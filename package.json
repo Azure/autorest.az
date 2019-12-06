@@ -1,7 +1,25 @@
 {
-    "dependencies": {
-        "@azure-tools/autorest-extension-base": "^3.1.207",
-        "@types/node": "^12.12.14",
-        "node-yaml": "^4.0.1"
-    }
+  "name": "@autorest/az",
+  "version": "0.1.0",
+  "description": "Autorest Azure CLI extension",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Azure/autorest.az.git"
+  },
+  "keywords": [
+    "autorest",
+    "extension"
+  ],
+  "author": "Microsoft Corporation",
+  "license": "MIT",
+  "dependencies": {
+    "@azure-tools/autorest-extension-base": "^3.1.207",
+    "@types/node": "^12.12.14",
+    "node-yaml": "^4.0.1"
+  }
 }
