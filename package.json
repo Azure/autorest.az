@@ -1,0 +1,7 @@
+{
+    "dependencies": {
+        "@azure-tools/autorest-extension-base": "^3.1.207",
+        "@types/node": "^12.12.14",
+        "node-yaml": "^4.0.1"
+    }
+}
