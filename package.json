@@ -2,8 +2,6 @@
     "dependencies": {
         "@azure-tools/autorest-extension-base": "^3.1.207",
         "@types/node": "^12.12.14",
-        "assert": "^2.0.0",
-        "node": "^13.3.0",
         "node-yaml": "^4.0.1"
     }
 }
