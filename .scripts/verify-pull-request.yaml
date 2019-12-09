@@ -1,0 +1,33 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master 
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install -g npm 
+    npx @microsoft/rush update 
+    npx @microsoft/rush rebuild 
+    npx @microsoft/rush test 
+
+    # install pester
+    pwsh -command install-module -scope currentuser -name pester -force
+
+    # generate the test modules
+    pwsh .scripts/generate-tests.ps1
+
+    # run the test module tests
+    pwsh .scripts/run-tests.ps1
+    
+  displayName: 'Rush install, build and test'

@@ -58,7 +58,7 @@ extension.Add("az", async autoRestApi => {
 
         // package name and group name can be guessed from namespace
         let packageName = await autoRestApi.GetValue("package-name") || namespace.replace(/\./g, '-');
-        let azName = await autoRestApi.GetValue("group-name") || await autoRestApi.GetValue("cli-name") || packageName.split('-').pop();
+        let azName = await autoRestApi.GetValue("group-name") || await autoRestApi.GetValue("az-name") || packageName.split('-').pop();
 
  
         let tag = await autoRestApi.GetValue("tag");

@@ -1,11 +1,25 @@
 {
   "name": "@autorest/az",
-  "version": "0.1.0",
-  "description": "Autorest Azure CLI extension",
+  "version": "1.0.0",
+  "description": "Autorest Azure AZ extension",
   "main": "dist/index.js",
+  "engines": {
+    "node": ">=10.12.0"
+  }, 
   "scripts": {
     "start": "node dist/index.js",
-    "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/index.js"
+    "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/index.js",
+    "eslint-fix": "eslint  . --fix --ext .ts",
+    "eslint": "eslint  . --ext .ts",
+    "build": "tsc -p .",
+    "start-testserver": "./node_modules/.bin/start-autorest-testserver",
+    "stop-testserver": "./node_modules/.bin/stop-autorest-testserver",
+    "watch": "tsc -p . --watch",
+    "prepare": "npm run build",
+    "test": "npm run build && mocha dist/test",
+    "clean": "ver > nul 2>&1 nul && npm run --silent clean-cmd || npm run --silent clean-bash",
+    "clean-cmd": "if exist dist rmdir /s /q dist && exit 0 || exit 0 ",
+    "clean-bash": "rm nul && rm -rf dist && exit 0 || exit 0"
   },
   "repository": {
     "type": "git",
@@ -17,9 +31,16 @@
   ],
   "author": "Microsoft Corporation",
   "license": "MIT",
+  "devDependencies": {
+    "@types/node": "10.17.0",
+    "eslint": "~5.4.0",
+    "node-yaml": "^3.2.0"
+  },
   "dependencies": {
-    "@azure-tools/autorest-extension-base": "^3.1.207",
-    "@types/node": "^12.12.14",
-    "node-yaml": "^4.0.1"
-  }
+    "@azure-tools/autorest-extension-base": "~3.1.0",
+    "node-yaml": "^3.2.0"
+  },
+  "files": [
+    "dist"
+  ]
 }
