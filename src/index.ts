@@ -49,6 +49,7 @@ extension.Add("az", async autoRestApi => {
         // namespace is the only obligatory option
         // we will derive default "package-name" and "root-name" from it
         const namespace = await autoRestApi.GetValue("namespace");
+        console.log("autorest az extension is called");
 
         if (!namespace)
         {
