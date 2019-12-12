@@ -36,6 +36,15 @@ extension.Add("az", async autoRestApi => {
         });
     }
 
+    function WriteFile(path: string, rows: string[])
+    {
+        autoRestApi.WriteFile(path, rows.join('\r\n'));
+    }
+
+    Error("I AM HERE");
+
+    WriteFile("myfolder/myfile.txt", ["single line"]);
+    return;
     try
     {
         // read files offered to this plugin
