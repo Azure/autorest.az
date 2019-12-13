@@ -1,4 +1,4 @@
-# Manually Generating Azure CLI Commands using AutoRest CLI PoC (v1)
+# Manually Generating Azure CLI Commands using AutoRest CLI PoC
 
 This document describes generation of Azure CLI Commands using **autorest.cli** PoC.
 It also describes changes that will occur in near future.
