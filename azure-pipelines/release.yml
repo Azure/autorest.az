@@ -23,11 +23,6 @@ steps:
     npx @microsoft/rush sync-versions
     npx @microsoft/rush update 
 
-    # set the actual package versions and update again
-    npx @microsoft/rush set-versions
-    npx @microsoft/rush sync-versions
-    npx @microsoft/rush update 
-
     # compile the code
     npx @microsoft/rush rebuild 
 
