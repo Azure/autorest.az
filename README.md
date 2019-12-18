@@ -17,6 +17,10 @@ pipeline:
         input: modelerfour
         output-artifact: source-file-cli
 
+    az/emitter:
+        input: generate
+        scope: scope-here
+
 scope-here:
     is-object: false
     output-artifact:

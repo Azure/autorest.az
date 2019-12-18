@@ -7,7 +7,8 @@ export type FileCallback = (path: string, rows: string[]) => void;
 const extension = new AutoRestExtension();
 
 extension.Add("az", async autoRestApi => {
-    
+
+
     try
     {
         // read files offered to this plugin
@@ -18,9 +19,10 @@ extension.Add("az", async autoRestApi => {
         // read a setting
 
         const isDebugFlagSet = await autoRestApi.GetValue("debug");
+        let azSettings = await autoRestApi.GetValue("az");
 
 
-        // emit a messages
+        // emit messages
 
         autoRestApi.Message({
             Channel: Channel.Warning,
@@ -28,13 +30,18 @@ extension.Add("az", async autoRestApi => {
         });
 
         autoRestApi.Message({
+            Channel: Channel.Warning,
+            Text: "az settings " + JSON.stringify(azSettings)
+        });
+
+        autoRestApi.Message({
             Channel: Channel.Information,
-            Text: "AutoRest offers the following input files: " + inputFiles.join(", "),
+            Text: "AutoRest offers the following input files: " + inputFileUris.join(", "),
         });
 
         // emit a file (all input files concatenated)
 
-        autoRestApi.WriteFile("concat.txt", inputFiles.join("\n---\n"));
+        autoRestApi.WriteFile("myfolder/concat.txt", inputFiles.join("\n---\n"));
     }
     catch (e)
     {
