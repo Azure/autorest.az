@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "engines": {
     "node": ">=10.12.0"
-  }, 
+  },
   "scripts": {
     "start": "node dist/index.js",
     "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/index.js",
@@ -37,6 +37,7 @@
     "node-yaml": "^3.2.0"
   },
   "dependencies": {
+    "@autorest/modelerfour": "^4.1.60",
     "@azure-tools/autorest-extension-base": "~3.1.0",
     "node-yaml": "^3.2.0"
   },
