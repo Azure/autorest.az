@@ -26,7 +26,7 @@ extension.Add("az", async autoRestApi => {
 
         autoRestApi.Message({
             Channel: Channel.Warning,
-            Text: "Hello World! The `debug` flag is " + (isDebugFlagSet ? "set" : "not set"),
+            Text: "Hello World az! The `debug` flag is " + (isDebugFlagSet ? "set" : "not set"),
         });
 
         autoRestApi.Message({
@@ -41,7 +41,7 @@ extension.Add("az", async autoRestApi => {
 
         // emit a file (all input files concatenated)
 
-        autoRestApi.WriteFile("myfolder/concat.txt", inputFiles.join("\n---\n"));
+        autoRestApi.WriteFile("myfolder/concataz.txt", inputFiles.join("\n---\n"));
     }
     catch (e)
     {

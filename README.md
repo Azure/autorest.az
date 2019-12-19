@@ -4,21 +4,18 @@ See documentation [here](doc/00-overview.md)
 
 ``` yaml
 use-extension:
-  "@autorest/modelerfour": "~4.1.60"
+  #"@autorest/cli.common": "/home/qiaozha/code/autorest.cli.common/"
   "az": "$(this-folder)"
 
 pipeline-model: v3
 
 pipeline:
-    modelerfour:
-        input: openapi-document/multi-api/identity
-    az/generate:
-        plugin: az
-        input: modelerfour
+    az:
+        input: cli.common
         output-artifact: source-file-cli
 
     az/emitter:
-        input: generate
+        input: az
         scope: scope-here
 
 scope-here:
