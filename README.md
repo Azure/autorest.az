@@ -5,7 +5,7 @@ See documentation [here](doc/00-overview.md)
 ``` yaml
 use-extension:
   "@autorest/cli.common": "latest"
-  "@autorest/fakesdk": "latest"
+  "@qiaozha/fakesdk": "latest"
   "az": "$(this-folder)"
 
 pipeline-model: v3
