@@ -40,7 +40,7 @@
     "@autorest/modelerfour": "^4.1.60",
     "@azure-tools/autorest-extension-base": "~3.1.0",
     "@azure-tools/codegen": "^2.1.222",
-    "@azure-tools/codemodel": "^3.0.252",
+    "@azure-tools/codemodel": "~3.0.0",
     "@azure-tools/linq": "^3.1.212",
     "node-yaml": "^3.2.0"
   },

@@ -1,4 +1,4 @@
-import { CodeModel, codeModelSchema, ObjectSchema, SchemaType, Property } from '@azure-tools/codemodel';
+import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { Session, startSession, Host } from '@azure-tools/autorest-extension-base';
 import { serialize, deserialize } from '@azure-tools/codegen';
 import { values, items, length, Dictionary } from '@azure-tools/linq';
