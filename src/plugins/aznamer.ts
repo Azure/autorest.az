@@ -22,12 +22,12 @@ class AzNamer {
     for (const operationGroup of values(this.codeModel.operationGroups)) {
         operationGroup.language['az'] = operationGroup.language['cli'];
         let operationGroupName = extensionName + " " + operationGroup.language['az'].name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
-        operationGroup.language['az'].name = operationGroupName;
+        operationGroup.language['az']['command'] = operationGroupName;
 
         for (const operation of values (operationGroup.operations)) {
             operation.language['az'] = operation.language['cli'];
             let operationName = operationGroupName + " " + operation.language['az'].name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
-            operation.language['az'].name = operationName;
+            operation.language['az']['command'] = operationName;
 
             for (const parameter of values (operation.request.parameters)) {
                 parameter.language['az'] = parameter.language['cli'];

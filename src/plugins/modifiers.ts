@@ -106,8 +106,8 @@ class Modifiers {
 
           for (const operation of values(operationGroup.operations)) {
             //operation
-            if(operation.language['az']['name'].match(commandRegex)) {
-                operation.language['az']['name'] = commandReplacer? commandRegex? operation.language['az']['name'].replace(commandRegex, commandReplacer): commandReplacer: operation.language['az']['name'];
+            if(operation.language['az']['command'].match(commandRegex)) {
+                operation.language['az']['command'] = commandReplacer? commandRegex? operation.language['az']['command'].replace(commandRegex, commandReplacer): commandReplacer: operation.language['az']['command'];
                 operation.language['az']['description'] = commandDescriptionReplacer? commandDescriptionReplacer: operation.language['az']['description'];
             }
 
