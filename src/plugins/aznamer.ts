@@ -4,39 +4,39 @@ import { serialize, deserialize } from '@azure-tools/codegen';
 import { values, items, length, Dictionary } from '@azure-tools/linq';
 
 class AzNamer {
-  codeModel: CodeModel
+    codeModel: CodeModel
 
-  constructor(protected session: Session<CodeModel>) {
-    this.codeModel = session.model;
-  }
+    constructor(protected session: Session<CodeModel>) {
+        this.codeModel = session.model;
+    }
 
-  async init() {
-    // any configuration if necessary
-    return this;
-  }
+    async init() {
+        // any configuration if necessary
+        return this;
+    }
 
-  process() {
- 
-    let extensionName = this.session.getValue('az-name');
+    process() {
 
-    for (const operationGroup of values(this.codeModel.operationGroups)) {
-        operationGroup.language['az'] = operationGroup.language['cli'];
-        let operationGroupName = extensionName + " " + operationGroup.language['az'].name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
-        operationGroup.language['az']['command'] = operationGroupName;
+        let extensionName = this.session.getValue('az-name');
 
-        for (const operation of values (operationGroup.operations)) {
-            operation.language['az'] = operation.language['cli'];
-            let operationName = operationGroupName + " " + operation.language['az'].name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
-            operation.language['az']['command'] = operationName;
+        for (const operationGroup of values(this.codeModel.operationGroups)) {
+            operationGroup.language['az'] = operationGroup.language['cli'];
+            let operationGroupName = extensionName + " " + operationGroup.language['az'].name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
+            operationGroup.language['az']['command'] = operationGroupName;
 
-            for (const parameter of values (operation.request.parameters)) {
-                parameter.language['az'] = parameter.language['cli'];
-                parameter.language['az'].name = parameter.language['az'].name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
+            for (const operation of values(operationGroup.operations)) {
+                operation.language['az'] = operation.language['cli'];
+                let operationName = operationGroupName + " " + operation.language['az'].name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
+                operation.language['az']['command'] = operationName;
+
+                for (const parameter of values(operation.request.parameters)) {
+                    parameter.language['az'] = parameter.language['cli'];
+                    parameter.language['az'].name = parameter.language['az'].name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
+                }
             }
         }
+        return this.codeModel;
     }
-    return this.codeModel;
-  }
 }
 
 export async function processRequest(host: Host) {
@@ -48,7 +48,7 @@ export async function processRequest(host: Host) {
         const result = plugin.process();
         host.WriteFile('aznamer-temp-output', serialize(result))
     } catch (E) {
-        if(debug) {
+        if (debug) {
             console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
         }
         throw E;
