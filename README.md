@@ -19,13 +19,13 @@ pipeline:
         plugin: fakenamer
         input: cli.common
         output-artifact: source-file-cli
-    az/renamer:
+    az/modifiers:
         input: az/aznamer
         output-artifact: source-file-cli
     az/emitter:
         input:
             - az
-            - az/renamer
+            - az/modifiers
         scope: scope-here
 
 scope-here:
