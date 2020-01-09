@@ -117,11 +117,6 @@ class Modifiers {
         this.codeModel = session.model;
     }
 
-    async init() {
-        // any configuration if necessary
-        return this;
-    }
-
     process() {
         for (const directive of directives.filter(each => !each.transform)) {
             const getPatternToMatch = (
@@ -205,7 +200,7 @@ export async function processRequest(host: Host) {
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        const plugin = await new Modifiers(session).init();
+        const plugin = new Modifiers(session);
         const result = plugin.process();
         host.WriteFile("modifiers-temp-output", serialize(result));
     } catch (E) {
