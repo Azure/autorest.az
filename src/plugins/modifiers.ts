@@ -8,7 +8,8 @@ import {
 import {
     Session,
     startSession,
-    Host
+    Host,
+    Channel
 } from "@azure-tools/autorest-extension-base";
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
@@ -18,13 +19,13 @@ let directives: Array<any> = [];
 interface WhereCommandDirective {
     select?: string;
     where: {
-        command?: string;
+        "command"?: string;
         "command-description"?: string;
         "parameter-name"?: string;
         "parameter-description"?: string;
     };
     set?: {
-        command?: string;
+        "command"?: string;
         "command-description"?: string;
         "parameter-name"?: string;
         "parameter-description"?: string;
@@ -67,14 +68,9 @@ function getSetError(
 
 function isWhereCommandDirective(it: any): it is WhereCommandDirective {
     const directive = it;
-    const select = directive.select;
     const where = directive.where;
     const set = directive.set;
-    if (
-        directive.remove === undefined &&
-        where &&
-        (where["parameter-name"] || select === "command" || select === "parameter")
-    ) {
+    if (where && (where["command"] || where['parameter-name'])) {
         const prohibitedFilters = [
             "model-name",
             "property-name",
@@ -87,7 +83,7 @@ function isWhereCommandDirective(it: any): it is WhereCommandDirective {
             const prohibitedSetters = [
                 "property-name",
                 "property-description",
-                " model-name",
+                "model-name",
                 "enum-name",
                 "enum-value-name"
             ];
@@ -117,7 +113,9 @@ class Modifiers {
         this.codeModel = session.model;
     }
 
-    process() {
+    async process() {
+        let azSettings = await this.session.getValue('az');
+        directives = azSettings['directive'];
         for (const directive of directives.filter(each => !each.transform)) {
             const getPatternToMatch = (
                 selector: string | undefined
@@ -129,31 +127,22 @@ class Modifiers {
                     : undefined;
             };
             if (isWhereCommandDirective(directive)) {
+                this.session.message({Channel:Channel.Warning, Text:serialize(directive)});
                 const selectType = directive.select;
                 const parameterRegex = getPatternToMatch(
                     directive.where["parameter-name"]
                 );
                 const commandRegex = getPatternToMatch(directive.where["command"]);
-                const parameterReplacer =
-                    directive.set !== undefined
-                        ? directive.set["parameter-name"]
-                        : undefined;
-                const paramDescriptionReplacer =
-                    directive.set !== undefined
-                        ? directive.set["parameter-description"]
-                        : undefined;
-                const commandReplacer =
-                    directive.set !== undefined ? directive.set["command"] : undefined;
-                const commandDescriptionReplacer =
-                    directive.set !== undefined
-                        ? directive.set["command-description"]
-                        : undefined;
+                const parameterReplacer = directive.set !== undefined? directive.set["parameter-name"]: undefined;
+                const paramDescriptionReplacer = directive.set !== undefined? directive.set["parameter-description"]: undefined;
+                const commandReplacer = directive.set !== undefined ? directive.set["command"] : undefined;
+                const commandDescriptionReplacer = directive.set !== undefined? directive.set["command-description"]: undefined;
                 for (const operationGroup of values(this.codeModel.operationGroups)) {
                     //operationGroup
 
                     for (const operation of values(operationGroup.operations)) {
                         //operation
-                        if (operation.language["az"]["command"].match(commandRegex)) {
+                        if (operation.language['az']['command'] != undefined && operation.language["az"]["command"].match(commandRegex)) {
                             operation.language["az"]["command"] = commandReplacer
                                 ? commandRegex
                                     ? operation.language["az"]["command"].replace(
@@ -170,7 +159,7 @@ class Modifiers {
                         }
 
                         for (const parameter of values(operation.request.parameters)) {
-                            if (parameter.language["az"]["name"].match(parameterRegex)) {
+                            if (parameter.language['az']['name'] != undefined && parameter.language["az"]["name"].match(parameterRegex)) {
                                 parameter.language["az"]["name"] = parameterReplacer
                                     ? parameterRegex
                                         ? parameter.language["az"]["name"].replace(
@@ -200,8 +189,8 @@ export async function processRequest(host: Host) {
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        const plugin = new Modifiers(session);
-        const result = plugin.process();
+        const plugin = await new Modifiers(session);
+        const result = await plugin.process();
         host.WriteFile("modifiers-temp-output", serialize(result));
     } catch (E) {
         if (debug) {
