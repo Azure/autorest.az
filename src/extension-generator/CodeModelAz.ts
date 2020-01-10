@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-export interface CodeModel
+export interface CodeModelAz
 {
     SelectFirstExtension(): boolean;
     SelectNextExtension(): boolean;
@@ -16,16 +16,14 @@ export interface CodeModel
     SelectNextCommandGroup(): boolean;
 
     CommandGroup_Name: string;
-    CommandGroup_NameUnderscored: string;
     CommandGroup_Help: string;
-    CommandGroup_Commands: string[];
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
-    SelectCommand(name: string): boolean;
 
     Command_Name: string;
-    Command_NameUnderscored: string;
+    Command_MethodName: string;
+    Command_FunctionName: string;
 
     Command_Help: string;
 
