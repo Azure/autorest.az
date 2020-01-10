@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
-import { EscapeString, ToCamelCase, Capitalize } from "../Common/Helpers";
+import { EscapeString, ToCamelCase, Capitalize } from "../Helpers";
 
 export function GenerateAzureCliParams(model: CodeModelAz) : string[] {
     let output: string[] = [];

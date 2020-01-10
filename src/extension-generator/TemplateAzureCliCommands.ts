@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
-import { CommandMethod } from "./CodeModelAzImpl";
 
 export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
     var output: string[] = [];

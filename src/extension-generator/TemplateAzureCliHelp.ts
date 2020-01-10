@@ -4,8 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
-import { CommandExample } from "./CodeModelAzImpl"
-import { ToSnakeCase } from "../Common/Helpers"
 
 export function GenerateAzureCliHelp(model: CodeModelAz) : string[] {
     var output: string[] = [];
