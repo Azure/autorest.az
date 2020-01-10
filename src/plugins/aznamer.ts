@@ -2,6 +2,7 @@ import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 import { serialize, deserialize } from '@azure-tools/codegen';
 import { values, items, length, Dictionary } from '@azure-tools/linq';
+import { changeCamelToDash } from '../utils/helper';
 
 class AzNamer {
     codeModel: CodeModel;
@@ -10,13 +11,7 @@ class AzNamer {
         this.codeModel = session.model;
     }
 
-    changeCamelToDash(str: string) {
-        str = str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
-        if(str.startsWith('-')) {
-            str = str.substring(1, str.length);
-        }
-        return str;
-    }
+
     async process() {
 
         let azSettings = await this.session.getValue('az');
@@ -31,7 +26,7 @@ class AzNamer {
                 operationGroup.language['az'] = {};
                 operationGroup.language['az']['name'] = operationGroup.language['cli']['name'];
                 operationGroup.language['az']['description'] = operationGroup.language['cli']['description'];
-                operationGroupName = extensionName + " " + this.changeCamelToDash(operationGroup.language['az']['name'])
+                operationGroupName = extensionName + " " + changeCamelToDash(operationGroup.language['az']['name'])
                 operationGroup.language['az']['command'] = operationGroupName;
             }
 
@@ -41,7 +36,7 @@ class AzNamer {
                     operation.language['az'] = {};
                     operation.language['az']['name'] = operation.language['cli']['name'];
                     operation.language['az']['description'] = operation.language['cli']['description'];
-                    operationName = operationGroupName + " " +  this.changeCamelToDash(operation.language['az']['name']);
+                    operationName = operationGroupName + " " +  changeCamelToDash(operation.language['az']['name']);
                     operation.language['az']['command'] = operationName;
                 }
                 for (const parameter of values(operation.request.parameters)) {
@@ -49,7 +44,7 @@ class AzNamer {
                         parameter.language['az'] = {};
                         parameter.language['az']['name'] = parameter.language['cli']['name'];
                         parameter.language['az']['description'] = parameter.language['cli']['description'];
-                        parameter.language['az']['name'] =  this.changeCamelToDash(parameter.language['az']['name']);
+                        parameter.language['az']['name'] = changeCamelToDash(parameter.language['az']['name']);
                     }
                 }
             }
