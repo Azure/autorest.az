@@ -1,4 +1,4 @@
-import { AutoRestExtension, Channel } from '@azure-tools/autorest-extension-base';
+import { AutoRestExtension, Channel, Host } from '@azure-tools/autorest-extension-base';
 import { processRequest as aznamer } from './plugins/aznamer';
 import { processRequest as modifiers } from './plugins/modifiers';
 import { ALPN_ENABLED } from 'constants';
@@ -52,6 +52,10 @@ extension.Add("az", async autoRestApi => {
     }
 });
 
-extension.Add("aznamer", aznamer);
-extension.Add("modifiers", modifiers);
+export async function initializePlugins(pluginHost: AutoRestExtension) {
+    pluginHost.Add("aznamer", aznamer);
+    pluginHost.Add("modifiers", modifiers);
+}
+
+initializePlugins(extension);
 extension.Run();
