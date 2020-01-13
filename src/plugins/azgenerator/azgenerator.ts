@@ -1,8 +1,6 @@
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 import { serialize, deserialize } from '@azure-tools/codegen';
-import { values, items, length, Dictionary } from '@azure-tools/linq';
-import { changeCamelToDash } from '../../utils/helper';
 
 class AzGenerator {
     codeModel: CodeModel;
