@@ -43,6 +43,11 @@ export class CodeModelCliImpl implements CodeModelAz
         return "my_extension";
     }
 
+    public get Extension_NameClass(): string
+    {
+        return "MyExtensionClassName";
+    }
+
     public get CommandGroup_Name(): string
     {
         return "my-extension something";
@@ -238,5 +243,35 @@ export class CodeModelCliImpl implements CodeModelAz
     public SelectCommand(name: string): boolean
     {
         return true;
+    }
+
+    public GetModuleOperationName(): string
+    {
+        return "OperationName";
+    }
+
+    public GetModuleOperationNameUpper(): string
+    {
+        return "operation_name";
+    }
+
+    public GetPythonNamespace(): string
+    {
+        return "azure.mgmt.whatever";
+    }
+
+    public get PythonMgmtClient(): string
+    {
+        return "MyMgmtClient";
+    }
+
+    public get PythonOperationsName(): string
+    {
+        return "whatever";
+    }
+
+    public FindExampleById(id: string): string[]
+    {
+        return [];
     }
 }
