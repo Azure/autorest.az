@@ -9,7 +9,7 @@ export type FileCallback = (path: string, rows: string[]) => void;
 
 const extension = new AutoRestExtension();
 
-
+/* [ZIM] for now disabled until it actually works
 extension.Add("az", async autoRestApi => {
 
 
@@ -52,8 +52,9 @@ extension.Add("az", async autoRestApi => {
         Error(e.message + " -- " + JSON.stringify(e.stack));
     }
 });
+*/
 
-export async function initializePlugins(pluginHost: AutoRestExtension) {
+async function initializePlugins(pluginHost: AutoRestExtension) {
     pluginHost.Add("aznamer", aznamer);
     pluginHost.Add("modifiers", modifiers);
     pluginHost.Add("azgenerator", generator);
