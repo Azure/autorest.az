@@ -23,6 +23,9 @@ pipeline:
     az/modifiers:
         input: az/aznamer
         output-artifact: source-file-modifiers
+    az/azgenerator:
+        input: az/azmodifiers
+        output-artifact: source-file-extension
     az/emitter:
         input:
             - az
@@ -36,5 +39,5 @@ scope-here:
         - source-file-fakesdk-inaz
         - source-file-aznamer
         - source-file-modifiers
-        
+        - source-file-extension
 ```
