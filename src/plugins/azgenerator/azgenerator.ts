@@ -11,7 +11,7 @@ export async function processRequest(host: Host) {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
 
         let model = new CodeModelCliImpl();
-        let files: any = GenerateAll(model, [], true, "cli-name");
+        let files: any = GenerateAll(model, true);
 
         for (let f in files) {
             host.WriteFile(f, files[f].join('\r\n'));

@@ -48,6 +48,11 @@ export class CodeModelCliImpl implements CodeModelAz
         return "MyExtensionClassName";
     }
 
+    public get Extension_TestScenario(): any
+    {
+        return [];
+    }
+
     public get CommandGroup_Name(): string
     {
         return "my-extension something";

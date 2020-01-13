@@ -19,43 +19,46 @@ import { GenerateAzureCliSetupCfg } from "./TemplateAzureCliSetupCfg"
 import { GenerateAzureCliSetupPy } from "./TemplateAzureCliSetupPy"
 import { CodeModelAz } from "./CodeModelAz";
 
-export function GenerateAll(modelCli: CodeModelAz,
-    testScenario: any,
-    generateReport: any,
-    cliName: any): any
+export function GenerateAll(model: CodeModelAz,
+    generateReport: any): any
 {
     let files: any = {};
-    let pathTop = "src/" + cliName + "/";
-    let path = "src/" + cliName + "/azext_" + cliName.replace("-", "_") + "/";
 
-    files[path + "_help.py"] = GenerateAzureCliHelp(modelCli);
-    modelCli.SelectFirstExtension();
-    files[path + "_params.py"] = GenerateAzureCliParams(modelCli);
-    modelCli.SelectFirstExtension();
-    files[path + "commands.py"] = GenerateAzureCliCommands(modelCli);
-    modelCli.SelectFirstExtension();
-    files[path + "custom.py"] = GenerateAzureCliCustom(modelCli);
-    modelCli.SelectFirstExtension();
-    files[path + "_client_factory.py"] = GenerateAzureCliClientFactory(modelCli);
-    modelCli.SelectFirstExtension();
-    files[path + "tests/latest/test_" + cliName + "_scenario.py"] = GenerateAzureCliTestScenario(modelCli, testScenario);   
-    modelCli.SelectFirstExtension();
-    files[path + "__init__.py"] = GenerateAzureCliInit(modelCli);
-    modelCli.SelectFirstExtension();
-    files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(modelCli);
-    modelCli.SelectFirstExtension();
-    files[path + "_validators.py"] = GenerateAzureCliValidators(modelCli);
-
-    files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(modelCli);
-    files[pathTop + "README.rst"] = GenerateAzureCliReadme(modelCli);
-    files[pathTop + "setup.cfg"] = GenerateAzureCliSetupCfg(modelCli);
-    files[pathTop + "setup.py"] = GenerateAzureCliSetupPy(modelCli);  
-
-    if (generateReport)
+    if (model.SelectFirstExtension())
     {
-        modelCli.SelectFirstExtension();
-        files[pathTop + "report.md"] = GenerateAzureCliReport(modelCli);
-    }
+        do
+        {
+            let pathTop = "src/" + model.Extension_Name + "/";
+            let path = "src/" + model.Extension_Name + "/azext_" + model.Extension_Name.replace("-", "_") + "/";
 
+            files[path + "_help.py"] = GenerateAzureCliHelp(model);
+            files[path + "_params.py"] = GenerateAzureCliParams(model);
+            files[path + "commands.py"] = GenerateAzureCliCommands(model);
+            model.SelectFirstExtension();
+            files[path + "custom.py"] = GenerateAzureCliCustom(model);
+            model.SelectFirstExtension();
+            files[path + "_client_factory.py"] = GenerateAzureCliClientFactory(model);
+            model.SelectFirstExtension();
+            files[path + "tests/latest/test_" + model.Extension_Name + "_scenario.py"] = GenerateAzureCliTestScenario(model);   
+            model.SelectFirstExtension();
+            files[path + "__init__.py"] = GenerateAzureCliInit(model);
+            model.SelectFirstExtension();
+            files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
+            model.SelectFirstExtension();
+            files[path + "_validators.py"] = GenerateAzureCliValidators(model);
+
+            files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(model);
+            files[pathTop + "README.rst"] = GenerateAzureCliReadme(model);
+            files[pathTop + "setup.cfg"] = GenerateAzureCliSetupCfg(model);
+            files[pathTop + "setup.py"] = GenerateAzureCliSetupPy(model);  
+
+            if (generateReport)
+            {
+                model.SelectFirstExtension();
+                files[pathTop + "report.md"] = GenerateAzureCliReport(model);
+            }
+        }
+        while (model.SelectNextExtension())
+    }
     return files;
 }

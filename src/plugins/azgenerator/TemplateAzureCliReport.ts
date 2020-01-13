@@ -13,82 +13,84 @@ export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
 
     let cmds = {};
     
-    do
+    if (model.SelectFirstCommandGroup())
     {
-        var mo: string[] = [];
-        mo.push("## " + model.Command_Name);
-        mo.push("");
-
-        if (model.SelectFirstCommand())
+        do
         {
-            do
+            var mo: string[] = [];
+            mo.push("## " + model.Command_Name);
+            mo.push("");
+
+            if (model.SelectFirstCommand())
             {
-                mo.push("### " + model.Command_Name);
-                mo.push("");
-                mo.push(model.Command_MethodName + " a " + model.CommandGroup_Name +  ".");
-                mo.push("");
-
-                mo.push("|Option|Type|Description|Path (SDK)|Path (swagger)|");
-                mo.push("|------|----|-----------|----------|--------------|");
-
-
-                model.SelectFirstOption();
-
-                // first parameters that are required
                 do
                 {
-                    if (model.Option_Type != "placeholder" && model.Option_IsRequired)
-                    {
-                        mo.push("|**--" + model.Option_Name + "**|" + model.Option_Type + "|" + model.Option_Description + "|" + model.Option_PathSdk + "|" + model.Option_PathSwagger + "|");
-                    }
-                }
-                while (model.SelectNextOption());
+                    mo.push("### " + model.Command_Name);
+                    mo.push("");
+                    mo.push(model.Command_MethodName + " a " + model.CommandGroup_Name +  ".");
+                    mo.push("");
 
-                model.SelectFirstOption();
-
-                // following by required parameters
-                do {
-                    if (model.Option_Type != "placeholder" && !model.Option_IsRequired)
-                    {
-                        mo.push("|--" + model.Option_Name + "**|" + model.Option_Type + "|" + model.Option_Description + "|" + model.Option_PathSdk + "|" + model.Option_PathSwagger + "|");
-                    }
-                }
-                while (model.SelectNextOption());
+                    mo.push("|Option|Type|Description|Path (SDK)|Path (swagger)|");
+                    mo.push("|------|----|-----------|----------|--------------|");
 
 
-                if (model.SelectFirstExample())
-                {
+                    model.SelectFirstOption();
+
+                    // first parameters that are required
                     do
                     {
-                        mo.push("");
-                        mo.push ("**Example: " + model.Example_Title + "**");
-                        mo.push("");
-                        mo.push("```");
-
-                        let next: string = model.Command_Name + " " + model.Command_MethodName + " ";
-                        for (let k in model.Example_Params)
+                        if (model.Option_Type != "placeholder" && model.Option_IsRequired)
                         {
-                            let v: string = model.Example_Params[k];
-                            if (/\s/.test(v))
-                            {
-                                v = "\"" + v.replace("\"", "\\\"") + "\"";
-                            }
-
-                            next += k + " " + v;
-                            mo.push(next);
-                            next = "        ";
+                            mo.push("|**--" + model.Option_Name + "**|" + model.Option_Type + "|" + model.Option_Description + "|" + model.Option_PathSdk + "|" + model.Option_PathSwagger + "|");
                         }
-                        mo.push("```");
-                    } while (model.SelectNextExample());
+                    }
+                    while (model.SelectNextOption());
+
+                    model.SelectFirstOption();
+
+                    // following by required parameters
+                    do {
+                        if (model.Option_Type != "placeholder" && !model.Option_IsRequired)
+                        {
+                            mo.push("|--" + model.Option_Name + "**|" + model.Option_Type + "|" + model.Option_Description + "|" + model.Option_PathSdk + "|" + model.Option_PathSwagger + "|");
+                        }
+                    }
+                    while (model.SelectNextOption());
+
+
+                    if (model.SelectFirstExample())
+                    {
+                        do
+                        {
+                            mo.push("");
+                            mo.push ("**Example: " + model.Example_Title + "**");
+                            mo.push("");
+                            mo.push("```");
+
+                            let next: string = model.Command_Name + " " + model.Command_MethodName + " ";
+                            for (let k in model.Example_Params)
+                            {
+                                let v: string = model.Example_Params[k];
+                                if (/\s/.test(v))
+                                {
+                                    v = "\"" + v.replace("\"", "\\\"") + "\"";
+                                }
+
+                                next += k + " " + v;
+                                mo.push(next);
+                                next = "        ";
+                            }
+                            mo.push("```");
+                        } while (model.SelectNextExample());
+                    }
+                                
                 }
-                            
+                while (model.SelectNextCommand());
             }
-            while (model.SelectNextCommand());
-        }
 
-        cmds[model.Command_Name] = mo;
-    } while (model.SelectNextCommandGroup());;
-
+            cmds[model.Command_Name] = mo;
+        } while (model.SelectNextCommandGroup());;
+    }
     // build sorted output
     var keys = Object.keys(cmds);
     keys.sort();

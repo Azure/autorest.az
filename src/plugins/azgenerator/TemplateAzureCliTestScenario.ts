@@ -5,8 +5,9 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 
-export function GenerateAzureCliTestScenario(model: CodeModelAz, config: any) : string[] {
-    var output: string[] = [];
+export function GenerateAzureCliTestScenario(model: CodeModelAz) : string[] {
+    let output: string[] = [];
+    let config: any = model.Extension_TestScenario;
 
     output.push("# --------------------------------------------------------------------------------------------");
     output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");

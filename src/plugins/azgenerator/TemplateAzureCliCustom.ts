@@ -37,215 +37,218 @@ export function GenerateAzureCliCustom(model: CodeModelAz) : string[] {
 function GenerateBody(model: CodeModelAz, required: any) : string[] {
     var output: string[] = [];
 
-    do
+    if (model.SelectFirstCommandGroup())
     {
-        //let methods: string[] = model.CommandGroup_Commands;
-        if (model.SelectFirstCommand())
+        do
         {
-            do
+            //let methods: string[] = model.CommandGroup_Commands;
+            if (model.SelectFirstCommand())
             {
-                // create, delete, list, show, update
-
-                output.push("");
-                output.push("");
-
-                //
-                // method
-                //
-
-                //let updatedMethodName = ((methodName != "show") ? methodName : "get").replace(/-/g, '_');
-                let updatedMethodName: string = model.Command_FunctionName; 
-                let call = "def " + updatedMethodName + "(";
-                let indent = " ".repeat(call.length);
-                let isUpdate = updatedMethodName.startsWith("update_");
-
-                output.push(call + "cmd, client");
-
-                if (model.SelectFirstOption())
+                do
                 {
-                    do
+                    // create, delete, list, show, update
+
+                    output.push("");
+                    output.push("");
+
+                    //
+                    // method
+                    //
+
+                    //let updatedMethodName = ((methodName != "show") ? methodName : "get").replace(/-/g, '_');
+                    let updatedMethodName: string = model.Command_FunctionName; 
+                    let call = "def " + updatedMethodName + "(";
+                    let indent = " ".repeat(call.length);
+                    let isUpdate = updatedMethodName.startsWith("update_");
+
+                    output.push(call + "cmd, client");
+
+                    if (model.SelectFirstOption())
                     {
-                        let required: boolean = model.Option_IsRequired;
-
-                        // XXX - handle this in model
-                        //if (element.Type == "placeholder")
-                        //    continue;
-
-                        // XXX - handle this in model
-                        //if (isUpdate && element.PathSwagger.startsWith("/"))
-                        //    required = false;
-
-                        if (isUpdate && model.Option_PathSwagger.startsWith("/"))
-                            required = false;
-
-                        if (required)
+                        do
                         {
-                            let name = model.Option_NamePython; // PythonParameterName(element.Name);
-                            output[output.length - 1] += ",";  
-                            output.push(indent + name);
-                        }
-                    } while (model.SelectNextOption());
-                }
+                            let required: boolean = model.Option_IsRequired;
 
-                if (model.SelectFirstOption())
-                {
-                    do
-                    {
-                        let required = model.Option_IsRequired;
+                            // XXX - handle this in model
+                            //if (element.Type == "placeholder")
+                            //    continue;
 
-                        if (model.Option_Type == "placeholder")
-                            continue;
+                            // XXX - handle this in model
+                            //if (isUpdate && element.PathSwagger.startsWith("/"))
+                            //    required = false;
 
-                        if (isUpdate && model.Option_PathSwagger.startsWith("/"))
-                            required = false;
+                            if (isUpdate && model.Option_PathSwagger.startsWith("/"))
+                                required = false;
 
-                        if (!required)
-                        {
-                            output[output.length - 1] += ",";  
-                            output.push(indent + model.Option_NamePython + "=None");
-                        }
+                            if (required)
+                            {
+                                let name = model.Option_NamePython; // PythonParameterName(element.Name);
+                                output[output.length - 1] += ",";  
+                                output.push(indent + name);
+                            }
+                        } while (model.SelectNextOption());
                     }
-                    while (model.SelectNextOption());
-                }
 
-                output[output.length - 1] += "):";  
-
-                let output_body: string[] = []
-                let output_method_call: string[] = [];
-
-                if (model.SelectFirstMethod())
-                {
-                    if (model.Method_BodyParameterName != null)
+                    if (model.SelectFirstOption())
                     {
-                        // create body transformation for methods that support it
-                        let methodName: string = model.Command_MethodName;
-
-                        if (methodName != "show" && methodName != "list" && methodName != "delete")
+                        do
                         {
-                            // body transformation
-                            if (!isUpdate)
-                            {
-                                output_body.push("    body = {}");
-                            }
-                            else
-                            {
-                                // XXX-FIX-GET
-                                //if (methods.indexOf("show") >= 0)
-                                //{
-                                //    model.SelectCommand("show");
-                                //    output_body.push("    body = " + GetMethodCall(model) + ".as_dict()");
-                                //}
-                                //else
-                                //{
-                                    output_body.push("    body = {}");
-                                //}
-                            }
+                            let required = model.Option_IsRequired;
 
-                            if (model.SelectFirstOption())
+                            if (model.Option_Type == "placeholder")
+                                continue;
+
+                            if (isUpdate && model.Option_PathSwagger.startsWith("/"))
+                                required = false;
+
+                            if (!required)
                             {
-                                do
+                                output[output.length - 1] += ",";  
+                                output.push(indent + model.Option_NamePython + "=None");
+                            }
+                        }
+                        while (model.SelectNextOption());
+                    }
+
+                    output[output.length - 1] += "):";  
+
+                    let output_body: string[] = []
+                    let output_method_call: string[] = [];
+
+                    if (model.SelectFirstMethod())
+                    {
+                        if (model.Method_BodyParameterName != null)
+                        {
+                            // create body transformation for methods that support it
+                            let methodName: string = model.Command_MethodName;
+
+                            if (methodName != "show" && methodName != "list" && methodName != "delete")
+                            {
+                                // body transformation
+                                if (!isUpdate)
                                 {
-                                    let access = "    body"
-                                    if (model.Option_PathSdk.startsWith("/") && model.Option_Type != "placeholder")
-                                    {
-                                        let parts = model.Option_PathSdk.split("/");
-                                        let last: string = parts.pop();
-                                        parts.forEach(part => {
-                                            if (part != "" && part != "*")
-                                            {
-                                                access += ".setdefault('" + part + "', {})";
-                                            }
-                                        });
-
-                                        access += "['" + last + "'] = ";
-
-                                        if (model.Option_IsList)
-                                        {
-                                            if (model.Option_Type != "dict")
-                                            {
-                                                // a comma separated list
-                                                access += "None if " + model.Option_NamePython + " is None else " + model.Option_NamePython;
-                                            }
-                                            else
-                                            {
-                                                // already preprocessed by actions
-                                                access += model.Option_NamePython
-                                            }
-                                        }
-                                        else if (model.Option_Type != "dict")
-                                        {
-                                            access += model.Option_NamePython + "  # " + model.Option_Type; // # JSON.stringify(element);
-                                        }
-                                        else
-                                        {
-                                            access += "json.loads(" + model.Option_NamePython + ") if isinstance(" +model.Option_NamePython + ", str) else " + model.Option_NamePython
-                                            required['json'] = true;
-                                        }
-                                        
-                                        if (isUpdate)
-                                        {
-                                            output_body.push("    if " + model.Option_NamePython + " is not None:");
-                                            output_body.push("    " + access);
-                                        }
-                                        else
-                                        {
-                                            output_body.push(access);
-                                        }
-                                    }
+                                    output_body.push("    body = {}");
                                 }
-                                while (model.SelectNextOption());
-                            }
-                        }
-                    }
+                                else
+                                {
+                                    // XXX-FIX-GET
+                                    //if (methods.indexOf("show") >= 0)
+                                    //{
+                                    //    model.SelectCommand("show");
+                                    //    output_body.push("    body = " + GetMethodCall(model) + ".as_dict()");
+                                    //}
+                                    //else
+                                    //{
+                                        output_body.push("    body = {}");
+                                    //}
+                                }
 
-                    let needIfStatement = !model.Method_IsLast;
-                    
-                    do
-                    {
-                        let prefix = "    ";
-                        if (needIfStatement)
-                        {
-                            let ifStatement = prefix;
-                            prefix += "    ";
-
-                            if (!model.Method_IsLast)
-                            {
-                                ifStatement += ((model.Method_IsFirst) ? "if" : "elif");
-                                
-                                if (model.SelectFirstMethodParameter())
+                                if (model.SelectFirstOption())
                                 {
                                     do
                                     {
-                                        ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
-                                        ifStatement += " " + model.MethodParamerer_MapsTo + " is not None"
+                                        let access = "    body"
+                                        if (model.Option_PathSdk.startsWith("/") && model.Option_Type != "placeholder")
+                                        {
+                                            let parts = model.Option_PathSdk.split("/");
+                                            let last: string = parts.pop();
+                                            parts.forEach(part => {
+                                                if (part != "" && part != "*")
+                                                {
+                                                    access += ".setdefault('" + part + "', {})";
+                                                }
+                                            });
+
+                                            access += "['" + last + "'] = ";
+
+                                            if (model.Option_IsList)
+                                            {
+                                                if (model.Option_Type != "dict")
+                                                {
+                                                    // a comma separated list
+                                                    access += "None if " + model.Option_NamePython + " is None else " + model.Option_NamePython;
+                                                }
+                                                else
+                                                {
+                                                    // already preprocessed by actions
+                                                    access += model.Option_NamePython
+                                                }
+                                            }
+                                            else if (model.Option_Type != "dict")
+                                            {
+                                                access += model.Option_NamePython + "  # " + model.Option_Type; // # JSON.stringify(element);
+                                            }
+                                            else
+                                            {
+                                                access += "json.loads(" + model.Option_NamePython + ") if isinstance(" +model.Option_NamePython + ", str) else " + model.Option_NamePython
+                                                required['json'] = true;
+                                            }
+                                            
+                                            if (isUpdate)
+                                            {
+                                                output_body.push("    if " + model.Option_NamePython + " is not None:");
+                                                output_body.push("    " + access);
+                                            }
+                                            else
+                                            {
+                                                output_body.push(access);
+                                            }
+                                        }
                                     }
-                                    while (model.SelectNextMethodParameter());
-                                    ifStatement += ":";
-                                    output_method_call.push(ifStatement);
+                                    while (model.SelectNextOption());
                                 }
                             }
-                            else
-                            {
-                                ifStatement == "";
-                                prefix = "    ";
-                            }
                         }
-                        // call client & return value
-                        // XXX - this is still a hack
 
-                        let methodCall = prefix + "return " + GetMethodCall(model);
-                        output_method_call.push(methodCall); 
-                    }
-                    while (model.SelectNextMethod());
-                }            
+                        let needIfStatement = !model.Method_IsLast;
+                        
+                        do
+                        {
+                            let prefix = "    ";
+                            if (needIfStatement)
+                            {
+                                let ifStatement = prefix;
+                                prefix += "    ";
 
-                output = output.concat(output_body);
-                output = output.concat(output_method_call);
+                                if (!model.Method_IsLast)
+                                {
+                                    ifStatement += ((model.Method_IsFirst) ? "if" : "elif");
+                                    
+                                    if (model.SelectFirstMethodParameter())
+                                    {
+                                        do
+                                        {
+                                            ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
+                                            ifStatement += " " + model.MethodParamerer_MapsTo + " is not None"
+                                        }
+                                        while (model.SelectNextMethodParameter());
+                                        ifStatement += ":";
+                                        output_method_call.push(ifStatement);
+                                    }
+                                }
+                                else
+                                {
+                                    ifStatement == "";
+                                    prefix = "    ";
+                                }
+                            }
+                            // call client & return value
+                            // XXX - this is still a hack
+
+                            let methodCall = prefix + "return " + GetMethodCall(model);
+                            output_method_call.push(methodCall); 
+                        }
+                        while (model.SelectNextMethod());
+                    }            
+
+                    output = output.concat(output_body);
+                    output = output.concat(output_method_call);
+                }
+                while (model.SelectNextCommand());
             }
-            while (model.SelectNextCommand());
-        }
-    } while (model.SelectNextCommandGroup());
-
+        } while (model.SelectNextCommandGroup());
+    }
+    
     return output;
 }
 
