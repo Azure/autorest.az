@@ -68,6 +68,7 @@ export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
     output.push("    install_requires=DEPENDENCIES,");
     output.push("    package_data={'azext_" + model.Extension_NameUnderscored + "': ['azext_metadata.json']},");
     output.push(")");
+    output.push("");
 
     return output;
 }
