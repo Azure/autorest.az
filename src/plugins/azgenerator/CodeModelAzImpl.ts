@@ -23,16 +23,6 @@ export class CodeModelCliImpl implements CodeModelAz
         return false;
     }
 
-    public SelectFirstCommandGroup(): boolean
-    {
-        return true;
-    }
-
-    public SelectNextCommandGroup(): boolean
-    {
-        return false;
-    }
-
     public get Extension_Name()
     {
         return "my-extension";
@@ -53,9 +43,41 @@ export class CodeModelCliImpl implements CodeModelAz
         return [];
     }
 
+    public SelectFirstCommandGroup(): boolean
+    {
+        // just enumerate through command groups in code-model-v4
+        return true;
+    }
+
+    public SelectNextCommandGroup(): boolean
+    {
+        return false;
+    }
+
     public get CommandGroup_Name(): string
     {
         return "my-extension something";
+    }
+
+    public get CommandGroup_Help(): string
+    {
+        return "Commands to manage somehting.";
+    }
+
+    public SelectFirstCommand(): boolean
+    {
+        // just enumerate through commands in command group
+        return true;
+    }
+
+    public SelectNextCommand(): boolean
+    {
+        return false;
+    }
+
+    public SelectCommand(name: string): boolean
+    {
+        return true;
     }
 
     public get Command_FunctionName()
@@ -71,11 +93,6 @@ export class CodeModelCliImpl implements CodeModelAz
     public get Command_MethodName(): string
     {
         return "show";
-    }
-
-    public get CommandGroup_Help(): string
-    {
-        return "Commands to manage somehting.";
     }
 
     public SelectFirstExample(): boolean
@@ -233,21 +250,6 @@ export class CodeModelCliImpl implements CodeModelAz
     public get Command_Help(): string
     {
         return "This command does something amazing"
-    }
-
-    public SelectFirstCommand(): boolean
-    {
-        return true;
-    }
-
-    public SelectNextCommand(): boolean
-    {
-        return false;
-    }
-
-    public SelectCommand(name: string): boolean
-    {
-        return true;
     }
 
     public GetModuleOperationName(): string
