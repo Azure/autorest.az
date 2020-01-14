@@ -11,6 +11,7 @@ export interface CodeModelAz
     Extension_Name: string;
     Extension_NameUnderscored: string;
     Extension_NameClass: string;
+    Extension_TestScenario: any;
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;

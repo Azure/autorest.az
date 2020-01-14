@@ -13,9 +13,9 @@ pipeline-model: v3
 clicommon: true
 fakesdk123: true
 pipeline:
-    az:
-        input: fakesdk
-        output-artifact: source-file-fakesdk-inaz
+    #az:
+    #    input: fakesdk
+    #    output-artifact: source-file-fakesdk-inaz
     az/aznamer:
         #plugin: fakenamer
         input: cli.common
@@ -23,18 +23,22 @@ pipeline:
     az/modifiers:
         input: az/aznamer
         output-artifact: source-file-modifiers
+    az/azgenerator:
+        input: az/modifiers
+        output-artifact: source-file-extension
     az/emitter:
         input:
-            - az
+            # - az
             - az/aznamer
             - az/modifiers
+            - az/azgenerator
         scope: scope-here
 
 scope-here:
     is-object: false
     output-artifact:
-        - source-file-fakesdk-inaz
+        # - source-file-fakesdk-inaz
         - source-file-aznamer
         - source-file-modifiers
-        
+        - source-file-extension
 ```
