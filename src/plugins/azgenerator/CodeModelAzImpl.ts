@@ -13,30 +13,18 @@ export class CodeModelCliImpl implements CodeModelAz
     codeModel: CodeModel;
     options: any;
     extensionName: string;
-    operationGroups: Array<any>;
     currentOperationGroupIndex: number;
-    currentOperationGroup: Array<any>;
-    operations: Array<any>;
-    currentOperation: string;
     currentOperationIndex: number;
     currentParameterIndex: number;
-    parameters: Array<any>;
-    currentParameters: Array<any>;
+
 
 
     async init() {
         this.options = await this.session.getValue('az');
         this.extensionName = await this.options['az-name'];
-        this.operationGroups = this.codeModel.operationGroups;
         this.currentOperationGroupIndex = 0;
-        this.currentOperationGroup = this.operationGroups[this.currentOperationGroupIndex];
-        this.operations = this.operationGroups[this.currentOperationGroupIndex].operations;
         this.currentOperationIndex = 0;
-        this.currentOperation = this.operations[this.currentOperationIndex];
         this.currentParameterIndex = 0;
-        this.parameters = this.operations[this.currentOperationIndex].request.parameters;
-        this.currentParameters = this.parameters[this.currentParameterIndex];
-        
     }
 
     public constructor(protected session: Session<CodeModel>) 
@@ -80,8 +68,7 @@ export class CodeModelCliImpl implements CodeModelAz
     public SelectFirstCommandGroup(): boolean
     {
         // just enumerate through command groups in code-model-v4
-        this.session.message({Channel:Channel.Warning, Text:"currentOperationGroupIndex: " + this.currentOperationGroupIndex});
-        if(this.operationGroups.length > 0) {
+        if(this.codeModel.operationGroups.length > 0) {
             this.currentOperationGroupIndex = 0;
             this.SelectFirstCommand();
             return true;
@@ -93,7 +80,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextCommandGroup(): boolean
     {
-        if(this.currentOperationGroupIndex < this.operationGroups.length - 1) {
+        if(this.currentOperationGroupIndex < this.codeModel.operationGroups.length - 1) {
             this.currentOperationGroupIndex++;
             this.SelectFirstCommand();
             return true;
@@ -105,7 +92,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get CommandGroup_Name(): string
     {
-        return this.currentOperationGroup['$keys'];
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex]['$keys'];
     }
 
     public get CommandGroup_Help(): string
@@ -116,7 +103,7 @@ export class CodeModelCliImpl implements CodeModelAz
     public SelectFirstCommand(): boolean
     {
         // just enumerate through commands in command group
-        if(this.operations.length > 0) {
+        if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length > 0) {
             this.currentOperationIndex = 0;
             this.SelectFirstOption();
             return true;
@@ -128,7 +115,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextCommand(): boolean
     {
-        if(this.currentOperationIndex < this.currentOperation.length - 1) {
+        if(this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length - 1) {
             this.currentOperationIndex++;
             this.SelectFirstOption();
             return true;
@@ -150,7 +137,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_Name(): string
     {
-        this.session.message({Channel:Channel.Warning, Text:"currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex});
+        this.session.message({Channel:Channel.Warning, Text:"currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex + " currentParameterIndex: " + this.currentParameterIndex});
         //+ " operationGroup: " + this.session.model.operationGroups[thi]
         return this.session.model.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command;
     }
@@ -189,7 +176,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectFirstOption(): boolean
     {
-        if(this.parameters.length > 0) {
+        if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length > 0) {
             this.currentParameterIndex = 0;
             return true;
         } else {
@@ -200,7 +187,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextOption(): boolean
     {
-        if(this.currentParameterIndex < this.parameters.length - 1) {
+        if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
             return true;
         } else {
@@ -226,12 +213,12 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_Name(): string
     {
-        return this.parameters[this.currentParameterIndex].language['az'].name;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
     }
 
     public get Option_NameUnderscored(): string
     {
-        return this.parameters[this.currentParameterIndex].language['az'].name.replace(/-/g, "_");
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name.replace(/-/g, "_");
     }
 
     public get Option_NamePython(): string
@@ -241,12 +228,12 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_IsRequired(): boolean
     {
-        return this.parameters[this.currentParameterIndex].required;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].required;
     }
 
     public get Option_Description(): string
     {
-        return this.parameters[this.currentParameterIndex].language['az'].description;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].description;
     }
 
     public get Option_PathSdk(): string
@@ -261,19 +248,20 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_Type(): string
     {
-        return typeof this.parameters[this.currentParameterIndex];
+        return typeof this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
     }
 
     public get Option_IsList(): boolean
     {
-        return this.parameters[this.currentParameterIndex] instanceof Array? true: null;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex] instanceof Array? true: null;
     }
 
     public get Option_EnumValues(): string[]
     {
-        if(this.parameters[this.currentParameterIndex].type == "sealed-choice") {
+        if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type == "sealed-choice") {
             var enumArray = [];
-            for(var item in this.parameters[this.currentParameterIndex].choices) {
+            let schema = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema;
+            for(var item in schema['choices']) {
                 enumArray.push(item);
             }
             return enumArray;
@@ -304,7 +292,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Method_Name(): string
     {
-       return  this.operations[this.currentOperationIndex].language['az'].name;
+       return  this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
     }
 
     public get Method_BodyParameterName(): string
@@ -314,7 +302,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectFirstMethodParameter(): boolean
     {
-        if(this.parameters.length > 0) {
+        if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length > 0) {
             this.currentParameterIndex = 0;
             return true;
         } else {
@@ -324,7 +312,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextMethodParameter(): boolean
     {
-        if(this.parameters.length > this.currentParameterIndex + 1) {
+        if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
             return true;
         } else {
@@ -334,7 +322,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get MethodParameter_Name(): string
     {
-        return this.parameters[this.currentParameterIndex].language['az'].name;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
     }
 
     public get MethodParamerer_MapsTo(): string
