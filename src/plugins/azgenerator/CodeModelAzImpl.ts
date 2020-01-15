@@ -83,6 +83,7 @@ export class CodeModelCliImpl implements CodeModelAz
         this.session.message({Channel:Channel.Warning, Text:"currentOperationGroupIndex: " + this.currentOperationGroupIndex});
         if(this.operationGroups.length > 0) {
             this.currentOperationGroupIndex = 0;
+            this.SelectFirstCommand();
             return true;
         } else {
             this.currentOperationGroupIndex = -1;
@@ -94,8 +95,7 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentOperationGroupIndex < this.operationGroups.length - 1) {
             this.currentOperationGroupIndex++;
-            this.currentOperationIndex = -1;
-            this.currentParameterIndex = -1;
+            this.SelectFirstCommand();
             return true;
         } else {
             this.currentOperationGroupIndex = -1;
@@ -118,7 +118,7 @@ export class CodeModelCliImpl implements CodeModelAz
         // just enumerate through commands in command group
         if(this.operations.length > 0) {
             this.currentOperationIndex = 0;
-            this.currentParameterIndex = -1;
+            this.SelectFirstOption();
             return true;
         } else {
             this.currentOperationIndex = -1;
@@ -130,7 +130,7 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentOperationIndex < this.currentOperation.length - 1) {
             this.currentOperationIndex++;
-            this.currentParameterIndex = -1;
+            this.SelectFirstOption();
             return true;
         } else {
             this.currentOperationIndex = -1;
@@ -192,8 +192,6 @@ export class CodeModelCliImpl implements CodeModelAz
         if(this.parameters.length > 0) {
             this.currentParameterIndex = 0;
             return true;
-        /*} else if(this.currentParameterIndex == 0){
-            return true;*/
         } else {
             this.currentParameterIndex = -1;
             return false;
