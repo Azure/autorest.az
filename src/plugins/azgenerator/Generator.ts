@@ -18,11 +18,14 @@ import { GenerateAzureCliReadme } from "./TemplateAzureCliReadme"
 import { GenerateAzureCliSetupCfg } from "./TemplateAzureCliSetupCfg"
 import { GenerateAzureCliSetupPy } from "./TemplateAzureCliSetupPy"
 import { CodeModelAz } from "./CodeModelAz";
+import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 
-export function GenerateAll(model: CodeModelAz,
-    generateReport: any): any
-{
+export async function GenerateAll(model: CodeModelAz,
+    generateReport: any) {
     let files: any = {};
+
+    await model.init();
+
 
     if (model.SelectFirstExtension())
     {

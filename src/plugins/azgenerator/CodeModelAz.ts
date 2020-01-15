@@ -5,6 +5,7 @@
 
 export interface CodeModelAz
 {
+    init(): any;
     SelectFirstExtension(): boolean;
     SelectNextExtension(): boolean;
 
