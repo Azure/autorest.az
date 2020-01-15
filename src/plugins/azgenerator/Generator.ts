@@ -55,11 +55,11 @@ export async function GenerateAll(model: CodeModelAz,
             files[pathTop + "setup.cfg"] = GenerateAzureCliSetupCfg(model);
             files[pathTop + "setup.py"] = GenerateAzureCliSetupPy(model);  
 
-            if (generateReport)
-            {
-                model.SelectFirstExtension();
-                files[pathTop + "report.md"] = GenerateAzureCliReport(model);
-            }
+            //if (generateReport)
+            //{
+            //    model.SelectFirstExtension();
+            //    files[pathTop + "report.md"] = GenerateAzureCliReport(model);
+            //}
         }
         while (model.SelectNextExtension())
     }

@@ -7,6 +7,7 @@ import { CodeModelAz } from "./CodeModelAz";
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
+import { ToSnakeCase } from '../../utils/helper';
 
 export class CodeModelCliImpl implements CodeModelAz
 {
@@ -22,9 +23,9 @@ export class CodeModelCliImpl implements CodeModelAz
     async init() {
         this.options = await this.session.getValue('az');
         this.extensionName = await this.options['az-name'];
-        this.currentOperationGroupIndex = 0;
-        this.currentOperationIndex = 0;
-        this.currentParameterIndex = 0;
+        this.currentOperationGroupIndex = -1;
+        this.currentOperationIndex = -1;
+        this.currentParameterIndex = -1;
     }
 
     public constructor(protected session: Session<CodeModel>) 
@@ -132,13 +133,13 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_FunctionName()
     {
-        return  this.Command_MethodName.toLowerCase + "_" + this.Command_Name.replace(/ /g, "_");
+        return  this.Command_MethodName.toLowerCase() + "_" + this.Command_Name.replace(/ /g, "_");
     }
 
     public get Command_Name(): string
     {
-        this.session.message({Channel:Channel.Warning, Text:"currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex + " currentParameterIndex: " + this.currentParameterIndex});
-        //+ " operationGroup: " + this.session.model.operationGroups[thi]
+        //this.session.message({Channel:Channel.Warning, Text:"currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex + " currentParameterIndex: " + this.currentParameterIndex});
+        //this.session.message({Channel:Channel.Warning, Text:" operationGroup: " + this.session.model.operationGroups[this.currentOperationGroupIndex].$key});
         return this.session.model.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command;
     }
 
@@ -322,7 +323,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get MethodParameter_Name(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
+        return ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name);
     }
 
     public get MethodParamerer_MapsTo(): string
@@ -337,12 +338,12 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public GetModuleOperationName(): string
     {
-        return "OperationName";
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
     }
 
     public GetModuleOperationNameUpper(): string
     {
-        return "operation_name";
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
     }
 
     public GetPythonNamespace(): string
@@ -358,6 +359,7 @@ export class CodeModelCliImpl implements CodeModelAz
     public get PythonOperationsName(): string
     {
         return "whatever";
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
     }
 
     public FindExampleById(id: string): string[]
