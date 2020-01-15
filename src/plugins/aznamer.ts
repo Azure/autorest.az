@@ -60,7 +60,7 @@ export async function processRequest(host: Host) {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         const plugin = await new AzNamer(session);
         const result = await plugin.process();
-        host.WriteFile('aznamer-temp-output', serialize(result));
+        host.WriteFile('aznamer-temp-output.yaml', serialize(result));
     } catch (E) {
         if (debug) {
             console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
