@@ -18,8 +18,8 @@ export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
         do
         {
             var mo: string[] = [];
-            mo.push("## " + model.Command_Name);
-            mo.push("");
+            /*mo.push("## " + model.Command_Name);
+            mo.push("");*/
 
             if (model.SelectFirstCommand())
             {
@@ -83,12 +83,11 @@ export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
                             mo.push("```");
                         } while (model.SelectNextExample());
                     }
-                                
+                    cmds[model.Command_Name] = mo;        
                 }
                 while (model.SelectNextCommand());
             }
-
-            cmds[model.Command_Name] = mo;
+            
         } while (model.SelectNextCommandGroup());;
     }
     // build sorted output
