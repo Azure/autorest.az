@@ -17,6 +17,7 @@ export class CodeModelCliImpl implements CodeModelAz
     currentOperationGroupIndex: number;
     currentOperationIndex: number;
     currentParameterIndex: number;
+    currentExampleIndex: number;
 
 
 
@@ -26,6 +27,7 @@ export class CodeModelCliImpl implements CodeModelAz
         this.currentOperationGroupIndex = -1;
         this.currentOperationIndex = -1;
         this.currentParameterIndex = -1;
+        this.currentExampleIndex = -1;
     }
 
     public constructor(protected session: Session<CodeModel>) 
@@ -93,12 +95,12 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get CommandGroup_Name(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex]['$keys'];
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].$key;
     }
 
     public get CommandGroup_Help(): string
     {
-        return "Commands to manage somehting.";
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command;
     }
 
     public SelectFirstCommand(): boolean
@@ -107,6 +109,7 @@ export class CodeModelCliImpl implements CodeModelAz
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length > 0) {
             this.currentOperationIndex = 0;
             this.SelectFirstOption();
+            this.SelectFirstMethodParameter();
             return true;
         } else {
             this.currentOperationIndex = -1;
@@ -119,6 +122,7 @@ export class CodeModelCliImpl implements CodeModelAz
         if(this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length - 1) {
             this.currentOperationIndex++;
             this.SelectFirstOption();
+            this.SelectFirstMethodParameter();
             return true;
         } else {
             this.currentOperationIndex = -1;
@@ -133,7 +137,8 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_FunctionName()
     {
-        return  this.Command_MethodName.toLowerCase() + "_" + this.Command_Name.replace(/ /g, "_");
+        //return  this.Command_MethodName.toLowerCase() + "_" + this.Command_Name.replace(/ /g, "_");
+        return this.Command_Name.replace(/ /g, "_");
     }
 
     public get Command_Name(): string
@@ -150,29 +155,45 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectFirstExample(): boolean
     {
-        return true;
+        //this.session.message({Channel:Channel.Warning, Text:serialize(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'])});
+        let example = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'];
+        if(example && example.length > 0) {
+            this.currentExampleIndex = 0;
+            return true;
+        } else {
+            this.currentExampleIndex = -1;
+            return false;
+        }
+        
     }
 
     public SelectNextExample(): boolean
     {
-        return false;
+        let example = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'];
+        if(example && this.currentExampleIndex < example.length - 1) {
+            this.currentExampleIndex++;
+            return true;
+        } else {
+            this.currentExampleIndex = -1;
+            return false;
+        }
     }
 
     public get Example_Body(): string[]
     {
         // TBD
-        return null;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].key();
     }
 
     public get Example_Params(): any
     {
         // TBD
-        return {};
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().parameters;
     }
 
     public get Example_Title(): string
     {
-        return "Create something";
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().title;
     }
 
     public SelectFirstOption(): boolean
@@ -199,7 +220,10 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public HasSubOptions(): boolean
     {
-        return false;
+        /*if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type == "object") {
+            return true;
+        }*/
+        return false;       
     }
 
     public EnterSubOptions(): boolean
@@ -224,7 +248,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_NamePython(): string
     {
-        return "python_sdk_name";
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
     }
 
     public get Option_IsRequired(): boolean
@@ -249,12 +273,12 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_Type(): string
     {
-        return typeof this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type;
     }
 
     public get Option_IsList(): boolean
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex] instanceof Array? true: null;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type == "array"? true: false;
     }
 
     public get Option_EnumValues(): string[]
@@ -333,17 +357,17 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_Help(): string
     {
-        return "This command does something amazing"
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].description;
     }
 
     public GetModuleOperationName(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
+        return ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].name);
     }
 
     public GetModuleOperationNameUpper(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].name;
     }
 
     public GetPythonNamespace(): string
@@ -358,8 +382,8 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get PythonOperationsName(): string
     {
-        return "whatever";
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
+        //return this.options['namespace'].split('.').pop();
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].name;
     }
 
     public FindExampleById(id: string): string[]

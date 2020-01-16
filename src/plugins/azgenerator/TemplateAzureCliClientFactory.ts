@@ -7,7 +7,7 @@ import { CodeModelAz } from "./CodeModelAz"
 
 export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
     var output: string[] = [];
-
+    model.SelectFirstCommandGroup();
     output.push("# --------------------------------------------------------------------------------------------");
     output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
     output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
