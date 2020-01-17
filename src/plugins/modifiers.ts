@@ -106,7 +106,7 @@ function hasSpecialChars(str: string): boolean {
     return !/^[a-zA-Z0-9]+$/.test(str);
 }
 
-class Modifiers {
+export class Modifiers {
     codeModel: CodeModel;
 
     constructor(protected session: Session<CodeModel>) {
@@ -191,7 +191,7 @@ export async function processRequest(host: Host) {
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        const plugin = await new Modifiers(session);
+        const plugin = new Modifiers(session);
         const result = await plugin.process();
         host.WriteFile("modifiers-temp-output.yaml", serialize(result));
     } catch (E) {

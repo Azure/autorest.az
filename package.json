@@ -43,6 +43,7 @@
     "@azure-tools/codemodel": "~3.0.0",
     "@azure-tools/linq": "^3.1.212",
     "js-yaml": "^3.13.1",
+    "mocha-typescript": "^1.1.17",
     "node-yaml": "^3.2.0"
   },
   "files": [

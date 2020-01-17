@@ -4,7 +4,7 @@ import { serialize, deserialize } from '@azure-tools/codegen';
 import { values, items, length, Dictionary } from '@azure-tools/linq';
 import { changeCamelToDash } from '../utils/helper';
 
-class AzNamer {
+export class AzNamer {
     codeModel: CodeModel;
 
     constructor(protected session: Session<CodeModel>) {
