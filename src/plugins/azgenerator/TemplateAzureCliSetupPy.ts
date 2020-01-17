@@ -56,7 +56,7 @@ export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
     output.push("    name='" + model.Extension_NameUnderscored + "',");
     output.push("    version=VERSION,");
     output.push("    description='Microsoft Azure Command-Line Tools " + model.Extension_NameClass + " Extension',");
-    output.push("   # TODO: Update author and email, if applicable");
+    output.push("    # TODO: Update author and email, if applicable");
     output.push("    author='Microsoft Corporation',");
     output.push("    author_email='azpycli@microsoft.com',");
     output.push("    # TODO: consider pointing directly to your source code instead of the generic repo");
