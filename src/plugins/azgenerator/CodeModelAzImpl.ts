@@ -35,6 +35,36 @@ export class CodeModelCliImpl implements CodeModelAz
         this.codeModel = session.model;
     }
 
+    //-----------------------------------------------------------------------------------------------------------------
+    // Extension level information
+    // autorest.az will have support for multiple extensions from single swagger file.
+    // Following formats in readme.az.md shall be supported:
+    //
+    // For single extension:
+    //
+    //  az:
+    //    extensions: <extension-name>
+    //
+    // Multiple extensions:
+    //
+    //  az:
+    //    extensions:
+    //      - <extension-name-1>
+    //      - <extension-name-2>
+    //
+    // Multiple extensions with additional parameters:
+    //
+    //  az:
+    //    extensions:
+    //      - name: <extension-name-1>
+    //        something-else: value
+    //      - name: <extension-name-2>
+    //        something-else: value
+    //
+    // Initially single extension without additional parameters should be supported, however all formats should
+    // be handled correctly.
+    //
+    //-----------------------------------------------------------------------------------------------------------------
 
     public SelectFirstExtension(): boolean
     {
@@ -48,8 +78,7 @@ export class CodeModelCliImpl implements CodeModelAz
     }
 
     public get Extension_Name()
-    {
-       
+    { 
         return this.extensionName;
     }
 
@@ -67,6 +96,15 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         return [];
     }
+
+    //-----------------------------------------------------------------------------------------------------------------
+    // Command Groups
+    //
+    // This interface provides enumeration of command groups assigned to currently selected extension.
+    // Currently all the command groups should be assigned to default extension (first one on the list).
+    // Users will be able to assign command groups to specific extension via readme.az.md file.
+    // Specification will be updated accordingly.
+    //-----------------------------------------------------------------------------------------------------------------
 
     public SelectFirstCommandGroup(): boolean
     {
@@ -102,6 +140,23 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command;
     }
+
+    //-----------------------------------------------------------------------------------------------------------------
+    // Commands
+    //
+    // This interface provides enumeration of commands in selected command group.
+    // Note that it doesn't map directly into operations from code-model-v4
+    // Azure CLI usually provides following commands to operate on single resource:
+    //  (1) "az <resource> create"
+    //  (2) "az <resource> update"
+    //  (3) "az <resource> show"
+    //  (4) "az <resource> list"
+    //  (5) "az <resource> delete"
+    //  (6) "az <resource> any-other-specific operation"
+    // In all the cases except of (4) mapping of command to operation in code-model-v4 is one to one.
+    // In case (4) several operations shall be grouped into a single command called "list", for instance:
+    // "list", "list-by-resource-group", "list-by-something"
+    //-----------------------------------------------------------------------------------------------------------------
 
     public SelectFirstCommand(): boolean
     {
