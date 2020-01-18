@@ -307,6 +307,19 @@ export class CodeModelCliImpl implements CodeModelAz
         }
     }
 
+    //-----------------------------------------------------------------------------------------------------------------
+    // Methods / Operations associated with the command.
+    //
+    // Usually there will be one to one relationship between command and method.
+    // However in one case described above ("az <operation> list"), several methods may be assigned with single
+    // command, for instance "list", "list-by-resource-group", "list-by-someting-else".
+    // In case of "list" command all the GET operations associated with the resource should be enumerated here,
+    // except of GET operation that returns particular instance of a resource and is associated to "show" command.
+    //
+    // There is also additional requirement for sort order of returned methods. They should be sorted by number
+    // of arguments. Those with more arguments should be listed first. 
+    //-----------------------------------------------------------------------------------------------------------------
+
     public SelectFirstMethod(): boolean
     {
         return true;
@@ -337,6 +350,11 @@ export class CodeModelCliImpl implements CodeModelAz
         return null;
     }
 
+    //-----------------------------------------------------------------------------------------------------------------
+    // Methods Parameters.
+    //
+    // This interface is designed to enumerate all parameters of the selected method and their mapping to Python SDK.
+    //-----------------------------------------------------------------------------------------------------------------
     public SelectFirstMethodParameter(): boolean
     {
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length > 0) {
@@ -367,6 +385,13 @@ export class CodeModelCliImpl implements CodeModelAz
         return "param";
     }
 
+    //-----------------------------------------------------------------------------------------------------------------
+    // Top Level Python Related Information
+    //
+    // Most of the information included here should be either produced by Python namer, or come from readme.az.md file.
+    // Detailed descriptions below.
+    //-----------------------------------------------------------------------------------------------------------------
+
     public GetModuleOperationName(): string
     {
         return ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].name);
@@ -393,10 +418,12 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].name;
     }
 
-    public FindExampleById(id: string): string[]
-    {
-        return [];
-    }
+    //-----------------------------------------------------------------------------------------------------------------
+    // Example / Test Scenario related interface.
+    //
+    // This interface enumerates examples related to currently selected command.
+    // It should be implemented when example processor implementation is in place.
+    //-----------------------------------------------------------------------------------------------------------------
 
     public SelectFirstExample(): boolean
     {
@@ -427,6 +454,11 @@ export class CodeModelCliImpl implements CodeModelAz
         }
     }
 
+    public get Example_Title(): string
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().title;
+    }
+
     public get Example_Body(): string[]
     {
         // TBD
@@ -439,8 +471,8 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().parameters;
     }
 
-    public get Example_Title(): string
+    public FindExampleById(id: string): string[]
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().title;
+        return [];
     }
 }
