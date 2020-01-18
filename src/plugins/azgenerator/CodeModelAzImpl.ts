@@ -155,6 +155,9 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectFirstExample(): boolean
     {
+        if (this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions == undefined)
+            return false;
+
         //this.session.message({Channel:Channel.Warning, Text:serialize(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'])});
         let example = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'];
         if(example && example.length > 0) {
