@@ -130,11 +130,6 @@ export class CodeModelCliImpl implements CodeModelAz
         }
     }
 
-    public SelectCommand(name: string): boolean
-    {
-        return true;
-    }
-
     public get Command_FunctionName()
     {
         //return  this.Command_MethodName.toLowerCase() + "_" + this.Command_Name.replace(/ /g, "_");
@@ -153,50 +148,9 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.session.model.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
     }
 
-    public SelectFirstExample(): boolean
+    public get Command_Help(): string
     {
-        if (this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions == undefined)
-            return false;
-
-        //this.session.message({Channel:Channel.Warning, Text:serialize(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'])});
-        let example = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'];
-        if(example && example.length > 0) {
-            this.currentExampleIndex = 0;
-            return true;
-        } else {
-            this.currentExampleIndex = -1;
-            return false;
-        }
-        
-    }
-
-    public SelectNextExample(): boolean
-    {
-        let example = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'];
-        if(example && this.currentExampleIndex < example.length - 1) {
-            this.currentExampleIndex++;
-            return true;
-        } else {
-            this.currentExampleIndex = -1;
-            return false;
-        }
-    }
-
-    public get Example_Body(): string[]
-    {
-        // TBD
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].key();
-    }
-
-    public get Example_Params(): any
-    {
-        // TBD
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().parameters;
-    }
-
-    public get Example_Title(): string
-    {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().title;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].description;
     }
 
     public SelectFirstOption(): boolean
@@ -358,11 +312,6 @@ export class CodeModelCliImpl implements CodeModelAz
         return "param";
     }
 
-    public get Command_Help(): string
-    {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].description;
-    }
-
     public GetModuleOperationName(): string
     {
         return ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].name);
@@ -392,5 +341,51 @@ export class CodeModelCliImpl implements CodeModelAz
     public FindExampleById(id: string): string[]
     {
         return [];
+    }
+
+    public SelectFirstExample(): boolean
+    {
+        if (this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions == undefined)
+            return false;
+
+        //this.session.message({Channel:Channel.Warning, Text:serialize(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'])});
+        let example = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'];
+        if(example && example.length > 0) {
+            this.currentExampleIndex = 0;
+            return true;
+        } else {
+            this.currentExampleIndex = -1;
+            return false;
+        }
+        
+    }
+
+    public SelectNextExample(): boolean
+    {
+        let example = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'];
+        if(example && this.currentExampleIndex < example.length - 1) {
+            this.currentExampleIndex++;
+            return true;
+        } else {
+            this.currentExampleIndex = -1;
+            return false;
+        }
+    }
+
+    public get Example_Body(): string[]
+    {
+        // TBD
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].key();
+    }
+
+    public get Example_Params(): any
+    {
+        // TBD
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().parameters;
+    }
+
+    public get Example_Title(): string
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().title;
     }
 }
