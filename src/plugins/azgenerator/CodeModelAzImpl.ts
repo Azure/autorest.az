@@ -147,12 +147,22 @@ export class CodeModelCliImpl implements CodeModelAz
     // This interface provides enumeration of commands in selected command group.
     // Note that it doesn't map directly into operations from code-model-v4
     // Azure CLI usually provides following commands to operate on single resource:
-    //  (1) "az <resource> create"
-    //  (2) "az <resource> update"
-    //  (3) "az <resource> show"
-    //  (4) "az <resource> list"
-    //  (5) "az <resource> delete"
-    //  (6) "az <resource> any-other-specific operation"
+    //  (1) "az <resource> create"                          -> PUT
+    //  (2) "az <resource> update"                          -> PUT or PATCH
+    //  (3) "az <resource> show"                            -> GET
+    //  (4) "az <resource> list"                            -> GET
+    //  (5) "az <resource> delete"                          -> DELETE
+    //  (6) "az <resource> any-other-specific operation"    -> POST or GET
+    //
+    // NOTE: It would be nice if the implementation enumerates commands in the sequence as above.
+    //
+    // Commands (1) - (5) represent basic CRUD operations and "create" / "update" / "show" / "list" / "delete" follow
+    // standard naming conventions in Azure CLI
+    //
+    // Commands (6) are custom and operation name should be used to generate command name.
+    // Note that some GET operations may be also custom operations (not "list").
+    // This can be recognised by URL - it will be longer than "base" PUT URL.
+    //
     // In all the cases except of (4) mapping of command to operation in code-model-v4 is one to one.
     // In case (4) several operations shall be grouped into a single command called "list", for instance:
     // "list", "list-by-resource-group", "list-by-something"
