@@ -12,11 +12,8 @@ export class AzNamer {
     }
 
 
-    async process() {
+    async process(extensionName: string) {
 
-        let azSettings = await this.session.getValue('az');
-        let extensionName = azSettings['az-name'];
-        //console.error(extensionName);
         this.session.message({Channel:Channel.Debug, Text:"in aznamer process"});
 
         for (const operationGroup of values(this.codeModel.operationGroups)) {
@@ -56,10 +53,13 @@ export class AzNamer {
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
     host.Message({Channel:Channel.Warning, Text:"in aznamer processRequest"});
+    let azSettings = await this.session.getValue('az');
+    let extensionName = azSettings['az-name'];
+    //console.error(extensionName);
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         const plugin = await new AzNamer(session);
-        const result = await plugin.process();
+        const result = await plugin.process(extensionName);
         host.WriteFile('aznamer-temp-output.yaml', serialize(result));
     } catch (E) {
         if (debug) {

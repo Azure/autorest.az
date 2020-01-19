@@ -26,7 +26,8 @@ const resources = `${__dirname}/../../test/resources/process`;
         const modeler = new AzNamer(session);
 
         // go!
-        const codeModel = await modeler.process();
+        const extensionName = "attestation";
+        const codeModel = await modeler.process(extensionName);
 
         // console.log(serialize(codeModel))
         const yaml = serialize(codeModel, codeModelSchema);
