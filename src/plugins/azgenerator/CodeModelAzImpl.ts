@@ -23,7 +23,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     async init() {
         this.options = await this.session.getValue('az');
-        this.extensionName = await this.options['az-name'];
+        this.extensionName = await this.options['extensions'];
         this.currentOperationGroupIndex = -1;
         this.currentOperationIndex = -1;
         this.currentParameterIndex = -1;
@@ -133,7 +133,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get CommandGroup_Name(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].$key;
+        return this.extensionName + " " + ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].$key);
     }
 
     public get CommandGroup_Help(): string
@@ -240,6 +240,15 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length > 0) {
             this.currentParameterIndex = 0;
+            //this.session.message({Channel:Channel.Warning, Text: "operationGroupIndex: " + this.currentOperationGroupIndex + " operationIndex: "+ this.currentOperationIndex +" parameterIndex: " + this.currentParameterIndex})
+            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
+            if(currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+                if(this.SelectNextOption()) {
+                    return true;
+                } else {
+                    return false;
+                };
+            }
             return true;
         } else {
             this.currentParameterIndex = -1;
@@ -251,6 +260,14 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
+            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
+            if(currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+                if(this.SelectNextOption()) {
+                    return true;
+                } else {
+                    return false;
+                };
+            }
             return true;
         } else {
             this.currentParameterIndex = -1;

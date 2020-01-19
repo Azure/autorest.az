@@ -4,18 +4,35 @@ import { serialize, deserialize } from '@azure-tools/codegen';
 import { values, items, length, Dictionary } from '@azure-tools/linq';
 import { changeCamelToDash } from '../utils/helper';
 
-class AzNamer {
+export class AzNamer {
     codeModel: CodeModel;
 
     constructor(protected session: Session<CodeModel>) {
         this.codeModel = session.model;
     }
 
+    public methodMap(operationNameOri: string, httpProtocol: string) {
+        let operationName = operationNameOri.toLowerCase();
+        httpProtocol = httpProtocol.toLowerCase();
+
+        if(operationName.startsWith("create") && httpProtocol == "put") {
+            return "create";
+        } else if(operationName.startsWith("update") && (httpProtocol == "put" || httpProtocol == "patch")) {
+            return "update";
+        } else if(operationName.startsWith("get") && httpProtocol == "get") {
+            return "show";
+        } else if(operationName.startsWith("list") && httpProtocol == "get") {
+            return "list";
+        } else if(operationName.startsWith("delete") && httpProtocol == "delete") {
+            return "delete";
+        }
+        return operationNameOri;
+    }
 
     async process() {
 
         let azSettings = await this.session.getValue('az');
-        let extensionName = azSettings['az-name'];
+        let extensionName = azSettings['extensions'];
         //console.error(extensionName);
         this.session.message({Channel:Channel.Debug, Text:"in aznamer process"});
 
@@ -34,7 +51,7 @@ class AzNamer {
                 let operationName = "";
                 if(operation.language['cli'] != undefined) {
                     operation.language['az'] = {};
-                    operation.language['az']['name'] = operation.language['cli']['name'];
+                    operation.language['az']['name'] = this.methodMap(operation.language['cli']['name'], operation.request.protocol.http.method);
                     operation.language['az']['description'] = operation.language['cli']['description'];
                     operationName = operationGroupName + " " +  changeCamelToDash(operation.language['az']['name']);
                     operation.language['az']['command'] = operationName;

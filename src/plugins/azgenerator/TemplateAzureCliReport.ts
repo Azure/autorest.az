@@ -34,7 +34,9 @@ export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
                     mo.push("|------|----|-----------|----------|--------------|");
 
 
-                    model.SelectFirstOption();
+                    if(!model.SelectFirstOption()) {
+                        continue;
+                    }
 
                     // first parameters that are required
                     do
@@ -46,7 +48,9 @@ export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
                     }
                     while (model.SelectNextOption());
 
-                    model.SelectFirstOption();
+                    if(!model.SelectFirstOption()) {
+                        continue;
+                    }
 
                     // following by required parameters
                     do {
