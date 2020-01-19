@@ -1,0 +1,369 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "custom-baseUrl-more-options",
+  "description": "Test Infrastructure for AutoRest",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/customuri/{subscriptionId}/{keyName}",
+    "originalLocations": [
+     "http://localhost:3000/__files/custom-baseUrl-more-options.json#/paths/~1customuri~1{subscriptionId}~1{keyName}"
+    ]
+   }
+  },
+  "path:0.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/customuri/{subscriptionId}/{keyName}",
+    "originalLocations": [
+     "http://localhost:3000/__files/custom-baseUrl-more-options.json#/paths/~1customuri~1{subscriptionId}~1{keyName}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "{vault}{secret}{dnsSuffix}",
+      "variables": {
+       "vault": {
+        "x-name": "vault",
+        "description": "The vault name, e.g. https://myvault",
+        "x-required": true,
+        "x-type": "string",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "default": ""
+       },
+       "secret": {
+        "x-name": "secret",
+        "description": "Secret value.",
+        "x-required": true,
+        "x-type": "string",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "default": ""
+       },
+       "dnsSuffix": {
+        "x-name": "dnsSuffix",
+        "description": "A string value that is used as a global part of the parameterized host. Default value 'host'.",
+        "x-type": "string",
+        "x-required": true,
+        "default": "host",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "x-ms-parameter-location": "client",
+        "x-ms-original": {
+         "$ref": "#/components/parameters/parameters:3"
+        }
+       }
+      }
+     }
+    ],
+    "operationId": "paths_getEmpty",
+    "description": "Get a 200 to test a valid base uri",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:0",
+      "description": "The key name with value 'key1'."
+     },
+     {
+      "$ref": "#/components/parameters/parameters:2"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:1",
+      "description": "The key version. Default value 'v1'."
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received a 200 response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "parameters:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·customuri-subscriptionid-keyname·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/parameters/paths·customuri-subscriptionid-keyname·get·parameters·0"
+     ]
+    },
+    "name": "keyName",
+    "in": "path",
+    "description": "The key name with value 'key1'.",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·customuri-subscriptionid-keyname·get·parameters·2",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/parameters/paths·customuri-subscriptionid-keyname·get·parameters·2"
+     ]
+    },
+    "name": "keyVersion",
+    "in": "query",
+    "description": "The key version. Default value 'v1'.",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:1"
+    },
+    "required": false,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "SubscriptionIdParameter",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/parameters/SubscriptionIdParameter"
+     ]
+    },
+    "name": "subscriptionId",
+    "in": "path",
+    "description": "The subscription id with value 'test12'.",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true
+   },
+   "parameters:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "dnsSuffix",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/parameters/dnsSuffix"
+     ]
+    },
+    "name": "dnsSuffix",
+    "in": "path",
+    "description": "A string value that is used as a global part of the parameterized host. Default value 'host'.",
+    "x-ms-parameter-location": "client",
+    "x-ms-skip-url-encoding": true,
+    "schema": {
+     "$ref": "#/components/schemas/schemas:3"
+    },
+    "required": true
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·customuri-subscriptionid-keyname·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/schemas/paths·customuri-subscriptionid-keyname·get·parameters·0·schema",
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/schemas/components·parameters·subscriptionidparameter·schema"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·customuri-subscriptionid-keyname·get·parameters·2·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/schemas/paths·customuri-subscriptionid-keyname·get·parameters·2·schema"
+     ]
+    },
+    "default": "v1",
+    "type": "string"
+   },
+   "schemas:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "components·parameters·dnssuffix·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/schemas/components·parameters·dnssuffix·schema"
+     ]
+    },
+    "default": "host",
+    "type": "string"
+   },
+   "schemas:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:5"
+     }
+    }
+   },
+   "schemas:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   }
+  },
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·customuri-subscriptionid-keyname·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/responses/paths·customuri-subscriptionid-keyname·get·responses·200"
+     ]
+    },
+    "description": "Successfully received a 200 response"
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·customuri-subscriptionid-keyname·get·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/responses/paths·customuri-subscriptionid-keyname·get·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:4"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "{vault}{secret}{dnsSuffix}",
+   "variables": {
+    "vault": {
+     "x-name": "vault",
+     "description": "The vault name, e.g. https://myvault",
+     "x-required": true,
+     "x-type": "string",
+     "x-in": "path",
+     "x-ms-skip-url-encoding": true,
+     "default": ""
+    },
+    "secret": {
+     "x-name": "secret",
+     "description": "Secret value.",
+     "x-required": true,
+     "x-type": "string",
+     "x-in": "path",
+     "x-ms-skip-url-encoding": true,
+     "default": ""
+    },
+    "dnsSuffix": {
+     "x-name": "dnsSuffix",
+     "description": "A string value that is used as a global part of the parameterized host. Default value 'host'.",
+     "x-type": "string",
+     "x-required": true,
+     "default": "host",
+     "x-in": "path",
+     "x-ms-skip-url-encoding": true,
+     "x-ms-parameter-location": "client",
+     "x-ms-original": {
+      "$ref": "#/components/parameters/parameters:3"
+     }
+    }
+   }
+  }
+ ]
+}

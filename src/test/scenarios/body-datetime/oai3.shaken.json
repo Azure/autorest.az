@@ -1,0 +1,944 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest DateTime Test Service",
+  "description": "Test Infrastructure for AutoRest",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/datetime/null": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getNull",
+    "description": "Get null datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-null·get·responses·200",
+      "description": "The null datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-null·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/invalid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getInvalid",
+    "description": "Get invalid datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-invalid·get·responses·200",
+      "description": "The invalid datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-invalid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/overflow": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getOverflow",
+    "description": "Get overflow datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-overflow·get·responses·200",
+      "description": "The overflow datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-overflow·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/underflow": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getUnderflow",
+    "description": "Get underflow datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-underflow·get·responses·200",
+      "description": "The underflow datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-underflow·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/max/utc": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putUtcMaxDateTime",
+    "description": "Put max datetime value 9999-12-31T23:59:59.9999999Z",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·datetime-max-utc·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-max-utc·put·responses·200",
+      "description": "The max datetime value 9999-12-31T23:59:59.9999999Z"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-max-utc·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/max/utc/lowercase": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getUtcLowercaseMaxDateTime",
+    "description": "Get max datetime value 9999-12-31t23:59:59.9999999z",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-max-utc-lowercase·get·responses·200",
+      "description": "The max datetime value 9999-12-31t23:59:59.9999999z"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-max-utc-lowercase·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/max/utc/uppercase": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getUtcUppercaseMaxDateTime",
+    "description": "Get max datetime value 9999-12-31T23:59:59.9999999Z",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-max-utc-uppercase·get·responses·200",
+      "description": "The max datetime value 9999-12-31T23:59:59.9999999Z"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-max-utc-uppercase·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/max/localpositiveoffset": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putLocalPositiveOffsetMaxDateTime",
+    "description": "Put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999+14:00",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·datetime-max-localpositiveoffset·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-max-localpositiveoffset·put·responses·200",
+      "description": "The max datetime value with positive num offset 9999-12-31T23:59:59.9999999+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-max-localpositiveoffset·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/max/localpositiveoffset/lowercase": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalPositiveOffsetLowercaseMaxDateTime",
+    "description": "Get max datetime value with positive num offset 9999-12-31t23:59:59.9999999+14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-max-localpositiveoffset-lowercase·get·responses·200",
+      "description": "The max datetime value 9999-12-31t23:59:59.9999999+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-max-localpositiveoffset-lowercase·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/max/localpositiveoffset/uppercase": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalPositiveOffsetUppercaseMaxDateTime",
+    "description": "Get max datetime value with positive num offset 9999-12-31T23:59:59.9999999+14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-max-localpositiveoffset-uppercase·get·responses·200",
+      "description": "The max datetime value 9999-12-31T23:59:59.9999999+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-max-localpositiveoffset-uppercase·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/max/localnegativeoffset": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putLocalNegativeOffsetMaxDateTime",
+    "description": "Put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999-14:00",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·datetime-max-localnegativeoffset·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-max-localnegativeoffset·put·responses·200",
+      "description": "The max datetime value with positive num offset 9999-12-31T23:59:59.9999999+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-max-localnegativeoffset·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/max/localnegativeoffset/uppercase": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalNegativeOffsetUppercaseMaxDateTime",
+    "description": "Get max datetime value with positive num offset 9999-12-31T23:59:59.9999999-14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-max-localnegativeoffset-uppercase·get·responses·200",
+      "description": "The max datetime value 9999-12-31T23:59:59.9999999-14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-max-localnegativeoffset-uppercase·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/max/localnegativeoffset/lowercase": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalNegativeOffsetLowercaseMaxDateTime",
+    "description": "Get max datetime value with positive num offset 9999-12-31t23:59:59.9999999-14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-max-localnegativeoffset-lowercase·get·responses·200",
+      "description": "The max datetime value 9999-12-31t23:59:59.9999999-14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-max-localnegativeoffset-lowercase·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/min/utc": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putUtcMinDateTime",
+    "description": "Put min datetime value 0001-01-01T00:00:00Z",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·datetime-min-utc·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-min-utc·put·responses·200",
+      "description": "The min datetime value 0001-01-01T00:00:00Z"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-min-utc·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getUtcMinDateTime",
+    "description": "Get min datetime value 0001-01-01T00:00:00Z",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-min-utc·get·responses·200",
+      "description": "The min datetime value 0001-01-01T00:00:00Z"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-min-utc·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/min/localpositiveoffset": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putLocalPositiveOffsetMinDateTime",
+    "description": "Put min datetime value 0001-01-01T00:00:00+14:00",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·datetime-min-localpositiveoffset·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-min-localpositiveoffset·put·responses·200",
+      "description": "The min datetime value 0001-01-01T00:00:00+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-min-localpositiveoffset·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalPositiveOffsetMinDateTime",
+    "description": "Get min datetime value 0001-01-01T00:00:00+14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-min-localpositiveoffset·get·responses·200",
+      "description": "The min datetime value 0001-01-01T00:00:00+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-min-localpositiveoffset·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetime/min/localnegativeoffset": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putLocalNegativeOffsetMinDateTime",
+    "description": "Put min datetime value 0001-01-01T00:00:00-14:00",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·datetime-min-localnegativeoffset·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-min-localnegativeoffset·put·responses·200",
+      "description": "The min datetime value 0001-01-01T00:00:00+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-min-localnegativeoffset·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalNegativeOffsetMinDateTime",
+    "description": "Get min datetime value 0001-01-01T00:00:00-14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetime-min-localnegativeoffset·get·responses·200",
+      "description": "The min datetime value 0001-01-01T00:00:00+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetime-min-localnegativeoffset·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "responses": {
+   "paths·datetime-null·get·responses·200": {
+    "description": "The null datetime value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-null·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-null·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-invalid·get·responses·200": {
+    "description": "The invalid datetime value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-invalid·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-invalid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-overflow·get·responses·200": {
+    "description": "The overflow datetime value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-overflow·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-overflow·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-underflow·get·responses·200": {
+    "description": "The underflow datetime value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-underflow·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-underflow·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-utc·put·responses·200": {
+    "description": "The max datetime value 9999-12-31T23:59:59.9999999Z"
+   },
+   "paths·datetime-max-utc·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-utc-lowercase·get·responses·200": {
+    "description": "The max datetime value 9999-12-31t23:59:59.9999999z",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-max-utc-lowercase·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-utc-lowercase·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-utc-uppercase·get·responses·200": {
+    "description": "The max datetime value 9999-12-31T23:59:59.9999999Z",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-max-utc-uppercase·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-utc-uppercase·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-localpositiveoffset·put·responses·200": {
+    "description": "The max datetime value with positive num offset 9999-12-31T23:59:59.9999999+14:00"
+   },
+   "paths·datetime-max-localpositiveoffset·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-localpositiveoffset-lowercase·get·responses·200": {
+    "description": "The max datetime value 9999-12-31t23:59:59.9999999+14:00",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-max-localpositiveoffset-lowercase·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-localpositiveoffset-lowercase·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-localpositiveoffset-uppercase·get·responses·200": {
+    "description": "The max datetime value 9999-12-31T23:59:59.9999999+14:00",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-max-localpositiveoffset-uppercase·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-localpositiveoffset-uppercase·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-localnegativeoffset·put·responses·200": {
+    "description": "The max datetime value with positive num offset 9999-12-31T23:59:59.9999999+14:00"
+   },
+   "paths·datetime-max-localnegativeoffset·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-localnegativeoffset-uppercase·get·responses·200": {
+    "description": "The max datetime value 9999-12-31T23:59:59.9999999-14:00",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-max-localnegativeoffset-uppercase·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-localnegativeoffset-uppercase·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-localnegativeoffset-lowercase·get·responses·200": {
+    "description": "The max datetime value 9999-12-31t23:59:59.9999999-14:00",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-max-localnegativeoffset-lowercase·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-max-localnegativeoffset-lowercase·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-min-utc·put·responses·200": {
+    "description": "The min datetime value 0001-01-01T00:00:00Z"
+   },
+   "paths·datetime-min-utc·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-min-utc·get·responses·200": {
+    "description": "The min datetime value 0001-01-01T00:00:00Z",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-min-utc·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-min-utc·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-min-localpositiveoffset·put·responses·200": {
+    "description": "The min datetime value 0001-01-01T00:00:00+14:00"
+   },
+   "paths·datetime-min-localpositiveoffset·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-min-localpositiveoffset·get·responses·200": {
+    "description": "The min datetime value 0001-01-01T00:00:00+14:00",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-min-localpositiveoffset·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-min-localpositiveoffset·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-min-localnegativeoffset·put·responses·200": {
+    "description": "The min datetime value 0001-01-01T00:00:00+14:00"
+   },
+   "paths·datetime-min-localnegativeoffset·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetime-min-localnegativeoffset·get·responses·200": {
+    "description": "The min datetime value 0001-01-01T00:00:00+14:00",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-min-localnegativeoffset·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetime-min-localnegativeoffset·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "paths·datetime-null·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-invalid·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-overflow·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-underflow·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-max-utc·put·requestbody·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-max-utc-lowercase·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-max-utc-uppercase·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-max-localpositiveoffset·put·requestbody·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-max-localpositiveoffset-lowercase·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-max-localpositiveoffset-uppercase·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-max-localnegativeoffset·put·requestbody·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-max-localnegativeoffset-uppercase·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-max-localnegativeoffset-lowercase·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-min-utc·put·requestbody·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-min-utc·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time",
+    "enum": [
+     "0001-01-01T00:00:00Z"
+    ]
+   },
+   "paths·datetime-min-localpositiveoffset·put·requestbody·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-min-localpositiveoffset·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time",
+    "enum": [
+     "0001-01-01t00:00:00+14:00"
+    ]
+   },
+   "paths·datetime-min-localnegativeoffset·put·requestbody·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time"
+   },
+   "paths·datetime-min-localnegativeoffset·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time",
+    "enum": [
+     "0001-01-01t00:00:00+14:00"
+    ]
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   }
+  },
+  "requestBodies": {
+   "paths·datetime-max-utc·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-max-utc·put·requestbody·content·application-json·schema"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "datetimeBody"
+   },
+   "paths·datetime-max-localpositiveoffset·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-max-localpositiveoffset·put·requestbody·content·application-json·schema"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "datetimeBody"
+   },
+   "paths·datetime-max-localnegativeoffset·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-max-localnegativeoffset·put·requestbody·content·application-json·schema"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "datetimeBody"
+   },
+   "paths·datetime-min-utc·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-min-utc·put·requestbody·content·application-json·schema"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "datetimeBody"
+   },
+   "paths·datetime-min-localpositiveoffset·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-min-localpositiveoffset·put·requestbody·content·application-json·schema"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "datetimeBody"
+   },
+   "paths·datetime-min-localnegativeoffset·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetime-min-localnegativeoffset·put·requestbody·content·application-json·schema"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "datetimeBody"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

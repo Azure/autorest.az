@@ -1,0 +1,2242 @@
+!<!CodeModel> 
+schemas: !<!Schemas> 
+  objects:
+  - !<!ObjectSchema> &ref_17
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    properties:
+    - !<!Property> 
+      schema: !<!NumberSchema> &ref_7
+        type: integer
+        precision: 32
+        language: !<!Languages> 
+          default:
+            name: typeForstatus
+            description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+        protocol: !<!Protocols> {}
+      serializedName: status
+      language: !<!Languages> 
+        default:
+          name: status
+          description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+      protocol: !<!Protocols> {}
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_0
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 1.0.0
+        language: !<!Languages> 
+          default:
+            name: Error-message
+            description: MISSING·SCHEMA-DESCRIPTION-STRING
+        protocol: !<!Protocols> {}
+      serializedName: message
+      language: !<!Languages> 
+        default:
+          name: message
+          description: MISSING·SCHEMA-DESCRIPTION-STRING
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: Error
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api100
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_21
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    properties:
+    - !<!Property> 
+      schema: !<!NumberSchema> &ref_8
+        type: integer
+        precision: 32
+        language: !<!Languages> 
+          default:
+            name: typeForvalue
+            description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+        protocol: !<!Protocols> {}
+      required: true
+      serializedName: value
+      language: !<!Languages> 
+        default:
+          name: value
+          description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: int-wrapper
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api100
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_22
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    properties:
+    - !<!Property> 
+      schema: !<!NumberSchema> &ref_9
+        type: integer
+        precision: 32
+        language: !<!Languages> 
+          default:
+            name: typeForvalue
+            description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+        protocol: !<!Protocols> {}
+      serializedName: value
+      language: !<!Languages> 
+        default:
+          name: value
+          description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: int-optional-wrapper
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api100
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_23
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    properties:
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_1
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 1.0.0
+        language: !<!Languages> 
+          default:
+            name: string-wrapper-value
+            description: MISSING·SCHEMA-DESCRIPTION-STRING
+        protocol: !<!Protocols> {}
+      required: true
+      serializedName: value
+      language: !<!Languages> 
+        default:
+          name: value
+          description: MISSING·SCHEMA-DESCRIPTION-STRING
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: string-wrapper
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api100
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_24
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    properties:
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_2
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 1.0.0
+        language: !<!Languages> 
+          default:
+            name: string-optional-wrapper-value
+            description: MISSING·SCHEMA-DESCRIPTION-STRING
+        protocol: !<!Protocols> {}
+      serializedName: value
+      language: !<!Languages> 
+        default:
+          name: value
+          description: MISSING·SCHEMA-DESCRIPTION-STRING
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: string-optional-wrapper
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api100
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_4
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    properties:
+    - !<!Property> 
+      schema: !<!NumberSchema> &ref_10
+        type: integer
+        precision: 32
+        language: !<!Languages> 
+          default:
+            name: typeForid
+            description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+        protocol: !<!Protocols> {}
+      required: true
+      serializedName: id
+      language: !<!Languages> 
+        default:
+          name: id
+          description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+      protocol: !<!Protocols> {}
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_3
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 1.0.0
+        language: !<!Languages> 
+          default:
+            name: product-name
+            description: MISSING·SCHEMA-DESCRIPTION-STRING
+        protocol: !<!Protocols> {}
+      required: false
+      serializedName: name
+      language: !<!Languages> 
+        default:
+          name: name
+          description: MISSING·SCHEMA-DESCRIPTION-STRING
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: product
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api100
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_25
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    properties:
+    - !<!Property> 
+      schema: *ref_4
+      required: true
+      serializedName: value
+      language: !<!Languages> 
+        default:
+          name: value
+          description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: class-wrapper
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api100
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_26
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    properties:
+    - !<!Property> 
+      schema: *ref_4
+      serializedName: value
+      language: !<!Languages> 
+        default:
+          name: value
+          description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: class-optional-wrapper
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api100
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_29
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    properties:
+    - !<!Property> 
+      schema: !<!ArraySchema> &ref_13
+        type: array
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 1.0.0
+        elementType: !<!StringSchema> &ref_5
+          type: string
+          apiVersions:
+          - !<!ApiVersion> 
+            version: 1.0.0
+          language: !<!Languages> 
+            default:
+              name: array-wrapper-valueItem
+              description: MISSING·SCHEMA-DESCRIPTION-STRING
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: array-wrapper-value
+            description: MISSING·SCHEMA-DESCRIPTION-ARRAYSCHEMA
+        protocol: !<!Protocols> {}
+      required: true
+      serializedName: value
+      language: !<!Languages> 
+        default:
+          name: value
+          description: MISSING·SCHEMA-DESCRIPTION-ARRAYSCHEMA
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: array-wrapper
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api100
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_30
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    properties:
+    - !<!Property> 
+      schema: !<!ArraySchema> &ref_14
+        type: array
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 1.0.0
+        elementType: !<!StringSchema> &ref_6
+          type: string
+          apiVersions:
+          - !<!ApiVersion> 
+            version: 1.0.0
+          language: !<!Languages> 
+            default:
+              name: array-optional-wrapper-valueItem
+              description: MISSING·SCHEMA-DESCRIPTION-STRING
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: array-optional-wrapper-value
+            description: MISSING·SCHEMA-DESCRIPTION-ARRAYSCHEMA
+        protocol: !<!Protocols> {}
+      serializedName: value
+      language: !<!Languages> 
+        default:
+          name: value
+          description: MISSING·SCHEMA-DESCRIPTION-ARRAYSCHEMA
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: array-optional-wrapper
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api100
+    protocol: !<!Protocols> {}
+  arrays:
+  - !<!ArraySchema> &ref_27
+    type: array
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    elementType: !<!StringSchema> &ref_11
+      type: string
+      apiVersions:
+      - !<!ApiVersion> 
+        version: 1.0.0
+      language: !<!Languages> 
+        default:
+          name: post-content-schemaItem
+          description: MISSING·SCHEMA-DESCRIPTION-STRING
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: paths·reqopt-requied-array-parameter·post·requestbody·content·application-json·schema
+        description: MISSING·SCHEMA-DESCRIPTION-ARRAYSCHEMA
+    protocol: !<!Protocols> {}
+  - !<!ArraySchema> &ref_28
+    type: array
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    elementType: !<!StringSchema> &ref_12
+      type: string
+      apiVersions:
+      - !<!ApiVersion> 
+        version: 1.0.0
+      language: !<!Languages> 
+        default:
+          name: components·parameters·required_global_path·schema
+          description: MISSING·SCHEMA-DESCRIPTION-STRING
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: paths·reqopt-optional-array-header·post·parameters·0·schema
+        description: MISSING·SCHEMA-DESCRIPTION-ARRAYSCHEMA
+    protocol: !<!Protocols> {}
+  - *ref_13
+  - *ref_14
+  - !<!ArraySchema> &ref_31
+    type: array
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    elementType: !<!StringSchema> &ref_15
+      type: string
+      apiVersions:
+      - !<!ApiVersion> 
+        version: 1.0.0
+      language: !<!Languages> 
+        default:
+          name: post-0-itemsItem
+          description: MISSING·SCHEMA-DESCRIPTION-STRING
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: paths·reqopt-requied-array-header·post·parameters·0·schema
+        description: MISSING·SCHEMA-DESCRIPTION-ARRAYSCHEMA
+    protocol: !<!Protocols> {}
+  numbers:
+  - *ref_7
+  - !<!NumberSchema> &ref_20
+    type: integer
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    precision: 32
+    language: !<!Languages> 
+      default:
+        name: paths·reqopt-requied-integer-header·post·parameters·0·schema
+        description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+    protocol: !<!Protocols> {}
+  - *ref_8
+  - *ref_9
+  - *ref_10
+  - !<!NumberSchema> &ref_19
+    type: integer
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    precision: 32
+    language: !<!Languages> 
+      default:
+        name: components·parameters·optional_global_query·schema
+        description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+    protocol: !<!Protocols> {}
+  strings:
+  - !<!StringSchema> &ref_16
+    type: string
+    language: !<!Languages> 
+      default:
+        name: string
+        description: simple string
+    protocol: !<!Protocols> {}
+  - *ref_12
+  - *ref_0
+  - *ref_1
+  - *ref_2
+  - *ref_3
+  - *ref_11
+  - *ref_5
+  - *ref_6
+  - *ref_15
+globalParameters:
+- !<!Parameter> &ref_32
+  schema: *ref_12
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 0
+  language: !<!Languages> 
+    default:
+      name: required-global-path
+      description: number of items to skip
+      serializedName: required-global-path
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: path
+- !<!Parameter> &ref_33
+  schema: *ref_12
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: required-global-query
+      description: number of items to skip
+      serializedName: required-global-query
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: query
+- !<!Parameter> &ref_34
+  schema: *ref_19
+  implementation: Client
+  extensions:
+    x-ms-priority: 2
+  language: !<!Languages> 
+    default:
+      name: optional-global-query
+      description: number of items to skip
+      serializedName: optional-global-query
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: query
+- !<!Parameter> &ref_18
+  schema: *ref_16
+  clientDefaultValue: 'http://localhost:3000'
+  implementation: Client
+  required: true
+  language: !<!Languages> 
+    default:
+      name: $host
+      description: server parameter
+      serializedName: $host
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: uri
+info: !<!Info> 
+  description: Test Infrastructure for AutoRest
+  title: required-optional
+operationGroups:
+- !<!OperationGroup> 
+  $key: implicit
+  operations:
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_12
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: pathParameter
+            description: MISSING·PARAMETER-DESCRIPTION
+            serializedName: pathParameter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: '/reqopt/implicit/required/path/{pathParameter}'
+          method: get
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: getRequiredPath
+        description: Test implicitly required path parameter
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_12
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: queryParameter
+            description: MISSING·PARAMETER-DESCRIPTION
+            serializedName: queryParameter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /reqopt/implicit/optional/query
+          method: put
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: putOptionalQuery
+        description: Test implicitly optional query parameter
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_12
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: queryParameter
+            description: MISSING·PARAMETER-DESCRIPTION
+            serializedName: queryParameter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /reqopt/implicit/optional/header
+          method: put
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: putOptionalHeader
+        description: Test implicitly optional header parameter
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_12
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/implicit/optional/body
+          method: put
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: putOptionalBody
+        description: Test implicitly optional body parameter
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - *ref_32
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: '/reqopt/global/required/path/{required-global-path}'
+          method: get
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: getRequiredGlobalPath
+        description: Test implicitly required path parameter
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - *ref_33
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /reqopt/global/required/query
+          method: get
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: getRequiredGlobalQuery
+        description: Test implicitly required query parameter
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - *ref_34
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /reqopt/global/optional/query
+          method: get
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: getOptionalGlobalQuery
+        description: Test implicitly optional query parameter
+    protocol: !<!Protocols> {}
+  language: !<!Languages> 
+    default:
+      name: implicit
+      description: ''
+  protocol: !<!Protocols> {}
+- !<!OperationGroup> 
+  $key: explicit
+  operations:
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_20
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/requied/integer/parameter
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postRequiredIntegerParameter
+        description: Test explicitly required integer. Please put null and the client library should throw before the request is sent.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_20
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/optional/integer/parameter
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postOptionalIntegerParameter
+        description: Test explicitly optional integer. Please put null.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_21
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/requied/integer/property
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postRequiredIntegerProperty
+        description: Test explicitly required integer. Please put a valid int-wrapper with 'value' = null and the client library should throw before the request is sent.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_22
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/optional/integer/property
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postOptionalIntegerProperty
+        description: Test explicitly optional integer. Please put a valid int-wrapper with 'value' = null.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_20
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: headerParameter
+            description: MISSING·PARAMETER-DESCRIPTION
+            serializedName: headerParameter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /reqopt/requied/integer/header
+          method: post
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: postRequiredIntegerHeader
+        description: Test explicitly required integer. Please put a header 'headerParameter' => null and the client library should throw before the request is sent.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_20
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: headerParameter
+            description: MISSING·PARAMETER-DESCRIPTION
+            serializedName: headerParameter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /reqopt/optional/integer/header
+          method: post
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: postOptionalIntegerHeader
+        description: Test explicitly optional integer. Please put a header 'headerParameter' => null.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_12
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/requied/string/parameter
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postRequiredStringParameter
+        description: Test explicitly required string. Please put null and the client library should throw before the request is sent.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_12
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/optional/string/parameter
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postOptionalStringParameter
+        description: Test explicitly optional string. Please put null.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_23
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/requied/string/property
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postRequiredStringProperty
+        description: Test explicitly required string. Please put a valid string-wrapper with 'value' = null and the client library should throw before the request is sent.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_24
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/optional/string/property
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postOptionalStringProperty
+        description: Test explicitly optional integer. Please put a valid string-wrapper with 'value' = null.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_12
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: headerParameter
+            description: MISSING·PARAMETER-DESCRIPTION
+            serializedName: headerParameter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /reqopt/requied/string/header
+          method: post
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: postRequiredStringHeader
+        description: Test explicitly required string. Please put a header 'headerParameter' => null and the client library should throw before the request is sent.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_12
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: MISSING·PARAMETER-DESCRIPTION
+            serializedName: bodyParameter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /reqopt/optional/string/header
+          method: post
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: postOptionalStringHeader
+        description: Test explicitly optional string. Please put a header 'headerParameter' => null.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_4
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/requied/class/parameter
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postRequiredClassParameter
+        description: Test explicitly required complex object. Please put null and the client library should throw before the request is sent.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_4
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/optional/class/parameter
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postOptionalClassParameter
+        description: Test explicitly optional complex object. Please put null.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_25
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/requied/class/property
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postRequiredClassProperty
+        description: Test explicitly required complex object. Please put a valid class-wrapper with 'value' = null and the client library should throw before the request is sent.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_26
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/optional/class/property
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postOptionalClassProperty
+        description: Test explicitly optional complex object. Please put a valid class-wrapper with 'value' = null.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_27
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/requied/array/parameter
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postRequiredArrayParameter
+        description: Test explicitly required array. Please put null and the client library should throw before the request is sent.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_28
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/optional/array/parameter
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postOptionalArrayParameter
+        description: Test explicitly optional array. Please put null.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_29
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/requied/array/property
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postRequiredArrayProperty
+        description: Test explicitly required array. Please put a valid array-wrapper with 'value' = null and the client library should throw before the request is sent.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_30
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: ''
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /reqopt/optional/array/property
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: postOptionalArrayProperty
+        description: Test explicitly optional array. Please put a valid array-wrapper with 'value' = null.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_31
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: headerParameter
+            description: MISSING·PARAMETER-DESCRIPTION
+            serializedName: headerParameter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+            style: simple
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /reqopt/requied/array/header
+          method: post
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: postRequiredArrayHeader
+        description: Test explicitly required array. Please put a header 'headerParameter' => null and the client library should throw before the request is sent.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 1.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_28
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: headerParameter
+            description: MISSING·PARAMETER-DESCRIPTION
+            serializedName: headerParameter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+            style: simple
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /reqopt/optional/array/header
+          method: post
+          uri: '{$host}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_17
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: postOptionalArrayHeader
+        description: Test explicitly optional integer. Please put a header 'headerParameter' => null.
+    protocol: !<!Protocols> {}
+  language: !<!Languages> 
+    default:
+      name: explicit
+      description: ''
+  protocol: !<!Protocols> {}
+language: !<!Languages> 
+  default:
+    name: ''
+    description: ''
+protocol: !<!Protocols> 
+  http: !<!HttpModel> {}

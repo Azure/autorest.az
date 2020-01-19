@@ -1,0 +1,460 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest RFC1123 DateTime Test Service",
+  "description": "Test Infrastructure for AutoRest",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/datetimerfc1123/null": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetimerfc1123_getNull",
+    "description": "Get null datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-null·get·responses·200",
+      "description": "The null datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-null·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetimerfc1123/invalid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetimerfc1123_getInvalid",
+    "description": "Get invalid datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-invalid·get·responses·200",
+      "description": "The invalid datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-invalid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetimerfc1123/overflow": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetimerfc1123_getOverflow",
+    "description": "Get overflow datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-overflow·get·responses·200",
+      "description": "The overflow datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-overflow·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetimerfc1123/underflow": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetimerfc1123_getUnderflow",
+    "description": "Get underflow datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-underflow·get·responses·200",
+      "description": "The underflow datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-underflow·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetimerfc1123/max": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetimerfc1123_putUtcMaxDateTime",
+    "description": "Put max datetime value Fri, 31 Dec 9999 23:59:59 GMT",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·datetimerfc1123-max·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-max·put·responses·200",
+      "description": "The max datetime value Fri, 31 Dec 9999 23:59:59 GMT"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-max·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetimerfc1123/max/lowercase": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetimerfc1123_getUtcLowercaseMaxDateTime",
+    "description": "Get max datetime value fri, 31 dec 9999 23:59:59 gmt",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-max-lowercase·get·responses·200",
+      "description": "The max datetime value fri, 31 dec 9999 23:59:59 gmt"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-max-lowercase·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetimerfc1123/max/uppercase": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetimerfc1123_getUtcUppercaseMaxDateTime",
+    "description": "Get max datetime value FRI, 31 DEC 9999 23:59:59 GMT",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-max-uppercase·get·responses·200",
+      "description": "The max datetime value FRI, 31 DEC 9999 23:59:59 GMT"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-max-uppercase·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/datetimerfc1123/min": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetimerfc1123_putUtcMinDateTime",
+    "description": "Put min datetime value Mon, 1 Jan 0001 00:00:00 GMT",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·datetimerfc1123-min·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-min·put·responses·200",
+      "description": "The min datetime value Mon, 1 Jan 0001 00:00:00 GMT"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-min·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetimerfc1123_getUtcMinDateTime",
+    "description": "Get min datetime value Mon, 1 Jan 0001 00:00:00 GMT",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-min·get·responses·200",
+      "description": "The min datetime value Mon, 1 Jan 0001 00:00:00 GMT"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·datetimerfc1123-min·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "responses": {
+   "paths·datetimerfc1123-null·get·responses·200": {
+    "description": "The null datetime value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetimerfc1123-null·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-null·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime-rfc1123.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-invalid·get·responses·200": {
+    "description": "The invalid datetime value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetimerfc1123-invalid·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-invalid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime-rfc1123.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-overflow·get·responses·200": {
+    "description": "The overflow datetime value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetimerfc1123-overflow·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-overflow·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime-rfc1123.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-underflow·get·responses·200": {
+    "description": "The underflow datetime value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetimerfc1123-underflow·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-underflow·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime-rfc1123.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-max·put·responses·200": {
+    "description": "The max datetime value Fri, 31 Dec 9999 23:59:59 GMT"
+   },
+   "paths·datetimerfc1123-max·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime-rfc1123.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-max-lowercase·get·responses·200": {
+    "description": "The max datetime value fri, 31 dec 9999 23:59:59 gmt",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetimerfc1123-max-lowercase·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-max-lowercase·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime-rfc1123.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-max-uppercase·get·responses·200": {
+    "description": "The max datetime value FRI, 31 DEC 9999 23:59:59 GMT",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetimerfc1123-max-uppercase·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-max-uppercase·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime-rfc1123.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-min·put·responses·200": {
+    "description": "The min datetime value Mon, 1 Jan 0001 00:00:00 GMT"
+   },
+   "paths·datetimerfc1123-min·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime-rfc1123.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-min·get·responses·200": {
+    "description": "The min datetime value Mon, 1 Jan 0001 00:00:00 GMT",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetimerfc1123-min·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·datetimerfc1123-min·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-datetime-rfc1123.json#/components/schemas/Error"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "paths·datetimerfc1123-null·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time-rfc1123"
+   },
+   "paths·datetimerfc1123-invalid·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time-rfc1123"
+   },
+   "paths·datetimerfc1123-overflow·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time-rfc1123"
+   },
+   "paths·datetimerfc1123-underflow·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time-rfc1123"
+   },
+   "paths·datetimerfc1123-max·put·requestbody·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time-rfc1123"
+   },
+   "paths·datetimerfc1123-max-lowercase·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time-rfc1123"
+   },
+   "paths·datetimerfc1123-max-uppercase·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time-rfc1123"
+   },
+   "paths·datetimerfc1123-min·put·requestbody·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time-rfc1123"
+   },
+   "paths·datetimerfc1123-min·get·responses·200·content·application-json·schema": {
+    "type": "string",
+    "format": "date-time-rfc1123",
+    "enum": [
+     "Sun, 1 Jan 0001 00:00:00 GMT"
+    ]
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   }
+  },
+  "requestBodies": {
+   "paths·datetimerfc1123-max·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetimerfc1123-max·put·requestbody·content·application-json·schema"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "datetimeBody"
+   },
+   "paths·datetimerfc1123-min·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·datetimerfc1123-min·put·requestbody·content·application-json·schema"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "datetimeBody"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

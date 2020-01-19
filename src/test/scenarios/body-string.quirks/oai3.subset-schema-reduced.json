@@ -1,0 +1,1520 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "body-string.quirks",
+  "description": "Test Infrastructure for AutoRest Swagger BAT",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1null"
+    ]
+   }
+  },
+  "path:0.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_getNull",
+    "description": "Get null string value value",
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "The null String value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:0.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1null"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_putNull",
+    "description": "Set string value null",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:1": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/empty",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1empty"
+    ]
+   }
+  },
+  "path:1.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/empty",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1empty"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_getEmpty",
+    "description": "Get empty string value value ''",
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "The empty String value",
+      "$ref": "#/components/responses/responses:4"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:1.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/empty",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1empty"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_putEmpty",
+    "description": "Set string value empty ''",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:1"
+    },
+    "x-ms-requestBody-index": 0,
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:2": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/mbcs",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1mbcs"
+    ]
+   }
+  },
+  "path:2.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/mbcs",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1mbcs"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_getMbcs",
+    "description": "Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'",
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "The mbcs String value",
+      "$ref": "#/components/responses/responses:8"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:2.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/mbcs",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1mbcs"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_putMbcs",
+    "description": "Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:1"
+    },
+    "x-ms-requestBody-index": 0,
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:3": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/whitespace",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1whitespace"
+    ]
+   }
+  },
+  "path:3.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/whitespace",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1whitespace"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_getWhitespace",
+    "description": "Get string value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'",
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "The String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'",
+      "$ref": "#/components/responses/responses:12"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:3.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/whitespace",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1whitespace"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_putWhitespace",
+    "description": "Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:1"
+    },
+    "x-ms-requestBody-index": 0,
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:4": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/enum/notExpandable",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1enum~1notExpandable"
+    ]
+   }
+  },
+  "path:4.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/enum/notExpandable",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1enum~1notExpandable"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "enum_getNotExpandable",
+    "description": "Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.",
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "The String value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'",
+      "$ref": "#/components/responses/responses:16"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:4.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/enum/notExpandable",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1enum~1notExpandable"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "enum_putNotExpandable",
+    "description": "Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:4"
+    },
+    "x-ms-requestBody-index": 0,
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:5": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/enum/Referenced",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1enum~1Referenced"
+    ]
+   }
+  },
+  "path:5.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/enum/Referenced",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1enum~1Referenced"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "enum_getReferenced",
+    "description": "Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.",
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "The String value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'",
+      "$ref": "#/components/responses/responses:16"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:5.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/enum/Referenced",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1enum~1Referenced"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "enum_putReferenced",
+    "description": "Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:5"
+    },
+    "x-ms-requestBody-index": 0,
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:6": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/enum/ReferencedConstant",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1enum~1ReferencedConstant"
+    ]
+   }
+  },
+  "path:6.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/enum/ReferencedConstant",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1enum~1ReferencedConstant"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "enum_getReferencedConstant",
+    "description": "Get value 'green-color' from the constant.",
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "The String value 'green-color' from a constant",
+      "$ref": "#/components/responses/responses:24"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:6.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/enum/ReferencedConstant",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1enum~1ReferencedConstant"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "enum_putReferencedConstant",
+    "description": "Sends value 'green-color' from a constant",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:6"
+    },
+    "x-ms-requestBody-index": 0,
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:7": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/notProvided",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1notProvided"
+    ]
+   }
+  },
+  "path:7.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/notProvided",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1notProvided"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_getNotProvided",
+    "description": "Get String value when no string value is sent in response payload",
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "The not provided string value",
+      "$ref": "#/components/responses/responses:28"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:8": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/base64Encoding",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1base64Encoding"
+    ]
+   }
+  },
+  "path:8.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/base64Encoding",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1base64Encoding"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_getBase64Encoded",
+    "description": "Get value that is base64 encoded",
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "The base64 encoded string value",
+      "$ref": "#/components/responses/responses:30"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:9": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/base64UrlEncoding",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1base64UrlEncoding"
+    ]
+   }
+  },
+  "path:9.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/base64UrlEncoding",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1base64UrlEncoding"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_getBase64UrlEncoded",
+    "description": "Get value that is base64url encoded",
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "The base64url encoded string value",
+      "$ref": "#/components/responses/responses:30"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:9.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/base64UrlEncoding",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1base64UrlEncoding"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_putBase64UrlEncoded",
+    "description": "Put value that is base64url encoded",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:7"
+    },
+    "x-ms-requestBody-index": 0,
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:10": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/nullBase64UrlEncoding",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1nullBase64UrlEncoding"
+    ]
+   }
+  },
+  "path:10.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/string/nullBase64UrlEncoding",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-string.quirks.json#/paths/~1string~1nullBase64UrlEncoding"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "string_getNullBase64UrlEncoded",
+    "description": "Get null value that is expected to be base64url encoded",
+    "tags": [
+     "String Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "The null value",
+      "$ref": "#/components/responses/responses:30"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-null·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-null·get·responses·200"
+     ]
+    },
+    "description": "The null String value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·string-null·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-null·get·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-null·get·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-null·put·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-empty·get·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-empty·put·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-mbcs·get·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-mbcs·put·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-whitespace·get·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-whitespace·put·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-notexpandable·get·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-notexpandable·put·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-referenced·get·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-referenced·put·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-referencedconstant·get·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-referencedconstant·put·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-notprovided·get·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-base64encoding·get·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-base64urlencoding·get·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-base64urlencoding·put·responses·default",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-nullbase64urlencoding·get·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:15"
+      }
+     }
+    }
+   },
+   "responses:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-null·put·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-null·put·responses·200",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-empty·put·responses·200",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-mbcs·put·responses·200",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-whitespace·put·responses·200",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-notexpandable·put·responses·200",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-referenced·put·responses·200",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-referencedconstant·put·responses·200",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-base64urlencoding·put·responses·200"
+     ]
+    },
+    "description": "Empty Response"
+   },
+   "responses:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-empty·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-empty·get·responses·200"
+     ]
+    },
+    "description": "The empty String value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·string-empty·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "responses:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-mbcs·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-mbcs·get·responses·200"
+     ]
+    },
+    "description": "The mbcs String value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·string-mbcs·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "responses:12": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-whitespace·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-whitespace·get·responses·200"
+     ]
+    },
+    "description": "The String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·string-whitespace·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "responses:16": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-enum-notexpandable·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-notexpandable·get·responses·200",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-referenced·get·responses·200"
+     ]
+    },
+    "description": "The String value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/Colors"
+      }
+     }
+    }
+   },
+   "responses:24": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-enum-referencedconstant·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-enum-referencedconstant·get·responses·200"
+     ]
+    },
+    "description": "The String value 'green-color' from a constant",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:18"
+      }
+     }
+    }
+   },
+   "responses:28": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-notprovided·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-notprovided·get·responses·200"
+     ]
+    },
+    "description": "The not provided string value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:10"
+      }
+     }
+    }
+   },
+   "responses:30": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-base64encoding·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-base64encoding·get·responses·200",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-base64urlencoding·get·responses·200",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/responses/paths·string-nullbase64urlencoding·get·responses·200"
+     ]
+    },
+    "description": "The base64 encoded string value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:11"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "schemas:10": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-notprovided·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-notprovided·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-null·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-empty·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-mbcs·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-whitespace·put·requestbody·content·application-json·schema"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:11": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-base64encoding·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-base64encoding·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-base64urlencoding·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-base64urlencoding·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-nullbase64urlencoding·get·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "string",
+    "format": "base64url"
+   },
+   "schemas:15": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:16"
+     }
+    }
+   },
+   "schemas:16": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:18": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "RefColorConstant",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/RefColorConstant"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "ColorConstant": {
+      "description": "Referenced Color Constant Description.",
+      "$ref": "#/components/schemas/ColorConstant"
+     },
+     "field1": {
+      "description": "Sample string.",
+      "$ref": "#/components/schemas/schemas:20"
+     }
+    },
+    "required": [
+     "ColorConstant"
+    ]
+   },
+   "schemas:20": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "RefColorConstant-field1",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/RefColorConstant-field1"
+     ]
+    },
+    "type": "string",
+    "description": "Sample string."
+   },
+   "paths·string-null·get·responses·200·content·application-json·schema": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-null·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-null·get·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "string",
+    "enum": [
+     null
+    ]
+   },
+   "paths·string-empty·get·responses·200·content·application-json·schema": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-empty·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-empty·get·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "string",
+    "enum": [
+     ""
+    ]
+   },
+   "paths·string-mbcs·get·responses·200·content·application-json·schema": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-mbcs·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-mbcs·get·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "string",
+    "enum": [
+     "啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€"
+    ]
+   },
+   "paths·string-whitespace·get·responses·200·content·application-json·schema": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-whitespace·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-whitespace·get·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "string",
+    "enum": [
+     "    Now is the time for all good men to come to the aid of their country    "
+    ]
+   },
+   "Colors": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Colors",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-enum-notexpandable·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/paths·string-enum-notexpandable·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/RefColors"
+     ]
+    },
+    "x-ms-enum": {
+     "name": "Colors",
+     "modelAsString": false
+    },
+    "type": "string",
+    "enum": [
+     "red color",
+     "green-color",
+     "blue_color"
+    ]
+   },
+   "ColorConstant": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "ColorConstant",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/schemas/RefColorConstant-ColorConstant"
+     ]
+    },
+    "x-ms-enum": {
+     "name": "ColorConstant",
+     "modelAsString": false
+    },
+    "type": "string",
+    "enum": [
+     "green-color"
+    ],
+    "description": "Referenced Color Constant Description."
+   }
+  },
+  "requestBodies": {
+   "requestBodies:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-null·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/requestBodies/paths·string-null·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:10"
+      }
+     }
+    },
+    "x-ms-requestBody-name": "stringBody"
+   },
+   "requestBodies:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-empty·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/requestBodies/paths·string-empty·put·requestbody",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/requestBodies/paths·string-mbcs·put·requestbody",
+      "http://localhost:3000/__files/body-string.quirks.json#/components/requestBodies/paths·string-whitespace·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:10"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "stringBody"
+   },
+   "requestBodies:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-enum-notexpandable·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/requestBodies/paths·string-enum-notexpandable·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/Colors"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "stringBody"
+   },
+   "requestBodies:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-enum-referenced·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/requestBodies/paths·string-enum-referenced·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/Colors"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "enumStringBody"
+   },
+   "requestBodies:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-enum-referencedconstant·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/requestBodies/paths·string-enum-referencedconstant·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:18"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "enumStringBody"
+   },
+   "requestBodies:7": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·string-base64urlencoding·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-string.quirks.json#/components/requestBodies/paths·string-base64urlencoding·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:11"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "stringBody"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

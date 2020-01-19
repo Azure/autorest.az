@@ -1,0 +1,2904 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "header",
+  "description": "Test Infrastructure for AutoRest",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/existingkey",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1existingkey"
+    ]
+   }
+  },
+  "path:0.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/existingkey",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1existingkey"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramExistingKey",
+    "description": "Send a post request with header value \"User-Agent\": \"overwrite\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:0",
+      "description": "Send a post request with header value \"User-Agent\": \"overwrite\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:1": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/existingkey",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1existingkey"
+    ]
+   }
+  },
+  "path:1.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/existingkey",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1existingkey"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseExistingKey",
+    "description": "Get a response with header value \"User-Agent\": \"overwrite\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:2": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/protectedkey",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1protectedkey"
+    ]
+   }
+  },
+  "path:2.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/protectedkey",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1protectedkey"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramProtectedKey",
+    "description": "Send a post request with header value \"Content-Type\": \"text/html\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:1",
+      "description": "Send a post request with header value \"Content-Type\": \"text/html\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:3": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/protectedkey",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1protectedkey"
+    ]
+   }
+  },
+  "path:3.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/protectedkey",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1protectedkey"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseProtectedKey",
+    "description": "Get a response with header value \"Content-Type\": \"text/html\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:6"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:4": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/integer",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1integer"
+    ]
+   }
+  },
+  "path:4.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/integer",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1integer"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramInteger",
+    "description": "Send a post request with header values \"scenario\": \"positive\", \"value\": 1 or \"scenario\": \"negative\", \"value\": -2 ",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:3",
+      "description": "Send a post request with header values 1 or -2"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:5": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/integer",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1integer"
+    ]
+   }
+  },
+  "path:5.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/integer",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1integer"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseInteger",
+    "description": "Get a response with header value \"value\": 1 or -2",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:10"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:6": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/long",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1long"
+    ]
+   }
+  },
+  "path:6.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/long",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1long"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramLong",
+    "description": "Send a post request with header values \"scenario\": \"positive\", \"value\": 105 or \"scenario\": \"negative\", \"value\": -2 ",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:6",
+      "description": "Send a post request with header values 105 or -2"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:7": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/long",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1long"
+    ]
+   }
+  },
+  "path:7.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/long",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1long"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseLong",
+    "description": "Get a response with header value \"value\": 105 or -2",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:14"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:8": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/float",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1float"
+    ]
+   }
+  },
+  "path:8.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/float",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1float"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramFloat",
+    "description": "Send a post request with header values \"scenario\": \"positive\", \"value\": 0.07 or \"scenario\": \"negative\", \"value\": -3.0",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:9",
+      "description": "Send a post request with header values 0.07 or -3.0"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:9": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/float",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1float"
+    ]
+   }
+  },
+  "path:9.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/float",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1float"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseFloat",
+    "description": "Get a response with header value \"value\": 0.07 or -3.0",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:18"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:10": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/double",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1double"
+    ]
+   }
+  },
+  "path:10.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/double",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1double"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramDouble",
+    "description": "Send a post request with header values \"scenario\": \"positive\", \"value\": 7e120 or \"scenario\": \"negative\", \"value\": -3.0",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:12",
+      "description": "Send a post request with header values 7e120 or -3.0"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:11": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/double",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1double"
+    ]
+   }
+  },
+  "path:11.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/double",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1double"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseDouble",
+    "description": "Get a response with header value \"value\": 7e120 or -3.0",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:22"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:12": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/bool",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1bool"
+    ]
+   }
+  },
+  "path:12.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/bool",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1bool"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramBool",
+    "description": "Send a post request with header values \"scenario\": \"true\", \"value\": true or \"scenario\": \"false\", \"value\": false",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"true\" or \"false\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:15",
+      "description": "Send a post request with header values true or false"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:13": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/bool",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1bool"
+    ]
+   }
+  },
+  "path:13.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/bool",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1bool"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseBool",
+    "description": "Get a response with header value \"value\": true or false",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"true\" or \"false\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:26"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:14": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/string",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1string"
+    ]
+   }
+  },
+  "path:14.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/string",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1string"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramString",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"The quick brown fox jumps over the lazy dog\" or \"scenario\": \"null\", \"value\": null or \"scenario\": \"empty\", \"value\": \"\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:18",
+      "description": "Send a post request with header values \"The quick brown fox jumps over the lazy dog\" or null or \"\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:15": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/string",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1string"
+    ]
+   }
+  },
+  "path:15.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/string",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1string"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseString",
+    "description": "Get a response with header values \"The quick brown fox jumps over the lazy dog\" or null or \"\"",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:30"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:16": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/date",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1date"
+    ]
+   }
+  },
+  "path:16.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/date",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1date"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramDate",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"2010-01-01\" or \"scenario\": \"min\", \"value\": \"0001-01-01\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:21",
+      "description": "Send a post request with header values \"2010-01-01\" or \"0001-01-01\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:17": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/date",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1date"
+    ]
+   }
+  },
+  "path:17.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/date",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1date"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseDate",
+    "description": "Get a response with header values \"2010-01-01\" or \"0001-01-01\"",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:34"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:18": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/datetime",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1datetime"
+    ]
+   }
+  },
+  "path:18.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/datetime",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1datetime"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramDatetime",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"2010-01-01T12:34:56Z\" or \"scenario\": \"min\", \"value\": \"0001-01-01T00:00:00Z\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:24",
+      "description": "Send a post request with header values \"2010-01-01T12:34:56Z\" or \"0001-01-01T00:00:00Z\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:19": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/datetime",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1datetime"
+    ]
+   }
+  },
+  "path:19.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/datetime",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1datetime"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseDatetime",
+    "description": "Get a response with header values \"2010-01-01T12:34:56Z\" or \"0001-01-01T00:00:00Z\"",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:38"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:20": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/datetimerfc1123",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1datetimerfc1123"
+    ]
+   }
+  },
+  "path:20.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/datetimerfc1123",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1datetimerfc1123"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramDatetimeRfc1123",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"scenario\": \"min\", \"value\": \"Mon, 01 Jan 0001 00:00:00 GMT\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:27",
+      "description": "Send a post request with header values \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"Mon, 01 Jan 0001 00:00:00 GMT\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:21": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/datetimerfc1123",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1datetimerfc1123"
+    ]
+   }
+  },
+  "path:21.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/datetimerfc1123",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1datetimerfc1123"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseDatetimeRfc1123",
+    "description": "Get a response with header values \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"Mon, 01 Jan 0001 00:00:00 GMT\"",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:42"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:22": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/duration",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1duration"
+    ]
+   }
+  },
+  "path:22.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/duration",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1duration"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramDuration",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"P123DT22H14M12.011S\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:30",
+      "description": "Send a post request with header values \"P123DT22H14M12.011S\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:23": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/duration",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1duration"
+    ]
+   }
+  },
+  "path:23.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/duration",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1duration"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseDuration",
+    "description": "Get a response with header values \"P123DT22H14M12.011S\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:46"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:24": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/byte",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1byte"
+    ]
+   }
+  },
+  "path:24.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/byte",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1byte"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramByte",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"啊齄丂狛狜隣郎隣兀﨩\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:33",
+      "description": "Send a post request with header values \"啊齄丂狛狜隣郎隣兀﨩\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:25": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/byte",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1byte"
+    ]
+   }
+  },
+  "path:25.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/byte",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1byte"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseByte",
+    "description": "Get a response with header values \"啊齄丂狛狜隣郎隣兀﨩\"",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:50"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:26": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/enum",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1enum"
+    ]
+   }
+  },
+  "path:26.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/param/prim/enum",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1param~1prim~1enum"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramEnum",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"GREY\" or \"scenario\": \"null\", \"value\": null",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\""
+     },
+     {
+      "$ref": "#/components/parameters/parameters:36",
+      "description": "Send a post request with header values 'GREY' "
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:27": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/enum",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1enum"
+    ]
+   }
+  },
+  "path:27.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/response/prim/enum",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1response~1prim~1enum"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseEnum",
+    "description": "Get a response with header values \"GREY\" or null",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response",
+      "$ref": "#/components/responses/responses:54"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:28": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1custom~1x-ms-client-request-id~19C4D50EE-2D56-4CD3-8152-34347DC9F2B0"
+    ]
+   }
+  },
+  "path:28.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0",
+    "originalLocations": [
+     "http://localhost:3000/__files/header.json#/paths/~1header~1custom~1x-ms-client-request-id~19C4D50EE-2D56-4CD3-8152-34347DC9F2B0"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_customRequestId",
+    "description": "Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request",
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Empty Response indicates that x-ms-client-request-id was successfuly received",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "parameters:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-existingkey·post·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-existingkey·post·parameters·0"
+     ]
+    },
+    "name": "User-Agent",
+    "in": "header",
+    "description": "Send a post request with header value \"User-Agent\": \"overwrite\"",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-protectedkey·post·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-protectedkey·post·parameters·0"
+     ]
+    },
+    "name": "Content-Type",
+    "in": "header",
+    "description": "Send a post request with header value \"Content-Type\": \"text/html\"",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-integer·post·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-integer·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-integer·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-long·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-long·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-float·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-float·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-double·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-double·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-bool·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-bool·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-string·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-string·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-date·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-date·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-datetime·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-datetime·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-datetimerfc1123·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-datetimerfc1123·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-duration·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-duration·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-byte·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-byte·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-enum·post·parameters·0",
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-response-prim-enum·post·parameters·0"
+     ]
+    },
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\"",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-integer·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-integer·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values 1 or -2",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:5"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-long·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-long·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values 105 or -2",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:9"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:9": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-float·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-float·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values 0.07 or -3.0",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:13"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:12": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-double·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-double·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values 7e120 or -3.0",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:17"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:15": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-bool·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-bool·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values true or false",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:21"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:18": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-string·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-string·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"The quick brown fox jumps over the lazy dog\" or null or \"\"",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": false,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:21": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-date·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-date·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"2010-01-01\" or \"0001-01-01\"",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:29"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:24": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-datetime·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-datetime·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"2010-01-01T12:34:56Z\" or \"0001-01-01T00:00:00Z\"",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:33"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:27": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-datetimerfc1123·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-datetimerfc1123·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"Mon, 01 Jan 0001 00:00:00 GMT\"",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:37"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:30": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-duration·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-duration·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"P123DT22H14M12.011S\"",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:41"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:33": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-byte·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-byte·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"啊齄丂狛狜隣郎隣兀﨩\"",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:45"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:36": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-enum·post·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/parameters/paths·header-param-prim-enum·post·parameters·1"
+     ]
+    },
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values 'GREY' ",
+    "schema": {
+     "$ref": "#/components/schemas/GreyscaleColors"
+    },
+    "required": false,
+    "x-ms-parameter-location": "method"
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-existingkey·post·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-existingkey·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-existingkey·post·responses·200·headers·user_agent·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-protectedkey·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-protectedkey·post·responses·200·headers·content_type·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-integer·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-integer·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-long·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-long·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-float·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-float·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-double·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-double·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-bool·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-bool·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-string·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-string·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-string·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-string·post·responses·200·headers·value·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-date·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-date·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-datetime·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-datetime·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-datetimerfc1123·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-datetimerfc1123·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-duration·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-duration·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-byte·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-byte·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-enum·post·parameters·0·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-enum·post·parameters·0·schema"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-integer·post·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-integer·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-integer·post·responses·200·headers·value·schema"
+     ]
+    },
+    "format": "int32",
+    "type": "integer"
+   },
+   "schemas:9": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-long·post·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-long·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-long·post·responses·200·headers·value·schema"
+     ]
+    },
+    "format": "int64",
+    "type": "integer"
+   },
+   "schemas:13": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-float·post·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-float·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-float·post·responses·200·headers·value·schema"
+     ]
+    },
+    "format": "float",
+    "type": "number"
+   },
+   "schemas:17": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-double·post·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-double·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-double·post·responses·200·headers·value·schema"
+     ]
+    },
+    "format": "double",
+    "type": "number"
+   },
+   "schemas:21": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-bool·post·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-bool·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-bool·post·responses·200·headers·value·schema"
+     ]
+    },
+    "type": "boolean"
+   },
+   "schemas:29": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-date·post·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-date·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-date·post·responses·200·headers·value·schema"
+     ]
+    },
+    "format": "date",
+    "type": "string"
+   },
+   "schemas:33": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-datetime·post·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-datetime·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-datetime·post·responses·200·headers·value·schema"
+     ]
+    },
+    "format": "date-time",
+    "type": "string"
+   },
+   "schemas:37": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-datetimerfc1123·post·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-datetimerfc1123·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-datetimerfc1123·post·responses·200·headers·value·schema"
+     ]
+    },
+    "format": "date-time-rfc1123",
+    "type": "string"
+   },
+   "schemas:41": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-duration·post·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-duration·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-duration·post·responses·200·headers·value·schema"
+     ]
+    },
+    "format": "duration",
+    "type": "string"
+   },
+   "schemas:45": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-prim-byte·post·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-byte·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-byte·post·responses·200·headers·value·schema"
+     ]
+    },
+    "format": "byte",
+    "type": "string"
+   },
+   "schemas:52": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:53"
+     }
+    }
+   },
+   "schemas:53": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   },
+   "GreyscaleColors": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "GreyscaleColors",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-param-prim-enum·post·parameters·1·schema",
+      "http://localhost:3000/__files/header.json#/components/schemas/paths·header-response-prim-enum·post·responses·200·headers·value·schema"
+     ]
+    },
+    "enum": [
+     "White",
+     "black",
+     "GREY"
+    ],
+    "x-ms-enum": {
+     "name": "GreyscaleColors",
+     "modelAsString": false
+    },
+    "type": "string"
+   }
+  },
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-existingkey·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-existingkey·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-protectedkey·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-integer·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-long·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-float·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-double·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-bool·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-string·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-date·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-datetime·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-datetimerfc1123·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-duration·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-byte·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-enum·post·responses·200",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-custom-x_ms_client_request_id-9c4d50ee_2d56_4cd3_8152_34347dc9f2b0·post·responses·200"
+     ]
+    },
+    "description": "Empty Response"
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-param-existingkey·post·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-existingkey·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-existingkey·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-protectedkey·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-protectedkey·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-integer·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-integer·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-long·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-long·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-float·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-float·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-double·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-double·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-bool·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-bool·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-string·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-string·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-date·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-date·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-datetime·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-datetime·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-datetimerfc1123·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-datetimerfc1123·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-duration·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-duration·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-byte·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-byte·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-param-prim-enum·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-enum·post·responses·default",
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-custom-x_ms_client_request_id-9c4d50ee_2d56_4cd3_8152_34347dc9f2b0·post·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:52"
+      }
+     }
+    }
+   },
+   "responses:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-existingkey·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-existingkey·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "User-Agent": {
+      "description": "response with header value \"User-Agent\": \"overwrite\"",
+      "$ref": "#/components/headers/headers:0"
+     }
+    }
+   },
+   "responses:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-protectedkey·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-protectedkey·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "Content-Type": {
+      "description": "response with header value \"Content-Type\": \"text/html\"",
+      "$ref": "#/components/headers/headers:0"
+     }
+    }
+   },
+   "responses:10": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-integer·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-integer·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header value \"value\": 1 or -2",
+      "$ref": "#/components/headers/headers:2"
+     }
+    }
+   },
+   "responses:14": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-long·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-long·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header value \"value\": 105 or -2",
+      "$ref": "#/components/headers/headers:3"
+     }
+    }
+   },
+   "responses:18": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-float·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-float·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header value \"value\": 0.07 or -3.0",
+      "$ref": "#/components/headers/headers:4"
+     }
+    }
+   },
+   "responses:22": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-double·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-double·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header value \"value\": 7e120 or -3.0",
+      "$ref": "#/components/headers/headers:5"
+     }
+    }
+   },
+   "responses:26": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-bool·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-bool·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header value \"value\": true or false",
+      "$ref": "#/components/headers/headers:6"
+     }
+    }
+   },
+   "responses:30": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-string·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-string·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header values \"The quick brown fox jumps over the lazy dog\" or null or \"\"",
+      "$ref": "#/components/headers/headers:0"
+     }
+    }
+   },
+   "responses:34": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-date·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-date·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header values \"2010-01-01\" or \"0001-01-01\"",
+      "$ref": "#/components/headers/headers:8"
+     }
+    }
+   },
+   "responses:38": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-datetime·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-datetime·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header values \"2010-01-01T12:34:56Z\" or \"0001-01-01T00:00:00Z\"",
+      "$ref": "#/components/headers/headers:9"
+     }
+    }
+   },
+   "responses:42": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-datetimerfc1123·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-datetimerfc1123·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header values \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"Mon, 01 Jan 0001 00:00:00 GMT\"",
+      "$ref": "#/components/headers/headers:10"
+     }
+    }
+   },
+   "responses:46": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-duration·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-duration·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header values \"P123DT22H14M12.011S\"",
+      "$ref": "#/components/headers/headers:11"
+     }
+    }
+   },
+   "responses:50": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-byte·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-byte·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header values \"啊齄丂狛狜隣郎隣兀﨩\"",
+      "$ref": "#/components/headers/headers:12"
+     }
+    }
+   },
+   "responses:54": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-enum·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/responses/paths·header-response-prim-enum·post·responses·200"
+     ]
+    },
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "description": "response with header values \"GREY\" or null",
+      "$ref": "#/components/headers/headers:13"
+     }
+    }
+   }
+  },
+  "headers": {
+   "headers:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-existingkey·post·responses·200·headers·user_agent",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-existingkey·post·responses·200·headers·user_agent",
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-protectedkey·post·responses·200·headers·content_type",
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-string·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "description": "response with header value \"User-Agent\": \"overwrite\""
+   },
+   "headers:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-integer·post·responses·200·headers·value",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-integer·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/schemas:5"
+    },
+    "description": "response with header value \"value\": 1 or -2"
+   },
+   "headers:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-long·post·responses·200·headers·value",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-long·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/schemas:9"
+    },
+    "description": "response with header value \"value\": 105 or -2"
+   },
+   "headers:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-float·post·responses·200·headers·value",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-float·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/schemas:13"
+    },
+    "description": "response with header value \"value\": 0.07 or -3.0"
+   },
+   "headers:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-double·post·responses·200·headers·value",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-double·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/schemas:17"
+    },
+    "description": "response with header value \"value\": 7e120 or -3.0"
+   },
+   "headers:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-bool·post·responses·200·headers·value",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-bool·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/schemas:21"
+    },
+    "description": "response with header value \"value\": true or false"
+   },
+   "headers:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-date·post·responses·200·headers·value",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-date·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/schemas:29"
+    },
+    "description": "response with header values \"2010-01-01\" or \"0001-01-01\""
+   },
+   "headers:9": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-datetime·post·responses·200·headers·value",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-datetime·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/schemas:33"
+    },
+    "description": "response with header values \"2010-01-01T12:34:56Z\" or \"0001-01-01T00:00:00Z\""
+   },
+   "headers:10": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-datetimerfc1123·post·responses·200·headers·value",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-datetimerfc1123·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/schemas:37"
+    },
+    "description": "response with header values \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"Mon, 01 Jan 0001 00:00:00 GMT\""
+   },
+   "headers:11": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-duration·post·responses·200·headers·value",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-duration·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/schemas:41"
+    },
+    "description": "response with header values \"P123DT22H14M12.011S\""
+   },
+   "headers:12": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-byte·post·responses·200·headers·value",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-byte·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/schemas:45"
+    },
+    "description": "response with header values \"啊齄丂狛狜隣郎隣兀﨩\""
+   },
+   "headers:13": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·header-response-prim-enum·post·responses·200·headers·value",
+     "originalLocations": [
+      "http://localhost:3000/__files/header.json#/components/headers/paths·header-response-prim-enum·post·responses·200·headers·value"
+     ]
+    },
+    "schema": {
+     "$ref": "#/components/schemas/GreyscaleColors"
+    },
+    "description": "response with header values \"GREY\" or null"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

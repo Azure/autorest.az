@@ -8,10 +8,13 @@ import { AzNamer } from '../plugins/aznamer';
 import { Modifiers } from '../plugins/modifiers';
 
 
+
 require('source-map-support').install();
+
+
 @suite class Process {
-    @test async 'acceptance-suite'() {
-        const folders = await readdir(`${__dirname}/../../test/scenarios/`);
+    @test async acceptanceSuite() {
+        const folders = await readdir(`${__dirname}/../../src/test/scenarios/`);
         for (const each of folders) {
             if ([
                 'body-formdata',
@@ -20,41 +23,48 @@ require('source-map-support').install();
                 console.log(`Skipping: ${each}`);
                 continue;
             }
-            /* if ('body-complex' !== each) {
+            /*if ('body-complex' !== each) {
               console.log(`Skipping: ${each}`);
               continue;
-            } */
+            }*/
             console.log(`Processing: ${each}`);
-
+            
             const cfg = {
                 modelerfour: { 'flatten-models': true, 'flatten-payloads': true },
                 'payload-flattening-threshold': 2
             }
-
-            const session = await createTestSession<CodeModel>(cfg, `${__dirname}/../../test/scenarios/${each}`, ['openapi-document.json'], []);
+            
+    
+            const session = await createTestSession<CodeModel>(cfg, `${__dirname}/../../src/test/scenarios/${each}`, ['openapi-document.json'], []);
+            
 
             // process OAI model
             const modeler = new AzNamer(session);
-
+            
             // go!
             const codeModel = await modeler.process();
-
+    
             const yaml = serialize(codeModel, codeModelSchema);
-            await mkdir(`${__dirname}/../../test/scenarios/${each}`);
-            await (writeFile(`${__dirname}/../../test/scenarios/${each}/modeler.yaml`, yaml));
-
-
+            await mkdir(`${__dirname}/../../src/test/scenarios/${each}`);
+            await (writeFile(`${__dirname}/../../src/test/scenarios/${each}/modeler.yaml`, yaml));
+    
+    
             const aznamer = new AzNamer(await createPassThruSession(cfg, yaml, 'code-model-v4'));
             const model = await aznamer.process();
             const aznameryaml = serialize(model, codeModelSchema);
-            await (writeFile(`${__dirname}/../../test/scenarios/${each}/aznamer.yaml`, aznameryaml));
+            await (writeFile(`${__dirname}/../../src/test/scenarios/${each}/aznamer.yaml`, aznameryaml));
       
             const modifiers = new Modifiers(await createPassThruSession(cfg, aznameryaml, 'code-model-v4'));
             const modified = await modifiers.process();
             const modifieryaml = serialize(modified, codeModelSchema);
-            await (writeFile(`${__dirname}/../../test/scenarios/${each}/modifier.yaml`, modifieryaml));
-
-
+            await (writeFile(`${__dirname}/../../src/test/scenarios/${each}/modifier.yaml`, modifieryaml));
+    
         }
+    }
+}
+
+@suite class Hello {
+    @test world() {
+        console.log("test success");
     }
 }

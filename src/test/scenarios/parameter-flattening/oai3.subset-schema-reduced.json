@@ -1,0 +1,255 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "x-ms-code-generation-settings": {
+   "ft": 2
+  },
+  "title": "parameter-flattening",
+  "description": "Resource Flattening for AutoRest",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/parameterFlattening/{resourceGroupName}/{availabilitySetName}",
+    "originalLocations": [
+     "http://localhost:3000/__files/parameter-flattening.json#/paths/~1parameterFlattening~1{resourceGroupName}~1{availabilitySetName}"
+    ]
+   }
+  },
+  "path:0.patch": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/parameterFlattening/{resourceGroupName}/{availabilitySetName}",
+    "originalLocations": [
+     "http://localhost:3000/__files/parameter-flattening.json#/paths/~1parameterFlattening~1{resourceGroupName}~1{availabilitySetName}"
+    ]
+   },
+   "patch": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "tags": [
+     "AvailabilitySets"
+    ],
+    "operationId": "AvailabilitySets_Update",
+    "description": "Updates the tags for an availability set.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:0",
+      "description": "The name of the resource group."
+     },
+     {
+      "$ref": "#/components/parameters/parameters:1",
+      "description": "The name of the storage availability set.",
+      "x-ms-client-name": "avset"
+     }
+    ],
+    "requestBody": {
+     "description": "The tags.",
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 2,
+    "responses": {
+     "200": {
+      "description": "OK",
+      "$ref": "#/components/responses/responses:0"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "parameters:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·parameterflattening-resourcegroupname-availabilitysetname·patch·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/parameter-flattening.json#/components/parameters/paths·parameterflattening-resourcegroupname-availabilitysetname·patch·parameters·0"
+     ]
+    },
+    "name": "resourceGroupName",
+    "in": "path",
+    "description": "The name of the resource group.",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·parameterflattening-resourcegroupname-availabilitysetname·patch·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/parameter-flattening.json#/components/parameters/paths·parameterflattening-resourcegroupname-availabilitysetname·patch·parameters·1"
+     ]
+    },
+    "name": "availabilitySetName",
+    "in": "path",
+    "description": "The name of the storage availability set.",
+    "x-ms-client-name": "avset",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:1"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·parameterflattening-resourcegroupname-availabilitysetname·patch·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/parameter-flattening.json#/components/schemas/paths·parameterflattening-resourcegroupname-availabilitysetname·patch·parameters·0·schema",
+      "http://localhost:3000/__files/parameter-flattening.json#/components/schemas/components·schemas·availabilitysetupdateparameters·properties·tags·additionalproperties"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·parameterflattening-resourcegroupname-availabilitysetname·patch·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/parameter-flattening.json#/components/schemas/paths·parameterflattening-resourcegroupname-availabilitysetname·patch·parameters·1·schema"
+     ]
+    },
+    "maxLength": 80,
+    "type": "string"
+   },
+   "schemas:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "AvailabilitySetUpdateParameters",
+     "originalLocations": [
+      "http://localhost:3000/__files/parameter-flattening.json#/components/schemas/AvailabilitySetUpdateParameters"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "tags": {
+      "description": "A description about the set of tags.",
+      "$ref": "#/components/schemas/schemas:3"
+     }
+    },
+    "required": [
+     "tags"
+    ]
+   },
+   "schemas:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "AvailabilitySetUpdateParameters-tags",
+     "originalLocations": [
+      "http://localhost:3000/__files/parameter-flattening.json#/components/schemas/AvailabilitySetUpdateParameters-tags"
+     ]
+    },
+    "type": "object",
+    "title": "A set of tags.",
+    "description": "A description about the set of tags.",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:0"
+    }
+   }
+  },
+  "requestBodies": {
+   "requestBodies:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·parameterflattening-resourcegroupname-availabilitysetname·patch·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/parameter-flattening.json#/components/requestBodies/paths·parameterflattening-resourcegroupname-availabilitysetname·patch·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:2"
+      }
+     }
+    },
+    "required": true,
+    "description": "The tags.",
+    "x-ms-requestBody-name": "tags"
+   }
+  },
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·parameterflattening-resourcegroupname-availabilitysetname·patch·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/parameter-flattening.json#/components/responses/paths·parameterflattening-resourcegroupname-availabilitysetname·patch·responses·200"
+     ]
+    },
+    "description": "OK"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

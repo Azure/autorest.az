@@ -1,0 +1,5604 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "url",
+  "description": "Test Infrastructure for AutoRest",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/bool/true/{boolPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1bool~1true~1{boolPath}"
+    ]
+   }
+  },
+  "path:0.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/bool/true/{boolPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1bool~1true~1{boolPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_getBooleanTrue",
+    "description": "Get true Boolean value on path",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:0",
+      "description": "true boolean value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received the true boolean value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:1": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/bool/false/{boolPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1bool~1false~1{boolPath}"
+    ]
+   }
+  },
+  "path:1.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/bool/false/{boolPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1bool~1false~1{boolPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_getBooleanFalse",
+    "description": "Get false Boolean value on path",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:1",
+      "description": "false boolean value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received the false Boolean value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:2": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/int/1000000/{intPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1int~11000000~1{intPath}"
+    ]
+   }
+  },
+  "path:2.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/int/1000000/{intPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1int~11000000~1{intPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_getIntOneMillion",
+    "description": "Get '1000000' integer value",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "'1000000' integer value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '1000000' integer value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:3": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/int/-1000000/{intPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1int~1-1000000~1{intPath}"
+    ]
+   }
+  },
+  "path:3.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/int/-1000000/{intPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1int~1-1000000~1{intPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_getIntNegativeOneMillion",
+    "description": "Get '-1000000' integer value",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:3",
+      "description": "'-1000000' integer value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '-1000000' integer value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:4": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/long/10000000000/{longPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1long~110000000000~1{longPath}"
+    ]
+   }
+  },
+  "path:4.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/long/10000000000/{longPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1long~110000000000~1{longPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_getTenBillion",
+    "description": "Get '10000000000' 64 bit integer value",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:4",
+      "description": "'10000000000' 64 bit integer value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '10000000000' integer value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:5": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/long/-10000000000/{longPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1long~1-10000000000~1{longPath}"
+    ]
+   }
+  },
+  "path:5.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/long/-10000000000/{longPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1long~1-10000000000~1{longPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_getNegativeTenBillion",
+    "description": "Get '-10000000000' 64 bit integer value",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:5",
+      "description": "'-10000000000' 64 bit integer value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '-10000000000' integer value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:6": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/float/1.034E+20/{floatPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1float~11.034E+20~1{floatPath}"
+    ]
+   }
+  },
+  "path:6.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/float/1.034E+20/{floatPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1float~11.034E+20~1{floatPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_floatScientificPositive",
+    "description": "Get '1.034E+20' numeric value",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:6",
+      "description": "'1.034E+20'numeric value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '1.034E+20' numeric value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:7": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/float/-1.034E-20/{floatPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1float~1-1.034E-20~1{floatPath}"
+    ]
+   }
+  },
+  "path:7.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/float/-1.034E-20/{floatPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1float~1-1.034E-20~1{floatPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_floatScientificNegative",
+    "description": "Get '-1.034E-20' numeric value",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:7",
+      "description": "'-1.034E-20'numeric value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '-1.034E-20' numeric value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:8": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/double/9999999.999/{doublePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1double~19999999.999~1{doublePath}"
+    ]
+   }
+  },
+  "path:8.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/double/9999999.999/{doublePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1double~19999999.999~1{doublePath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_doubleDecimalPositive",
+    "description": "Get '9999999.999' numeric value",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:8",
+      "description": "'9999999.999'numeric value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '9999999.999' numeric value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:9": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/double/-9999999.999/{doublePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1double~1-9999999.999~1{doublePath}"
+    ]
+   }
+  },
+  "path:9.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/double/-9999999.999/{doublePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1double~1-9999999.999~1{doublePath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_doubleDecimalNegative",
+    "description": "Get '-9999999.999' numeric value",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:9",
+      "description": "'-9999999.999'numeric value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '-9999999.999' numeric value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:10": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/unicode/{stringPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1unicode~1{stringPath}"
+    ]
+   }
+  },
+  "path:10.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/unicode/{stringPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1unicode~1{stringPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_stringUnicode",
+    "description": "Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:10",
+      "description": "'啊齄丂狛狜隣郎隣兀﨩'multi-byte string value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:11": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend/{stringPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend~1{stringPath}"
+    ]
+   }
+  },
+  "path:11.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend/{stringPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend~1{stringPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_stringUrlEncoded",
+    "description": "Get 'begin!*'();:@ &=+$,/?#[]end",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:11",
+      "description": "'begin!*'();:@ &=+$,/?#[]end' url encoded string value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received 'begin!*'();:@ &=+$,/?#[]end' url encoded string value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:12": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/empty/{stringPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1empty~1{stringPath}"
+    ]
+   }
+  },
+  "path:12.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/empty/{stringPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1empty~1{stringPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_stringEmpty",
+    "description": "Get ''",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:12",
+      "description": "'' string value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '' string value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:13": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/null/{stringPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1null~1{stringPath}"
+    ]
+   }
+  },
+  "path:13.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/null/{stringPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1null~1{stringPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_stringNull",
+    "description": "Get null (should throw)",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:13",
+      "description": "null string value"
+     }
+    ],
+    "responses": {
+     "400": {
+      "description": "You should not reach this, null should throw",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:14": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/enum/green%20color/{enumPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1enum~1green%20color~1{enumPath}"
+    ]
+   }
+  },
+  "path:14.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/enum/green%20color/{enumPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1enum~1green%20color~1{enumPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_enumValid",
+    "description": "Get using uri with 'green color' in path parameter",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:14",
+      "description": "send the value green"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received 'green color' in url encoded enum value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:15": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/null/{enumPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1null~1{enumPath}"
+    ]
+   }
+  },
+  "path:15.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/null/{enumPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1null~1{enumPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_enumNull",
+    "description": "Get null (should throw on the client before the request is sent on wire)",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:14",
+      "description": "send null should throw"
+     }
+    ],
+    "responses": {
+     "400": {
+      "description": "You should not reach this, null should throw",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:16": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/byte/multibyte/{bytePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1byte~1multibyte~1{bytePath}"
+    ]
+   }
+  },
+  "path:16.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/byte/multibyte/{bytePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1byte~1multibyte~1{bytePath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_byteMultiByte",
+    "description": "Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:16",
+      "description": "'啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:17": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/byte/empty/{bytePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1byte~1empty~1{bytePath}"
+    ]
+   }
+  },
+  "path:17.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/byte/empty/{bytePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1byte~1empty~1{bytePath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_byteEmpty",
+    "description": "Get '' as byte array",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:17",
+      "description": "'' as byte array"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '' as byte array",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:18": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/byte/null/{bytePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1byte~1null~1{bytePath}"
+    ]
+   }
+  },
+  "path:18.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/byte/null/{bytePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1byte~1null~1{bytePath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_byteNull",
+    "description": "Get null as byte array (should throw)",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:16",
+      "description": "null as byte array (should throw)"
+     }
+    ],
+    "responses": {
+     "400": {
+      "description": "Failure - client-side code should throw at null path parameter",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:19": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/date/2012-01-01/{datePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1date~12012-01-01~1{datePath}"
+    ]
+   }
+  },
+  "path:19.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/date/2012-01-01/{datePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1date~12012-01-01~1{datePath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_DateValid",
+    "description": "Get '2012-01-01' as date",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:19",
+      "description": "'2012-01-01' as date"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '2012-01-01' as date",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:20": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/date/null/{datePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1date~1null~1{datePath}"
+    ]
+   }
+  },
+  "path:20.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/date/null/{datePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1date~1null~1{datePath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_DateNull",
+    "description": "Get null as date - this should throw or be unusable on the client side, depending on date representation",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:20",
+      "description": "null as date (should throw)"
+     }
+    ],
+    "responses": {
+     "400": {
+      "description": "This should never happen - client code should not accept this",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:21": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/datetime/2012-01-01T01%3A01%3A01Z/{dateTimePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1datetime~12012-01-01T01%3A01%3A01Z~1{dateTimePath}"
+    ]
+   }
+  },
+  "path:21.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/datetime/2012-01-01T01%3A01%3A01Z/{dateTimePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1datetime~12012-01-01T01%3A01%3A01Z~1{dateTimePath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_DateTimeValid",
+    "description": "Get '2012-01-01T01:01:01Z' as date-time",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:21",
+      "description": "'2012-01-01T01:01:01Z' as date-time"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '2012-01-01T01:01:01Z' as date-time",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:22": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/datetime/null/{dateTimePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1datetime~1null~1{dateTimePath}"
+    ]
+   }
+  },
+  "path:22.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/datetime/null/{dateTimePath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1datetime~1null~1{dateTimePath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_DateTimeNull",
+    "description": "Get null as date-time, should be disallowed or throw depending on representation of date-time",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:22",
+      "description": "null as date-time"
+     }
+    ],
+    "responses": {
+     "400": {
+      "description": "This should not occur: the test fails if you contact the server",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:23": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/bG9yZW0/{base64UrlPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1bG9yZW0~1{base64UrlPath}"
+    ]
+   }
+  },
+  "path:23.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/string/bG9yZW0/{base64UrlPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1string~1bG9yZW0~1{base64UrlPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_base64Url",
+    "description": "Get 'lorem' encoded value as 'bG9yZW0' (base64url)",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:23",
+      "description": "base64url encoded value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received 'lorem' encoded value as 'bG9yZW0' (base64url)",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:24": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/{arrayPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1array~1ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c~1{arrayPath}"
+    ]
+   }
+  },
+  "path:24.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/{arrayPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1array~1ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c~1{arrayPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_ArrayCsvInPath",
+    "description": "Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:24",
+      "description": "an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received /paths/array/ArrayPath1,begin!*'();:@ &=+$,/?#[]end,,/ArrayPath1,begin!*'();:@ &=+$,/?#[]end,,",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:25": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/int/1460505600/{unixTimeUrlPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1int~11460505600~1{unixTimeUrlPath}"
+    ]
+   }
+  },
+  "path:25.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/paths/int/1460505600/{unixTimeUrlPath}",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1paths~1int~11460505600~1{unixTimeUrlPath}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "paths_unixTimeUrl",
+    "description": "Get the date 2016-04-13 encoded value as '1460505600' (Unix time)",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:25",
+      "description": "Unix time encoded value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received date 2016-04-13 encoded value as '1460505600' (Unix time)",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:26": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/bool/true",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1bool~1true"
+    ]
+   }
+  },
+  "path:26.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/bool/true",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1bool~1true"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_getBooleanTrue",
+    "description": "Get true Boolean value on path",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:26",
+      "description": "true boolean value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received the true boolean value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:27": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/bool/false",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1bool~1false"
+    ]
+   }
+  },
+  "path:27.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/bool/false",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1bool~1false"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_getBooleanFalse",
+    "description": "Get false Boolean value on path",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:27",
+      "description": "false boolean value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received the false Boolean value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:28": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/bool/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1bool~1null"
+    ]
+   }
+  },
+  "path:28.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/bool/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1bool~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_getBooleanNull",
+    "description": "Get null Boolean value on query (query string should be absent)",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:28",
+      "description": "null boolean value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received the null Boolean value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:29": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/int/1000000",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1int~11000000"
+    ]
+   }
+  },
+  "path:29.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/int/1000000",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1int~11000000"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_getIntOneMillion",
+    "description": "Get '1000000' integer value",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:29",
+      "description": "'1000000' integer value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '1000000' integer value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:30": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/int/-1000000",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1int~1-1000000"
+    ]
+   }
+  },
+  "path:30.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/int/-1000000",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1int~1-1000000"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_getIntNegativeOneMillion",
+    "description": "Get '-1000000' integer value",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:30",
+      "description": "'-1000000' integer value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '-1000000' integer value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:31": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/int/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1int~1null"
+    ]
+   }
+  },
+  "path:31.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/int/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1int~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_getIntNull",
+    "description": "Get null integer value (no query parameter)",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:31",
+      "description": "null integer value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received null integer value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:32": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/long/10000000000",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1long~110000000000"
+    ]
+   }
+  },
+  "path:32.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/long/10000000000",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1long~110000000000"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_getTenBillion",
+    "description": "Get '10000000000' 64 bit integer value",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:32",
+      "description": "'10000000000' 64 bit integer value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '10000000000' integer value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:33": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/long/-10000000000",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1long~1-10000000000"
+    ]
+   }
+  },
+  "path:33.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/long/-10000000000",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1long~1-10000000000"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_getNegativeTenBillion",
+    "description": "Get '-10000000000' 64 bit integer value",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:33",
+      "description": "'-10000000000' 64 bit integer value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '-10000000000' integer value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:34": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/long/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1long~1null"
+    ]
+   }
+  },
+  "path:34.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/long/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1long~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_getLongNull",
+    "description": "Get 'null 64 bit integer value (no query param in uri)",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:34",
+      "description": "null 64 bit integer value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received null 64-bit integer value (no param in uri)",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:35": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/float/1.034E+20",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1float~11.034E+20"
+    ]
+   }
+  },
+  "path:35.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/float/1.034E+20",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1float~11.034E+20"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_floatScientificPositive",
+    "description": "Get '1.034E+20' numeric value",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:35",
+      "description": "'1.034E+20'numeric value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '1.034E+20' numeric value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:36": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/float/-1.034E-20",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1float~1-1.034E-20"
+    ]
+   }
+  },
+  "path:36.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/float/-1.034E-20",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1float~1-1.034E-20"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_floatScientificNegative",
+    "description": "Get '-1.034E-20' numeric value",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:36",
+      "description": "'-1.034E-20'numeric value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '-1.034E-20' numeric value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:37": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/float/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1float~1null"
+    ]
+   }
+  },
+  "path:37.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/float/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1float~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_floatNull",
+    "description": "Get null numeric value (no query parameter)",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:37",
+      "description": "null numeric value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received null numeric value (no query parameter)",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:38": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/double/9999999.999",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1double~19999999.999"
+    ]
+   }
+  },
+  "path:38.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/double/9999999.999",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1double~19999999.999"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_doubleDecimalPositive",
+    "description": "Get '9999999.999' numeric value",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:38",
+      "description": "'9999999.999'numeric value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '9999999.999' numeric value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:39": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/double/-9999999.999",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1double~1-9999999.999"
+    ]
+   }
+  },
+  "path:39.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/double/-9999999.999",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1double~1-9999999.999"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_doubleDecimalNegative",
+    "description": "Get '-9999999.999' numeric value",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:39",
+      "description": "'-9999999.999'numeric value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '-9999999.999' numeric value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:40": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/double/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1double~1null"
+    ]
+   }
+  },
+  "path:40.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/double/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1double~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_doubleNull",
+    "description": "Get null numeric value (no query parameter)",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:40",
+      "description": "null numeric value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received null numeric value (no query parameter)",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:41": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/string/unicode/",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1string~1unicode~1"
+    ]
+   }
+  },
+  "path:41.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/string/unicode/",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1string~1unicode~1"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_stringUnicode",
+    "description": "Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:41",
+      "description": "'啊齄丂狛狜隣郎隣兀﨩'multi-byte string value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:42": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1string~1begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend"
+    ]
+   }
+  },
+  "path:42.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1string~1begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_stringUrlEncoded",
+    "description": "Get 'begin!*'();:@ &=+$,/?#[]end",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:42",
+      "description": "'begin!*'();:@ &=+$,/?#[]end' url encoded string value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received 'begin!*'();:@ &=+$,/?#[]end' url encoded string value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:43": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/string/empty",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1string~1empty"
+    ]
+   }
+  },
+  "path:43.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/string/empty",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1string~1empty"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_stringEmpty",
+    "description": "Get ''",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:43",
+      "description": "'' string value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '' string value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:44": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/string/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1string~1null"
+    ]
+   }
+  },
+  "path:44.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/string/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1string~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_stringNull",
+    "description": "Get null (no query parameter in url)",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:44",
+      "description": "null string value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received null parameter (no query string in url)",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:45": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/enum/green%20color",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1enum~1green%20color"
+    ]
+   }
+  },
+  "path:45.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/enum/green%20color",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1enum~1green%20color"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_enumValid",
+    "description": "Get using uri with query parameter 'green color'",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:45",
+      "description": "'green color' enum value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received 'green color' string value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:46": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/enum/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1enum~1null"
+    ]
+   }
+  },
+  "path:46.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/enum/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1enum~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_enumNull",
+    "description": "Get null (no query parameter in url)",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:45",
+      "description": "null string value"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received null parameter (no query string in url)",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:47": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/byte/multibyte",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1byte~1multibyte"
+    ]
+   }
+  },
+  "path:47.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/byte/multibyte",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1byte~1multibyte"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_byteMultiByte",
+    "description": "Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:47",
+      "description": "'啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:48": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/byte/empty",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1byte~1empty"
+    ]
+   }
+  },
+  "path:48.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/byte/empty",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1byte~1empty"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_byteEmpty",
+    "description": "Get '' as byte array",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:48",
+      "description": "'' as byte array"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '' as byte array",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:49": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/byte/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1byte~1null"
+    ]
+   }
+  },
+  "path:49.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/byte/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1byte~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_byteNull",
+    "description": "Get null as byte array (no query parameters in uri)",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:47",
+      "description": "null as byte array (no query parameters in uri)"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received no query parameters in uri",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:50": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/date/2012-01-01",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1date~12012-01-01"
+    ]
+   }
+  },
+  "path:50.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/date/2012-01-01",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1date~12012-01-01"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_DateValid",
+    "description": "Get '2012-01-01' as date",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:50",
+      "description": "'2012-01-01' as date"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '2012-01-01' as date",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:51": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/date/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1date~1null"
+    ]
+   }
+  },
+  "path:51.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/date/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1date~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_DateNull",
+    "description": "Get null as date - this should result in no query parameters in uri",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:51",
+      "description": "null as date (no query parameters in uri)"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received no query parameters in uri",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:52": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/datetime/2012-01-01T01%3A01%3A01Z",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1datetime~12012-01-01T01%3A01%3A01Z"
+    ]
+   }
+  },
+  "path:52.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/datetime/2012-01-01T01%3A01%3A01Z",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1datetime~12012-01-01T01%3A01%3A01Z"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_DateTimeValid",
+    "description": "Get '2012-01-01T01:01:01Z' as date-time",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:52",
+      "description": "'2012-01-01T01:01:01Z' as date-time"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully Received '2012-01-01T01:01:01Z' as date-time",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:53": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/datetime/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1datetime~1null"
+    ]
+   }
+  },
+  "path:53.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/datetime/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1datetime~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_DateTimeNull",
+    "description": "Get null as date-time, should result in no query parameters in uri",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:53",
+      "description": "null as date-time (no query parameters)"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received no query parameters in uri",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:54": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/csv/string/valid",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1csv~1string~1valid"
+    ]
+   }
+  },
+  "path:54.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/csv/string/valid",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1csv~1string~1valid"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_ArrayStringCsvValid",
+    "description": "Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:54",
+      "description": "an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received ?arrayQuery=ArrayQuery1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:55": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/csv/string/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1csv~1string~1null"
+    ]
+   }
+  },
+  "path:55.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/csv/string/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1csv~1string~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_ArrayStringCsvNull",
+    "description": "Get a null array of string using the csv-array format",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:54",
+      "description": "a null array of string using the csv-array format"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received no query parameters",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:56": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/csv/string/empty",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1csv~1string~1empty"
+    ]
+   }
+  },
+  "path:56.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/csv/string/empty",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1csv~1string~1empty"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_ArrayStringCsvEmpty",
+    "description": "Get an empty array [] of string using the csv-array format",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:54",
+      "description": "an empty array [] of string using the csv-array format"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received no query parameters",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:57": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/ssv/string/valid",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1ssv~1string~1valid"
+    ]
+   }
+  },
+  "path:57.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/ssv/string/valid",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1ssv~1string~1valid"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_ArrayStringSsvValid",
+    "description": "Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:57",
+      "description": "an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received ?arrayQuery=ArrayQuery1%20begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%20%20",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:58": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/tsv/string/valid",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1tsv~1string~1valid"
+    ]
+   }
+  },
+  "path:58.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/tsv/string/valid",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1tsv~1string~1valid"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_ArrayStringTsvValid",
+    "description": "Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:58",
+      "description": "an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received ?arrayQuery=ArrayQuery1\tbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend\t\t",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:59": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/pipes/string/valid",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1pipes~1string~1valid"
+    ]
+   }
+  },
+  "path:59.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/queries/array/pipes/string/valid",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1queries~1array~1pipes~1string~1valid"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "queries_ArrayStringPipesValid",
+    "description": "Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format",
+    "tags": [
+     "query Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:59",
+      "description": "an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received ?arrayQuery=ArrayQuery1%|begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend||",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:60": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/pathItemStringQuery/localStringQuery",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1pathitem~1nullable~1globalStringPath~1{globalStringPath}~1pathItemStringPath~1{pathItemStringPath}~1localStringPath~1{localStringPath}~1globalStringQuery~1pathItemStringQuery~1localStringQuery"
+    ]
+   }
+  },
+  "path:60.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/pathItemStringQuery/localStringQuery",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1pathitem~1nullable~1globalStringPath~1{globalStringPath}~1pathItemStringPath~1{pathItemStringPath}~1localStringPath~1{localStringPath}~1globalStringQuery~1pathItemStringQuery~1localStringQuery"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:60",
+      "description": "A string value 'pathItemStringPath' that appears in the path"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:61",
+      "description": "A string value 'pathItemStringQuery' that appears as a query parameter"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:76"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:77"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:62",
+      "description": "should contain value 'localStringPath'"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:63",
+      "description": "should contain value 'localStringQuery'"
+     }
+    ],
+    "operationId": "pathItems_getAllWithValues",
+    "description": "send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery'",
+    "tags": [
+     "query Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received all query parameters in uri",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:61": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/localStringQuery",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1pathitem~1nullable~1globalStringPath~1{globalStringPath}~1pathItemStringPath~1{pathItemStringPath}~1localStringPath~1{localStringPath}~1null~1pathItemStringQuery~1localStringQuery"
+    ]
+   }
+  },
+  "path:61.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/localStringQuery",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1pathitem~1nullable~1globalStringPath~1{globalStringPath}~1pathItemStringPath~1{pathItemStringPath}~1localStringPath~1{localStringPath}~1null~1pathItemStringQuery~1localStringQuery"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:60",
+      "description": "A string value 'pathItemStringPath' that appears in the path"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:61",
+      "description": "A string value 'pathItemStringQuery' that appears as a query parameter"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:76"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:77"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:62",
+      "description": "should contain value 'localStringPath'"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:63",
+      "description": "should contain value 'localStringQuery'"
+     }
+    ],
+    "operationId": "pathItems_getGlobalQueryNull",
+    "description": "send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery'",
+    "tags": [
+     "query Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received all query parameters but global",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:62": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1pathitem~1nullable~1globalStringPath~1{globalStringPath}~1pathItemStringPath~1{pathItemStringPath}~1localStringPath~1{localStringPath}~1null~1pathItemStringQuery~1null"
+    ]
+   }
+  },
+  "path:62.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1pathitem~1nullable~1globalStringPath~1{globalStringPath}~1pathItemStringPath~1{pathItemStringPath}~1localStringPath~1{localStringPath}~1null~1pathItemStringQuery~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:60",
+      "description": "A string value 'pathItemStringPath' that appears in the path"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:61",
+      "description": "A string value 'pathItemStringQuery' that appears as a query parameter"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:76"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:77"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:62",
+      "description": "should contain value 'localStringPath'"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:63",
+      "description": "should contain null value"
+     }
+    ],
+    "operationId": "pathItems_getGlobalAndLocalQueryNull",
+    "description": "send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery=null",
+    "tags": [
+     "query Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received only the pathItemQuery query parameter",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:63": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/null/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1pathitem~1nullable~1globalStringPath~1{globalStringPath}~1pathItemStringPath~1{pathItemStringPath}~1localStringPath~1{localStringPath}~1globalStringQuery~1null~1null"
+    ]
+   }
+  },
+  "path:63.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/null/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/url.json#/paths/~1pathitem~1nullable~1globalStringPath~1{globalStringPath}~1pathItemStringPath~1{pathItemStringPath}~1localStringPath~1{localStringPath}~1globalStringQuery~1null~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:60",
+      "description": "A string value 'pathItemStringPath' that appears in the path"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:61",
+      "description": "should contain value null"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:76"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:77"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:62",
+      "description": "should contain value 'localStringPath'"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:63",
+      "description": "should contain value null"
+     }
+    ],
+    "operationId": "pathItems_getLocalPathItemQueryNull",
+    "description": "send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery=null, localStringQuery=null",
+    "tags": [
+     "query Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received only global query parameter",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "parameters:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-bool-true-boolpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-bool-true-boolpath·get·parameters·0"
+     ]
+    },
+    "name": "boolPath",
+    "in": "path",
+    "description": "true boolean value",
+    "schema": {
+     "enum": [
+      true
+     ],
+     "type": "boolean"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-bool-false-boolpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-bool-false-boolpath·get·parameters·0"
+     ]
+    },
+    "name": "boolPath",
+    "in": "path",
+    "description": "false boolean value",
+    "schema": {
+     "enum": [
+      false
+     ],
+     "type": "boolean"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-int-1000000-intpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-int-1000000-intpath·get·parameters·0"
+     ]
+    },
+    "name": "intPath",
+    "in": "path",
+    "description": "'1000000' integer value",
+    "schema": {
+     "enum": [
+      1000000
+     ],
+     "type": "integer"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-int-_1000000-intpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-int-_1000000-intpath·get·parameters·0"
+     ]
+    },
+    "name": "intPath",
+    "in": "path",
+    "description": "'-1000000' integer value",
+    "schema": {
+     "enum": [
+      -1000000
+     ],
+     "type": "integer"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-long-10000000000-longpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-long-10000000000-longpath·get·parameters·0"
+     ]
+    },
+    "name": "longPath",
+    "in": "path",
+    "description": "'10000000000' 64 bit integer value",
+    "schema": {
+     "format": "int64",
+     "enum": [
+      10000000000
+     ],
+     "type": "integer"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-long-_10000000000-longpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-long-_10000000000-longpath·get·parameters·0"
+     ]
+    },
+    "name": "longPath",
+    "in": "path",
+    "description": "'-10000000000' 64 bit integer value",
+    "schema": {
+     "format": "int64",
+     "enum": [
+      -10000000000
+     ],
+     "type": "integer"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-float-1-034e-20-floatpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-float-1-034e-20-floatpath·get·parameters·0"
+     ]
+    },
+    "name": "floatPath",
+    "in": "path",
+    "description": "'1.034E+20'numeric value",
+    "schema": {
+     "enum": [
+      103400000000000000000
+     ],
+     "type": "number"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:7": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-float-_1-034e_20-floatpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-float-_1-034e_20-floatpath·get·parameters·0"
+     ]
+    },
+    "name": "floatPath",
+    "in": "path",
+    "description": "'-1.034E-20'numeric value",
+    "schema": {
+     "enum": [
+      -1.034e-20
+     ],
+     "type": "number"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-double-9999999-999-doublepath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-double-9999999-999-doublepath·get·parameters·0"
+     ]
+    },
+    "name": "doublePath",
+    "in": "path",
+    "description": "'9999999.999'numeric value",
+    "schema": {
+     "format": "double",
+     "enum": [
+      9999999.999
+     ],
+     "type": "number"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:9": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-double-_9999999-999-doublepath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-double-_9999999-999-doublepath·get·parameters·0"
+     ]
+    },
+    "name": "doublePath",
+    "in": "path",
+    "description": "'-9999999.999'numeric value",
+    "schema": {
+     "format": "double",
+     "enum": [
+      -9999999.999
+     ],
+     "type": "number"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:10": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-string-unicode-stringpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-string-unicode-stringpath·get·parameters·0"
+     ]
+    },
+    "name": "stringPath",
+    "in": "path",
+    "description": "'啊齄丂狛狜隣郎隣兀﨩'multi-byte string value",
+    "schema": {
+     "enum": [
+      "啊齄丂狛狜隣郎隣兀﨩"
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:11": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-string-begin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend-stringpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-string-begin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend-stringpath·get·parameters·0"
+     ]
+    },
+    "name": "stringPath",
+    "in": "path",
+    "description": "'begin!*'();:@ &=+$,/?#[]end' url encoded string value",
+    "schema": {
+     "enum": [
+      "begin!*'();:@ &=+$,/?#[]end"
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:12": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-string-empty-stringpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-string-empty-stringpath·get·parameters·0"
+     ]
+    },
+    "name": "stringPath",
+    "in": "path",
+    "description": "'' string value",
+    "schema": {
+     "enum": [
+      ""
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:13": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-string-null-stringpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-string-null-stringpath·get·parameters·0"
+     ]
+    },
+    "name": "stringPath",
+    "in": "path",
+    "description": "null string value",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:14": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-enum-green-20color-enumpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-enum-green-20color-enumpath·get·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-string-null-enumpath·get·parameters·0"
+     ]
+    },
+    "name": "enumPath",
+    "in": "path",
+    "description": "send the value green",
+    "schema": {
+     "$ref": "#/components/schemas/UriColor"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:16": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-byte-multibyte-bytepath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-byte-multibyte-bytepath·get·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-byte-null-bytepath·get·parameters·0"
+     ]
+    },
+    "name": "bytePath",
+    "in": "path",
+    "description": "'啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:3"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:17": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-byte-empty-bytepath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-byte-empty-bytepath·get·parameters·0"
+     ]
+    },
+    "name": "bytePath",
+    "in": "path",
+    "description": "'' as byte array",
+    "schema": {
+     "format": "byte",
+     "enum": [
+      ""
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:19": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-date-2012_01_01-datepath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-date-2012_01_01-datepath·get·parameters·0"
+     ]
+    },
+    "name": "datePath",
+    "in": "path",
+    "description": "'2012-01-01' as date",
+    "schema": {
+     "format": "date",
+     "enum": [
+      "2012-01-01"
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:20": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-date-null-datepath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-date-null-datepath·get·parameters·0"
+     ]
+    },
+    "name": "datePath",
+    "in": "path",
+    "description": "null as date (should throw)",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:5"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:21": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-datetime-2012_01_01t01-3a01-3a01z-datetimepath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-datetime-2012_01_01t01-3a01-3a01z-datetimepath·get·parameters·0"
+     ]
+    },
+    "name": "dateTimePath",
+    "in": "path",
+    "description": "'2012-01-01T01:01:01Z' as date-time",
+    "schema": {
+     "format": "date-time",
+     "enum": [
+      "2012-01-01T01:01:01Z"
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:22": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-datetime-null-datetimepath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-datetime-null-datetimepath·get·parameters·0"
+     ]
+    },
+    "name": "dateTimePath",
+    "in": "path",
+    "description": "null as date-time",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:6"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:23": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-string-bg9yzw0-base64urlpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-string-bg9yzw0-base64urlpath·get·parameters·0"
+     ]
+    },
+    "name": "base64UrlPath",
+    "in": "path",
+    "description": "base64url encoded value",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:7"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:24": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-array-arraypath1-2cbegin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend-2c-2c-arraypath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-array-arraypath1-2cbegin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend-2c-2c-arraypath·get·parameters·0"
+     ]
+    },
+    "name": "arrayPath",
+    "in": "path",
+    "description": "an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format",
+    "style": "simple",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:8"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:25": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-int-1460505600-unixtimeurlpath·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·paths-int-1460505600-unixtimeurlpath·get·parameters·0"
+     ]
+    },
+    "name": "unixTimeUrlPath",
+    "in": "path",
+    "description": "Unix time encoded value",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:10"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:26": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-bool-true·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-bool-true·get·parameters·0"
+     ]
+    },
+    "name": "boolQuery",
+    "in": "query",
+    "description": "true boolean value",
+    "schema": {
+     "enum": [
+      true
+     ],
+     "type": "boolean"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:27": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-bool-false·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-bool-false·get·parameters·0"
+     ]
+    },
+    "name": "boolQuery",
+    "in": "query",
+    "description": "false boolean value",
+    "schema": {
+     "enum": [
+      false
+     ],
+     "type": "boolean"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:28": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-bool-null·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-bool-null·get·parameters·0"
+     ]
+    },
+    "name": "boolQuery",
+    "in": "query",
+    "description": "null boolean value",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:11"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:29": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-int-1000000·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-int-1000000·get·parameters·0"
+     ]
+    },
+    "name": "intQuery",
+    "in": "query",
+    "description": "'1000000' integer value",
+    "schema": {
+     "enum": [
+      1000000
+     ],
+     "type": "integer"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:30": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-int-_1000000·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-int-_1000000·get·parameters·0"
+     ]
+    },
+    "name": "intQuery",
+    "in": "query",
+    "description": "'-1000000' integer value",
+    "schema": {
+     "enum": [
+      -1000000
+     ],
+     "type": "integer"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:31": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-int-null·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-int-null·get·parameters·0"
+     ]
+    },
+    "name": "intQuery",
+    "in": "query",
+    "description": "null integer value",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:12"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:32": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-long-10000000000·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-long-10000000000·get·parameters·0"
+     ]
+    },
+    "name": "longQuery",
+    "in": "query",
+    "description": "'10000000000' 64 bit integer value",
+    "schema": {
+     "format": "int64",
+     "enum": [
+      10000000000
+     ],
+     "type": "integer"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:33": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-long-_10000000000·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-long-_10000000000·get·parameters·0"
+     ]
+    },
+    "name": "longQuery",
+    "in": "query",
+    "description": "'-10000000000' 64 bit integer value",
+    "schema": {
+     "format": "int64",
+     "enum": [
+      -10000000000
+     ],
+     "type": "integer"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:34": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-long-null·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-long-null·get·parameters·0"
+     ]
+    },
+    "name": "longQuery",
+    "in": "query",
+    "description": "null 64 bit integer value",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:13"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:35": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-float-1-034e-20·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-float-1-034e-20·get·parameters·0"
+     ]
+    },
+    "name": "floatQuery",
+    "in": "query",
+    "description": "'1.034E+20'numeric value",
+    "schema": {
+     "enum": [
+      103400000000000000000
+     ],
+     "type": "number"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:36": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-float-_1-034e_20·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-float-_1-034e_20·get·parameters·0"
+     ]
+    },
+    "name": "floatQuery",
+    "in": "query",
+    "description": "'-1.034E-20'numeric value",
+    "schema": {
+     "enum": [
+      -1.034e-20
+     ],
+     "type": "number"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:37": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-float-null·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-float-null·get·parameters·0"
+     ]
+    },
+    "name": "floatQuery",
+    "in": "query",
+    "description": "null numeric value",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:14"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:38": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-double-9999999-999·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-double-9999999-999·get·parameters·0"
+     ]
+    },
+    "name": "doubleQuery",
+    "in": "query",
+    "description": "'9999999.999'numeric value",
+    "schema": {
+     "format": "double",
+     "enum": [
+      9999999.999
+     ],
+     "type": "number"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:39": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-double-_9999999-999·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-double-_9999999-999·get·parameters·0"
+     ]
+    },
+    "name": "doubleQuery",
+    "in": "query",
+    "description": "'-9999999.999'numeric value",
+    "schema": {
+     "format": "double",
+     "enum": [
+      -9999999.999
+     ],
+     "type": "number"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:40": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-double-null·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-double-null·get·parameters·0"
+     ]
+    },
+    "name": "doubleQuery",
+    "in": "query",
+    "description": "null numeric value",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:15"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:41": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-string-unicode·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-string-unicode·get·parameters·0"
+     ]
+    },
+    "name": "stringQuery",
+    "in": "query",
+    "description": "'啊齄丂狛狜隣郎隣兀﨩'multi-byte string value",
+    "schema": {
+     "enum": [
+      "啊齄丂狛狜隣郎隣兀﨩"
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:42": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-string-begin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-string-begin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend·get·parameters·0"
+     ]
+    },
+    "name": "stringQuery",
+    "in": "query",
+    "description": "'begin!*'();:@ &=+$,/?#[]end' url encoded string value",
+    "schema": {
+     "enum": [
+      "begin!*'();:@ &=+$,/?#[]end"
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:43": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-string-empty·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-string-empty·get·parameters·0"
+     ]
+    },
+    "name": "stringQuery",
+    "in": "query",
+    "description": "'' string value",
+    "schema": {
+     "enum": [
+      ""
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:44": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-string-null·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-string-null·get·parameters·0"
+     ]
+    },
+    "name": "stringQuery",
+    "in": "query",
+    "description": "null string value",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:45": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-enum-green-20color·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-enum-green-20color·get·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-enum-null·get·parameters·0"
+     ]
+    },
+    "name": "enumQuery",
+    "in": "query",
+    "description": "'green color' enum value",
+    "schema": {
+     "$ref": "#/components/schemas/UriColor"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:47": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-byte-multibyte·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-byte-multibyte·get·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-byte-null·get·parameters·0"
+     ]
+    },
+    "name": "byteQuery",
+    "in": "query",
+    "description": "'啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:3"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:48": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-byte-empty·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-byte-empty·get·parameters·0"
+     ]
+    },
+    "name": "byteQuery",
+    "in": "query",
+    "description": "'' as byte array",
+    "schema": {
+     "format": "byte",
+     "enum": [
+      ""
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:50": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-date-2012_01_01·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-date-2012_01_01·get·parameters·0"
+     ]
+    },
+    "name": "dateQuery",
+    "in": "query",
+    "description": "'2012-01-01' as date",
+    "schema": {
+     "format": "date",
+     "enum": [
+      "2012-01-01"
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:51": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-date-null·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-date-null·get·parameters·0"
+     ]
+    },
+    "name": "dateQuery",
+    "in": "query",
+    "description": "null as date (no query parameters in uri)",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:5"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:52": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-datetime-2012_01_01t01-3a01-3a01z·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-datetime-2012_01_01t01-3a01-3a01z·get·parameters·0"
+     ]
+    },
+    "name": "dateTimeQuery",
+    "in": "query",
+    "description": "'2012-01-01T01:01:01Z' as date-time",
+    "schema": {
+     "format": "date-time",
+     "enum": [
+      "2012-01-01T01:01:01Z"
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:53": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-datetime-null·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-datetime-null·get·parameters·0"
+     ]
+    },
+    "name": "dateTimeQuery",
+    "in": "query",
+    "description": "null as date-time (no query parameters)",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:6"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:54": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-array-csv-string-valid·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-array-csv-string-valid·get·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-array-csv-string-null·get·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-array-csv-string-empty·get·parameters·0"
+     ]
+    },
+    "name": "arrayQuery",
+    "in": "query",
+    "description": "an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format",
+    "style": "form",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:23"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:57": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-array-ssv-string-valid·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-array-ssv-string-valid·get·parameters·0"
+     ]
+    },
+    "name": "arrayQuery",
+    "in": "query",
+    "description": "an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format",
+    "style": "spaceDelimited",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:23"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:58": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-array-tsv-string-valid·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-array-tsv-string-valid·get·parameters·0"
+     ]
+    },
+    "name": "arrayQuery",
+    "in": "query",
+    "description": "an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format",
+    "style": "tabDelimited",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:23"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:59": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-array-pipes-string-valid·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·queries-array-pipes-string-valid·get·parameters·0"
+     ]
+    },
+    "name": "arrayQuery",
+    "in": "query",
+    "description": "an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format",
+    "style": "pipeDelimited",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:23"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:60": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-localstringquery·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-null·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-null-null·parameters·0"
+     ]
+    },
+    "name": "pathItemStringPath",
+    "in": "path",
+    "description": "A string value 'pathItemStringPath' that appears in the path",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:61": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·parameters·1",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-localstringquery·parameters·1",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-null·parameters·1",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-null-null·parameters·1"
+     ]
+    },
+    "name": "pathItemStringQuery",
+    "in": "query",
+    "description": "A string value 'pathItemStringQuery' that appears as a query parameter",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:62": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·get·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-localstringquery·get·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-null·get·parameters·0",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-null-null·get·parameters·0"
+     ]
+    },
+    "name": "localStringPath",
+    "in": "path",
+    "description": "should contain value 'localStringPath'",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:63": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·get·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·get·parameters·1",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-localstringquery·get·parameters·1",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-null·get·parameters·1",
+      "http://localhost:3000/__files/url.json#/components/parameters/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-null-null·get·parameters·1"
+     ]
+    },
+    "name": "localStringQuery",
+    "in": "query",
+    "description": "should contain value 'localStringQuery'",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:76": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "globalStringPath",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/globalStringPath"
+     ]
+    },
+    "name": "globalStringPath",
+    "in": "path",
+    "description": "A string value 'globalItemStringPath' that appears in the path",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true
+   },
+   "parameters:77": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "globalStringQuery",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/parameters/globalStringQuery"
+     ]
+    },
+    "name": "globalStringQuery",
+    "in": "query",
+    "description": "should contain value null",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    }
+   }
+  },
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-bool-true-boolpath·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-bool-true-boolpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-bool-false-boolpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-int-1000000-intpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-int-_1000000-intpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-long-10000000000-longpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-long-_10000000000-longpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-float-1-034e-20-floatpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-float-_1-034e_20-floatpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-double-9999999-999-doublepath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-double-_9999999-999-doublepath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-unicode-stringpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-begin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend-stringpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-empty-stringpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-null-stringpath·get·responses·400",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-enum-green-20color-enumpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-null-enumpath·get·responses·400",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-byte-multibyte-bytepath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-byte-empty-bytepath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-byte-null-bytepath·get·responses·400",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-date-2012_01_01-datepath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-date-null-datepath·get·responses·400",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-datetime-2012_01_01t01-3a01-3a01z-datetimepath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-datetime-null-datetimepath·get·responses·400",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-bg9yzw0-base64urlpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-array-arraypath1-2cbegin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend-2c-2c-arraypath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-int-1460505600-unixtimeurlpath·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-bool-true·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-bool-false·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-bool-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-int-1000000·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-int-_1000000·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-int-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-long-10000000000·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-long-_10000000000·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-long-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-float-1-034e-20·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-float-_1-034e_20·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-float-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-double-9999999-999·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-double-_9999999-999·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-double-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-string-unicode·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-string-begin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-string-empty·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-string-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-enum-green-20color·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-enum-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-byte-multibyte·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-byte-empty·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-byte-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-date-2012_01_01·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-date-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-datetime-2012_01_01t01-3a01-3a01z·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-datetime-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-csv-string-valid·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-csv-string-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-csv-string-empty·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-ssv-string-valid·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-tsv-string-valid·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-pipes-string-valid·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-localstringquery·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-null·get·responses·200",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-null-null·get·responses·200"
+     ]
+    },
+    "description": "Successfully received the true boolean value"
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-bool-true-boolpath·get·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-bool-true-boolpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-bool-false-boolpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-int-1000000-intpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-int-_1000000-intpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-long-10000000000-longpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-long-_10000000000-longpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-float-1-034e-20-floatpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-float-_1-034e_20-floatpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-double-9999999-999-doublepath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-double-_9999999-999-doublepath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-unicode-stringpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-begin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend-stringpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-empty-stringpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-null-stringpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-enum-green-20color-enumpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-null-enumpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-byte-multibyte-bytepath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-byte-empty-bytepath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-byte-null-bytepath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-date-2012_01_01-datepath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-date-null-datepath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-datetime-2012_01_01t01-3a01-3a01z-datetimepath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-datetime-null-datetimepath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-string-bg9yzw0-base64urlpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-array-arraypath1-2cbegin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend-2c-2c-arraypath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·paths-int-1460505600-unixtimeurlpath·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-bool-true·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-bool-false·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-bool-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-int-1000000·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-int-_1000000·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-int-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-long-10000000000·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-long-_10000000000·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-long-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-float-1-034e-20·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-float-_1-034e_20·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-float-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-double-9999999-999·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-double-_9999999-999·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-double-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-string-unicode·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-string-begin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-string-empty·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-string-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-enum-green-20color·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-enum-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-byte-multibyte·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-byte-empty·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-byte-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-date-2012_01_01·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-date-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-datetime-2012_01_01t01-3a01-3a01z·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-datetime-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-csv-string-valid·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-csv-string-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-csv-string-empty·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-ssv-string-valid·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-tsv-string-valid·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·queries-array-pipes-string-valid·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-localstringquery·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-null·get·responses·default",
+      "http://localhost:3000/__files/url.json#/components/responses/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-null-null·get·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:53"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-string-null-stringpath·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·paths-string-null-stringpath·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-string-null·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-csv-string-valid·get·parameters·0·schema·items",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-csv-string-null·get·parameters·0·schema·items",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-csv-string-empty·get·parameters·0·schema·items",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-ssv-string-valid·get·parameters·0·schema·items",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-tsv-string-valid·get·parameters·0·schema·items",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-pipes-string-valid·get·parameters·0·schema·items",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·parameters·1·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-pathitemstringquery-localstringquery·get·parameters·1·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-localstringquery·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-localstringquery·parameters·1·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-localstringquery·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-localstringquery·get·parameters·1·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-null·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-null·parameters·1·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-null·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-null-pathitemstringquery-null·get·parameters·1·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-null-null·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-null-null·parameters·1·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-null-null·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·pathitem-nullable-globalstringpath-globalstringpath-pathitemstringpath-pathitemstringpath-localstringpath-localstringpath-globalstringquery-null-null·get·parameters·1·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/components·parameters·globalstringpath·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/components·parameters·globalstringquery·schema"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-byte-multibyte-bytepath·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·paths-byte-multibyte-bytepath·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·paths-byte-null-bytepath·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-byte-multibyte·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-byte-null·get·parameters·0·schema"
+     ]
+    },
+    "format": "byte",
+    "type": "string"
+   },
+   "schemas:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-date-null-datepath·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·paths-date-null-datepath·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-date-null·get·parameters·0·schema"
+     ]
+    },
+    "format": "date",
+    "type": "string"
+   },
+   "schemas:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-datetime-null-datetimepath·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·paths-datetime-null-datetimepath·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-datetime-null·get·parameters·0·schema"
+     ]
+    },
+    "format": "date-time",
+    "type": "string"
+   },
+   "schemas:7": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-string-bg9yzw0-base64urlpath·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·paths-string-bg9yzw0-base64urlpath·get·parameters·0·schema"
+     ]
+    },
+    "format": "base64url",
+    "type": "string"
+   },
+   "schemas:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-array-arraypath1-2cbegin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend-2c-2c-arraypath·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·paths-array-arraypath1-2cbegin-21-2a-27-28-29-3b-3a-40-20-26-3d-2b-24-2c-2f-3f-23-5b-5dend-2c-2c-arraypath·get·parameters·0·schema"
+     ]
+    },
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/schemas:9"
+    }
+   },
+   "schemas:9": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "get-0-itemsItem",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/get-0-itemsItem"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:10": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·paths-int-1460505600-unixtimeurlpath·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·paths-int-1460505600-unixtimeurlpath·get·parameters·0·schema"
+     ]
+    },
+    "format": "unixtime",
+    "type": "integer"
+   },
+   "schemas:11": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-bool-null·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-bool-null·get·parameters·0·schema"
+     ]
+    },
+    "type": "boolean"
+   },
+   "schemas:12": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-int-null·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-int-null·get·parameters·0·schema"
+     ]
+    },
+    "type": "integer"
+   },
+   "schemas:13": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-long-null·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-long-null·get·parameters·0·schema"
+     ]
+    },
+    "format": "int64",
+    "type": "integer"
+   },
+   "schemas:14": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-float-null·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-float-null·get·parameters·0·schema"
+     ]
+    },
+    "type": "number"
+   },
+   "schemas:15": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-double-null·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-double-null·get·parameters·0·schema"
+     ]
+    },
+    "format": "double",
+    "type": "number"
+   },
+   "schemas:23": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·queries-array-csv-string-valid·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-csv-string-valid·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-csv-string-null·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-csv-string-empty·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-ssv-string-valid·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-tsv-string-valid·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-array-pipes-string-valid·get·parameters·0·schema"
+     ]
+    },
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/schemas:0"
+    }
+   },
+   "schemas:53": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:54"
+     }
+    }
+   },
+   "schemas:54": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   },
+   "UriColor": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "UriColor",
+     "originalLocations": [
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·paths-enum-green-20color-enumpath·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·paths-string-null-enumpath·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-enum-green-20color·get·parameters·0·schema",
+      "http://localhost:3000/__files/url.json#/components/schemas/paths·queries-enum-null·get·parameters·0·schema"
+     ]
+    },
+    "enum": [
+     "red color",
+     "green color",
+     "blue color"
+    ],
+    "x-ms-enum": {
+     "name": "UriColor"
+    },
+    "type": "string"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

@@ -1,0 +1,149 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "Microsoft Azure Test Url",
+  "description": "Some cool documentation.",
+  "version": "2014-04-01-preview"
+ },
+ "components": {
+  "parameters": {
+   "subscriptionIdParameter": {
+    "name": "subscriptionId",
+    "in": "path",
+    "description": "Subscription Id.",
+    "schema": {
+     "$ref": "#/components/schemas/components·parameters·subscriptionidparameter·schema"
+    },
+    "required": true
+   },
+   "apiVersionParameter": {
+    "name": "api-version",
+    "in": "query",
+    "description": "API Version with value '2014-04-01-preview'.",
+    "schema": {
+     "$ref": "#/components/schemas/components·parameters·apiversionparameter·schema"
+    },
+    "required": true
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·parameters·1": {
+    "name": "resourceGroupName",
+    "in": "path",
+    "description": "Resource Group name 'testgroup101'.",
+    "schema": {
+     "$ref": "#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   }
+  },
+  "schemas": {
+   "components·parameters·subscriptionidparameter·schema": {
+    "type": "string"
+   },
+   "components·parameters·apiversionparameter·schema": {
+    "type": "string"
+   },
+   "SampleResourceGroup": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "$ref": "#/components/schemas/SampleResourceGroup-name",
+      "description": "resource group name 'testgroup101'"
+     },
+     "location": {
+      "$ref": "#/components/schemas/SampleResourceGroup-location",
+      "description": "resource group location 'West US'"
+     }
+    }
+   },
+   "SampleResourceGroup-name": {
+    "type": "string",
+    "description": "resource group name 'testgroup101'"
+   },
+   "SampleResourceGroup-location": {
+    "type": "string",
+    "description": "resource group location 'West US'"
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·parameters·1·schema": {
+    "type": "string"
+   }
+  },
+  "responses": {
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·responses·200": {
+    "description": "A sample resource group",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/schemas/SampleResourceGroup"
+      }
+     }
+    }
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/schemas/Error"
+      }
+     }
+    }
+   }
+  }
+ },
+ "paths": {
+  "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}": {
+   "get": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "operationId": "group_getSampleResourceGroup",
+    "description": "Provides a resouce group with name 'testgroup101' and location 'West US'.",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/parameters/subscriptionIdParameter"
+     },
+     {
+      "$ref": "#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·parameters·1",
+      "description": "Resource Group name 'testgroup101'."
+     },
+     {
+      "$ref": "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/parameters/apiVersionParameter"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·responses·200",
+      "description": "A sample resource group"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "https://management.azure.com/"
+  }
+ ]
+}

@@ -1,0 +1,1041 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "additionalProperties",
+  "description": "Test Infrastructure for AutoRest",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/true",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1true"
+    ]
+   }
+  },
+  "path:0.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/true",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1true"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateAPTrue",
+    "description": "Create a Pet which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "A Pet which contains more properties than what is defined.",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:1": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/true-subclass",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1true-subclass"
+    ]
+   }
+  },
+  "path:1.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/true-subclass",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1true-subclass"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateCatAPTrue",
+    "description": "Create a CatAPTrue which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:1"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "A CatAPTrue which contains more properties than what is defined.",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:2": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/type/object",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1type~1object"
+    ]
+   }
+  },
+  "path:2.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/type/object",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1type~1object"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateAPObject",
+    "description": "Create a Pet which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:2"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "A Pet which contains more properties than what is defined.",
+      "$ref": "#/components/responses/responses:4"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:3": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/type/string",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1type~1string"
+    ]
+   }
+  },
+  "path:3.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/type/string",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1type~1string"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateAPString",
+    "description": "Create a Pet which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:3"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "A Pet which contains more properties than what is defined.",
+      "$ref": "#/components/responses/responses:6"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:4": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/in/properties",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1in~1properties"
+    ]
+   }
+  },
+  "path:4.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/in/properties",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1in~1properties"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateAPInProperties",
+    "description": "Create a Pet which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:4"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "A Pet which contains more properties than what is defined.",
+      "$ref": "#/components/responses/responses:8"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:5": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/in/properties/with/additionalProperties/string",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1in~1properties~1with~1additionalProperties~1string"
+    ]
+   }
+  },
+  "path:5.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///100?oai3.shaken.json"
+    ],
+    "path": "/additionalProperties/in/properties/with/additionalProperties/string",
+    "originalLocations": [
+     "http://localhost:3000/__files/additionalProperties.json#/paths/~1additionalProperties~1in~1properties~1with~1additionalProperties~1string"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateAPInPropertiesWithAPString",
+    "description": "Create a Pet which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:5"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "A Pet which contains more properties than what is defined.",
+      "$ref": "#/components/responses/responses:10"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "requestBodies": {
+   "requestBodies:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-true·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/requestBodies/paths·additionalproperties-true·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:2"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   },
+   "requestBodies:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-true_subclass·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/requestBodies/paths·additionalproperties-true_subclass·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:5"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   },
+   "requestBodies:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-type-object·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/requestBodies/paths·additionalproperties-type-object·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:6"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   },
+   "requestBodies:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-type-string·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/requestBodies/paths·additionalproperties-type-string·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:9"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   },
+   "requestBodies:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-in-properties·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/requestBodies/paths·additionalproperties-in-properties·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:12"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   },
+   "requestBodies:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-in-properties-with-additionalproperties-string·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/requestBodies/paths·additionalproperties-in-properties-with-additionalproperties-string·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:16"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:1"
+     }
+    }
+   },
+   "schemas:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPTrue",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPTrue"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "name": {
+      "$ref": "#/components/schemas/schemas:3"
+     },
+     "status": {
+      "type": "boolean",
+      "readOnly": true
+     }
+    },
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:4"
+    },
+    "required": [
+     "id"
+    ]
+   },
+   "schemas:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPTrue-name",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPTrue-name"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "components·schemas·petaptrue·additionalproperties",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/components·schemas·petaptrue·additionalproperties",
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/components·schemas·petapobject·additionalproperties"
+     ]
+    },
+    "type": "object"
+   },
+   "schemas:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "CatAPTrue",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/CatAPTrue"
+     ]
+    },
+    "type": "object",
+    "allOf": [
+     {
+      "$ref": "#/components/schemas/schemas:2"
+     }
+    ],
+    "properties": {
+     "friendly": {
+      "type": "boolean"
+     }
+    }
+   },
+   "schemas:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPObject",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPObject"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "name": {
+      "$ref": "#/components/schemas/schemas:7"
+     },
+     "status": {
+      "type": "boolean",
+      "readOnly": true
+     }
+    },
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:4"
+    },
+    "required": [
+     "id"
+    ]
+   },
+   "schemas:7": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPObject-name",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPObject-name"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:9": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPString",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPString"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "name": {
+      "$ref": "#/components/schemas/schemas:10"
+     },
+     "status": {
+      "type": "boolean",
+      "readOnly": true
+     }
+    },
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:11"
+    },
+    "required": [
+     "id"
+    ]
+   },
+   "schemas:10": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPString-name",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPString-name"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:11": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "components·schemas·petapstring·additionalproperties",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/components·schemas·petapstring·additionalproperties",
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/components·schemas·petapinpropertieswithapstring·additionalproperties"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:12": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPInProperties",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPInProperties"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "name": {
+      "$ref": "#/components/schemas/schemas:13"
+     },
+     "status": {
+      "type": "boolean",
+      "readOnly": true
+     },
+     "additionalProperties": {
+      "$ref": "#/components/schemas/schemas:14"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   },
+   "schemas:13": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPInProperties-name",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPInProperties-name"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:14": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPInProperties-additionalProperties",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPInProperties-additionalProperties"
+     ]
+    },
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:15"
+    }
+   },
+   "schemas:15": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "components·schemas·petapinproperties·properties·additionalproperties·additionalproperties",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/components·schemas·petapinproperties·properties·additionalproperties·additionalproperties",
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/components·schemas·petapinpropertieswithapstring·properties·additionalproperties·additionalproperties"
+     ]
+    },
+    "type": "number"
+   },
+   "schemas:16": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPInPropertiesWithAPString",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPInPropertiesWithAPString"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "name": {
+      "$ref": "#/components/schemas/schemas:17"
+     },
+     "status": {
+      "type": "boolean",
+      "readOnly": true
+     },
+     "@odata.location": {
+      "$ref": "#/components/schemas/schemas:18"
+     },
+     "additionalProperties": {
+      "$ref": "#/components/schemas/schemas:19"
+     }
+    },
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:11"
+    },
+    "required": [
+     "id",
+     "@odata.location"
+    ]
+   },
+   "schemas:17": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPInPropertiesWithAPString-name",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPInPropertiesWithAPString-name"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:18": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPInPropertiesWithAPString-@odata.location",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPInPropertiesWithAPString-@odata.location"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:19": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "PetAPInPropertiesWithAPString-additionalProperties",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPInPropertiesWithAPString-additionalProperties"
+     ]
+    },
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:15"
+    }
+   }
+  },
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-true·put·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-true·put·responses·200"
+     ]
+    },
+    "description": "A Pet which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:2"
+      }
+     }
+    }
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-true·put·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-true·put·responses·default",
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-true_subclass·put·responses·default",
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-type-object·put·responses·default",
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-type-string·put·responses·default",
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-in-properties·put·responses·default",
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-in-properties-with-additionalproperties-string·put·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:0"
+      }
+     }
+    }
+   },
+   "responses:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-true_subclass·put·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-true_subclass·put·responses·200"
+     ]
+    },
+    "description": "A CatAPTrue which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:5"
+      }
+     }
+    }
+   },
+   "responses:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-type-object·put·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-type-object·put·responses·200"
+     ]
+    },
+    "description": "A Pet which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:6"
+      }
+     }
+    }
+   },
+   "responses:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-type-string·put·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-type-string·put·responses·200"
+     ]
+    },
+    "description": "A Pet which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:9"
+      }
+     }
+    }
+   },
+   "responses:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-in-properties·put·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-in-properties·put·responses·200"
+     ]
+    },
+    "description": "A Pet which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:12"
+      }
+     }
+    }
+   },
+   "responses:10": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///100?oai3.shaken.json"
+     ],
+     "name": "paths·additionalproperties-in-properties-with-additionalproperties-string·put·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/additionalProperties.json#/components/responses/paths·additionalproperties-in-properties-with-additionalproperties-string·put·responses·200"
+     ]
+    },
+    "description": "A Pet which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:16"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

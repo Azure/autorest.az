@@ -1,0 +1,547 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AdditionalPropertiesClient",
+  "description": "Test Infrastructure for AutoRest",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/additionalProperties/true": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateAPTrue",
+    "description": "Create a Pet which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·additionalproperties-true·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·additionalproperties-true·put·responses·200",
+      "description": "A Pet which contains more properties than what is defined."
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·additionalproperties-true·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/additionalProperties/true-subclass": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateCatAPTrue",
+    "description": "Create a CatAPTrue which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·additionalproperties-true_subclass·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·additionalproperties-true_subclass·put·responses·200",
+      "description": "A CatAPTrue which contains more properties than what is defined."
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·additionalproperties-true_subclass·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/additionalProperties/type/object": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateAPObject",
+    "description": "Create a Pet which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·additionalproperties-type-object·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·additionalproperties-type-object·put·responses·200",
+      "description": "A Pet which contains more properties than what is defined."
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·additionalproperties-type-object·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/additionalProperties/type/string": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateAPString",
+    "description": "Create a Pet which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·additionalproperties-type-string·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·additionalproperties-type-string·put·responses·200",
+      "description": "A Pet which contains more properties than what is defined."
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·additionalproperties-type-string·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/additionalProperties/in/properties": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateAPInProperties",
+    "description": "Create a Pet which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·additionalproperties-in-properties·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·additionalproperties-in-properties·put·responses·200",
+      "description": "A Pet which contains more properties than what is defined."
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·additionalproperties-in-properties·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/additionalProperties/in/properties/with/additionalProperties/string": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pets_CreateAPInPropertiesWithAPString",
+    "description": "Create a Pet which contains more properties than what is defined.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·additionalproperties-in-properties-with-additionalproperties-string·put·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·additionalproperties-in-properties-with-additionalproperties-string·put·responses·200",
+      "description": "A Pet which contains more properties than what is defined."
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·additionalproperties-in-properties-with-additionalproperties-string·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "requestBodies": {
+   "paths·additionalproperties-true·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPTrue"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   },
+   "paths·additionalproperties-true_subclass·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/CatAPTrue"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   },
+   "paths·additionalproperties-type-object·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPObject"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   },
+   "paths·additionalproperties-type-string·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPString"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   },
+   "paths·additionalproperties-in-properties·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPInProperties"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   },
+   "paths·additionalproperties-in-properties-with-additionalproperties-string·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPInPropertiesWithAPString"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "createParameters"
+   }
+  },
+  "schemas": {
+   "Error": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   },
+   "PetAPTrue": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "name": {
+      "$ref": "#/components/schemas/PetAPTrue-name"
+     },
+     "status": {
+      "type": "boolean",
+      "readOnly": true
+     }
+    },
+    "additionalProperties": {
+     "$ref": "#/components/schemas/components·schemas·petaptrue·additionalproperties"
+    },
+    "required": [
+     "id"
+    ]
+   },
+   "PetAPTrue-name": {
+    "type": "string"
+   },
+   "components·schemas·petaptrue·additionalproperties": {
+    "type": "object"
+   },
+   "CatAPTrue": {
+    "type": "object",
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPTrue"
+     }
+    ],
+    "properties": {
+     "friendly": {
+      "type": "boolean"
+     }
+    }
+   },
+   "PetAPObject": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "name": {
+      "$ref": "#/components/schemas/PetAPObject-name"
+     },
+     "status": {
+      "type": "boolean",
+      "readOnly": true
+     }
+    },
+    "additionalProperties": {
+     "$ref": "#/components/schemas/components·schemas·petapobject·additionalproperties"
+    },
+    "required": [
+     "id"
+    ]
+   },
+   "PetAPObject-name": {
+    "type": "string"
+   },
+   "components·schemas·petapobject·additionalproperties": {
+    "type": "object"
+   },
+   "PetAPString": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "name": {
+      "$ref": "#/components/schemas/PetAPString-name"
+     },
+     "status": {
+      "type": "boolean",
+      "readOnly": true
+     }
+    },
+    "additionalProperties": {
+     "$ref": "#/components/schemas/components·schemas·petapstring·additionalproperties"
+    },
+    "required": [
+     "id"
+    ]
+   },
+   "PetAPString-name": {
+    "type": "string"
+   },
+   "components·schemas·petapstring·additionalproperties": {
+    "type": "string"
+   },
+   "PetAPInProperties": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "name": {
+      "$ref": "#/components/schemas/PetAPInProperties-name"
+     },
+     "status": {
+      "type": "boolean",
+      "readOnly": true
+     },
+     "additionalProperties": {
+      "$ref": "#/components/schemas/PetAPInProperties-additionalProperties"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   },
+   "PetAPInProperties-name": {
+    "type": "string"
+   },
+   "PetAPInProperties-additionalProperties": {
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/components·schemas·petapinproperties·properties·additionalproperties·additionalproperties"
+    }
+   },
+   "components·schemas·petapinproperties·properties·additionalproperties·additionalproperties": {
+    "type": "number"
+   },
+   "PetAPInPropertiesWithAPString": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "name": {
+      "$ref": "#/components/schemas/PetAPInPropertiesWithAPString-name"
+     },
+     "status": {
+      "type": "boolean",
+      "readOnly": true
+     },
+     "@odata.location": {
+      "$ref": "#/components/schemas/PetAPInPropertiesWithAPString-@odata.location"
+     },
+     "additionalProperties": {
+      "$ref": "#/components/schemas/PetAPInPropertiesWithAPString-additionalProperties"
+     }
+    },
+    "additionalProperties": {
+     "$ref": "#/components/schemas/components·schemas·petapinpropertieswithapstring·additionalproperties"
+    },
+    "required": [
+     "id",
+     "@odata.location"
+    ]
+   },
+   "PetAPInPropertiesWithAPString-name": {
+    "type": "string"
+   },
+   "PetAPInPropertiesWithAPString-@odata.location": {
+    "type": "string"
+   },
+   "PetAPInPropertiesWithAPString-additionalProperties": {
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/components·schemas·petapinpropertieswithapstring·properties·additionalproperties·additionalproperties"
+    }
+   },
+   "components·schemas·petapinpropertieswithapstring·properties·additionalproperties·additionalproperties": {
+    "type": "number"
+   },
+   "components·schemas·petapinpropertieswithapstring·additionalproperties": {
+    "type": "string"
+   }
+  },
+  "responses": {
+   "paths·additionalproperties-true·put·responses·200": {
+    "description": "A Pet which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPTrue"
+      }
+     }
+    }
+   },
+   "paths·additionalproperties-true·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·additionalproperties-true_subclass·put·responses·200": {
+    "description": "A CatAPTrue which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/CatAPTrue"
+      }
+     }
+    }
+   },
+   "paths·additionalproperties-true_subclass·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·additionalproperties-type-object·put·responses·200": {
+    "description": "A Pet which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPObject"
+      }
+     }
+    }
+   },
+   "paths·additionalproperties-type-object·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·additionalproperties-type-string·put·responses·200": {
+    "description": "A Pet which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPString"
+      }
+     }
+    }
+   },
+   "paths·additionalproperties-type-string·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·additionalproperties-in-properties·put·responses·200": {
+    "description": "A Pet which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPInProperties"
+      }
+     }
+    }
+   },
+   "paths·additionalproperties-in-properties·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·additionalproperties-in-properties-with-additionalproperties-string·put·responses·200": {
+    "description": "A Pet which contains more properties than what is defined.",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/PetAPInPropertiesWithAPString"
+      }
+     }
+    }
+   },
+   "paths·additionalproperties-in-properties-with-additionalproperties-string·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/additionalProperties.json#/components/schemas/Error"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

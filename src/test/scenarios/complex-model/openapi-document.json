@@ -1,0 +1,792 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "complex-model",
+  "description": "Some cool documentation.",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "2014-04-01-preview"
+   ]
+  },
+  "version": "2014-04-01-preview"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "2014-04-01-preview"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis",
+    "originalLocations": [
+     "http://localhost:3000/__files/complex-model.json#/paths/~1subscriptions~1{subscriptionId}~1resourcegroups~1{resourceGroupName}~1Microsoft.Cache~1Redis"
+    ]
+   }
+  },
+  "path:0.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "2014-04-01-preview"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis",
+    "originalLocations": [
+     "http://localhost:3000/__files/complex-model.json#/paths/~1subscriptions~1{subscriptionId}~1resourcegroups~1{resourceGroupName}~1Microsoft.Cache~1Redis"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "list",
+    "summary": "Product Types",
+    "description": "The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other details about each product, and lists the products in the proper display order.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:5"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:0",
+      "description": "Resource Group ID."
+     },
+     {
+      "$ref": "#/components/parameters/parameters:6"
+     }
+    ],
+    "tags": [
+     "Redis"
+    ],
+    "responses": {
+     "200": {
+      "description": "A list of caches",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:0.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "2014-04-01-preview"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis",
+    "originalLocations": [
+     "http://localhost:3000/__files/complex-model.json#/paths/~1subscriptions~1{subscriptionId}~1resourcegroups~1{resourceGroupName}~1Microsoft.Cache~1Redis"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "create",
+    "summary": "Create products",
+    "description": "Resets products.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:1",
+      "description": "Subscription ID."
+     },
+     {
+      "$ref": "#/components/parameters/parameters:0",
+      "description": "Resource Group ID."
+     },
+     {
+      "$ref": "#/components/parameters/parameters:6"
+     }
+    ],
+    "requestBody": {
+     "description": "body Parameter",
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 2,
+    "tags": [
+     "Redis"
+    ],
+    "responses": {
+     "200": {
+      "description": "A list of caches",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:0.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "2014-04-01-preview"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis",
+    "originalLocations": [
+     "http://localhost:3000/__files/complex-model.json#/paths/~1subscriptions~1{subscriptionId}~1resourcegroups~1{resourceGroupName}~1Microsoft.Cache~1Redis"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "update",
+    "summary": "Update products",
+    "description": "Resets products.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:1",
+      "description": "Subscription ID."
+     },
+     {
+      "$ref": "#/components/parameters/parameters:0",
+      "description": "Resource Group ID."
+     },
+     {
+      "$ref": "#/components/parameters/parameters:6"
+     }
+    ],
+    "requestBody": {
+     "description": "body Parameter",
+     "$ref": "#/components/requestBodies/requestBodies:1"
+    },
+    "x-ms-requestBody-index": 2,
+    "tags": [
+     "Redis"
+    ],
+    "responses": {
+     "200": {
+      "description": "A list of caches",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "parameters:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·get·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·get·parameters·1",
+      "http://localhost:3000/__files/complex-model.json#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·post·parameters·1",
+      "http://localhost:3000/__files/complex-model.json#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·put·parameters·1"
+     ]
+    },
+    "name": "resourceGroupName",
+    "in": "path",
+    "description": "Resource Group ID.",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·post·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·post·parameters·0",
+      "http://localhost:3000/__files/complex-model.json#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·put·parameters·0"
+     ]
+    },
+    "name": "subscriptionId",
+    "in": "path",
+    "description": "Subscription ID.",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "SubscriptionIdParamterer",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/parameters/SubscriptionIdParamterer"
+     ]
+    },
+    "name": "subscriptionId",
+    "in": "path",
+    "description": "Subscription ID.",
+    "schema": {
+     "enum": [
+      "123456"
+     ],
+     "type": "string"
+    },
+    "required": true
+   },
+   "parameters:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "ApiVersionParameter",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/parameters/ApiVersionParameter"
+     ]
+    },
+    "name": "api-version",
+    "in": "query",
+    "description": "API ID.",
+    "schema": {
+     "enum": [
+      "2014-04-01-preview"
+     ],
+     "type": "string"
+    },
+    "required": true
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·get·parameters·1·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·get·parameters·1·schema",
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·post·parameters·0·schema",
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·post·parameters·1·schema",
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·put·parameters·0·schema",
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·put·parameters·1·schema"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Product",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/Product"
+     ]
+    },
+    "type": "object",
+    "description": "The product documentation.",
+    "properties": {
+     "product_id": {
+      "description": "Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.",
+      "$ref": "#/components/schemas/schemas:6"
+     },
+     "description": {
+      "description": "Description of product.",
+      "$ref": "#/components/schemas/schemas:7"
+     },
+     "display_name": {
+      "description": "Display name of product.",
+      "$ref": "#/components/schemas/schemas:8"
+     },
+     "capacity": {
+      "description": "Capacity of product. For example, 4 people.",
+      "$ref": "#/components/schemas/schemas:9"
+     },
+     "image": {
+      "description": "Image URL representing the product.",
+      "$ref": "#/components/schemas/schemas:10"
+     }
+    },
+    "example": {
+     "name": "Puma",
+     "id": 1
+    }
+   },
+   "schemas:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Product-product_id",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/Product-product_id"
+     ]
+    },
+    "type": "string",
+    "description": "Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles."
+   },
+   "schemas:7": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Product-description",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/Product-description"
+     ]
+    },
+    "type": "string",
+    "description": "Description of product."
+   },
+   "schemas:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Product-display_name",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/Product-display_name"
+     ]
+    },
+    "type": "string",
+    "description": "Display name of product."
+   },
+   "schemas:9": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Product-capacity",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/Product-capacity"
+     ]
+    },
+    "type": "string",
+    "description": "Capacity of product. For example, 4 people.",
+    "default": "100"
+   },
+   "schemas:10": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Product-image",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/Product-image"
+     ]
+    },
+    "type": "string",
+    "description": "Image URL representing the product."
+   },
+   "schemas:11": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "CatalogDictionary",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/CatalogDictionary"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "productDictionary": {
+      "description": "Dictionary of products",
+      "$ref": "#/components/schemas/schemas:12"
+     }
+    }
+   },
+   "schemas:12": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "CatalogDictionary-productDictionary",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/CatalogDictionary-productDictionary"
+     ]
+    },
+    "type": "object",
+    "description": "Dictionary of products",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:5"
+    }
+   },
+   "schemas:13": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "CatalogArray",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/CatalogArray"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "productArray": {
+      "description": "Array of products",
+      "$ref": "#/components/schemas/schemas:14"
+     }
+    }
+   },
+   "schemas:14": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "CatalogArray-productArray",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/CatalogArray-productArray"
+     ]
+    },
+    "description": "Array of products",
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/schemas:5"
+    }
+   },
+   "schemas:15": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "CatalogArrayOfDictionary",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/CatalogArrayOfDictionary"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "productArrayOfDictionary": {
+      "description": "Array of dictionary of products",
+      "$ref": "#/components/schemas/schemas:16"
+     }
+    }
+   },
+   "schemas:16": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "CatalogArrayOfDictionary-productArrayOfDictionary",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/CatalogArrayOfDictionary-productArrayOfDictionary"
+     ]
+    },
+    "description": "Array of dictionary of products",
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/schemas:17"
+    }
+   },
+   "schemas:17": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "CatalogArrayOfDictionary-productArrayOfDictionaryItem",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/CatalogArrayOfDictionary-productArrayOfDictionaryItem"
+     ]
+    },
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:5"
+    }
+   },
+   "schemas:18": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "CatalogDictionaryOfArray",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/CatalogDictionaryOfArray"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "productDictionaryOfArray": {
+      "description": "Dictionary of Array of product",
+      "$ref": "#/components/schemas/schemas:19"
+     }
+    }
+   },
+   "schemas:19": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "CatalogDictionaryOfArray-productDictionaryOfArray",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/CatalogDictionaryOfArray-productDictionaryOfArray"
+     ]
+    },
+    "type": "object",
+    "description": "Dictionary of Array of product",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:20"
+    }
+   },
+   "schemas:20": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "components·schemas·catalogdictionaryofarray·properties·productdictionaryofarray·additionalproperties",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/components·schemas·catalogdictionaryofarray·properties·productdictionaryofarray·additionalproperties"
+     ]
+    },
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/schemas:5"
+    }
+   },
+   "schemas:21": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:22"
+     }
+    }
+   },
+   "schemas:22": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   }
+  },
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·get·responses·200",
+      "http://localhost:3000/__files/complex-model.json#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·put·responses·200"
+     ]
+    },
+    "description": "A list of caches",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:13"
+      }
+     }
+    }
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·get·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·get·responses·default",
+      "http://localhost:3000/__files/complex-model.json#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·post·responses·default",
+      "http://localhost:3000/__files/complex-model.json#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·put·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:21"
+      }
+     }
+    }
+   },
+   "responses:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·post·responses·200"
+     ]
+    },
+    "description": "A list of caches",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:11"
+      }
+     }
+    }
+   }
+  },
+  "requestBodies": {
+   "requestBodies:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·post·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/requestBodies/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·post·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:18"
+      }
+     }
+    },
+    "required": true,
+    "description": "body Parameter",
+    "x-ms-requestBody-name": "bodyParameter"
+   },
+   "requestBodies:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/complex-model.json#/components/requestBodies/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-microsoft-cache-redis·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:15"
+      }
+     }
+    },
+    "required": true,
+    "description": "body Parameter",
+    "x-ms-requestBody-name": "bodyParameter"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

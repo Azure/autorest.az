@@ -1,0 +1,5425 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest Http Infrastructure Test Service",
+  "description": "Test Infrastructure for AutoRest",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/http/failure/emptybody/error": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpFailure_getEmptyError",
+    "description": "Get empty error form server",
+    "tags": [
+     "HttpFailure Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-failure-emptybody-error·get·responses·200",
+      "description": "Successfully returns 400 error code with the get request"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-emptybody-error·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/nomodel/error": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpFailure_getNoModelError",
+    "description": "Get empty error form server",
+    "tags": [
+     "HttpFailure Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-failure-nomodel-error·get·responses·200",
+      "description": "Successfully returns 400 error code with the get request"
+     }
+    }
+   }
+  },
+  "/http/failure/nomodel/empty": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpFailure_getNoModelEmpty",
+    "description": "Get empty response from server",
+    "tags": [
+     "HttpFailure Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-failure-nomodel-empty·get·responses·200",
+      "description": "Successfully returns 200 error code with the get request"
+     }
+    }
+   }
+  },
+  "/http/success/200": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_head200",
+    "description": "Return 200 status code if successful",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-success-200·head·responses·200",
+      "description": "Successfully received the head request"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-200·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_get200",
+    "description": "Get 200 success",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-success-200·get·responses·200",
+      "description": "Successfully received the get request"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-200·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "options": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_options200",
+    "description": "Options 200 success",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-success-200·options·responses·200",
+      "description": "Successfully received the options request"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-200·options·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_put200",
+    "description": "Put boolean value true returning 200 success",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-200·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-success-200·put·responses·200",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-200·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "patch": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_patch200",
+    "description": "Patch true Boolean value in request returning 200",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-200·patch·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-success-200·patch·responses·200",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-200·patch·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_post200",
+    "description": "Post bollean value true in request that returns a 200",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-200·post·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-success-200·post·responses·200",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-200·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "delete": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_delete200",
+    "description": "Delete simple boolean value true returns 200",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-200·delete·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-success-200·delete·responses·200",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-200·delete·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/success/201": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_put201",
+    "description": "Put true Boolean value in request returns 201",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-201·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "201": {
+      "$ref": "#/components/responses/paths·http-success-201·put·responses·201",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-201·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_post201",
+    "description": "Post true Boolean value in request returns 201 (Created)",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-201·post·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "201": {
+      "$ref": "#/components/responses/paths·http-success-201·post·responses·201",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-201·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/success/202": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_put202",
+    "description": "Put true Boolean value in request returns 202 (Accepted)",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-202·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "202": {
+      "$ref": "#/components/responses/paths·http-success-202·put·responses·202",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-202·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "patch": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_patch202",
+    "description": "Patch true Boolean value in request returns 202",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-202·patch·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "202": {
+      "$ref": "#/components/responses/paths·http-success-202·patch·responses·202",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-202·patch·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_post202",
+    "description": "Post true Boolean value in request returns 202 (Accepted)",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-202·post·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "202": {
+      "$ref": "#/components/responses/paths·http-success-202·post·responses·202",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-202·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "delete": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_delete202",
+    "description": "Delete true Boolean value in request returns 202 (accepted)",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-202·delete·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "202": {
+      "$ref": "#/components/responses/paths·http-success-202·delete·responses·202",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-202·delete·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/success/204": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_head204",
+    "description": "Return 204 status code if successful",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "responses": {
+     "204": {
+      "$ref": "#/components/responses/paths·http-success-204·head·responses·204",
+      "description": "Successfully received the true boolean value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-204·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_put204",
+    "description": "Put true Boolean value in request returns 204 (no content)",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-204·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "204": {
+      "$ref": "#/components/responses/paths·http-success-204·put·responses·204",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-204·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "patch": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_patch204",
+    "description": "Patch true Boolean value in request returns 204 (no content)",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-204·patch·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "204": {
+      "$ref": "#/components/responses/paths·http-success-204·patch·responses·204",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-204·patch·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "HttpSuccess_post204",
+    "description": "Post true Boolean value in request returns 204 (no content)",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-204·post·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "204": {
+      "$ref": "#/components/responses/paths·http-success-204·post·responses·204",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-204·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "delete": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_delete204",
+    "description": "Delete true Boolean value in request returns 204 (no content)",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-success-204·delete·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "204": {
+      "$ref": "#/components/responses/paths·http-success-204·delete·responses·204",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-204·delete·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/success/404": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_head404",
+    "description": "Return 404 status code",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "responses": {
+     "204": {
+      "$ref": "#/components/responses/paths·http-success-404·head·responses·204",
+      "description": "Successfully received the head request"
+     },
+     "404": {
+      "$ref": "#/components/responses/paths·http-success-404·head·responses·404",
+      "description": "Successfully received the head request"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-404·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/redirect/300": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_head300",
+    "description": "Return 300 status code and redirect to /http/success/200",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-300·head·responses·200",
+      "description": "Success, should be returned afyter a successful redirect"
+     },
+     "300": {
+      "$ref": "#/components/responses/paths·http-redirect-300·head·responses·300",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-300·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_get300",
+    "description": "Return 300 status code and redirect to /http/success/200",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-300·get·responses·200",
+      "description": "Success, should be returned afyter a successful redirect"
+     },
+     "300": {
+      "$ref": "#/components/responses/paths·http-redirect-300·get·responses·300",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-300·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/redirect/301": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_head301",
+    "description": "Return 301 status code and redirect to /http/success/200",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-301·head·responses·200",
+      "description": "Success, should be returned afyter a successful redirect"
+     },
+     "301": {
+      "$ref": "#/components/responses/paths·http-redirect-301·head·responses·301",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-301·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_get301",
+    "description": "Return 301 status code and redirect to /http/success/200",
+    "tags": [
+     "HttpOperation Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-301·get·responses·200",
+      "description": "Success, should be returned after a successful redirect"
+     },
+     "301": {
+      "$ref": "#/components/responses/paths·http-redirect-301·get·responses·301",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-301·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_put301",
+    "description": "Put true Boolean value in request returns 301.  This request should not be automatically redirected, but should return the received 301 to the caller for evaluation",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-redirect-301·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "301": {
+      "$ref": "#/components/responses/paths·http-redirect-301·put·responses·301",
+      "description": "Redirect to another endpoint. This redirect should *not* be automatically followed"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-301·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/redirect/302": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_head302",
+    "description": "Return 302 status code and redirect to /http/success/200",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-302·head·responses·200",
+      "description": "Success, should be returned afyter a successful redirect"
+     },
+     "302": {
+      "$ref": "#/components/responses/paths·http-redirect-302·head·responses·302",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-302·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_get302",
+    "description": "Return 302 status code and redirect to /http/success/200",
+    "tags": [
+     "HttpOperation Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-302·get·responses·200",
+      "description": "Success, should be returned afyter a successful redirect"
+     },
+     "302": {
+      "$ref": "#/components/responses/paths·http-redirect-302·get·responses·302",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-302·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "patch": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_patch302",
+    "description": "Patch true Boolean value in request returns 302.  This request should not be automatically redirected, but should return the received 302 to the caller for evaluation",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-redirect-302·patch·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "302": {
+      "$ref": "#/components/responses/paths·http-redirect-302·patch·responses·302",
+      "description": "Redirect to another endpoint. This redirect should *not* be automatically followed"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-302·patch·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/redirect/303": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_post303",
+    "description": "Post true Boolean value in request returns 303.  This request should be automatically redirected usign a get, ultimately returning a 200 status code",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-redirect-303·post·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-303·post·responses·200",
+      "description": "Success, should be returned afyter a successful redirect"
+     },
+     "303": {
+      "$ref": "#/components/responses/paths·http-redirect-303·post·responses·303",
+      "description": "Redirect to another endpoint. This redirect should be automatically followed with a get request"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-303·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/redirect/307": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_head307",
+    "description": "Redirect with 307, resulting in a 200 success",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-307·head·responses·200",
+      "description": "Success, should be returned after a successful redirect"
+     },
+     "307": {
+      "$ref": "#/components/responses/paths·http-redirect-307·head·responses·307",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-307·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_get307",
+    "description": "Redirect get with 307, resulting in a 200 success",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-307·get·responses·200",
+      "description": "Success, should be returned after a successful redirect"
+     },
+     "307": {
+      "$ref": "#/components/responses/paths·http-redirect-307·get·responses·307",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-307·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "options": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_options307",
+    "description": "options redirected with 307, resulting in a 200 after redirect",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-307·options·responses·200",
+      "description": "Success, should be returned after a successful redirect"
+     },
+     "307": {
+      "$ref": "#/components/responses/paths·http-redirect-307·options·responses·307",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-307·options·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "HttpRedirects_put307",
+    "description": "Put redirected with 307, resulting in a 200 after redirect",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-redirect-307·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-307·put·responses·200",
+      "description": "Success, should be returned after a successful redirect"
+     },
+     "307": {
+      "$ref": "#/components/responses/paths·http-redirect-307·put·responses·307",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-307·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "patch": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_patch307",
+    "description": "Patch redirected with 307, resulting in a 200 after redirect",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-redirect-307·patch·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-307·patch·responses·200",
+      "description": "Success, should be returned after a successful redirect"
+     },
+     "307": {
+      "$ref": "#/components/responses/paths·http-redirect-307·patch·responses·307",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-307·patch·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_post307",
+    "description": "Post redirected with 307, resulting in a 200 after redirect",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-redirect-307·post·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-307·post·responses·200",
+      "description": "Success, should be returned after a successful redirect"
+     },
+     "307": {
+      "$ref": "#/components/responses/paths·http-redirect-307·post·responses·307",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-307·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "delete": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRedirects_delete307",
+    "description": "Delete redirected with 307, resulting in a 200 after redirect",
+    "tags": [
+     "HttpRedirect Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-redirect-307·delete·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-redirect-307·delete·responses·200",
+      "description": "Success, should be returned after a successful redirect"
+     },
+     "307": {
+      "$ref": "#/components/responses/paths·http-redirect-307·delete·responses·307",
+      "description": "Redirect to another endpoint"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-redirect-307·delete·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/400": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_head400",
+    "description": "Return 400 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-400·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_get400",
+    "description": "Return 400 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-400·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "options": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_options400",
+    "description": "Return 400 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-400·options·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_put400",
+    "description": "Return 400 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-400·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-400·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "patch": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_patch400",
+    "description": "Return 400 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-400·patch·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-400·patch·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_post400",
+    "description": "Return 400 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-400·post·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-400·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "delete": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_delete400",
+    "description": "Return 400 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-400·delete·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-400·delete·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/401": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_head401",
+    "description": "Return 401 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-401·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/402": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_get402",
+    "description": "Return 402 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-402·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/403": {
+   "options": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_options403",
+    "description": "Return 403 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-403·options·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_get403",
+    "description": "Return 403 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-403·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/404": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_put404",
+    "description": "Return 404 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-404·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-404·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/405": {
+   "patch": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_patch405",
+    "description": "Return 405 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-405·patch·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-405·patch·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/406": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_post406",
+    "description": "Return 406 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-406·post·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-406·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/407": {
+   "delete": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_delete407",
+    "description": "Return 407 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-407·delete·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-407·delete·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/409": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_put409",
+    "description": "Return 409 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-409·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-409·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/410": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_head410",
+    "description": "Return 410 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-410·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/411": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_get411",
+    "description": "Return 411 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-411·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/412": {
+   "options": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_options412",
+    "description": "Return 412 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-412·options·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_get412",
+    "description": "Return 412 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-412·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/413": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_put413",
+    "description": "Return 413 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-413·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-413·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/414": {
+   "patch": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_patch414",
+    "description": "Return 414 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-414·patch·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-414·patch·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/415": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_post415",
+    "description": "Return 415 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-415·post·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-415·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/416": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_get416",
+    "description": "Return 416 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-416·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/417": {
+   "delete": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_delete417",
+    "description": "Return 417 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-client-417·delete·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-417·delete·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/client/429": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpClientFailure_head429",
+    "description": "Return 429 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpClientFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-client-429·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/server/501": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpServerFailure_head501",
+    "description": "Return 501 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpServerFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-server-501·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpServerFailure_get501",
+    "description": "Return 501 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpServerFailure Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-server-501·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/failure/server/505": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpServerFailure_post505",
+    "description": "Return 505 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpServerFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-server-505·post·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-server-505·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "delete": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpServerFailure_delete505",
+    "description": "Return 505 status code - should be represented in the client as an error",
+    "tags": [
+     "HttpServerFailure Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-failure-server-505·delete·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-failure-server-505·delete·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/retry/408": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRetry_head408",
+    "description": "Return 408 status code, then 200 after retry",
+    "tags": [
+     "HttpRetry Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-retry-408·head·responses·200",
+      "description": "Successfully received the true boolean value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-retry-408·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/retry/500": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRetry_put500",
+    "description": "Return 500 status code, then 200 after retry",
+    "tags": [
+     "HttpRetry Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-retry-500·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-retry-500·put·responses·200",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-retry-500·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "patch": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRetry_patch500",
+    "description": "Return 500 status code, then 200 after retry",
+    "tags": [
+     "HttpRetry Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-retry-500·patch·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-retry-500·patch·responses·200",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-retry-500·patch·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/retry/502": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRetry_get502",
+    "description": "Return 502 status code, then 200 after retry",
+    "tags": [
+     "HttpRetry Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-retry-502·get·responses·200",
+      "description": "Successfully received the true boolean value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-retry-502·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "options": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRetry_options502",
+    "description": "Return 502 status code, then 200 after retry",
+    "tags": [
+     "HttpRetry Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-retry-502·options·responses·200",
+      "description": "Successfully received the true boolean value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-retry-502·options·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/retry/503": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRetry_post503",
+    "description": "Return 503 status code, then 200 after retry",
+    "tags": [
+     "HttpRetry Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-retry-503·post·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-retry-503·post·responses·200",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-retry-503·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "delete": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRetry_delete503",
+    "description": "Return 503 status code, then 200 after retry",
+    "tags": [
+     "HttpRetry Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-retry-503·delete·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-retry-503·delete·responses·200",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-retry-503·delete·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/retry/504": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRetry_put504",
+    "description": "Return 504 status code, then 200 after retry",
+    "tags": [
+     "HttpRetry Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-retry-504·put·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-retry-504·put·responses·200",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-retry-504·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "patch": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpRetry_patch504",
+    "description": "Return 504 status code, then 200 after retry",
+    "tags": [
+     "HttpRetry Operations"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·http-retry-504·patch·requestbody",
+     "description": "Simple boolean value true"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-retry-504·patch·responses·200",
+      "description": "Successfully received the boolean true value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-retry-504·patch·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/204/none/default/Error/response/200/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200Model204NoModelDefaultError200Valid",
+    "description": "Send a 200 response with valid payload: {'statusCode': '200'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-200-valid·get·responses·200",
+      "description": "Return {'statusCode': '200'}"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-200-valid·get·responses·204",
+      "description": "Return no payload"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-200-valid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/204/none/default/Error/response/204/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200Model204NoModelDefaultError204Valid",
+    "description": "Send a 204 response with no payload",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-204-none·get·responses·200",
+      "description": "Return {'statusCode': '204'}"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-204-none·get·responses·204",
+      "description": "Return no payload"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-204-none·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/204/none/default/Error/response/201/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200Model204NoModelDefaultError201Invalid",
+    "description": "Send a 201 response with valid payload: {'statusCode': '201'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-201-valid·get·responses·200",
+      "description": "Return {'statusCode': '200'}"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-201-valid·get·responses·204",
+      "description": "Return no payload"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-201-valid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/204/none/default/Error/response/202/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200Model204NoModelDefaultError202None",
+    "description": "Send a 202 response with no payload:",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-202-none·get·responses·200",
+      "description": "Return {'statusCode': '200'}"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-202-none·get·responses·204",
+      "description": "Return no payload"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-202-none·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/204/none/default/Error/response/400/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200Model204NoModelDefaultError400Valid",
+    "description": "Send a 400 response with valid error payload: {'status': 400, 'message': 'client error'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-400-valid·get·responses·200",
+      "description": "Return {'statusCode': '200'}"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-400-valid·get·responses·204",
+      "description": "Return no payload"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-204-none-default-error-response-400-valid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/201/B/default/Error/response/200/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200Model201ModelDefaultError200Valid",
+    "description": "Send a 200 response with valid payload: {'statusCode': '200'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-b-default-error-response-200-valid·get·responses·200",
+      "description": "Return {'statusCode': '200'}"
+     },
+     "201": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-b-default-error-response-200-valid·get·responses·201",
+      "description": "Return {'statusCode': '201', 'textStatusCode': 'Created'}"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-b-default-error-response-200-valid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/201/B/default/Error/response/201/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200Model201ModelDefaultError201Valid",
+    "description": "Send a 201 response with valid payload: {'statusCode': '201', 'textStatusCode': 'Created'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-b-default-error-response-201-valid·get·responses·200",
+      "description": "Return {'statusCode': '200'}"
+     },
+     "201": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-b-default-error-response-201-valid·get·responses·201",
+      "description": "Return {'statusCode': '201', 'textStatusCode': 'Created'}"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-b-default-error-response-201-valid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/201/B/default/Error/response/400/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200Model201ModelDefaultError400Valid",
+    "description": "Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-b-default-error-response-400-valid·get·responses·200",
+      "description": "Return {'statusCode': '200'}"
+     },
+     "201": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-b-default-error-response-400-valid·get·responses·201",
+      "description": "Return {'statusCode': '201', 'textStatusCode': 'Created'}"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-b-default-error-response-400-valid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/201/C/404/D/default/Error/response/200/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200ModelA201ModelC404ModelDDefaultError200Valid",
+    "description": "Send a 200 response with valid payload: {'statusCode': '200'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-200-valid·get·responses·200",
+      "description": "Return {'statusCode': '200'}"
+     },
+     "201": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-200-valid·get·responses·201",
+      "description": "Return {'httpCode': '201'}"
+     },
+     "404": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-200-valid·get·responses·404",
+      "description": "Return {'httpStatusCode': '404'}"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-200-valid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/201/C/404/D/default/Error/response/201/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200ModelA201ModelC404ModelDDefaultError201Valid",
+    "description": "Send a 200 response with valid payload: {'httpCode': '201'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-201-valid·get·responses·200",
+      "description": "Return {'statusCode': '200'}"
+     },
+     "201": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-201-valid·get·responses·201",
+      "description": "Return {'httpCode': '201'}"
+     },
+     "404": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-201-valid·get·responses·404",
+      "description": "Return {'httpStatusCode': '404'}"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-201-valid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/201/C/404/D/default/Error/response/404/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200ModelA201ModelC404ModelDDefaultError404Valid",
+    "description": "Send a 200 response with valid payload: {'httpStatusCode': '404'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-404-valid·get·responses·200",
+      "description": "Return {'statusCode': '200'}"
+     },
+     "201": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-404-valid·get·responses·201",
+      "description": "Return {'httpCode': '201'}"
+     },
+     "404": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-404-valid·get·responses·404",
+      "description": "Return {'httpStatusCode': '404'}"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-404-valid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/201/C/404/D/default/Error/response/400/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200ModelA201ModelC404ModelDDefaultError400Valid",
+    "description": "Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-400-valid·get·responses·200",
+      "description": "Return {'statusCode': '200'}"
+     },
+     "201": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-400-valid·get·responses·201",
+      "description": "Return {'httpCode': '201'}"
+     },
+     "404": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-400-valid·get·responses·404",
+      "description": "Return {'httpStatusCode': '404'}"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-201-c-404-d-default-error-response-400-valid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/202/none/204/none/default/Error/response/202/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get202None204NoneDefaultError202None",
+    "description": "Send a 202 response with no payload",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "202": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-error-response-202-none·get·responses·202",
+      "description": "No payload for Accepted"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-error-response-202-none·get·responses·204",
+      "description": "No Payload for NoContent"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-error-response-202-none·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/202/none/204/none/default/Error/response/204/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get202None204NoneDefaultError204None",
+    "description": "Send a 204 response with no payload",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "202": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-error-response-204-none·get·responses·202",
+      "description": "No payload for Accepted"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-error-response-204-none·get·responses·204",
+      "description": "No Payload for NoContent"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-error-response-204-none·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/payloads/202/none/204/none/default/Error/response/400/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get202None204NoneDefaultError400Valid",
+    "description": "Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "202": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-error-response-400-valid·get·responses·202",
+      "description": "No payload for Accepted"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-error-response-400-valid·get·responses·204",
+      "description": "No Payload for NoContent"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-error-response-400-valid·get·responses·default",
+      "description": "Unexpected error with payload: {'code': '400', 'message': 'client error'}"
+     }
+    }
+   }
+  },
+  "/http/payloads/202/none/204/none/default/none/response/202/invalid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get202None204NoneDefaultNone202Invalid",
+    "description": "Send a 202 response with an unexpected payload {'property': 'value'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "202": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-202-invalid·get·responses·202",
+      "description": "No payload for Accepted, but this operation will return {'property': 'value'}"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-202-invalid·get·responses·204",
+      "description": "No payload for NoContent"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-202-invalid·get·responses·default",
+      "description": "Unexpected error with no payload"
+     }
+    }
+   }
+  },
+  "/http/payloads/202/none/204/none/default/none/response/204/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get202None204NoneDefaultNone204None",
+    "description": "Send a 204 response with no payload",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "202": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-204-none·get·responses·202",
+      "description": "No payload for Accepted"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-204-none·get·responses·204",
+      "description": "No payload for NoContent"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-204-none·get·responses·default",
+      "description": "Unexpected error with no payload"
+     }
+    }
+   }
+  },
+  "/http/payloads/202/none/204/none/default/none/response/400/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get202None204NoneDefaultNone400None",
+    "description": "Send a 400 response with no payload",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "202": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-400-none·get·responses·202",
+      "description": "No payload for Accepted"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-400-none·get·responses·204",
+      "description": "No payload for NoContent"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-400-none·get·responses·default",
+      "description": "Unexpected error with no payload"
+     }
+    }
+   }
+  },
+  "/http/payloads/202/none/204/none/default/none/response/400/invalid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get202None204NoneDefaultNone400Invalid",
+    "description": "Send a 400 response with an unexpected payload {'property': 'value'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "202": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-400-invalid·get·responses·202",
+      "description": "No payload for Accepted"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-400-invalid·get·responses·204",
+      "description": "No payload for NoContent"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-202-none-204-none-default-none-response-400-invalid·get·responses·default",
+      "description": "Unexpected error should have no payload, but this operation sends: {'property': 'value'}"
+     }
+    }
+   }
+  },
+  "/http/payloads/default/A/response/200/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_getDefaultModelA200Valid",
+    "description": "Send a 200 response with valid payload: {'statusCode': '200'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-default-a-response-200-valid·get·responses·default",
+      "description": "Return {'statusCode': '200'}"
+     }
+    }
+   }
+  },
+  "/http/payloads/default/A/response/200/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_getDefaultModelA200None",
+    "description": "Send a 200 response with no payload",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-default-a-response-200-none·get·responses·default",
+      "description": "Return no payload"
+     }
+    }
+   }
+  },
+  "/http/payloads/default/A/response/400/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_getDefaultModelA400Valid",
+    "description": "Send a 400 response with valid payload: {'statusCode': '400'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-default-a-response-400-valid·get·responses·default",
+      "description": "Return {'statusCode': '400'}"
+     }
+    }
+   }
+  },
+  "/http/payloads/default/A/response/400/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_getDefaultModelA400None",
+    "description": "Send a 400 response with no payload",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-default-a-response-400-none·get·responses·default",
+      "description": "Return no payload"
+     }
+    }
+   }
+  },
+  "/http/payloads/default/none/response/200/invalid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_getDefaultNone200Invalid",
+    "description": "Send a 200 response with invalid payload: {'statusCode': '200'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-default-none-response-200-invalid·get·responses·default",
+      "description": "Return invalid payload {'statusCode': '200'}"
+     }
+    }
+   }
+  },
+  "/http/payloads/default/none/response/200/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_getDefaultNone200None",
+    "description": "Send a 200 response with no payload",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-default-none-response-200-none·get·responses·default",
+      "description": "Return no payload"
+     }
+    }
+   }
+  },
+  "/http/payloads/default/none/response/400/invalid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_getDefaultNone400Invalid",
+    "description": "Send a 400 response with valid payload: {'statusCode': '400'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-default-none-response-400-invalid·get·responses·default",
+      "description": "Return invalid payload{'statusCode': '400'}"
+     }
+    }
+   }
+  },
+  "/http/payloads/default/none/response/400/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_getDefaultNone400None",
+    "description": "Send a 400 response with no payload",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "default": {
+      "$ref": "#/components/responses/paths·http-payloads-default-none-response-400-none·get·responses·default",
+      "description": "Return no payload"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/response/200/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200ModelA200None",
+    "description": "Send a 200 response with no payload, when a payload is expected - client should return a null object of thde type for model A",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-response-200-none·get·responses·200",
+      "description": "Return no payload"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/response/200/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200ModelA200Valid",
+    "description": "Send a 200 response with payload {'statusCode': '200'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-response-200-valid·get·responses·200",
+      "description": "Return a respose with valid payload {'statusCode': '200'}"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/response/200/invalid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200ModelA200Invalid",
+    "description": "Send a 200 response with invalid payload {'statusCodeInvalid': '200'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-response-200-invalid·get·responses·200",
+      "description": "Return a respose with invalid payload {'statusCodeInvalid': '200'}"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/response/400/none": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200ModelA400None",
+    "description": "Send a 400 response with no payload client should treat as an http error with no error model",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-response-400-none·get·responses·200",
+      "description": "Return no payload, and an unmodeled 400 response"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/response/400/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200ModelA400Valid",
+    "description": "Send a 200 response with payload {'statusCode': '400'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-response-400-valid·get·responses·200",
+      "description": "Return a respose with valid payload {'statusCode': '400'}  but error status code 400, which is unmodeled"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/response/400/invalid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200ModelA400Invalid",
+    "description": "Send a 200 response with invalid payload {'statusCodeInvalid': '400'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-response-400-invalid·get·responses·200",
+      "description": "Return a respose with invalid payload {'statusCodeInvalid': '400'}"
+     }
+    }
+   }
+  },
+  "/http/payloads/200/A/response/202/valid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "multipleResponses_get200ModelA202Valid",
+    "description": "Send a 202 response with payload {'statusCode': '202'}",
+    "tags": [
+     "MultipleResponse Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-payloads-200-a-response-202-valid·get·responses·200",
+      "description": "Return a respose with valid payload {'statusCode': '202'}  but unmodeled success status code 202, which is unmodeled"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "responses": {
+   "paths·http-failure-emptybody-error·get·responses·200": {
+    "description": "Successfully returns 400 error code with the get request",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-emptybody-error·get·responses·200·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    }
+   },
+   "paths·http-failure-emptybody-error·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-nomodel-error·get·responses·200": {
+    "description": "Successfully returns 400 error code with the get request",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-nomodel-error·get·responses·200·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    }
+   },
+   "paths·http-failure-nomodel-empty·get·responses·200": {
+    "description": "Successfully returns 200 error code with the get request",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-nomodel-empty·get·responses·200·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    }
+   },
+   "paths·http-success-200·head·responses·200": {
+    "description": "Successfully received the head request"
+   },
+   "paths·http-success-200·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-200·get·responses·200": {
+    "description": "Successfully received the get request",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-200·get·responses·200·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    }
+   },
+   "paths·http-success-200·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-200·options·responses·200": {
+    "description": "Successfully received the options request",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-200·options·responses·200·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    }
+   },
+   "paths·http-success-200·options·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-200·put·responses·200": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-200·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-200·patch·responses·200": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-200·patch·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-200·post·responses·200": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-200·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-200·delete·responses·200": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-200·delete·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-201·put·responses·201": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-201·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-201·post·responses·201": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-201·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-202·put·responses·202": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-202·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-202·patch·responses·202": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-202·patch·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-202·post·responses·202": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-202·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-202·delete·responses·202": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-202·delete·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-204·head·responses·204": {
+    "description": "Successfully received the true boolean value"
+   },
+   "paths·http-success-204·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-204·put·responses·204": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-204·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-204·patch·responses·204": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-204·patch·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-204·post·responses·204": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-204·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-204·delete·responses·204": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-success-204·delete·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-success-404·head·responses·204": {
+    "description": "Successfully received the head request"
+   },
+   "paths·http-success-404·head·responses·404": {
+    "description": "Successfully received the head request"
+   },
+   "paths·http-success-404·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-300·head·responses·200": {
+    "description": "Success, should be returned afyter a successful redirect"
+   },
+   "paths·http-redirect-300·head·responses·300": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-300·head·responses·300·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-300·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-300·get·responses·200": {
+    "description": "Success, should be returned afyter a successful redirect"
+   },
+   "paths·http-redirect-300·get·responses·300": {
+    "description": "Redirect to another endpoint",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-redirect-300·get·responses·300·content·application-json·schema",
+       "description": "A list of location options for the request ['/http/success/get/200']"
+      }
+     }
+    },
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-300·get·responses·300·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-300·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-301·head·responses·200": {
+    "description": "Success, should be returned afyter a successful redirect"
+   },
+   "paths·http-redirect-301·head·responses·301": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-301·head·responses·301·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-301·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-301·get·responses·200": {
+    "description": "Success, should be returned after a successful redirect"
+   },
+   "paths·http-redirect-301·get·responses·301": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-301·get·responses·301·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-301·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-301·put·responses·301": {
+    "description": "Redirect to another endpoint. This redirect should *not* be automatically followed",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-301·put·responses·301·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-301·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-302·head·responses·200": {
+    "description": "Success, should be returned afyter a successful redirect"
+   },
+   "paths·http-redirect-302·head·responses·302": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-302·head·responses·302·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-302·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-302·get·responses·200": {
+    "description": "Success, should be returned afyter a successful redirect"
+   },
+   "paths·http-redirect-302·get·responses·302": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-302·get·responses·302·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-302·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-302·patch·responses·302": {
+    "description": "Redirect to another endpoint. This redirect should *not* be automatically followed",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-302·patch·responses·302·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-302·patch·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-303·post·responses·200": {
+    "description": "Success, should be returned afyter a successful redirect"
+   },
+   "paths·http-redirect-303·post·responses·303": {
+    "description": "Redirect to another endpoint. This redirect should be automatically followed with a get request",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-303·post·responses·303·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-303·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-307·head·responses·200": {
+    "description": "Success, should be returned after a successful redirect"
+   },
+   "paths·http-redirect-307·head·responses·307": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-307·head·responses·307·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-307·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-307·get·responses·200": {
+    "description": "Success, should be returned after a successful redirect"
+   },
+   "paths·http-redirect-307·get·responses·307": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-307·get·responses·307·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-307·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-307·options·responses·200": {
+    "description": "Success, should be returned after a successful redirect"
+   },
+   "paths·http-redirect-307·options·responses·307": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-307·options·responses·307·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-307·options·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-307·put·responses·200": {
+    "description": "Success, should be returned after a successful redirect"
+   },
+   "paths·http-redirect-307·put·responses·307": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-307·put·responses·307·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-307·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-307·patch·responses·200": {
+    "description": "Success, should be returned after a successful redirect"
+   },
+   "paths·http-redirect-307·patch·responses·307": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-307·patch·responses·307·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-307·patch·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-307·post·responses·200": {
+    "description": "Success, should be returned after a successful redirect"
+   },
+   "paths·http-redirect-307·post·responses·307": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-307·post·responses·307·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-307·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-redirect-307·delete·responses·200": {
+    "description": "Success, should be returned after a successful redirect"
+   },
+   "paths·http-redirect-307·delete·responses·307": {
+    "description": "Redirect to another endpoint",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/paths·http-redirect-307·delete·responses·307·headers·location",
+      "description": "The redirect location for this request"
+     }
+    }
+   },
+   "paths·http-redirect-307·delete·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-400·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-400·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-400·options·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-400·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-400·patch·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-400·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-400·delete·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-401·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-402·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-403·options·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-403·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-404·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-405·patch·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-406·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-407·delete·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-409·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-410·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-411·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-412·options·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-412·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-413·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-414·patch·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-415·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-416·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-417·delete·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-client-429·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-server-501·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-server-501·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-server-505·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-failure-server-505·delete·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-retry-408·head·responses·200": {
+    "description": "Successfully received the true boolean value"
+   },
+   "paths·http-retry-408·head·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-retry-500·put·responses·200": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-retry-500·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-retry-500·patch·responses·200": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-retry-500·patch·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-retry-502·get·responses·200": {
+    "description": "Successfully received the true boolean value"
+   },
+   "paths·http-retry-502·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-retry-502·options·responses·200": {
+    "description": "Successfully received the true boolean value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-retry-502·options·responses·200·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    }
+   },
+   "paths·http-retry-502·options·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-retry-503·post·responses·200": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-retry-503·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-retry-503·delete·responses·200": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-retry-503·delete·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-retry-504·put·responses·200": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-retry-504·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-retry-504·patch·responses·200": {
+    "description": "Successfully received the boolean true value"
+   },
+   "paths·http-retry-504·patch·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-200-valid·get·responses·200": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-200-valid·get·responses·204": {
+    "description": "Return no payload"
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-200-valid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-204-none·get·responses·200": {
+    "description": "Return {'statusCode': '204'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-204-none·get·responses·204": {
+    "description": "Return no payload"
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-204-none·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-201-valid·get·responses·200": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-201-valid·get·responses·204": {
+    "description": "Return no payload"
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-201-valid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-202-none·get·responses·200": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-202-none·get·responses·204": {
+    "description": "Return no payload"
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-202-none·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-400-valid·get·responses·200": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-400-valid·get·responses·204": {
+    "description": "Return no payload"
+   },
+   "paths·http-payloads-200-a-204-none-default-error-response-400-valid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-b-default-error-response-200-valid·get·responses·200": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-b-default-error-response-200-valid·get·responses·201": {
+    "description": "Return {'statusCode': '201', 'textStatusCode': 'Created'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/B"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-b-default-error-response-200-valid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-b-default-error-response-201-valid·get·responses·200": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-b-default-error-response-201-valid·get·responses·201": {
+    "description": "Return {'statusCode': '201', 'textStatusCode': 'Created'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/B"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-b-default-error-response-201-valid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-b-default-error-response-400-valid·get·responses·200": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-b-default-error-response-400-valid·get·responses·201": {
+    "description": "Return {'statusCode': '201', 'textStatusCode': 'Created'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/B"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-b-default-error-response-400-valid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-200-valid·get·responses·200": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-200-valid·get·responses·201": {
+    "description": "Return {'httpCode': '201'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/C"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-200-valid·get·responses·404": {
+    "description": "Return {'httpStatusCode': '404'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/D"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-200-valid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-201-valid·get·responses·200": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-201-valid·get·responses·201": {
+    "description": "Return {'httpCode': '201'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/C"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-201-valid·get·responses·404": {
+    "description": "Return {'httpStatusCode': '404'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/D"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-201-valid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-404-valid·get·responses·200": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-404-valid·get·responses·201": {
+    "description": "Return {'httpCode': '201'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/C"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-404-valid·get·responses·404": {
+    "description": "Return {'httpStatusCode': '404'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/D"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-404-valid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-400-valid·get·responses·200": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-400-valid·get·responses·201": {
+    "description": "Return {'httpCode': '201'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/C"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-400-valid·get·responses·404": {
+    "description": "Return {'httpStatusCode': '404'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/D"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-201-c-404-d-default-error-response-400-valid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-202-none-204-none-default-error-response-202-none·get·responses·202": {
+    "description": "No payload for Accepted"
+   },
+   "paths·http-payloads-202-none-204-none-default-error-response-202-none·get·responses·204": {
+    "description": "No Payload for NoContent"
+   },
+   "paths·http-payloads-202-none-204-none-default-error-response-202-none·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-202-none-204-none-default-error-response-204-none·get·responses·202": {
+    "description": "No payload for Accepted"
+   },
+   "paths·http-payloads-202-none-204-none-default-error-response-204-none·get·responses·204": {
+    "description": "No Payload for NoContent"
+   },
+   "paths·http-payloads-202-none-204-none-default-error-response-204-none·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-202-none-204-none-default-error-response-400-valid·get·responses·202": {
+    "description": "No payload for Accepted"
+   },
+   "paths·http-payloads-202-none-204-none-default-error-response-400-valid·get·responses·204": {
+    "description": "No Payload for NoContent"
+   },
+   "paths·http-payloads-202-none-204-none-default-error-response-400-valid·get·responses·default": {
+    "description": "Unexpected error with payload: {'code': '400', 'message': 'client error'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-202-invalid·get·responses·202": {
+    "description": "No payload for Accepted, but this operation will return {'property': 'value'}"
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-202-invalid·get·responses·204": {
+    "description": "No payload for NoContent"
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-202-invalid·get·responses·default": {
+    "description": "Unexpected error with no payload"
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-204-none·get·responses·202": {
+    "description": "No payload for Accepted"
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-204-none·get·responses·204": {
+    "description": "No payload for NoContent"
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-204-none·get·responses·default": {
+    "description": "Unexpected error with no payload"
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-400-none·get·responses·202": {
+    "description": "No payload for Accepted"
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-400-none·get·responses·204": {
+    "description": "No payload for NoContent"
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-400-none·get·responses·default": {
+    "description": "Unexpected error with no payload"
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-400-invalid·get·responses·202": {
+    "description": "No payload for Accepted"
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-400-invalid·get·responses·204": {
+    "description": "No payload for NoContent"
+   },
+   "paths·http-payloads-202-none-204-none-default-none-response-400-invalid·get·responses·default": {
+    "description": "Unexpected error should have no payload, but this operation sends: {'property': 'value'}"
+   },
+   "paths·http-payloads-default-a-response-200-valid·get·responses·default": {
+    "description": "Return {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-default-a-response-200-none·get·responses·default": {
+    "description": "Return no payload",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-default-a-response-400-valid·get·responses·default": {
+    "description": "Return {'statusCode': '400'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-default-a-response-400-none·get·responses·default": {
+    "description": "Return no payload",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-default-none-response-200-invalid·get·responses·default": {
+    "description": "Return invalid payload {'statusCode': '200'}"
+   },
+   "paths·http-payloads-default-none-response-200-none·get·responses·default": {
+    "description": "Return no payload"
+   },
+   "paths·http-payloads-default-none-response-400-invalid·get·responses·default": {
+    "description": "Return invalid payload{'statusCode': '400'}"
+   },
+   "paths·http-payloads-default-none-response-400-none·get·responses·default": {
+    "description": "Return no payload"
+   },
+   "paths·http-payloads-200-a-response-200-none·get·responses·200": {
+    "description": "Return no payload",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-response-200-valid·get·responses·200": {
+    "description": "Return a respose with valid payload {'statusCode': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-response-200-invalid·get·responses·200": {
+    "description": "Return a respose with invalid payload {'statusCodeInvalid': '200'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-response-400-none·get·responses·200": {
+    "description": "Return no payload, and an unmodeled 400 response",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-response-400-valid·get·responses·200": {
+    "description": "Return a respose with valid payload {'statusCode': '400'}  but error status code 400, which is unmodeled",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-response-400-invalid·get·responses·200": {
+    "description": "Return a respose with invalid payload {'statusCodeInvalid': '400'}",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   },
+   "paths·http-payloads-200-a-response-202-valid·get·responses·200": {
+    "description": "Return a respose with valid payload {'statusCode': '202'}  but unmodeled success status code 202, which is unmodeled",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "paths·http-failure-emptybody-error·get·responses·200·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean",
+    "enum": [
+     true
+    ]
+   },
+   "paths·http-failure-nomodel-error·get·responses·200·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean",
+    "enum": [
+     true
+    ]
+   },
+   "paths·http-failure-nomodel-empty·get·responses·200·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean",
+    "enum": [
+     true
+    ]
+   },
+   "paths·http-success-200·get·responses·200·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean",
+    "enum": [
+     true
+    ]
+   },
+   "paths·http-success-200·options·responses·200·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean",
+    "enum": [
+     true
+    ]
+   },
+   "paths·http-success-200·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-200·patch·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-200·post·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-200·delete·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-201·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-201·post·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-202·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-202·patch·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-202·post·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-202·delete·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-204·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-204·patch·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-204·post·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-success-204·delete·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-redirect-300·head·responses·300·headers·location·schema": {
+    "enum": [
+     "/http/success/head/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-300·get·responses·300·content·application-json·schema": {
+    "description": "A list of location options for the request ['/http/success/get/200']",
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/get-300-application-json-itemsItem"
+    }
+   },
+   "get-300-application-json-itemsItem": {
+    "type": "string"
+   },
+   "paths·http-redirect-300·get·responses·300·headers·location·schema": {
+    "enum": [
+     "/http/success/get/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-301·head·responses·301·headers·location·schema": {
+    "enum": [
+     "/http/success/head/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-301·get·responses·301·headers·location·schema": {
+    "enum": [
+     "/http/success/get/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-301·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-redirect-301·put·responses·301·headers·location·schema": {
+    "enum": [
+     "/http/failure/500"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-302·head·responses·302·headers·location·schema": {
+    "enum": [
+     "/http/success/head/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-302·get·responses·302·headers·location·schema": {
+    "enum": [
+     "/http/success/get/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-302·patch·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-redirect-302·patch·responses·302·headers·location·schema": {
+    "enum": [
+     "/http/failure/500"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-303·post·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-redirect-303·post·responses·303·headers·location·schema": {
+    "enum": [
+     "/http/success/get/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-307·head·responses·307·headers·location·schema": {
+    "enum": [
+     "/http/success/head/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-307·get·responses·307·headers·location·schema": {
+    "enum": [
+     "/http/success/get/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-307·options·responses·307·headers·location·schema": {
+    "enum": [
+     "/http/success/options/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-307·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-redirect-307·put·responses·307·headers·location·schema": {
+    "enum": [
+     "/http/success/put/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-307·patch·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-redirect-307·patch·responses·307·headers·location·schema": {
+    "enum": [
+     "/http/success/patch/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-307·post·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-redirect-307·post·responses·307·headers·location·schema": {
+    "enum": [
+     "/http/success/post/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-redirect-307·delete·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-redirect-307·delete·responses·307·headers·location·schema": {
+    "enum": [
+     "/http/success/delete/200"
+    ],
+    "type": "string"
+   },
+   "paths·http-failure-client-400·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-400·patch·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-400·post·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-400·delete·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-404·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-405·patch·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-406·post·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-407·delete·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-409·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-413·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-414·patch·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-415·post·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-client-417·delete·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-server-505·post·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-failure-server-505·delete·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-retry-500·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-retry-500·patch·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-retry-502·options·responses·200·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean",
+    "enum": [
+     true
+    ]
+   },
+   "paths·http-retry-503·post·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-retry-503·delete·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-retry-504·put·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "paths·http-retry-504·patch·requestbody·content·application-json·schema": {
+    "description": "Simple boolean value true",
+    "type": "boolean"
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   },
+   "A": {
+    "type": "object",
+    "x-ms-client-name": "MyException",
+    "properties": {
+     "statusCode": {
+      "$ref": "#/components/schemas/A-statusCode"
+     }
+    }
+   },
+   "A-statusCode": {
+    "type": "string"
+   },
+   "B": {
+    "type": "object",
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/httpInfrastructure.quirks.json#/components/schemas/A"
+     }
+    ],
+    "properties": {
+     "textStatusCode": {
+      "$ref": "#/components/schemas/B-textStatusCode"
+     }
+    }
+   },
+   "B-textStatusCode": {
+    "type": "string"
+   },
+   "C": {
+    "type": "object",
+    "properties": {
+     "httpCode": {
+      "$ref": "#/components/schemas/C-httpCode"
+     }
+    }
+   },
+   "C-httpCode": {
+    "type": "string"
+   },
+   "D": {
+    "type": "object",
+    "properties": {
+     "httpStatusCode": {
+      "$ref": "#/components/schemas/D-httpStatusCode"
+     }
+    }
+   },
+   "D-httpStatusCode": {
+    "type": "string"
+   }
+  },
+  "requestBodies": {
+   "paths·http-success-200·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-200·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-200·patch·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-200·patch·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-200·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-200·post·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-200·delete·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-200·delete·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-201·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-201·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-201·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-201·post·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-202·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-202·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-202·patch·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-202·patch·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-202·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-202·post·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-202·delete·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-202·delete·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-204·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-204·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-204·patch·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-204·patch·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-204·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-204·post·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-success-204·delete·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-success-204·delete·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-redirect-301·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-redirect-301·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-redirect-302·patch·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-redirect-302·patch·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-redirect-303·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-redirect-303·post·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-redirect-307·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-redirect-307·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-redirect-307·patch·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-redirect-307·patch·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-redirect-307·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-redirect-307·post·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-redirect-307·delete·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-redirect-307·delete·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-400·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-400·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-400·patch·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-400·patch·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-400·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-400·post·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-400·delete·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-400·delete·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-404·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-404·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-405·patch·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-405·patch·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-406·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-406·post·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-407·delete·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-407·delete·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-409·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-409·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-413·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-413·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-414·patch·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-414·patch·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-415·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-415·post·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-client-417·delete·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-client-417·delete·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-server-505·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-server-505·post·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-failure-server-505·delete·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-failure-server-505·delete·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-retry-500·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-retry-500·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-retry-500·patch·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-retry-500·patch·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-retry-503·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-retry-503·post·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-retry-503·delete·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-retry-503·delete·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-retry-504·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-retry-504·put·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   },
+   "paths·http-retry-504·patch·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·http-retry-504·patch·requestbody·content·application-json·schema",
+       "description": "Simple boolean value true"
+      }
+     }
+    },
+    "description": "Simple boolean value true",
+    "x-ms-requestBody-name": "booleanValue"
+   }
+  },
+  "headers": {
+   "paths·http-redirect-300·head·responses·300·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-300·head·responses·300·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-300·get·responses·300·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-300·get·responses·300·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-301·head·responses·301·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-301·head·responses·301·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-301·get·responses·301·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-301·get·responses·301·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-301·put·responses·301·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-301·put·responses·301·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-302·head·responses·302·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-302·head·responses·302·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-302·get·responses·302·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-302·get·responses·302·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-302·patch·responses·302·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-302·patch·responses·302·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-303·post·responses·303·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-303·post·responses·303·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-307·head·responses·307·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-307·head·responses·307·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-307·get·responses·307·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-307·get·responses·307·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-307·options·responses·307·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-307·options·responses·307·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-307·put·responses·307·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-307·put·responses·307·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-307·patch·responses·307·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-307·patch·responses·307·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-307·post·responses·307·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-307·post·responses·307·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   },
+   "paths·http-redirect-307·delete·responses·307·headers·location": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·http-redirect-307·delete·responses·307·headers·location·schema"
+    },
+    "description": "The redirect location for this request"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

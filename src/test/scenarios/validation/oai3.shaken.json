@@ -1,0 +1,501 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest Validation Test",
+  "description": "Test Infrastructure for AutoRest. No server backend exists for these tests.",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/fakepath/{subscriptionId}/{resourceGroupName}/{id}?api-version={apiVersion}": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "validationOfMethodParameters",
+    "summary": "",
+    "description": "Validates input parameters on the method. See swagger for details.",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/validation.json#/components/parameters/SubscriptionIdParamterer"
+     },
+     {
+      "$ref": "#/components/parameters/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·parameters·1",
+      "description": "Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+."
+     },
+     {
+      "$ref": "#/components/parameters/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·parameters·2",
+      "description": "Required int multiple of 10 from 100 to 1000."
+     },
+     {
+      "$ref": "http://localhost:3000/__files/validation.json#/components/parameters/ApiVersionParameter"
+     }
+    ],
+    "tags": [
+     "Redis"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·responses·200",
+      "description": "A list of caches"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "validationOfBody",
+    "summary": "",
+    "description": "Validates body parameters on the method. See swagger for details.",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/validation.json#/components/parameters/SubscriptionIdParamterer"
+     },
+     {
+      "$ref": "#/components/parameters/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·parameters·1",
+      "description": "Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+."
+     },
+     {
+      "$ref": "#/components/parameters/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·parameters·2",
+      "description": "Required int multiple of 10 from 100 to 1000."
+     },
+     {
+      "$ref": "http://localhost:3000/__files/validation.json#/components/parameters/ApiVersionParameter"
+     }
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·requestbody"
+    },
+    "x-ms-requestBody-index": 3,
+    "tags": [
+     "Redis"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·responses·200",
+      "description": "A list of caches"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/validation/constantsInPath/{constantParam}/value": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "getWithConstantInPath",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·validation-constantsinpath-constantparam-value·get·parameters·0"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·validation-constantsinpath-constantparam-value·get·responses·200",
+      "description": "Success"
+     }
+    }
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "postWithConstantInBody",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·validation-constantsinpath-constantparam-value·post·parameters·0"
+     }
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·validation-constantsinpath-constantparam-value·post·requestbody"
+    },
+    "x-ms-requestBody-index": 1,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·validation-constantsinpath-constantparam-value·post·responses·200",
+      "description": "Success"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·parameters·1": {
+    "name": "resourceGroupName",
+    "in": "path",
+    "description": "Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.",
+    "schema": {
+     "$ref": "#/components/schemas/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·parameters·2": {
+    "name": "id",
+    "in": "path",
+    "description": "Required int multiple of 10 from 100 to 1000.",
+    "schema": {
+     "$ref": "#/components/schemas/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·parameters·2·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·parameters·1": {
+    "name": "resourceGroupName",
+    "in": "path",
+    "description": "Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.",
+    "schema": {
+     "$ref": "#/components/schemas/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·parameters·2": {
+    "name": "id",
+    "in": "path",
+    "description": "Required int multiple of 10 from 100 to 1000.",
+    "schema": {
+     "$ref": "#/components/schemas/paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·parameters·2·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·validation-constantsinpath-constantparam-value·get·parameters·0": {
+    "name": "constantParam",
+    "in": "path",
+    "schema": {
+     "enum": [
+      "constant"
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·validation-constantsinpath-constantparam-value·post·parameters·0": {
+    "name": "constantParam",
+    "in": "path",
+    "schema": {
+     "enum": [
+      "constant"
+     ],
+     "type": "string"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "SubscriptionIdParamterer": {
+    "name": "subscriptionId",
+    "in": "path",
+    "description": "Subscription ID.",
+    "schema": {
+     "$ref": "#/components/schemas/components·parameters·subscriptionidparamterer·schema"
+    },
+    "required": true
+   },
+   "ApiVersionParameter": {
+    "name": "apiVersion",
+    "in": "query",
+    "description": "Required string following pattern \\d{2}-\\d{2}-\\d{4}",
+    "schema": {
+     "$ref": "#/components/schemas/components·parameters·apiversionparameter·schema"
+    },
+    "required": true
+   }
+  },
+  "schemas": {
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·parameters·1·schema": {
+    "maxLength": 10,
+    "minLength": 3,
+    "pattern": "[a-zA-Z0-9]+",
+    "type": "string"
+   },
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·parameters·2·schema": {
+    "multipleOf": 10,
+    "maximum": 1000,
+    "minimum": 100,
+    "type": "integer"
+   },
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·parameters·1·schema": {
+    "maxLength": 10,
+    "minLength": 3,
+    "pattern": "[a-zA-Z0-9]+",
+    "type": "string"
+   },
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·parameters·2·schema": {
+    "multipleOf": 10,
+    "maximum": 1000,
+    "minimum": 100,
+    "type": "integer"
+   },
+   "Product": {
+    "type": "object",
+    "description": "The product documentation.",
+    "properties": {
+     "display_names": {
+      "$ref": "#/components/schemas/Product-display_names",
+      "description": "Non required array of unique items from 0 to 6 elements."
+     },
+     "capacity": {
+      "type": "integer",
+      "description": "Non required int betwen 0 and 100 exclusive.",
+      "exclusiveMinimum": true,
+      "exclusiveMaximum": true,
+      "maximum": 100,
+      "minimum": 0
+     },
+     "image": {
+      "$ref": "#/components/schemas/Product-image",
+      "description": "Image URL representing the product."
+     },
+     "child": {
+      "$ref": "http://localhost:3000/__files/validation.json#/components/schemas/ChildProduct"
+     },
+     "constChild": {
+      "$ref": "http://localhost:3000/__files/validation.json#/components/schemas/ConstantProduct"
+     },
+     "constInt": {
+      "type": "integer",
+      "description": "Constant int",
+      "enum": [
+       0
+      ]
+     },
+     "constString": {
+      "$ref": "#/components/schemas/Product-constString",
+      "description": "Constant string"
+     },
+     "constStringAsEnum": {
+      "$ref": "#/components/schemas/Product-constStringAsEnum",
+      "description": "Constant string as Enum"
+     }
+    },
+    "required": [
+     "child",
+     "constString",
+     "constInt",
+     "constChild"
+    ]
+   },
+   "Product-display_names": {
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/Product-display_namesItem"
+    },
+    "description": "Non required array of unique items from 0 to 6 elements.",
+    "maxItems": 6,
+    "uniqueItems": true,
+    "minItems": 0
+   },
+   "Product-display_namesItem": {
+    "type": "string"
+   },
+   "Product-image": {
+    "type": "string",
+    "description": "Image URL representing the product.",
+    "pattern": "http://\\w+"
+   },
+   "Product-constString": {
+    "type": "string",
+    "description": "Constant string",
+    "enum": [
+     "constant"
+    ]
+   },
+   "Product-constStringAsEnum": {
+    "type": "string",
+    "description": "Constant string as Enum",
+    "enum": [
+     "constant_string_as_enum"
+    ],
+    "x-ms-enum": {
+     "name": "EnumConst",
+     "modelAsString": false
+    }
+   },
+   "ChildProduct": {
+    "type": "object",
+    "description": "The product documentation.",
+    "properties": {
+     "constProperty": {
+      "$ref": "#/components/schemas/ChildProduct-constProperty",
+      "description": "Constant string"
+     },
+     "count": {
+      "type": "integer",
+      "description": "Count"
+     }
+    },
+    "required": [
+     "constProperty"
+    ]
+   },
+   "ChildProduct-constProperty": {
+    "type": "string",
+    "description": "Constant string",
+    "enum": [
+     "constant"
+    ]
+   },
+   "ConstantProduct": {
+    "type": "object",
+    "description": "The product documentation.",
+    "properties": {
+     "constProperty": {
+      "$ref": "#/components/schemas/ConstantProduct-constProperty",
+      "description": "Constant string"
+     },
+     "constProperty2": {
+      "$ref": "#/components/schemas/ConstantProduct-constProperty2",
+      "description": "Constant string2"
+     }
+    },
+    "required": [
+     "constProperty",
+     "constProperty2"
+    ]
+   },
+   "ConstantProduct-constProperty": {
+    "type": "string",
+    "description": "Constant string",
+    "enum": [
+     "constant"
+    ]
+   },
+   "ConstantProduct-constProperty2": {
+    "type": "string",
+    "description": "Constant string2",
+    "enum": [
+     "constant2"
+    ]
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     },
+     "fields": {
+      "$ref": "#/components/schemas/Error-fields"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   },
+   "Error-fields": {
+    "type": "string"
+   },
+   "components·parameters·subscriptionidparamterer·schema": {
+    "type": "string"
+   },
+   "components·parameters·apiversionparameter·schema": {
+    "pattern": "\\d{2}-\\d{2}-\\d{4}",
+    "type": "string"
+   }
+  },
+  "responses": {
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·responses·200": {
+    "description": "A list of caches",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/validation.json#/components/schemas/Product"
+      }
+     }
+    }
+   },
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/validation.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·responses·200": {
+    "description": "A list of caches",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/validation.json#/components/schemas/Product"
+      }
+     }
+    }
+   },
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/validation.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·validation-constantsinpath-constantparam-value·get·responses·200": {
+    "description": "Success"
+   },
+   "paths·validation-constantsinpath-constantparam-value·post·responses·200": {
+    "description": "Success",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/validation.json#/components/schemas/Product"
+      }
+     }
+    }
+   }
+  },
+  "requestBodies": {
+   "paths·fakepath-subscriptionid-resourcegroupname-id-api_version-apiversion·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/validation.json#/components/schemas/Product"
+      }
+     }
+    },
+    "x-ms-requestBody-name": "body"
+   },
+   "paths·validation-constantsinpath-constantparam-value·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/validation.json#/components/schemas/Product"
+      }
+     }
+    },
+    "x-ms-requestBody-name": "body"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

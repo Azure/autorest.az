@@ -1,0 +1,1263 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "StorageManagementClient",
+  "version": "2015-05-01-preview"
+ },
+ "paths": {
+  "/subscriptions/{subscriptionId}/providers/Microsoft.Storage/checkNameAvailability": {
+   "post": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "tags": [
+     "StorageAccounts"
+    ],
+    "operationId": "StorageAccounts_CheckNameAvailability",
+    "description": "Checks that account name is valid and is not in use.",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·subscriptions-subscriptionid-providers-microsoft-storage-checknameavailability·post·requestbody",
+     "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
+    },
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ApiVersionParameter"
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/SubscriptionIdParameter"
+     }
+    ],
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-providers-microsoft-storage-checknameavailability·post·responses·200",
+      "description": "OK"
+     }
+    }
+   }
+  },
+  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}": {
+   "put": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "tags": [
+     "StorageAccounts"
+    ],
+    "operationId": "StorageAccounts_Create",
+    "description": "Asynchronously creates a new storage account with the specified parameters. Existing accounts cannot be updated with this API and should instead use the Update Storage Account API. If an account is already created and subsequent PUT request is issued with exact same set of properties, then HTTP 200 would be returned. ",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ResourceGroupName"
+     },
+     {
+      "$ref": "#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·put·parameters·1",
+      "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ApiVersionParameter"
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/SubscriptionIdParameter"
+     }
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·put·requestbody",
+     "description": "The parameters to provide for the created account."
+    },
+    "x-ms-requestBody-index": 2,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·put·responses·200",
+      "description": "OK"
+     },
+     "202": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·put·responses·202",
+      "description": "Accepted"
+     }
+    },
+    "x-ms-long-running-operation": true
+   },
+   "delete": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "tags": [
+     "StorageAccounts"
+    ],
+    "operationId": "StorageAccounts_Delete",
+    "description": "Deletes a storage account in Microsoft Azure.",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ResourceGroupName"
+     },
+     {
+      "$ref": "#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·delete·parameters·1",
+      "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ApiVersionParameter"
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/SubscriptionIdParameter"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·delete·responses·200",
+      "description": "OK"
+     },
+     "204": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·delete·responses·204",
+      "description": "No Content"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "tags": [
+     "StorageAccounts"
+    ],
+    "operationId": "StorageAccounts_GetProperties",
+    "description": "Returns the properties for the specified storage account including but not limited to name, account type, location, and account status. The ListKeys operation should be used to retrieve storage keys.",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ResourceGroupName"
+     },
+     {
+      "$ref": "#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·get·parameters·1",
+      "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ApiVersionParameter"
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/SubscriptionIdParameter"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·get·responses·200",
+      "description": "OK"
+     }
+    }
+   },
+   "patch": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "tags": [
+     "StorageAccounts"
+    ],
+    "operationId": "StorageAccounts_Update",
+    "description": "Updates the account type or tags for a storage account. It can also be used to add a custom domain (note that custom domains cannot be added via the Create operation). Only one custom domain is supported per storage account. This API can only be used to update one of tags, accountType, or customDomain per call. To update multiple of these properties, call the API multiple times with one change per call. This call does not change the storage keys for the account. If you want to change storage account keys, use the RegenerateKey operation. The location and name of the storage account cannot be changed after creation.",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ResourceGroupName"
+     },
+     {
+      "$ref": "#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·patch·parameters·1",
+      "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ApiVersionParameter"
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/SubscriptionIdParameter"
+     }
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·patch·requestbody",
+     "description": "The parameters to update on the account. Note that only one property can be changed at a time using this API. "
+    },
+    "x-ms-requestBody-index": 2,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·patch·responses·200",
+      "description": "OK"
+     }
+    }
+   }
+  },
+  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys": {
+   "post": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "tags": [
+     "StorageAccounts"
+    ],
+    "operationId": "StorageAccounts_ListKeys",
+    "description": "Lists the access keys for the specified storage account.",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ResourceGroupName"
+     },
+     {
+      "$ref": "#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-listkeys·post·parameters·1",
+      "description": "The name of the storage account."
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ApiVersionParameter"
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/SubscriptionIdParameter"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-listkeys·post·responses·200",
+      "description": "OK"
+     }
+    }
+   }
+  },
+  "/subscriptions/{subscriptionId}/providers/Microsoft.Storage/storageAccounts": {
+   "get": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "tags": [
+     "StorageAccounts"
+    ],
+    "operationId": "StorageAccounts_List",
+    "description": "Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this.",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ApiVersionParameter"
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/SubscriptionIdParameter"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-providers-microsoft-storage-storageaccounts·get·responses·200",
+      "description": "OK"
+     }
+    },
+    "x-ms-pageable": {
+     "nextLinkName": null
+    }
+   }
+  },
+  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts": {
+   "get": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "tags": [
+     "StorageAccounts"
+    ],
+    "operationId": "StorageAccounts_ListByResourceGroup",
+    "description": "Lists all the storage accounts available under the given resource group. Note that storage keys are not returned; use the ListKeys operation for this.",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ResourceGroupName"
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ApiVersionParameter"
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/SubscriptionIdParameter"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts·get·responses·200",
+      "description": "OK"
+     }
+    },
+    "x-ms-pageable": {
+     "nextLinkName": null
+    }
+   }
+  },
+  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/regenerateKey": {
+   "post": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "tags": [
+     "StorageAccounts"
+    ],
+    "operationId": "StorageAccounts_RegenerateKey",
+    "description": "Regenerates the access keys for the specified storage account.",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ResourceGroupName"
+     },
+     {
+      "$ref": "#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-regeneratekey·post·parameters·1",
+      "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ApiVersionParameter"
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/SubscriptionIdParameter"
+     }
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-regeneratekey·post·requestbody",
+     "description": "Specifies name of the key which should be regenerated."
+    },
+    "x-ms-requestBody-index": 2,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-regeneratekey·post·responses·200",
+      "description": "OK"
+     }
+    }
+   }
+  },
+  "/subscriptions/{subscriptionId}/providers/Microsoft.Storage/usages": {
+   "get": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "tags": [
+     "Usage"
+    ],
+    "operationId": "Usage_List",
+    "description": "Gets the current usage count and the limit for the resources under the subscription.",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/ApiVersionParameter"
+     },
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/parameters/SubscriptionIdParameter"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·subscriptions-subscriptionid-providers-microsoft-storage-usages·get·responses·200",
+      "description": "OK"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "requestBodies": {
+   "paths·subscriptions-subscriptionid-providers-microsoft-storage-checknameavailability·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountCheckNameAvailabilityParameters"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountCheckNameAvailabilityParameters"
+      }
+     }
+    },
+    "required": true,
+    "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  ",
+    "x-ms-requestBody-name": "accountName"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountCreateParameters"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountCreateParameters"
+      }
+     }
+    },
+    "required": true,
+    "description": "The parameters to provide for the created account.",
+    "x-ms-requestBody-name": "parameters"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·patch·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountUpdateParameters"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountUpdateParameters"
+      }
+     }
+    },
+    "required": true,
+    "description": "The parameters to update on the account. Note that only one property can be changed at a time using this API. ",
+    "x-ms-requestBody-name": "parameters"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-regeneratekey·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountRegenerateKeyParameters"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountRegenerateKeyParameters"
+      }
+     }
+    },
+    "required": true,
+    "description": "Specifies name of the key which should be regenerated.",
+    "x-ms-requestBody-name": "regenerateKey"
+   }
+  },
+  "schemas": {
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·put·parameters·1·schema": {
+    "type": "string"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·delete·parameters·1·schema": {
+    "type": "string"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·get·parameters·1·schema": {
+    "type": "string"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·patch·parameters·1·schema": {
+    "type": "string"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-listkeys·post·parameters·1·schema": {
+    "type": "string"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-regeneratekey·post·parameters·1·schema": {
+    "type": "string"
+   },
+   "StorageAccountCheckNameAvailabilityParameters": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "$ref": "#/components/schemas/StorageAccountCheckNameAvailabilityParameters-name"
+     },
+     "type": {
+      "$ref": "#/components/schemas/StorageAccountCheckNameAvailabilityParameters-type"
+     }
+    },
+    "required": [
+     "name"
+    ]
+   },
+   "StorageAccountCheckNameAvailabilityParameters-name": {
+    "type": "string"
+   },
+   "StorageAccountCheckNameAvailabilityParameters-type": {
+    "type": "string",
+    "default": "Microsoft.Storage/storageAccounts"
+   },
+   "CheckNameAvailabilityResult": {
+    "type": "object",
+    "properties": {
+     "nameAvailable": {
+      "type": "boolean",
+      "description": "Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or invalid and cannot be used."
+     },
+     "reason": {
+      "$ref": "#/components/schemas/CheckNameAvailabilityResult-reason",
+      "description": "Gets the reason that a storage account name could not be used. The Reason element is only returned if NameAvailable is false."
+     },
+     "message": {
+      "$ref": "#/components/schemas/CheckNameAvailabilityResult-message",
+      "description": "Gets an error message explaining the Reason value in more detail."
+     }
+    },
+    "description": "The CheckNameAvailability operation response."
+   },
+   "CheckNameAvailabilityResult-reason": {
+    "type": "string",
+    "description": "Gets the reason that a storage account name could not be used. The Reason element is only returned if NameAvailable is false.",
+    "enum": [
+     "AccountNameInvalid",
+     "AlreadyExists"
+    ],
+    "x-ms-enum": {
+     "name": "Reason"
+    }
+   },
+   "CheckNameAvailabilityResult-message": {
+    "type": "string",
+    "description": "Gets an error message explaining the Reason value in more detail."
+   },
+   "StorageAccountPropertiesCreateParameters": {
+    "type": "object",
+    "properties": {
+     "accountType": {
+      "$ref": "#/components/schemas/StorageAccountPropertiesCreateParameters-accountType",
+      "description": "Gets or sets the account type."
+     }
+    }
+   },
+   "StorageAccountPropertiesCreateParameters-accountType": {
+    "type": "string",
+    "description": "Gets or sets the account type.",
+    "enum": [
+     "Standard_LRS",
+     "Standard_ZRS",
+     "Standard_GRS",
+     "Standard_RAGRS",
+     "Premium_LRS"
+    ],
+    "x-ms-enum": {
+     "name": "AccountType"
+    }
+   },
+   "StorageAccountCreateParameters": {
+    "type": "object",
+    "properties": {
+     "properties": {
+      "x-ms-client-flatten": true,
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountPropertiesCreateParameters"
+     }
+    },
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/Resource"
+     }
+    ],
+    "description": "The parameters to provide for the account."
+   },
+   "Endpoints": {
+    "type": "object",
+    "properties": {
+     "blob": {
+      "$ref": "#/components/schemas/Endpoints-blob",
+      "description": "Gets the blob endpoint."
+     },
+     "queue": {
+      "$ref": "#/components/schemas/Endpoints-queue",
+      "description": "Gets the queue endpoint."
+     },
+     "table": {
+      "$ref": "#/components/schemas/Endpoints-table",
+      "description": "Gets the table endpoint."
+     },
+     "dummyEndPoint": {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/Endpoints",
+      "description": "Dummy EndPoint"
+     },
+     "FooPoint": {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/Foo",
+      "description": "Foo point"
+     }
+    },
+    "description": "The URIs that are used to perform a retrieval of a public blob, queue or table object."
+   },
+   "Endpoints-blob": {
+    "type": "string",
+    "description": "Gets the blob endpoint."
+   },
+   "Endpoints-queue": {
+    "type": "string",
+    "description": "Gets the queue endpoint."
+   },
+   "Endpoints-table": {
+    "type": "string",
+    "description": "Gets the table endpoint."
+   },
+   "Foo": {
+    "type": "object",
+    "properties": {
+     "Bar.Point": {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/Bar",
+      "description": "Bar point"
+     }
+    },
+    "description": "The URIs that are used to perform a retrieval of a public blob, queue or table object."
+   },
+   "Bar": {
+    "type": "object",
+    "properties": {
+     "RecursivePoint": {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/Endpoints",
+      "description": "Recursive Endpoints"
+     }
+    },
+    "description": "The URIs that are used to perform a retrieval of a public blob, queue or table object."
+   },
+   "CustomDomain": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "$ref": "#/components/schemas/CustomDomain-name",
+      "description": "Gets or sets the custom domain name. Name is the CNAME source."
+     },
+     "useSubDomain": {
+      "type": "boolean",
+      "description": "Indicates whether indirect CName validation is enabled. Default value is false. This should only be set on updates"
+     }
+    },
+    "description": "The custom domain assigned to this storage account. This can be set via Update."
+   },
+   "CustomDomain-name": {
+    "type": "string",
+    "description": "Gets or sets the custom domain name. Name is the CNAME source."
+   },
+   "StorageAccountProperties": {
+    "type": "object",
+    "properties": {
+     "provisioningState": {
+      "$ref": "#/components/schemas/StorageAccountProperties-provisioningState",
+      "description": "Gets the status of the storage account at the time the operation was called."
+     },
+     "accountType": {
+      "$ref": "#/components/schemas/StorageAccountProperties-accountType",
+      "description": "Gets the type of the storage account."
+     },
+     "primaryEndpoints": {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/Endpoints",
+      "description": "Gets the URLs that are used to perform a retrieval of a public blob, queue or table object.Note that StandardZRS and PremiumLRS accounts only return the blob endpoint."
+     },
+     "primaryLocation": {
+      "$ref": "#/components/schemas/StorageAccountProperties-primaryLocation",
+      "description": "Gets the location of the primary for the storage account."
+     },
+     "statusOfPrimary": {
+      "$ref": "#/components/schemas/StorageAccountProperties-statusOfPrimary",
+      "description": "Gets the status indicating whether the primary location of the storage account is available or unavailable."
+     },
+     "lastGeoFailoverTime": {
+      "$ref": "#/components/schemas/StorageAccountProperties-lastGeoFailoverTime",
+      "description": "Gets the timestamp of the most recent instance of a failover to the secondary location. Only the most recent timestamp is retained. This element is not returned if there has never been a failover instance. Only available if the accountType is StandardGRS or StandardRAGRS."
+     },
+     "secondaryLocation": {
+      "$ref": "#/components/schemas/StorageAccountProperties-secondaryLocation",
+      "description": "Gets the location of the geo replicated secondary for the storage account. Only available if the accountType is StandardGRS or StandardRAGRS."
+     },
+     "statusOfSecondary": {
+      "$ref": "#/components/schemas/StorageAccountProperties-statusOfSecondary",
+      "description": "Gets the status indicating whether the secondary location of the storage account is available or unavailable. Only available if the accountType is StandardGRS or StandardRAGRS."
+     },
+     "creationTime": {
+      "$ref": "#/components/schemas/StorageAccountProperties-creationTime",
+      "description": "Gets the creation date and time of the storage account in UTC."
+     },
+     "customDomain": {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/CustomDomain",
+      "description": "Gets the user assigned custom domain assigned to this storage account."
+     },
+     "secondaryEndpoints": {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/Endpoints",
+      "description": "Gets the URLs that are used to perform a retrieval of a public blob, queue or table object from the secondary location of the storage account. Only available if the accountType is StandardRAGRS."
+     }
+    }
+   },
+   "StorageAccountProperties-provisioningState": {
+    "type": "string",
+    "description": "Gets the status of the storage account at the time the operation was called.",
+    "enum": [
+     "Creating",
+     "ResolvingDNS",
+     "Succeeded"
+    ],
+    "x-ms-enum": {
+     "name": "ProvisioningState"
+    }
+   },
+   "StorageAccountProperties-accountType": {
+    "type": "string",
+    "description": "Gets the type of the storage account.",
+    "enum": [
+     "Standard_LRS",
+     "Standard_ZRS",
+     "Standard_GRS",
+     "Standard_RAGRS",
+     "Premium_LRS"
+    ],
+    "x-ms-enum": {
+     "name": "AccountType"
+    }
+   },
+   "StorageAccountProperties-primaryLocation": {
+    "type": "string",
+    "description": "Gets the location of the primary for the storage account."
+   },
+   "StorageAccountProperties-statusOfPrimary": {
+    "type": "string",
+    "description": "Gets the status indicating whether the primary location of the storage account is available or unavailable.",
+    "enum": [
+     "Available",
+     "Unavailable"
+    ],
+    "x-ms-enum": {
+     "name": "AccountStatus"
+    }
+   },
+   "StorageAccountProperties-lastGeoFailoverTime": {
+    "type": "string",
+    "format": "date-time",
+    "description": "Gets the timestamp of the most recent instance of a failover to the secondary location. Only the most recent timestamp is retained. This element is not returned if there has never been a failover instance. Only available if the accountType is StandardGRS or StandardRAGRS."
+   },
+   "StorageAccountProperties-secondaryLocation": {
+    "type": "string",
+    "description": "Gets the location of the geo replicated secondary for the storage account. Only available if the accountType is StandardGRS or StandardRAGRS."
+   },
+   "StorageAccountProperties-statusOfSecondary": {
+    "type": "string",
+    "description": "Gets the status indicating whether the secondary location of the storage account is available or unavailable. Only available if the accountType is StandardGRS or StandardRAGRS.",
+    "enum": [
+     "Available",
+     "Unavailable"
+    ],
+    "x-ms-enum": {
+     "name": "AccountStatus"
+    }
+   },
+   "StorageAccountProperties-creationTime": {
+    "type": "string",
+    "format": "date-time",
+    "description": "Gets the creation date and time of the storage account in UTC."
+   },
+   "StorageAccount": {
+    "type": "object",
+    "properties": {
+     "properties": {
+      "x-ms-client-flatten": true,
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountProperties"
+     }
+    },
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/Resource"
+     }
+    ],
+    "description": "The storage account."
+   },
+   "StorageAccountKeys": {
+    "type": "object",
+    "properties": {
+     "key1": {
+      "$ref": "#/components/schemas/StorageAccountKeys-key1",
+      "description": "Gets the value of key 1."
+     },
+     "key2": {
+      "$ref": "#/components/schemas/StorageAccountKeys-key2",
+      "description": "Gets the value of key 2."
+     }
+    },
+    "description": "The access keys for the storage account."
+   },
+   "StorageAccountKeys-key1": {
+    "type": "string",
+    "description": "Gets the value of key 1."
+   },
+   "StorageAccountKeys-key2": {
+    "type": "string",
+    "description": "Gets the value of key 2."
+   },
+   "StorageAccountListResult": {
+    "type": "object",
+    "properties": {
+     "value": {
+      "$ref": "#/components/schemas/StorageAccountListResult-value",
+      "description": "Gets the list of storage accounts and their properties."
+     },
+     "nextLink": {
+      "$ref": "#/components/schemas/StorageAccountListResult-nextLink",
+      "description": "Gets the link to the next set of results. Currently this will always be empty as the API does not support pagination."
+     }
+    },
+    "description": "The list storage accounts operation response."
+   },
+   "StorageAccountListResult-value": {
+    "type": "array",
+    "items": {
+     "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccount"
+    },
+    "description": "Gets the list of storage accounts and their properties."
+   },
+   "StorageAccountListResult-nextLink": {
+    "type": "string",
+    "description": "Gets the link to the next set of results. Currently this will always be empty as the API does not support pagination."
+   },
+   "StorageAccountPropertiesUpdateParameters": {
+    "type": "object",
+    "properties": {
+     "accountType": {
+      "$ref": "#/components/schemas/StorageAccountPropertiesUpdateParameters-accountType",
+      "description": "Gets or sets the account type. Note that StandardZRS and PremiumLRS accounts cannot be changed to other account types, and other account types cannot be changed to StandardZRS or PremiumLRS."
+     },
+     "customDomain": {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/CustomDomain",
+      "description": "User domain assigned to the storage account. Name is the CNAME source. Only one custom domain is supported per storage account at this time. To clear the existing custom domain, use an empty string for the custom domain name property."
+     }
+    }
+   },
+   "StorageAccountPropertiesUpdateParameters-accountType": {
+    "type": "string",
+    "description": "Gets or sets the account type. Note that StandardZRS and PremiumLRS accounts cannot be changed to other account types, and other account types cannot be changed to StandardZRS or PremiumLRS.",
+    "enum": [
+     "Standard_LRS",
+     "Standard_ZRS",
+     "Standard_GRS",
+     "Standard_RAGRS",
+     "Premium_LRS"
+    ],
+    "x-ms-enum": {
+     "name": "AccountType"
+    }
+   },
+   "StorageAccountUpdateParameters": {
+    "type": "object",
+    "properties": {
+     "properties": {
+      "x-ms-client-flatten": true,
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountPropertiesUpdateParameters"
+     }
+    },
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/Resource"
+     }
+    ],
+    "description": "The parameters to update on the account."
+   },
+   "StorageAccountRegenerateKeyParameters": {
+    "type": "object",
+    "properties": {
+     "keyName": {
+      "$ref": "#/components/schemas/StorageAccountRegenerateKeyParameters-keyName"
+     }
+    }
+   },
+   "StorageAccountRegenerateKeyParameters-keyName": {
+    "type": "string",
+    "enum": [
+     "key1",
+     "key2"
+    ],
+    "x-ms-enum": {
+     "name": "KeyName"
+    }
+   },
+   "UsageName": {
+    "type": "object",
+    "properties": {
+     "value": {
+      "$ref": "#/components/schemas/UsageName-value",
+      "description": "Gets a string describing the resource name."
+     },
+     "localizedValue": {
+      "$ref": "#/components/schemas/UsageName-localizedValue",
+      "description": "Gets a localized string describing the resource name."
+     }
+    },
+    "description": "The Usage Names."
+   },
+   "UsageName-value": {
+    "type": "string",
+    "description": "Gets a string describing the resource name."
+   },
+   "UsageName-localizedValue": {
+    "type": "string",
+    "description": "Gets a localized string describing the resource name."
+   },
+   "Usage": {
+    "type": "object",
+    "properties": {
+     "unit": {
+      "$ref": "#/components/schemas/Usage-unit",
+      "description": "Gets the unit of measurement."
+     },
+     "currentValue": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Gets the current count of the allocated resources in the subscription."
+     },
+     "limit": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Gets the maximum count of the resources that can be allocated in the subscription."
+     },
+     "name": {
+      "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/UsageName",
+      "description": "Gets the name of the type of usage."
+     }
+    },
+    "description": "Describes Storage Resource Usage."
+   },
+   "Usage-unit": {
+    "type": "string",
+    "description": "Gets the unit of measurement.",
+    "enum": [
+     "Count",
+     "Bytes",
+     "Seconds",
+     "Percent",
+     "CountsPerSecond",
+     "BytesPerSecond"
+    ],
+    "x-ms-enum": {
+     "name": "UsageUnit"
+    }
+   },
+   "UsageListResult": {
+    "type": "object",
+    "properties": {
+     "value": {
+      "$ref": "#/components/schemas/UsageListResult-value",
+      "description": "Gets or sets the list Storage Resource Usages."
+     }
+    },
+    "description": "The List Usages operation response."
+   },
+   "UsageListResult-value": {
+    "type": "array",
+    "items": {
+     "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/Usage"
+    },
+    "description": "Gets or sets the list Storage Resource Usages."
+   },
+   "Resource": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "$ref": "#/components/schemas/Resource-id",
+      "description": "Resource Id",
+      "readOnly": true
+     },
+     "name": {
+      "$ref": "#/components/schemas/Resource-name",
+      "description": "Resource name",
+      "readOnly": true
+     },
+     "type": {
+      "$ref": "#/components/schemas/Resource-type",
+      "description": "Resource type",
+      "readOnly": true
+     },
+     "location": {
+      "$ref": "#/components/schemas/Resource-location",
+      "description": "Resource location"
+     },
+     "tags": {
+      "$ref": "#/components/schemas/Resource-tags",
+      "description": "Resource tags"
+     }
+    },
+    "x-ms-azure-resource": true,
+    "required": [
+     "location"
+    ]
+   },
+   "Resource-id": {
+    "readOnly": true,
+    "type": "string",
+    "description": "Resource Id"
+   },
+   "Resource-name": {
+    "readOnly": true,
+    "type": "string",
+    "description": "Resource name"
+   },
+   "Resource-type": {
+    "readOnly": true,
+    "type": "string",
+    "description": "Resource type"
+   },
+   "Resource-location": {
+    "type": "string",
+    "description": "Resource location"
+   },
+   "Resource-tags": {
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/components·schemas·resource·properties·tags·additionalproperties"
+    },
+    "description": "Resource tags"
+   },
+   "components·schemas·resource·properties·tags·additionalproperties": {
+    "type": "string"
+   },
+   "SubResource": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "$ref": "#/components/schemas/SubResource-id",
+      "description": "Resource Id"
+     }
+    },
+    "x-ms-azure-resource": true
+   },
+   "SubResource-id": {
+    "type": "string",
+    "description": "Resource Id"
+   },
+   "components·parameters·subscriptionidparameter·schema": {
+    "type": "string"
+   },
+   "components·parameters·apiversionparameter·schema": {
+    "type": "string"
+   },
+   "components·parameters·resourcegroupname·schema": {
+    "type": "string"
+   }
+  },
+  "parameters": {
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·put·parameters·1": {
+    "name": "accountName",
+    "in": "path",
+    "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  ",
+    "schema": {
+     "$ref": "#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·put·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·delete·parameters·1": {
+    "name": "accountName",
+    "in": "path",
+    "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  ",
+    "schema": {
+     "$ref": "#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·delete·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·get·parameters·1": {
+    "name": "accountName",
+    "in": "path",
+    "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  ",
+    "schema": {
+     "$ref": "#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·get·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·patch·parameters·1": {
+    "name": "accountName",
+    "in": "path",
+    "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  ",
+    "schema": {
+     "$ref": "#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·patch·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-listkeys·post·parameters·1": {
+    "name": "accountName",
+    "in": "path",
+    "description": "The name of the storage account.",
+    "schema": {
+     "$ref": "#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-listkeys·post·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-regeneratekey·post·parameters·1": {
+    "name": "accountName",
+    "in": "path",
+    "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  ",
+    "schema": {
+     "$ref": "#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-regeneratekey·post·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "SubscriptionIdParameter": {
+    "name": "subscriptionId",
+    "in": "path",
+    "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+    "schema": {
+     "$ref": "#/components/schemas/components·parameters·subscriptionidparameter·schema"
+    },
+    "required": true
+   },
+   "ApiVersionParameter": {
+    "name": "api-version",
+    "in": "query",
+    "description": "Client Api Version.",
+    "schema": {
+     "$ref": "#/components/schemas/components·parameters·apiversionparameter·schema"
+    },
+    "required": true
+   },
+   "ResourceGroupName": {
+    "name": "resourceGroupName",
+    "in": "path",
+    "description": "The name of the resource group within the user’s subscription.",
+    "x-ms-parameter-location": "method",
+    "schema": {
+     "$ref": "#/components/schemas/components·parameters·resourcegroupname·schema"
+    },
+    "required": true
+   }
+  },
+  "responses": {
+   "paths·subscriptions-subscriptionid-providers-microsoft-storage-checknameavailability·post·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/CheckNameAvailabilityResult"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/CheckNameAvailabilityResult"
+      }
+     }
+    }
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·put·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccount"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccount"
+      }
+     }
+    }
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·put·responses·202": {
+    "description": "Accepted"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·delete·responses·200": {
+    "description": "OK"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·delete·responses·204": {
+    "description": "No Content"
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·get·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccount"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccount"
+      }
+     }
+    }
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname·patch·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccount"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccount"
+      }
+     }
+    }
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-listkeys·post·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountKeys"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountKeys"
+      }
+     }
+    }
+   },
+   "paths·subscriptions-subscriptionid-providers-microsoft-storage-storageaccounts·get·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountListResult"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountListResult"
+      }
+     }
+    }
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts·get·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountListResult"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountListResult"
+      }
+     }
+    }
+   },
+   "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-storage-storageaccounts-accountname-regeneratekey·post·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountKeys"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/StorageAccountKeys"
+      }
+     }
+    }
+   },
+   "paths·subscriptions-subscriptionid-providers-microsoft-storage-usages·get·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/UsageListResult"
+      }
+     },
+     "text/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/storage.json#/components/schemas/UsageListResult"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "https://management.azure.com/"
+  }
+ ]
+}

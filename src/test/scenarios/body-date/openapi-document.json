@@ -1,0 +1,581 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "body-date",
+  "description": "Test Infrastructure for AutoRest",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1null"
+    ]
+   }
+  },
+  "path:0.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "date_getNull",
+    "description": "Get null date value",
+    "responses": {
+     "200": {
+      "description": "The null date value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:1": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/invaliddate",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1invaliddate"
+    ]
+   }
+  },
+  "path:1.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/invaliddate",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1invaliddate"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "date_getInvalidDate",
+    "description": "Get invalid date value",
+    "responses": {
+     "200": {
+      "description": "The invalid date value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:2": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/overflowdate",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1overflowdate"
+    ]
+   }
+  },
+  "path:2.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/overflowdate",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1overflowdate"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "date_getOverflowDate",
+    "description": "Get overflow date value",
+    "responses": {
+     "200": {
+      "description": "The overflow date value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:3": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/underflowdate",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1underflowdate"
+    ]
+   }
+  },
+  "path:3.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/underflowdate",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1underflowdate"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "date_getUnderflowDate",
+    "description": "Get underflow date value",
+    "responses": {
+     "200": {
+      "description": "The underflow date value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:4": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/max",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1max"
+    ]
+   }
+  },
+  "path:4.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/max",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1max"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "date_putMaxDate",
+    "description": "Put max date value 9999-12-31",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "The max date value",
+      "$ref": "#/components/responses/responses:8"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:4.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/max",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1max"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "date_getMaxDate",
+    "description": "Get max date value 9999-12-31",
+    "responses": {
+     "200": {
+      "description": "The max date value",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:5": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/min",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1min"
+    ]
+   }
+  },
+  "path:5.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/min",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1min"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "date_putMinDate",
+    "description": "Put min date value 0000-01-01",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "The min date value",
+      "$ref": "#/components/responses/responses:8"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:5.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/date/min",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-date.json#/paths/~1date~1min"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "date_getMinDate",
+    "description": "Get min date value 0000-01-01",
+    "responses": {
+     "200": {
+      "description": "The min date value 0000-01-01",
+      "$ref": "#/components/responses/responses:14"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·date-null·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-null·get·responses·200",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-invaliddate·get·responses·200",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-overflowdate·get·responses·200",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-underflowdate·get·responses·200",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-max·get·responses·200"
+     ]
+    },
+    "description": "The null date value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:0"
+      }
+     }
+    }
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·date-null·get·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-null·get·responses·default",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-invaliddate·get·responses·default",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-overflowdate·get·responses·default",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-underflowdate·get·responses·default",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-max·put·responses·default",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-max·get·responses·default",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-min·put·responses·default",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-min·get·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:8"
+      }
+     }
+    }
+   },
+   "responses:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·date-max·put·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-max·put·responses·200",
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-min·put·responses·200"
+     ]
+    },
+    "description": "The max date value"
+   },
+   "responses:14": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·date-min·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-date.json#/components/responses/paths·date-min·get·responses·200"
+     ]
+    },
+    "description": "The min date value 0000-01-01",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·date-min·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·date-null·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-date.json#/components/schemas/paths·date-null·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-date.json#/components/schemas/paths·date-invaliddate·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-date.json#/components/schemas/paths·date-overflowdate·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-date.json#/components/schemas/paths·date-underflowdate·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-date.json#/components/schemas/paths·date-max·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/body-date.json#/components/schemas/paths·date-max·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-date.json#/components/schemas/paths·date-min·put·requestbody·content·application-json·schema"
+     ]
+    },
+    "type": "string",
+    "format": "date"
+   },
+   "schemas:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-date.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:9"
+     }
+    }
+   },
+   "schemas:9": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-date.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   },
+   "paths·date-min·get·responses·200·content·application-json·schema": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·date-min·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-date.json#/components/schemas/paths·date-min·get·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "string",
+    "format": "date",
+    "enum": [
+     "0000-01-01"
+    ]
+   }
+  },
+  "requestBodies": {
+   "requestBodies:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·date-max·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-date.json#/components/requestBodies/paths·date-max·put·requestbody",
+      "http://localhost:3000/__files/body-date.json#/components/requestBodies/paths·date-min·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:0"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "dateBody"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

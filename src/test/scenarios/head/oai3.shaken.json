@@ -1,0 +1,130 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest Head Test Service",
+  "description": "Test Infrastructure for AutoRest",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/http/success/200": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_head200",
+    "description": "Return 200 status code if successful",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·http-success-200·head·responses·200",
+      "description": "Successfully returns the true boolean value"
+     },
+     "404": {
+      "$ref": "#/components/responses/paths·http-success-200·head·responses·404",
+      "description": "Successfully returns the false boolean value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-200·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/success/204": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_head204",
+    "description": "Return 204 status code if successful",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "responses": {
+     "204": {
+      "$ref": "#/components/responses/paths·http-success-204·head·responses·204",
+      "description": "Successfully returns the true boolean value"
+     },
+     "404": {
+      "$ref": "#/components/responses/paths·http-success-204·head·responses·404",
+      "description": "Successfully returns the false boolean value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-204·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/http/success/404": {
+   "head": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "httpSuccess_head404",
+    "description": "Return 404 status code if successful",
+    "tags": [
+     "HttpSuccess Operations"
+    ],
+    "responses": {
+     "204": {
+      "$ref": "#/components/responses/paths·http-success-404·head·responses·204",
+      "description": "Successfully returns the true boolean value"
+     },
+     "404": {
+      "$ref": "#/components/responses/paths·http-success-404·head·responses·404",
+      "description": "Successfully returns the false boolean value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·http-success-404·head·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "responses": {
+   "paths·http-success-200·head·responses·200": {
+    "description": "Successfully returns the true boolean value"
+   },
+   "paths·http-success-200·head·responses·404": {
+    "description": "Successfully returns the false boolean value"
+   },
+   "paths·http-success-200·head·responses·default": {
+    "description": "Unexpected error"
+   },
+   "paths·http-success-204·head·responses·204": {
+    "description": "Successfully returns the true boolean value"
+   },
+   "paths·http-success-204·head·responses·404": {
+    "description": "Successfully returns the false boolean value"
+   },
+   "paths·http-success-204·head·responses·default": {
+    "description": "Unexpected error"
+   },
+   "paths·http-success-404·head·responses·204": {
+    "description": "Successfully returns the true boolean value"
+   },
+   "paths·http-success-404·head·responses·404": {
+    "description": "Successfully returns the false boolean value"
+   },
+   "paths·http-success-404·head·responses·default": {
+    "description": "Unexpected error"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

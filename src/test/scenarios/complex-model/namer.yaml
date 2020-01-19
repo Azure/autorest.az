@@ -1,0 +1,692 @@
+!<!CodeModel> 
+schemas: !<!Schemas> 
+  objects:
+  - !<!ObjectSchema> &ref_21
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 2014-04-01-preview
+    properties:
+    - !<!Property> 
+      schema: !<!ArraySchema> &ref_4
+        type: array
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 2014-04-01-preview
+        elementType: !<!ObjectSchema> &ref_0
+          type: object
+          apiVersions:
+          - !<!ApiVersion> 
+            version: 2014-04-01-preview
+          properties:
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_9
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: 2014-04-01-preview
+              language: !<!Languages> 
+                default:
+                  name: Product-product_id
+                  description: 'Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.'
+              protocol: !<!Protocols> {}
+            serializedName: product_id
+            language: !<!Languages> 
+              default:
+                name: product_id
+                description: 'Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.'
+            protocol: !<!Protocols> {}
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_10
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: 2014-04-01-preview
+              language: !<!Languages> 
+                default:
+                  name: Product-description
+                  description: Description of product.
+              protocol: !<!Protocols> {}
+            serializedName: description
+            language: !<!Languages> 
+              default:
+                name: description
+                description: Description of product.
+            protocol: !<!Protocols> {}
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_11
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: 2014-04-01-preview
+              language: !<!Languages> 
+                default:
+                  name: Product-display_name
+                  description: Display name of product.
+              protocol: !<!Protocols> {}
+            serializedName: display_name
+            language: !<!Languages> 
+              default:
+                name: display_name
+                description: Display name of product.
+            protocol: !<!Protocols> {}
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_12
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: 2014-04-01-preview
+              defaultValue: '100'
+              language: !<!Languages> 
+                default:
+                  name: Product-capacity
+                  description: 'Capacity of product. For example, 4 people.'
+              protocol: !<!Protocols> {}
+            serializedName: capacity
+            language: !<!Languages> 
+              default:
+                name: capacity
+                description: 'Capacity of product. For example, 4 people.'
+            protocol: !<!Protocols> {}
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_13
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: 2014-04-01-preview
+              language: !<!Languages> 
+                default:
+                  name: Product-image
+                  description: Image URL representing the product.
+              protocol: !<!Protocols> {}
+            serializedName: image
+            language: !<!Languages> 
+              default:
+                name: image
+                description: Image URL representing the product.
+            protocol: !<!Protocols> {}
+          language: !<!Languages> 
+            default:
+              name: Product
+              description: The product documentation.
+              namespace: Api20140401Preview
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: CatalogArray-productArray
+            description: Array of products
+        protocol: !<!Protocols> {}
+      serializedName: productArray
+      language: !<!Languages> 
+        default:
+          name: productArray
+          description: Array of products
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: CatalogArray
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api20140401Preview
+    protocol: !<!Protocols> {}
+  - *ref_0
+  - !<!ObjectSchema> &ref_22
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 2014-04-01-preview
+    properties:
+    - !<!Property> 
+      schema: !<!NumberSchema> &ref_8
+        type: integer
+        precision: 32
+        language: !<!Languages> 
+          default:
+            name: typeForstatus
+            description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+        protocol: !<!Protocols> {}
+      serializedName: status
+      language: !<!Languages> 
+        default:
+          name: status
+          description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+      protocol: !<!Protocols> {}
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_14
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 2014-04-01-preview
+        language: !<!Languages> 
+          default:
+            name: Error-message
+            description: MISSING·SCHEMA-DESCRIPTION-STRING
+        protocol: !<!Protocols> {}
+      serializedName: message
+      language: !<!Languages> 
+        default:
+          name: message
+          description: MISSING·SCHEMA-DESCRIPTION-STRING
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: Error
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api20140401Preview
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_23
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 2014-04-01-preview
+    properties:
+    - !<!Property> 
+      schema: !<!DictionarySchema> &ref_1
+        type: dictionary
+        elementType: !<!ArraySchema> &ref_5
+          type: array
+          apiVersions:
+          - !<!ApiVersion> 
+            version: 2014-04-01-preview
+          elementType: *ref_0
+          language: !<!Languages> 
+            default:
+              name: Array of Product
+              description: MISSING·SCHEMA-DESCRIPTION-ARRAYSCHEMA
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: CatalogDictionaryOfArray-productDictionaryOfArray
+            description: Dictionary of Array of product
+        protocol: !<!Protocols> {}
+      serializedName: productDictionaryOfArray
+      language: !<!Languages> 
+        default:
+          name: productDictionaryOfArray
+          description: Dictionary of Array of product
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: CatalogDictionaryOfArray
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api20140401Preview
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_24
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 2014-04-01-preview
+    properties:
+    - !<!Property> 
+      schema: !<!DictionarySchema> &ref_2
+        type: dictionary
+        elementType: *ref_0
+        language: !<!Languages> 
+          default:
+            name: CatalogDictionary-productDictionary
+            description: Dictionary of products
+        protocol: !<!Protocols> {}
+      serializedName: productDictionary
+      language: !<!Languages> 
+        default:
+          name: productDictionary
+          description: Dictionary of products
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: CatalogDictionary
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api20140401Preview
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_25
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 2014-04-01-preview
+    properties:
+    - !<!Property> 
+      schema: !<!ArraySchema> &ref_6
+        type: array
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 2014-04-01-preview
+        elementType: !<!DictionarySchema> &ref_3
+          type: dictionary
+          elementType: *ref_0
+          language: !<!Languages> 
+            default:
+              name: CatalogArrayOfDictionary-productArrayOfDictionaryItem
+              description: Dictionary of <Product>
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: CatalogArrayOfDictionary-productArrayOfDictionary
+            description: Array of dictionary of products
+        protocol: !<!Protocols> {}
+      serializedName: productArrayOfDictionary
+      language: !<!Languages> 
+        default:
+          name: productArrayOfDictionary
+          description: Array of dictionary of products
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: CatalogArrayOfDictionary
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api20140401Preview
+    protocol: !<!Protocols> {}
+  dictionaries:
+  - *ref_1
+  - *ref_2
+  - *ref_3
+  arrays:
+  - *ref_4
+  - *ref_5
+  - *ref_6
+  constants:
+  - !<!ConstantSchema> &ref_15
+    type: constant
+    value: !<!ConstantValue> 
+      value: '123456'
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: !<!StringSchema> &ref_7
+      type: string
+      language: !<!Languages> 
+        default:
+          name: string
+          description: simple string
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: Constant0
+        description: MISSING·SCHEMA-DESCRIPTION-CHOICE
+    protocol: !<!Protocols> {}
+  - !<!ConstantSchema> &ref_16
+    type: constant
+    value: !<!ConstantValue> 
+      value: 2014-04-01-preview
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_7
+    language: !<!Languages> 
+      default:
+        name: ApiVersion-2014-04-01-preview
+        description: Api Version (2014-04-01-preview)
+    protocol: !<!Protocols> {}
+  - !<!ConstantSchema> 
+    type: constant
+    value: !<!ConstantValue> 
+      value: 2014-04-01-preview
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_7
+    language: !<!Languages> 
+      default:
+        name: ApiVersion-2014-04-01-preview
+        description: Api Version (2014-04-01-preview)
+    protocol: !<!Protocols> {}
+  - !<!ConstantSchema> 
+    type: constant
+    value: !<!ConstantValue> 
+      value: 2014-04-01-preview
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_7
+    language: !<!Languages> 
+      default:
+        name: ApiVersion-2014-04-01-preview
+        description: Api Version (2014-04-01-preview)
+    protocol: !<!Protocols> {}
+  numbers:
+  - *ref_8
+  strings:
+  - *ref_7
+  - !<!StringSchema> &ref_19
+    type: string
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 2014-04-01-preview
+    language: !<!Languages> 
+      default:
+        name: string
+        description: MISSING·SCHEMA-DESCRIPTION-STRING
+    protocol: !<!Protocols> {}
+  - *ref_9
+  - *ref_10
+  - *ref_11
+  - *ref_12
+  - *ref_13
+  - *ref_14
+globalParameters:
+- !<!Parameter> &ref_18
+  schema: *ref_15
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 0
+  language: !<!Languages> 
+    default:
+      name: subscriptionId
+      description: Subscription ID.
+      serializedName: subscriptionId
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: path
+- !<!Parameter> &ref_17
+  schema: *ref_7
+  clientDefaultValue: 'http://localhost:3000'
+  implementation: Client
+  required: true
+  language: !<!Languages> 
+    default:
+      name: $host
+      description: server parameter
+      serializedName: $host
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: uri
+- !<!Parameter> &ref_20
+  schema: *ref_16
+  implementation: Client
+  required: true
+  language: !<!Languages> 
+    default:
+      name: ApiVersion
+      description: Api Version
+      serializedName: api-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: query
+info: !<!Info> 
+  description: Some cool documentation.
+  title: complex-model
+operationGroups:
+- !<!OperationGroup> 
+  $key: ''
+  operations:
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 2014-04-01-preview
+    request: !<!Request> 
+      parameters:
+      - *ref_17
+      - *ref_18
+      - !<!Parameter> 
+        schema: *ref_19
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: resourceGroupName
+            description: Resource Group ID.
+            serializedName: resourceGroupName
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - *ref_20
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis'
+          method: get
+          uri: '{$host}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_21
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_22
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: list
+        description: 'The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other details about each product, and lists the products in the proper display order.'
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 2014-04-01-preview
+    request: !<!Request> 
+      parameters:
+      - *ref_17
+      - !<!Parameter> 
+        schema: *ref_19
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: subscriptionId
+            description: Subscription ID.
+            serializedName: subscriptionId
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> 
+        schema: *ref_19
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: resourceGroupName
+            description: Resource Group ID.
+            serializedName: resourceGroupName
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - *ref_20
+      - !<!Parameter> 
+        schema: *ref_23
+        hidden: true
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: body Parameter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      - !<!Parameter> 
+        schema: *ref_1
+        serializedName: productDictionaryOfArray
+        language: !<!Languages> 
+          default:
+            name: productDictionaryOfArray
+            description: Dictionary of Array of product
+        protocol: !<!Protocols> {}
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis'
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_24
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_22
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 2
+    language: !<!Languages> 
+      default:
+        name: create
+        description: Resets products.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 2014-04-01-preview
+    request: !<!Request> 
+      parameters:
+      - *ref_17
+      - !<!Parameter> 
+        schema: *ref_19
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: subscriptionId
+            description: Subscription ID.
+            serializedName: subscriptionId
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> 
+        schema: *ref_19
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: resourceGroupName
+            description: Resource Group ID.
+            serializedName: resourceGroupName
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - *ref_20
+      - !<!Parameter> 
+        schema: *ref_25
+        hidden: true
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: bodyParameter
+        language: !<!Languages> 
+          default:
+            name: bodyParameter
+            description: body Parameter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      - !<!Parameter> 
+        schema: *ref_6
+        serializedName: productArrayOfDictionary
+        language: !<!Languages> 
+          default:
+            name: productArrayOfDictionary
+            description: Array of dictionary of products
+        protocol: !<!Protocols> {}
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis'
+          method: put
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_21
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_22
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 2
+    language: !<!Languages> 
+      default:
+        name: update
+        description: Resets products.
+    protocol: !<!Protocols> {}
+  language: !<!Languages> 
+    default:
+      name: ''
+      description: ''
+  protocol: !<!Protocols> {}
+language: !<!Languages> 
+  default:
+    name: ''
+    description: ''
+protocol: !<!Protocols> 
+  http: !<!HttpModel> {}
