@@ -72,8 +72,7 @@ jobs:
     steps:
       - task: CredScan@2
         inputs:
-          toolMajorVersion: 'V2'
-
+          toolMajorVersion: 'V1'
       - task: PostAnalysis@1
         inputs:
           AllTools: false
