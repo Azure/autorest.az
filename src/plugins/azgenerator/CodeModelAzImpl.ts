@@ -457,6 +457,14 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters.length > 0) {
             this.currentParameterIndex = 0;
+            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].name;
+            if(currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+                if(this.SelectNextOption()) {
+                    return true;
+                } else {
+                    return false;
+                };
+            }
             return true;
         } else {
             return false;
@@ -467,6 +475,14 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
+            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].name;
+            if(currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+                if(this.SelectNextOption()) {
+                    return true;
+                } else {
+                    return false;
+                };
+            }
             return true;
         } else {
             return false;
