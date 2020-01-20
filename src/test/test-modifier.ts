@@ -26,10 +26,10 @@ const resources = `${__dirname}/../../src/test/resources`;
                 directive:[
                     {
                         where:{
-                            command:"get"
+                            command:"attestation operations list"
                         },
                         set:{
-                            command:"show"
+                            command:"attestation list"
                         }
                     }
                 ]
@@ -45,11 +45,11 @@ const resources = `${__dirname}/../../src/test/resources`;
 
         // console.log(serialize(codeModel))
         const yaml = serialize(codeModel);
-
-        await (writeFile(`${__dirname}/../../src/test/resources/attestation-az-modifier.yaml`, yaml));
+        //await (writeFile(`${__dirname}/../../src/test/resources/attestation-az-modifier.yaml`, yaml));
+        const supposeFile = await readFile(`${__dirname}/../../src/test/resources/attestation-az-modifier.yaml`);
 
         //const cms = deserialize<CodeModel>(yaml, 'foo.yaml');
 
-        //assert.strictEqual(true, cms instanceof CodeModel, 'Type Info is maintained in deserialization.');
+        assert.strictEqual(yaml, supposeFile, 'namer has failed the unit test');
     }
 }

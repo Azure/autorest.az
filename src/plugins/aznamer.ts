@@ -32,7 +32,7 @@ export class AzNamer {
                 let operationName = "";
                 if(operation.language['cli'] != undefined) {
                     operation.language['az'] = {};
-                    operation.language['az']['name'] = operation.language['cli']['name'];
+                    operation.language['az']['name'] = changeCamelToDash(operation.language['cli']['name']);
                     operation.language['az']['description'] = operation.language['cli']['description'];
                     operationName = operationGroupName + " " +  changeCamelToDash(operation.language['az']['name']);
                     operation.language['az']['command'] = operationName;

@@ -37,11 +37,11 @@ const resources = `${__dirname}/../../src/test/resources/`;
         // console.log(serialize(codeModel))
         const yaml = serialize(codeModel);
 
-        await (writeFile(`${__dirname}/../../src/test/resources/attestation-az-namer.yaml`, yaml));
+        const supposeFile = await readFile(`${__dirname}/../../src/test/resources/attestation-az-namer.yaml`);
 
-        //const cms = deserialize<CodeModel>(yaml, 'foo.yaml');
+        //const cms = deserialize<CodeModel>(supposeFile, 'foo.yaml');
 
-        //assert.strictEqual(true, cms instanceof CodeModel, 'Type Info is maintained in deserialization.');
+        assert.strictEqual(yaml, supposeFile, 'namer has failed the unit test');
     }
 
 

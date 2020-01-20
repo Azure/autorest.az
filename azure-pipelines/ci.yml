@@ -38,6 +38,9 @@ jobs:
       - script: 'npx @microsoft/rush sync-versions && npx @microsoft/rush update && npx @microsoft/rush rebuild'
         displayName: 'npm build'
 
+      - script: 'npm test'
+        displayName: 'npm test'
+
       - script: 'npx @microsoft/rush publish --publish --pack --include-all --tag latest'
         displayName: 'npm pack'
 

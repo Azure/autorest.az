@@ -1184,7 +1184,7 @@ operationGroups:
         name: List
         description: Lists all of the available Azure attestation operations.
       az:
-        name: List
+        name: list
         description: Lists all of the available Azure attestation operations.
         command: attestation operations list
       cli:
@@ -1334,7 +1334,7 @@ operationGroups:
         name: Get
         description: Get the status of Attestation Provider.
       az:
-        name: Get
+        name: get
         description: Get the status of Attestation Provider.
         command: attestation attestation-providers get
       cli:
@@ -1515,7 +1515,7 @@ operationGroups:
         name: Create
         description: Creates or updates the Attestation Provider.
       az:
-        name: Create
+        name: create
         description: Creates or updates the Attestation Provider.
         command: attestation attestation-providers create
       cli:
@@ -1662,7 +1662,7 @@ operationGroups:
         name: Delete
         description: Delete Attestation Service.
       az:
-        name: Delete
+        name: delete
         description: Delete Attestation Service.
         command: attestation attestation-providers delete
       cli:
@@ -1768,7 +1768,7 @@ operationGroups:
         name: List
         description: Returns a list of attestation providers in a subscription.
       az:
-        name: List
+        name: list
         description: Returns a list of attestation providers in a subscription.
         command: attestation attestation-providers list
       cli:
@@ -1892,7 +1892,7 @@ operationGroups:
         name: ListByResourceGroup
         description: Returns attestation providers list in a resource group.
       az:
-        name: ListByResourceGroup
+        name: list-by-resource-group
         description: Returns attestation providers list in a resource group.
         command: attestation attestation-providers list-by-resource-group
       cli:
