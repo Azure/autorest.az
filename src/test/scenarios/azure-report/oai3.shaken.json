@@ -1,0 +1,107 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest Report Service For Azure",
+  "description": "Test Infrastructure for AutoRest",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/report/azure": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "getReport",
+    "description": "Get test coverage report",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·report-azure·get·parameters·0",
+      "description": "If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators that run all tests several times, can distinguish the generated reports."
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·report-azure·get·responses·200",
+      "description": "The test coverage mapping"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·report-azure·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "paths·report-azure·get·parameters·0": {
+    "name": "qualifier",
+    "in": "query",
+    "description": "If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators that run all tests several times, can distinguish the generated reports.",
+    "schema": {
+     "$ref": "#/components/schemas/paths·report-azure·get·parameters·0·schema"
+    },
+    "required": false,
+    "x-ms-parameter-location": "method"
+   }
+  },
+  "schemas": {
+   "paths·report-azure·get·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·report-azure·get·responses·200·content·application-json·schema": {
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/paths·report-azure·get·responses·200·content·application-json·schema·additionalproperties"
+    }
+   },
+   "paths·report-azure·get·responses·200·content·application-json·schema·additionalproperties": {
+    "type": "integer"
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   }
+  },
+  "responses": {
+   "paths·report-azure·get·responses·200": {
+    "description": "The test coverage mapping",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·report-azure·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·report-azure·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/azure-report.json#/components/schemas/Error"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

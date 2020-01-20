@@ -32,11 +32,20 @@
   "author": "Microsoft Corporation",
   "license": "MIT",
   "devDependencies": {
+    "@types/chai": "^4.2.7",
+    "@types/mocha": "^5.2.5",
     "@types/node": "10.17.0",
+    "chai": "^4.2.0",
     "eslint": "~5.4.0",
-    "node-yaml": "^3.2.0"
+    "mocha": "^5.2.0",
+    "mocha-typescript": "^1.1.17",
+    "node-yaml": "^3.2.0",
+    "nyc": "^15.0.0",
+    "source-map-support": "^0.5.13",
+    "typescript": "^3.7.5"
   },
   "dependencies": {
+    "@autorest/cli.common": "^1.0.14",
     "@autorest/modelerfour": "^4.1.60",
     "@azure-tools/autorest-extension-base": "~3.1.0",
     "@azure-tools/codegen": "^2.1.222",

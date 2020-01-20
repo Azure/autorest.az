@@ -1,0 +1,1176 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "body-datetime",
+  "description": "Test Infrastructure for AutoRest",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1null"
+    ]
+   }
+  },
+  "path:0.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/null",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1null"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getNull",
+    "description": "Get null datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:0",
+      "description": "The null datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:1": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/invalid",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1invalid"
+    ]
+   }
+  },
+  "path:1.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/invalid",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1invalid"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getInvalid",
+    "description": "Get invalid datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:0",
+      "description": "The invalid datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:2": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/overflow",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1overflow"
+    ]
+   }
+  },
+  "path:2.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/overflow",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1overflow"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getOverflow",
+    "description": "Get overflow datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:0",
+      "description": "The overflow datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:3": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/underflow",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1underflow"
+    ]
+   }
+  },
+  "path:3.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/underflow",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1underflow"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getUnderflow",
+    "description": "Get underflow datetime value",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:0",
+      "description": "The underflow datetime value"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:4": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/utc",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1utc"
+    ]
+   }
+  },
+  "path:4.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/utc",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1utc"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putUtcMaxDateTime",
+    "description": "Put max datetime value 9999-12-31T23:59:59.9999999Z",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:8",
+      "description": "The max datetime value 9999-12-31T23:59:59.9999999Z"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:5": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/utc/lowercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1utc~1lowercase"
+    ]
+   }
+  },
+  "path:5.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/utc/lowercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1utc~1lowercase"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getUtcLowercaseMaxDateTime",
+    "description": "Get max datetime value 9999-12-31t23:59:59.9999999z",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:0",
+      "description": "The max datetime value 9999-12-31t23:59:59.9999999z"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:6": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/utc/uppercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1utc~1uppercase"
+    ]
+   }
+  },
+  "path:6.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/utc/uppercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1utc~1uppercase"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getUtcUppercaseMaxDateTime",
+    "description": "Get max datetime value 9999-12-31T23:59:59.9999999Z",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:0",
+      "description": "The max datetime value 9999-12-31T23:59:59.9999999Z"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:7": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localpositiveoffset",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localpositiveoffset"
+    ]
+   }
+  },
+  "path:7.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localpositiveoffset",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localpositiveoffset"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putLocalPositiveOffsetMaxDateTime",
+    "description": "Put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999+14:00",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:8",
+      "description": "The max datetime value with positive num offset 9999-12-31T23:59:59.9999999+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:8": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localpositiveoffset/lowercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localpositiveoffset~1lowercase"
+    ]
+   }
+  },
+  "path:8.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localpositiveoffset/lowercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localpositiveoffset~1lowercase"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalPositiveOffsetLowercaseMaxDateTime",
+    "description": "Get max datetime value with positive num offset 9999-12-31t23:59:59.9999999+14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:0",
+      "description": "The max datetime value 9999-12-31t23:59:59.9999999+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:9": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localpositiveoffset/uppercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localpositiveoffset~1uppercase"
+    ]
+   }
+  },
+  "path:9.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localpositiveoffset/uppercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localpositiveoffset~1uppercase"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalPositiveOffsetUppercaseMaxDateTime",
+    "description": "Get max datetime value with positive num offset 9999-12-31T23:59:59.9999999+14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:0",
+      "description": "The max datetime value 9999-12-31T23:59:59.9999999+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:10": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localnegativeoffset",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localnegativeoffset"
+    ]
+   }
+  },
+  "path:10.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localnegativeoffset",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localnegativeoffset"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putLocalNegativeOffsetMaxDateTime",
+    "description": "Put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999-14:00",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:8",
+      "description": "The max datetime value with positive num offset 9999-12-31T23:59:59.9999999+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:11": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localnegativeoffset/uppercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localnegativeoffset~1uppercase"
+    ]
+   }
+  },
+  "path:11.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localnegativeoffset/uppercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localnegativeoffset~1uppercase"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalNegativeOffsetUppercaseMaxDateTime",
+    "description": "Get max datetime value with positive num offset 9999-12-31T23:59:59.9999999-14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:0",
+      "description": "The max datetime value 9999-12-31T23:59:59.9999999-14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:12": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localnegativeoffset/lowercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localnegativeoffset~1lowercase"
+    ]
+   }
+  },
+  "path:12.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/max/localnegativeoffset/lowercase",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1max~1localnegativeoffset~1lowercase"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalNegativeOffsetLowercaseMaxDateTime",
+    "description": "Get max datetime value with positive num offset 9999-12-31t23:59:59.9999999-14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:0",
+      "description": "The max datetime value 9999-12-31t23:59:59.9999999-14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:13": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/min/utc",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1min~1utc"
+    ]
+   }
+  },
+  "path:13.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/min/utc",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1min~1utc"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putUtcMinDateTime",
+    "description": "Put min datetime value 0001-01-01T00:00:00Z",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:8",
+      "description": "The min datetime value 0001-01-01T00:00:00Z"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:13.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/min/utc",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1min~1utc"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getUtcMinDateTime",
+    "description": "Get min datetime value 0001-01-01T00:00:00Z",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:28",
+      "description": "The min datetime value 0001-01-01T00:00:00Z"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:14": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/min/localpositiveoffset",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1min~1localpositiveoffset"
+    ]
+   }
+  },
+  "path:14.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/min/localpositiveoffset",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1min~1localpositiveoffset"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putLocalPositiveOffsetMinDateTime",
+    "description": "Put min datetime value 0001-01-01T00:00:00+14:00",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:8",
+      "description": "The min datetime value 0001-01-01T00:00:00+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:14.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/min/localpositiveoffset",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1min~1localpositiveoffset"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalPositiveOffsetMinDateTime",
+    "description": "Get min datetime value 0001-01-01T00:00:00+14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:32",
+      "description": "The min datetime value 0001-01-01T00:00:00+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:15": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/min/localnegativeoffset",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1min~1localnegativeoffset"
+    ]
+   }
+  },
+  "path:15.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/min/localnegativeoffset",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1min~1localnegativeoffset"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_putLocalNegativeOffsetMinDateTime",
+    "description": "Put min datetime value 0001-01-01T00:00:00-14:00",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:8",
+      "description": "The min datetime value 0001-01-01T00:00:00+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "path:15.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/datetime/min/localnegativeoffset",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-datetime.json#/paths/~1datetime~1min~1localnegativeoffset"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "datetime_getLocalNegativeOffsetMinDateTime",
+    "description": "Get min datetime value 0001-01-01T00:00:00-14:00",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/responses:32",
+      "description": "The min datetime value 0001-01-01T00:00:00+14:00"
+     },
+     "default": {
+      "$ref": "#/components/responses/responses:1",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·datetime-null·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-null·get·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-invalid·get·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-overflow·get·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-underflow·get·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-utc-lowercase·get·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-utc-uppercase·get·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localpositiveoffset-lowercase·get·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localpositiveoffset-uppercase·get·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localnegativeoffset-uppercase·get·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localnegativeoffset-lowercase·get·responses·200"
+     ]
+    },
+    "description": "The null datetime value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:0"
+      }
+     }
+    }
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·datetime-null·get·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-null·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-invalid·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-overflow·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-underflow·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-utc·put·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-utc-lowercase·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-utc-uppercase·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localpositiveoffset·put·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localpositiveoffset-lowercase·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localpositiveoffset-uppercase·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localnegativeoffset·put·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localnegativeoffset-uppercase·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localnegativeoffset-lowercase·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-utc·put·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-utc·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-localpositiveoffset·put·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-localpositiveoffset·get·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-localnegativeoffset·put·responses·default",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-localnegativeoffset·get·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:19"
+      }
+     }
+    }
+   },
+   "responses:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·datetime-max-utc·put·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-utc·put·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localpositiveoffset·put·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-max-localnegativeoffset·put·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-utc·put·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-localpositiveoffset·put·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-localnegativeoffset·put·responses·200"
+     ]
+    },
+    "description": "The max datetime value 9999-12-31T23:59:59.9999999Z"
+   },
+   "responses:28": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·datetime-min-utc·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-utc·get·responses·200"
+     ]
+    },
+    "description": "The min datetime value 0001-01-01T00:00:00Z",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:14"
+      }
+     }
+    }
+   },
+   "responses:32": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·datetime-min-localpositiveoffset·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-localpositiveoffset·get·responses·200",
+      "http://localhost:3000/__files/body-datetime.json#/components/responses/paths·datetime-min-localnegativeoffset·get·responses·200"
+     ]
+    },
+    "description": "The min datetime value 0001-01-01T00:00:00+14:00",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:16"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·datetime-null·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-null·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-invalid·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-overflow·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-underflow·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-max-utc·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-max-utc-lowercase·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-max-utc-uppercase·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-max-localpositiveoffset·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-max-localpositiveoffset-lowercase·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-max-localpositiveoffset-uppercase·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-max-localnegativeoffset·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-max-localnegativeoffset-uppercase·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-max-localnegativeoffset-lowercase·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-min-utc·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-min-localpositiveoffset·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-min-localnegativeoffset·put·requestbody·content·application-json·schema"
+     ]
+    },
+    "type": "string",
+    "format": "date-time"
+   },
+   "schemas:14": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·datetime-min-utc·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-min-utc·get·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "string",
+    "format": "date-time",
+    "enum": [
+     "0001-01-01T00:00:00Z"
+    ]
+   },
+   "schemas:16": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·datetime-min-localpositiveoffset·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-min-localpositiveoffset·get·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/paths·datetime-min-localnegativeoffset·get·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "string",
+    "format": "date-time",
+    "enum": [
+     "0001-01-01t00:00:00+14:00"
+    ]
+   },
+   "schemas:19": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:20"
+     }
+    }
+   },
+   "schemas:20": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-datetime.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   }
+  },
+  "requestBodies": {
+   "requestBodies:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·datetime-max-utc·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-datetime.json#/components/requestBodies/paths·datetime-max-utc·put·requestbody",
+      "http://localhost:3000/__files/body-datetime.json#/components/requestBodies/paths·datetime-max-localpositiveoffset·put·requestbody",
+      "http://localhost:3000/__files/body-datetime.json#/components/requestBodies/paths·datetime-max-localnegativeoffset·put·requestbody",
+      "http://localhost:3000/__files/body-datetime.json#/components/requestBodies/paths·datetime-min-utc·put·requestbody",
+      "http://localhost:3000/__files/body-datetime.json#/components/requestBodies/paths·datetime-min-localpositiveoffset·put·requestbody",
+      "http://localhost:3000/__files/body-datetime.json#/components/requestBodies/paths·datetime-min-localnegativeoffset·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:0"
+      }
+     }
+    },
+    "required": true,
+    "x-ms-requestBody-name": "datetimeBody"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

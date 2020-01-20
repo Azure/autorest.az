@@ -1,0 +1,376 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "version": "0.0.0",
+  "title": "XMS Error Response Extensions",
+  "description": "XMS Error Response Extensions"
+ },
+ "paths": {
+  "/errorStatusCodes/Pets/{petId}/GetPet": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost/"
+     }
+    ],
+    "operationId": "Pet_GetPetById",
+    "description": "Gets pets by id.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·errorstatuscodes-pets-petid-getpet·get·parameters·0",
+      "description": "pet id"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·200",
+      "description": "OK"
+     },
+     "202": {
+      "$ref": "#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·202",
+      "description": "something something dark side"
+     },
+     "400": {
+      "$ref": "#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·400",
+      "description": "Bad request"
+     },
+     "404": {
+      "$ref": "#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·404",
+      "description": "Not found"
+     },
+     "501": {
+      "$ref": "#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·501",
+      "description": "Some unexpected error"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·default",
+      "description": "default stuff"
+     }
+    }
+   }
+  },
+  "/errorStatusCodes/Pets/doSomething/{whatAction}": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost/"
+     }
+    ],
+    "operationId": "Pet_DoSomething",
+    "description": "Asks pet to do something",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·errorstatuscodes-pets-dosomething-whataction·post·parameters·0",
+      "description": "what action the pet should do"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·errorstatuscodes-pets-dosomething-whataction·post·responses·200",
+      "description": "action performed"
+     },
+     "500": {
+      "$ref": "#/components/responses/paths·errorstatuscodes-pets-dosomething-whataction·post·responses·500",
+      "description": "something bad happened"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·errorstatuscodes-pets-dosomething-whataction·post·responses·default",
+      "description": "default stuff"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "paths·errorstatuscodes-pets-petid-getpet·get·parameters·0": {
+    "name": "petId",
+    "in": "path",
+    "description": "pet id",
+    "schema": {
+     "$ref": "#/components/schemas/paths·errorstatuscodes-pets-petid-getpet·get·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·errorstatuscodes-pets-dosomething-whataction·post·parameters·0": {
+    "name": "whatAction",
+    "in": "path",
+    "description": "what action the pet should do",
+    "schema": {
+     "$ref": "#/components/schemas/paths·errorstatuscodes-pets-dosomething-whataction·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   }
+  },
+  "schemas": {
+   "paths·errorstatuscodes-pets-petid-getpet·get·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·errorstatuscodes-pets-petid-getpet·get·responses·400·content·application-json·schema": {
+    "type": "string"
+   },
+   "paths·errorstatuscodes-pets-petid-getpet·get·responses·501·content·application-json·schema": {
+    "type": "integer"
+   },
+   "paths·errorstatuscodes-pets-dosomething-whataction·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "Pet": {
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/Animal"
+     }
+    ],
+    "properties": {
+     "name": {
+      "$ref": "#/components/schemas/Pet-name",
+      "description": "Gets the Pet by id.",
+      "readOnly": true
+     }
+    }
+   },
+   "Pet-name": {
+    "type": "string",
+    "readOnly": true,
+    "description": "Gets the Pet by id."
+   },
+   "NotFoundErrorBase": {
+    "properties": {
+     "reason": {
+      "$ref": "#/components/schemas/NotFoundErrorBase-reason"
+     },
+     "whatNotFound": {
+      "$ref": "#/components/schemas/NotFoundErrorBase-whatNotFound"
+     }
+    },
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/BaseError"
+     }
+    ],
+    "discriminator": {
+     "propertyName": "whatNotFound"
+    },
+    "required": [
+     "whatNotFound"
+    ]
+   },
+   "NotFoundErrorBase-reason": {
+    "type": "string"
+   },
+   "NotFoundErrorBase-whatNotFound": {
+    "type": "string"
+   },
+   "BaseError": {
+    "properties": {
+     "someBaseProp": {
+      "$ref": "#/components/schemas/BaseError-someBaseProp"
+     }
+    }
+   },
+   "BaseError-someBaseProp": {
+    "type": "string"
+   },
+   "LinkNotFound": {
+    "properties": {
+     "whatSubAddress": {
+      "$ref": "#/components/schemas/LinkNotFound-whatSubAddress"
+     }
+    },
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/NotFoundErrorBase"
+     }
+    ],
+    "x-ms-discriminator-value": "InvalidResourceLink"
+   },
+   "LinkNotFound-whatSubAddress": {
+    "type": "string"
+   },
+   "AnimalNotFound": {
+    "properties": {
+     "name": {
+      "$ref": "#/components/schemas/AnimalNotFound-name"
+     }
+    },
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/NotFoundErrorBase"
+     }
+    ]
+   },
+   "AnimalNotFound-name": {
+    "type": "string"
+   },
+   "Animal": {
+    "properties": {
+     "aniType": {
+      "$ref": "#/components/schemas/Animal-aniType"
+     }
+    }
+   },
+   "Animal-aniType": {
+    "type": "string"
+   },
+   "PetAction": {
+    "properties": {
+     "actionResponse": {
+      "$ref": "#/components/schemas/PetAction-actionResponse",
+      "description": "action feedback"
+     }
+    }
+   },
+   "PetAction-actionResponse": {
+    "type": "string",
+    "description": "action feedback"
+   },
+   "PetActionError": {
+    "properties": {
+     "errorType": {
+      "$ref": "#/components/schemas/PetActionError-errorType"
+     },
+     "errorMessage": {
+      "$ref": "#/components/schemas/PetActionError-errorMessage",
+      "description": "the error message"
+     }
+    },
+    "discriminator": {
+     "propertyName": "errorType"
+    },
+    "required": [
+     "errorType"
+    ]
+   },
+   "PetActionError-errorType": {
+    "type": "string"
+   },
+   "PetActionError-errorMessage": {
+    "type": "string",
+    "description": "the error message"
+   },
+   "PetSadError": {
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetActionError"
+     }
+    ],
+    "properties": {
+     "reason": {
+      "$ref": "#/components/schemas/PetSadError-reason",
+      "description": "why is the pet sad"
+     }
+    }
+   },
+   "PetSadError-reason": {
+    "type": "string",
+    "description": "why is the pet sad"
+   },
+   "PetHungryOrThirstyError": {
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetSadError"
+     }
+    ],
+    "properties": {
+     "hungryOrThirsty": {
+      "$ref": "#/components/schemas/PetHungryOrThirstyError-hungryOrThirsty",
+      "description": "is the pet hungry or thirsty or both"
+     }
+    }
+   },
+   "PetHungryOrThirstyError-hungryOrThirsty": {
+    "type": "string",
+    "description": "is the pet hungry or thirsty or both"
+   }
+  },
+  "responses": {
+   "paths·errorstatuscodes-pets-petid-getpet·get·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/Pet"
+      }
+     }
+    }
+   },
+   "paths·errorstatuscodes-pets-petid-getpet·get·responses·202": {
+    "description": "something something dark side"
+   },
+   "paths·errorstatuscodes-pets-petid-getpet·get·responses·400": {
+    "description": "Bad request",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·errorstatuscodes-pets-petid-getpet·get·responses·400·content·application-json·schema"
+      }
+     }
+    },
+    "x-ms-error-response": true
+   },
+   "paths·errorstatuscodes-pets-petid-getpet·get·responses·404": {
+    "description": "Not found",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/NotFoundErrorBase"
+      }
+     }
+    },
+    "x-ms-error-response": true
+   },
+   "paths·errorstatuscodes-pets-petid-getpet·get·responses·501": {
+    "description": "Some unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·errorstatuscodes-pets-petid-getpet·get·responses·501·content·application-json·schema"
+      }
+     }
+    },
+    "x-ms-error-response": true
+   },
+   "paths·errorstatuscodes-pets-petid-getpet·get·responses·default": {
+    "description": "default stuff"
+   },
+   "paths·errorstatuscodes-pets-dosomething-whataction·post·responses·200": {
+    "description": "action performed",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetAction"
+      }
+     }
+    }
+   },
+   "paths·errorstatuscodes-pets-dosomething-whataction·post·responses·500": {
+    "description": "something bad happened",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetActionError"
+      }
+     }
+    },
+    "x-ms-error-response": true
+   },
+   "paths·errorstatuscodes-pets-dosomething-whataction·post·responses·default": {
+    "description": "default stuff",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetActionError"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost/"
+  }
+ ]
+}

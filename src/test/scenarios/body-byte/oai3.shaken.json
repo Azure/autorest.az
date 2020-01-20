@@ -1,0 +1,302 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest Swagger BAT Byte Service",
+  "description": "Test Infrastructure for AutoRest Swagger BAT",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/byte/null": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "byte_getNull",
+    "description": "Get null byte value",
+    "tags": [
+     "Byte Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·byte-null·get·responses·200",
+      "description": "The null byte value"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·byte-null·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/byte/empty": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "byte_getEmpty",
+    "description": "Get empty byte value ''",
+    "tags": [
+     "Byte Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·byte-empty·get·responses·200",
+      "description": "The empty byte value ''"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·byte-empty·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/byte/nonAscii": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "byte_getNonAscii",
+    "description": "Get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)",
+    "tags": [
+     "Byte Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·byte-nonascii·get·responses·200",
+      "description": "Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·byte-nonascii·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "byte_putNonAscii",
+    "description": "Put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·byte-nonascii·put·requestbody",
+     "description": "Base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)"
+    },
+    "x-ms-requestBody-index": 0,
+    "tags": [
+     "Byte Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·byte-nonascii·put·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·byte-nonascii·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/byte/invalid": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "byte_getInvalid",
+    "description": "Get invalid byte value ':::SWAGGER::::'",
+    "tags": [
+     "Byte Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·byte-invalid·get·responses·200",
+      "description": "The invalid byte value '::::SWAGGER::::'"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·byte-invalid·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "responses": {
+   "paths·byte-null·get·responses·200": {
+    "description": "The null byte value",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·byte-null·get·responses·200·content·application-json·schema",
+       "description": "The null byte value"
+      }
+     }
+    }
+   },
+   "paths·byte-null·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-byte.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·byte-empty·get·responses·200": {
+    "description": "The empty byte value ''",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·byte-empty·get·responses·200·content·application-json·schema",
+       "description": "The empty byte value ''"
+      }
+     }
+    }
+   },
+   "paths·byte-empty·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-byte.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·byte-nonascii·get·responses·200": {
+    "description": "Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·byte-nonascii·get·responses·200·content·application-json·schema",
+       "description": "Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)"
+      }
+     }
+    }
+   },
+   "paths·byte-nonascii·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-byte.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·byte-nonascii·put·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·byte-nonascii·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-byte.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·byte-invalid·get·responses·200": {
+    "description": "The invalid byte value '::::SWAGGER::::'",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·byte-invalid·get·responses·200·content·application-json·schema",
+       "description": "The invalid byte value '::::SWAGGER::::'"
+      }
+     }
+    }
+   },
+   "paths·byte-invalid·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-byte.json#/components/schemas/Error"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "paths·byte-null·get·responses·200·content·application-json·schema": {
+    "description": "The null byte value",
+    "type": "string",
+    "format": "byte",
+    "enum": [
+     null
+    ]
+   },
+   "paths·byte-empty·get·responses·200·content·application-json·schema": {
+    "description": "The empty byte value ''",
+    "type": "string",
+    "format": "byte",
+    "enum": [
+     ""
+    ]
+   },
+   "paths·byte-nonascii·get·responses·200·content·application-json·schema": {
+    "description": "Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)",
+    "type": "string",
+    "format": "byte"
+   },
+   "paths·byte-nonascii·put·requestbody·content·application-json·schema": {
+    "description": "Base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)",
+    "type": "string",
+    "format": "byte"
+   },
+   "paths·byte-invalid·get·responses·200·content·application-json·schema": {
+    "description": "The invalid byte value '::::SWAGGER::::'",
+    "type": "string",
+    "format": "byte"
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   }
+  },
+  "requestBodies": {
+   "paths·byte-nonascii·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·byte-nonascii·put·requestbody·content·application-json·schema",
+       "description": "Base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)"
+      }
+     }
+    },
+    "required": true,
+    "description": "Base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)",
+    "x-ms-requestBody-name": "byteBody"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

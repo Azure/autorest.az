@@ -1,0 +1,359 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "body-formdata",
+  "description": "Test Infrastructure for AutoRest Swagger BAT",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/formdata/stream/uploadfile",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-formdata.json#/paths/~1formdata~1stream~1uploadfile"
+    ]
+   }
+  },
+  "path:0.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/formdata/stream/uploadfile",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-formdata.json#/paths/~1formdata~1stream~1uploadfile"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "formdata_UploadFile",
+    "description": "Upload file",
+    "tags": [
+     "Formdata"
+    ],
+    "requestBody": {
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "Serialized file stream",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:0.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/formdata/stream/uploadfile",
+    "originalLocations": [
+     "http://localhost:3000/__files/body-formdata.json#/paths/~1formdata~1stream~1uploadfile"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "formdata_UploadFileViaBody",
+    "description": "Upload file",
+    "tags": [
+     "Formdata"
+    ],
+    "requestBody": {
+     "description": "File to upload.",
+     "$ref": "#/components/requestBodies/requestBodies:1"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "Serialized file stream",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "requestBodies": {
+   "requestBodies:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·formdata-stream-uploadfile·post·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-formdata.json#/components/requestBodies/paths·formdata-stream-uploadfile·post·requestbody"
+     ]
+    },
+    "content": {
+     "multipart/form-data": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:0"
+      }
+     }
+    },
+    "x-ms-requestBody-name": "fileName"
+   },
+   "requestBodies:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·formdata-stream-uploadfile·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-formdata.json#/components/requestBodies/paths·formdata-stream-uploadfile·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/octet-stream": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:5"
+      }
+     }
+    },
+    "required": true,
+    "description": "File to upload.",
+    "x-ms-requestBody-name": "fileContent"
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·formdata-stream-uploadfile·post·requestbody·content·multipart-form_data·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-formdata.json#/components/schemas/paths·formdata-stream-uploadfile·post·requestbody·content·multipart-form_data·schema"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "fileContent": {
+      "description": "File to upload.",
+      "$ref": "#/components/schemas/schemas:1"
+     },
+     "fileName": {
+      "description": "File name to upload. Name has to be spelled exactly as written here.",
+      "$ref": "#/components/schemas/schemas:2"
+     }
+    },
+    "required": [
+     "fileContent",
+     "fileName"
+    ]
+   },
+   "schemas:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "post-content-schema-fileContent",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-formdata.json#/components/schemas/post-content-schema-fileContent"
+     ]
+    },
+    "description": "File to upload.",
+    "type": "file"
+   },
+   "schemas:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "post-content-schema-fileName",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-formdata.json#/components/schemas/post-content-schema-fileName"
+     ]
+    },
+    "description": "File name to upload. Name has to be spelled exactly as written here.",
+    "type": "string"
+   },
+   "schemas:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·formdata-stream-uploadfile·post·responses·200·content·application-octet_stream·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-formdata.json#/components/schemas/paths·formdata-stream-uploadfile·post·responses·200·content·application-octet_stream·schema",
+      "http://localhost:3000/__files/body-formdata.json#/components/schemas/paths·formdata-stream-uploadfile·post·responses·200·content·application-json·schema",
+      "http://localhost:3000/__files/body-formdata.json#/components/schemas/paths·formdata-stream-uploadfile·put·responses·200·content·application-octet_stream·schema",
+      "http://localhost:3000/__files/body-formdata.json#/components/schemas/paths·formdata-stream-uploadfile·put·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "file"
+   },
+   "schemas:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·formdata-stream-uploadfile·put·requestbody·content·application-octet_stream·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-formdata.json#/components/schemas/paths·formdata-stream-uploadfile·put·requestbody·content·application-octet_stream·schema"
+     ]
+    },
+    "type": "object",
+    "format": "file"
+   },
+   "schemas:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-formdata.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:9"
+     }
+    }
+   },
+   "schemas:9": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-formdata.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   }
+  },
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·formdata-stream-uploadfile·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-formdata.json#/components/responses/paths·formdata-stream-uploadfile·post·responses·200",
+      "http://localhost:3000/__files/body-formdata.json#/components/responses/paths·formdata-stream-uploadfile·put·responses·200"
+     ]
+    },
+    "description": "Serialized file stream",
+    "content": {
+     "application/octet-stream": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:3"
+      }
+     },
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:3"
+      }
+     }
+    }
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·formdata-stream-uploadfile·post·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/body-formdata.json#/components/responses/paths·formdata-stream-uploadfile·post·responses·default",
+      "http://localhost:3000/__files/body-formdata.json#/components/responses/paths·formdata-stream-uploadfile·put·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/octet-stream": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:8"
+      }
+     },
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:8"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

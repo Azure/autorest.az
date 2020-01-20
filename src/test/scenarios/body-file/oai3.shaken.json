@@ -1,0 +1,216 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest Swagger BAT File Service",
+  "description": "Test Infrastructure for AutoRest Swagger BAT",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/files/stream/nonempty": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "files_GetFile",
+    "description": "Get file",
+    "tags": [
+     "Files"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·files-stream-nonempty·get·responses·200",
+      "description": "The PNG file"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·files-stream-nonempty·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/files/stream/verylarge": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "files_GetFileLarge",
+    "description": "Get a large file",
+    "tags": [
+     "Files"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·files-stream-verylarge·get·responses·200",
+      "description": "The large file"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·files-stream-verylarge·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/files/stream/empty": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "files_GetEmptyFile",
+    "description": "Get empty file",
+    "tags": [
+     "Files"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·files-stream-empty·get·responses·200",
+      "description": "The empty file stream"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·files-stream-empty·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "responses": {
+   "paths·files-stream-nonempty·get·responses·200": {
+    "description": "The PNG file",
+    "content": {
+     "image/png": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·files-stream-nonempty·get·responses·200·content·image-png·schema"
+      }
+     },
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·files-stream-nonempty·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·files-stream-nonempty·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "image/png": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-file.json#/components/schemas/Error"
+      }
+     },
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-file.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·files-stream-verylarge·get·responses·200": {
+    "description": "The large file",
+    "content": {
+     "image/png": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·files-stream-verylarge·get·responses·200·content·image-png·schema"
+      }
+     },
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·files-stream-verylarge·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·files-stream-verylarge·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "image/png": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-file.json#/components/schemas/Error"
+      }
+     },
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-file.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·files-stream-empty·get·responses·200": {
+    "description": "The empty file stream",
+    "content": {
+     "image/png": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·files-stream-empty·get·responses·200·content·image-png·schema"
+      }
+     },
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·files-stream-empty·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·files-stream-empty·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "image/png": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-file.json#/components/schemas/Error"
+      }
+     },
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/body-file.json#/components/schemas/Error"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "paths·files-stream-nonempty·get·responses·200·content·image-png·schema": {
+    "type": "file"
+   },
+   "paths·files-stream-nonempty·get·responses·200·content·application-json·schema": {
+    "type": "file"
+   },
+   "paths·files-stream-verylarge·get·responses·200·content·image-png·schema": {
+    "type": "file"
+   },
+   "paths·files-stream-verylarge·get·responses·200·content·application-json·schema": {
+    "type": "file"
+   },
+   "paths·files-stream-empty·get·responses·200·content·image-png·schema": {
+    "type": "file"
+   },
+   "paths·files-stream-empty·get·responses·200·content·application-json·schema": {
+    "type": "file"
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

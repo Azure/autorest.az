@@ -1,0 +1,686 @@
+!<!CodeModel> 
+schemas: !<!Schemas> 
+  objects:
+  - !<!ObjectSchema> &ref_0
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 0.0.0
+    children: !<!Relations> 
+      all:
+      - !<!ObjectSchema> &ref_1
+        type: object
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 0.0.0
+        parents: !<!Relations> 
+          all:
+          - *ref_0
+          immediate:
+          - *ref_0
+        properties:
+        - !<!Property> 
+          schema: !<!StringSchema> &ref_12
+            type: string
+            apiVersions:
+            - !<!ApiVersion> 
+              version: 0.0.0
+            language: !<!Languages> 
+              default:
+                name: Pet-name
+                description: Gets the Pet by id.
+            protocol: !<!Protocols> {}
+          readOnly: true
+          serializedName: name
+          language: !<!Languages> 
+            default:
+              name: name
+              description: Gets the Pet by id.
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: Pet
+            description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+            namespace: Api000
+        protocol: !<!Protocols> {}
+      immediate:
+      - *ref_1
+    properties:
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_11
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 0.0.0
+        language: !<!Languages> 
+          default:
+            name: Animal-aniType
+            description: MISSING·SCHEMA-DESCRIPTION-STRING
+        protocol: !<!Protocols> {}
+      serializedName: aniType
+      language: !<!Languages> 
+        default:
+          name: aniType
+          description: MISSING·SCHEMA-DESCRIPTION-STRING
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: Animal
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api000
+    protocol: !<!Protocols> {}
+  - *ref_1
+  - !<!ObjectSchema> &ref_3
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 0.0.0
+    children: !<!Relations> 
+      all:
+      - !<!ObjectSchema> &ref_2
+        type: object
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 0.0.0
+        children: !<!Relations> 
+          all:
+          - !<!ObjectSchema> &ref_4
+            type: object
+            apiVersions:
+            - !<!ApiVersion> 
+              version: 0.0.0
+            discriminatorValue: InvalidResourceLink
+            parents: !<!Relations> 
+              all:
+              - *ref_2
+              - *ref_3
+              immediate:
+              - *ref_2
+            properties:
+            - !<!Property> 
+              schema: !<!StringSchema> &ref_19
+                type: string
+                apiVersions:
+                - !<!ApiVersion> 
+                  version: 0.0.0
+                language: !<!Languages> 
+                  default:
+                    name: LinkNotFound-whatSubAddress
+                    description: MISSING·SCHEMA-DESCRIPTION-STRING
+                protocol: !<!Protocols> {}
+              serializedName: whatSubAddress
+              language: !<!Languages> 
+                default:
+                  name: whatSubAddress
+                  description: MISSING·SCHEMA-DESCRIPTION-STRING
+              protocol: !<!Protocols> {}
+            extensions:
+              x-ms-discriminator-value: InvalidResourceLink
+            language: !<!Languages> 
+              default:
+                name: LinkNotFound
+                description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+                namespace: Api000
+            protocol: !<!Protocols> {}
+          - !<!ObjectSchema> &ref_5
+            type: object
+            apiVersions:
+            - !<!ApiVersion> 
+              version: 0.0.0
+            discriminatorValue: AnimalNotFound
+            parents: !<!Relations> 
+              all:
+              - *ref_2
+              - *ref_3
+              immediate:
+              - *ref_2
+            properties:
+            - !<!Property> 
+              schema: !<!StringSchema> &ref_20
+                type: string
+                apiVersions:
+                - !<!ApiVersion> 
+                  version: 0.0.0
+                language: !<!Languages> 
+                  default:
+                    name: AnimalNotFound-name
+                    description: MISSING·SCHEMA-DESCRIPTION-STRING
+                protocol: !<!Protocols> {}
+              serializedName: name
+              language: !<!Languages> 
+                default:
+                  name: name
+                  description: MISSING·SCHEMA-DESCRIPTION-STRING
+              protocol: !<!Protocols> {}
+            language: !<!Languages> 
+              default:
+                name: AnimalNotFound
+                description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+                namespace: Api000
+            protocol: !<!Protocols> {}
+          immediate:
+          - *ref_4
+          - *ref_5
+        discriminator: !<!Discriminator> 
+          all:
+            AnimalNotFound: *ref_5
+            InvalidResourceLink: *ref_4
+          immediate:
+            AnimalNotFound: *ref_5
+            InvalidResourceLink: *ref_4
+          property: !<!Property> &ref_6
+            schema: !<!StringSchema> &ref_15
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: 0.0.0
+              language: !<!Languages> 
+                default:
+                  name: NotFoundErrorBase-whatNotFound
+                  description: MISSING·SCHEMA-DESCRIPTION-STRING
+              protocol: !<!Protocols> {}
+            isDiscriminator: true
+            required: true
+            serializedName: whatNotFound
+            language: !<!Languages> 
+              default:
+                name: whatNotFound
+                description: MISSING·SCHEMA-DESCRIPTION-STRING
+            protocol: !<!Protocols> {}
+        discriminatorValue: NotFoundErrorBase
+        parents: !<!Relations> 
+          all:
+          - *ref_3
+          immediate:
+          - *ref_3
+        properties:
+        - !<!Property> 
+          schema: !<!StringSchema> &ref_14
+            type: string
+            apiVersions:
+            - !<!ApiVersion> 
+              version: 0.0.0
+            language: !<!Languages> 
+              default:
+                name: NotFoundErrorBase-reason
+                description: MISSING·SCHEMA-DESCRIPTION-STRING
+            protocol: !<!Protocols> {}
+          required: false
+          serializedName: reason
+          language: !<!Languages> 
+            default:
+              name: reason
+              description: MISSING·SCHEMA-DESCRIPTION-STRING
+          protocol: !<!Protocols> {}
+        - *ref_6
+        language: !<!Languages> 
+          default:
+            name: NotFoundErrorBase
+            description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+            namespace: Api000
+        protocol: !<!Protocols> {}
+      - *ref_4
+      - *ref_5
+      immediate:
+      - *ref_2
+    properties:
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_13
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 0.0.0
+        language: !<!Languages> 
+          default:
+            name: BaseError-someBaseProp
+            description: MISSING·SCHEMA-DESCRIPTION-STRING
+        protocol: !<!Protocols> {}
+      serializedName: someBaseProp
+      language: !<!Languages> 
+        default:
+          name: someBaseProp
+          description: MISSING·SCHEMA-DESCRIPTION-STRING
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: BaseError
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api000
+    protocol: !<!Protocols> {}
+  - *ref_2
+  - !<!ObjectSchema> &ref_27
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 0.0.0
+    properties:
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_16
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 0.0.0
+        language: !<!Languages> 
+          default:
+            name: PetAction-actionResponse
+            description: action feedback
+        protocol: !<!Protocols> {}
+      serializedName: actionResponse
+      language: !<!Languages> 
+        default:
+          name: actionResponse
+          description: action feedback
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: PetAction
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api000
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_8
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 0.0.0
+    children: !<!Relations> 
+      all:
+      - !<!ObjectSchema> &ref_7
+        type: object
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 0.0.0
+        children: !<!Relations> 
+          all:
+          - !<!ObjectSchema> &ref_9
+            type: object
+            apiVersions:
+            - !<!ApiVersion> 
+              version: 0.0.0
+            discriminatorValue: PetHungryOrThirstyError
+            parents: !<!Relations> 
+              all:
+              - *ref_7
+              - *ref_8
+              immediate:
+              - *ref_7
+            properties:
+            - !<!Property> 
+              schema: !<!StringSchema> &ref_22
+                type: string
+                apiVersions:
+                - !<!ApiVersion> 
+                  version: 0.0.0
+                language: !<!Languages> 
+                  default:
+                    name: PetHungryOrThirstyError-hungryOrThirsty
+                    description: is the pet hungry or thirsty or both
+                protocol: !<!Protocols> {}
+              serializedName: hungryOrThirsty
+              language: !<!Languages> 
+                default:
+                  name: hungryOrThirsty
+                  description: is the pet hungry or thirsty or both
+              protocol: !<!Protocols> {}
+            language: !<!Languages> 
+              default:
+                name: PetHungryOrThirstyError
+                description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+                namespace: Api000
+            protocol: !<!Protocols> {}
+          immediate:
+          - *ref_9
+        discriminator: !<!Discriminator> 
+          all:
+            PetHungryOrThirstyError: *ref_9
+          immediate:
+            PetHungryOrThirstyError: *ref_9
+          property: !<!Property> &ref_10
+            schema: !<!StringSchema> &ref_17
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: 0.0.0
+              language: !<!Languages> 
+                default:
+                  name: PetActionError-errorType
+                  description: MISSING·SCHEMA-DESCRIPTION-STRING
+              protocol: !<!Protocols> {}
+            isDiscriminator: true
+            required: true
+            serializedName: errorType
+            language: !<!Languages> 
+              default:
+                name: errorType
+                description: MISSING·SCHEMA-DESCRIPTION-STRING
+            protocol: !<!Protocols> {}
+        discriminatorValue: PetSadError
+        parents: !<!Relations> 
+          all:
+          - *ref_8
+          immediate:
+          - *ref_8
+        properties:
+        - !<!Property> 
+          schema: !<!StringSchema> &ref_21
+            type: string
+            apiVersions:
+            - !<!ApiVersion> 
+              version: 0.0.0
+            language: !<!Languages> 
+              default:
+                name: PetSadError-reason
+                description: why is the pet sad
+            protocol: !<!Protocols> {}
+          serializedName: reason
+          language: !<!Languages> 
+            default:
+              name: reason
+              description: why is the pet sad
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: PetSadError
+            description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+            namespace: Api000
+        protocol: !<!Protocols> {}
+      - *ref_9
+      immediate:
+      - *ref_7
+    discriminator: !<!Discriminator> 
+      all:
+        PetHungryOrThirstyError: *ref_9
+        PetSadError: *ref_7
+      immediate:
+        PetSadError: *ref_7
+      property: *ref_10
+    properties:
+    - *ref_10
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_18
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: 0.0.0
+        language: !<!Languages> 
+          default:
+            name: PetActionError-errorMessage
+            description: the error message
+        protocol: !<!Protocols> {}
+      required: false
+      serializedName: errorMessage
+      language: !<!Languages> 
+        default:
+          name: errorMessage
+          description: the error message
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: PetActionError
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api000
+    protocol: !<!Protocols> {}
+  - *ref_4
+  - *ref_5
+  - *ref_7
+  - *ref_9
+  numbers:
+  - !<!NumberSchema> &ref_26
+    type: integer
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 0.0.0
+    precision: 32
+    language: !<!Languages> 
+      default:
+        name: paths·errorstatuscodes-pets-petid-getpet·get·responses·501·content·application-json·schema
+        description: MISSING·SCHEMA-DESCRIPTION-INTEGER
+    protocol: !<!Protocols> {}
+  strings:
+  - !<!StringSchema> &ref_23
+    type: string
+    language: !<!Languages> 
+      default:
+        name: string
+        description: simple string
+    protocol: !<!Protocols> {}
+  - !<!StringSchema> &ref_25
+    type: string
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 0.0.0
+    language: !<!Languages> 
+      default:
+        name: paths·errorstatuscodes-pets-petid-getpet·get·parameters·0·schema
+        description: MISSING·SCHEMA-DESCRIPTION-STRING
+    protocol: !<!Protocols> {}
+  - *ref_11
+  - *ref_12
+  - *ref_13
+  - *ref_14
+  - *ref_15
+  - *ref_16
+  - *ref_17
+  - *ref_18
+  - *ref_19
+  - *ref_20
+  - *ref_21
+  - *ref_22
+globalParameters:
+- !<!Parameter> &ref_24
+  schema: *ref_23
+  clientDefaultValue: 'http://localhost'
+  implementation: Client
+  required: true
+  language: !<!Languages> 
+    default:
+      name: $host
+      description: server parameter
+      serializedName: $host
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: uri
+info: !<!Info> 
+  description: XMS Error Response Extensions
+  title: xms-error-responses
+operationGroups:
+- !<!OperationGroup> 
+  $key: Pet
+  operations:
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 0.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_24
+      - !<!Parameter> 
+        schema: *ref_25
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: petId
+            description: pet id
+            serializedName: petId
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: '/errorStatusCodes/Pets/{petId}/GetPet'
+          method: get
+          uri: '{$host}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_1
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '200'
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - '202'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_25
+      extensions:
+        x-ms-error-response: true
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '400'
+    - !<!SchemaResponse> 
+      schema: *ref_2
+      extensions:
+        x-ms-error-response: true
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '404'
+    - !<!SchemaResponse> 
+      schema: *ref_26
+      extensions:
+        x-ms-error-response: true
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '501'
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: GetPetById
+        description: Gets pets by id.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: 0.0.0
+    request: !<!Request> 
+      parameters:
+      - *ref_24
+      - !<!Parameter> 
+        schema: *ref_25
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: whatAction
+            description: what action the pet should do
+            serializedName: whatAction
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: '/errorStatusCodes/Pets/doSomething/{whatAction}'
+          method: post
+          uri: '{$host}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_27
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_8
+      extensions:
+        x-ms-error-response: true
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '500'
+    - !<!SchemaResponse> 
+      schema: *ref_8
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: DoSomething
+        description: Asks pet to do something
+    protocol: !<!Protocols> {}
+  language: !<!Languages> 
+    default:
+      name: Pet
+      description: ''
+  protocol: !<!Protocols> {}
+language: !<!Languages> 
+  default:
+    name: ''
+    description: ''
+protocol: !<!Protocols> 
+  http: !<!HttpModel> {}

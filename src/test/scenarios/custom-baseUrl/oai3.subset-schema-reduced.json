@@ -1,0 +1,247 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "custom-baseUrl",
+  "description": "Test Infrastructure for AutoRest",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/customuri",
+    "originalLocations": [
+     "http://localhost:3000/__files/custom-baseUrl.json#/paths/~1customuri"
+    ]
+   }
+  },
+  "path:0.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/customuri",
+    "originalLocations": [
+     "http://localhost:3000/__files/custom-baseUrl.json#/paths/~1customuri"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://{accountName}{host}",
+      "x-ms-parameterized-host": {
+       "positionInOperation": "last"
+      },
+      "variables": {
+       "accountName": {
+        "x-name": "accountName",
+        "description": "Account Name",
+        "x-required": true,
+        "x-type": "string",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "default": ""
+       },
+       "host": {
+        "x-name": "host",
+        "description": "A string value that is used as a global part of the parameterized host",
+        "x-type": "string",
+        "x-required": true,
+        "default": "host",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "x-ms-parameter-location": "client",
+        "x-ms-original": {
+         "$ref": "#/components/parameters/parameters:0"
+        }
+       }
+      }
+     }
+    ],
+    "operationId": "paths_getEmpty",
+    "description": "Get a 200 to test a valid base uri",
+    "tags": [
+     "Path Operations"
+    ],
+    "responses": {
+     "200": {
+      "description": "Successfully received a 200 response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·customuri·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl.json#/components/responses/paths·customuri·get·responses·200"
+     ]
+    },
+    "description": "Successfully received a 200 response"
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·customuri·get·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl.json#/components/responses/paths·customuri·get·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:1"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "components·parameters·host·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl.json#/components/schemas/components·parameters·host·schema"
+     ]
+    },
+    "default": "host",
+    "type": "string"
+   },
+   "schemas:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:2"
+     }
+    }
+   },
+   "schemas:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   }
+  },
+  "parameters": {
+   "parameters:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "host",
+     "originalLocations": [
+      "http://localhost:3000/__files/custom-baseUrl.json#/components/parameters/host"
+     ]
+    },
+    "name": "host",
+    "in": "path",
+    "description": "A string value that is used as a global part of the parameterized host",
+    "x-ms-parameter-location": "client",
+    "x-ms-skip-url-encoding": true,
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://{accountName}{host}",
+   "x-ms-parameterized-host": {
+    "positionInOperation": "last"
+   },
+   "variables": {
+    "accountName": {
+     "x-name": "accountName",
+     "description": "Account Name",
+     "x-required": true,
+     "x-type": "string",
+     "x-in": "path",
+     "x-ms-skip-url-encoding": true,
+     "default": ""
+    },
+    "host": {
+     "x-name": "host",
+     "description": "A string value that is used as a global part of the parameterized host",
+     "x-type": "string",
+     "x-required": true,
+     "default": "host",
+     "x-in": "path",
+     "x-ms-skip-url-encoding": true,
+     "x-ms-parameter-location": "client",
+     "x-ms-original": {
+      "$ref": "#/components/parameters/parameters:0"
+     }
+    }
+   }
+  }
+ ]
+}

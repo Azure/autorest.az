@@ -1,0 +1,2056 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest Swagger BAT Header Service",
+  "description": "Test Infrastructure for AutoRest",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/header/param/existingkey": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramExistingKey",
+    "description": "Send a post request with header value \"User-Agent\": \"overwrite\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-existingkey·post·parameters·0",
+      "description": "Send a post request with header value \"User-Agent\": \"overwrite\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-existingkey·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-existingkey·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/existingkey": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseExistingKey",
+    "description": "Get a response with header value \"User-Agent\": \"overwrite\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-existingkey·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-existingkey·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/protectedkey": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramProtectedKey",
+    "description": "Send a post request with header value \"Content-Type\": \"text/html\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-protectedkey·post·parameters·0",
+      "description": "Send a post request with header value \"Content-Type\": \"text/html\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-protectedkey·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-protectedkey·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/protectedkey": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseProtectedKey",
+    "description": "Get a response with header value \"Content-Type\": \"text/html\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-protectedkey·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-protectedkey·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/integer": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramInteger",
+    "description": "Send a post request with header values \"scenario\": \"positive\", \"value\": 1 or \"scenario\": \"negative\", \"value\": -2 ",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-integer·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-integer·post·parameters·1",
+      "description": "Send a post request with header values 1 or -2"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-integer·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-integer·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/integer": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseInteger",
+    "description": "Get a response with header value \"value\": 1 or -2",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-integer·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-integer·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-integer·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/long": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramLong",
+    "description": "Send a post request with header values \"scenario\": \"positive\", \"value\": 105 or \"scenario\": \"negative\", \"value\": -2 ",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-long·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-long·post·parameters·1",
+      "description": "Send a post request with header values 105 or -2"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-long·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-long·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/long": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseLong",
+    "description": "Get a response with header value \"value\": 105 or -2",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-long·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-long·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-long·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/float": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramFloat",
+    "description": "Send a post request with header values \"scenario\": \"positive\", \"value\": 0.07 or \"scenario\": \"negative\", \"value\": -3.0",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-float·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-float·post·parameters·1",
+      "description": "Send a post request with header values 0.07 or -3.0"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-float·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-float·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/float": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseFloat",
+    "description": "Get a response with header value \"value\": 0.07 or -3.0",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-float·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-float·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-float·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/double": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramDouble",
+    "description": "Send a post request with header values \"scenario\": \"positive\", \"value\": 7e120 or \"scenario\": \"negative\", \"value\": -3.0",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-double·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-double·post·parameters·1",
+      "description": "Send a post request with header values 7e120 or -3.0"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-double·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-double·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/double": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseDouble",
+    "description": "Get a response with header value \"value\": 7e120 or -3.0",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-double·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-double·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-double·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/bool": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramBool",
+    "description": "Send a post request with header values \"scenario\": \"true\", \"value\": true or \"scenario\": \"false\", \"value\": false",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-bool·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"true\" or \"false\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-bool·post·parameters·1",
+      "description": "Send a post request with header values true or false"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-bool·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-bool·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/bool": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseBool",
+    "description": "Get a response with header value \"value\": true or false",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-bool·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"true\" or \"false\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-bool·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-bool·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/string": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramString",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"The quick brown fox jumps over the lazy dog\" or \"scenario\": \"null\", \"value\": null or \"scenario\": \"empty\", \"value\": \"\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-string·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-string·post·parameters·1",
+      "description": "Send a post request with header values \"The quick brown fox jumps over the lazy dog\" or null or \"\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-string·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-string·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/string": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseString",
+    "description": "Get a response with header values \"The quick brown fox jumps over the lazy dog\" or null or \"\"",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-string·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-string·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-string·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/date": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramDate",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"2010-01-01\" or \"scenario\": \"min\", \"value\": \"0001-01-01\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-date·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-date·post·parameters·1",
+      "description": "Send a post request with header values \"2010-01-01\" or \"0001-01-01\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-date·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-date·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/date": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseDate",
+    "description": "Get a response with header values \"2010-01-01\" or \"0001-01-01\"",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-date·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-date·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-date·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/datetime": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramDatetime",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"2010-01-01T12:34:56Z\" or \"scenario\": \"min\", \"value\": \"0001-01-01T00:00:00Z\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-datetime·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-datetime·post·parameters·1",
+      "description": "Send a post request with header values \"2010-01-01T12:34:56Z\" or \"0001-01-01T00:00:00Z\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-datetime·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-datetime·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/datetime": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseDatetime",
+    "description": "Get a response with header values \"2010-01-01T12:34:56Z\" or \"0001-01-01T00:00:00Z\"",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-datetime·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-datetime·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-datetime·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/datetimerfc1123": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramDatetimeRfc1123",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"scenario\": \"min\", \"value\": \"Mon, 01 Jan 0001 00:00:00 GMT\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-datetimerfc1123·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-datetimerfc1123·post·parameters·1",
+      "description": "Send a post request with header values \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"Mon, 01 Jan 0001 00:00:00 GMT\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-datetimerfc1123·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-datetimerfc1123·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/datetimerfc1123": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseDatetimeRfc1123",
+    "description": "Get a response with header values \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"Mon, 01 Jan 0001 00:00:00 GMT\"",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-datetimerfc1123·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-datetimerfc1123·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-datetimerfc1123·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/duration": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramDuration",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"P123DT22H14M12.011S\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-duration·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-duration·post·parameters·1",
+      "description": "Send a post request with header values \"P123DT22H14M12.011S\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-duration·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-duration·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/duration": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseDuration",
+    "description": "Get a response with header values \"P123DT22H14M12.011S\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-duration·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-duration·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-duration·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/byte": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramByte",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"啊齄丂狛狜隣郎隣兀﨩\"",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-byte·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-byte·post·parameters·1",
+      "description": "Send a post request with header values \"啊齄丂狛狜隣郎隣兀﨩\""
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-byte·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-byte·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/byte": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseByte",
+    "description": "Get a response with header values \"啊齄丂狛狜隣郎隣兀﨩\"",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-byte·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-byte·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-byte·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/param/prim/enum": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_paramEnum",
+    "description": "Send a post request with header values \"scenario\": \"valid\", \"value\": \"GREY\" or \"scenario\": \"null\", \"value\": null",
+    "tags": [
+     "Header Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-enum·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\""
+     },
+     {
+      "$ref": "#/components/parameters/paths·header-param-prim-enum·post·parameters·1",
+      "description": "Send a post request with header values 'GREY' "
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-param-prim-enum·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-param-prim-enum·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/response/prim/enum": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_responseEnum",
+    "description": "Get a response with header values \"GREY\" or null",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·header-response-prim-enum·post·parameters·0",
+      "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\""
+     }
+    ],
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-response-prim-enum·post·responses·200",
+      "description": "Empty Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-response-prim-enum·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "header_customRequestId",
+    "description": "Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request",
+    "tags": [
+     "Header Operations"
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·header-custom-x_ms_client_request_id-9c4d50ee_2d56_4cd3_8152_34347dc9f2b0·post·responses·200",
+      "description": "Empty Response indicates that x-ms-client-request-id was successfuly received"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·header-custom-x_ms_client_request_id-9c4d50ee_2d56_4cd3_8152_34347dc9f2b0·post·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "paths·header-param-existingkey·post·parameters·0": {
+    "name": "User-Agent",
+    "in": "header",
+    "description": "Send a post request with header value \"User-Agent\": \"overwrite\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-existingkey·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-protectedkey·post·parameters·0": {
+    "name": "Content-Type",
+    "in": "header",
+    "description": "Send a post request with header value \"Content-Type\": \"text/html\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-protectedkey·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-integer·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-integer·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-integer·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values 1 or -2",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-integer·post·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-integer·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-integer·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-long·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-long·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-long·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values 105 or -2",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-long·post·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-long·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-long·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-float·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-float·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-float·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values 0.07 or -3.0",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-float·post·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-float·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-float·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-double·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-double·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-double·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values 7e120 or -3.0",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-double·post·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-double·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"positive\" or \"negative\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-double·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-bool·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"true\" or \"false\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-bool·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-bool·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values true or false",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-bool·post·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-bool·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"true\" or \"false\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-bool·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-string·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-string·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-string·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"The quick brown fox jumps over the lazy dog\" or null or \"\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-string·post·parameters·1·schema"
+    },
+    "required": false,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-string·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-string·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-date·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-date·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-date·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"2010-01-01\" or \"0001-01-01\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-date·post·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-date·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-date·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-datetime·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-datetime·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-datetime·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"2010-01-01T12:34:56Z\" or \"0001-01-01T00:00:00Z\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-datetime·post·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-datetime·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-datetime·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-datetimerfc1123·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-datetimerfc1123·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-datetimerfc1123·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"Mon, 01 Jan 0001 00:00:00 GMT\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-datetimerfc1123·post·parameters·1·schema"
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-datetimerfc1123·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\" or \"min\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-datetimerfc1123·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-duration·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-duration·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-duration·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"P123DT22H14M12.011S\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-duration·post·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-duration·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-duration·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-byte·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-byte·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-byte·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values \"啊齄丂狛狜隣郎隣兀﨩\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-byte·post·parameters·1·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-byte·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-byte·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-enum·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-enum·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-param-prim-enum·post·parameters·1": {
+    "name": "value",
+    "in": "header",
+    "description": "Send a post request with header values 'GREY' ",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-param-prim-enum·post·parameters·1·schema"
+    },
+    "required": false,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·header-response-prim-enum·post·parameters·0": {
+    "name": "scenario",
+    "in": "header",
+    "description": "Send a post request with header values \"scenario\": \"valid\" or \"null\" or \"empty\"",
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-enum·post·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   }
+  },
+  "schemas": {
+   "paths·header-param-existingkey·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-existingkey·post·responses·200·headers·user_agent·schema": {
+    "type": "string"
+   },
+   "paths·header-param-protectedkey·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-protectedkey·post·responses·200·headers·content_type·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-integer·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-integer·post·parameters·1·schema": {
+    "format": "int32",
+    "type": "integer"
+   },
+   "paths·header-response-prim-integer·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-integer·post·responses·200·headers·value·schema": {
+    "format": "int32",
+    "type": "integer"
+   },
+   "paths·header-param-prim-long·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-long·post·parameters·1·schema": {
+    "format": "int64",
+    "type": "integer"
+   },
+   "paths·header-response-prim-long·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-long·post·responses·200·headers·value·schema": {
+    "format": "int64",
+    "type": "integer"
+   },
+   "paths·header-param-prim-float·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-float·post·parameters·1·schema": {
+    "format": "float",
+    "type": "number"
+   },
+   "paths·header-response-prim-float·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-float·post·responses·200·headers·value·schema": {
+    "format": "float",
+    "type": "number"
+   },
+   "paths·header-param-prim-double·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-double·post·parameters·1·schema": {
+    "format": "double",
+    "type": "number"
+   },
+   "paths·header-response-prim-double·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-double·post·responses·200·headers·value·schema": {
+    "format": "double",
+    "type": "number"
+   },
+   "paths·header-param-prim-bool·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-bool·post·parameters·1·schema": {
+    "type": "boolean"
+   },
+   "paths·header-response-prim-bool·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-bool·post·responses·200·headers·value·schema": {
+    "type": "boolean"
+   },
+   "paths·header-param-prim-string·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-string·post·parameters·1·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-string·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-string·post·responses·200·headers·value·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-date·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-date·post·parameters·1·schema": {
+    "format": "date",
+    "type": "string"
+   },
+   "paths·header-response-prim-date·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-date·post·responses·200·headers·value·schema": {
+    "format": "date",
+    "type": "string"
+   },
+   "paths·header-param-prim-datetime·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-datetime·post·parameters·1·schema": {
+    "format": "date-time",
+    "type": "string"
+   },
+   "paths·header-response-prim-datetime·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-datetime·post·responses·200·headers·value·schema": {
+    "format": "date-time",
+    "type": "string"
+   },
+   "paths·header-param-prim-datetimerfc1123·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-datetimerfc1123·post·parameters·1·schema": {
+    "format": "date-time-rfc1123",
+    "type": "string"
+   },
+   "paths·header-response-prim-datetimerfc1123·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-datetimerfc1123·post·responses·200·headers·value·schema": {
+    "format": "date-time-rfc1123",
+    "type": "string"
+   },
+   "paths·header-param-prim-duration·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-duration·post·parameters·1·schema": {
+    "format": "duration",
+    "type": "string"
+   },
+   "paths·header-response-prim-duration·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-duration·post·responses·200·headers·value·schema": {
+    "format": "duration",
+    "type": "string"
+   },
+   "paths·header-param-prim-byte·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-byte·post·parameters·1·schema": {
+    "format": "byte",
+    "type": "string"
+   },
+   "paths·header-response-prim-byte·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-byte·post·responses·200·headers·value·schema": {
+    "format": "byte",
+    "type": "string"
+   },
+   "paths·header-param-prim-enum·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-param-prim-enum·post·parameters·1·schema": {
+    "enum": [
+     "White",
+     "black",
+     "GREY"
+    ],
+    "x-ms-enum": {
+     "name": "GreyscaleColors",
+     "modelAsString": false
+    },
+    "type": "string"
+   },
+   "paths·header-response-prim-enum·post·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·header-response-prim-enum·post·responses·200·headers·value·schema": {
+    "enum": [
+     "White",
+     "black",
+     "GREY"
+    ],
+    "x-ms-enum": {
+     "name": "GreyscaleColors",
+     "modelAsString": false
+    },
+    "type": "string"
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   }
+  },
+  "responses": {
+   "paths·header-param-existingkey·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-existingkey·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-existingkey·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "User-Agent": {
+      "$ref": "#/components/headers/paths·header-response-existingkey·post·responses·200·headers·user_agent",
+      "description": "response with header value \"User-Agent\": \"overwrite\""
+     }
+    }
+   },
+   "paths·header-response-existingkey·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-protectedkey·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-protectedkey·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-protectedkey·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "Content-Type": {
+      "$ref": "#/components/headers/paths·header-response-protectedkey·post·responses·200·headers·content_type",
+      "description": "response with header value \"Content-Type\": \"text/html\""
+     }
+    }
+   },
+   "paths·header-response-protectedkey·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-integer·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-integer·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-integer·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-integer·post·responses·200·headers·value",
+      "description": "response with header value \"value\": 1 or -2"
+     }
+    }
+   },
+   "paths·header-response-prim-integer·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-long·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-long·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-long·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-long·post·responses·200·headers·value",
+      "description": "response with header value \"value\": 105 or -2"
+     }
+    }
+   },
+   "paths·header-response-prim-long·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-float·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-float·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-float·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-float·post·responses·200·headers·value",
+      "description": "response with header value \"value\": 0.07 or -3.0"
+     }
+    }
+   },
+   "paths·header-response-prim-float·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-double·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-double·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-double·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-double·post·responses·200·headers·value",
+      "description": "response with header value \"value\": 7e120 or -3.0"
+     }
+    }
+   },
+   "paths·header-response-prim-double·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-bool·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-bool·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-bool·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-bool·post·responses·200·headers·value",
+      "description": "response with header value \"value\": true or false"
+     }
+    }
+   },
+   "paths·header-response-prim-bool·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-string·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-string·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-string·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-string·post·responses·200·headers·value",
+      "description": "response with header values \"The quick brown fox jumps over the lazy dog\" or null or \"\""
+     }
+    }
+   },
+   "paths·header-response-prim-string·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-date·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-date·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-date·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-date·post·responses·200·headers·value",
+      "description": "response with header values \"2010-01-01\" or \"0001-01-01\""
+     }
+    }
+   },
+   "paths·header-response-prim-date·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-datetime·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-datetime·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-datetime·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-datetime·post·responses·200·headers·value",
+      "description": "response with header values \"2010-01-01T12:34:56Z\" or \"0001-01-01T00:00:00Z\""
+     }
+    }
+   },
+   "paths·header-response-prim-datetime·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-datetimerfc1123·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-datetimerfc1123·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-datetimerfc1123·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-datetimerfc1123·post·responses·200·headers·value",
+      "description": "response with header values \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"Mon, 01 Jan 0001 00:00:00 GMT\""
+     }
+    }
+   },
+   "paths·header-response-prim-datetimerfc1123·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-duration·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-duration·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-duration·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-duration·post·responses·200·headers·value",
+      "description": "response with header values \"P123DT22H14M12.011S\""
+     }
+    }
+   },
+   "paths·header-response-prim-duration·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-byte·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-byte·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-byte·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-byte·post·responses·200·headers·value",
+      "description": "response with header values \"啊齄丂狛狜隣郎隣兀﨩\""
+     }
+    }
+   },
+   "paths·header-response-prim-byte·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-param-prim-enum·post·responses·200": {
+    "description": "Empty Response"
+   },
+   "paths·header-param-prim-enum·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-response-prim-enum·post·responses·200": {
+    "description": "Empty Response",
+    "headers": {
+     "value": {
+      "$ref": "#/components/headers/paths·header-response-prim-enum·post·responses·200·headers·value",
+      "description": "response with header values \"GREY\" or null"
+     }
+    }
+   },
+   "paths·header-response-prim-enum·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·header-custom-x_ms_client_request_id-9c4d50ee_2d56_4cd3_8152_34347dc9f2b0·post·responses·200": {
+    "description": "Empty Response indicates that x-ms-client-request-id was successfuly received"
+   },
+   "paths·header-custom-x_ms_client_request_id-9c4d50ee_2d56_4cd3_8152_34347dc9f2b0·post·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/header.json#/components/schemas/Error"
+      }
+     }
+    }
+   }
+  },
+  "headers": {
+   "paths·header-response-existingkey·post·responses·200·headers·user_agent": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-existingkey·post·responses·200·headers·user_agent·schema"
+    },
+    "description": "response with header value \"User-Agent\": \"overwrite\""
+   },
+   "paths·header-response-protectedkey·post·responses·200·headers·content_type": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-protectedkey·post·responses·200·headers·content_type·schema"
+    },
+    "description": "response with header value \"Content-Type\": \"text/html\""
+   },
+   "paths·header-response-prim-integer·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-integer·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header value \"value\": 1 or -2"
+   },
+   "paths·header-response-prim-long·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-long·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header value \"value\": 105 or -2"
+   },
+   "paths·header-response-prim-float·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-float·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header value \"value\": 0.07 or -3.0"
+   },
+   "paths·header-response-prim-double·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-double·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header value \"value\": 7e120 or -3.0"
+   },
+   "paths·header-response-prim-bool·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-bool·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header value \"value\": true or false"
+   },
+   "paths·header-response-prim-string·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-string·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header values \"The quick brown fox jumps over the lazy dog\" or null or \"\""
+   },
+   "paths·header-response-prim-date·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-date·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header values \"2010-01-01\" or \"0001-01-01\""
+   },
+   "paths·header-response-prim-datetime·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-datetime·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header values \"2010-01-01T12:34:56Z\" or \"0001-01-01T00:00:00Z\""
+   },
+   "paths·header-response-prim-datetimerfc1123·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-datetimerfc1123·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header values \"Wed, 01 Jan 2010 12:34:56 GMT\" or \"Mon, 01 Jan 0001 00:00:00 GMT\""
+   },
+   "paths·header-response-prim-duration·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-duration·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header values \"P123DT22H14M12.011S\""
+   },
+   "paths·header-response-prim-byte·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-byte·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header values \"啊齄丂狛狜隣郎隣兀﨩\""
+   },
+   "paths·header-response-prim-enum·post·responses·200·headers·value": {
+    "schema": {
+     "$ref": "#/components/schemas/paths·header-response-prim-enum·post·responses·200·headers·value·schema"
+    },
+    "description": "response with header values \"GREY\" or null"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

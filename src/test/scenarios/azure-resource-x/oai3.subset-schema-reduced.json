@@ -1,0 +1,864 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "azure-resource-x",
+  "description": "Resource Flattening for AutoRest",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/azure/resource-flatten/array",
+    "originalLocations": [
+     "http://localhost:3000/__files/azure-resource-x.json#/paths/~1azure~1resource-flatten~1array"
+    ]
+   }
+  },
+  "path:0.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/azure/resource-flatten/array",
+    "originalLocations": [
+     "http://localhost:3000/__files/azure-resource-x.json#/paths/~1azure~1resource-flatten~1array"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "putArray",
+    "description": "Put External Resource as an Array",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "requestBody": {
+     "description": "External Resource as an Array to put",
+     "$ref": "#/components/requestBodies/requestBodies:0"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:0.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/azure/resource-flatten/array",
+    "originalLocations": [
+     "http://localhost:3000/__files/azure-resource-x.json#/paths/~1azure~1resource-flatten~1array"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "getArray",
+    "description": "Get External Resource as an Array",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "responses": {
+     "200": {
+      "description": "External Resource as an Array from get",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:1": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/azure/resource-flatten/dictionary",
+    "originalLocations": [
+     "http://localhost:3000/__files/azure-resource-x.json#/paths/~1azure~1resource-flatten~1dictionary"
+    ]
+   }
+  },
+  "path:1.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/azure/resource-flatten/dictionary",
+    "originalLocations": [
+     "http://localhost:3000/__files/azure-resource-x.json#/paths/~1azure~1resource-flatten~1dictionary"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "putDictionary",
+    "description": "Put External Resource as a Dictionary",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "requestBody": {
+     "description": "External Resource as a Dictionary to put",
+     "$ref": "#/components/requestBodies/requestBodies:1"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:1.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/azure/resource-flatten/dictionary",
+    "originalLocations": [
+     "http://localhost:3000/__files/azure-resource-x.json#/paths/~1azure~1resource-flatten~1dictionary"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "getDictionary",
+    "description": "Get External Resource as a Dictionary",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "responses": {
+     "200": {
+      "description": "External Resource as a Dictionary from get",
+      "$ref": "#/components/responses/responses:6"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:2": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/azure/resource-flatten/resourcecollection",
+    "originalLocations": [
+     "http://localhost:3000/__files/azure-resource-x.json#/paths/~1azure~1resource-flatten~1resourcecollection"
+    ]
+   }
+  },
+  "path:2.put": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/azure/resource-flatten/resourcecollection",
+    "originalLocations": [
+     "http://localhost:3000/__files/azure-resource-x.json#/paths/~1azure~1resource-flatten~1resourcecollection"
+    ]
+   },
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "putResourceCollection",
+    "description": "Put External Resource as a ResourceCollection",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "requestBody": {
+     "description": "External Resource as a ResourceCollection to put",
+     "$ref": "#/components/requestBodies/requestBodies:2"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:2.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/azure/resource-flatten/resourcecollection",
+    "originalLocations": [
+     "http://localhost:3000/__files/azure-resource-x.json#/paths/~1azure~1resource-flatten~1resourcecollection"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "getResourceCollection",
+    "description": "Get External Resource as a ResourceCollection",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "responses": {
+     "200": {
+      "description": "External Resource as a ResourceCollection from get",
+      "$ref": "#/components/responses/responses:10"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "requestBodies": {
+   "requestBodies:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·azure-resource_flatten-array·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/requestBodies/paths·azure-resource_flatten-array·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:0"
+      }
+     }
+    },
+    "description": "External Resource as an Array to put",
+    "x-ms-requestBody-name": "ResourceArray"
+   },
+   "requestBodies:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·azure-resource_flatten-dictionary·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/requestBodies/paths·azure-resource_flatten-dictionary·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:2"
+      }
+     }
+    },
+    "description": "External Resource as a Dictionary to put",
+    "x-ms-requestBody-name": "ResourceDictionary"
+   },
+   "requestBodies:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·azure-resource_flatten-resourcecollection·put·requestbody",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/requestBodies/paths·azure-resource_flatten-resourcecollection·put·requestbody"
+     ]
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:17"
+      }
+     }
+    },
+    "description": "External Resource as a ResourceCollection to put",
+    "x-ms-requestBody-name": "ResourceComplexObject"
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·azure-resource_flatten-array·put·requestbody·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/paths·azure-resource_flatten-array·put·requestbody·content·application-json·schema"
+     ]
+    },
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/schemas:6"
+    }
+   },
+   "schemas:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·azure-resource_flatten-array·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/paths·azure-resource_flatten-array·get·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/schemas:13"
+    }
+   },
+   "schemas:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·azure-resource_flatten-dictionary·put·requestbody·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/paths·azure-resource_flatten-dictionary·put·requestbody·content·application-json·schema",
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/paths·azure-resource_flatten-dictionary·get·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:13"
+    }
+   },
+   "schemas:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:5"
+     }
+    }
+   },
+   "schemas:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "ResourceX",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/ResourceX"
+     ]
+    },
+    "type": "object",
+    "x-ms-azure-resource": true,
+    "description": "Some resource",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "properties": {
+     "id": {
+      "description": "Resource Id",
+      "readOnly": true,
+      "$ref": "#/components/schemas/schemas:7"
+     },
+     "type": {
+      "description": "Resource Type",
+      "readOnly": true,
+      "$ref": "#/components/schemas/schemas:8"
+     },
+     "tags": {
+      "$ref": "#/components/schemas/schemas:9"
+     },
+     "location": {
+      "description": "Resource Location",
+      "$ref": "#/components/schemas/schemas:11"
+     },
+     "name": {
+      "description": "Resource Name",
+      "readOnly": true,
+      "$ref": "#/components/schemas/schemas:12"
+     }
+    }
+   },
+   "schemas:7": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "ResourceX-id",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/ResourceX-id"
+     ]
+    },
+    "type": "string",
+    "description": "Resource Id",
+    "readOnly": true
+   },
+   "schemas:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "ResourceX-type",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/ResourceX-type"
+     ]
+    },
+    "type": "string",
+    "description": "Resource Type",
+    "readOnly": true
+   },
+   "schemas:9": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "ResourceX-tags",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/ResourceX-tags"
+     ]
+    },
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:10"
+    }
+   },
+   "schemas:10": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "components·schemas·resourcex·properties·tags·additionalproperties",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/components·schemas·resourcex·properties·tags·additionalproperties"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:11": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "ResourceX-location",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/ResourceX-location"
+     ]
+    },
+    "type": "string",
+    "description": "Resource Location"
+   },
+   "schemas:12": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "ResourceX-name",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/ResourceX-name"
+     ]
+    },
+    "type": "string",
+    "description": "Resource Name",
+    "readOnly": true
+   },
+   "schemas:13": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "FlattenedProduct",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/FlattenedProduct"
+     ]
+    },
+    "allOf": [
+     {
+      "$ref": "#/components/schemas/schemas:6"
+     }
+    ],
+    "type": "object",
+    "properties": {
+     "properties": {
+      "x-ms-client-flatten": true,
+      "$ref": "#/components/schemas/schemas:14"
+     }
+    }
+   },
+   "schemas:14": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "FlattenedResourceProperties",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/FlattenedResourceProperties"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "pname": {
+      "$ref": "#/components/schemas/schemas:15"
+     },
+     "lsize": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "provisioningState": {
+      "$ref": "#/components/schemas/schemas:16"
+     }
+    }
+   },
+   "schemas:15": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "FlattenedResourceProperties-pname",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/FlattenedResourceProperties-pname"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:16": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "FlattenedResourceProperties-provisioningState",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/FlattenedResourceProperties-provisioningState"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:17": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "ResourceCollection",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/ResourceCollection"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "productresource": {
+      "type": "object",
+      "$ref": "#/components/schemas/schemas:13"
+     },
+     "arrayofresources": {
+      "$ref": "#/components/schemas/schemas:18"
+     },
+     "dictionaryofresources": {
+      "$ref": "#/components/schemas/schemas:19"
+     }
+    }
+   },
+   "schemas:18": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "ResourceCollection-arrayofresources",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/ResourceCollection-arrayofresources"
+     ]
+    },
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/schemas:13"
+    }
+   },
+   "schemas:19": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "ResourceCollection-dictionaryofresources",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/schemas/ResourceCollection-dictionaryofresources"
+     ]
+    },
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:13"
+    }
+   }
+  },
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·azure-resource_flatten-array·put·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-array·put·responses·200",
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-dictionary·put·responses·200",
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-resourcecollection·put·responses·200"
+     ]
+    },
+    "description": "Successful Response"
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·azure-resource_flatten-array·put·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-array·put·responses·default",
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-array·get·responses·default",
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-dictionary·put·responses·default",
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-dictionary·get·responses·default",
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-resourcecollection·put·responses·default",
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-resourcecollection·get·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:4"
+      }
+     }
+    }
+   },
+   "responses:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·azure-resource_flatten-array·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-array·get·responses·200"
+     ]
+    },
+    "description": "External Resource as an Array from get",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:1"
+      }
+     }
+    }
+   },
+   "responses:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·azure-resource_flatten-dictionary·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-dictionary·get·responses·200"
+     ]
+    },
+    "description": "External Resource as a Dictionary from get",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:2"
+      }
+     }
+    }
+   },
+   "responses:10": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·azure-resource_flatten-resourcecollection·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-resource-x.json#/components/responses/paths·azure-resource_flatten-resourcecollection·get·responses·200"
+     ]
+    },
+    "description": "External Resource as a ResourceCollection from get",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:17"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

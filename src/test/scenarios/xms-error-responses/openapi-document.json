@@ -1,0 +1,835 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "xms-error-responses",
+  "description": "XMS Error Response Extensions",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "0.0.0"
+   ]
+  },
+  "version": "0.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "0.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/errorStatusCodes/Pets/{petId}/GetPet",
+    "originalLocations": [
+     "http://localhost:3000/__files/xms-error-responses.json#/paths/~1errorStatusCodes~1Pets~1{petId}~1GetPet"
+    ]
+   }
+  },
+  "path:0.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "0.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/errorStatusCodes/Pets/{petId}/GetPet",
+    "originalLocations": [
+     "http://localhost:3000/__files/xms-error-responses.json#/paths/~1errorStatusCodes~1Pets~1{petId}~1GetPet"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost/"
+     }
+    ],
+    "operationId": "Pet_GetPetById",
+    "description": "Gets pets by id.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:0",
+      "description": "pet id"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "202": {
+      "description": "something something dark side",
+      "$ref": "#/components/responses/responses:1"
+     },
+     "400": {
+      "description": "Bad request",
+      "$ref": "#/components/responses/responses:2"
+     },
+     "404": {
+      "description": "Not found",
+      "$ref": "#/components/responses/responses:3"
+     },
+     "501": {
+      "description": "Some unexpected error",
+      "$ref": "#/components/responses/responses:4"
+     },
+     "default": {
+      "description": "default stuff",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  },
+  "path:1": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "0.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/errorStatusCodes/Pets/doSomething/{whatAction}",
+    "originalLocations": [
+     "http://localhost:3000/__files/xms-error-responses.json#/paths/~1errorStatusCodes~1Pets~1doSomething~1{whatAction}"
+    ]
+   }
+  },
+  "path:1.post": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "0.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/errorStatusCodes/Pets/doSomething/{whatAction}",
+    "originalLocations": [
+     "http://localhost:3000/__files/xms-error-responses.json#/paths/~1errorStatusCodes~1Pets~1doSomething~1{whatAction}"
+    ]
+   },
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost/"
+     }
+    ],
+    "operationId": "Pet_DoSomething",
+    "description": "Asks pet to do something",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:1",
+      "description": "what action the pet should do"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "action performed",
+      "$ref": "#/components/responses/responses:6"
+     },
+     "500": {
+      "description": "something bad happened",
+      "$ref": "#/components/responses/responses:7"
+     },
+     "default": {
+      "description": "default stuff",
+      "$ref": "#/components/responses/responses:8"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "parameters:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-petid-getpet·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/parameters/paths·errorstatuscodes-pets-petid-getpet·get·parameters·0"
+     ]
+    },
+    "name": "petId",
+    "in": "path",
+    "description": "pet id",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "parameters:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-dosomething-whataction·post·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/parameters/paths·errorstatuscodes-pets-dosomething-whataction·post·parameters·0"
+     ]
+    },
+    "name": "whatAction",
+    "in": "path",
+    "description": "what action the pet should do",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-petid-getpet·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/paths·errorstatuscodes-pets-petid-getpet·get·parameters·0·schema",
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/paths·errorstatuscodes-pets-petid-getpet·get·responses·400·content·application-json·schema",
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/paths·errorstatuscodes-pets-dosomething-whataction·post·parameters·0·schema"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-petid-getpet·get·responses·501·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/paths·errorstatuscodes-pets-petid-getpet·get·responses·501·content·application-json·schema"
+     ]
+    },
+    "type": "integer"
+   },
+   "schemas:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Pet",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/Pet"
+     ]
+    },
+    "allOf": [
+     {
+      "$ref": "#/components/schemas/schemas:15"
+     }
+    ],
+    "properties": {
+     "name": {
+      "description": "Gets the Pet by id.",
+      "readOnly": true,
+      "$ref": "#/components/schemas/schemas:5"
+     }
+    }
+   },
+   "schemas:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Pet-name",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/Pet-name"
+     ]
+    },
+    "type": "string",
+    "readOnly": true,
+    "description": "Gets the Pet by id."
+   },
+   "schemas:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "NotFoundErrorBase",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/NotFoundErrorBase"
+     ]
+    },
+    "properties": {
+     "reason": {
+      "$ref": "#/components/schemas/schemas:7"
+     },
+     "whatNotFound": {
+      "$ref": "#/components/schemas/schemas:8"
+     }
+    },
+    "allOf": [
+     {
+      "$ref": "#/components/schemas/schemas:9"
+     }
+    ],
+    "discriminator": {
+     "propertyName": "whatNotFound"
+    },
+    "required": [
+     "whatNotFound"
+    ]
+   },
+   "schemas:7": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "NotFoundErrorBase-reason",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/NotFoundErrorBase-reason"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "NotFoundErrorBase-whatNotFound",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/NotFoundErrorBase-whatNotFound"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:9": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "BaseError",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/BaseError"
+     ]
+    },
+    "properties": {
+     "someBaseProp": {
+      "$ref": "#/components/schemas/schemas:10"
+     }
+    }
+   },
+   "schemas:10": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "BaseError-someBaseProp",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/BaseError-someBaseProp"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:11": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "LinkNotFound",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/LinkNotFound"
+     ]
+    },
+    "properties": {
+     "whatSubAddress": {
+      "$ref": "#/components/schemas/schemas:12"
+     }
+    },
+    "allOf": [
+     {
+      "$ref": "#/components/schemas/schemas:6"
+     }
+    ],
+    "x-ms-discriminator-value": "InvalidResourceLink"
+   },
+   "schemas:12": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "LinkNotFound-whatSubAddress",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/LinkNotFound-whatSubAddress"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:13": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "AnimalNotFound",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/AnimalNotFound"
+     ]
+    },
+    "properties": {
+     "name": {
+      "$ref": "#/components/schemas/schemas:14"
+     }
+    },
+    "allOf": [
+     {
+      "$ref": "#/components/schemas/schemas:6"
+     }
+    ]
+   },
+   "schemas:14": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "AnimalNotFound-name",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/AnimalNotFound-name"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:15": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Animal",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/Animal"
+     ]
+    },
+    "properties": {
+     "aniType": {
+      "$ref": "#/components/schemas/schemas:16"
+     }
+    }
+   },
+   "schemas:16": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Animal-aniType",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/Animal-aniType"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:17": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "PetAction",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetAction"
+     ]
+    },
+    "properties": {
+     "actionResponse": {
+      "description": "action feedback",
+      "$ref": "#/components/schemas/schemas:18"
+     }
+    }
+   },
+   "schemas:18": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "PetAction-actionResponse",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetAction-actionResponse"
+     ]
+    },
+    "type": "string",
+    "description": "action feedback"
+   },
+   "schemas:19": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "PetActionError",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetActionError"
+     ]
+    },
+    "properties": {
+     "errorType": {
+      "$ref": "#/components/schemas/schemas:20"
+     },
+     "errorMessage": {
+      "description": "the error message",
+      "$ref": "#/components/schemas/schemas:21"
+     }
+    },
+    "discriminator": {
+     "propertyName": "errorType"
+    },
+    "required": [
+     "errorType"
+    ]
+   },
+   "schemas:20": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "PetActionError-errorType",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetActionError-errorType"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:21": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "PetActionError-errorMessage",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetActionError-errorMessage"
+     ]
+    },
+    "type": "string",
+    "description": "the error message"
+   },
+   "schemas:22": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "PetSadError",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetSadError"
+     ]
+    },
+    "allOf": [
+     {
+      "$ref": "#/components/schemas/schemas:19"
+     }
+    ],
+    "properties": {
+     "reason": {
+      "description": "why is the pet sad",
+      "$ref": "#/components/schemas/schemas:23"
+     }
+    }
+   },
+   "schemas:23": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "PetSadError-reason",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetSadError-reason"
+     ]
+    },
+    "type": "string",
+    "description": "why is the pet sad"
+   },
+   "schemas:24": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "PetHungryOrThirstyError",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetHungryOrThirstyError"
+     ]
+    },
+    "allOf": [
+     {
+      "$ref": "#/components/schemas/schemas:22"
+     }
+    ],
+    "properties": {
+     "hungryOrThirsty": {
+      "description": "is the pet hungry or thirsty or both",
+      "$ref": "#/components/schemas/schemas:25"
+     }
+    }
+   },
+   "schemas:25": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "PetHungryOrThirstyError-hungryOrThirsty",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/schemas/PetHungryOrThirstyError-hungryOrThirsty"
+     ]
+    },
+    "type": "string",
+    "description": "is the pet hungry or thirsty or both"
+   }
+  },
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-petid-getpet·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·200"
+     ]
+    },
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:4"
+      }
+     }
+    }
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-petid-getpet·get·responses·202",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·202",
+      "http://localhost:3000/__files/xms-error-responses.json#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·default"
+     ]
+    },
+    "description": "something something dark side"
+   },
+   "responses:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-petid-getpet·get·responses·400",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·400"
+     ]
+    },
+    "description": "Bad request",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:0"
+      }
+     }
+    },
+    "x-ms-error-response": true
+   },
+   "responses:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-petid-getpet·get·responses·404",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·404"
+     ]
+    },
+    "description": "Not found",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:6"
+      }
+     }
+    },
+    "x-ms-error-response": true
+   },
+   "responses:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-petid-getpet·get·responses·501",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/responses/paths·errorstatuscodes-pets-petid-getpet·get·responses·501"
+     ]
+    },
+    "description": "Some unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:2"
+      }
+     }
+    },
+    "x-ms-error-response": true
+   },
+   "responses:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-dosomething-whataction·post·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/responses/paths·errorstatuscodes-pets-dosomething-whataction·post·responses·200"
+     ]
+    },
+    "description": "action performed",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:17"
+      }
+     }
+    }
+   },
+   "responses:7": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-dosomething-whataction·post·responses·500",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/responses/paths·errorstatuscodes-pets-dosomething-whataction·post·responses·500"
+     ]
+    },
+    "description": "something bad happened",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:19"
+      }
+     }
+    },
+    "x-ms-error-response": true
+   },
+   "responses:8": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "0.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·errorstatuscodes-pets-dosomething-whataction·post·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/xms-error-responses.json#/components/responses/paths·errorstatuscodes-pets-dosomething-whataction·post·responses·default"
+     ]
+    },
+    "description": "default stuff",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:19"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost/"
+  }
+ ]
+}

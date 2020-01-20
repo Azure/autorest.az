@@ -1,0 +1,234 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "azure-report",
+  "description": "Test Infrastructure for AutoRest",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "1.0.0"
+   ]
+  },
+  "version": "1.0.0"
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/report/azure",
+    "originalLocations": [
+     "http://localhost:3000/__files/azure-report.json#/paths/~1report~1azure"
+    ]
+   }
+  },
+  "path:0.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "1.0.0"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/report/azure",
+    "originalLocations": [
+     "http://localhost:3000/__files/azure-report.json#/paths/~1report~1azure"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "getReport",
+    "description": "Get test coverage report",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:0",
+      "description": "If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators that run all tests several times, can distinguish the generated reports."
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "The test coverage mapping",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "parameters:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·report-azure·get·parameters·0",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-report.json#/components/parameters/paths·report-azure·get·parameters·0"
+     ]
+    },
+    "name": "qualifier",
+    "in": "query",
+    "description": "If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators that run all tests several times, can distinguish the generated reports.",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": false,
+    "x-ms-parameter-location": "method"
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·report-azure·get·parameters·0·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-report.json#/components/schemas/paths·report-azure·get·parameters·0·schema"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·report-azure·get·responses·200·content·application-json·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-report.json#/components/schemas/paths·report-azure·get·responses·200·content·application-json·schema"
+     ]
+    },
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/schemas:2"
+    }
+   },
+   "schemas:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·report-azure·get·responses·200·content·application-json·schema·additionalproperties",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-report.json#/components/schemas/paths·report-azure·get·responses·200·content·application-json·schema·additionalproperties"
+     ]
+    },
+    "type": "integer"
+   },
+   "schemas:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-report.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:4"
+     }
+    }
+   },
+   "schemas:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-report.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   }
+  },
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·report-azure·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-report.json#/components/responses/paths·report-azure·get·responses·200"
+     ]
+    },
+    "description": "The test coverage mapping",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:1"
+      }
+     }
+    }
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0.0"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·report-azure·get·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/azure-report.json#/components/responses/paths·report-azure·get·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:3"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

@@ -106,7 +106,7 @@ function hasSpecialChars(str: string): boolean {
     return !/^[a-zA-Z0-9]+$/.test(str);
 }
 
-class Modifiers {
+export class Modifiers {
     codeModel: CodeModel;
 
     constructor(protected session: Session<CodeModel>) {
@@ -119,62 +119,32 @@ class Modifiers {
 
         if (directives != null) {
             for (const directive of directives.filter(each => !each.transform)) {
-                const getPatternToMatch = (
-                    selector: string | undefined
-                ): RegExp | undefined => {
-                    return selector
-                        ? !hasSpecialChars(selector)
-                            ? new RegExp(`^${selector}$`, "gi")
-                            : new RegExp(selector, "gi")
-                        : undefined;
+                const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
+                    return selector? !hasSpecialChars(selector)? new RegExp(`^${selector}$`, "gi"): new RegExp(selector, "gi"): undefined;
                 };
                 if (isWhereCommandDirective(directive)) {
-                    this.session.message({Channel:Channel.Warning, Text:serialize(directive)});
                     const selectType = directive.select;
-                    const parameterRegex = getPatternToMatch(
-                        directive.where["parameter-name"]
-                    );
+                    const parameterRegex = getPatternToMatch(directive.where["parameter-name"]);
                     const commandRegex = getPatternToMatch(directive.where["command"]);
                     const parameterReplacer = directive.set !== undefined? directive.set["parameter-name"]: undefined;
                     const paramDescriptionReplacer = directive.set !== undefined? directive.set["parameter-description"]: undefined;
                     const commandReplacer = directive.set !== undefined ? directive.set["command"] : undefined;
                     const commandDescriptionReplacer = directive.set !== undefined? directive.set["command-description"]: undefined;
+                    this.session.message({Channel:Channel.Warning, Text:serialize(commandRegex) + " " + serialize(commandReplacer)});
                     for (const operationGroup of values(this.codeModel.operationGroups)) {
                         //operationGroup
 
                         for (const operation of values(operationGroup.operations)) {
                             //operation
                             if (operation.language['az']['command'] != undefined && operation.language["az"]["command"].match(commandRegex)) {
-                                operation.language["az"]["command"] = commandReplacer
-                                    ? commandRegex
-                                        ? operation.language["az"]["command"].replace(
-                                            commandRegex,
-                                            commandReplacer
-                                        )
-                                        : commandReplacer
-                                    : operation.language["az"]["command"];
-                                operation.language["az"][
-                                    "description"
-                                ] = commandDescriptionReplacer
-                                        ? commandDescriptionReplacer
-                                        : operation.language["az"]["description"];
+                                operation.language["az"]["command"] = commandReplacer? commandRegex? operation.language["az"]["command"].replace(commandRegex, commandReplacer): commandReplacer: operation.language["az"]["command"];
+                                operation.language["az"]["description"] = commandDescriptionReplacer? commandDescriptionReplacer: operation.language["az"]["description"];
                             }
 
                             for (const parameter of values(operation.request.parameters)) {
                                 if (parameter.language['az']['name'] != undefined && parameter.language["az"]["name"].match(parameterRegex)) {
-                                    parameter.language["az"]["name"] = parameterReplacer
-                                        ? parameterRegex
-                                            ? parameter.language["az"]["name"].replace(
-                                                parameterRegex,
-                                                parameterReplacer
-                                            )
-                                            : parameterReplacer
-                                        : parameter.language["az"]["name"];
-                                    parameter.language["az"][
-                                        "description"
-                                    ] = paramDescriptionReplacer
-                                            ? paramDescriptionReplacer
-                                            : parameter.language["az"]["description"];
+                                    parameter.language["az"]["name"] = parameterReplacer? parameterRegex? parameter.language["az"]["name"].replace(parameterRegex, parameterReplacer): parameterReplacer: parameter.language["az"]["name"];
+                                    parameter.language["az"]["description"] = paramDescriptionReplacer? paramDescriptionReplacer: parameter.language["az"]["description"];
                                 }
                             }
                         }
@@ -191,7 +161,7 @@ export async function processRequest(host: Host) {
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        const plugin = await new Modifiers(session);
+        const plugin = new Modifiers(session);
         const result = await plugin.process();
         host.WriteFile("modifiers-temp-output.yaml", serialize(result));
     } catch (E) {

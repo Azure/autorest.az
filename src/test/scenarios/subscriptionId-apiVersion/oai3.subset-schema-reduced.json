@@ -1,0 +1,308 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "subscriptionId-apiVersion",
+  "description": "Some cool documentation.",
+  "x-ms-metadata": {
+   "apiVersions": [
+    "2014-04-01-preview"
+   ]
+  },
+  "version": "2014-04-01-preview"
+ },
+ "components": {
+  "parameters": {
+   "parameters:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "subscriptionIdParameter",
+     "originalLocations": [
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/parameters/subscriptionIdParameter"
+     ]
+    },
+    "name": "subscriptionId",
+    "in": "path",
+    "description": "Subscription Id.",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true
+   },
+   "parameters:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "apiVersionParameter",
+     "originalLocations": [
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/parameters/apiVersionParameter"
+     ]
+    },
+    "name": "api-version",
+    "in": "query",
+    "description": "API Version with value '2014-04-01-preview'.",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true
+   },
+   "parameters:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·parameters·1",
+     "originalLocations": [
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/parameters/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·parameters·1"
+     ]
+    },
+    "name": "resourceGroupName",
+    "in": "path",
+    "description": "Resource Group name 'testgroup101'.",
+    "schema": {
+     "$ref": "#/components/schemas/schemas:0"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   }
+  },
+  "schemas": {
+   "schemas:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "components·parameters·subscriptionidparameter·schema",
+     "originalLocations": [
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/schemas/components·parameters·subscriptionidparameter·schema",
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/schemas/components·parameters·apiversionparameter·schema",
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/schemas/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·parameters·1·schema"
+     ]
+    },
+    "type": "string"
+   },
+   "schemas:2": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "SampleResourceGroup",
+     "originalLocations": [
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/schemas/SampleResourceGroup"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "name": {
+      "description": "resource group name 'testgroup101'",
+      "$ref": "#/components/schemas/schemas:3"
+     },
+     "location": {
+      "description": "resource group location 'West US'",
+      "$ref": "#/components/schemas/schemas:4"
+     }
+    }
+   },
+   "schemas:3": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "SampleResourceGroup-name",
+     "originalLocations": [
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/schemas/SampleResourceGroup-name"
+     ]
+    },
+    "type": "string",
+    "description": "resource group name 'testgroup101'"
+   },
+   "schemas:4": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "SampleResourceGroup-location",
+     "originalLocations": [
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/schemas/SampleResourceGroup-location"
+     ]
+    },
+    "type": "string",
+    "description": "resource group location 'West US'"
+   },
+   "schemas:5": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error",
+     "originalLocations": [
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/schemas/Error"
+     ]
+    },
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/schemas:6"
+     }
+    }
+   },
+   "schemas:6": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "Error-message",
+     "originalLocations": [
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/schemas/Error-message"
+     ]
+    },
+    "type": "string"
+   }
+  },
+  "responses": {
+   "responses:0": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·responses·200",
+     "originalLocations": [
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·responses·200"
+     ]
+    },
+    "description": "A sample resource group",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:2"
+      }
+     }
+    }
+   },
+   "responses:1": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2014-04-01-preview"
+     ],
+     "filename": [
+      "mem:///99?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·responses·default",
+     "originalLocations": [
+      "http://localhost:3000/__files/subscriptionId-apiVersion.json#/components/responses/paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname·get·responses·default"
+     ]
+    },
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/schemas:5"
+      }
+     }
+    }
+   }
+  }
+ },
+ "paths": {
+  "path:0": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "2014-04-01-preview"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}",
+    "originalLocations": [
+     "http://localhost:3000/__files/subscriptionId-apiVersion.json#/paths/~1subscriptions~1{subscriptionId}~1resourcegroups~1{resourceGroupName}"
+    ]
+   }
+  },
+  "path:0.get": {
+   "x-ms-metadata": {
+    "apiVersions": [
+     "2014-04-01-preview"
+    ],
+    "filename": [
+     "mem:///99?oai3.shaken.json"
+    ],
+    "path": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}",
+    "originalLocations": [
+     "http://localhost:3000/__files/subscriptionId-apiVersion.json#/paths/~1subscriptions~1{subscriptionId}~1resourcegroups~1{resourceGroupName}"
+    ]
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "https://management.azure.com/"
+     }
+    ],
+    "operationId": "group_getSampleResourceGroup",
+    "description": "Provides a resouce group with name 'testgroup101' and location 'West US'.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/parameters:0"
+     },
+     {
+      "$ref": "#/components/parameters/parameters:2",
+      "description": "Resource Group name 'testgroup101'."
+     },
+     {
+      "$ref": "#/components/parameters/parameters:1"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "A sample resource group",
+      "$ref": "#/components/responses/responses:0"
+     },
+     "default": {
+      "description": "Unexpected error",
+      "$ref": "#/components/responses/responses:1"
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "https://management.azure.com/"
+  }
+ ]
+}

@@ -1,0 +1,208 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest Parameterized Custom Host Test Client",
+  "description": "Test Infrastructure for AutoRest",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/customuri/{subscriptionId}/{keyName}": {
+   "get": {
+    "servers": [
+     {
+      "url": "{vault}{secret}{dnsSuffix}",
+      "variables": {
+       "vault": {
+        "x-name": "vault",
+        "description": "The vault name, e.g. https://myvault",
+        "x-required": true,
+        "x-type": "string",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "default": ""
+       },
+       "secret": {
+        "x-name": "secret",
+        "description": "Secret value.",
+        "x-required": true,
+        "x-type": "string",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "default": ""
+       },
+       "dnsSuffix": {
+        "x-name": "dnsSuffix",
+        "description": "A string value that is used as a global part of the parameterized host. Default value 'host'.",
+        "x-type": "string",
+        "x-required": true,
+        "default": "host",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "x-ms-parameter-location": "client",
+        "x-ms-original": {
+         "$ref": "#/components/parameters/dnsSuffix"
+        }
+       }
+      }
+     }
+    ],
+    "operationId": "paths_getEmpty",
+    "description": "Get a 200 to test a valid base uri",
+    "tags": [
+     "Path Operations"
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·customuri-subscriptionid-keyname·get·parameters·0",
+      "description": "The key name with value 'key1'."
+     },
+     {
+      "$ref": "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/parameters/SubscriptionIdParameter"
+     },
+     {
+      "$ref": "#/components/parameters/paths·customuri-subscriptionid-keyname·get·parameters·2",
+      "description": "The key version. Default value 'v1'."
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·customuri-subscriptionid-keyname·get·responses·200",
+      "description": "Successfully received a 200 response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·customuri-subscriptionid-keyname·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "paths·customuri-subscriptionid-keyname·get·parameters·0": {
+    "name": "keyName",
+    "in": "path",
+    "description": "The key name with value 'key1'.",
+    "schema": {
+     "$ref": "#/components/schemas/paths·customuri-subscriptionid-keyname·get·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "paths·customuri-subscriptionid-keyname·get·parameters·2": {
+    "name": "keyVersion",
+    "in": "query",
+    "description": "The key version. Default value 'v1'.",
+    "schema": {
+     "$ref": "#/components/schemas/paths·customuri-subscriptionid-keyname·get·parameters·2·schema"
+    },
+    "required": false,
+    "x-ms-parameter-location": "method"
+   },
+   "SubscriptionIdParameter": {
+    "name": "subscriptionId",
+    "in": "path",
+    "description": "The subscription id with value 'test12'.",
+    "schema": {
+     "$ref": "#/components/schemas/components·parameters·subscriptionidparameter·schema"
+    },
+    "required": true
+   },
+   "dnsSuffix": {
+    "name": "dnsSuffix",
+    "in": "path",
+    "description": "A string value that is used as a global part of the parameterized host. Default value 'host'.",
+    "x-ms-parameter-location": "client",
+    "x-ms-skip-url-encoding": true,
+    "schema": {
+     "$ref": "#/components/schemas/components·parameters·dnssuffix·schema"
+    },
+    "required": true
+   }
+  },
+  "schemas": {
+   "paths·customuri-subscriptionid-keyname·get·parameters·0·schema": {
+    "type": "string"
+   },
+   "paths·customuri-subscriptionid-keyname·get·parameters·2·schema": {
+    "default": "v1",
+    "type": "string"
+   },
+   "components·parameters·subscriptionidparameter·schema": {
+    "type": "string"
+   },
+   "components·parameters·dnssuffix·schema": {
+    "default": "host",
+    "type": "string"
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   }
+  },
+  "responses": {
+   "paths·customuri-subscriptionid-keyname·get·responses·200": {
+    "description": "Successfully received a 200 response"
+   },
+   "paths·customuri-subscriptionid-keyname·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/custom-baseUrl-more-options.json#/components/schemas/Error"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "{vault}{secret}{dnsSuffix}",
+   "variables": {
+    "vault": {
+     "x-name": "vault",
+     "description": "The vault name, e.g. https://myvault",
+     "x-required": true,
+     "x-type": "string",
+     "x-in": "path",
+     "x-ms-skip-url-encoding": true,
+     "default": ""
+    },
+    "secret": {
+     "x-name": "secret",
+     "description": "Secret value.",
+     "x-required": true,
+     "x-type": "string",
+     "x-in": "path",
+     "x-ms-skip-url-encoding": true,
+     "default": ""
+    },
+    "dnsSuffix": {
+     "x-name": "dnsSuffix",
+     "description": "A string value that is used as a global part of the parameterized host. Default value 'host'.",
+     "x-type": "string",
+     "x-required": true,
+     "default": "host",
+     "x-in": "path",
+     "x-ms-skip-url-encoding": true,
+     "x-ms-parameter-location": "client",
+     "x-ms-original": {
+      "$ref": "#/components/parameters/dnsSuffix"
+     }
+    }
+   }
+  }
+ ]
+}

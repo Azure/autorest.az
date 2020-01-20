@@ -1,0 +1,192 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "version": "2016-07-07",
+  "title": "PetStore Inc",
+  "description": "PetStore"
+ },
+ "paths": {
+  "/extensibleenums/pet/{petId}": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pet_GetByPetId",
+    "parameters": [
+     {
+      "$ref": "http://localhost:3000/__files/extensible-enums-swagger.json#/components/parameters/petid"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·extensibleenums-pet-petid·get·responses·200",
+      "description": "OK"
+     }
+    }
+   }
+  },
+  "/extensibleenums/pet/addPet": {
+   "post": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "Pet_AddPet",
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·extensibleenums-pet-addpet·post·requestbody"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·extensibleenums-pet-addpet·post·responses·200",
+      "description": "OK"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "parameters": {
+   "petid": {
+    "name": "petId",
+    "in": "path",
+    "description": "Pet id",
+    "x-ms-parameter-location": "method",
+    "schema": {
+     "$ref": "#/components/schemas/components·parameters·petid·schema"
+    },
+    "required": true
+   }
+  },
+  "responses": {
+   "paths·extensibleenums-pet-petid·get·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/extensible-enums-swagger.json#/components/schemas/Pet"
+      }
+     }
+    }
+   },
+   "paths·extensibleenums-pet-addpet·post·responses·200": {
+    "description": "OK",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/extensible-enums-swagger.json#/components/schemas/Pet"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "Pet": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "$ref": "#/components/schemas/Pet-name"
+     },
+     "DaysOfWeek": {
+      "$ref": "#/components/schemas/Pet-DaysOfWeek",
+      "description": "Type of Pet"
+     },
+     "IntEnum": {
+      "$ref": "#/components/schemas/Pet-IntEnum",
+      "description": ""
+     }
+    },
+    "required": [
+     "IntEnum"
+    ]
+   },
+   "Pet-name": {
+    "type": "string"
+   },
+   "Pet-DaysOfWeek": {
+    "type": "string",
+    "description": "Type of Pet",
+    "enum": [
+     "Monday",
+     "Tuesday",
+     "Wednesday",
+     "Thursday",
+     "Friday",
+     "Saturday",
+     "Sunday"
+    ],
+    "x-ms-enum": {
+     "name": "DaysOfWeekExtensibleEnum",
+     "modelAsString": true
+    },
+    "default": "Friday"
+   },
+   "Pet-IntEnum": {
+    "type": "string",
+    "description": "",
+    "enum": [
+     "1",
+     "2",
+     "3"
+    ],
+    "x-ms-enum": {
+     "modelAsString": true,
+     "name": "IntEnum",
+     "values": [
+      {
+       "value": "1",
+       "description": "one",
+       "name": "1",
+       "allowedValues": [
+        "1.1",
+        "1.2",
+        "1.3"
+       ]
+      },
+      {
+       "value": "2",
+       "description": "two",
+       "name": "2",
+       "allowedValues": [
+        "2.1",
+        "2.2"
+       ]
+      },
+      {
+       "value": "3",
+       "description": "three",
+       "name": "3",
+       "allowedValues": [
+        "3.1",
+        "3.3"
+       ]
+      }
+     ]
+    }
+   },
+   "components·parameters·petid·schema": {
+    "type": "string"
+   }
+  },
+  "requestBodies": {
+   "paths·extensibleenums-pet-addpet·post·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/extensible-enums-swagger.json#/components/schemas/Pet"
+      }
+     }
+    },
+    "x-ms-requestBody-name": "petParam"
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}

@@ -1,0 +1,339 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest Parameterized Host Test Paging Client",
+  "description": "Test Infrastructure for AutoRest",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/paging/customurl/partialnextlink": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://{accountName}{host}",
+      "x-ms-parameterized-host": {
+       "positionInOperation": "last"
+      },
+      "variables": {
+       "accountName": {
+        "x-name": "accountName",
+        "description": "Account Name",
+        "x-required": true,
+        "x-type": "string",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "default": ""
+       },
+       "host": {
+        "x-name": "host",
+        "description": "A string value that is used as a global part of the parameterized host",
+        "x-type": "string",
+        "x-required": true,
+        "default": "host",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "x-ms-parameter-location": "client",
+        "x-ms-original": {
+         "$ref": "#/components/parameters/host"
+        }
+       }
+      }
+     }
+    ],
+    "operationId": "Paging_getPagesPartialUrl",
+    "description": "A paging operation that combines custom url, paging and partial URL and expect to concat after host",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·paging-customurl-partialnextlink·get·responses·200",
+      "description": "Paging response with a fragment nextLink"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·paging-customurl-partialnextlink·get·responses·default",
+      "description": "Unexpected error"
+     }
+    },
+    "x-ms-pageable": {
+     "nextLinkName": "nextLink",
+     "itemName": "values"
+    }
+   }
+  },
+  "/paging/customurl/partialnextlinkop": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://{accountName}{host}",
+      "x-ms-parameterized-host": {
+       "positionInOperation": "last"
+      },
+      "variables": {
+       "accountName": {
+        "x-name": "accountName",
+        "description": "Account Name",
+        "x-required": true,
+        "x-type": "string",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "default": ""
+       },
+       "host": {
+        "x-name": "host",
+        "description": "A string value that is used as a global part of the parameterized host",
+        "x-type": "string",
+        "x-required": true,
+        "default": "host",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "x-ms-parameter-location": "client",
+        "x-ms-original": {
+         "$ref": "#/components/parameters/host"
+        }
+       }
+      }
+     }
+    ],
+    "operationId": "Paging_getPagesPartialUrlOperation",
+    "description": "A paging operation that combines custom url, paging and partial URL with next operation",
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·paging-customurl-partialnextlinkop·get·responses·200",
+      "description": "Paging response with a fragment nextLink"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·paging-customurl-partialnextlinkop·get·responses·default",
+      "description": "Unexpected error"
+     }
+    },
+    "x-ms-pageable": {
+     "nextLinkName": "nextLink",
+     "itemName": "values",
+     "operationName": "Paging_getPagesPartialUrlOperationNext"
+    }
+   }
+  },
+  "/paging/customurl/{nextLink}?Paging_getPagesPartialUrlOperationNext": {
+   "get": {
+    "servers": [
+     {
+      "url": "http://{accountName}{host}",
+      "x-ms-parameterized-host": {
+       "positionInOperation": "last"
+      },
+      "variables": {
+       "accountName": {
+        "x-name": "accountName",
+        "description": "Account Name",
+        "x-required": true,
+        "x-type": "string",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "default": ""
+       },
+       "host": {
+        "x-name": "host",
+        "description": "A string value that is used as a global part of the parameterized host",
+        "x-type": "string",
+        "x-required": true,
+        "default": "host",
+        "x-in": "path",
+        "x-ms-skip-url-encoding": true,
+        "x-ms-parameter-location": "client",
+        "x-ms-original": {
+         "$ref": "#/components/parameters/host"
+        }
+       }
+      }
+     }
+    ],
+    "operationId": "Paging_getPagesPartialUrlOperationNext",
+    "description": "A paging operation that combines custom url, paging and partial URL",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/paths·paging-customurl-nextlink-paging_getpagespartialurloperationnext·get·parameters·0",
+      "description": "Next link for the list operation."
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·paging-customurl-nextlink-paging_getpagespartialurloperationnext·get·responses·200",
+      "description": "Paging response with a fragment nextLink"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·paging-customurl-nextlink-paging_getpagespartialurloperationnext·get·responses·default",
+      "description": "Unexpected error"
+     }
+    },
+    "x-ms-pageable": {
+     "nextLinkName": "nextLink",
+     "itemName": "values",
+     "operationName": "Paging_getPagesPartialUrlOperationNext"
+    }
+   }
+  }
+ },
+ "components": {
+  "responses": {
+   "paths·paging-customurl-partialnextlink·get·responses·200": {
+    "description": "Paging response with a fragment nextLink",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/custom-baseUrl-paging.json#/components/schemas/ProductResult"
+      }
+     }
+    }
+   },
+   "paths·paging-customurl-partialnextlink·get·responses·default": {
+    "description": "Unexpected error"
+   },
+   "paths·paging-customurl-partialnextlinkop·get·responses·200": {
+    "description": "Paging response with a fragment nextLink",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/custom-baseUrl-paging.json#/components/schemas/ProductResult"
+      }
+     }
+    }
+   },
+   "paths·paging-customurl-partialnextlinkop·get·responses·default": {
+    "description": "Unexpected error"
+   },
+   "paths·paging-customurl-nextlink-paging_getpagespartialurloperationnext·get·responses·200": {
+    "description": "Paging response with a fragment nextLink",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/custom-baseUrl-paging.json#/components/schemas/ProductResult"
+      }
+     }
+    }
+   },
+   "paths·paging-customurl-nextlink-paging_getpagespartialurloperationnext·get·responses·default": {
+    "description": "Unexpected error"
+   }
+  },
+  "schemas": {
+   "paths·paging-customurl-nextlink-paging_getpagespartialurloperationnext·get·parameters·0·schema": {
+    "type": "string"
+   },
+   "components·parameters·host·schema": {
+    "default": "host",
+    "type": "string"
+   },
+   "ProductResult": {
+    "type": "object",
+    "properties": {
+     "values": {
+      "$ref": "#/components/schemas/ProductResult-values"
+     },
+     "nextLink": {
+      "$ref": "#/components/schemas/ProductResult-nextLink"
+     }
+    }
+   },
+   "ProductResult-values": {
+    "type": "array",
+    "items": {
+     "$ref": "http://localhost:3000/__files/custom-baseUrl-paging.json#/components/schemas/Product"
+    }
+   },
+   "ProductResult-nextLink": {
+    "type": "string"
+   },
+   "Product": {
+    "type": "object",
+    "properties": {
+     "properties": {
+      "$ref": "#/components/schemas/Product-properties"
+     }
+    }
+   },
+   "Product-properties": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "name": {
+      "$ref": "#/components/schemas/Product-properties-name"
+     }
+    }
+   },
+   "Product-properties-name": {
+    "type": "string"
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   }
+  },
+  "parameters": {
+   "paths·paging-customurl-nextlink-paging_getpagespartialurloperationnext·get·parameters·0": {
+    "name": "nextLink",
+    "in": "path",
+    "description": "Next link for the list operation.",
+    "x-ms-skip-url-encoding": true,
+    "schema": {
+     "$ref": "#/components/schemas/paths·paging-customurl-nextlink-paging_getpagespartialurloperationnext·get·parameters·0·schema"
+    },
+    "required": true,
+    "x-ms-parameter-location": "method"
+   },
+   "host": {
+    "name": "host",
+    "in": "path",
+    "description": "A string value that is used as a global part of the parameterized host",
+    "x-ms-parameter-location": "client",
+    "x-ms-skip-url-encoding": true,
+    "schema": {
+     "$ref": "#/components/schemas/components·parameters·host·schema"
+    },
+    "required": true
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://{accountName}{host}",
+   "x-ms-parameterized-host": {
+    "positionInOperation": "last"
+   },
+   "variables": {
+    "accountName": {
+     "x-name": "accountName",
+     "description": "Account Name",
+     "x-required": true,
+     "x-type": "string",
+     "x-in": "path",
+     "x-ms-skip-url-encoding": true,
+     "default": ""
+    },
+    "host": {
+     "x-name": "host",
+     "description": "A string value that is used as a global part of the parameterized host",
+     "x-type": "string",
+     "x-required": true,
+     "default": "host",
+     "x-in": "path",
+     "x-ms-skip-url-encoding": true,
+     "x-ms-parameter-location": "client",
+     "x-ms-original": {
+      "$ref": "#/components/parameters/host"
+     }
+    }
+   }
+  }
+ ]
+}

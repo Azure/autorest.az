@@ -1,0 +1,469 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "AutoRest Resource Flattening Test Service",
+  "description": "Resource Flattening for AutoRest",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/azure/resource-flatten/array": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "putArray",
+    "description": "Put External Resource as an Array",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·azure-resource_flatten-array·put·requestbody",
+     "description": "External Resource as an Array to put"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-array·put·responses·200",
+      "description": "Successful Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-array·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "getArray",
+    "description": "Get External Resource as an Array",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-array·get·responses·200",
+      "description": "External Resource as an Array from get"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-array·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/azure/resource-flatten/dictionary": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "putDictionary",
+    "description": "Put External Resource as a Dictionary",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·azure-resource_flatten-dictionary·put·requestbody",
+     "description": "External Resource as a Dictionary to put"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-dictionary·put·responses·200",
+      "description": "Successful Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-dictionary·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "getDictionary",
+    "description": "Get External Resource as a Dictionary",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-dictionary·get·responses·200",
+      "description": "External Resource as a Dictionary from get"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-dictionary·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  },
+  "/azure/resource-flatten/resourcecollection": {
+   "put": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "putResourceCollection",
+    "description": "Put External Resource as a ResourceCollection",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "requestBody": {
+     "$ref": "#/components/requestBodies/paths·azure-resource_flatten-resourcecollection·put·requestbody",
+     "description": "External Resource as a ResourceCollection to put"
+    },
+    "x-ms-requestBody-index": 0,
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-resourcecollection·put·responses·200",
+      "description": "Successful Response"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-resourcecollection·put·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   },
+   "get": {
+    "servers": [
+     {
+      "url": "http://localhost:3000/"
+     }
+    ],
+    "operationId": "getResourceCollection",
+    "description": "Get External Resource as a ResourceCollection",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-resourcecollection·get·responses·200",
+      "description": "External Resource as a ResourceCollection from get"
+     },
+     "default": {
+      "$ref": "#/components/responses/paths·azure-resource_flatten-resourcecollection·get·responses·default",
+      "description": "Unexpected error"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "requestBodies": {
+   "paths·azure-resource_flatten-array·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·azure-resource_flatten-array·put·requestbody·content·application-json·schema"
+      }
+     }
+    },
+    "description": "External Resource as an Array to put",
+    "x-ms-requestBody-name": "ResourceArray"
+   },
+   "paths·azure-resource_flatten-dictionary·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·azure-resource_flatten-dictionary·put·requestbody·content·application-json·schema"
+      }
+     }
+    },
+    "description": "External Resource as a Dictionary to put",
+    "x-ms-requestBody-name": "ResourceDictionary"
+   },
+   "paths·azure-resource_flatten-resourcecollection·put·requestbody": {
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/ResourceCollection"
+      }
+     }
+    },
+    "description": "External Resource as a ResourceCollection to put",
+    "x-ms-requestBody-name": "ResourceComplexObject"
+   }
+  },
+  "schemas": {
+   "paths·azure-resource_flatten-array·put·requestbody·content·application-json·schema": {
+    "type": "array",
+    "items": {
+     "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/Resource"
+    }
+   },
+   "paths·azure-resource_flatten-array·get·responses·200·content·application-json·schema": {
+    "type": "array",
+    "items": {
+     "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/FlattenedProduct"
+    }
+   },
+   "paths·azure-resource_flatten-dictionary·put·requestbody·content·application-json·schema": {
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/FlattenedProduct"
+    }
+   },
+   "paths·azure-resource_flatten-dictionary·get·responses·200·content·application-json·schema": {
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/FlattenedProduct"
+    }
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Error-message"
+     }
+    }
+   },
+   "Error-message": {
+    "type": "string"
+   },
+   "Resource": {
+    "type": "object",
+    "x-ms-azure-resource": true,
+    "description": "Some resource",
+    "externalDocs": {
+     "url": "http://tempuri.org"
+    },
+    "properties": {
+     "id": {
+      "$ref": "#/components/schemas/Resource-id",
+      "description": "Resource Id",
+      "readOnly": true
+     },
+     "type": {
+      "$ref": "#/components/schemas/Resource-type",
+      "description": "Resource Type",
+      "readOnly": true
+     },
+     "tags": {
+      "$ref": "#/components/schemas/Resource-tags"
+     },
+     "location": {
+      "$ref": "#/components/schemas/Resource-location",
+      "description": "Resource Location"
+     },
+     "name": {
+      "$ref": "#/components/schemas/Resource-name",
+      "description": "Resource Name",
+      "readOnly": true
+     }
+    }
+   },
+   "Resource-id": {
+    "type": "string",
+    "description": "Resource Id",
+    "readOnly": true
+   },
+   "Resource-type": {
+    "type": "string",
+    "description": "Resource Type",
+    "readOnly": true
+   },
+   "Resource-tags": {
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "#/components/schemas/components·schemas·resource·properties·tags·additionalproperties"
+    }
+   },
+   "components·schemas·resource·properties·tags·additionalproperties": {
+    "type": "string"
+   },
+   "Resource-location": {
+    "type": "string",
+    "description": "Resource Location"
+   },
+   "Resource-name": {
+    "type": "string",
+    "description": "Resource Name",
+    "readOnly": true
+   },
+   "FlattenedProduct": {
+    "allOf": [
+     {
+      "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/Resource"
+     }
+    ],
+    "type": "object",
+    "properties": {
+     "properties": {
+      "x-ms-client-flatten": true,
+      "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/FlattenedResourceProperties"
+     }
+    }
+   },
+   "FlattenedResourceProperties": {
+    "type": "object",
+    "properties": {
+     "pname": {
+      "$ref": "#/components/schemas/FlattenedResourceProperties-pname"
+     },
+     "lsize": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "provisioningState": {
+      "$ref": "#/components/schemas/FlattenedResourceProperties-provisioningState"
+     }
+    }
+   },
+   "FlattenedResourceProperties-pname": {
+    "type": "string"
+   },
+   "FlattenedResourceProperties-provisioningState": {
+    "type": "string"
+   },
+   "ResourceCollection": {
+    "type": "object",
+    "properties": {
+     "productresource": {
+      "type": "object",
+      "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/FlattenedProduct"
+     },
+     "arrayofresources": {
+      "$ref": "#/components/schemas/ResourceCollection-arrayofresources"
+     },
+     "dictionaryofresources": {
+      "$ref": "#/components/schemas/ResourceCollection-dictionaryofresources"
+     }
+    }
+   },
+   "ResourceCollection-arrayofresources": {
+    "type": "array",
+    "items": {
+     "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/FlattenedProduct"
+    }
+   },
+   "ResourceCollection-dictionaryofresources": {
+    "type": "object",
+    "additionalProperties": {
+     "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/FlattenedProduct"
+    }
+   }
+  },
+  "responses": {
+   "paths·azure-resource_flatten-array·put·responses·200": {
+    "description": "Successful Response"
+   },
+   "paths·azure-resource_flatten-array·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·azure-resource_flatten-array·get·responses·200": {
+    "description": "External Resource as an Array from get",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·azure-resource_flatten-array·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·azure-resource_flatten-array·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·azure-resource_flatten-dictionary·put·responses·200": {
+    "description": "Successful Response"
+   },
+   "paths·azure-resource_flatten-dictionary·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·azure-resource_flatten-dictionary·get·responses·200": {
+    "description": "External Resource as a Dictionary from get",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/paths·azure-resource_flatten-dictionary·get·responses·200·content·application-json·schema"
+      }
+     }
+    }
+   },
+   "paths·azure-resource_flatten-dictionary·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·azure-resource_flatten-resourcecollection·put·responses·200": {
+    "description": "Successful Response"
+   },
+   "paths·azure-resource_flatten-resourcecollection·put·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/Error"
+      }
+     }
+    }
+   },
+   "paths·azure-resource_flatten-resourcecollection·get·responses·200": {
+    "description": "External Resource as a ResourceCollection from get",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/ResourceCollection"
+      }
+     }
+    }
+   },
+   "paths·azure-resource_flatten-resourcecollection·get·responses·default": {
+    "description": "Unexpected error",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "http://localhost:3000/__files/azure-resource.json#/components/schemas/Error"
+      }
+     }
+    }
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "http://localhost:3000/"
+  }
+ ]
+}
