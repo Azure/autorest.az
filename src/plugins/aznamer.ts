@@ -14,9 +14,9 @@ export class AzNamer {
 
     async process() {
 
-        this.session.message({Channel:Channel.Debug, Text:"in aznamer process"});
         let azSettings = await this.session.getValue('az');
         let extensionName = azSettings['extensions'];
+        //console.error(extensionName);
         for (const operationGroup of values(this.codeModel.operationGroups)) {
             //this.session.message({Channel:Channel.Warning, Text:serialize(operationGroup.language)});
             let operationGroupName = "";
