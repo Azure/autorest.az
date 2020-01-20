@@ -9,6 +9,13 @@ import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 import { ToSnakeCase } from '../../utils/helper';
 
+function sortOperationByAzCommand(model: CodeModel) {
+    for(let [idx, operationGroup] of model.operationGroups.entries()) {
+        operationGroup.operations.sort((a, b) => a.language['az'].command.localeCompare(b.language['az'].command));
+        model.operationGroups[idx] = operationGroup;
+    }
+}
+
 export class CodeModelCliImpl implements CodeModelAz
 {
     codeModel: CodeModel;
@@ -18,6 +25,8 @@ export class CodeModelCliImpl implements CodeModelAz
     currentOperationIndex: number;
     currentParameterIndex: number;
     currentExampleIndex: number;
+    preMethodIndex: number;
+    currentMethodIndex: number;
 
 
 
@@ -28,11 +37,15 @@ export class CodeModelCliImpl implements CodeModelAz
         this.currentOperationIndex = -1;
         this.currentParameterIndex = -1;
         this.currentExampleIndex = -1;
+        this.preMethodIndex = -1;
+        this.currentMethodIndex = -1;
+        
     }
 
     public constructor(protected session: Session<CodeModel>) 
     {
         this.codeModel = session.model;
+        sortOperationByAzCommand(this.codeModel);
     }
 
     //=================================================================================================================
@@ -191,7 +204,16 @@ export class CodeModelCliImpl implements CodeModelAz
         // just enumerate through commands in command group
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length > 0) {
             this.currentOperationIndex = 0;
+            this.preMethodIndex = this.currentOperationIndex;
+            while(this.currentOperationIndex + 1 < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
+                if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1].language['az'].command) {
+                    this.currentOperationIndex++;
+                } else {
+                    break;
+                }
+            }
             this.SelectFirstOption();
+            this.SelectFirstMethod();
             this.SelectFirstMethodParameter();
             return true;
         } else {
@@ -204,7 +226,16 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length - 1) {
             this.currentOperationIndex++;
+            this.preMethodIndex = this.currentOperationIndex;
+            while(this.currentOperationIndex + 1 < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
+                if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1].language['az'].command) {
+                    this.currentOperationIndex++;
+                } else {
+                    break;
+                }
+            }
             this.SelectFirstOption();
+            this.SelectFirstMethod();
             this.SelectFirstMethodParameter();
             return true;
         } else {
@@ -358,6 +389,7 @@ export class CodeModelCliImpl implements CodeModelAz
     // Usually there will be one to one relationship between command and method.
     // However in one case described above ("az <operation> list"), several methods may be assigned with single
     // command, for instance "list", "list-by-resource-group", "list-by-someting-else".
+    // list 
     // In case of "list" command all the GET operations associated with the resource should be enumerated here,
     // except of GET operation that returns particular instance of a resource and is associated to "show" command.
     //
@@ -367,27 +399,48 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectFirstMethod(): boolean
     {
-        return true;
+        if(this.currentOperationIndex >= this.preMethodIndex) {
+            this.currentMethodIndex = this.preMethodIndex;
+            return true;
+        } else {
+            this.currentMethodIndex = -1;
+            return false;
+        }
     }
 
     public SelectNextMethod(): boolean
     {
-        return false;
+        if(this.currentMethodIndex < this.currentOperationIndex) {
+            this.currentMethodIndex++;
+            return true;
+        } else {
+            this.currentMethodIndex = -1;
+            return false;
+        }
     }
 
     public get Method_IsFirst(): boolean
     {
-        return true;
+        if(this.currentMethodIndex == this.preMethodIndex) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     public get Method_IsLast(): boolean
     {
-        return true;
+        if(this.currentMethodIndex == this.currentOperationIndex) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public get Method_Name(): string
     {
-       return  this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
+       return  this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].language['az'].name;
     }
 
     public get Method_BodyParameterName(): string
@@ -402,7 +455,7 @@ export class CodeModelCliImpl implements CodeModelAz
     //=================================================================================================================
     public SelectFirstMethodParameter(): boolean
     {
-        if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length > 0) {
+        if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters.length > 0) {
             this.currentParameterIndex = 0;
             return true;
         } else {
@@ -412,7 +465,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextMethodParameter(): boolean
     {
-        if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length - 1) {
+        if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
             return true;
         } else {
@@ -422,12 +475,12 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get MethodParameter_Name(): string
     {
-        return ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name);
+        return ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].name);
     }
 
     public get MethodParamerer_MapsTo(): string
     {
-        return "param";
+        return ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].name);
     }
 
     //=================================================================================================================

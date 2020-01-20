@@ -4,12 +4,13 @@ import { serialize, deserialize } from '@azure-tools/codegen';
 import { GenerateAll } from "./Generator";
 import { CodeModelCliImpl } from "./CodeModelAzImpl";
 
+
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
     host.Message({Channel:Channel.Warning, Text:"in azgenerator processRequest"});
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-
+ 
         let model = new CodeModelCliImpl(session);
         //session.message({Channel:Channel.Warning, Text:"Model operationGroup is " + serialize(session.model.operationGroups)});
         let operationGroup = session.model.operationGroups[0];
