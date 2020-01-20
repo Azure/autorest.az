@@ -12,10 +12,11 @@ export class AzNamer {
     }
 
 
-    async process(extensionName: string) {
+    async process() {
 
         this.session.message({Channel:Channel.Debug, Text:"in aznamer process"});
-
+        let azSettings = await this.session.getValue('az');
+        let extensionName = azSettings['extensions'];
         for (const operationGroup of values(this.codeModel.operationGroups)) {
             //this.session.message({Channel:Channel.Warning, Text:serialize(operationGroup.language)});
             let operationGroupName = "";
@@ -53,13 +54,12 @@ export class AzNamer {
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
     host.Message({Channel:Channel.Warning, Text:"in aznamer processRequest"});
-    let azSettings = await this.session.getValue('az');
-    let extensionName = azSettings['az-name'];
+
     //console.error(extensionName);
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         const plugin = await new AzNamer(session);
-        const result = await plugin.process(extensionName);
+        const result = await plugin.process();
         host.WriteFile('aznamer-temp-output.yaml', serialize(result));
     } catch (E) {
         if (debug) {

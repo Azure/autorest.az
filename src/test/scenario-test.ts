@@ -19,7 +19,7 @@ require('source-map-support').install();
         exec(cmd);
     }
 
-    @test async acceptanceSuite() {
+    async acceptanceSuite() {
         const folders = await readdir(`${__dirname}/../../src/test/scenarios/`);
         for (const each of folders) {
             if ([
@@ -37,16 +37,18 @@ require('source-map-support').install();
             
             const cfg = {
                 modelerfour: { 'flatten-models': true, 'flatten-payloads': true },
-                'payload-flattening-threshold': 2
+                'payload-flattening-threshold': 2,
+                az:{
+                    extensions:"attestation"
+                }
             }
     
             await mkdir(`${__dirname}/../../src/test/scenarios/${each}`);
             await this.clicommon(each);
             let yaml = `${__dirname}/../../src/test/scenarios/${each}/modeler.yaml`;
-    
-            const extensionName = "attestation";
+
             const aznamer = new AzNamer(await createPassThruSession(cfg, yaml, 'code-model-v4'));
-            const model = await aznamer.process(extensionName);
+            const model = await aznamer.process();
             const aznameryaml = serialize(model, codeModelSchema);
             await (writeFile(`${__dirname}/../../src/test/scenarios/${each}/aznamer.yaml`, aznameryaml));
 

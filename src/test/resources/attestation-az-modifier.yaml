@@ -1,0 +1,1919 @@
+schemas:
+  objects:
+  - &ref_53
+    type: object
+    apiVersions:
+    - version: 2018-09-01-preview
+    properties:
+    - schema: &ref_13
+        type: array
+        apiVersions:
+        - version: 2018-09-01-preview
+        elementType: &ref_0
+          type: object
+          apiVersions:
+          - version: 2018-09-01-preview
+          properties:
+          - schema: &ref_19
+              type: string
+              apiVersions:
+              - version: 2018-09-01-preview
+              language:
+                default:
+                  name: OperationsDefinition-name
+                  description: Name of the operation.
+              protocol: {}
+            serializedName: name
+            language:
+              default:
+                name: name
+                description: Name of the operation.
+            protocol: {}
+          - schema: &ref_1
+              type: object
+              apiVersions:
+              - version: 2018-09-01-preview
+              properties:
+              - schema: &ref_20
+                  type: string
+                  apiVersions:
+                  - version: 2018-09-01-preview
+                  language:
+                    default:
+                      name: OperationsDisplayDefinition-provider
+                      description: Resource provider of the operation.
+                  protocol: {}
+                serializedName: provider
+                language:
+                  default:
+                    name: provider
+                    description: Resource provider of the operation.
+                protocol: {}
+              - schema: &ref_21
+                  type: string
+                  apiVersions:
+                  - version: 2018-09-01-preview
+                  language:
+                    default:
+                      name: OperationsDisplayDefinition-resource
+                      description: Resource for the operation.
+                  protocol: {}
+                serializedName: resource
+                language:
+                  default:
+                    name: resource
+                    description: Resource for the operation.
+                protocol: {}
+              - schema: &ref_22
+                  type: string
+                  apiVersions:
+                  - version: 2018-09-01-preview
+                  language:
+                    default:
+                      name: OperationsDisplayDefinition-operation
+                      description: Short description of the operation.
+                  protocol: {}
+                serializedName: operation
+                language:
+                  default:
+                    name: operation
+                    description: Short description of the operation.
+                protocol: {}
+              - schema: &ref_23
+                  type: string
+                  apiVersions:
+                  - version: 2018-09-01-preview
+                  language:
+                    default:
+                      name: OperationsDisplayDefinition-description
+                      description: Description of the operation.
+                  protocol: {}
+                serializedName: description
+                language:
+                  default:
+                    name: description
+                    description: Description of the operation.
+                protocol: {}
+              language:
+                default:
+                  name: OperationsDisplayDefinition
+                  description: Display object with properties of the operation.
+                  namespace: Api20180901Preview
+              protocol: {}
+            serializedName: display
+            language:
+              default:
+                name: display
+                description: Display object with properties of the operation.
+            protocol: {}
+          language:
+            default:
+              name: OperationsDefinition
+              description: Definition object with the name and properties of an operation.
+              namespace: Api20180901Preview
+          protocol: {}
+        language:
+          default:
+            name: OperationList-value
+            description: List of supported operations.
+        protocol: {}
+      serializedName: value
+      language:
+        default:
+          name: value
+          description: List of supported operations.
+      protocol: {}
+    language:
+      default:
+        name: OperationList
+        description: List of supported operations.
+        namespace: Api20180901Preview
+    protocol: {}
+  - *ref_0
+  - *ref_1
+  - &ref_54
+    type: object
+    apiVersions:
+    - version: 2018-09-01-preview
+    properties:
+    - schema: &ref_2
+        type: object
+        apiVersions:
+        - version: 2018-09-01-preview
+        properties:
+        - schema: &ref_24
+            type: string
+            apiVersions:
+            - version: 2018-09-01-preview
+            language:
+              default:
+                name: CloudErrorBody-code
+                description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+            protocol: {}
+          serializedName: code
+          language:
+            default:
+              name: code
+              description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+          protocol: {}
+        - schema: &ref_25
+            type: string
+            apiVersions:
+            - version: 2018-09-01-preview
+            language:
+              default:
+                name: CloudErrorBody-message
+                description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
+            protocol: {}
+          serializedName: message
+          language:
+            default:
+              name: message
+              description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
+          protocol: {}
+        extensions:
+          x-ms-external: true
+        language:
+          default:
+            name: CloudErrorBody
+            description: An error response from Attestation.
+            namespace: Api20180901Preview
+        protocol: {}
+      serializedName: error
+      extensions:
+        x-ms-external: true
+      language:
+        default:
+          name: error
+          description: An error response from Attestation.
+      protocol: {}
+    extensions:
+      x-ms-external: true
+    language:
+      default:
+        name: CloudError
+        description: An error response from Attestation.
+        namespace: Api20180901Preview
+    protocol: {}
+  - *ref_2
+  - &ref_3
+    type: object
+    apiVersions:
+    - version: '1.0'
+    children:
+      all:
+      - &ref_5
+        type: object
+        apiVersions:
+        - version: 2018-09-01-preview
+        parents:
+          all:
+          - *ref_3
+          immediate:
+          - *ref_3
+        properties:
+        - schema: &ref_9
+            type: object
+            apiVersions:
+            - version: 2018-09-01-preview
+            properties:
+            - schema: &ref_18
+                choices:
+                - value: Ready
+                  language:
+                    default:
+                      name: Ready
+                      description: ''
+                - value: NotReady
+                  language:
+                    default:
+                      name: NotReady
+                      description: ''
+                - value: Error
+                  language:
+                    default:
+                      name: Error
+                      description: ''
+                type: sealed-choice
+                apiVersions:
+                - version: 2018-09-01-preview
+                choiceType: &ref_17
+                  type: string
+                  language:
+                    default:
+                      name: string
+                      description: simple string
+                  protocol: {}
+                language:
+                  default:
+                    name: AttestationServiceStatus
+                    description: Status of attestation service.
+                protocol: {}
+              required: true
+              serializedName: status
+              language:
+                default:
+                  name: status
+                  description: Status of attestation service.
+              protocol: {}
+            - schema: &ref_30
+                type: string
+                apiVersions:
+                - version: 2018-09-01-preview
+                language:
+                  default:
+                    name: StatusResult-attestUri
+                    description: Gets the uri of attestation service
+                protocol: {}
+              required: false
+              serializedName: attestUri
+              language:
+                default:
+                  name: attestUri
+                  description: Gets the uri of attestation service
+              protocol: {}
+            language:
+              default:
+                name: StatusResult
+                description: Status of attestation service.
+                namespace: Api20180901Preview
+            protocol: {}
+          required: true
+          serializedName: properties
+          language:
+            default:
+              name: properties
+              description: Status of attestation service.
+          protocol: {}
+        language:
+          default:
+            name: AttestationProvider
+            description: Attestation service response message.
+            namespace: Api20180901Preview
+        protocol: {}
+      - &ref_6
+        type: object
+        apiVersions:
+        - version: '1.0'
+        parents:
+          all:
+          - *ref_3
+          immediate:
+          - *ref_3
+        properties:
+        - schema: &ref_49
+            type: string
+            apiVersions:
+            - version: '1.0'
+            language:
+              default:
+                name: AzureEntityResource-etag
+                description: Resource Etag.
+            protocol: {}
+          readOnly: true
+          serializedName: etag
+          language:
+            default:
+              name: etag
+              description: Resource Etag.
+          protocol: {}
+        language:
+          default:
+            name: AzureEntityResource
+            description: The resource model definition for a Azure Resource Manager resource with an etag.
+            namespace: Api10
+        protocol: {}
+      - &ref_7
+        type: object
+        apiVersions:
+        - version: '1.0'
+        parents:
+          all:
+          - *ref_3
+          immediate:
+          - *ref_3
+        properties:
+        - schema: &ref_12
+            type: dictionary
+            elementType: &ref_26
+              type: string
+              apiVersions:
+              - version: 2018-09-01-preview
+              - version: '1.0'
+              language:
+                default:
+                  name: paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·get·parameters·2·schema
+                  description: MISSING·SCHEMA-DESCRIPTION-STRING
+              protocol: {}
+            language:
+              default:
+                name: TrackedResource-tags
+                description: Resource tags.
+            protocol: {}
+          required: false
+          serializedName: tags
+          extensions:
+            x-ms-mutability:
+            - read
+            - create
+            - update
+          language:
+            default:
+              name: tags
+              description: Resource tags.
+          protocol: {}
+        - schema: &ref_50
+            type: string
+            apiVersions:
+            - version: '1.0'
+            extensions:
+              x-ms-mutability: &ref_4
+              - read
+              - create
+            language:
+              default:
+                name: TrackedResource-location
+                description: The geo-location where the resource lives
+            protocol: {}
+          required: true
+          serializedName: location
+          extensions:
+            x-ms-mutability: *ref_4
+          language:
+            default:
+              name: location
+              description: The geo-location where the resource lives
+          protocol: {}
+        language:
+          default:
+            name: TrackedResource
+            description: The resource model definition for a ARM tracked top level resource
+            namespace: Api10
+        protocol: {}
+      - &ref_8
+        type: object
+        apiVersions:
+        - version: '1.0'
+        parents:
+          all:
+          - *ref_3
+          immediate:
+          - *ref_3
+        language:
+          default:
+            name: ProxyResource
+            description: The resource model definition for a ARM proxy resource. It will have everything other than required location and tags
+            namespace: Api10
+        protocol: {}
+      immediate:
+      - *ref_5
+      - *ref_6
+      - *ref_7
+      - *ref_8
+    properties:
+    - schema: &ref_27
+        type: string
+        apiVersions:
+        - version: '1.0'
+        language:
+          default:
+            name: Resource-id
+            description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
+        protocol: {}
+      readOnly: true
+      serializedName: id
+      language:
+        default:
+          name: id
+          description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
+      protocol: {}
+    - schema: &ref_28
+        type: string
+        apiVersions:
+        - version: '1.0'
+        language:
+          default:
+            name: Resource-name
+            description: The name of the resource
+        protocol: {}
+      readOnly: true
+      serializedName: name
+      language:
+        default:
+          name: name
+          description: The name of the resource
+      protocol: {}
+    - schema: &ref_29
+        type: string
+        apiVersions:
+        - version: '1.0'
+        language:
+          default:
+            name: Resource-type
+            description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+        protocol: {}
+      readOnly: true
+      serializedName: type
+      language:
+        default:
+          name: type
+          description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+      protocol: {}
+    extensions:
+      x-ms-azure-resource: true
+    language:
+      default:
+        name: Resource
+        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        namespace: Api10
+    protocol: {}
+  - *ref_5
+  - *ref_9
+  - &ref_59
+    type: object
+    apiVersions:
+    - version: 2018-09-01-preview
+    properties:
+    - schema: &ref_31
+        type: string
+        apiVersions:
+        - version: 2018-09-01-preview
+        language:
+          default:
+            name: AttestationServiceCreationParams-attestationPolicy
+            description: Name of attestation policy.
+        protocol: {}
+      serializedName: attestationPolicy
+      language:
+        default:
+          name: attestationPolicy
+          description: Name of attestation policy.
+      protocol: {}
+    - schema: &ref_10
+        type: object
+        apiVersions:
+        - version: '1.0'
+        properties:
+        - schema: &ref_15
+            type: array
+            apiVersions:
+            - version: '1.0'
+            elementType: &ref_11
+              type: object
+              apiVersions:
+              - version: '1.0'
+              properties:
+              - schema: &ref_32
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-alg
+                      description: |-
+                        The "alg" (algorithm) parameter identifies the algorithm intended for
+                        use with the key.  The values used should either be registered in the
+                        IANA "JSON Web Signature and Encryption Algorithms" registry
+                        established by [JWA] or be a value that contains a Collision-
+                        Resistant Name.
+                  protocol: {}
+                required: true
+                serializedName: alg
+                language:
+                  default:
+                    name: alg
+                    description: |-
+                      The "alg" (algorithm) parameter identifies the algorithm intended for
+                      use with the key.  The values used should either be registered in the
+                      IANA "JSON Web Signature and Encryption Algorithms" registry
+                      established by [JWA] or be a value that contains a Collision-
+                      Resistant Name.
+                protocol: {}
+              - schema: &ref_33
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-crv
+                      description: The "crv" (curve) parameter identifies the curve type
+                  protocol: {}
+                required: false
+                serializedName: crv
+                language:
+                  default:
+                    name: crv
+                    description: The "crv" (curve) parameter identifies the curve type
+                protocol: {}
+              - schema: &ref_34
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-d
+                      description: RSA private exponent or ECC private key
+                  protocol: {}
+                required: false
+                serializedName: d
+                language:
+                  default:
+                    name: d
+                    description: RSA private exponent or ECC private key
+                protocol: {}
+              - schema: &ref_35
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-dp
+                      description: RSA Private Key Parameter
+                  protocol: {}
+                required: false
+                serializedName: dp
+                language:
+                  default:
+                    name: dp
+                    description: RSA Private Key Parameter
+                protocol: {}
+              - schema: &ref_36
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-dq
+                      description: RSA Private Key Parameter
+                  protocol: {}
+                required: false
+                serializedName: dq
+                language:
+                  default:
+                    name: dq
+                    description: RSA Private Key Parameter
+                protocol: {}
+              - schema: &ref_37
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-e
+                      description: 'RSA public exponent, in Base64'
+                  protocol: {}
+                required: false
+                serializedName: e
+                language:
+                  default:
+                    name: e
+                    description: 'RSA public exponent, in Base64'
+                protocol: {}
+              - schema: &ref_38
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-k
+                      description: Symmetric key
+                  protocol: {}
+                required: false
+                serializedName: k
+                language:
+                  default:
+                    name: k
+                    description: Symmetric key
+                protocol: {}
+              - schema: &ref_39
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-kid
+                      description: |-
+                        The "kid" (key ID) parameter is used to match a specific key.  This
+                        is used, for instance, to choose among a set of keys within a JWK Set
+                        during key rollover.  The structure of the "kid" value is
+                        unspecified.  When "kid" values are used within a JWK Set, different
+                        keys within the JWK Set SHOULD use distinct "kid" values.  (One
+                        example in which different keys might use the same "kid" value is if
+                        they have different "kty" (key type) values but are considered to be
+                        equivalent alternatives by the application using them.)  The "kid"
+                        value is a case-sensitive string.
+                  protocol: {}
+                required: true
+                serializedName: kid
+                language:
+                  default:
+                    name: kid
+                    description: |-
+                      The "kid" (key ID) parameter is used to match a specific key.  This
+                      is used, for instance, to choose among a set of keys within a JWK Set
+                      during key rollover.  The structure of the "kid" value is
+                      unspecified.  When "kid" values are used within a JWK Set, different
+                      keys within the JWK Set SHOULD use distinct "kid" values.  (One
+                      example in which different keys might use the same "kid" value is if
+                      they have different "kty" (key type) values but are considered to be
+                      equivalent alternatives by the application using them.)  The "kid"
+                      value is a case-sensitive string.
+                protocol: {}
+              - schema: &ref_40
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-kty
+                      description: |-
+                        The "kty" (key type) parameter identifies the cryptographic algorithm
+                        family used with the key, such as "RSA" or "EC". "kty" values should
+                        either be registered in the IANA "JSON Web Key Types" registry
+                        established by [JWA] or be a value that contains a Collision-
+                        Resistant Name.  The "kty" value is a case-sensitive string.
+                  protocol: {}
+                required: true
+                serializedName: kty
+                language:
+                  default:
+                    name: kty
+                    description: |-
+                      The "kty" (key type) parameter identifies the cryptographic algorithm
+                      family used with the key, such as "RSA" or "EC". "kty" values should
+                      either be registered in the IANA "JSON Web Key Types" registry
+                      established by [JWA] or be a value that contains a Collision-
+                      Resistant Name.  The "kty" value is a case-sensitive string.
+                protocol: {}
+              - schema: &ref_41
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-n
+                      description: 'RSA modulus, in Base64'
+                  protocol: {}
+                required: false
+                serializedName: 'n'
+                language:
+                  default:
+                    name: 'n'
+                    description: 'RSA modulus, in Base64'
+                protocol: {}
+              - schema: &ref_42
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-p
+                      description: RSA secret prime
+                  protocol: {}
+                required: false
+                serializedName: p
+                language:
+                  default:
+                    name: p
+                    description: RSA secret prime
+                protocol: {}
+              - schema: &ref_43
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-q
+                      description: 'RSA secret prime, with p < q'
+                  protocol: {}
+                required: false
+                serializedName: q
+                language:
+                  default:
+                    name: q
+                    description: 'RSA secret prime, with p < q'
+                protocol: {}
+              - schema: &ref_44
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-qi
+                      description: RSA Private Key Parameter
+                  protocol: {}
+                required: false
+                serializedName: qi
+                language:
+                  default:
+                    name: qi
+                    description: RSA Private Key Parameter
+                protocol: {}
+              - schema: &ref_45
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-use
+                      description: |-
+                        Use ("public key use") identifies the intended use of
+                        the public key. The "use" parameter is employed to indicate whether
+                        a public key is used for encrypting data or verifying the signature
+                        on data. Values are commonly "sig" (signature) or "enc" (encryption).
+                  protocol: {}
+                required: true
+                serializedName: use
+                language:
+                  default:
+                    name: use
+                    description: |-
+                      Use ("public key use") identifies the intended use of
+                      the public key. The "use" parameter is employed to indicate whether
+                      a public key is used for encrypting data or verifying the signature
+                      on data. Values are commonly "sig" (signature) or "enc" (encryption).
+                protocol: {}
+              - schema: &ref_46
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-x
+                      description: X coordinate for the Elliptic Curve point
+                  protocol: {}
+                required: false
+                serializedName: x
+                language:
+                  default:
+                    name: x
+                    description: X coordinate for the Elliptic Curve point
+                protocol: {}
+              - schema: &ref_14
+                  type: array
+                  apiVersions:
+                  - version: '1.0'
+                  elementType: &ref_47
+                    type: string
+                    apiVersions:
+                    - version: '1.0'
+                    language:
+                      default:
+                        name: JSONWebKey-x5cItem
+                        description: MISSING·SCHEMA-DESCRIPTION-STRING
+                    protocol: {}
+                  language:
+                    default:
+                      name: JSONWebKey-x5c
+                      description: |-
+                        The "x5c" (X.509 certificate chain) parameter contains a chain of one
+                        or more PKIX certificates [RFC5280].  The certificate chain is
+                        represented as a JSON array of certificate value strings.  Each
+                        string in the array is a base64-encoded (Section 4 of [RFC4648] --
+                        not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.
+                        The PKIX certificate containing the key value MUST be the first
+                        certificate.
+                  protocol: {}
+                required: false
+                serializedName: x5c
+                language:
+                  default:
+                    name: x5c
+                    description: |-
+                      The "x5c" (X.509 certificate chain) parameter contains a chain of one
+                      or more PKIX certificates [RFC5280].  The certificate chain is
+                      represented as a JSON array of certificate value strings.  Each
+                      string in the array is a base64-encoded (Section 4 of [RFC4648] --
+                      not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.
+                      The PKIX certificate containing the key value MUST be the first
+                      certificate.
+                protocol: {}
+              - schema: &ref_48
+                  type: string
+                  apiVersions:
+                  - version: '1.0'
+                  language:
+                    default:
+                      name: JSONWebKey-y
+                      description: Y coordinate for the Elliptic Curve point
+                  protocol: {}
+                required: false
+                serializedName: 'y'
+                language:
+                  default:
+                    name: 'y'
+                    description: Y coordinate for the Elliptic Curve point
+                protocol: {}
+              language:
+                default:
+                  name: JSONWebKey
+                  description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+                  namespace: Api10
+              protocol: {}
+            language:
+              default:
+                name: JSONWebKeySet-keys
+                description: |-
+                  The value of the "keys" parameter is an array of JWK values.  By
+                  default, the order of the JWK values within the array does not imply
+                  an order of preference among them, although applications of JWK Sets
+                  can choose to assign a meaning to the order for their purposes, if
+                  desired.
+            protocol: {}
+          serializedName: keys
+          language:
+            default:
+              name: keys
+              description: |-
+                The value of the "keys" parameter is an array of JWK values.  By
+                default, the order of the JWK values within the array does not imply
+                an order of preference among them, although applications of JWK Sets
+                can choose to assign a meaning to the order for their purposes, if
+                desired.
+          protocol: {}
+        language:
+          default:
+            name: JSONWebKeySet
+            description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+            namespace: Api10
+        protocol: {}
+      serializedName: policySigningCertificates
+      language:
+        default:
+          name: policySigningCertificates
+          description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+      protocol: {}
+    language:
+      default:
+        name: AttestationServiceCreationParams
+        description: Client supplied parameters passed to attestation service.
+        namespace: Api20180901Preview
+    protocol: {}
+  - *ref_10
+  - *ref_11
+  - &ref_62
+    type: object
+    apiVersions:
+    - version: 2018-09-01-preview
+    properties:
+    - schema: &ref_16
+        type: array
+        apiVersions:
+        - version: 2018-09-01-preview
+        elementType: *ref_5
+        language:
+          default:
+            name: AttestationProviderListResult-value
+            description: Attestation Provider array.
+        protocol: {}
+      serializedName: value
+      language:
+        default:
+          name: value
+          description: Attestation Provider array.
+      protocol: {}
+    language:
+      default:
+        name: AttestationProviderListResult
+        description: Attestation Providers List.
+        namespace: Api20180901Preview
+    protocol: {}
+  - *ref_6
+  - *ref_7
+  - *ref_8
+  dictionaries:
+  - *ref_12
+  arrays:
+  - *ref_13
+  - *ref_14
+  - *ref_15
+  - *ref_16
+  constants:
+  - &ref_52
+    type: constant
+    value:
+      value: 2018-09-01-preview
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_17
+    language:
+      default:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
+    protocol: {}
+  - &ref_57
+    type: constant
+    value:
+      value: 2018-09-01-preview
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_17
+    language:
+      default:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
+    protocol: {}
+  - &ref_58
+    type: constant
+    value:
+      value: 2018-09-01-preview
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_17
+    language:
+      default:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
+    protocol: {}
+  - &ref_60
+    type: constant
+    value:
+      value: 2018-09-01-preview
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_17
+    language:
+      default:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
+    protocol: {}
+  - &ref_61
+    type: constant
+    value:
+      value: 2018-09-01-preview
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_17
+    language:
+      default:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
+    protocol: {}
+  - &ref_63
+    type: constant
+    value:
+      value: 2018-09-01-preview
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_17
+    language:
+      default:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
+    protocol: {}
+  sealedChoices:
+  - *ref_18
+  strings:
+  - *ref_17
+  - *ref_19
+  - *ref_20
+  - *ref_21
+  - *ref_22
+  - *ref_23
+  - *ref_24
+  - *ref_25
+  - &ref_55
+    type: string
+    apiVersions:
+    - version: '1.0'
+    minLength: 1
+    language:
+      default:
+        name: components·parameters·subscriptionidparameter·schema
+        description: MISSING·SCHEMA-DESCRIPTION-STRING
+    protocol: {}
+  - &ref_56
+    type: string
+    apiVersions:
+    - version: '1.0'
+    maxLength: 90
+    minLength: 1
+    pattern: '^[-\w\._\(\)]+$'
+    language:
+      default:
+        name: components·parameters·resourcegroupnameparameter·schema
+        description: MISSING·SCHEMA-DESCRIPTION-STRING
+    protocol: {}
+  - *ref_26
+  - *ref_27
+  - *ref_28
+  - *ref_29
+  - *ref_30
+  - *ref_31
+  - *ref_32
+  - *ref_33
+  - *ref_34
+  - *ref_35
+  - *ref_36
+  - *ref_37
+  - *ref_38
+  - *ref_39
+  - *ref_40
+  - *ref_41
+  - *ref_42
+  - *ref_43
+  - *ref_44
+  - *ref_45
+  - *ref_46
+  - *ref_47
+  - *ref_48
+  - *ref_49
+  - *ref_50
+globalParameters:
+- &ref_51
+  schema: *ref_17
+  clientDefaultValue: 'https://management.azure.com'
+  implementation: Client
+  required: true
+  language:
+    default:
+      name: $host
+      description: server parameter
+    az:
+      name: $host
+      description: server parameter
+    cli:
+      name: $host
+      description: server parameter
+  protocol:
+    http:
+      in: uri
+info:
+  description: Various APIs for managing resources in attestation service. This primarily encompasses per-tenant instance management.
+  title: AttestationManagementClient
+operationGroups:
+- $key: Operations
+  operations:
+  - apiVersions:
+    - version: 2018-09-01-preview
+    request:
+      parameters:
+      - *ref_51
+      - schema: *ref_52
+        implementation: Client
+        required: true
+        language:
+          default:
+            name: ApiVersion
+            description: Api Version
+            serializedName: api-version
+          az:
+            name: api-version
+            description: Api Version
+          cli:
+            name: ApiVersion
+            description: Api Version
+        protocol:
+          http:
+            in: query
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          path: /providers/Microsoft.Attestation/operations
+          method: get
+          uri: '{$host}'
+    responses:
+    - schema: *ref_53
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '200'
+    exceptions:
+    - schema: *ref_54
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-examples:
+        Operations_List:
+          parameters:
+            api-version: 2018-09-01-preview
+          responses:
+            '200':
+              body:
+              - name: Microsoft.Attestation/attestationProviders/attestation/read
+                display:
+                  description: Get status of attestation service.
+                  operation: Get status of attestation service
+                  provider: Microsoft Azure Attestation
+                  resource: Attestation
+              - name: Microsoft.Attestation/attestationProviders/attestation/write
+                display:
+                  description: Adds attestation service.
+                  operation: Adds attestation service.
+                  provider: Microsoft Azure Attestation
+                  resource: Attestation
+              - name: Microsoft.Attestation/attestationProviders/attestation/delete
+                display:
+                  description: Removes attestation service
+                  operation: Removes attestation service
+                  provider: Microsoft Azure Attestation
+                  resource: Attestation
+    language:
+      default:
+        name: List
+        description: Lists all of the available Azure attestation operations.
+      az:
+        name: List
+        description: Lists all of the available Azure attestation operations.
+        command: attestation operations list
+      cli:
+        name: List
+        description: Lists all of the available Azure attestation operations.
+    protocol: {}
+  language:
+    default:
+      name: Operations
+      description: ''
+    az:
+      name: Operations
+      description: ''
+      command: attestation operations
+    cli:
+      name: Operations
+      description: ''
+  protocol: {}
+- $key: AttestationProviders
+  operations:
+  - apiVersions:
+    - version: 2018-09-01-preview
+    request:
+      parameters:
+      - *ref_51
+      - schema: *ref_55
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: subscriptionId
+            description: The ID of the target subscription.
+            serializedName: subscriptionId
+          az:
+            name: subscription-id
+            description: The ID of the target subscription.
+          cli:
+            name: subscriptionId
+            description: The ID of the target subscription.
+        protocol:
+          http:
+            in: path
+      - schema: *ref_56
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: resourceGroupName
+            description: The name of the resource group. The name is case insensitive.
+            serializedName: resourceGroupName
+          az:
+            name: resource-group-name
+            description: The name of the resource group. The name is case insensitive.
+          cli:
+            name: resourceGroupName
+            description: The name of the resource group. The name is case insensitive.
+        protocol:
+          http:
+            in: path
+      - schema: *ref_26
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: providerName
+            description: Name of the attestation service instance
+            serializedName: providerName
+          az:
+            name: provider-name
+            description: Name of the attestation service instance
+          cli:
+            name: providerName
+            description: Name of the attestation service instance
+        protocol:
+          http:
+            in: path
+      - schema: *ref_57
+        implementation: Client
+        required: true
+        language:
+          default:
+            name: ApiVersion
+            description: Api Version
+            serializedName: api-version
+          az:
+            name: api-version
+            description: Api Version
+          cli:
+            name: ApiVersion
+            description: Api Version
+        protocol:
+          http:
+            in: query
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'
+          method: get
+          uri: '{$host}'
+    responses:
+    - schema: *ref_5
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '200'
+    exceptions:
+    - schema: *ref_54
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-examples:
+        AttestationProviders_Get:
+          parameters:
+            api-version: 2018-09-01-preview
+            providerName: MyAttestationProvider
+            resourceGroupName: MyResourceGroup
+            subscriptionId: 00000000-0000-0000-0000-000000000000
+          responses:
+            '200':
+              body:
+                name: MyAttestationProvider
+                type: Microsoft.Attestation/attestationProviders
+                id: subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Attestation/attestationProviders/MyAttestationProvider
+                properties:
+                  status: Ready
+    language:
+      default:
+        name: Get
+        description: Get the status of Attestation Provider.
+      az:
+        name: Get
+        description: Get the status of Attestation Provider.
+        command: attestation attestation-providers get
+      cli:
+        name: Get
+        description: Get the status of Attestation Provider.
+    protocol: {}
+  - apiVersions:
+    - version: 2018-09-01-preview
+    request:
+      parameters:
+      - *ref_51
+      - schema: *ref_55
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: subscriptionId
+            description: The ID of the target subscription.
+            serializedName: subscriptionId
+          az:
+            name: subscription-id
+            description: The ID of the target subscription.
+          cli:
+            name: subscriptionId
+            description: The ID of the target subscription.
+        protocol:
+          http:
+            in: path
+      - schema: *ref_56
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: resourceGroupName
+            description: The name of the resource group. The name is case insensitive.
+            serializedName: resourceGroupName
+          az:
+            name: resource-group-name
+            description: The name of the resource group. The name is case insensitive.
+          cli:
+            name: resourceGroupName
+            description: The name of the resource group. The name is case insensitive.
+        protocol:
+          http:
+            in: path
+      - schema: *ref_26
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: providerName
+            description: Name of the attestation service instance
+            serializedName: providerName
+          az:
+            name: provider-name
+            description: Name of the attestation service instance
+          cli:
+            name: providerName
+            description: Name of the attestation service instance
+        protocol:
+          http:
+            in: path
+      - schema: *ref_58
+        implementation: Client
+        required: true
+        language:
+          default:
+            name: ApiVersion
+            description: Api Version
+            serializedName: api-version
+          az:
+            name: api-version
+            description: Api Version
+          cli:
+            name: ApiVersion
+            description: Api Version
+        protocol:
+          http:
+            in: query
+      - schema: *ref_59
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: creationParams
+        language:
+          default:
+            name: creationParams
+            description: Client supplied parameters.
+          az:
+            name: creation-params
+            description: Client supplied parameters.
+          cli:
+            name: creationParams
+            description: Client supplied parameters.
+        protocol:
+          http:
+            in: body
+            style: json
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'
+          method: put
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          uri: '{$host}'
+    responses:
+    - schema: *ref_5
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '200'
+    - schema: *ref_5
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '201'
+    exceptions:
+    - schema: *ref_54
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-examples:
+        AttestationProviders_Create:
+          parameters:
+            api-version: 2018-09-01-preview
+            creationParams: test
+            providerName: MyAttestationProvider
+            resourceGroupName: MyResourceGroup
+            subscriptionId: 00000000-0000-0000-0000-000000000000
+          responses:
+            '200':
+              body:
+                name: MyAttestationProvider
+                type: Microsoft.Attestation/attestationProviders
+                id: subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Attestation/attestationProviders/MyAttestationProvider
+                properties:
+                  attestUri: 'https://sample-attestation.attestation.azure.net'
+                  status: Ready
+            '201':
+              body:
+                name: MyAttestationProvider
+                type: Microsoft.Attestation/attestationProviders
+                id: subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Attestation/attestationProviders/MyAttestationProvider
+                properties:
+                  attestUri: 'https://sample-attestation.attestation.azure.net'
+                  status: Ready
+      x-ms-requestBody-index: 4
+    language:
+      default:
+        name: Create
+        description: Creates or updates the Attestation Provider.
+      az:
+        name: Create
+        description: Creates or updates the Attestation Provider.
+        command: attestation attestation-providers create
+      cli:
+        name: Create
+        description: Creates or updates the Attestation Provider.
+    protocol: {}
+  - apiVersions:
+    - version: 2018-09-01-preview
+    request:
+      parameters:
+      - *ref_51
+      - schema: *ref_55
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: subscriptionId
+            description: The ID of the target subscription.
+            serializedName: subscriptionId
+          az:
+            name: subscription-id
+            description: The ID of the target subscription.
+          cli:
+            name: subscriptionId
+            description: The ID of the target subscription.
+        protocol:
+          http:
+            in: path
+      - schema: *ref_56
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: resourceGroupName
+            description: The name of the resource group. The name is case insensitive.
+            serializedName: resourceGroupName
+          az:
+            name: resource-group-name
+            description: The name of the resource group. The name is case insensitive.
+          cli:
+            name: resourceGroupName
+            description: The name of the resource group. The name is case insensitive.
+        protocol:
+          http:
+            in: path
+      - schema: *ref_26
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: providerName
+            description: Name of the attestation service instance
+            serializedName: providerName
+          az:
+            name: provider-name
+            description: Name of the attestation service instance
+          cli:
+            name: providerName
+            description: Name of the attestation service instance
+        protocol:
+          http:
+            in: path
+      - schema: *ref_60
+        implementation: Client
+        required: true
+        language:
+          default:
+            name: ApiVersion
+            description: Api Version
+            serializedName: api-version
+          az:
+            name: api-version
+            description: Api Version
+          cli:
+            name: ApiVersion
+            description: Api Version
+        protocol:
+          http:
+            in: query
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'
+          method: delete
+          uri: '{$host}'
+    responses:
+    - language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          statusCodes:
+          - '200'
+    - language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          statusCodes:
+          - '202'
+    - language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          statusCodes:
+          - '204'
+    exceptions:
+    - schema: *ref_54
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-examples:
+        AttestationProviders_Delete:
+          parameters:
+            api-version: 2018-09-01-preview
+            providerName: MyAttestationProvider
+            resourceGroupName: MyResourceGroup
+            subscriptionId: 00000000-0000-0000-0000-000000000000
+          responses:
+            '200':
+              description: Resource exists and was deleted successfully
+            '202':
+              description: Request accepted for deletion of attestation service
+            '204':
+              description: Resource does not exist
+    language:
+      default:
+        name: Delete
+        description: Delete Attestation Service.
+      az:
+        name: Delete
+        description: Delete Attestation Service.
+        command: attestation attestation-providers delete
+      cli:
+        name: Delete
+        description: Delete Attestation Service.
+    protocol: {}
+  - apiVersions:
+    - version: 2018-09-01-preview
+    request:
+      parameters:
+      - *ref_51
+      - schema: *ref_61
+        implementation: Client
+        required: true
+        language:
+          default:
+            name: ApiVersion
+            description: Api Version
+            serializedName: api-version
+          az:
+            name: api-version
+            description: Api Version
+          cli:
+            name: ApiVersion
+            description: Api Version
+        protocol:
+          http:
+            in: query
+      - schema: *ref_55
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: subscriptionId
+            description: The ID of the target subscription.
+            serializedName: subscriptionId
+          az:
+            name: subscription-id
+            description: The ID of the target subscription.
+          cli:
+            name: subscriptionId
+            description: The ID of the target subscription.
+        protocol:
+          http:
+            in: path
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          path: '/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders'
+          method: get
+          uri: '{$host}'
+    responses:
+    - schema: *ref_62
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '200'
+    exceptions:
+    - schema: *ref_54
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-examples:
+        AttestationProviders_List:
+          parameters:
+            api-version: 2018-09-01-preview
+            subscriptionId: 00000000-0000-0000-0000-000000000000
+          responses:
+            '200':
+              body:
+                value:
+                - name: MyAttestationProvider
+                  type: Microsoft.Attestation/attestationProviders
+                  id: subscriptions/6c96b33e-f5b8-40a6-9011-5cb1c58b0915/resourceGroups/testrg1/providers/Microsoft.Attestation/attestationProviders/MyAttestationProvider
+                  properties:
+                    status: Ready
+                - name: codes2
+                  type: Microsoft.Attestation/attestationProviders
+                  id: subscriptions/6c96b33e-f5b8-40a6-9011-5cb1c58b0915/resourceGroups/testrg2/providers/Microsoft.Attestation/attestationProviders/codes2
+                  properties:
+                    status: Ready
+    language:
+      default:
+        name: List
+        description: Returns a list of attestation providers in a subscription.
+      az:
+        name: List
+        description: Returns a list of attestation providers in a subscription.
+        command: attestation attestation-providers list
+      cli:
+        name: List
+        description: Returns a list of attestation providers in a subscription.
+    protocol: {}
+  - apiVersions:
+    - version: 2018-09-01-preview
+    request:
+      parameters:
+      - *ref_51
+      - schema: *ref_56
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: resourceGroupName
+            description: The name of the resource group. The name is case insensitive.
+            serializedName: resourceGroupName
+          az:
+            name: resource-group-name
+            description: The name of the resource group. The name is case insensitive.
+          cli:
+            name: resourceGroupName
+            description: The name of the resource group. The name is case insensitive.
+        protocol:
+          http:
+            in: path
+      - schema: *ref_63
+        implementation: Client
+        required: true
+        language:
+          default:
+            name: ApiVersion
+            description: Api Version
+            serializedName: api-version
+          az:
+            name: api-version
+            description: Api Version
+          cli:
+            name: ApiVersion
+            description: Api Version
+        protocol:
+          http:
+            in: query
+      - schema: *ref_55
+        implementation: Method
+        required: true
+        language:
+          default:
+            name: subscriptionId
+            description: The ID of the target subscription.
+            serializedName: subscriptionId
+          az:
+            name: subscription-id
+            description: The ID of the target subscription.
+          cli:
+            name: subscriptionId
+            description: The ID of the target subscription.
+        protocol:
+          http:
+            in: path
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders'
+          method: get
+          uri: '{$host}'
+    responses:
+    - schema: *ref_62
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - '200'
+    exceptions:
+    - schema: *ref_54
+      language:
+        default:
+          name: ''
+          description: ''
+      protocol:
+        http:
+          knownMediaType: json
+          mediaTypes:
+          - application/json
+          statusCodes:
+          - default
+    extensions:
+      x-ms-examples:
+        AttestationProviders_ListByResourceGroup:
+          parameters:
+            api-version: 2018-09-01-preview
+            resourceGroupName: testrg1
+            subscriptionId: 6c96b33e-f5b8-40a6-9011-5cb1c58b0915
+          responses:
+            '200':
+              body:
+                value:
+                - name: MyAttestationProvider
+                  type: Microsoft.Attestation/attestationProviders
+                  id: subscriptions/6c96b33e-f5b8-40a6-9011-5cb1c58b0915/resourceGroups/testrg1/providers/Microsoft.Attestation/attestationProviders/MyAttestationProvider
+                  properties:
+                    status: Ready
+                - name: codes2
+                  type: Microsoft.Attestation/attestationProviders
+                  id: subscriptions/6c96b33e-f5b8-40a6-9011-5cb1c58b0915/resourceGroups/testrg1/providers/Microsoft.Attestation/attestationProviders/codes2
+                  properties:
+                    status: Ready
+    language:
+      default:
+        name: ListByResourceGroup
+        description: Returns attestation providers list in a resource group.
+      az:
+        name: ListByResourceGroup
+        description: Returns attestation providers list in a resource group.
+        command: attestation attestation-providers list-by-resource-group
+      cli:
+        name: ListByResourceGroup
+        description: Returns attestation providers list in a resource group.
+    protocol: {}
+  language:
+    default:
+      name: AttestationProviders
+      description: ''
+    az:
+      name: AttestationProviders
+      description: ''
+      command: attestation attestation-providers
+    cli:
+      name: AttestationProviders
+      description: ''
+  protocol: {}
+language:
+  default:
+    name: ''
+    description: ''
+protocol:
+  http: {}
