@@ -6,7 +6,7 @@ See documentation [here](doc/00-overview.md)
 use-extension:
   "@autorest/cli.common": "latest"
   #"@autorest/python": "latest"
-  "@autorest/python": "/home/qiaozha/code/autorest.python"
+  "@autorest/python": "https://github.com/Azure/autorest.python/releases/download/v5.0.0_20200116/autorest-python-5.0.0-20200116.tgz"
   "az": "$(this-folder)"
 
 
