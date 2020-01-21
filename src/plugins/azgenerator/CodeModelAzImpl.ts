@@ -337,7 +337,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_NamePython(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['python'].name;
     }
 
     public get Option_IsRequired(): boolean
