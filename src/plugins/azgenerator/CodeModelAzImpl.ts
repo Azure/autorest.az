@@ -337,7 +337,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_NamePython(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['python'].name;
     }
 
     public get Option_IsRequired(): boolean
@@ -458,8 +458,8 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters.length > 0) {
             this.currentParameterIndex = 0;
-            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].name;
-            if(currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['python'].name;
+            if(currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -476,8 +476,8 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
-            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].name;
-            if(currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['python'].name;
+            if(currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -492,12 +492,12 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get MethodParameter_Name(): string
     {
-        return ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].name);
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['python'].name;
     }
 
     public get MethodParamerer_MapsTo(): string
     {
-        return ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].name);
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['python'].name;
     }
 
     //=================================================================================================================
@@ -530,7 +530,7 @@ export class CodeModelCliImpl implements CodeModelAz
     public get PythonOperationsName(): string
     {
         //return this.options['namespace'].split('.').pop();
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].name;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['python'].name;
     }
 
     //=================================================================================================================
