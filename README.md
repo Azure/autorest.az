@@ -5,7 +5,7 @@ See documentation [here](doc/00-overview.md)
 ``` yaml
 use-extension:
   "@autorest/clicommon": "latest"
-  #"@qiaozha/fakesdk": "latest"
+  "@qiaozha/fakesdk": "latest"
   "az": "$(this-folder)"
 
 
