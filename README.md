@@ -4,8 +4,8 @@ See documentation [here](doc/00-overview.md)
 
 ``` yaml
 use-extension:
-  "@autorest/cli.common": "latest"
-  "@qiaozha/fakesdk": "latest"
+  "@autorest/clicommon": "latest"
+  #"@qiaozha/fakesdk": "latest"
   "az": "$(this-folder)"
 
 
@@ -18,7 +18,7 @@ pipeline:
     #    output-artifact: source-file-fakesdk-inaz
     az/aznamer:
         #plugin: fakenamer
-        input: cli.common
+        input: clicommon
         output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
