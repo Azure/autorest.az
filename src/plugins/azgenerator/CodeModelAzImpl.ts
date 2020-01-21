@@ -9,12 +9,7 @@ import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 import { ToSnakeCase } from '../../utils/helper';
 
-function sortOperationByAzCommand(model: CodeModel) {
-    for(let [idx, operationGroup] of model.operationGroups.entries()) {
-        operationGroup.operations.sort((a, b) => a.language['az'].command.localeCompare(b.language['az'].command));
-        model.operationGroups[idx] = operationGroup;
-    }
-}
+
 
 export class CodeModelCliImpl implements CodeModelAz
 {
@@ -45,9 +40,15 @@ export class CodeModelCliImpl implements CodeModelAz
     public constructor(protected session: Session<CodeModel>) 
     {
         this.codeModel = session.model;
-        sortOperationByAzCommand(this.codeModel);
+        this.sortOperationByAzCommand(this.codeModel);
     }
 
+    private sortOperationByAzCommand(model: CodeModel) {
+        for(let [idx, operationGroup] of model.operationGroups.entries()) {
+            operationGroup.operations.sort((a, b) => a.language['az'].command.localeCompare(b.language['az'].command));
+            model.operationGroups[idx] = operationGroup;
+        }
+    }
     //=================================================================================================================
     // Extension level information
     // autorest.az will have support for multiple extensions from single swagger file.
