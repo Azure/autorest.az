@@ -5,20 +5,22 @@ See documentation [here](doc/00-overview.md)
 ``` yaml
 use-extension:
   "@autorest/cli.common": "latest"
-  "@qiaozha/fakesdk": "latest"
+  #"@autorest/python": "latest"
+  "@autorest/python": "/home/qiaozha/code/autorest.python"
   "az": "$(this-folder)"
 
 
 pipeline-model: v3
 clicommon: true
-fakesdk123: true
+#python: true
 pipeline:
-    #az:
-    #    input: fakesdk
-    #    output-artifact: source-file-fakesdk-inaz
+    
+    az/pynamer:
+        plugin: cli.common
+        input: python/namer
+        output-artifact: source-file-pynamer
     az/aznamer:
-        #plugin: fakenamer
-        input: cli.common
+        input: az/pynamer
         output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
@@ -28,7 +30,7 @@ pipeline:
         output-artifact: source-file-extension
     az/emitter:
         input:
-            # - az
+            #- az/pynamer
             - az/aznamer
             - az/modifiers
             - az/azgenerator
@@ -37,7 +39,7 @@ pipeline:
 scope-here:
     is-object: false
     output-artifact:
-        # - source-file-fakesdk-inaz
+        #- source-file-pynamer
         - source-file-aznamer
         - source-file-modifiers
         - source-file-extension

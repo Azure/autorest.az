@@ -9,8 +9,8 @@ export type FileCallback = (path: string, rows: string[]) => void;
 
 const extension = new AutoRestExtension();
 
-/* [ZIM] for now disabled until it actually works
-extension.Add("az", async autoRestApi => {
+// [ZIM] for now disabled until it actually works
+extension.Add("pynamer", async autoRestApi => {
 
 
     try
@@ -45,14 +45,14 @@ extension.Add("az", async autoRestApi => {
 
         // emit a file (all input files concatenated)
 
-        autoRestApi.WriteFile("myfolder/concataz.txt", inputFiles.join("\n---\n"));
+        autoRestApi.WriteFile("code-model-pynamer.yaml", inputFiles.join("\n---\n"));
     }
     catch (e)
     {
         Error(e.message + " -- " + JSON.stringify(e.stack));
     }
 });
-*/
+
 
 async function initializePlugins(pluginHost: AutoRestExtension) {
     pluginHost.Add("aznamer", aznamer);
