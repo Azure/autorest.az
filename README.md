@@ -12,27 +12,26 @@ use-extension:
 
 pipeline-model: v3
 clicommon: true
-#python: true
+
 pipeline:
-    
     az/pynamer:
         plugin: cli.common
         input: python/namer
-        output-artifact: source-file-pynamer
+        #output-artifact: source-file-pynamer
     az/aznamer:
         input: az/pynamer
-        output-artifact: source-file-aznamer
+        #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
-        output-artifact: source-file-modifiers
+        #output-artifact: source-file-modifiers
     az/azgenerator:
         input: az/modifiers
         output-artifact: source-file-extension
     az/emitter:
         input:
             #- az/pynamer
-            - az/aznamer
-            - az/modifiers
+            #- az/aznamer
+            #- az/modifiers
             - az/azgenerator
         scope: scope-here
 
@@ -40,7 +39,8 @@ scope-here:
     is-object: false
     output-artifact:
         #- source-file-pynamer
-        - source-file-aznamer
-        - source-file-modifiers
+        #- source-file-aznamer
+        #- source-file-modifiers
         - source-file-extension
+
 ```
