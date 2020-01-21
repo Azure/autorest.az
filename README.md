@@ -4,7 +4,7 @@ See documentation [here](doc/00-overview.md)
 
 ``` yaml
 use-extension:
-  "@autorest/cli.common": "/home/qiaozha/code/autorest.cli.common"
+  "@autorest/cli.common": "latest"
   #"@autorest/python": "latest"
   "@autorest/python": "https://github.com/Azure/autorest.python/releases/download/v5.0.0_20200116/autorest-python-5.0.0-20200116.tgz"
   "az": "$(this-folder)"
