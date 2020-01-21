@@ -42,4 +42,12 @@ scope-here:
         #- source-file-modifiers
         - source-file-extension
 
+
+
+no-namespace-folders: true
+clear-output-folder: true
+scope-codegen/emitter:
+    output-folder: "$(python-sdk-output-folder)"
+
+
 ```
