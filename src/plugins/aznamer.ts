@@ -70,7 +70,7 @@ export class AzNamer {
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
-    host.Message({Channel:Channel.Warning, Text:"in aznamer processRequest"});
+    //host.Message({Channel:Channel.Warning, Text:"in aznamer processRequest"});
 
     //console.error(extensionName);
     try {
