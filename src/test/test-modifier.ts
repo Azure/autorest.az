@@ -22,18 +22,18 @@ const resources = `${__dirname}/../../src/test/resources`;
     @test async simpleModifierTest() {
         let cfg = {
             az:{
-                extensions:"attestation",
-                directive:[
-                    {
-                        where:{
-                            command:"attestation operations list"
-                        },
-                        set:{
-                            command:"attestation list"
-                        }
+                extensions:"attestation"
+            },
+            directive:[
+                {
+                    where:{
+                        command:"attestation operations list"
+                    },
+                    set:{
+                        command:"attestation list"
                     }
-                ]
-            }
+                }
+            ]
         }
         const session = await createTestSession<CodeModel>(cfg, resources, ['attestation-az-namer.yaml'], []);
 
