@@ -114,9 +114,8 @@ export class Modifiers {
     }
 
     async process() {
-        let azSettings = await this.session.getValue('az');
-        directives = azSettings['directive'];
-
+        directives = await this.session.getValue('directive');
+        this.session.message({Channel:Channel.Warning, Text:serialize(directives)});
         if (directives != null) {
             for (const directive of directives.filter(each => !each.transform)) {
                 const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
@@ -130,7 +129,7 @@ export class Modifiers {
                     const paramDescriptionReplacer = directive.set !== undefined? directive.set["parameter-description"]: undefined;
                     const commandReplacer = directive.set !== undefined ? directive.set["command"] : undefined;
                     const commandDescriptionReplacer = directive.set !== undefined? directive.set["command-description"]: undefined;
-                    this.session.message({Channel:Channel.Warning, Text:serialize(commandRegex) + " " + serialize(commandReplacer)});
+                    
                     for (const operationGroup of values(this.codeModel.operationGroups)) {
                         //operationGroup
 

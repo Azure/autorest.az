@@ -36,7 +36,7 @@ const resources = `${__dirname}/../../src/test/resources/`;
 
         // console.log(serialize(codeModel))
         const yaml = serialize(codeModel);
-
+        //await (writeFile(`${__dirname}/../../src/test/resources/attestation-az-namer.yaml`, yaml));
         const supposeFile = await readFile(`${__dirname}/../../src/test/resources/attestation-az-namer.yaml`);
 
         //const cms = deserialize<CodeModel>(supposeFile, 'foo.yaml');

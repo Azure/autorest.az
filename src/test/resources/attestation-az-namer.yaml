@@ -1334,9 +1334,9 @@ operationGroups:
         name: Get
         description: Get the status of Attestation Provider.
       az:
-        name: get
+        name: show
         description: Get the status of Attestation Provider.
-        command: attestation attestation-providers get
+        command: attestation attestation-providers show
       cli:
         name: Get
         description: Get the status of Attestation Provider.
@@ -1892,9 +1892,9 @@ operationGroups:
         name: ListByResourceGroup
         description: Returns attestation providers list in a resource group.
       az:
-        name: list-by-resource-group
+        name: list
         description: Returns attestation providers list in a resource group.
-        command: attestation attestation-providers list-by-resource-group
+        command: attestation attestation-providers list
       cli:
         name: ListByResourceGroup
         description: Returns attestation providers list in a resource group.
