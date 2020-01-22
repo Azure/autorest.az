@@ -7,7 +7,7 @@ import { CodeModelCliImpl } from "./CodeModelAzImpl";
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
-    host.Message({Channel:Channel.Warning, Text:"in azgenerator processRequest"});
+    //host.Message({Channel:Channel.Warning, Text:"in azgenerator processRequest"});
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
  
@@ -16,7 +16,7 @@ export async function processRequest(host: Host) {
         let operationGroup = session.model.operationGroups[0];
         let operations = operationGroup.operations;
         let operation = operations[0];
-        session.message({Channel:Channel.Warning, Text:"Operation Command: " + operation.language['az'].command});
+        //session.message({Channel:Channel.Warning, Text:"Operation Command: " + operation.language['az'].command});
         let files: any = await GenerateAll(model, true);
 
         for (let f in files) {
