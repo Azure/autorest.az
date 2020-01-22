@@ -9,7 +9,7 @@ jobs:
     pool:
       vmImage: 'vs2017-win2016'
     steps:
-      - task: TSLint@1
+      - task: ms-codeanalysis.vss-microsoft-security-code-analysis.build-task-tslint.TSLint@1
         inputs:
           RuleLibrary: 'tslint'
           Ruleset: 'tsrecommended'
@@ -73,7 +73,7 @@ jobs:
       vmImage: "windows-2019"
 
     steps:
-      - task: CredScan@2
+      - task:  ms-codeanalysis.vss-microsoft-security-code-analysis.build-task-credscan.CredScan@2
         inputs:
           toolMajorVersion: 'V1'
       - task: PostAnalysis@1
