@@ -10,7 +10,7 @@ export type FileCallback = (path: string, rows: string[]) => void;
 const extension = new AutoRestExtension();
 
 // [ZIM] for now disabled until it actually works
-extension.Add("pynamer", async autoRestApi => {
+extension.Add("azclicommon", async autoRestApi => {
 
 
     try
@@ -25,7 +25,7 @@ extension.Add("pynamer", async autoRestApi => {
         const isDebugFlagSet = await autoRestApi.GetValue("debug");
         let azSettings = await autoRestApi.GetValue("az");
         let extensions = azSettings['extensions'];
-        
+
 
         // emit messages
 

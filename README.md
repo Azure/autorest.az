@@ -13,12 +13,12 @@ use-extension:
 pipeline-model: v3
 
 pipeline:
-    az/pynamer:
+    az/azclicommon:
         plugin: clicommon
         input: python/namer
         #output-artifact: source-file-pynamer
     az/aznamer:
-        input: az/pynamer
+        input: az/azclicommon
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
