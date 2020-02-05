@@ -87,13 +87,13 @@ export class AzNamer {
                     //this.session.message({Channel: Channel.Warning, Text: "operations number after " + operations.length});
                 }*/
             });
-            if(updateOperation != null) {
-                operations.push(updateOperation);
-            }
+            //if(updateOperation != null) {
+            //    operations.push(updateOperation);
+            //}
             //this.session.message({Channel: Channel.Warning, Text: "operations number outside " + operations.length});
-            operationGroup.operations = operations;
+            //operationGroup.operations = operations;
             //this.session.message({Channel: Channel.Warning, Text: "operationGroup.operations number outside " + operationGroup.operations.length});
-            this.codeModel.operationGroups[index] = operationGroup;
+            //this.codeModel.operationGroups[index] = operationGroup;
         });
         return this.codeModel;
     }
