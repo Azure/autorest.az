@@ -96,7 +96,7 @@ export function GenerateAzureCliParams(model: CodeModelAz) : string[] {
 
                             if (model.Option_IsList)
                             {
-                                if (model.Option_Type == SchemaType.Dictionary || model.Option_Type == SchemaType.Object)
+                                if (model.Option_Type == SchemaType.Object || model.Option_Type == SchemaType.Array)
                                 {
                                     let actionName: string = "PeeringAdd" + Capitalize(ToCamelCase(model.Option_Name));
                                     argument += ", action=" + actionName;
