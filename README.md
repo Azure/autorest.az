@@ -16,6 +16,9 @@ modelerfour:
     flatten-models: true
     flatten-payloads: true
 
+payload-flattening-threshold: 4
+recursive-payload-flattening: true
+
 pipeline:
     az/azclicommon:
         plugin: clicommon
