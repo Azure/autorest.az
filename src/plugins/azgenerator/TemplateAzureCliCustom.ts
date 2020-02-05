@@ -3,7 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz"
+import { CodeModelAz } from "./CodeModelAz";
+import { SchemaType } from "@azure-tools/codemodel";
 
 export function GenerateAzureCliCustom(model: CodeModelAz) : string[] {
     var output: string[] = [];
@@ -166,7 +167,7 @@ function GenerateBody(model: CodeModelAz, required: any) : string[] {
 
                                             if (model.MethodParameter_IsList)
                                             {
-                                                if (model.MethodParameter_Type != "dictionaries")
+                                                if (model.MethodParameter_Type != SchemaType.Dictionary)
                                                 {
                                                     // a comma separated list
                                                     access += "None if " + model.MethodParameter_Name + " is None else " + model.MethodParameter_Name;
@@ -177,7 +178,7 @@ function GenerateBody(model: CodeModelAz, required: any) : string[] {
                                                     access += model.MethodParameter_Name;
                                                 }
                                             }
-                                            else if (model.MethodParameter_Type != "dictionaries")
+                                            else if (model.MethodParameter_Type != SchemaType.Dictionary)
                                             {
                                                 access += model.MethodParameter_Name + "  # " + model.MethodParameter_Type; // # JSON.stringify(element);
                                             }
