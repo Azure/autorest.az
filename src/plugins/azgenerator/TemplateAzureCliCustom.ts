@@ -94,9 +94,12 @@ function GenerateBody(model: CodeModelAz, required: any) : string[] {
                         do
                         {
                             let required = model.Option_IsRequired;
-
-                            if (model.Option_Type == "placeholder")
+                            
+                            
+                            if (model.Option_In == "path") {
                                 continue;
+                            }
+                                
 
                             if (isUpdate && model.Option_PathSwagger.startsWith("/"))
                                 required = false;
@@ -143,12 +146,12 @@ function GenerateBody(model: CodeModelAz, required: any) : string[] {
                                     //}
                                 }
 
-                                if (model.SelectFirstOption())
+                                if (model.SelectFirstMethodParameter())
                                 {
                                     do
                                     {
                                         let access = "    body"
-                                        if (model.Option_PathSdk.startsWith("/") && model.Option_Type != "placeholder")
+                                        if (model.MethodParameter_In == "body")
                                         {
                                             let parts = model.Option_PathSdk.split("/");
                                             let last: string = parts.pop();
@@ -161,32 +164,32 @@ function GenerateBody(model: CodeModelAz, required: any) : string[] {
 
                                             access += "['" + last + "'] = ";
 
-                                            if (model.Option_IsList)
+                                            if (model.MethodParameter_IsList)
                                             {
-                                                if (model.Option_Type != "dict")
+                                                if (model.MethodParameter_Type != "dictionaries")
                                                 {
                                                     // a comma separated list
-                                                    access += "None if " + model.Option_NamePython + " is None else " + model.Option_NamePython;
+                                                    access += "None if " + model.MethodParameter_Name + " is None else " + model.MethodParameter_Name;
                                                 }
                                                 else
                                                 {
                                                     // already preprocessed by actions
-                                                    access += model.Option_NamePython
+                                                    access += model.MethodParameter_Name;
                                                 }
                                             }
-                                            else if (model.Option_Type != "dict")
+                                            else if (model.MethodParameter_Type != "dictionaries")
                                             {
-                                                access += model.Option_NamePython + "  # " + model.Option_Type; // # JSON.stringify(element);
+                                                access += model.MethodParameter_Name + "  # " + model.MethodParameter_Type; // # JSON.stringify(element);
                                             }
                                             else
                                             {
-                                                access += "json.loads(" + model.Option_NamePython + ") if isinstance(" +model.Option_NamePython + ", str) else " + model.Option_NamePython
+                                                access += "json.loads(" + model.MethodParameter_Name + ") if isinstance(" +model.MethodParameter_Name + ", str) else " + model.MethodParameter_Name
                                                 required['json'] = true;
                                             }
                                             
                                             if (isUpdate)
                                             {
-                                                output_body.push("    if " + model.Option_NamePython + " is not None:");
+                                                output_body.push("    if " + model.MethodParameter_Name + " is not None:");
                                                 output_body.push("    " + access);
                                             }
                                             else
@@ -195,7 +198,7 @@ function GenerateBody(model: CodeModelAz, required: any) : string[] {
                                             }
                                         }
                                     }
-                                    while (model.SelectNextOption());
+                                    while (model.SelectNextMethodParameter());
                                 }
                             }
                         }
@@ -219,7 +222,7 @@ function GenerateBody(model: CodeModelAz, required: any) : string[] {
                                         do
                                         {
                                             ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
-                                            ifStatement += " " + model.MethodParamerer_MapsTo + " is not None"
+                                            ifStatement += " " + model.MethodParameter_MapsTo + " is not None"
                                         }
                                         while (model.SelectNextMethodParameter());
                                         ifStatement += ":";
@@ -264,7 +267,7 @@ function GetMethodCall(model: CodeModelAz): string
     {
         do
         {
-            let optionName = model.MethodParamerer_MapsTo;
+            let optionName = model.MethodParameter_MapsTo;
             let parameterName = model.MethodParameter_Name; // p.PathSdk.split("/").pop();
             
             if (methodCall.endsWith("("))

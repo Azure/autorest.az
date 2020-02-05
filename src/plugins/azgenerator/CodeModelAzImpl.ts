@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType, Schema } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 import { ToSnakeCase } from '../../utils/helper';
@@ -40,13 +40,13 @@ export class CodeModelCliImpl implements CodeModelAz
     public constructor(protected session: Session<CodeModel>) 
     {
         this.codeModel = session.model;
-        this.sortOperationByAzCommand(this.codeModel);
+        this.sortOperationByAzCommand();
     }
 
-    private sortOperationByAzCommand(model: CodeModel) {
-        for(let [idx, operationGroup] of model.operationGroups.entries()) {
+    private sortOperationByAzCommand() {
+        for(let [idx, operationGroup] of this.codeModel.operationGroups.entries()) {
             operationGroup.operations.sort((a, b) => a.language['az'].command.localeCompare(b.language['az'].command));
-            model.operationGroups[idx] = operationGroup;
+            this.codeModel.operationGroups[idx] = operationGroup;
         }
     }
     //=================================================================================================================
@@ -253,14 +253,12 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_Name(): string
     {
-        //this.session.message({Channel:Channel.Warning, Text:"currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex + " currentParameterIndex: " + this.currentParameterIndex});
-        //this.session.message({Channel:Channel.Warning, Text:" operationGroup: " + this.session.model.operationGroups[this.currentOperationGroupIndex].$key});
-        return this.session.model.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command;
     }
 
     public get Command_MethodName(): string
     {
-        return this.session.model.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
     }
 
     public get Command_Help(): string
@@ -332,7 +330,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_NameUnderscored(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name.replace(/-/g, "_");
+        return this.Option_Name.replace(/-/g, "_");
     }
 
     public get Option_NamePython(): string
@@ -348,6 +346,12 @@ export class CodeModelCliImpl implements CodeModelAz
     public get Option_Description(): string
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].description;
+    }
+
+    public get Option_In(): string
+    {
+        let protocol = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].protocol;
+        return protocol != undefined && protocol.http != undefined && protocol.http.in != undefined ? protocol.http.in: "body";
     }
 
     public get Option_PathSdk(): string
@@ -367,16 +371,18 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_IsList(): boolean
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type == "array"? true: false;
+        let mtype = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type;
+        return (mtype == SchemaType.Dictionary || mtype == SchemaType.Object || mtype == SchemaType.Array)? true: false;
     }
 
     public get Option_EnumValues(): string[]
     {
-        if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type == "sealed-choice") {
+        let mtype = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type;
+        if(mtype == SchemaType.Choice || mtype == SchemaType.SealedChoice) {
             var enumArray = [];
             let schema = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema;
-            for(var item in schema['choices']) {
-                enumArray.push(item);
+            for(var item of schema['choices']) {
+                enumArray.push(item['value']);
             }
             return enumArray;
         } else {
@@ -495,11 +501,26 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['python'].name;
     }
 
-    public get MethodParamerer_MapsTo(): string
+    public get MethodParameter_MapsTo(): string
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['python'].name;
     }
+    public get MethodParameter_Type(): string
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].schema.type;
+    }
 
+    public get MethodParameter_IsList(): boolean
+    {
+        let mtype = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].schema.type;
+        return (mtype == SchemaType.Dictionary || mtype == SchemaType.Object || mtype == SchemaType.Array)? true: false;
+    }
+
+    public get MethodParameter_In(): string
+    {
+        let protocol = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].protocol;
+        return protocol != undefined && protocol.http != undefined && protocol.http.in != undefined? protocol.http.in: "body";
+    }
     //=================================================================================================================
     // Top Level Python Related Information
     //

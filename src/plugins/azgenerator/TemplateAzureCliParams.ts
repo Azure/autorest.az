@@ -5,6 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { EscapeString, ToCamelCase, Capitalize } from "../../utils/helper";
+import { SchemaType } from "@azure-tools/codemodel";
 
 export function GenerateAzureCliParams(model: CodeModelAz) : string[] {
     let output: string[] = [];
@@ -49,7 +50,7 @@ export function GenerateAzureCliParams(model: CodeModelAz) : string[] {
                         {
                             //let parameterName: string = element.Name.split("-").join("_");
                             let parameterName = model.Option_NameUnderscored;
-
+    
                             let argument = "        c.argument('" + parameterName + "'";
 
                             // this is to handle names like "format", "type", etc
@@ -59,12 +60,12 @@ export function GenerateAzureCliParams(model: CodeModelAz) : string[] {
                                 argument += ", options_list=['--" + parameterName + "']";
                             }
 
-                            if (model.Option_Type == "boolean")
+                            if (model.Option_Type == SchemaType.Boolean)
                             {
                                 hasBoolean = true;
                                 argument += ", arg_type=get_three_state_flag()";
                             }
-                            else if ((model.Option_EnumValues.length > 0) && !model.Option_IsList)
+                            else if (model.Option_Type == SchemaType.Choice || model.Option_Type == SchemaType.SealedChoice)
                             {
                                 hasEnum = true;
                                 argument += ", arg_type=get_enum_type([";
@@ -95,7 +96,7 @@ export function GenerateAzureCliParams(model: CodeModelAz) : string[] {
 
                             if (model.Option_IsList)
                             {
-                                if (model.Option_Type == "dict")
+                                if (model.Option_Type == SchemaType.Dictionary || model.Option_Type == SchemaType.Object)
                                 {
                                     let actionName: string = "PeeringAdd" + Capitalize(ToCamelCase(model.Option_Name));
                                     argument += ", action=" + actionName;
