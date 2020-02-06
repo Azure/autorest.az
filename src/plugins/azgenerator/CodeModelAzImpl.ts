@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { CodeModel, SchemaType, Schema } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType, Schema, ParameterLocation } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 import { ToSnakeCase } from '../../utils/helper';
@@ -270,9 +270,9 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length > 0) {
             this.currentParameterIndex = 0;
-            //this.session.message({Channel:Channel.Warning, Text: "operationGroupIndex: " + this.currentOperationGroupIndex + " operationIndex: "+ this.currentOperationIndex +" parameterIndex: " + this.currentParameterIndex})
-            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
-            if(currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+            let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex]
+            const currentParameterName = parameter.language['az'].name;
+            if(parameter.hidden || currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -290,8 +290,9 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
-            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
-            if(currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+            let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
+            const currentParameterName = parameter.language['az'].name;
+            if(parameter.hidden || currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -351,7 +352,12 @@ export class CodeModelCliImpl implements CodeModelAz
     public get Option_In(): string
     {
         let protocol = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].protocol;
-        return protocol != undefined && protocol.http != undefined && protocol.http.in != undefined ? protocol.http.in: "body";
+        return protocol != undefined && protocol.http != undefined && protocol.http.in != undefined ? protocol.http.in: ParameterLocation.Body;
+    }
+
+    public get Option_IsHidden(): boolean
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].hidden? true: false;   
     }
 
     public get Option_PathSdk(): string
@@ -464,8 +470,9 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters.length > 0) {
             this.currentParameterIndex = 0;
-            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['python'].name;
-            if(currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
+            let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
+            const currentParameterName = parameter.language['python'].name;
+            if(parameter.hidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -482,8 +489,9 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
-            const currentParameterName = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['python'].name;
-            if(currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
+            let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
+            const currentParameterName = parameter.language['python'].name;
+            if(parameter.hidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -519,7 +527,12 @@ export class CodeModelCliImpl implements CodeModelAz
     public get MethodParameter_In(): string
     {
         let protocol = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].protocol;
-        return protocol != undefined && protocol.http != undefined && protocol.http.in != undefined? protocol.http.in: "body";
+        return protocol != undefined && protocol.http != undefined && protocol.http.in != undefined? protocol.http.in: ParameterLocation.Body;
+    }
+
+    public get MethodParameter_IsHidden(): boolean
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].hidden? true: false;
     }
     //=================================================================================================================
     // Top Level Python Related Information

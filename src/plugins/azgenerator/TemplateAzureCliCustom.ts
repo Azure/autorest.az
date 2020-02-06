@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { SchemaType } from "@azure-tools/codemodel";
+import { SchemaType, ParameterLocation } from "@azure-tools/codemodel";
 
 export function GenerateAzureCliCustom(model: CodeModelAz) : string[] {
     var output: string[] = [];
@@ -68,6 +68,7 @@ function GenerateBody(model: CodeModelAz, required: any) : string[] {
                     {
                         do
                         {
+                            
                             let required: boolean = model.Option_IsRequired;
 
                             // XXX - handle this in model
@@ -94,10 +95,11 @@ function GenerateBody(model: CodeModelAz, required: any) : string[] {
                     {
                         do
                         {
+
                             let required = model.Option_IsRequired;
                             
                             
-                            if (model.Option_In == "path") {
+                            if (model.Option_In == ParameterLocation.Path) {
                                 continue;
                             }
                                 
@@ -152,7 +154,7 @@ function GenerateBody(model: CodeModelAz, required: any) : string[] {
                                     do
                                     {
                                         let access = "    body"
-                                        if (model.MethodParameter_In == "body")
+                                        if (model.MethodParameter_In == ParameterLocation.Body)
                                         {
                                             let parts = model.Option_PathSdk.split("/");
                                             let last: string = parts.pop();

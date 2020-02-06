@@ -46,6 +46,7 @@ export interface CodeModelAz
     Option_PathSdk: string;
     Option_PathSwagger: string;
     Option_EnumValues: string[];
+    Option_IsHidden: boolean;
 
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
@@ -63,6 +64,7 @@ export interface CodeModelAz
     MethodParameter_Type: string;
     MethodParameter_IsList: boolean;
     MethodParameter_In: string;
+    MethodParameter_IsHidden: boolean;
 
 
     GetModuleOperationName(): string;
