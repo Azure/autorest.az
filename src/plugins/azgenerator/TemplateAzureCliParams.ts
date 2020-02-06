@@ -48,8 +48,8 @@ export function GenerateAzureCliParams(model: CodeModelAz) : string[] {
                     {
                         do
                         {
-                            //let parameterName: string = element.Name.split("-").join("_");
-                            let parameterName = model.Option_NameUnderscored;
+                        
+                            let parameterName = model.Option_NamePython;
     
                             let argument = "        c.argument('" + parameterName + "'";
 
@@ -77,7 +77,7 @@ export function GenerateAzureCliParams(model: CodeModelAz) : string[] {
                                 argument += "])";
                             }
 
-                            if (parameterName == "resource_group")
+                            if (parameterName == "resource_group_name")
                             {
                                 argument += ", resource_group_name_type";
                             }

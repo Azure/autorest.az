@@ -65,6 +65,7 @@ export interface CodeModelAz
     MethodParameter_IsList: boolean;
     MethodParameter_In: string;
     MethodParameter_IsHidden: boolean;
+    MethodParameter_IsRequired: boolean;
 
 
     GetModuleOperationName(): string;

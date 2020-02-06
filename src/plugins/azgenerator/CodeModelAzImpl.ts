@@ -206,13 +206,6 @@ export class CodeModelCliImpl implements CodeModelAz
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length > 0) {
             this.currentOperationIndex = 0;
             this.preMethodIndex = this.currentOperationIndex;
-            while(this.currentOperationIndex + 1 < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
-                if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1].language['az'].command) {
-                    this.currentOperationIndex++;
-                } else {
-                    break;
-                }
-            }
             this.SelectFirstOption();
             this.SelectFirstMethod();
             this.SelectFirstMethodParameter();
@@ -228,8 +221,8 @@ export class CodeModelCliImpl implements CodeModelAz
         if(this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length - 1) {
             this.currentOperationIndex++;
             this.preMethodIndex = this.currentOperationIndex;
-            while(this.currentOperationIndex + 1 < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
-                if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1].language['az'].command) {
+            while(this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
+                if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex - 1].language['az'].command) {
                     this.currentOperationIndex++;
                 } else {
                     break;
@@ -276,11 +269,35 @@ export class CodeModelCliImpl implements CodeModelAz
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
+                    if(this.currentOperationIndex + 1 < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
+                        if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1].language['az'].command) {
+                            this.currentOperationIndex++;
+                            if(this.SelectFirstOption()) {
+                                for(var previousParam of this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex - 1].request.parameters) {
+                                    if(previousParam == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex]) {
+                                        return this.SelectNextOption();
+                                    }
+                                }
+                            }
+                        }
+                    }
                     return false;
                 };
             }
             return true;
         } else {
+            if(this.currentOperationIndex + 1 < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
+                if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1].language['az'].command) {
+                    this.currentOperationIndex++;
+                    if(this.SelectFirstOption()) {
+                        for(var previousParam of this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex - 1].request.parameters) {
+                            if(previousParam == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex]) {
+                                return this.SelectNextOption();
+                            }
+                        }
+                    }
+                }
+            }
             this.currentParameterIndex = -1;
             return false;
         }
@@ -296,14 +313,40 @@ export class CodeModelCliImpl implements CodeModelAz
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
+                    //If 
+                    if(this.currentOperationIndex + 1 < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
+                        if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1].language['az'].command) {
+                            this.currentOperationIndex++;
+                            if(this.SelectFirstOption()) {
+                                for(var previousParam of this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex - 1].request.parameters) {
+                                    if(previousParam == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex]) {
+                                        return this.SelectNextOption();
+                                    }
+                                }
+                            }
+                        }
+                    }
                     return false;
                 };
             }
             return true;
         } else {
+            if(this.currentOperationIndex + 1 < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
+                if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1].language['az'].command) {
+                    this.currentOperationIndex++;
+                    if(this.SelectFirstOption()) {
+                        for(var previousParam of this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex - 1].request.parameters) {
+                            if(previousParam == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex]) {
+                                return this.SelectNextOption();
+                            }
+                        }
+                    }
+                }
+            }
             this.currentParameterIndex = -1;
             return false;
         }
+        
     }
 
     public HasSubOptions(): boolean
@@ -331,6 +374,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_NameUnderscored(): string
     {
+        this.session.message({Channel:Channel.Warning, Text: "CommandGroupIndex: " + this.currentOperationGroupIndex +" CommandIndex: " + this.currentOperationIndex + " ParameterIdx: " + this.currentParameterIndex});
         return this.Option_Name.replace(/-/g, "_");
     }
 
@@ -473,7 +517,7 @@ export class CodeModelCliImpl implements CodeModelAz
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
             const currentParameterName = parameter.language['python'].name;
             if(parameter.hidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
-                if(this.SelectNextOption()) {
+                if(this.SelectNextMethodParameter()) {
                     return true;
                 } else {
                     return false;
@@ -492,7 +536,7 @@ export class CodeModelCliImpl implements CodeModelAz
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
             const currentParameterName = parameter.language['python'].name;
             if(parameter.hidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
-                if(this.SelectNextOption()) {
+                if(this.SelectNextMethodParameter()) {
                     return true;
                 } else {
                     return false;
@@ -533,6 +577,11 @@ export class CodeModelCliImpl implements CodeModelAz
     public get MethodParameter_IsHidden(): boolean
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].hidden? true: false;
+    }
+
+    public get MethodParameter_IsRequired(): boolean
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].required;
     }
     //=================================================================================================================
     // Top Level Python Related Information

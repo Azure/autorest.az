@@ -224,6 +224,9 @@ function GenerateBody(model: CodeModelAz, required: any) : string[] {
                                     {
                                         do
                                         {
+                                            if(!model.MethodParameter_IsRequired) {
+                                                continue;
+                                            }
                                             ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
                                             ifStatement += " " + model.MethodParameter_MapsTo + " is not None"
                                         }
