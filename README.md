@@ -16,16 +16,17 @@ modelerfour:
     flatten-models: true
     flatten-payloads: true
 
+clicommon: true
+
 payload-flattening-threshold: 4
 recursive-payload-flattening: true
 
 pipeline:
-    az/azclicommon:
-        plugin: clicommon
+    az/clicommon:
         input: python/namer
         #output-artifact: source-file-pynamer
     az/aznamer:
-        input: az/azclicommon
+        input: az/clicommon
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
@@ -35,13 +36,15 @@ pipeline:
         output-artifact: source-file-extension
     az/emitter:
         input:
-            #- az/pynamer
+            #- az/azclicommon
             #- az/aznamer
             #- az/modifiers
             - az/azgenerator
-        scope: scope-here
+        scope: scope-az
 
-scope-here:
+scope-clicommon: false
+
+scope-az:
     is-object: false
     output-artifact:
         #- source-file-pynamer
