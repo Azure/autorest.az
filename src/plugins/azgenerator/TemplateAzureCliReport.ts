@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
+import { ParameterLocation } from "@azure-tools/codemodel";
 
 export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
     var output: string[] = [];
@@ -41,7 +42,7 @@ export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
                     // first parameters that are required
                     do
                     {
-                        if (model.Option_Type != "placeholder" && model.Option_IsRequired)
+                        if (model.Option_In != ParameterLocation.Path && model.Option_IsRequired)
                         {
                             mo.push("|**--" + model.Option_Name + "**|" + model.Option_Type + "|" + model.Option_Description + "|" + model.Option_PathSdk + "|" + model.Option_PathSwagger + "|");
                         }
@@ -54,7 +55,7 @@ export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
 
                     // following by required parameters
                     do {
-                        if (model.Option_Type != "placeholder" && !model.Option_IsRequired)
+                        if (model.Option_In != ParameterLocation.Path && !model.Option_IsRequired)
                         {
                             mo.push("|--" + model.Option_Name + "**|" + model.Option_Type + "|" + model.Option_Description + "|" + model.Option_PathSdk + "|" + model.Option_PathSwagger + "|");
                         }

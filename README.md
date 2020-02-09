@@ -6,10 +6,18 @@ See documentation [here](doc/00-overview.md)
 use-extension:
   "@autorest/clicommon": "latest"
   #"@autorest/python": "latest"
-  "@autorest/python": "https://github.com/Azure/autorest.python/releases/download/v5.0.0_20200116/autorest-python-5.0.0-20200116.tgz"
+  "@autorest/python": "https://github.com/Azure/autorest.python/releases/download/v5.0.0_20200123/autorest-python-5.0.0-20200123.tgz"
 
 
 pipeline-model: v3
+
+modelerfour:
+    group-parameters: true
+    flatten-models: true
+    flatten-payloads: true
+
+payload-flattening-threshold: 4
+recursive-payload-flattening: true
 
 pipeline:
     az/azclicommon:
