@@ -115,7 +115,7 @@ export class AzNamer {
             let operationGroupName = "";
             if(operationGroup.language['cli'] != undefined) {
                 operationGroup.language['az'] = new Language();
-                operationGroup.language['az']['name'] = operationGroup.language['cli'].name;
+                operationGroup.language['az']['name'] = operationGroup.language['cli']['name'];
                 operationGroup.language['az']['description'] = operationGroup.language['cli']['description'];
                 operationGroupName = extensionName + " " + changeCamelToDash(operationGroup.language['az']['name'])
                 operationGroup.language['az']['command'] = operationGroupName;
