@@ -122,7 +122,8 @@ export class AzNamer {
             }
 
             let operations = operationGroup.operations;
-            var updateOperation = null;
+            var hasUpdate = false;
+            var operationIndex = -1;
             operations.map(operation => {
                 let operationName = "";
                 if(operation.language['cli'] != undefined) {
@@ -139,33 +140,16 @@ export class AzNamer {
                         this.getAzName(parameter);
                     }
                 });
-                /*if(operation.language['cli']['name'].toLowerCase() == "createorupdate") {
-                    updateOperation = operation;
-                    updateOperation.language['az'] = {}
-                    updateOperation.language['az']['name'] = this.methodMap("Update", updateOperation.request.protocol.http.method);
-                    updateOperation.language['az']['description'] = updateOperation.language['cli']['description'];
-                    operationName = operationGroupName + " " +  changeCamelToDash(updateOperation.language['az']['name']);
-                    updateOperation.language['az']['command'] = operationName;
-                    updateOperation.request.parameters.forEach(parameter => {
-                        if(parameter.language['cli'] != undefined) {
-                            parameter.language['az'] = {};
-                            parameter.language['az']['name'] = parameter.language['cli']['name'];
-                            parameter.language['az']['description'] = parameter.language['cli']['description'];
-                            parameter.language['az']['name'] = changeCamelToDash(parameter.language['az']['name']);
-                        }
-                    });
-                    //this.session.message({Channel: Channel.Warning, Text: "operations number before " + operations.length});                   
-                    //operations.push(updateOperation);
-                    //this.session.message({Channel: Channel.Warning, Text: "operations number after " + operations.length});
-                }*/
+                if(operation.language['cli']['name'].toLowerCase() == "createorupdate") {
+                    operationIndex = operations.indexOf(operation);
+                }
+                if(operation.language['cli']['name'].toLowerCase() == "update") {
+                    hasUpdate = true;
+                }
             });
-            //if(updateOperation != null) {
-            //    operations.push(updateOperation);
-            //}
-            //this.session.message({Channel: Channel.Warning, Text: "operations number outside " + operations.length});
-            //operationGroup.operations = operations;
-            //this.session.message({Channel: Channel.Warning, Text: "operationGroup.operations number outside " + operationGroup.operations.length});
-            //this.codeModel.operationGroups[index] = operationGroup;
+            if(!hasUpdate && operationIndex != -1) {
+                operations[operationIndex]['canSplitOperation'] = true;
+            }
         });
     }
 }

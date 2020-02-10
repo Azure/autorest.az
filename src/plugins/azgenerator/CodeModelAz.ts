@@ -29,6 +29,8 @@ export interface CodeModelAz
 
     Command_Help: string;
 
+    Command_CanSplit: boolean;
+
     SelectFirstOption(): boolean;
     SelectNextOption(): boolean;
     HasSubOptions(): boolean;

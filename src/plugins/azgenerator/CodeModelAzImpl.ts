@@ -4,10 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { CodeModel, SchemaType, Schema, ParameterLocation } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType, Schema, ParameterLocation, Operation } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 import { ToSnakeCase } from '../../utils/helper';
+import { values } from "@azure-tools/linq";
+import { stringify } from "querystring";
 
 
 
@@ -34,20 +36,25 @@ export class CodeModelCliImpl implements CodeModelAz
         this.currentExampleIndex = -1;
         this.preMethodIndex = -1;
         this.currentMethodIndex = -1;
+        this.sortOperationByAzCommand();
         
     }
 
     public constructor(protected session: Session<CodeModel>) 
     {
         this.codeModel = session.model;
-        this.sortOperationByAzCommand();
     }
 
+    private getOrder(op: string) {
+        let opOrder = ["list", "show", "create", "update", "delete"];
+        return opOrder.indexOf(op.toLowerCase()).toLocaleString();
+    }
     private sortOperationByAzCommand() {
         for(let [idx, operationGroup] of this.codeModel.operationGroups.entries()) {
-            operationGroup.operations.sort((a, b) => a.language['az'].command.localeCompare(b.language['az'].command));
+            operationGroup.operations.sort((a, b) => this.getOrder(a.language['az']['name']).localeCompare(this.getOrder(b.language['az']['name'])));
             this.codeModel.operationGroups[idx] = operationGroup;
         }
+
     }
     //=================================================================================================================
     // Extension level information
@@ -246,6 +253,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_Name(): string
     {
+        this.session.message({Channel:Channel.Warning, Text: "operationGroupIndex: " + this.currentOperationGroupIndex + " operationIndex: " + this.currentOperationIndex});
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command;
     }
 
@@ -259,8 +267,18 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].description;
     }
 
+    public get Command_CanSplit(): boolean 
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]['canSplitOperation']? true: false;
+    }
+
     public SelectFirstOption(): boolean
     {
+        if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
+            this.session.message({Channel: Channel.Warning, Text: "FirstOption: currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex});
+            this.currentParameterIndex = -1;
+            return false;
+        }
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length > 0) {
             this.currentParameterIndex = 0;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex]
@@ -281,6 +299,7 @@ export class CodeModelCliImpl implements CodeModelAz
                             }
                         }
                     }
+                    this.currentParameterIndex = -1;
                     return false;
                 };
             }
@@ -305,6 +324,11 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextOption(): boolean
     {
+        if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
+            this.session.message({Channel: Channel.Warning, Text: "NextOption: currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex});
+            this.currentParameterIndex = -1;
+            return false;
+        }
         if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
@@ -326,6 +350,7 @@ export class CodeModelCliImpl implements CodeModelAz
                             }
                         }
                     }
+                    this.currentParameterIndex = -1;
                     return false;
                 };
             }
@@ -497,7 +522,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Method_Name(): string
     {
-       return  this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].language['az'].name;
+       return  this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].language['python'].name;
     }
 
     public get Method_BodyParameterName(): string

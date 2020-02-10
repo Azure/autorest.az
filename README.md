@@ -5,6 +5,7 @@ See documentation [here](doc/00-overview.md)
 ``` yaml
 use-extension:
   "@autorest/clicommon": "latest"
+  #"@autorest/clicommon": "/Users/zhangqiaoqiao/work/code/autorest.cli.common"
   #"@autorest/python": "latest"
   "@autorest/python": "https://github.com/Azure/autorest.python/releases/download/v5.0.0_20200123/autorest-python-5.0.0-20200123.tgz"
 
