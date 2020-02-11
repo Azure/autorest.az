@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { CodeModel, SchemaType, Schema, ParameterLocation } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType, Schema, ParameterLocation, Parameter } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 import { ToSnakeCase } from '../../utils/helper';
@@ -689,28 +689,17 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].extensions['x-ms-examples'];
     }
 
-
-    public get GlobalParameterNames(): string[] {
-        let ret = []
-        this.codeModel.globalParameters.forEach((example) => {
-            let name = example.language?.default?.name;
-            if (name) {
-                ret.push(name);
-            }
-        });
-        return ret
-    }
-
-
     /**
      * Gets method parameters dict
      * @returns method parameters dict : key is parameter name, value is the parameter schema
      */
-    public GetMethodParametersDict(): Map<string, any> {
-        let method_param_dict: Map<string, any> = new Map<string, any>();
+    public GetMethodParametersDict(): Map<string, Parameter> {
+        let method_param_dict: Map<string, Parameter> = new Map<string, Parameter>();
         if (this.SelectFirstMethodParameter()) {
             do {
-                method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
+                if (this.MethodParameter.implementation=='Method') {
+                    method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
+                }
             } while (this.SelectNextMethodParameter());
         }
         return method_param_dict;
@@ -720,10 +709,8 @@ export class CodeModelCliImpl implements CodeModelAz
         let parameters: Map<string, string> = new Map<string, string>();
         let method_param_dict: Map<string, any> = this.GetMethodParametersDict();
         Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
-            if (!this.GlobalParameterNames.includes(param_name)) {
-                if (param_name in method_param_dict && (!kind || method_param_dict[param_name].protocol?.http?.in == kind)) {
-                    parameters[param_name] = param_value;
-                }
+            if (param_name in method_param_dict && (!kind || method_param_dict[param_name].protocol?.http?.in == kind)) {
+                parameters[param_name] = param_value;
             }
         })
         return parameters;
