@@ -5,10 +5,10 @@
 
 import { suite, test } from 'mocha-typescript';
 import * as assert from 'assert';
-import { readFile, writeFile, readdir, mkdir } from '@azure-tools/async-io';
-import { deserialize, serialize, fail } from '@azure-tools/codegen';
-import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
-import { createTestSession } from './utils/test-helper';
+import { readFile, writeFile, readdir, mkdir } from "@azure-tools/async-io";
+import { deserialize, serialize, fail } from "@azure-tools/codegen";
+import { CodeModel, codeModelSchema } from "@azure-tools/codemodel";
+import { createTestSession } from "./utils/test-helper";
 import { Modifiers } from '../plugins/modifiers';
 
 

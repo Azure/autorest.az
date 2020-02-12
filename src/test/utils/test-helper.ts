@@ -1,9 +1,9 @@
-import { readFile, writeFile, readdir, mkdir } from '@azure-tools/async-io';
-import { deserialize, serialize, fail } from '@azure-tools/codegen';
-import { startSession } from '@azure-tools/autorest-extension-base';
-import { values } from '@azure-tools/linq';
-import { CodeModel } from '@azure-tools/codemodel';
-import { codeModelSchema } from '@azure-tools/codemodel';
+import { readFile, writeFile, readdir, mkdir } from "@azure-tools/async-io";
+import { deserialize, serialize, fail } from "@azure-tools/codegen";
+import { startSession } from "@azure-tools/autorest-extension-base";
+import { values } from "@azure-tools/linq";
+import { CodeModel } from "@azure-tools/codemodel";
+import { codeModelSchema } from "@azure-tools/codemodel";
 
 
 require('source-map-support').install();
