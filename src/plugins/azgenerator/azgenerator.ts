@@ -10,7 +10,7 @@ export async function processRequest(host: Host) {
     //host.Message({Channel:Channel.Warning, Text:"in azgenerator processRequest"});
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        let cliSettings = await session.getValue('cli');
+        let cliSettings = await session.getValue('az');
         let testScenario: any[] = cliSettings['test-setup'] || cliSettings["test-scenario"];
 
  
