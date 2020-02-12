@@ -6,7 +6,7 @@ See documentation [here](doc/00-overview.md)
 use-extension:
   "@autorest/clicommon": "latest"
   #"@autorest/python": "latest"
-  "@autorest/python": "https://github.com/Azure/autorest.python/releases/download/v5.0.0_20200123/autorest-python-5.0.0-20200123.tgz"
+  "@autorest/python": "https://github.com/Azure/autorest.python/releases/download/v5.0.0-dev.20200211.1/autorest-python-5.0.0-dev.20200211.1.tgz"
 
 
 pipeline-model: v3
@@ -16,16 +16,17 @@ modelerfour:
     flatten-models: true
     flatten-payloads: true
 
+clicommon: true
+
 payload-flattening-threshold: 4
 recursive-payload-flattening: true
 
 pipeline:
-    az/azclicommon:
-        plugin: clicommon
+    az/clicommon:
         input: python/namer
         #output-artifact: source-file-pynamer
     az/aznamer:
-        input: az/azclicommon
+        input: az/clicommon
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
@@ -35,13 +36,15 @@ pipeline:
         output-artifact: source-file-extension
     az/emitter:
         input:
-            #- az/pynamer
+            #- az/azclicommon
             #- az/aznamer
             #- az/modifiers
             - az/azgenerator
-        scope: scope-here
+        scope: scope-az
 
-scope-here:
+scope-clicommon: false
+
+scope-az:
     is-object: false
     output-artifact:
         #- source-file-pynamer

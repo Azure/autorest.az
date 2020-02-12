@@ -53,13 +53,9 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
                 output.push("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + ") as g:");
                 do
                 {
-                    if (model.Command_MethodName != "show")
-                    {
-                        output.push("        g.custom_command('" + model.Command_MethodName + "', '" + model.Command_FunctionName + "')");
-                    }
-                    else
-                    {
-                        output.push("        g.custom_show_command('" + model.Command_MethodName + "', '" + model.Command_FunctionName + "')");
+                    output = output.concat(getCommandBody(model));
+                    if(model.Command_CanSplit) {
+                        output = output.concat(getCommandBody(model, true));
                     }
                 }
                 while (model.SelectNextCommand());
@@ -68,5 +64,22 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
     }
     output.push("");
 
+    return output;
+}
+
+function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
+    let output: string [] = [];
+    if (model.Command_MethodName != "show")
+    {
+        if(needUpdate) {
+            output.push("        g.custom_command('" + model.Command_MethodName.replace(/create/g, "update") + "', '" + model.Command_FunctionName.replace(/_create/g, "_update") + "')");
+        } else {
+            output.push("        g.custom_command('" + model.Command_MethodName + "', '" + model.Command_FunctionName + "')");
+        } 
+    }
+    else
+    {
+        output.push("        g.custom_show_command('" + model.Command_MethodName + "', '" + model.Command_FunctionName + "')");
+    }
     return output;
 }
