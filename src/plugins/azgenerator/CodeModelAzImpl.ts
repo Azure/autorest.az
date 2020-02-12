@@ -4,12 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { CodeModel, SchemaType, Schema, ParameterLocation, Operation } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType, Schema, ParameterLocation, Operation } from "@azure-tools/codemodel";
 import { serialize, deserialize } from "@azure-tools/codegen";
-import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
+import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { stringify } from "querystring";
 
 
 

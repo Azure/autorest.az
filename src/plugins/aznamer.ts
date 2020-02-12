@@ -1,7 +1,7 @@
-import { CodeModel, codeModelSchema, Language } from '@azure-tools/codemodel';
-import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
-import { serialize, deserialize } from '@azure-tools/codegen';
-import { values, items, length, Dictionary } from '@azure-tools/linq';
+import { CodeModel, codeModelSchema, Language } from "@azure-tools/codemodel";
+import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
+import { serialize, deserialize } from "@azure-tools/codegen";
+import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { changeCamelToDash } from '../utils/helper';
 
 export class AzNamer {
@@ -90,7 +90,6 @@ export class AzNamer {
 
         for(let cons of values(schemas.constants)) {
             this.getAzName(cons);
-            this.getAzName(cons.value);
         }
 
         for(let num of values(schemas.numbers)) {
