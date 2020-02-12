@@ -4,12 +4,21 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { CodeModel, SchemaType, Schema, ParameterLocation } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType, Schema, ParameterLocation, Parameter } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 import { ToSnakeCase } from '../../utils/helper';
 
 
+export class CommandExample
+{
+    // this should be "create", "update", "list", "show", or custom name
+    public Method: string;
+    public Id: string;
+    // public Title: string;
+    public Parameters: Map<string, string>;
+    // public MethodName: string;
+}
 
 export class CodeModelCliImpl implements CodeModelAz
 {
@@ -22,7 +31,7 @@ export class CodeModelCliImpl implements CodeModelAz
     currentExampleIndex: number;
     preMethodIndex: number;
     currentMethodIndex: number;
-
+    private _testScenario: any;
 
 
     async init() {
@@ -37,9 +46,10 @@ export class CodeModelCliImpl implements CodeModelAz
         
     }
 
-    public constructor(protected session: Session<CodeModel>) 
+    public constructor(protected session: Session<CodeModel>, testScenario: any) 
     {
         this.codeModel = session.model;
+        this._testScenario = testScenario;
         this.sortOperationByAzCommand();
     }
 
@@ -108,7 +118,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Extension_TestScenario(): any
     {
-        return [];
+        return this._testScenario;
     }
 
     //=================================================================================================================
@@ -568,6 +578,12 @@ export class CodeModelCliImpl implements CodeModelAz
         return (mtype == SchemaType.Dictionary || mtype == SchemaType.Object || mtype == SchemaType.Array)? true: false;
     }
 
+    public get MethodParameter(): any {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
+    }
+
+
+
     public get MethodParameter_In(): string
     {
         let protocol = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].protocol;
@@ -669,8 +685,113 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().parameters;
     }
 
-    public FindExampleById(id: string): string[]
-    {
+    public get Examples(): any {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].extensions['x-ms-examples'];
+    }
+
+    /**
+     * Gets method parameters dict
+     * @returns method parameters dict : key is parameter name, value is the parameter schema
+     */
+    public GetMethodParametersDict(): Map<string, Parameter> {
+        let method_param_dict: Map<string, Parameter> = new Map<string, Parameter>();
+        if (this.SelectFirstMethodParameter()) {
+            do {
+                if (this.MethodParameter.implementation=='Method') {
+                    method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
+                }
+            } while (this.SelectNextMethodParameter());
+        }
+        return method_param_dict;
+    }
+
+    public GetExampleParameters(example_obj, kind): Map<string, string> {
+        let parameters: Map<string, string> = new Map<string, string>();
+        let method_param_dict: Map<string, any> = this.GetMethodParametersDict();
+        Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
+            if (param_name in method_param_dict && (!kind || method_param_dict[param_name].protocol?.http?.in == kind)) {
+                parameters[param_name] = param_value;
+            }
+        })
+        return parameters;
+    }
+
+    public ConvertToCliParameters(example_params): Map<string, string> {
+        let ret: Map<string, string> = new Map<string, string>();
+        Object.entries(example_params).forEach(([param_name, param_value]) => {
+            param_name = ToSnakeCase(param_name);
+            if (param_name.endsWith('_name')) {
+                if (param_name == "resource_group_name") {
+                    param_name = "resource_group";
+                }
+                else {
+                    param_name = "name";
+                }
+            }
+            param_name = param_name.split("_").join("-");
+            ret["--" + param_name] = param_value;
+        });
+        return ret;
+    }
+
+
+    private GetExamples(): CommandExample[] {
+        let examples: CommandExample[] = [];
+        if (this.Examples) {
+            Object.entries(this.Examples).forEach(([id, example_obj]) => {
+                let example = new CommandExample();
+                example.Method = this.Method_Name;
+                example.Id = id;
+                let params: Map<string, string> = this.GetExampleParameters(example_obj, "path");
+                example.Parameters = this.ConvertToCliParameters(params);
+                examples.push(example);
+            });
+        }
+        return examples;
+    }
+
+    public GetExampleItems(example: CommandExample, isTest: boolean): string[] {
+        let parameters: string[] = [];
+
+        parameters.push("az " + this.CommandGroup_Name.split("_").join("-") + " " + example.Method)
+
+        for (let k in example.Parameters) {
+            let slp = JSON.stringify(example.Parameters[k]).split(/[\r\n]+/).join("");
+
+            if (isTest) {
+                if (k != "--resource-group") {
+                    parameters.push(k + " " + slp);
+                }
+                else {
+                    parameters.push(k + " {rg}");
+                }
+            }
+            else {
+                parameters.push(k + " " + slp);
+            }
+        }
+
+        return parameters;
+    }
+
+    public FindExampleById(id: string): string[] {
+        this.SelectFirstExtension();
+        if (this.SelectFirstCommandGroup()) {
+            do {    // iterate all CommandGroups
+                while (this.currentOperationIndex >= 0) {  // iterate all Commands
+                    this.SelectFirstMethod();
+                    do {                        // iterate all Methods
+                        for (let example of this.GetExamples()){
+                            if (example.Id.toLowerCase() == id.toLowerCase()) {
+                                return this.GetExampleItems(example, true);
+                            }
+                        }
+                    } while (this.SelectNextMethod())
+                    this.SelectNextCommand();
+                }
+            } while (this.SelectNextCommandGroup())
+        }
         return [];
+
     }
 }
