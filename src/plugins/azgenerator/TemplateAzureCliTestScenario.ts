@@ -59,6 +59,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz) : string[] {
             else
             {
                 output.push("        # EXAMPLE NOT FOUND: " + config[ci].name);
+                output.push("");
             }
         }
     }
