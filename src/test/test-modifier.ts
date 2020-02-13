@@ -20,36 +20,40 @@ const resources = `${__dirname}/../../src/test/resources`;
 
 @suite class Process {
     @test async simpleModifierTest() {
-        let cfg = {
-            az:{
-                extensions:"attestation"
-            },
-            directive:[
-                {
-                    where:{
-                        command:"attestation operations list"
-                    },
-                    set:{
-                        command:"attestation list"
+        const folders = await readdir(resources);
+        for(var each of folders) {
+            let cfg = {
+                az:{
+                    extensions:each
+                },
+                directive:[
+                    {
+                        where:{
+                            command: each + " operations list"
+                        },
+                        set:{
+                            command: each + " list"
+                        }
                     }
-                }
-            ]
+                ]
+            }
+            const session = await createTestSession<CodeModel>(cfg, resources+ "/" + each, [each + '-az-namer.yaml'], []);
+
+            // process OAI model
+            const modeler = new Modifiers(session);
+
+            // go!
+            const codeModel = await modeler.process();
+
+            // console.log(serialize(codeModel))
+            const yaml = serialize(codeModel);
+            const fileName = `${__dirname}/../../src/test/resources/` + each + "/" + each + `-az-modifier.yaml`;
+            //await (writeFile(fileName, yaml));
+            const supposeFile = await readFile(fileName);
+
+            //const cms = deserialize<CodeModel>(yaml, 'foo.yaml');
+
+            assert.strictEqual(yaml, supposeFile, 'namer has failed the unit test');
         }
-        const session = await createTestSession<CodeModel>(cfg, resources, ['attestation-az-namer.yaml'], []);
-
-        // process OAI model
-        const modeler = new Modifiers(session);
-
-        // go!
-        const codeModel = await modeler.process();
-
-        // console.log(serialize(codeModel))
-        const yaml = serialize(codeModel);
-        //await (writeFile(`${__dirname}/../../src/test/resources/attestation-az-modifier.yaml`, yaml));
-        const supposeFile = await readFile(`${__dirname}/../../src/test/resources/attestation-az-modifier.yaml`);
-
-        //const cms = deserialize<CodeModel>(yaml, 'foo.yaml');
-
-        assert.strictEqual(yaml, supposeFile, 'namer has failed the unit test');
     }
 }
