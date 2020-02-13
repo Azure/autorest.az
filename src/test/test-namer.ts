@@ -20,28 +20,33 @@ const resources = `${__dirname}/../../src/test/resources/`;
 
 @suite class Process {
     @test async simpleNamerTest() {
-        let cfg = {
-            az:{
-                extensions:"attestation"
+
+        const folders = await readdir(resources);
+        for(var each of folders) {
+            let cfg = {
+                az:{
+                    extensions:each
+                }
             }
+            const session = await createTestSession<CodeModel>(cfg, resources + "/" + each, [each + '-cli-common.yaml'], []);
+    
+            // process OAI model
+            const aznamer = new AzNamer(session);
+    
+            // go!
+            //const extensionName = "attestation";
+            const codeModel = await aznamer.process();
+    
+            // console.log(serialize(codeModel))
+            const yaml = serialize(codeModel);
+            const fileName = `${__dirname}/../../src/test/resources/`+ each + "/" + each + `-az-namer.yaml`;
+            const supposeFile = await readFile(fileName);
+            //await (writeFile(fileName, yaml));
+            //const cms = deserialize<CodeModel>(supposeFile, 'foo.yaml');
+    
+            assert.strictEqual(yaml, supposeFile, 'namer has failed the unit test');
         }
-        const session = await createTestSession<CodeModel>(cfg, resources, ['attestation-cli-common.yaml'], []);
 
-        // process OAI model
-        const aznamer = new AzNamer(session);
-
-        // go!
-        //const extensionName = "attestation";
-        const codeModel = await aznamer.process();
-
-        // console.log(serialize(codeModel))
-        const yaml = serialize(codeModel);
-        //await (writeFile(`${__dirname}/../../src/test/resources/attestation-az-namer.yaml`, yaml));
-        const supposeFile = await readFile(`${__dirname}/../../src/test/resources/attestation-az-namer.yaml`);
-
-        //const cms = deserialize<CodeModel>(supposeFile, 'foo.yaml');
-
-        assert.strictEqual(yaml, supposeFile, 'namer has failed the unit test');
     }
 
 
