@@ -1,6 +1,6 @@
 schemas:
   objects:
-  - &ref_53
+  - &ref_54
     type: object
     apiVersions:
     - version: 2018-09-01-preview
@@ -14,12 +14,15 @@ schemas:
           apiVersions:
           - version: 2018-09-01-preview
           properties:
-          - schema: &ref_19
+          - schema: &ref_18
               type: string
               apiVersions:
               - version: 2018-09-01-preview
               language:
                 default:
+                  name: OperationsDefinition-name
+                  description: Name of the operation.
+                cli:
                   name: OperationsDefinition-name
                   description: Name of the operation.
               protocol: {}
@@ -28,18 +31,24 @@ schemas:
               default:
                 name: name
                 description: Name of the operation.
+              cli:
+                name: name
+                description: Name of the operation.
             protocol: {}
           - schema: &ref_1
               type: object
               apiVersions:
               - version: 2018-09-01-preview
               properties:
-              - schema: &ref_20
+              - schema: &ref_19
                   type: string
                   apiVersions:
                   - version: 2018-09-01-preview
                   language:
                     default:
+                      name: OperationsDisplayDefinition-provider
+                      description: Resource provider of the operation.
+                    cli:
                       name: OperationsDisplayDefinition-provider
                       description: Resource provider of the operation.
                   protocol: {}
@@ -48,13 +57,19 @@ schemas:
                   default:
                     name: provider
                     description: Resource provider of the operation.
+                  cli:
+                    name: provider
+                    description: Resource provider of the operation.
                 protocol: {}
-              - schema: &ref_21
+              - schema: &ref_20
                   type: string
                   apiVersions:
                   - version: 2018-09-01-preview
                   language:
                     default:
+                      name: OperationsDisplayDefinition-resource
+                      description: Resource for the operation.
+                    cli:
                       name: OperationsDisplayDefinition-resource
                       description: Resource for the operation.
                   protocol: {}
@@ -63,13 +78,19 @@ schemas:
                   default:
                     name: resource
                     description: Resource for the operation.
+                  cli:
+                    name: resource
+                    description: Resource for the operation.
                 protocol: {}
-              - schema: &ref_22
+              - schema: &ref_21
                   type: string
                   apiVersions:
                   - version: 2018-09-01-preview
                   language:
                     default:
+                      name: OperationsDisplayDefinition-operation
+                      description: Short description of the operation.
+                    cli:
                       name: OperationsDisplayDefinition-operation
                       description: Short description of the operation.
                   protocol: {}
@@ -78,13 +99,19 @@ schemas:
                   default:
                     name: operation
                     description: Short description of the operation.
+                  cli:
+                    name: operation
+                    description: Short description of the operation.
                 protocol: {}
-              - schema: &ref_23
+              - schema: &ref_22
                   type: string
                   apiVersions:
                   - version: 2018-09-01-preview
                   language:
                     default:
+                      name: OperationsDisplayDefinition-description
+                      description: Description of the operation.
+                    cli:
                       name: OperationsDisplayDefinition-description
                       description: Description of the operation.
                   protocol: {}
@@ -93,16 +120,25 @@ schemas:
                   default:
                     name: description
                     description: Description of the operation.
+                  cli:
+                    name: description
+                    description: Description of the operation.
                 protocol: {}
               language:
                 default:
                   name: OperationsDisplayDefinition
                   description: Display object with properties of the operation.
                   namespace: Api20180901Preview
+                cli:
+                  name: OperationsDisplayDefinition
+                  description: Display object with properties of the operation.
               protocol: {}
             serializedName: display
             language:
               default:
+                name: display
+                description: Display object with properties of the operation.
+              cli:
                 name: display
                 description: Display object with properties of the operation.
             protocol: {}
@@ -111,9 +147,15 @@ schemas:
               name: OperationsDefinition
               description: Definition object with the name and properties of an operation.
               namespace: Api20180901Preview
+            cli:
+              name: OperationsDefinition
+              description: Definition object with the name and properties of an operation.
           protocol: {}
         language:
           default:
+            name: OperationList-value
+            description: List of supported operations.
+          cli:
             name: OperationList-value
             description: List of supported operations.
         protocol: {}
@@ -122,16 +164,22 @@ schemas:
         default:
           name: value
           description: List of supported operations.
+        cli:
+          name: value
+          description: List of supported operations.
       protocol: {}
     language:
       default:
         name: OperationList
         description: List of supported operations.
         namespace: Api20180901Preview
+      cli:
+        name: OperationList
+        description: List of supported operations.
     protocol: {}
   - *ref_0
   - *ref_1
-  - &ref_54
+  - &ref_55
     type: object
     apiVersions:
     - version: 2018-09-01-preview
@@ -141,12 +189,15 @@ schemas:
         apiVersions:
         - version: 2018-09-01-preview
         properties:
-        - schema: &ref_24
+        - schema: &ref_23
             type: string
             apiVersions:
             - version: 2018-09-01-preview
             language:
               default:
+                name: CloudErrorBody-code
+                description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+              cli:
                 name: CloudErrorBody-code
                 description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
             protocol: {}
@@ -155,8 +206,11 @@ schemas:
             default:
               name: code
               description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+            cli:
+              name: code
+              description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
           protocol: {}
-        - schema: &ref_25
+        - schema: &ref_24
             type: string
             apiVersions:
             - version: 2018-09-01-preview
@@ -164,10 +218,16 @@ schemas:
               default:
                 name: CloudErrorBody-message
                 description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
+              cli:
+                name: CloudErrorBody-message
+                description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
             protocol: {}
           serializedName: message
           language:
             default:
+              name: message
+              description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
+            cli:
               name: message
               description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
           protocol: {}
@@ -178,12 +238,16 @@ schemas:
             name: CloudErrorBody
             description: An error response from Attestation.
             namespace: Api20180901Preview
+          cli:
+            name: CloudErrorBody
+            description: An error response from Attestation.
         protocol: {}
       serializedName: error
-      extensions:
-        x-ms-external: true
       language:
         default:
+          name: error
+          description: An error response from Attestation.
+        cli:
           name: error
           description: An error response from Attestation.
       protocol: {}
@@ -194,6 +258,9 @@ schemas:
         name: CloudError
         description: An error response from Attestation.
         namespace: Api20180901Preview
+      cli:
+        name: CloudError
+        description: An error response from Attestation.
     protocol: {}
   - *ref_2
   - &ref_3
@@ -202,7 +269,7 @@ schemas:
     - version: '1.0'
     children:
       all:
-      - &ref_5
+      - &ref_4
         type: object
         apiVersions:
         - version: 2018-09-01-preview
@@ -212,16 +279,19 @@ schemas:
           immediate:
           - *ref_3
         properties:
-        - schema: &ref_9
+        - schema: &ref_8
             type: object
             apiVersions:
             - version: 2018-09-01-preview
             properties:
-            - schema: &ref_18
+            - schema: &ref_12
                 choices:
                 - value: Ready
                   language:
                     default:
+                      name: Ready
+                      description: ''
+                    cli:
                       name: Ready
                       description: ''
                 - value: NotReady
@@ -229,12 +299,18 @@ schemas:
                     default:
                       name: NotReady
                       description: ''
+                    cli:
+                      name: NotReady
+                      description: ''
                 - value: Error
                   language:
                     default:
                       name: Error
                       description: ''
-                type: sealed-choice
+                    cli:
+                      name: Error
+                      description: ''
+                type: choice
                 apiVersions:
                 - version: 2018-09-01-preview
                 choiceType: &ref_17
@@ -243,9 +319,15 @@ schemas:
                     default:
                       name: string
                       description: simple string
+                    cli:
+                      name: string
+                      description: simple string
                   protocol: {}
                 language:
                   default:
+                    name: AttestationServiceStatus
+                    description: Status of attestation service.
+                  cli:
                     name: AttestationServiceStatus
                     description: Status of attestation service.
                 protocol: {}
@@ -255,13 +337,19 @@ schemas:
                 default:
                   name: status
                   description: Status of attestation service.
+                cli:
+                  name: status
+                  description: Status of attestation service.
               protocol: {}
-            - schema: &ref_30
+            - schema: &ref_29
                 type: string
                 apiVersions:
                 - version: 2018-09-01-preview
                 language:
                   default:
+                    name: StatusResult-attestUri
+                    description: Gets the uri of attestation service
+                  cli:
                     name: StatusResult-attestUri
                     description: Gets the uri of attestation service
                 protocol: {}
@@ -271,17 +359,28 @@ schemas:
                 default:
                   name: attestUri
                   description: Gets the uri of attestation service
+                cli:
+                  name: attestUri
+                  description: Gets the uri of attestation service
               protocol: {}
             language:
               default:
                 name: StatusResult
                 description: Status of attestation service.
                 namespace: Api20180901Preview
+              cli:
+                name: StatusResult
+                description: Status of attestation service.
             protocol: {}
           required: true
           serializedName: properties
+          extensions:
+            x-ms-client-flatten: true
           language:
             default:
+              name: properties
+              description: Status of attestation service.
+            cli:
               name: properties
               description: Status of attestation service.
           protocol: {}
@@ -290,6 +389,50 @@ schemas:
             name: AttestationProvider
             description: Attestation service response message.
             namespace: Api20180901Preview
+          cli:
+            name: AttestationProvider
+            description: Attestation service response message.
+        protocol: {}
+      - &ref_5
+        type: object
+        apiVersions:
+        - version: '1.0'
+        parents:
+          all:
+          - *ref_3
+          immediate:
+          - *ref_3
+        properties:
+        - schema: &ref_48
+            type: string
+            apiVersions:
+            - version: '1.0'
+            language:
+              default:
+                name: AzureEntityResource-etag
+                description: Resource Etag.
+              cli:
+                name: AzureEntityResource-etag
+                description: Resource Etag.
+            protocol: {}
+          readOnly: true
+          serializedName: etag
+          language:
+            default:
+              name: etag
+              description: Resource Etag.
+            cli:
+              name: etag
+              description: Resource Etag.
+          protocol: {}
+        language:
+          default:
+            name: AzureEntityResource
+            description: The resource model definition for a Azure Resource Manager resource with an etag.
+            namespace: Api10
+          cli:
+            name: AzureEntityResource
+            description: The resource model definition for a Azure Resource Manager resource with an etag.
         protocol: {}
       - &ref_6
         type: object
@@ -301,86 +444,62 @@ schemas:
           immediate:
           - *ref_3
         properties:
-        - schema: &ref_49
-            type: string
-            apiVersions:
-            - version: '1.0'
-            language:
-              default:
-                name: AzureEntityResource-etag
-                description: Resource Etag.
-            protocol: {}
-          readOnly: true
-          serializedName: etag
-          language:
-            default:
-              name: etag
-              description: Resource Etag.
-          protocol: {}
-        language:
-          default:
-            name: AzureEntityResource
-            description: The resource model definition for a Azure Resource Manager resource with an etag.
-            namespace: Api10
-        protocol: {}
-      - &ref_7
-        type: object
-        apiVersions:
-        - version: '1.0'
-        parents:
-          all:
-          - *ref_3
-          immediate:
-          - *ref_3
-        properties:
-        - schema: &ref_12
+        - schema: &ref_11
             type: dictionary
-            elementType: &ref_26
+            elementType: &ref_25
               type: string
               apiVersions:
               - version: 2018-09-01-preview
               - version: '1.0'
               language:
                 default:
-                  name: paths·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·get·parameters·2·schema
-                  description: MISSING·SCHEMA-DESCRIPTION-STRING
+                  name: string
+                  description: ''
+                cli:
+                  name: string
+                  description: ''
               protocol: {}
             language:
               default:
                 name: TrackedResource-tags
                 description: Resource tags.
+              cli:
+                name: TrackedResource-tags
+                description: Resource tags.
             protocol: {}
           required: false
           serializedName: tags
-          extensions:
-            x-ms-mutability:
-            - read
-            - create
-            - update
           language:
             default:
               name: tags
               description: Resource tags.
+            cli:
+              name: tags
+              description: Resource tags.
           protocol: {}
-        - schema: &ref_50
+        - schema: &ref_49
             type: string
             apiVersions:
             - version: '1.0'
             extensions:
-              x-ms-mutability: &ref_4
+              x-ms-mutability:
               - read
               - create
             language:
               default:
                 name: TrackedResource-location
                 description: The geo-location where the resource lives
+              cli:
+                name: TrackedResource-location
+                description: The geo-location where the resource lives
             protocol: {}
           required: true
           serializedName: location
-          extensions:
-            x-ms-mutability: *ref_4
           language:
             default:
+              name: location
+              description: The geo-location where the resource lives
+            cli:
               name: location
               description: The geo-location where the resource lives
           protocol: {}
@@ -389,8 +508,11 @@ schemas:
             name: TrackedResource
             description: The resource model definition for a ARM tracked top level resource
             namespace: Api10
+          cli:
+            name: TrackedResource
+            description: The resource model definition for a ARM tracked top level resource
         protocol: {}
-      - &ref_8
+      - &ref_7
         type: object
         apiVersions:
         - version: '1.0'
@@ -404,19 +526,25 @@ schemas:
             name: ProxyResource
             description: The resource model definition for a ARM proxy resource. It will have everything other than required location and tags
             namespace: Api10
+          cli:
+            name: ProxyResource
+            description: The resource model definition for a ARM proxy resource. It will have everything other than required location and tags
         protocol: {}
       immediate:
+      - *ref_4
       - *ref_5
       - *ref_6
       - *ref_7
-      - *ref_8
     properties:
-    - schema: &ref_27
+    - schema: &ref_26
         type: string
         apiVersions:
         - version: '1.0'
         language:
           default:
+            name: Resource-id
+            description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
+          cli:
             name: Resource-id
             description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
         protocol: {}
@@ -426,13 +554,19 @@ schemas:
         default:
           name: id
           description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
+        cli:
+          name: id
+          description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
       protocol: {}
-    - schema: &ref_28
+    - schema: &ref_27
         type: string
         apiVersions:
         - version: '1.0'
         language:
           default:
+            name: Resource-name
+            description: The name of the resource
+          cli:
             name: Resource-name
             description: The name of the resource
         protocol: {}
@@ -442,13 +576,19 @@ schemas:
         default:
           name: name
           description: The name of the resource
+        cli:
+          name: name
+          description: The name of the resource
       protocol: {}
-    - schema: &ref_29
+    - schema: &ref_28
         type: string
         apiVersions:
         - version: '1.0'
         language:
           default:
+            name: Resource-type
+            description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+          cli:
             name: Resource-type
             description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
         protocol: {}
@@ -458,28 +598,37 @@ schemas:
         default:
           name: type
           description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+        cli:
+          name: type
+          description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
       protocol: {}
     extensions:
       x-ms-azure-resource: true
     language:
       default:
         name: Resource
-        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        description: ''
         namespace: Api10
+      cli:
+        name: Resource
+        description: ''
     protocol: {}
-  - *ref_5
-  - *ref_9
-  - &ref_59
+  - *ref_4
+  - *ref_8
+  - &ref_60
     type: object
     apiVersions:
     - version: 2018-09-01-preview
     properties:
-    - schema: &ref_31
+    - schema: &ref_30
         type: string
         apiVersions:
         - version: 2018-09-01-preview
         language:
           default:
+            name: AttestationServiceCreationParams-attestationPolicy
+            description: Name of attestation policy.
+          cli:
             name: AttestationServiceCreationParams-attestationPolicy
             description: Name of attestation policy.
         protocol: {}
@@ -488,8 +637,11 @@ schemas:
         default:
           name: attestationPolicy
           description: Name of attestation policy.
+        cli:
+          name: attestationPolicy
+          description: Name of attestation policy.
       protocol: {}
-    - schema: &ref_10
+    - schema: &ref_9
         type: object
         apiVersions:
         - version: '1.0'
@@ -498,17 +650,25 @@ schemas:
             type: array
             apiVersions:
             - version: '1.0'
-            elementType: &ref_11
+            elementType: &ref_10
               type: object
               apiVersions:
               - version: '1.0'
               properties:
-              - schema: &ref_32
+              - schema: &ref_31
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-alg
+                      description: |-
+                        The "alg" (algorithm) parameter identifies the algorithm intended for
+                        use with the key.  The values used should either be registered in the
+                        IANA "JSON Web Signature and Encryption Algorithms" registry
+                        established by [JWA] or be a value that contains a Collision-
+                        Resistant Name.
+                    cli:
                       name: JSONWebKey-alg
                       description: |-
                         The "alg" (algorithm) parameter identifies the algorithm intended for
@@ -528,13 +688,24 @@ schemas:
                       IANA "JSON Web Signature and Encryption Algorithms" registry
                       established by [JWA] or be a value that contains a Collision-
                       Resistant Name.
+                  cli:
+                    name: alg
+                    description: |-
+                      The "alg" (algorithm) parameter identifies the algorithm intended for
+                      use with the key.  The values used should either be registered in the
+                      IANA "JSON Web Signature and Encryption Algorithms" registry
+                      established by [JWA] or be a value that contains a Collision-
+                      Resistant Name.
                 protocol: {}
-              - schema: &ref_33
+              - schema: &ref_32
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-crv
+                      description: The "crv" (curve) parameter identifies the curve type
+                    cli:
                       name: JSONWebKey-crv
                       description: The "crv" (curve) parameter identifies the curve type
                   protocol: {}
@@ -544,13 +715,19 @@ schemas:
                   default:
                     name: crv
                     description: The "crv" (curve) parameter identifies the curve type
+                  cli:
+                    name: crv
+                    description: The "crv" (curve) parameter identifies the curve type
                 protocol: {}
-              - schema: &ref_34
+              - schema: &ref_33
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-d
+                      description: RSA private exponent or ECC private key
+                    cli:
                       name: JSONWebKey-d
                       description: RSA private exponent or ECC private key
                   protocol: {}
@@ -560,13 +737,19 @@ schemas:
                   default:
                     name: d
                     description: RSA private exponent or ECC private key
+                  cli:
+                    name: d
+                    description: RSA private exponent or ECC private key
                 protocol: {}
-              - schema: &ref_35
+              - schema: &ref_34
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-dp
+                      description: RSA Private Key Parameter
+                    cli:
                       name: JSONWebKey-dp
                       description: RSA Private Key Parameter
                   protocol: {}
@@ -576,13 +759,19 @@ schemas:
                   default:
                     name: dp
                     description: RSA Private Key Parameter
+                  cli:
+                    name: dp
+                    description: RSA Private Key Parameter
                 protocol: {}
-              - schema: &ref_36
+              - schema: &ref_35
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-dq
+                      description: RSA Private Key Parameter
+                    cli:
                       name: JSONWebKey-dq
                       description: RSA Private Key Parameter
                   protocol: {}
@@ -592,13 +781,19 @@ schemas:
                   default:
                     name: dq
                     description: RSA Private Key Parameter
+                  cli:
+                    name: dq
+                    description: RSA Private Key Parameter
                 protocol: {}
-              - schema: &ref_37
+              - schema: &ref_36
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-e
+                      description: 'RSA public exponent, in Base64'
+                    cli:
                       name: JSONWebKey-e
                       description: 'RSA public exponent, in Base64'
                   protocol: {}
@@ -608,13 +803,19 @@ schemas:
                   default:
                     name: e
                     description: 'RSA public exponent, in Base64'
+                  cli:
+                    name: e
+                    description: 'RSA public exponent, in Base64'
                 protocol: {}
-              - schema: &ref_38
+              - schema: &ref_37
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-k
+                      description: Symmetric key
+                    cli:
                       name: JSONWebKey-k
                       description: Symmetric key
                   protocol: {}
@@ -624,13 +825,28 @@ schemas:
                   default:
                     name: k
                     description: Symmetric key
+                  cli:
+                    name: k
+                    description: Symmetric key
                 protocol: {}
-              - schema: &ref_39
+              - schema: &ref_38
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-kid
+                      description: |-
+                        The "kid" (key ID) parameter is used to match a specific key.  This
+                        is used, for instance, to choose among a set of keys within a JWK Set
+                        during key rollover.  The structure of the "kid" value is
+                        unspecified.  When "kid" values are used within a JWK Set, different
+                        keys within the JWK Set SHOULD use distinct "kid" values.  (One
+                        example in which different keys might use the same "kid" value is if
+                        they have different "kty" (key type) values but are considered to be
+                        equivalent alternatives by the application using them.)  The "kid"
+                        value is a case-sensitive string.
+                    cli:
                       name: JSONWebKey-kid
                       description: |-
                         The "kid" (key ID) parameter is used to match a specific key.  This
@@ -658,13 +874,33 @@ schemas:
                       they have different "kty" (key type) values but are considered to be
                       equivalent alternatives by the application using them.)  The "kid"
                       value is a case-sensitive string.
+                  cli:
+                    name: kid
+                    description: |-
+                      The "kid" (key ID) parameter is used to match a specific key.  This
+                      is used, for instance, to choose among a set of keys within a JWK Set
+                      during key rollover.  The structure of the "kid" value is
+                      unspecified.  When "kid" values are used within a JWK Set, different
+                      keys within the JWK Set SHOULD use distinct "kid" values.  (One
+                      example in which different keys might use the same "kid" value is if
+                      they have different "kty" (key type) values but are considered to be
+                      equivalent alternatives by the application using them.)  The "kid"
+                      value is a case-sensitive string.
                 protocol: {}
-              - schema: &ref_40
+              - schema: &ref_39
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-kty
+                      description: |-
+                        The "kty" (key type) parameter identifies the cryptographic algorithm
+                        family used with the key, such as "RSA" or "EC". "kty" values should
+                        either be registered in the IANA "JSON Web Key Types" registry
+                        established by [JWA] or be a value that contains a Collision-
+                        Resistant Name.  The "kty" value is a case-sensitive string.
+                    cli:
                       name: JSONWebKey-kty
                       description: |-
                         The "kty" (key type) parameter identifies the cryptographic algorithm
@@ -684,13 +920,24 @@ schemas:
                       either be registered in the IANA "JSON Web Key Types" registry
                       established by [JWA] or be a value that contains a Collision-
                       Resistant Name.  The "kty" value is a case-sensitive string.
+                  cli:
+                    name: kty
+                    description: |-
+                      The "kty" (key type) parameter identifies the cryptographic algorithm
+                      family used with the key, such as "RSA" or "EC". "kty" values should
+                      either be registered in the IANA "JSON Web Key Types" registry
+                      established by [JWA] or be a value that contains a Collision-
+                      Resistant Name.  The "kty" value is a case-sensitive string.
                 protocol: {}
-              - schema: &ref_41
+              - schema: &ref_40
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-n
+                      description: 'RSA modulus, in Base64'
+                    cli:
                       name: JSONWebKey-n
                       description: 'RSA modulus, in Base64'
                   protocol: {}
@@ -700,13 +947,19 @@ schemas:
                   default:
                     name: 'n'
                     description: 'RSA modulus, in Base64'
+                  cli:
+                    name: 'n'
+                    description: 'RSA modulus, in Base64'
                 protocol: {}
-              - schema: &ref_42
+              - schema: &ref_41
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-p
+                      description: RSA secret prime
+                    cli:
                       name: JSONWebKey-p
                       description: RSA secret prime
                   protocol: {}
@@ -716,13 +969,19 @@ schemas:
                   default:
                     name: p
                     description: RSA secret prime
+                  cli:
+                    name: p
+                    description: RSA secret prime
                 protocol: {}
-              - schema: &ref_43
+              - schema: &ref_42
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-q
+                      description: 'RSA secret prime, with p < q'
+                    cli:
                       name: JSONWebKey-q
                       description: 'RSA secret prime, with p < q'
                   protocol: {}
@@ -732,13 +991,19 @@ schemas:
                   default:
                     name: q
                     description: 'RSA secret prime, with p < q'
+                  cli:
+                    name: q
+                    description: 'RSA secret prime, with p < q'
                 protocol: {}
-              - schema: &ref_44
+              - schema: &ref_43
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-qi
+                      description: RSA Private Key Parameter
+                    cli:
                       name: JSONWebKey-qi
                       description: RSA Private Key Parameter
                   protocol: {}
@@ -748,13 +1013,23 @@ schemas:
                   default:
                     name: qi
                     description: RSA Private Key Parameter
+                  cli:
+                    name: qi
+                    description: RSA Private Key Parameter
                 protocol: {}
-              - schema: &ref_45
+              - schema: &ref_44
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-use
+                      description: |-
+                        Use ("public key use") identifies the intended use of
+                        the public key. The "use" parameter is employed to indicate whether
+                        a public key is used for encrypting data or verifying the signature
+                        on data. Values are commonly "sig" (signature) or "enc" (encryption).
+                    cli:
                       name: JSONWebKey-use
                       description: |-
                         Use ("public key use") identifies the intended use of
@@ -772,13 +1047,23 @@ schemas:
                       the public key. The "use" parameter is employed to indicate whether
                       a public key is used for encrypting data or verifying the signature
                       on data. Values are commonly "sig" (signature) or "enc" (encryption).
+                  cli:
+                    name: use
+                    description: |-
+                      Use ("public key use") identifies the intended use of
+                      the public key. The "use" parameter is employed to indicate whether
+                      a public key is used for encrypting data or verifying the signature
+                      on data. Values are commonly "sig" (signature) or "enc" (encryption).
                 protocol: {}
-              - schema: &ref_46
+              - schema: &ref_45
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-x
+                      description: X coordinate for the Elliptic Curve point
+                    cli:
                       name: JSONWebKey-x
                       description: X coordinate for the Elliptic Curve point
                   protocol: {}
@@ -788,22 +1073,38 @@ schemas:
                   default:
                     name: x
                     description: X coordinate for the Elliptic Curve point
+                  cli:
+                    name: x
+                    description: X coordinate for the Elliptic Curve point
                 protocol: {}
               - schema: &ref_14
                   type: array
                   apiVersions:
                   - version: '1.0'
-                  elementType: &ref_47
+                  elementType: &ref_46
                     type: string
                     apiVersions:
                     - version: '1.0'
                     language:
                       default:
                         name: JSONWebKey-x5cItem
-                        description: MISSING·SCHEMA-DESCRIPTION-STRING
+                        description: ''
+                      cli:
+                        name: JSONWebKey-x5cItem
+                        description: ''
                     protocol: {}
                   language:
                     default:
+                      name: JSONWebKey-x5c
+                      description: |-
+                        The "x5c" (X.509 certificate chain) parameter contains a chain of one
+                        or more PKIX certificates [RFC5280].  The certificate chain is
+                        represented as a JSON array of certificate value strings.  Each
+                        string in the array is a base64-encoded (Section 4 of [RFC4648] --
+                        not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.
+                        The PKIX certificate containing the key value MUST be the first
+                        certificate.
+                    cli:
                       name: JSONWebKey-x5c
                       description: |-
                         The "x5c" (X.509 certificate chain) parameter contains a chain of one
@@ -827,13 +1128,26 @@ schemas:
                       not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.
                       The PKIX certificate containing the key value MUST be the first
                       certificate.
+                  cli:
+                    name: x5c
+                    description: |-
+                      The "x5c" (X.509 certificate chain) parameter contains a chain of one
+                      or more PKIX certificates [RFC5280].  The certificate chain is
+                      represented as a JSON array of certificate value strings.  Each
+                      string in the array is a base64-encoded (Section 4 of [RFC4648] --
+                      not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.
+                      The PKIX certificate containing the key value MUST be the first
+                      certificate.
                 protocol: {}
-              - schema: &ref_48
+              - schema: &ref_47
                   type: string
                   apiVersions:
                   - version: '1.0'
                   language:
                     default:
+                      name: JSONWebKey-y
+                      description: Y coordinate for the Elliptic Curve point
+                    cli:
                       name: JSONWebKey-y
                       description: Y coordinate for the Elliptic Curve point
                   protocol: {}
@@ -843,15 +1157,29 @@ schemas:
                   default:
                     name: 'y'
                     description: Y coordinate for the Elliptic Curve point
+                  cli:
+                    name: 'y'
+                    description: Y coordinate for the Elliptic Curve point
                 protocol: {}
               language:
                 default:
                   name: JSONWebKey
-                  description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+                  description: ''
                   namespace: Api10
+                cli:
+                  name: JSONWebKey
+                  description: ''
               protocol: {}
             language:
               default:
+                name: JSONWebKeySet-keys
+                description: |-
+                  The value of the "keys" parameter is an array of JWK values.  By
+                  default, the order of the JWK values within the array does not imply
+                  an order of preference among them, although applications of JWK Sets
+                  can choose to assign a meaning to the order for their purposes, if
+                  desired.
+              cli:
                 name: JSONWebKeySet-keys
                 description: |-
                   The value of the "keys" parameter is an array of JWK values.  By
@@ -870,28 +1198,45 @@ schemas:
                 an order of preference among them, although applications of JWK Sets
                 can choose to assign a meaning to the order for their purposes, if
                 desired.
+            cli:
+              name: keys
+              description: |-
+                The value of the "keys" parameter is an array of JWK values.  By
+                default, the order of the JWK values within the array does not imply
+                an order of preference among them, although applications of JWK Sets
+                can choose to assign a meaning to the order for their purposes, if
+                desired.
           protocol: {}
         language:
           default:
             name: JSONWebKeySet
-            description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+            description: ''
             namespace: Api10
+          cli:
+            name: JSONWebKeySet
+            description: ''
         protocol: {}
       serializedName: policySigningCertificates
       language:
         default:
           name: policySigningCertificates
-          description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+          description: ''
+        cli:
+          name: policySigningCertificates
+          description: ''
       protocol: {}
     language:
       default:
         name: AttestationServiceCreationParams
         description: Client supplied parameters passed to attestation service.
         namespace: Api20180901Preview
+      cli:
+        name: AttestationServiceCreationParams
+        description: Client supplied parameters passed to attestation service.
     protocol: {}
+  - *ref_9
   - *ref_10
-  - *ref_11
-  - &ref_62
+  - &ref_66
     type: object
     apiVersions:
     - version: 2018-09-01-preview
@@ -900,9 +1245,12 @@ schemas:
         type: array
         apiVersions:
         - version: 2018-09-01-preview
-        elementType: *ref_5
+        elementType: *ref_4
         language:
           default:
+            name: AttestationProviderListResult-value
+            description: Attestation Provider array.
+          cli:
             name: AttestationProviderListResult-value
             description: Attestation Provider array.
         protocol: {}
@@ -911,17 +1259,25 @@ schemas:
         default:
           name: value
           description: Attestation Provider array.
+        cli:
+          name: value
+          description: Attestation Provider array.
       protocol: {}
     language:
       default:
         name: AttestationProviderListResult
         description: Attestation Providers List.
         namespace: Api20180901Preview
+      cli:
+        name: AttestationProviderListResult
+        description: Attestation Providers List.
     protocol: {}
+  - *ref_5
   - *ref_6
   - *ref_7
-  - *ref_8
   dictionaries:
+  - *ref_11
+  choices:
   - *ref_12
   arrays:
   - *ref_13
@@ -929,112 +1285,102 @@ schemas:
   - *ref_15
   - *ref_16
   constants:
-  - &ref_52
+  - &ref_51
     type: constant
     value:
       value: 2018-09-01-preview
-      language:
-        default:
-          name: ''
-          description: ''
     valueType: *ref_17
     language:
       default:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
+      cli:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
     protocol: {}
-  - &ref_57
-    type: constant
+  - type: constant
     value:
       value: 2018-09-01-preview
-      language:
-        default:
-          name: ''
-          description: ''
     valueType: *ref_17
     language:
       default:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
+      cli:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
     protocol: {}
-  - &ref_58
-    type: constant
+  - type: constant
     value:
       value: 2018-09-01-preview
-      language:
-        default:
-          name: ''
-          description: ''
     valueType: *ref_17
     language:
       default:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
+      cli:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
     protocol: {}
-  - &ref_60
-    type: constant
+  - type: constant
     value:
       value: 2018-09-01-preview
-      language:
-        default:
-          name: ''
-          description: ''
     valueType: *ref_17
     language:
       default:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
+      cli:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
     protocol: {}
-  - &ref_61
-    type: constant
+  - type: constant
     value:
       value: 2018-09-01-preview
-      language:
-        default:
-          name: ''
-          description: ''
     valueType: *ref_17
     language:
       default:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
+      cli:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
     protocol: {}
-  - &ref_63
-    type: constant
+  - type: constant
     value:
       value: 2018-09-01-preview
-      language:
-        default:
-          name: ''
-          description: ''
     valueType: *ref_17
     language:
       default:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
+      cli:
+        name: ApiVersion-2018-09-01-preview
+        description: Api Version (2018-09-01-preview)
     protocol: {}
-  sealedChoices:
-  - *ref_18
   strings:
   - *ref_17
+  - *ref_18
   - *ref_19
   - *ref_20
   - *ref_21
   - *ref_22
   - *ref_23
   - *ref_24
-  - *ref_25
-  - &ref_55
+  - &ref_50
     type: string
     apiVersions:
     - version: '1.0'
     minLength: 1
     language:
       default:
-        name: components·parameters·subscriptionidparameter·schema
-        description: MISSING·SCHEMA-DESCRIPTION-STRING
+        name: string
+        description: ''
+      cli:
+        name: string
+        description: ''
     protocol: {}
-  - &ref_56
+  - &ref_57
     type: string
     apiVersions:
     - version: '1.0'
@@ -1043,9 +1389,13 @@ schemas:
     pattern: '^[-\w\._\(\)]+$'
     language:
       default:
-        name: components·parameters·resourcegroupnameparameter·schema
-        description: MISSING·SCHEMA-DESCRIPTION-STRING
+        name: string
+        description: ''
+      cli:
+        name: string
+        description: ''
     protocol: {}
+  - *ref_25
   - *ref_26
   - *ref_27
   - *ref_28
@@ -1070,23 +1420,57 @@ schemas:
   - *ref_47
   - *ref_48
   - *ref_49
-  - *ref_50
 globalParameters:
-- &ref_51
+- &ref_56
+  schema: *ref_50
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language:
+    default:
+      name: subscriptionId
+      description: The ID of the target subscription.
+      serializedName: subscriptionId
+    cli:
+      name: subscriptionId
+      description: The ID of the target subscription.
+  protocol:
+    http:
+      in: path
+- &ref_52
   schema: *ref_17
   clientDefaultValue: 'https://management.azure.com'
   implementation: Client
   required: true
+  extensions:
+    x-ms-skip-url-encoding: true
   language:
     default:
       name: $host
       description: server parameter
+      serializedName: $host
     cli:
       name: $host
       description: server parameter
   protocol:
     http:
       in: uri
+- &ref_53
+  schema: *ref_51
+  implementation: Client
+  required: true
+  language:
+    default:
+      name: ApiVersion
+      description: Api Version
+      serializedName: api-version
+    cli:
+      name: ApiVersion
+      description: Api Version
+  protocol:
+    http:
+      in: query
 info:
   description: Various APIs for managing resources in attestation service. This primarily encompasses per-tenant instance management.
   title: AttestationManagementClient
@@ -1097,21 +1481,9 @@ operationGroups:
     - version: 2018-09-01-preview
     request:
       parameters:
-      - *ref_51
-      - schema: *ref_52
-        implementation: Client
-        required: true
-        language:
-          default:
-            name: ApiVersion
-            description: Api Version
-            serializedName: api-version
-          cli:
-            name: ApiVersion
-            description: Api Version
-        protocol:
-          http:
-            in: query
+      - *ref_52
+      - *ref_53
+      signatureParameters: []
       language:
         default:
           name: ''
@@ -1122,7 +1494,7 @@ operationGroups:
           method: get
           uri: '{$host}'
     responses:
-    - schema: *ref_53
+    - schema: *ref_54
       language:
         default:
           name: ''
@@ -1135,7 +1507,7 @@ operationGroups:
           statusCodes:
           - '200'
     exceptions:
-    - schema: *ref_54
+    - schema: *ref_55
       language:
         default:
           name: ''
@@ -1195,22 +1567,10 @@ operationGroups:
     - version: 2018-09-01-preview
     request:
       parameters:
-      - *ref_51
-      - schema: *ref_55
-        implementation: Method
-        required: true
-        language:
-          default:
-            name: subscriptionId
-            description: The ID of the target subscription.
-            serializedName: subscriptionId
-          cli:
-            name: subscriptionId
-            description: The ID of the target subscription.
-        protocol:
-          http:
-            in: path
-      - schema: *ref_56
+      - *ref_52
+      - *ref_56
+      - &ref_58
+        schema: *ref_57
         implementation: Method
         required: true
         language:
@@ -1224,7 +1584,8 @@ operationGroups:
         protocol:
           http:
             in: path
-      - schema: *ref_26
+      - &ref_59
+        schema: *ref_25
         implementation: Method
         required: true
         language:
@@ -1238,20 +1599,10 @@ operationGroups:
         protocol:
           http:
             in: path
-      - schema: *ref_57
-        implementation: Client
-        required: true
-        language:
-          default:
-            name: ApiVersion
-            description: Api Version
-            serializedName: api-version
-          cli:
-            name: ApiVersion
-            description: Api Version
-        protocol:
-          http:
-            in: query
+      - *ref_53
+      signatureParameters:
+      - *ref_58
+      - *ref_59
       language:
         default:
           name: ''
@@ -1262,7 +1613,7 @@ operationGroups:
           method: get
           uri: '{$host}'
     responses:
-    - schema: *ref_5
+    - schema: *ref_4
       language:
         default:
           name: ''
@@ -1275,7 +1626,7 @@ operationGroups:
           statusCodes:
           - '200'
     exceptions:
-    - schema: *ref_54
+    - schema: *ref_55
       language:
         default:
           name: ''
@@ -1315,22 +1666,10 @@ operationGroups:
     - version: 2018-09-01-preview
     request:
       parameters:
-      - *ref_51
-      - schema: *ref_55
-        implementation: Method
-        required: true
-        language:
-          default:
-            name: subscriptionId
-            description: The ID of the target subscription.
-            serializedName: subscriptionId
-          cli:
-            name: subscriptionId
-            description: The ID of the target subscription.
-        protocol:
-          http:
-            in: path
-      - schema: *ref_56
+      - *ref_52
+      - *ref_56
+      - &ref_61
+        schema: *ref_57
         implementation: Method
         required: true
         language:
@@ -1344,7 +1683,8 @@ operationGroups:
         protocol:
           http:
             in: path
-      - schema: *ref_26
+      - &ref_62
+        schema: *ref_25
         implementation: Method
         required: true
         language:
@@ -1358,23 +1698,10 @@ operationGroups:
         protocol:
           http:
             in: path
-      - schema: *ref_58
-        implementation: Client
-        required: true
-        language:
-          default:
-            name: ApiVersion
-            description: Api Version
-            serializedName: api-version
-          cli:
-            name: ApiVersion
-            description: Api Version
-        protocol:
-          http:
-            in: query
-      - schema: *ref_59
+      - *ref_53
+      - &ref_63
+        schema: *ref_60
         implementation: Method
-        required: true
         extensions:
           x-ms-requestBody-name: creationParams
         language:
@@ -1388,6 +1715,10 @@ operationGroups:
           http:
             in: body
             style: json
+      signatureParameters:
+      - *ref_61
+      - *ref_62
+      - *ref_63
       language:
         default:
           name: ''
@@ -1401,7 +1732,7 @@ operationGroups:
           - application/json
           uri: '{$host}'
     responses:
-    - schema: *ref_5
+    - schema: *ref_4
       language:
         default:
           name: ''
@@ -1413,7 +1744,7 @@ operationGroups:
           - application/json
           statusCodes:
           - '200'
-    - schema: *ref_5
+    - schema: *ref_4
       language:
         default:
           name: ''
@@ -1426,7 +1757,7 @@ operationGroups:
           statusCodes:
           - '201'
     exceptions:
-    - schema: *ref_54
+    - schema: *ref_55
       language:
         default:
           name: ''
@@ -1477,22 +1808,10 @@ operationGroups:
     - version: 2018-09-01-preview
     request:
       parameters:
-      - *ref_51
-      - schema: *ref_55
-        implementation: Method
-        required: true
-        language:
-          default:
-            name: subscriptionId
-            description: The ID of the target subscription.
-            serializedName: subscriptionId
-          cli:
-            name: subscriptionId
-            description: The ID of the target subscription.
-        protocol:
-          http:
-            in: path
-      - schema: *ref_56
+      - *ref_52
+      - *ref_56
+      - &ref_64
+        schema: *ref_57
         implementation: Method
         required: true
         language:
@@ -1506,7 +1825,8 @@ operationGroups:
         protocol:
           http:
             in: path
-      - schema: *ref_26
+      - &ref_65
+        schema: *ref_25
         implementation: Method
         required: true
         language:
@@ -1520,20 +1840,10 @@ operationGroups:
         protocol:
           http:
             in: path
-      - schema: *ref_60
-        implementation: Client
-        required: true
-        language:
-          default:
-            name: ApiVersion
-            description: Api Version
-            serializedName: api-version
-          cli:
-            name: ApiVersion
-            description: Api Version
-        protocol:
-          http:
-            in: query
+      - *ref_53
+      signatureParameters:
+      - *ref_64
+      - *ref_65
       language:
         default:
           name: ''
@@ -1569,7 +1879,7 @@ operationGroups:
           statusCodes:
           - '204'
     exceptions:
-    - schema: *ref_54
+    - schema: *ref_55
       language:
         default:
           name: ''
@@ -1608,35 +1918,10 @@ operationGroups:
     - version: 2018-09-01-preview
     request:
       parameters:
-      - *ref_51
-      - schema: *ref_61
-        implementation: Client
-        required: true
-        language:
-          default:
-            name: ApiVersion
-            description: Api Version
-            serializedName: api-version
-          cli:
-            name: ApiVersion
-            description: Api Version
-        protocol:
-          http:
-            in: query
-      - schema: *ref_55
-        implementation: Method
-        required: true
-        language:
-          default:
-            name: subscriptionId
-            description: The ID of the target subscription.
-            serializedName: subscriptionId
-          cli:
-            name: subscriptionId
-            description: The ID of the target subscription.
-        protocol:
-          http:
-            in: path
+      - *ref_52
+      - *ref_53
+      - *ref_56
+      signatureParameters: []
       language:
         default:
           name: ''
@@ -1647,7 +1932,7 @@ operationGroups:
           method: get
           uri: '{$host}'
     responses:
-    - schema: *ref_62
+    - schema: *ref_66
       language:
         default:
           name: ''
@@ -1660,7 +1945,7 @@ operationGroups:
           statusCodes:
           - '200'
     exceptions:
-    - schema: *ref_54
+    - schema: *ref_55
       language:
         default:
           name: ''
@@ -1704,8 +1989,9 @@ operationGroups:
     - version: 2018-09-01-preview
     request:
       parameters:
-      - *ref_51
-      - schema: *ref_56
+      - *ref_52
+      - &ref_67
+        schema: *ref_57
         implementation: Method
         required: true
         language:
@@ -1719,34 +2005,10 @@ operationGroups:
         protocol:
           http:
             in: path
-      - schema: *ref_63
-        implementation: Client
-        required: true
-        language:
-          default:
-            name: ApiVersion
-            description: Api Version
-            serializedName: api-version
-          cli:
-            name: ApiVersion
-            description: Api Version
-        protocol:
-          http:
-            in: query
-      - schema: *ref_55
-        implementation: Method
-        required: true
-        language:
-          default:
-            name: subscriptionId
-            description: The ID of the target subscription.
-            serializedName: subscriptionId
-          cli:
-            name: subscriptionId
-            description: The ID of the target subscription.
-        protocol:
-          http:
-            in: path
+      - *ref_53
+      - *ref_56
+      signatureParameters:
+      - *ref_67
       language:
         default:
           name: ''
@@ -1757,7 +2019,7 @@ operationGroups:
           method: get
           uri: '{$host}'
     responses:
-    - schema: *ref_62
+    - schema: *ref_66
       language:
         default:
           name: ''
@@ -1770,7 +2032,7 @@ operationGroups:
           statusCodes:
           - '200'
     exceptions:
-    - schema: *ref_54
+    - schema: *ref_55
       language:
         default:
           name: ''
@@ -1821,6 +2083,9 @@ operationGroups:
   protocol: {}
 language:
   default:
+    name: ''
+    description: ''
+  cli:
     name: ''
     description: ''
 protocol:

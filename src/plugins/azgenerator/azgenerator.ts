@@ -10,16 +10,11 @@ export async function processRequest(host: Host) {
     //host.Message({Channel:Channel.Warning, Text:"in azgenerator processRequest"});
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        let cliSettings = await session.getValue('cli');
+        let cliSettings = await session.getValue('az');
         let testScenario: any[] = cliSettings['test-setup'] || cliSettings["test-scenario"];
 
  
         let model = new CodeModelCliImpl(session, testScenario);
-        //session.message({Channel:Channel.Warning, Text:"Model operationGroup is " + serialize(session.model.operationGroups)});
-        let operationGroup = session.model.operationGroups[0];
-        let operations = operationGroup.operations;
-        let operation = operations[0];
-        //session.message({Channel:Channel.Warning, Text:"Operation Command: " + operation.language['az'].command});
         let files: any = await GenerateAll(model, true);
 
         for (let f in files) {

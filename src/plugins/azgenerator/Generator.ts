@@ -18,7 +18,6 @@ import { GenerateAzureCliReadme } from "./TemplateAzureCliReadme"
 import { GenerateAzureCliSetupCfg } from "./TemplateAzureCliSetupCfg"
 import { GenerateAzureCliSetupPy } from "./TemplateAzureCliSetupPy"
 import { CodeModelAz } from "./CodeModelAz";
-import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 
 
 export async function GenerateAll(model: CodeModelAz,

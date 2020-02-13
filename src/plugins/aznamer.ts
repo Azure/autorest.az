@@ -1,7 +1,7 @@
-import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
-import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
-import { serialize, deserialize } from '@azure-tools/codegen';
-import { values, items, length, Dictionary } from '@azure-tools/linq';
+import { CodeModel, codeModelSchema, Language } from "@azure-tools/codemodel";
+import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
+import { serialize, deserialize } from "@azure-tools/codegen";
+import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { changeCamelToDash } from '../utils/helper';
 
 export class AzNamer {
@@ -30,6 +30,78 @@ export class AzNamer {
     }
 
     async process() {
+        await this.processOperationGroup();
+        this.getAzName(this.codeModel);
+        this.processGlobalParam();
+        this.processSchemas();
+        return this.codeModel;
+    }
+
+
+    getAzName(obj) {
+        if(obj.language['az']) {
+            return;
+        }
+        obj.language['az'] = new Language();
+        obj.language['az']['name'] = obj.language['cli']? obj.language['cli']['name']: obj.language['python']['name'];
+        obj.language['az']['name'] = changeCamelToDash(obj.language['az']['name']);
+        obj.language['az']['description'] = obj.language['cli']? obj.language['cli']['description']: obj.language['python']['description'];;
+    } 
+
+    processGlobalParam() {
+        for(let para of values(this.codeModel.globalParameters)) {
+            this.getAzName(para);
+        }
+    }
+
+    processSchemas() {
+        let schemas = this.codeModel.schemas;
+
+        for (let obj of values(schemas.objects)) {
+            this.getAzName(obj);
+            for (let property of values(obj.properties)) {
+                this.getAzName(property);
+            }
+        }
+
+        for(let dict of values(schemas.dictionaries)) {
+            this.getAzName(dict);
+            this.getAzName(dict.elementType);
+        }
+
+        for(let enumn of values(schemas.choices)) {
+            this.getAzName(enumn);
+            for(let item of values(enumn.choices)) {
+                this.getAzName(item);
+            }
+        }
+
+        for(let enumn of values(schemas.sealedChoices)) {
+            this.getAzName(enumn);
+            for(let item of values(enumn.choices)) {
+                this.getAzName(item);
+            }
+        }
+
+        for(let arr of values(schemas.arrays)) {
+            this.getAzName(arr);
+            this.getAzName(arr.elementType);
+        }
+
+        for(let cons of values(schemas.constants)) {
+            this.getAzName(cons);
+        }
+
+        for(let num of values(schemas.numbers)) {
+            this.getAzName(num);
+        }
+
+        for(let str of values(schemas.strings)) {
+            this.getAzName(str);
+        }
+    }
+
+    async processOperationGroup() {
 
         let azSettings = await this.session.getValue('az');
         let extensionName = azSettings['extensions'];
@@ -41,7 +113,7 @@ export class AzNamer {
             let index = this.codeModel.operationGroups.indexOf(operationGroup);
             let operationGroupName = "";
             if(operationGroup.language['cli'] != undefined) {
-                operationGroup.language['az'] = {};
+                operationGroup.language['az'] = new Language();
                 operationGroup.language['az']['name'] = operationGroup.language['cli']['name'];
                 operationGroup.language['az']['description'] = operationGroup.language['cli']['description'];
                 operationGroupName = extensionName + " " + changeCamelToDash(operationGroup.language['az']['name'])
@@ -49,53 +121,35 @@ export class AzNamer {
             }
 
             let operations = operationGroup.operations;
-            var updateOperation = null;
+            var hasUpdate = false;
+            var operationIndex = -1;
             operations.map(operation => {
                 let operationName = "";
                 if(operation.language['cli'] != undefined) {
-                    operation.language['az'] = {};
+                    operation.language['az'] = new Language();
                     operation.language['az']['name'] = this.methodMap(operation.language['cli']['name'], operation.request.protocol.http.method);
                     operation.language['az']['description'] = operation.language['cli']['description'];
                     operationName = operationGroupName + " " +  changeCamelToDash(operation.language['az']['name']);
                     operation.language['az']['command'] = operationName;
+                } else {
+                    this.session.message({Channel:Channel.Warning, Text: "operation doesn't have cli"});
                 }
                 operation.request.parameters.forEach(parameter => {
                     if(parameter.language['cli'] != undefined) {
-                        parameter.language['az'] = {};
-                        parameter.language['az']['name'] = parameter.language['cli']['name'];
-                        parameter.language['az']['description'] = parameter.language['cli']['description'];
-                        parameter.language['az']['name'] = changeCamelToDash(parameter.language['az']['name']);
+                        this.getAzName(parameter);
                     }
                 });
-                /*if(operation.language['cli']['name'].toLowerCase() == "createorupdate") {
-                    updateOperation = operation;
-                    updateOperation.language['az'] = {}
-                    updateOperation.language['az']['name'] = this.methodMap("Update", updateOperation.request.protocol.http.method);
-                    updateOperation.language['az']['description'] = updateOperation.language['cli']['description'];
-                    operationName = operationGroupName + " " +  changeCamelToDash(updateOperation.language['az']['name']);
-                    updateOperation.language['az']['command'] = operationName;
-                    updateOperation.request.parameters.forEach(parameter => {
-                        if(parameter.language['cli'] != undefined) {
-                            parameter.language['az'] = {};
-                            parameter.language['az']['name'] = parameter.language['cli']['name'];
-                            parameter.language['az']['description'] = parameter.language['cli']['description'];
-                            parameter.language['az']['name'] = changeCamelToDash(parameter.language['az']['name']);
-                        }
-                    });
-                    //this.session.message({Channel: Channel.Warning, Text: "operations number before " + operations.length});                   
-                    //operations.push(updateOperation);
-                    //this.session.message({Channel: Channel.Warning, Text: "operations number after " + operations.length});
-                }*/
+                if(operation.language['cli']['name'].toLowerCase() == "createorupdate") {
+                    operationIndex = operations.indexOf(operation);
+                }
+                if(operation.language['cli']['name'].toLowerCase() == "update") {
+                    hasUpdate = true;
+                }
             });
-            //if(updateOperation != null) {
-            //    operations.push(updateOperation);
-            //}
-            //this.session.message({Channel: Channel.Warning, Text: "operations number outside " + operations.length});
-            //operationGroup.operations = operations;
-            //this.session.message({Channel: Channel.Warning, Text: "operationGroup.operations number outside " + operationGroup.operations.length});
-            //this.codeModel.operationGroups[index] = operationGroup;
+            if(!hasUpdate && operationIndex != -1) {
+                operations[operationIndex]['canSplitOperation'] = true;
+            }
         });
-        return this.codeModel;
     }
 }
 
