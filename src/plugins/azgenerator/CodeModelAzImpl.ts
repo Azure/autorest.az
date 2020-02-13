@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { CodeModel, SchemaType, Schema, ParameterLocation, Parameter } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType, Schema, ParameterLocation, Value } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 import { ToSnakeCase } from '../../utils/helper';
@@ -693,41 +693,63 @@ export class CodeModelCliImpl implements CodeModelAz
      * Gets method parameters dict
      * @returns method parameters dict : key is parameter name, value is the parameter schema
      */
-    public GetMethodParametersDict(): Map<string, Parameter> {
-        let method_param_dict: Map<string, Parameter> = new Map<string, Parameter>();
+    public GetMethodParametersDict(): Map<string, Value> {
+        let method_param_dict: Map<string, Value> = new Map<string, Value>();
         if (this.SelectFirstMethodParameter()) {
             do {
-                if (this.MethodParameter.implementation=='Method') {
-                    method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
+                if (this.MethodParameter.implementation == 'Method') {
+                    // method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
+                    this.AddFlattenedParameter(method_param_dict, this.MethodParameter, this.MethodParameter.language.default.name)
                 }
             } while (this.SelectNextMethodParameter());
         }
         return method_param_dict;
     }
 
-    public GetExampleParameters(example_obj, kind): Map<string, string> {
-        let parameters: Map<string, string> = new Map<string, string>();
-        let method_param_dict: Map<string, any> = this.GetMethodParametersDict();
-        Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
-            if (param_name in method_param_dict && (!kind || method_param_dict[param_name].protocol?.http?.in == kind)) {
-                parameters[param_name] = param_value;
+    public AddFlattenedParameter(dict: Map<string, Value>, value: any, name: string) {
+        if (value?.flattened) {
+            for (let k of value?.schema?.properties || []) {
+                this.AddFlattenedParameter(dict, k, k.language.default.name)
             }
+        }
+        else {
+            dict[name] = value;
+        }
+    }
+
+    public GetExampleParameters(example_obj): Map<string, string> {
+        let parameters: Map<string, string> = new Map<string, string>();
+        let method_param_dict: Map<string, Value> = this.GetMethodParametersDict();
+        Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
+            this.FlattenExampleParameter(method_param_dict, parameters, param_name, param_value);
         })
         return parameters;
+    }
+
+    public FlattenExampleParameter(method_param: Map<string, Value>, example_parm: Map<string, string>, name: string, value: any) {
+        if (typeof value === 'object' && value !== null) {
+            for (let sub_name in value) {
+                this.FlattenExampleParameter(method_param, example_parm, sub_name, value[sub_name]);
+            }
+        }
+        else if (name in method_param) {
+            example_parm[name] = value;
+        }
     }
 
     public ConvertToCliParameters(example_params): Map<string, string> {
         let ret: Map<string, string> = new Map<string, string>();
         Object.entries(example_params).forEach(([param_name, param_value]) => {
             param_name = ToSnakeCase(param_name);
-            if (param_name.endsWith('_name')) {
-                if (param_name == "resource_group_name") {
-                    param_name = "resource_group";
-                }
-                else {
-                    param_name = "name";
-                }
-            }
+            //// Here are some rename logic in POC, but not implement in current az codegen, so comment them here 
+            // if (param_name.endsWith('_name')) {
+            //     if (param_name == "resource_group_name") {
+            //         param_name = "resource_group";
+            //     }
+            //     else {
+            //         param_name = "name";
+            //     }
+            // }
             param_name = param_name.split("_").join("-");
             ret["--" + param_name] = param_value;
         });
@@ -742,7 +764,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 let example = new CommandExample();
                 example.Method = this.Method_Name;
                 example.Id = id;
-                let params: Map<string, string> = this.GetExampleParameters(example_obj, "path");
+                let params: Map<string, string> = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
                 examples.push(example);
             });
@@ -757,9 +779,8 @@ export class CodeModelCliImpl implements CodeModelAz
 
         for (let k in example.Parameters) {
             let slp = JSON.stringify(example.Parameters[k]).split(/[\r\n]+/).join("");
-
             if (isTest) {
-                if (k != "--resource-group") {
+                if (k != "--resource-group-name") {
                     parameters.push(k + " " + slp);
                 }
                 else {
@@ -781,7 +802,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 while (this.currentOperationIndex >= 0) {  // iterate all Commands
                     this.SelectFirstMethod();
                     do {                        // iterate all Methods
-                        for (let example of this.GetExamples()){
+                        for (let example of this.GetExamples()) {
                             if (example.Id.toLowerCase() == id.toLowerCase()) {
                                 return this.GetExampleItems(example, true);
                             }
