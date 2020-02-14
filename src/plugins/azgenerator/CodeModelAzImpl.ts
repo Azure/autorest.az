@@ -267,7 +267,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_Name(): string
     {
-        this.session.message({Channel:Channel.Warning, Text: "operationGroupIndex: " + this.currentOperationGroupIndex + " operationIndex: " + this.currentOperationIndex});
+        //this.session.message({Channel:Channel.Warning, Text: "operationGroupIndex: " + this.currentOperationGroupIndex + " operationIndex: " + this.currentOperationIndex});
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command;
     }
 
@@ -289,7 +289,7 @@ export class CodeModelCliImpl implements CodeModelAz
     public SelectFirstOption(): boolean
     {
         if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
-            this.session.message({Channel: Channel.Warning, Text: "FirstOption: currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex});
+            //this.session.message({Channel: Channel.Warning, Text: "FirstOption: currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex});
             this.currentParameterIndex = -1;
             return false;
         }
@@ -339,7 +339,7 @@ export class CodeModelCliImpl implements CodeModelAz
     public SelectNextOption(): boolean
     {
         if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
-            this.session.message({Channel: Channel.Warning, Text: "NextOption: currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex});
+            //this.session.message({Channel: Channel.Warning, Text: "NextOption: currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex});
             this.currentParameterIndex = -1;
             return false;
         }
@@ -413,7 +413,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_NameUnderscored(): string
     {
-        this.session.message({Channel:Channel.Warning, Text: "CommandGroupIndex: " + this.currentOperationGroupIndex +" CommandIndex: " + this.currentOperationIndex + " ParameterIdx: " + this.currentParameterIndex});
+        //this.session.message({Channel:Channel.Warning, Text: "CommandGroupIndex: " + this.currentOperationGroupIndex +" CommandIndex: " + this.currentOperationIndex + " ParameterIdx: " + this.currentParameterIndex});
         return this.Option_Name.replace(/-/g, "_");
     }
 
