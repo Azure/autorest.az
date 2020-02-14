@@ -35,7 +35,7 @@ pipeline:
         output-artifact: source-file-extension
     az/emitter:
         input:
-            #- az/azclicommon
+            #- az/clicommon
             #- az/aznamer
             #- az/modifiers
             - az/azgenerator
