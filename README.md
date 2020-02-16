@@ -16,7 +16,6 @@ modelerfour:
     flatten-models: true
     flatten-payloads: true
 
-clicommon: true
 
 payload-flattening-threshold: 4
 recursive-payload-flattening: true
