@@ -746,19 +746,30 @@ export class CodeModelCliImpl implements CodeModelAz
         let parameters: Map<string, string> = new Map<string, string>();
         let method_param_dict: Map<string, Value> = this.GetMethodParametersDict();
         Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
-            this.FlattenExampleParameter(method_param_dict, parameters, param_name, param_value);
+            this.FlattenExampleParameter(method_param_dict, parameters, param_name, param_value, []);
         })
         return parameters;
     }
 
-    public FlattenExampleParameter(method_param: Map<string, Value>, example_parm: Map<string, string>, name: string, value: any) {
+    public FlattenExampleParameter(method_param: Map<string, Value>, example_parm: Map<string, string>, name: string, value: any, ancestors: string[]) {
         if (typeof value === 'object' && value !== null) {
             for (let sub_name in value) {
-                this.FlattenExampleParameter(method_param, example_parm, sub_name, value[sub_name]);
+                this.FlattenExampleParameter(method_param, example_parm, sub_name, value[sub_name], ancestors.concat(name));
             }
         }
         else if (name in method_param) {
-            example_parm[name] = value;
+            if ('pathToProperty' in method_param[name]) {
+                // if the method parameter has 'pathToProperty', check the path with example parameter full path.
+                for (let i = method_param[name].pathToProperty.length - 1; i >= 0; i--) {
+                    if (ancestors.length <= 0) return;
+                    let parent = ancestors.pop();
+                    if (method_param[name].pathToProperty[i].language.az.name != parent) return;
+                }
+                example_parm[name] = value;
+            }
+            else {
+                example_parm[name] = value;
+            }
         }
     }
 
@@ -787,7 +798,7 @@ export class CodeModelCliImpl implements CodeModelAz
         if (this.Examples) {
             Object.entries(this.Examples).forEach(([id, example_obj]) => {
                 let example = new CommandExample();
-                example.Method = this.Method_Name;
+                example.Method = this.Command_MethodName;
                 example.Id = id;
                 let params: Map<string, string> = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
