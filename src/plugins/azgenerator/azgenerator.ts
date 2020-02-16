@@ -10,8 +10,17 @@ export async function processRequest(host: Host) {
     //host.Message({Channel:Channel.Warning, Text:"in azgenerator processRequest"});
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        let cliSettings = await session.getValue('az');
-        let testScenario: any[] = cliSettings['test-setup'] || cliSettings["test-scenario"];
+        let testScenario: any[] = [];
+        try {
+            let cliSettings = await session.getValue('az');
+            testScenario = cliSettings['test-setup'] || cliSettings["test-scenario"];
+            if (!testScenario) {
+                cliSettings = await session.getValue('cli');
+                testScenario = cliSettings['test-setup'] || cliSettings["test-scenario"];
+            }
+        } catch (E) {
+            console.error(`${__filename} - FAILURE can't read configuration test-setup or test-scenario. ${JSON.stringify(E)} ${E.stack}`);
+        }
 
  
         let model = new CodeModelCliImpl(session, testScenario);
