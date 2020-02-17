@@ -44,7 +44,7 @@ export class CodeModelCliImpl implements CodeModelAz
         this.currentExampleIndex = -1;
         this.preMethodIndex = -1;
         this.currentMethodIndex = -1;
-        this.sortOperationByAzCommand();
+        //this.sortOperationByAzCommand();
         
     }
 
@@ -65,7 +65,11 @@ export class CodeModelCliImpl implements CodeModelAz
     }
     private sortOperationByAzCommand() {
         for(let [idx, operationGroup] of this.codeModel.operationGroups.entries()) {
-            operationGroup.operations.sort((a, b) => this.getOrder(a.language['az']['name']).localeCompare(this.getOrder(b.language['az']['name'])));
+            operationGroup.operations.sort((a, b) => {
+                let oa = this.getOrder(a.language['az']['name']) + "_" + (100 - a.request.parameters.length);
+                let ob = this.getOrder(b.language['az']['name']) + "_" + (100 - b.request.parameters.length);
+                return oa.localeCompare(ob);
+            });
             this.codeModel.operationGroups[idx] = operationGroup;
         }
 
