@@ -153,10 +153,10 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                             if(oriParam == body) {
                                 if(param['pathToProperty']?.length == 1) {
                                     let pathParam = param['pathToProperty'][0];
-                                    access += ".setdefault('" + pathParam.language['python'].name + "', {})";
-                                    access += "['" + model.MethodParameter_Name + "'] = ";
+                                    access += `.setdefault(' + ${pathParam.language['python'].name} + ', {})`;
+                                    access += `[' + ${model.MethodParameter_Name} + '] = `;
                                 } else {
-                                    access += "['" + model.MethodParameter_Name + "'] = ";
+                                    access += `[' + ${model.MethodParameter_Name} + '] = `;
                                 }
                                 if (model.MethodParameter_IsList) {
                                     if (model.MethodParameter_Type != SchemaType.Dictionary) {
