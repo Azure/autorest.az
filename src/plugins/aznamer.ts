@@ -26,7 +26,7 @@ export class AzNamer {
         } else if(operationName.startsWith("delete") && httpProtocol == "delete") {
             return "delete";
         }
-        return operationNameOri;
+        return changeCamelToDash(operationNameOri);
     }
 
     async process() {

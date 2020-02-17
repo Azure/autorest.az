@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Parameter } from "@azure-tools/codemodel";
+import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Parameter, Value } from "@azure-tools/codemodel";
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase } from '../../utils/helper';
@@ -57,7 +57,11 @@ export class CodeModelCliImpl implements CodeModelAz
 
     private getOrder(op: string) {
         let opOrder = ["list", "show", "create", "update", "delete"];
-        return opOrder.indexOf(op.toLowerCase()).toLocaleString();
+        let order = opOrder.indexOf(op.toLowerCase());
+        if(order == -1) {
+            order = opOrder.length;
+        }
+        return order.toLocaleString();
     }
     private sortOperationByAzCommand() {
         for(let [idx, operationGroup] of this.codeModel.operationGroups.entries()) {
@@ -257,13 +261,11 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_FunctionName()
     {
-        //return  this.Command_MethodName.toLowerCase() + "_" + this.Command_Name.replace(/ /g, "_");
         return this.Command_Name.replace(/ /g, "_");
     }
 
     public get Command_Name(): string
     {
-        this.session.message({Channel:Channel.Warning, Text: "operationGroupIndex: " + this.currentOperationGroupIndex + " operationIndex: " + this.currentOperationIndex});
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command;
     }
 
@@ -285,7 +287,6 @@ export class CodeModelCliImpl implements CodeModelAz
     public SelectFirstOption(): boolean
     {
         if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
-            this.session.message({Channel: Channel.Warning, Text: "FirstOption: currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex});
             this.currentParameterIndex = -1;
             return false;
         }
@@ -335,7 +336,6 @@ export class CodeModelCliImpl implements CodeModelAz
     public SelectNextOption(): boolean
     {
         if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
-            this.session.message({Channel: Channel.Warning, Text: "NextOption: currentOperationGroupIndex: " + this.currentOperationGroupIndex + " currentOperationIndex: " + this.currentOperationIndex});
             this.currentParameterIndex = -1;
             return false;
         }
@@ -409,13 +409,18 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_NameUnderscored(): string
     {
-        this.session.message({Channel:Channel.Warning, Text: "CommandGroupIndex: " + this.currentOperationGroupIndex +" CommandIndex: " + this.currentOperationIndex + " ParameterIdx: " + this.currentParameterIndex});
         return this.Option_Name.replace(/-/g, "_");
     }
 
     public get Option_NamePython(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['python'].name;
+        let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
+        if(parameter['pathToProperty']?.length == 1) {
+            return (parameter['pathToProperty'][0]).language['python'].name + "_" + parameter.language['python'].name;
+        } else {
+            return parameter.language['python'].name;
+        }
+        
     }
 
     public get Option_IsRequired(): boolean
@@ -437,6 +442,11 @@ export class CodeModelCliImpl implements CodeModelAz
     public get Option_IsHidden(): boolean
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].hidden? true: false;   
+    }
+
+    public get Option_IsFlattened(): boolean
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex]['flattened']? true: false;   
     }
 
     public get Option_PathSdk(): string
@@ -590,7 +600,12 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get MethodParameter_MapsTo(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['python'].name;
+        let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
+        if(parameter['pathToProperty']?.length == 1) {
+            return (parameter['pathToProperty'][0]).language['python'].name + "_" + parameter.language['python'].name;
+        } else {
+            return parameter.language['python'].name;
+        }
     }
     public get MethodParameter_Type(): string
     {
@@ -623,6 +638,11 @@ export class CodeModelCliImpl implements CodeModelAz
     public get MethodParameter_IsRequired(): boolean
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].required;
+    }
+
+    public get MethodParameter_IsFlattened(): boolean
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex]['flattened']? true: false;
     }
     //=================================================================================================================
     // Top Level Python Related Information
@@ -669,7 +689,6 @@ export class CodeModelCliImpl implements CodeModelAz
         if (this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions == undefined)
             return false;
 
-        //this.session.message({Channel:Channel.Warning, Text:serialize(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'])});
         let example = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'];
         if(example && example.length > 0) {
             this.currentExampleIndex = 0;

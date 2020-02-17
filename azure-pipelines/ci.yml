@@ -23,6 +23,7 @@ jobs:
 
     pool:
       vmImage: 'Ubuntu 16.04'
+      pythonVersion: '3.6'
 
     steps:
       - task: NodeTool@0
@@ -34,6 +35,11 @@ jobs:
         displayName: 'npm install'
         inputs:
           verbose: false
+
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.6'
+        inputs:
+          versionSpec: 3.6
 
       - script: 'npx @microsoft/rush sync-versions && npx @microsoft/rush update && npx @microsoft/rush rebuild'
         displayName: 'npm build'

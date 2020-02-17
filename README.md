@@ -6,7 +6,7 @@ See documentation [here](doc/00-overview.md)
 use-extension:
   "@autorest/clicommon": "latest"
   #"@autorest/python": "latest"
-  "@autorest/python": "https://github.com/Azure/autorest.python/releases/download/v5.0.0-dev.20200211.1/autorest-python-5.0.0-dev.20200211.1.tgz"
+  "@autorest/python": "5.0.0-dev.20200211.1"
 
 
 pipeline-model: v3
@@ -35,7 +35,7 @@ pipeline:
         output-artifact: source-file-extension
     az/emitter:
         input:
-            #- az/azclicommon
+            #- az/clicommon
             #- az/aznamer
             #- az/modifiers
             - az/azgenerator
