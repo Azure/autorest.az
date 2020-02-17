@@ -115,7 +115,6 @@ export class Modifiers {
 
     async process() {
         directives = await this.session.getValue('directive');
-        //this.session.message({Channel:Channel.Warning, Text:serialize(directives)});
         if (directives != null) {
             for (const directive of directives.filter(each => !each.transform)) {
                 const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
