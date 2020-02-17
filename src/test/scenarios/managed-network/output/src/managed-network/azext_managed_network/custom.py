@@ -27,22 +27,29 @@ def managed-network_managed-networks_show(cmd, client,
 def managed-network_managed-networks_create(cmd, client,
                                             resource_group_name,
                                             managed_network_name,
-                                            managed_network,
                                             location=None,
                                             tags=None,
-                                            management_groups=None,
-                                            subscriptions=None,
-                                            virtual_networks=None,
-                                            subnets=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network=managed_network, location=location, tags=tags, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
+                                            scope_management_groups=None,
+                                            scope_subscriptions=None,
+                                            scope_virtual_networks=None,
+                                            scope_subnets=None):
+    managed_network = {}
+    managed_network['location'] = location  # string
+    managed_network['tags'] = tags
+    managed_network.setdefault('scope', {})['management_groups'] = None if scope_management_groups is None else scope_management_groups
+    managed_network.setdefault('scope', {})['subscriptions'] = None if scope_subscriptions is None else scope_subscriptions
+    managed_network.setdefault('scope', {})['virtual_networks'] = None if scope_virtual_networks is None else scope_virtual_networks
+    managed_network.setdefault('scope', {})['subnets'] = None if scope_subnets is None else scope_subnets
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network=managed_network)
 
 
 def managed-network_managed-networks_update(cmd, client,
                                             resource_group_name,
                                             managed_network_name,
-                                            parameters,
                                             tags=None):
-    return client.update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, parameters=parameters, tags=tags)
+    parameters = {}
+    parameters['tags'] = tags
+    return client.update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, parameters=parameters)
 
 
 def managed-network_managed-networks_delete(cmd, client,
@@ -65,19 +72,23 @@ def managed-network_scope-assignments_show(cmd, client,
 def managed-network_scope-assignments_create(cmd, client,
                                              scope,
                                              scope_assignment_name,
-                                             parameters,
                                              location=None,
                                              assigned_managed_network=None):
-    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, parameters=parameters, location=location, assigned_managed_network=assigned_managed_network)
+    parameters = {}
+    parameters['location'] = location  # string
+    parameters['assigned_managed_network'] = assigned_managed_network  # string
+    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, parameters=parameters)
 
 
 def managed-network_scope-assignments_update(cmd, client,
                                              scope,
                                              scope_assignment_name,
-                                             parameters,
                                              location=None,
                                              assigned_managed_network=None):
-    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, parameters=parameters, location=location, assigned_managed_network=assigned_managed_network)
+    parameters = {}
+    parameters['location'] = location  # string
+    parameters['assigned_managed_network'] = assigned_managed_network  # string
+    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, parameters=parameters)
 
 
 def managed-network_scope-assignments_delete(cmd, client,
@@ -143,26 +154,36 @@ def managed-network_managed-network-peering-policies_create(cmd, client,
                                                             resource_group_name,
                                                             managed_network_name,
                                                             managed_network_peering_policy_name,
-                                                            managed_network_policy,
-                                                            type,
+                                                            properties_type,
                                                             location=None,
                                                             id=None,
-                                                            spokes=None,
-                                                            mesh=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, managed_network_policy=managed_network_policy, location=location, type=type, id=id, spokes=spokes, mesh=mesh)
+                                                            properties_spokes=None,
+                                                            properties_mesh=None):
+    managed_network_policy = {}
+    managed_network_policy['location'] = location  # string
+    managed_network_policy.setdefault('properties', {})['type'] = properties_type  # choice
+    managed_network_policy['id'] = id  # string
+    managed_network_policy.setdefault('properties', {})['spokes'] = None if properties_spokes is None else properties_spokes
+    managed_network_policy.setdefault('properties', {})['mesh'] = None if properties_mesh is None else properties_mesh
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, managed_network_policy=managed_network_policy)
 
 
 def managed-network_managed-network-peering-policies_update(cmd, client,
                                                             resource_group_name,
                                                             managed_network_name,
                                                             managed_network_peering_policy_name,
-                                                            managed_network_policy,
-                                                            type,
+                                                            properties_type,
                                                             location=None,
                                                             id=None,
-                                                            spokes=None,
-                                                            mesh=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, managed_network_policy=managed_network_policy, location=location, type=type, id=id, spokes=spokes, mesh=mesh)
+                                                            properties_spokes=None,
+                                                            properties_mesh=None):
+    managed_network_policy = {}
+    managed_network_policy['location'] = location  # string
+    managed_network_policy.setdefault('properties', {})['type'] = properties_type  # choice
+    managed_network_policy['id'] = id  # string
+    managed_network_policy.setdefault('properties', {})['spokes'] = None if properties_spokes is None else properties_spokes
+    managed_network_policy.setdefault('properties', {})['mesh'] = None if properties_mesh is None else properties_mesh
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, managed_network_policy=managed_network_policy)
 
 
 def managed-network_managed-network-peering-policies_delete(cmd, client,

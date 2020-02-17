@@ -93,8 +93,12 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
         output_args.push("        pass");
     }
     else {
+        let hasParam = false;
         do {
-
+            if(model.Option_IsFlattened) {
+                continue;
+            }
+            hasParam = true;
             let parameterName = model.Option_NamePython;
 
             let argument = "        c.argument('" + parameterName + "'";
@@ -150,6 +154,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
 
             output_args.push(argument);
         } while (model.SelectNextOption());
+        if (!hasParam) {
+            output_args.push("        pass");
+        }
     }
     return output_args;
 }

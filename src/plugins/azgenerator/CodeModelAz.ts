@@ -1,4 +1,6 @@
-﻿/*---------------------------------------------------------------------------------------------
+﻿import { AnyARecord } from "dns";
+
+/*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -49,6 +51,7 @@ export interface CodeModelAz
     Option_PathSwagger: string;
     Option_EnumValues: string[];
     Option_IsHidden: boolean;
+    Option_IsFlattened: boolean
 
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
@@ -65,9 +68,11 @@ export interface CodeModelAz
     MethodParameter_MapsTo: string;
     MethodParameter_Type: string;
     MethodParameter_IsList: boolean;
+    MethodParameter: any;
     MethodParameter_In: string;
     MethodParameter_IsHidden: boolean;
     MethodParameter_IsRequired: boolean;
+    MethodParameter_IsFlattened: boolean
 
 
     GetModuleOperationName(): string;
