@@ -16,7 +16,7 @@ helps['managed-network managed_networks'] = """
 
 helps['managed-network managed_networks list'] = """
     type: command
-    short-summary: The ListByResourceGroup ManagedNetwork operation retrieves all the Managed Network resources in a resource group in a paginated format.
+    short-summary: The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
 """
 
 helps['managed-network managed_networks show'] = """

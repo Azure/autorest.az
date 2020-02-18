@@ -88,75 +88,83 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     } else {
         output_args.push("    with self.argument_context('" + model.Command_Name + "') as c:");
     }
-    
-    if (!model.SelectFirstOption()) {
+
+    let hasParam = false;
+    let allParam: Map<string, boolean> = new Map<string, boolean>();
+    if(model.SelectFirstMethod()) {
+        do {
+            if(model.SelectFirstMethodParameter()) {
+                do {
+                    if(model.MethodParameter_IsFlattened) {
+                        continue;
+                    }
+                    hasParam = true;
+                    
+                    let parameterName = model.MethodParameter_NamePython;
+        
+                    if(allParam.has(parameterName)) {
+                        continue;
+                    }
+                    allParam.set(parameterName, true);
+                    let argument = "        c.argument('" + parameterName + "'";
+        
+                    // this is to handle names like "format", "type", etc
+                    if (parameterName == "type" || parameterName == "format") {
+                        argument = "        c.argument('_" + parameterName + "'";
+                        argument += ", options_list=['--" + parameterName + "']";
+                    }
+        
+                    if (model.MethodParameter_Type == SchemaType.Boolean) {
+                        hasBoolean = true;
+                        argument += ", arg_type=get_three_state_flag()";
+                    }
+                    else if (model.MethodParameter_Type == SchemaType.Choice || model.MethodParameter_Type == SchemaType.SealedChoice) {
+                        hasEnum = true;
+                        argument += ", arg_type=get_enum_type([";
+        
+                        model.MethodParameter_EnumValues.forEach(element => {
+                            if (!argument.endsWith("[")) argument += ", ";
+                            argument += "'" + element + "'";
+                        });
+                        argument += "])";
+                    }
+        
+                    if (parameterName == "resource_group_name") {
+                        argument += ", resource_group_name_type";
+                    }
+                    else if (parameterName == "tags") {
+                        argument += ", tags_type";
+                    }
+                    else if (parameterName == "location") {
+                        argument += ", arg_type=get_location_type(self.cli_ctx)";
+                    }
+                    else {
+                        argument += ", id_part=None, help='" + EscapeString(model.MethodParameter_Description) + "'";
+                    }
+        
+                    if (model.MethodParameter_IsList) {
+                        if (model.MethodParameter_Type == SchemaType.Object || model.MethodParameter_Type == SchemaType.Array) {
+                            let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
+                            argument += ", action=" + actionName;
+                            hasActions = true;
+        
+                            if (actions.indexOf(actionName) < 0) {
+                                actions.push(actionName);
+                            }
+                        }
+                        argument += ", nargs='+'";
+                    }
+        
+                    argument += ")";
+        
+                    output_args.push(argument);
+                } while(model.SelectNextMethodParameter());
+            }
+        } while(model.SelectNextMethod());
+    }
+    if (!hasParam) {
         output_args.push("        pass");
     }
-    else {
-        let hasParam = false;
-        do {
-            if(model.Option_IsFlattened) {
-                continue;
-            }
-            hasParam = true;
-            let parameterName = model.Option_NamePython;
 
-            let argument = "        c.argument('" + parameterName + "'";
-
-            // this is to handle names like "format", "type", etc
-            if (parameterName == "type" || parameterName == "format") {
-                argument = "        c.argument('_" + parameterName + "'";
-                argument += ", options_list=['--" + parameterName + "']";
-            }
-
-            if (model.Option_Type == SchemaType.Boolean) {
-                hasBoolean = true;
-                argument += ", arg_type=get_three_state_flag()";
-            }
-            else if (model.Option_Type == SchemaType.Choice || model.Option_Type == SchemaType.SealedChoice) {
-                hasEnum = true;
-                argument += ", arg_type=get_enum_type([";
-
-                model.Option_EnumValues.forEach(element => {
-                    if (!argument.endsWith("[")) argument += ", ";
-                    argument += "'" + element + "'";
-                });
-                argument += "])";
-            }
-
-            if (parameterName == "resource_group_name") {
-                argument += ", resource_group_name_type";
-            }
-            else if (parameterName == "tags") {
-                argument += ", tags_type";
-            }
-            else if (parameterName == "location") {
-                argument += ", arg_type=get_location_type(self.cli_ctx)";
-            }
-            else {
-                argument += ", id_part=None, help='" + EscapeString(model.Option_Description) + "'";
-            }
-
-            if (model.Option_IsList) {
-                if (model.Option_Type == SchemaType.Object || model.Option_Type == SchemaType.Array) {
-                    let actionName: string = "Add" + Capitalize(ToCamelCase(model.Option_Name));
-                    argument += ", action=" + actionName;
-                    hasActions = true;
-
-                    if (actions.indexOf(actionName) < 0) {
-                        actions.push(actionName);
-                    }
-                }
-                argument += ", nargs='+'";
-            }
-
-            argument += ")";
-
-            output_args.push(argument);
-        } while (model.SelectNextOption());
-        if (!hasParam) {
-            output_args.push("        pass");
-        }
-    }
     return output_args;
 }

@@ -68,7 +68,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     //let updatedMethodName = ((methodName != "show") ? methodName : "get").replace(/-/g, '_');
     let updatedMethodName: string = model.Command_FunctionName;
     if (needUpdate) {
-        updatedMethodName = model.Command_FunctionName.replace(/_create/g, "_update");
+        updatedMethodName = updatedMethodName.replace(/_create/g, "_update");
     }
     let call = "def " + updatedMethodName + "(";
     let indent = " ".repeat(call.length);
@@ -76,55 +76,47 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
 
     output.push(call + "cmd, client");
 
-    if (model.SelectFirstOption()) {
+    let allParam: Map<string, boolean> = new Map<string, boolean>();
+    if (model.SelectFirstMethod()) {
         do {
-            if (model.Option_IsFlattened) {
-                continue;
-            }
-
-            let required: boolean = model.Option_IsRequired;
-
-            // XXX - handle this in model
-            //if (element.Type == "placeholder")
-            //    continue;
-
-            // XXX - handle this in model
-            //if (isUpdate && element.PathSwagger.startsWith("/"))
-            //    required = false;
-
-            if (isUpdate && model.Option_PathSwagger.startsWith("/"))
-                required = false;
-
-            if (required) {
-                let name = model.Option_NamePython; // PythonParameterName(element.Name);
-                output[output.length - 1] += ",";
-                output.push(indent + name);
-            }
-        } while (model.SelectNextOption());
+            if(model.SelectFirstMethodParameter()) {
+                do {
+                    if (model.MethodParameter_IsFlattened) {
+                        continue;
+                    }
+        
+                    let required: boolean = model.MethodParameter_RequiredByMethod;
+    
+                    let name = model.MethodParameter_NamePython; // PythonParameterName(element.Name);
+                    if (required && !allParam.has(name)) {
+                        allParam.set(name, true);
+                        output[output.length - 1] += ",";
+                        output.push(indent + name);
+                    }
+                } while(model.SelectNextMethodParameter());
+            }      
+        } while (model.SelectNextMethod());
     }
 
-    if (model.SelectFirstOption()) {
+    if (model.SelectFirstMethod()) {
         do {
-            if (model.Option_IsFlattened) {
-                continue;
-            }
-            let required = model.Option_IsRequired;
+            if(model.SelectFirstMethodParameter()) {
+                do {
+                    if (model.MethodParameter_IsFlattened) {
+                        continue;
+                    }
+                    let required = model.MethodParameter_RequiredByMethod;
 
-
-            if (model.Option_In == ParameterLocation.Path) {
-                continue;
-            }
-
-
-            if (isUpdate && model.Option_PathSwagger.startsWith("/"))
-                required = false;
-
-            if (!required) {
-                output[output.length - 1] += ",";
-                output.push(indent + model.Option_NamePython + "=None");
+                    let name = model.MethodParameter_NamePython;
+                    if (!required && !allParam.has(name)) {
+                        allParam.set(name, true);
+                        output[output.length - 1] += ",";
+                        output.push(indent + name + "=None");
+                    }
+                } while(model.SelectNextMethodParameter());
             }
         }
-        while (model.SelectNextOption());
+        while (model.SelectNextMethod());
     }
 
     output[output.length - 1] += "):";
@@ -136,7 +128,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
         // create body transformation for methods that support it
         let methodName: string = model.Command_MethodName;
 
-        if (methodName != "show" && methodName != "list" && methodName != "delete") {
+        //if (methodName != "show" && methodName != "list" && methodName != "delete") {
             // body transformation
 
             if (model.SelectFirstMethodParameter()) {
@@ -195,7 +187,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                 
             } 
 
-        }
+        //}
 
         let needIfStatement = !model.Method_IsLast;
 
