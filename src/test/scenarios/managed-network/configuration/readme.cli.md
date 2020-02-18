@@ -33,7 +33,7 @@ cli:
     "mesh_id":
       name: mesh
   flatten-all: true
-  test-setup:
+  test-scenario:
     - name: ManagedNetworksPut
     - name: ManagementNetworkGroupsPut
     - name: ScopeAssignmentsPut
