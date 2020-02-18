@@ -43,7 +43,7 @@ export class CodeModelCliImpl implements CodeModelAz
         this.currentExampleIndex = -1;
         this.preMethodIndex = -1;
         this.currentMethodIndex = -1;
-        this.sortOperationByAzCommand();
+        //this.sortOperationByAzCommand();
         
     }
 
@@ -63,7 +63,11 @@ export class CodeModelCliImpl implements CodeModelAz
     }
     private sortOperationByAzCommand() {
         for(let [idx, operationGroup] of this.codeModel.operationGroups.entries()) {
-            operationGroup.operations.sort((a, b) => this.getOrder(a.language['az']['name']).localeCompare(this.getOrder(b.language['az']['name'])));
+            operationGroup.operations.sort((a, b) => {
+                let oa = this.getOrder(a.language['az']['name']) + "_" + (100 - a.request.parameters.length);
+                let ob = this.getOrder(b.language['az']['name']) + "_" + (100 - b.request.parameters.length);
+                return oa.localeCompare(ob);
+            });
             this.codeModel.operationGroups[idx] = operationGroup;
         }
 
@@ -122,7 +126,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Extension_NameClass(): string
     {
-        return this.codeModel.info.title.replace(/ManagementClient/g, '');
+        return this.codeModel.info['pascal_case_title']
     }
 
     public get Extension_TestScenario(): any
@@ -292,7 +296,7 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex = 0;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex]
             const currentParameterName = parameter.language['az'].name;
-            if(parameter.hidden || currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+            if(parameter.hidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -341,7 +345,7 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex++;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
             const currentParameterName = parameter.language['az'].name;
-            if(parameter.hidden || currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+            if(parameter.hidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -666,13 +670,13 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get PythonMgmtClient(): string
     {
-        return this.codeModel.info.title;
+        return this.codeModel.info['pascal_case_title'];
     }
 
     public get PythonOperationsName(): string
     {
-        //return this.options['namespace'].split('.').pop();
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['python'].name;
+        return this.options['namespace'].split('.').pop();
+        //return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['python'].name;
     }
 
     //=================================================================================================================

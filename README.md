@@ -54,7 +54,7 @@ scope-az:
 
 
 no-namespace-folders: true
-clear-output-folder: true
+#clear-output-folder: true
 scope-codegen/emitter:
     output-folder: "$(python-sdk-output-folder)"
 

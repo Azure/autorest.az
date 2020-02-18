@@ -15,8 +15,7 @@ let actions: string[] = [];
 
 export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     let output: string[] = [];
-
-
+        
     var output_args: string[] = [];
 
     output_args.push("");
@@ -48,6 +47,8 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     output.push("# pylint: disable=too-many-statements");
     output.push("");
     //output.push("from knack.arguments import CLIArgumentType");
+
+    //output.push("from knack.arguments import CLIArgumentType");
     output.push("from azure.cli.core.commands.parameters import (");
     output.push("    tags_type,");
     //output.push("    get_resource_name_completion_list,");
@@ -57,10 +58,9 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     output.push("    resource_group_name_type,");
     output.push("    get_location_type");
     output.push(")");
-    //output.push("from azure.cli.core.commands.validators import get_default_location_from_resource_group");
 
     if (hasActions) {
-        output.push("from azext_" + model.Extension_NameUnderscored + ".action import (")
+        output.push("from azext_" + model.Extension_NameUnderscored + ".actions import (")
 
         for (let idx: number = 0; idx < actions.length; idx++) {
             let action = actions[idx];
@@ -139,7 +139,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
 
             if (model.Option_IsList) {
                 if (model.Option_Type == SchemaType.Object || model.Option_Type == SchemaType.Array) {
-                    let actionName: string = "PeeringAdd" + Capitalize(ToCamelCase(model.Option_Name));
+                    let actionName: string = "Add" + Capitalize(ToCamelCase(model.Option_Name));
                     argument += ", action=" + actionName;
                     hasActions = true;
 
