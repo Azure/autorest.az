@@ -84,7 +84,6 @@ export class CodeModelCliImpl implements CodeModelAz
                         if(this.SelectFirstMethod()) {
                             let paramRequired: Map<string, number> = new Map<string, number>();
                             paramTime++;
-                            this.session.message({Channel:Channel.Warning, Text: " paramTime:" + paramTime + " CommandGroupName: " + this.CommandGroup_Name + " MethodName:" + this.Method_Name});
                             if(this.SelectFirstMethodParameter()) {
                                 do {
                                     paramRequired.set(this.MethodParameter_Name, this.MethodParameter_IsRequired? 1: 0);
@@ -92,7 +91,6 @@ export class CodeModelCliImpl implements CodeModelAz
                             }
                             while(this.SelectNextMethod()) {
                                 paramTime++;
-                                this.session.message({Channel:Channel.Warning, Text: " paramTime:" + paramTime + " CommandGroupName: " + this.CommandGroup_Name + " MethodName:" + this.Method_Name});
                                 if(this.SelectFirstMethodParameter()) {
                                     do {
                                         if(!paramRequired.has(this.MethodParameter_Name)) {
@@ -102,9 +100,6 @@ export class CodeModelCliImpl implements CodeModelAz
                                         }
                                     } while(this.SelectNextMethodParameter());
                                 }                                
-                            }
-                            for(let [k,v] of paramRequired.entries()) {
-                                this.session.message({Channel:Channel.Warning, Text: "param: " + k + " requiredTimes:" + v});
                             }
                             if(this.SelectFirstMethod()) {
                                 if(this.SelectFirstMethodParameter()) {
