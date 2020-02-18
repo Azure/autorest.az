@@ -32,7 +32,6 @@ export class CodeModelCliImpl implements CodeModelAz
     currentExampleIndex: number;
     preMethodIndex: number;
     currentMethodIndex: number;
-    private _testScenario: any;
 
 
     async init() {
@@ -48,10 +47,9 @@ export class CodeModelCliImpl implements CodeModelAz
         
     }
 
-    public constructor(protected session: Session<CodeModel>, testScenario: any) 
+    public constructor(protected session: Session<CodeModel>) 
     {
         this.codeModel = session.model;
-        this._testScenario = testScenario;
         this.sortOperationByAzCommand();
     }
 
@@ -129,7 +127,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Extension_TestScenario(): any
     {
-        return this._testScenario;
+        return this.codeModel['test-scenario'] || [];
     }
 
     //=================================================================================================================
