@@ -77,28 +77,28 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstMethod()) {
         do {
-            if (model.SelectFirstMethodParameter()) {
+            if(model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
                         continue;
                     }
-
+        
                     let required: boolean = model.MethodParameter_RequiredByMethod;
-
+    
                     let name = model.MethodParameter_NamePython; // PythonParameterName(element.Name);
                     if (required && !allParam.has(name)) {
                         allParam.set(name, true);
                         output[output.length - 1] += ",";
                         output.push(indent + name);
                     }
-                } while (model.SelectNextMethodParameter());
-            }
+                } while(model.SelectNextMethodParameter());
+            }      
         } while (model.SelectNextMethod());
     }
 
     if (model.SelectFirstMethod()) {
         do {
-            if (model.SelectFirstMethodParameter()) {
+            if(model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
                         continue;
@@ -111,7 +111,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                         output[output.length - 1] += ",";
                         output.push(indent + name + "=None");
                     }
-                } while (model.SelectNextMethodParameter());
+                } while(model.SelectNextMethodParameter());
             }
         }
         while (model.SelectNextMethod());
