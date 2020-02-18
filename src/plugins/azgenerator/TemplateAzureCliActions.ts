@@ -5,6 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { ToCamelCase, Capitalize } from "../../utils/helper";
+import { SchemaType } from "@azure-tools/codemodel";
 
 export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
     var output: string[] = [];
@@ -29,7 +30,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                         {
                             if (model.Option_IsList)
                             {
-                                if (model.Option_Type == "dict")
+                                if (model.Option_Type == SchemaType.Object || model.Option_Type == SchemaType.Array)
                                 {
                                     let actionName: string = "Add" + Capitalize(ToCamelCase(model.Option_Name));
 
