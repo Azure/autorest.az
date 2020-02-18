@@ -128,7 +128,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Extension_NameClass(): string
     {
-        return this.codeModel.info.title.replace(/ManagementClient/g, '');
+        return this.codeModel.info['pascal_case_title']
     }
 
     public get Extension_TestScenario(): any
@@ -298,7 +298,7 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex = 0;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex]
             const currentParameterName = parameter.language['az'].name;
-            if(parameter.hidden || currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+            if(parameter.hidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -347,7 +347,7 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex++;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
             const currentParameterName = parameter.language['az'].name;
-            if(parameter.hidden || currentParameterName == "subscription-id" || currentParameterName == "api-version" || currentParameterName == "$host") {
+            if(parameter.hidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -672,13 +672,13 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get PythonMgmtClient(): string
     {
-        return this.codeModel.info.title;
+        return this.codeModel.info['pascal_case_title'];
     }
 
     public get PythonOperationsName(): string
     {
-        //return this.options['namespace'].split('.').pop();
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['python'].name;
+        return this.options['namespace'].split('.').pop();
+        //return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['python'].name;
     }
 
     //=================================================================================================================
