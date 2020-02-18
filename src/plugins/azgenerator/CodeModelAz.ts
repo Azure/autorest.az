@@ -51,8 +51,8 @@ export interface CodeModelAz
     Option_PathSwagger: string;
     Option_EnumValues: string[];
     Option_IsHidden: boolean;
-    Option_IsFlattened: boolean
-
+    Option_IsFlattened: boolean;
+    
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
 
@@ -65,14 +65,19 @@ export interface CodeModelAz
     SelectNextMethodParameter(): boolean;
 
     MethodParameter_Name: string;
+    MethodParameter_NamePython: string
     MethodParameter_MapsTo: string;
+    MethodParameter_Description: string;
     MethodParameter_Type: string;
     MethodParameter_IsList: boolean;
     MethodParameter: any;
     MethodParameter_In: string;
     MethodParameter_IsHidden: boolean;
     MethodParameter_IsRequired: boolean;
-    MethodParameter_IsFlattened: boolean
+    MethodParameter_IsFlattened: boolean;
+    MethodParameter_RequiredByMethod: boolean;
+    MethodParameter_EnumValues: string[];
+
 
 
     GetModuleOperationName(): string;
