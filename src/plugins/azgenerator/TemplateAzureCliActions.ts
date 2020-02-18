@@ -36,7 +36,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
 
                                     output.push("");
                                     output.push("");
-                                    output.push("class Add" + actionName + "(argparse._AppendAction):");
+                                    output.push("class " + actionName + "(argparse._AppendAction):");
                                     output.push("    def __call__(self, parser, namespace, values, option_string=None):");
                                     output.push("        action = self.get_action(values, option_string)");
                                     output.push("        super(ImageBuilderAddCustomize, self).__call__(parser, namespace, action, option_string)");

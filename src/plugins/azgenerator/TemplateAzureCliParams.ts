@@ -15,13 +15,6 @@ let actions: string[] = [];
 
 export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     let output: string[] = [];
-    let hasActions: boolean = false;
-    let hasBoolean: boolean = false;
-    let hasTags: boolean = false;
-    let hasResourceGroup: boolean = false;
-    let hasLocationType: boolean = false;
-    let hasEnum: boolean = false;
-    let actions: string[] = [];
         
     var output_args: string[] = [];
 
@@ -55,20 +48,19 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     output.push("");
     //output.push("from knack.arguments import CLIArgumentType");
 
-    if (hasTags || hasBoolean || hasEnum || hasResourceGroup || hasLocationType)
-    {
-        output.push("from azure.cli.core.commands.parameters import (");
-        if (hasTags) output.push("    tags_type,");
-        if (hasBoolean) output.push("    get_three_state_flag,");
-        if (hasEnum) output.push("    get_enum_type,");
-        if (hasResourceGroup) output.push("    resource_group_name_type,");
-        if (hasLocationType )output.push("    get_location_type,");
-        output[output.length - 1] = output[output.length - 1].split(",")[0];
-        output.push(")");
-    }
+    //output.push("from knack.arguments import CLIArgumentType");
+    output.push("from azure.cli.core.commands.parameters import (");
+    output.push("    tags_type,");
+    //output.push("    get_resource_name_completion_list,");
+    //output.push("    quotes,");
+    if (hasBoolean) output.push("    get_three_state_flag,");
+    if (hasEnum) output.push("    get_enum_type,");
+    output.push("    resource_group_name_type,");
+    output.push("    get_location_type");
+    output.push(")");
 
     if (hasActions) {
-        output.push("from azext_" + model.Extension_NameUnderscored + ".action import (")
+        output.push("from azext_" + model.Extension_NameUnderscored + ".actions import (")
 
         for (let idx: number = 0; idx < actions.length; idx++) {
             let action = actions[idx];
