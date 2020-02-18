@@ -23,7 +23,7 @@ schemas:
                   name: OperationsDefinition-name
                   description: Name of the operation.
                 az:
-                  name: operations-definition-name
+                  name: operations_definition-name
                   description: Name of the operation.
                 cli:
                   name: OperationsDefinition-name
@@ -55,7 +55,7 @@ schemas:
                       name: OperationsDisplayDefinition-provider
                       description: Resource provider of the operation.
                     az:
-                      name: operations-display-definition-provider
+                      name: operations_display_definition-provider
                       description: Resource provider of the operation.
                     cli:
                       name: OperationsDisplayDefinition-provider
@@ -82,7 +82,7 @@ schemas:
                       name: OperationsDisplayDefinition-resource
                       description: Resource for the operation.
                     az:
-                      name: operations-display-definition-resource
+                      name: operations_display_definition-resource
                       description: Resource for the operation.
                     cli:
                       name: OperationsDisplayDefinition-resource
@@ -109,7 +109,7 @@ schemas:
                       name: OperationsDisplayDefinition-operation
                       description: Short description of the operation.
                     az:
-                      name: operations-display-definition-operation
+                      name: operations_display_definition-operation
                       description: Short description of the operation.
                     cli:
                       name: OperationsDisplayDefinition-operation
@@ -136,7 +136,7 @@ schemas:
                       name: OperationsDisplayDefinition-description
                       description: Description of the operation.
                     az:
-                      name: operations-display-definition-description
+                      name: operations_display_definition-description
                       description: Description of the operation.
                     cli:
                       name: OperationsDisplayDefinition-description
@@ -160,7 +160,7 @@ schemas:
                   description: Display object with properties of the operation.
                   namespace: Api20180901Preview
                 az:
-                  name: operations-display-definition
+                  name: operations_display_definition
                   description: Display object with properties of the operation.
                 cli:
                   name: OperationsDisplayDefinition
@@ -184,7 +184,7 @@ schemas:
               description: Definition object with the name and properties of an operation.
               namespace: Api20180901Preview
             az:
-              name: operations-definition
+              name: operations_definition
               description: Definition object with the name and properties of an operation.
             cli:
               name: OperationsDefinition
@@ -195,7 +195,7 @@ schemas:
             name: OperationList-value
             description: List of supported operations.
           az:
-            name: operation-list-value
+            name: operation_list-value
             description: List of supported operations.
           cli:
             name: OperationList-value
@@ -219,7 +219,7 @@ schemas:
         description: List of supported operations.
         namespace: Api20180901Preview
       az:
-        name: operation-list
+        name: operation_list
         description: List of supported operations.
       cli:
         name: OperationList
@@ -246,7 +246,7 @@ schemas:
                 name: CloudErrorBody-code
                 description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
               az:
-                name: cloud-error-body-code
+                name: cloud_error_body-code
                 description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
               cli:
                 name: CloudErrorBody-code
@@ -273,7 +273,7 @@ schemas:
                 name: CloudErrorBody-message
                 description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
               az:
-                name: cloud-error-body-message
+                name: cloud_error_body-message
                 description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
               cli:
                 name: CloudErrorBody-message
@@ -299,7 +299,7 @@ schemas:
             description: An error response from Attestation.
             namespace: Api20180901Preview
           az:
-            name: cloud-error-body
+            name: cloud_error_body
             description: An error response from Attestation.
           cli:
             name: CloudErrorBody
@@ -325,7 +325,7 @@ schemas:
         description: An error response from Attestation.
         namespace: Api20180901Preview
       az:
-        name: cloud-error
+        name: cloud_error
         description: An error response from Attestation.
       cli:
         name: CloudError
@@ -372,7 +372,7 @@ schemas:
                       name: NotReady
                       description: ''
                     az:
-                      name: not-ready
+                      name: not_ready
                       description: ''
                     cli:
                       name: NotReady
@@ -409,7 +409,7 @@ schemas:
                     name: AttestationServiceStatus
                     description: Status of attestation service.
                   az:
-                    name: attestation-service-status
+                    name: attestation_service_status
                     description: Status of attestation service.
                   cli:
                     name: AttestationServiceStatus
@@ -437,7 +437,7 @@ schemas:
                     name: StatusResult-attestUri
                     description: Gets the uri of attestation service
                   az:
-                    name: status-result-attest-uri
+                    name: status_result-attest_uri
                     description: Gets the uri of attestation service
                   cli:
                     name: StatusResult-attestUri
@@ -450,7 +450,7 @@ schemas:
                   name: attestUri
                   description: Gets the uri of attestation service
                 az:
-                  name: attest-uri
+                  name: attest_uri
                   description: Gets the uri of attestation service
                 cli:
                   name: attestUri
@@ -462,7 +462,7 @@ schemas:
                 description: Status of attestation service.
                 namespace: Api20180901Preview
               az:
-                name: status-result
+                name: status_result
                 description: Status of attestation service.
               cli:
                 name: StatusResult
@@ -489,7 +489,7 @@ schemas:
             description: Attestation service response message.
             namespace: Api20180901Preview
           az:
-            name: attestation-provider
+            name: attestation_provider
             description: Attestation service response message.
           cli:
             name: AttestationProvider
@@ -514,7 +514,7 @@ schemas:
                 name: AzureEntityResource-etag
                 description: Resource Etag.
               az:
-                name: azure-entity-resource-etag
+                name: azure_entity_resource-etag
                 description: Resource Etag.
               cli:
                 name: AzureEntityResource-etag
@@ -539,7 +539,7 @@ schemas:
             description: The resource model definition for a Azure Resource Manager resource with an etag.
             namespace: Api10
           az:
-            name: azure-entity-resource
+            name: azure_entity_resource
             description: The resource model definition for a Azure Resource Manager resource with an etag.
           cli:
             name: AzureEntityResource
@@ -578,7 +578,7 @@ schemas:
                 name: TrackedResource-tags
                 description: Resource tags.
               az:
-                name: tracked-resource-tags
+                name: tracked_resource-tags
                 description: Resource tags.
               cli:
                 name: TrackedResource-tags
@@ -610,7 +610,7 @@ schemas:
                 name: TrackedResource-location
                 description: The geo-location where the resource lives
               az:
-                name: tracked-resource-location
+                name: tracked_resource-location
                 description: The geo-location where the resource lives
               cli:
                 name: TrackedResource-location
@@ -635,7 +635,7 @@ schemas:
             description: The resource model definition for a ARM tracked top level resource
             namespace: Api10
           az:
-            name: tracked-resource
+            name: tracked_resource
             description: The resource model definition for a ARM tracked top level resource
           cli:
             name: TrackedResource
@@ -656,7 +656,7 @@ schemas:
             description: The resource model definition for a ARM proxy resource. It will have everything other than required location and tags
             namespace: Api10
           az:
-            name: proxy-resource
+            name: proxy_resource
             description: The resource model definition for a ARM proxy resource. It will have everything other than required location and tags
           cli:
             name: ProxyResource
@@ -782,7 +782,7 @@ schemas:
             name: AttestationServiceCreationParams-attestationPolicy
             description: Name of attestation policy.
           az:
-            name: attestation-service-creation-params-attestation-policy
+            name: attestation_service_creation_params-attestation_policy
             description: Name of attestation policy.
           cli:
             name: AttestationServiceCreationParams-attestationPolicy
@@ -794,7 +794,7 @@ schemas:
           name: attestationPolicy
           description: Name of attestation policy.
         az:
-          name: attestation-policy
+          name: attestation_policy
           description: Name of attestation policy.
         cli:
           name: attestationPolicy
@@ -828,7 +828,7 @@ schemas:
                         established by [JWA] or be a value that contains a Collision-
                         Resistant Name.
                     az:
-                      name: j-s-o-n-web-key-alg
+                      name: jsonweb_key-alg
                       description: |-
                         The "alg" (algorithm) parameter identifies the algorithm intended for
                         use with the key.  The values used should either be registered in the
@@ -881,7 +881,7 @@ schemas:
                       name: JSONWebKey-crv
                       description: The "crv" (curve) parameter identifies the curve type
                     az:
-                      name: j-s-o-n-web-key-crv
+                      name: jsonweb_key-crv
                       description: The "crv" (curve) parameter identifies the curve type
                     cli:
                       name: JSONWebKey-crv
@@ -909,7 +909,7 @@ schemas:
                       name: JSONWebKey-d
                       description: RSA private exponent or ECC private key
                     az:
-                      name: j-s-o-n-web-key-d
+                      name: jsonweb_key-d
                       description: RSA private exponent or ECC private key
                     cli:
                       name: JSONWebKey-d
@@ -937,7 +937,7 @@ schemas:
                       name: JSONWebKey-dp
                       description: RSA Private Key Parameter
                     az:
-                      name: j-s-o-n-web-key-dp
+                      name: jsonweb_key-dp
                       description: RSA Private Key Parameter
                     cli:
                       name: JSONWebKey-dp
@@ -965,7 +965,7 @@ schemas:
                       name: JSONWebKey-dq
                       description: RSA Private Key Parameter
                     az:
-                      name: j-s-o-n-web-key-dq
+                      name: jsonweb_key-dq
                       description: RSA Private Key Parameter
                     cli:
                       name: JSONWebKey-dq
@@ -993,7 +993,7 @@ schemas:
                       name: JSONWebKey-e
                       description: 'RSA public exponent, in Base64'
                     az:
-                      name: j-s-o-n-web-key-e
+                      name: jsonweb_key-e
                       description: 'RSA public exponent, in Base64'
                     cli:
                       name: JSONWebKey-e
@@ -1021,7 +1021,7 @@ schemas:
                       name: JSONWebKey-k
                       description: Symmetric key
                     az:
-                      name: j-s-o-n-web-key-k
+                      name: jsonweb_key-k
                       description: Symmetric key
                     cli:
                       name: JSONWebKey-k
@@ -1058,7 +1058,7 @@ schemas:
                         equivalent alternatives by the application using them.)  The "kid"
                         value is a case-sensitive string.
                     az:
-                      name: j-s-o-n-web-key-kid
+                      name: jsonweb_key-kid
                       description: |-
                         The "kid" (key ID) parameter is used to match a specific key.  This
                         is used, for instance, to choose among a set of keys within a JWK Set
@@ -1136,7 +1136,7 @@ schemas:
                         established by [JWA] or be a value that contains a Collision-
                         Resistant Name.  The "kty" value is a case-sensitive string.
                     az:
-                      name: j-s-o-n-web-key-kty
+                      name: jsonweb_key-kty
                       description: |-
                         The "kty" (key type) parameter identifies the cryptographic algorithm
                         family used with the key, such as "RSA" or "EC". "kty" values should
@@ -1189,7 +1189,7 @@ schemas:
                       name: JSONWebKey-n
                       description: 'RSA modulus, in Base64'
                     az:
-                      name: j-s-o-n-web-key-n
+                      name: jsonweb_key-n
                       description: 'RSA modulus, in Base64'
                     cli:
                       name: JSONWebKey-n
@@ -1217,7 +1217,7 @@ schemas:
                       name: JSONWebKey-p
                       description: RSA secret prime
                     az:
-                      name: j-s-o-n-web-key-p
+                      name: jsonweb_key-p
                       description: RSA secret prime
                     cli:
                       name: JSONWebKey-p
@@ -1245,7 +1245,7 @@ schemas:
                       name: JSONWebKey-q
                       description: 'RSA secret prime, with p < q'
                     az:
-                      name: j-s-o-n-web-key-q
+                      name: jsonweb_key-q
                       description: 'RSA secret prime, with p < q'
                     cli:
                       name: JSONWebKey-q
@@ -1273,7 +1273,7 @@ schemas:
                       name: JSONWebKey-qi
                       description: RSA Private Key Parameter
                     az:
-                      name: j-s-o-n-web-key-qi
+                      name: jsonweb_key-qi
                       description: RSA Private Key Parameter
                     cli:
                       name: JSONWebKey-qi
@@ -1305,7 +1305,7 @@ schemas:
                         a public key is used for encrypting data or verifying the signature
                         on data. Values are commonly "sig" (signature) or "enc" (encryption).
                     az:
-                      name: j-s-o-n-web-key-use
+                      name: jsonweb_key-use
                       description: |-
                         Use ("public key use") identifies the intended use of
                         the public key. The "use" parameter is employed to indicate whether
@@ -1353,7 +1353,7 @@ schemas:
                       name: JSONWebKey-x
                       description: X coordinate for the Elliptic Curve point
                     az:
-                      name: j-s-o-n-web-key-x
+                      name: jsonweb_key-x
                       description: X coordinate for the Elliptic Curve point
                     cli:
                       name: JSONWebKey-x
@@ -1385,7 +1385,7 @@ schemas:
                         name: JSONWebKey-x5cItem
                         description: ''
                       az:
-                        name: j-s-o-n-web-key-x5c-item
+                        name: jsonweb_key-x5c_item
                         description: ''
                       cli:
                         name: JSONWebKey-x5cItem
@@ -1403,7 +1403,7 @@ schemas:
                         The PKIX certificate containing the key value MUST be the first
                         certificate.
                     az:
-                      name: j-s-o-n-web-key-x5c
+                      name: jsonweb_key-x5c
                       description: |-
                         The "x5c" (X.509 certificate chain) parameter contains a chain of one
                         or more PKIX certificates [RFC5280].  The certificate chain is
@@ -1466,7 +1466,7 @@ schemas:
                       name: JSONWebKey-y
                       description: Y coordinate for the Elliptic Curve point
                     az:
-                      name: j-s-o-n-web-key-y
+                      name: jsonweb_key-y
                       description: Y coordinate for the Elliptic Curve point
                     cli:
                       name: JSONWebKey-y
@@ -1491,7 +1491,7 @@ schemas:
                   description: ''
                   namespace: Api10
                 az:
-                  name: j-s-o-n-web-key
+                  name: jsonweb_key
                   description: ''
                 cli:
                   name: JSONWebKey
@@ -1507,7 +1507,7 @@ schemas:
                   can choose to assign a meaning to the order for their purposes, if
                   desired.
               az:
-                name: j-s-o-n-web-key-set-keys
+                name: jsonweb_key_set-keys
                 description: |-
                   The value of the "keys" parameter is an array of JWK values.  By
                   default, the order of the JWK values within the array does not imply
@@ -1556,7 +1556,7 @@ schemas:
             description: ''
             namespace: Api10
           az:
-            name: j-s-o-n-web-key-set
+            name: jsonweb_key_set
             description: ''
           cli:
             name: JSONWebKeySet
@@ -1568,7 +1568,7 @@ schemas:
           name: policySigningCertificates
           description: ''
         az:
-          name: policy-signing-certificates
+          name: policy_signing_certificates
           description: ''
         cli:
           name: policySigningCertificates
@@ -1580,7 +1580,7 @@ schemas:
         description: Client supplied parameters passed to attestation service.
         namespace: Api20180901Preview
       az:
-        name: attestation-service-creation-params
+        name: attestation_service_creation_params
         description: Client supplied parameters passed to attestation service.
       cli:
         name: AttestationServiceCreationParams
@@ -1603,7 +1603,7 @@ schemas:
             name: AttestationProviderListResult-value
             description: Attestation Provider array.
           az:
-            name: attestation-provider-list-result-value
+            name: attestation_provider_list_result-value
             description: Attestation Provider array.
           cli:
             name: AttestationProviderListResult-value
@@ -1627,7 +1627,7 @@ schemas:
         description: Attestation Providers List.
         namespace: Api20180901Preview
       az:
-        name: attestation-provider-list-result
+        name: attestation_provider_list_result
         description: Attestation Providers List.
       cli:
         name: AttestationProviderListResult
@@ -1656,7 +1656,7 @@ schemas:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       az:
-        name: api-version-2018-09-01-preview
+        name: api_version-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       cli:
         name: ApiVersion-2018-09-01-preview
@@ -1671,7 +1671,7 @@ schemas:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       az:
-        name: api-version-2018-09-01-preview
+        name: api_version-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       cli:
         name: ApiVersion-2018-09-01-preview
@@ -1686,7 +1686,7 @@ schemas:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       az:
-        name: api-version-2018-09-01-preview
+        name: api_version-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       cli:
         name: ApiVersion-2018-09-01-preview
@@ -1701,7 +1701,7 @@ schemas:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       az:
-        name: api-version-2018-09-01-preview
+        name: api_version-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       cli:
         name: ApiVersion-2018-09-01-preview
@@ -1716,7 +1716,7 @@ schemas:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       az:
-        name: api-version-2018-09-01-preview
+        name: api_version-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       cli:
         name: ApiVersion-2018-09-01-preview
@@ -1731,7 +1731,7 @@ schemas:
         name: ApiVersion-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       az:
-        name: api-version-2018-09-01-preview
+        name: api_version-2018-09-01-preview
         description: Api Version (2018-09-01-preview)
       cli:
         name: ApiVersion-2018-09-01-preview
@@ -1818,7 +1818,7 @@ globalParameters:
       description: The ID of the target subscription.
       serializedName: subscriptionId
     az:
-      name: subscription-id
+      name: subscription_id
       description: The ID of the target subscription.
     cli:
       name: subscriptionId
@@ -1857,7 +1857,7 @@ globalParameters:
       description: Api Version
       serializedName: api-version
     az:
-      name: api-version
+      name: api_version
       description: Api Version
     cli:
       name: ApiVersion
@@ -1981,7 +1981,7 @@ operationGroups:
             description: The name of the resource group. The name is case insensitive.
             serializedName: resourceGroupName
           az:
-            name: resource-group-name
+            name: resource_group_name
             description: The name of the resource group. The name is case insensitive.
           cli:
             name: resourceGroupName
@@ -1999,7 +1999,7 @@ operationGroups:
             description: Name of the attestation service instance
             serializedName: providerName
           az:
-            name: provider-name
+            name: provider_name
             description: Name of the attestation service instance
           cli:
             name: providerName
@@ -2069,7 +2069,7 @@ operationGroups:
       az:
         name: show
         description: Get the status of Attestation Provider.
-        command: attestation attestation-providers show
+        command: attestation attestation_providers show
       cli:
         name: Get
         description: Get the status of Attestation Provider.
@@ -2090,7 +2090,7 @@ operationGroups:
             description: The name of the resource group. The name is case insensitive.
             serializedName: resourceGroupName
           az:
-            name: resource-group-name
+            name: resource_group_name
             description: The name of the resource group. The name is case insensitive.
           cli:
             name: resourceGroupName
@@ -2108,7 +2108,7 @@ operationGroups:
             description: Name of the attestation service instance
             serializedName: providerName
           az:
-            name: provider-name
+            name: provider_name
             description: Name of the attestation service instance
           cli:
             name: providerName
@@ -2127,7 +2127,7 @@ operationGroups:
             name: creationParams
             description: Client supplied parameters.
           az:
-            name: creation-params
+            name: creation_params
             description: Client supplied parameters.
           cli:
             name: creationParams
@@ -2224,7 +2224,7 @@ operationGroups:
       az:
         name: create
         description: Creates or updates the Attestation Provider.
-        command: attestation attestation-providers create
+        command: attestation attestation_providers create
       cli:
         name: Create
         description: Creates or updates the Attestation Provider.
@@ -2245,7 +2245,7 @@ operationGroups:
             description: The name of the resource group. The name is case insensitive.
             serializedName: resourceGroupName
           az:
-            name: resource-group-name
+            name: resource_group_name
             description: The name of the resource group. The name is case insensitive.
           cli:
             name: resourceGroupName
@@ -2263,7 +2263,7 @@ operationGroups:
             description: Name of the attestation service instance
             serializedName: providerName
           az:
-            name: provider-name
+            name: provider_name
             description: Name of the attestation service instance
           cli:
             name: providerName
@@ -2344,7 +2344,7 @@ operationGroups:
       az:
         name: delete
         description: Delete Attestation Service.
-        command: attestation attestation-providers delete
+        command: attestation attestation_providers delete
       cli:
         name: Delete
         description: Delete Attestation Service.
@@ -2419,7 +2419,7 @@ operationGroups:
       az:
         name: list
         description: Returns a list of attestation providers in a subscription.
-        command: attestation attestation-providers list
+        command: attestation attestation_providers list
       cli:
         name: List
         description: Returns a list of attestation providers in a subscription.
@@ -2439,7 +2439,7 @@ operationGroups:
             description: The name of the resource group. The name is case insensitive.
             serializedName: resourceGroupName
           az:
-            name: resource-group-name
+            name: resource_group_name
             description: The name of the resource group. The name is case insensitive.
           cli:
             name: resourceGroupName
@@ -2514,7 +2514,7 @@ operationGroups:
       az:
         name: list
         description: Returns attestation providers list in a resource group.
-        command: attestation attestation-providers list
+        command: attestation attestation_providers list
       cli:
         name: ListByResourceGroup
         description: Returns attestation providers list in a resource group.
@@ -2526,7 +2526,7 @@ operationGroups:
     az:
       name: AttestationProviders
       description: ''
-      command: attestation attestation-providers
+      command: attestation attestation_providers
     cli:
       name: AttestationProviders
       description: ''

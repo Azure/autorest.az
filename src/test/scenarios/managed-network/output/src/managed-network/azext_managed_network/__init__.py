@@ -8,7 +8,7 @@ from azure.cli.core import AzCommandsLoader
 from azext_managed_network._help import helps  # pylint: disable=unused-import
 
 
-class ManagedNetworkCommandsLoader(AzCommandsLoader):
+class ManagedNetworkManagementClientCommandsLoader(AzCommandsLoader):
 
     def __init__(self, cli_ctx=None):
         from azure.cli.core.commands import CliCommandType
@@ -16,8 +16,8 @@ class ManagedNetworkCommandsLoader(AzCommandsLoader):
         managed_network_custom = CliCommandType(
             operations_tmpl='azext_managed_network.custom#{}',
             client_factory=cf_managed_network)
-        super(ManagedNetworkCommandsLoader, self).__init__(cli_ctx=cli_ctx,
-                                                           custom_command_type=managed_network_custom)
+        super(ManagedNetworkManagementClientCommandsLoader, self).__init__(cli_ctx=cli_ctx,
+                                                                           custom_command_type=managed_network_custom)
 
     def load_command_table(self, args):
         from azext_managed_network.commands import load_command_table
@@ -29,4 +29,4 @@ class ManagedNetworkCommandsLoader(AzCommandsLoader):
         load_arguments(self, command)
 
 
-COMMAND_LOADER_CLS = ManagedNetworkCommandsLoader
+COMMAND_LOADER_CLS = ManagedNetworkManagementClientCommandsLoader

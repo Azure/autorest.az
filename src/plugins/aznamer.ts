@@ -2,7 +2,7 @@ import { CodeModel, codeModelSchema, Language } from "@azure-tools/codemodel";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
-import { changeCamelToDash } from '../utils/helper';
+import { ToSnakeCase } from '../utils/helper';
 
 export class AzNamer {
     codeModel: CodeModel;
@@ -26,7 +26,7 @@ export class AzNamer {
         } else if(operationName.startsWith("delete") && httpProtocol == "delete") {
             return "delete";
         }
-        return changeCamelToDash(operationNameOri);
+        return ToSnakeCase(operationNameOri);
     }
 
     async process() {
@@ -44,7 +44,7 @@ export class AzNamer {
         }
         obj.language['az'] = new Language();
         obj.language['az']['name'] = obj.language['cli']? obj.language['cli']['name']: obj.language['python']['name'];
-        obj.language['az']['name'] = changeCamelToDash(obj.language['az']['name']);
+        obj.language['az']['name'] = ToSnakeCase(obj.language['az']['name']);
         obj.language['az']['description'] = obj.language['cli']? obj.language['cli']['description']: obj.language['python']['description'];;
     } 
 
@@ -116,7 +116,7 @@ export class AzNamer {
                 operationGroup.language['az'] = new Language();
                 operationGroup.language['az']['name'] = operationGroup.language['cli']['name'];
                 operationGroup.language['az']['description'] = operationGroup.language['cli']['description'];
-                operationGroupName = extensionName + " " + changeCamelToDash(operationGroup.language['az']['name'])
+                operationGroupName = extensionName + " " + ToSnakeCase(operationGroup.language['az']['name'])
                 operationGroup.language['az']['command'] = operationGroupName;
             }
 
@@ -129,7 +129,7 @@ export class AzNamer {
                     operation.language['az'] = new Language();
                     operation.language['az']['name'] = this.methodMap(operation.language['cli']['name'], operation.request.protocol.http.method);
                     operation.language['az']['description'] = operation.language['cli']['description'];
-                    operationName = operationGroupName + " " +  changeCamelToDash(operation.language['az']['name']);
+                    operationName = operationGroupName + " " +  ToSnakeCase(operation.language['az']['name']);
                     operation.language['az']['command'] = operationName;
                 } else {
                     this.session.message({Channel:Channel.Warning, Text: "operation doesn't have cli"});
