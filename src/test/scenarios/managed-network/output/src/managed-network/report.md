@@ -19,6 +19,7 @@ list a managed-network managed_network_groups.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
+|**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 |--$top**|integer|May be used to limit the number of results in a page for list queries.|/something/my_option|/something/myOption|
 |--$skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|/something/my_option|/something/myOption|
 ### managed-network managed-network-groups show
@@ -58,6 +59,7 @@ list a managed-network managed_network_peering_policies.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
+|**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 |--$top**|integer|May be used to limit the number of results in a page for list queries.|/something/my_option|/something/myOption|
 |--$skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|/something/my_option|/something/myOption|
 ### managed-network managed-network-peering-policies show
@@ -103,6 +105,7 @@ list a managed-network managed_networks.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
+|**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 |--$top**|integer|May be used to limit the number of results in a page for list queries.|/something/my_option|/something/myOption|
 |--$skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|/something/my_option|/something/myOption|
 ### managed-network managed-networks show
@@ -117,6 +120,7 @@ update a managed-network managed_networks.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
+|**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 |**--parameters**|object|Parameters supplied to update application gateway tags and/or scope.|/something/my_option|/something/myOption|
 |--tags**|dictionary|Resource tags|/something/my_option|/something/myOption|
 ### managed-network operations list
@@ -131,6 +135,7 @@ create a managed-network scope_assignments.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
+|**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 |**--parameters**|object|Parameters supplied to the specify which Managed Network this scope is being assigned|/something/my_option|/something/myOption|
 |--location**|string|The geo-location where the resource lives|/something/my_option|/something/myOption|
 |--assigned-managed-network**|string|The managed network ID with scope will be assigned to.|/something/my_option|/something/myOption|
@@ -158,6 +163,7 @@ create a managed-network scope_assignments.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
+|**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 |**--parameters**|object|Parameters supplied to the specify which Managed Network this scope is being assigned|/something/my_option|/something/myOption|
 |--location**|string|The geo-location where the resource lives|/something/my_option|/something/myOption|
 |--assigned-managed-network**|string|The managed network ID with scope will be assigned to.|/something/my_option|/something/myOption|
