@@ -2,20 +2,20 @@
 
 ### managed-network managed-network-groups create
 
-create a managed-network managed_network_groups.
+create a managed-network managed-network-groups.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 |**--managed-network-group**|object|Parameters supplied to the create/update a Managed Network Group resource|/something/my_option|/something/myOption|
 ### managed-network managed-network-groups delete
 
-delete a managed-network managed_network_groups.
+delete a managed-network managed-network-groups.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 ### managed-network managed-network-groups list
 
-list a managed-network managed_network_groups.
+list a managed-network managed-network-groups.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -23,20 +23,20 @@ list a managed-network managed_network_groups.
 |--$skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|/something/my_option|/something/myOption|
 ### managed-network managed-network-groups show
 
-show a managed-network managed_network_groups.
+show a managed-network managed-network-groups.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 ### managed-network managed-network-groups update
 
-create a managed-network managed_network_groups.
+create a managed-network managed-network-groups.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 |**--managed-network-group**|object|Parameters supplied to the create/update a Managed Network Group resource|/something/my_option|/something/myOption|
 ### managed-network managed-network-peering-policies create
 
-create a managed-network managed_network_peering_policies.
+create a managed-network managed-network-peering-policies.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -48,13 +48,13 @@ create a managed-network managed_network_peering_policies.
 |--mesh**|array|Gets or sets the mesh group IDs|/something/my_option|/something/myOption|
 ### managed-network managed-network-peering-policies delete
 
-delete a managed-network managed_network_peering_policies.
+delete a managed-network managed-network-peering-policies.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 ### managed-network managed-network-peering-policies list
 
-list a managed-network managed_network_peering_policies.
+list a managed-network managed-network-peering-policies.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -62,13 +62,13 @@ list a managed-network managed_network_peering_policies.
 |--$skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|/something/my_option|/something/myOption|
 ### managed-network managed-network-peering-policies show
 
-show a managed-network managed_network_peering_policies.
+show a managed-network managed-network-peering-policies.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 ### managed-network managed-network-peering-policies update
 
-create a managed-network managed_network_peering_policies.
+create a managed-network managed-network-peering-policies.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -80,7 +80,7 @@ create a managed-network managed_network_peering_policies.
 |--mesh**|array|Gets or sets the mesh group IDs|/something/my_option|/something/myOption|
 ### managed-network managed-networks create
 
-create a managed-network managed_networks.
+create a managed-network managed-networks.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -93,13 +93,13 @@ create a managed-network managed_networks.
 |--subnets**|array|The collection of  subnets covered by the Managed Network|/something/my_option|/something/myOption|
 ### managed-network managed-networks delete
 
-delete a managed-network managed_networks.
+delete a managed-network managed-networks.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 ### managed-network managed-networks list
 
-list a managed-network managed_networks.
+list a managed-network managed-networks.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -107,13 +107,13 @@ list a managed-network managed_networks.
 |--$skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|/something/my_option|/something/myOption|
 ### managed-network managed-networks show
 
-show a managed-network managed_networks.
+show a managed-network managed-networks.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 ### managed-network managed-networks update
 
-update a managed-network managed_networks.
+update a managed-network managed-networks.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -127,7 +127,7 @@ list a managed-network operations.
 |------|----|-----------|----------|--------------|
 ### managed-network scope-assignments create
 
-create a managed-network scope_assignments.
+create a managed-network scope-assignments.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -136,25 +136,25 @@ create a managed-network scope_assignments.
 |--assigned-managed-network**|string|The managed network ID with scope will be assigned to.|/something/my_option|/something/myOption|
 ### managed-network scope-assignments delete
 
-delete a managed-network scope_assignments.
+delete a managed-network scope-assignments.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 ### managed-network scope-assignments list
 
-list a managed-network scope_assignments.
+list a managed-network scope-assignments.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 ### managed-network scope-assignments show
 
-show a managed-network scope_assignments.
+show a managed-network scope-assignments.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 ### managed-network scope-assignments update
 
-create a managed-network scope_assignments.
+create a managed-network scope-assignments.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|

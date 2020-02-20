@@ -9,7 +9,7 @@
 from knack.help_files import helps  # pylint: disable=unused-import
 
 
-helps['managed-network managed_networks'] = """
+helps['managed-network managed-networks'] = """
     type: group
     short-summary: managed-network managed-networks
 """
@@ -39,7 +39,7 @@ helps['managed-network managed-networks delete'] = """
     short-summary: The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource group and Managed Network name
 """
 
-helps['managed-network scope_assignments'] = """
+helps['managed-network scope-assignments'] = """
     type: group
     short-summary: managed-network scope-assignments
 """
@@ -69,7 +69,7 @@ helps['managed-network scope-assignments delete'] = """
     short-summary: Deletes a scope assignment.
 """
 
-helps['managed-network managed_network_groups'] = """
+helps['managed-network managed-network-groups'] = """
     type: group
     short-summary: managed-network managed-network-groups
 """
@@ -99,7 +99,7 @@ helps['managed-network managed-network-groups delete'] = """
     short-summary: The Delete ManagedNetworkGroups operation deletes a Managed Network Group specified by the resource group, Managed Network name, and group name
 """
 
-helps['managed-network managed_network_peering_policies'] = """
+helps['managed-network managed-network-peering-policies'] = """
     type: group
     short-summary: managed-network managed-network-peering-policies
 """

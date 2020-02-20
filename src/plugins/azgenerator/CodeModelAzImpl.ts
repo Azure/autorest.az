@@ -221,7 +221,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get CommandGroup_Name(): string
     {
-        return this.extensionName + " " + ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].$key);
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command;
     }
 
     public get CommandGroup_Help(): string
