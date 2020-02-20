@@ -59,6 +59,7 @@ class ManagedNetworksOperations(object):
         """
         cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetwork"]
         error_map = kwargs.pop('error_map', {})
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.get.metadata['url']
@@ -71,6 +72,7 @@ class ManagedNetworksOperations(object):
 
         # Construct parameters
         query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -133,6 +135,7 @@ class ManagedNetworksOperations(object):
         error_map = kwargs.pop('error_map', {})
 
         managed_network = models.ManagedNetwork(location=location, tags=tags, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.create_or_update.metadata['url']
@@ -145,6 +148,7 @@ class ManagedNetworksOperations(object):
 
         # Construct parameters
         query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -185,6 +189,7 @@ class ManagedNetworksOperations(object):
         # type: (...) -> None
         cls = kwargs.pop('cls', None )  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {})
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self._delete_initial.metadata['url']
@@ -197,6 +202,7 @@ class ManagedNetworksOperations(object):
 
         # Construct parameters
         query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -272,6 +278,7 @@ class ManagedNetworksOperations(object):
         error_map = kwargs.pop('error_map', {})
 
         parameters = models.ManagedNetworkUpdate(tags=tags)
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self._update_initial.metadata['url']
@@ -284,6 +291,7 @@ class ManagedNetworksOperations(object):
 
         # Construct parameters
         query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -392,6 +400,7 @@ class ManagedNetworksOperations(object):
         """
         cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkListResult"]
         error_map = kwargs.pop('error_map', {})
+        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
@@ -407,6 +416,7 @@ class ManagedNetworksOperations(object):
 
             # Construct parameters
             query_parameters = {}
+            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
             if top is not None:
                 query_parameters['$top'] = self._serialize.query("top", top, 'int', maximum=20, minimum=1)
             if skiptoken is not None:
@@ -466,6 +476,7 @@ class ManagedNetworksOperations(object):
         """
         cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkListResult"]
         error_map = kwargs.pop('error_map', {})
+        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
@@ -480,6 +491,7 @@ class ManagedNetworksOperations(object):
 
             # Construct parameters
             query_parameters = {}
+            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
             if top is not None:
                 query_parameters['$top'] = self._serialize.query("top", top, 'int', maximum=20, minimum=1)
             if skiptoken is not None:
