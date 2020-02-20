@@ -5,6 +5,16 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+export class CommandExample
+{
+    // this should be "create", "update", "list", "show", or custom name
+    public Method: string;
+    public Id: string;
+    public Title: string;
+    public Parameters: Map<string, string>;
+    // public MethodName: string;
+}
+
 export interface CodeModelAz
 {
     init(): any;
@@ -89,4 +99,5 @@ export interface CodeModelAz
     Example_Body: string[];
     Example_Title: string;
     Example_Params: any;
+    GetExamples(): CommandExample[];
 }

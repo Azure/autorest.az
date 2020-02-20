@@ -81,28 +81,26 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
 
     let examplesStarted: boolean = false;
 
-    if (model.SelectFirstExample()) {
-
-        do {
+    for( let example of model.GetExamples() ) {
             if (!examplesStarted) {
                 output.push("    examples:");
                 examplesStarted = true;
             }
 
-            //output.push ("# " + example.Method);
+            //output.push ("# " + example_id);
             let parameters: string[] = [];
 
             parameters.push("az");
             parameters = parameters.concat(model.Command_Name.split(" "));
             //parameters.push(method);
 
-            for (let k in model.Example_Params) {
-                let slp = JSON.stringify(model.Example_Params[k]).split(/[\r\n]+/).join("");
+            for (let k in example.Parameters) {
+                let slp = JSON.stringify(example.Parameters[k]).split(/[\r\n]+/).join("");
                 //parameters += " " + k + " " + slp;
                 parameters.push(k);
                 parameters.push(slp);
             }
-            output.push("      - name: " + model.Example_Title);
+            output.push("      - name: " + example.Title);
             output.push("        text: |-");
             let line = "";
             parameters.forEach(element => {
@@ -141,8 +139,6 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
                 line = line.split("\\").join("\\\\");
                 output.push("               " + line);
             }
-        }
-        while (model.SelectNextExample());
     }
 
     output.push("\"\"\"");

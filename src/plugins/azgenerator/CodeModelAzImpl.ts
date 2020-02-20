@@ -3,23 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz";
+import { CodeModelAz, CommandExample } from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 
-
-export class CommandExample
-{
-    // this should be "create", "update", "list", "show", or custom name
-    public Method: string;
-    public Id: string;
-    // public Title: string;
-    public Parameters: Map<string, string>;
-    // public MethodName: string;
-}
 
 export class CodeModelCliImpl implements CodeModelAz
 {
@@ -731,7 +721,7 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().parameters;
     }
 
-    public get Examples(): any {
+    public get Examples(): object {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].extensions['x-ms-examples'];
     }
 
@@ -814,13 +804,14 @@ export class CodeModelCliImpl implements CodeModelAz
     }
 
 
-    private GetExamples(): CommandExample[] {
+    public GetExamples(): CommandExample[] {
         let examples: CommandExample[] = [];
         if (this.Examples) {
             Object.entries(this.Examples).forEach(([id, example_obj]) => {
                 let example = new CommandExample();
                 example.Method = this.Command_MethodName;
                 example.Id = id;
+                example.Title = example_obj.title || id;
                 let params: Map<string, string> = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
                 examples.push(example);
