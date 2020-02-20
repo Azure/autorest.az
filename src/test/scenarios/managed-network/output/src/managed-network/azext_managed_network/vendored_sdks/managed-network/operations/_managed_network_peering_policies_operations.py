@@ -62,7 +62,6 @@ class ManagedNetworkPeeringPoliciesOperations(object):
         """
         cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkPeeringPolicy"]
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.get.metadata['url']
@@ -76,7 +75,6 @@ class ManagedNetworkPeeringPoliciesOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -116,7 +114,6 @@ class ManagedNetworkPeeringPoliciesOperations(object):
         error_map = kwargs.pop('error_map', {})
 
         managed_network_policy = models.ManagedNetworkPeeringPolicy(location=location, type=type, id=id, spokes=spokes, mesh=mesh)
-        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self._create_or_update_initial.metadata['url']
@@ -130,7 +127,6 @@ class ManagedNetworkPeeringPoliciesOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -244,7 +240,6 @@ class ManagedNetworkPeeringPoliciesOperations(object):
         # type: (...) -> None
         cls = kwargs.pop('cls', None )  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self._delete_initial.metadata['url']
@@ -258,7 +253,6 @@ class ManagedNetworkPeeringPoliciesOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -354,7 +348,6 @@ class ManagedNetworkPeeringPoliciesOperations(object):
         """
         cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkPeeringPolicyListResult"]
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
@@ -371,7 +364,6 @@ class ManagedNetworkPeeringPoliciesOperations(object):
 
             # Construct parameters
             query_parameters = {}
-            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
             if top is not None:
                 query_parameters['$top'] = self._serialize.query("top", top, 'int', maximum=20, minimum=1)
             if skiptoken is not None:

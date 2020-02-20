@@ -51,7 +51,6 @@ class Operations(object):
         """
         cls = kwargs.pop('cls', None )  # type: ClsType["models.OperationListResult"]
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
@@ -62,7 +61,6 @@ class Operations(object):
 
             # Construct parameters
             query_parameters = {}
-            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
             # Construct headers
             header_parameters = {}

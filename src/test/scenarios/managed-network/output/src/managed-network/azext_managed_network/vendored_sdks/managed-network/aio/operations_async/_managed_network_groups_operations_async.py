@@ -61,7 +61,6 @@ class ManagedNetworkGroupsOperations:
         """
         cls: ClsType["models.ManagedNetworkGroup"] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.get.metadata['url']
@@ -75,7 +74,6 @@ class ManagedNetworkGroupsOperations:
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -108,7 +106,6 @@ class ManagedNetworkGroupsOperations:
     ) -> "models.ManagedNetworkGroup":
         cls: ClsType["models.ManagedNetworkGroup"] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self._create_or_update_initial.metadata['url']
@@ -122,7 +119,6 @@ class ManagedNetworkGroupsOperations:
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -219,7 +215,6 @@ class ManagedNetworkGroupsOperations:
     ) -> None:
         cls: ClsType[None] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self._delete_initial.metadata['url']
@@ -233,7 +228,6 @@ class ManagedNetworkGroupsOperations:
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -327,7 +321,6 @@ class ManagedNetworkGroupsOperations:
         """
         cls: ClsType["models.ManagedNetworkGroupListResult"] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
@@ -344,7 +337,6 @@ class ManagedNetworkGroupsOperations:
 
             # Construct parameters
             query_parameters: Dict[str, Any] = {}
-            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
             if top is not None:
                 query_parameters['$top'] = self._serialize.query("top", top, 'int', maximum=20, minimum=1)
             if skiptoken is not None:

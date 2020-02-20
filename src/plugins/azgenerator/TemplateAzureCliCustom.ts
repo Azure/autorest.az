@@ -39,7 +39,6 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
 
     if (model.SelectFirstCommandGroup()) {
         do {
-            //let methods: string[] = model.CommandGroup_Commands;
             if (model.SelectFirstCommand()) {
                 do {
                     output = output.concat(GetCommandBody(model, required));
@@ -65,7 +64,6 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     // method
     //
 
-    //let updatedMethodName = ((methodName != "show") ? methodName : "get").replace(/-/g, '_');
     let updatedMethodName: string = model.Command_FunctionName;
     if (needUpdate) {
         updatedMethodName = updatedMethodName.replace(/_create/g, "_update");
@@ -79,28 +77,28 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstMethod()) {
         do {
-            if(model.SelectFirstMethodParameter()) {
+            if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
                         continue;
                     }
-        
+
                     let required: boolean = model.MethodParameter_RequiredByMethod;
-    
+
                     let name = model.MethodParameter_NamePython; // PythonParameterName(element.Name);
                     if (required && !allParam.has(name)) {
                         allParam.set(name, true);
                         output[output.length - 1] += ",";
                         output.push(indent + name);
                     }
-                } while(model.SelectNextMethodParameter());
-            }      
+                } while (model.SelectNextMethodParameter());
+            }
         } while (model.SelectNextMethod());
     }
 
     if (model.SelectFirstMethod()) {
         do {
-            if(model.SelectFirstMethodParameter()) {
+            if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
                         continue;
@@ -113,7 +111,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                         output[output.length - 1] += ",";
                         output.push(indent + name + "=None");
                     }
-                } while(model.SelectNextMethodParameter());
+                } while (model.SelectNextMethodParameter());
             }
         }
         while (model.SelectNextMethod());
@@ -128,66 +126,63 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
         // create body transformation for methods that support it
         let methodName: string = model.Command_MethodName;
 
-        //if (methodName != "show" && methodName != "list" && methodName != "delete") {
-            // body transformation
+        // body transformation
 
-            if (model.SelectFirstMethodParameter()) {
-                do {
-                    if(model.MethodParameter_IsFlattened) {
-                        let bodyName = model.MethodParameter_Name;
-                        output_body.push("    " + bodyName + " = {}");
-                        let body = model.MethodParameter;
+        if (model.SelectFirstMethodParameter()) {
+            do {
+                if (model.MethodParameter_IsFlattened) {
+                    let bodyName = model.MethodParameter_Name;
+                    output_body.push("    " + bodyName + " = {}");
+                    let body = model.MethodParameter;
 
-                        while(model.SelectNextMethodParameter()) {
-                            let access = "    " + bodyName;
-                            let param = model.MethodParameter;
-                            let oriParam = (param['originalParameter']);
-                            if(oriParam == body) {
-                                if(param['pathToProperty']?.length == 1) {
-                                    let pathParam = param['pathToProperty'][0];
-                                    access += `.setdefault('${pathParam.language['python'].name}', {})`;
-                                    access += `['${model.MethodParameter_Name}'] = `;
-                                } else {
-                                    access += `['${model.MethodParameter_Name}'] = `;
-                                }
-                                if (model.MethodParameter_IsList) {
-                                    if (model.MethodParameter_Type != SchemaType.Dictionary) {
-                                        // a comma separated list
-                                        access += "None if " + model.MethodParameter_MapsTo + " is None else " + model.MethodParameter_MapsTo;
-                                    }
-                                    else {
-                                        // already preprocessed by actions
-                                        access += model.MethodParameter_MapsTo;
-                                    }
-                                }
-                                else if (model.MethodParameter_Type != SchemaType.Dictionary) {
-                                    access += model.MethodParameter_MapsTo + "  # " + model.MethodParameter_Type; // # JSON.stringify(element);
-                                }
-                                else {
-                                    access += "json.loads(" + model.MethodParameter_MapsTo + ") if isinstance(" + model.MethodParameter_MapsTo + ", str) else " + model.MethodParameter_MapsTo
-                                    required['json'] = true;
-                                }
-
-                                if (isUpdate) {
-                                    output_body.push("    if " + model.MethodParameter_MapsTo + " is not None:");
-                                    output_body.push("    " + access);
-                                }
-                                else {
-                                    output_body.push(access);
-                                }
-                                
+                    while (model.SelectNextMethodParameter()) {
+                        let access = "    " + bodyName;
+                        let param = model.MethodParameter;
+                        let oriParam = (param['originalParameter']);
+                        if (oriParam == body) {
+                            if (param['pathToProperty']?.length == 1) {
+                                let pathParam = param['pathToProperty'][0];
+                                access += `.setdefault('${pathParam.language['python'].name}', {})`;
+                                access += `['${model.MethodParameter_Name}'] = `;
                             } else {
-                                break;
+                                access += `['${model.MethodParameter_Name}'] = `;
                             }
+                            if (model.MethodParameter_IsList) {
+                                if (model.MethodParameter_Type != SchemaType.Dictionary) {
+                                    // a comma separated list
+                                    access += "None if " + model.MethodParameter_MapsTo + " is None else " + model.MethodParameter_MapsTo;
+                                }
+                                else {
+                                    // already preprocessed by actions
+                                    access += model.MethodParameter_MapsTo;
+                                }
+                            }
+                            else if (model.MethodParameter_Type != SchemaType.Dictionary) {
+                                access += model.MethodParameter_MapsTo + "  # " + model.MethodParameter_Type; // # JSON.stringify(element);
+                            }
+                            else {
+                                access += "json.loads(" + model.MethodParameter_MapsTo + ") if isinstance(" + model.MethodParameter_MapsTo + ", str) else " + model.MethodParameter_MapsTo
+                                required['json'] = true;
+                            }
+
+                            if (isUpdate) {
+                                output_body.push("    if " + model.MethodParameter_MapsTo + " is not None:");
+                                output_body.push("    " + access);
+                            }
+                            else {
+                                output_body.push(access);
+                            }
+
+                        } else {
+                            break;
                         }
                     }
-
                 }
-                while (model.SelectNextMethodParameter());
-                
-            } 
 
-        //}
+            }
+            while (model.SelectNextMethodParameter());
+
+        }
 
         let needIfStatement = !model.Method_IsLast;
 
@@ -240,7 +235,7 @@ function GetMethodCall(model: CodeModelAz): string {
     if (model.SelectFirstMethodParameter()) {
         do {
             let param = model.MethodParameter;
-            if(param.originalParameter != null) {
+            if (param.originalParameter != null) {
                 continue;
             }
             let optionName = model.MethodParameter_MapsTo;
