@@ -37,7 +37,7 @@ class ManagedNetworkManagementClientConfiguration(Configuration):
 
         self.credential = credential
         self.subscription_id = subscription_id
-        self.credential_scopes = ['https://management.azure.com/.default']
+        self.api_version = "2019-06-01-preview"
         self._configure(**kwargs)
         self.user_agent_policy.add_user_agent('azsdk-python-managednetworkmanagementclient/{}'.format(VERSION))
 
@@ -55,4 +55,4 @@ class ManagedNetworkManagementClientConfiguration(Configuration):
         self.redirect_policy = kwargs.get('redirect_policy') or policies.RedirectPolicy(**kwargs)
         self.authentication_policy = kwargs.get('authentication_policy')
         if self.credential and not self.authentication_policy:
-            self.authentication_policy = policies.BearerTokenCredentialPolicy(self.credential, *self.credential_scopes, **kwargs)
+            self.authentication_policy = policies.BearerTokenCredentialPolicy(self.credential, **kwargs)
