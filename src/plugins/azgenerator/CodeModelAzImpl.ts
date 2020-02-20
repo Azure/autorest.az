@@ -321,7 +321,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_FunctionName()
     {
-        return this.Command_Name.replace(/ /g, "_").replace(/-/g, "_");;
+        return this.Command_Name.replace(/( |-)/g, "_");
     }
 
     public get Command_Name(): string
