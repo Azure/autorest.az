@@ -6,7 +6,7 @@
 
 from typing import Any, Optional
 
-from azure.core import AsyncPipelineClient
+from azure.mgmt.core import AsyncARMPipelineClient
 from msrest import Deserializer, Serializer
 
 from ._configuration_async import ManagedNetworkManagementClientConfiguration
@@ -31,6 +31,8 @@ class ManagedNetworkManagementClient(object):
     :vartype managed_network_peering_policies: managed_network_management_client.aio.operations_async.ManagedNetworkPeeringPoliciesOperations
     :ivar operations: Operations operations
     :vartype operations: managed_network_management_client.aio.operations_async.Operations
+    :param credential: Credential needed for the client to connect to Azure.
+    :type credential: azure.core.credentials.TokenCredential
     :param subscription_id: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
     :type subscription_id: str
     :param str base_url: Service URL
@@ -38,14 +40,15 @@ class ManagedNetworkManagementClient(object):
 
     def __init__(
         self,
+        credential: "TokenCredential",
         subscription_id: str,
         base_url: Optional[str] = None,
         **kwargs: Any
     ) -> None:
         if not base_url:
             base_url = 'https://management.azure.com'
-        self._config = ManagedNetworkManagementClientConfiguration(subscription_id, **kwargs)
-        self._client = AsyncPipelineClient(base_url=base_url, config=self._config, **kwargs)
+        self._config = ManagedNetworkManagementClientConfiguration(credential, subscription_id, **kwargs)
+        self._client = AsyncARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
         self._serialize = Serializer(client_models)

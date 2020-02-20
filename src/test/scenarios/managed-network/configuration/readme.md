@@ -27,6 +27,7 @@ These are the global settings for the Managed Network API.
 ``` yaml
 openapi-type: arm
 tag: package-2019-06-01-preview
+azure-arm: true
 ```
 
 ### Tag: package-2019-06-01-preview
