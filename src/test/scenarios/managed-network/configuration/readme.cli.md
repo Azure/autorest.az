@@ -1,8 +1,8 @@
 ## CLI
 
-These settings apply only when `--cli` is specified on the command line.
+These settings don't need to apply `--cli` on the command line.
 
-``` yaml $(cli)
+``` yaml
 cli:
   cli-name: managed-network
   namespace: azure.mgmt.managednetwork
@@ -33,7 +33,7 @@ cli:
     "mesh_id":
       name: mesh
   flatten-all: true
-  test-setup:
+  test-scenario:
     - name: ManagedNetworksPut
     - name: ManagementNetworkGroupsPut
     - name: ScopeAssignmentsPut

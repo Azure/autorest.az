@@ -18,83 +18,93 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
     @ResourceGroupPreparer(name_prefix='cli_test_managed_network')
     def test_managed_network(self, resource_group):
 
-        self.cmd('az managed-network managed-networks create_or_update '
-                 '--name "myManagedNetwork" '
-                 '--resource-group {rg}',
+        self.cmd('az managed-network managed-networks create '
+                 '--location "eastus" '
+                 '--managed-network-name "myManagedNetwork" '
+                 '--resource-group-name {rg}',
                  checks=[])
 
-        self.cmd('az managed-network managed-network-groups create_or_update '
-                 '--name "myManagedNetwork" '
-                 '--resource-group {rg}',
+        self.cmd('az managed-network managed-network-groups create '
+                 '--managed-network-group-name "myManagedNetworkGroup1" '
+                 '--managed-network-name "myManagedNetwork" '
+                 '--resource-group-name {rg}',
                  checks=[])
 
-        self.cmd('az managed-network scope-assignments create_or_update '
+        self.cmd('az managed-network scope-assignments create '
+                 '--assigned-managed-network "/subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" '
                  '--scope "subscriptions/subscriptionC" '
-                 '--name "subscriptionCAssignment"',
+                 '--scope-assignment-name "subscriptionCAssignment"',
                  checks=[])
 
-        self.cmd('az managed-network managed-network-peering-policies create_or_update '
-                 '--name "myHubAndSpoke" '
-                 '--resource-group {rg}',
+        self.cmd('az managed-network managed-network-peering-policies create '
+                 '--managed-network-name "myManagedNetwork" '
+                 '--managed-network-peering-policy-name "myHubAndSpoke" '
+                 '--type "HubAndSpokeTopology" '
+                 '--id "/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myHubVnet" '
+                 '--resource-group-name {rg}',
                  checks=[])
 
-        self.cmd('az managed-network managed-networks get '
-                 '--name "myManagedNetwork" '
-                 '--resource-group {rg}',
+        self.cmd('az managed-network managed-networks show '
+                 '--managed-network-name "myManagedNetwork" '
+                 '--resource-group-name {rg}',
                  checks=[])
 
-        self.cmd('az managed-network managed-networks list_by_resource_group '
-                 '--resource-group {rg}',
+        self.cmd('az managed-network managed-networks list '
+                 '--resource-group-name {rg}',
                  checks=[])
 
-        self.cmd('az managed-network managed-networks list_by_subscription',
+        self.cmd('az managed-network managed-networks show',
                  checks=[])
 
-        self.cmd('az managed-network scope-assignments get '
+        self.cmd('az managed-network scope-assignments show '
                  '--scope "subscriptions/subscriptionC" '
-                 '--name "subscriptionCAssignment"',
+                 '--scope-assignment-name "subscriptionCAssignment"',
                  checks=[])
 
         self.cmd('az managed-network scope-assignments list '
                  '--scope "subscriptions/subscriptionC"',
                  checks=[])
 
-        self.cmd('az managed-network managed-network-groups get '
-                 '--name "myManagedNetwork" '
-                 '--resource-group {rg}',
+        self.cmd('az managed-network managed-network-groups show '
+                 '--managed-network-group-name "myManagedNetworkGroup1" '
+                 '--managed-network-name "myManagedNetwork" '
+                 '--resource-group-name {rg}',
                  checks=[])
 
-        self.cmd('az managed-network managed-network-groups list_by_managed_network '
-                 '--name "myManagedNetwork" '
-                 '--resource-group {rg}',
+        self.cmd('az managed-network managed-network-groups list '
+                 '--managed-network-name "myManagedNetwork" '
+                 '--resource-group-name {rg}',
                  checks=[])
 
-        self.cmd('az managed-network managed-network-peering-policies get '
-                 '--name "myHubAndSpoke" '
-                 '--resource-group {rg}',
+        self.cmd('az managed-network managed-network-peering-policies show '
+                 '--managed-network-name "myManagedNetwork" '
+                 '--managed-network-peering-policy-name "myHubAndSpoke" '
+                 '--resource-group-name {rg}',
                  checks=[])
 
-        self.cmd('az managed-network managed-network-peering-policies list_by_managed_network '
-                 '--name "myManagedNetwork" '
-                 '--resource-group {rg}',
+        self.cmd('az managed-network managed-network-peering-policies list '
+                 '--managed-network-name "myManagedNetwork" '
+                 '--resource-group-name {rg}',
                  checks=[])
 
         self.cmd('az managed-network managed-network-peering-policies delete '
-                 '--name "myHubAndSpoke" '
-                 '--resource-group {rg}',
+                 '--managed-network-name "myManagedNetwork" '
+                 '--managed-network-peering-policy-name "myHubAndSpoke" '
+                 '--resource-group-name {rg}',
                  checks=[])
 
         self.cmd('az managed-network scope-assignments delete '
                  '--scope "subscriptions/subscriptionC" '
-                 '--name "subscriptionCAssignment"',
+                 '--scope-assignment-name "subscriptionCAssignment"',
                  checks=[])
 
         self.cmd('az managed-network managed-network-groups delete '
-                 '--name "myManagedNetwork" '
-                 '--resource-group {rg}',
+                 '--managed-network-group-name "myManagedNetworkGroup1" '
+                 '--managed-network-name "myManagedNetwork" '
+                 '--resource-group-name {rg}',
                  checks=[])
 
         self.cmd('az managed-network managed-networks delete '
-                 '--name "myManagedNetwork" '
-                 '--resource-group {rg}',
+                 '--managed-network-name "myManagedNetwork" '
+                 '--resource-group-name {rg}',
                  checks=[])

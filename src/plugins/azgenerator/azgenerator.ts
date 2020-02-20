@@ -9,12 +9,8 @@ export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
     //host.Message({Channel:Channel.Warning, Text:"in azgenerator processRequest"});
     try {
-        const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        let cliSettings = await session.getValue('az');
-        let testScenario: any[] = cliSettings['test-setup'] || cliSettings["test-scenario"];
-
- 
-        let model = new CodeModelCliImpl(session, testScenario);
+        const session = await startSession<CodeModel>(host, {}, codeModelSchema); 
+        let model = new CodeModelCliImpl(session);
         let files: any = await GenerateAll(model, true);
 
         for (let f in files) {

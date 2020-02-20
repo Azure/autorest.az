@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Parameter, Value } from "@azure-tools/codemodel";
+import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase } from '../../utils/helper';
@@ -32,7 +32,6 @@ export class CodeModelCliImpl implements CodeModelAz
     currentExampleIndex: number;
     preMethodIndex: number;
     currentMethodIndex: number;
-    private _testScenario: any;
 
 
     async init() {
@@ -48,10 +47,9 @@ export class CodeModelCliImpl implements CodeModelAz
         
     }
 
-    public constructor(protected session: Session<CodeModel>, testScenario: any) 
+    public constructor(protected session: Session<CodeModel>) 
     {
         this.codeModel = session.model;
-        this._testScenario = testScenario;
         this.sortOperationByAzCommand();
     }
 
@@ -133,7 +131,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Extension_TestScenario(): any
     {
-        return this._testScenario;
+        return this.codeModel['test-scenario'] || [];
     }
 
     //=================================================================================================================
@@ -741,41 +739,74 @@ export class CodeModelCliImpl implements CodeModelAz
      * Gets method parameters dict
      * @returns method parameters dict : key is parameter name, value is the parameter schema
      */
-    public GetMethodParametersDict(): Map<string, Parameter> {
-        let method_param_dict: Map<string, Parameter> = new Map<string, Parameter>();
+    public GetMethodParametersDict(): Map<string, Value> {
+        let method_param_dict: Map<string, Value> = new Map<string, Value>();
         if (this.SelectFirstMethodParameter()) {
             do {
-                if (this.MethodParameter.implementation=='Method') {
-                    method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
+                if (this.MethodParameter.implementation == 'Method') {
+                    // method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
+                    this.AddFlattenedParameter(method_param_dict, this.MethodParameter, this.MethodParameter.language.default.name)
                 }
             } while (this.SelectNextMethodParameter());
         }
         return method_param_dict;
     }
 
-    public GetExampleParameters(example_obj, kind): Map<string, string> {
-        let parameters: Map<string, string> = new Map<string, string>();
-        let method_param_dict: Map<string, any> = this.GetMethodParametersDict();
-        Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
-            if (param_name in method_param_dict && (!kind || method_param_dict[param_name].protocol?.http?.in == kind)) {
-                parameters[param_name] = param_value;
+    public AddFlattenedParameter(dict: Map<string, Value>, value: any, name: string) {
+        if (value?.flattened) {
+            for (let k of value?.schema?.properties || []) {
+                this.AddFlattenedParameter(dict, k, k.language.default.name)
             }
+        }
+        else {
+            dict[name] = value;
+        }
+    }
+
+    public GetExampleParameters(example_obj): Map<string, string> {
+        let parameters: Map<string, string> = new Map<string, string>();
+        let method_param_dict: Map<string, Value> = this.GetMethodParametersDict();
+        Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
+            this.FlattenExampleParameter(method_param_dict, parameters, param_name, param_value, []);
         })
         return parameters;
+    }
+
+    public FlattenExampleParameter(method_param: Map<string, Value>, example_parm: Map<string, string>, name: string, value: any, ancestors: string[]) {
+        if (typeof value === 'object' && value !== null) {
+            for (let sub_name in value) {
+                this.FlattenExampleParameter(method_param, example_parm, sub_name, value[sub_name], ancestors.concat(name));
+            }
+        }
+        else if (name in method_param) {
+            if ('pathToProperty' in method_param[name]) {
+                // if the method parameter has 'pathToProperty', check the path with example parameter full path.
+                for (let i = method_param[name].pathToProperty.length - 1; i >= 0; i--) {
+                    if (ancestors.length <= 0) return;
+                    let parent = ancestors.pop();
+                    if (method_param[name].pathToProperty[i].language.az.name != parent) return;
+                }
+                example_parm[name] = value;
+            }
+            else {
+                example_parm[name] = value;
+            }
+        }
     }
 
     public ConvertToCliParameters(example_params): Map<string, string> {
         let ret: Map<string, string> = new Map<string, string>();
         Object.entries(example_params).forEach(([param_name, param_value]) => {
             param_name = ToSnakeCase(param_name);
-            if (param_name.endsWith('_name')) {
-                if (param_name == "resource_group_name") {
-                    param_name = "resource_group";
-                }
-                else {
-                    param_name = "name";
-                }
-            }
+            //// Here are some rename logic in POC, but not implement in current az codegen, so comment them here 
+            // if (param_name.endsWith('_name')) {
+            //     if (param_name == "resource_group_name") {
+            //         param_name = "resource_group";
+            //     }
+            //     else {
+            //         param_name = "name";
+            //     }
+            // }
             param_name = param_name.split("_").join("-");
             ret["--" + param_name] = param_value;
         });
@@ -788,9 +819,9 @@ export class CodeModelCliImpl implements CodeModelAz
         if (this.Examples) {
             Object.entries(this.Examples).forEach(([id, example_obj]) => {
                 let example = new CommandExample();
-                example.Method = this.Method_Name;
+                example.Method = this.Command_MethodName;
                 example.Id = id;
-                let params: Map<string, string> = this.GetExampleParameters(example_obj, "path");
+                let params: Map<string, string> = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
                 examples.push(example);
             });
@@ -805,9 +836,8 @@ export class CodeModelCliImpl implements CodeModelAz
 
         for (let k in example.Parameters) {
             let slp = JSON.stringify(example.Parameters[k]).split(/[\r\n]+/).join("");
-
             if (isTest) {
-                if (k != "--resource-group") {
+                if (k != "--resource-group-name") {
                     parameters.push(k + " " + slp);
                 }
                 else {
@@ -829,7 +859,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 while (this.currentOperationIndex >= 0) {  // iterate all Commands
                     this.SelectFirstMethod();
                     do {                        // iterate all Methods
-                        for (let example of this.GetExamples()){
+                        for (let example of this.GetExamples()) {
                             if (example.Id.toLowerCase() == id.toLowerCase()) {
                                 return this.GetExampleItems(example, true);
                             }
