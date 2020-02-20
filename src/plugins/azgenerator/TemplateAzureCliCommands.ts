@@ -69,17 +69,19 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
 
 function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     let output: string [] = [];
-    if (model.Command_MethodName != "show")
+    let functionName = model.Command_FunctionName;
+    let methodName = model.Command_MethodName;
+    if (methodName != "show")
     {
         if(needUpdate) {
-            output.push("        g.custom_command('" + model.Command_MethodName.replace(/create/g, "update") + "', '" + model.Command_FunctionName.replace(/_create/g, "_update") + "')");
+            output.push("        g.custom_command('" + methodName.replace(/create/g, "update") + "', '" + functionName.replace(/_create/g, "_update") + "')");
         } else {
-            output.push("        g.custom_command('" + model.Command_MethodName + "', '" + model.Command_FunctionName + "')");
+            output.push("        g.custom_command('" + methodName + "', '" + functionName + "')");
         } 
     }
     else
     {
-        output.push("        g.custom_show_command('" + model.Command_MethodName + "', '" + model.Command_FunctionName + "')");
+        output.push("        g.custom_show_command('" + methodName + "', '" + functionName + "')");
     }
     return output;
 }
