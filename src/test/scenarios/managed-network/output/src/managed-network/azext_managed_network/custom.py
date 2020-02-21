@@ -29,18 +29,8 @@ def managed_network_managed_networks_create(cmd, client,
                                             managed_network_name,
                                             location=None,
                                             tags=None,
-                                            scope_management_groups=None,
-                                            scope_subscriptions=None,
-                                            scope_virtual_networks=None,
-                                            scope_subnets=None):
-    managed_network = {}
-    managed_network['location'] = location  # string
-    managed_network['tags'] = tags
-    managed_network.setdefault('scope', {})['management_groups'] = None if scope_management_groups is None else scope_management_groups
-    managed_network.setdefault('scope', {})['subscriptions'] = None if scope_subscriptions is None else scope_subscriptions
-    managed_network.setdefault('scope', {})['virtual_networks'] = None if scope_virtual_networks is None else scope_virtual_networks
-    managed_network.setdefault('scope', {})['subnets'] = None if scope_subnets is None else scope_subnets
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network=managed_network)
+                                            scope=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, scope=scope)
 
 
 def managed_network_managed_networks_update(cmd, client,
@@ -72,10 +62,7 @@ def managed_network_scope_assignments_create(cmd, client,
                                              scope_assignment_name,
                                              location=None,
                                              assigned_managed_network=None):
-    parameters = {}
-    parameters['location'] = location  # string
-    parameters['assigned_managed_network'] = assigned_managed_network  # string
-    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, parameters=parameters)
+    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=assigned_managed_network)
 
 
 def managed_network_scope_assignments_update(cmd, client,
@@ -83,10 +70,7 @@ def managed_network_scope_assignments_update(cmd, client,
                                              scope_assignment_name,
                                              location=None,
                                              assigned_managed_network=None):
-    parameters = {}
-    parameters['location'] = location  # string
-    parameters['assigned_managed_network'] = assigned_managed_network  # string
-    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, parameters=parameters)
+    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=assigned_managed_network)
 
 
 def managed_network_scope_assignments_delete(cmd, client,
@@ -114,16 +98,24 @@ def managed_network_managed_network_groups_create(cmd, client,
                                                   resource_group_name,
                                                   managed_network_name,
                                                   managed_network_group_name,
-                                                  managed_network_group):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, managed_network_group=managed_network_group)
+                                                  location=None,
+                                                  management_groups=None,
+                                                  subscriptions=None,
+                                                  virtual_networks=None,
+                                                  subnets=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
 
 
 def managed_network_managed_network_groups_update(cmd, client,
                                                   resource_group_name,
                                                   managed_network_name,
                                                   managed_network_group_name,
-                                                  managed_network_group):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, managed_network_group=managed_network_group)
+                                                  location=None,
+                                                  management_groups=None,
+                                                  subscriptions=None,
+                                                  virtual_networks=None,
+                                                  subnets=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
 
 
 def managed_network_managed_network_groups_delete(cmd, client,
@@ -152,36 +144,18 @@ def managed_network_managed_network_peering_policies_create(cmd, client,
                                                             resource_group_name,
                                                             managed_network_name,
                                                             managed_network_peering_policy_name,
-                                                            properties_type,
                                                             location=None,
-                                                            id=None,
-                                                            properties_spokes=None,
-                                                            properties_mesh=None):
-    managed_network_policy = {}
-    managed_network_policy['location'] = location  # string
-    managed_network_policy.setdefault('properties', {})['type'] = properties_type  # choice
-    managed_network_policy['id'] = id  # string
-    managed_network_policy.setdefault('properties', {})['spokes'] = None if properties_spokes is None else properties_spokes
-    managed_network_policy.setdefault('properties', {})['mesh'] = None if properties_mesh is None else properties_mesh
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, managed_network_policy=managed_network_policy)
+                                                            properties=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=properties)
 
 
 def managed_network_managed_network_peering_policies_update(cmd, client,
                                                             resource_group_name,
                                                             managed_network_name,
                                                             managed_network_peering_policy_name,
-                                                            properties_type,
                                                             location=None,
-                                                            id=None,
-                                                            properties_spokes=None,
-                                                            properties_mesh=None):
-    managed_network_policy = {}
-    managed_network_policy['location'] = location  # string
-    managed_network_policy.setdefault('properties', {})['type'] = properties_type  # choice
-    managed_network_policy['id'] = id  # string
-    managed_network_policy.setdefault('properties', {})['spokes'] = None if properties_spokes is None else properties_spokes
-    managed_network_policy.setdefault('properties', {})['mesh'] = None if properties_mesh is None else properties_mesh
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, managed_network_policy=managed_network_policy)
+                                                            properties=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=properties)
 
 
 def managed_network_managed_network_peering_policies_delete(cmd, client,
