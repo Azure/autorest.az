@@ -39,8 +39,6 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         self.cmd('az managed-network managed-network-peering-policies create '
                  '--managed-network-name "myManagedNetwork" '
                  '--managed-network-peering-policy-name "myHubAndSpoke" '
-                 '--type "HubAndSpokeTopology" '
-                 '--id "/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myHubVnet" '
                  '--resource-group-name {rg}',
                  checks=[])
 
