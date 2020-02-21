@@ -17,8 +17,8 @@ modelerfour:
     flatten-payloads: true
 
 
-payload-flattening-threshold: 4
-recursive-payload-flattening: true
+#payload-flattening-threshold: 4
+#recursive-payload-flattening: true
 
 pipeline:
     az/clicommon:
@@ -26,7 +26,7 @@ pipeline:
         #output-artifact: source-file-pynamer
     az/aznamer:
         input: az/clicommon
-        #output-artifact: source-file-aznamer
+        output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
         #output-artifact: source-file-modifiers
@@ -36,7 +36,7 @@ pipeline:
     az/emitter:
         input:
             #- az/clicommon
-            #- az/aznamer
+            - az/aznamer
             #- az/modifiers
             - az/azgenerator
         scope: scope-az
@@ -47,7 +47,7 @@ scope-az:
     is-object: false
     output-artifact:
         #- source-file-pynamer
-        #- source-file-aznamer
+        - source-file-aznamer
         #- source-file-modifiers
         - source-file-extension
 
