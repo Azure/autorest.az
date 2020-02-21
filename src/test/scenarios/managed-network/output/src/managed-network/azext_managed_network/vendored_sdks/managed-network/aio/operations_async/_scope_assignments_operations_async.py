@@ -7,10 +7,9 @@ from typing import Any, Callable, Dict, Generic, Optional, TypeVar, Union
 import warnings
 
 from azure.core.async_paging import AsyncItemPaged, AsyncList
-from azure.core.exceptions import map_error
+from azure.core.exceptions import HttpResponseError, map_error
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
-from azure.mgmt.core.exceptions import ARMError
 
 from ... import models
 
@@ -57,6 +56,7 @@ class ScopeAssignmentsOperations:
         """
         cls: ClsType["models.ScopeAssignment"] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.get.metadata['url']
@@ -68,6 +68,7 @@ class ScopeAssignmentsOperations:
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -117,6 +118,7 @@ class ScopeAssignmentsOperations:
         error_map = kwargs.pop('error_map', {})
 
         parameters = models.ScopeAssignment(location=location, assigned_managed_network=assigned_managed_network)
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.create_or_update.metadata['url']
@@ -128,6 +130,7 @@ class ScopeAssignmentsOperations:
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -174,10 +177,11 @@ class ScopeAssignmentsOperations:
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None or the result of cls(response)
         :rtype: None
-        :raises: ~azure.mgmt.core.ARMError
+        :raises: ~azure.core.HttpResponseError
         """
         cls: ClsType[None] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.delete.metadata['url']
@@ -189,6 +193,7 @@ class ScopeAssignmentsOperations:
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -200,7 +205,7 @@ class ScopeAssignmentsOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise ARMError(response=response)
+            raise HttpResponseError(response=response)
 
         if cls:
           return cls(pipeline_response, None, {})
@@ -223,6 +228,7 @@ class ScopeAssignmentsOperations:
         """
         cls: ClsType["models.ScopeAssignmentListResult"] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
+        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
@@ -237,6 +243,7 @@ class ScopeAssignmentsOperations:
 
             # Construct parameters
             query_parameters: Dict[str, Any] = {}
+            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
             # Construct headers
             header_parameters: Dict[str, Any] = {}
