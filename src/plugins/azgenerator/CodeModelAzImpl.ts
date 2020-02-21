@@ -9,6 +9,7 @@ import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
+import { GenerateDefaultTestScenario } from './scenario_tool'
 
 
 export class CodeModelCliImpl implements CodeModelAz
@@ -121,7 +122,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Extension_TestScenario(): any
     {
-        return this.codeModel['test-scenario'] || [];
+        return this.codeModel['test-scenario'] || GenerateDefaultTestScenario(this.GetAllExamples());
     }
 
     //=================================================================================================================
@@ -542,6 +543,11 @@ export class CodeModelCliImpl implements CodeModelAz
         return null;
     }
 
+    public get Method_Path(): string
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.protocol?.http?.path;
+    }
+
     //=================================================================================================================
     // Methods Parameters.
     //
@@ -636,6 +642,7 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex]['flattened']? true: false;
     }
+    
     //=================================================================================================================
     // Top Level Python Related Information
     //
@@ -811,6 +818,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 example.Method = this.Command_MethodName;
                 example.Id = id;
                 example.Title = example_obj.title || id;
+                example.Path = this.Method_Path;
                 let params: Map<string, string> = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
                 examples.push(example);
@@ -842,7 +850,16 @@ export class CodeModelCliImpl implements CodeModelAz
         return parameters;
     }
 
-    public FindExampleById(id: string): string[] {
+    public FindExampleById(id: string): string[][] {
+        let ret: string[][] = [];
+        this.GetAllExamples(id, (example) => {
+            ret.push(this.GetExampleItems(example, true));
+        });
+        return ret;
+    }
+
+    public GetAllExamples(id?: string, callback?: (example)=>void): CommandExample[] {
+        let ret: CommandExample[] = [];
         this.SelectFirstExtension();
         if (this.SelectFirstCommandGroup()) {
             do {    // iterate all CommandGroups
@@ -850,16 +867,17 @@ export class CodeModelCliImpl implements CodeModelAz
                     this.SelectFirstMethod();
                     do {                        // iterate all Methods
                         for (let example of this.GetExamples()) {
-                            if (example.Id.toLowerCase() == id.toLowerCase()) {
-                                return this.GetExampleItems(example, true);
+                            if (id && (example.Id.toLowerCase() != id.toLowerCase())) continue;
+                            if(callback) {
+                                callback(example);
                             }
+                            ret.push(example);
                         }
                     } while (this.SelectNextMethod())
                     this.SelectNextCommand();
                 }
             } while (this.SelectNextCommandGroup())
         }
-        return [];
-
+        return ret;
     }
 }

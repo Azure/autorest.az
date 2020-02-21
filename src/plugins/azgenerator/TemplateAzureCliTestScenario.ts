@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 
-export function GenerateAzureCliTestScenario(model: CodeModelAz) : string[] {
+export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let output: string[] = [];
     let config: any = model.Extension_TestScenario;
 
@@ -35,35 +35,33 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz) : string[] {
     output.push("");
 
     // walk through test config
-    if (config)
-    {
-        for (var ci = 0; ci < config.length; ci++)
-        {
+    if (config) {
+        for (var ci = 0; ci < config.length; ci++) {
             let exampleId: string = config[ci].name;
             let disabled: string = config[ci].disabled ? "# " : "";
             // find example by name
 
-            let exampleCmd: string[] = model.FindExampleById(config[ci].name);
-            if (exampleCmd && exampleCmd.length > 0)
-            {
-                for (let idx = 0; idx < exampleCmd.length; idx++)
-                {
-                    let prefix: string = "        " + disabled + ((idx == 0) ? "self.cmd('" : "         '");
-                    let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',"; 
+            let found = false;
+            for (let exampleCmd of model.FindExampleById(config[ci].name)) {
+                if (exampleCmd && exampleCmd.length > 0) {
+                    found = true;
+                    for (let idx = 0; idx < exampleCmd.length; idx++) {
+                        let prefix: string = "        " + disabled + ((idx == 0) ? "self.cmd('" : "         '");
+                        let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
 
-                    output.push(prefix + exampleCmd[idx] + postfix);
+                        output.push(prefix + exampleCmd[idx] + postfix);
+                    }
+                    output.push("        " + disabled + "         checks=[])");
+                    output.push("");
                 }
-                output.push("        " + disabled + "         checks=[])");
-                output.push("");
             }
-            else
-            {
+            if (!found) {
                 output.push("        # EXAMPLE NOT FOUND: " + config[ci].name);
                 output.push("");
             }
         }
     }
-    
+
     return output;
 }
 

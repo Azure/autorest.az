@@ -13,6 +13,7 @@ export class CommandExample
     public Title: string;
     public Parameters: Map<string, string>;
     // public MethodName: string;
+    public Path: string;
 }
 
 export interface CodeModelAz
@@ -95,7 +96,7 @@ export interface CodeModelAz
 
     SelectFirstExample(): boolean;
     SelectNextExample(): boolean;
-    FindExampleById(id: string): string[];
+    FindExampleById(id: string): string[][];
     Example_Body: string[];
     Example_Title: string;
     Example_Params: any;
