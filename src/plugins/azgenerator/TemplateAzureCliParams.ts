@@ -98,6 +98,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     if(model.MethodParameter_IsFlattened) {
                         continue;
                     }
+                    if(model.MethodParameter_Type == SchemaType.Constant) {
+                        continue;
+                    }
                     hasParam = true;
                     
                     let parameterName = model.MethodParameter_NamePython;
