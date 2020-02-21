@@ -755,7 +755,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 this.AddFlattenedParameter(dict, k, k.language.default.name)
             }
         }
-        else {
+        else if (value?.schema?.type != 'constant') {
             dict[name] = value;
         }
     }
