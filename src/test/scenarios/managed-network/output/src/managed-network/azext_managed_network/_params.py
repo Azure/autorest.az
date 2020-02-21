@@ -8,16 +8,17 @@
 
 from azure.cli.core.commands.parameters import (
     tags_type,
+    get_enum_type,
     resource_group_name_type,
     get_location_type
 )
 from azext_managed_network.actions import (
-    AddScope,
     AddManagementGroups,
     AddSubscriptions,
     AddVirtualNetworks,
     AddSubnets,
-    AddProperties
+    AddSpokes,
+    AddMesh
 )
 
 
@@ -37,7 +38,10 @@ def load_arguments(self, _):
         c.argument('managed_network_name', id_part=None, help='The name of the Managed Network.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('tags', tags_type, nargs='+')
-        c.argument('scope', id_part=None, help='Scope of a Managed Network', action=AddScope, nargs='+')
+        c.argument('scope_management_groups', id_part=None, help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('scope_subscriptions', id_part=None, help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
+        c.argument('scope_virtual_networks', id_part=None, help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
+        c.argument('scope_subnets', id_part=None, help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
 
     with self.argument_context('managed-network managed-networks update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -123,14 +127,20 @@ def load_arguments(self, _):
         c.argument('managed_network_name', id_part=None, help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', id_part=None, help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('properties', id_part=None, help='Properties of a Managed Network Peering Policy', action=AddProperties, nargs='+')
+        c.argument('properties_type', arg_type=get_enum_type(['HubAndSpokeTopology', 'MeshTopology']), id_part=None, help='Gets or sets the connectivity type of a network structure policy')
+        c.argument('id', id_part=None, help='Resource Id')
+        c.argument('properties_spokes', id_part=None, help='Gets or sets the spokes group IDs', action=AddSpokes, nargs='+')
+        c.argument('properties_mesh', id_part=None, help='Gets or sets the mesh group IDs', action=AddMesh, nargs='+')
 
     with self.argument_context('managed-network managed-network-peering-policies update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', id_part=None, help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', id_part=None, help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('properties', id_part=None, help='Properties of a Managed Network Peering Policy', action=AddProperties, nargs='+')
+        c.argument('properties_type', arg_type=get_enum_type(['HubAndSpokeTopology', 'MeshTopology']), id_part=None, help='Gets or sets the connectivity type of a network structure policy')
+        c.argument('id', id_part=None, help='Resource Id')
+        c.argument('properties_spokes', id_part=None, help='Gets or sets the spokes group IDs', action=AddSpokes, nargs='+')
+        c.argument('properties_mesh', id_part=None, help='Gets or sets the mesh group IDs', action=AddMesh, nargs='+')
 
     with self.argument_context('managed-network managed-network-peering-policies delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
