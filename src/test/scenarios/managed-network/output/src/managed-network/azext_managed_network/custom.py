@@ -47,9 +47,7 @@ def managed_network_managed_networks_update(cmd, client,
                                             resource_group_name,
                                             managed_network_name,
                                             tags=None):
-    parameters = {}
-    parameters['tags'] = tags
-    return client.update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, parameters=parameters)
+    return client.update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, tags=tags)
 
 
 def managed_network_managed_networks_delete(cmd, client,
