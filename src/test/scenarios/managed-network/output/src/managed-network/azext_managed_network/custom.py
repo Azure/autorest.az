@@ -29,8 +29,11 @@ def managed_network_managed_networks_create(cmd, client,
                                             managed_network_name,
                                             location=None,
                                             tags=None,
-                                            scope=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, scope=scope)
+                                            scope_management_groups=None,
+                                            scope_subscriptions=None,
+                                            scope_virtual_networks=None,
+                                            scope_subnets=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, management_groups=scope_management_groups, subscriptions=scope_subscriptions, virtual_networks=scope_virtual_networks, subnets=scope_subnets)
 
 
 def managed_network_managed_networks_update(cmd, client,
@@ -144,18 +147,24 @@ def managed_network_managed_network_peering_policies_create(cmd, client,
                                                             resource_group_name,
                                                             managed_network_name,
                                                             managed_network_peering_policy_name,
+                                                            properties_type,
                                                             location=None,
-                                                            properties=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=properties)
+                                                            id=None,
+                                                            properties_spokes=None,
+                                                            properties_mesh=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, type=properties_type, id=id, spokes=properties_spokes, mesh=properties_mesh)
 
 
 def managed_network_managed_network_peering_policies_update(cmd, client,
                                                             resource_group_name,
                                                             managed_network_name,
                                                             managed_network_peering_policy_name,
+                                                            properties_type,
                                                             location=None,
-                                                            properties=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=properties)
+                                                            id=None,
+                                                            properties_spokes=None,
+                                                            properties_mesh=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, type=properties_type, id=id, spokes=properties_spokes, mesh=properties_mesh)
 
 
 def managed_network_managed_network_peering_policies_delete(cmd, client,

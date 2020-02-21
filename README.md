@@ -18,7 +18,7 @@ modelerfour:
 
 
 #payload-flattening-threshold: 4
-#recursive-payload-flattening: true
+recursive-payload-flattening: true
 
 pipeline:
     az/clicommon:
