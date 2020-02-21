@@ -788,15 +788,14 @@ export class CodeModelCliImpl implements CodeModelAz
         let ret: Map<string, string> = new Map<string, string>();
         Object.entries(example_params).forEach(([param_name, param_value]) => {
             param_name = ToSnakeCase(param_name);
-            //// Here are some rename logic in POC, but not implement in current az codegen, so comment them here 
-            // if (param_name.endsWith('_name')) {
-            //     if (param_name == "resource_group_name") {
-            //         param_name = "resource_group";
-            //     }
-            //     else {
-            //         param_name = "name";
-            //     }
-            // }
+            if (param_name.endsWith('_name')) {
+                if (param_name == "resource_group_name") {
+                    param_name = "resource_group";
+                }
+                // else {
+                //     param_name = "name";
+                // }
+            }
             param_name = param_name.split("_").join("-");
             ret["--" + param_name] = param_value;
         });
@@ -828,7 +827,7 @@ export class CodeModelCliImpl implements CodeModelAz
         for (let k in example.Parameters) {
             let slp = JSON.stringify(example.Parameters[k]).split(/[\r\n]+/).join("");
             if (isTest) {
-                if (k != "--resource-group-name") {
+                if (k != "--resource-group") {
                     parameters.push(k + " " + slp);
                 }
                 else {
