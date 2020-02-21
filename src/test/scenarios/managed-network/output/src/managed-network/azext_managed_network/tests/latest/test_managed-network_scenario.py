@@ -53,7 +53,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--resource-group {rg}',
                  checks=[])
 
-        self.cmd('az managed-network managed-networks show',
+        self.cmd('az managed-network managed-networks list',
                  checks=[])
 
         self.cmd('az managed-network scope-assignments show '

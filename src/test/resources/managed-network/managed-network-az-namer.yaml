@@ -105,7 +105,7 @@ schemas:
                     name: ProvisioningState
                     description: Provisioning state of the ManagedNetwork resource.
                   az:
-                    name: provisioning_state
+                    name: provisioning-state
                     description: Provisioning state of the ManagedNetwork resource.
                   cli:
                     name: ProvisioningState
@@ -125,7 +125,7 @@ schemas:
                   description: Provisioning state of the ManagedNetwork resource.
                   originalName: provisioningState
                 az:
-                  name: provisioning_state
+                  name: provisioning-state
                   description: Provisioning state of the ManagedNetwork resource.
                 cli:
                   name: provisioningState
@@ -144,7 +144,7 @@ schemas:
                     name: ResourceProperties-etag
                     description: A unique read-only string that changes whenever the resource is updated.
                   az:
-                    name: resource_properties-etag
+                    name: resource-properties-etag
                     description: A unique read-only string that changes whenever the resource is updated.
                   cli:
                     name: ResourceProperties-etag
@@ -200,7 +200,7 @@ schemas:
                               name: ResourceId-id
                               description: Resource Id
                             az:
-                              name: resource_id-id
+                              name: resource-id-id
                               description: Resource Id
                             cli:
                               name: ResourceId-id
@@ -232,7 +232,7 @@ schemas:
                           description: Generic pointer to a resource
                           namespace: Api20190601Preview
                         az:
-                          name: resource_id
+                          name: resource-id
                           description: Generic pointer to a resource
                         cli:
                           name: ResourceId
@@ -247,7 +247,7 @@ schemas:
                         name: Scope-managementGroups
                         description: The collection of management groups covered by the Managed Network
                       az:
-                        name: scope-management_groups
+                        name: scope-management-groups
                         description: The collection of management groups covered by the Managed Network
                       cli:
                         name: Scope-managementGroups
@@ -263,7 +263,7 @@ schemas:
                       description: The collection of management groups covered by the Managed Network
                       originalName: managementGroups
                     az:
-                      name: management_groups
+                      name: management-groups
                       description: The collection of management groups covered by the Managed Network
                     cli:
                       name: managementGroups
@@ -321,7 +321,7 @@ schemas:
                         name: Scope-virtualNetworks
                         description: The collection of virtual nets covered by the Managed Network
                       az:
-                        name: scope-virtual_networks
+                        name: scope-virtual-networks
                         description: The collection of virtual nets covered by the Managed Network
                       cli:
                         name: Scope-virtualNetworks
@@ -337,7 +337,7 @@ schemas:
                       description: The collection of virtual nets covered by the Managed Network
                       originalName: virtualNetworks
                     az:
-                      name: virtual_networks
+                      name: virtual-networks
                       description: The collection of virtual nets covered by the Managed Network
                     cli:
                       name: virtualNetworks
@@ -493,7 +493,7 @@ schemas:
                                                       name: ManagedNetworkGroupProperties-managementGroups
                                                       description: The collection of management groups covered by the Managed Network
                                                     az:
-                                                      name: managed_network_group_properties-management_groups
+                                                      name: managed-network-group-properties-management-groups
                                                       description: The collection of management groups covered by the Managed Network
                                                     cli:
                                                       name: ManagedNetworkGroupProperties-managementGroups
@@ -509,7 +509,7 @@ schemas:
                                                     description: The collection of management groups covered by the Managed Network
                                                     originalName: managementGroups
                                                   az:
-                                                    name: management_groups
+                                                    name: management-groups
                                                     description: The collection of management groups covered by the Managed Network
                                                   cli:
                                                     name: managementGroups
@@ -529,7 +529,7 @@ schemas:
                                                       name: ManagedNetworkGroupProperties-subscriptions
                                                       description: The collection of subscriptions covered by the Managed Network
                                                     az:
-                                                      name: managed_network_group_properties-subscriptions
+                                                      name: managed-network-group-properties-subscriptions
                                                       description: The collection of subscriptions covered by the Managed Network
                                                     cli:
                                                       name: ManagedNetworkGroupProperties-subscriptions
@@ -565,7 +565,7 @@ schemas:
                                                       name: ManagedNetworkGroupProperties-virtualNetworks
                                                       description: The collection of virtual nets covered by the Managed Network
                                                     az:
-                                                      name: managed_network_group_properties-virtual_networks
+                                                      name: managed-network-group-properties-virtual-networks
                                                       description: The collection of virtual nets covered by the Managed Network
                                                     cli:
                                                       name: ManagedNetworkGroupProperties-virtualNetworks
@@ -581,7 +581,7 @@ schemas:
                                                     description: The collection of virtual nets covered by the Managed Network
                                                     originalName: virtualNetworks
                                                   az:
-                                                    name: virtual_networks
+                                                    name: virtual-networks
                                                     description: The collection of virtual nets covered by the Managed Network
                                                   cli:
                                                     name: virtualNetworks
@@ -601,7 +601,7 @@ schemas:
                                                       name: ManagedNetworkGroupProperties-subnets
                                                       description: The collection of  subnets covered by the Managed Network
                                                     az:
-                                                      name: managed_network_group_properties-subnets
+                                                      name: managed-network-group-properties-subnets
                                                       description: The collection of  subnets covered by the Managed Network
                                                     cli:
                                                       name: ManagedNetworkGroupProperties-subnets
@@ -635,7 +635,7 @@ schemas:
                                                   description: Properties of a Managed Network Group
                                                   namespace: Api20190601Preview
                                                 az:
-                                                  name: managed_network_group_properties
+                                                  name: managed-network-group-properties
                                                   description: Properties of a Managed Network Group
                                                 cli:
                                                   name: ManagedNetworkGroupProperties
@@ -701,7 +701,7 @@ schemas:
                                                   description: Properties of Managed Network
                                                   namespace: Api20190601Preview
                                                 az:
-                                                  name: managed_network_properties
+                                                  name: managed-network-properties
                                                   description: Properties of Managed Network
                                                 cli:
                                                   name: ManagedNetworkProperties
@@ -730,7 +730,7 @@ schemas:
                                                       name: ScopeAssignmentProperties-assignedManagedNetwork
                                                       description: The managed network ID with scope will be assigned to.
                                                     az:
-                                                      name: scope_assignment_properties-assigned_managed_network
+                                                      name: scope-assignment-properties-assigned-managed-network
                                                       description: The managed network ID with scope will be assigned to.
                                                     cli:
                                                       name: ScopeAssignmentProperties-assignedManagedNetwork
@@ -746,7 +746,7 @@ schemas:
                                                     description: The managed network ID with scope will be assigned to.
                                                     originalName: assignedManagedNetwork
                                                   az:
-                                                    name: assigned_managed_network
+                                                    name: assigned-managed-network
                                                     description: The managed network ID with scope will be assigned to.
                                                   cli:
                                                     name: assignedManagedNetwork
@@ -764,7 +764,7 @@ schemas:
                                                   description: Properties of Managed Network
                                                   namespace: Api20190601Preview
                                                 az:
-                                                  name: scope_assignment_properties
+                                                  name: scope-assignment-properties
                                                   description: Properties of Managed Network
                                                 cli:
                                                   name: ScopeAssignmentProperties
@@ -796,7 +796,7 @@ schemas:
                                                       name: MeshPeeringPolicyProperties-mesh
                                                       description: Gets or sets the mesh group IDs
                                                     az:
-                                                      name: mesh_peering_policy_properties-mesh
+                                                      name: mesh-peering-policy-properties-mesh
                                                       description: Gets or sets the mesh group IDs
                                                     cli:
                                                       name: MeshPeeringPolicyProperties-mesh
@@ -830,7 +830,7 @@ schemas:
                                                   description: Properties of a Mesh Peering Policy
                                                   namespace: Api20190601Preview
                                                 az:
-                                                  name: mesh_peering_policy_properties
+                                                  name: mesh-peering-policy-properties
                                                   description: Properties of a Mesh Peering Policy
                                                 cli:
                                                   name: MeshPeeringPolicyProperties
@@ -855,7 +855,7 @@ schemas:
                                                 description: Provisioning state of the ManagedNetwork resource.
                                                 originalName: provisioningState
                                               az:
-                                                name: provisioning_state
+                                                name: provisioning-state
                                                 description: Provisioning state of the ManagedNetwork resource.
                                               cli:
                                                 name: provisioningState
@@ -890,7 +890,7 @@ schemas:
                                               description: Base for resource properties.
                                               namespace: Api20190601Preview
                                             az:
-                                              name: resource_properties
+                                              name: resource-properties
                                               description: Base for resource properties.
                                             cli:
                                               name: ResourceProperties
@@ -931,7 +931,7 @@ schemas:
                                               name: HubAndSpokePeeringPolicyProperties-spokes
                                               description: Gets or sets the spokes group IDs
                                             az:
-                                              name: hub_and_spoke_peering_policy_properties-spokes
+                                              name: hub-and-spoke-peering-policy-properties-spokes
                                               description: Gets or sets the spokes group IDs
                                             cli:
                                               name: HubAndSpokePeeringPolicyProperties-spokes
@@ -965,7 +965,7 @@ schemas:
                                           description: Properties of a Hub and Spoke Peering Policy
                                           namespace: Api20190601Preview
                                         az:
-                                          name: hub_and_spoke_peering_policy_properties
+                                          name: hub-and-spoke-peering-policy-properties
                                           description: Properties of a Hub and Spoke Peering Policy
                                         cli:
                                           name: HubAndSpokePeeringPolicyProperties
@@ -994,7 +994,7 @@ schemas:
                                             name: HubAndSpokeTopology
                                             description: ''
                                           az:
-                                            name: hub_and_spoke_topology
+                                            name: hub-and-spoke-topology
                                             description: ''
                                           cli:
                                             name: HubAndSpokeTopology
@@ -1008,7 +1008,7 @@ schemas:
                                             name: MeshTopology
                                             description: ''
                                           az:
-                                            name: mesh_topology
+                                            name: mesh-topology
                                             description: ''
                                           cli:
                                             name: MeshTopology
@@ -1083,7 +1083,7 @@ schemas:
                                           name: ManagedNetworkPeeringPolicyProperties-spokes
                                           description: Gets or sets the spokes group IDs
                                         az:
-                                          name: managed_network_peering_policy_properties-spokes
+                                          name: managed-network-peering-policy-properties-spokes
                                           description: Gets or sets the spokes group IDs
                                         cli:
                                           name: ManagedNetworkPeeringPolicyProperties-spokes
@@ -1121,7 +1121,7 @@ schemas:
                                           name: ManagedNetworkPeeringPolicyProperties-mesh
                                           description: Gets or sets the mesh group IDs
                                         az:
-                                          name: managed_network_peering_policy_properties-mesh
+                                          name: managed-network-peering-policy-properties-mesh
                                           description: Gets or sets the mesh group IDs
                                         cli:
                                           name: ManagedNetworkPeeringPolicyProperties-mesh
@@ -1154,7 +1154,7 @@ schemas:
                                       description: Properties of a Managed Network Peering Policy
                                       namespace: Api20190601Preview
                                     az:
-                                      name: managed_network_peering_policy_properties
+                                      name: managed-network-peering-policy-properties
                                       description: Properties of a Managed Network Peering Policy
                                     cli:
                                       name: ManagedNetworkPeeringPolicyProperties
@@ -1187,7 +1187,7 @@ schemas:
                                   description: The Managed Network Peering Policy resource
                                   namespace: Api20190601Preview
                                 az:
-                                  name: managed_network_peering_policy
+                                  name: managed-network-peering-policy
                                   description: The Managed Network Peering Policy resource
                                 cli:
                                   name: ManagedNetworkPeeringPolicy
@@ -1220,7 +1220,7 @@ schemas:
                                     description: Provisioning state of the ManagedNetwork resource.
                                     originalName: provisioningState
                                   az:
-                                    name: provisioning_state
+                                    name: provisioning-state
                                     description: Provisioning state of the ManagedNetwork resource.
                                   cli:
                                     name: provisioningState
@@ -1264,7 +1264,7 @@ schemas:
                                     description: The managed network ID with scope will be assigned to.
                                     originalName: assignedManagedNetwork
                                   az:
-                                    name: assigned_managed_network
+                                    name: assigned-managed-network
                                     description: The managed network ID with scope will be assigned to.
                                   cli:
                                     name: assignedManagedNetwork
@@ -1280,7 +1280,7 @@ schemas:
                                   description: The Managed Network resource
                                   namespace: Api20190601Preview
                                 az:
-                                  name: scope_assignment
+                                  name: scope-assignment
                                   description: The Managed Network resource
                                 cli:
                                   name: ScopeAssignment
@@ -1305,7 +1305,7 @@ schemas:
                               description: The resource model definition for a ARM proxy resource. It will have everything other than required location and tags
                               namespace: Api20190601Preview
                             az:
-                              name: proxy_resource
+                              name: proxy-resource
                               description: The resource model definition for a ARM proxy resource. It will have everything other than required location and tags
                             cli:
                               name: ProxyResource
@@ -1369,7 +1369,7 @@ schemas:
                             description: Provisioning state of the ManagedNetwork resource.
                             originalName: provisioningState
                           az:
-                            name: provisioning_state
+                            name: provisioning-state
                             description: Provisioning state of the ManagedNetwork resource.
                           cli:
                             name: provisioningState
@@ -1412,7 +1412,7 @@ schemas:
                             description: The collection of management groups covered by the Managed Network
                             originalName: managementGroups
                           az:
-                            name: management_groups
+                            name: management-groups
                             description: The collection of management groups covered by the Managed Network
                           cli:
                             name: managementGroups
@@ -1454,7 +1454,7 @@ schemas:
                             description: The collection of virtual nets covered by the Managed Network
                             originalName: virtualNetworks
                           az:
-                            name: virtual_networks
+                            name: virtual-networks
                             description: The collection of virtual nets covered by the Managed Network
                           cli:
                             name: virtualNetworks
@@ -1491,7 +1491,7 @@ schemas:
                           description: The Managed Network Group resource
                           namespace: Api20190601Preview
                         az:
-                          name: managed_network_group
+                          name: managed-network-group
                           description: The Managed Network Group resource
                         cli:
                           name: ManagedNetworkGroup
@@ -1506,7 +1506,7 @@ schemas:
                         name: ConnectivityCollection-groups
                         description: The collection of connectivity related Managed Network Groups within the Managed Network
                       az:
-                        name: connectivity_collection-groups
+                        name: connectivity-collection-groups
                         description: The collection of connectivity related Managed Network Groups within the Managed Network
                       cli:
                         name: ConnectivityCollection-groups
@@ -1543,7 +1543,7 @@ schemas:
                         name: ConnectivityCollection-peerings
                         description: The collection of Managed Network Peering Policies within the Managed Network
                       az:
-                        name: connectivity_collection-peerings
+                        name: connectivity-collection-peerings
                         description: The collection of Managed Network Peering Policies within the Managed Network
                       cli:
                         name: ConnectivityCollection-peerings
@@ -1576,7 +1576,7 @@ schemas:
                     description: The collection of Connectivity related groups and policies within the Managed Network
                     namespace: Api20190601Preview
                   az:
-                    name: connectivity_collection
+                    name: connectivity-collection
                     description: The collection of Connectivity related groups and policies within the Managed Network
                   cli:
                     name: ConnectivityCollection
@@ -1613,7 +1613,7 @@ schemas:
                 description: The Managed Network resource
                 namespace: Api20190601Preview
               az:
-                name: managed_network
+                name: managed-network
                 description: The Managed Network resource
               cli:
                 name: ManagedNetwork
@@ -1657,7 +1657,7 @@ schemas:
                 name: TrackedResource-tags
                 description: Resource tags
               az:
-                name: tracked_resource-tags
+                name: tracked-resource-tags
                 description: Resource tags
               cli:
                 name: TrackedResource-tags
@@ -1690,7 +1690,7 @@ schemas:
             description: The resource model definition for a ARM tracked top level resource
             namespace: Api20190601Preview
           az:
-            name: tracked_resource
+            name: tracked-resource
             description: The resource model definition for a ARM tracked top level resource
           cli:
             name: TrackedResource
@@ -1901,7 +1901,7 @@ schemas:
             name: ErrorResponse-code
             description: The error code.
           az:
-            name: error_response-code
+            name: error-response-code
             description: The error code.
           cli:
             name: ErrorResponse-code
@@ -1937,7 +1937,7 @@ schemas:
             name: ErrorResponse-message
             description: The error message.
           az:
-            name: error_response-message
+            name: error-response-message
             description: The error message.
           cli:
             name: ErrorResponse-message
@@ -1970,7 +1970,7 @@ schemas:
         description: The error response that indicates why an operation has failed.
         namespace: Api20190601Preview
       az:
-        name: error_response
+        name: error-response
         description: The error response that indicates why an operation has failed.
       cli:
         name: ErrorResponse
@@ -1994,7 +1994,7 @@ schemas:
             name: ManagedNetworkUpdate-tags
             description: Resource tags
           az:
-            name: managed_network_update-tags
+            name: managed-network-update-tags
             description: Resource tags
           cli:
             name: ManagedNetworkUpdate-tags
@@ -2026,7 +2026,7 @@ schemas:
         description: Update Tags of Managed Network
         namespace: Api20190601Preview
       az:
-        name: managed_network_update
+        name: managed-network-update
         description: Update Tags of Managed Network
       cli:
         name: ManagedNetworkUpdate
@@ -2051,7 +2051,7 @@ schemas:
             name: ManagedNetworkListResult-value
             description: Gets a page of ManagedNetworks
           az:
-            name: managed_network_list_result-value
+            name: managed-network-list-result-value
             description: Gets a page of ManagedNetworks
           cli:
             name: ManagedNetworkListResult-value
@@ -2086,7 +2086,7 @@ schemas:
             name: ManagedNetworkListResult-nextLink
             description: Gets the URL to get the next page of results.
           az:
-            name: managed_network_list_result-next_link
+            name: managed-network-list-result-next-link
             description: Gets the URL to get the next page of results.
           cli:
             name: ManagedNetworkListResult-nextLink
@@ -2102,7 +2102,7 @@ schemas:
           description: Gets the URL to get the next page of results.
           originalName: nextLink
         az:
-          name: next_link
+          name: next-link
           description: Gets the URL to get the next page of results.
         cli:
           name: nextLink
@@ -2118,7 +2118,7 @@ schemas:
         description: Result of the request to list Managed Network. It contains a list of Managed Networks and a URL link to get the next set of results.
         namespace: Api20190601Preview
       az:
-        name: managed_network_list_result
+        name: managed-network-list-result
         description: Result of the request to list Managed Network. It contains a list of Managed Networks and a URL link to get the next set of results.
       cli:
         name: ManagedNetworkListResult
@@ -2145,7 +2145,7 @@ schemas:
             name: ScopeAssignmentListResult-value
             description: Gets a page of ScopeAssignment
           az:
-            name: scope_assignment_list_result-value
+            name: scope-assignment-list-result-value
             description: Gets a page of ScopeAssignment
           cli:
             name: ScopeAssignmentListResult-value
@@ -2180,7 +2180,7 @@ schemas:
             name: ScopeAssignmentListResult-nextLink
             description: Gets the URL to get the next set of results.
           az:
-            name: scope_assignment_list_result-next_link
+            name: scope-assignment-list-result-next-link
             description: Gets the URL to get the next set of results.
           cli:
             name: ScopeAssignmentListResult-nextLink
@@ -2196,7 +2196,7 @@ schemas:
           description: Gets the URL to get the next set of results.
           originalName: nextLink
         az:
-          name: next_link
+          name: next-link
           description: Gets the URL to get the next set of results.
         cli:
           name: nextLink
@@ -2212,7 +2212,7 @@ schemas:
         description: Result of the request to list ScopeAssignment. It contains a list of groups and a URL link to get the next set of results.
         namespace: Api20190601Preview
       az:
-        name: scope_assignment_list_result
+        name: scope-assignment-list-result
         description: Result of the request to list ScopeAssignment. It contains a list of groups and a URL link to get the next set of results.
       cli:
         name: ScopeAssignmentListResult
@@ -2237,7 +2237,7 @@ schemas:
             name: ManagedNetworkGroupListResult-value
             description: Gets a page of ManagedNetworkGroup
           az:
-            name: managed_network_group_list_result-value
+            name: managed-network-group-list-result-value
             description: Gets a page of ManagedNetworkGroup
           cli:
             name: ManagedNetworkGroupListResult-value
@@ -2272,7 +2272,7 @@ schemas:
             name: ManagedNetworkGroupListResult-nextLink
             description: Gets the URL to get the next set of results.
           az:
-            name: managed_network_group_list_result-next_link
+            name: managed-network-group-list-result-next-link
             description: Gets the URL to get the next set of results.
           cli:
             name: ManagedNetworkGroupListResult-nextLink
@@ -2288,7 +2288,7 @@ schemas:
           description: Gets the URL to get the next set of results.
           originalName: nextLink
         az:
-          name: next_link
+          name: next-link
           description: Gets the URL to get the next set of results.
         cli:
           name: nextLink
@@ -2304,7 +2304,7 @@ schemas:
         description: Result of the request to list Managed Network Groups. It contains a list of groups and a URL link to get the next set of results.
         namespace: Api20190601Preview
       az:
-        name: managed_network_group_list_result
+        name: managed-network-group-list-result
         description: Result of the request to list Managed Network Groups. It contains a list of groups and a URL link to get the next set of results.
       cli:
         name: ManagedNetworkGroupListResult
@@ -2329,7 +2329,7 @@ schemas:
             name: ManagedNetworkPeeringPolicyListResult-value
             description: Gets a page of Peering Policies
           az:
-            name: managed_network_peering_policy_list_result-value
+            name: managed-network-peering-policy-list-result-value
             description: Gets a page of Peering Policies
           cli:
             name: ManagedNetworkPeeringPolicyListResult-value
@@ -2364,7 +2364,7 @@ schemas:
             name: ManagedNetworkPeeringPolicyListResult-nextLink
             description: Gets the URL to get the next page of results.
           az:
-            name: managed_network_peering_policy_list_result-next_link
+            name: managed-network-peering-policy-list-result-next-link
             description: Gets the URL to get the next page of results.
           cli:
             name: ManagedNetworkPeeringPolicyListResult-nextLink
@@ -2380,7 +2380,7 @@ schemas:
           description: Gets the URL to get the next page of results.
           originalName: nextLink
         az:
-          name: next_link
+          name: next-link
           description: Gets the URL to get the next page of results.
         cli:
           name: nextLink
@@ -2396,7 +2396,7 @@ schemas:
         description: Result of the request to list Managed Network Peering Policies. It contains a list of policies and a URL link to get the next set of results.
         namespace: Api20190601Preview
       az:
-        name: managed_network_peering_policy_list_result
+        name: managed-network-peering-policy-list-result
         description: Result of the request to list Managed Network Peering Policies. It contains a list of policies and a URL link to get the next set of results.
       cli:
         name: ManagedNetworkPeeringPolicyListResult
@@ -2619,7 +2619,7 @@ schemas:
             name: OperationListResult-value
             description: List of Resource Provider operations supported by the Managed Network resource provider.
           az:
-            name: operation_list_result-value
+            name: operation-list-result-value
             description: List of Resource Provider operations supported by the Managed Network resource provider.
           cli:
             name: OperationListResult-value
@@ -2654,7 +2654,7 @@ schemas:
             name: OperationListResult-nextLink
             description: URL to get the next set of operation list results if there are any.
           az:
-            name: operation_list_result-next_link
+            name: operation-list-result-next-link
             description: URL to get the next set of operation list results if there are any.
           cli:
             name: OperationListResult-nextLink
@@ -2670,7 +2670,7 @@ schemas:
           description: URL to get the next set of operation list results if there are any.
           originalName: nextLink
         az:
-          name: next_link
+          name: next-link
           description: URL to get the next set of operation list results if there are any.
         cli:
           name: nextLink
@@ -2686,7 +2686,7 @@ schemas:
         description: Result of the request to list Managed Network operations. It contains a list of operations and a URL link to get the next set of results.
         namespace: Api20190601Preview
       az:
-        name: operation_list_result
+        name: operation-list-result
         description: Result of the request to list Managed Network operations. It contains a list of operations and a URL link to get the next set of results.
       cli:
         name: OperationListResult
@@ -2737,7 +2737,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2756,7 +2756,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2774,7 +2774,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2792,7 +2792,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2810,7 +2810,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2828,7 +2828,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2846,7 +2846,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2864,7 +2864,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2882,7 +2882,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2900,7 +2900,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2918,7 +2918,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2936,7 +2936,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2954,7 +2954,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2972,7 +2972,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -2990,7 +2990,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -3008,7 +3008,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -3026,7 +3026,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -3044,7 +3044,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -3062,7 +3062,7 @@ schemas:
         name: ApiVersion-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       az:
-        name: api_version-2019-06-01-preview
+        name: api-version-2019-06-01-preview
         description: Api Version (2019-06-01-preview)
       cli:
         name: ApiVersion-2019-06-01-preview
@@ -3127,7 +3127,7 @@ globalParameters:
       description: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
       serializedName: subscriptionId
     az:
-      name: subscription_id
+      name: subscription-id
       description: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
     cli:
       name: subscriptionId
@@ -3174,7 +3174,7 @@ globalParameters:
       description: Api Version
       serializedName: api-version
     az:
-      name: api_version
+      name: api-version
       description: Api Version
     cli:
       name: ApiVersion
@@ -3213,7 +3213,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -3235,7 +3235,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -3334,7 +3334,7 @@ operationGroups:
       az:
         name: show
         description: 'The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name'
-        command: managed-network managed_networks show
+        command: managed-network managed-networks show
       cli:
         name: Get
         description: 'The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name'
@@ -3359,7 +3359,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -3381,7 +3381,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -3405,7 +3405,7 @@ operationGroups:
             name: managedNetwork
             description: Parameters supplied to the create/update a Managed Network Resource
           az:
-            name: managed_network
+            name: managed-network
             description: Parameters supplied to the create/update a Managed Network Resource
           cli:
             name: managedNetwork
@@ -3473,7 +3473,7 @@ operationGroups:
             name: managementGroups
             description: The collection of management groups covered by the Managed Network
           az:
-            name: management_groups
+            name: management-groups
             description: The collection of management groups covered by the Managed Network
           cli:
             name: managementGroups
@@ -3517,7 +3517,7 @@ operationGroups:
             name: virtualNetworks
             description: The collection of virtual nets covered by the Managed Network
           az:
-            name: virtual_networks
+            name: virtual-networks
             description: The collection of virtual nets covered by the Managed Network
           cli:
             name: virtualNetworks
@@ -3703,7 +3703,7 @@ operationGroups:
       az:
         name: create
         description: 'The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name'
-        command: managed-network managed_networks create
+        command: managed-network managed-networks create
       cli:
         name: CreateOrUpdate
         description: 'The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name'
@@ -3728,7 +3728,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -3750,7 +3750,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -3847,7 +3847,7 @@ operationGroups:
       az:
         name: delete
         description: 'The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource group and Managed Network name'
-        command: managed-network managed_networks delete
+        command: managed-network managed-networks delete
       cli:
         name: Delete
         description: 'The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource group and Managed Network name'
@@ -3872,7 +3872,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -3894,7 +3894,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -4089,7 +4089,7 @@ operationGroups:
       az:
         name: update
         description: Updates the specified Managed Network resource tags.
-        command: managed-network managed_networks update
+        command: managed-network managed-networks update
       cli:
         name: Update
         description: Updates the specified Managed Network resource tags.
@@ -4114,7 +4114,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -4267,7 +4267,7 @@ operationGroups:
       az:
         name: list
         description: The ListByResourceGroup ManagedNetwork operation retrieves all the Managed Network resources in a resource group in a paginated format.
-        command: managed-network managed_networks list
+        command: managed-network managed-networks list
       cli:
         name: ListByResourceGroup
         description: The ListByResourceGroup ManagedNetwork operation retrieves all the Managed Network resources in a resource group in a paginated format.
@@ -4421,7 +4421,7 @@ operationGroups:
       az:
         name: list
         description: The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
-        command: managed-network managed_networks list
+        command: managed-network managed-networks list
       cli:
         name: ListBySubscription
         description: The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
@@ -4436,7 +4436,7 @@ operationGroups:
     az:
       name: ManagedNetworks
       description: ''
-      command: managed-network managed_networks
+      command: managed-network managed-networks
     cli:
       name: ManagedNetworks
       description: ''
@@ -4486,7 +4486,7 @@ operationGroups:
             description: The name of the scope assignment to get.
             serializedName: scopeAssignmentName
           az:
-            name: scope_assignment_name
+            name: scope-assignment-name
             description: The name of the scope assignment to get.
           cli:
             name: scopeAssignmentName
@@ -4566,7 +4566,7 @@ operationGroups:
       az:
         name: show
         description: Get the specified scope assignment.
-        command: managed-network scope_assignments show
+        command: managed-network scope-assignments show
       cli:
         name: Get
         description: Get the specified scope assignment.
@@ -4614,7 +4614,7 @@ operationGroups:
             description: The name of the scope assignment to get.
             serializedName: scopeAssignmentName
           az:
-            name: scope_assignment_name
+            name: scope-assignment-name
             description: The name of the scope assignment to get.
           cli:
             name: scopeAssignmentName
@@ -4685,7 +4685,7 @@ operationGroups:
             name: assignedManagedNetwork
             description: The managed network ID with scope will be assigned to.
           az:
-            name: assigned_managed_network
+            name: assigned-managed-network
             description: The managed network ID with scope will be assigned to.
           cli:
             name: assignedManagedNetwork
@@ -4796,7 +4796,7 @@ operationGroups:
       az:
         name: create
         description: Creates a scope assignment.
-        command: managed-network scope_assignments create
+        command: managed-network scope-assignments create
       cli:
         name: CreateOrUpdate
         description: Creates a scope assignment.
@@ -4843,7 +4843,7 @@ operationGroups:
             description: The name of the scope assignment to get.
             serializedName: scopeAssignmentName
           az:
-            name: scope_assignment_name
+            name: scope-assignment-name
             description: The name of the scope assignment to get.
           cli:
             name: scopeAssignmentName
@@ -4909,7 +4909,7 @@ operationGroups:
       az:
         name: delete
         description: Deletes a scope assignment.
-        command: managed-network scope_assignments delete
+        command: managed-network scope-assignments delete
       cli:
         name: Delete
         description: Deletes a scope assignment.
@@ -5018,7 +5018,7 @@ operationGroups:
       az:
         name: list
         description: Get the specified scope assignment.
-        command: managed-network scope_assignments list
+        command: managed-network scope-assignments list
       cli:
         name: List
         description: Get the specified scope assignment.
@@ -5033,7 +5033,7 @@ operationGroups:
     az:
       name: ScopeAssignments
       description: ''
-      command: managed-network scope_assignments
+      command: managed-network scope-assignments
     cli:
       name: ScopeAssignments
       description: ''
@@ -5061,7 +5061,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -5083,7 +5083,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -5105,7 +5105,7 @@ operationGroups:
             description: The name of the Managed Network Group.
             serializedName: managedNetworkGroupName
           az:
-            name: managed_network_group_name
+            name: managed-network-group-name
             description: The name of the Managed Network Group.
           cli:
             name: managedNetworkGroupName
@@ -5195,7 +5195,7 @@ operationGroups:
       az:
         name: show
         description: 'The Get ManagedNetworkGroups operation gets a Managed Network Group specified by the resource group, Managed Network name, and group name'
-        command: managed-network managed_network_groups show
+        command: managed-network managed-network-groups show
       cli:
         name: Get
         description: 'The Get ManagedNetworkGroups operation gets a Managed Network Group specified by the resource group, Managed Network name, and group name'
@@ -5221,7 +5221,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -5243,7 +5243,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -5265,7 +5265,7 @@ operationGroups:
             description: The name of the Managed Network Group.
             serializedName: managedNetworkGroupName
           az:
-            name: managed_network_group_name
+            name: managed-network-group-name
             description: The name of the Managed Network Group.
           cli:
             name: managedNetworkGroupName
@@ -5288,7 +5288,7 @@ operationGroups:
             name: managedNetworkGroup
             description: Parameters supplied to the create/update a Managed Network Group resource
           az:
-            name: managed_network_group
+            name: managed-network-group
             description: Parameters supplied to the create/update a Managed Network Group resource
           cli:
             name: managedNetworkGroup
@@ -5425,7 +5425,7 @@ operationGroups:
       az:
         name: create
         description: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
-        command: managed-network managed_network_groups create
+        command: managed-network managed-network-groups create
       cli:
         name: CreateOrUpdate
         description: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
@@ -5450,7 +5450,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -5472,7 +5472,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -5494,7 +5494,7 @@ operationGroups:
             description: The name of the Managed Network Group.
             serializedName: managedNetworkGroupName
           az:
-            name: managed_network_group_name
+            name: managed-network-group-name
             description: The name of the Managed Network Group.
           cli:
             name: managedNetworkGroupName
@@ -5593,7 +5593,7 @@ operationGroups:
       az:
         name: delete
         description: 'The Delete ManagedNetworkGroups operation deletes a Managed Network Group specified by the resource group, Managed Network name, and group name'
-        command: managed-network managed_network_groups delete
+        command: managed-network managed-network-groups delete
       cli:
         name: Delete
         description: 'The Delete ManagedNetworkGroups operation deletes a Managed Network Group specified by the resource group, Managed Network name, and group name'
@@ -5618,7 +5618,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -5640,7 +5640,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -5784,7 +5784,7 @@ operationGroups:
       az:
         name: list
         description: The ListByManagedNetwork ManagedNetworkGroup operation retrieves all the Managed Network Groups in a specified Managed Networks in a paginated format.
-        command: managed-network managed_network_groups list
+        command: managed-network managed-network-groups list
       cli:
         name: ListByManagedNetwork
         description: The ListByManagedNetwork ManagedNetworkGroup operation retrieves all the Managed Network Groups in a specified Managed Networks in a paginated format.
@@ -5799,7 +5799,7 @@ operationGroups:
     az:
       name: ManagedNetworkGroups
       description: ''
-      command: managed-network managed_network_groups
+      command: managed-network managed-network-groups
     cli:
       name: ManagedNetworkGroups
       description: ''
@@ -5827,7 +5827,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -5849,7 +5849,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -5871,7 +5871,7 @@ operationGroups:
             description: The name of the Managed Network Peering Policy.
             serializedName: managedNetworkPeeringPolicyName
           az:
-            name: managed_network_peering_policy_name
+            name: managed-network-peering-policy-name
             description: The name of the Managed Network Peering Policy.
           cli:
             name: managedNetworkPeeringPolicyName
@@ -5959,7 +5959,7 @@ operationGroups:
       az:
         name: show
         description: 'The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource, specified by the  resource group, Managed Network name, and peering policy name'
-        command: managed-network managed_network_peering_policies show
+        command: managed-network managed-network-peering-policies show
       cli:
         name: Get
         description: 'The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource, specified by the  resource group, Managed Network name, and peering policy name'
@@ -5985,7 +5985,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -6007,7 +6007,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -6029,7 +6029,7 @@ operationGroups:
             description: The name of the Managed Network Peering Policy.
             serializedName: managedNetworkPeeringPolicyName
           az:
-            name: managed_network_peering_policy_name
+            name: managed-network-peering-policy-name
             description: The name of the Managed Network Peering Policy.
           cli:
             name: managedNetworkPeeringPolicyName
@@ -6053,7 +6053,7 @@ operationGroups:
             name: managedNetworkPolicy
             description: Parameters supplied to create/update a Managed Network Peering Policy
           az:
-            name: managed_network_policy
+            name: managed-network-policy
             description: Parameters supplied to create/update a Managed Network Peering Policy
           cli:
             name: managedNetworkPolicy
@@ -6301,7 +6301,7 @@ operationGroups:
       az:
         name: create
         description: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
-        command: managed-network managed_network_peering_policies create
+        command: managed-network managed-network-peering-policies create
       cli:
         name: CreateOrUpdate
         description: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
@@ -6326,7 +6326,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -6348,7 +6348,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -6370,7 +6370,7 @@ operationGroups:
             description: The name of the Managed Network Peering Policy.
             serializedName: managedNetworkPeeringPolicyName
           az:
-            name: managed_network_peering_policy_name
+            name: managed-network-peering-policy-name
             description: The name of the Managed Network Peering Policy.
           cli:
             name: managedNetworkPeeringPolicyName
@@ -6469,7 +6469,7 @@ operationGroups:
       az:
         name: delete
         description: 'The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy, specified by the  resource group, Managed Network name, and peering policy name'
-        command: managed-network managed_network_peering_policies delete
+        command: managed-network managed-network-peering-policies delete
       cli:
         name: Delete
         description: 'The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy, specified by the  resource group, Managed Network name, and peering policy name'
@@ -6494,7 +6494,7 @@ operationGroups:
             description: The name of the resource group.
             serializedName: resourceGroupName
           az:
-            name: resource_group_name
+            name: resource-group-name
             description: The name of the resource group.
           cli:
             name: resourceGroupName
@@ -6516,7 +6516,7 @@ operationGroups:
             description: The name of the Managed Network.
             serializedName: managedNetworkName
           az:
-            name: managed_network_name
+            name: managed-network-name
             description: The name of the Managed Network.
           cli:
             name: managedNetworkName
@@ -6658,7 +6658,7 @@ operationGroups:
       az:
         name: list
         description: 'The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering Policies in a specified Managed Network, in a paginated format.'
-        command: managed-network managed_network_peering_policies list
+        command: managed-network managed-network-peering-policies list
       cli:
         name: ListByManagedNetwork
         description: 'The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering Policies in a specified Managed Network, in a paginated format.'
@@ -6673,7 +6673,7 @@ operationGroups:
     az:
       name: ManagedNetworkPeeringPolicies
       description: ''
-      command: managed-network managed_network_peering_policies
+      command: managed-network managed-network-peering-policies
     cli:
       name: ManagedNetworkPeeringPolicies
       description: ''

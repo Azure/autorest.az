@@ -31,6 +31,8 @@ class ManagedNetworkManagementClient(object):
     :vartype managed_network_peering_policies: managed_network_management_client.operations.ManagedNetworkPeeringPoliciesOperations
     :ivar operations: Operations operations
     :vartype operations: managed_network_management_client.operations.Operations
+    :param credential: Credential needed for the client to connect to Azure.
+    :type credential: azure.core.credentials.TokenCredential
     :param subscription_id: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
     :type subscription_id: str
     :param str base_url: Service URL
@@ -38,6 +40,7 @@ class ManagedNetworkManagementClient(object):
 
     def __init__(
         self,
+        credential,  # type: "TokenCredential"
         subscription_id,  # type: str
         base_url=None,  # type: Optional[str]
         **kwargs  # type: Any
@@ -45,7 +48,7 @@ class ManagedNetworkManagementClient(object):
         # type: (...) -> None
         if not base_url:
             base_url = 'https://management.azure.com'
-        self._config = ManagedNetworkManagementClientConfiguration(subscription_id, **kwargs)
+        self._config = ManagedNetworkManagementClientConfiguration(credential, subscription_id, **kwargs)
         self._client = PipelineClient(base_url=base_url, config=self._config, **kwargs)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
