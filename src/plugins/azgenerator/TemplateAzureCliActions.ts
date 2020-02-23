@@ -39,7 +39,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                     output.push("class " + actionName + "(argparse._AppendAction):");
                                     output.push("    def __call__(self, parser, namespace, values, option_string=None):");
                                     output.push("        action = self.get_action(values, option_string)");
-                                    output.push("        super(ImageBuilderAddCustomize, self).__call__(parser, namespace, action, option_string)");
+                                    output.push("        super(" + "Add" + Capitalize(ToCamelCase(model.Option_Name)) + ", self).__call__(parser, namespace, action, option_string)");
                                     output.push("");
                                     output.push("    def get_action(self, values, option_string):  # pylint: disable=no-self-use");
                                     output.push("        try:");
