@@ -10,6 +10,11 @@ import { SchemaType } from "@azure-tools/codemodel";
 export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
     var output: string[] = [];
 
+    output.push("# --------------------------------------------------------------------------------------------");
+    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
+    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
+    output.push("# --------------------------------------------------------------------------------------------");
+    output.push("");
     output.push("import argparse");
     output.push("from knack.util import CLIError");
     output.push("");
@@ -75,6 +80,8 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
             }
         } while (model.SelectNextCommandGroup());
     }
+
+    output.push("");
 
     return output;
 }
