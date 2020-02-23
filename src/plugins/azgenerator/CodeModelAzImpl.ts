@@ -3,23 +3,14 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz";
+import { CodeModelAz, CommandExample } from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
+import { GenerateDefaultTestScenario } from './scenario_tool'
 
-
-export class CommandExample
-{
-    // this should be "create", "update", "list", "show", or custom name
-    public Method: string;
-    public Id: string;
-    // public Title: string;
-    public Parameters: Map<string, string>;
-    // public MethodName: string;
-}
 
 export class CodeModelCliImpl implements CodeModelAz
 {
@@ -182,7 +173,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Extension_TestScenario(): any
     {
-        return this.codeModel['test-scenario'] || [];
+        return this.codeModel['test-scenario'] || GenerateDefaultTestScenario(this.GetAllExamples());
     }
 
     //=================================================================================================================
@@ -612,6 +603,11 @@ export class CodeModelCliImpl implements CodeModelAz
         return null;
     }
 
+    public get Method_Path(): string
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.protocol?.http?.path;
+    }
+
     //=================================================================================================================
     // Methods Parameters.
     //
@@ -826,7 +822,7 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().parameters;
     }
 
-    public get Examples(): any {
+    public get Examples(): object {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].extensions['x-ms-examples'];
     }
 
@@ -853,7 +849,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 this.AddFlattenedParameter(dict, k, k.language.default.name)
             }
         }
-        else {
+        else if (value?.schema?.type != 'constant') {
             dict[name] = value;
         }
     }
@@ -893,15 +889,14 @@ export class CodeModelCliImpl implements CodeModelAz
         let ret: Map<string, string> = new Map<string, string>();
         Object.entries(example_params).forEach(([param_name, param_value]) => {
             param_name = ToSnakeCase(param_name);
-            //// Here are some rename logic in POC, but not implement in current az codegen, so comment them here 
-            // if (param_name.endsWith('_name')) {
-            //     if (param_name == "resource_group_name") {
-            //         param_name = "resource_group";
-            //     }
-            //     else {
-            //         param_name = "name";
-            //     }
-            // }
+            if (param_name.endsWith('_name')) {
+                if (param_name == "resource_group_name") {
+                    param_name = "resource_group";
+                }
+                // else {
+                //     param_name = "name";
+                // }
+            }
             param_name = param_name.split("_").join("-");
             ret["--" + param_name] = param_value;
         });
@@ -909,13 +904,15 @@ export class CodeModelCliImpl implements CodeModelAz
     }
 
 
-    private GetExamples(): CommandExample[] {
+    public GetExamples(): CommandExample[] {
         let examples: CommandExample[] = [];
         if (this.Examples) {
             Object.entries(this.Examples).forEach(([id, example_obj]) => {
                 let example = new CommandExample();
                 example.Method = this.Command_MethodName;
                 example.Id = id;
+                example.Title = example_obj.title || id;
+                example.Path = this.Method_Path;
                 let params: Map<string, string> = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
                 examples.push(example);
@@ -932,7 +929,7 @@ export class CodeModelCliImpl implements CodeModelAz
         for (let k in example.Parameters) {
             let slp = JSON.stringify(example.Parameters[k]).split(/[\r\n]+/).join("");
             if (isTest) {
-                if (k != "--resource-group-name") {
+                if (k != "--resource-group") {
                     parameters.push(k + " " + slp);
                 }
                 else {
@@ -947,7 +944,16 @@ export class CodeModelCliImpl implements CodeModelAz
         return parameters;
     }
 
-    public FindExampleById(id: string): string[] {
+    public FindExampleById(id: string): string[][] {
+        let ret: string[][] = [];
+        this.GetAllExamples(id, (example) => {
+            ret.push(this.GetExampleItems(example, true));
+        });
+        return ret;
+    }
+
+    public GetAllExamples(id?: string, callback?: (example)=>void): CommandExample[] {
+        let ret: CommandExample[] = [];
         this.SelectFirstExtension();
         if (this.SelectFirstCommandGroup()) {
             do {    // iterate all CommandGroups
@@ -955,16 +961,17 @@ export class CodeModelCliImpl implements CodeModelAz
                     this.SelectFirstMethod();
                     do {                        // iterate all Methods
                         for (let example of this.GetExamples()) {
-                            if (example.Id.toLowerCase() == id.toLowerCase()) {
-                                return this.GetExampleItems(example, true);
+                            if (id && (example.Id.toLowerCase() != id.toLowerCase())) continue;
+                            if(callback) {
+                                callback(example);
                             }
+                            ret.push(example);
                         }
                     } while (this.SelectNextMethod())
                     this.SelectNextCommand();
                 }
             } while (this.SelectNextCommandGroup())
         }
-        return [];
-
+        return ret;
     }
 }
