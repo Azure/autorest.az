@@ -17,7 +17,7 @@ modelerfour:
     flatten-payloads: true
 
 
-payload-flattening-threshold: 4
+#payload-flattening-threshold: 4
 recursive-payload-flattening: true
 
 pipeline:

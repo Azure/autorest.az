@@ -327,7 +327,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_Help(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].description;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].description.replace(/\n/g, " ");
     }
 
     public get Command_CanSplit(): boolean 
@@ -481,7 +481,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_Description(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].description;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].description.replace(/\n/g, " ");
     }
 
     public get Option_In(): string
@@ -679,7 +679,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get MethodParameter_Description(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].description;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].description.replace(/\n/g, " ");
     }
 
     public get MethodParameter_Type(): string

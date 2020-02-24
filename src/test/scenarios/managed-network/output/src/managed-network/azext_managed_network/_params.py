@@ -17,7 +17,6 @@ from azext_managed_network.actions import (
     AddSubscriptions,
     AddVirtualNetworks,
     AddSubnets,
-    AddManagedNetworkGroup,
     AddSpokes,
     AddMesh
 )
@@ -91,13 +90,21 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', id_part=None, help='The name of the Managed Network.')
         c.argument('managed_network_group_name', id_part=None, help='The name of the Managed Network Group.')
-        c.argument('managed_network_group', id_part=None, help='Parameters supplied to the create/update a Managed Network Group resource', action=AddManagedNetworkGroup, nargs='+')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx))
+        c.argument('management_groups', id_part=None, help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('subscriptions', id_part=None, help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
+        c.argument('virtual_networks', id_part=None, help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
+        c.argument('subnets', id_part=None, help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
 
     with self.argument_context('managed-network managed-network-groups update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', id_part=None, help='The name of the Managed Network.')
         c.argument('managed_network_group_name', id_part=None, help='The name of the Managed Network Group.')
-        c.argument('managed_network_group', id_part=None, help='Parameters supplied to the create/update a Managed Network Group resource', action=AddManagedNetworkGroup, nargs='+')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx))
+        c.argument('management_groups', id_part=None, help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('subscriptions', id_part=None, help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
+        c.argument('virtual_networks', id_part=None, help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
+        c.argument('subnets', id_part=None, help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
 
     with self.argument_context('managed-network managed-network-groups delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
