@@ -134,19 +134,23 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
 
         // body transformation
 
-        // with x-ms-client-flatten it doesn't need this part now 
-        /*if (model.SelectFirstMethodParameter()) {
+        if (model.SelectFirstMethodParameter()) {
             do {
                 if (model.MethodParameter_IsFlattened) {
                     let bodyName = model.MethodParameter_Name;
                     output_body.push("    " + bodyName + " = {}");
                     let body = model.MethodParameter;
 
+                    let body_cnt = 0;
                     while (model.SelectNextMethodParameter()) {
                         let access = "    " + bodyName;
                         let param = model.MethodParameter;
+                        if(model.MethodParameter_Type == SchemaType.Constant) {
+                            continue;
+                        }
                         let oriParam = (param['originalParameter']);
                         if (oriParam == body) {
+                            body_cnt++;
                             if (param['pathToProperty']?.length == 1) {
                                 let pathParam = param['pathToProperty'][0];
                                 access += `.setdefault('${pathParam.language['python'].name}', {})`;
@@ -172,6 +176,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                                 required['json'] = true;
                             }
 
+                            
                             if (isUpdate) {
                                 output_body.push("    if " + model.MethodParameter_MapsTo + " is not None:");
                                 output_body.push("    " + access);
@@ -184,12 +189,19 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                             break;
                         }
                     }
+                    if(body_cnt == 1) {
+                        output_body.pop();
+                        output_body.pop();
+                        if(isUpdate) {
+                            output_body.pop();
+                        }
+                    }
                 }
 
             }
             while (model.SelectNextMethodParameter());
 
-        }*/
+        }
 
         let needIfStatement = !model.Method_IsLast;
 
@@ -251,8 +263,33 @@ function GetMethodCall(model: CodeModelAz): string {
             if(model.MethodParameter_Type == SchemaType.Constant) {
                 continue;
             }
+
             let optionName = model.MethodParameter_MapsTo;
             let parameterName = model.MethodParameter_Name; 
+            if (model.MethodParameter_IsFlattened) {
+                let body_cnt = 0;
+                let body = model.MethodParameter;
+                let preOptionName = "";
+                let preParameterName = "";
+                while(model.SelectNextMethodParameter()) {
+                    let param = model.MethodParameter;
+                    if(model.MethodParameter_Type == SchemaType.Constant) {
+                        continue;
+                    }
+                    let oriParam = (param['originalParameter']);
+                    if (oriParam == body) {
+                        body_cnt++;
+                        preOptionName = model.MethodParameter_MapsTo;
+                        preParameterName = model.MethodParameter_Name;
+                    } else {
+                        break;
+                    }    
+                }
+                if(body_cnt == 1) {
+                    optionName = preOptionName;
+                    parameterName = preParameterName;
+                }
+            }
 
             if (methodCall.endsWith("(")) {
                 // XXX - split and pop is a hack
