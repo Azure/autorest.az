@@ -834,9 +834,10 @@ export class CodeModelCliImpl implements CodeModelAz
         let method_param_dict: Map<string, Value> = new Map<string, Value>();
         if (this.SelectFirstMethodParameter()) {
             do {
-                if (this.MethodParameter.implementation == 'Method') {
-                    // method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
-                    this.AddFlattenedParameter(method_param_dict, this.MethodParameter, this.MethodParameter.language.default.name)
+                if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
+                    
+                    method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
+                    // this.AddFlattenedParameter(method_param_dict, this.MethodParameter, this.MethodParameter.language.default.name)
                 }
             } while (this.SelectNextMethodParameter());
         }
