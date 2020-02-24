@@ -823,7 +823,8 @@ export class CodeModelCliImpl implements CodeModelAz
     }
 
     public get Examples(): object {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].extensions['x-ms-examples'];
+        let extensions = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].extensions;
+        return (extensions && 'x-ms-examples' in extensions? extensions['x-ms-examples']: {})
     }
 
     /**
@@ -834,9 +835,10 @@ export class CodeModelCliImpl implements CodeModelAz
         let method_param_dict: Map<string, Value> = new Map<string, Value>();
         if (this.SelectFirstMethodParameter()) {
             do {
-                if (this.MethodParameter.implementation == 'Method') {
-                    // method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
-                    this.AddFlattenedParameter(method_param_dict, this.MethodParameter, this.MethodParameter.language.default.name)
+                if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
+                    
+                    method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
+                    // this.AddFlattenedParameter(method_param_dict, this.MethodParameter, this.MethodParameter.language.default.name)
                 }
             } while (this.SelectNextMethodParameter());
         }
