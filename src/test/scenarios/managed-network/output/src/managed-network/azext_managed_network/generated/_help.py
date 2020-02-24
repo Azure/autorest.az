@@ -9,12 +9,12 @@
 from knack.help_files import helps  # pylint: disable=unused-import
 
 
-helps['managed-network managed-networks'] = """
+helps['managed-network managed_networks'] = """
     type: group
-    short-summary: managed-network managed-networks
+    short-summary: managed-network managed_networks
 """
 
-helps['managed-network managed-networks list'] = """
+helps['managed-network managed_networks list'] = """
     type: command
     short-summary: The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
     examples:
@@ -23,7 +23,7 @@ helps['managed-network managed-networks list'] = """
                az managed-network managed-networks list --resource-group "myResourceGroup"
 """
 
-helps['managed-network managed-networks show'] = """
+helps['managed-network managed_networks show'] = """
     type: command
     short-summary: The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name
     examples:
@@ -33,7 +33,7 @@ helps['managed-network managed-networks show'] = """
                --resource-group "myResourceGroup"
 """
 
-helps['managed-network managed-networks create'] = """
+helps['managed-network managed_networks create'] = """
     type: command
     short-summary: The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name
     examples:
@@ -43,7 +43,7 @@ helps['managed-network managed-networks create'] = """
                "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
-helps['managed-network managed-networks update'] = """
+helps['managed-network managed_networks update'] = """
     type: command
     short-summary: Updates the specified Managed Network resource tags.
     examples:
@@ -53,7 +53,7 @@ helps['managed-network managed-networks update'] = """
                --resource-group "myResourceGroup"
 """
 
-helps['managed-network managed-networks delete'] = """
+helps['managed-network managed_networks delete'] = """
     type: command
     short-summary: The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource group and Managed Network name
     examples:
@@ -63,12 +63,12 @@ helps['managed-network managed-networks delete'] = """
                --resource-group "myResourceGroup"
 """
 
-helps['managed-network scope-assignments'] = """
+helps['managed-network scope_assignments'] = """
     type: group
-    short-summary: managed-network scope-assignments
+    short-summary: managed-network scope_assignments
 """
 
-helps['managed-network scope-assignments list'] = """
+helps['managed-network scope_assignments list'] = """
     type: command
     short-summary: Get the specified scope assignment.
     examples:
@@ -77,7 +77,7 @@ helps['managed-network scope-assignments list'] = """
                az managed-network scope-assignments list --scope "subscriptions/subscriptionC"
 """
 
-helps['managed-network scope-assignments show'] = """
+helps['managed-network scope_assignments show'] = """
     type: command
     short-summary: Get the specified scope assignment.
     examples:
@@ -87,7 +87,7 @@ helps['managed-network scope-assignments show'] = """
                --scope-assignment-name "subscriptionCAssignment"
 """
 
-helps['managed-network scope-assignments create'] = """
+helps['managed-network scope_assignments create'] = """
     type: command
     short-summary: Creates a scope assignment.
     examples:
@@ -99,7 +99,7 @@ helps['managed-network scope-assignments create'] = """
                "subscriptionCAssignment"
 """
 
-helps['managed-network scope-assignments update'] = """
+helps['managed-network scope_assignments update'] = """
     type: command
     short-summary: Creates a scope assignment.
     examples:
@@ -111,7 +111,7 @@ helps['managed-network scope-assignments update'] = """
                "subscriptionCAssignment"
 """
 
-helps['managed-network scope-assignments delete'] = """
+helps['managed-network scope_assignments delete'] = """
     type: command
     short-summary: Deletes a scope assignment.
     examples:
@@ -121,12 +121,12 @@ helps['managed-network scope-assignments delete'] = """
                --scope-assignment-name "subscriptionCAssignment"
 """
 
-helps['managed-network managed-network-groups'] = """
+helps['managed-network managed_network_groups'] = """
     type: group
-    short-summary: managed-network managed-network-groups
+    short-summary: managed-network managed_network_groups
 """
 
-helps['managed-network managed-network-groups list'] = """
+helps['managed-network managed_network_groups list'] = """
     type: command
     short-summary: The ListByManagedNetwork ManagedNetworkGroup operation retrieves all the Managed Network Groups in a specified Managed Networks in a paginated format.
     examples:
@@ -136,7 +136,7 @@ helps['managed-network managed-network-groups list'] = """
                --resource-group "myResourceGroup"
 """
 
-helps['managed-network managed-network-groups show'] = """
+helps['managed-network managed_network_groups show'] = """
     type: command
     short-summary: The Get ManagedNetworkGroups operation gets a Managed Network Group specified by the resource group, Managed Network name, and group name
     examples:
@@ -147,7 +147,7 @@ helps['managed-network managed-network-groups show'] = """
                "myResourceGroup"
 """
 
-helps['managed-network managed-network-groups create'] = """
+helps['managed-network managed_network_groups create'] = """
     type: command
     short-summary: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
     examples:
@@ -158,7 +158,7 @@ helps['managed-network managed-network-groups create'] = """
                "myResourceGroup"
 """
 
-helps['managed-network managed-network-groups update'] = """
+helps['managed-network managed_network_groups update'] = """
     type: command
     short-summary: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
     examples:
@@ -169,7 +169,7 @@ helps['managed-network managed-network-groups update'] = """
                "myResourceGroup"
 """
 
-helps['managed-network managed-network-groups delete'] = """
+helps['managed-network managed_network_groups delete'] = """
     type: command
     short-summary: The Delete ManagedNetworkGroups operation deletes a Managed Network Group specified by the resource group, Managed Network name, and group name
     examples:
@@ -180,12 +180,12 @@ helps['managed-network managed-network-groups delete'] = """
                "myResourceGroup"
 """
 
-helps['managed-network managed-network-peering-policies'] = """
+helps['managed-network managed_network_peering_policies'] = """
     type: group
-    short-summary: managed-network managed-network-peering-policies
+    short-summary: managed-network managed_network_peering_policies
 """
 
-helps['managed-network managed-network-peering-policies list'] = """
+helps['managed-network managed_network_peering_policies list'] = """
     type: command
     short-summary: The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering Policies in a specified Managed Network, in a paginated format.
     examples:
@@ -195,7 +195,7 @@ helps['managed-network managed-network-peering-policies list'] = """
                "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
-helps['managed-network managed-network-peering-policies show'] = """
+helps['managed-network managed_network_peering_policies show'] = """
     type: command
     short-summary: The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource, specified by the  resource group, Managed Network name, and peering policy name
     examples:
@@ -206,7 +206,7 @@ helps['managed-network managed-network-peering-policies show'] = """
                "myResourceGroup"
 """
 
-helps['managed-network managed-network-peering-policies create'] = """
+helps['managed-network managed_network_peering_policies create'] = """
     type: command
     short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
     examples:
@@ -217,7 +217,7 @@ helps['managed-network managed-network-peering-policies create'] = """
                "myResourceGroup"
 """
 
-helps['managed-network managed-network-peering-policies update'] = """
+helps['managed-network managed_network_peering_policies update'] = """
     type: command
     short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
     examples:
@@ -228,7 +228,7 @@ helps['managed-network managed-network-peering-policies update'] = """
                "myResourceGroup"
 """
 
-helps['managed-network managed-network-peering-policies delete'] = """
+helps['managed-network managed_network_peering_policies delete'] = """
     type: command
     short-summary: The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy, specified by the  resource group, Managed Network name, and peering policy name
     examples:
