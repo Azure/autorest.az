@@ -32,16 +32,16 @@ export async function GenerateAll(model: CodeModelAz,
         {
             let pathTop = "src/" + model.Extension_Name + "/";
             let path = "src/" + model.Extension_Name + "/azext_" + model.Extension_Name.replace("-", "_") + "/";
-            files[path + "_help.py"] = GenerateAzureCliHelp(model);
-            files[path + "_params.py"] = GenerateAzureCliParams(model);
-            files[path + "commands.py"] = GenerateAzureCliCommands(model);
-            files[path + "custom.py"] = GenerateAzureCliCustom(model);
-            files[path + "_client_factory.py"] = GenerateAzureCliClientFactory(model);
+            files[path + "generated/_help.py"] = GenerateAzureCliHelp(model);
+            files[path + "generated/_params.py"] = GenerateAzureCliParams(model);
+            files[path + "generated/commands.py"] = GenerateAzureCliCommands(model);
+            files[path + "generated/custom.py"] = GenerateAzureCliCustom(model);
+            files[path + "generated/_client_factory.py"] = GenerateAzureCliClientFactory(model);
             files[path + "tests/latest/test_" + model.Extension_Name + "_scenario.py"] = GenerateAzureCliTestScenario(model);   
             files[path + "__init__.py"] = GenerateAzureCliInit(model);
             files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
-            files[path + "_validators.py"] = GenerateAzureCliValidators(model);
-            files[path + "actions.py"] = GenerateAzureCliActions(model);  
+            files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);
+            files[path + "generated/action.py"] = GenerateAzureCliActions(model);  
 
             files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(model);
             files[pathTop + "README.rst"] = GenerateAzureCliReadme(model);
