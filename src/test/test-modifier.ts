@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { suite, test } from 'mocha-typescript';
+import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
 import { readFile, writeFile, readdir, mkdir } from "@azure-tools/async-io";
 import { deserialize, serialize, fail } from "@azure-tools/codegen";
@@ -19,7 +19,7 @@ const resources = `${__dirname}/../../src/test/resources`;
 
 
 @suite class Process {
-    @test async simpleModifierTest() {
+    @test(slow(600000), timeout(1500000)) async simpleModifierTest() {
         const folders = await readdir(resources);
         for(var each of folders) {
             let cfg = {
@@ -45,15 +45,12 @@ const resources = `${__dirname}/../../src/test/resources`;
             // go!
             const codeModel = await modeler.process();
 
-            // console.log(serialize(codeModel))
-            const yaml = serialize(codeModel);
             const fileName = `${__dirname}/../../src/test/resources/` + each + "/" + each + `-az-modifier.yaml`;
-            //await (writeFile(fileName, yaml));
+
             const supposeFile = await readFile(fileName);
 
-            //const cms = deserialize<CodeModel>(yaml, 'foo.yaml');
-
-            assert.strictEqual(yaml, supposeFile, 'namer has failed the unit test');
+            const codeModelSupposed = deserialize<CodeModel>(supposeFile, fileName);
+            assert.deepEqual(codeModel, codeModelSupposed, 'namer has failed the unit test');
         }
     }
 }
