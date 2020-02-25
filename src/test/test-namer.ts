@@ -39,6 +39,10 @@ const resources = `${__dirname}/../../src/test/resources/`;
     
             // console.log(serialize(codeModel))
             const fileName = `${__dirname}/../../src/test/resources/`+ each + "/" + each + `-az-namer.yaml`;
+
+            // uncomment this line to overwrite existing file
+            // await (writeFile(fileName, serialize(codeModel)));
+
             const supposeFile = await readFile(fileName);
 
             const codeModelSupposed = deserialize<CodeModel>(supposeFile, fileName);
