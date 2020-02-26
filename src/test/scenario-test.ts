@@ -10,7 +10,7 @@ require('source-map-support').install();
 
 @suite class Process {
     async runAz(directory: string) {
-        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest-beta --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md --output-folder=" + directory + "/tmpoutput ";
+        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md --output-folder=" + directory + "/tmpoutput ";
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => { 
             exec(cmd, function(error) {
