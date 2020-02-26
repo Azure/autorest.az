@@ -45,9 +45,9 @@ If you want to run **az** using your local code you need to clone following repo
 
     ...
 
-### Prepare Minimal **readme.az.md** File
+### Prepare Minimal **readme.az.md** and **readme.cli.md** File
 
-Minimal file must exist in 
+Minimal **readme.cli.md** file must exist: 
 
     ## CLI
 
@@ -55,6 +55,17 @@ Minimal file must exist in
 
     ``` yaml $(cli)
     cli:
+      namespace: azure.mgmt.healthcareapis
+    ```
+
+Minimal **readme.az.md** file must exist: 
+
+    ## AZ
+
+    These settings apply only when `--cli` is specified on the command line.
+
+    ``` yaml $(az)
+    az:
       namespace: azure.mgmt.healthcareapis
     ```
 
