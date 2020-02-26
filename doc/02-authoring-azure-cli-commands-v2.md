@@ -4,7 +4,7 @@
 
 This document describes generation of Azure CLI Commands using **autorest.az**.
 
-### Prepare Your Environment
+## Prepare Your Environment
 
 Install AutoRest tools, or alternatively you can use Docker container.
 
@@ -15,9 +15,35 @@ You will need to clone following directories locally.
 
 For simplicity let's assume they are cloned under **c:\dev** directory on Windows machine.
 
-If you want to use the container:
+### Using the Container
 
     docker run -it --rm -v c:\dev:/_ mcr.microsoft.com/azure-cli/tools
+
+### Setup Environment Manually
+
+>NOTE: This may be extremely useful for development purposes as **--interactive** option is available only in Windows environment
+
+Things that need to be installed:
+- Node JS (check version etc, instructions)
+- Python (check version etc, instructions)
+- Autorest Beta (instructions)
+- Tools needed to test extensions...
+
+## Run AutoRest to Generate Azure CLI Extensions
+
+### Command to Run AutoRest
+
+    autorest-beta --az --output-folder=/_/azure-cli-extensions /_/azure-rest-api-specs/specification/attestation/resource-manager/readme.md
+
+When you run above command AutoRest will download and use most recent npm packages.
+
+### Command to Run AutoRest with clicommon/az Extensions as Source Code
+
+If you want to run **az** using your local code you need to clone following repositories:
+
+
+
+    ...
 
 ### Prepare Minimal **readme.az.md** File
 
@@ -36,7 +62,7 @@ Minimal file must exist in
 
 To generate extension use following command:
 
-    autorest --az --output-folder=/_/azure-cli-extensions /_/azure-rest-api-specs/specification/frontdoor/resource-manager/readme.md
+    autorest-beta --az --output-folder=/_/azure-cli-extensions /_/azure-rest-api-specs/specification/attestation/resource-manager/readme.md
 
 ### Integration Test
 
