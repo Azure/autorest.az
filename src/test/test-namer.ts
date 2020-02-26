@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { suite, test } from "mocha-typescript";
+import { suite, test, slow, timeout } from "mocha-typescript";
 import * as assert from 'assert';
 import { readFile, writeFile, readdir, mkdir } from "@azure-tools/async-io";
 import { deserialize, serialize, fail } from "@azure-tools/codegen";
@@ -19,7 +19,7 @@ const resources = `${__dirname}/../../src/test/resources/`;
 
 
 @suite class Process {
-    @test async simpleNamerTest() {
+    @test(slow(600000), timeout(1500000)) async simpleNamerTest() {
 
         const folders = await readdir(resources);
         for(var each of folders) {
@@ -38,13 +38,15 @@ const resources = `${__dirname}/../../src/test/resources/`;
             const codeModel = await aznamer.process();
     
             // console.log(serialize(codeModel))
-            const yaml = serialize(codeModel);
             const fileName = `${__dirname}/../../src/test/resources/`+ each + "/" + each + `-az-namer.yaml`;
+
+            // uncomment this line to overwrite existing file
+            // await (writeFile(fileName, serialize(codeModel)));
+
             const supposeFile = await readFile(fileName);
-            //await (writeFile(fileName, yaml));
-            //const cms = deserialize<CodeModel>(supposeFile, 'foo.yaml');
-    
-            assert.strictEqual(yaml, supposeFile, 'namer has failed the unit test');
+
+            const codeModelSupposed = deserialize<CodeModel>(supposeFile, fileName);
+            assert.deepEqual(codeModel, codeModelSupposed, 'modifier has failed the unit test');
         }
 
     }
