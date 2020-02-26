@@ -29,9 +29,9 @@ require('source-map-support').install();
         let cmd = "diff -r " + dir1 + " " + dir2;
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => { 
-            exec(cmd, function(error) {
+            exec(cmd, function(error, stdout) {
                 if (error !== null) {
-                    console.log('exec error: ' + error);
+                    console.log('exec error: ' + error + ", " + stdout);
                     // Reject if there is an error:
                     return reject(false);
                 }
