@@ -89,8 +89,7 @@
             "schema": {
               "$ref": "#/definitions/ManagedNetwork"
             },
-            "description": "Parameters supplied to the create/update a Managed Network Resource",
-            "x-ms-client-flatten": true
+            "description": "Parameters supplied to the create/update a Managed Network Resource"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -192,8 +191,7 @@
             "schema": {
               "$ref": "#/definitions/ManagedNetworkUpdate"
             },
-            "description": "Parameters supplied to update application gateway tags and/or scope.",
-            "x-ms-client-flatten": true
+            "description": "Parameters supplied to update application gateway tags and/or scope."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -393,8 +391,7 @@
             "schema": {
               "$ref": "#/definitions/ScopeAssignment"
             },
-            "description": "Parameters supplied to the specify which Managed Network this scope is being assigned",
-            "x-ms-client-flatten": true
+            "description": "Parameters supplied to the specify which Managed Network this scope is being assigned"
           },
           {
             "name": "scope",
@@ -584,8 +581,7 @@
             "schema": {
               "$ref": "#/definitions/ManagedNetworkGroup"
             },
-            "description": "Parameters supplied to the create/update a Managed Network Group resource",
-            "x-ms-client-flatten": true
+            "description": "Parameters supplied to the create/update a Managed Network Group resource"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -793,8 +789,7 @@
             "schema": {
               "$ref": "#/definitions/ManagedNetworkPeeringPolicy"
             },
-            "description": "Parameters supplied to create/update a Managed Network Peering Policy",
-            "x-ms-client-flatten": true
+            "description": "Parameters supplied to create/update a Managed Network Peering Policy"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
