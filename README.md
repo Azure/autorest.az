@@ -11,7 +11,7 @@ use-extension:
 python: true
 cli: true
 clicommon: true
-require: 
+try-require:
   - readme.python.md
   - readme.cli.md
 

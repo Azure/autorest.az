@@ -991,10 +991,12 @@
       "type": "object",
       "properties": {
         "scope": {
+          "x-ms-client-flatten": true,
           "$ref": "#/definitions/Scope",
           "description": "The collection of management groups, subscriptions, virtual networks, and subnets by the Managed Network. This is a read-only property that is reflective of all ScopeAssignments for this Managed Network"
         },
         "connectivity": {
+          "x-ms-client-flatten": true,
           "$ref": "#/definitions/ConnectivityCollection",
           "readOnly": true,
           "description": "The collection of groups and policies concerned with connectivity"
