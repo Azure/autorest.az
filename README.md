@@ -8,6 +8,12 @@ use-extension:
   #"@autorest/python": "latest"
   "@autorest/python": "5.0.0-dev.20200211.1"
 
+python: true
+cli: true
+clicommon: true
+try-require:
+  - readme.python.md
+  - readme.cli.md
 
 pipeline-model: v3
 
@@ -57,6 +63,5 @@ no-namespace-folders: true
 #clear-output-folder: true
 scope-codegen/emitter:
     output-folder: "$(python-sdk-output-folder)"
-
 
 ```
