@@ -26,7 +26,7 @@ require('source-map-support').install();
     }
 
     async compare(dir1: string, dir2: string) {
-        let cmd = "diff -r " + dir1 + " " + dir2;
+        let cmd = "diff -r --strip-trailing-cr " + dir1 + " " + dir2;
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => { 
             exec(cmd, function(error, stdout) {
