@@ -19,6 +19,8 @@ import { GenerateAzureCliSetupCfg } from "./TemplateAzureCliSetupCfg"
 import { GenerateAzureCliSetupPy } from "./TemplateAzureCliSetupPy"
 import { CodeModelAz } from "./CodeModelAz";
 import { GenerateAzureCliActions } from "./TemplateAzureCliActions"
+import { GenerateTopLevelImport } from "./TemplateAzureCliTopLevelImport"
+import { GenerateVendoredSdksInit } from "./TemplateAzureCliVendoredSdksInit"
 
 export async function GenerateAll(model: CodeModelAz,
     generateReport: any) {
@@ -42,6 +44,10 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
             files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);
             files[path + "generated/action.py"] = GenerateAzureCliActions(model);  
+            files[path + "vendored_sdks/__init__.py"] = GenerateVendoredSdksInit(model);  
+            files[path + "action.py"] = GenerateTopLevelImport(model, "action");  
+            files[path + "commands.py"] = GenerateTopLevelImport(model, "commands");  
+            files[path + "custom.py"] = GenerateTopLevelImport(model, "custom");  
 
             files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(model);
             files[pathTop + "README.rst"] = GenerateAzureCliReadme(model);
