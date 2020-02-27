@@ -54,9 +54,10 @@ python-sdk-output-folder: "$(output-folder)/src/managed-network/azext_managed_ne
 flatten-all: true
 
 directive:
-  from: swagger-document
-  where: $..parameters[?(@.in=='body')]
-  transform: >
-    $['x-ms-client-flatten'] = true;
-  reason: Flatten everything for Azure CLI
+  - from: swagger-document
+    where: $..parameters[?(@.in=='body')]
+    transform: >
+      $['x-ms-client-flatten'] = true;
+    reason: Flatten everything for Azure CLI
+
 ```
