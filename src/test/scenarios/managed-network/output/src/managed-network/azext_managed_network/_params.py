@@ -38,10 +38,10 @@ def load_arguments(self, _):
         c.argument('managed_network_name', id_part=None, help='The name of the Managed Network.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('tags', tags_type, nargs='+')
-        c.argument('scope_management_groups', id_part=None, help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
-        c.argument('scope_subscriptions', id_part=None, help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
-        c.argument('scope_virtual_networks', id_part=None, help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
-        c.argument('scope_subnets', id_part=None, help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
+        c.argument('management_groups', id_part=None, help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('subscriptions', id_part=None, help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
+        c.argument('virtual_networks', id_part=None, help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
+        c.argument('subnets', id_part=None, help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
 
     with self.argument_context('managed-network managed-networks update') as c:
         c.argument('resource_group_name', resource_group_name_type)
