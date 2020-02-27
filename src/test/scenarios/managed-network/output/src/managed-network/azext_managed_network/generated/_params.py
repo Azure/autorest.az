@@ -11,7 +11,7 @@ from azure.cli.core.commands.parameters import (
     resource_group_name_type,
     get_location_type
 )
-from azext_managed_network.actions import (
+from azext_managed_network.action import (
     AddManagementGroups,
     AddSubscriptions,
     AddVirtualNetworks,
@@ -37,6 +37,7 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('tags', tags_type, nargs='+')
 <<<<<<< HEAD
+<<<<<<< HEAD
         c.argument('managed_network_management_groups', help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
         c.argument('managed_network_subscriptions', help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
         c.argument('managed_network_virtual_networks', help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
@@ -46,6 +47,12 @@ def load_arguments(self, _):
         c.argument('scope_subscriptions', id_part=None, help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
         c.argument('scope_virtual_networks', id_part=None, help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
         c.argument('scope_subnets', id_part=None, help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
+>>>>>>> updated test
+=======
+        c.argument('management_groups', id_part=None, help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('subscriptions', id_part=None, help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
+        c.argument('virtual_networks', id_part=None, help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
+        c.argument('subnets', id_part=None, help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
 >>>>>>> updated test
 
     with self.argument_context('managed-network managed-networks update') as c:
