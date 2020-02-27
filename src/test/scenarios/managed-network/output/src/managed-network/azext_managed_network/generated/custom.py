@@ -29,11 +29,19 @@ def managed_network_managed_networks_create(cmd, client,
                                             managed_network_name,
                                             location=None,
                                             tags=None,
+<<<<<<< HEAD
                                             managed_network_management_groups=None,
                                             managed_network_subscriptions=None,
                                             managed_network_virtual_networks=None,
                                             managed_network_subnets=None):
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, management_groups=managed_network_management_groups, subscriptions=managed_network_subscriptions, virtual_networks=managed_network_virtual_networks, subnets=managed_network_subnets)
+=======
+                                            scope_management_groups=None,
+                                            scope_subscriptions=None,
+                                            scope_virtual_networks=None,
+                                            scope_subnets=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, management_groups=scope_management_groups, subscriptions=scope_subscriptions, virtual_networks=scope_virtual_networks, subnets=scope_subnets)
+>>>>>>> updated test
 
 
 def managed_network_managed_networks_update(cmd, client,
