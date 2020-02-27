@@ -11,11 +11,7 @@ use-extension:
 python: true
 cli: true
 clicommon: true
-<<<<<<< HEAD
 try-require:
-=======
-require: 
->>>>>>> using directive to flatten everything
   - readme.python.md
   - readme.cli.md
 
