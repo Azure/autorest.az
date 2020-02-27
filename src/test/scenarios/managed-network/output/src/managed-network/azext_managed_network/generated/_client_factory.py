@@ -6,7 +6,7 @@
 
 def cf_managed_network(cli_ctx, *_):
     from azure.cli.core.commands.client_factory import get_mgmt_service_client
-    from .vendored_sdks.managednetwork import ManagedNetworkManagementClient
+    from ..vendored_sdks.managednetwork import ManagedNetworkManagementClient
     return get_mgmt_service_client(cli_ctx, ManagedNetworkManagementClient)
 
 
