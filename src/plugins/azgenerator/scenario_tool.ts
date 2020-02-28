@@ -5,9 +5,10 @@ import { deepCopy, ReadFile } from "../../utils/helper"
 
 function MethodToOrder(method: string): number {
     if (method == 'create') return 0;
-    else if (method == 'show' || method=='list') return 1;
-    else if (method == 'delete') return 3;
-    else return 2;
+    else if (method == 'show') return 1;
+    else if (method == 'list') return 2;
+    else if (method == 'delete') return 4;
+    else return 3;
 }
 
 export function GenerateDefaultTestScenario(
@@ -303,7 +304,9 @@ export class ResourcePool {
         return null;
     }
 
-    public add_endpoint_resource(endpoint: string) {
+    public add_endpoint_resource(endpoint: any) {
+        if (typeof endpoint !== 'string')   return endpoint;
+        
         let nodes = endpoint.split('/');
         if (nodes.length <= 5 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
             return endpoint;
@@ -341,5 +344,5 @@ export class ResourcePool {
 
 export function generate_resource_files(filename: string): string[] {
     let src_folder = path.join(`${__dirname}`, '..', '..', '..', 'src', 'plugins', 'azgenerator', 'resources');
-    return ReadFile(path.join(src_folder, "preparers.py")).split(/\r\n|\n/);
+    return ReadFile(path.join(src_folder, filename)).split(/\r\n|\n/);
 } 

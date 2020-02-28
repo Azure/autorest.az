@@ -214,8 +214,8 @@ helps['managed-network managed-network-peering-policies create'] = """
         text: |-
                az managed-network managed-network-peering-policies create --managed-network-name \\
                "myManagedNetwork" --managed-network-peering-policy-name "myHubAndSpoke" --type \\
-               "HubAndSpokeTopology" --id "/subscriptionB/resourceGroups/myResourceGroup/providers/Micros
-               oft.Network/virtualNetworks/myHubVnet" --resource-group "myResourceGroup"
+               "HubAndSpokeTopology" --id "/subscriptions/subscriptionB/resourceGroups/myResourceGroup/pr
+               oviders/Microsoft.Network/virtualNetworks/myHubVnet" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policies update'] = """
@@ -226,8 +226,8 @@ helps['managed-network managed-network-peering-policies update'] = """
         text: |-
                az managed-network managed-network-peering-policies create --managed-network-name \\
                "myManagedNetwork" --managed-network-peering-policy-name "myHubAndSpoke" --type \\
-               "HubAndSpokeTopology" --id "/subscriptionB/resourceGroups/myResourceGroup/providers/Micros
-               oft.Network/virtualNetworks/myHubVnet" --resource-group "myResourceGroup"
+               "HubAndSpokeTopology" --id "/subscriptions/subscriptionB/resourceGroups/myResourceGroup/pr
+               oviders/Microsoft.Network/virtualNetworks/myHubVnet" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policies delete'] = """

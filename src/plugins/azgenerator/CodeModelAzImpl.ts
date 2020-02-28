@@ -610,6 +610,11 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.protocol?.http?.path;
     }
 
+    public get Method_MethodName(): string
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].language['az'].name;
+    }
+
     //=================================================================================================================
     // Methods Parameters.
     //
@@ -913,7 +918,7 @@ export class CodeModelCliImpl implements CodeModelAz
         if (this.Examples) {
             Object.entries(this.Examples).forEach(([id, example_obj]) => {
                 let example = new CommandExample();
-                example.Method = this.Command_MethodName;
+                example.Method = this.Method_MethodName;
                 example.Id = id;
                 example.Title = example_obj.title || id;
                 example.Path = this.Method_Path;
