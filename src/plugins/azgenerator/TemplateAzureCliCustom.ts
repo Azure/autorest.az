@@ -88,7 +88,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
 
                     let required: boolean = model.MethodParameter_RequiredByMethod;
 
-                    let name = model.MethodParameter_NamePython; // PythonParameterName(element.Name);
+                    let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
                     if (required && !allParam.has(name)) {
                         allParam.set(name, true);
                         output[output.length - 1] += ",";
@@ -111,7 +111,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                     }
                     let required = model.MethodParameter_RequiredByMethod;
 
-                    let name = model.MethodParameter_NamePython;
+                    let name = model.MethodParameter_MapsTo;
                     if (!required && !allParam.has(name)) {
                         allParam.set(name, true);
                         output[output.length - 1] += ",";

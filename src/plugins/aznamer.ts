@@ -132,7 +132,7 @@ export class AzNamer {
                     operationName = operationGroupName + " " +  changeCamelToDash(operation.language['az']['name']);
                     operation.language['az']['command'] = operationName;
                 } else {
-                    this.session.message({Channel:Channel.Warning, Text: "operation doesn't have cli"});
+                    this.session.message({Channel:Channel.Warning, Text: "OperationGroup " + operationGroup.language.default.name + " operation " + operation.language.default.name + " doesn't have cli"});
                 }
                 operation.request.parameters.forEach(parameter => {
                     if(parameter.language['cli'] != undefined) {

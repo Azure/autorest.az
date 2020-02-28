@@ -659,19 +659,14 @@ export class CodeModelCliImpl implements CodeModelAz
     public get MethodParameter_NamePython(): string
     {
         let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
-        if(parameter['pathToProperty']?.length == 1) {
-            return (parameter['pathToProperty'][0]).language['python'].name + "_" + parameter.language['python'].name;
-        } else {
-            return parameter.language['python'].name;
-        }
-        
+        return parameter.language['python'].name;
     }
 
     public get MethodParameter_MapsTo(): string
     {
         let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
-        if(parameter['pathToProperty']?.length == 1) {
-            return (parameter['pathToProperty'][0]).language['python'].name + "_" + parameter.language['python'].name;
+        if(parameter['originalParameter'] != null && parameter.language['python'].name != 'location' && parameter.language['python'].name != "tags") {
+            return (parameter['originalParameter']).language['python'].name + "_" + parameter.language['python'].name;
         } else {
             return parameter.language['python'].name;
         }

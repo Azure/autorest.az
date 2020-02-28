@@ -103,7 +103,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     }
                     hasParam = true;
                     
-                    let parameterName = model.MethodParameter_NamePython;
+                    let parameterName = model.MethodParameter_MapsTo;
         
                     if(allParam.has(parameterName)) {
                         continue;
