@@ -9,7 +9,7 @@ use-extension:
   "@autorest/python": "5.0.0-dev.20200211.1"
 
 python: true
-require:
+require: 
   - ./readme.python.md
   - ./readme.cli.md
   
