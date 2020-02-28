@@ -9,18 +9,12 @@ use-extension:
   "@autorest/python": "5.0.0-dev.20200211.1"
 
 python: true
-<<<<<<< HEAD
-require: 
-  - ./readme.python.md
-  - ./readme.cli.md
   
-=======
 cli: true
 clicommon: true
 require:
   - ./readme.python.md
   - ./readme.cli.md
->>>>>>> fix some change folder and name issue
 
 pipeline-model: v3
 
