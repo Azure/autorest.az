@@ -74,21 +74,13 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--resource-group {rg}',
                  checks=[])
 
-<<<<<<< HEAD
-        self.cmd('az managed-network managed-networks update '
-=======
         self.cmd('az managed-network managed-network-peering-policies show '
->>>>>>> use --cli for now and  need to register cli in autorest
                  '--managed-network-name "myManagedNetwork" '
                  '--managed-network-peering-policy-name "myHubAndSpoke" '
                  '--resource-group {rg}',
                  checks=[])
 
-<<<<<<< HEAD
-        self.cmd('az managed-network managed-networks show '
-=======
         self.cmd('az managed-network managed-network-peering-policies list '
->>>>>>> use --cli for now and  need to register cli in autorest
                  '--managed-network-name "myManagedNetwork" '
                  '--resource-group {rg}',
                  checks=[])
@@ -99,31 +91,11 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--resource-group {rg}',
                  checks=[])
 
-<<<<<<< HEAD
-        self.cmd('az managed-network scope-assignments show '
-=======
         self.cmd('az managed-network scope-assignments delete '
->>>>>>> use --cli for now and  need to register cli in autorest
                  '--scope "subscriptions/subscriptionC" '
                  '--scope-assignment-name "subscriptionCAssignment"',
                  checks=[])
 
-<<<<<<< HEAD
-        self.cmd('az managed-network managed-networks list',
-                 checks=[])
-
-        self.cmd('az managed-network scope-assignments list '
-                 '--scope "subscriptions/subscriptionC"',
-                 checks=[])
-
-        self.cmd('az managed-network managed-network-peering-policies delete '
-                 '--managed-network-name "myManagedNetwork" '
-                 '--managed-network-peering-policy-name "myHubAndSpoke" '
-                 '--resource-group {rg}',
-                 checks=[])
-
-=======
->>>>>>> use --cli for now and  need to register cli in autorest
         self.cmd('az managed-network managed-network-groups delete '
                  '--managed-network-group-name "myManagedNetworkGroup1" '
                  '--managed-network-name "myManagedNetwork" '
