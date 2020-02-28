@@ -9,6 +9,7 @@ python:
   payload-flattening-threshold: 2
   package-name: azure-mgmt-managednetwork
   clear-output-folder: true
+
 add-credential: true
 ```
 

@@ -9,11 +9,10 @@ use-extension:
   "@autorest/python": "5.0.0-dev.20200211.1"
 
 python: true
-cli: true
-clicommon: true
-try-require:
-  - readme.python.md
-  - readme.cli.md
+require: 
+  - ./readme.python.md
+  - ./readme.cli.md
+  
 
 pipeline-model: v3
 
@@ -24,7 +23,7 @@ modelerfour:
 
 
 #payload-flattening-threshold: 4
-recursive-payload-flattening: true
+#recursive-payload-flattening: true
 
 pipeline:
     az/clicommon:

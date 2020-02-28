@@ -59,11 +59,8 @@ create a managed-network managed-network-peering-policies.
 |------|----|-----------|----------|--------------|
 |**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 |**--managed-network-policy**|object|Parameters supplied to create/update a Managed Network Peering Policy|/something/my_option|/something/myOption|
-|**--type**|choice|Gets or sets the connectivity type of a network structure policy|/something/my_option|/something/myOption|
 |--location**|string|The geo-location where the resource lives|/something/my_option|/something/myOption|
-|--id**|string|Resource Id|/something/my_option|/something/myOption|
-|--spokes**|array|Gets or sets the spokes group IDs|/something/my_option|/something/myOption|
-|--mesh**|array|Gets or sets the mesh group IDs|/something/my_option|/something/myOption|
+|--properties**|object|Properties of a Managed Network Peering Policy|/something/my_option|/something/myOption|
 ### managed-network managed-network-peering-policies delete
 
 delete a managed-network managed-network-peering-policies.
@@ -95,11 +92,8 @@ create a managed-network managed-network-peering-policies.
 |------|----|-----------|----------|--------------|
 |**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 |**--managed-network-policy**|object|Parameters supplied to create/update a Managed Network Peering Policy|/something/my_option|/something/myOption|
-|**--type**|choice|Gets or sets the connectivity type of a network structure policy|/something/my_option|/something/myOption|
 |--location**|string|The geo-location where the resource lives|/something/my_option|/something/myOption|
-|--id**|string|Resource Id|/something/my_option|/something/myOption|
-|--spokes**|array|Gets or sets the spokes group IDs|/something/my_option|/something/myOption|
-|--mesh**|array|Gets or sets the mesh group IDs|/something/my_option|/something/myOption|
+|--properties**|object|Properties of a Managed Network Peering Policy|/something/my_option|/something/myOption|
 ### managed-network managed-networks create
 
 create a managed-network managed-networks.
