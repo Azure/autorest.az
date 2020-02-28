@@ -25,7 +25,6 @@ export class CodeModelCliImpl implements CodeModelAz
     preMethodIndex: number;
     currentMethodIndex: number;
 
-    processingSubOptions: boolean;
     suboptions: Property[];
     currentSubOptionIndex: number;
 
@@ -38,7 +37,6 @@ export class CodeModelCliImpl implements CodeModelAz
         this.currentExampleIndex = -1;
         this.preMethodIndex = -1;
         this.currentMethodIndex = -1;
-        this.processingSubOptions = false;
         this.suboptions = null;
         this.currentSubOptionIndex = -1;
         //this.sortOperationByAzCommand();
@@ -344,7 +342,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectFirstOption(): boolean
     {
-        if (this.processingSubOptions)
+        if (this.suboptions != null)
         {
             this.currentSubOptionIndex = 0;
             return true;
@@ -399,7 +397,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextOption(): boolean
     {
-        if (this.processingSubOptions)
+        if (this.suboptions != null)
         {
             this.currentSubOptionIndex++;
 
@@ -464,7 +462,6 @@ export class CodeModelCliImpl implements CodeModelAz
         if (!this.Option_IsList)
             return false;
 
-        this.processingSubOptions = true;
         this.suboptions = this.Option_GetElementType()['properties'];
 
         return true;
@@ -472,9 +469,10 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public ExitSubOptions(): boolean
     {
-        if (this.processingSubOptions)
+        if (this.suboptions != null)
         {
-            this.processingSubOptions = false;
+            this.suboptions = null;
+            this.currentSubOptionIndex = -1;
             return true;
         }
         return false;
@@ -482,7 +480,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_Name(): string
     {
-        if (this.processingSubOptions)
+        if (this.suboptions != null)
         {
             return this.suboptions[this.currentSubOptionIndex].language.python.name;
         }
@@ -497,7 +495,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_NamePython(): string
     {
-        if (this.processingSubOptions)
+        if (this.suboptions != null)
         {
             return this.suboptions[this.currentSubOptionIndex].language.python.name;
         }
