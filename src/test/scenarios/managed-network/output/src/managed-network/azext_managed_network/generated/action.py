@@ -232,8 +232,11 @@ class AddManagedNetworkPolicy(argparse._AppendAction):
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 class AddProperties(argparse._AppendAction):
 =======
+=======
+>>>>>>> fix some change folder and name issue
 class AddSpokes(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
@@ -252,7 +255,13 @@ class AddSpokes(argparse._AppendAction):
 
 
 class AddMesh(argparse._AppendAction):
+<<<<<<< HEAD
 >>>>>>> updated test
+=======
+=======
+class AddProperties(argparse._AppendAction):
+>>>>>>> fix some change folder and name issue
+>>>>>>> fix some change folder and name issue
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
         super(AddMesh, self).__call__(parser, namespace, action, option_string)

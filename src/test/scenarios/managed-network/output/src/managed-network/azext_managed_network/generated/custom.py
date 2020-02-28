@@ -31,6 +31,7 @@ def managed_network_managed_networks_create(cmd, client,
                                             tags=None,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             managed_network_management_groups=None,
                                             managed_network_subscriptions=None,
                                             managed_network_virtual_networks=None,
@@ -44,6 +45,8 @@ def managed_network_managed_networks_create(cmd, client,
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, management_groups=scope_management_groups, subscriptions=scope_subscriptions, virtual_networks=scope_virtual_networks, subnets=scope_subnets)
 >>>>>>> updated test
 =======
+=======
+>>>>>>> fix some change folder and name issue
                                             management_groups=None,
                                             subscriptions=None,
                                             virtual_networks=None,
@@ -56,7 +59,17 @@ def managed_network_managed_networks_create(cmd, client,
     managed_network['virtual_networks'] = None if virtual_networks is None else virtual_networks
     managed_network['subnets'] = None if subnets is None else subnets
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
+<<<<<<< HEAD
 >>>>>>> updated test
+=======
+=======
+                                            managed_network_management_groups=None,
+                                            managed_network_subscriptions=None,
+                                            managed_network_virtual_networks=None,
+                                            managed_network_subnets=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, management_groups=managed_network_management_groups, subscriptions=managed_network_subscriptions, virtual_networks=managed_network_virtual_networks, subnets=managed_network_subnets)
+>>>>>>> fix some change folder and name issue
+>>>>>>> fix some change folder and name issue
 
 
 def managed_network_managed_networks_update(cmd, client,
@@ -88,15 +101,25 @@ def managed_network_scope_assignments_create(cmd, client,
                                              scope_assignment_name,
                                              location=None,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                              parameters_assigned_managed_network=None):
     return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=parameters_assigned_managed_network)
 =======
+=======
+>>>>>>> fix some change folder and name issue
                                              assigned_managed_network=None):
     parameters = {}
     parameters['location'] = location  # string
     parameters['assigned_managed_network'] = assigned_managed_network  # string
     return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=assigned_managed_network)
+<<<<<<< HEAD
 >>>>>>> updated test
+=======
+=======
+                                             parameters_assigned_managed_network=None):
+    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=parameters_assigned_managed_network)
+>>>>>>> fix some change folder and name issue
+>>>>>>> fix some change folder and name issue
 
 
 def managed_network_scope_assignments_update(cmd, client,
@@ -104,15 +127,25 @@ def managed_network_scope_assignments_update(cmd, client,
                                              scope_assignment_name,
                                              location=None,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                              parameters_assigned_managed_network=None):
     return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=parameters_assigned_managed_network)
 =======
+=======
+>>>>>>> fix some change folder and name issue
                                              assigned_managed_network=None):
     parameters = {}
     parameters['location'] = location  # string
     parameters['assigned_managed_network'] = assigned_managed_network  # string
     return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=assigned_managed_network)
+<<<<<<< HEAD
 >>>>>>> updated test
+=======
+=======
+                                             parameters_assigned_managed_network=None):
+    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=parameters_assigned_managed_network)
+>>>>>>> fix some change folder and name issue
+>>>>>>> fix some change folder and name issue
 
 
 def managed_network_scope_assignments_delete(cmd, client,
@@ -142,12 +175,15 @@ def managed_network_managed_network_groups_create(cmd, client,
                                                   managed_network_group_name,
                                                   location=None,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                   managed_network_group_management_groups=None,
                                                   managed_network_group_subscriptions=None,
                                                   managed_network_group_virtual_networks=None,
                                                   managed_network_group_subnets=None):
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=managed_network_group_management_groups, subscriptions=managed_network_group_subscriptions, virtual_networks=managed_network_group_virtual_networks, subnets=managed_network_group_subnets)
 =======
+=======
+>>>>>>> fix some change folder and name issue
                                                   management_groups=None,
                                                   subscriptions=None,
                                                   virtual_networks=None,
@@ -159,7 +195,17 @@ def managed_network_managed_network_groups_create(cmd, client,
     managed_network_group['virtual_networks'] = None if virtual_networks is None else virtual_networks
     managed_network_group['subnets'] = None if subnets is None else subnets
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
+<<<<<<< HEAD
 >>>>>>> updated test
+=======
+=======
+                                                  managed_network_group_management_groups=None,
+                                                  managed_network_group_subscriptions=None,
+                                                  managed_network_group_virtual_networks=None,
+                                                  managed_network_group_subnets=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=managed_network_group_management_groups, subscriptions=managed_network_group_subscriptions, virtual_networks=managed_network_group_virtual_networks, subnets=managed_network_group_subnets)
+>>>>>>> fix some change folder and name issue
+>>>>>>> fix some change folder and name issue
 
 
 def managed_network_managed_network_groups_update(cmd, client,
@@ -168,12 +214,15 @@ def managed_network_managed_network_groups_update(cmd, client,
                                                   managed_network_group_name,
                                                   location=None,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                   managed_network_group_management_groups=None,
                                                   managed_network_group_subscriptions=None,
                                                   managed_network_group_virtual_networks=None,
                                                   managed_network_group_subnets=None):
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=managed_network_group_management_groups, subscriptions=managed_network_group_subscriptions, virtual_networks=managed_network_group_virtual_networks, subnets=managed_network_group_subnets)
 =======
+=======
+>>>>>>> fix some change folder and name issue
                                                   management_groups=None,
                                                   subscriptions=None,
                                                   virtual_networks=None,
@@ -185,7 +234,17 @@ def managed_network_managed_network_groups_update(cmd, client,
     managed_network_group['virtual_networks'] = None if virtual_networks is None else virtual_networks
     managed_network_group['subnets'] = None if subnets is None else subnets
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
+<<<<<<< HEAD
 >>>>>>> updated test
+=======
+=======
+                                                  managed_network_group_management_groups=None,
+                                                  managed_network_group_subscriptions=None,
+                                                  managed_network_group_virtual_networks=None,
+                                                  managed_network_group_subnets=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=managed_network_group_management_groups, subscriptions=managed_network_group_subscriptions, virtual_networks=managed_network_group_virtual_networks, subnets=managed_network_group_subnets)
+>>>>>>> fix some change folder and name issue
+>>>>>>> fix some change folder and name issue
 
 
 def managed_network_managed_network_groups_delete(cmd, client,
@@ -216,9 +275,12 @@ def managed_network_managed_network_peering_policies_create(cmd, client,
                                                             managed_network_peering_policy_name,
                                                             location=None,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                             managed_network_policy_properties=None):
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=managed_network_policy_properties)
 =======
+=======
+>>>>>>> fix some change folder and name issue
                                                             id=None,
                                                             properties_spokes=None,
                                                             properties_mesh=None):
@@ -229,7 +291,14 @@ def managed_network_managed_network_peering_policies_create(cmd, client,
     managed_network_policy.setdefault('properties', {})['spokes'] = None if properties_spokes is None else properties_spokes
     managed_network_policy.setdefault('properties', {})['mesh'] = None if properties_mesh is None else properties_mesh
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, type=properties_type, id=id, spokes=properties_spokes, mesh=properties_mesh)
+<<<<<<< HEAD
 >>>>>>> updated test
+=======
+=======
+                                                            managed_network_policy_properties=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=managed_network_policy_properties)
+>>>>>>> fix some change folder and name issue
+>>>>>>> fix some change folder and name issue
 
 
 def managed_network_managed_network_peering_policies_update(cmd, client,
@@ -238,9 +307,12 @@ def managed_network_managed_network_peering_policies_update(cmd, client,
                                                             managed_network_peering_policy_name,
                                                             location=None,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                             managed_network_policy_properties=None):
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=managed_network_policy_properties)
 =======
+=======
+>>>>>>> fix some change folder and name issue
                                                             id=None,
                                                             properties_spokes=None,
                                                             properties_mesh=None):
@@ -251,7 +323,14 @@ def managed_network_managed_network_peering_policies_update(cmd, client,
     managed_network_policy.setdefault('properties', {})['spokes'] = None if properties_spokes is None else properties_spokes
     managed_network_policy.setdefault('properties', {})['mesh'] = None if properties_mesh is None else properties_mesh
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, type=properties_type, id=id, spokes=properties_spokes, mesh=properties_mesh)
+<<<<<<< HEAD
 >>>>>>> updated test
+=======
+=======
+                                                            managed_network_policy_properties=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=managed_network_policy_properties)
+>>>>>>> fix some change folder and name issue
+>>>>>>> fix some change folder and name issue
 
 
 def managed_network_managed_network_peering_policies_delete(cmd, client,

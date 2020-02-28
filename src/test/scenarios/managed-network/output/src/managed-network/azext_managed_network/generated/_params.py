@@ -38,6 +38,7 @@ def load_arguments(self, _):
         c.argument('tags', tags_type, nargs='+')
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         c.argument('managed_network_management_groups', help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
         c.argument('managed_network_subscriptions', help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
         c.argument('managed_network_virtual_networks', help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
@@ -54,6 +55,12 @@ def load_arguments(self, _):
         c.argument('virtual_networks', id_part=None, help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
         c.argument('subnets', id_part=None, help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
 >>>>>>> updated test
+=======
+        c.argument('managed_network_management_groups', id_part=None, help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('managed_network_subscriptions', id_part=None, help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
+        c.argument('managed_network_virtual_networks', id_part=None, help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
+        c.argument('managed_network_subnets', id_part=None, help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
+>>>>>>> fix some change folder and name issue
 
     with self.argument_context('managed-network managed-networks update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -92,7 +99,11 @@ def load_arguments(self, _):
         c.argument('scope_assignment_name', id_part=None, help='The name of the scope assignment to get.')
 >>>>>>> updated test
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
+<<<<<<< HEAD
         c.argument('parameters_assigned_managed_network', help='The managed network ID with scope will be assigned to.')
+=======
+        c.argument('parameters_assigned_managed_network', id_part=None, help='The managed network ID with scope will be assigned to.')
+>>>>>>> fix some change folder and name issue
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -108,7 +119,11 @@ def load_arguments(self, _):
         c.argument('scope_assignment_name', id_part=None, help='The name of the scope assignment to get.')
 >>>>>>> updated test
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
+<<<<<<< HEAD
         c.argument('parameters_assigned_managed_network', help='The managed network ID with scope will be assigned to.')
+=======
+        c.argument('parameters_assigned_managed_network', id_part=None, help='The managed network ID with scope will be assigned to.')
+>>>>>>> fix some change folder and name issue
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -140,20 +155,34 @@ def load_arguments(self, _):
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
+<<<<<<< HEAD
         c.argument('managed_network_group_management_groups', help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
         c.argument('managed_network_group_subscriptions', help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
         c.argument('managed_network_group_virtual_networks', help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
         c.argument('managed_network_group_subnets', help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
+=======
+        c.argument('managed_network_group_management_groups', id_part=None, help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('managed_network_group_subscriptions', id_part=None, help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
+        c.argument('managed_network_group_virtual_networks', id_part=None, help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
+        c.argument('managed_network_group_subnets', id_part=None, help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
+>>>>>>> fix some change folder and name issue
 
     with self.argument_context('managed-network managed-network-groups update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
+<<<<<<< HEAD
         c.argument('managed_network_group_management_groups', help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
         c.argument('managed_network_group_subscriptions', help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
         c.argument('managed_network_group_virtual_networks', help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
         c.argument('managed_network_group_subnets', help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
+=======
+        c.argument('managed_network_group_management_groups', id_part=None, help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('managed_network_group_subscriptions', id_part=None, help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
+        c.argument('managed_network_group_virtual_networks', id_part=None, help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
+        c.argument('managed_network_group_subnets', id_part=None, help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
+>>>>>>> fix some change folder and name issue
 
     with self.argument_context('managed-network managed-network-groups delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -176,14 +205,22 @@ def load_arguments(self, _):
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
+<<<<<<< HEAD
         c.argument('managed_network_policy_properties', help='Properties of a Managed Network Peering Policy', action=AddProperties, nargs='+')
+=======
+        c.argument('managed_network_policy_properties', id_part=None, help='Properties of a Managed Network Peering Policy', action=AddProperties, nargs='+')
+>>>>>>> fix some change folder and name issue
 
     with self.argument_context('managed-network managed-network-peering-policies update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
+<<<<<<< HEAD
         c.argument('managed_network_policy_properties', help='Properties of a Managed Network Peering Policy', action=AddProperties, nargs='+')
+=======
+        c.argument('managed_network_policy_properties', id_part=None, help='Properties of a Managed Network Peering Policy', action=AddProperties, nargs='+')
+>>>>>>> fix some change folder and name issue
 
     with self.argument_context('managed-network managed-network-peering-policies delete') as c:
         c.argument('resource_group_name', resource_group_name_type)

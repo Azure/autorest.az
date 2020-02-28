@@ -5,6 +5,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 from azext_managed_network.generated.commands import *
 =======
 <<<<<<< HEAD
@@ -12,6 +13,9 @@ from azext_managed_network.generated.commands import *
 >>>>>>> updated test
 from azext_account.generated.commands import *
 >>>>>>> updated test
+=======
+from azext_managed_network.generated.commands import *
+>>>>>>> fix some change folder and name issue
 try:
     from azext_managed_network.manual.commands import *
 except ImportError:
