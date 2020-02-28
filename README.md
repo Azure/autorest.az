@@ -26,11 +26,10 @@ modelerfour:
 #recursive-payload-flattening: true
 
 pipeline:
-    az/clicommon:
-        input: python/namer
-        #output-artifact: source-file-pynamer
+    python/m2r:
+        input: clicommon/identity
     az/aznamer:
-        input: az/clicommon
+        input: python/namer
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
@@ -40,7 +39,6 @@ pipeline:
         output-artifact: source-file-extension
     az/emitter:
         input:
-            #- az/clicommon
             #- az/aznamer
             #- az/modifiers
             - az/azgenerator
@@ -51,7 +49,6 @@ scope-clicommon: false
 scope-az:
     is-object: false
     output-artifact:
-        #- source-file-pynamer
         #- source-file-aznamer
         #- source-file-modifiers
         - source-file-extension
