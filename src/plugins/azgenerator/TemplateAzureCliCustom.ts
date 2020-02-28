@@ -134,7 +134,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
 
         // body transformation
 
-        // with x-ms-client-flatten it doesn't need this part now
+        // with x-ms-client-flatten it doesn't need this part now 
         /*if (model.SelectFirstMethodParameter()) {
             do {
                 if (model.MethodParameter_IsFlattened) {
@@ -145,9 +145,6 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                     while (model.SelectNextMethodParameter()) {
                         let access = "    " + bodyName;
                         let param = model.MethodParameter;
-                        if(model.MethodParameter_Type == SchemaType.Constant) {
-                            continue;
-                        }
                         let oriParam = (param['originalParameter']);
                         if (oriParam == body) {
                             if (param['pathToProperty']?.length == 1) {
@@ -174,7 +171,6 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                                 access += "json.loads(" + model.MethodParameter_MapsTo + ") if isinstance(" + model.MethodParameter_MapsTo + ", str) else " + model.MethodParameter_MapsTo
                                 required['json'] = true;
                             }
-
                             
                             if (isUpdate) {
                                 output_body.push("    if " + model.MethodParameter_MapsTo + " is not None:");
@@ -255,33 +251,8 @@ function GetMethodCall(model: CodeModelAz): string {
             if(model.MethodParameter_Type == SchemaType.Constant) {
                 continue;
             }
-
             let optionName = model.MethodParameter_MapsTo;
             let parameterName = model.MethodParameter_Name; 
-            if (model.MethodParameter_IsFlattened) {
-                let body_cnt = 0;
-                let body = model.MethodParameter;
-                let preOptionName = "";
-                let preParameterName = "";
-                while(model.SelectNextMethodParameter()) {
-                    let param = model.MethodParameter;
-                    if(model.MethodParameter_Type == SchemaType.Constant) {
-                        continue;
-                    }
-                    let oriParam = (param['originalParameter']);
-                    if (oriParam == body) {
-                        body_cnt++;
-                        preOptionName = model.MethodParameter_MapsTo;
-                        preParameterName = model.MethodParameter_Name;
-                    } else {
-                        break;
-                    }    
-                }
-                if(body_cnt == 1) {
-                    optionName = preOptionName;
-                    parameterName = preParameterName;
-                }
-            }
 
             if (methodCall.endsWith("(")) {
                 // XXX - split and pop is a hack
