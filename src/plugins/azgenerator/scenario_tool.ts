@@ -153,6 +153,8 @@ class ResourceObject {
     }
 }
 
+let key_cache = {}  //class_name+objectname->key
+let key_seq = {}    // class_name ->seq
 export function transfer_to_key(class_name: string, object_name: string): string {
     const class_keys: object = {
         [Resource.RESOUREGROUP]: 'rg',
@@ -160,7 +162,20 @@ export function transfer_to_key(class_name: string, object_name: string): string
         [Resource.SUBNET]: 'sn',
     }
 
-    return (class_keys[class_name] || class_name) + '_' + object_name;
+    let long_key = (class_keys[class_name] || class_name) + '_' + object_name;
+    if ( long_key in key_cache) {
+        return key_cache[long_key];
+    }
+    if (class_name in key_seq) {
+        let key = (class_keys[class_name] || class_name) + '_' + key_seq[class_name];
+        key_seq[class_name] += 1;
+        key_cache[long_key] = key;
+    }
+    else {
+        key_seq[class_name] = 2;
+        key_cache[long_key] = class_keys[class_name] || class_name;
+    }
+    return key_cache[long_key];
 }
 
 export class ResourcePool {
