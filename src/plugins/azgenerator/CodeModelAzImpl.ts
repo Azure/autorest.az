@@ -9,7 +9,7 @@ import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { GenerateDefaultTestScenario } from './scenario_tool'
+import { GenerateDefaultTestScenario, ResourcePool, transfer_to_key} from './scenario_tool'
 
 
 export class CodeModelCliImpl implements CodeModelAz
@@ -23,6 +23,7 @@ export class CodeModelCliImpl implements CodeModelAz
     currentExampleIndex: number;
     preMethodIndex: number;
     currentMethodIndex: number;
+    resource_pool: ResourcePool;
 
 
     async init() {
@@ -43,6 +44,7 @@ export class CodeModelCliImpl implements CodeModelAz
         this.codeModel = session.model;
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
+        this.resource_pool = new ResourcePool();
     }
 
     private getOrder(op: string) {
@@ -925,26 +927,38 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public GetExampleItems(example: CommandExample, isTest: boolean): string[] {
         let parameters: string[] = [];
-
         parameters.push("az " + this.CommandGroup_Name.split("_").join("-") + " " + example.Method)
 
         for (let k in example.Parameters) {
-            let slp = JSON.stringify(example.Parameters[k]).split(/[\r\n]+/).join("");
+            let param_value = example.Parameters[k];
             if (isTest) {
-                if (k != "--resource-group") {
-                    parameters.push(k + " " + slp);
+                let replaced_value = this.resource_pool.add_endpoint_resource(param_value);
+                if (replaced_value == param_value) {
+                    replaced_value = this.resource_pool.add_param_resource(k, param_value);
                 }
-                else {
-                    parameters.push(k + " {rg}");
-                }
+                param_value = replaced_value;
             }
-            else {
-                parameters.push(k + " " + slp);
-            }
+            let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("");
+            parameters.push(k + " " + slp);
         }
 
         return parameters;
     }
+
+    public FormatPreparers(): string[] {
+        let ret: string[] = [];
+        for (let entity of this.resource_pool.create_preparer_entities()) {
+            //ret.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + m + "')")
+            let line: string = `    @${entity.info.name}(name_prefix='cli_test_${this.Extension_NameUnderscored}_${entity.object_name}', key='${transfer_to_key(entity.info.class_name, entity.object_name)}'`;
+            for (let i=0; i<entity.depend_parameter_values.length;i++) {
+                line += `, ${entity.info.depend_parameters[i]}='${entity.depend_parameter_values[i]}'`
+            }
+            line += ")";
+            ret.push(line);
+        }
+        return ret;
+    }
+
 
     public FindExampleById(id: string): string[][] {
         let ret: string[][] = [];

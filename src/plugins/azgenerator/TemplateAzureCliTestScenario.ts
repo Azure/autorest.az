@@ -7,6 +7,7 @@ import { CodeModelAz } from "./CodeModelAz"
 
 export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let output: string[] = [];
+    let body: string[] = [];
     let config: any = model.Extension_TestScenario;
 
     output.push("# --------------------------------------------------------------------------------------------");
@@ -19,6 +20,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     output.push("");
     output.push("from azure_devtools.scenario_tests import AllowLargeResponse");
     output.push("from azure.cli.testsdk import (ScenarioTest, ResourceGroupPreparer)");
+    output.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
     output.push("");
     output.push("");
     output.push("TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))");
@@ -26,13 +28,14 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     output.push("");
     output.push("class " + model.Extension_NameClass + "ScenarioTest(ScenarioTest):");
     output.push("");
-    output.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + model.Extension_NameUnderscored + "')");
-    output.push("    def test_" + model.Extension_NameUnderscored + "(self, resource_group):");
+    //output.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + model.Extension_NameUnderscored + "')");
+    body.push("    def test_" + model.Extension_NameUnderscored + "(self, resource_group):");
+
     //output.push("");
     //output.push("        self.kwargs.update({");
     //output.push("            'name': 'test1'");
     //output.push("        })");
-    output.push("");
+    body.push("");
 
     // walk through test config
     if (config) {
@@ -49,19 +52,19 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                         let prefix: string = "        " + disabled + ((idx == 0) ? "self.cmd('" : "         '");
                         let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
 
-                        output.push(prefix + exampleCmd[idx] + postfix);
+                        body.push(prefix + exampleCmd[idx] + postfix);
                     }
-                    output.push("        " + disabled + "         checks=[])");
-                    output.push("");
+                    body.push("        " + disabled + "         checks=[])");
+                    body.push("");
                 }
             }
             if (!found) {
-                output.push("        # EXAMPLE NOT FOUND: " + config[ci].name);
-                output.push("");
+                body.push("        # EXAMPLE NOT FOUND: " + config[ci].name);
+                body.push("");
             }
         }
     }
 
-    return output;
+    return output.concat(model.FormatPreparers(), body);
 }
 

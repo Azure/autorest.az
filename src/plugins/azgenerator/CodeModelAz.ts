@@ -106,4 +106,5 @@ export interface CodeModelAz
     Example_Title: string;
     Example_Params: any;
     GetExamples(): CommandExample[];
+    FormatPreparers(): string[];
 }
