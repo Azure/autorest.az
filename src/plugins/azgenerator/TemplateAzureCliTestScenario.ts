@@ -7,20 +7,21 @@ import { CodeModelAz } from "./CodeModelAz"
 
 export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let output: string[] = [];
+    let head: string[] = [];
     let body: string[] = [];
     let config: any = model.Extension_TestScenario;
 
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("");
-    output.push("import os");
-    output.push("import unittest");
-    output.push("");
-    output.push("from azure_devtools.scenario_tests import AllowLargeResponse");
-    output.push("from azure.cli.testsdk import (ScenarioTest, ResourceGroupPreparer)");
-    output.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
+    head.push("# --------------------------------------------------------------------------------------------");
+    head.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
+    head.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
+    head.push("# --------------------------------------------------------------------------------------------");
+    head.push("");
+    head.push("import os");
+    head.push("import unittest");
+    head.push("");
+    head.push("from azure_devtools.scenario_tests import AllowLargeResponse");
+    head.push("from azure.cli.testsdk import ScenarioTest");
+    head.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
     output.push("");
     output.push("");
     output.push("TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))");
@@ -37,6 +38,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     //output.push("        })");
     body.push("");
 
+    let has_example = false;
     // walk through test config
     if (config) {
         for (var ci = 0; ci < config.length; ci++) {
@@ -56,6 +58,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                     }
                     body.push("        " + disabled + "         checks=[])");
                     body.push("");
+                    has_example = true;
                 }
             }
             if (!found) {
@@ -64,7 +67,14 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
             }
         }
     }
+    if (!has_example) {
+        body.push("        pass")
+    }
 
-    return output.concat(model.FormatPreparers(), body);
+    let imports: string[] = [];
+    let decorators: string[] = [];
+    model.FormatPreparers(imports, decorators);
+
+    return head.concat(imports, output, decorators, body);
 }
 

@@ -111,7 +111,8 @@ class VnetSubnetPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):
         #     tags['job'] = os.environ['ENV_JOB_NAME']
         # tags = ' '.join(['{}={}'.format(key, value)
         #                  for key, value in tags.items()])
-        template = "az network vnet subnet create --resource-group {} --vnet-name {} --name {} --address-prefixes {}"
+        template = "az network vnet subnet create --resource-group {} " \
+            "--vnet-name {} --name {} --address-prefixes {}"
         self.live_only_execute(self.cli_ctx, template.format(
             self.resource_group_name, self.vnet_name, name,
             self.address_prefixes))
@@ -122,5 +123,8 @@ class VnetSubnetPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):
     def remove_resource(self, name, **kwargs):
         # delete vnet if test is being recorded and if the vnet is not a dev rg
         if not self.dev_setting_name:
-            self.live_only_execute(self.cli_ctx, "az network vnet subnet delete --name {} --resource-group {} --vnet-name {}".format(
-                name, self.resource_group_name, self.vnet_name))
+            self.live_only_execute(self.cli_ctx, "az network vnet subnet"
+                                   "delete --name {} --resource-group {} "
+                                   "--vnet-name {}".format(
+                                       name, self.resource_group_name,
+                                       self.vnet_name))

@@ -306,7 +306,7 @@ export class ResourcePool {
 
     public add_endpoint_resource(endpoint: any) {
         if (typeof endpoint !== 'string')   return endpoint;
-        
+
         let nodes = endpoint.split('/');
         if (nodes.length <= 5 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
             return endpoint;
