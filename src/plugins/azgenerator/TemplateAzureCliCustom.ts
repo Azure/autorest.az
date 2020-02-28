@@ -134,14 +134,14 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
 
         // body transformation
 
-        if (model.SelectFirstMethodParameter()) {
+        // with x-ms-client-flatten it doesn't need this part now
+        /*if (model.SelectFirstMethodParameter()) {
             do {
                 if (model.MethodParameter_IsFlattened) {
                     let bodyName = model.MethodParameter_Name;
                     output_body.push("    " + bodyName + " = {}");
                     let body = model.MethodParameter;
 
-                    let body_cnt = 0;
                     while (model.SelectNextMethodParameter()) {
                         let access = "    " + bodyName;
                         let param = model.MethodParameter;
@@ -150,7 +150,6 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                         }
                         let oriParam = (param['originalParameter']);
                         if (oriParam == body) {
-                            body_cnt++;
                             if (param['pathToProperty']?.length == 1) {
                                 let pathParam = param['pathToProperty'][0];
                                 access += `.setdefault('${pathParam.language['python'].name}', {})`;
@@ -189,19 +188,12 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                             break;
                         }
                     }
-                    if(body_cnt == 1) {
-                        output_body.pop();
-                        output_body.pop();
-                        if(isUpdate) {
-                            output_body.pop();
-                        }
-                    }
                 }
 
             }
             while (model.SelectNextMethodParameter());
 
-        }
+        }*/
 
         let needIfStatement = !model.Method_IsLast;
 

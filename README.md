@@ -10,11 +10,10 @@ use-extension:
 
 python: true
   
-cli: true
-clicommon: true
 require:
   - ./readme.python.md
   - ./readme.cli.md
+
 
 pipeline-model: v3
 
