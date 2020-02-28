@@ -45,7 +45,7 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);
             files[path + "generated/action.py"] = GenerateAzureCliActions(model);  
             files[path + "vendored_sdks/__init__.py"] = GenerateVendoredSdksInit(model);  
-            files[path + "action.py"] = GenerateTopLevelImport(model, "action");  
+            files[path + "actions.py"] = GenerateTopLevelImport(model, "action");  
             files[path + "commands.py"] = GenerateTopLevelImport(model, "commands");  
             files[path + "custom.py"] = GenerateTopLevelImport(model, "custom");  
 

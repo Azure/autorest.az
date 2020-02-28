@@ -35,12 +35,12 @@ export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
     output.push("    'Intended Audience :: Developers',");
     output.push("    'Intended Audience :: System Administrators',");
     output.push("    'Programming Language :: Python',");
-    output.push("    'Programming Language :: Python :: 2',");
-    output.push("    'Programming Language :: Python :: 2.7',");
     output.push("    'Programming Language :: Python :: 3',");
     output.push("    'Programming Language :: Python :: 3.4',");
     output.push("    'Programming Language :: Python :: 3.5',");
     output.push("    'Programming Language :: Python :: 3.6',");
+    output.push("    'Programming Language :: Python :: 3.7',");
+    output.push("    'Programming Language :: Python :: 3.8',");
     output.push("    'License :: OSI Approved :: MIT License',");
     output.push("]");
     output.push("");

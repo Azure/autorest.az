@@ -129,6 +129,9 @@ class ResourceProperties(msrest.serialization.Model):
 class ManagedNetworkPeeringPolicyProperties(ResourceProperties):
     """Properties of a Managed Network Peering Policy.
 
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: HubAndSpokePeeringPolicyProperties, MeshPeeringPolicyProperties.
+
     Variables are only populated by the server, and will be ignored when sending a request.
 
     All required parameters must be populated in order to send to Azure.
@@ -138,8 +141,9 @@ class ManagedNetworkPeeringPolicyProperties(ResourceProperties):
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
-    :param type: Required. Gets or sets the connectivity type of a network structure policy.
-     Possible values include: 'HubAndSpokeTopology', 'MeshTopology'.
+    :param type: Required. Gets or sets the connectivity type of a network structure
+     policy.Constant filled by server.  Possible values include: 'HubAndSpokeTopology',
+     'MeshTopology'.
     :type type: str or ~managed_network_management_client.models.Type
     :param hub: Generic pointer to a resource.
     :type hub: ~managed_network_management_client.models.ResourceId
@@ -164,12 +168,16 @@ class ManagedNetworkPeeringPolicyProperties(ResourceProperties):
         'mesh': {'key': 'mesh', 'type': '[ResourceId]'},
     }
 
+    _subtype_map = {
+        'type': {'HubAndSpokeTopology': 'HubAndSpokePeeringPolicyProperties', 'MeshTopology': 'MeshPeeringPolicyProperties'}
+    }
+
     def __init__(
         self,
         **kwargs
     ):
         super(ManagedNetworkPeeringPolicyProperties, self).__init__(**kwargs)
-        self.type = kwargs.get('type', None)
+        self.type = 'ManagedNetworkPeeringPolicyProperties'
         self.hub = kwargs.get('hub', None)
         self.spokes = kwargs.get('spokes', None)
         self.mesh = kwargs.get('mesh', None)
@@ -187,8 +195,9 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
-    :param type: Required. Gets or sets the connectivity type of a network structure policy.
-     Possible values include: 'HubAndSpokeTopology', 'MeshTopology'.
+    :param type: Required. Gets or sets the connectivity type of a network structure
+     policy.Constant filled by server.  Possible values include: 'HubAndSpokeTopology',
+     'MeshTopology'.
     :type type: str or ~managed_network_management_client.models.Type
     :param hub: Generic pointer to a resource.
     :type hub: ~managed_network_management_client.models.ResourceId
@@ -218,6 +227,7 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         **kwargs
     ):
         super(HubAndSpokePeeringPolicyProperties, self).__init__(**kwargs)
+        self.type = 'HubAndSpokeTopology'
 
 
 class Resource(msrest.serialization.Model):
@@ -731,8 +741,9 @@ class MeshPeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
-    :param type: Required. Gets or sets the connectivity type of a network structure policy.
-     Possible values include: 'HubAndSpokeTopology', 'MeshTopology'.
+    :param type: Required. Gets or sets the connectivity type of a network structure
+     policy.Constant filled by server.  Possible values include: 'HubAndSpokeTopology',
+     'MeshTopology'.
     :type type: str or ~managed_network_management_client.models.Type
     :param hub: Generic pointer to a resource.
     :type hub: ~managed_network_management_client.models.ResourceId
@@ -762,6 +773,7 @@ class MeshPeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         **kwargs
     ):
         super(MeshPeeringPolicyProperties, self).__init__(**kwargs)
+        self.type = 'MeshTopology'
 
 
 class Operation(msrest.serialization.Model):

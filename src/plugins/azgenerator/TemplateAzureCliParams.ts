@@ -103,7 +103,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     }
                     hasParam = true;
                     
-                    let parameterName = model.MethodParameter_NamePython;
+                    let parameterName = model.MethodParameter_MapsTo;
         
                     if(allParam.has(parameterName)) {
                         continue;
@@ -142,7 +142,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         argument += ", arg_type=get_location_type(self.cli_ctx)";
                     }
                     else {
-                        argument += ", id_part=None, help='" + EscapeString(model.MethodParameter_Description) + "'";
+                        argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
                     }
         
                     if (model.MethodParameter_IsList) {

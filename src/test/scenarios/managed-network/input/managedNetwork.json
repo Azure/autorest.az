@@ -1238,6 +1238,7 @@
       "description": "The Managed Network Peering Policy resource"
     },
     "ManagedNetworkPeeringPolicyProperties": {
+      "discriminator": "type",
       "properties": {
         "type": {
           "type": "string",

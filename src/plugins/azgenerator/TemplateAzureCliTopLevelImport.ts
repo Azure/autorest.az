@@ -13,9 +13,9 @@ export function GenerateTopLevelImport(model: CodeModelAz, name: string) : strin
     output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
     output.push("# --------------------------------------------------------------------------------------------");
     output.push("");
-    output.push("from azext_account.generated." + name + " import *");
+    output.push("from azext_"+ model.Extension_NameUnderscored +".generated." + name + " import *");
     output.push("try:");
-    output.push("    from azext_account.manual." + name + " import *");
+    output.push("    from azext_" + model.Extension_NameUnderscored + ".manual." + name + " import *");
     output.push("except ImportError:");
     output.push("    pass");
     output.push("");
