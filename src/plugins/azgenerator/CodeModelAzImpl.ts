@@ -25,6 +25,7 @@ export class CodeModelCliImpl implements CodeModelAz
     currentMethodIndex: number;
 
 
+
     async init() {
         this.options = await this.session.getValue('az');
         this.extensionName = this.options['extensions'];
