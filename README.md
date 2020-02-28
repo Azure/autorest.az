@@ -27,6 +27,13 @@ modelerfour:
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true
 
+directive:
+  - from: swagger-document
+    where: $..parameters[?(@.in=='body')]
+    transform: >
+      $['x-ms-client-flatten'] = true;
+    reason: Flatten everything for Azure CLI
+
 pipeline:
     az/clicommon:
         input: python/namer
