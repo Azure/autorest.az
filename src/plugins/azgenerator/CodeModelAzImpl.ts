@@ -10,6 +10,7 @@ import { Session, startSession, Host, Channel } from "@azure-tools/autorest-exte
 import { ToSnakeCase } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario } from './scenario_tool'
+import { timingSafeEqual } from "crypto";
 
 
 export class CodeModelCliImpl implements CodeModelAz
@@ -24,6 +25,8 @@ export class CodeModelCliImpl implements CodeModelAz
     preMethodIndex: number;
     currentMethodIndex: number;
 
+    processingSubOptions: boolean;
+
 
 
     async init() {
@@ -35,6 +38,7 @@ export class CodeModelCliImpl implements CodeModelAz
         this.currentExampleIndex = -1;
         this.preMethodIndex = -1;
         this.currentMethodIndex = -1;
+        this.processingSubOptions = false;
         //this.sortOperationByAzCommand();
         
     }
@@ -338,6 +342,11 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectFirstOption(): boolean
     {
+        if (this.processingSubOptions)
+        {
+            return true;
+        }
+
         if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
             this.currentParameterIndex = -1;
             return false;
@@ -387,6 +396,11 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextOption(): boolean
     {
+        if (this.processingSubOptions)
+        {
+            return false;
+        }
+
         if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
             this.currentParameterIndex = -1;
             return false;
@@ -438,24 +452,41 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public HasSubOptions(): boolean
     {
-        /*if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type == "object") {
+        if (this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type == "object") {
             return true;
-        }*/
+        }
         return false;       
     }
 
+    
+
     public EnterSubOptions(): boolean
     {
-        return false;
+        if (!this.HasSubOptions())
+            return false;
+
+        this.processingSubOptions = true;
+
+        return true;
     }
 
     public ExitSubOptions(): boolean
     {
+        if (this.processingSubOptions)
+        {
+            this.processingSubOptions = false;
+            return true;
+        }
         return false;
     }
 
     public get Option_Name(): string
     {
+        if (this.processingSubOptions)
+        {
+            return "xxx";
+        }
+
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
     }
 
@@ -466,6 +497,11 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_NamePython(): string
     {
+        if (this.processingSubOptions)
+        {
+            return "moo";
+        }
+
         let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
         if(parameter['pathToProperty']?.length == 1) {
             return (parameter['pathToProperty'][0]).language['python'].name + "_" + parameter.language['python'].name;

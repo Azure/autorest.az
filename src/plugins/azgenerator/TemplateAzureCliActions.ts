@@ -69,6 +69,8 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                         }
                                     }
 
+                                    model.ExitSubOptions();
+
                                     output.push("        return d");                                
                                 }
                             }
