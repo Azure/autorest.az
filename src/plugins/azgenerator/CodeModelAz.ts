@@ -46,7 +46,6 @@ export interface CodeModelAz
 
     SelectFirstOption(): boolean;
     SelectNextOption(): boolean;
-    HasSubOptions(): boolean;
     EnterSubOptions(): boolean;
     ExitSubOptions(): boolean;
 
