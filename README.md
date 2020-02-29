@@ -33,6 +33,7 @@ directive:
       $['x-ms-client-flatten'] = true;
     reason: Flatten everything for Azure CLI
 
+
 pipeline:
     python/m2r:
         input: clicommon/identity

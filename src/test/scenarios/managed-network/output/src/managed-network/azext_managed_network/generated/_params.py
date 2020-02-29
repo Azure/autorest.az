@@ -11,7 +11,7 @@ from azure.cli.core.commands.parameters import (
     resource_group_name_type,
     get_location_type
 )
-from azext_managed_network.actions import (
+from azext_managed_network.action import (
     AddManagementGroups,
     AddSubscriptions,
     AddVirtualNetworks,
