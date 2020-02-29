@@ -15,8 +15,7 @@ from azext_managed_network.action import (
     AddManagementGroups,
     AddSubscriptions,
     AddVirtualNetworks,
-    AddSubnets,
-    AddProperties
+    AddSubnets
 )
 
 
@@ -35,7 +34,7 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('tags', tags_type, nargs='+')
+        c.argument('tags', tags_type)
         c.argument('managed_network_management_groups', help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
         c.argument('managed_network_subscriptions', help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
         c.argument('managed_network_virtual_networks', help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
@@ -44,7 +43,7 @@ def load_arguments(self, _):
     with self.argument_context('managed-network managed-network update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('tags', tags_type, nargs='+')
+        c.argument('tags', tags_type)
 
     with self.argument_context('managed-network managed-network delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -125,14 +124,14 @@ def load_arguments(self, _):
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('managed_network_policy_properties', help='Properties of a Managed Network Peering Policy', action=AddProperties, nargs='+')
+        c.argument('managed_network_policy_properties', help='Properties of a Managed Network Peering Policy')
 
     with self.argument_context('managed-network managed-network-peering-policy update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('managed_network_policy_properties', help='Properties of a Managed Network Peering Policy', action=AddProperties, nargs='+')
+        c.argument('managed_network_policy_properties', help='Properties of a Managed Network Peering Policy')
 
     with self.argument_context('managed-network managed-network-peering-policy delete') as c:
         c.argument('resource_group_name', resource_group_name_type)

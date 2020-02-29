@@ -571,6 +571,9 @@ export class CodeModelCliImpl implements CodeModelAz
                           .request
                           .parameters[this.currentParameterIndex] as VirtualParameter;
 
+        if (p == undefined)
+            return null;
+
         if (p.targetProperty == undefined)
             return null;
 
