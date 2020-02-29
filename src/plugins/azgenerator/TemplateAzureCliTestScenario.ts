@@ -22,7 +22,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     head.push("");
     head.push("from azure_devtools.scenario_tests import AllowLargeResponse");
     head.push("from azure.cli.testsdk import ScenarioTest");
-    head.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
+    //head.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
     class_info.push("");
     class_info.push("");
     class_info.push("TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))");
@@ -80,6 +80,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
         initiates.push("        self.kwargs.update({");
         initiates.push(`            '${subscription_id}': self.current_subscription()`);
         initiates.push("        })");
+        initiates.push("");
     }
 
     let imports: string[] = [];

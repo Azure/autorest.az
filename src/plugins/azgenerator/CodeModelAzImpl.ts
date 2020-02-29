@@ -28,6 +28,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     suboptions: Property[];
     currentSubOptionIndex: number;
+    az_common: {};
 
     async init() {
         this.options = await this.session.getValue('az');
@@ -41,15 +42,15 @@ export class CodeModelCliImpl implements CodeModelAz
         this.suboptions = null;
         this.currentSubOptionIndex = -1;
         //this.sortOperationByAzCommand();
-        
     }
 
-    public constructor(protected session: Session<CodeModel>) 
+    public constructor(protected session: Session<CodeModel>, az_common: any) 
     {
         this.codeModel = session.model;
+        this.az_common = az_common;
+        this.resource_pool = new ResourcePool();
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
-        this.resource_pool = new ResourcePool();
     }
 
     private getOrder(op: string) {
@@ -197,7 +198,7 @@ export class CodeModelCliImpl implements CodeModelAz
         // just enumerate through command groups in code-model-v4
         if(this.codeModel.operationGroups.length > 0) {
             this.currentOperationGroupIndex = 0;
-            this.SelectFirstCommand();
+            if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
             return true;
         } else {
             this.currentOperationGroupIndex = -1;
@@ -209,7 +210,7 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentOperationGroupIndex < this.codeModel.operationGroups.length - 1) {
             this.currentOperationGroupIndex++;
-            this.SelectFirstCommand();
+            if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
             return true;
         } else {
             this.currentOperationGroupIndex = -1;
@@ -288,6 +289,7 @@ export class CodeModelCliImpl implements CodeModelAz
             this.SelectFirstOption();
             this.SelectFirstMethod();
             this.SelectFirstMethodParameter();
+            if (this.is_suppressed_command) return this.SelectNextCommand();
             return true;
         } else {
             this.currentOperationIndex = -1;
@@ -310,6 +312,7 @@ export class CodeModelCliImpl implements CodeModelAz
             this.SelectFirstOption();
             this.SelectFirstMethod();
             this.SelectFirstMethodParameter();
+            if (this.is_suppressed_command) return this.SelectNextCommand();
             return true;
         } else {
             this.currentOperationIndex = -1;
@@ -340,6 +343,14 @@ export class CodeModelCliImpl implements CodeModelAz
     public get Command_CanSplit(): boolean 
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]['canSplitOperation']? true: false;
+    }
+
+    public get is_suppressed_command(): boolean {
+        const suppressed_methods = ['check-name-availability', 'list-operation']
+        let enabled_methods = [];
+        if ('enable_methods' in this.az_common) enabled_methods = this.az_common['enable_methods'];
+        let current_method = this.Command_MethodName.toLowerCase();
+        return suppressed_methods.indexOf(current_method) >= 0 && enabled_methods.indexOf(current_method) < 0;
     }
 
     public SelectFirstOption(): boolean
@@ -663,11 +674,6 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.protocol?.http?.path;
     }
 
-    public get Method_MethodName(): string
-    {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].language['az'].name;
-    }
-
     //=================================================================================================================
     // Methods Parameters.
     //
@@ -966,7 +972,7 @@ export class CodeModelCliImpl implements CodeModelAz
         if (this.Examples) {
             Object.entries(this.Examples).forEach(([id, example_obj]) => {
                 let example = new CommandExample();
-                example.Method = this.Method_MethodName;
+                example.Method = this.Command_MethodName;
                 example.Id = id;
                 example.Title = example_obj.title || id;
                 example.Path = this.Method_Path;

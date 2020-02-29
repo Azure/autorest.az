@@ -12,7 +12,8 @@ python: true
 require: 
   - ./readme.python.md
   - ./readme.cli.md
-  
+try-require:
+  - $(this-folder)/readme.az.common.md
 
 pipeline-model: v3
 

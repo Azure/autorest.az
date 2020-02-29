@@ -8,7 +8,6 @@ import unittest
 
 from azure_devtools.scenario_tests import AllowLargeResponse
 from azure.cli.testsdk import ScenarioTest
-from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)
 from azure.cli.testsdk import ResourceGroupPreparer
 
 
@@ -27,6 +26,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         self.kwargs.update({
             'subscription_id': self.current_subscription()
         })
+
         self.cmd('az managed-network managed-networks create '
                  '--location "eastus" '
                  '--managed-network-name "myManagedNetwork" '
