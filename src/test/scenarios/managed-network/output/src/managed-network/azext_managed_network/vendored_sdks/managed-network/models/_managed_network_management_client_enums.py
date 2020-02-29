@@ -6,7 +6,7 @@
 
 from enum import Enum
 
-class Provisioningstate(str, Enum):
+class ProvisioningState(str, Enum):
 
     updating = "Updating"
     deleting = "Deleting"
@@ -15,5 +15,5 @@ class Provisioningstate(str, Enum):
 
 class Type(str, Enum):
 
-    hubandspoketopology = "HubAndSpokeTopology"
-    meshtopology = "MeshTopology"
+    hub_and_spoke_topology = "HubAndSpokeTopology"
+    mesh_topology = "MeshTopology"

@@ -4,9 +4,10 @@ See documentation [here](doc/00-overview.md)
 
 ``` yaml
 use-extension:
+  "@autorest/python": "5.0.0-dev.20200211.1"
   "@autorest/clicommon": "/Users/zhangqiaoqiao/work/code/autorest.cli.common"
   #"@autorest/python": "latest"
-  "@autorest/python": "5.0.0-dev.20200211.1"
+  
 
 python: true
 require: 

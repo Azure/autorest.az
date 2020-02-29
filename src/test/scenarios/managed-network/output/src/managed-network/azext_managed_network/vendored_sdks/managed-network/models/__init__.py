@@ -5,91 +5,91 @@
 # --------------------------------------------------------------------------
 
 try:
-    from ._models_py3 import Connectivitycollection
-    from ._models_py3 import Errorresponse, ErrorresponseException
-    from ._models_py3 import Hubandspokepeeringpolicyproperties
-    from ._models_py3 import Managednetwork
-    from ._models_py3 import Managednetworkgroup
-    from ._models_py3 import Managednetworkgrouplistresult
-    from ._models_py3 import Managednetworkgroupproperties
-    from ._models_py3 import Managednetworklistresult
-    from ._models_py3 import Managednetworkpeeringpolicy
-    from ._models_py3 import Managednetworkpeeringpolicylistresult
-    from ._models_py3 import Managednetworkpeeringpolicyproperties
-    from ._models_py3 import Managednetworkproperties
-    from ._models_py3 import Managednetworkupdate
-    from ._models_py3 import Meshpeeringpolicyproperties
+    from ._models_py3 import ConnectivityCollection
+    from ._models_py3 import ErrorResponse, ErrorResponseException
+    from ._models_py3 import HubAndSpokePeeringPolicyProperties
+    from ._models_py3 import ManagedNetwork
+    from ._models_py3 import ManagedNetworkGroup
+    from ._models_py3 import ManagedNetworkGroupListResult
+    from ._models_py3 import ManagedNetworkGroupProperties
+    from ._models_py3 import ManagedNetworkListResult
+    from ._models_py3 import ManagedNetworkPeeringPolicy
+    from ._models_py3 import ManagedNetworkPeeringPolicyListResult
+    from ._models_py3 import ManagedNetworkPeeringPolicyProperties
+    from ._models_py3 import ManagedNetworkProperties
+    from ._models_py3 import ManagedNetworkUpdate
+    from ._models_py3 import MeshPeeringPolicyProperties
     from ._models_py3 import Operation
     from ._models_py3 import OperationDisplay
-    from ._models_py3 import Operationlistresult
-    from ._models_py3 import Proxyresource
+    from ._models_py3 import OperationListResult
+    from ._models_py3 import ProxyResource
     from ._models_py3 import Resource
-    from ._models_py3 import Resourceid
-    from ._models_py3 import Resourceproperties
+    from ._models_py3 import ResourceId
+    from ._models_py3 import ResourceProperties
     from ._models_py3 import Scope
-    from ._models_py3 import Scopeassignment
-    from ._models_py3 import Scopeassignmentlistresult
-    from ._models_py3 import Scopeassignmentproperties
-    from ._models_py3 import Trackedresource
+    from ._models_py3 import ScopeAssignment
+    from ._models_py3 import ScopeAssignmentListResult
+    from ._models_py3 import ScopeAssignmentProperties
+    from ._models_py3 import TrackedResource
 except (SyntaxError, ImportError):
-    from ._models import Connectivitycollection  # type: ignore
-    from ._models import Errorresponse, ErrorresponseException  # type: ignore
-    from ._models import Hubandspokepeeringpolicyproperties  # type: ignore
-    from ._models import Managednetwork  # type: ignore
-    from ._models import Managednetworkgroup  # type: ignore
-    from ._models import Managednetworkgrouplistresult  # type: ignore
-    from ._models import Managednetworkgroupproperties  # type: ignore
-    from ._models import Managednetworklistresult  # type: ignore
-    from ._models import Managednetworkpeeringpolicy  # type: ignore
-    from ._models import Managednetworkpeeringpolicylistresult  # type: ignore
-    from ._models import Managednetworkpeeringpolicyproperties  # type: ignore
-    from ._models import Managednetworkproperties  # type: ignore
-    from ._models import Managednetworkupdate  # type: ignore
-    from ._models import Meshpeeringpolicyproperties  # type: ignore
+    from ._models import ConnectivityCollection  # type: ignore
+    from ._models import ErrorResponse, ErrorResponseException  # type: ignore
+    from ._models import HubAndSpokePeeringPolicyProperties  # type: ignore
+    from ._models import ManagedNetwork  # type: ignore
+    from ._models import ManagedNetworkGroup  # type: ignore
+    from ._models import ManagedNetworkGroupListResult  # type: ignore
+    from ._models import ManagedNetworkGroupProperties  # type: ignore
+    from ._models import ManagedNetworkListResult  # type: ignore
+    from ._models import ManagedNetworkPeeringPolicy  # type: ignore
+    from ._models import ManagedNetworkPeeringPolicyListResult  # type: ignore
+    from ._models import ManagedNetworkPeeringPolicyProperties  # type: ignore
+    from ._models import ManagedNetworkProperties  # type: ignore
+    from ._models import ManagedNetworkUpdate  # type: ignore
+    from ._models import MeshPeeringPolicyProperties  # type: ignore
     from ._models import Operation  # type: ignore
     from ._models import OperationDisplay  # type: ignore
-    from ._models import Operationlistresult  # type: ignore
-    from ._models import Proxyresource  # type: ignore
+    from ._models import OperationListResult  # type: ignore
+    from ._models import ProxyResource  # type: ignore
     from ._models import Resource  # type: ignore
-    from ._models import Resourceid  # type: ignore
-    from ._models import Resourceproperties  # type: ignore
+    from ._models import ResourceId  # type: ignore
+    from ._models import ResourceProperties  # type: ignore
     from ._models import Scope  # type: ignore
-    from ._models import Scopeassignment  # type: ignore
-    from ._models import Scopeassignmentlistresult  # type: ignore
-    from ._models import Scopeassignmentproperties  # type: ignore
-    from ._models import Trackedresource  # type: ignore
+    from ._models import ScopeAssignment  # type: ignore
+    from ._models import ScopeAssignmentListResult  # type: ignore
+    from ._models import ScopeAssignmentProperties  # type: ignore
+    from ._models import TrackedResource  # type: ignore
 from ._managed_network_management_client_enums import (
-    Provisioningstate,
+    ProvisioningState,
     Type,
 )
 
 __all__ = [
-    'Connectivitycollection',
-    'Errorresponse', 'ErrorresponseException',
-    'Hubandspokepeeringpolicyproperties',
-    'Managednetwork',
-    'Managednetworkgroup',
-    'Managednetworkgrouplistresult',
-    'Managednetworkgroupproperties',
-    'Managednetworklistresult',
-    'Managednetworkpeeringpolicy',
-    'Managednetworkpeeringpolicylistresult',
-    'Managednetworkpeeringpolicyproperties',
-    'Managednetworkproperties',
-    'Managednetworkupdate',
-    'Meshpeeringpolicyproperties',
+    'ConnectivityCollection',
+    'ErrorResponse', 'ErrorResponseException',
+    'HubAndSpokePeeringPolicyProperties',
+    'ManagedNetwork',
+    'ManagedNetworkGroup',
+    'ManagedNetworkGroupListResult',
+    'ManagedNetworkGroupProperties',
+    'ManagedNetworkListResult',
+    'ManagedNetworkPeeringPolicy',
+    'ManagedNetworkPeeringPolicyListResult',
+    'ManagedNetworkPeeringPolicyProperties',
+    'ManagedNetworkProperties',
+    'ManagedNetworkUpdate',
+    'MeshPeeringPolicyProperties',
     'Operation',
     'OperationDisplay',
-    'Operationlistresult',
-    'Proxyresource',
+    'OperationListResult',
+    'ProxyResource',
     'Resource',
-    'Resourceid',
-    'Resourceproperties',
+    'ResourceId',
+    'ResourceProperties',
     'Scope',
-    'Scopeassignment',
-    'Scopeassignmentlistresult',
-    'Scopeassignmentproperties',
-    'Trackedresource',
-    'Provisioningstate',
+    'ScopeAssignment',
+    'ScopeAssignmentListResult',
+    'ScopeAssignmentProperties',
+    'TrackedResource',
+    'ProvisioningState',
     'Type',
 ]

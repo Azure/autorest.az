@@ -10,10 +10,10 @@ from knack.util import CLIError
 # pylint: disable=protected-access
 
 
-class AddManagementgroups(argparse._AppendAction):
+class AddManagementGroups(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-        super(AddManagementgroups, self).__call__(parser, namespace, action, option_string)
+        super(AddManagementGroups, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
@@ -48,10 +48,10 @@ class AddSubscriptions(argparse._AppendAction):
         return d
 
 
-class AddVirtualnetworks(argparse._AppendAction):
+class AddVirtualNetworks(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-        super(AddVirtualnetworks, self).__call__(parser, namespace, action, option_string)
+        super(AddVirtualNetworks, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:

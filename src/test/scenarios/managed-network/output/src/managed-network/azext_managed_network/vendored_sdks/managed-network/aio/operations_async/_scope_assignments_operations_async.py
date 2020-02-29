@@ -16,8 +16,8 @@ from ... import models
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
-class ScopeassignmentsOperations:
-    """ScopeassignmentsOperations async operations.
+class ScopeAssignmentsOperations:
+    """ScopeAssignmentsOperations async operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -40,34 +40,35 @@ class ScopeassignmentsOperations:
     async def get(
         self,
         scope: str,
-        scopeassignmentname: str,
+        scope_assignment_name: str,
         **kwargs
-    ) -> "models.Scopeassignment":
+    ) -> "models.ScopeAssignment":
         """Get the specified scope assignment.
 
         :param scope: The base resource of the scope assignment.
         :type scope: str
-        :param scopeassignmentname: The name of the scope assignment to get.
-        :type scopeassignmentname: str
+        :param scope_assignment_name: The name of the scope assignment to get.
+        :type scope_assignment_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Scopeassignment or the result of cls(response)
-        :rtype: ~managed_network_management_client.models.Scopeassignment
-        :raises: ~managed_network_management_client.models.ErrorresponseException:
+        :return: ScopeAssignment or the result of cls(response)
+        :rtype: ~managed_network_management_client.models.ScopeAssignment
+        :raises: ~managed_network_management_client.models.ErrorResponseException:
         """
-        cls: ClsType["models.Scopeassignment"] = kwargs.pop('cls', None )
+        cls: ClsType["models.ScopeAssignment"] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.get.metadata['url']
         path_format_arguments = {
             'scope': self._serialize.url("scope", scope, 'str', skip_quote=True),
-            'scopeAssignmentName': self._serialize.url("scopeassignmentname", scopeassignmentname, 'str'),
+            'scopeAssignmentName': self._serialize.url("scope_assignment_name", scope_assignment_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
-        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -80,9 +81,9 @@ class ScopeassignmentsOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise models.ErrorresponseException.from_response(response, self._deserialize)
+            raise models.ErrorResponseException.from_response(response, self._deserialize)
 
-        deserialized = self._deserialize('Scopeassignment', pipeline_response)
+        deserialized = self._deserialize('ScopeAssignment', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
@@ -90,45 +91,46 @@ class ScopeassignmentsOperations:
         return deserialized
     get.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}'}
 
-    async def createorupdate(
+    async def create_or_update(
         self,
         scope: str,
-        scopeassignmentname: str,
+        scope_assignment_name: str,
         location: Optional[str] = None,
-        assignedmanagednetwork: Optional[str] = None,
+        assigned_managed_network: Optional[str] = None,
         **kwargs
-    ) -> "models.Scopeassignment":
+    ) -> "models.ScopeAssignment":
         """Creates a scope assignment.
 
         :param scope: The base resource of the scope assignment.
         :type scope: str
-        :param scopeassignmentname: The name of the scope assignment to get.
-        :type scopeassignmentname: str
+        :param scope_assignment_name: The name of the scope assignment to get.
+        :type scope_assignment_name: str
         :param location: The geo-location where the resource lives.
         :type location: str
-        :param assignedmanagednetwork: The managed network ID with scope will be assigned to.
-        :type assignedmanagednetwork: str
+        :param assigned_managed_network: The managed network ID with scope will be assigned to.
+        :type assigned_managed_network: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Scopeassignment or Scopeassignment or the result of cls(response)
-        :rtype: ~managed_network_management_client.models.Scopeassignment or ~managed_network_management_client.models.Scopeassignment
-        :raises: ~managed_network_management_client.models.ErrorresponseException:
+        :return: ScopeAssignment or ScopeAssignment or the result of cls(response)
+        :rtype: ~managed_network_management_client.models.ScopeAssignment or ~managed_network_management_client.models.ScopeAssignment
+        :raises: ~managed_network_management_client.models.ErrorResponseException:
         """
-        cls: ClsType["models.Scopeassignment"] = kwargs.pop('cls', None )
+        cls: ClsType["models.ScopeAssignment"] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
 
-        parameters = models.Scopeassignment(location=location, assignedmanagednetwork=assignedmanagednetwork)
+        parameters = models.ScopeAssignment(location=location, assigned_managed_network=assigned_managed_network)
+        api_version = "2019-06-01-preview"
 
         # Construct URL
-        url = self.createorupdate.metadata['url']
+        url = self.create_or_update.metadata['url']
         path_format_arguments = {
             'scope': self._serialize.url("scope", scope, 'str', skip_quote=True),
-            'scopeAssignmentName': self._serialize.url("scopeassignmentname", scopeassignmentname, 'str'),
+            'scopeAssignmentName': self._serialize.url("scope_assignment_name", scope_assignment_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
-        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -136,7 +138,7 @@ class ScopeassignmentsOperations:
         header_parameters['Content-Type'] = 'application/json'
 
         # Construct body
-        body_content = self._serialize.body(parameters, 'Scopeassignment')
+        body_content = self._serialize.body(parameters, 'ScopeAssignment')
 
         # Construct and send request
         request = self._client.put(url, query_parameters, header_parameters, body_content)
@@ -145,33 +147,33 @@ class ScopeassignmentsOperations:
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise models.ErrorresponseException.from_response(response, self._deserialize)
+            raise models.ErrorResponseException.from_response(response, self._deserialize)
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('Scopeassignment', pipeline_response)
+            deserialized = self._deserialize('ScopeAssignment', pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize('Scopeassignment', pipeline_response)
+            deserialized = self._deserialize('ScopeAssignment', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    createorupdate.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}'}
+    create_or_update.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}'}
 
     async def delete(
         self,
         scope: str,
-        scopeassignmentname: str,
+        scope_assignment_name: str,
         **kwargs
     ) -> None:
         """Deletes a scope assignment.
 
         :param scope: The base resource of the scope assignment.
         :type scope: str
-        :param scopeassignmentname: The name of the scope assignment to get.
-        :type scopeassignmentname: str
+        :param scope_assignment_name: The name of the scope assignment to get.
+        :type scope_assignment_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None or the result of cls(response)
         :rtype: None
@@ -179,18 +181,19 @@ class ScopeassignmentsOperations:
         """
         cls: ClsType[None] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.delete.metadata['url']
         path_format_arguments = {
             'scope': self._serialize.url("scope", scope, 'str', skip_quote=True),
-            'scopeAssignmentName': self._serialize.url("scopeassignmentname", scopeassignmentname, 'str'),
+            'scopeAssignmentName': self._serialize.url("scope_assignment_name", scope_assignment_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
-        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -213,18 +216,19 @@ class ScopeassignmentsOperations:
         self,
         scope: str,
         **kwargs
-    ) -> "models.Scopeassignmentlistresult":
+    ) -> "models.ScopeAssignmentListResult":
         """Get the specified scope assignment.
 
         :param scope: The base resource of the scope assignment.
         :type scope: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Scopeassignmentlistresult or the result of cls(response)
-        :rtype: ~managed_network_management_client.models.Scopeassignmentlistresult
-        :raises: ~managed_network_management_client.models.ErrorresponseException:
+        :return: ScopeAssignmentListResult or the result of cls(response)
+        :rtype: ~managed_network_management_client.models.ScopeAssignmentListResult
+        :raises: ~managed_network_management_client.models.ErrorResponseException:
         """
-        cls: ClsType["models.Scopeassignmentlistresult"] = kwargs.pop('cls', None )
+        cls: ClsType["models.ScopeAssignmentListResult"] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
+        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
@@ -239,7 +243,7 @@ class ScopeassignmentsOperations:
 
             # Construct parameters
             query_parameters: Dict[str, Any] = {}
-            query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
             # Construct headers
             header_parameters: Dict[str, Any] = {}
@@ -250,11 +254,11 @@ class ScopeassignmentsOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('Scopeassignmentlistresult', pipeline_response)
+            deserialized = self._deserialize('ScopeAssignmentListResult', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.nextlink, AsyncList(list_of_elem)
+            return deserialized.next_link, AsyncList(list_of_elem)
 
         async def get_next(next_link=None):
             request = prepare_request(next_link)
@@ -264,7 +268,7 @@ class ScopeassignmentsOperations:
 
             if response.status_code not in [200]:
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise models.ErrorresponseException.from_response(response, self._deserialize)
+                raise models.ErrorResponseException.from_response(response, self._deserialize)
 
             return pipeline_response
 
