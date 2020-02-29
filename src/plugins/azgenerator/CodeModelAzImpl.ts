@@ -4,12 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz, CommandExample } from "./CodeModelAz";
-import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, transfer_to_key} from './scenario_tool'
+import { timingSafeEqual } from "crypto";
 
 
 export class CodeModelCliImpl implements CodeModelAz
@@ -25,7 +26,8 @@ export class CodeModelCliImpl implements CodeModelAz
     currentMethodIndex: number;
     resource_pool: ResourcePool;
 
-
+    suboptions: Property[];
+    currentSubOptionIndex: number;
 
     async init() {
         this.options = await this.session.getValue('az');
@@ -36,6 +38,8 @@ export class CodeModelCliImpl implements CodeModelAz
         this.currentExampleIndex = -1;
         this.preMethodIndex = -1;
         this.currentMethodIndex = -1;
+        this.suboptions = null;
+        this.currentSubOptionIndex = -1;
         //this.sortOperationByAzCommand();
         
     }
@@ -340,6 +344,12 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectFirstOption(): boolean
     {
+        if (this.suboptions != null)
+        {
+            this.currentSubOptionIndex = 0;
+            return true;
+        }
+
         if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
             this.currentParameterIndex = -1;
             return false;
@@ -389,10 +399,21 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextOption(): boolean
     {
+        if (this.suboptions != null)
+        {
+            this.currentSubOptionIndex++;
+
+            if (this.currentSubOptionIndex >= this.suboptions.length)
+            {
+                return false;
+            }
+        }
+
         if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
             this.currentParameterIndex = -1;
             return false;
         }
+
         if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
@@ -438,26 +459,34 @@ export class CodeModelCliImpl implements CodeModelAz
         
     }
 
-    public HasSubOptions(): boolean
-    {
-        /*if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type == "object") {
-            return true;
-        }*/
-        return false;       
-    }
-
     public EnterSubOptions(): boolean
     {
-        return false;
+        if (!this.Option_IsList)
+            return false;
+
+        this.suboptions = this.Option_GetElementType()['properties'];
+
+        return true;
     }
 
     public ExitSubOptions(): boolean
     {
+        if (this.suboptions != null)
+        {
+            this.suboptions = null;
+            this.currentSubOptionIndex = -1;
+            return true;
+        }
         return false;
     }
 
     public get Option_Name(): string
     {
+        if (this.suboptions != null)
+        {
+            return this.suboptions[this.currentSubOptionIndex].language.python.name;
+        }
+
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].language['az'].name;
     }
 
@@ -468,6 +497,11 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_NamePython(): string
     {
+        if (this.suboptions != null)
+        {
+            return this.suboptions[this.currentSubOptionIndex].language.python.name;
+        }
+
         let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
         if(parameter['pathToProperty']?.length == 1) {
             return (parameter['pathToProperty'][0]).language['python'].name + "_" + parameter.language['python'].name;
@@ -520,8 +554,26 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_IsList(): boolean
     {
-        let mtype = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type;
-        return (mtype == SchemaType.Dictionary || mtype == SchemaType.Object || mtype == SchemaType.Array)? true: false;
+        let p: Property = this.Option_GetElementType();
+        return (p != null);
+    }
+
+    private Option_GetElementType(): Property
+    {
+        let p: VirtualParameter;
+
+        p = this.codeModel.operationGroups[this.currentOperationGroupIndex]
+                          .operations[this.currentOperationIndex]
+                          .request
+                          .parameters[this.currentParameterIndex] as VirtualParameter;
+
+        if (p.targetProperty == undefined)
+            return null;
+
+        if (p.targetProperty.schema.type != "array")
+            return null;
+
+        return p.targetProperty.schema['elementType'] as Property;
     }
 
     public get Option_EnumValues(): string[]

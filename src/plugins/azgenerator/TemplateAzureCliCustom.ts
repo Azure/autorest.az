@@ -171,7 +171,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                                 access += "json.loads(" + model.MethodParameter_MapsTo + ") if isinstance(" + model.MethodParameter_MapsTo + ", str) else " + model.MethodParameter_MapsTo
                                 required['json'] = true;
                             }
-
+                            
                             if (isUpdate) {
                                 output_body.push("    if " + model.MethodParameter_MapsTo + " is not None:");
                                 output_body.push("    " + access);

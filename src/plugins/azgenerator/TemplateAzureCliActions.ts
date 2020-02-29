@@ -10,6 +10,11 @@ import { SchemaType } from "@azure-tools/codemodel";
 export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
     var output: string[] = [];
 
+    output.push("# --------------------------------------------------------------------------------------------");
+    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
+    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
+    output.push("# --------------------------------------------------------------------------------------------");
+    output.push("");
     output.push("import argparse");
     output.push("from knack.util import CLIError");
     output.push("");
@@ -39,7 +44,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                     output.push("class " + actionName + "(argparse._AppendAction):");
                                     output.push("    def __call__(self, parser, namespace, values, option_string=None):");
                                     output.push("        action = self.get_action(values, option_string)");
-                                    output.push("        super(ImageBuilderAddCustomize, self).__call__(parser, namespace, action, option_string)");
+                                    output.push("        super(" + "Add" + Capitalize(ToCamelCase(model.Option_Name)) + ", self).__call__(parser, namespace, action, option_string)");
                                     output.push("");
                                     output.push("    def get_action(self, values, option_string):  # pylint: disable=no-self-use");
                                     output.push("        try:");
@@ -64,6 +69,8 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                         }
                                     }
 
+                                    model.ExitSubOptions();
+
                                     output.push("        return d");                                
                                 }
                             }
@@ -75,6 +82,8 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
             }
         } while (model.SelectNextCommandGroup());
     }
+
+    output.push("");
 
     return output;
 }
