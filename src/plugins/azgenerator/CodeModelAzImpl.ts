@@ -968,6 +968,14 @@ export class CodeModelCliImpl implements CodeModelAz
         }
     }
 
+    public GetSubscriptionKey(): string {
+        if (this.resource_pool.use_subscription) {
+            return ResourcePool.KEY_SUBSCRIPTIONID;
+        }
+        else {
+            return null;
+        }
+    }
 
     public FindExampleById(id: string): string[][] {
         let ret: string[][] = [];

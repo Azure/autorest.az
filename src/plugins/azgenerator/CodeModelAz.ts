@@ -107,4 +107,5 @@ export interface CodeModelAz
     Example_Params: any;
     GetExamples(): CommandExample[];
     FormatPreparers(imports: string[], decoraters: string[]);
+    GetSubscriptionKey(): string;
 }

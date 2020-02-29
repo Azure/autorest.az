@@ -182,10 +182,13 @@ export class ResourcePool {
     //resources: Map<string, Map<string, resource_object[]>>; // resource_class-->resource_name-->resource_object
     root: Map<string, ResourceClass>;    //resource_class_name --> resource_class
     map: Map<string, ResourceClass>;
+    use_subscription: boolean;
+    static KEY_SUBSCRIPTIONID = "subscription_id";
 
     public constructor() {
         this.root = new Map<string, ResourceClass>();
         this.map = new Map<string, ResourceClass>();
+        this.use_subscription = false;
     }
 
     private prepare_resource(class_name: string, object_name: string, depends: string[][], entitys: PreparerEntity[]) {
@@ -323,9 +326,11 @@ export class ResourcePool {
         if (typeof endpoint !== 'string')   return endpoint;
 
         let nodes = endpoint.split('/');
-        if (nodes.length <= 5 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
+        if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
             return endpoint;
         }
+        nodes[2] = `{${ResourcePool.KEY_SUBSCRIPTIONID}}`;
+        this.use_subscription = true;
         let i = 3;
         let resource_object: ResourceObject = null;
         while (i < (nodes.length - 1)) {
