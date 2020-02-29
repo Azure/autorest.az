@@ -10,21 +10,21 @@ def cf_managed_network(cli_ctx, *_):
     return get_mgmt_service_client(cli_ctx, ManagedNetworkManagementClient)
 
 
-def cf_managed_networks(cli_ctx, *_):
-    return cf_managed_network(cli_ctx).managed_networks
+def cf_managed_network(cli_ctx, *_):
+    return cf_managed_network(cli_ctx).managed_network
 
 
-def cf_scope_assignments(cli_ctx, *_):
-    return cf_managed_network(cli_ctx).scope_assignments
+def cf_scope_assignment(cli_ctx, *_):
+    return cf_managed_network(cli_ctx).scope_assignment
 
 
-def cf_managed_network_groups(cli_ctx, *_):
-    return cf_managed_network(cli_ctx).managed_network_groups
+def cf_managed_network_group(cli_ctx, *_):
+    return cf_managed_network(cli_ctx).managed_network_group
 
 
-def cf_managed_network_peering_policies(cli_ctx, *_):
-    return cf_managed_network(cli_ctx).managed_network_peering_policies
+def cf_managed_network_peering_policy(cli_ctx, *_):
+    return cf_managed_network(cli_ctx).managed_network_peering_policy
 
 
-def cf_operations(cli_ctx, *_):
-    return cf_managed_network(cli_ctx).operations
+def cf_operation(cli_ctx, *_):
+    return cf_managed_network(cli_ctx).operation
