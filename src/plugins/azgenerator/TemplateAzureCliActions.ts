@@ -35,7 +35,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                     {
                         do
                         {
-                            if (model.Option_IsList)
+                            if (model.Option_IsListOfComplex)
                             {
                                 if (model.Option_Type == SchemaType.Object || model.Option_Type == SchemaType.Array)
                                 {

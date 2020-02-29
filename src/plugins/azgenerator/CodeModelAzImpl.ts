@@ -459,7 +459,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public EnterSubOptions(): boolean
     {
-        if (!this.Option_IsList)
+        if (!this.Option_IsListOfComplex)
             return false;
 
         this.suboptions = this.Option_GetElementType()['properties'];
@@ -554,6 +554,12 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         let p: Property = this.Option_GetElementType();
         return (p != null);
+    }
+
+    public get Option_IsListOfComplex(): boolean
+    {
+        let p: Property = this.Option_GetElementType();
+        return (p != null) && p['type'] == "object";
     }
 
     private Option_GetElementType(): Property

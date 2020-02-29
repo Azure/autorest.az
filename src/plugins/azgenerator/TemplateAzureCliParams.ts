@@ -145,8 +145,8 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
                     }
         
-                    if (model.MethodParameter_IsList) {
-                        if (model.MethodParameter_Type == SchemaType.Object || model.MethodParameter_Type == SchemaType.Array) {
+                    if (model.Option_IsList) {
+                        if (model.Option_IsListOfComplex) {
                             let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
                             argument += ", action=" + actionName;
                             hasActions = true;

@@ -56,6 +56,7 @@ export interface CodeModelAz
     Option_Description: string;
     Option_Type: string;
     Option_IsList: boolean;
+    Option_IsListOfComplex: boolean;
     Option_In: string;
     Option_PathSdk: string;
     Option_PathSwagger: string;
