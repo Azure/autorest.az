@@ -4,9 +4,9 @@ See documentation [here](doc/00-overview.md)
 
 ``` yaml
 use-extension:
-  "@autorest/clicommon": "latest"
-  #"@autorest/python": "latest"
   "@autorest/python": "5.0.0-dev.20200211.1"
+  "@autorest/clicommon": "c:/git/autorest.clicommon"
+  
 
 python: true
 require: 
