@@ -12,53 +12,53 @@ from azure.cli.core.commands import CliCommandType
 
 def load_command_table(self, _):
 
-    from ._client_factory import cf_managed_networks
-    managed_network_managed_networks = CliCommandType(
-        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_networks_operations#ManagedNetworksOperations.{}',
-        client_factory=cf_managed_networks)
-    with self.command_group('managed-network managed-networks', managed_network_managed_networks, client_factory=cf_managed_networks) as g:
-        g.custom_command('list', 'managed_network_managed_networks_list')
-        g.custom_show_command('show', 'managed_network_managed_networks_show')
-        g.custom_command('create', 'managed_network_managed_networks_create')
-        g.custom_command('update', 'managed_network_managed_networks_update')
-        g.custom_command('delete', 'managed_network_managed_networks_delete')
+    from ._client_factory import cf_managednetwork
+    managed_network_managednetwork = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managednetwork_operations#ManagednetworkOperations.{}',
+        client_factory=cf_managednetwork)
+    with self.command_group('managed-network managednetwork', managed_network_managednetwork, client_factory=cf_managednetwork) as g:
+        g.custom_command('list', 'managed_network_managednetwork_list')
+        g.custom_show_command('show', 'managed_network_managednetwork_show')
+        g.custom_command('create', 'managed_network_managednetwork_create')
+        g.custom_command('update', 'managed_network_managednetwork_update')
+        g.custom_command('delete', 'managed_network_managednetwork_delete')
 
-    from ._client_factory import cf_scope_assignments
-    managed_network_scope_assignments = CliCommandType(
-        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._scope_assignments_operations#ScopeAssignmentsOperations.{}',
-        client_factory=cf_scope_assignments)
-    with self.command_group('managed-network scope-assignments', managed_network_scope_assignments, client_factory=cf_scope_assignments) as g:
-        g.custom_command('list', 'managed_network_scope_assignments_list')
-        g.custom_show_command('show', 'managed_network_scope_assignments_show')
-        g.custom_command('create', 'managed_network_scope_assignments_create')
-        g.custom_command('update', 'managed_network_scope_assignments_update')
-        g.custom_command('delete', 'managed_network_scope_assignments_delete')
+    from ._client_factory import cf_scopeassignment
+    managed_network_scopeassignment = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._scopeassignment_operations#ScopeassignmentOperations.{}',
+        client_factory=cf_scopeassignment)
+    with self.command_group('managed-network scopeassignment', managed_network_scopeassignment, client_factory=cf_scopeassignment) as g:
+        g.custom_command('list', 'managed_network_scopeassignment_list')
+        g.custom_show_command('show', 'managed_network_scopeassignment_show')
+        g.custom_command('create', 'managed_network_scopeassignment_create')
+        g.custom_command('update', 'managed_network_scopeassignment_update')
+        g.custom_command('delete', 'managed_network_scopeassignment_delete')
 
-    from ._client_factory import cf_managed_network_groups
-    managed_network_managed_network_groups = CliCommandType(
-        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_groups_operations#ManagedNetworkGroupsOperations.{}',
-        client_factory=cf_managed_network_groups)
-    with self.command_group('managed-network managed-network-groups', managed_network_managed_network_groups, client_factory=cf_managed_network_groups) as g:
-        g.custom_command('list', 'managed_network_managed_network_groups_list')
-        g.custom_show_command('show', 'managed_network_managed_network_groups_show')
-        g.custom_command('create', 'managed_network_managed_network_groups_create')
-        g.custom_command('update', 'managed_network_managed_network_groups_update')
-        g.custom_command('delete', 'managed_network_managed_network_groups_delete')
+    from ._client_factory import cf_managednetworkgroup
+    managed_network_managednetworkgroup = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managednetworkgroup_operations#ManagednetworkgroupOperations.{}',
+        client_factory=cf_managednetworkgroup)
+    with self.command_group('managed-network managednetworkgroup', managed_network_managednetworkgroup, client_factory=cf_managednetworkgroup) as g:
+        g.custom_command('list', 'managed_network_managednetworkgroup_list')
+        g.custom_show_command('show', 'managed_network_managednetworkgroup_show')
+        g.custom_command('create', 'managed_network_managednetworkgroup_create')
+        g.custom_command('update', 'managed_network_managednetworkgroup_update')
+        g.custom_command('delete', 'managed_network_managednetworkgroup_delete')
 
-    from ._client_factory import cf_managed_network_peering_policies
-    managed_network_managed_network_peering_policies = CliCommandType(
-        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_peering_policies_operations#ManagedNetworkPeeringPoliciesOperations.{}',
-        client_factory=cf_managed_network_peering_policies)
-    with self.command_group('managed-network managed-network-peering-policies', managed_network_managed_network_peering_policies, client_factory=cf_managed_network_peering_policies) as g:
-        g.custom_command('list', 'managed_network_managed_network_peering_policies_list')
-        g.custom_show_command('show', 'managed_network_managed_network_peering_policies_show')
-        g.custom_command('create', 'managed_network_managed_network_peering_policies_create')
-        g.custom_command('update', 'managed_network_managed_network_peering_policies_update')
-        g.custom_command('delete', 'managed_network_managed_network_peering_policies_delete')
+    from ._client_factory import cf_managednetworkpeeringpolicy
+    managed_network_managednetworkpeeringpolicy = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managednetworkpeeringpolicy_operations#ManagednetworkpeeringpolicyOperations.{}',
+        client_factory=cf_managednetworkpeeringpolicy)
+    with self.command_group('managed-network managednetworkpeeringpolicy', managed_network_managednetworkpeeringpolicy, client_factory=cf_managednetworkpeeringpolicy) as g:
+        g.custom_command('list', 'managed_network_managednetworkpeeringpolicy_list')
+        g.custom_show_command('show', 'managed_network_managednetworkpeeringpolicy_show')
+        g.custom_command('create', 'managed_network_managednetworkpeeringpolicy_create')
+        g.custom_command('update', 'managed_network_managednetworkpeeringpolicy_update')
+        g.custom_command('delete', 'managed_network_managednetworkpeeringpolicy_delete')
 
-    from ._client_factory import cf_operations
-    managed_network_operations = CliCommandType(
-        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._operations_operations#OperationsOperations.{}',
-        client_factory=cf_operations)
-    with self.command_group('managed-network operations', managed_network_operations, client_factory=cf_operations) as g:
-        g.custom_command('list', 'managed_network_operations_list')
+    from ._client_factory import cf_operation
+    managed_network_operation = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._operation_operations#OperationOperations.{}',
+        client_factory=cf_operation)
+    with self.command_group('managed-network operation', managed_network_operation, client_factory=cf_operation) as g:
+        g.custom_command('list', 'managed_network_operation_list')

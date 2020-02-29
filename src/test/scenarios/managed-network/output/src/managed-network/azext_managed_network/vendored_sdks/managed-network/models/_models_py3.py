@@ -10,16 +10,16 @@ from azure.core.exceptions import HttpResponseError
 import msrest.serialization
 
 
-class ConnectivityCollection(msrest.serialization.Model):
+class Connectivitycollection(msrest.serialization.Model):
     """The collection of Connectivity related groups and policies within the Managed Network.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar groups: The collection of connectivity related Managed Network Groups within the Managed
      Network.
-    :vartype groups: list[~managed_network_management_client.models.ManagedNetworkGroup]
+    :vartype groups: list[~managed_network_management_client.models.Managednetworkgroup]
     :ivar peerings: The collection of Managed Network Peering Policies within the Managed Network.
-    :vartype peerings: list[~managed_network_management_client.models.ManagedNetworkPeeringPolicy]
+    :vartype peerings: list[~managed_network_management_client.models.Managednetworkpeeringpolicy]
     """
 
     _validation = {
@@ -28,21 +28,21 @@ class ConnectivityCollection(msrest.serialization.Model):
     }
 
     _attribute_map = {
-        'groups': {'key': 'groups', 'type': '[ManagedNetworkGroup]'},
-        'peerings': {'key': 'peerings', 'type': '[ManagedNetworkPeeringPolicy]'},
+        'groups': {'key': 'groups', 'type': '[Managednetworkgroup]'},
+        'peerings': {'key': 'peerings', 'type': '[Managednetworkpeeringpolicy]'},
     }
 
     def __init__(
         self,
         **kwargs
     ):
-        super(ConnectivityCollection, self).__init__(**kwargs)
+        super(Connectivitycollection, self).__init__(**kwargs)
         self.groups = None
         self.peerings = None
 
 
-class ErrorResponseException(HttpResponseError):
-    """Server responded with exception of type: 'ErrorResponse'.
+class ErrorresponseException(HttpResponseError):
+    """Server responded with exception of type: 'Errorresponse'.
 
     :param response: Server response to be deserialized.
     :param error_model: A deserialized model of the response body as model.
@@ -50,7 +50,7 @@ class ErrorResponseException(HttpResponseError):
 
     def __init__(self, response, error_model):
         self.error = error_model
-        super(ErrorResponseException, self).__init__(response=response, error_model=error_model)
+        super(ErrorresponseException, self).__init__(response=response, error_model=error_model)
 
     @classmethod
     def from_response(cls, response, deserialize):
@@ -59,14 +59,14 @@ class ErrorResponseException(HttpResponseError):
         :param response: Server response to be deserialized.
         :param deserialize: A deserializer
         """
-        model_name = 'ErrorResponse'
+        model_name = 'Errorresponse'
         error = deserialize(model_name, response)
         if error is None:
             error = deserialize.dependencies[model_name]()
         return error._EXCEPTION_TYPE(response, error)
 
 
-class ErrorResponse(msrest.serialization.Model):
+class Errorresponse(msrest.serialization.Model):
     """The error response that indicates why an operation has failed.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -76,7 +76,7 @@ class ErrorResponse(msrest.serialization.Model):
     :ivar message: The error message.
     :vartype message: str
     """
-    _EXCEPTION_TYPE = ErrorResponseException
+    _EXCEPTION_TYPE = ErrorresponseException
 
     _validation = {
         'code': {'readonly': True},
@@ -92,30 +92,30 @@ class ErrorResponse(msrest.serialization.Model):
         self,
         **kwargs
     ):
-        super(ErrorResponse, self).__init__(**kwargs)
+        super(Errorresponse, self).__init__(**kwargs)
         self.code = None
         self.message = None
 
 
-class ResourceProperties(msrest.serialization.Model):
+class Resourceproperties(msrest.serialization.Model):
     """Base for resource properties.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
+    :ivar provisioningstate: Provisioning state of the ManagedNetwork resource. Possible values
      include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
+    :vartype provisioningstate: str or ~managed_network_management_client.models.Provisioningstate
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
     """
 
     _validation = {
-        'provisioning_state': {'readonly': True},
+        'provisioningstate': {'readonly': True},
         'etag': {'readonly': True},
     }
 
     _attribute_map = {
-        'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
+        'provisioningstate': {'key': 'provisioningState', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
     }
 
@@ -123,24 +123,24 @@ class ResourceProperties(msrest.serialization.Model):
         self,
         **kwargs
     ):
-        super(ResourceProperties, self).__init__(**kwargs)
-        self.provisioning_state = None
+        super(Resourceproperties, self).__init__(**kwargs)
+        self.provisioningstate = None
         self.etag = None
 
 
-class ManagedNetworkPeeringPolicyProperties(ResourceProperties):
+class Managednetworkpeeringpolicyproperties(Resourceproperties):
     """Properties of a Managed Network Peering Policy.
 
     You probably want to use the sub-classes and not this class directly. Known
-    sub-classes are: HubAndSpokePeeringPolicyProperties, MeshPeeringPolicyProperties.
+    sub-classes are: Hubandspokepeeringpolicyproperties, Meshpeeringpolicyproperties.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
     All required parameters must be populated in order to send to Azure.
 
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
+    :ivar provisioningstate: Provisioning state of the ManagedNetwork resource. Possible values
      include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
+    :vartype provisioningstate: str or ~managed_network_management_client.models.Provisioningstate
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
     :param type: Required. Gets or sets the connectivity type of a network structure
@@ -148,57 +148,57 @@ class ManagedNetworkPeeringPolicyProperties(ResourceProperties):
      'MeshTopology'.
     :type type: str or ~managed_network_management_client.models.Type
     :param hub: Generic pointer to a resource.
-    :type hub: ~managed_network_management_client.models.ResourceId
+    :type hub: ~managed_network_management_client.models.Resourceid
     :param spokes: Gets or sets the spokes group IDs.
-    :type spokes: list[~managed_network_management_client.models.ResourceId]
+    :type spokes: list[~managed_network_management_client.models.Resourceid]
     :param mesh: Gets or sets the mesh group IDs.
-    :type mesh: list[~managed_network_management_client.models.ResourceId]
+    :type mesh: list[~managed_network_management_client.models.Resourceid]
     """
 
     _validation = {
-        'provisioning_state': {'readonly': True},
+        'provisioningstate': {'readonly': True},
         'etag': {'readonly': True},
         'type': {'required': True},
     }
 
     _attribute_map = {
-        'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
+        'provisioningstate': {'key': 'provisioningState', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
-        'hub': {'key': 'hub', 'type': 'ResourceId'},
-        'spokes': {'key': 'spokes', 'type': '[ResourceId]'},
-        'mesh': {'key': 'mesh', 'type': '[ResourceId]'},
+        'hub': {'key': 'hub', 'type': 'Resourceid'},
+        'spokes': {'key': 'spokes', 'type': '[Resourceid]'},
+        'mesh': {'key': 'mesh', 'type': '[Resourceid]'},
     }
 
     _subtype_map = {
-        'type': {'HubAndSpokeTopology': 'HubAndSpokePeeringPolicyProperties', 'MeshTopology': 'MeshPeeringPolicyProperties'}
+        'type': {'HubAndSpokeTopology': 'Hubandspokepeeringpolicyproperties', 'MeshTopology': 'Meshpeeringpolicyproperties'}
     }
 
     def __init__(
         self,
         *,
-        hub: Optional["ResourceId"] = None,
-        spokes: Optional[List["ResourceId"]] = None,
-        mesh: Optional[List["ResourceId"]] = None,
+        hub: Optional["Resourceid"] = None,
+        spokes: Optional[List["Resourceid"]] = None,
+        mesh: Optional[List["Resourceid"]] = None,
         **kwargs
     ):
-        super(ManagedNetworkPeeringPolicyProperties, self).__init__(**kwargs)
+        super(Managednetworkpeeringpolicyproperties, self).__init__(**kwargs)
         self.type = 'ManagedNetworkPeeringPolicyProperties'
         self.hub = hub
         self.spokes = spokes
         self.mesh = mesh
 
 
-class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
+class Hubandspokepeeringpolicyproperties(Managednetworkpeeringpolicyproperties):
     """Properties of a Hub and Spoke Peering Policy.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
     All required parameters must be populated in order to send to Azure.
 
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
+    :ivar provisioningstate: Provisioning state of the ManagedNetwork resource. Possible values
      include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
+    :vartype provisioningstate: str or ~managed_network_management_client.models.Provisioningstate
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
     :param type: Required. Gets or sets the connectivity type of a network structure
@@ -206,37 +206,37 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
      'MeshTopology'.
     :type type: str or ~managed_network_management_client.models.Type
     :param hub: Generic pointer to a resource.
-    :type hub: ~managed_network_management_client.models.ResourceId
+    :type hub: ~managed_network_management_client.models.Resourceid
     :param spokes: Gets or sets the spokes group IDs.
-    :type spokes: list[~managed_network_management_client.models.ResourceId]
+    :type spokes: list[~managed_network_management_client.models.Resourceid]
     :param mesh: Gets or sets the mesh group IDs.
-    :type mesh: list[~managed_network_management_client.models.ResourceId]
+    :type mesh: list[~managed_network_management_client.models.Resourceid]
     """
 
     _validation = {
-        'provisioning_state': {'readonly': True},
+        'provisioningstate': {'readonly': True},
         'etag': {'readonly': True},
         'type': {'required': True},
     }
 
     _attribute_map = {
-        'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
+        'provisioningstate': {'key': 'provisioningState', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
-        'hub': {'key': 'hub', 'type': 'ResourceId'},
-        'spokes': {'key': 'spokes', 'type': '[ResourceId]'},
-        'mesh': {'key': 'mesh', 'type': '[ResourceId]'},
+        'hub': {'key': 'hub', 'type': 'Resourceid'},
+        'spokes': {'key': 'spokes', 'type': '[Resourceid]'},
+        'mesh': {'key': 'mesh', 'type': '[Resourceid]'},
     }
 
     def __init__(
         self,
         *,
-        hub: Optional["ResourceId"] = None,
-        spokes: Optional[List["ResourceId"]] = None,
-        mesh: Optional[List["ResourceId"]] = None,
+        hub: Optional["Resourceid"] = None,
+        spokes: Optional[List["Resourceid"]] = None,
+        mesh: Optional[List["Resourceid"]] = None,
         **kwargs
     ):
-        super(HubAndSpokePeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, mesh=mesh, **kwargs)
+        super(Hubandspokepeeringpolicyproperties, self).__init__(hub=hub, spokes=spokes, mesh=mesh, **kwargs)
         self.type = 'HubAndSpokeTopology'
 
 
@@ -283,7 +283,7 @@ class Resource(msrest.serialization.Model):
         self.location = location
 
 
-class TrackedResource(Resource):
+class Trackedresource(Resource):
     """The resource model definition for a ARM tracked top level resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -323,11 +323,11 @@ class TrackedResource(Resource):
         tags: Optional[Dict[str, str]] = None,
         **kwargs
     ):
-        super(TrackedResource, self).__init__(location=location, **kwargs)
+        super(Trackedresource, self).__init__(location=location, **kwargs)
         self.tags = tags
 
 
-class ManagedNetwork(TrackedResource):
+class Managednetwork(Trackedresource):
     """The Managed Network resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -344,31 +344,31 @@ class ManagedNetwork(TrackedResource):
     :type location: str
     :param tags: A set of tags. Resource tags.
     :type tags: dict[str, str]
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
+    :ivar provisioningstate: Provisioning state of the ManagedNetwork resource. Possible values
      include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
+    :vartype provisioningstate: str or ~managed_network_management_client.models.Provisioningstate
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
     :ivar groups: The collection of connectivity related Managed Network Groups within the Managed
      Network.
-    :vartype groups: list[~managed_network_management_client.models.ManagedNetworkGroup]
+    :vartype groups: list[~managed_network_management_client.models.Managednetworkgroup]
     :ivar peerings: The collection of Managed Network Peering Policies within the Managed Network.
-    :vartype peerings: list[~managed_network_management_client.models.ManagedNetworkPeeringPolicy]
-    :param management_groups: The collection of management groups covered by the Managed Network.
-    :type management_groups: list[~managed_network_management_client.models.ResourceId]
+    :vartype peerings: list[~managed_network_management_client.models.Managednetworkpeeringpolicy]
+    :param managementgroups: The collection of management groups covered by the Managed Network.
+    :type managementgroups: list[~managed_network_management_client.models.Resourceid]
     :param subscriptions: The collection of subscriptions covered by the Managed Network.
-    :type subscriptions: list[~managed_network_management_client.models.ResourceId]
-    :param virtual_networks: The collection of virtual nets covered by the Managed Network.
-    :type virtual_networks: list[~managed_network_management_client.models.ResourceId]
+    :type subscriptions: list[~managed_network_management_client.models.Resourceid]
+    :param virtualnetworks: The collection of virtual nets covered by the Managed Network.
+    :type virtualnetworks: list[~managed_network_management_client.models.Resourceid]
     :param subnets: The collection of  subnets covered by the Managed Network.
-    :type subnets: list[~managed_network_management_client.models.ResourceId]
+    :type subnets: list[~managed_network_management_client.models.Resourceid]
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'provisioning_state': {'readonly': True},
+        'provisioningstate': {'readonly': True},
         'etag': {'readonly': True},
         'groups': {'readonly': True},
         'peerings': {'readonly': True},
@@ -380,14 +380,14 @@ class ManagedNetwork(TrackedResource):
         'type': {'key': 'type', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+        'provisioningstate': {'key': 'properties.provisioningState', 'type': 'str'},
         'etag': {'key': 'properties.etag', 'type': 'str'},
-        'groups': {'key': 'properties.connectivity.groups', 'type': '[ManagedNetworkGroup]'},
-        'peerings': {'key': 'properties.connectivity.peerings', 'type': '[ManagedNetworkPeeringPolicy]'},
-        'management_groups': {'key': 'properties.scope.managementGroups', 'type': '[ResourceId]'},
-        'subscriptions': {'key': 'properties.scope.subscriptions', 'type': '[ResourceId]'},
-        'virtual_networks': {'key': 'properties.scope.virtualNetworks', 'type': '[ResourceId]'},
-        'subnets': {'key': 'properties.scope.subnets', 'type': '[ResourceId]'},
+        'groups': {'key': 'properties.connectivity.groups', 'type': '[Managednetworkgroup]'},
+        'peerings': {'key': 'properties.connectivity.peerings', 'type': '[Managednetworkpeeringpolicy]'},
+        'managementgroups': {'key': 'properties.scope.managementGroups', 'type': '[Resourceid]'},
+        'subscriptions': {'key': 'properties.scope.subscriptions', 'type': '[Resourceid]'},
+        'virtualnetworks': {'key': 'properties.scope.virtualNetworks', 'type': '[Resourceid]'},
+        'subnets': {'key': 'properties.scope.subnets', 'type': '[Resourceid]'},
     }
 
     def __init__(
@@ -395,24 +395,24 @@ class ManagedNetwork(TrackedResource):
         *,
         location: Optional[str] = None,
         tags: Optional[Dict[str, str]] = None,
-        management_groups: Optional[List["ResourceId"]] = None,
-        subscriptions: Optional[List["ResourceId"]] = None,
-        virtual_networks: Optional[List["ResourceId"]] = None,
-        subnets: Optional[List["ResourceId"]] = None,
+        managementgroups: Optional[List["Resourceid"]] = None,
+        subscriptions: Optional[List["Resourceid"]] = None,
+        virtualnetworks: Optional[List["Resourceid"]] = None,
+        subnets: Optional[List["Resourceid"]] = None,
         **kwargs
     ):
-        super(ManagedNetwork, self).__init__(location=location, tags=tags, **kwargs)
-        self.provisioning_state = None
+        super(Managednetwork, self).__init__(location=location, tags=tags, **kwargs)
+        self.provisioningstate = None
         self.etag = None
         self.groups = None
         self.peerings = None
-        self.management_groups = management_groups
+        self.managementgroups = managementgroups
         self.subscriptions = subscriptions
-        self.virtual_networks = virtual_networks
+        self.virtualnetworks = virtualnetworks
         self.subnets = subnets
 
 
-class ProxyResource(Resource):
+class Proxyresource(Resource):
     """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -448,10 +448,10 @@ class ProxyResource(Resource):
         location: Optional[str] = None,
         **kwargs
     ):
-        super(ProxyResource, self).__init__(location=location, **kwargs)
+        super(Proxyresource, self).__init__(location=location, **kwargs)
 
 
-class ManagedNetworkGroup(ProxyResource):
+class Managednetworkgroup(Proxyresource):
     """The Managed Network Group resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -469,19 +469,19 @@ class ManagedNetworkGroup(ProxyResource):
     :ivar kind: Responsibility role under which this Managed Network Group will be created. Default
      value: "Connectivity".
     :vartype kind: str
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
+    :ivar provisioningstate: Provisioning state of the ManagedNetwork resource. Possible values
      include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
+    :vartype provisioningstate: str or ~managed_network_management_client.models.Provisioningstate
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
-    :param management_groups: The collection of management groups covered by the Managed Network.
-    :type management_groups: list[~managed_network_management_client.models.ResourceId]
+    :param managementgroups: The collection of management groups covered by the Managed Network.
+    :type managementgroups: list[~managed_network_management_client.models.Resourceid]
     :param subscriptions: The collection of subscriptions covered by the Managed Network.
-    :type subscriptions: list[~managed_network_management_client.models.ResourceId]
-    :param virtual_networks: The collection of virtual nets covered by the Managed Network.
-    :type virtual_networks: list[~managed_network_management_client.models.ResourceId]
+    :type subscriptions: list[~managed_network_management_client.models.Resourceid]
+    :param virtualnetworks: The collection of virtual nets covered by the Managed Network.
+    :type virtualnetworks: list[~managed_network_management_client.models.Resourceid]
     :param subnets: The collection of  subnets covered by the Managed Network.
-    :type subnets: list[~managed_network_management_client.models.ResourceId]
+    :type subnets: list[~managed_network_management_client.models.Resourceid]
     """
 
     _validation = {
@@ -489,7 +489,7 @@ class ManagedNetworkGroup(ProxyResource):
         'name': {'readonly': True},
         'type': {'readonly': True},
         'kind': {'constant': True},
-        'provisioning_state': {'readonly': True},
+        'provisioningstate': {'readonly': True},
         'etag': {'readonly': True},
     }
 
@@ -499,12 +499,12 @@ class ManagedNetworkGroup(ProxyResource):
         'type': {'key': 'type', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
         'kind': {'key': 'kind', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+        'provisioningstate': {'key': 'properties.provisioningState', 'type': 'str'},
         'etag': {'key': 'properties.etag', 'type': 'str'},
-        'management_groups': {'key': 'properties.managementGroups', 'type': '[ResourceId]'},
-        'subscriptions': {'key': 'properties.subscriptions', 'type': '[ResourceId]'},
-        'virtual_networks': {'key': 'properties.virtualNetworks', 'type': '[ResourceId]'},
-        'subnets': {'key': 'properties.subnets', 'type': '[ResourceId]'},
+        'managementgroups': {'key': 'properties.managementGroups', 'type': '[Resourceid]'},
+        'subscriptions': {'key': 'properties.subscriptions', 'type': '[Resourceid]'},
+        'virtualnetworks': {'key': 'properties.virtualNetworks', 'type': '[Resourceid]'},
+        'subnets': {'key': 'properties.subnets', 'type': '[Resourceid]'},
     }
 
     kind = "Connectivity"
@@ -513,124 +513,124 @@ class ManagedNetworkGroup(ProxyResource):
         self,
         *,
         location: Optional[str] = None,
-        management_groups: Optional[List["ResourceId"]] = None,
-        subscriptions: Optional[List["ResourceId"]] = None,
-        virtual_networks: Optional[List["ResourceId"]] = None,
-        subnets: Optional[List["ResourceId"]] = None,
+        managementgroups: Optional[List["Resourceid"]] = None,
+        subscriptions: Optional[List["Resourceid"]] = None,
+        virtualnetworks: Optional[List["Resourceid"]] = None,
+        subnets: Optional[List["Resourceid"]] = None,
         **kwargs
     ):
-        super(ManagedNetworkGroup, self).__init__(location=location, **kwargs)
-        self.provisioning_state = None
+        super(Managednetworkgroup, self).__init__(location=location, **kwargs)
+        self.provisioningstate = None
         self.etag = None
-        self.management_groups = management_groups
+        self.managementgroups = managementgroups
         self.subscriptions = subscriptions
-        self.virtual_networks = virtual_networks
+        self.virtualnetworks = virtualnetworks
         self.subnets = subnets
 
 
-class ManagedNetworkGroupListResult(msrest.serialization.Model):
+class Managednetworkgrouplistresult(msrest.serialization.Model):
     """Result of the request to list Managed Network Groups. It contains a list of groups and a URL link to get the next set of results.
 
     :param value: Gets a page of ManagedNetworkGroup.
-    :type value: list[~managed_network_management_client.models.ManagedNetworkGroup]
-    :param next_link: Gets the URL to get the next set of results.
-    :type next_link: str
+    :type value: list[~managed_network_management_client.models.Managednetworkgroup]
+    :param nextlink: Gets the URL to get the next set of results.
+    :type nextlink: str
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[ManagedNetworkGroup]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        'value': {'key': 'value', 'type': '[Managednetworkgroup]'},
+        'nextlink': {'key': 'nextLink', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
-        value: Optional[List["ManagedNetworkGroup"]] = None,
-        next_link: Optional[str] = None,
+        value: Optional[List["Managednetworkgroup"]] = None,
+        nextlink: Optional[str] = None,
         **kwargs
     ):
-        super(ManagedNetworkGroupListResult, self).__init__(**kwargs)
+        super(Managednetworkgrouplistresult, self).__init__(**kwargs)
         self.value = value
-        self.next_link = next_link
+        self.nextlink = nextlink
 
 
-class ManagedNetworkGroupProperties(ResourceProperties):
+class Managednetworkgroupproperties(Resourceproperties):
     """Properties of a Managed Network Group.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
+    :ivar provisioningstate: Provisioning state of the ManagedNetwork resource. Possible values
      include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
+    :vartype provisioningstate: str or ~managed_network_management_client.models.Provisioningstate
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
-    :param management_groups: The collection of management groups covered by the Managed Network.
-    :type management_groups: list[~managed_network_management_client.models.ResourceId]
+    :param managementgroups: The collection of management groups covered by the Managed Network.
+    :type managementgroups: list[~managed_network_management_client.models.Resourceid]
     :param subscriptions: The collection of subscriptions covered by the Managed Network.
-    :type subscriptions: list[~managed_network_management_client.models.ResourceId]
-    :param virtual_networks: The collection of virtual nets covered by the Managed Network.
-    :type virtual_networks: list[~managed_network_management_client.models.ResourceId]
+    :type subscriptions: list[~managed_network_management_client.models.Resourceid]
+    :param virtualnetworks: The collection of virtual nets covered by the Managed Network.
+    :type virtualnetworks: list[~managed_network_management_client.models.Resourceid]
     :param subnets: The collection of  subnets covered by the Managed Network.
-    :type subnets: list[~managed_network_management_client.models.ResourceId]
+    :type subnets: list[~managed_network_management_client.models.Resourceid]
     """
 
     _validation = {
-        'provisioning_state': {'readonly': True},
+        'provisioningstate': {'readonly': True},
         'etag': {'readonly': True},
     }
 
     _attribute_map = {
-        'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
+        'provisioningstate': {'key': 'provisioningState', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
-        'management_groups': {'key': 'managementGroups', 'type': '[ResourceId]'},
-        'subscriptions': {'key': 'subscriptions', 'type': '[ResourceId]'},
-        'virtual_networks': {'key': 'virtualNetworks', 'type': '[ResourceId]'},
-        'subnets': {'key': 'subnets', 'type': '[ResourceId]'},
+        'managementgroups': {'key': 'managementGroups', 'type': '[Resourceid]'},
+        'subscriptions': {'key': 'subscriptions', 'type': '[Resourceid]'},
+        'virtualnetworks': {'key': 'virtualNetworks', 'type': '[Resourceid]'},
+        'subnets': {'key': 'subnets', 'type': '[Resourceid]'},
     }
 
     def __init__(
         self,
         *,
-        management_groups: Optional[List["ResourceId"]] = None,
-        subscriptions: Optional[List["ResourceId"]] = None,
-        virtual_networks: Optional[List["ResourceId"]] = None,
-        subnets: Optional[List["ResourceId"]] = None,
+        managementgroups: Optional[List["Resourceid"]] = None,
+        subscriptions: Optional[List["Resourceid"]] = None,
+        virtualnetworks: Optional[List["Resourceid"]] = None,
+        subnets: Optional[List["Resourceid"]] = None,
         **kwargs
     ):
-        super(ManagedNetworkGroupProperties, self).__init__(**kwargs)
-        self.management_groups = management_groups
+        super(Managednetworkgroupproperties, self).__init__(**kwargs)
+        self.managementgroups = managementgroups
         self.subscriptions = subscriptions
-        self.virtual_networks = virtual_networks
+        self.virtualnetworks = virtualnetworks
         self.subnets = subnets
 
 
-class ManagedNetworkListResult(msrest.serialization.Model):
+class Managednetworklistresult(msrest.serialization.Model):
     """Result of the request to list Managed Network. It contains a list of Managed Networks and a URL link to get the next set of results.
 
     :param value: Gets a page of ManagedNetworks.
-    :type value: list[~managed_network_management_client.models.ManagedNetwork]
-    :param next_link: Gets the URL to get the next page of results.
-    :type next_link: str
+    :type value: list[~managed_network_management_client.models.Managednetwork]
+    :param nextlink: Gets the URL to get the next page of results.
+    :type nextlink: str
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[ManagedNetwork]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        'value': {'key': 'value', 'type': '[Managednetwork]'},
+        'nextlink': {'key': 'nextLink', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
-        value: Optional[List["ManagedNetwork"]] = None,
-        next_link: Optional[str] = None,
+        value: Optional[List["Managednetwork"]] = None,
+        nextlink: Optional[str] = None,
         **kwargs
     ):
-        super(ManagedNetworkListResult, self).__init__(**kwargs)
+        super(Managednetworklistresult, self).__init__(**kwargs)
         self.value = value
-        self.next_link = next_link
+        self.nextlink = nextlink
 
 
-class ManagedNetworkPeeringPolicy(ProxyResource):
+class Managednetworkpeeringpolicy(Proxyresource):
     """The Managed Network Peering Policy resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -647,7 +647,7 @@ class ManagedNetworkPeeringPolicy(ProxyResource):
     :type location: str
     :param properties: Properties of a Managed Network Peering Policy.
     :type properties:
-     ~managed_network_management_client.models.ManagedNetworkPeeringPolicyProperties
+     ~managed_network_management_client.models.Managednetworkpeeringpolicyproperties
     """
 
     _validation = {
@@ -661,108 +661,108 @@ class ManagedNetworkPeeringPolicy(ProxyResource):
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
-        'properties': {'key': 'properties', 'type': 'ManagedNetworkPeeringPolicyProperties'},
+        'properties': {'key': 'properties', 'type': 'Managednetworkpeeringpolicyproperties'},
     }
 
     def __init__(
         self,
         *,
         location: Optional[str] = None,
-        properties: Optional["ManagedNetworkPeeringPolicyProperties"] = None,
+        properties: Optional["Managednetworkpeeringpolicyproperties"] = None,
         **kwargs
     ):
-        super(ManagedNetworkPeeringPolicy, self).__init__(location=location, **kwargs)
+        super(Managednetworkpeeringpolicy, self).__init__(location=location, **kwargs)
         self.properties = properties
 
 
-class ManagedNetworkPeeringPolicyListResult(msrest.serialization.Model):
+class Managednetworkpeeringpolicylistresult(msrest.serialization.Model):
     """Result of the request to list Managed Network Peering Policies. It contains a list of policies and a URL link to get the next set of results.
 
     :param value: Gets a page of Peering Policies.
-    :type value: list[~managed_network_management_client.models.ManagedNetworkPeeringPolicy]
-    :param next_link: Gets the URL to get the next page of results.
-    :type next_link: str
+    :type value: list[~managed_network_management_client.models.Managednetworkpeeringpolicy]
+    :param nextlink: Gets the URL to get the next page of results.
+    :type nextlink: str
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[ManagedNetworkPeeringPolicy]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        'value': {'key': 'value', 'type': '[Managednetworkpeeringpolicy]'},
+        'nextlink': {'key': 'nextLink', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
-        value: Optional[List["ManagedNetworkPeeringPolicy"]] = None,
-        next_link: Optional[str] = None,
+        value: Optional[List["Managednetworkpeeringpolicy"]] = None,
+        nextlink: Optional[str] = None,
         **kwargs
     ):
-        super(ManagedNetworkPeeringPolicyListResult, self).__init__(**kwargs)
+        super(Managednetworkpeeringpolicylistresult, self).__init__(**kwargs)
         self.value = value
-        self.next_link = next_link
+        self.nextlink = nextlink
 
 
-class ManagedNetworkProperties(ResourceProperties):
+class Managednetworkproperties(Resourceproperties):
     """Properties of Managed Network.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
+    :ivar provisioningstate: Provisioning state of the ManagedNetwork resource. Possible values
      include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
+    :vartype provisioningstate: str or ~managed_network_management_client.models.Provisioningstate
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
     :ivar groups: The collection of connectivity related Managed Network Groups within the Managed
      Network.
-    :vartype groups: list[~managed_network_management_client.models.ManagedNetworkGroup]
+    :vartype groups: list[~managed_network_management_client.models.Managednetworkgroup]
     :ivar peerings: The collection of Managed Network Peering Policies within the Managed Network.
-    :vartype peerings: list[~managed_network_management_client.models.ManagedNetworkPeeringPolicy]
-    :param management_groups: The collection of management groups covered by the Managed Network.
-    :type management_groups: list[~managed_network_management_client.models.ResourceId]
+    :vartype peerings: list[~managed_network_management_client.models.Managednetworkpeeringpolicy]
+    :param managementgroups: The collection of management groups covered by the Managed Network.
+    :type managementgroups: list[~managed_network_management_client.models.Resourceid]
     :param subscriptions: The collection of subscriptions covered by the Managed Network.
-    :type subscriptions: list[~managed_network_management_client.models.ResourceId]
-    :param virtual_networks: The collection of virtual nets covered by the Managed Network.
-    :type virtual_networks: list[~managed_network_management_client.models.ResourceId]
+    :type subscriptions: list[~managed_network_management_client.models.Resourceid]
+    :param virtualnetworks: The collection of virtual nets covered by the Managed Network.
+    :type virtualnetworks: list[~managed_network_management_client.models.Resourceid]
     :param subnets: The collection of  subnets covered by the Managed Network.
-    :type subnets: list[~managed_network_management_client.models.ResourceId]
+    :type subnets: list[~managed_network_management_client.models.Resourceid]
     """
 
     _validation = {
-        'provisioning_state': {'readonly': True},
+        'provisioningstate': {'readonly': True},
         'etag': {'readonly': True},
         'groups': {'readonly': True},
         'peerings': {'readonly': True},
     }
 
     _attribute_map = {
-        'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
+        'provisioningstate': {'key': 'provisioningState', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
-        'groups': {'key': 'connectivity.groups', 'type': '[ManagedNetworkGroup]'},
-        'peerings': {'key': 'connectivity.peerings', 'type': '[ManagedNetworkPeeringPolicy]'},
-        'management_groups': {'key': 'scope.managementGroups', 'type': '[ResourceId]'},
-        'subscriptions': {'key': 'scope.subscriptions', 'type': '[ResourceId]'},
-        'virtual_networks': {'key': 'scope.virtualNetworks', 'type': '[ResourceId]'},
-        'subnets': {'key': 'scope.subnets', 'type': '[ResourceId]'},
+        'groups': {'key': 'connectivity.groups', 'type': '[Managednetworkgroup]'},
+        'peerings': {'key': 'connectivity.peerings', 'type': '[Managednetworkpeeringpolicy]'},
+        'managementgroups': {'key': 'scope.managementGroups', 'type': '[Resourceid]'},
+        'subscriptions': {'key': 'scope.subscriptions', 'type': '[Resourceid]'},
+        'virtualnetworks': {'key': 'scope.virtualNetworks', 'type': '[Resourceid]'},
+        'subnets': {'key': 'scope.subnets', 'type': '[Resourceid]'},
     }
 
     def __init__(
         self,
         *,
-        management_groups: Optional[List["ResourceId"]] = None,
-        subscriptions: Optional[List["ResourceId"]] = None,
-        virtual_networks: Optional[List["ResourceId"]] = None,
-        subnets: Optional[List["ResourceId"]] = None,
+        managementgroups: Optional[List["Resourceid"]] = None,
+        subscriptions: Optional[List["Resourceid"]] = None,
+        virtualnetworks: Optional[List["Resourceid"]] = None,
+        subnets: Optional[List["Resourceid"]] = None,
         **kwargs
     ):
-        super(ManagedNetworkProperties, self).__init__(**kwargs)
+        super(Managednetworkproperties, self).__init__(**kwargs)
         self.groups = None
         self.peerings = None
-        self.management_groups = management_groups
+        self.managementgroups = managementgroups
         self.subscriptions = subscriptions
-        self.virtual_networks = virtual_networks
+        self.virtualnetworks = virtualnetworks
         self.subnets = subnets
 
 
-class ManagedNetworkUpdate(msrest.serialization.Model):
+class Managednetworkupdate(msrest.serialization.Model):
     """Update Tags of Managed Network.
 
     :param tags: A set of tags. Resource tags.
@@ -779,20 +779,20 @@ class ManagedNetworkUpdate(msrest.serialization.Model):
         tags: Optional[Dict[str, str]] = None,
         **kwargs
     ):
-        super(ManagedNetworkUpdate, self).__init__(**kwargs)
+        super(Managednetworkupdate, self).__init__(**kwargs)
         self.tags = tags
 
 
-class MeshPeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
+class Meshpeeringpolicyproperties(Managednetworkpeeringpolicyproperties):
     """Properties of a Mesh Peering Policy.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
     All required parameters must be populated in order to send to Azure.
 
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
+    :ivar provisioningstate: Provisioning state of the ManagedNetwork resource. Possible values
      include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
+    :vartype provisioningstate: str or ~managed_network_management_client.models.Provisioningstate
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
     :param type: Required. Gets or sets the connectivity type of a network structure
@@ -800,37 +800,37 @@ class MeshPeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
      'MeshTopology'.
     :type type: str or ~managed_network_management_client.models.Type
     :param hub: Generic pointer to a resource.
-    :type hub: ~managed_network_management_client.models.ResourceId
+    :type hub: ~managed_network_management_client.models.Resourceid
     :param spokes: Gets or sets the spokes group IDs.
-    :type spokes: list[~managed_network_management_client.models.ResourceId]
+    :type spokes: list[~managed_network_management_client.models.Resourceid]
     :param mesh: Gets or sets the mesh group IDs.
-    :type mesh: list[~managed_network_management_client.models.ResourceId]
+    :type mesh: list[~managed_network_management_client.models.Resourceid]
     """
 
     _validation = {
-        'provisioning_state': {'readonly': True},
+        'provisioningstate': {'readonly': True},
         'etag': {'readonly': True},
         'type': {'required': True},
     }
 
     _attribute_map = {
-        'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
+        'provisioningstate': {'key': 'provisioningState', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
-        'hub': {'key': 'hub', 'type': 'ResourceId'},
-        'spokes': {'key': 'spokes', 'type': '[ResourceId]'},
-        'mesh': {'key': 'mesh', 'type': '[ResourceId]'},
+        'hub': {'key': 'hub', 'type': 'Resourceid'},
+        'spokes': {'key': 'spokes', 'type': '[Resourceid]'},
+        'mesh': {'key': 'mesh', 'type': '[Resourceid]'},
     }
 
     def __init__(
         self,
         *,
-        hub: Optional["ResourceId"] = None,
-        spokes: Optional[List["ResourceId"]] = None,
-        mesh: Optional[List["ResourceId"]] = None,
+        hub: Optional["Resourceid"] = None,
+        spokes: Optional[List["Resourceid"]] = None,
+        mesh: Optional[List["Resourceid"]] = None,
         **kwargs
     ):
-        super(MeshPeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, mesh=mesh, **kwargs)
+        super(Meshpeeringpolicyproperties, self).__init__(hub=hub, spokes=spokes, mesh=mesh, **kwargs)
         self.type = 'MeshTopology'
 
 
@@ -891,34 +891,34 @@ class OperationDisplay(msrest.serialization.Model):
         self.operation = operation
 
 
-class OperationListResult(msrest.serialization.Model):
+class Operationlistresult(msrest.serialization.Model):
     """Result of the request to list Managed Network operations. It contains a list of operations and a URL link to get the next set of results.
 
     :param value: List of Resource Provider operations supported by the Managed Network resource
      provider.
     :type value: list[~managed_network_management_client.models.Operation]
-    :param next_link: URL to get the next set of operation list results if there are any.
-    :type next_link: str
+    :param nextlink: URL to get the next set of operation list results if there are any.
+    :type nextlink: str
     """
 
     _attribute_map = {
         'value': {'key': 'value', 'type': '[Operation]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        'nextlink': {'key': 'nextLink', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
         value: Optional[List["Operation"]] = None,
-        next_link: Optional[str] = None,
+        nextlink: Optional[str] = None,
         **kwargs
     ):
-        super(OperationListResult, self).__init__(**kwargs)
+        super(Operationlistresult, self).__init__(**kwargs)
         self.value = value
-        self.next_link = next_link
+        self.nextlink = nextlink
 
 
-class ResourceId(msrest.serialization.Model):
+class Resourceid(msrest.serialization.Model):
     """Generic pointer to a resource.
 
     :param id: Resource Id.
@@ -935,47 +935,47 @@ class ResourceId(msrest.serialization.Model):
         id: Optional[str] = None,
         **kwargs
     ):
-        super(ResourceId, self).__init__(**kwargs)
+        super(Resourceid, self).__init__(**kwargs)
         self.id = id
 
 
 class Scope(msrest.serialization.Model):
     """Scope of a Managed Network.
 
-    :param management_groups: The collection of management groups covered by the Managed Network.
-    :type management_groups: list[~managed_network_management_client.models.ResourceId]
+    :param managementgroups: The collection of management groups covered by the Managed Network.
+    :type managementgroups: list[~managed_network_management_client.models.Resourceid]
     :param subscriptions: The collection of subscriptions covered by the Managed Network.
-    :type subscriptions: list[~managed_network_management_client.models.ResourceId]
-    :param virtual_networks: The collection of virtual nets covered by the Managed Network.
-    :type virtual_networks: list[~managed_network_management_client.models.ResourceId]
+    :type subscriptions: list[~managed_network_management_client.models.Resourceid]
+    :param virtualnetworks: The collection of virtual nets covered by the Managed Network.
+    :type virtualnetworks: list[~managed_network_management_client.models.Resourceid]
     :param subnets: The collection of  subnets covered by the Managed Network.
-    :type subnets: list[~managed_network_management_client.models.ResourceId]
+    :type subnets: list[~managed_network_management_client.models.Resourceid]
     """
 
     _attribute_map = {
-        'management_groups': {'key': 'managementGroups', 'type': '[ResourceId]'},
-        'subscriptions': {'key': 'subscriptions', 'type': '[ResourceId]'},
-        'virtual_networks': {'key': 'virtualNetworks', 'type': '[ResourceId]'},
-        'subnets': {'key': 'subnets', 'type': '[ResourceId]'},
+        'managementgroups': {'key': 'managementGroups', 'type': '[Resourceid]'},
+        'subscriptions': {'key': 'subscriptions', 'type': '[Resourceid]'},
+        'virtualnetworks': {'key': 'virtualNetworks', 'type': '[Resourceid]'},
+        'subnets': {'key': 'subnets', 'type': '[Resourceid]'},
     }
 
     def __init__(
         self,
         *,
-        management_groups: Optional[List["ResourceId"]] = None,
-        subscriptions: Optional[List["ResourceId"]] = None,
-        virtual_networks: Optional[List["ResourceId"]] = None,
-        subnets: Optional[List["ResourceId"]] = None,
+        managementgroups: Optional[List["Resourceid"]] = None,
+        subscriptions: Optional[List["Resourceid"]] = None,
+        virtualnetworks: Optional[List["Resourceid"]] = None,
+        subnets: Optional[List["Resourceid"]] = None,
         **kwargs
     ):
         super(Scope, self).__init__(**kwargs)
-        self.management_groups = management_groups
+        self.managementgroups = managementgroups
         self.subscriptions = subscriptions
-        self.virtual_networks = virtual_networks
+        self.virtualnetworks = virtualnetworks
         self.subnets = subnets
 
 
-class ScopeAssignment(ProxyResource):
+class Scopeassignment(Proxyresource):
     """The Managed Network resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -990,20 +990,20 @@ class ScopeAssignment(ProxyResource):
     :vartype type: str
     :param location: The geo-location where the resource lives.
     :type location: str
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
+    :ivar provisioningstate: Provisioning state of the ManagedNetwork resource. Possible values
      include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
+    :vartype provisioningstate: str or ~managed_network_management_client.models.Provisioningstate
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
-    :param assigned_managed_network: The managed network ID with scope will be assigned to.
-    :type assigned_managed_network: str
+    :param assignedmanagednetwork: The managed network ID with scope will be assigned to.
+    :type assignedmanagednetwork: str
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'provisioning_state': {'readonly': True},
+        'provisioningstate': {'readonly': True},
         'etag': {'readonly': True},
     }
 
@@ -1012,80 +1012,80 @@ class ScopeAssignment(ProxyResource):
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+        'provisioningstate': {'key': 'properties.provisioningState', 'type': 'str'},
         'etag': {'key': 'properties.etag', 'type': 'str'},
-        'assigned_managed_network': {'key': 'properties.assignedManagedNetwork', 'type': 'str'},
+        'assignedmanagednetwork': {'key': 'properties.assignedManagedNetwork', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
         location: Optional[str] = None,
-        assigned_managed_network: Optional[str] = None,
+        assignedmanagednetwork: Optional[str] = None,
         **kwargs
     ):
-        super(ScopeAssignment, self).__init__(location=location, **kwargs)
-        self.provisioning_state = None
+        super(Scopeassignment, self).__init__(location=location, **kwargs)
+        self.provisioningstate = None
         self.etag = None
-        self.assigned_managed_network = assigned_managed_network
+        self.assignedmanagednetwork = assignedmanagednetwork
 
 
-class ScopeAssignmentListResult(msrest.serialization.Model):
+class Scopeassignmentlistresult(msrest.serialization.Model):
     """Result of the request to list ScopeAssignment. It contains a list of groups and a URL link to get the next set of results.
 
     :param value: Gets a page of ScopeAssignment.
-    :type value: list[~managed_network_management_client.models.ScopeAssignment]
-    :param next_link: Gets the URL to get the next set of results.
-    :type next_link: str
+    :type value: list[~managed_network_management_client.models.Scopeassignment]
+    :param nextlink: Gets the URL to get the next set of results.
+    :type nextlink: str
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[ScopeAssignment]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        'value': {'key': 'value', 'type': '[Scopeassignment]'},
+        'nextlink': {'key': 'nextLink', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
-        value: Optional[List["ScopeAssignment"]] = None,
-        next_link: Optional[str] = None,
+        value: Optional[List["Scopeassignment"]] = None,
+        nextlink: Optional[str] = None,
         **kwargs
     ):
-        super(ScopeAssignmentListResult, self).__init__(**kwargs)
+        super(Scopeassignmentlistresult, self).__init__(**kwargs)
         self.value = value
-        self.next_link = next_link
+        self.nextlink = nextlink
 
 
-class ScopeAssignmentProperties(ResourceProperties):
+class Scopeassignmentproperties(Resourceproperties):
     """Properties of Managed Network.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
+    :ivar provisioningstate: Provisioning state of the ManagedNetwork resource. Possible values
      include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
+    :vartype provisioningstate: str or ~managed_network_management_client.models.Provisioningstate
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
-    :param assigned_managed_network: The managed network ID with scope will be assigned to.
-    :type assigned_managed_network: str
+    :param assignedmanagednetwork: The managed network ID with scope will be assigned to.
+    :type assignedmanagednetwork: str
     """
 
     _validation = {
-        'provisioning_state': {'readonly': True},
+        'provisioningstate': {'readonly': True},
         'etag': {'readonly': True},
     }
 
     _attribute_map = {
-        'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
+        'provisioningstate': {'key': 'provisioningState', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
-        'assigned_managed_network': {'key': 'assignedManagedNetwork', 'type': 'str'},
+        'assignedmanagednetwork': {'key': 'assignedManagedNetwork', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
-        assigned_managed_network: Optional[str] = None,
+        assignedmanagednetwork: Optional[str] = None,
         **kwargs
     ):
-        super(ScopeAssignmentProperties, self).__init__(**kwargs)
-        self.assigned_managed_network = assigned_managed_network
+        super(Scopeassignmentproperties, self).__init__(**kwargs)
+        self.assignedmanagednetwork = assignedmanagednetwork

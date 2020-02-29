@@ -41,17 +41,16 @@ class Operations(object):
         self,
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.OperationListResult"
+        # type: (...) -> "models.Operationlistresult"
         """Lists all of the available MNC operations.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: OperationListResult or the result of cls(response)
-        :rtype: ~managed_network_management_client.models.OperationListResult
-        :raises: ~managed_network_management_client.models.ErrorResponseException:
+        :return: Operationlistresult or the result of cls(response)
+        :rtype: ~managed_network_management_client.models.Operationlistresult
+        :raises: ~managed_network_management_client.models.ErrorresponseException:
         """
-        cls = kwargs.pop('cls', None )  # type: ClsType["models.OperationListResult"]
+        cls = kwargs.pop('cls', None )  # type: ClsType["models.Operationlistresult"]
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
@@ -62,7 +61,7 @@ class Operations(object):
 
             # Construct parameters
             query_parameters = {}
-            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+            query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
             # Construct headers
             header_parameters = {}
@@ -73,11 +72,11 @@ class Operations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('OperationListResult', pipeline_response)
+            deserialized = self._deserialize('Operationlistresult', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.next_link, iter(list_of_elem)
+            return deserialized.nextlink, iter(list_of_elem)
 
         def get_next(next_link=None):
             request = prepare_request(next_link)
@@ -87,7 +86,7 @@ class Operations(object):
 
             if response.status_code not in [200]:
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise models.ErrorResponseException.from_response(response, self._deserialize)
+                raise models.ErrorresponseException.from_response(response, self._deserialize)
 
             return pipeline_response
 

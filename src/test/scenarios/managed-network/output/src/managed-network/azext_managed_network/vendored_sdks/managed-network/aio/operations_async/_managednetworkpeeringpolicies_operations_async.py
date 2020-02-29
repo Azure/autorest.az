@@ -18,8 +18,8 @@ from ... import models
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
-class ManagedNetworkPeeringPoliciesOperations:
-    """ManagedNetworkPeeringPoliciesOperations async operations.
+class ManagednetworkpeeringpoliciesOperations:
+    """ManagednetworkpeeringpoliciesOperations async operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -41,41 +41,40 @@ class ManagedNetworkPeeringPoliciesOperations:
 
     async def get(
         self,
-        resource_group_name: str,
-        managed_network_name: str,
-        managed_network_peering_policy_name: str,
+        resourcegroupname: str,
+        managednetworkname: str,
+        managednetworkpeeringpolicyname: str,
         **kwargs
-    ) -> "models.ManagedNetworkPeeringPolicy":
+    ) -> "models.Managednetworkpeeringpolicy":
         """The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource, specified by the  resource group, Managed Network name, and peering policy name.
 
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param managed_network_name: The name of the Managed Network.
-        :type managed_network_name: str
-        :param managed_network_peering_policy_name: The name of the Managed Network Peering Policy.
-        :type managed_network_peering_policy_name: str
+        :param resourcegroupname: The name of the resource group.
+        :type resourcegroupname: str
+        :param managednetworkname: The name of the Managed Network.
+        :type managednetworkname: str
+        :param managednetworkpeeringpolicyname: The name of the Managed Network Peering Policy.
+        :type managednetworkpeeringpolicyname: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagedNetworkPeeringPolicy or the result of cls(response)
-        :rtype: ~managed_network_management_client.models.ManagedNetworkPeeringPolicy
-        :raises: ~managed_network_management_client.models.ErrorResponseException:
+        :return: Managednetworkpeeringpolicy or the result of cls(response)
+        :rtype: ~managed_network_management_client.models.Managednetworkpeeringpolicy
+        :raises: ~managed_network_management_client.models.ErrorresponseException:
         """
-        cls: ClsType["models.ManagedNetworkPeeringPolicy"] = kwargs.pop('cls', None )
+        cls: ClsType["models.Managednetworkpeeringpolicy"] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.get.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'managedNetworkName': self._serialize.url("managed_network_name", managed_network_name, 'str'),
-            'managedNetworkPeeringPolicyName': self._serialize.url("managed_network_peering_policy_name", managed_network_peering_policy_name, 'str'),
+            'resourceGroupName': self._serialize.url("resourcegroupname", resourcegroupname, 'str'),
+            'managedNetworkName': self._serialize.url("managednetworkname", managednetworkname, 'str'),
+            'managedNetworkPeeringPolicyName': self._serialize.url("managednetworkpeeringpolicyname", managednetworkpeeringpolicyname, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -88,9 +87,9 @@ class ManagedNetworkPeeringPoliciesOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise models.ErrorResponseException.from_response(response, self._deserialize)
+            raise models.ErrorresponseException.from_response(response, self._deserialize)
 
-        deserialized = self._deserialize('ManagedNetworkPeeringPolicy', pipeline_response)
+        deserialized = self._deserialize('Managednetworkpeeringpolicy', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
@@ -98,34 +97,33 @@ class ManagedNetworkPeeringPoliciesOperations:
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}'}
 
-    async def _create_or_update_initial(
+    async def _createorupdate_initial(
         self,
-        resource_group_name: str,
-        managed_network_name: str,
-        managed_network_peering_policy_name: str,
+        resourcegroupname: str,
+        managednetworkname: str,
+        managednetworkpeeringpolicyname: str,
         location: Optional[str] = None,
-        properties: Optional["models.ManagedNetworkPeeringPolicyProperties"] = None,
+        properties: Optional["models.Managednetworkpeeringpolicyproperties"] = None,
         **kwargs
-    ) -> "models.ManagedNetworkPeeringPolicy":
-        cls: ClsType["models.ManagedNetworkPeeringPolicy"] = kwargs.pop('cls', None )
+    ) -> "models.Managednetworkpeeringpolicy":
+        cls: ClsType["models.Managednetworkpeeringpolicy"] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
 
-        managed_network_policy = models.ManagedNetworkPeeringPolicy(location=location, properties=properties)
-        api_version = "2019-06-01-preview"
+        managed_network_policy = models.Managednetworkpeeringpolicy(location=location, properties=properties)
 
         # Construct URL
-        url = self._create_or_update_initial.metadata['url']
+        url = self._createorupdate_initial.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'managedNetworkName': self._serialize.url("managed_network_name", managed_network_name, 'str'),
-            'managedNetworkPeeringPolicyName': self._serialize.url("managed_network_peering_policy_name", managed_network_peering_policy_name, 'str'),
+            'resourceGroupName': self._serialize.url("resourcegroupname", resourcegroupname, 'str'),
+            'managedNetworkName': self._serialize.url("managednetworkname", managednetworkname, 'str'),
+            'managedNetworkPeeringPolicyName': self._serialize.url("managednetworkpeeringpolicyname", managednetworkpeeringpolicyname, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -133,7 +131,7 @@ class ManagedNetworkPeeringPoliciesOperations:
         header_parameters['Content-Type'] = 'application/json'
 
         # Construct body
-        body_content = self._serialize.body(managed_network_policy, 'ManagedNetworkPeeringPolicy')
+        body_content = self._serialize.body(managed_network_policy, 'Managednetworkpeeringpolicy')
 
         # Construct and send request
         request = self._client.put(url, query_parameters, header_parameters, body_content)
@@ -142,57 +140,57 @@ class ManagedNetworkPeeringPoliciesOperations:
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise models.ErrorResponseException.from_response(response, self._deserialize)
+            raise models.ErrorresponseException.from_response(response, self._deserialize)
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('ManagedNetworkPeeringPolicy', pipeline_response)
+            deserialized = self._deserialize('Managednetworkpeeringpolicy', pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize('ManagedNetworkPeeringPolicy', pipeline_response)
+            deserialized = self._deserialize('Managednetworkpeeringpolicy', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}'}
+    _createorupdate_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}'}
 
-    async def create_or_update(
+    async def createorupdate(
         self,
-        resource_group_name: str,
-        managed_network_name: str,
-        managed_network_peering_policy_name: str,
+        resourcegroupname: str,
+        managednetworkname: str,
+        managednetworkpeeringpolicyname: str,
         location: Optional[str] = None,
-        properties: Optional["models.ManagedNetworkPeeringPolicyProperties"] = None,
+        properties: Optional["models.Managednetworkpeeringpolicyproperties"] = None,
         **kwargs
-    ) -> "models.ManagedNetworkPeeringPolicy":
+    ) -> "models.Managednetworkpeeringpolicy":
         """The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy.
 
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param managed_network_name: The name of the Managed Network.
-        :type managed_network_name: str
-        :param managed_network_peering_policy_name: The name of the Managed Network Peering Policy.
-        :type managed_network_peering_policy_name: str
+        :param resourcegroupname: The name of the resource group.
+        :type resourcegroupname: str
+        :param managednetworkname: The name of the Managed Network.
+        :type managednetworkname: str
+        :param managednetworkpeeringpolicyname: The name of the Managed Network Peering Policy.
+        :type managednetworkpeeringpolicyname: str
         :param location: The geo-location where the resource lives.
         :type location: str
         :param properties: Properties of a Managed Network Peering Policy.
-        :type properties: ~managed_network_management_client.models.ManagedNetworkPeeringPolicyProperties
+        :type properties: ~managed_network_management_client.models.Managednetworkpeeringpolicyproperties
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
-        :return: An instance of LROPoller that returns ManagedNetworkPeeringPolicy
-        :rtype: ~azure.core.polling.LROPoller[~managed_network_management_client.models.ManagedNetworkPeeringPolicy]
+        :return: An instance of LROPoller that returns Managednetworkpeeringpolicy
+        :rtype: ~azure.core.polling.LROPoller[~managed_network_management_client.models.Managednetworkpeeringpolicy]
 
-        :raises ~managed_network_management_client.models.ErrorResponseException:
+        :raises ~managed_network_management_client.models.ErrorresponseException:
         """
         polling: Union[bool, AsyncPollingMethod] = kwargs.pop('polling', True)
-        cls: ClsType["models.ManagedNetworkPeeringPolicy"] = kwargs.pop('cls', None )
-        raw_result = await self._create_or_update_initial(
-            resource_group_name=resource_group_name,
-            managed_network_name=managed_network_name,
-            managed_network_peering_policy_name=managed_network_peering_policy_name,
+        cls: ClsType["models.Managednetworkpeeringpolicy"] = kwargs.pop('cls', None )
+        raw_result = await self._createorupdate_initial(
+            resourcegroupname=resourcegroupname,
+            managednetworkname=managednetworkname,
+            managednetworkpeeringpolicyname=managednetworkpeeringpolicyname,
             location=location,
             properties=properties,
             cls=lambda x,y,z: x,
@@ -200,7 +198,7 @@ class ManagedNetworkPeeringPoliciesOperations:
         )
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize('ManagedNetworkPeeringPolicy', pipeline_response)
+            deserialized = self._deserialize('Managednetworkpeeringpolicy', pipeline_response)
 
             if cls:
                 return cls(pipeline_response, deserialized, {})
@@ -214,32 +212,31 @@ class ManagedNetworkPeeringPoliciesOperations:
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
         return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}'}
+    createorupdate.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}'}
 
     async def _delete_initial(
         self,
-        resource_group_name: str,
-        managed_network_name: str,
-        managed_network_peering_policy_name: str,
+        resourcegroupname: str,
+        managednetworkname: str,
+        managednetworkpeeringpolicyname: str,
         **kwargs
     ) -> None:
         cls: ClsType[None] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self._delete_initial.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'managedNetworkName': self._serialize.url("managed_network_name", managed_network_name, 'str'),
-            'managedNetworkPeeringPolicyName': self._serialize.url("managed_network_peering_policy_name", managed_network_peering_policy_name, 'str'),
+            'resourceGroupName': self._serialize.url("resourcegroupname", resourcegroupname, 'str'),
+            'managedNetworkName': self._serialize.url("managednetworkname", managednetworkname, 'str'),
+            'managedNetworkPeeringPolicyName': self._serialize.url("managednetworkpeeringpolicyname", managednetworkpeeringpolicyname, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters: Dict[str, Any] = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters: Dict[str, Any] = {}
@@ -251,7 +248,7 @@ class ManagedNetworkPeeringPoliciesOperations:
 
         if response.status_code not in [200, 202, 204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise models.ErrorResponseException.from_response(response, self._deserialize)
+            raise models.ErrorresponseException.from_response(response, self._deserialize)
 
         if cls:
           return cls(pipeline_response, None, {})
@@ -260,19 +257,19 @@ class ManagedNetworkPeeringPoliciesOperations:
 
     async def delete(
         self,
-        resource_group_name: str,
-        managed_network_name: str,
-        managed_network_peering_policy_name: str,
+        resourcegroupname: str,
+        managednetworkname: str,
+        managednetworkpeeringpolicyname: str,
         **kwargs
     ) -> None:
         """The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy, specified by the  resource group, Managed Network name, and peering policy name.
 
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param managed_network_name: The name of the Managed Network.
-        :type managed_network_name: str
-        :param managed_network_peering_policy_name: The name of the Managed Network Peering Policy.
-        :type managed_network_peering_policy_name: str
+        :param resourcegroupname: The name of the resource group.
+        :type resourcegroupname: str
+        :param managednetworkname: The name of the Managed Network.
+        :type managednetworkname: str
+        :param managednetworkpeeringpolicyname: The name of the Managed Network Peering Policy.
+        :type managednetworkpeeringpolicyname: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
@@ -280,14 +277,14 @@ class ManagedNetworkPeeringPoliciesOperations:
         :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
 
-        :raises ~managed_network_management_client.models.ErrorResponseException:
+        :raises ~managed_network_management_client.models.ErrorresponseException:
         """
         polling: Union[bool, AsyncPollingMethod] = kwargs.pop('polling', True)
         cls: ClsType[None] = kwargs.pop('cls', None )
         raw_result = await self._delete_initial(
-            resource_group_name=resource_group_name,
-            managed_network_name=managed_network_name,
-            managed_network_peering_policy_name=managed_network_peering_policy_name,
+            resourcegroupname=resourcegroupname,
+            managednetworkname=managednetworkname,
+            managednetworkpeeringpolicyname=managednetworkpeeringpolicyname,
             cls=lambda x,y,z: x,
             **kwargs
         )
@@ -306,20 +303,20 @@ class ManagedNetworkPeeringPoliciesOperations:
         return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}'}
 
-    def list_by_managed_network(
+    def listbymanagednetwork(
         self,
-        resource_group_name: str,
-        managed_network_name: str,
+        resourcegroupname: str,
+        managednetworkname: str,
         top: Optional[int] = None,
         skiptoken: Optional[str] = None,
         **kwargs
-    ) -> "models.ManagedNetworkPeeringPolicyListResult":
+    ) -> "models.Managednetworkpeeringpolicylistresult":
         """The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering Policies in a specified Managed Network, in a paginated format.
 
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param managed_network_name: The name of the Managed Network.
-        :type managed_network_name: str
+        :param resourcegroupname: The name of the resource group.
+        :type resourcegroupname: str
+        :param managednetworkname: The name of the Managed Network.
+        :type managednetworkname: str
         :param top: May be used to limit the number of results in a page for list queries.
         :type top: int
         :param skiptoken: Skiptoken is only used if a previous operation returned a partial result. If
@@ -327,22 +324,21 @@ class ManagedNetworkPeeringPoliciesOperations:
          a skiptoken parameter that specifies a starting point to use for subsequent calls.
         :type skiptoken: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagedNetworkPeeringPolicyListResult or the result of cls(response)
-        :rtype: ~managed_network_management_client.models.ManagedNetworkPeeringPolicyListResult
-        :raises: ~managed_network_management_client.models.ErrorResponseException:
+        :return: Managednetworkpeeringpolicylistresult or the result of cls(response)
+        :rtype: ~managed_network_management_client.models.Managednetworkpeeringpolicylistresult
+        :raises: ~managed_network_management_client.models.ErrorresponseException:
         """
-        cls: ClsType["models.ManagedNetworkPeeringPolicyListResult"] = kwargs.pop('cls', None )
+        cls: ClsType["models.Managednetworkpeeringpolicylistresult"] = kwargs.pop('cls', None )
         error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
                 # Construct URL
-                url = self.list_by_managed_network.metadata['url']
+                url = self.listbymanagednetwork.metadata['url']
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-                    'managedNetworkName': self._serialize.url("managed_network_name", managed_network_name, 'str'),
+                    'resourceGroupName': self._serialize.url("resourcegroupname", resourcegroupname, 'str'),
+                    'managedNetworkName': self._serialize.url("managednetworkname", managednetworkname, 'str'),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
             else:
@@ -350,7 +346,7 @@ class ManagedNetworkPeeringPoliciesOperations:
 
             # Construct parameters
             query_parameters: Dict[str, Any] = {}
-            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+            query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
             if top is not None:
                 query_parameters['$top'] = self._serialize.query("top", top, 'int', maximum=20, minimum=1)
             if skiptoken is not None:
@@ -365,11 +361,11 @@ class ManagedNetworkPeeringPoliciesOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('ManagedNetworkPeeringPolicyListResult', pipeline_response)
+            deserialized = self._deserialize('Managednetworkpeeringpolicylistresult', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.next_link, AsyncList(list_of_elem)
+            return deserialized.nextlink, AsyncList(list_of_elem)
 
         async def get_next(next_link=None):
             request = prepare_request(next_link)
@@ -379,11 +375,11 @@ class ManagedNetworkPeeringPoliciesOperations:
 
             if response.status_code not in [200]:
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise models.ErrorResponseException.from_response(response, self._deserialize)
+                raise models.ErrorresponseException.from_response(response, self._deserialize)
 
             return pipeline_response
 
         return AsyncItemPaged(
             get_next, extract_data
         )
-    list_by_managed_network.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies'}
+    listbymanagednetwork.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies'}

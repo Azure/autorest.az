@@ -4,7 +4,7 @@ See documentation [here](doc/00-overview.md)
 
 ``` yaml
 use-extension:
-  "@autorest/clicommon": "latest"
+  "@autorest/clicommon": "/Users/zhangqiaoqiao/work/code/autorest.cli.common"
   #"@autorest/python": "latest"
   "@autorest/python": "5.0.0-dev.20200211.1"
 
@@ -33,11 +33,10 @@ directive:
     reason: Flatten everything for Azure CLI
 
 pipeline:
-    az/clicommon:
-        input: python/namer
-        #output-artifact: source-file-pynamer
+    python/m2r:
+        input: clicommon/identity
     az/aznamer:
-        input: az/clicommon
+        input: python/namer
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer

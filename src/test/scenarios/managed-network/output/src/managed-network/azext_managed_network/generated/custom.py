@@ -9,164 +9,164 @@
 # pylint: disable=unused-argument
 
 
-def managed_network_managed_networks_list(cmd, client,
-                                          resource_group_name=None,
-                                          top=None,
-                                          skiptoken=None):
-    if resource_group_name is not None:
-        return client.list_by_resource_group(resource_group_name=resource_group_name, top=top, skiptoken=skiptoken)
-    return client.list_by_subscription(top=top, skiptoken=skiptoken)
+def managed_network_managednetwork_list(cmd, client,
+                                        resourcegroupname=None,
+                                        top=None,
+                                        skiptoken=None):
+    if resourcegroupname is not None:
+        return client.listbyresourcegroup(resourcegroupname=resourcegroupname, top=top, skiptoken=skiptoken)
+    return client.listbysubscription(top=top, skiptoken=skiptoken)
 
 
-def managed_network_managed_networks_show(cmd, client,
-                                          resource_group_name,
-                                          managed_network_name):
-    return client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name)
+def managed_network_managednetwork_show(cmd, client,
+                                        resourcegroupname,
+                                        managednetworkname):
+    return client.get(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname)
 
 
-def managed_network_managed_networks_create(cmd, client,
-                                            resource_group_name,
-                                            managed_network_name,
-                                            location=None,
-                                            tags=None,
-                                            managed_network_management_groups=None,
-                                            managed_network_subscriptions=None,
-                                            managed_network_virtual_networks=None,
-                                            managed_network_subnets=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, management_groups=managed_network_management_groups, subscriptions=managed_network_subscriptions, virtual_networks=managed_network_virtual_networks, subnets=managed_network_subnets)
+def managed_network_managednetwork_create(cmd, client,
+                                          resourcegroupname,
+                                          managednetworkname,
+                                          location=None,
+                                          tags=None,
+                                          managed_network_managementgroups=None,
+                                          managed_network_subscriptions=None,
+                                          managed_network_virtualnetworks=None,
+                                          managed_network_subnets=None):
+    return client.createorupdate(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, location=location, tags=tags, managementgroups=managed_network_managementgroups, subscriptions=managed_network_subscriptions, virtualnetworks=managed_network_virtualnetworks, subnets=managed_network_subnets)
 
 
-def managed_network_managed_networks_update(cmd, client,
-                                            resource_group_name,
-                                            managed_network_name,
-                                            tags=None):
-    return client.update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, tags=tags)
+def managed_network_managednetwork_update(cmd, client,
+                                          resourcegroupname,
+                                          managednetworkname,
+                                          tags=None):
+    return client.update(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, tags=tags)
 
 
-def managed_network_managed_networks_delete(cmd, client,
-                                            resource_group_name,
-                                            managed_network_name):
-    return client.delete(resource_group_name=resource_group_name, managed_network_name=managed_network_name)
+def managed_network_managednetwork_delete(cmd, client,
+                                          resourcegroupname,
+                                          managednetworkname):
+    return client.delete(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname)
 
 
-def managed_network_scope_assignments_list(cmd, client,
-                                           scope):
+def managed_network_scopeassignment_list(cmd, client,
+                                         scope):
     return client.list(scope=scope)
 
 
-def managed_network_scope_assignments_show(cmd, client,
+def managed_network_scopeassignment_show(cmd, client,
+                                         scope,
+                                         scopeassignmentname):
+    return client.get(scope=scope, scopeassignmentname=scopeassignmentname)
+
+
+def managed_network_scopeassignment_create(cmd, client,
                                            scope,
-                                           scope_assignment_name):
-    return client.get(scope=scope, scope_assignment_name=scope_assignment_name)
+                                           scopeassignmentname,
+                                           location=None,
+                                           parameters_assignedmanagednetwork=None):
+    return client.createorupdate(scope=scope, scopeassignmentname=scopeassignmentname, location=location, assignedmanagednetwork=parameters_assignedmanagednetwork)
 
 
-def managed_network_scope_assignments_create(cmd, client,
-                                             scope,
-                                             scope_assignment_name,
-                                             location=None,
-                                             parameters_assigned_managed_network=None):
-    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=parameters_assigned_managed_network)
+def managed_network_scopeassignment_update(cmd, client,
+                                           scope,
+                                           scopeassignmentname,
+                                           location=None,
+                                           parameters_assignedmanagednetwork=None):
+    return client.createorupdate(scope=scope, scopeassignmentname=scopeassignmentname, location=location, assignedmanagednetwork=parameters_assignedmanagednetwork)
 
 
-def managed_network_scope_assignments_update(cmd, client,
-                                             scope,
-                                             scope_assignment_name,
-                                             location=None,
-                                             parameters_assigned_managed_network=None):
-    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=parameters_assigned_managed_network)
+def managed_network_scopeassignment_delete(cmd, client,
+                                           scope,
+                                           scopeassignmentname):
+    return client.delete(scope=scope, scopeassignmentname=scopeassignmentname)
 
 
-def managed_network_scope_assignments_delete(cmd, client,
-                                             scope,
-                                             scope_assignment_name):
-    return client.delete(scope=scope, scope_assignment_name=scope_assignment_name)
+def managed_network_managednetworkgroup_list(cmd, client,
+                                             resourcegroupname,
+                                             managednetworkname,
+                                             top=None,
+                                             skiptoken=None):
+    return client.listbymanagednetwork(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, top=top, skiptoken=skiptoken)
 
 
-def managed_network_managed_network_groups_list(cmd, client,
-                                                resource_group_name,
-                                                managed_network_name,
-                                                top=None,
-                                                skiptoken=None):
-    return client.list_by_managed_network(resource_group_name=resource_group_name, managed_network_name=managed_network_name, top=top, skiptoken=skiptoken)
+def managed_network_managednetworkgroup_show(cmd, client,
+                                             resourcegroupname,
+                                             managednetworkname,
+                                             managednetworkgroupname):
+    return client.get(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, managednetworkgroupname=managednetworkgroupname)
 
 
-def managed_network_managed_network_groups_show(cmd, client,
-                                                resource_group_name,
-                                                managed_network_name,
-                                                managed_network_group_name):
-    return client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name)
+def managed_network_managednetworkgroup_create(cmd, client,
+                                               resourcegroupname,
+                                               managednetworkname,
+                                               managednetworkgroupname,
+                                               location=None,
+                                               managed_network_group_managementgroups=None,
+                                               managed_network_group_subscriptions=None,
+                                               managed_network_group_virtualnetworks=None,
+                                               managed_network_group_subnets=None):
+    return client.createorupdate(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, managednetworkgroupname=managednetworkgroupname, location=location, managementgroups=managed_network_group_managementgroups, subscriptions=managed_network_group_subscriptions, virtualnetworks=managed_network_group_virtualnetworks, subnets=managed_network_group_subnets)
 
 
-def managed_network_managed_network_groups_create(cmd, client,
-                                                  resource_group_name,
-                                                  managed_network_name,
-                                                  managed_network_group_name,
-                                                  location=None,
-                                                  managed_network_group_management_groups=None,
-                                                  managed_network_group_subscriptions=None,
-                                                  managed_network_group_virtual_networks=None,
-                                                  managed_network_group_subnets=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=managed_network_group_management_groups, subscriptions=managed_network_group_subscriptions, virtual_networks=managed_network_group_virtual_networks, subnets=managed_network_group_subnets)
+def managed_network_managednetworkgroup_update(cmd, client,
+                                               resourcegroupname,
+                                               managednetworkname,
+                                               managednetworkgroupname,
+                                               location=None,
+                                               managed_network_group_managementgroups=None,
+                                               managed_network_group_subscriptions=None,
+                                               managed_network_group_virtualnetworks=None,
+                                               managed_network_group_subnets=None):
+    return client.createorupdate(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, managednetworkgroupname=managednetworkgroupname, location=location, managementgroups=managed_network_group_managementgroups, subscriptions=managed_network_group_subscriptions, virtualnetworks=managed_network_group_virtualnetworks, subnets=managed_network_group_subnets)
 
 
-def managed_network_managed_network_groups_update(cmd, client,
-                                                  resource_group_name,
-                                                  managed_network_name,
-                                                  managed_network_group_name,
-                                                  location=None,
-                                                  managed_network_group_management_groups=None,
-                                                  managed_network_group_subscriptions=None,
-                                                  managed_network_group_virtual_networks=None,
-                                                  managed_network_group_subnets=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=managed_network_group_management_groups, subscriptions=managed_network_group_subscriptions, virtual_networks=managed_network_group_virtual_networks, subnets=managed_network_group_subnets)
+def managed_network_managednetworkgroup_delete(cmd, client,
+                                               resourcegroupname,
+                                               managednetworkname,
+                                               managednetworkgroupname):
+    return client.delete(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, managednetworkgroupname=managednetworkgroupname)
 
 
-def managed_network_managed_network_groups_delete(cmd, client,
-                                                  resource_group_name,
-                                                  managed_network_name,
-                                                  managed_network_group_name):
-    return client.delete(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name)
+def managed_network_managednetworkpeeringpolicy_list(cmd, client,
+                                                     resourcegroupname,
+                                                     managednetworkname,
+                                                     top=None,
+                                                     skiptoken=None):
+    return client.listbymanagednetwork(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, top=top, skiptoken=skiptoken)
 
 
-def managed_network_managed_network_peering_policies_list(cmd, client,
-                                                          resource_group_name,
-                                                          managed_network_name,
-                                                          top=None,
-                                                          skiptoken=None):
-    return client.list_by_managed_network(resource_group_name=resource_group_name, managed_network_name=managed_network_name, top=top, skiptoken=skiptoken)
+def managed_network_managednetworkpeeringpolicy_show(cmd, client,
+                                                     resourcegroupname,
+                                                     managednetworkname,
+                                                     managednetworkpeeringpolicyname):
+    return client.get(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, managednetworkpeeringpolicyname=managednetworkpeeringpolicyname)
 
 
-def managed_network_managed_network_peering_policies_show(cmd, client,
-                                                          resource_group_name,
-                                                          managed_network_name,
-                                                          managed_network_peering_policy_name):
-    return client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name)
+def managed_network_managednetworkpeeringpolicy_create(cmd, client,
+                                                       resourcegroupname,
+                                                       managednetworkname,
+                                                       managednetworkpeeringpolicyname,
+                                                       location=None,
+                                                       managed_network_policy_properties=None):
+    return client.createorupdate(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, managednetworkpeeringpolicyname=managednetworkpeeringpolicyname, location=location, properties=managed_network_policy_properties)
 
 
-def managed_network_managed_network_peering_policies_create(cmd, client,
-                                                            resource_group_name,
-                                                            managed_network_name,
-                                                            managed_network_peering_policy_name,
-                                                            location=None,
-                                                            managed_network_policy_properties=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=managed_network_policy_properties)
+def managed_network_managednetworkpeeringpolicy_update(cmd, client,
+                                                       resourcegroupname,
+                                                       managednetworkname,
+                                                       managednetworkpeeringpolicyname,
+                                                       location=None,
+                                                       managed_network_policy_properties=None):
+    return client.createorupdate(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, managednetworkpeeringpolicyname=managednetworkpeeringpolicyname, location=location, properties=managed_network_policy_properties)
 
 
-def managed_network_managed_network_peering_policies_update(cmd, client,
-                                                            resource_group_name,
-                                                            managed_network_name,
-                                                            managed_network_peering_policy_name,
-                                                            location=None,
-                                                            managed_network_policy_properties=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=managed_network_policy_properties)
+def managed_network_managednetworkpeeringpolicy_delete(cmd, client,
+                                                       resourcegroupname,
+                                                       managednetworkname,
+                                                       managednetworkpeeringpolicyname):
+    return client.delete(resourcegroupname=resourcegroupname, managednetworkname=managednetworkname, managednetworkpeeringpolicyname=managednetworkpeeringpolicyname)
 
 
-def managed_network_managed_network_peering_policies_delete(cmd, client,
-                                                            resource_group_name,
-                                                            managed_network_name,
-                                                            managed_network_peering_policy_name):
-    return client.delete(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name)
-
-
-def managed_network_operations_list(cmd, client):
+def managed_network_operation_list(cmd, client):
     return client.list()

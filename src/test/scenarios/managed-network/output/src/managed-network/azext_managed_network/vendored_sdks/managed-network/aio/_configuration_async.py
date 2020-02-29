@@ -36,7 +36,7 @@ class ManagedNetworkManagementClientConfiguration(Configuration):
 
         self.credential = credential
         self.subscription_id = subscription_id
-        self.api_version = "2019-06-01-preview"
+        self.apiversion = "2019-06-01-preview"
         self._configure(**kwargs)
         self.user_agent_policy.add_user_agent('azsdk-python-managednetworkmanagementclient/{}'.format(VERSION))
 
