@@ -4,9 +4,10 @@ See documentation [here](doc/00-overview.md)
 
 ``` yaml
 use-extension:
+  "@autorest/python": "5.0.0-dev.20200211.1"
   "@autorest/clicommon": "latest"
   #"@autorest/python": "latest"
-  "@autorest/python": "5.0.0-dev.20200211.1"
+  
 
 python: true
 require: 
@@ -32,12 +33,12 @@ directive:
       $['x-ms-client-flatten'] = true;
     reason: Flatten everything for Azure CLI
 
+
 pipeline:
-    az/clicommon:
-        input: python/namer
-        #output-artifact: source-file-pynamer
+    python/m2r:
+        input: clicommon/identity
     az/aznamer:
-        input: az/clicommon
+        input: python/namer
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer

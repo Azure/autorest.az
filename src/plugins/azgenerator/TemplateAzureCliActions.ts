@@ -6,6 +6,7 @@
 import { CodeModelAz } from "./CodeModelAz"
 import { ToCamelCase, Capitalize } from "../../utils/helper";
 import { SchemaType } from "@azure-tools/codemodel";
+import { stringify } from "querystring";
 
 export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
     var output: string[] = [];
@@ -21,6 +22,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
     output.push("");
     output.push("# pylint: disable=protected-access");
 
+    let allActions: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstCommandGroup())
     {
         do
@@ -39,6 +41,10 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                 {
                                     let actionName: string = "Add" + Capitalize(ToCamelCase(model.Option_Name));
 
+                                    if(allActions.has(actionName)) {
+                                        continue;
+                                    }
+                                    
                                     output.push("");
                                     output.push("");
                                     output.push("class " + actionName + "(argparse._AppendAction):");
@@ -53,9 +59,8 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                     output.push("            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))");
                                     output.push("        d = {}");
                                     output.push("        for k in properties:");
-                                    output.push("            kl = k.lower()");
+                                    output.push("            k1 = k.lower()");
                                     output.push("            v = properties[k]");
-
                                     if (model.EnterSubOptions()) {
                                         if (model.SelectFirstOption())
                                         {
@@ -71,8 +76,10 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
 
                                     model.ExitSubOptions();
 
-                                    output.push("        return d");                                
+                                    output.push("        return d");  
+                                    allActions.set(actionName, true);                              
                                 }
+
                             }
 
                         } while (model.SelectNextOption());
