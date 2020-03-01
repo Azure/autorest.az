@@ -27,7 +27,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
             'subscription_id': self.current_subscription()
         })
 
-        self.cmd('az managed-network managed-networks create '
+        self.cmd('az managed-network managed-network create '
                  '--location "eastus" '
                  '--managed-network-name "myManagedNetwork" '
                  '--resource-group "{rg}"',
@@ -39,7 +39,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--resource-group "{rg}"',
                  checks=[])
 
-        self.cmd('az managed-network scope-assignments create '
+        self.cmd('az managed-network scope-assignment create '
                  '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" '
                  '--scope "subscriptions/subscriptionC" '
                  '--scope-assignment-name "subscriptionCAssignment"',
@@ -56,7 +56,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--resource-group "{rg}"',
                  checks=[])
 
-        self.cmd('az managed-network managed-networks list '
+        self.cmd('az managed-network managed-network list '
                  '--resource-group "{rg}"',
                  checks=[])
 
