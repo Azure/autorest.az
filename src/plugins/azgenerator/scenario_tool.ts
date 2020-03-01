@@ -43,27 +43,35 @@ export function GenerateDefaultTestScenario(
 
 
 const SUBSCRIPTIONS = "subscriptions";
-enum Resource {
-    RESOUREGROUP = "resource-group",
-    VIRTUALNETWORK = "virtual-network",
-    SUBNET = "subnet",
-    NONE = "none",
+const RESOUREGROUP = "resource-group";
+const VIRTUALNETWORK = "virtual-network";
+const SUBNET = "subnet";
+
+export let Resource = {        // resource class_name -> boolean (whether is an external resource)
+    [RESOUREGROUP]: true,
+    [VIRTUALNETWORK]: true,
+    [SUBNET]: true,
 }
 
-function get_resource(str: string): Resource {
-    if (str==Resource.RESOUREGROUP) return  Resource.RESOUREGROUP;
-    else if (str==Resource.VIRTUALNETWORK) return Resource.VIRTUALNETWORK;
-    else if(str==Resource.SUBNET) return Resource.SUBNET;
-    else    return Resource.NONE;
+export let resource_class_depends = {
+    [RESOUREGROUP]: [],
+    [VIRTUALNETWORK]: [RESOUREGROUP,],
+    [SUBNET]: [VIRTUALNETWORK, RESOUREGROUP],
 }
 
-const resource_class_depends = {
-    [Resource.RESOUREGROUP]: [],
-    [Resource.VIRTUALNETWORK]: [Resource.RESOUREGROUP],
-    [Resource.SUBNET]: [Resource.VIRTUALNETWORK, Resource.RESOUREGROUP],
+export let resource_languages = {
+    [RESOUREGROUP]: ['resource-group', 'resourceGroups'],
+    [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworks'],
+    [SUBNET]: ['subnet', 'subnets'],
 }
 
-let topo_sorted_resources = (() => {
+export let resource_class_keys = {
+    [RESOUREGROUP]: 'rg',
+    [VIRTUALNETWORK]: 'vn',
+    [SUBNET]: 'sn',
+}
+
+export function topo_sort_resource() {
     let ret = [];
     let resources = Object.keys(resource_class_depends);
     //let reverse_depends = { };
@@ -84,21 +92,14 @@ let topo_sorted_resources = (() => {
         }
     }
     return ret;
-})();
-
-
-const resource_languages: object = {
-    [Resource.RESOUREGROUP]: ['resource-group', 'resourceGroups'],
-    [Resource.VIRTUALNETWORK]: ['virtual-network', 'virtualNetworks'],
-    [Resource.SUBNET]: ['subnet', 'subnets'],
 }
 
 class PreparerInfo {
     name: string;
-    class_name: Resource
+    class_name: string
     depend_parameters: string[];
     depend_resources: string[];
-    public constructor(name: string, class_name: Resource, depend_parameters: string[], depend_resources: string[]) {
+    public constructor(name: string, class_name: string, depend_parameters: string[], depend_resources: string[]) {
         this.name = name;
         this.class_name = class_name
         this.depend_parameters = depend_parameters;
@@ -106,9 +107,9 @@ class PreparerInfo {
     }
 }
 const preparer_infos = {
-    [Resource.RESOUREGROUP]: new PreparerInfo('ResourceGroupPreparer', Resource.RESOUREGROUP, [], []),
-    [Resource.VIRTUALNETWORK]: new PreparerInfo('VirtualNetworkPreparer', Resource.VIRTUALNETWORK, ['resource_group_key'], [Resource.RESOUREGROUP]),
-    [Resource.SUBNET]: new PreparerInfo('VnetSubnetPreparer', Resource.SUBNET, ['resource_group_key', 'vnet_key'], [Resource.RESOUREGROUP, Resource.VIRTUALNETWORK]),
+    [RESOUREGROUP]: new PreparerInfo('ResourceGroupPreparer', RESOUREGROUP, [], []),
+    [VIRTUALNETWORK]: new PreparerInfo('VirtualNetworkPreparer', VIRTUALNETWORK, ['resource_group_key'], [RESOUREGROUP]),
+    [SUBNET]: new PreparerInfo('VnetSubnetPreparer', SUBNET, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
 }
 
 export class PreparerEntity {
@@ -156,24 +157,18 @@ class ResourceObject {
 let key_cache = {}  //class_name+objectname->key
 let key_seq = {}    // class_name ->seq
 export function transfer_to_key(class_name: string, object_name: string): string {
-    const class_keys: object = {
-        [Resource.RESOUREGROUP]: 'rg',
-        [Resource.VIRTUALNETWORK]: 'vn',
-        [Resource.SUBNET]: 'sn',
-    }
-
-    let long_key = (class_keys[class_name] || class_name) + '_' + object_name;
-    if ( long_key in key_cache) {
+    let long_key = (resource_class_keys[class_name] || class_name) + '_' + object_name;
+    if (long_key in key_cache) {
         return key_cache[long_key];
     }
     if (class_name in key_seq) {
-        let key = (class_keys[class_name] || class_name) + '_' + key_seq[class_name];
+        let key = (resource_class_keys[class_name] || class_name) + '_' + key_seq[class_name];
         key_seq[class_name] += 1;
         key_cache[long_key] = key;
     }
     else {
         key_seq[class_name] = 2;
-        key_cache[long_key] = class_keys[class_name] || class_name;
+        key_cache[long_key] = resource_class_keys[class_name] || class_name;
     }
     return key_cache[long_key];
 }
@@ -229,7 +224,7 @@ export class ResourcePool {
         entitys.push(entity);
     }
 
-    public prepare_in_tree(resource: Resource, entitys: PreparerEntity[], root: Map<string, ResourceClass>, depends: string[][]) {
+    public prepare_in_tree(resource: string, entitys: PreparerEntity[], root: Map<string, ResourceClass>, depends: string[][]) {
         if (resource in root) {
             for (let object_name in root[resource].objects) {
                 this.prepare_resource(resource, object_name, depends, entitys);
@@ -254,7 +249,7 @@ export class ResourcePool {
 
     public create_preparer_entities(): PreparerEntity[] {
         let ret: PreparerEntity[] = [];
-        for (let resource of topo_sorted_resources) {
+        for (let resource of topo_sort_resource()) {
             this.prepare_in_tree(resource, ret, this.root, []);
             this.prepare_in_map(resource, ret);
         }
@@ -313,17 +308,17 @@ export class ResourcePool {
         return this.map[class_name].objects[object_name];
     }
 
-    private is_resource(language): Resource | null {
+    private is_resource(language): string | null {
         for (let resource in resource_languages) {
-            if (resource_languages[resource].indexOf(language)>-1){
-                return get_resource(resource);
+            if (resource_languages[resource].indexOf(language) > -1) {
+                return resource;
             }
         }
         return null;
     }
 
     public add_endpoint_resource(endpoint: any) {
-        if (typeof endpoint !== 'string')   return endpoint;
+        if (typeof endpoint !== 'string') return endpoint;
 
         let nodes = endpoint.split('/');
         if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
