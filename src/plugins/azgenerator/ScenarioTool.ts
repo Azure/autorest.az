@@ -47,36 +47,36 @@ const RESOUREGROUP = "resource-group";
 const VIRTUALNETWORK = "virtual-network";
 const SUBNET = "subnet";
 
-const external_resources = [
+const externalResources = [
     RESOUREGROUP,
     VIRTUALNETWORK,
     SUBNET,
 ]
 
-let resource_class_depends = {
+let resourceClassDepends = {
     [RESOUREGROUP]: [],
     [VIRTUALNETWORK]: [RESOUREGROUP,],
     [SUBNET]: [VIRTUALNETWORK, RESOUREGROUP],
 }
 
-let resource_languages = {
+let resourceLanguages = {
     [RESOUREGROUP]: ['resource-group', 'resourceGroups'],
     [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworks'],
     [SUBNET]: ['subnet', 'subnets'],
 }
 
-let resource_class_keys = {
+let resourceClassKeys = {
     [RESOUREGROUP]: 'rg',
     [VIRTUALNETWORK]: 'vn',
     [SUBNET]: 'sn',
 }
 
-export function topo_sort_resource() {
+export function TopoSortResource() {
     let ret = [];
-    let resources = Object.keys(resource_class_depends);
+    let resources = Object.keys(resourceClassDepends);
     //let reverse_depends = { };
-    let depends = deepCopy(resource_class_depends);
-    while (ret.length < Object.keys(resource_class_depends).length) {
+    let depends = deepCopy(resourceClassDepends);
+    while (ret.length < Object.keys(resourceClassDepends).length) {
         for (let a of resources) {
             if (a in depends && depends[a].length == 0) {
                 ret.push(a);
@@ -106,7 +106,7 @@ class PreparerInfo {
         this.depend_resources = depend_resources;
     }
 }
-const preparer_infos = {
+const preparerInfos = {
     [RESOUREGROUP]: new PreparerInfo('ResourceGroupPreparer', RESOUREGROUP, [], []),
     [VIRTUALNETWORK]: new PreparerInfo('VirtualNetworkPreparer', VIRTUALNETWORK, ['resource_group_key'], [RESOUREGROUP]),
     [SUBNET]: new PreparerInfo('VnetSubnetPreparer', SUBNET, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
@@ -146,7 +146,7 @@ class ResourceObject {
     }
 
     public get key(): string {
-        return get_resource_key(this.class_name, this.object_name);
+        return getResourceKey(this.class_name, this.object_name);
     }
 
     public get placeholder(): string {
@@ -154,23 +154,23 @@ class ResourceObject {
     }
 }
 
-let key_cache = {}  //class_name+objectname->key
-let key_seq = {}    // class_name ->seq
-export function get_resource_key(class_name: string, object_name: string): string {
-    let long_key = (resource_class_keys[class_name] || class_name) + '_' + object_name;
-    if (long_key in key_cache) {
-        return key_cache[long_key];
+let keyCache = {}  //class_name+objectname->key
+let keySeq = {}    // class_name ->seq
+export function getResourceKey(class_name: string, object_name: string): string {
+    let longKey = (resourceClassKeys[class_name] || class_name) + '_' + object_name;
+    if (longKey in keyCache) {
+        return keyCache[longKey];
     }
-    if (class_name in key_seq) {
-        let key = (resource_class_keys[class_name] || class_name) + '_' + key_seq[class_name];
-        key_seq[class_name] += 1;
-        key_cache[long_key] = key;
+    if (class_name in keySeq) {
+        let key = (resourceClassKeys[class_name] || class_name) + '_' + keySeq[class_name];
+        keySeq[class_name] += 1;
+        keyCache[longKey] = key;
     }
     else {
-        key_seq[class_name] = 2;
-        key_cache[long_key] = resource_class_keys[class_name] || class_name;
+        keySeq[class_name] = 2;
+        keyCache[longKey] = resourceClassKeys[class_name] || class_name;
     }
-    return key_cache[long_key];
+    return keyCache[longKey];
 }
 
 export class ResourcePool {
@@ -186,16 +186,16 @@ export class ResourcePool {
         this.use_subscription = false;
     }
 
-    private prepare_resource(class_name: string, object_name: string, depends: string[][], entitys: PreparerEntity[]) {
+    private prepareResource(class_name: string, object_name: string, depends: string[][], entitys: PreparerEntity[]) {
         for (let e of entitys) {
             if (e.info.class_name == class_name && e.object_name == object_name) {
                 return;
             }
         }
         for (let i = depends.length - 1; i >= 0; i--) {
-            this.prepare_resource(depends[i][0], depends[i][1], depends.slice(0, i), entitys);
+            this.prepareResource(depends[i][0], depends[i][1], depends.slice(0, i), entitys);
         }
-        let entity = new PreparerEntity(preparer_infos[class_name], object_name);
+        let entity = new PreparerEntity(preparerInfos[class_name], object_name);
         for (let depend_resource of entity.info.depend_resources) {
             let found = false;
             for (let i = depends.length - 1; i >= 0; i--) {
@@ -218,51 +218,51 @@ export class ResourcePool {
 
             //if there is no entity for this depend has been exist, create a new of it.
             const default_name = 'default';
-            this.prepare_resource(depend_resource, default_name, [], entitys);
+            this.prepareResource(depend_resource, default_name, [], entitys);
             entity.depend_parameter_values.push(default_name);
         }
         entitys.push(entity);
     }
 
-    public prepare_in_tree(resource: string, entitys: PreparerEntity[], root: Map<string, ResourceClass>, depends: string[][]) {
+    public prepareInTree(resource: string, entitys: PreparerEntity[], root: Map<string, ResourceClass>, depends: string[][]) {
         if (resource in root) {
             for (let object_name in root[resource].objects) {
-                this.prepare_resource(resource, object_name, depends, entitys);
+                this.prepareResource(resource, object_name, depends, entitys);
             }
         }
         for (let r_name in root) {
             for (let o_name in root[r_name].objects) {
                 depends.push([r_name, o_name]);
-                this.prepare_in_tree(resource, entitys, root[r_name].objects[o_name].sub_resources, depends);
+                this.prepareInTree(resource, entitys, root[r_name].objects[o_name].sub_resources, depends);
                 depends.pop();
             }
         }
     }
 
-    public prepare_in_map(resource, entitys: PreparerEntity[]) {
+    public prepareInMap(resource, entitys: PreparerEntity[]) {
         if (resource in this.map) {
             for (let o_name in this.map[resource].objects) {
-                this.prepare_resource(resource, o_name, [], entitys);
+                this.prepareResource(resource, o_name, [], entitys);
             }
         }
     }
 
-    public create_preparer_entities(): PreparerEntity[] {
+    public createPreparerEntities(): PreparerEntity[] {
         let ret: PreparerEntity[] = [];
-        for (let resource of topo_sort_resource()) {
-            this.prepare_in_tree(resource, ret, this.root, []);
-            this.prepare_in_map(resource, ret);
+        for (let resource of TopoSortResource()) {
+            this.prepareInTree(resource, ret, this.root, []);
+            this.prepareInMap(resource, ret);
         }
         return ret;
 
     }
-    private remove_map_resource(class_name: string, object_name: string) {
+    private removeMapResource(class_name: string, object_name: string) {
         if (class_name in this.map && object_name in this.map[class_name].objects) {
             this.map[class_name].objects.delete(object_name);
         }
     }
 
-    public add_tree_resource(class_name: string, object_name: string, parent_object: ResourceObject): ResourceObject {
+    public addTreeResource(class_name: string, object_name: string, parent_object: ResourceObject): ResourceObject {
         let resources: Map<string, ResourceClass> = parent_object ? parent_object.sub_resources : this.root;
 
         if (!(class_name in resources)) {
@@ -273,25 +273,25 @@ export class ResourcePool {
             resources[class_name].objects[object_name] = new ResourceObject(object_name, class_name);
         }
 
-        this.remove_map_resource(class_name, object_name);
+        this.removeMapResource(class_name, object_name);
         return resources[class_name].objects[object_name];
     }
 
-    public find_tree_resource(class_name: string, object_name: string, root: Map<string, ResourceClass>): ResourceObject {
+    public findTreeResource(class_name: string, object_name: string, root: Map<string, ResourceClass>): ResourceObject {
         if (class_name in root && object_name in root[class_name].objects) {
             return root[class_name].objects[object_name];
         }
         for (let c in root) {
             for (let o in root[c].objects) {
-                let ret = this.find_tree_resource(class_name, object_name, root[c].objects[o].sub_resources);
+                let ret = this.findTreeResource(class_name, object_name, root[c].objects[o].sub_resources);
                 if (ret) return ret;
             }
         }
         return null;
     }
 
-    public add_map_resource(class_name: string, object_name: string): ResourceObject {
-        let resource_object = this.find_tree_resource(class_name, object_name, this.root);
+    public addMapResource(class_name: string, object_name: string): ResourceObject {
+        let resource_object = this.findTreeResource(class_name, object_name, this.root);
         if (resource_object) {
             return resource_object;
         }
@@ -308,16 +308,16 @@ export class ResourcePool {
         return this.map[class_name].objects[object_name];
     }
 
-    private is_resource(language): string | null {
-        for (let resource in resource_languages) {
-            if (resource_languages[resource].indexOf(language) > -1) {
+    private isResource(language): string | null {
+        for (let resource in resourceLanguages) {
+            if (resourceLanguages[resource].indexOf(language) > -1) {
                 return resource;
             }
         }
         return null;
     }
 
-    public add_endpoint_resource(endpoint: any) {
+    public addEndpointResource(endpoint: any) {
         if (typeof endpoint !== 'string') return endpoint;
 
         let nodes = endpoint.split('/');
@@ -329,9 +329,9 @@ export class ResourcePool {
         let i = 3;
         let resource_object: ResourceObject = null;
         while (i < (nodes.length - 1)) {
-            const resource = this.is_resource(nodes[i]);
+            const resource = this.isResource(nodes[i]);
             if (resource) {
-                resource_object = this.add_tree_resource(resource, nodes[i + 1], resource_object);
+                resource_object = this.addTreeResource(resource, nodes[i + 1], resource_object);
                 nodes[i + 1] = resource_object.placeholder;
             }
             i += 2;
@@ -339,15 +339,15 @@ export class ResourcePool {
         return nodes.join('/');
     }
 
-    public add_param_resource(param_name: string, param_value: string): string {
+    public addParamResource(param_name: string, param_value: string): string {
         if (param_name.startsWith('--')) {
             param_name = param_name.substr(2);
         }
-        let resource = this.is_resource(param_name);
+        let resource = this.isResource(param_name);
         if (!resource) {
             return param_value;
         }
-        let resource_object = this.add_map_resource(param_name, param_value);
+        let resource_object = this.addMapResource(param_name, param_value);
         if (resource_object) {
             return resource_object.placeholder;
         }
@@ -356,15 +356,15 @@ export class ResourcePool {
         }
     }
 
-    public add_resources_info(resources: object) {
+    public addResourcesInfo(resources: object) {
         for (let class_name in resources) {
-            resource_class_keys[class_name] = class_name; // TODO: brief key for internal resources
-            resource_languages[class_name] = resources[class_name];
+            resourceClassKeys[class_name] = class_name; // TODO: brief key for internal resources
+            resourceLanguages[class_name] = resources[class_name];
         }
     } 
 }
 
-export function generate_resource_files(filename: string): string[] {
+export function generateResourceFiles(filename: string): string[] {
     let src_folder = path.join(`${__dirname}`, '..', '..', '..', 'src', 'plugins', 'azgenerator', 'resources');
     return ReadFile(path.join(src_folder, filename)).split(/\r\n|\n/);
 } 

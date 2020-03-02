@@ -21,7 +21,7 @@ import { CodeModelAz } from "./CodeModelAz";
 import { GenerateAzureCliActions } from "./TemplateAzureCliActions"
 import { GenerateTopLevelImport } from "./TemplateAzureCliTopLevelImport"
 import { GenerateVendoredSdksInit } from "./TemplateAzureCliVendoredSdksInit"
-import { generate_resource_files } from "./scenario_tool"
+import { generateResourceFiles } from "./ScenarioTool"
 
 export async function GenerateAll(model: CodeModelAz,
     generateReport: any) {
@@ -41,8 +41,8 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "generated/custom.py"] = GenerateAzureCliCustom(model);
             files[path + "generated/_client_factory.py"] = GenerateAzureCliClientFactory(model);
             files[path + "tests/latest/test_" + model.Extension_Name + "_scenario.py"] = GenerateAzureCliTestScenario(model);   
-            files[path + "tests/latest/preparers.py"] = generate_resource_files("preparers.py");
-            files[path + "tests/latest/__init__.py"] = generate_resource_files("__init__.py");
+            files[path + "tests/latest/preparers.py"] = generateResourceFiles("preparers.py");
+            files[path + "tests/latest/__init__.py"] = generateResourceFiles("__init__.py");
             files[path + "__init__.py"] = GenerateAzureCliInit(model);
             files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
             files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);

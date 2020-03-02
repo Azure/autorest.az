@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
-import { PreparerEntity, get_resource_key } from "./scenario_tool"
+import { PreparerEntity, getResourceKey } from "./ScenarioTool"
 
 export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let head: string[] = [];
@@ -95,7 +95,7 @@ function FormatPreparers(model: CodeModelAz, imports: string[], decorators: stri
     let decorated = [];
     for (let entity of (model.GetPreparerEntities() as PreparerEntity[])) {
         //ret.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + m + "')")
-        let line: string = `    @${entity.info.name}(name_prefix='cli_test_${model.Extension_NameUnderscored}_${entity.object_name}', key='${get_resource_key(entity.info.class_name, entity.object_name)}'`;
+        let line: string = `    @${entity.info.name}(name_prefix='cli_test_${model.Extension_NameUnderscored}_${entity.object_name}', key='${getResourceKey(entity.info.class_name, entity.object_name)}'`;
         for (let i = 0; i < entity.depend_parameter_values.length; i++) {
             line += `, ${entity.info.depend_parameters[i]}='${entity.depend_parameter_values[i]}'`
         }

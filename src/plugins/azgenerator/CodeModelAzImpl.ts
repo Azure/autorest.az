@@ -9,7 +9,7 @@ import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { GenerateDefaultTestScenario, ResourcePool, get_resource_key, PreparerEntity} from './scenario_tool'
+import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity} from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
 
 
@@ -1000,9 +1000,9 @@ export class CodeModelCliImpl implements CodeModelAz
         for (let k in example.Parameters) {
             let param_value = example.Parameters[k];
             if (isTest) {
-                let replaced_value = this.resource_pool.add_endpoint_resource(param_value);
+                let replaced_value = this.resource_pool.addEndpointResource(param_value);
                 if (replaced_value == param_value) {
-                    replaced_value = this.resource_pool.add_param_resource(k, param_value);
+                    replaced_value = this.resource_pool.addParamResource(k, param_value);
                 }
                 param_value = replaced_value;
             }
@@ -1014,7 +1014,7 @@ export class CodeModelCliImpl implements CodeModelAz
     }
 
     public GetPreparerEntities(): any[] {
-        return this.resource_pool.create_preparer_entities();
+        return this.resource_pool.createPreparerEntities();
     }
 
     public GetSubscriptionKey(): string {
@@ -1046,7 +1046,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 internal_resources[this.CommandGroup_Key].push(resource_name);
             }
         });
-        this.resource_pool.add_resources_info(internal_resources);
+        this.resource_pool.addResourcesInfo(internal_resources);
 
         //find dependency relationships of internal_resources
         this.GetAllExamples(null, (example) => {
