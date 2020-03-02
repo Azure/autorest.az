@@ -10,11 +10,8 @@
 
 
 def managed_network_managed_network_list(cmd, client,
-                                         resource_group_name=None,
                                          top=None,
                                          skiptoken=None):
-    if resource_group_name is not None:
-        return client.list_by_resource_group(resource_group_name=resource_group_name, top=top, skiptoken=skiptoken)
     return client.list_by_subscription(top=top, skiptoken=skiptoken)
 
 
@@ -166,7 +163,3 @@ def managed_network_managed_network_peering_policy_delete(cmd, client,
                                                           managed_network_name,
                                                           managed_network_peering_policy_name):
     return client.delete(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name)
-
-
-def managed_network_operation_list(cmd, client):
-    return client.list()

@@ -54,7 +54,7 @@ pipeline:
             - az/azgenerator
         scope: scope-az
 
-#scope-clicommon: false
+scope-clicommon: false
 
 scope-az:
     is-object: false
