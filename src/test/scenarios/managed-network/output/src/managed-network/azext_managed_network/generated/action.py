@@ -22,7 +22,7 @@ class AddManagementGroups(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-            k1 = k.lower()
+            kl = k.lower()
             v = properties[k]
             if kl == 'id':
                 d['id'] = v
@@ -41,7 +41,7 @@ class AddSubscriptions(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-            k1 = k.lower()
+            kl = k.lower()
             v = properties[k]
             if kl == 'id':
                 d['id'] = v
@@ -60,7 +60,7 @@ class AddVirtualNetworks(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-            k1 = k.lower()
+            kl = k.lower()
             v = properties[k]
             if kl == 'id':
                 d['id'] = v
@@ -79,7 +79,7 @@ class AddSubnets(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-            k1 = k.lower()
+            kl = k.lower()
             v = properties[k]
             if kl == 'id':
                 d['id'] = v
