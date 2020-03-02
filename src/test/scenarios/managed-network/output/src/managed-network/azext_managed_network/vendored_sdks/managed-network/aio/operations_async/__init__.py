@@ -6,16 +6,16 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._managed_networks_operations_async import ManagedNetworksOperations
-from ._scope_assignments_operations_async import ScopeAssignmentsOperations
-from ._managed_network_groups_operations_async import ManagedNetworkGroupsOperations
-from ._managed_network_peering_policies_operations_async import ManagedNetworkPeeringPoliciesOperations
-from ._operations_operations_async import Operations
+from ._managed_network_operations_async import ManagedNetworkOperations
+from ._scope_assignment_operations_async import ScopeAssignmentOperations
+from ._managed_network_group_operations_async import ManagedNetworkGroupOperations
+from ._managed_network_peering_policy_operations_async import ManagedNetworkPeeringPolicyOperations
+from ._operation_operations_async import OperationOperations
 
 __all__ = [
-    'ManagedNetworksOperations',
-    'ScopeAssignmentsOperations',
-    'ManagedNetworkGroupsOperations',
-    'ManagedNetworkPeeringPoliciesOperations',
-    'Operations',
+    'ManagedNetworkOperations',
+    'ScopeAssignmentOperations',
+    'ManagedNetworkGroupOperations',
+    'ManagedNetworkPeeringPolicyOperations',
+    'OperationOperations',
 ]
