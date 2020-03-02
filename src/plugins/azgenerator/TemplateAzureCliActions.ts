@@ -35,7 +35,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                     {
                         do
                         {
-                            if (model.Option_IsList)
+                            if (model.Option_IsListOfComplex)
                             {
                                 if (model.Option_Type == SchemaType.Object || model.Option_Type == SchemaType.Array)
                                 {
@@ -59,7 +59,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                     output.push("            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))");
                                     output.push("        d = {}");
                                     output.push("        for k in properties:");
-                                    output.push("            k1 = k.lower()");
+                                    output.push("            kl = k.lower()");
                                     output.push("            v = properties[k]");
                                     if (model.EnterSubOptions()) {
                                         if (model.SelectFirstOption())

@@ -73,6 +73,7 @@ scope-az:
 
 
 no-namespace-folders: true
+license-header: MICROSOFT_MIT_NO_VERSION
 #clear-output-folder: true
 scope-codegen/emitter:
     output-folder: "$(python-sdk-output-folder)"

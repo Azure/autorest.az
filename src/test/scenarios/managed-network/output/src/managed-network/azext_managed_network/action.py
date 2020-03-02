@@ -3,8 +3,11 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from azext_managed_network.generated.action import *
+# pylint: disable=wildcard-import
+# pylint: disable=unused-wildcard-import
+
+from azext_managed_network.generated.action import *  # noqa: F403
 try:
-    from azext_managed_network.manual.action import *
+    from azext_managed_network.manual.action import *  # noqa: F403
 except ImportError:
     pass
