@@ -746,12 +746,35 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get MethodParameter_IsList(): boolean
     {
-        let mtype = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].schema.type;
-        return (mtype == SchemaType.Dictionary || mtype == SchemaType.Object || mtype == SchemaType.Array)? true: false;
+        let p: Property = this.MethodParameter_GetElementType();
+        return (p != null);
+    }
+
+    public get MethodParameter_IsListOfComplex(): boolean
+    {
+        let p: Property = this.MethodParameter_GetElementType();
+        return (p != null) && p['type'] == "object";
     }
 
     public get MethodParameter(): any {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
+    }
+
+    private MethodParameter_GetElementType(): Property
+    {
+        let mp = this.MethodParameter;
+        let p: VirtualParameter = this.MethodParameter as VirtualParameter;        ;
+
+        if (p == undefined)
+            return null;
+
+        if (p.targetProperty == undefined)
+            return null;
+
+        if (p.targetProperty.schema.type != "array")
+            return null;
+
+        return p.targetProperty.schema['elementType'] as Property;
     }
 
     public get MethodParameter_EnumValues(): string[]
