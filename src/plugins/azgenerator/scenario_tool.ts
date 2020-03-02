@@ -47,25 +47,25 @@ const RESOUREGROUP = "resource-group";
 const VIRTUALNETWORK = "virtual-network";
 const SUBNET = "subnet";
 
-export let Resource = {        // resource class_name -> boolean (whether is an external resource)
-    [RESOUREGROUP]: true,
-    [VIRTUALNETWORK]: true,
-    [SUBNET]: true,
-}
+const external_resources = [
+    RESOUREGROUP,
+    VIRTUALNETWORK,
+    SUBNET,
+]
 
-export let resource_class_depends = {
+let resource_class_depends = {
     [RESOUREGROUP]: [],
     [VIRTUALNETWORK]: [RESOUREGROUP,],
     [SUBNET]: [VIRTUALNETWORK, RESOUREGROUP],
 }
 
-export let resource_languages = {
+let resource_languages = {
     [RESOUREGROUP]: ['resource-group', 'resourceGroups'],
     [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworks'],
     [SUBNET]: ['subnet', 'subnets'],
 }
 
-export let resource_class_keys = {
+let resource_class_keys = {
     [RESOUREGROUP]: 'rg',
     [VIRTUALNETWORK]: 'vn',
     [SUBNET]: 'sn',
@@ -355,6 +355,13 @@ export class ResourcePool {
             return param_value;
         }
     }
+
+    public add_resources_info(resources: object) {
+        for (let class_name in resources) {
+            resource_class_keys[class_name] = class_name; // TODO: brief key for internal resources
+            resource_languages[class_name] = resources[class_name];
+        }
+    } 
 }
 
 export function generate_resource_files(filename: string): string[] {

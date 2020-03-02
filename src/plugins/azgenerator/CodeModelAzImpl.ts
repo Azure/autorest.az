@@ -228,6 +228,10 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command;
     }
 
+    public get CommandGroup_Key(): string {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].$key || this.CommandGroup_Name;
+    }
+
     //-----------------------------------------------------------------------------------------------------------------
     // Commands
     //
@@ -674,6 +678,11 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.protocol?.http?.path;
     }
 
+    public Get_Method_Name(language="az"): string
+    {
+       return  this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].language[language].name;
+    }
+
     //=================================================================================================================
     // Methods Parameters.
     //
@@ -1043,26 +1052,78 @@ export class CodeModelCliImpl implements CodeModelAz
         return ret;
     }
 
-    public GetAllExamples(id?: string, callback?: (example)=>void): CommandExample[] {
-        let ret: CommandExample[] = [];
+    public GatherInternalResource() {
+        let internal_resources = {};  // resource_key --> list of resource languages
+        this.GetAllMethods(null, () => {
+            if ( !(this.CommandGroup_Key in internal_resources)) {
+                internal_resources[this.CommandGroup_Key] = [this.CommandGroup_Key, ];
+            }
+            let commands = this.CommandGroup_Name.split(" ");
+            let resource_name = commands[commands.length-1]+"-name";
+            if (internal_resources[this.CommandGroup_Key].indexOf(resource_name)<0){
+                internal_resources[this.CommandGroup_Key].push(resource_name);
+            }
+        });
+        this.resource_pool.add_resources_info(internal_resources);
+
+        //find dependency relationships of internal_resources
+        this.GetAllExamples(null, (example) => {
+            if (this.Get_Method_Name("az") == 'create') {
+                let depends = [];
+                // TODO: gater internal resources dependency
+            }
+        });
+    }
+
+    public GetAllMethods(command_group?: string, callback?: ()=>void): any[] {
+        let ret: [];
         this.SelectFirstExtension();
         if (this.SelectFirstCommandGroup()) {
             do {    // iterate all CommandGroups
+                if (command_group && command_group.toLowerCase() != this.CommandGroup_Key.toLowerCase()) continue;
                 while (this.currentOperationIndex >= 0) {  // iterate all Commands
                     this.SelectFirstMethod();
-                    do {                        // iterate all Methods
-                        for (let example of this.GetExamples()) {
-                            if (id && (example.Id.toLowerCase() != id.toLowerCase())) continue;
-                            if(callback) {
-                                callback(example);
-                            }
-                            ret.push(example);
-                        }
+                    do {                                   //
+                        if(callback) {
+                            callback();
+                        }                       
                     } while (this.SelectNextMethod())
                     this.SelectNextCommand();
                 }
             } while (this.SelectNextCommandGroup())
         }
+        return ret;
+    }
+
+    public GetAllExamples(id?: string, callback?: (example)=>void): CommandExample[] {
+        let ret: CommandExample[] = [];
+        this.GetAllMethods(null, () => {
+            for (let example of this.GetExamples()) {
+                if (id && (example.Id.toLowerCase() != id.toLowerCase())) continue;
+                if(callback) {
+                    callback(example);
+                }
+                ret.push(example);
+            }
+        });
+        // this.SelectFirstExtension();
+        // if (this.SelectFirstCommandGroup()) {
+        //     do {    // iterate all CommandGroups
+        //         while (this.currentOperationIndex >= 0) {  // iterate all Commands
+        //             this.SelectFirstMethod();
+        //             do {                        // iterate all Methods
+        //                 for (let example of this.GetExamples()) {
+        //                     if (id && (example.Id.toLowerCase() != id.toLowerCase())) continue;
+        //                     if(callback) {
+        //                         callback(example);
+        //                     }
+        //                     ret.push(example);
+        //                 }
+        //             } while (this.SelectNextMethod())
+        //             this.SelectNextCommand();
+        //         }
+        //     } while (this.SelectNextCommandGroup())
+        // }
         return ret;
     }
 }
