@@ -1081,10 +1081,14 @@ export class CodeModelCliImpl implements CodeModelAz
         this.resource_pool.addResourcesInfo(internal_resources);
 
         //find dependency relationships of internal_resources
-        this.GetAllExamples(null, (example) => {
+        this.GetAllMethods(null, () => {
             if (this.Get_Method_Name("az") == 'create') {
                 let depends = [];
-                // TODO: gater internal resources dependency
+                if (this.SelectFirstMethodParameter()) {
+                    do {
+                        // TODO: gater internal resources dependency
+                    } while(this.SelectNextMethodParameter())
+                }
             }
         });
     }
@@ -1097,7 +1101,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 if (command_group && command_group.toLowerCase() != this.CommandGroup_Key.toLowerCase()) continue;
                 while (this.currentOperationIndex >= 0) {  // iterate all Commands
                     this.SelectFirstMethod();
-                    do {                                   //
+                    do {                                   
                         if(callback) {
                             callback();
                         }                       
@@ -1120,24 +1124,6 @@ export class CodeModelCliImpl implements CodeModelAz
                 ret.push(example);
             }
         });
-        // this.SelectFirstExtension();
-        // if (this.SelectFirstCommandGroup()) {
-        //     do {    // iterate all CommandGroups
-        //         while (this.currentOperationIndex >= 0) {  // iterate all Commands
-        //             this.SelectFirstMethod();
-        //             do {                        // iterate all Methods
-        //                 for (let example of this.GetExamples()) {
-        //                     if (id && (example.Id.toLowerCase() != id.toLowerCase())) continue;
-        //                     if(callback) {
-        //                         callback(example);
-        //                     }
-        //                     ret.push(example);
-        //                 }
-        //             } while (this.SelectNextMethod())
-        //             this.SelectNextCommand();
-        //         }
-        //     } while (this.SelectNextCommandGroup())
-        // }
         return ret;
     }
 }
