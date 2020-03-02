@@ -46,5 +46,8 @@ clicommon:
             operationGroup: 'managed_networks'
             operation: 'list_by_resource_group'
         removed: true
+      - where:
+            parameter: location
+        required: true
 
 ```
