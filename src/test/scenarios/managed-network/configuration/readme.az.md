@@ -36,6 +36,11 @@ directive:
     reason: Flatten everything for Azure CLI
 
 clicommon:
+    naming:
+        default:
+            singularize:
+              - operationGroup
+              - operation
     cli-directive:
     # directive on operationGroup
       - select: 'operationGroup'
