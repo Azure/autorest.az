@@ -509,7 +509,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public EnterSubOptions(): boolean
     {
-        if (!this.Option_IsList)
+        if (!this.Option_IsListOfComplex)
             return false;
 
         this.suboptions = this.Option_GetElementType()['properties'];
