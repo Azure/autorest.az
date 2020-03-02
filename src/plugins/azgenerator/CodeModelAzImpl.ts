@@ -9,7 +9,7 @@ import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { GenerateDefaultTestScenario, ResourcePool, transfer_to_key} from './scenario_tool'
+import { GenerateDefaultTestScenario, ResourcePool, get_resource_key, PreparerEntity} from './scenario_tool'
 import { timingSafeEqual } from "crypto";
 
 
@@ -1013,26 +1013,8 @@ export class CodeModelCliImpl implements CodeModelAz
         return parameters;
     }
 
-    public FormatPreparers(imports: string[], decoraters: string[]) {
-        let decorated = [];
-        for (let entity of this.resource_pool.create_preparer_entities()) {
-            //ret.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + m + "')")
-            let line: string = `    @${entity.info.name}(name_prefix='cli_test_${this.Extension_NameUnderscored}_${entity.object_name}', key='${transfer_to_key(entity.info.class_name, entity.object_name)}'`;
-            for (let i = 0; i < entity.depend_parameter_values.length; i++) {
-                line += `, ${entity.info.depend_parameters[i]}='${entity.depend_parameter_values[i]}'`
-            }
-            line += ")";
-            decoraters.push(line);
-            if (decorated.indexOf(entity.info.name) < 0) {
-                if (entity.info.name=='ResourceGroupPreparer') {
-                    imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
-                }
-                else {
-                    imports.push(`from .preparers import ${entity.info.name}`);
-                }
-                decorated.push(entity.info.name);
-            }
-        }
+    public GetPreparerEntities(): any[] {
+        return this.resource_pool.create_preparer_entities();
     }
 
     public GetSubscriptionKey(): string {

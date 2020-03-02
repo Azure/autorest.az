@@ -105,6 +105,6 @@ export interface CodeModelAz
     Example_Title: string;
     Example_Params: any;
     GetExamples(): CommandExample[];
-    FormatPreparers(imports: string[], decoraters: string[]);
     GetSubscriptionKey(): string;
+    GetPreparerEntities(): any[];
 }

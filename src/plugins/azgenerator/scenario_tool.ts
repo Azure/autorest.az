@@ -146,7 +146,7 @@ class ResourceObject {
     }
 
     public get key(): string {
-        return transfer_to_key(this.class_name, this.object_name);
+        return get_resource_key(this.class_name, this.object_name);
     }
 
     public get placeholder(): string {
@@ -156,7 +156,7 @@ class ResourceObject {
 
 let key_cache = {}  //class_name+objectname->key
 let key_seq = {}    // class_name ->seq
-export function transfer_to_key(class_name: string, object_name: string): string {
+export function get_resource_key(class_name: string, object_name: string): string {
     let long_key = (resource_class_keys[class_name] || class_name) + '_' + object_name;
     if (long_key in key_cache) {
         return key_cache[long_key];
