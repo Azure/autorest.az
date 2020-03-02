@@ -24,8 +24,8 @@ class AddManagementGroups(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'id':
-                d['id'] = v
+            if kl == 'management_groups':
+                d['management_groups'] = v
         return d
 
 
@@ -43,8 +43,8 @@ class AddSubscriptions(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'id':
-                d['id'] = v
+            if kl == 'subscriptions':
+                d['subscriptions'] = v
         return d
 
 
@@ -62,8 +62,8 @@ class AddVirtualNetworks(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'id':
-                d['id'] = v
+            if kl == 'virtual_networks':
+                d['virtual_networks'] = v
         return d
 
 
@@ -81,6 +81,6 @@ class AddSubnets(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'id':
-                d['id'] = v
+            if kl == 'subnets':
+                d['subnets'] = v
         return d

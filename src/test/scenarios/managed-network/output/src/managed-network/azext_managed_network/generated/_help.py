@@ -20,7 +20,7 @@ helps['managed-network managed-network list'] = """
     examples:
       - name: Get Managed Network
         text: |-
-               az managed-network managed-network list --resource-group "myResourceGroup"
+               az managed-network managed-network list
 """
 
 helps['managed-network managed-network show'] = """
@@ -237,14 +237,4 @@ helps['managed-network managed-network-peering-policy delete'] = """
                az managed-network managed-network-peering-policy delete --managed-network-name \\
                "myManagedNetwork" --managed-network-peering-policy-name "myHubAndSpoke" --resource-group \\
                "myResourceGroup"
-"""
-
-helps['managed-network operation'] = """
-    type: group
-    short-summary: managed-network operation
-"""
-
-helps['managed-network operation list'] = """
-    type: command
-    short-summary: Lists all of the available MNC operations.
 """
