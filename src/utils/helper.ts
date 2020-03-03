@@ -77,3 +77,29 @@ export function deepCopy(obj: Object): Object {
 
     throw new Error("Unable to copy obj! Its type isn't supported.");
 }
+
+export function MergeSort(arr: any[], comparer: (left, right) => number): any[] {
+    if (arr.length < 2)
+        return arr;
+
+    let middle: number = Math.floor(arr.length / 2);
+    var left = arr.slice(0, middle);
+    var right = arr.slice(middle, arr.length);
+    return Merge(MergeSort(left, comparer), MergeSort(right, comparer), comparer);
+}
+
+function Merge(left: any[], right: any[], comparer: (left, right) => number): any[] {
+    var result = [];
+    while (left.length && right.length) {
+        if (comparer(left[0], right[0]) <= 0) {
+            result.push(left.shift());
+        } else {
+            result.push(right.shift());
+        }
+    }
+    while (left.length)
+        result.push(left.shift());
+    while (right.length)
+        result.push(right.shift());
+    return result;
+}

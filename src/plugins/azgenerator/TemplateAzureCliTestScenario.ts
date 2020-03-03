@@ -12,8 +12,9 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let class_info: string[] = [];
     let initiates: string[] = [];
     let body: string[] = [];
-    let config: any = model.Extension_TestScenario;
+    
     model.GatherInternalResource();
+    let config: any = model.Extension_TestScenario;
 
     head.push("# --------------------------------------------------------------------------------------------");
     head.push("# Copyright (c) Microsoft Corporation. All rights reserved.");

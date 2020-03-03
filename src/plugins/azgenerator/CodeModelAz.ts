@@ -14,6 +14,7 @@ export class CommandExample
     public Parameters: Map<string, string>;
     // public MethodName: string;
     public Path: string;
+    public ResourceClassName: string;
 }
 
 export interface CodeModelAz

@@ -7,7 +7,7 @@ import { CodeModelAz, CommandExample } from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
-import { ToSnakeCase } from '../../utils/helper';
+import { ToSnakeCase, MergeSort } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity} from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
@@ -30,7 +30,7 @@ export class CodeModelCliImpl implements CodeModelAz
     submethodparameters: Property[];
     currentSubOptionIndex: number;
     az_common: {};
-    private _testScenario: any;
+    private _testScenario: any[];
 
     async init() {
         this.options = await this.session.getValue('az');
@@ -1166,6 +1166,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 example.Id = id;
                 example.Title = example_obj.title || id;
                 example.Path = this.Method_Path;
+                example.ResourceClassName = this.CommandGroup_Key;
                 let params: Map<string, string> = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
                 examples.push(example);
@@ -1254,6 +1255,72 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
                 this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
             }
+        });
+
+        this.SortExamplesByDependency();
+    }
+
+    public SortExamplesByDependency() {
+        let depend_on = (example_a: CommandExample, example_b: CommandExample): boolean => {
+            return Object.keys(example_a.Parameters).some((param_name): boolean => {
+                if (this.resource_pool.isResource(param_name.substr(2)) == example_b.ResourceClassName) return true;
+                if (typeof  example_a[param_name] == 'string') {
+                    for (let resource_name of example_a[param_name].split('/')) {
+                        if (this.resource_pool.isResource(resource_name) == example_b.ResourceClassName) return true;
+                    }
+                }
+                return false;
+            });
+        }
+
+        // stable sort
+        this._testScenario = MergeSort(this._testScenario, (config_a: object, config_b: object): number => {
+            let examples_a: CommandExample[] = this.GetAllExamples(config_a['name']);
+            let examples_b: CommandExample[] = this.GetAllExamples(config_b['name']);
+            if (examples_a.length <= 0 || examples_b.length <=0 ){
+                return 0; // if any example can't be found, keep the original order
+            }
+
+            if (examples_a[0].ResourceClassName == examples_b[0].ResourceClassName) {
+                if (examples_b[0].Method.toLowerCase() == "create") {
+                    return 1;
+                }
+                else if (examples_b[0].Method.toLowerCase() == "delete") {
+                    return -1;
+                }
+                else if (examples_a[0].Method.toLowerCase() == "create") {
+                    return -1;
+                }
+                else if (examples_a[0].Method.toLowerCase() == "delete") {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
+            else if (depend_on(examples_a[0], examples_b[0])) {
+                if (examples_b[0].Method.toLowerCase() == "create") {
+                    return 1;
+                }
+                else if (examples_b[0].Method.toLowerCase() == "delete") {
+                    return -1;
+                }
+                else {
+                    return 0;
+                }
+            }
+            else if (depend_on(examples_b[0], examples_a[0])) {
+                if (examples_a[0].Method.toLowerCase() == "create") {
+                    return -1;
+                }
+                else if (examples_a[0].Method.toLowerCase() == "delete") {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
+            return 0;
         });
     }
 
