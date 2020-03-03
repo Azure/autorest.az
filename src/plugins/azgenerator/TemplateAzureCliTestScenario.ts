@@ -5,13 +5,15 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { PreparerEntity, getResourceKey } from "./ScenarioTool"
+import { ToSnakeCase } from '../../utils/helper';
 
 export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let head: string[] = [];
     let class_info: string[] = [];
-    let initiates: string[]= [];
+    let initiates: string[] = [];
     let body: string[] = [];
     let config: any = model.Extension_TestScenario;
+    model.GatherInternalResource();
 
     head.push("# --------------------------------------------------------------------------------------------");
     head.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
@@ -73,7 +75,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
         body.push("        pass")
     }
     let subscription_id = model.GetSubscriptionKey();
-    if(subscription_id) {
+    if (subscription_id) {
         class_info.push("    def current_subscription(self):");
         class_info.push("        subs = self.cmd('az account show').get_output_in_json()");
         class_info.push("        return subs['id']");
@@ -86,15 +88,21 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
 
     let imports: string[] = [];
     let decorators: string[] = [];
-    FormatPreparers(model, imports, decorators);
+    InitiateDependencies(model, imports, decorators, initiates);
 
     return head.concat(imports, class_info, decorators, initiates, body);
 }
 
-function FormatPreparers(model: CodeModelAz, imports: string[], decorators: string[]) {
+function InitiateDependencies(model: CodeModelAz, imports: string[], decorators: string[], initiates: string[]) {
     let decorated = [];
+    let internalObjects = [];
     for (let entity of (model.GetPreparerEntities() as PreparerEntity[])) {
-        //ret.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + m + "')")
+        if (!entity.info.name) {
+            internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name)]);
+            continue;
+        }
+
+        // create preparers for outside dependency
         let line: string = `    @${entity.info.name}(name_prefix='cli_test_${model.Extension_NameUnderscored}_${entity.object_name}', key='${getResourceKey(entity.info.class_name, entity.object_name)}'`;
         for (let i = 0; i < entity.depend_parameter_values.length; i++) {
             line += `, ${entity.info.depend_parameters[i]}='${entity.depend_parameter_values[i]}'`
@@ -102,7 +110,7 @@ function FormatPreparers(model: CodeModelAz, imports: string[], decorators: stri
         line += ")";
         decorators.push(line);
         if (decorated.indexOf(entity.info.name) < 0) {
-            if (entity.info.name=='ResourceGroupPreparer') {
+            if (entity.info.name == 'ResourceGroupPreparer') {
                 imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
             }
             else {
@@ -110,5 +118,14 @@ function FormatPreparers(model: CodeModelAz, imports: string[], decorators: stri
             }
             decorated.push(entity.info.name);
         }
+    }
+
+    // randomize name for internal resources
+    if (internalObjects.length > 0) {
+        initiates.push("        self.kwargs.update({");
+        for (let [class_name, kargs_key] of internalObjects)
+            initiates.push(`            '${kargs_key}': self.create_random_name(prefix='${ToSnakeCase(class_name)}', length=24)`);
+        initiates.push("        })");
+        initiates.push("");
     }
 }

@@ -47,12 +47,6 @@ const RESOUREGROUP = "resource-group";
 const VIRTUALNETWORK = "virtual-network";
 const SUBNET = "subnet";
 
-const externalResources = [
-    RESOUREGROUP,
-    VIRTUALNETWORK,
-    SUBNET,
-]
-
 let resourceClassDepends = {
     [RESOUREGROUP]: [],
     [VIRTUALNETWORK]: [RESOUREGROUP,],
@@ -168,7 +162,14 @@ export function getResourceKey(class_name: string, object_name: string): string 
     }
     else {
         keySeq[class_name] = 2;
-        keyCache[longKey] = resourceClassKeys[class_name] || class_name;
+        if (preparerInfos[class_name].name) {  // is external resource
+            keyCache[longKey] = resourceClassKeys[class_name] || class_name;
+        }
+        else {                              // is internal resource
+            // generally, internal resource object_name is shorter than class_name
+            keyCache[longKey] = object_name;
+        }
+
     }
     return keyCache[longKey];
 }
@@ -224,7 +225,7 @@ export class ResourcePool {
         entitys.push(entity);
     }
 
-    public prepareInTree(resource: string, entitys: PreparerEntity[], root: Map<string, ResourceClass>, depends: string[][]) {
+    private prepareInTree(resource: string, entitys: PreparerEntity[], root: Map<string, ResourceClass>, depends: string[][]) {
         if (resource in root) {
             for (let object_name in root[resource].objects) {
                 this.prepareResource(resource, object_name, depends, entitys);
@@ -239,7 +240,7 @@ export class ResourcePool {
         }
     }
 
-    public prepareInMap(resource, entitys: PreparerEntity[]) {
+    private prepareInMap(resource, entitys: PreparerEntity[]) {
         if (resource in this.map) {
             for (let o_name in this.map[resource].objects) {
                 this.prepareResource(resource, o_name, [], entitys);
@@ -254,8 +255,8 @@ export class ResourcePool {
             this.prepareInMap(resource, ret);
         }
         return ret;
-
     }
+
     private removeMapResource(class_name: string, object_name: string) {
         if (class_name in this.map && object_name in this.map[class_name].objects) {
             this.map[class_name].objects.delete(object_name);
@@ -308,10 +309,10 @@ export class ResourcePool {
         return this.map[class_name].objects[object_name];
     }
 
-    private isResource(language): string | null {
+    public isResource(language): string | null {
         for (let resource in resourceLanguages) {
-            if (resourceLanguages[resource].indexOf(language) > -1) {
-                return resource;
+            for (let resource_language of resourceLanguages[resource]) {
+                if (resource_language.toLowerCase() == language.toLowerCase()) return resource;
             }
         }
         return null;
@@ -347,7 +348,7 @@ export class ResourcePool {
         if (!resource) {
             return param_value;
         }
-        let resource_object = this.addMapResource(param_name, param_value);
+        let resource_object = this.addMapResource(resource, param_value);
         if (resource_object) {
             return resource_object.placeholder;
         }
@@ -361,7 +362,12 @@ export class ResourcePool {
             resourceClassKeys[class_name] = class_name; // TODO: brief key for internal resources
             resourceLanguages[class_name] = resources[class_name];
         }
-    } 
+    }
+
+    public setResourceDepends(resource_class_name: string, depend_resources: string[], depend_parameters: string[]) {
+        resourceClassDepends[resource_class_name] = depend_resources;
+        preparerInfos[resource_class_name] = new PreparerInfo(null, resource_class_name, depend_parameters, depend_resources);
+    }
 }
 
 export function generateResourceFiles(filename: string): string[] {

@@ -1083,12 +1083,27 @@ export class CodeModelCliImpl implements CodeModelAz
         //find dependency relationships of internal_resources
         this.GetAllMethods(null, () => {
             if (this.Get_Method_Name("az") == 'create') {
-                let depends = [];
+                let depend_resources = [];
+                let depend_parameters = [];
                 if (this.SelectFirstMethodParameter()) {
                     do {
-                        // TODO: gater internal resources dependency
+                        if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
+                            let param_name = this.MethodParameter.language["az"].name;
+                            if (internal_resources[this.CommandGroup_Key].indexOf(param_name)<0 ) {// if it isn't name of current resource) 
+                                let on_resource = this.resource_pool.isResource(param_name);
+                                if (on_resource)
+                                    // the resource is a dependency only when it's a parameter in an example.
+                                    for (let example of this.GetExamples()) {
+                                        if(param_name in example.Parameters) {
+                                            depend_resources.push(on_resource);
+                                            depend_parameters.push(param_name);
+                                        }
+                                    }
+                                }
+                        }
                     } while(this.SelectNextMethodParameter())
                 }
+                this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
             }
         });
     }

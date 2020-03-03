@@ -109,4 +109,5 @@ export interface CodeModelAz
     GetExamples(): CommandExample[];
     GetSubscriptionKey(): string;
     GetPreparerEntities(): any[];
+    GatherInternalResource();
 }
