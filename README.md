@@ -8,9 +8,12 @@ use-extension:
   "@autorest/clicommon": "0.3.3"
   #"@autorest/python": "latest"
   
+python:
+    reason: 'make sure python flag exists to load config in python.md'
+cli:
+    reason: 'make sure cli flag exists to load config in cli.md'
 
-python: true
-require: 
+require:
   - ./readme.python.md
   - ./readme.cli.md
   - $(this-folder)/readme.az.common.md
@@ -26,14 +29,6 @@ modelerfour:
 
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true
-
-directive:
-  - from: swagger-document
-    where: $..parameters[?(@.in=='body')]
-    transform: >
-      $['x-ms-client-flatten'] = true;
-    reason: Flatten everything for Azure CLI
-
 
 pipeline:
     python/m2r:
