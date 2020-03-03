@@ -51,14 +51,21 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
                 output.push("        client_factory=" + cf_name + ")");
 
                 output.push("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + ") as g:");
+                let needWait = false;
                 do
                 {
+                    if(model.Command_IsLongRun) {
+                        needWait = true;
+                    }
                     output = output.concat(getCommandBody(model));
                     if(model.Command_CanSplit) {
                         output = output.concat(getCommandBody(model, true));
                     }
                 }
                 while (model.SelectNextCommand());
+                if(needWait) {
+                    output.push("        g.wait_command('wait');");
+                }
             }
         } while (model.SelectNextCommandGroup());
     }
@@ -71,17 +78,21 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     let output: string [] = [];
     let functionName = model.Command_FunctionName;
     let methodName = model.Command_MethodName;
+    let endStr = ")";
+    if(model.Command_IsLongRun) {
+        endStr = ", supports_no_wait=True" + endStr;
+    }
     if (methodName != "show")
     {
         if(needUpdate) {
-            output.push("        g.custom_command('" + methodName.replace(/create/g, "update") + "', '" + functionName.replace(/_create/g, "_update") + "')");
+            output.push("        g.generic_update_command('" + methodName.replace(/create/g, "update") + "', '" + functionName.replace(/_create/g, "_update") + "'" + endStr);
         } else {
-            output.push("        g.custom_command('" + methodName + "', '" + functionName + "')");
+            output.push("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr);
         } 
     }
     else
     {
-        output.push("        g.custom_show_command('" + methodName + "', '" + functionName + "')");
+        output.push("        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr);
     }
     return output;
 }
