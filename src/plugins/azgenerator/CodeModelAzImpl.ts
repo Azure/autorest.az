@@ -29,6 +29,7 @@ export class CodeModelCliImpl implements CodeModelAz
     suboptions: Property[];
     currentSubOptionIndex: number;
     az_common: {};
+    private _testScenario: any;
 
     async init() {
         this.options = await this.session.getValue('az');
@@ -51,6 +52,19 @@ export class CodeModelCliImpl implements CodeModelAz
         this.resource_pool = new ResourcePool();
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
+        if (this.codeModel['test-scenario']) {
+            if ('examples' in this.codeModel['test-scenario']) {
+                //new style of example configuration
+                this._testScenario = this.codeModel['test-scenario']['examples'];
+            }
+            else {
+                //old style of example configuration
+                this._testScenario = this.codeModel['test-scenario']
+            }
+        }
+        else {
+            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
+        }
     }
 
     private getOrder(op: string) {
@@ -181,7 +195,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Extension_TestScenario(): any
     {
-        return this.codeModel['test-scenario'] || GenerateDefaultTestScenario(this.GetAllExamples());
+        return this._testScenario;
     }
 
     //=================================================================================================================
