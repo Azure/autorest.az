@@ -74,6 +74,8 @@ export interface CodeModelAz
 
     SelectFirstMethodParameter(): boolean;
     SelectNextMethodParameter(): boolean;
+    EnterSubMethodParameters(): boolean;
+    ExitSubMethodParameters(): boolean;
 
     MethodParameter_Name: string;
     MethodParameter_NamePython: string

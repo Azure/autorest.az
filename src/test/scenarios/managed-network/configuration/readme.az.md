@@ -7,31 +7,6 @@ az:
   extensions: managed-network
   namespace: azure.mgmt.managednetwork
   package-name: azure-mgmt-managednetwork
-  cmd-override:
-    "^.*[/]microsoft.managednetwork/scopeassignments([/][^/]*)?$": "managed-network scope-assignment"
-    "^.*[/]managednetworkgroups([/][^/]*)?$": "managed-network group"
-    "^.*[/]managednetworkpeeringpolicies([/][^/]*)?$": "managed-network peering-policy"
-  option-override:
-    "scope_management_groups_id":
-      name: scope_management_groups
-    "scope_subscriptions_id":
-      name: scope_subscriptions
-    "scope_virtual_networks_id":
-      name: scope_virtual_networks
-    "scope_subnets_id":
-      name: scope_subnets
-    "management_groups_id":
-      name: management_groups
-    "subscriptions_id":
-      name: subscriptions
-    "virtual_networks_id":
-      name: virtual_networks
-    "subnets_id":
-      name: subnets
-    "spokes_id":
-      name: spokes
-    "mesh_id":
-      name: mesh
   test-setup:
     - name: ManagedNetworksPut
     - name: ManagementNetworkGroupsPut
@@ -59,5 +34,25 @@ directive:
     transform: >
       $['x-ms-client-flatten'] = true;
     reason: Flatten everything for Azure CLI
+
+clicommon:
+    naming:
+        default:
+            singularize:
+              - operationGroup
+              - operation
+    cli-directive:
+    # directive on operationGroup
+      - select: 'operationGroup'
+        where:
+            operationGroup: 'operations'
+        hidden: true
+      - where:
+            operationGroup: 'managed_networks'
+            operation: 'list_by_resource_group'
+        removed: true
+      - where:
+            parameter: location
+        required: true
 
 ```

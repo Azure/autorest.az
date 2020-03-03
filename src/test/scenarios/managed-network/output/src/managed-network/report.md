@@ -140,13 +140,6 @@ create a managed-network managed-network-peering-policy.
 |**--managed-network-policy**|object|Parameters supplied to create/update a Managed Network Peering Policy|/something/my_option|/something/myOption|
 |--location**|string|The geo-location where the resource lives|/something/my_option|/something/myOption|
 |--properties**|object|Properties of a Managed Network Peering Policy|/something/my_option|/something/myOption|
-### managed-network operation list
-
-list a managed-network operation.
-
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 ### managed-network scope-assignment create
 
 create a managed-network scope-assignment.

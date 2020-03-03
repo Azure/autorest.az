@@ -27,6 +27,7 @@ export class CodeModelCliImpl implements CodeModelAz
     resource_pool: ResourcePool;
 
     suboptions: Property[];
+    submethodparameters: Property[];
     currentSubOptionIndex: number;
     az_common: {};
     private _testScenario: any;
@@ -42,6 +43,7 @@ export class CodeModelCliImpl implements CodeModelAz
         this.currentMethodIndex = -1;
         this.suboptions = null;
         this.currentSubOptionIndex = -1;
+        this.submethodparameters = null;
         //this.sortOperationByAzCommand();
     }
 
@@ -117,13 +119,23 @@ export class CodeModelCliImpl implements CodeModelAz
                             if(this.SelectFirstMethod()) {
                                 if(this.SelectFirstMethodParameter()) {
                                     do {
-                                        this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex]['RequiredByMethod'] = paramRequired.get(this.MethodParameter_Name) == paramTime? true: false;        
+                                        let parameters = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
+                                        if(parameters.language['cli'].required) {
+                                            this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex]['RequiredByMethod'] = true;
+                                        } else {
+                                            this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex]['RequiredByMethod'] = paramRequired.get(this.MethodParameter_Name) == paramTime? true: false;
+                                        }
                                     } while(this.SelectNextMethodParameter());
                                 }
                                 while(this.SelectNextMethod()) {
                                     if(this.SelectFirstMethodParameter()) {
                                         do {
-                                            this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex]['RequiredByMethod'] = paramRequired.get(this.MethodParameter_Name) == paramTime? true: false;
+                                            let parameters = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
+                                            if(parameters.language['cli'].required) {
+                                                this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex]['RequiredByMethod'] = true;
+                                            } else {
+                                                this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex]['RequiredByMethod'] = paramRequired.get(this.MethodParameter_Name) == paramTime? true: false;
+                                            }
                                         } while(this.SelectNextMethodParameter());
                                     }                                
                                 }
@@ -212,6 +224,14 @@ export class CodeModelCliImpl implements CodeModelAz
         // just enumerate through command groups in code-model-v4
         if(this.codeModel.operationGroups.length > 0) {
             this.currentOperationGroupIndex = 0;
+            if(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].hidden || this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].removed) {
+                if(this.SelectNextCommandGroup()) {
+                    if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
             if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
             return true;
         } else {
@@ -224,6 +244,14 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentOperationGroupIndex < this.codeModel.operationGroups.length - 1) {
             this.currentOperationGroupIndex++;
+            if(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].hidden || this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].removed) {
+                if(this.SelectNextCommandGroup()) {
+                    if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
             if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
             return true;
         } else {
@@ -296,13 +324,25 @@ export class CodeModelCliImpl implements CodeModelAz
         // just enumerate through commands in command group
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length > 0) {
             this.currentOperationIndex = 0;
+            let operation = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex];
             this.preMethodIndex = this.currentOperationIndex;
+            let needNext = false; 
+            if(operation.language['cli'].hidden || operation.language['cli'].removed) {
+                needNext = true;
+            }
             while(this.currentOperationIndex + 1 < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
-                if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1].language['az'].command == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command) {
+                let tmpOperation = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1];
+                if(tmpOperation.language['az'].command == operation.language['az'].command) {
                     this.currentOperationIndex++;
+                    if(tmpOperation.language['cli'].hidden != true && tmpOperation.language['cli'].removed != true) {
+                        needNext = false;
+                    }
                 } else {
                     break;
                 }
+            }
+            if(needNext && !this.SelectNextCommand()) {
+                return false;
             }
             this.SelectFirstOption();
             this.SelectFirstMethod();
@@ -320,12 +360,24 @@ export class CodeModelCliImpl implements CodeModelAz
         if(this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length - 1) {
             this.currentOperationIndex++;
             this.preMethodIndex = this.currentOperationIndex;
+            let operation = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex];
+            let needNext = false; 
+            if(operation.language['cli'].hidden || operation.language['cli'].removed) {
+                needNext = true;
+            }
             while(this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
-                if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command == this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex - 1].language['az'].command) {
+                let tmpOperation =  this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex - 1];
+                if(operation.language['az'].command == tmpOperation.language['az'].command) {
                     this.currentOperationIndex++;
+                    if(tmpOperation.language['cli'].hidden != true && tmpOperation.language['cli'].removed != true) {
+                        needNext = false;
+                    }
                 } else {
                     break;
                 }
+            }
+            if(needNext && !this.SelectNextCommand()) {
+                return false;
             }
             this.SelectFirstOption();
             this.SelectFirstMethod();
@@ -376,18 +428,20 @@ export class CodeModelCliImpl implements CodeModelAz
         if (this.suboptions != null)
         {
             this.currentSubOptionIndex = 0;
+            let option = this.suboptions[this.currentSubOptionIndex];
+            if (option.language['cli'].hidden || option.language['cli'].removed) {
+                if(!this.SelectNextOption()) {
+                    return false;
+                }
+            }
             return true;
         }
 
-        if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
-            this.currentParameterIndex = -1;
-            return false;
-        }
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length > 0) {
             this.currentParameterIndex = 0;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex]
             const currentParameterName = parameter.language['az'].name;
-            if(parameter.hidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
+            if(this.Option_IsHidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -436,18 +490,20 @@ export class CodeModelCliImpl implements CodeModelAz
             {
                 return false;
             }
-        }
-
-        if(!this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]) {
-            this.currentParameterIndex = -1;
-            return false;
+            let option = this.suboptions[this.currentSubOptionIndex];
+            if (option.language['cli'].hidden || option.language['cli'].removed) {
+                if(!this.SelectNextOption()) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
             const currentParameterName = parameter.language['az'].name;
-            if(parameter.hidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
+            if(this.Option_IsHidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -558,7 +614,16 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Option_IsHidden(): boolean
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].hidden? true: false;   
+        let operation = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex];
+        if(operation.language['cli'].hidden || operation.language['cli'].removed) {
+            return true;
+        }
+        let parameter = operation.request.parameters[this.currentParameterIndex];
+        if (parameter.language['cli'].hidden || parameter.language['cli'].removed) {
+            return true;
+        } else {
+            return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].hidden ? true : false;
+        }  
     }
 
     public get Option_IsFlattened(): boolean
@@ -603,7 +668,7 @@ export class CodeModelCliImpl implements CodeModelAz
                           .parameters[this.currentParameterIndex] as VirtualParameter;
 
         if (p == undefined)
-            return null;
+            return null; 
 
         if (p.targetProperty == undefined)
             return null;
@@ -647,6 +712,12 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentOperationIndex >= this.preMethodIndex) {
             this.currentMethodIndex = this.preMethodIndex;
+            let method = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex];
+            if(method.language['cli'].removed || method.language['cli'].hidden) {
+                if(!this.SelectNextMethod()) {
+                    return false;
+                }
+            }
             this.SelectFirstMethodParameter();
             return true;
         } else {
@@ -659,6 +730,12 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.currentMethodIndex < this.currentOperationIndex) {
             this.currentMethodIndex++;
+            let method = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex];
+            if(method.language['cli'].removed || method.language['cli'].hidden) {
+                if(!this.SelectNextMethod()) {
+                    return false;
+                }
+            }
             this.SelectFirstMethodParameter();
             return true;
         } else {
@@ -713,11 +790,22 @@ export class CodeModelCliImpl implements CodeModelAz
     //=================================================================================================================
     public SelectFirstMethodParameter(): boolean
     {
+        if (this.submethodparameters != null)
+        {
+            this.currentSubOptionIndex = 0;
+            let parameter = this.submethodparameters[this.currentSubOptionIndex];
+            if (parameter.language['cli'].hidden || parameter.language['cli'].removed) {
+                if(!this.SelectNextMethodParameter()) {
+                    return false;
+                }
+            }
+            return true;
+        }
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters.length > 0) {
             this.currentParameterIndex = 0;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
             const currentParameterName = parameter.language['python'].name;
-            if(parameter.hidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
+            if(this.MethodParameter_IsHidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
                 if(this.SelectNextMethodParameter()) {
                     return true;
                 } else {
@@ -732,11 +820,27 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextMethodParameter(): boolean
     {
+        if (this.submethodparameters != null)
+        {
+            this.currentSubOptionIndex++;
+
+            if (this.currentSubOptionIndex >= this.submethodparameters.length)
+            {
+                return false;
+            }
+            let parameter = this.submethodparameters[this.currentSubOptionIndex];
+            if (parameter.language['cli'].hidden || parameter.language['cli'].removed) {
+                if(!this.SelectNextMethodParameter()) {
+                    return false;
+                }
+            }
+            return true;
+        }
         if(this.currentParameterIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters.length - 1) {
             this.currentParameterIndex++;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
             const currentParameterName = parameter.language['python'].name;
-            if(parameter.hidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
+            if(this.MethodParameter_IsHidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
                 if(this.SelectNextMethodParameter()) {
                     return true;
                 } else {
@@ -747,6 +851,27 @@ export class CodeModelCliImpl implements CodeModelAz
         } else {
             return false;
         }    
+    }
+
+    public EnterSubMethodParameters(): boolean
+    {
+        if (!this.MethodParameter_IsListOfComplex)
+            return false;
+
+        this.submethodparameters = this.MethodParameter_GetElementType()['properties'];
+
+        return true;
+    }
+
+    public ExitSubMethodParameters(): boolean
+    {
+        if (this.submethodparameters != null)
+        {
+            this.submethodparameters = null;
+            this.currentSubOptionIndex = -1;
+            return true;
+        }
+        return false;
     }
 
     public get MethodParameter_Name(): string
@@ -836,7 +961,17 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get MethodParameter_IsHidden(): boolean
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].hidden? true: false;
+        let operation = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex];
+        if(operation.language['cli'].removed || operation.language['cli'].hidden) {
+            return true;
+        }
+        let parameter = operation.request.parameters[this.currentParameterIndex];
+        if(parameter.language['cli'].removed || parameter.language['cli'].hidden) {
+            return true;
+        } else {
+            return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].hidden? true: false;
+        }
+        
     }
 
     public get MethodParameter_IsRequired(): boolean
