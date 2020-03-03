@@ -8,10 +8,10 @@ directive:
     transform: >
       $['x-ms-client-flatten'] = true;
     reason: Flatten everything for Azure CLI
-  - from: swagger-document
-    where: $.definitions.*.[?(@.properties && !@.discriminator)].*
-    transform: >
-      $['x-ms-client-flatten'] = true;
+  #- from: swagger-document
+  #  where: $.definitions.*.[?(@.properties && !@.discriminator)].*
+  #  transform: >
+  #    $['x-ms-client-flatten'] = true;
 
 clicommon:
     naming:
