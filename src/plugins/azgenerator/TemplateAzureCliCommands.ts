@@ -48,6 +48,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
                 
                 output.push("        client_factory=" + cf_name + ")");
 
+                // top level command group
                 output.push("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + ") as g:");
                 let needWait = false;
                 do

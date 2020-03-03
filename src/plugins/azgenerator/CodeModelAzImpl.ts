@@ -19,6 +19,8 @@ export class CodeModelCliImpl implements CodeModelAz
     options: any;
     extensionName: string;
     currentOperationGroupIndex: number;
+    currentOperationSubGroupIndex: number;
+    subgroups: string[];
     currentOperationIndex: number;
     currentParameterIndex: number;
     currentExampleIndex: number;
@@ -256,6 +258,13 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentOperationGroupIndex = -1;
             return false;
         }
+    }
+
+    private CreateVirtualSubGroups(): void
+    {
+        // iterate through methods and parameters to find all the parameters that are list of complex
+        // and create list of subgroups
+        this.subgroups = ["xxx", "yyy", "zzz"];
     }
 
     public get CommandGroup_Name(): string
