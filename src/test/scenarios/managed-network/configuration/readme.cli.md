@@ -2,7 +2,7 @@
 
 These settings don't need to apply `--cli` on the command line.
 
-``` yaml $(cli)
+``` yaml
 cli:
   cli-name: managed-network
   namespace: azure.mgmt.managednetwork
