@@ -27,6 +27,9 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
         do
         {
             // if there's no operation in this command group, just continue
+            // if disabled
+            //if (model.Command_Name == "-")
+            //    continue;
 
             if (model.SelectFirstCommand())
             {

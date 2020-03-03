@@ -17,9 +17,9 @@ export async function processRequest(host: Host) {
             host.WriteFile(f, files[f].join('\r\n'));
         }
     } catch (E) {
-        if (debug) {
+        //if (debug) {
             console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
-        }
+        //}
         throw E;
     }
 

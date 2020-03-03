@@ -41,9 +41,14 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
         do {
             if (model.SelectFirstCommand()) {
                 do {
-                    output = output.concat(GetCommandBody(model, required));
-                    if (model.Command_CanSplit) {
-                        output = output.concat(GetCommandBody(model, required, true));
+                    if (!model.CommandGroup_IsVirtual) {
+                        output = output.concat(GetCommandBody(model, required));
+                        if (model.Command_CanSplit) {
+                            output = output.concat(GetCommandBody(model, required, true));
+                        }
+                    } else {
+                        // handling virtual commands / sub-commands
+                        output = output.concat(GetCommandBodyVirtualAdd(model, required));
                     }
                 }
                 while (model.SelectNextCommand());
@@ -132,6 +137,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
         // create body transformation for methods that support it
         let methodName: string = model.Command_MethodName;
 
+<<<<<<< HEAD
         // body transformation
 
         // with x-ms-client-flatten it doesn't need this part now 
@@ -143,12 +149,144 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                     required['json'] = true;
                     output_body.push(access);
 
+=======
+        let needIfStatement = !model.Method_IsLast;
+
+        do {
+            let prefix = "    ";
+            if (needIfStatement) {
+                let ifStatement = prefix;
+                prefix += "    ";
+
+                if (!model.Method_IsLast) {
+                    ifStatement += ((model.Method_IsFirst) ? "if" : "elif");
+
+                    if (model.SelectFirstMethodParameter()) {
+                        do {
+                            if (!model.MethodParameter_IsRequired) {
+                                continue;
+                            }
+                            if(model.MethodParameter_Type == SchemaType.Constant) {
+                                continue;
+                            }
+                            ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
+                            ifStatement += " " + model.MethodParameter_MapsTo + " is not None"
+                        }
+                        while (model.SelectNextMethodParameter());
+                        ifStatement += ":";
+                        output_method_call.push(ifStatement);
+                    }
+>>>>>>> stuff
                 }
-
+                else {
+                    ifStatement == "";
+                    prefix = "    ";
+                }
             }
-            while (model.SelectNextMethodParameter());
+            // call client & return value
+            // XXX - this is still a hack
 
+            let methodCall = prefix + "return " + GetMethodCall(model);
+            output_method_call.push(methodCall);
         }
+        while (model.SelectNextMethod());
+    }
+
+    output = output.concat(output_body);
+    output = output.concat(output_method_call);
+    return output;
+}
+
+function GetCommandBodyVirtualAdd(model: CodeModelAz) {
+    // create, delete, list, show, update
+    let output: string[] = [];
+    output.push("");
+    output.push("");
+
+    //
+    // call get
+    //
+
+    //
+    // add item to the list
+    //
+
+
+    //
+    // call create_or_udpate
+    //
+    
+    let updatedMethodName: string = model.Command_FunctionName;
+    if (needUpdate) {
+        updatedMethodName = updatedMethodName.replace(/_create/g, "_update");
+    }
+    let call = "def " + updatedMethodName + "(";
+    let indent = " ".repeat(call.length);
+    let isUpdate = updatedMethodName.startsWith("update_");
+
+    output.push(call + "cmd, client");
+
+    let allParam: Map<string, boolean> = new Map<string, boolean>();
+    if (model.SelectFirstMethod()) {
+        do {
+            if (model.SelectFirstMethodParameter()) {
+                do {
+                    if (model.MethodParameter_IsFlattened) {
+                        continue;
+                    }
+                    if(model.MethodParameter_Type == SchemaType.Constant) {
+                        continue;
+                    }
+
+                    let required: boolean = model.MethodParameter_RequiredByMethod;
+
+                    let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
+                    if (required && !allParam.has(name)) {
+                        allParam.set(name, true);
+                        output[output.length - 1] += ",";
+                        output.push(indent + name);
+                    }
+                } while (model.SelectNextMethodParameter());
+            }
+        } while (model.SelectNextMethod());
+    }
+
+    if (model.SelectFirstMethod()) {
+        do {
+            if (model.SelectFirstMethodParameter()) {
+                do {
+                    if (model.MethodParameter_IsFlattened) {
+                        continue;
+                    }
+                    if(model.MethodParameter_Type == SchemaType.Constant) {
+                        continue;
+                    }
+                    let required = model.MethodParameter_RequiredByMethod;
+
+                    let name = model.MethodParameter_MapsTo;
+                    if (!required && !allParam.has(name)) {
+                        allParam.set(name, true);
+                        output[output.length - 1] += ",";
+                        output.push(indent + name + "=None");
+                    }
+                } while (model.SelectNextMethodParameter());
+            }
+        }
+        while (model.SelectNextMethod());
+    }
+
+<<<<<<< HEAD
+        }
+=======
+    output[output.length - 1] += "):";
+
+    let output_body: string[] = []
+    let output_method_call: string[] = [];
+
+    if (model.SelectFirstMethod()) {
+        // create body transformation for methods that support it
+        let methodName: string = model.Command_MethodName;
+>>>>>>> stuff
 
         let needIfStatement = !model.Method_IsLast;
 

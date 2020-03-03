@@ -23,12 +23,15 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
     {
         do
         {
-            if (model.GetModuleOperationName() != "")
+            if (!model.CommandGroup_IsVirtual)
             {
-                output.push("");
-                output.push("");
-                output.push("def cf_" + model.GetModuleOperationName() + "(cli_ctx, *_):");
-                output.push("    return cf_" + model.Extension_NameUnderscored + "(cli_ctx)." + model.GetModuleOperationName());
+                if (model.GetModuleOperationName() != "")
+                {
+                    output.push("");
+                    output.push("");
+                    output.push("def cf_" + model.GetModuleOperationName() + "(cli_ctx, *_):");
+                    output.push("    return cf_" + model.Extension_NameUnderscored + "(cli_ctx)." + model.GetModuleOperationName());
+                }
             }
         } while (model.SelectNextCommandGroup());
     }

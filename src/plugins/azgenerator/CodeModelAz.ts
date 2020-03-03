@@ -43,6 +43,7 @@ export interface CodeModelAz
 
     CommandGroup_Name: string;
     CommandGroup_Help: string;
+    CommandGroup_IsVirtual: boolean;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;

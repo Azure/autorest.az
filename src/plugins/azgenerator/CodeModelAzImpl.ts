@@ -37,6 +37,7 @@ export class CodeModelCliImpl implements CodeModelAz
         this.options = await this.session.getValue('az');
         this.extensionName = this.options['extensions'];
         this.currentOperationGroupIndex = -1;
+        this.currentOperationSubGroupIndex = -1;
         this.currentOperationIndex = -1;
         this.currentParameterIndex = -1;
         this.currentExampleIndex = -1;
@@ -242,8 +243,20 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextCommandGroup(): boolean
     {
+        // if enumerating virtual sub-groups, try to select next sub-group
+        if (this.SelectNextSubGroup())
+            return true;
+
+        // try to select first sub-group if exists
+        if (this.SelectFirstSubGroup())
+            return true;
+
         if(this.currentOperationGroupIndex < this.codeModel.operationGroups.length - 1) {
             this.currentOperationGroupIndex++;
+
+            // create a list of subgroups for current group
+            this.CreateVirtualSubGroups();
+
             if(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].hidden || this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].removed) {
                 if(this.SelectNextCommandGroup()) {
                     if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
@@ -267,9 +280,48 @@ export class CodeModelCliImpl implements CodeModelAz
         this.subgroups = ["xxx", "yyy", "zzz"];
     }
 
+    private SelectFirstSubGroup(): boolean
+    {
+        if (this.subgroups != null)
+        {
+            this.currentOperationSubGroupIndex = 0;
+            return true;
+        }
+
+        return false;
+    }
+
+    private SelectNextSubGroup(): boolean
+    {
+        if (this.currentOperationSubGroupIndex < 0)
+            return false;
+
+        if ( this.subgroups == null)
+            return false;
+
+        if (this.currentOperationSubGroupIndex + 1 < this.subgroups.length)
+        {
+            this.currentOperationSubGroupIndex++;
+            return true;
+        }
+
+        // clear list of subgroups
+        this.currentOperationSubGroupIndex = -1;
+        this.subgroups = null;
+
+        return false;
+    }
+
     public get CommandGroup_Name(): string
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command;
+        if (this.currentOperationSubGroupIndex < 0)
+        {
+            return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command;
+        }
+        else
+        {
+            return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command + " " + this.subgroups[this.currentOperationSubGroupIndex];
+        }
     }
 
     public get CommandGroup_Help(): string
@@ -279,6 +331,11 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get CommandGroup_Key(): string {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].$key || this.CommandGroup_Name;
+    }
+    
+    public get CommandGroup_IsVirtual(): boolean
+    {
+        return (this.currentOperationSubGroupIndex >= 0);
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -328,6 +385,9 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectFirstCommand(): boolean
     {
+        if (this.CommandGroup_IsVirtual)
+            return true;
+
         // just enumerate through commands in command group
         if(this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length > 0) {
             this.currentOperationIndex = 0;
@@ -363,6 +423,9 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectNextCommand(): boolean
     {
+        if (this.CommandGroup_IsVirtual)
+            return false;
+
         if(this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length - 1) {
             this.currentOperationIndex++;
             this.preMethodIndex = this.currentOperationIndex;
@@ -402,21 +465,38 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_Name(): string
     {
+        if (this.CommandGroup_IsVirtual)
+        {
+            return this.CommandGroup_Name + " add";
+        }
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command;
     }
 
     public get Command_MethodName(): string
     {
+        if (this.CommandGroup_IsVirtual)
+        {
+            return this.CommandGroup_Name + " add";
+        }
+
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
     }
 
     public get Command_Help(): string
     {
+        if (this.CommandGroup_IsVirtual)
+        {
+            return "Add subitem";
+        }
+
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].description.replace(/\n/g, " ");
     }
 
     public get Command_CanSplit(): boolean 
     {
+        if (this.CommandGroup_IsVirtual)
+            return false;
+
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]['canSplitOperation']? true: false;
     }
 
@@ -427,6 +507,11 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SelectFirstOption(): boolean
     {
+        if (this.CommandGroup_IsVirtual)
+        {
+            return false;
+        }
+
         if (this.suboptions != null)
         {
             this.currentSubOptionIndex = 0;
