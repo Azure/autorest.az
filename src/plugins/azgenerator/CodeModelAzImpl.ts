@@ -777,6 +777,17 @@ export class CodeModelCliImpl implements CodeModelAz
         }
     }
 
+    public SelectMethodByName(name: string): boolean
+    {
+        for (let i: number = 0; i < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length; i++) {
+            this.currentMethodIndex = i;
+            if (this.Method_Name == name)
+                return true;
+        }
+
+        return false;
+    }
+
     public get Method_IsFirst(): boolean
     {
         if(this.currentMethodIndex == this.preMethodIndex) {

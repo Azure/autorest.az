@@ -75,6 +75,7 @@ export interface CodeModelAz
     
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
+    SelectMethodByName(name: string): boolean;
 
     Method_IsFirst: boolean;
     Method_IsLast: boolean;
