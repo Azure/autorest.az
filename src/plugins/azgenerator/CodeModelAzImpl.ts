@@ -29,7 +29,6 @@ export class CodeModelCliImpl implements CodeModelAz
     suboptions: Property[];
     submethodparameters: Property[];
     currentSubOptionIndex: number;
-    az_common: {};
     private _testScenario: any[];
 
     async init() {
@@ -47,10 +46,9 @@ export class CodeModelCliImpl implements CodeModelAz
         //this.sortOperationByAzCommand();
     }
 
-    public constructor(protected session: Session<CodeModel>, az_common: any) 
+    public constructor(protected session: Session<CodeModel>) 
     {
         this.codeModel = session.model;
-        this.az_common = az_common;
         this.resource_pool = new ResourcePool();
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
