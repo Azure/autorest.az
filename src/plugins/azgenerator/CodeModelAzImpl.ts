@@ -1085,7 +1085,7 @@ export class CodeModelCliImpl implements CodeModelAz
             do {
                 if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
                     
-                    method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
+                    method_param_dict.set(this.MethodParameter.language.default.name, this.MethodParameter);
                     // this.AddFlattenedParameter(method_param_dict, this.MethodParameter, this.MethodParameter.language.default.name)
                 }
             } while (this.SelectNextMethodParameter());
@@ -1119,25 +1119,26 @@ export class CodeModelCliImpl implements CodeModelAz
                 this.FlattenExampleParameter(method_param, example_parm, sub_name, value[sub_name], ancestors.concat(name));
             }
         }
-        else if (name in method_param) {
-            if ('pathToProperty' in method_param[name]) {
+        else if (typeof method_param.get(name) !== 'undefined' ) {
+            if ('pathToProperty' in method_param.get(name)) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
-                for (let i = method_param[name].pathToProperty.length - 1; i >= 0; i--) {
+                for (let i = method_param.get(name)['pathToProperty'].length - 1; i >= 0; i--) {
                     if (ancestors.length <= 0) return;
                     let parent = ancestors.pop();
-                    if (method_param[name].pathToProperty[i].language.az.name != parent) return;
+                    if (method_param.get(name)['pathToProperty'][i].language.az.name != parent) return;
                 }
-                example_parm[name] = value;
+                example_parm.set(name, value);
             }
             else {
-                example_parm[name] = value;
+                example_parm.set(name, value);
             }
         }
     }
 
     public ConvertToCliParameters(example_params): Map<string, string> {
         let ret: Map<string, string> = new Map<string, string>();
-        Object.entries(example_params).forEach(([param_name, param_value]) => {
+        for(let [param_name, param_value] of example_params) {
+        //Object.entries(example_params).forEach(() => {
             param_name = ToSnakeCase(param_name);
             if (param_name.endsWith('_name')) {
                 if (param_name == "resource_group_name") {
@@ -1149,7 +1150,7 @@ export class CodeModelCliImpl implements CodeModelAz
             }
             param_name = param_name.split("_").join("-");
             ret["--" + param_name] = param_value;
-        });
+        };
         return ret;
     }
 
