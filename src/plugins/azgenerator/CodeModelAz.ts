@@ -43,6 +43,7 @@ export interface CodeModelAz
     Command_Help: string;
 
     Command_CanSplit: boolean;
+    Command_IsLongRun: boolean;
 
     SelectFirstOption(): boolean;
     SelectNextOption(): boolean;
@@ -71,6 +72,7 @@ export interface CodeModelAz
     Method_IsLast: boolean;
     Method_Name: string;
     Method_BodyParameterName: string;
+    Method_IsLongRun: boolean;
 
     SelectFirstMethodParameter(): boolean;
     SelectNextMethodParameter(): boolean;
