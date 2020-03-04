@@ -82,7 +82,6 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstMethod()) {
         do {
-<<<<<<< HEAD
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
@@ -102,14 +101,13 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                     }
                 } while (model.SelectNextMethodParameter());
             }
-=======
             CreateParameters(model, output, allParam, indent);
->>>>>>> refactoring
         } while (model.SelectNextMethod());
     }
 
     if (model.SelectFirstMethod()) {
         do {
+<<<<<<< HEAD
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
@@ -128,6 +126,9 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                     }
                 } while (model.SelectNextMethodParameter());
             }
+=======
+            CreateParameters(model, output, allParam, indent, false);
+>>>>>>> refactoring
         }
         while (model.SelectNextMethod());
     }
@@ -190,25 +191,8 @@ function GetCommandBodyVirtualAdd(model: CodeModelAz): string[] {
     output.push(call + "cmd, client");
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectMethodByName("get")) {
-        if (model.SelectFirstMethodParameter()) {
-            do {
-                if (model.MethodParameter_IsFlattened) {
-                    continue;
-                }
-                if(model.MethodParameter_Type == SchemaType.Constant) {
-                    continue;
-                }
+        CreateParameters(model, output, allParam, indent, true);
 
-                let required: boolean = model.MethodParameter_RequiredByMethod;
-
-                let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
-                if (required && !allParam.has(name)) {
-                    allParam.set(name, true);
-                    output[output.length - 1] += ",";
-                    output.push(indent + name);
-                }
-            } while (model.SelectNextMethodParameter());
-        }
     }
     output[output.length - 1] += "):";
 
@@ -306,7 +290,11 @@ function GetMethodCall(model: CodeModelAz): string {
     return methodCall;
 }
 
-function CreateParameters(model: CodeModelAz, output: string[], allParam: Map<string, boolean>, indent: string)
+function CreateParameters(model: CodeModelAz,
+                          output: string[],
+                          allParam: Map<string, boolean>,
+                          indent: string,
+                          createRequired: boolean)
 {
     if (model.SelectFirstMethodParameter()) {
         do {
@@ -316,14 +304,15 @@ function CreateParameters(model: CodeModelAz, output: string[], allParam: Map<st
             if(model.MethodParameter_Type == SchemaType.Constant) {
                 continue;
             }
-
+            
             let required: boolean = model.MethodParameter_RequiredByMethod;
 
             let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
-            if (required && !allParam.has(name)) {
+            if (((required && createRequired) || (!required && !createRequired)) &&
+                !allParam.has(name)) {
                 allParam.set(name, true);
                 output[output.length - 1] += ",";
-                output.push(indent + name);
+                output.push(indent + name + (!required ? "=None" : ""));
             }
         } while (model.SelectNextMethodParameter());
     }
