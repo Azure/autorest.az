@@ -162,7 +162,7 @@ export function getResourceKey(class_name: string, object_name: string): string 
     }
     else {
         keySeq[class_name] = 2;
-        if (preparerInfos[class_name].name) {  // is external resource
+        if (preparerInfos[class_name]?.name) {  // is external resource
             keyCache[longKey] = resourceClassKeys[class_name] || class_name;
         }
         else {                              // is internal resource
