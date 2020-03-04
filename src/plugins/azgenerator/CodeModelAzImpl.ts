@@ -347,7 +347,6 @@ export class CodeModelCliImpl implements CodeModelAz
             this.SelectFirstOption();
             this.SelectFirstMethod();
             this.SelectFirstMethodParameter();
-            if (this.is_suppressed_command) return this.SelectNextCommand();
             return true;
         } else {
             this.currentOperationIndex = -1;
@@ -382,7 +381,6 @@ export class CodeModelCliImpl implements CodeModelAz
             this.SelectFirstOption();
             this.SelectFirstMethod();
             this.SelectFirstMethodParameter();
-            if (this.is_suppressed_command) return this.SelectNextCommand();
             return true;
         } else {
             this.currentOperationIndex = -1;
@@ -415,14 +413,6 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]['canSplitOperation']? true: false;
     }
 
-    public get is_suppressed_command(): boolean {
-        const suppressed_methods = ['check-name-availability', 'list-operation']
-        let enabled_methods = [];
-        if ('enable_methods' in this.az_common) enabled_methods = this.az_common['enable_methods'];
-        let current_method = this.Command_MethodName.toLowerCase();
-        return suppressed_methods.indexOf(current_method) >= 0 && enabled_methods.indexOf(current_method) < 0;
-    }
-    
     public get Command_IsLongRun(): boolean
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-long-running-operation']? true: false;

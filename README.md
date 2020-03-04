@@ -18,14 +18,6 @@ require:
   - ./readme.cli.md
   - $(this-folder)/readme.az.common.md
 
-az_common:
-    ## The check-name-availability and list-operation are suppressed in CLI by default,
-    # enable_methods:
-    #   - check-name-availability
-    #   - list-operation
-    enable_methods: []
-  
-
 pipeline-model: v3
 
 modelerfour:

@@ -19,4 +19,11 @@ clicommon:
             singularize:
               - operationGroup
               - operation
+    cli-directive:
+        - where:
+            operation: check-name-availability
+          hidden: true
+        - where:
+            operation: list-operation
+          hidden: true
 ```
