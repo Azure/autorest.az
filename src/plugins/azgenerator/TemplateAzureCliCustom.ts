@@ -240,7 +240,11 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
 function GetMethodCall(model: CodeModelAz): string {
     let methodCall: string = "";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
-    methodCall += "client." + model.Method_Name + "(";
+    let methodName = model.Method_Name;
+    if(model.Method_IsLongRun) {
+        methodName = "begin_" + methodName;
+    }
+    methodCall += "client." + methodName + "(";
 
     if (model.SelectFirstMethodParameter()) {
         do {
