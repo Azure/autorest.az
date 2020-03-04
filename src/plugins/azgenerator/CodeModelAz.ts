@@ -47,8 +47,6 @@ export interface CodeModelAz
 
     SelectFirstOption(): boolean;
     SelectNextOption(): boolean;
-    EnterSubOptions(): boolean;
-    ExitSubOptions(): boolean;
 
     Option_Name: string;
     Option_NameUnderscored: string;
@@ -56,8 +54,6 @@ export interface CodeModelAz
     Option_IsRequired: boolean;
     Option_Description: string;
     Option_Type: string;
-    Option_IsList: boolean;
-    Option_IsListOfComplex: boolean;
     Option_In: string;
     Option_PathSdk: string;
     Option_PathSwagger: string;
@@ -84,7 +80,6 @@ export interface CodeModelAz
     MethodParameter_MapsTo: string;
     MethodParameter_Description: string;
     MethodParameter_Type: string;
-    MethodParameter_IsList: boolean;
     MethodParameter_IsListOfComplex: boolean;
     MethodParameter: any;
     MethodParameter_In: string;

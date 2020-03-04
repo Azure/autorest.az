@@ -518,27 +518,6 @@ export class CodeModelCliImpl implements CodeModelAz
         
     }
 
-    public EnterSubOptions(): boolean
-    {
-        if (!this.Option_IsListOfComplex)
-            return false;
-
-        this.suboptions = this.Option_GetElementType()['properties'];
-
-        return true;
-    }
-
-    public ExitSubOptions(): boolean
-    {
-        if (this.suboptions != null)
-        {
-            this.suboptions = null;
-            this.currentSubOptionIndex = -1;
-            return true;
-        }
-        return false;
-    }
-
     public get Option_Name(): string
     {
         if (this.suboptions != null)
@@ -618,39 +597,6 @@ export class CodeModelCliImpl implements CodeModelAz
     public get Option_Type(): string
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex].schema.type;
-    }
-
-    public get Option_IsList(): boolean
-    {
-        let p: Property = this.Option_GetElementType();
-        return (p != null);
-    }
-
-    public get Option_IsListOfComplex(): boolean
-    {
-        let p: Property = this.Option_GetElementType();
-        return (p != null) && p['type'] == "object";
-    }
-
-    private Option_GetElementType(): Property
-    {
-        let p: VirtualParameter;
-
-        p = this.codeModel.operationGroups[this.currentOperationGroupIndex]
-                          .operations[this.currentOperationIndex]
-                          .request
-                          .parameters[this.currentParameterIndex] as VirtualParameter;
-
-        if (p == undefined)
-            return null; 
-
-        if (p.targetProperty == undefined)
-            return null;
-
-        if (p.targetProperty.schema.type != "array")
-            return null;
-
-        return p.targetProperty.schema['elementType'] as Property;
     }
 
     public get Option_EnumValues(): string[]
@@ -831,7 +777,15 @@ export class CodeModelCliImpl implements CodeModelAz
         if (!this.MethodParameter_IsListOfComplex)
             return false;
 
-        this.submethodparameters = this.MethodParameter_GetElementType()['properties'];
+        if(this.MethodParameter_Type == SchemaType.Array) {
+            if((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
+                this.submethodparameters = (this.MethodParameter['schema'])['elementType'].properties;
+            } else {
+                return false;
+            }
+        } else {
+            this.submethodparameters = (this.MethodParameter['schema'])['properties'];
+        }
 
         return true;
     }
@@ -849,11 +803,19 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get MethodParameter_Name(): string
     {
+        if (this.submethodparameters != null)
+        {
+            return this.submethodparameters[this.currentSubOptionIndex].language.python.name;
+        }
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['python'].name;
     }
 
     public get MethodParameter_NamePython(): string
     {
+        if (this.submethodparameters != null)
+        {
+            return this.submethodparameters[this.currentSubOptionIndex].language.python.name;
+        }
         let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
         return parameter.language['python'].name;
     }
@@ -878,37 +840,19 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].schema.type;
     }
 
-    public get MethodParameter_IsList(): boolean
-    {
-        let p: Property = this.MethodParameter_GetElementType();
-        return (p != null);
-    }
-
     public get MethodParameter_IsListOfComplex(): boolean
     {
-        let p: Property = this.MethodParameter_GetElementType();
-        return (p != null) && p['type'] == "object";
+        if(this.MethodParameter_IsFlattened) {
+            return false;
+        }
+        if(this.MethodParameter_Type == SchemaType.Object || this.MethodParameter_Type == SchemaType.Array) {
+            return true;
+        }
+        return false;
     }
 
     public get MethodParameter(): any {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
-    }
-
-    private MethodParameter_GetElementType(): Property
-    {
-        let mp = this.MethodParameter;
-        let p: VirtualParameter = this.MethodParameter as VirtualParameter;        ;
-
-        if (p == undefined)
-            return null;
-
-        if (p.targetProperty == undefined)
-            return null;
-
-        if (p.targetProperty.schema.type != "array")
-            return null;
-
-        return p.targetProperty.schema['elementType'] as Property;
     }
 
     public get MethodParameter_EnumValues(): string[]

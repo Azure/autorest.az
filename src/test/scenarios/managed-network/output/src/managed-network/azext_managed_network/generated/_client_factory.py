@@ -24,3 +24,7 @@ def cf_managed_network_group(cli_ctx, *_):
 
 def cf_managed_network_peering_policy(cli_ctx, *_):
     return cf_managed_network(cli_ctx).managed_network_peering_policy
+
+
+def cf_operation(cli_ctx, *_):
+    return cf_managed_network(cli_ctx).operation

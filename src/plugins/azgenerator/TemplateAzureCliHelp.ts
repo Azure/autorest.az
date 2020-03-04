@@ -23,8 +23,8 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
     if (model.SelectFirstCommandGroup()) {
         do {
 
-            // if disabled
-            if (model.Command_Name == "-")
+            // if there's no operation in this command group
+            if (!model.SelectFirstCommand())
                 continue;
 
             output.push("");

@@ -28,16 +28,12 @@ az:
 python-sdk-output-folder: "$(output-folder)/src/managed-network/azext_managed_network/vendored_sdks/managed-network"
 
 clicommon:
-    naming:
-        default:
-            singularize:
-              - operationGroup
-              - operation
     cli-directive:
     # directive on operationGroup
-      - select: 'operationGroup'
+      - select: 'operation'
         where:
             operationGroup: 'operations'
+            operation: 'list'
         hidden: true
       - where:
             operationGroup: 'managed_networks'
