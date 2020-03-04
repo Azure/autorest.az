@@ -422,6 +422,11 @@ export class CodeModelCliImpl implements CodeModelAz
         let current_method = this.Command_MethodName.toLowerCase();
         return suppressed_methods.indexOf(current_method) >= 0 && enabled_methods.indexOf(current_method) < 0;
     }
+    
+    public get Command_IsLongRun(): boolean
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-long-running-operation']? true: false;
+    }
 
     public SelectFirstOption(): boolean
     {
@@ -763,6 +768,10 @@ export class CodeModelCliImpl implements CodeModelAz
         }
     }
 
+    public get Method_IsLongRun(): boolean
+    {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].extensions['x-ms-long-running-operation']? true: false;
+    }
     public get Method_Name(): string
     {
        return  this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].language['python'].name;
