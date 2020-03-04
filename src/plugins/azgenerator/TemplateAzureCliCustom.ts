@@ -192,8 +192,15 @@ function GetCommandBodyVirtualAdd(model: CodeModelAz): string[] {
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectMethodByName("get")) {
         CreateParameters(model, output, allParam, indent, true);
-
     }
+
+    if (model.EnterSubMethodParameters()) {
+        CreateParameters(model, output, allParam, indent, true);
+        CreateParameters(model, output, allParam, indent, false);
+        model.ExitSubMethodParameters();
+    }
+
+
     output[output.length - 1] += "):";
 
     // create, delete, list, show, update

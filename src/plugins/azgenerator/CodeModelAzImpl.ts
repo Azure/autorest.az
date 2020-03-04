@@ -280,15 +280,12 @@ export class CodeModelCliImpl implements CodeModelAz
                     return false;
                 }
             }
-<<<<<<< HEAD
             if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
-=======
 
             // create a list of subgroups for current group
             this.CreateVirtualSubGroups();
 
             this.SelectFirstCommand();
->>>>>>> updates
             return true;
         } else {
             this.currentOperationGroupIndex = -1;
@@ -979,6 +976,12 @@ export class CodeModelCliImpl implements CodeModelAz
             return false;
         }
         if (!this.MethodParameter_IsListOfSimple)
+        if (this.CommandGroup_IsVirtual) {
+            this.currentMethodIndex = this.subgroups[this.currentOperationSubGroupIndex].methodIdx;
+            this.currentParameterIndex = this.subgroups[this.currentOperationSubGroupIndex].parameterIdx;
+        }
+
+        if (!this.MethodParameter_IsListOfComplex)
             return false;
 
         this.submethodparameters = null;
