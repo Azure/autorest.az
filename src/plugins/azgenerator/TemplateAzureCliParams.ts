@@ -26,13 +26,15 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
 
     if (model.SelectFirstCommandGroup()) {
         do {
-            //let methods: string[] = model.CommandGroup_Commands;
-
             if (model.SelectFirstCommand()) {
                 do {
-                    output_args = output_args.concat(getCommandBody(model));
-                    if(model.Command_CanSplit) {
-                        output_args = output_args.concat(getCommandBody(model, true));
+                    if (!model.CommandGroup_IsVirtual) {
+                        output_args = output_args.concat(getCommandBody(model));
+                        if(model.Command_CanSplit) {
+                            output_args = output_args.concat(getCommandBody(model, true));
+                        }
+                    } else {
+                        output_args = output_args.concat(getVirtualCommandBody(model));
                     }
                 }
                 while (model.SelectNextCommand());
@@ -167,6 +169,93 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
             }
         } while(model.SelectNextMethod());
     }
+    if (!hasParam) {
+        output_args.push("        pass");
+    }
+
+    return output_args;
+}
+
+function getVirtualCommandBody(model: CodeModelAz) {
+    let output_args: string [] = [];
+    output_args.push("");
+    output_args.push("    with self.argument_context('" + model.Command_Name + "') as c:");
+
+    let hasParam = false;
+    let allParam: Map<string, boolean> = new Map<string, boolean>();
+    if (model.SelectMethodByName("get")) {
+        if(model.SelectFirstMethodParameter()) {
+            do {
+                if(model.MethodParameter_IsFlattened) {
+                    continue;
+                }
+                if(model.MethodParameter_Type == SchemaType.Constant) {
+                    continue;
+                }
+                hasParam = true;
+                
+                let parameterName = model.MethodParameter_MapsTo;
+    
+                if(allParam.has(parameterName)) {
+                    continue;
+                }
+                allParam.set(parameterName, true);
+                let argument = "        c.argument('" + parameterName + "'";
+    
+                // this is to handle names like "format", "type", etc
+                if (parameterName == "type" || parameterName == "format") {
+                    argument = "        c.argument('_" + parameterName + "'";
+                    argument += ", options_list=['--" + parameterName + "']";
+                }
+    
+                if (model.MethodParameter_Type == SchemaType.Boolean) {
+                    hasBoolean = true;
+                    argument += ", arg_type=get_three_state_flag()";
+                }
+                else if (model.MethodParameter_Type == SchemaType.Choice || model.MethodParameter_Type == SchemaType.SealedChoice) {
+                    hasEnum = true;
+                    argument += ", arg_type=get_enum_type([";
+    
+                    model.MethodParameter_EnumValues.forEach(element => {
+                        if (!argument.endsWith("[")) argument += ", ";
+                        argument += "'" + element + "'";
+                    });
+                    argument += "])";
+                }
+    
+                if (parameterName == "resource_group_name") {
+                    argument += ", resource_group_name_type";
+                }
+                else if (parameterName == "tags") {
+                    argument += ", tags_type";
+                }
+                else if (parameterName == "location") {
+                    argument += ", arg_type=get_location_type(self.cli_ctx)";
+                }
+                else {
+                    argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
+                }
+    
+                if (model.MethodParameter_IsList) {
+                    if (model.MethodParameter_IsListOfComplex) {
+                        let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
+                        argument += ", action=" + actionName;
+                        hasActions = true;
+    
+                        if (actions.indexOf(actionName) < 0) {
+                            actions.push(actionName);
+                        }
+                    }
+                    argument += ", nargs='+'";
+                }
+    
+                argument += ")";
+    
+                output_args.push(argument);
+            } while(model.SelectNextMethodParameter());
+        }
+    }
+    
     if (!hasParam) {
         output_args.push("        pass");
     }

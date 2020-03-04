@@ -14,13 +14,16 @@ import { timingSafeEqual } from "crypto";
 
 class SubGroup
 {
-    public constructor(name: string, methodIdx: number)
+    public constructor(name: string, methodIdx: number, parameterIdx: number)
     {
         this.name = name;
         this.methodIdx = methodIdx;
+        this.parameterIdx = parameterIdx;
     }
     public name: string;
     public methodIdx: number;
+    public parameterIdx: number;
+    public getMethodIdx: number;
 }
 
 
@@ -298,19 +301,24 @@ export class CodeModelCliImpl implements CodeModelAz
         // iterate through methods and parameters to find all the parameters that are list of complex
         // and create list of subgroups
         this.subgroups = [];
+        let methodGetIndex: number = -1;
 
         if (this.SelectFirstCommand()) {
             do {
                 if (this.SelectFirstMethod()) {
                     do {
-
-                        if (this.SelectFirstMethodParameter()) {
-                            do {
-
-                                if (this.MethodParameter_IsListOfComplex) {
-                                    this.subgroups.push(new SubGroup(this.MethodParameter_Name, this.currentMethodIndex));
-                                }
-                            } while (this.SelectNextMethodParameter());
+                        if (this.Command_MethodName == "get") {
+                            methodGetIndex = this.currentMethodIndex;
+                        }
+                    
+                        if (this.Command_MethodName == "create_or_update") {
+                            if (this.SelectFirstMethodParameter()) {
+                                do {
+                                    if (this.MethodParameter_IsListOfComplex) {
+                                        this.subgroups.push(new SubGroup(this.MethodParameter_Name, this.currentMethodIndex, this.currentParameterIndex));
+                                    }
+                                } while (this.SelectNextMethodParameter());
+                            }
                         }
                     } while (this.SelectNextMethod());
                 }
@@ -318,8 +326,14 @@ export class CodeModelCliImpl implements CodeModelAz
             } while (this.SelectNextCommand());
         }
 
-        if (this.subgroups.length == 0) {
+        // make sure any subgroups were created and we have get method
+        if (this.subgroups.length == 0 || methodGetIndex < 0) {
             this.subgroups = null;
+        } else {
+            // store get method index for each subgroup
+            this.subgroups.forEach(element => {
+                element.getMethodIdx = methodGetIndex;       
+            });
         }
 
         this.SelectFirstCommand();
