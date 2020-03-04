@@ -311,7 +311,7 @@ export class CodeModelCliImpl implements CodeModelAz
                             methodGetIndex = this.currentMethodIndex;
                         }
                     
-                        if (this.Command_MethodName == "create_or_update") {
+                        //if (this.Command_MethodName == "create_or_update") {
                             if (this.SelectFirstMethodParameter()) {
                                 do {
                                     if (this.MethodParameter_IsListOfComplex) {
@@ -319,7 +319,7 @@ export class CodeModelCliImpl implements CodeModelAz
                                     }
                                 } while (this.SelectNextMethodParameter());
                             }
-                        }
+                        //}
                     } while (this.SelectNextMethod());
                 }
 
@@ -327,7 +327,7 @@ export class CodeModelCliImpl implements CodeModelAz
         }
 
         // make sure any subgroups were created and we have get method
-        if (this.subgroups.length == 0 || methodGetIndex < 0) {
+        if (this.subgroups.length == 0 /*|| methodGetIndex < 0*/) {
             this.subgroups = null;
         } else {
             // store get method index for each subgroup
@@ -561,7 +561,14 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_IsLongRun(): boolean
     {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-long-running-operation']? true: false;
+        if (this.CommandGroup_IsVirtual)
+            return false;
+
+        if (this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions) {
+            return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-long-running-operation']? true: false;
+        } else {
+            return false;
+        }
     }
 
     public SelectFirstOption(): boolean

@@ -74,6 +74,66 @@ helps['managed-network managed-network delete'] = """
                --resource-group "myResourceGroup"
 """
 
+helps['managed-network managed-network management_groups'] = """
+    type: group
+    short-summary: managed-network managed-network
+"""
+
+helps['managed-network managed-network management_groups add'] = """
+    type: command
+    short-summary: Add subitem
+    examples:
+      - name: Delete Managed Network
+        text: |-
+               az managed-network managed-network management_groups add --managed-network-name \\
+               "myManagedNetwork" --resource-group "myResourceGroup"
+"""
+
+helps['managed-network managed-network subscriptions'] = """
+    type: group
+    short-summary: managed-network managed-network
+"""
+
+helps['managed-network managed-network subscriptions add'] = """
+    type: command
+    short-summary: Add subitem
+    examples:
+      - name: Delete Managed Network
+        text: |-
+               az managed-network managed-network subscriptions add --managed-network-name \\
+               "myManagedNetwork" --resource-group "myResourceGroup"
+"""
+
+helps['managed-network managed-network virtual_networks'] = """
+    type: group
+    short-summary: managed-network managed-network
+"""
+
+helps['managed-network managed-network virtual_networks add'] = """
+    type: command
+    short-summary: Add subitem
+    examples:
+      - name: Delete Managed Network
+        text: |-
+               az managed-network managed-network virtual_networks add --managed-network-name \\
+               "myManagedNetwork" --resource-group "myResourceGroup"
+"""
+
+helps['managed-network managed-network subnets'] = """
+    type: group
+    short-summary: managed-network managed-network
+"""
+
+helps['managed-network managed-network subnets add'] = """
+    type: command
+    short-summary: Add subitem
+    examples:
+      - name: Delete Managed Network
+        text: |-
+               az managed-network managed-network subnets add --managed-network-name "myManagedNetwork" \\
+               --resource-group "myResourceGroup"
+"""
+
 helps['managed-network scope-assignment'] = """
     type: group
     short-summary: managed-network scope-assignment
@@ -195,6 +255,70 @@ helps['managed-network managed-network-group delete'] = """
       - name: Delete Managed Network Group
         text: |-
                az managed-network managed-network-group delete --managed-network-group-name \\
+               "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group \\
+               "myResourceGroup"
+"""
+
+helps['managed-network managed-network-group management_groups'] = """
+    type: group
+    short-summary: managed-network managed-network-group
+"""
+
+helps['managed-network managed-network-group management_groups add'] = """
+    type: command
+    short-summary: Add subitem
+    examples:
+      - name: Delete Managed Network Group
+        text: |-
+               az managed-network managed-network-group management_groups add \\
+               --managed-network-group-name "myManagedNetworkGroup1" --managed-network-name \\
+               "myManagedNetwork" --resource-group "myResourceGroup"
+"""
+
+helps['managed-network managed-network-group subscriptions'] = """
+    type: group
+    short-summary: managed-network managed-network-group
+"""
+
+helps['managed-network managed-network-group subscriptions add'] = """
+    type: command
+    short-summary: Add subitem
+    examples:
+      - name: Delete Managed Network Group
+        text: |-
+               az managed-network managed-network-group subscriptions add --managed-network-group-name \\
+               "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group \\
+               "myResourceGroup"
+"""
+
+helps['managed-network managed-network-group virtual_networks'] = """
+    type: group
+    short-summary: managed-network managed-network-group
+"""
+
+helps['managed-network managed-network-group virtual_networks add'] = """
+    type: command
+    short-summary: Add subitem
+    examples:
+      - name: Delete Managed Network Group
+        text: |-
+               az managed-network managed-network-group virtual_networks add \\
+               --managed-network-group-name "myManagedNetworkGroup1" --managed-network-name \\
+               "myManagedNetwork" --resource-group "myResourceGroup"
+"""
+
+helps['managed-network managed-network-group subnets'] = """
+    type: group
+    short-summary: managed-network managed-network-group
+"""
+
+helps['managed-network managed-network-group subnets add'] = """
+    type: command
+    short-summary: Add subitem
+    examples:
+      - name: Delete Managed Network Group
+        text: |-
+               az managed-network managed-network-group subnets add --managed-network-group-name \\
                "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group \\
                "myResourceGroup"
 """

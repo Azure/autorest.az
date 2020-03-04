@@ -24,6 +24,34 @@ def load_command_table(self, _):
         g.custom_command('delete', 'managed_network_managed_network_delete', supports_no_wait=True)
         g.wait_command('wait');
 
+    from ._client_factory import cf_managed_network
+    managed_network_managed_network = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_operations#ManagedNetworkOperations.{}',
+        client_factory=cf_managed_network)
+    with self.command_group('managed-network managed-network management_groups', managed_network_managed_network, client_factory=cf_managed_network) as g:
+        g.custom_command('managed-network managed-network management_groups add', 'managed_network_managed_network_management_groups_add')
+
+    from ._client_factory import cf_managed_network
+    managed_network_managed_network = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_operations#ManagedNetworkOperations.{}',
+        client_factory=cf_managed_network)
+    with self.command_group('managed-network managed-network subscriptions', managed_network_managed_network, client_factory=cf_managed_network) as g:
+        g.custom_command('managed-network managed-network subscriptions add', 'managed_network_managed_network_subscriptions_add')
+
+    from ._client_factory import cf_managed_network
+    managed_network_managed_network = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_operations#ManagedNetworkOperations.{}',
+        client_factory=cf_managed_network)
+    with self.command_group('managed-network managed-network virtual_networks', managed_network_managed_network, client_factory=cf_managed_network) as g:
+        g.custom_command('managed-network managed-network virtual_networks add', 'managed_network_managed_network_virtual_networks_add')
+
+    from ._client_factory import cf_managed_network
+    managed_network_managed_network = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_operations#ManagedNetworkOperations.{}',
+        client_factory=cf_managed_network)
+    with self.command_group('managed-network managed-network subnets', managed_network_managed_network, client_factory=cf_managed_network) as g:
+        g.custom_command('managed-network managed-network subnets add', 'managed_network_managed_network_subnets_add')
+
     from ._client_factory import cf_scope_assignment
     managed_network_scope_assignment = CliCommandType(
         operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._scope_assignment_operations#ScopeAssignmentOperations.{}',
@@ -46,6 +74,34 @@ def load_command_table(self, _):
         g.generic_update_command('update', supports_no_wait=True)
         g.custom_command('delete', 'managed_network_managed_network_group_delete', supports_no_wait=True)
         g.wait_command('wait');
+
+    from ._client_factory import cf_managed_network_group
+    managed_network_managed_network_group = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_group_operations#ManagedNetworkGroupOperations.{}',
+        client_factory=cf_managed_network_group)
+    with self.command_group('managed-network managed-network-group management_groups', managed_network_managed_network_group, client_factory=cf_managed_network_group) as g:
+        g.custom_command('managed-network managed-network-group management_groups add', 'managed_network_managed_network_group_management_groups_add')
+
+    from ._client_factory import cf_managed_network_group
+    managed_network_managed_network_group = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_group_operations#ManagedNetworkGroupOperations.{}',
+        client_factory=cf_managed_network_group)
+    with self.command_group('managed-network managed-network-group subscriptions', managed_network_managed_network_group, client_factory=cf_managed_network_group) as g:
+        g.custom_command('managed-network managed-network-group subscriptions add', 'managed_network_managed_network_group_subscriptions_add')
+
+    from ._client_factory import cf_managed_network_group
+    managed_network_managed_network_group = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_group_operations#ManagedNetworkGroupOperations.{}',
+        client_factory=cf_managed_network_group)
+    with self.command_group('managed-network managed-network-group virtual_networks', managed_network_managed_network_group, client_factory=cf_managed_network_group) as g:
+        g.custom_command('managed-network managed-network-group virtual_networks add', 'managed_network_managed_network_group_virtual_networks_add')
+
+    from ._client_factory import cf_managed_network_group
+    managed_network_managed_network_group = CliCommandType(
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_group_operations#ManagedNetworkGroupOperations.{}',
+        client_factory=cf_managed_network_group)
+    with self.command_group('managed-network managed-network-group subnets', managed_network_managed_network_group, client_factory=cf_managed_network_group) as g:
+        g.custom_command('managed-network managed-network-group subnets add', 'managed_network_managed_network_group_subnets_add')
 
     from ._client_factory import cf_managed_network_peering_policy
     managed_network_managed_network_peering_policy = CliCommandType(

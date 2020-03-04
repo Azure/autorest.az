@@ -50,6 +50,22 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
 
+    with self.argument_context('managed-network managed-network management_groups add') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.')
+
+    with self.argument_context('managed-network managed-network subscriptions add') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.')
+
+    with self.argument_context('managed-network managed-network virtual_networks add') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.')
+
+    with self.argument_context('managed-network managed-network subnets add') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.')
+
     with self.argument_context('managed-network scope-assignment list') as c:
         c.argument('scope', help='The base resource of the scope assignment.')
 
@@ -105,6 +121,26 @@ def load_arguments(self, _):
         c.argument('properties_subnets', help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
 
     with self.argument_context('managed-network managed-network-group delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.')
+        c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
+
+    with self.argument_context('managed-network managed-network-group management_groups add') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.')
+        c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
+
+    with self.argument_context('managed-network managed-network-group subscriptions add') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.')
+        c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
+
+    with self.argument_context('managed-network managed-network-group virtual_networks add') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.')
+        c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
+
+    with self.argument_context('managed-network managed-network-group subnets add') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_group_name', help='The name of the Managed Network Group.')

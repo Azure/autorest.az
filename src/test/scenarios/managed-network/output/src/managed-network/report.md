@@ -30,6 +30,12 @@ list a managed-network managed-network.
 |**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 |--top**|integer|May be used to limit the number of results in a page for list queries.|/something/my_option|/something/myOption|
 |--skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|/something/my_option|/something/myOption|
+### managed-network managed-network management_groups add
+
+managed-network managed-network management_groups add a managed-network managed-network management_groups.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
 ### managed-network managed-network show
 
 show a managed-network managed-network.
@@ -37,6 +43,18 @@ show a managed-network managed-network.
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 |**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
+### managed-network managed-network subnets add
+
+managed-network managed-network subnets add a managed-network managed-network subnets.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+### managed-network managed-network subscriptions add
+
+managed-network managed-network subscriptions add a managed-network managed-network subscriptions.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
 ### managed-network managed-network update
 
 update a managed-network managed-network.
@@ -46,6 +64,12 @@ update a managed-network managed-network.
 |**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 |**--parameters**|object|Parameters supplied to update application gateway tags and/or scope.|/something/my_option|/something/myOption|
 |--tags**|dictionary|Resource tags|/something/my_option|/something/myOption|
+### managed-network managed-network virtual_networks add
+
+managed-network managed-network virtual_networks add a managed-network managed-network virtual_networks.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
 ### managed-network managed-network-group create
 
 create a managed-network managed-network-group.
@@ -76,6 +100,12 @@ list a managed-network managed-network-group.
 |**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
 |--top**|integer|May be used to limit the number of results in a page for list queries.|/something/my_option|/something/myOption|
 |--skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|/something/my_option|/something/myOption|
+### managed-network managed-network-group management_groups add
+
+managed-network managed-network-group management_groups add a managed-network managed-network-group management_groups.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
 ### managed-network managed-network-group show
 
 show a managed-network managed-network-group.
@@ -83,6 +113,18 @@ show a managed-network managed-network-group.
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 |**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
+### managed-network managed-network-group subnets add
+
+managed-network managed-network-group subnets add a managed-network managed-network-group subnets.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+### managed-network managed-network-group subscriptions add
+
+managed-network managed-network-group subscriptions add a managed-network managed-network-group subscriptions.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
 ### managed-network managed-network-group update
 
 create a managed-network managed-network-group.
@@ -97,6 +139,12 @@ create a managed-network managed-network-group.
 |--subscriptions**|array|The collection of subscriptions covered by the Managed Network|/something/my_option|/something/myOption|
 |--virtual-networks**|array|The collection of virtual nets covered by the Managed Network|/something/my_option|/something/myOption|
 |--subnets**|array|The collection of  subnets covered by the Managed Network|/something/my_option|/something/myOption|
+### managed-network managed-network-group virtual_networks add
+
+managed-network managed-network-group virtual_networks add a managed-network managed-network-group virtual_networks.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
 ### managed-network managed-network-peering-policy create
 
 create a managed-network managed-network-peering-policy.
