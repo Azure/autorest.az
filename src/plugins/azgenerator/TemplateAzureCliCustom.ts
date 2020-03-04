@@ -184,6 +184,29 @@ function GetCommandBodyVirtualAdd(model: CodeModelAz): string[] {
     let isUpdate = updatedMethodName.startsWith("update_");
 
     output.push(call + "cmd, client");
+    let allParam: Map<string, boolean> = new Map<string, boolean>();
+    if (model.SelectMethodByName("get")) {
+        if (model.SelectFirstMethodParameter()) {
+            do {
+                if (model.MethodParameter_IsFlattened) {
+                    continue;
+                }
+                if(model.MethodParameter_Type == SchemaType.Constant) {
+                    continue;
+                }
+
+                let required: boolean = model.MethodParameter_RequiredByMethod;
+
+                let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
+                if (required && !allParam.has(name)) {
+                    allParam.set(name, true);
+                    output[output.length - 1] += ",";
+                    output.push(indent + name);
+                }
+            } while (model.SelectNextMethodParameter());
+        }
+    }
+    output[output.length - 1] += "):";
 
     // create, delete, list, show, update
     output.push("");

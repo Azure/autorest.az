@@ -50,7 +50,9 @@ def managed_network_managed_network_delete(cmd, client,
     return client.begin_delete(resource_group_name=resource_group_name, managed_network_name=managed_network_name)
 
 
-def managed_network_managed_network_management_groups_add(cmd, client
+def managed_network_managed_network_management_groups_add(cmd, client,
+                                                          resource_group_name,
+                                                          managed_network_name):
 
 
     old = client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name)
@@ -59,7 +61,9 @@ def managed_network_managed_network_management_groups_add(cmd, client
 
 
 
-def managed_network_managed_network_subscriptions_add(cmd, client
+def managed_network_managed_network_subscriptions_add(cmd, client,
+                                                      resource_group_name,
+                                                      managed_network_name):
 
 
     old = client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name)
@@ -68,7 +72,9 @@ def managed_network_managed_network_subscriptions_add(cmd, client
 
 
 
-def managed_network_managed_network_virtual_networks_add(cmd, client
+def managed_network_managed_network_virtual_networks_add(cmd, client,
+                                                         resource_group_name,
+                                                         managed_network_name):
 
 
     old = client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name)
@@ -77,7 +83,9 @@ def managed_network_managed_network_virtual_networks_add(cmd, client
 
 
 
-def managed_network_managed_network_subnets_add(cmd, client
+def managed_network_managed_network_subnets_add(cmd, client,
+                                                resource_group_name,
+                                                managed_network_name):
 
 
     old = client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name)
@@ -165,7 +173,10 @@ def managed_network_managed_network_group_delete(cmd, client,
     return client.begin_delete(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name)
 
 
-def managed_network_managed_network_group_management_groups_add(cmd, client
+def managed_network_managed_network_group_management_groups_add(cmd, client,
+                                                                resource_group_name,
+                                                                managed_network_name,
+                                                                managed_network_group_name):
 
 
     old = client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name)
@@ -174,7 +185,10 @@ def managed_network_managed_network_group_management_groups_add(cmd, client
 
 
 
-def managed_network_managed_network_group_subscriptions_add(cmd, client
+def managed_network_managed_network_group_subscriptions_add(cmd, client,
+                                                            resource_group_name,
+                                                            managed_network_name,
+                                                            managed_network_group_name):
 
 
     old = client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name)
@@ -183,7 +197,10 @@ def managed_network_managed_network_group_subscriptions_add(cmd, client
 
 
 
-def managed_network_managed_network_group_virtual_networks_add(cmd, client
+def managed_network_managed_network_group_virtual_networks_add(cmd, client,
+                                                               resource_group_name,
+                                                               managed_network_name,
+                                                               managed_network_group_name):
 
 
     old = client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name)
@@ -192,7 +209,10 @@ def managed_network_managed_network_group_virtual_networks_add(cmd, client
 
 
 
-def managed_network_managed_network_group_subnets_add(cmd, client
+def managed_network_managed_network_group_subnets_add(cmd, client,
+                                                      resource_group_name,
+                                                      managed_network_name,
+                                                      managed_network_group_name):
 
 
     old = client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name)

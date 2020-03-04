@@ -561,6 +561,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Command_IsLongRun(): boolean
     {
+        // no support yet for virtual commands
         if (this.CommandGroup_IsVirtual)
             return false;
 
