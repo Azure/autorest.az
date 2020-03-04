@@ -12,6 +12,17 @@ import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity} from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
 
+class SubGroup
+{
+    public constructor(name: string, methodIdx: number)
+    {
+        this.name = name;
+        this.methodIdx = methodIdx;
+    }
+    public name: string;
+    public methodIdx: number;
+}
+
 
 export class CodeModelCliImpl implements CodeModelAz
 {
@@ -20,7 +31,7 @@ export class CodeModelCliImpl implements CodeModelAz
     extensionName: string;
     currentOperationGroupIndex: number;
     currentOperationSubGroupIndex: number;
-    subgroups: string[];
+    subgroups: SubGroup[];
     currentOperationIndex: number;
     currentParameterIndex: number;
     currentExampleIndex: number;
@@ -234,6 +245,10 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
             }
             if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
+            // create a list of subgroups for current group
+            this.CreateVirtualSubGroups();
+
+            this.SelectFirstCommand();
             return true;
         } else {
             this.currentOperationGroupIndex = -1;
@@ -254,9 +269,6 @@ export class CodeModelCliImpl implements CodeModelAz
         if(this.currentOperationGroupIndex < this.codeModel.operationGroups.length - 1) {
             this.currentOperationGroupIndex++;
 
-            // create a list of subgroups for current group
-            this.CreateVirtualSubGroups();
-
             if(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].hidden || this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].removed) {
                 if(this.SelectNextCommandGroup()) {
                     if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
@@ -265,7 +277,15 @@ export class CodeModelCliImpl implements CodeModelAz
                     return false;
                 }
             }
+<<<<<<< HEAD
             if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
+=======
+
+            // create a list of subgroups for current group
+            this.CreateVirtualSubGroups();
+
+            this.SelectFirstCommand();
+>>>>>>> updates
             return true;
         } else {
             this.currentOperationGroupIndex = -1;
@@ -277,7 +297,32 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         // iterate through methods and parameters to find all the parameters that are list of complex
         // and create list of subgroups
-        this.subgroups = ["xxx", "yyy", "zzz"];
+        this.subgroups = [];
+
+        if (this.SelectFirstCommand()) {
+            do {
+                if (this.SelectFirstMethod()) {
+                    do {
+
+                        if (this.SelectFirstMethodParameter()) {
+                            do {
+
+                                if (this.MethodParameter_IsListOfComplex) {
+                                    this.subgroups.push(new SubGroup(this.MethodParameter_Name, this.currentMethodIndex));
+                                }
+                            } while (this.SelectNextMethodParameter());
+                        }
+                    } while (this.SelectNextMethod());
+                }
+
+            } while (this.SelectNextCommand());
+        }
+
+        if (this.subgroups.length == 0) {
+            this.subgroups = null;
+        }
+
+        this.SelectFirstCommand();
     }
 
     private SelectFirstSubGroup(): boolean
@@ -320,7 +365,7 @@ export class CodeModelCliImpl implements CodeModelAz
         }
         else
         {
-            return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command + " " + this.subgroups[this.currentOperationSubGroupIndex];
+            return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command + " " + this.subgroups[this.currentOperationSubGroupIndex].name;
         }
     }
 

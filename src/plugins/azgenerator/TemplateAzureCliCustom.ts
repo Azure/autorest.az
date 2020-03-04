@@ -193,7 +193,7 @@ function GetCommandBodyVirtualAdd(model: CodeModelAz): string[] {
     // call get
     //
     if (model.SelectMethodByName("get")) {
-        output.push(GetMethodCall(model));
+        output.push("    old = " + GetMethodCall(model));
         output.push("");
     }
 
@@ -223,16 +223,19 @@ function GetCommandBodyVirtualAdd(model: CodeModelAz): string[] {
                     ifStatement += ((model.Method_IsFirst) ? "if" : "elif");
 =======
     //
-    // add item to the list
+    // split response to single parameters
     //
 >>>>>>> virtual add next
 
+    //
+    // add item to the list
+    //
 
     //
     // call create_or_udpate
     //
     if (model.SelectMethodByName("create_or_update")) {
-        output.push(GetMethodCall(model));
+        output.push("    " + GetMethodCall(model));
         output.push("");
     }
 
