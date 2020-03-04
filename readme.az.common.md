@@ -21,9 +21,10 @@ clicommon:
               - operation
     cli-directive:
         - where:
-            operation: check-name-availability
+            operation: check_name_availability
           hidden: true
         - where:
-            operation: list-operation
+            operationGroup: operations
+            operation: list
           hidden: true
 ```
