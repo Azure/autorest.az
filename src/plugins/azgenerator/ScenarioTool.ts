@@ -341,6 +341,8 @@ export class ResourcePool {
     }
 
     public addParamResource(param_name: string, param_value: string): string {
+        if (typeof param_value !== 'string') return param_value;
+
         if (param_name.startsWith('--')) {
             param_name = param_name.substr(2);
         }
