@@ -777,16 +777,17 @@ export class CodeModelCliImpl implements CodeModelAz
         if (!this.MethodParameter_IsListOfComplex)
             return false;
 
+        this.submethodparameters = null;
         if(this.MethodParameter_Type == SchemaType.Array) {
             if((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
-                this.submethodparameters = (this.MethodParameter['schema'])['elementType'].properties;
-            } else {
-                return false;
+                this.submethodparameters = this.MethodParameter['schema']?.['elementType']?.properties;
             }
         } else {
-            this.submethodparameters = (this.MethodParameter['schema'])['properties'];
+            this.submethodparameters = this.MethodParameter['schema']?.['properties'];
         }
-
+        if(this.submethodparameters == null) {
+            return false;
+        }
         return true;
     }
 
