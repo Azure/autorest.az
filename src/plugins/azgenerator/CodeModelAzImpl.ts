@@ -7,7 +7,7 @@ import { CodeModelAz, CommandExample } from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
-import { ToSnakeCase, MergeSort } from '../../utils/helper';
+import { ToSnakeCase, MergeSort, deepCopy } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity} from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
@@ -1113,24 +1113,54 @@ export class CodeModelCliImpl implements CodeModelAz
         return parameters;
     }
 
-    public FlattenExampleParameter(method_param: Map<string, Value>, example_parm: Map<string, string>, name: string, value: any, ancestors: string[]) {
-        if (typeof value === 'object' && value !== null) {
-            for (let sub_name in value) {
-                this.FlattenExampleParameter(method_param, example_parm, sub_name, value[sub_name], ancestors.concat(name));
-            }
-        }
-        else if (typeof method_param.get(name) !== 'undefined' ) {
-            if ('pathToProperty' in method_param.get(name)) {
+    public FlattenExampleParameter(method_param: Map<string, Value>, example_param: Map<string, string>, name: string, value: any, ancestors: string[]) {
+        if (typeof method_param.get(name) !== 'undefined') {
+            if ('pathToProperty' in method_param.get(name) && ancestors.length - method_param.get(name)['pathToProperty'].length==-1) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
+                let ancestors_ = deepCopy(ancestors) as string[];
+                let match = true;
                 for (let i = method_param.get(name)['pathToProperty'].length - 1; i >= 0; i--) {
-                    if (ancestors.length <= 0) return;
-                    let parent = ancestors.pop();
-                    if (method_param.get(name)['pathToProperty'][i].language.az.name != parent) return;
+                    if (ancestors_.length <= 0) {
+                        match = false;
+                        break;
+                    }
+                    let parent = ancestors_.pop();
+                    if (method_param.get(name)['pathToProperty'][i].language.az.name != parent) {
+                        match = false;
+                    };
                 }
-                example_parm.set(name, value);
+                if (match) {
+                    example_param.set(name, value);
+                    return;
+                }
+            }
+            else if ('flattenedNames' in method_param.get(name) && ancestors.length - method_param.get(name)['flattenedNames'].length == 0 && ancestors.length>0) {
+                // if the method parameter has 'flattenedNames', check the names (except the last name) with example parameter full path.
+                let ancestors_ = deepCopy(ancestors) as string[];
+                let match = true;
+                for (let i = method_param.get(name)['flattenedNames'].length - 2; i >= 0; i--) {
+                    if (ancestors_.length <= 0) {
+                        match = false;
+                        break;
+                    }
+                    let parent = ancestors_.pop();
+                    if (method_param.get(name)['flattenedNames'][i] != parent) {
+                        match = false;
+                    };
+                }
+                if (match) {
+                    example_param.set(name, value);
+                    return;
+                }
             }
             else {
-                example_parm.set(name, value);
+                example_param.set(name, value);
+            }
+        }
+
+        if (typeof value === 'object' && value !== null) {
+            for (let sub_name in value) {
+                this.FlattenExampleParameter(method_param, example_param, sub_name, value[sub_name], ancestors.concat(name));
             }
         }
     }
