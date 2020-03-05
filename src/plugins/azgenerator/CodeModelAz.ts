@@ -14,6 +14,7 @@ export class CommandExample
     public Parameters: Map<string, string>;
     // public MethodName: string;
     public Path: string;
+    public ResourceClassName: string;
 }
 
 export interface CodeModelAz
@@ -106,4 +107,7 @@ export interface CodeModelAz
     Example_Title: string;
     Example_Params: any;
     GetExamples(): CommandExample[];
+    GetSubscriptionKey(): string;
+    GetPreparerEntities(): any[];
+    GatherInternalResource();
 }

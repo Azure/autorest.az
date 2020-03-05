@@ -7,9 +7,9 @@ import { CodeModelAz, CommandExample } from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
-import { ToSnakeCase } from '../../utils/helper';
+import { ToSnakeCase, MergeSort } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { GenerateDefaultTestScenario } from './scenario_tool'
+import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity} from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
 
 
@@ -24,10 +24,12 @@ export class CodeModelCliImpl implements CodeModelAz
     currentExampleIndex: number;
     preMethodIndex: number;
     currentMethodIndex: number;
+    resource_pool: ResourcePool;
 
     suboptions: Property[];
     submethodparameters: Property[];
     currentSubOptionIndex: number;
+    private _testScenario: any[];
 
     async init() {
         this.options = await this.session.getValue('az');
@@ -42,14 +44,27 @@ export class CodeModelCliImpl implements CodeModelAz
         this.currentSubOptionIndex = -1;
         this.submethodparameters = null;
         //this.sortOperationByAzCommand();
-        
     }
 
     public constructor(protected session: Session<CodeModel>) 
     {
         this.codeModel = session.model;
+        this.resource_pool = new ResourcePool();
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
+        if (this.codeModel['test-scenario']) {
+            if ('examples' in this.codeModel['test-scenario']) {
+                //new style of example configuration
+                this._testScenario = this.codeModel['test-scenario']['examples'];
+            }
+            else {
+                //old style of example configuration
+                this._testScenario = this.codeModel['test-scenario']
+            }
+        }
+        else {
+            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
+        }
     }
 
     private getOrder(op: string) {
@@ -190,7 +205,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get Extension_TestScenario(): any
     {
-        return this.codeModel['test-scenario'] || GenerateDefaultTestScenario(this.GetAllExamples());
+        return this._testScenario;
     }
 
     //=================================================================================================================
@@ -209,13 +224,13 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentOperationGroupIndex = 0;
             if(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].hidden || this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].removed) {
                 if(this.SelectNextCommandGroup()) {
-                    this.SelectFirstCommand();
+                    if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
                     return true;
                 } else {
                     return false;
                 }
             }
-            this.SelectFirstCommand();
+            if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
             return true;
         } else {
             this.currentOperationGroupIndex = -1;
@@ -229,13 +244,13 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentOperationGroupIndex++;
             if(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].hidden || this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].removed) {
                 if(this.SelectNextCommandGroup()) {
-                    this.SelectFirstCommand();
+                    if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
                     return true;
                 } else {
                     return false;
                 }
             }
-            this.SelectFirstCommand();
+            if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
             return true;
         } else {
             this.currentOperationGroupIndex = -1;
@@ -251,6 +266,10 @@ export class CodeModelCliImpl implements CodeModelAz
     public get CommandGroup_Help(): string
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command;
+    }
+
+    public get CommandGroup_Key(): string {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].$key || this.CommandGroup_Name;
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -702,6 +721,11 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.protocol?.http?.path;
     }
 
+    public Get_Method_Name(language="az"): string
+    {
+       return  this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].language[language].name;
+    }
+
     //=================================================================================================================
     // Methods Parameters.
     //
@@ -1006,7 +1030,7 @@ export class CodeModelCliImpl implements CodeModelAz
             do {
                 if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
                     
-                    method_param_dict[this.MethodParameter.language.default.name] = this.MethodParameter;
+                    method_param_dict.set(this.MethodParameter.language.default.name, this.MethodParameter);
                     // this.AddFlattenedParameter(method_param_dict, this.MethodParameter, this.MethodParameter.language.default.name)
                 }
             } while (this.SelectNextMethodParameter());
@@ -1040,25 +1064,26 @@ export class CodeModelCliImpl implements CodeModelAz
                 this.FlattenExampleParameter(method_param, example_parm, sub_name, value[sub_name], ancestors.concat(name));
             }
         }
-        else if (name in method_param) {
-            if ('pathToProperty' in method_param[name]) {
+        else if (typeof method_param.get(name) !== 'undefined' ) {
+            if ('pathToProperty' in method_param.get(name)) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
-                for (let i = method_param[name].pathToProperty.length - 1; i >= 0; i--) {
+                for (let i = method_param.get(name)['pathToProperty'].length - 1; i >= 0; i--) {
                     if (ancestors.length <= 0) return;
                     let parent = ancestors.pop();
-                    if (method_param[name].pathToProperty[i].language.az.name != parent) return;
+                    if (method_param.get(name)['pathToProperty'][i].language.az.name != parent) return;
                 }
-                example_parm[name] = value;
+                example_parm.set(name, value);
             }
             else {
-                example_parm[name] = value;
+                example_parm.set(name, value);
             }
         }
     }
 
     public ConvertToCliParameters(example_params): Map<string, string> {
         let ret: Map<string, string> = new Map<string, string>();
-        Object.entries(example_params).forEach(([param_name, param_value]) => {
+        for(let [param_name, param_value] of example_params) {
+        //Object.entries(example_params).forEach(() => {
             param_name = ToSnakeCase(param_name);
             if (param_name.endsWith('_name')) {
                 if (param_name == "resource_group_name") {
@@ -1070,7 +1095,7 @@ export class CodeModelCliImpl implements CodeModelAz
             }
             param_name = param_name.split("_").join("-");
             ret["--" + param_name] = param_value;
-        });
+        };
         return ret;
     }
 
@@ -1084,6 +1109,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 example.Id = id;
                 example.Title = example_obj.title || id;
                 example.Path = this.Method_Path;
+                example.ResourceClassName = this.CommandGroup_Key;
                 let params: Map<string, string> = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
                 examples.push(example);
@@ -1094,25 +1120,35 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public GetExampleItems(example: CommandExample, isTest: boolean): string[] {
         let parameters: string[] = [];
-
         parameters.push("az " + this.CommandGroup_Name.split("_").join("-") + " " + example.Method)
 
         for (let k in example.Parameters) {
-            let slp = JSON.stringify(example.Parameters[k]).split(/[\r\n]+/).join("");
+            let param_value = example.Parameters[k];
             if (isTest) {
-                if (k != "--resource-group") {
-                    parameters.push(k + " " + slp);
+                let replaced_value = this.resource_pool.addEndpointResource(param_value);
+                if (replaced_value == param_value) {
+                    replaced_value = this.resource_pool.addParamResource(k, param_value);
                 }
-                else {
-                    parameters.push(k + " {rg}");
-                }
+                param_value = replaced_value;
             }
-            else {
-                parameters.push(k + " " + slp);
-            }
+            let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("");
+            parameters.push(k + " " + slp);
         }
 
         return parameters;
+    }
+
+    public GetPreparerEntities(): any[] {
+        return this.resource_pool.createPreparerEntities();
+    }
+
+    public GetSubscriptionKey(): string {
+        if (this.resource_pool.use_subscription) {
+            return ResourcePool.KEY_SUBSCRIPTIONID;
+        }
+        else {
+            return null;
+        }
     }
 
     public FindExampleById(id: string): string[][] {
@@ -1123,26 +1159,145 @@ export class CodeModelCliImpl implements CodeModelAz
         return ret;
     }
 
-    public GetAllExamples(id?: string, callback?: (example)=>void): CommandExample[] {
-        let ret: CommandExample[] = [];
+    public GatherInternalResource() {
+        let internal_resources = {};  // resource_key --> list of resource languages
+        this.GetAllMethods(null, () => {
+            if ( !(this.CommandGroup_Key in internal_resources)) {
+                internal_resources[this.CommandGroup_Key] = [this.CommandGroup_Key, ];
+            }
+            let commands = this.CommandGroup_Name.split(" ");
+            let resource_name = commands[commands.length-1]+"-name";
+            if (internal_resources[this.CommandGroup_Key].indexOf(resource_name)<0){
+                internal_resources[this.CommandGroup_Key].push(resource_name);
+            }
+        });
+        this.resource_pool.addResourcesInfo(internal_resources);
+
+        //find dependency relationships of internal_resources
+        this.GetAllMethods(null, () => {
+            if (this.Get_Method_Name("az") == 'create') {
+                let depend_resources = [];
+                let depend_parameters = [];
+                if (this.SelectFirstMethodParameter()) {
+                    do {
+                        if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
+                            let param_name = this.MethodParameter.language["az"].name;
+                            if (internal_resources[this.CommandGroup_Key].indexOf(param_name)<0 ) {// if it isn't name of current resource) 
+                                let on_resource = this.resource_pool.isResource(param_name);
+                                if (on_resource)
+                                    // the resource is a dependency only when it's a parameter in an example.
+                                    for (let example of this.GetExamples()) {
+                                        if(param_name in example.Parameters) {
+                                            depend_resources.push(on_resource);
+                                            depend_parameters.push(param_name);
+                                        }
+                                    }
+                                }
+                        }
+                    } while(this.SelectNextMethodParameter())
+                }
+                this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
+            }
+        });
+
+        this.SortExamplesByDependency();
+    }
+
+    public SortExamplesByDependency() {
+        let depend_on = (example_a: CommandExample, example_b: CommandExample): boolean => {
+            return Object.keys(example_a.Parameters).some((param_name): boolean => {
+                if (this.resource_pool.isResource(param_name.substr(2)) == example_b.ResourceClassName) return true;
+                if (typeof  example_a[param_name] == 'string') {
+                    for (let resource_name of example_a[param_name].split('/')) {
+                        if (this.resource_pool.isResource(resource_name) == example_b.ResourceClassName) return true;
+                    }
+                }
+                return false;
+            });
+        }
+
+        // stable sort
+        this._testScenario = MergeSort(this._testScenario, (config_a: object, config_b: object): number => {
+            let examples_a: CommandExample[] = this.GetAllExamples(config_a['name']);
+            let examples_b: CommandExample[] = this.GetAllExamples(config_b['name']);
+            if (examples_a.length <= 0 || examples_b.length <=0 ){
+                return 0; // if any example can't be found, keep the original order
+            }
+
+            if (examples_a[0].ResourceClassName == examples_b[0].ResourceClassName) {
+                if (examples_b[0].Method.toLowerCase() == "create") {
+                    return 1;
+                }
+                else if (examples_b[0].Method.toLowerCase() == "delete") {
+                    return -1;
+                }
+                else if (examples_a[0].Method.toLowerCase() == "create") {
+                    return -1;
+                }
+                else if (examples_a[0].Method.toLowerCase() == "delete") {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
+            else if (depend_on(examples_a[0], examples_b[0])) {
+                if (examples_b[0].Method.toLowerCase() == "create") {
+                    return 1;
+                }
+                else if (examples_b[0].Method.toLowerCase() == "delete") {
+                    return -1;
+                }
+                else {
+                    return 0;
+                }
+            }
+            else if (depend_on(examples_b[0], examples_a[0])) {
+                if (examples_a[0].Method.toLowerCase() == "create") {
+                    return -1;
+                }
+                else if (examples_a[0].Method.toLowerCase() == "delete") {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
+            return 0;
+        });
+    }
+
+    public GetAllMethods(command_group?: string, callback?: ()=>void): any[] {
+        let ret: [];
         this.SelectFirstExtension();
         if (this.SelectFirstCommandGroup()) {
             do {    // iterate all CommandGroups
+                if (command_group && command_group.toLowerCase() != this.CommandGroup_Key.toLowerCase()) continue;
                 while (this.currentOperationIndex >= 0) {  // iterate all Commands
                     this.SelectFirstMethod();
-                    do {                        // iterate all Methods
-                        for (let example of this.GetExamples()) {
-                            if (id && (example.Id.toLowerCase() != id.toLowerCase())) continue;
-                            if(callback) {
-                                callback(example);
-                            }
-                            ret.push(example);
-                        }
+                    do {                                   
+                        if(callback) {
+                            callback();
+                        }                       
                     } while (this.SelectNextMethod())
                     this.SelectNextCommand();
                 }
             } while (this.SelectNextCommandGroup())
         }
+        return ret;
+    }
+
+    public GetAllExamples(id?: string, callback?: (example)=>void): CommandExample[] {
+        let ret: CommandExample[] = [];
+        this.GetAllMethods(null, () => {
+            for (let example of this.GetExamples()) {
+                if (id && (example.Id.toLowerCase() != id.toLowerCase())) continue;
+                if(callback) {
+                    callback(example);
+                }
+                ret.push(example);
+            }
+        });
         return ret;
     }
 }

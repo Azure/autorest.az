@@ -17,7 +17,6 @@ require:
   - ./readme.python.md
   - ./readme.cli.md
   - $(this-folder)/readme.az.common.md
-  
 
 pipeline-model: v3
 
