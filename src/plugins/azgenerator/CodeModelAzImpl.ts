@@ -876,6 +876,8 @@ export class CodeModelCliImpl implements CodeModelAz
         return false;
     }
 
+    
+
     public get MethodParameter(): any {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
     }
