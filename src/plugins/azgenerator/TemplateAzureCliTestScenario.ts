@@ -125,7 +125,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     if (internalObjects.length > 0) {
         initiates.push("        self.kwargs.update({");
         for (let [class_name, kargs_key] of internalObjects)
-            initiates.push(`            '${kargs_key}': self.create_random_name(prefix='${ToSnakeCase(class_name)}', length=24),`);
+            initiates.push(`            '${kargs_key}': self.create_random_name(prefix='${ToSnakeCase(class_name)}'[-4:], length=24),`);
         initiates.push("        })");
         initiates.push("");
     }
