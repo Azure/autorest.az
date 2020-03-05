@@ -885,6 +885,10 @@ export class CodeModelCliImpl implements CodeModelAz
     public get MethodParameter_MapsTo(): string
     {
         let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
+        return this.GetMethodParameterMapName(parameter);
+    }
+
+    private GetMethodParameterMapName(parameter): string {
         if(parameter['originalParameter'] != null && parameter.language['python'].name != 'location' && parameter.language['python'].name != "tags") {
             return (parameter['originalParameter']).language['python'].name + "_" + parameter.language['python'].name;
         } else {
@@ -1127,10 +1131,10 @@ export class CodeModelCliImpl implements CodeModelAz
                     let parent = ancestors.pop();
                     if (method_param.get(name)['pathToProperty'][i].language.az.name != parent) return;
                 }
-                example_parm.set(name, value);
+                example_parm.set(this.GetMethodParameterMapName(method_param.get(name)), value);
             }
             else {
-                example_parm.set(name, value);
+                example_parm.set(this.GetMethodParameterMapName(method_param.get(name)), value);
             }
         }
     }

@@ -47,7 +47,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  checks=[])
 
         self.cmd('az managed-network scope-assignment create '
-                 '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
+                 '--parameters-assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
                  '--scope "subscriptions/subscriptionC" '
                  '--scope-assignment-name "{subscriptionCAssignment}"',
                  checks=[])
