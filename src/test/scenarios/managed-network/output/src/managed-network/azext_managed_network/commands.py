@@ -6,8 +6,8 @@
 # pylint: disable=wildcard-import
 # pylint: disable=unused-wildcard-import
 
-from azext_managed_network.generated.commands import *  # noqa: F403
+from .generated.commands import *  # noqa: F403
 try:
-    from azext_managed_network.manual.commands import *  # noqa: F403
+    from .manual.commands import *  # noqa: F403
 except ImportError:
     pass
