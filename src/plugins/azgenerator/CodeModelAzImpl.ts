@@ -848,10 +848,17 @@ export class CodeModelCliImpl implements CodeModelAz
     public get MethodParameter_MapsTo(): string
     {
         let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
-        if(parameter['originalParameter'] != null && parameter.language['python'].name != 'location' && parameter.language['python'].name != "tags") {
+        /*if(parameter['originalParameter'] != null && parameter.language['python'].name != 'location' && parameter.language['python'].name != "tags") {
             return (parameter['originalParameter']).language['python'].name + "_" + parameter.language['python'].name;
+        } else {*/
+        let mapName: Array<any> = [];
+        for(var name of values(parameter['flattenedNames'])) {
+            mapName.push(ToSnakeCase(name.toLocaleString()));
+        }
+        if(mapName.length <= 0) {
+            return parameter.language.python.name;
         } else {
-            return parameter.language['python'].name;
+            return mapName.join('_');
         }
     }
 
