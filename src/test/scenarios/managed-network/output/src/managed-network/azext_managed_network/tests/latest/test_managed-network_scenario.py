@@ -20,7 +20,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         subs = self.cmd('az account show').get_output_in_json()
         return subs['id']
 
-    @ResourceGroupPreparer(name_prefix='cli_test_managed_network_myResourceGroup', key='rg')
+    @ResourceGroupPreparer(name_prefix='cli_test_managed_network_myResourceGroup'[:9], key='rg')
     def test_managed_network(self, resource_group):
 
         self.kwargs.update({
