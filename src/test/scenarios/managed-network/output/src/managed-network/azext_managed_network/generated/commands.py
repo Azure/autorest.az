@@ -32,7 +32,7 @@ def load_command_table(self, _):
         g.custom_command('list', 'managed_network_scope_assignment_list')
         g.custom_show_command('show', 'managed_network_scope_assignment_show')
         g.custom_command('create', 'managed_network_scope_assignment_create')
-        g.generic_update_command('update', 'managed_network_scope_assignment_update')
+        g.generic_update_command('update')
         g.custom_command('delete', 'managed_network_scope_assignment_delete')
 
     from ._client_factory import cf_managed_network_group
@@ -43,7 +43,7 @@ def load_command_table(self, _):
         g.custom_command('list', 'managed_network_managed_network_group_list')
         g.custom_show_command('show', 'managed_network_managed_network_group_show')
         g.custom_command('create', 'managed_network_managed_network_group_create', supports_no_wait=True)
-        g.generic_update_command('update', 'managed_network_managed_network_group_update', supports_no_wait=True)
+        g.generic_update_command('update', supports_no_wait=True)
         g.custom_command('delete', 'managed_network_managed_network_group_delete', supports_no_wait=True)
         g.wait_command('wait');
 
@@ -55,6 +55,6 @@ def load_command_table(self, _):
         g.custom_command('list', 'managed_network_managed_network_peering_policy_list')
         g.custom_show_command('show', 'managed_network_managed_network_peering_policy_show')
         g.custom_command('create', 'managed_network_managed_network_peering_policy_create', supports_no_wait=True)
-        g.generic_update_command('update', 'managed_network_managed_network_peering_policy_update', supports_no_wait=True)
+        g.generic_update_command('update', supports_no_wait=True)
         g.custom_command('delete', 'managed_network_managed_network_peering_policy_delete', supports_no_wait=True)
         g.wait_command('wait');

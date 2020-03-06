@@ -213,6 +213,8 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
     :type spokes: list[~managed_network_management_client.models.ResourceId]
     :param mesh: Gets or sets the mesh group IDs.
     :type mesh: list[~managed_network_management_client.models.ResourceId]
+    :param id: Resource Id.
+    :type id: str
     """
 
     _validation = {
@@ -228,6 +230,7 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         'hub': {'key': 'hub', 'type': 'ResourceId'},
         'spokes': {'key': 'spokes', 'type': '[ResourceId]'},
         'mesh': {'key': 'mesh', 'type': '[ResourceId]'},
+        'id': {'key': 'hub.id', 'type': 'str'},
     }
 
     def __init__(
@@ -236,10 +239,12 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         hub: Optional["ResourceId"] = None,
         spokes: Optional[List["ResourceId"]] = None,
         mesh: Optional[List["ResourceId"]] = None,
+        id: Optional[str] = None,
         **kwargs
     ):
         super(HubAndSpokePeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, mesh=mesh, **kwargs)
         self.type = 'HubAndSpokeTopology'
+        self.id = id
 
 
 class Resource(msrest.serialization.Model):
@@ -841,25 +846,35 @@ class Operation(msrest.serialization.Model):
 
     :param name: Operation name: {provider}/{resource}/{operation}.
     :type name: str
-    :param display: The object that represents the operation.
-    :type display: ~managed_network_management_client.models.OperationDisplay
+    :param provider: Service provider: Microsoft.ManagedNetwork.
+    :type provider: str
+    :param resource: Resource on which the operation is performed: Profile, endpoint, etc.
+    :type resource: str
+    :param operation: Operation type: Read, write, delete, etc.
+    :type operation: str
     """
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
-        'display': {'key': 'display', 'type': 'OperationDisplay'},
+        'provider': {'key': 'display.provider', 'type': 'str'},
+        'resource': {'key': 'display.resource', 'type': 'str'},
+        'operation': {'key': 'display.operation', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
         name: Optional[str] = None,
-        display: Optional["OperationDisplay"] = None,
+        provider: Optional[str] = None,
+        resource: Optional[str] = None,
+        operation: Optional[str] = None,
         **kwargs
     ):
         super(Operation, self).__init__(**kwargs)
         self.name = name
-        self.display = display
+        self.provider = provider
+        self.resource = resource
+        self.operation = operation
 
 
 class OperationDisplay(msrest.serialization.Model):
