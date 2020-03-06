@@ -26,9 +26,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
     {
         do
         {
-            // if disabled
-            if (model.Command_Name == "-")
-                continue;
+            // if there's no operation in this command group, just continue
 
             if (model.SelectFirstCommand())
             {
@@ -85,7 +83,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     if (methodName != "show")
     {
         if(needUpdate) {
-            output.push("        g.generic_update_command('" + methodName.replace(/create/g, "update") + "', '" + functionName.replace(/_create/g, "_update") + "'" + endStr);
+            output.push("        g.generic_update_command('update'" + endStr);
         } else {
             output.push("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr);
         } 

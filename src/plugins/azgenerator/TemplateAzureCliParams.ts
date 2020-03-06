@@ -144,19 +144,19 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     else {
                         argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
                     }
-        
-                    if (model.MethodParameter_IsList) {
-                        if (model.MethodParameter_IsListOfComplex) {
-                            let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
-                            argument += ", action=" + actionName;
-                            hasActions = true;
-        
-                            if (actions.indexOf(actionName) < 0) {
-                                actions.push(actionName);
-                            }
+
+                    if (model.MethodParameter_IsListOfComplex) {
+                        let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
+                        argument += ", action=" + actionName;
+                        hasActions = true;
+
+                        if (actions.indexOf(actionName) < 0) {
+                            actions.push(actionName);
                         }
                         argument += ", nargs='+'";
                     }
+                        
+                    
         
                     argument += ")";
         

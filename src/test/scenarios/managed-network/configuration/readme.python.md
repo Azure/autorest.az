@@ -10,7 +10,6 @@ python:
   package-name: azure-mgmt-managednetwork
   clear-output-folder: true
 
-add-credential: true
 ```
 
 ``` yaml $(python) && $(python-mode) == 'update'
