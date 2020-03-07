@@ -383,7 +383,3 @@ export class ResourcePool {
     }
 }
 
-export function generateResourceFiles(filename: string): string[] {
-    let src_folder = path.join(`${__dirname}`, '..', '..', '..', 'src', 'plugins', 'azgenerator', 'resources');
-    return ReadFile(path.join(src_folder, filename)).split(/\r\n|\n/);
-} 

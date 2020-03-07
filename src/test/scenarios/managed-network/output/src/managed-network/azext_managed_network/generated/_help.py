@@ -20,7 +20,7 @@ helps['managed-network managed-network list'] = """
     examples:
       - name: Get Managed Network
         text: |-
-               az managed-network managed-network list
+               az managed-network managed-network list --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network show'] = """

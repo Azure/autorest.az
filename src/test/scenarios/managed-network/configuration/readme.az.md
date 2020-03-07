@@ -61,10 +61,6 @@ cli:
             operation: 'list'
         hidden: true
       - where:
-            operationGroup: 'managed_networks'
-            operation: 'list_by_resource_group'
-        removed: true
-      - where:
             parameter: location
         required: true
 
