@@ -9,6 +9,8 @@ import unittest
 from azure_devtools.scenario_tests import AllowLargeResponse
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
+from .preparers import VirtualNetworkPreparer
+from .preparers import VnetSubnetPreparer
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
@@ -21,6 +23,11 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         return subs['id']
 
     @ResourceGroupPreparer(name_prefix='cli_test_managed_network_myResourceGroup'[:9], key='rg')
+    @VirtualNetworkPreparer(name_prefix='cli_test_managed_network_VnetC'[:9], key='vn', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='cli_test_managed_network_VnetA'[:9], key='vn_2', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='cli_test_managed_network_VnetB'[:9], key='vn_3', resource_group_key='rg')
+    @VnetSubnetPreparer(name_prefix='cli_test_managed_network_subnetA'[:9], key='sn', resource_group_key='rg', vnet_key='vn')
+    @VnetSubnetPreparer(name_prefix='cli_test_managed_network_subnetB'[:9], key='sn_2', resource_group_key='rg', vnet_key='vn')
     def test_managed_network(self, resource_group):
 
         self.kwargs.update({
@@ -37,12 +44,12 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         self.cmd('az managed-network managed-network create '
                  '--properties-scope-management-groups "id=/providers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000" '
                  '--properties-scope-management-groups "id=/providers/Microsoft.Management/managementGroups/20000000-0002-0000-0000-000000000000" '
-                 '--properties-scope-subnets "id=/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC/subnets/subnetA" '
-                 '--properties-scope-subnets "id=/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC/subnets/subnetB" '
+                 '--properties-scope-subnets "id=/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}/subnets/{sn}" '
+                 '--properties-scope-subnets "id=/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}/subnets/{sn_2}" '
                  '--properties-scope-subscriptions "id=subscriptionA" '
                  '--properties-scope-subscriptions "id=subscriptionB" '
-                 '--properties-scope-virtual-networks "id=/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" '
-                 '--properties-scope-virtual-networks "id=/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" '
+                 '--properties-scope-virtual-networks "id=/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_2}" '
+                 '--properties-scope-virtual-networks "id=/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_3}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])

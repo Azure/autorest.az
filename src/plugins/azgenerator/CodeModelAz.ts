@@ -6,16 +6,17 @@ import { Example } from "@azure-tools/codemodel";
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
- export class ExampleParam {
-     name: string;
-     value: any;
-     public constructor(name: string, value: any) {
-         this.name = name;
-         this.value = value;
-     }
- }
-export class CommandExample
-{
+export class ExampleParam {
+    name: string;
+    value: any;
+    original_type: string;
+    public constructor(name: string, value: any, original_type: any) {
+        this.name = name;
+        this.value = value;
+        this.original_type = original_type;
+    }
+}
+export class CommandExample {
     // this should be "create", "update", "list", "show", or custom name
     public Method: string;
     public Id: string;
