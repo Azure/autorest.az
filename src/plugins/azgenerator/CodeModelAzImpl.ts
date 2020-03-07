@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz, CommandExample } from "./CodeModelAz";
-import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property } from '@azure-tools/codemodel';
+import { CodeModelAz, CommandExample, ExampleParam} from "./CodeModelAz";
+import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Example } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, MergeSort, deepCopy } from '../../utils/helper';
@@ -1058,8 +1058,8 @@ export class CodeModelCliImpl implements CodeModelAz
         }
     }
 
-    public GetExampleParameters(example_obj): Map<string, string> {
-        let parameters: Map<string, string> = new Map<string, string>();
+    public GetExampleParameters(example_obj): ExampleParam[]{
+        let parameters: ExampleParam[] = [];
         let method_param_dict: Map<string, Value> = this.GetMethodParametersDict();
         Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
             this.FlattenExampleParameter(method_param_dict, parameters, param_name, param_value, []);
@@ -1067,7 +1067,33 @@ export class CodeModelCliImpl implements CodeModelAz
         return parameters;
     }
 
-    public FlattenExampleParameter(method_param: Map<string, Value>, example_param: Map<string, string>, name: string, value: any, ancestors: string[]) {
+    private AddExampleParameter(example_param: ExampleParam[], name: string, value: any) {
+        if (value instanceof Array) {
+            for (let e of value) {
+                this.AddExampleParameter(example_param, name, e);
+            }
+        }
+        else if (value) {
+            if (typeof value == 'object') {
+                let ret = "";
+                for (let k in value) {
+                    if (ret.length>0) {
+                        ret += " ";
+                    }
+                    //let v = JSON.stringify(value[k]).split(/[\r\n]+/).join("");
+                    //ret += `${k}=${v.substr(1, v.length-2)}`;
+                    ret += `${k}=${value[k]}`;
+                }
+                example_param.push(new ExampleParam(name, ret));
+            }
+            else {
+                example_param.push(new ExampleParam(name, value));
+            }
+        }
+
+    }
+
+    public FlattenExampleParameter(method_param: Map<string, Value>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
         if (typeof method_param.get(name) !== 'undefined') {
             if ('pathToProperty' in method_param.get(name) && ancestors.length - method_param.get(name)['pathToProperty'].length==-1) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
@@ -1084,7 +1110,8 @@ export class CodeModelCliImpl implements CodeModelAz
                     };
                 }
                 if (match) {
-                    example_param.set(name, value);
+                    // example_param.set(name, value);
+                    this.AddExampleParameter(example_param, name, value);
                     return;
                 }
             }
@@ -1103,12 +1130,15 @@ export class CodeModelCliImpl implements CodeModelAz
                     };
                 }
                 if (match) {
-                    example_param.set(name, value);
+                    // example_param.set(name, value);
+                    this.AddExampleParameter(example_param, name, value);
                     return;
                 }
             }
-            else {
-                example_param.set(name, value);
+            else if (ancestors.length==0){
+                // example_param.set(name, value);
+                this.AddExampleParameter(example_param, name, value);
+                return;
             }
         }
 
@@ -1119,11 +1149,11 @@ export class CodeModelCliImpl implements CodeModelAz
         }
     }
 
-    public ConvertToCliParameters(example_params): Map<string, string> {
-        let ret: Map<string, string> = new Map<string, string>();
-        for(let [param_name, param_value] of example_params) {
+    public ConvertToCliParameters(example_params: ExampleParam[]): ExampleParam[] {
+        let ret: ExampleParam[] = [];
+        for(let param of example_params) {
         //Object.entries(example_params).forEach(() => {
-            param_name = ToSnakeCase(param_name);
+            let param_name = ToSnakeCase(param.name);
             if (param_name.endsWith('_name')) {
                 if (param_name == "resource_group_name") {
                     param_name = "resource_group";
@@ -1133,7 +1163,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 // }
             }
             param_name = param_name.split("_").join("-");
-            ret["--" + param_name] = param_value;
+            ret.push(new ExampleParam("--" + param_name, param.value));
         };
         return ret;
     }
@@ -1149,7 +1179,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 example.Title = example_obj.title || id;
                 example.Path = this.Method_Path;
                 example.ResourceClassName = this.CommandGroup_Key;
-                let params: Map<string, string> = this.GetExampleParameters(example_obj);
+                let params: ExampleParam[] = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
                 examples.push(example);
             });
@@ -1161,17 +1191,17 @@ export class CodeModelCliImpl implements CodeModelAz
         let parameters: string[] = [];
         parameters.push("az " + this.CommandGroup_Name.split("_").join("-") + " " + example.Method)
 
-        for (let k in example.Parameters) {
-            let param_value = example.Parameters[k];
+        for (let param of example.Parameters) {
+            let param_value = param.value;
             if (isTest) {
                 let replaced_value = this.resource_pool.addEndpointResource(param_value);
                 if (replaced_value == param_value) {
-                    replaced_value = this.resource_pool.addParamResource(k, param_value);
+                    replaced_value = this.resource_pool.addParamResource(param.name, param_value);
                 }
                 param_value = replaced_value;
             }
             let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("");
-            parameters.push(k + " " + slp);
+            parameters.push(param.name + " " + slp);
         }
 
         return parameters;
@@ -1226,9 +1256,11 @@ export class CodeModelCliImpl implements CodeModelAz
                                 if (on_resource)
                                     // the resource is a dependency only when it's a parameter in an example.
                                     for (let example of this.GetExamples()) {
-                                        if(param_name in example.Parameters) {
-                                            depend_resources.push(on_resource);
-                                            depend_parameters.push(param_name);
+                                        for (let param of example.Parameters) {
+                                            if(param_name == param.name) {
+                                                depend_resources.push(on_resource);
+                                                depend_parameters.push(param_name);
+                                            }
                                         }
                                     }
                                 }
@@ -1244,10 +1276,10 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SortExamplesByDependency() {
         let depend_on = (example_a: CommandExample, example_b: CommandExample): boolean => {
-            return Object.keys(example_a.Parameters).some((param_name): boolean => {
-                if (this.resource_pool.isResource(param_name.substr(2)) == example_b.ResourceClassName) return true;
-                if (typeof  example_a[param_name] == 'string') {
-                    for (let resource_name of example_a[param_name].split('/')) {
+            return example_a.Parameters.some((param): boolean => {
+                if (this.resource_pool.isResource(param.name.substr(2)) == example_b.ResourceClassName) return true;
+                if (typeof  param.value == 'string') {
+                    for (let resource_name of param.value.split('/')) {
                         if (this.resource_pool.isResource(resource_name) == example_b.ResourceClassName) return true;
                     }
                 }
