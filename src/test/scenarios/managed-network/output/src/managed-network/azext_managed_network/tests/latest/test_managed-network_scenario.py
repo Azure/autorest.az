@@ -63,7 +63,9 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--resource-group "{rg}"',
                  checks=[])
 
-        # EXAMPLE NOT FOUND: ManagedNetworksListByResourceGroup
+        self.cmd('az managed-network managed-network list '
+                 '--resource-group "{rg}"',
+                 checks=[])
 
         self.cmd('az managed-network managed-network list',
                  checks=[])

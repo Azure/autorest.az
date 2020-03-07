@@ -10,8 +10,11 @@
 
 
 def managed_network_managed_network_list(cmd, client,
+                                         resource_group_name=None,
                                          top=None,
                                          skiptoken=None):
+    if resource_group_name is not None:
+        return client.list_by_resource_group(resource_group_name=resource_group_name, top=top, skiptoken=skiptoken)
     return client.list_by_subscription(top=top, skiptoken=skiptoken)
 
 

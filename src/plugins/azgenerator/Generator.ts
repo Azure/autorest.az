@@ -35,18 +35,18 @@ export async function GenerateAll(model: CodeModelAz,
         {
             let pathTop = "src/" + model.Extension_Name + "/";
             let path = "src/" + model.Extension_Name + "/azext_" + model.Extension_Name.replace("-", "_") + "/";
-            files[path + "generated/_help.py"] = GenerateAzureCliHelp(model);
             files[path + "generated/_params.py"] = GenerateAzureCliParams(model);
             files[path + "generated/commands.py"] = GenerateAzureCliCommands(model);
             files[path + "generated/custom.py"] = GenerateAzureCliCustom(model);
             files[path + "generated/_client_factory.py"] = GenerateAzureCliClientFactory(model);
+            files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);
+            files[path + "generated/action.py"] = GenerateAzureCliActions(model);
+            files[path + "generated/_help.py"] = GenerateAzureCliHelp(model);
             files[path + "tests/latest/test_" + model.Extension_Name + "_scenario.py"] = GenerateAzureCliTestScenario(model);   
             files[path + "tests/latest/preparers.py"] = generateResourceFiles("preparers.py");
             files[path + "tests/latest/__init__.py"] = generateResourceFiles("__init__.py");
             files[path + "__init__.py"] = GenerateAzureCliInit(model);
             files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
-            files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);
-            files[path + "generated/action.py"] = GenerateAzureCliActions(model);  
             files[path + "vendored_sdks/__init__.py"] = GenerateVendoredSdksInit(model);  
             files[path + "action.py"] = GenerateTopLevelImport(model, "action");  
             files[path + "commands.py"] = GenerateTopLevelImport(model, "commands");  
