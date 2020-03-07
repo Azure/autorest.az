@@ -23,8 +23,8 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
     if (model.SelectFirstCommandGroup()) {
         do {
 
-            // if disabled
-            if (model.Command_Name == "-")
+            // if there's no operation in this command group
+            if (!model.SelectFirstCommand())
                 continue;
 
             output.push("");
@@ -94,10 +94,10 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
             parameters = parameters.concat(model.Command_Name.split(" "));
             //parameters.push(method);
 
-            for (let k in example.Parameters) {
-                let slp = JSON.stringify(example.Parameters[k]).split(/[\r\n]+/).join("");
+            for (let param of example.Parameters) {
+                let slp = JSON.stringify(param.value).split(/[\r\n]+/).join("");
                 //parameters += " " + k + " " + slp;
-                parameters.push(k);
+                parameters.push(param.name);
                 parameters.push(slp);
             }
             output.push("      - name: " + example.Title);

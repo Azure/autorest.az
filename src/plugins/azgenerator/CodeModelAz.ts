@@ -1,17 +1,26 @@
 ﻿import { AnyARecord } from "dns";
+import { Example } from "@azure-tools/codemodel";
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+ export class ExampleParam {
+     name: string;
+     value: any;
+     public constructor(name: string, value: any) {
+         this.name = name;
+         this.value = value;
+     }
+ }
 export class CommandExample
 {
     // this should be "create", "update", "list", "show", or custom name
     public Method: string;
     public Id: string;
     public Title: string;
-    public Parameters: Map<string, string>;
+    public Parameters: ExampleParam[];
     // public MethodName: string;
     public Path: string;
     public ResourceClassName: string;
@@ -48,8 +57,6 @@ export interface CodeModelAz
 
     SelectFirstOption(): boolean;
     SelectNextOption(): boolean;
-    EnterSubOptions(): boolean;
-    ExitSubOptions(): boolean;
 
     Option_Name: string;
     Option_NameUnderscored: string;
@@ -57,8 +64,6 @@ export interface CodeModelAz
     Option_IsRequired: boolean;
     Option_Description: string;
     Option_Type: string;
-    Option_IsList: boolean;
-    Option_IsListOfComplex: boolean;
     Option_In: string;
     Option_PathSdk: string;
     Option_PathSwagger: string;
@@ -85,7 +90,6 @@ export interface CodeModelAz
     MethodParameter_MapsTo: string;
     MethodParameter_Description: string;
     MethodParameter_Type: string;
-    MethodParameter_IsList: boolean;
     MethodParameter_IsListOfComplex: boolean;
     MethodParameter: any;
     MethodParameter_In: string;
