@@ -35,19 +35,29 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         })
 
         self.cmd('az managed-network managed-network create '
-                 '--location "eastus" '
+                 '--properties-scope-management-groups "id=/providers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000" '
+                 '--properties-scope-management-groups "id=/providers/Microsoft.Management/managementGroups/20000000-0002-0000-0000-000000000000" '
+                 '--properties-scope-subnets "id=/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC/subnets/subnetA" '
+                 '--properties-scope-subnets "id=/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC/subnets/subnetB" '
+                 '--properties-scope-subscriptions "id=subscriptionA" '
+                 '--properties-scope-subscriptions "id=subscriptionB" '
+                 '--properties-scope-virtual-networks "id=/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" '
+                 '--properties-scope-virtual-networks "id=/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
         self.cmd('az managed-network managed-network-group create '
+                 '--properties-subnets "id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" '
+                 '--properties-virtual-networks "id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" '
+                 '--properties-virtual-networks "id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" '
                  '--managed-network-group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
         self.cmd('az managed-network scope-assignment create '
-                 '--parameters-assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
+                 '--properties-assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
                  '--scope "subscriptions/subscriptionC" '
                  '--scope-assignment-name "{subscriptionCAssignment}"',
                  checks=[])
