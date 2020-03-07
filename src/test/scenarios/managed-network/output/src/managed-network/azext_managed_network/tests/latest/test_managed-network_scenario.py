@@ -35,10 +35,10 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         })
 
         self.kwargs.update({
-            'myManagedNetwork': self.create_random_name(prefix='managed_networks'[-4:], length=24),
-            'subscriptionCAssignment': self.create_random_name(prefix='scope_assignments'[-4:], length=24),
-            'myManagedNetworkGroup1': self.create_random_name(prefix='managed_network_groups'[-4:], length=24),
-            'myHubAndSpoke': self.create_random_name(prefix='managed_network_peering_policies'[-4:], length=24),
+            'myManagedNetwork': self.create_random_name(prefix='cli_test_managed_networks'[:9], length=24),
+            'subscriptionCAssignment': self.create_random_name(prefix='cli_test_scope_assignments'[:9], length=24),
+            'myManagedNetworkGroup1': self.create_random_name(prefix='cli_test_managed_network_groups'[:9], length=24),
+            'myHubAndSpoke': self.create_random_name(prefix='cli_test_managed_network_peering_policies'[:9], length=24),
         })
 
         self.cmd('az managed-network managed-network create '
