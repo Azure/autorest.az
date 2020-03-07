@@ -23,6 +23,7 @@ from azext_managed_network.action import (
 def load_arguments(self, _):
 
     with self.argument_context('managed-network managed-network list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
         c.argument('top', help='May be used to limit the number of results in a page for list queries.')
         c.argument('skiptoken', help='Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.')
 
