@@ -11,6 +11,7 @@ import { SchemaType } from "@azure-tools/codemodel";
 let hasActions: boolean = false;
 let hasBoolean: boolean = false;
 let hasEnum: boolean = false;
+let hasJson: boolean = true;
 let actions: string[] = [];
 
 export function GenerateAzureCliParams(model: CodeModelAz): string[] {
@@ -48,13 +49,14 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     output.push("");
     //output.push("from knack.arguments import CLIArgumentType");
 
-    //output.push("from knack.arguments import CLIArgumentType");
+    if (hasJson) output.push("from knack.arguments import CLIArgumentType");
     output.push("from azure.cli.core.commands.parameters import (");
     output.push("    tags_type,");
     //output.push("    get_resource_name_completion_list,");
     //output.push("    quotes,");
     if (hasBoolean) output.push("    get_three_state_flag,");
     if (hasEnum) output.push("    get_enum_type,");
+    
     output.push("    resource_group_name_type,");
     output.push("    get_location_type");
     output.push(")");
@@ -134,18 +136,18 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
         
                     if (parameterName == "resource_group_name") {
                         argument += ", resource_group_name_type";
-                    }
-                    else if (parameterName == "tags") {
+                    } else if (parameterName == "tags") {
                         argument += ", tags_type";
-                    }
-                    else if (parameterName == "location") {
+                    } else if (parameterName == "location") {
                         argument += ", arg_type=get_location_type(self.cli_ctx)";
-                    }
-                    else {
+                    } else if(model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                        hasJson = true;
+                        argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "'], help='" + model.MethodParameter_Description + "')";
+                    } else {
                         argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
                     }
 
-                    if (model.MethodParameter_IsListOfComplex) {
+                    if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
                         let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
                         argument += ", action=" + actionName;
                         hasActions = true;

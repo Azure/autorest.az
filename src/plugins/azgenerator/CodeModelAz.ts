@@ -81,7 +81,8 @@ export interface CodeModelAz
     MethodParameter_MapsTo: string;
     MethodParameter_Description: string;
     MethodParameter_Type: string;
-    MethodParameter_IsListOfComplex: boolean;
+    MethodParameter_IsList: boolean;
+    MethodParameter_IsListOfSimple: boolean;
     MethodParameter: any;
     MethodParameter_In: string;
     MethodParameter_IsHidden: boolean;

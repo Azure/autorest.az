@@ -51,6 +51,10 @@ directive:
     transform: >
       $['x-ms-client-flatten'] = false;
     reason: manually don't flatten the polymorphic base class
+  - from: swagger-document
+    where: $.definitions[*].properties.[?(@.type=='array')]
+    transform: >
+      $['x-ms-client-flatten'] = false;
 
 cli:
     cli-directive:
