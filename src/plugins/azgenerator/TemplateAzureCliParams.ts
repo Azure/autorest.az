@@ -142,7 +142,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         argument += ", arg_type=get_location_type(self.cli_ctx)";
                     } else if(model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         hasJson = true;
-                        argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "'], help='" + model.MethodParameter_Description + "')";
+                        argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "'], help='" + EscapeString(model.MethodParameter_Description) + "')";
                     } else {
                         argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
                     }

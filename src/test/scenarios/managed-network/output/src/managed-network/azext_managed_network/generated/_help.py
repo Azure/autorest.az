@@ -39,8 +39,8 @@ helps['managed-network managed-network create'] = """
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network managed-network create --location "eastus" --managed-network-name \\
-               "myManagedNetwork" --resource-group "myResourceGroup"
+               az managed-network managed-network create --managed-network-name "myManagedNetwork" \\
+               --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network update'] = """
@@ -93,10 +93,8 @@ helps['managed-network scope-assignment create'] = """
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network scope-assignment create --assigned-managed-network "/subscriptions/subs
-               criptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetwork
-               s/myManagedNetwork" --scope "subscriptions/subscriptionC" --scope-assignment-name \\
-               "subscriptionCAssignment"
+               az managed-network scope-assignment create --scope "subscriptions/subscriptionC" \\
+               --scope-assignment-name "subscriptionCAssignment"
 """
 
 helps['managed-network scope-assignment update'] = """
@@ -105,10 +103,8 @@ helps['managed-network scope-assignment update'] = """
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network scope-assignment create --assigned-managed-network "/subscriptions/subs
-               criptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetwork
-               s/myManagedNetwork" --scope "subscriptions/subscriptionC" --scope-assignment-name \\
-               "subscriptionCAssignment"
+               az managed-network scope-assignment create --scope "subscriptions/subscriptionC" \\
+               --scope-assignment-name "subscriptionCAssignment"
 """
 
 helps['managed-network scope-assignment delete'] = """

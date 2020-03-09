@@ -16,16 +16,8 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
-    def current_subscription(self):
-        subs = self.cmd('az account show').get_output_in_json()
-        return subs['id']
-
     @ResourceGroupPreparer(name_prefix='cli_test_managed_network_myResourceGroup', key='rg')
     def test_managed_network(self, resource_group):
-
-        self.kwargs.update({
-            'subscription_id': self.current_subscription()
-        })
 
         self.kwargs.update({
             'myManagedNetwork': self.create_random_name(prefix='managed_networks', length=24),
@@ -35,7 +27,6 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         })
 
         self.cmd('az managed-network managed-network create '
-                 '--location "eastus" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
@@ -47,7 +38,6 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  checks=[])
 
         self.cmd('az managed-network scope-assignment create '
-                 '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
                  '--scope "subscriptions/subscriptionC" '
                  '--scope-assignment-name "{subscriptionCAssignment}"',
                  checks=[])
