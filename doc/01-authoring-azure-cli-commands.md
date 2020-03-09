@@ -69,6 +69,21 @@ Minimal **readme.az.md** file must exist:
       namespace: azure.mgmt.healthcareapis
     ```
 
+### Python SDK
+
+Python SDK will be automatically generated, however appropriate folder needs to be specified.
+Add following line to **readme.az.md**:
+
+
+    ``` yaml $(az)
+    az:
+      ...
+      python-sdk-output-folder: "$(output-folder)/src/<extension-name>/azext_<extension-name>/vendored_sdks/<sdk-namespace-name>"
+    ```
+
+NOTE: In the future this step may be automated, but for now it's necessary it matches extension folder structure.
+
+
 ### Generate Extension
 
 To generate extension use following command:
@@ -168,37 +183,3 @@ At this point you can commit and push the change to **index.json**.
 >NOTE 2: When running **azdev extension publish** old entry won't be removed so it may be necessary to remove it manually
 
 >NOTE 3: Adding extension to index triggers some additional sanity checks and there may be additional errors to fix, so it advised to add extension to index as soon as possible.
-
-## Next Steps
-
-### Changing Extension / Top Command Group Name
-
-TBD
-
-### Modelling Command Groups
-
-TBD
-
-### Disabling Command Groups
-
-TBD
-
-### Renaming Parameters
-
-TBD
-
-### Adjusting Documentation
-
-TBD
-
-### Disabling Parameters
-
-TBD
-
-### Marking Options Non-Updatable
-
-TBD
-
-### Fixing Example Description / Name
-
-TBD
