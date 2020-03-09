@@ -13,8 +13,10 @@ from azure.cli.core.commands.parameters import (
     get_location_type
 )
 from azext_managed_network.action import (
-    AddParameters,
-    AddManagedNetworkGroup
+    AddManagementGroups,
+    AddSubscriptions,
+    AddVirtualNetworks,
+    AddSubnets
 )
 
 
@@ -32,12 +34,17 @@ def load_arguments(self, _):
     with self.argument_context('managed-network managed-network create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('managed_network', arg_type=CLIArgumentType(options_list=['--managed-network'], help='Parameters supplied to the create/update a Managed Network Resource'))
+        c.argument('location', arg_type=get_location_type(self.cli_ctx))
+        c.argument('tags', tags_type)
+        c.argument('properties_scope_management_groups', help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('properties_scope_subscriptions', help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
+        c.argument('properties_scope_virtual_networks', help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
+        c.argument('properties_scope_subnets', help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
 
     with self.argument_context('managed-network managed-network update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('parameters', help='Parameters supplied to update application gateway tags and/or scope.', action=AddParameters, nargs='+')
+        c.argument('tags', tags_type)
 
     with self.argument_context('managed-network managed-network delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -53,12 +60,14 @@ def load_arguments(self, _):
     with self.argument_context('managed-network scope-assignment create') as c:
         c.argument('scope', help='The base resource of the scope assignment.')
         c.argument('scope_assignment_name', help='The name of the scope assignment to get.')
-        c.argument('parameters', help='Parameters supplied to the specify which Managed Network this scope is being assigned', action=AddParameters, nargs='+')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx))
+        c.argument('properties_assigned_managed_network', help='The managed network ID with scope will be assigned to.')
 
     with self.argument_context('managed-network scope-assignment update') as c:
         c.argument('scope', help='The base resource of the scope assignment.')
         c.argument('scope_assignment_name', help='The name of the scope assignment to get.')
-        c.argument('parameters', help='Parameters supplied to the specify which Managed Network this scope is being assigned', action=AddParameters, nargs='+')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx))
+        c.argument('properties_assigned_managed_network', help='The managed network ID with scope will be assigned to.')
 
     with self.argument_context('managed-network scope-assignment delete') as c:
         c.argument('scope', help='The base resource of the scope assignment.')
@@ -79,13 +88,21 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
-        c.argument('managed_network_group', help='Parameters supplied to the create/update a Managed Network Group resource', action=AddManagedNetworkGroup, nargs='+')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx))
+        c.argument('properties_management_groups', help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('properties_subscriptions', help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
+        c.argument('properties_virtual_networks', help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
+        c.argument('properties_subnets', help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
 
     with self.argument_context('managed-network managed-network-group update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
-        c.argument('managed_network_group', help='Parameters supplied to the create/update a Managed Network Group resource', action=AddManagedNetworkGroup, nargs='+')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx))
+        c.argument('properties_management_groups', help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('properties_subscriptions', help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
+        c.argument('properties_virtual_networks', help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
+        c.argument('properties_subnets', help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
 
     with self.argument_context('managed-network managed-network-group delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -107,13 +124,15 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', help='The name of the Managed Network Peering Policy.')
-        c.argument('managed_network_policy', arg_type=CLIArgumentType(options_list=['--managed-network-policy'], help='Parameters supplied to create/update a Managed Network Peering Policy'))
+        c.argument('location', arg_type=get_location_type(self.cli_ctx))
+        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of a Managed Network Peering Policy'))
 
     with self.argument_context('managed-network managed-network-peering-policy update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', help='The name of the Managed Network Peering Policy.')
-        c.argument('managed_network_policy', arg_type=CLIArgumentType(options_list=['--managed-network-policy'], help='Parameters supplied to create/update a Managed Network Peering Policy'))
+        c.argument('location', arg_type=get_location_type(self.cli_ctx))
+        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of a Managed Network Peering Policy'))
 
     with self.argument_context('managed-network managed-network-peering-policy delete') as c:
         c.argument('resource_group_name', resource_group_name_type)

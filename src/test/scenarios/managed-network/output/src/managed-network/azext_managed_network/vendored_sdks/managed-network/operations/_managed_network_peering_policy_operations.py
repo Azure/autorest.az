@@ -106,12 +106,15 @@ class ManagedNetworkPeeringPolicyOperations(object):
         resource_group_name,  # type: str
         managed_network_name,  # type: str
         managed_network_peering_policy_name,  # type: str
-        managed_network_policy,  # type: "models.ManagedNetworkPeeringPolicy"
+        location=None,  # type: Optional[str]
+        properties=None,  # type: Optional["models.ManagedNetworkPeeringPolicyProperties"]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ManagedNetworkPeeringPolicy"
         cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkPeeringPolicy"]
         error_map = kwargs.pop('error_map', {})
+
+        managed_network_policy = models.ManagedNetworkPeeringPolicy(location=location, properties=properties)
         api_version = "2019-06-01-preview"
 
         # Construct URL
@@ -163,7 +166,8 @@ class ManagedNetworkPeeringPolicyOperations(object):
         resource_group_name,  # type: str
         managed_network_name,  # type: str
         managed_network_peering_policy_name,  # type: str
-        managed_network_policy,  # type: "models.ManagedNetworkPeeringPolicy"
+        location=None,  # type: Optional[str]
+        properties=None,  # type: Optional["models.ManagedNetworkPeeringPolicyProperties"]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ManagedNetworkPeeringPolicy"
@@ -175,9 +179,10 @@ class ManagedNetworkPeeringPolicyOperations(object):
         :type managed_network_name: str
         :param managed_network_peering_policy_name: The name of the Managed Network Peering Policy.
         :type managed_network_peering_policy_name: str
-        :param managed_network_policy: Parameters supplied to create/update a Managed Network Peering
-         Policy.
-        :type managed_network_policy: ~managed_network_management_client.models.ManagedNetworkPeeringPolicy
+        :param location: The geo-location where the resource lives.
+        :type location: str
+        :param properties: Properties of a Managed Network Peering Policy.
+        :type properties: ~managed_network_management_client.models.ManagedNetworkPeeringPolicyProperties
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
@@ -193,7 +198,8 @@ class ManagedNetworkPeeringPolicyOperations(object):
             resource_group_name=resource_group_name,
             managed_network_name=managed_network_name,
             managed_network_peering_policy_name=managed_network_peering_policy_name,
-            managed_network_policy=managed_network_policy,
+            location=location,
+            properties=properties,
             cls=lambda x,y,z: x,
             **kwargs
         )

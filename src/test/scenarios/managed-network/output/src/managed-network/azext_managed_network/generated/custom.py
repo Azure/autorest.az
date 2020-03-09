@@ -28,16 +28,20 @@ def managed_network_managed_network_show(cmd, client,
 def managed_network_managed_network_create(cmd, client,
                                            resource_group_name,
                                            managed_network_name,
-                                           managed_network):
-    managed_network = json.loads(managed_network) if isinstance(managed_network, str) else managed_network
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network=managed_network)
+                                           location,
+                                           tags=None,
+                                           properties_scope_management_groups=None,
+                                           properties_scope_subscriptions=None,
+                                           properties_scope_virtual_networks=None,
+                                           properties_scope_subnets=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, management_groups=properties_scope_management_groups, subscriptions=properties_scope_subscriptions, virtual_networks=properties_scope_virtual_networks, subnets=properties_scope_subnets)
 
 
 def managed_network_managed_network_update(cmd, client,
                                            resource_group_name,
                                            managed_network_name,
-                                           parameters):
-    return client.begin_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, parameters=parameters)
+                                           tags=None):
+    return client.begin_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, tags=tags)
 
 
 def managed_network_managed_network_delete(cmd, client,
@@ -60,15 +64,17 @@ def managed_network_scope_assignment_show(cmd, client,
 def managed_network_scope_assignment_create(cmd, client,
                                             scope,
                                             scope_assignment_name,
-                                            parameters):
-    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, parameters=parameters)
+                                            location,
+                                            properties_assigned_managed_network=None):
+    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=properties_assigned_managed_network)
 
 
 def managed_network_scope_assignment_update(cmd, client,
                                             scope,
                                             scope_assignment_name,
-                                            parameters):
-    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, parameters=parameters)
+                                            location,
+                                            properties_assigned_managed_network=None):
+    return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=properties_assigned_managed_network)
 
 
 def managed_network_scope_assignment_delete(cmd, client,
@@ -96,16 +102,24 @@ def managed_network_managed_network_group_create(cmd, client,
                                                  resource_group_name,
                                                  managed_network_name,
                                                  managed_network_group_name,
-                                                 managed_network_group):
-    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, managed_network_group=managed_network_group)
+                                                 location,
+                                                 properties_management_groups=None,
+                                                 properties_subscriptions=None,
+                                                 properties_virtual_networks=None,
+                                                 properties_subnets=None):
+    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=properties_management_groups, subscriptions=properties_subscriptions, virtual_networks=properties_virtual_networks, subnets=properties_subnets)
 
 
 def managed_network_managed_network_group_update(cmd, client,
                                                  resource_group_name,
                                                  managed_network_name,
                                                  managed_network_group_name,
-                                                 managed_network_group):
-    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, managed_network_group=managed_network_group)
+                                                 location,
+                                                 properties_management_groups=None,
+                                                 properties_subscriptions=None,
+                                                 properties_virtual_networks=None,
+                                                 properties_subnets=None):
+    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=properties_management_groups, subscriptions=properties_subscriptions, virtual_networks=properties_virtual_networks, subnets=properties_subnets)
 
 
 def managed_network_managed_network_group_delete(cmd, client,
@@ -134,18 +148,20 @@ def managed_network_managed_network_peering_policy_create(cmd, client,
                                                           resource_group_name,
                                                           managed_network_name,
                                                           managed_network_peering_policy_name,
-                                                          managed_network_policy):
-    managed_network_policy = json.loads(managed_network_policy) if isinstance(managed_network_policy, str) else managed_network_policy
-    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, managed_network_policy=managed_network_policy)
+                                                          location,
+                                                          properties=None):
+    properties = json.loads(properties) if isinstance(properties, str) else properties
+    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=properties)
 
 
 def managed_network_managed_network_peering_policy_update(cmd, client,
                                                           resource_group_name,
                                                           managed_network_name,
                                                           managed_network_peering_policy_name,
-                                                          managed_network_policy):
-    managed_network_policy = json.loads(managed_network_policy) if isinstance(managed_network_policy, str) else managed_network_policy
-    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, managed_network_policy=managed_network_policy)
+                                                          location,
+                                                          properties=None):
+    properties = json.loads(properties) if isinstance(properties, str) else properties
+    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=properties)
 
 
 def managed_network_managed_network_peering_policy_delete(cmd, client,

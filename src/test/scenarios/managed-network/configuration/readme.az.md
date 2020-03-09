@@ -69,7 +69,7 @@ cli:
         required: true
     flatten:
         cli-flatten-set-enabled: true
-        flatten-all: true
+        cli-flatten-all: true
         #cli-flatten-directive:
         #    - where:
         #        type: ResourceProviderOperation

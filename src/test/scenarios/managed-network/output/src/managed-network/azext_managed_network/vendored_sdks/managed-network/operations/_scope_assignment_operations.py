@@ -98,7 +98,8 @@ class ScopeAssignmentOperations(object):
         self,
         scope,  # type: str
         scope_assignment_name,  # type: str
-        parameters,  # type: "models.ScopeAssignment"
+        location=None,  # type: Optional[str]
+        assigned_managed_network=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ScopeAssignment"
@@ -108,9 +109,10 @@ class ScopeAssignmentOperations(object):
         :type scope: str
         :param scope_assignment_name: The name of the scope assignment to get.
         :type scope_assignment_name: str
-        :param parameters: Parameters supplied to the specify which Managed Network this scope is being
-         assigned.
-        :type parameters: ~managed_network_management_client.models.ScopeAssignment
+        :param location: The geo-location where the resource lives.
+        :type location: str
+        :param assigned_managed_network: The managed network ID with scope will be assigned to.
+        :type assigned_managed_network: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ScopeAssignment or ScopeAssignment or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ScopeAssignment or ~managed_network_management_client.models.ScopeAssignment
@@ -118,6 +120,8 @@ class ScopeAssignmentOperations(object):
         """
         cls = kwargs.pop('cls', None )  # type: ClsType["models.ScopeAssignment"]
         error_map = kwargs.pop('error_map', {})
+
+        parameters = models.ScopeAssignment(location=location, assigned_managed_network=assigned_managed_network)
         api_version = "2019-06-01-preview"
 
         # Construct URL
