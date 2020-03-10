@@ -43,7 +43,7 @@ Things that need to be installed:
 
 ### Command to Run AutoRest
 
-    autorest-beta --az --output-folder=/_/azure-cli-extensions /_/azure-rest-api-specs/specification/attestation/resource-manager/readme.md
+    autorest --az --version=3.0.6212 --output-folder=/_/azure-cli-extensions /_/azure-rest-api-specs/specification/attestation/resource-manager/readme.md
 
 When you run above command AutoRest will download and use most recent npm packages.
 
@@ -61,21 +61,10 @@ Minimal **readme.cli.md** file must exist:
 
     ## CLI
 
-    These settings apply only when `--cli` is specified on the command line.
+    These settings apply only when `--az` is specified on the command line.
 
     ``` yaml $(cli)
     cli:
-      namespace: azure.mgmt.healthcareapis
-    ```
-
-Minimal **readme.az.md** file must exist: 
-
-    ## AZ
-
-    These settings apply only when `--cli` is specified on the command line.
-
-    ``` yaml $(az)
-    az:
       namespace: azure.mgmt.healthcareapis
     ```
 
