@@ -62,7 +62,7 @@ class VirtualNetworkPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):
         # delete vnet if test is being recorded and if the vnet is not a dev rg
         if not self.dev_setting_name:
             self.live_only_execute(
-                self.cli_ctx, 'az network vnet delete --name {}'.format(name))
+                self.cli_ctx, 'az network vnet delete --name {} --resource-group {}'.format(name, self.resource_group_name))
 
 
 class VnetSubnetPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):
