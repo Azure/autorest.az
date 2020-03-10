@@ -26,7 +26,7 @@ export function GenerateAzureCliTestPrepare(model: CodeModelAz) : string[] {
     output.push("                 resource_group_name=None,");
     output.push("                 resource_group_key=KEY_RESOURCE_GROUP,");
     output.push("                 dev_setting_name='AZURE_CLI_TEST_DEV_VIRTUAL_NETWORK_NAME',");
-    output.push("                 random_name_length=75, key=KEY_VIRTUAL_NETWORK):");
+    output.push("                 random_name_length=24, key=KEY_VIRTUAL_NETWORK):");
     output.push("        if ' ' in name_prefix:");
     output.push("            raise CliTestError(");
     output.push("                'Error: Space character in name prefix \\'%s\\'' % name_prefix)");
@@ -71,14 +71,14 @@ export function GenerateAzureCliTestPrepare(model: CodeModelAz) : string[] {
     output.push("");
     output.push("class VnetSubnetPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):");
     output.push("    def __init__(self, name_prefix='clitest.vn',");
-    output.push("                 parameter_name='virtual_network',");
+    output.push("                 parameter_name='subnet',");
     output.push("                 resource_group_name=None,");
     output.push("                 resource_group_key=KEY_RESOURCE_GROUP,");
     output.push("                 vnet_name=None,");
     output.push("                 vnet_key=KEY_VIRTUAL_NETWORK,");
     output.push("                 address_prefixes=\"11.0.0.0/24\",");
     output.push("                 dev_setting_name='AZURE_CLI_TEST_DEV_VNET_SUBNET_NAME',");
-    output.push("                 random_name_length=75, key=KEY_VNET_SUBNET):");
+    output.push("                 random_name_length=24, key=KEY_VNET_SUBNET):");
     output.push("        if ' ' in name_prefix:");
     output.push("            raise CliTestError(");
     output.push("                'Error: Space character in name prefix \\'%s\\'' % name_prefix)");
