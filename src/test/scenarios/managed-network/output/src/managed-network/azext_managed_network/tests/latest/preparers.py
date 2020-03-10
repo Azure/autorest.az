@@ -5,7 +5,6 @@
 
 import os
 from datetime import datetime
-
 from azure.cli.testsdk.preparers import NoTrafficRecordingPreparer
 from azure_devtools.scenario_tests import SingleValueReplacer
 from azure.cli.testsdk.exceptions import CliTestError
@@ -79,7 +78,7 @@ class VnetSubnetPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):
         if ' ' in name_prefix:
             raise CliTestError(
                 'Error: Space character in name prefix \'%s\'' % name_prefix)
-        super(VirtualNetworkPreparer, self).__init__(
+        super(VnetSubnetPreparer, self).__init__(
             name_prefix, random_name_length)
         self.cli_ctx = get_dummy_cli()
         self.parameter_name = parameter_name

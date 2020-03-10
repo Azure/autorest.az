@@ -9,7 +9,6 @@ export function GenerateAzureCliTestPrepare(model: CodeModelAz) : string[] {
     output.push("");
     output.push("import os");
     output.push("from datetime import datetime");
-    output.push("");
     output.push("from azure.cli.testsdk.preparers import NoTrafficRecordingPreparer");
     output.push("from azure_devtools.scenario_tests import SingleValueReplacer");
     output.push("from azure.cli.testsdk.exceptions import CliTestError");
@@ -83,7 +82,7 @@ export function GenerateAzureCliTestPrepare(model: CodeModelAz) : string[] {
     output.push("        if ' ' in name_prefix:");
     output.push("            raise CliTestError(");
     output.push("                'Error: Space character in name prefix \\'%s\\'' % name_prefix)");
-    output.push("        super(VirtualNetworkPreparer, self).__init__(");
+    output.push("        super(VnetSubnetPreparer, self).__init__(");
     output.push("            name_prefix, random_name_length)");
     output.push("        self.cli_ctx = get_dummy_cli()");
     output.push("        self.parameter_name = parameter_name");
