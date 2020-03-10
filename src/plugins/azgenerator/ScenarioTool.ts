@@ -318,28 +318,36 @@ export class ResourcePool {
         return null;
     }
 
-    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean) {
-        
+    private formatable(str:string, placeholders: string[]) {
+        str = str.split("{").join("{{").split("}").join("}}");
+        for (let placeholder of placeholders) {
+            str = str.split(`{${placeholder}}`).join(placeholder);
+        }
+        return str;
+    }
+
+    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders?: string[]) {
+        if (placeholders==undefined)  placeholders = new Array();
         if(isJson) {
             let body = typeof endpoint == 'string'? JSON.parse(endpoint):endpoint;
             if (typeof body == 'object') {
                 if ( body instanceof Array) {
                     body = body.map((value) => {
-                        return this.addEndpointResource(value, typeof value=='object', isKeyValues);
+                        return this.addEndpointResource(value, typeof value=='object', isKeyValues, placeholders);
                     });
                 }
                 else if(isDict(body)) {
                     for (let k in body) {
-                        body[k] = this.addEndpointResource(body[k], typeof body[k]=='object', isKeyValues);
+                        body[k] = this.addEndpointResource(body[k], typeof body[k]=='object', isKeyValues, placeholders);
                     }
                 }
             }
             else {
-                body = this.addEndpointResource(body, false, isKeyValues);
+                body = this.addEndpointResource(body, false, isKeyValues, placeholders);
             }
 
             if (typeof endpoint == 'string') {
-                return JSON.stringify(body).split(/[\r\n]+/).join("");
+                return this.formatable(JSON.stringify(body).split(/[\r\n]+/).join(""), placeholders);
             }
             else {
                 return body;
@@ -354,7 +362,7 @@ export class ResourcePool {
             for (let attr of endpoint.split(" ")) {
                 let kv = attr.split("=");
                 if (ret.length > 0) ret += " ";
-                ret += `${kv[0]}=${this.addEndpointResource(kv[1], isJson, false)}`;
+                ret += `${kv[0]}=${this.addEndpointResource(kv[1], isJson, false, placeholders)}`;
             }
             return ret;
         }
@@ -364,6 +372,9 @@ export class ResourcePool {
             return endpoint;
         }
         nodes[2] = `{${ResourcePool.KEY_SUBSCRIPTIONID}}`;
+        if (placeholders.indexOf(nodes[2])<0) {
+            placeholders.push(nodes[2]);
+        }
         this.use_subscription = true;
         let i = 3;
         let resource_object: ResourceObject = null;
@@ -372,6 +383,9 @@ export class ResourcePool {
             if (resource) {
                 resource_object = this.addTreeResource(resource, nodes[i + 1], resource_object);
                 nodes[i + 1] = resource_object.placeholder;
+                if (placeholders.indexOf(resource_object.placeholder)<0) {
+                    placeholders.push(resource_object.placeholder);
+                }
             }
             i += 2;
         }
