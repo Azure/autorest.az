@@ -27,31 +27,6 @@ az:
     - name: ManagedNetworksDelete
 python-sdk-output-folder: "$(output-folder)/src/managed-network/azext_managed_network/vendored_sdks/managed-network"
 
-directive:
-  - from: swagger-document
-    where: $..parameters[?(@.in=='body')]
-    transform: >
-      $['x-ms-client-flatten'] = true;
-    reason: Flatten everything for Azure CLI
-  - from: swagger-document
-    where: $.definitions[*].properties.*
-    transform: >
-      $['x-ms-client-flatten'] = true;
-    reason: Flatten everything for Azure CLI
-  - from: swagger-document
-    where: $.definitions[?(@.discriminator)]
-    transform: >
-      $['x-ms-client-flatten'] = false;
-  - from: swagger-document
-    where: $.definitions[?(@.discriminator)].properties.*
-    transform: >
-      $['x-ms-client-flatten'] = false;
-  - from: swagger-document
-    where: $.definitions.ManagedNetworkPeeringPolicy.properties.*
-    transform: >
-      $['x-ms-client-flatten'] = false;
-    reason: manually don't flatten the polymorphic base class
-
 cli:
     cli-directive:
     # directive on operationGroup

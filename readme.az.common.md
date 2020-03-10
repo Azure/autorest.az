@@ -9,7 +9,10 @@ cli:
         default:
             singularize:
               - operationGroup
-              - operation
+              - operation    
+    flatten:
+        cli-flatten-set-enabled: true
+        cli-flatten-all: true
     cli-directive:
         - where:
             operation: check_name_availability
@@ -18,4 +21,5 @@ cli:
             operationGroup: operations
             operation: list
           hidden: true
+
 ```

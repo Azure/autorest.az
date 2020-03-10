@@ -3,15 +3,29 @@
 See documentation [here](doc/00-overview.md)
 
 ``` yaml
+
+debug-output: $(output-folder)/_az_debug
+
 use-extension:
-  "@autorest/python": "5.0.0-dev.20200211.1"
-  "@autorest/clicommon": "0.3.5"
+  "@autorest/clicommon": "c:/git/autorest.clicommon"
+  "@autorest/python": "https://github.com/Azure/autorest.python/releases/download/v5.0.0-dev.20200306.1/autorest-python-5.0.0-dev.20200306.1.tgz"
+  #"@autorest/clicommon": "0.3.5"
   #"@autorest/python": "latest"
   
 python:
     reason: 'make sure python flag exists to load config in python.md'
 cli:
     reason: 'make sure cli flag exists to load config in cli.md'
+    naming:
+        default:
+            parameter: 'snake'
+            property: 'snake'
+            operation: 'snake'
+            operationGroup:  'pascal'
+            choice:  'pascal'
+            choiceValue:  'snake'
+            constant:  'snake'
+            type:  'pascal'
 
 require:
   - ./readme.python.md
@@ -25,31 +39,28 @@ modelerfour:
     flatten-models: true
     flatten-payloads: true
 
-
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true
 
 pipeline:
     python/m2r:
         input: clicommon/identity
-    az/aznamer:
-        input: python/namer
-        #output-artifact: source-file-aznamer
-    az/modifiers:
-        input: az/aznamer
-        #output-artifact: source-file-modifiers
-    az/azgenerator:
-        input: az/modifiers
-        output-artifact: source-file-extension
-    az/emitter:
-        input:
-            #- az/clicommon
-            #- az/aznamer
-            #- az/modifiers
-            - az/azgenerator
-        scope: scope-az
-
-scope-clicommon: false
+#    az/aznamer:
+#        input: python/namer
+#        #output-artifact: source-file-aznamer
+#    az/modifiers:
+#        input: az/aznamer
+#        #output-artifact: source-file-modifiers
+#    az/azgenerator:
+#        input: az/modifiers
+#        output-artifact: source-file-extension
+#    az/emitter:
+#        input:
+#            #- az/clicommon
+#            #- az/aznamer
+#            #- az/modifiers
+#            - az/azgenerator
+#        scope: scope-az
 
 scope-az:
     is-object: false
@@ -59,12 +70,16 @@ scope-az:
         #- source-file-modifiers
         - source-file-extension
 
-
-
 no-namespace-folders: true
 license-header: MICROSOFT_MIT_NO_VERSION
 #clear-output-folder: true
 scope-codegen/emitter:
     output-folder: "$(python-sdk-output-folder)"
+
+scope-clicommon-flatten-setter:
+    output-folder: $(debug-output)
+
+scope-clicommon:
+    output-folder: $(debug-output)
 
 ```

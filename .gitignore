@@ -3,3 +3,6 @@ dist/
 .vscode/
 package-lock.json
 tmpoutput
+*.orig
+*.njsproj
+*.user
