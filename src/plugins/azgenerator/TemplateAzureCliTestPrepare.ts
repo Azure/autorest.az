@@ -66,7 +66,7 @@ export function GenerateAzureCliTestPrepare(model: CodeModelAz) : string[] {
     output.push("        # delete vnet if test is being recorded and if the vnet is not a dev rg");
     output.push("        if not self.dev_setting_name:");
     output.push("            self.live_only_execute(");
-    output.push("                self.cli_ctx, 'az network vnet delete --name {}'.format(name))");
+    output.push("                self.cli_ctx, 'az network vnet delete --name {} --resource-group {}'.format(name, self.resource_group_name))");
     output.push("");
     output.push("");
     output.push("class VnetSubnetPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):");
