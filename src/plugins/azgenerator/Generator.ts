@@ -9,6 +9,8 @@ import { GenerateAzureCliHelp } from "./TemplateAzureCliHelp"
 import { GenerateAzureCliParams} from "./TemplateAzureCliParams"
 import { GenerateAzureCliClientFactory } from "./TemplateAzureCliClientFactory"
 import { GenerateAzureCliTestScenario } from "./TemplateAzureCliTestScenario"
+import { GenerateAzureCliTestInit } from "./TemplateAzureCliTestInit"
+import { GenerateAzureCliTestPrepare } from "./TemplateAzureCliTestPrepare"
 import { GenerateAzureCliReport } from "./TemplateAzureCliReport"
 import { GenerateAzureCliInit } from "./TemplateAzureCliInit"
 import { GenerateAzureCliAzextMetadata } from "./TemplateAzureCliAzextMetadata"
@@ -21,7 +23,6 @@ import { CodeModelAz } from "./CodeModelAz";
 import { GenerateAzureCliActions } from "./TemplateAzureCliActions"
 import { GenerateTopLevelImport } from "./TemplateAzureCliTopLevelImport"
 import { GenerateVendoredSdksInit } from "./TemplateAzureCliVendoredSdksInit"
-import { generateResourceFiles } from "./ScenarioTool"
 
 export async function GenerateAll(model: CodeModelAz,
     generateReport: any) {
@@ -43,8 +44,8 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "generated/action.py"] = GenerateAzureCliActions(model);
             files[path + "generated/_help.py"] = GenerateAzureCliHelp(model);
             files[path + "tests/latest/test_" + model.Extension_Name + "_scenario.py"] = GenerateAzureCliTestScenario(model);   
-            files[path + "tests/latest/preparers.py"] = generateResourceFiles("preparers.py");
-            files[path + "tests/latest/__init__.py"] = generateResourceFiles("__init__.py");
+            files[path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(model);
+            files[path + "tests/latest/__init__.py"] = GenerateAzureCliTestInit(model);
             files[path + "__init__.py"] = GenerateAzureCliInit(model);
             files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
             files[path + "vendored_sdks/__init__.py"] = GenerateVendoredSdksInit(model);  

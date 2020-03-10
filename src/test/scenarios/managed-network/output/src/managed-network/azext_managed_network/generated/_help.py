@@ -39,7 +39,18 @@ helps['managed-network managed-network create'] = """
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network managed-network create --location "eastus" --managed-network-name \\
+               az managed-network managed-network create --properties-scope-management-groups "id=/provid
+               ers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000" \\
+               --properties-scope-management-groups "id=/providers/Microsoft.Management/managementGroups/
+               20000000-0002-0000-0000-000000000000" --properties-scope-subnets "id=/subscriptions/subscr
+               iptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC/s
+               ubnets/subnetA" --properties-scope-subnets "id=/subscriptions/subscriptionC/resourceGroups
+               /myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC/subnets/subnetB" \\
+               --properties-scope-subscriptions "id=subscriptionA" --properties-scope-subscriptions \\
+               "id=subscriptionB" --properties-scope-virtual-networks "id=/subscriptions/subscriptionC/re
+               sourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" \\
+               --properties-scope-virtual-networks "id=/subscriptions/subscriptionC/resourceGroups/myReso
+               urceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" --managed-network-name \\
                "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
@@ -93,10 +104,10 @@ helps['managed-network scope-assignment create'] = """
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network scope-assignment create --assigned-managed-network "/subscriptions/subs
-               criptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetwork
-               s/myManagedNetwork" --scope "subscriptions/subscriptionC" --scope-assignment-name \\
-               "subscriptionCAssignment"
+               az managed-network scope-assignment create --properties-assigned-managed-network "/subscri
+               ptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/man
+               agedNetworks/myManagedNetwork" --scope "subscriptions/subscriptionC" \\
+               --scope-assignment-name "subscriptionCAssignment"
 """
 
 helps['managed-network scope-assignment update'] = """
@@ -105,10 +116,10 @@ helps['managed-network scope-assignment update'] = """
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network scope-assignment create --assigned-managed-network "/subscriptions/subs
-               criptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetwork
-               s/myManagedNetwork" --scope "subscriptions/subscriptionC" --scope-assignment-name \\
-               "subscriptionCAssignment"
+               az managed-network scope-assignment create --properties-assigned-managed-network "/subscri
+               ptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/man
+               agedNetworks/myManagedNetwork" --scope "subscriptions/subscriptionC" \\
+               --scope-assignment-name "subscriptionCAssignment"
 """
 
 helps['managed-network scope-assignment delete'] = """
@@ -153,9 +164,13 @@ helps['managed-network managed-network-group create'] = """
     examples:
       - name: Create/Update Managed Network Group
         text: |-
-               az managed-network managed-network-group create --managed-network-group-name \\
-               "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group \\
-               "myResourceGroup"
+               az managed-network managed-network-group create --properties-subnets "id=/subscriptionB/re
+               sourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/sub
+               netA" --properties-virtual-networks "id=/subscriptionB/resourceGroups/myResourceGroup/prov
+               iders/Microsoft.Network/virtualNetworks/VnetA" --properties-virtual-networks "id=/subscrip
+               tionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" \\
+               --managed-network-group-name "myManagedNetworkGroup1" --managed-network-name \\
+               "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-group update'] = """
@@ -164,9 +179,13 @@ helps['managed-network managed-network-group update'] = """
     examples:
       - name: Create/Update Managed Network Group
         text: |-
-               az managed-network managed-network-group create --managed-network-group-name \\
-               "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group \\
-               "myResourceGroup"
+               az managed-network managed-network-group create --properties-subnets "id=/subscriptionB/re
+               sourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/sub
+               netA" --properties-virtual-networks "id=/subscriptionB/resourceGroups/myResourceGroup/prov
+               iders/Microsoft.Network/virtualNetworks/VnetA" --properties-virtual-networks "id=/subscrip
+               tionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" \\
+               --managed-network-group-name "myManagedNetworkGroup1" --managed-network-name \\
+               "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-group delete'] = """

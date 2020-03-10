@@ -202,7 +202,7 @@ export class ResourcePool {
             for (let i = depends.length - 1; i >= 0; i--) {
                 if (depends[i][0] == depend_resource) {
                     found = true;
-                    entity.depend_parameter_values.push(depends[i][1]);
+                    entity.depend_parameter_values.push(getResourceKey(depends[i][0], depends[i][1]));
                     break;
                 }
             }
@@ -212,7 +212,7 @@ export class ResourcePool {
             for (let e of entitys) {
                 if (e.info.class_name == depend_resource) {
                     found = true;
-                    entity.depend_parameter_values.push(e.object_name);
+                    entity.depend_parameter_values.push(getResourceKey(e.info.class_name, e.object_name));
                     break;
                 }
             }
@@ -220,7 +220,7 @@ export class ResourcePool {
             //if there is no entity for this depend has been exist, create a new of it.
             const default_name = 'default';
             this.prepareResource(depend_resource, default_name, [], entitys);
-            entity.depend_parameter_values.push(default_name);
+            entity.depend_parameter_values.push(getResourceKey(depend_resource, default_name));
         }
         entitys.push(entity);
     }
@@ -318,8 +318,19 @@ export class ResourcePool {
         return null;
     }
 
-    public addEndpointResource(endpoint: any) {
+    public addEndpointResource(endpoint: any, original_type: string) {
         if (typeof endpoint !== 'string') return endpoint;
+
+        //if the input is in form of "key1=value2 key2=value2 ...", then analyse the values one by one
+        if (original_type == 'object') {
+            let ret = "";
+            for (let attr of endpoint.split(" ")) {
+                let kv = attr.split("=");
+                if (ret.length > 0) ret += " ";
+                ret += `${kv[0]}=${this.addEndpointResource(kv[1], 'string')}`;
+            }
+            return ret;
+        }
 
         let nodes = endpoint.split('/');
         if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
@@ -341,6 +352,8 @@ export class ResourcePool {
     }
 
     public addParamResource(param_name: string, param_value: string): string {
+        if (typeof param_value !== 'string') return param_value;
+
         if (param_name.startsWith('--')) {
             param_name = param_name.substr(2);
         }
@@ -370,7 +383,3 @@ export class ResourcePool {
     }
 }
 
-export function generateResourceFiles(filename: string): string[] {
-    let src_folder = path.join(`${__dirname}`, '..', '..', '..', 'src', 'plugins', 'azgenerator', 'resources');
-    return ReadFile(path.join(src_folder, filename)).split(/\r\n|\n/);
-} 
