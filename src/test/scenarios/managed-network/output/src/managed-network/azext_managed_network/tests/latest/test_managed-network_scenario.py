@@ -26,6 +26,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
     @VirtualNetworkPreparer(name_prefix='cli_test_managed_network_VnetC'[:9], key='vn', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='cli_test_managed_network_VnetA'[:9], key='vn_2', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='cli_test_managed_network_VnetB'[:9], key='vn_3', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='cli_test_managed_network_myHubVnet'[:9], key='vn_4', resource_group_key='rg')
     @VnetSubnetPreparer(name_prefix='cli_test_managed_network_subnetA'[:9], key='sn', resource_group_key='rg', vnet_key='vn')
     @VnetSubnetPreparer(name_prefix='cli_test_managed_network_subnetB'[:9], key='sn_2', resource_group_key='rg', vnet_key='vn')
     def test_managed_network(self, resource_group):
@@ -73,7 +74,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         self.cmd('az managed-network managed-network-peering-policy create '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--managed-network-peering-policy-name "{myHubAndSpoke}" '
-                 '--properties "{\"type\":\"HubAndSpokeTopology\",\"hub\":{\"id\":\"/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myHubVnet\"},\"spokes\":[{\"id\":\"/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\"}]}" '
+                 '--properties "{\"type\":\"HubAndSpokeTopology\",\"hub\":{\"id\":\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_4}\"},\"spokes\":[{\"id\":\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup1}\"}]}" '
                  '--resource-group "{rg}"',
                  checks=[])
 

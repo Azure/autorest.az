@@ -1,7 +1,7 @@
 
 import * as path from "path"
 import { CommandExample } from "./CodeModelAz";
-import { deepCopy, ReadFile } from "../../utils/helper"
+import { deepCopy, isDict } from "../../utils/helper"
 
 function MethodToOrder(method: string): number {
     if (method == 'create') return 0;
@@ -319,6 +319,33 @@ export class ResourcePool {
     }
 
     public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean) {
+        
+        if(isJson) {
+            let body = typeof endpoint == 'string'? JSON.parse(endpoint):endpoint;
+            if (typeof body == 'object') {
+                if ( body instanceof Array) {
+                    body = body.map((value) => {
+                        return this.addEndpointResource(value, typeof value=='object', isKeyValues);
+                    });
+                }
+                else if(isDict(body)) {
+                    for (let k in body) {
+                        body[k] = this.addEndpointResource(body[k], typeof body[k]=='object', isKeyValues);
+                    }
+                }
+            }
+            else {
+                body = this.addEndpointResource(body, false, isKeyValues);
+            }
+
+            if (typeof endpoint == 'string') {
+                return JSON.stringify(body).split(/[\r\n]+/).join("");
+            }
+            else {
+                return body;
+            }
+        }
+
         if (typeof endpoint !== 'string') return endpoint;
 
         //if the input is in form of "key1=value2 key2=value2 ...", then analyse the values one by one
@@ -330,10 +357,6 @@ export class ResourcePool {
                 ret += `${kv[0]}=${this.addEndpointResource(kv[1], isJson, false)}`;
             }
             return ret;
-        }
-
-        if(isJson) {
-            //TODO: recognize resources
         }
 
         let nodes = endpoint.split('/');
