@@ -6,6 +6,7 @@
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-statements
 
+from knack.arguments import CLIArgumentType
 from azure.cli.core.commands.parameters import (
     tags_type,
     resource_group_name_type,
@@ -15,8 +16,7 @@ from azext_managed_network.action import (
     AddManagementGroups,
     AddSubscriptions,
     AddVirtualNetworks,
-    AddSubnets,
-    AddProperties
+    AddSubnets
 )
 
 
@@ -125,14 +125,14 @@ def load_arguments(self, _):
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('properties', help='Properties of a Managed Network Peering Policy', action=AddProperties, nargs='+')
+        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of a Managed Network Peering Policy'))
 
     with self.argument_context('managed-network managed-network-peering-policy update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('properties', help='Properties of a Managed Network Peering Policy', action=AddProperties, nargs='+')
+        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of a Managed Network Peering Policy'))
 
     with self.argument_context('managed-network managed-network-peering-policy delete') as c:
         c.argument('resource_group_name', resource_group_name_type)

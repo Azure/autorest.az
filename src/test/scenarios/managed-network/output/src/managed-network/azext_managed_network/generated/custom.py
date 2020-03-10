@@ -7,6 +7,7 @@
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-locals
 # pylint: disable=unused-argument
+import json
 
 
 def managed_network_managed_network_list(cmd, client,
@@ -149,6 +150,7 @@ def managed_network_managed_network_peering_policy_create(cmd, client,
                                                           managed_network_peering_policy_name,
                                                           location,
                                                           properties=None):
+    properties = json.loads(properties) if isinstance(properties, str) else properties
     return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=properties)
 
 
@@ -158,6 +160,7 @@ def managed_network_managed_network_peering_policy_update(cmd, client,
                                                           managed_network_peering_policy_name,
                                                           location,
                                                           properties=None):
+    properties = json.loads(properties) if isinstance(properties, str) else properties
     return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=properties)
 
 
