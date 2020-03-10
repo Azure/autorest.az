@@ -118,23 +118,23 @@ def load_arguments(self, _):
     with self.argument_context('managed-network managed-network-peering-policy show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('policyname', help='The name of the Managed Network Peering Policy.')
+        c.argument('policy_name', help='The name of the Managed Network Peering Policy.')
 
     with self.argument_context('managed-network managed-network-peering-policy create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('policyname', help='The name of the Managed Network Peering Policy.')
+        c.argument('policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of a Managed Network Peering Policy'))
 
     with self.argument_context('managed-network managed-network-peering-policy update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('policyname', help='The name of the Managed Network Peering Policy.')
+        c.argument('policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of a Managed Network Peering Policy'))
 
     with self.argument_context('managed-network managed-network-peering-policy delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('policyname', help='The name of the Managed Network Peering Policy.')
+        c.argument('policy_name', help='The name of the Managed Network Peering Policy.')

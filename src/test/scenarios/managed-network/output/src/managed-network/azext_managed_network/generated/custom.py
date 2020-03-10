@@ -140,32 +140,32 @@ def managed_network_managed_network_peering_policy_list(cmd, client,
 def managed_network_managed_network_peering_policy_show(cmd, client,
                                                         resource_group_name,
                                                         managed_network_name,
-                                                        policyname):
-    return client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=policyname)
+                                                        policy_name):
+    return client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=policy_name)
 
 
 def managed_network_managed_network_peering_policy_create(cmd, client,
                                                           resource_group_name,
                                                           managed_network_name,
-                                                          policyname,
+                                                          policy_name,
                                                           location,
                                                           properties=None):
     properties = json.loads(properties) if isinstance(properties, str) else properties
-    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=policyname, location=location, properties=properties)
+    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=policy_name, location=location, properties=properties)
 
 
 def managed_network_managed_network_peering_policy_update(cmd, client,
                                                           resource_group_name,
                                                           managed_network_name,
-                                                          policyname,
+                                                          policy_name,
                                                           location,
                                                           properties=None):
     properties = json.loads(properties) if isinstance(properties, str) else properties
-    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=policyname, location=location, properties=properties)
+    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=policy_name, location=location, properties=properties)
 
 
 def managed_network_managed_network_peering_policy_delete(cmd, client,
                                                           resource_group_name,
                                                           managed_network_name,
-                                                          policyname):
-    return client.begin_delete(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=policyname)
+                                                          policy_name):
+    return client.begin_delete(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=policy_name)

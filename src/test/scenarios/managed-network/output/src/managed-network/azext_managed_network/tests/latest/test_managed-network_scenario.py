@@ -70,7 +70,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         self.cmd('az managed-network managed-network-peering-policy create '
                  '--managed-network-name "{myManagedNetwork}" '
-                 '--policyname "myHubAndSpoke" '
+                 '--policy-name "myHubAndSpoke" '
                  '--resource-group "{rg}"',
                  checks=[])
 
@@ -108,7 +108,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         self.cmd('az managed-network managed-network-peering-policy show '
                  '--managed-network-name "{myManagedNetwork}" '
-                 '--policyname "myHubAndSpoke" '
+                 '--policy-name "myHubAndSpoke" '
                  '--resource-group "{rg}"',
                  checks=[])
 
@@ -119,7 +119,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         self.cmd('az managed-network managed-network-peering-policy delete '
                  '--managed-network-name "{myManagedNetwork}" '
-                 '--policyname "myHubAndSpoke" '
+                 '--policy-name "myHubAndSpoke" '
                  '--resource-group "{rg}"',
                  checks=[])
 

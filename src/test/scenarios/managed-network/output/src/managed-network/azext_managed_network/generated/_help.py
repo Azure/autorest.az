@@ -221,7 +221,7 @@ helps['managed-network managed-network-peering-policy show'] = """
       - name: Get Managed Network Peering Policy
         text: |-
                az managed-network managed-network-peering-policy show --managed-network-name \\
-               "myManagedNetwork" --policyname "myHubAndSpoke" --resource-group "myResourceGroup"
+               "myManagedNetwork" --policy-name "myHubAndSpoke" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy create'] = """
@@ -231,7 +231,7 @@ helps['managed-network managed-network-peering-policy create'] = """
       - name: Create/Update Managed Network Peering Policy
         text: |-
                az managed-network managed-network-peering-policy create --managed-network-name \\
-               "myManagedNetwork" --policyname "myHubAndSpoke" --resource-group "myResourceGroup"
+               "myManagedNetwork" --policy-name "myHubAndSpoke" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy update'] = """
@@ -241,7 +241,7 @@ helps['managed-network managed-network-peering-policy update'] = """
       - name: Create/Update Managed Network Peering Policy
         text: |-
                az managed-network managed-network-peering-policy create --managed-network-name \\
-               "myManagedNetwork" --policyname "myHubAndSpoke" --resource-group "myResourceGroup"
+               "myManagedNetwork" --policy-name "myHubAndSpoke" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy delete'] = """
@@ -251,5 +251,5 @@ helps['managed-network managed-network-peering-policy delete'] = """
       - name: Get Managed Network Peering Policy
         text: |-
                az managed-network managed-network-peering-policy delete --managed-network-name \\
-               "myManagedNetwork" --policyname "myHubAndSpoke" --resource-group "myResourceGroup"
+               "myManagedNetwork" --policy-name "myHubAndSpoke" --resource-group "myResourceGroup"
 """
