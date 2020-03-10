@@ -1259,7 +1259,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
                 param_value = replaced_value;
             }
-            let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("").split("'").join("\\'");
+            let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("").split("'").join("\\'").split("\\").join("\\\\");
             parameters.push(param.name + " " + slp);
         }
 
