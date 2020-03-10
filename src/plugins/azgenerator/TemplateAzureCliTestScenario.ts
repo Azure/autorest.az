@@ -104,7 +104,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
         }
 
         // create preparers for outside dependency
-        let line: string = `    @${entity.info.name}(name_prefix='cli_test_${model.Extension_NameUnderscored}_${entity.object_name}', key='${getResourceKey(entity.info.class_name, entity.object_name)}'`;
+        let line: string = `    @${entity.info.name}(name_prefix='cli_test_${model.Extension_NameUnderscored}_${entity.object_name}'[:9], key='${getResourceKey(entity.info.class_name, entity.object_name)}'`;
         for (let i = 0; i < entity.depend_parameter_values.length; i++) {
             line += `, ${entity.info.depend_parameters[i]}='${entity.depend_parameter_values[i]}'`
         }
@@ -125,7 +125,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     if (internalObjects.length > 0) {
         initiates.push("        self.kwargs.update({");
         for (let [class_name, kargs_key] of internalObjects)
-            initiates.push(`            '${kargs_key}': self.create_random_name(prefix='${ToSnakeCase(class_name)}'[-4:], length=24),`);
+            initiates.push(`            '${kargs_key}': self.create_random_name(prefix='cli_test_${ToSnakeCase(class_name)}'[:9], length=24),`);
         initiates.push("        })");
         initiates.push("");
     }

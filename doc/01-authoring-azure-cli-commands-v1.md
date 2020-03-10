@@ -21,7 +21,7 @@ If you want to use the container:
 
 ### Prepare Minimal **readme.cli.md** File
 
-Minimal file must exist in 
+Minimal file must exist at `azure-rest-api-specs/specification/healthcareapis/resource-manager/readme.cli.md` (Replace `healthcareapis` with other Resource Provider names)
 
     ## CLI
 

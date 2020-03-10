@@ -848,6 +848,10 @@ export class CodeModelCliImpl implements CodeModelAz
     public get MethodParameter_MapsTo(): string
     {
         let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
+        return this.GetMethodParameterMapName(parameter);
+    }
+
+    private GetMethodParameterMapName(parameter): string {
         /*if(parameter['originalParameter'] != null && parameter.language['python'].name != 'location' && parameter.language['python'].name != "tags") {
             return (parameter['originalParameter']).language['python'].name + "_" + parameter.language['python'].name;
         } else {*/
@@ -1084,10 +1088,10 @@ export class CodeModelCliImpl implements CodeModelAz
                     //ret += `${k}=${v.substr(1, v.length-2)}`;
                     ret += `${k}=${value[k]}`;
                 }
-                example_param.push(new ExampleParam(name, ret));
+                example_param.push(new ExampleParam(name, ret, typeof value));
             }
             else {
-                example_param.push(new ExampleParam(name, value));
+                example_param.push(new ExampleParam(name, value, typeof values));
             }
         }
 
@@ -1111,7 +1115,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(example_param, name, value);
+                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(method_param.get(name)), value);
                     return;
                 }
             }
@@ -1131,13 +1135,13 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(example_param, name, value);
+                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(method_param.get(name)), value);
                     return;
                 }
             }
             else if (ancestors.length==0){
                 // example_param.set(name, value);
-                this.AddExampleParameter(example_param, name, value);
+                this.AddExampleParameter(example_param, this.GetMethodParameterMapName(method_param.get(name)), value);
                 return;
             }
         }
@@ -1163,7 +1167,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 // }
             }
             param_name = param_name.split("_").join("-");
-            ret.push(new ExampleParam("--" + param_name, param.value));
+            ret.push(new ExampleParam("--" + param_name, param.value, param.original_type));
         };
         return ret;
     }
@@ -1194,7 +1198,7 @@ export class CodeModelCliImpl implements CodeModelAz
         for (let param of example.Parameters) {
             let param_value = param.value;
             if (isTest) {
-                let replaced_value = this.resource_pool.addEndpointResource(param_value);
+                let replaced_value = this.resource_pool.addEndpointResource(param_value, param.original_type);
                 if (replaced_value == param_value) {
                     replaced_value = this.resource_pool.addParamResource(param.name, param_value);
                 }
