@@ -37,7 +37,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                             {
                                 do
                                 {
-                                    if (model.MethodParameter_IsListOfComplex)
+                                    if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple)
                                     {
                                         if (model.MethodParameter_Type == SchemaType.Object || model.MethodParameter_Type == SchemaType.Array)
                                         {

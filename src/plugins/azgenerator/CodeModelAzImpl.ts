@@ -434,7 +434,7 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex = 0;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex]
             const currentParameterName = parameter.language['az'].name;
-            if(this.Option_IsHidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
+            if(this.Option_IsHidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -496,7 +496,7 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex++;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].request.parameters[this.currentParameterIndex];
             const currentParameterName = parameter.language['az'].name;
-            if(this.Option_IsHidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
+            if(this.Option_IsHidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "$host") {
                 if(this.SelectNextOption()) {
                     return true;
                 } else {
@@ -748,7 +748,7 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex = 0;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
             const currentParameterName = parameter.language['python'].name;
-            if(this.MethodParameter_IsHidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
+            if(this.MethodParameter_IsHidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
                 if(this.SelectNextMethodParameter()) {
                     return true;
                 } else {
@@ -783,7 +783,7 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex++;
             let parameter = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
             const currentParameterName = parameter.language['python'].name;
-            if(this.MethodParameter_IsHidden || parameter.protocol?.http?.in == ParameterLocation.Header || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
+            if(this.MethodParameter_IsHidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
                 if(this.SelectNextMethodParameter()) {
                     return true;
                 } else {
@@ -798,7 +798,15 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public EnterSubMethodParameters(): boolean
     {
-        if (!this.MethodParameter_IsListOfComplex)
+        // this should only works for 
+        // 1. objects with simple properties 
+        // 2. or objects with arrays as properties but has simple element type 
+        // 3. or arrays with simple element types
+        // 4. or arrays with object element types but has simple properties
+        if (!this.MethodParameter_IsList) {
+            return false;
+        }
+        if (!this.MethodParameter_IsListOfSimple)
             return false;
 
         this.submethodparameters = null;
@@ -806,8 +814,8 @@ export class CodeModelCliImpl implements CodeModelAz
             if((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
                 this.submethodparameters = this.MethodParameter['schema']?.['elementType']?.properties;
             }
-        } else {
-            this.submethodparameters = this.MethodParameter['schema']?.['properties'];
+        } if(this.MethodParameter_Type == SchemaType.Object) {
+            this.submethodparameters = this.MethodParameter['schema']['properties'];
         }
         if(this.submethodparameters == null) {
             return false;
@@ -876,12 +884,58 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].schema.type;
     }
 
-    public get MethodParameter_IsListOfComplex(): boolean
+    public get MethodParameter_IsListOfSimple(): boolean
+    {
+        // objects that is not base class of polymorphic and satisfy one of the four conditions
+        // 1. objects with simple properties 
+        // 2. or objects with arrays as properties but has simple element type 
+        // 3. or arrays with simple element types
+        // 4. or arrays with object element types but has simple properties
+        if(this.MethodParameter_IsFlattened) {
+            return false;
+        }
+        if (this.MethodParameter_Type == SchemaType.Array) {
+            if ((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
+                for (let p of values(this.MethodParameter['schema']?.['elementType']?.properties)) {
+                    if (p['schema'].type == SchemaType.Object) {
+                        return false;
+                    } else if(p['schema'].type == SchemaType.Array) {
+                        for(let mp of values(p['schema']?.['elementType']?.properties)) {
+                            if(mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+        } if (this.MethodParameter_Type == SchemaType.Object) {
+            if (this.MethodParameter.schema.children != null && this.MethodParameter.schema.discriminator != null) {
+                return false;
+            }
+            for(let p of values(this.MethodParameter['schema']['properties'])) {
+                if(p['schema'].type == SchemaType.Object) {
+                    // objects.objects
+                    return false;
+                } else if(p['schema'].type == SchemaType.Array) {
+                    for(let mp of values(p['schema']?.['elementType']?.properties)) {
+                        if(mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        return false; 
+    }
+
+    public get MethodParameter_IsList(): boolean
     {
         if(this.MethodParameter_IsFlattened) {
             return false;
         }
-        if(this.MethodParameter_Type == SchemaType.Object || this.MethodParameter_Type == SchemaType.Array) {
+        if (this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Object) {
             return true;
         }
         return false;
@@ -943,6 +997,7 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex]['RequiredByMethod'];
     }
+
     //=================================================================================================================
     // Top Level Python Related Information
     //
