@@ -67,6 +67,10 @@ cli:
       - where:
             parameter: location
         required: true
+      - where:
+            group: 'managed_network_peering_policies'
+            param: 'managed_network_peering_policy_name'
+        name: 'policyName'
     flatten:
         cli-flatten-set-enabled: true
         cli-flatten-all: true

@@ -38,7 +38,6 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
             'myManagedNetwork': self.create_random_name(prefix='cli_test_managed_networks'[:9], length=24),
             'subscriptionCAssignment': self.create_random_name(prefix='cli_test_scope_assignments'[:9], length=24),
             'myManagedNetworkGroup1': self.create_random_name(prefix='cli_test_managed_network_groups'[:9], length=24),
-            'myHubAndSpoke': self.create_random_name(prefix='cli_test_managed_network_peering_policies'[:9], length=24),
         })
 
         self.cmd('az managed-network managed-network create '
@@ -71,7 +70,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         self.cmd('az managed-network managed-network-peering-policy create '
                  '--managed-network-name "{myManagedNetwork}" '
-                 '--managed-network-peering-policy-name "{myHubAndSpoke}" '
+                 '--policyname "myHubAndSpoke" '
                  '--resource-group "{rg}"',
                  checks=[])
 
@@ -109,7 +108,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         self.cmd('az managed-network managed-network-peering-policy show '
                  '--managed-network-name "{myManagedNetwork}" '
-                 '--managed-network-peering-policy-name "{myHubAndSpoke}" '
+                 '--policyname "myHubAndSpoke" '
                  '--resource-group "{rg}"',
                  checks=[])
 
@@ -120,7 +119,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         self.cmd('az managed-network managed-network-peering-policy delete '
                  '--managed-network-name "{myManagedNetwork}" '
-                 '--managed-network-peering-policy-name "{myHubAndSpoke}" '
+                 '--policyname "myHubAndSpoke" '
                  '--resource-group "{rg}"',
                  checks=[])
 

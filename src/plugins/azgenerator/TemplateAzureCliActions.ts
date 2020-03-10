@@ -69,7 +69,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                                     let ifkv = "if";
                                                     do
                                                     {
-                                                        output.push("            " + ifkv + " kl == '" + model.MethodParameter_Name + "':");
+                                                        output.push("            " + ifkv + " kl == '" + model.MethodParameter_NamePython + "':");
                                                         output.push("                d['" + model.MethodParameter_NamePython + "'] = v");
                                                         ifkv = "elif";
                                                     } while (model.SelectNextMethodParameter());
