@@ -42,6 +42,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         })
 
         self.cmd('az managed-network managed-network create '
+                 '--location "eastus" '
                  '--properties-scope-management-groups "id=/providers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000" '
                  '--properties-scope-management-groups "id=/providers/Microsoft.Management/managementGroups/20000000-0002-0000-0000-000000000000" '
                  '--properties-scope-subnets "id=/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}/subnets/{sn}" '
@@ -72,6 +73,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         self.cmd('az managed-network managed-network-peering-policy create '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--managed-network-peering-policy-name "{myHubAndSpoke}" '
+                 '--properties "{\"type\":\"HubAndSpokeTopology\",\"hub\":{\"id\":\"/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myHubVnet\"},\"spokes\":[{\"id\":\"/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\"}]}" '
                  '--resource-group "{rg}"',
                  checks=[])
 

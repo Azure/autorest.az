@@ -318,18 +318,22 @@ export class ResourcePool {
         return null;
     }
 
-    public addEndpointResource(endpoint: any, original_type: string) {
+    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean) {
         if (typeof endpoint !== 'string') return endpoint;
 
         //if the input is in form of "key1=value2 key2=value2 ...", then analyse the values one by one
-        if (original_type == 'object') {
+        if (isKeyValues) {
             let ret = "";
             for (let attr of endpoint.split(" ")) {
                 let kv = attr.split("=");
                 if (ret.length > 0) ret += " ";
-                ret += `${kv[0]}=${this.addEndpointResource(kv[1], 'string')}`;
+                ret += `${kv[0]}=${this.addEndpointResource(kv[1], isJson, false)}`;
             }
             return ret;
+        }
+
+        if(isJson) {
+            //TODO: recognize resources
         }
 
         let nodes = endpoint.split('/');
