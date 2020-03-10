@@ -27,6 +27,12 @@ az:
     - name: ManagedNetworksDelete
 python-sdk-output-folder: "$(output-folder)/src/managed-network/azext_managed_network/vendored_sdks/managed-network"
 
+
+directive:
+    - where:
+        parameter-name: managed-network-group-name
+      set:
+        parameter-name: group-name
 #directive:
 #  - from: swagger-document
 #    where: $..parameters[?(@.in=='body')]

@@ -37,7 +37,6 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         self.kwargs.update({
             'myManagedNetwork': self.create_random_name(prefix='cli_test_managed_networks'[:9], length=24),
             'subscriptionCAssignment': self.create_random_name(prefix='cli_test_scope_assignments'[:9], length=24),
-            'myManagedNetworkGroup1': self.create_random_name(prefix='cli_test_managed_network_groups'[:9], length=24),
         })
 
         self.cmd('az managed-network managed-network create '
@@ -57,7 +56,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--properties-subnets "id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" '
                  '--properties-virtual-networks "id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" '
                  '--properties-virtual-networks "id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" '
-                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
+                 '--group-name "myManagedNetworkGroup1" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
@@ -96,7 +95,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  checks=[])
 
         self.cmd('az managed-network managed-network-group show '
-                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
+                 '--group-name "myManagedNetworkGroup1" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
@@ -129,7 +128,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  checks=[])
 
         self.cmd('az managed-network managed-network-group delete '
-                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
+                 '--group-name "myManagedNetworkGroup1" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])

@@ -94,39 +94,39 @@ def managed_network_managed_network_group_list(cmd, client,
 def managed_network_managed_network_group_show(cmd, client,
                                                resource_group_name,
                                                managed_network_name,
-                                               managed_network_group_name):
-    return client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name)
+                                               group_name):
+    return client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=group_name)
 
 
 def managed_network_managed_network_group_create(cmd, client,
                                                  resource_group_name,
                                                  managed_network_name,
-                                                 managed_network_group_name,
+                                                 group_name,
                                                  location,
                                                  properties_management_groups=None,
                                                  properties_subscriptions=None,
                                                  properties_virtual_networks=None,
                                                  properties_subnets=None):
-    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=properties_management_groups, subscriptions=properties_subscriptions, virtual_networks=properties_virtual_networks, subnets=properties_subnets)
+    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=group_name, location=location, management_groups=properties_management_groups, subscriptions=properties_subscriptions, virtual_networks=properties_virtual_networks, subnets=properties_subnets)
 
 
 def managed_network_managed_network_group_update(cmd, client,
                                                  resource_group_name,
                                                  managed_network_name,
-                                                 managed_network_group_name,
+                                                 group_name,
                                                  location,
                                                  properties_management_groups=None,
                                                  properties_subscriptions=None,
                                                  properties_virtual_networks=None,
                                                  properties_subnets=None):
-    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name, location=location, management_groups=properties_management_groups, subscriptions=properties_subscriptions, virtual_networks=properties_virtual_networks, subnets=properties_subnets)
+    return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=group_name, location=location, management_groups=properties_management_groups, subscriptions=properties_subscriptions, virtual_networks=properties_virtual_networks, subnets=properties_subnets)
 
 
 def managed_network_managed_network_group_delete(cmd, client,
                                                  resource_group_name,
                                                  managed_network_name,
-                                                 managed_network_group_name):
-    return client.begin_delete(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=managed_network_group_name)
+                                                 group_name):
+    return client.begin_delete(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=group_name)
 
 
 def managed_network_managed_network_peering_policy_list(cmd, client,
