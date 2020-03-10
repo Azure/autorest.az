@@ -237,7 +237,7 @@ function getVirtualCommandBody(model: CodeModelAz) {
                 }
     
                 if (model.MethodParameter_IsList) {
-                    if (model.MethodParameter_IsListOfComplex) {
+                    if (!model.MethodParameter_IsListOfSimple) {
                         let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
                         argument += ", action=" + actionName;
                         hasActions = true;

@@ -101,13 +101,12 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                     }
                 } while (model.SelectNextMethodParameter());
             }
-            CreateParameters(model, output, allParam, indent);
+            CreateParameters(model, output, allParam, indent, false);
         } while (model.SelectNextMethod());
     }
 
     if (model.SelectFirstMethod()) {
         do {
-<<<<<<< HEAD
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
@@ -126,9 +125,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
                     }
                 } while (model.SelectNextMethodParameter());
             }
-=======
             CreateParameters(model, output, allParam, indent, false);
->>>>>>> refactoring
         }
         while (model.SelectNextMethod());
     }
@@ -155,15 +152,16 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
 
                 }
                 else {
-                    ifStatement == "";
-                    prefix = "    ";
+                    //ifStatement == "";
+                    //prefix = "    ";
                 }
-            }
+            } while (model.SelectNextMethodParameter());
             // call client & return value
             // XXX - this is still a hack
 
-            let methodCall = prefix + "return " + GetMethodCall(model);
-            output_method_call.push(methodCall);
+            // XXX - broken
+            //let methodCall = prefix + "return " + GetMethodCall(model);
+            //output_method_call.push(methodCall);
         }
         while (model.SelectNextMethod());
     }
@@ -215,10 +213,6 @@ function GetCommandBodyVirtualAdd(model: CodeModelAz): string[] {
         output.push("");
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        }
-=======
     output[output.length - 1] += "):";
 
     let output_body: string[] = []
@@ -227,7 +221,6 @@ function GetCommandBodyVirtualAdd(model: CodeModelAz): string[] {
     if (model.SelectFirstMethod()) {
         // create body transformation for methods that support it
         let methodName: string = model.Command_MethodName;
->>>>>>> stuff
 
         let needIfStatement = !model.Method_IsLast;
 
@@ -239,11 +232,14 @@ function GetCommandBodyVirtualAdd(model: CodeModelAz): string[] {
 
                 if (!model.Method_IsLast) {
                     ifStatement += ((model.Method_IsFirst) ? "if" : "elif");
-=======
+                }
+            }
+        } while (1);
+    }
+
     //
     // split response to single parameters
     //
->>>>>>> virtual add next
 
     //
     // add item to the list

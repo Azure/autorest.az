@@ -311,7 +311,7 @@ export class CodeModelCliImpl implements CodeModelAz
                         //if (this.Command_MethodName == "create_or_update") {
                             if (this.SelectFirstMethodParameter()) {
                                 do {
-                                    if (this.MethodParameter_IsListOfComplex) {
+                                    if (!this.MethodParameter_IsListOfSimple) {
                                         this.subgroups.push(new SubGroup(this.MethodParameter_Name, this.currentMethodIndex, this.currentParameterIndex));
                                     }
                                 } while (this.SelectNextMethodParameter());
@@ -981,7 +981,7 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex = this.subgroups[this.currentOperationSubGroupIndex].parameterIdx;
         }
 
-        if (!this.MethodParameter_IsListOfComplex)
+        if (this.MethodParameter_IsListOfSimple)
             return false;
 
         this.submethodparameters = null;

@@ -23,15 +23,9 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
     if (model.SelectFirstCommandGroup()) {
         do {
 
-<<<<<<< HEAD
             // if there's no operation in this command group
             if (!model.SelectFirstCommand())
                 continue;
-=======
-            // if disabled
-            //if (model.Command_Name == "-")
-            //    continue;
->>>>>>> stuff
 
             output.push("");
             output.push("helps['" + model.CommandGroup_Name + "'] = \"\"\"");
