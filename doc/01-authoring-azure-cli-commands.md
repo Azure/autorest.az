@@ -82,13 +82,6 @@ Add following line to **readme.az.md**:
 
 NOTE: In the future this step may be automated, but for now it's necessary it matches extension folder structure.
 
-
-### Generate Extension
-
-To generate extension use following command:
-
-    autorest-beta --az --output-folder=/_/azure-cli-extensions /_/azure-rest-api-specs/specification/attestation/resource-manager/readme.md
-
 ### Integration Test
 
 When generating your extension **autorest.cli** will attempt to create default integration test. You may see output as follows:
