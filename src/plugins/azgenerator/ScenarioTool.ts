@@ -381,10 +381,16 @@ export class ResourcePool {
         while (i < (nodes.length - 1)) {
             const resource = this.isResource(nodes[i]);
             if (resource) {
-                resource_object = this.addTreeResource(resource, nodes[i + 1], resource_object);
-                nodes[i + 1] = resource_object.placeholder;
-                if (placeholders.indexOf(resource_object.placeholder)<0) {
-                    placeholders.push(resource_object.placeholder);
+                if (resource == SUBNET) {
+                    // since the subnet can't be created with rand name, just use the dfault one.
+                    nodes[i + 1] = 'default';
+                }
+                else {
+                    resource_object = this.addTreeResource(resource, nodes[i + 1], resource_object);
+                    nodes[i + 1] = resource_object.placeholder;
+                    if (placeholders.indexOf(resource_object.placeholder)<0) {
+                        placeholders.push(resource_object.placeholder);
+                    }
                 }
             }
             i += 2;
@@ -401,6 +407,10 @@ export class ResourcePool {
         let resource = this.isResource(param_name);
         if (!resource) {
             return param_value;
+        }
+        if (resource == SUBNET) {
+            // since the subnet can't be created with rand name, just use the dfault one.
+            return 'default';
         }
         let resource_object = this.addMapResource(resource, param_value);
         if (resource_object) {
