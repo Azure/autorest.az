@@ -21,7 +21,8 @@ ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T
 class OperationOperations:
     """OperationOperations async operations.
 
-    You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
+    You should not instantiate this class directly. Instead, you should create a Client instance that
+    instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
     :type models: ~managed_network_management_client.models
@@ -50,7 +51,7 @@ class OperationOperations:
         :rtype: ~managed_network_management_client.models.OperationListResult
         :raises: ~managed_network_management_client.models.ErrorResponseException:
         """
-        cls: ClsType["models.OperationListResult"] = kwargs.pop('cls', None )
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.OperationListResult"]
         error_map = kwargs.pop('error_map', {})
         api_version = "2019-06-01-preview"
 
@@ -62,11 +63,11 @@ class OperationOperations:
                 url = next_link
 
             # Construct parameters
-            query_parameters: Dict[str, Any] = {}
+            query_parameters = {}  # type: Dict[str, Any]
             query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
             # Construct headers
-            header_parameters: Dict[str, Any] = {}
+            header_parameters = {}  # type: Dict[str, Any]
             header_parameters['Accept'] = 'application/json'
 
             # Construct and send request

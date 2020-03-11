@@ -4,14 +4,24 @@ See documentation [here](doc/00-overview.md)
 
 ``` yaml
 use-extension:
-  "@autorest/python": "5.0.0-dev.20200211.1"
-  "@autorest/clicommon": "0.3.6"
+  "@autorest/python": "5.0.0-dev.20200306.1"
+  "@autorest/clicommon": "/Users/zhangqiaoqiao/work/code/autorest.cli.common"
   #"@autorest/python": "latest"
   
 python:
     reason: 'make sure python flag exists to load config in python.md'
 cli:
     reason: 'make sure cli flag exists to load config in cli.md'
+    naming:
+        default:
+            parameter: 'snake'
+            property: 'snake'
+            operation: 'snake'
+            operationGroup:  'pascal'
+            choice:  'pascal'
+            choiceValue:  'snake'
+            constant:  'snake'
+            type:  'pascal'
 
 require:
   - ./readme.python.md
@@ -49,7 +59,7 @@ pipeline:
             - az/azgenerator
         scope: scope-az
 
-scope-clicommon: false
+#scope-clicommon: false
 
 scope-az:
     is-object: false

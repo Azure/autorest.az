@@ -77,47 +77,55 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstMethod()) {
         do {
-            if (model.SelectFirstMethodParameter()) {
+            if (model.SelectFirstRequest()) {
                 do {
-                    if (model.MethodParameter_IsFlattened) {
-                        continue;
+                    if (model.SelectFirstMethodParameter()) {
+                        do {
+                            if (model.MethodParameter_IsFlattened) {
+                                continue;
+                            }
+                            if(model.MethodParameter_Type == SchemaType.Constant) {
+                                continue;
+                            }
+        
+                            let requiredParam: boolean = model.MethodParameter_RequiredByMethod;
+        
+                            let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
+                            if (requiredParam && !allParam.has(name)) {
+                                allParam.set(name, true);
+                                output[output.length - 1] += ",";
+                                output.push(indent + name);
+                            }
+                        } while (model.SelectNextMethodParameter());
                     }
-                    if(model.MethodParameter_Type == SchemaType.Constant) {
-                        continue;
-                    }
-
-                    let requiredParam: boolean = model.MethodParameter_RequiredByMethod;
-
-                    let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
-                    if (requiredParam && !allParam.has(name)) {
-                        allParam.set(name, true);
-                        output[output.length - 1] += ",";
-                        output.push(indent + name);
-                    }
-                } while (model.SelectNextMethodParameter());
+                } while (model.SelectNextRequest());
             }
         } while (model.SelectNextMethod());
     }
 
     if (model.SelectFirstMethod()) {
         do {
-            if (model.SelectFirstMethodParameter()) {
+            if (model.SelectFirstRequest()) {
                 do {
-                    if (model.MethodParameter_IsFlattened) {
-                        continue;
+                    if (model.SelectFirstMethodParameter()) {
+                        do {
+                            if (model.MethodParameter_IsFlattened) {
+                                continue;
+                            }
+                            if(model.MethodParameter_Type == SchemaType.Constant) {
+                                continue;
+                            }
+                            let requiredParam = model.MethodParameter_RequiredByMethod;
+        
+                            let name = model.MethodParameter_MapsTo;
+                            if (!requiredParam && !allParam.has(name)) {
+                                allParam.set(name, true);
+                                output[output.length - 1] += ",";
+                                output.push(indent + name + "=None");
+                            }
+                        } while (model.SelectNextMethodParameter());
                     }
-                    if(model.MethodParameter_Type == SchemaType.Constant) {
-                        continue;
-                    }
-                    let requiredParam = model.MethodParameter_RequiredByMethod;
-
-                    let name = model.MethodParameter_MapsTo;
-                    if (!requiredParam && !allParam.has(name)) {
-                        allParam.set(name, true);
-                        output[output.length - 1] += ",";
-                        output.push(indent + name + "=None");
-                    }
-                } while (model.SelectNextMethodParameter());
+                } while (model.SelectNextRequest());
             }
         }
         while (model.SelectNextMethod());
@@ -135,20 +143,25 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
         // body transformation
 
         // with x-ms-client-flatten it doesn't need this part now 
-        if (model.SelectFirstMethodParameter()) {
+        if (model.SelectFirstRequest()) {
             do {
-                if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
-                    let access = "    " + model.MethodParameter_MapsTo;
-                    access += " = json.loads(" + model.MethodParameter_MapsTo + ") if isinstance(" + model.MethodParameter_MapsTo + ", str) else " + model.MethodParameter_MapsTo
-                    required['json'] = true;
-                    output_body.push(access);
-
+                if (model.SelectFirstMethodParameter()) {
+                    do {
+                        if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                            let access = "    " + model.MethodParameter_MapsTo;
+                            access += " = json.loads(" + model.MethodParameter_MapsTo + ") if isinstance(" + model.MethodParameter_MapsTo + ", str) else " + model.MethodParameter_MapsTo
+                            required['json'] = true;
+                            output_body.push(access);
+        
+                        }
+        
+                    }
+                    while (model.SelectNextMethodParameter());
+        
                 }
-
-            }
-            while (model.SelectNextMethodParameter());
-
+            } while (model.SelectNextRequest());
         }
+
 
         let needIfStatement = !model.Method_IsLast;
 
@@ -160,21 +173,24 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
 
                 if (!model.Method_IsLast) {
                     ifStatement += ((model.Method_IsFirst) ? "if" : "elif");
-
-                    if (model.SelectFirstMethodParameter()) {
+                    if (model.SelectFirstRequest()) {
                         do {
-                            if (!model.MethodParameter_IsRequired) {
-                                continue;
+                            if (model.SelectFirstMethodParameter()) {
+                                do {
+                                    if (!model.MethodParameter_IsRequired) {
+                                        continue;
+                                    }
+                                    if(model.MethodParameter_Type == SchemaType.Constant) {
+                                        continue;
+                                    }
+                                    ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
+                                    ifStatement += " " + model.MethodParameter_MapsTo + " is not None"
+                                }
+                                while (model.SelectNextMethodParameter());
+                                ifStatement += ":";
+                                output_method_call.push(ifStatement);
                             }
-                            if(model.MethodParameter_Type == SchemaType.Constant) {
-                                continue;
-                            }
-                            ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
-                            ifStatement += " " + model.MethodParameter_MapsTo + " is not None"
-                        }
-                        while (model.SelectNextMethodParameter());
-                        ifStatement += ":";
-                        output_method_call.push(ifStatement);
+                        } while (model.SelectNextRequest());
                     }
                 }
                 else {
@@ -205,28 +221,33 @@ function GetMethodCall(model: CodeModelAz): string {
     }
     methodCall += "client." + methodName + "(";
 
-    if (model.SelectFirstMethodParameter()) {
+    if (model.SelectFirstRequest()) {
         do {
-            let param = model.MethodParameter;
-            if (model.MethodParameter_IsFlattened) {
-                continue;
+            if (model.SelectFirstMethodParameter()) {
+                do {
+                    let param = model.MethodParameter;
+                    if (model.MethodParameter_IsFlattened) {
+                        continue;
+                    }
+                    if(model.MethodParameter_Type == SchemaType.Constant) {
+                        continue;
+                    }
+                    let optionName = model.MethodParameter_MapsTo;
+                    let parameterName = model.MethodParameter_Name; 
+        
+                    if (methodCall.endsWith("(")) {
+                        // XXX - split and pop is a hack
+                        methodCall += parameterName + "=" + optionName;
+                    }
+                    else {
+                        methodCall += ", " + parameterName + "=" + optionName;
+                    }
+                }
+                while (model.SelectNextMethodParameter());
             }
-            if(model.MethodParameter_Type == SchemaType.Constant) {
-                continue;
-            }
-            let optionName = model.MethodParameter_MapsTo;
-            let parameterName = model.MethodParameter_Name; 
-
-            if (methodCall.endsWith("(")) {
-                // XXX - split and pop is a hack
-                methodCall += parameterName + "=" + optionName;
-            }
-            else {
-                methodCall += ", " + parameterName + "=" + optionName;
-            }
-        }
-        while (model.SelectNextMethodParameter());
+        } while (model.SelectNextRequest());
     }
+
 
     methodCall += ")";
 

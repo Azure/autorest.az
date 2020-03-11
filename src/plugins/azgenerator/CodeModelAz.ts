@@ -1,5 +1,5 @@
 ﻿import { AnyARecord } from "dns";
-import { Example } from "@azure-tools/codemodel";
+import { Operation, Parameter, Request } from "@azure-tools/codemodel";
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -55,31 +55,21 @@ export interface CodeModelAz
 
     Command_CanSplit: boolean;
     Command_IsLongRun: boolean;
-
-    SelectFirstOption(): boolean;
-    SelectNextOption(): boolean;
-
-    Option_Name: string;
-    Option_NameUnderscored: string;
-    Option_NamePython: string;
-    Option_IsRequired: boolean;
-    Option_Description: string;
-    Option_Type: string;
-    Option_In: string;
-    Option_PathSdk: string;
-    Option_PathSwagger: string;
-    Option_EnumValues: string[];
-    Option_IsHidden: boolean;
-    Option_IsFlattened: boolean;
     
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
 
+    Method: Operation;
     Method_IsFirst: boolean;
     Method_IsLast: boolean;
     Method_Name: string;
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
+
+    SelectFirstRequest(): boolean;
+    SelectNextRequest(): boolean;
+
+    Request: Request;
 
     SelectFirstMethodParameter(): boolean;
     SelectNextMethodParameter(): boolean;
@@ -93,7 +83,8 @@ export interface CodeModelAz
     MethodParameter_Type: string;
     MethodParameter_IsList: boolean;
     MethodParameter_IsListOfSimple: boolean;
-    MethodParameter: any;
+    MethodParameter: Parameter;
+    MethodParameters: Array<Parameter>;
     MethodParameter_In: string;
     MethodParameter_IsHidden: boolean;
     MethodParameter_IsRequired: boolean;

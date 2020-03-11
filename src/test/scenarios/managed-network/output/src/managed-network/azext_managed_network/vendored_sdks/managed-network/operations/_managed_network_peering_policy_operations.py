@@ -23,7 +23,8 @@ ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dic
 class ManagedNetworkPeeringPolicyOperations(object):
     """ManagedNetworkPeeringPolicyOperations operations.
 
-    You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
+    You should not instantiate this class directly. Instead, you should create a Client instance that
+    instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
     :type models: ~managed_network_management_client.models
@@ -60,9 +61,9 @@ class ManagedNetworkPeeringPolicyOperations(object):
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ManagedNetworkPeeringPolicy or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetworkPeeringPolicy
-        :raises: ~managed_network_management_client.models.ErrorResponseException:
+        :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkPeeringPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkPeeringPolicy"]
         error_map = kwargs.pop('error_map', {})
         api_version = "2019-06-01-preview"
 
@@ -77,11 +78,11 @@ class ManagedNetworkPeeringPolicyOperations(object):
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
-        query_parameters = {}
+        query_parameters = {}  # type: Dict[str, Any]
         query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
-        header_parameters = {}
+        header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
         # Construct and send request
@@ -111,10 +112,10 @@ class ManagedNetworkPeeringPolicyOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ManagedNetworkPeeringPolicy"
-        cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkPeeringPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkPeeringPolicy"]
         error_map = kwargs.pop('error_map', {})
 
-        managed_network_policy = models.ManagedNetworkPeeringPolicy(location=location, properties=properties)
+        _managed_network_policy = models.ManagedNetworkPeeringPolicy(location=location, properties=properties)
         api_version = "2019-06-01-preview"
 
         # Construct URL
@@ -128,19 +129,20 @@ class ManagedNetworkPeeringPolicyOperations(object):
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
-        query_parameters = {}
+        query_parameters = {}  # type: Dict[str, Any]
         query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
-        header_parameters = {}
+        header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = 'application/json'
-
-        # Construct body
-        body_content = self._serialize.body(managed_network_policy, 'ManagedNetworkPeeringPolicy')
+        header_parameters['Content-Type'] = kwargs.pop('content_type', 'application/json')
 
         # Construct and send request
-        request = self._client.put(url, query_parameters, header_parameters, body_content)
+        body_content_kwargs = {}  # type: Dict[str, Any]
+        body_content = self._serialize.body(_managed_network_policy, 'ManagedNetworkPeeringPolicy')
+        body_content_kwargs['content'] = body_content
+        request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
+
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
@@ -181,7 +183,7 @@ class ManagedNetworkPeeringPolicyOperations(object):
         :type managed_network_peering_policy_name: str
         :param location: The geo-location where the resource lives.
         :type location: str
-        :param properties: Properties of a Managed Network Peering Policy.
+        :param properties: Gets or sets the properties of a Managed Network Policy.
         :type properties: ~managed_network_management_client.models.ManagedNetworkPeeringPolicyProperties
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword polling: True for ARMPolling, False for no polling, or a
@@ -193,7 +195,7 @@ class ManagedNetworkPeeringPolicyOperations(object):
         :raises ~managed_network_management_client.models.ErrorResponseException:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkPeeringPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkPeeringPolicy"]
         raw_result = self._create_or_update_initial(
             resource_group_name=resource_group_name,
             managed_network_name=managed_network_name,
@@ -229,7 +231,7 @@ class ManagedNetworkPeeringPolicyOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> None
-        cls = kwargs.pop('cls', None )  # type: ClsType[None]
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {})
         api_version = "2019-06-01-preview"
 
@@ -244,11 +246,11 @@ class ManagedNetworkPeeringPolicyOperations(object):
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
-        query_parameters = {}
+        query_parameters = {}  # type: Dict[str, Any]
         query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
-        header_parameters = {}
+        header_parameters = {}  # type: Dict[str, Any]
 
         # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
@@ -290,7 +292,7 @@ class ManagedNetworkPeeringPolicyOperations(object):
         :raises ~managed_network_management_client.models.ErrorResponseException:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None )  # type: ClsType[None]
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
         raw_result = self._delete_initial(
             resource_group_name=resource_group_name,
             managed_network_name=managed_network_name,
@@ -331,15 +333,15 @@ class ManagedNetworkPeeringPolicyOperations(object):
         :param top: May be used to limit the number of results in a page for list queries.
         :type top: int
         :param skiptoken: Skiptoken is only used if a previous operation returned a partial result. If
-         a previous response contains a nextLink element, the value of the nextLink element will include
-         a skiptoken parameter that specifies a starting point to use for subsequent calls.
+     a previous response contains a nextLink element, the value of the nextLink element will include
+     a skiptoken parameter that specifies a starting point to use for subsequent calls.
         :type skiptoken: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ManagedNetworkPeeringPolicyListResult or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetworkPeeringPolicyListResult
         :raises: ~managed_network_management_client.models.ErrorResponseException:
         """
-        cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkPeeringPolicyListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkPeeringPolicyListResult"]
         error_map = kwargs.pop('error_map', {})
         api_version = "2019-06-01-preview"
 
@@ -357,7 +359,7 @@ class ManagedNetworkPeeringPolicyOperations(object):
                 url = next_link
 
             # Construct parameters
-            query_parameters = {}
+            query_parameters = {}  # type: Dict[str, Any]
             query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
             if top is not None:
                 query_parameters['$top'] = self._serialize.query("top", top, 'int', maximum=20, minimum=1)
@@ -365,7 +367,7 @@ class ManagedNetworkPeeringPolicyOperations(object):
                 query_parameters['$skiptoken'] = self._serialize.query("skiptoken", skiptoken, 'str')
 
             # Construct headers
-            header_parameters = {}
+            header_parameters = {}  # type: Dict[str, Any]
             header_parameters['Accept'] = 'application/json'
 
             # Construct and send request

@@ -58,20 +58,20 @@ def load_arguments(self, _):
         c.argument('scope_assignment_name', help='The name of the scope assignment to get.')
 
     with self.argument_context('managed-network scope-assignment create') as c:
-        c.argument('scope', help='The base resource of the scope assignment.')
-        c.argument('scope_assignment_name', help='The name of the scope assignment to get.')
+        c.argument('scope', help='The base resource of the scope assignment to create. The scope can be any REST resource instance. For example, use \'subscriptions/{subscription-id}\' for a subscription, \'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}\' for a resource group, and \'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}\' for a resource.')
+        c.argument('scope_assignment_name', help='The name of the scope assignment to create.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('properties_assigned_managed_network', help='The managed network ID with scope will be assigned to.')
 
     with self.argument_context('managed-network scope-assignment update') as c:
-        c.argument('scope', help='The base resource of the scope assignment.')
-        c.argument('scope_assignment_name', help='The name of the scope assignment to get.')
+        c.argument('scope', help='The base resource of the scope assignment to create. The scope can be any REST resource instance. For example, use \'subscriptions/{subscription-id}\' for a subscription, \'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}\' for a resource group, and \'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}\' for a resource.')
+        c.argument('scope_assignment_name', help='The name of the scope assignment to create.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('properties_assigned_managed_network', help='The managed network ID with scope will be assigned to.')
 
     with self.argument_context('managed-network scope-assignment delete') as c:
-        c.argument('scope', help='The base resource of the scope assignment.')
-        c.argument('scope_assignment_name', help='The name of the scope assignment to get.')
+        c.argument('scope', help='The scope of the scope assignment to delete.')
+        c.argument('scope_assignment_name', help='The name of the scope assignment to delete.')
 
     with self.argument_context('managed-network managed-network-group list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -125,14 +125,14 @@ def load_arguments(self, _):
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of a Managed Network Peering Policy'))
+        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Gets or sets the properties of a Managed Network Policy'))
 
     with self.argument_context('managed-network managed-network-peering-policy update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('managed_network_peering_policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of a Managed Network Peering Policy'))
+        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Gets or sets the properties of a Managed Network Policy'))
 
     with self.argument_context('managed-network managed-network-peering-policy delete') as c:
         c.argument('resource_group_name', resource_group_name_type)

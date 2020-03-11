@@ -124,21 +124,31 @@ export class AzNamer {
             var hasUpdate = false;
             var operationIndex = -1;
             operations.map(operation => {
-                let operationName = "";
-                if(operation.language['cli'] != undefined) {
-                    operation.language['az'] = new Language();
-                    operation.language['az']['name'] = this.methodMap(operation.language['cli']['name'], operation.request.protocol.http.method);
-                    operation.language['az']['description'] = operation.language['cli']['description'];
-                    operationName = operationGroupName + " " +  changeCamelToDash(operation.language['az']['name']);
-                    operation.language['az']['command'] = operationName;
-                } else {
-                    this.session.message({Channel:Channel.Warning, Text: "OperationGroup " + operationGroup.language.default.name + " operation " + operation.language.default.name + " doesn't have cli"});
-                }
-                operation.request.parameters.forEach(parameter => {
+                operation.parameters.forEach(parameter => {
                     if(parameter.language['cli'] != undefined) {
                         this.getAzName(parameter);
                     }
                 });
+                operation.requests.forEach(request => {
+                    let operationName = "";
+                    if(operation.language['cli'] != undefined) {
+                        operation.language['az'] = new Language();
+                        operation.language['az']['name'] = this.methodMap(operation.language['cli']['name'], request.protocol.http.method);
+                        operation.language['az']['description'] = operation.language['cli']['description'];
+                        operationName = operationGroupName + " " +  changeCamelToDash(operation.language['az']['name']);
+                        operation.language['az']['command'] = operationName;
+                    } else {
+                        this.session.message({Channel:Channel.Warning, Text: "OperationGroup " + operationGroup.language.default.name + " operation " + operation.language.default.name + " doesn't have cli"});
+                    }
+                    if(request.parameters) {
+                        request.parameters.forEach(parameter => {
+                            if(parameter.language['cli'] != undefined) {
+                                this.getAzName(parameter);
+                            }
+                        });                        
+                    }
+                });
+                
                 if(operation.language['cli']['name'].toLowerCase() == "createorupdate") {
                     operationIndex = operations.indexOf(operation);
                 }

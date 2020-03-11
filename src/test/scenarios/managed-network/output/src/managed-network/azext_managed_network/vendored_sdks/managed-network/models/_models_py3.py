@@ -149,7 +149,7 @@ class ManagedNetworkPeeringPolicyProperties(ResourceProperties):
      policy.Constant filled by server.  Possible values include: 'HubAndSpokeTopology',
      'MeshTopology'.
     :type type: str or ~managed_network_management_client.models.Type
-    :param hub: Generic pointer to a resource.
+    :param hub: Gets or sets the hub virtual network ID.
     :type hub: ~managed_network_management_client.models.ResourceId
     :param spokes: Gets or sets the spokes group IDs.
     :type spokes: list[~managed_network_management_client.models.ResourceId]
@@ -207,7 +207,7 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
      policy.Constant filled by server.  Possible values include: 'HubAndSpokeTopology',
      'MeshTopology'.
     :type type: str or ~managed_network_management_client.models.Type
-    :param hub: Generic pointer to a resource.
+    :param hub: Gets or sets the hub virtual network ID.
     :type hub: ~managed_network_management_client.models.ResourceId
     :param spokes: Gets or sets the spokes group IDs.
     :type spokes: list[~managed_network_management_client.models.ResourceId]
@@ -652,7 +652,7 @@ class ManagedNetworkPeeringPolicy(ProxyResource):
     :vartype type: str
     :param location: The geo-location where the resource lives.
     :type location: str
-    :param properties: Properties of a Managed Network Peering Policy.
+    :param properties: Gets or sets the properties of a Managed Network Policy.
     :type properties:
      ~managed_network_management_client.models.ManagedNetworkPeeringPolicyProperties
     """
@@ -806,7 +806,7 @@ class MeshPeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
      policy.Constant filled by server.  Possible values include: 'HubAndSpokeTopology',
      'MeshTopology'.
     :type type: str or ~managed_network_management_client.models.Type
-    :param hub: Generic pointer to a resource.
+    :param hub: Gets or sets the hub virtual network ID.
     :type hub: ~managed_network_management_client.models.ResourceId
     :param spokes: Gets or sets the spokes group IDs.
     :type spokes: list[~managed_network_management_client.models.ResourceId]

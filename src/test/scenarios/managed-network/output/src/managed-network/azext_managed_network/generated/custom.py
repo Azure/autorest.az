@@ -28,7 +28,7 @@ def managed_network_managed_network_show(cmd, client,
 def managed_network_managed_network_create(cmd, client,
                                            resource_group_name,
                                            managed_network_name,
-                                           location,
+                                           location=None,
                                            tags=None,
                                            properties_scope_management_groups=None,
                                            properties_scope_subscriptions=None,
@@ -64,7 +64,7 @@ def managed_network_scope_assignment_show(cmd, client,
 def managed_network_scope_assignment_create(cmd, client,
                                             scope,
                                             scope_assignment_name,
-                                            location,
+                                            location=None,
                                             properties_assigned_managed_network=None):
     return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=properties_assigned_managed_network)
 
@@ -72,7 +72,7 @@ def managed_network_scope_assignment_create(cmd, client,
 def managed_network_scope_assignment_update(cmd, client,
                                             scope,
                                             scope_assignment_name,
-                                            location,
+                                            location=None,
                                             properties_assigned_managed_network=None):
     return client.create_or_update(scope=scope, scope_assignment_name=scope_assignment_name, location=location, assigned_managed_network=properties_assigned_managed_network)
 
@@ -102,7 +102,7 @@ def managed_network_managed_network_group_create(cmd, client,
                                                  resource_group_name,
                                                  managed_network_name,
                                                  managed_network_group_name,
-                                                 location,
+                                                 location=None,
                                                  properties_management_groups=None,
                                                  properties_subscriptions=None,
                                                  properties_virtual_networks=None,
@@ -114,7 +114,7 @@ def managed_network_managed_network_group_update(cmd, client,
                                                  resource_group_name,
                                                  managed_network_name,
                                                  managed_network_group_name,
-                                                 location,
+                                                 location=None,
                                                  properties_management_groups=None,
                                                  properties_subscriptions=None,
                                                  properties_virtual_networks=None,
@@ -148,7 +148,7 @@ def managed_network_managed_network_peering_policy_create(cmd, client,
                                                           resource_group_name,
                                                           managed_network_name,
                                                           managed_network_peering_policy_name,
-                                                          location,
+                                                          location=None,
                                                           properties=None):
     properties = json.loads(properties) if isinstance(properties, str) else properties
     return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=properties)
@@ -158,7 +158,7 @@ def managed_network_managed_network_peering_policy_update(cmd, client,
                                                           resource_group_name,
                                                           managed_network_name,
                                                           managed_network_peering_policy_name,
-                                                          location,
+                                                          location=None,
                                                           properties=None):
     properties = json.loads(properties) if isinstance(properties, str) else properties
     return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_peering_policy_name=managed_network_peering_policy_name, location=location, properties=properties)

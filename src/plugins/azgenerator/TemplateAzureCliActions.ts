@@ -33,58 +33,62 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                 {
                     if (model.SelectFirstMethod()) {
                         do {
-                            if (model.SelectFirstMethodParameter())
-                            {
-                                do
-                                {
-                                    if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple)
+                            if (model.SelectFirstRequest()) {
+                                do {
+                                    if (model.SelectFirstMethodParameter())
                                     {
-                                        if (model.MethodParameter_Type == SchemaType.Object || model.MethodParameter_Type == SchemaType.Array)
+                                        do
                                         {
-                                            let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
-        
-                                            if(allActions.has(actionName)) {
-                                                continue;
-                                            }
-                                            
-                                            output.push("");
-                                            output.push("");
-                                            output.push("class " + actionName + "(argparse._AppendAction):");
-                                            output.push("    def __call__(self, parser, namespace, values, option_string=None):");
-                                            output.push("        action = self.get_action(values, option_string)");
-                                            output.push("        super(" + "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name)) + ", self).__call__(parser, namespace, action, option_string)");
-                                            output.push("");
-                                            output.push("    def get_action(self, values, option_string):  # pylint: disable=no-self-use");
-                                            output.push("        try:");
-                                            output.push("            properties = dict(x.split('=', 1) for x in values)");
-                                            output.push("        except ValueError:");
-                                            output.push("            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))");
-                                            output.push("        d = {}");
-                                            output.push("        for k in properties:");
-                                            output.push("            kl = k.lower()");
-                                            output.push("            v = properties[k]");
-                                            if (model.EnterSubMethodParameters()) {
-                                                if (model.SelectFirstMethodParameter())
+                                            if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple)
+                                            {
+                                                if (model.MethodParameter_Type == SchemaType.Object || model.MethodParameter_Type == SchemaType.Array)
                                                 {
-                                                    let ifkv = "if";
-                                                    do
-                                                    {
-                                                        output.push("            " + ifkv + " kl == '" + model.MethodParameter_Name + "':");
-                                                        output.push("                d['" + model.MethodParameter_NamePython + "'] = v");
-                                                        ifkv = "elif";
-                                                    } while (model.SelectNextMethodParameter());
+                                                    let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
+                
+                                                    if(allActions.has(model.MethodParameter_Name)) {
+                                                        continue;
+                                                    }
+                                                    
+                                                    output.push("");
+                                                    output.push("");
+                                                    output.push("class " + actionName + "(argparse._AppendAction):");
+                                                    output.push("    def __call__(self, parser, namespace, values, option_string=None):");
+                                                    output.push("        action = self.get_action(values, option_string)");
+                                                    output.push("        super(" + "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name)) + ", self).__call__(parser, namespace, action, option_string)");
+                                                    output.push("");
+                                                    output.push("    def get_action(self, values, option_string):  # pylint: disable=no-self-use");
+                                                    output.push("        try:");
+                                                    output.push("            properties = dict(x.split('=', 1) for x in values)");
+                                                    output.push("        except ValueError:");
+                                                    output.push("            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))");
+                                                    output.push("        d = {}");
+                                                    output.push("        for k in properties:");
+                                                    output.push("            kl = k.lower()");
+                                                    output.push("            v = properties[k]");
+                                                    if (model.EnterSubMethodParameters()) {
+                                                        if (model.SelectFirstMethodParameter())
+                                                        {
+                                                            let ifkv = "if";
+                                                            do
+                                                            {
+                                                                output.push("            " + ifkv + " kl == '" + model.MethodParameter_Name + "':");
+                                                                output.push("                d['" + model.MethodParameter_NamePython + "'] = v");
+                                                                ifkv = "elif";
+                                                            } while (model.SelectNextMethodParameter());
+                                                        }
+                                                    }
+                
+                                                    model.ExitSubMethodParameters();
+                
+                                                    output.push("        return d");  
+                                                    allActions.set(model.MethodParameter_Name, true);                              
                                                 }
+                
                                             }
-        
-                                            model.ExitSubMethodParameters();
-        
-                                            output.push("        return d");  
-                                            allActions.set(actionName, true);                              
-                                        }
-        
+                
+                                        } while (model.SelectNextMethodParameter());
                                     }
-        
-                                } while (model.SelectNextMethodParameter());
+                                } while (model.SelectNextRequest());
                             }
                         } while (model.SelectNextMethod());
                     }

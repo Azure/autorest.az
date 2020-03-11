@@ -23,7 +23,8 @@ ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dic
 class ManagedNetworkGroupOperations(object):
     """ManagedNetworkGroupOperations operations.
 
-    You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
+    You should not instantiate this class directly. Instead, you should create a Client instance that
+    instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
     :type models: ~managed_network_management_client.models
@@ -60,9 +61,9 @@ class ManagedNetworkGroupOperations(object):
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ManagedNetworkGroup or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetworkGroup
-        :raises: ~managed_network_management_client.models.ErrorResponseException:
+        :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkGroup"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkGroup"]
         error_map = kwargs.pop('error_map', {})
         api_version = "2019-06-01-preview"
 
@@ -77,11 +78,11 @@ class ManagedNetworkGroupOperations(object):
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
-        query_parameters = {}
+        query_parameters = {}  # type: Dict[str, Any]
         query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
-        header_parameters = {}
+        header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
         # Construct and send request
@@ -114,10 +115,10 @@ class ManagedNetworkGroupOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ManagedNetworkGroup"
-        cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkGroup"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkGroup"]
         error_map = kwargs.pop('error_map', {})
 
-        managed_network_group = models.ManagedNetworkGroup(location=location, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
+        _managed_network_group = models.ManagedNetworkGroup(location=location, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
         api_version = "2019-06-01-preview"
 
         # Construct URL
@@ -131,19 +132,20 @@ class ManagedNetworkGroupOperations(object):
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
-        query_parameters = {}
+        query_parameters = {}  # type: Dict[str, Any]
         query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
-        header_parameters = {}
+        header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = 'application/json'
-
-        # Construct body
-        body_content = self._serialize.body(managed_network_group, 'ManagedNetworkGroup')
+        header_parameters['Content-Type'] = kwargs.pop('content_type', 'application/json')
 
         # Construct and send request
-        request = self._client.put(url, query_parameters, header_parameters, body_content)
+        body_content_kwargs = {}  # type: Dict[str, Any]
+        body_content = self._serialize.body(_managed_network_group, 'ManagedNetworkGroup')
+        body_content_kwargs['content'] = body_content
+        request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
+
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
@@ -205,7 +207,7 @@ class ManagedNetworkGroupOperations(object):
         :raises ~managed_network_management_client.models.ErrorResponseException:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkGroup"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkGroup"]
         raw_result = self._create_or_update_initial(
             resource_group_name=resource_group_name,
             managed_network_name=managed_network_name,
@@ -244,7 +246,7 @@ class ManagedNetworkGroupOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> None
-        cls = kwargs.pop('cls', None )  # type: ClsType[None]
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {})
         api_version = "2019-06-01-preview"
 
@@ -259,11 +261,11 @@ class ManagedNetworkGroupOperations(object):
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
-        query_parameters = {}
+        query_parameters = {}  # type: Dict[str, Any]
         query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
-        header_parameters = {}
+        header_parameters = {}  # type: Dict[str, Any]
 
         # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
@@ -305,7 +307,7 @@ class ManagedNetworkGroupOperations(object):
         :raises ~managed_network_management_client.models.ErrorResponseException:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None )  # type: ClsType[None]
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
         raw_result = self._delete_initial(
             resource_group_name=resource_group_name,
             managed_network_name=managed_network_name,
@@ -346,15 +348,15 @@ class ManagedNetworkGroupOperations(object):
         :param top: May be used to limit the number of results in a page for list queries.
         :type top: int
         :param skiptoken: Skiptoken is only used if a previous operation returned a partial result. If
-         a previous response contains a nextLink element, the value of the nextLink element will include
-         a skiptoken parameter that specifies a starting point to use for subsequent calls.
+     a previous response contains a nextLink element, the value of the nextLink element will include
+     a skiptoken parameter that specifies a starting point to use for subsequent calls.
         :type skiptoken: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ManagedNetworkGroupListResult or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetworkGroupListResult
         :raises: ~managed_network_management_client.models.ErrorResponseException:
         """
-        cls = kwargs.pop('cls', None )  # type: ClsType["models.ManagedNetworkGroupListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkGroupListResult"]
         error_map = kwargs.pop('error_map', {})
         api_version = "2019-06-01-preview"
 
@@ -372,7 +374,7 @@ class ManagedNetworkGroupOperations(object):
                 url = next_link
 
             # Construct parameters
-            query_parameters = {}
+            query_parameters = {}  # type: Dict[str, Any]
             query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
             if top is not None:
                 query_parameters['$top'] = self._serialize.query("top", top, 'int', maximum=20, minimum=1)
@@ -380,7 +382,7 @@ class ManagedNetworkGroupOperations(object):
                 query_parameters['$skiptoken'] = self._serialize.query("skiptoken", skiptoken, 'str')
 
             # Construct headers
-            header_parameters = {}
+            header_parameters = {}  # type: Dict[str, Any]
             header_parameters['Accept'] = 'application/json'
 
             # Construct and send request

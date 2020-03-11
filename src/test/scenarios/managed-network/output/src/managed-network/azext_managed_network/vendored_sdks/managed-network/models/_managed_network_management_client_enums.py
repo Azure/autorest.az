@@ -9,6 +9,8 @@
 from enum import Enum
 
 class ProvisioningState(str, Enum):
+    """Provisioning state of the ManagedNetwork resource.
+    """
 
     updating = "Updating"
     deleting = "Deleting"
@@ -16,6 +18,8 @@ class ProvisioningState(str, Enum):
     succeeded = "Succeeded"
 
 class Type(str, Enum):
+    """Gets or sets the connectivity type of a network structure policy
+    """
 
     hub_and_spoke_topology = "HubAndSpokeTopology"
     mesh_topology = "MeshTopology"

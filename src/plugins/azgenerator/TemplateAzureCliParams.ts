@@ -95,75 +95,79 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     if(model.SelectFirstMethod()) {
         do {
-            if(model.SelectFirstMethodParameter()) {
+            if (model.SelectFirstRequest()) {
                 do {
-                    if(model.MethodParameter_IsFlattened) {
-                        continue;
-                    }
-                    if(model.MethodParameter_Type == SchemaType.Constant) {
-                        continue;
-                    }
-                    hasParam = true;
-                    
-                    let parameterName = model.MethodParameter_MapsTo;
+                    if (model.SelectFirstMethodParameter()) {
+                        do {
+                            if(model.MethodParameter_IsFlattened) {
+                                continue;
+                            }
+                            if(model.MethodParameter_Type == SchemaType.Constant) {
+                                continue;
+                            }
+                            hasParam = true;
+                            
+                            let parameterName = model.MethodParameter_MapsTo;
+                
+                            if(allParam.has(parameterName)) {
+                                continue;
+                            }
+                            allParam.set(parameterName, true);
+                            let argument = "        c.argument('" + parameterName + "'";
+                
+                            // this is to handle names like "format", "type", etc
+                            if (parameterName == "type" || parameterName == "format") {
+                                argument = "        c.argument('_" + parameterName + "'";
+                                argument += ", options_list=['--" + parameterName + "']";
+                            }
+                
+                            if (model.MethodParameter_Type == SchemaType.Boolean) {
+                                hasBoolean = true;
+                                argument += ", arg_type=get_three_state_flag()";
+                            }
+                            else if (model.MethodParameter_Type == SchemaType.Choice || model.MethodParameter_Type == SchemaType.SealedChoice) {
+                                hasEnum = true;
+                                argument += ", arg_type=get_enum_type([";
+                
+                                model.MethodParameter_EnumValues.forEach(element => {
+                                    if (!argument.endsWith("[")) argument += ", ";
+                                    argument += "'" + element + "'";
+                                });
+                                argument += "])";
+                            }
+                
+                            if (parameterName == "resource_group_name") {
+                                argument += ", resource_group_name_type";
+                            } else if (parameterName == "tags") {
+                                argument += ", tags_type";
+                            } else if (parameterName == "location") {
+                                argument += ", arg_type=get_location_type(self.cli_ctx)";
+                            } else if(model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                                hasJson = true;
+                                argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "'], help='" + EscapeString(model.MethodParameter_Description) + "')";
+                            } else {
+                                argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
+                            }
         
-                    if(allParam.has(parameterName)) {
-                        continue;
-                    }
-                    allParam.set(parameterName, true);
-                    let argument = "        c.argument('" + parameterName + "'";
+                            if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
+                                let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
+                                argument += ", action=" + actionName;
+                                hasActions = true;
         
-                    // this is to handle names like "format", "type", etc
-                    if (parameterName == "type" || parameterName == "format") {
-                        argument = "        c.argument('_" + parameterName + "'";
-                        argument += ", options_list=['--" + parameterName + "']";
+                                if (actions.indexOf(actionName) < 0) {
+                                    actions.push(actionName);
+                                }
+                                argument += ", nargs='+'";
+                            }
+                                
+                            
+                
+                            argument += ")";
+                
+                            output_args.push(argument);
+                        } while(model.SelectNextMethodParameter());
                     }
-        
-                    if (model.MethodParameter_Type == SchemaType.Boolean) {
-                        hasBoolean = true;
-                        argument += ", arg_type=get_three_state_flag()";
-                    }
-                    else if (model.MethodParameter_Type == SchemaType.Choice || model.MethodParameter_Type == SchemaType.SealedChoice) {
-                        hasEnum = true;
-                        argument += ", arg_type=get_enum_type([";
-        
-                        model.MethodParameter_EnumValues.forEach(element => {
-                            if (!argument.endsWith("[")) argument += ", ";
-                            argument += "'" + element + "'";
-                        });
-                        argument += "])";
-                    }
-        
-                    if (parameterName == "resource_group_name") {
-                        argument += ", resource_group_name_type";
-                    } else if (parameterName == "tags") {
-                        argument += ", tags_type";
-                    } else if (parameterName == "location") {
-                        argument += ", arg_type=get_location_type(self.cli_ctx)";
-                    } else if(model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
-                        hasJson = true;
-                        argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "'], help='" + EscapeString(model.MethodParameter_Description) + "')";
-                    } else {
-                        argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
-                    }
-
-                    if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
-                        let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
-                        argument += ", action=" + actionName;
-                        hasActions = true;
-
-                        if (actions.indexOf(actionName) < 0) {
-                            actions.push(actionName);
-                        }
-                        argument += ", nargs='+'";
-                    }
-                        
-                    
-        
-                    argument += ")";
-        
-                    output_args.push(argument);
-                } while(model.SelectNextMethodParameter());
+                } while (model.SelectNextRequest());
             }
         } while(model.SelectNextMethod());
     }

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
-import { ParameterLocation } from "@azure-tools/codemodel";
+import { ParameterLocation, StringSchema } from "@azure-tools/codemodel";
 
 export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
     var output: string[] = [];
@@ -69,33 +69,62 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     mo.push("|Option|Type|Description|Path (SDK)|Path (swagger)|");
     mo.push("|------|----|-----------|----------|--------------|");
 
+    let allParam: Map<string, boolean> = new Map<string, boolean>();
+    if (model.SelectFirstMethod()) {
+        do {
+            if (model.SelectFirstRequest()) {
+                do {
+                    if(!model.SelectFirstMethodParameter()) {
+                        return mo;
+                    }
+                
+                    // first parameters that are required
+                    do
+                    {
+                        if (allParam.has(model.MethodParameter_Name)) {
+                            continue;
+                        }
+                        if (model.MethodParameter_In != ParameterLocation.Path && model.MethodParameter_IsRequired)
+                        {
+                            allParam.set(model.MethodParameter_Name, true);
+                            mo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_MapsTo + "|" + model.MethodParameter_NamePython + "|");
+                        }
+                    }
+                    while (model.SelectNextMethodParameter());
+                } while (model.SelectNextRequest());
+            }
 
-    if(!model.SelectFirstOption()) {
-        return mo;
+        } while (model.SelectNextMethod());
     }
 
-    // first parameters that are required
-    do
-    {
-        if (model.Option_In != ParameterLocation.Path && model.Option_IsRequired)
-        {
-            mo.push("|**--" + model.Option_Name + "**|" + model.Option_Type + "|" + model.Option_Description + "|" + model.Option_PathSdk + "|" + model.Option_PathSwagger + "|");
-        }
-    }
-    while (model.SelectNextOption());
 
-    if(!model.SelectFirstOption()) {
-        return mo;
+    allParam.clear();
+    if (model.SelectFirstMethod()) {
+        do {
+            if (model.SelectFirstRequest()) {
+                do {
+                    if(!model.SelectFirstMethodParameter()) {
+                        return mo;
+                    }
+                
+                    // first parameters that are required
+                    do
+                    {
+                        if (allParam.has(model.MethodParameter_Name)) {
+                            continue;
+                        }
+                        if (model.MethodParameter_In != ParameterLocation.Path && !model.MethodParameter_IsRequired)
+                        {
+                            allParam.set(model.MethodParameter_Name, true);
+                            mo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_MapsTo + "|" + model.MethodParameter_NamePython + "|");
+                        }
+                    }
+                    while (model.SelectNextMethodParameter());
+                } while (model.SelectNextRequest());
+            }
+        } while (model.SelectNextMethod());
     }
 
-    // following by required parameters
-    do {
-        if (model.Option_In != ParameterLocation.Path && !model.Option_IsRequired)
-        {
-            mo.push("|--" + model.Option_Name + "**|" + model.Option_Type + "|" + model.Option_Description + "|" + model.Option_PathSdk + "|" + model.Option_PathSwagger + "|");
-        }
-    }
-    while (model.SelectNextOption());
 
 
     if (model.SelectFirstExample())
