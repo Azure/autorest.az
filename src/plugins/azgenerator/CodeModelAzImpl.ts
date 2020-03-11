@@ -1264,6 +1264,9 @@ export class CodeModelCliImpl implements CodeModelAz
                 param_value = replaced_value;
             }
             let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("").split("'").join("\\'").split("\\").join("\\\\");
+            if (param.isKeyValues) {
+                slp = slp.substr(1, slp.length-2); // remove quots 
+            }
             parameters.push(param.name + " " + slp);
         }
 

@@ -96,6 +96,9 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
 
             for (let param of example.Parameters) {
                 let slp = JSON.stringify(param.value).split(/[\r\n]+/).join("");
+                if (param.isKeyValues) {
+                    slp = slp.substr(1, slp.length-2); // remove quots 
+                }
                 //parameters += " " + k + " " + slp;
                 parameters.push(param.name);
                 parameters.push(slp);
