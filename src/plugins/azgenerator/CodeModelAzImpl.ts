@@ -851,11 +851,14 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get MethodParameter_Name(): string
     {
-        if (this.submethodparameters != null)
-        {
-            return this.submethodparameters[this.currentSubOptionIndex].language.python.name;
+        let name = "";
+        if (this.submethodparameters != null) {
+            name = this.submethodparameters[this.currentSubOptionIndex].language['az'].name;
+        } else {
+            name = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].name;
         }
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['python'].name;
+        name = name.replace(/-/g, '_');
+        return name;
     }
 
     public get MethodParameter_NamePython(): string
@@ -883,7 +886,7 @@ export class CodeModelCliImpl implements CodeModelAz
             mapName.push(ToSnakeCase(name.toLocaleString()));
         }
         if(mapName.length <= 0) {
-            return parameter.language.python.name;
+            return parameter.language['az'].name.replace(/-/g, '_');
         } else {
             return mapName.join('_');
         }

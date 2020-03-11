@@ -215,7 +215,7 @@ function GetMethodCall(model: CodeModelAz): string {
                 continue;
             }
             let optionName = model.MethodParameter_MapsTo;
-            let parameterName = model.MethodParameter_Name; 
+            let parameterName = model.MethodParameter_NamePython; 
 
             if (methodCall.endsWith("(")) {
                 // XXX - split and pop is a hack

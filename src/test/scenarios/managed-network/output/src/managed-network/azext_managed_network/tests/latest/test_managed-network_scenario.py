@@ -57,7 +57,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--properties-subnets id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA '
                  '--properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA '
                  '--properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB '
-                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
+                 '--group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
@@ -70,7 +70,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         self.cmd('az managed-network managed-network-peering-policy create '
                  '--managed-network-name "{myManagedNetwork}" '
-                 '--managed-network-peering-policy-name "{myHubAndSpoke}" '
+                 '--policy-name "{myHubAndSpoke}" '
                  '--properties "{{\\"type\\":\\"HubAndSpokeTopology\\",\\"hub\\":{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_4}\\"}},\\"spokes\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup1}\\"}}]}}" '
                  '--resource-group "{rg}"',
                  checks=[])
@@ -97,7 +97,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  checks=[])
 
         self.cmd('az managed-network managed-network-group show '
-                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
+                 '--group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
@@ -109,7 +109,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         self.cmd('az managed-network managed-network-peering-policy show '
                  '--managed-network-name "{myManagedNetwork}" '
-                 '--managed-network-peering-policy-name "{myHubAndSpoke}" '
+                 '--policy-name "{myHubAndSpoke}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
@@ -120,7 +120,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         self.cmd('az managed-network managed-network-peering-policy delete '
                  '--managed-network-name "{myManagedNetwork}" '
-                 '--managed-network-peering-policy-name "{myHubAndSpoke}" '
+                 '--policy-name "{myHubAndSpoke}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
@@ -130,7 +130,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  checks=[])
 
         self.cmd('az managed-network managed-network-group delete '
-                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
+                 '--group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
