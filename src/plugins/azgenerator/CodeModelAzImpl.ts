@@ -13,6 +13,17 @@ import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEnti
 import { timingSafeEqual } from "crypto";
 
 
+class MethodParam {
+    public value: any;
+    public isList: boolean;
+    public isSimpleList: boolean;
+    public constructor(value, isList, isSimpleList) {
+        this.value = value;
+        this.isList = isList;
+        this.isSimpleList = isSimpleList;
+    }
+}
+
 export class CodeModelCliImpl implements CodeModelAz
 {
     codeModel: CodeModel;
@@ -270,6 +281,10 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public get CommandGroup_Key(): string {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].$key || this.CommandGroup_Name;
+    }
+
+    public get CommandGroup_DefaultName(): string {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['default'].name;
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -1092,111 +1107,100 @@ export class CodeModelCliImpl implements CodeModelAz
      * Gets method parameters dict
      * @returns method parameters dict : key is parameter name, value is the parameter schema
      */
-    public GetMethodParametersDict(): Map<string, Value> {
-        let method_param_dict: Map<string, Value> = new Map<string, Value>();
+    public GetMethodParametersDict(): Map<string, MethodParam> {
+        let method_param_dict: Map<string, MethodParam> = new Map<string, MethodParam>();
         if (this.SelectFirstMethodParameter()) {
             do {
                 if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
-                    
-                    method_param_dict.set(this.MethodParameter.language.default.name, this.MethodParameter);
-                    // this.AddFlattenedParameter(method_param_dict, this.MethodParameter, this.MethodParameter.language.default.name)
+
+                    method_param_dict.set(this.MethodParameter.language.default.name, new MethodParam(this.MethodParameter, this.MethodParameter_IsList, this.MethodParameter_IsListOfSimple));
                 }
             } while (this.SelectNextMethodParameter());
         }
         return method_param_dict;
     }
 
-    public AddFlattenedParameter(dict: Map<string, Value>, value: any, name: string) {
-        if (value?.flattened) {
-            for (let k of value?.schema?.properties || []) {
-                this.AddFlattenedParameter(dict, k, k.language.default.name)
-            }
-        }
-        else if (value?.schema?.type != 'constant') {
-            dict[name] = value;
-        }
-    }
-
-    public GetExampleParameters(example_obj): ExampleParam[]{
+    public GetExampleParameters(example_obj): ExampleParam[] {
         let parameters: ExampleParam[] = [];
-        let method_param_dict: Map<string, Value> = this.GetMethodParametersDict();
+        let method_param_dict: Map<string, MethodParam> = this.GetMethodParametersDict();
         Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
             this.FlattenExampleParameter(method_param_dict, parameters, param_name, param_value, []);
         })
         return parameters;
     }
 
-    private AddExampleParameter(example_param: ExampleParam[], name: string, value: any) {
-        if (value instanceof Array) {
-            for (let e of value) {
-                this.AddExampleParameter(example_param, name, e);
-            }
-        }
-        else if (value) {
-            if (typeof value == 'object') {
-                let ret = "";
-                for (let k in value) {
-                    if (ret.length>0) {
-                        ret += " ";
+    private AddExampleParameter(example_param: ExampleParam[], name: string, value: any, isList: boolean, isSimpleList: boolean, defaultName: string) {
+        if (isList) {
+            if (isSimpleList) {
+                if (value instanceof Array) {
+                    for (let e of value) {
+                        this.AddExampleParameter(example_param, name, e, isList, isSimpleList, defaultName);
                     }
-                    //let v = JSON.stringify(value[k]).split(/[\r\n]+/).join("");
-                    //ret += `${k}=${v.substr(1, v.length-2)}`;
-                    ret += `${k}=${value[k]}`;
                 }
-                example_param.push(new ExampleParam(name, ret, typeof value));
+                else if (typeof value == 'object') {
+                    let ret = "";
+                    for (let k in value) {
+                        if (ret.length > 0) {
+                            ret += " ";
+                        }
+                        //let v = JSON.stringify(value[k]).split(/[\r\n]+/).join("");
+                        //ret += `${k}=${v.substr(1, v.length-2)}`;
+                        ret += `${k}=${value[k]}`;
+                    }
+                    example_param.push(new ExampleParam(name, ret, false, true, defaultName));
+                }
             }
-            else {
-                example_param.push(new ExampleParam(name, value, typeof values));
+            else if (isList && !isSimpleList) {
+                example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, defaultName));
             }
         }
-
+        else if (typeof value != 'object') {     // ignore object values if not isList.
+            example_param.push(new ExampleParam(name, value, false, false, defaultName));
+        }
     }
 
-    public FlattenExampleParameter(method_param: Map<string, Value>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
+    public FlattenExampleParameter(method_param: Map<string, MethodParam>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
         if (typeof method_param.get(name) !== 'undefined') {
-            if ('pathToProperty' in method_param.get(name) && ancestors.length - method_param.get(name)['pathToProperty'].length==-1) {
+            let methodParam = method_param.get(name);
+            if ('pathToProperty' in methodParam.value && ancestors.length - methodParam.value['pathToProperty'].length == 1) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
                 let ancestors_ = deepCopy(ancestors) as string[];
                 let match = true;
-                for (let i = method_param.get(name)['pathToProperty'].length - 1; i >= 0; i--) {
-                    if (ancestors_.length <= 0) {
-                        match = false;
-                        break;
-                    }
+                for (let i = methodParam.value['pathToProperty'].length - 1; i >= 0; i--) {
                     let parent = ancestors_.pop();
-                    if (method_param.get(name)['pathToProperty'][i].language.az.name != parent) {
+                    if (methodParam.value['pathToProperty'][i].language.az.name != parent) {
                         match = false;
                     };
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(method_param.get(name)), value);
+                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
                     return;
                 }
             }
-            else if ('flattenedNames' in method_param.get(name) && ancestors.length - method_param.get(name)['flattenedNames'].length == 0 && ancestors.length>0) {
+            else if ('flattenedNames' in methodParam.value && ancestors.length - methodParam.value['flattenedNames'].length == 0 && ancestors.length > 0) {
                 // if the method parameter has 'flattenedNames', check the names (except the last name) with example parameter full path.
                 let ancestors_ = deepCopy(ancestors) as string[];
                 let match = true;
-                for (let i = method_param.get(name)['flattenedNames'].length - 2; i >= 0; i--) {
+                for (let i = methodParam.value['flattenedNames'].length - 2; i >= 0; i--) {
                     if (ancestors_.length <= 0) {
                         match = false;
                         break;
                     }
                     let parent = ancestors_.pop();
-                    if (method_param.get(name)['flattenedNames'][i] != parent) {
+                    if (methodParam.value['flattenedNames'][i] != parent) {
                         match = false;
                     };
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(method_param.get(name)), value);
+                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
                     return;
                 }
             }
-            else if (ancestors.length==0){
+            else if (ancestors.length == 0) {
                 // example_param.set(name, value);
-                this.AddExampleParameter(example_param, this.GetMethodParameterMapName(method_param.get(name)), value);
+                this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
                 return;
             }
         }
@@ -1210,8 +1214,8 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public ConvertToCliParameters(example_params: ExampleParam[]): ExampleParam[] {
         let ret: ExampleParam[] = [];
-        for(let param of example_params) {
-        //Object.entries(example_params).forEach(() => {
+        for (let param of example_params) {
+            //Object.entries(example_params).forEach(() => {
             let param_name = ToSnakeCase(param.name);
             if (param_name.endsWith('_name')) {
                 if (param_name == "resource_group_name") {
@@ -1222,7 +1226,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 // }
             }
             param_name = param_name.split("_").join("-");
-            ret.push(new ExampleParam("--" + param_name, param.value, param.original_type));
+            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.defaultName));
         };
         return ret;
     }
@@ -1253,13 +1257,16 @@ export class CodeModelCliImpl implements CodeModelAz
         for (let param of example.Parameters) {
             let param_value = param.value;
             if (isTest) {
-                let replaced_value = this.resource_pool.addEndpointResource(param_value, param.original_type);
+                let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues);
                 if (replaced_value == param_value) {
-                    replaced_value = this.resource_pool.addParamResource(param.name, param_value);
+                    replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues);
                 }
                 param_value = replaced_value;
             }
-            let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("");
+            let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("").split("'").join("\\'").split("\\").join("\\\\");
+            if (param.isKeyValues) {
+                slp = slp.substr(1, slp.length-2); // remove quots 
+            }
             parameters.push(param.name + " " + slp);
         }
 
@@ -1290,12 +1297,13 @@ export class CodeModelCliImpl implements CodeModelAz
     public GatherInternalResource() {
         let internal_resources = {};  // resource_key --> list of resource languages
         this.GetAllMethods(null, () => {
-            if ( !(this.CommandGroup_Key in internal_resources)) {
-                internal_resources[this.CommandGroup_Key] = [this.CommandGroup_Key, ];
+            if (!(this.CommandGroup_Key in internal_resources)) {
+                internal_resources[this.CommandGroup_Key] = [this.CommandGroup_Key,];
             }
-            let commands = this.CommandGroup_Name.split(" ");
-            let resource_name = commands[commands.length-1]+"-name";
-            if (internal_resources[this.CommandGroup_Key].indexOf(resource_name)<0){
+            // let commands = this.CommandGroup_Name.split(" ");
+            // let resource_name = commands[commands.length - 1] + "-name";
+            let resource_name = this.CommandGroup_DefaultName+"Name";
+            if (internal_resources[this.CommandGroup_Key].indexOf(resource_name) < 0) {
                 internal_resources[this.CommandGroup_Key].push(resource_name);
             }
         });
@@ -1310,21 +1318,21 @@ export class CodeModelCliImpl implements CodeModelAz
                     do {
                         if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
                             let param_name = this.MethodParameter.language["az"].name;
-                            if (internal_resources[this.CommandGroup_Key].indexOf(param_name)<0 ) {// if it isn't name of current resource) 
+                            if (internal_resources[this.CommandGroup_Key].indexOf(param_name) < 0) {// if it isn't name of current resource) 
                                 let on_resource = this.resource_pool.isResource(param_name);
                                 if (on_resource)
                                     // the resource is a dependency only when it's a parameter in an example.
                                     for (let example of this.GetExamples()) {
                                         for (let param of example.Parameters) {
-                                            if(param_name == param.name) {
+                                            if (param_name == param.name) {
                                                 depend_resources.push(on_resource);
                                                 depend_parameters.push(param_name);
                                             }
                                         }
                                     }
-                                }
+                            }
                         }
-                    } while(this.SelectNextMethodParameter())
+                    } while (this.SelectNextMethodParameter())
                 }
                 this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
             }
@@ -1337,7 +1345,7 @@ export class CodeModelCliImpl implements CodeModelAz
         let depend_on = (example_a: CommandExample, example_b: CommandExample): boolean => {
             return example_a.Parameters.some((param): boolean => {
                 if (this.resource_pool.isResource(param.name.substr(2)) == example_b.ResourceClassName) return true;
-                if (typeof  param.value == 'string') {
+                if (typeof param.value == 'string') {
                     for (let resource_name of param.value.split('/')) {
                         if (this.resource_pool.isResource(resource_name) == example_b.ResourceClassName) return true;
                     }
@@ -1350,7 +1358,7 @@ export class CodeModelCliImpl implements CodeModelAz
         this._testScenario = MergeSort(this._testScenario, (config_a: object, config_b: object): number => {
             let examples_a: CommandExample[] = this.GetAllExamples(config_a['name']);
             let examples_b: CommandExample[] = this.GetAllExamples(config_b['name']);
-            if (examples_a.length <= 0 || examples_b.length <=0 ){
+            if (examples_a.length <= 0 || examples_b.length <= 0) {
                 return 0; // if any example can't be found, keep the original order
             }
 
@@ -1397,7 +1405,7 @@ export class CodeModelCliImpl implements CodeModelAz
         });
     }
 
-    public GetAllMethods(command_group?: string, callback?: ()=>void): any[] {
+    public GetAllMethods(command_group?: string, callback?: () => void): any[] {
         let ret: [];
         this.SelectFirstExtension();
         if (this.SelectFirstCommandGroup()) {
@@ -1405,10 +1413,10 @@ export class CodeModelCliImpl implements CodeModelAz
                 if (command_group && command_group.toLowerCase() != this.CommandGroup_Key.toLowerCase()) continue;
                 while (this.currentOperationIndex >= 0) {  // iterate all Commands
                     this.SelectFirstMethod();
-                    do {                                   
-                        if(callback) {
+                    do {
+                        if (callback) {
                             callback();
-                        }                       
+                        }
                     } while (this.SelectNextMethod())
                     this.SelectNextCommand();
                 }
@@ -1417,12 +1425,12 @@ export class CodeModelCliImpl implements CodeModelAz
         return ret;
     }
 
-    public GetAllExamples(id?: string, callback?: (example)=>void): CommandExample[] {
+    public GetAllExamples(id?: string, callback?: (example) => void): CommandExample[] {
         let ret: CommandExample[] = [];
         this.GetAllMethods(null, () => {
             for (let example of this.GetExamples()) {
                 if (id && (example.Id.toLowerCase() != id.toLowerCase())) continue;
-                if(callback) {
+                if (callback) {
                     callback(example);
                 }
                 ret.push(example);

@@ -103,3 +103,7 @@ function Merge(left: any[], right: any[], comparer: (left, right) => number): an
         result.push(right.shift());
     return result;
 }
+
+export function isDict(v) {
+    return typeof v==='object' && v!==null && !(v instanceof Array) && !(v instanceof Date);
+}
