@@ -170,8 +170,8 @@ helps['managed-network managed-network-group create'] = """
                etA --properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/provide\\
                rs/Microsoft.Network/virtualNetworks/VnetA --properties-virtual-networks id=/subscriptionB\\
                /resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB \\
-               --managed-network-group-name "myManagedNetworkGroup1" --managed-network-name \\
-               "myManagedNetwork" --resource-group "myResourceGroup"
+               --group-name "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" \\
+               --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-group update'] = """
@@ -185,8 +185,8 @@ helps['managed-network managed-network-group update'] = """
                etA --properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/provide\\
                rs/Microsoft.Network/virtualNetworks/VnetA --properties-virtual-networks id=/subscriptionB\\
                /resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB \\
-               --managed-network-group-name "myManagedNetworkGroup1" --managed-network-name \\
-               "myManagedNetwork" --resource-group "myResourceGroup"
+               --group-name "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" \\
+               --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-group delete'] = """
@@ -231,12 +231,12 @@ helps['managed-network managed-network-peering-policy create'] = """
       - name: Create/Update Managed Network Peering Policy
         text: |-
                az managed-network managed-network-peering-policy create --managed-network-name \\
-               "myManagedNetwork" --managed-network-peering-policy-name "myHubAndSpoke" --properties "{\\"
-               type\\":\\"HubAndSpokeTopology\\",\\"hub\\":{\\"id\\":\\"/subscriptions/subscriptionB/resourceGrou
-               ps/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myHubVnet\\"},\\"spokes\\":[{\\
-               "id\\":\\"/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Ma
-               nagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\\
-               "}]}" --resource-group "myResourceGroup"
+               "myManagedNetwork" --policy-name "myHubAndSpoke" --properties "{\\"type\\":\\"HubAndSpokeTopo
+               logy\\",\\"hub\\":{\\"id\\":\\"/subscriptions/subscriptionB/resourceGroups/myResourceGroup/provi
+               ders/Microsoft.Network/virtualNetworks/myHubVnet\\"},\\"spokes\\":[{\\"id\\":\\"/subscriptions/s
+               ubscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetw
+               orks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\\"}]}" --resource-group \\
+               "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy update'] = """
@@ -246,12 +246,12 @@ helps['managed-network managed-network-peering-policy update'] = """
       - name: Create/Update Managed Network Peering Policy
         text: |-
                az managed-network managed-network-peering-policy create --managed-network-name \\
-               "myManagedNetwork" --managed-network-peering-policy-name "myHubAndSpoke" --properties "{\\"
-               type\\":\\"HubAndSpokeTopology\\",\\"hub\\":{\\"id\\":\\"/subscriptions/subscriptionB/resourceGrou
-               ps/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myHubVnet\\"},\\"spokes\\":[{\\
-               "id\\":\\"/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Ma
-               nagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\\
-               "}]}" --resource-group "myResourceGroup"
+               "myManagedNetwork" --policy-name "myHubAndSpoke" --properties "{\\"type\\":\\"HubAndSpokeTopo
+               logy\\",\\"hub\\":{\\"id\\":\\"/subscriptions/subscriptionB/resourceGroups/myResourceGroup/provi
+               ders/Microsoft.Network/virtualNetworks/myHubVnet\\"},\\"spokes\\":[{\\"id\\":\\"/subscriptions/s
+               ubscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetw
+               orks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\\"}]}" --resource-group \\
+               "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy delete'] = """
