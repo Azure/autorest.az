@@ -9,11 +9,15 @@ import { Example } from "@azure-tools/codemodel";
 export class ExampleParam {
     name: string;
     value: any;
-    original_type: string;
-    public constructor(name: string, value: any, original_type: any) {
+    isJson: boolean;
+    isKeyValues: boolean;
+    defaultName: string;
+    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, defaultName: string) {
         this.name = name;
         this.value = value;
-        this.original_type = original_type;
+        this.isJson = isJson;
+        this.isKeyValues = isKeyValues;
+        this.defaultName = defaultName;
     }
 }
 export class CommandExample {
