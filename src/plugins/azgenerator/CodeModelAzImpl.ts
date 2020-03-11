@@ -283,6 +283,10 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].$key || this.CommandGroup_Name;
     }
 
+    public get CommandGroup_DefaultName(): string {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['default'].name;
+    }
+
     //-----------------------------------------------------------------------------------------------------------------
     // Commands
     //
@@ -1125,12 +1129,12 @@ export class CodeModelCliImpl implements CodeModelAz
         return parameters;
     }
 
-    private AddExampleParameter(example_param: ExampleParam[], name: string, value: any, isList: boolean, isSimpleList: boolean) {
+    private AddExampleParameter(example_param: ExampleParam[], name: string, value: any, isList: boolean, isSimpleList: boolean, defaultName: string) {
         if (isList) {
             if (isSimpleList) {
                 if (value instanceof Array) {
                     for (let e of value) {
-                        this.AddExampleParameter(example_param, name, e, isList, isSimpleList);
+                        this.AddExampleParameter(example_param, name, e, isList, isSimpleList, defaultName);
                     }
                 }
                 else if (typeof value == 'object') {
@@ -1143,15 +1147,15 @@ export class CodeModelCliImpl implements CodeModelAz
                         //ret += `${k}=${v.substr(1, v.length-2)}`;
                         ret += `${k}=${value[k]}`;
                     }
-                    example_param.push(new ExampleParam(name, ret, false, true));
+                    example_param.push(new ExampleParam(name, ret, false, true, defaultName));
                 }
             }
             else if (isList && !isSimpleList) {
-                example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false));
+                example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, defaultName));
             }
         }
         else if (typeof value != 'object') {     // ignore object values if not isList.
-            example_param.push(new ExampleParam(name, value, false, false));
+            example_param.push(new ExampleParam(name, value, false, false, defaultName));
         }
     }
 
@@ -1170,7 +1174,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList);
+                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
                     return;
                 }
             }
@@ -1190,13 +1194,13 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList);
+                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
                     return;
                 }
             }
             else if (ancestors.length == 0) {
                 // example_param.set(name, value);
-                this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList);
+                this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
                 return;
             }
         }
@@ -1222,7 +1226,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 // }
             }
             param_name = param_name.split("_").join("-");
-            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues));
+            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.defaultName));
         };
         return ret;
     }
@@ -1255,7 +1259,7 @@ export class CodeModelCliImpl implements CodeModelAz
             if (isTest) {
                 let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues);
                 if (replaced_value == param_value) {
-                    replaced_value = this.resource_pool.addParamResource(param.name, param_value);
+                    replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues);
                 }
                 param_value = replaced_value;
             }
@@ -1293,8 +1297,9 @@ export class CodeModelCliImpl implements CodeModelAz
             if (!(this.CommandGroup_Key in internal_resources)) {
                 internal_resources[this.CommandGroup_Key] = [this.CommandGroup_Key,];
             }
-            let commands = this.CommandGroup_Name.split(" ");
-            let resource_name = commands[commands.length - 1] + "-name";
+            // let commands = this.CommandGroup_Name.split(" ");
+            // let resource_name = commands[commands.length - 1] + "-name";
+            let resource_name = this.CommandGroup_DefaultName+"Name";
             if (internal_resources[this.CommandGroup_Key].indexOf(resource_name) < 0) {
                 internal_resources[this.CommandGroup_Key].push(resource_name);
             }

@@ -54,9 +54,9 @@ let resourceClassDepends = {
 }
 
 let resourceLanguages = {
-    [RESOUREGROUP]: ['resource-group', 'resourceGroups'],
-    [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworks'],
-    [SUBNET]: ['subnet', 'subnets'],
+    [RESOUREGROUP]: ['resource-group', 'resourceGroupName', 'resourceGroups'],
+    [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworkName', 'virtualNetworks'],
+    [SUBNET]: ['subnet', 'subnetName', 'subnets'],
 }
 
 let resourceClassKeys = {
@@ -398,8 +398,8 @@ export class ResourcePool {
         return nodes.join('/');
     }
 
-    public addParamResource(param_name: string, param_value: string): string {
-        if (typeof param_value !== 'string') return param_value;
+    public addParamResource(param_name: string, param_value: string, isJson: boolean, isKeyValues: boolean): string {
+        if (typeof param_value !== 'string' || isJson || isKeyValues) return param_value;
 
         if (param_name.startsWith('--')) {
             param_name = param_name.substr(2);

@@ -11,11 +11,13 @@ export class ExampleParam {
     value: any;
     isJson: boolean;
     isKeyValues: boolean;
-    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean) {
+    defaultName: string;
+    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, defaultName: string) {
         this.name = name;
         this.value = value;
         this.isJson = isJson;
         this.isKeyValues = isKeyValues;
+        this.defaultName = defaultName;
     }
 }
 export class CommandExample {
