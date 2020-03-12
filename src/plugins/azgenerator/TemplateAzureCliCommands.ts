@@ -8,13 +8,11 @@ import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
-    header.disableLineTooLong = true;
     header.disableTooManyStatements = true;
-    header.disableTooManyLines = true;
     header.disableTooManyLocals = true;
     header.addFromImport("azure.cli.core.commands", ["CliCommandType"]);
-    var output: string[] = header.getLines();
 
+    let output: string[] = []
     output.push("");
     output.push("");
     output.push("def load_command_table(self, _):");
@@ -66,7 +64,15 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
     }
     output.push("");
 
-    return output;
+    output.forEach(element => {
+        if (element.length > 120) header.disableLineTooLong = true;
+    });
+
+    if (output.length + header.getLines().length > 1000) {
+        header.disableTooManyLines = true;
+    }
+
+    return header.getLines().concat(output);
 }
 
 function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
