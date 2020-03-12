@@ -969,6 +969,17 @@ export class CodeModelCliImpl implements CodeModelAz
         return false; 
     }
 
+    public get MethodParameter_IsSimpleArray(): boolean
+    {
+        if(this.MethodParameter_Type == SchemaType.Array) {
+            let elementType = this.MethodParameter['schema']['elementType'].type;
+            if(elementType != SchemaType.Object && elementType != SchemaType.Array && elementType != SchemaType.Dictionary) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public get MethodParameter_IsList(): boolean
     {
         if(this.MethodParameter_IsFlattened) {

@@ -154,6 +154,8 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     } else if (parameterName == "location") {
                         argument += ", arg_type=get_location_type(self.cli_ctx)";
                         hasLocation = true;
+                    } else if (model.MethodParameter_IsSimpleArray) {
+                        argument += ", nargs='+'";
                     } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         hasJson = true;
                         hasJsonLastTime = true;

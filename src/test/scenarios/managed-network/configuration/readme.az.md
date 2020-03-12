@@ -91,11 +91,6 @@ cli:
             param: 'managed_networks'
         set:
             json: true
-
-    flatten:
-        cli-flatten-set-enabled: true
-        cli-flatten-all: true
-        cli-flatten-all-overwrite-swagger: false
         #cli-flatten-directive:
         #    - where:
         #        type: ResourceProviderOperation
