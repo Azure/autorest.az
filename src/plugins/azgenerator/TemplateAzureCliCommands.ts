@@ -8,7 +8,9 @@ import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
-    header.disableTooManyStatements = true;
+    
+    // this can't be currently reproduced
+    // header.disableTooManyStatements = true;
     // header.disableTooManyLocals = true;
     header.addFromImport("azure.cli.core.commands", ["CliCommandType"]);
 
