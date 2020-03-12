@@ -932,7 +932,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 return false;
             }
             for(let p of values(this.MethodParameter['schema']['properties'])) {
-                if(p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
+                if(p['schema'].type == SchemaType.Object) {
                     // objects.objects
                     return false;
                 } else if(p['schema'].type == SchemaType.Array) {
