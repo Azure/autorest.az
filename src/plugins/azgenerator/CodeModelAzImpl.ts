@@ -825,11 +825,11 @@ export class CodeModelCliImpl implements CodeModelAz
             return false;
 
         this.submethodparameters = null;
-        if(this.MethodParameter_Type == SchemaType.Array) {
+        if(this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Dictionary) {
             if((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
                 this.submethodparameters = this.MethodParameter['schema']?.['elementType']?.properties;
             }
-        } if(this.MethodParameter_Type == SchemaType.Object) {
+        } else if(this.MethodParameter_Type == SchemaType.Object) {
             this.submethodparameters = this.MethodParameter['schema']['properties'];
         }
         if(this.submethodparameters == null) {
