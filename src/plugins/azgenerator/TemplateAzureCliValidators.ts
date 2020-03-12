@@ -4,14 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliValidators(model: CodeModelAz) : string[] {
-    var output: string[] = [];
+    let header: HeaderGenerator = new HeaderGenerator();
+    var output: string[] = header.getLines();
 
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
     output.push("");
     output.push("");
     output.push("def example_name_or_id_validator(cmd, namespace):");

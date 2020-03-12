@@ -22,6 +22,8 @@ export class HeaderGenerator
         this.disableTooManyStatements = false;
         this.disableUnusedArgument = false;
         this.disableProtectedAccess = false;
+        this.disableWildcardImport = false;
+        this.disableUnusedWildcardImport = false;
         this.fromImports = [];
         this.imports = [];
     }
@@ -37,6 +39,9 @@ export class HeaderGenerator
     public getLines(): string[] {
         var output: string[] = [];
 
+        if (this.codingUtf8) {
+            output.push("# coding=utf-8");
+        }
         output.push("# --------------------------------------------------------------------------------------------");
         output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
         output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
@@ -61,6 +66,12 @@ export class HeaderGenerator
         if (this.disableProtectedAccess) {
             output.push("# pylint: disable=protected-access");
         }
+        if (this.disableWildcardImport) {
+            output.push("# pylint: disable=wildcard-import");
+        }
+        if (this.disableUnusedWildcardImport) {
+            output.push("# pylint: disable=unused-wildcard-import");
+        }
 
         if (this.imports.length || this.fromImports.length > 0) {
             output.push("");
@@ -74,7 +85,16 @@ export class HeaderGenerator
 
         if (this.fromImports.length > 0) {
             this.fromImports.forEach(element => {
-                output.push("from " + element.from + " import " + element.imports.join(", "));
+                if (element.imports.length == 1) {
+                    output.push("from " + element.from + " import " + element.imports[0]);
+                } else {
+                    output.push("from " + element.from + " import (");
+                    for (let i = 0; i < element.imports.length; i++) {
+                        output.push("    " + element.imports[i] + ((i < element.imports.length - 1) ? "," : ""));
+                    }
+                    output.push(")");
+                }
+
             });
         }
 
@@ -87,6 +107,9 @@ export class HeaderGenerator
     public disableTooManyLocals: boolean;
     public disableUnusedArgument: boolean;
     public disableProtectedAccess: boolean;
+    public disableWildcardImport: boolean;
+    public disableUnusedWildcardImport: boolean;
+    public codingUtf8: boolean;
     private fromImports: FromImport[];
     private imports: string[];
 }

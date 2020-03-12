@@ -9,7 +9,6 @@ import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
-
     header.disableLineTooLong = true;
     header.disableTooManyStatements = true;
     header.disableTooManyLines = true;

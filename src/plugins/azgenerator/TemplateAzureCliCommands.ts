@@ -4,20 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
-    var output: string[] = [];
+    let header: HeaderGenerator = new HeaderGenerator();
+    header.disableLineTooLong = true;
+    header.disableTooManyStatements = true;
+    header.disableTooManyLines = true;
+    header.disableTooManyLocals = true;
+    header.addFromImport("azure.cli.core.commands", ["CliCommandType"]);
+    var output: string[] = header.getLines();
 
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("");
-    output.push("# pylint: disable=line-too-long");
-    output.push("# pylint: disable=too-many-lines");
-    output.push("# pylint: disable=too-many-statements");
-    output.push("# pylint: disable=too-many-locals");
-    output.push("from azure.cli.core.commands import CliCommandType");
     output.push("");
     output.push("");
     output.push("def load_command_table(self, _):");
