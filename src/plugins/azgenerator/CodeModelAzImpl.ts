@@ -14,7 +14,19 @@ import { timingSafeEqual } from "crypto";
 import { isNullOrUndefined } from "util";
 
 
-export class CodeModelCliImpl implements CodeModelAz {
+class MethodParam {
+    public value: any;
+    public isList: boolean;
+    public isSimpleList: boolean;
+    public constructor(value, isList, isSimpleList) {
+        this.value = value;
+        this.isList = isList;
+        this.isSimpleList = isSimpleList;
+    }
+}
+
+export class CodeModelCliImpl implements CodeModelAz
+{
     codeModel: CodeModel;
     options: any;
     extensionName: string;
@@ -281,6 +293,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get CommandGroup_Key(): string {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].$key || this.CommandGroup_Name;
+    }
+
+    public get CommandGroup_DefaultName(): string {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['default'].name;
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -635,11 +651,16 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
-    public get MethodParameter_Name(): string {
+    public get MethodParameter_Name(): string
+    {
+        let name = "";
         if (this.submethodparameters != null) {
-            return this.submethodparameters[this.currentSubOptionIndex].language.python.name;
+            name = this.submethodparameters[this.currentSubOptionIndex].language['az'].name;
+        } else {
+            name = this.MethodParameter.language['az'].name;
         }
-        return this.MethodParameter.language['python'].name;
+        name = name.replace(/-/g, '_');
+        return name;
     }
 
     public get MethodParameter_NamePython(): string {
@@ -663,8 +684,8 @@ export class CodeModelCliImpl implements CodeModelAz {
         for (var name of values(parameter['flattenedNames'])) {
             mapName.push(ToSnakeCase(name.toLocaleString()));
         }
-        if (mapName.length <= 0) {
-            return parameter.language.python.name;
+        if(mapName.length <= 0) {
+            return parameter.language['az'].name.replace(/-/g, '_');
         } else {
             return mapName.join('_');
         }
@@ -875,15 +896,15 @@ export class CodeModelCliImpl implements CodeModelAz {
      * Gets method parameters dict
      * @returns method parameters dict : key is parameter name, value is the parameter schema
      */
-    public GetMethodParametersDict(): Map<string, Value> {
-        let method_param_dict: Map<string, Value> = new Map<string, Value>();
+    public GetMethodParametersDict(): Map<string, MethodParam> {
+        let method_param_dict: Map<string, MethodParam> = new Map<string, MethodParam>();
         if (this.SelectFirstRequest()) {
             do {
                 if (this.SelectFirstMethodParameter()) {
                     do {
                         if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
 
-                            method_param_dict.set(this.MethodParameter.language.default.name, this.MethodParameter);
+                            method_param_dict.set(this.MethodParameter.language.default.name, new MethodParam(this.MethodParameter, this.MethodParameter_IsList, this.MethodParameter_IsListOfSimple));
                             // this.AddFlattenedParameter(method_param_dict, this.MethodParameter, this.MethodParameter.language.default.name)
                         }
                     } while (this.SelectNextMethodParameter());
@@ -893,97 +914,87 @@ export class CodeModelCliImpl implements CodeModelAz {
         return method_param_dict;
     }
 
-    public AddFlattenedParameter(dict: Map<string, Value>, value: any, name: string) {
-        if (value?.flattened) {
-            for (let k of value?.schema?.properties || []) {
-                this.AddFlattenedParameter(dict, k, k.language.default.name)
-            }
-        }
-        else if (value?.schema?.type != 'constant') {
-            dict[name] = value;
-        }
-    }
-
     public GetExampleParameters(example_obj): ExampleParam[] {
         let parameters: ExampleParam[] = [];
-        let method_param_dict: Map<string, Value> = this.GetMethodParametersDict();
+        let method_param_dict: Map<string, MethodParam> = this.GetMethodParametersDict();
         Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
             this.FlattenExampleParameter(method_param_dict, parameters, param_name, param_value, []);
         })
         return parameters;
     }
 
-    private AddExampleParameter(example_param: ExampleParam[], name: string, value: any) {
-        if (value instanceof Array) {
-            for (let e of value) {
-                this.AddExampleParameter(example_param, name, e);
-            }
-        }
-        else if (value) {
-            if (typeof value == 'object') {
-                let ret = "";
-                for (let k in value) {
-                    if (ret.length > 0) {
-                        ret += " ";
+    private AddExampleParameter(example_param: ExampleParam[], name: string, value: any, isList: boolean, isSimpleList: boolean, defaultName: string) {
+        if (isList) {
+            if (isSimpleList) {
+                if (value instanceof Array) {
+                    for (let e of value) {
+                        this.AddExampleParameter(example_param, name, e, isList, isSimpleList, defaultName);
                     }
-                    //let v = JSON.stringify(value[k]).split(/[\r\n]+/).join("");
-                    //ret += `${k}=${v.substr(1, v.length-2)}`;
-                    ret += `${k}=${value[k]}`;
                 }
-                example_param.push(new ExampleParam(name, ret, typeof value));
+                else if (typeof value == 'object') {
+                    let ret = "";
+                    for (let k in value) {
+                        if (ret.length > 0) {
+                            ret += " ";
+                        }
+                        //let v = JSON.stringify(value[k]).split(/[\r\n]+/).join("");
+                        //ret += `${k}=${v.substr(1, v.length-2)}`;
+                        ret += `${k}=${value[k]}`;
+                    }
+                    example_param.push(new ExampleParam(name, ret, false, true, defaultName));
+                }
             }
-            else {
-                example_param.push(new ExampleParam(name, value, typeof values));
+            else if (isList && !isSimpleList) {
+                example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, defaultName));
             }
         }
-
+        else if (typeof value != 'object') {     // ignore object values if not isList.
+            example_param.push(new ExampleParam(name, value, false, false, defaultName));
+        }
     }
 
-    public FlattenExampleParameter(method_param: Map<string, Value>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
+    public FlattenExampleParameter(method_param: Map<string, MethodParam>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
         if (typeof method_param.get(name) !== 'undefined') {
-            if ('pathToProperty' in method_param.get(name) && ancestors.length - method_param.get(name)['pathToProperty'].length == -1) {
+            let methodParam = method_param.get(name);
+            if ('pathToProperty' in methodParam.value && ancestors.length - methodParam.value['pathToProperty'].length == 1) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
                 let ancestors_ = deepCopy(ancestors) as string[];
                 let match = true;
-                for (let i = method_param.get(name)['pathToProperty'].length - 1; i >= 0; i--) {
-                    if (ancestors_.length <= 0) {
-                        match = false;
-                        break;
-                    }
+                for (let i = methodParam.value['pathToProperty'].length - 1; i >= 0; i--) {
                     let parent = ancestors_.pop();
-                    if (method_param.get(name)['pathToProperty'][i].language.az.name != parent) {
+                    if (methodParam.value['pathToProperty'][i].language.az.name != parent) {
                         match = false;
                     };
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(method_param.get(name)), value);
+                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
                     return;
                 }
             }
-            else if ('flattenedNames' in method_param.get(name) && ancestors.length - method_param.get(name)['flattenedNames'].length == 0 && ancestors.length > 0) {
+            else if ('flattenedNames' in methodParam.value && ancestors.length - methodParam.value['flattenedNames'].length == 0 && ancestors.length > 0) {
                 // if the method parameter has 'flattenedNames', check the names (except the last name) with example parameter full path.
                 let ancestors_ = deepCopy(ancestors) as string[];
                 let match = true;
-                for (let i = method_param.get(name)['flattenedNames'].length - 2; i >= 0; i--) {
+                for (let i = methodParam.value['flattenedNames'].length - 2; i >= 0; i--) {
                     if (ancestors_.length <= 0) {
                         match = false;
                         break;
                     }
                     let parent = ancestors_.pop();
-                    if (method_param.get(name)['flattenedNames'][i] != parent) {
+                    if (methodParam.value['flattenedNames'][i] != parent) {
                         match = false;
                     };
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(method_param.get(name)), value);
+                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
                     return;
                 }
             }
             else if (ancestors.length == 0) {
                 // example_param.set(name, value);
-                this.AddExampleParameter(example_param, this.GetMethodParameterMapName(method_param.get(name)), value);
+                this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
                 return;
             }
         }
@@ -1009,7 +1020,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 // }
             }
             param_name = param_name.split("_").join("-");
-            ret.push(new ExampleParam("--" + param_name, param.value, param.original_type));
+            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.defaultName));
         };
         return ret;
     }
@@ -1040,13 +1051,16 @@ export class CodeModelCliImpl implements CodeModelAz {
         for (let param of example.Parameters) {
             let param_value = param.value;
             if (isTest) {
-                let replaced_value = this.resource_pool.addEndpointResource(param_value, param.original_type);
+                let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues);
                 if (replaced_value == param_value) {
-                    replaced_value = this.resource_pool.addParamResource(param.name, param_value);
+                    replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues);
                 }
                 param_value = replaced_value;
             }
-            let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("");
+            let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("").split("'").join("\\'").split("\\").join("\\\\");
+            if (param.isKeyValues) {
+                slp = slp.substr(1, slp.length-2); // remove quots 
+            }
             parameters.push(param.name + " " + slp);
         }
 
@@ -1080,8 +1094,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             if (!(this.CommandGroup_Key in internal_resources)) {
                 internal_resources[this.CommandGroup_Key] = [this.CommandGroup_Key,];
             }
-            let commands = this.CommandGroup_Name.split(" ");
-            let resource_name = commands[commands.length - 1] + "-name";
+            // let commands = this.CommandGroup_Name.split(" ");
+            // let resource_name = commands[commands.length - 1] + "-name";
+            let resource_name = this.CommandGroup_DefaultName+"Name";
             if (internal_resources[this.CommandGroup_Key].indexOf(resource_name) < 0) {
                 internal_resources[this.CommandGroup_Key].push(resource_name);
             }
@@ -1115,7 +1130,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                                 }
                             } while (this.SelectNextMethodParameter())
                         }
-                        this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
                     } while (this.SelectNextRequest());
                 }
             }

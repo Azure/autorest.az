@@ -43,7 +43,7 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);
             files[path + "generated/action.py"] = GenerateAzureCliActions(model);
             files[path + "generated/_help.py"] = GenerateAzureCliHelp(model);
-            files[path + "tests/latest/test_" + model.Extension_Name + "_scenario.py"] = GenerateAzureCliTestScenario(model);   
+            //files[path + "tests/latest/test_" + model.Extension_Name + "_scenario.py"] = GenerateAzureCliTestScenario(model);   
             files[path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(model);
             files[path + "tests/latest/__init__.py"] = GenerateAzureCliTestInit(model);
             files[path + "__init__.py"] = GenerateAzureCliInit(model);

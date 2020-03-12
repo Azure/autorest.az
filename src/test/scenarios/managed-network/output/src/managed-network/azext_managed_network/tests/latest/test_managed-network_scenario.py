@@ -16,7 +16,7 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
     def test_managed_network(self, resource_group):
-
+    
         # EXAMPLE NOT FOUND: ManagedNetworksPut
 
         # EXAMPLE NOT FOUND: ManagementNetworkGroupsPut
