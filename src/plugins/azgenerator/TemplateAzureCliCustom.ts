@@ -12,8 +12,10 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     header.disableLineTooLong = true;
     header.disableTooManyStatements = true;
     header.disableTooManyLines = true;
-    header.disableTooManyLocals = true;
-    header.disableUnusedArgument = true;
+    
+    // this is no longer a problem
+    // header.disableTooManyLocals = true;
+    // header.disableUnusedArgument = true;
 
     let required: any = {};
     let body: string[] = GenerateBody(model, required);

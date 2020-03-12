@@ -5,8 +5,6 @@
 # pylint: disable=line-too-long
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-statements
-# pylint: disable=too-many-locals
-# pylint: disable=unused-argument
 
 import json
 
