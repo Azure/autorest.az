@@ -13,7 +13,7 @@ from azure.cli.core.commands.parameters import (
     get_location_type
 )
 from azext_managed_network.action import (
-    AddManagementGroups,
+    AddTags,
     AddSubscriptions,
     AddVirtualNetworks,
     AddSubnets
@@ -35,16 +35,13 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('tags', tags_type)
-        c.argument('properties_scope_management_groups', help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
-        c.argument('properties_scope_subscriptions', help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
-        c.argument('properties_scope_virtual_networks', help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
-        c.argument('properties_scope_subnets', help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
+        c.argument('tags', tags_type, action=AddTags, nargs='+')
+        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of Managed Network'))
 
     with self.argument_context('managed-network managed-network update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('tags', tags_type)
+        c.argument('tags', tags_type, action=AddTags, nargs='+')
 
     with self.argument_context('managed-network managed-network delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -89,7 +86,7 @@ def load_arguments(self, _):
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('group_name', help='The name of the Managed Network Group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('properties_management_groups', help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('properties_management_groups', arg_type=CLIArgumentType(options_list=['--properties-management-groups'], help='The collection of management groups covered by the Managed Network'))
         c.argument('properties_subscriptions', help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
         c.argument('properties_virtual_networks', help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
         c.argument('properties_subnets', help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')
@@ -99,7 +96,7 @@ def load_arguments(self, _):
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('group_name', help='The name of the Managed Network Group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('properties_management_groups', help='The collection of management groups covered by the Managed Network', action=AddManagementGroups, nargs='+')
+        c.argument('properties_management_groups', arg_type=CLIArgumentType(options_list=['--properties-management-groups'], help='The collection of management groups covered by the Managed Network'))
         c.argument('properties_subscriptions', help='The collection of subscriptions covered by the Managed Network', action=AddSubscriptions, nargs='+')
         c.argument('properties_virtual_networks', help='The collection of virtual nets covered by the Managed Network', action=AddVirtualNetworks, nargs='+')
         c.argument('properties_subnets', help='The collection of  subnets covered by the Managed Network', action=AddSubnets, nargs='+')

@@ -351,34 +351,14 @@ class ManagedNetwork(TrackedResource):
     :type location: str
     :param tags: A set of tags. Resource tags.
     :type tags: dict[str, str]
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
-     include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
-    :ivar etag: A unique read-only string that changes whenever the resource is updated.
-    :vartype etag: str
-    :ivar groups: The collection of connectivity related Managed Network Groups within the Managed
-     Network.
-    :vartype groups: list[~managed_network_management_client.models.ManagedNetworkGroup]
-    :ivar peerings: The collection of Managed Network Peering Policies within the Managed Network.
-    :vartype peerings: list[~managed_network_management_client.models.ManagedNetworkPeeringPolicy]
-    :param management_groups: The collection of management groups covered by the Managed Network.
-    :type management_groups: list[~managed_network_management_client.models.ResourceId]
-    :param subscriptions: The collection of subscriptions covered by the Managed Network.
-    :type subscriptions: list[~managed_network_management_client.models.ResourceId]
-    :param virtual_networks: The collection of virtual nets covered by the Managed Network.
-    :type virtual_networks: list[~managed_network_management_client.models.ResourceId]
-    :param subnets: The collection of  subnets covered by the Managed Network.
-    :type subnets: list[~managed_network_management_client.models.ResourceId]
+    :param properties: Properties of Managed Network.
+    :type properties: ~managed_network_management_client.models.ManagedNetworkProperties
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'provisioning_state': {'readonly': True},
-        'etag': {'readonly': True},
-        'groups': {'readonly': True},
-        'peerings': {'readonly': True},
     }
 
     _attribute_map = {
@@ -387,14 +367,7 @@ class ManagedNetwork(TrackedResource):
         'type': {'key': 'type', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'etag': {'key': 'properties.etag', 'type': 'str'},
-        'groups': {'key': 'properties.connectivity.groups', 'type': '[ManagedNetworkGroup]'},
-        'peerings': {'key': 'properties.connectivity.peerings', 'type': '[ManagedNetworkPeeringPolicy]'},
-        'management_groups': {'key': 'properties.scope.managementGroups', 'type': '[ResourceId]'},
-        'subscriptions': {'key': 'properties.scope.subscriptions', 'type': '[ResourceId]'},
-        'virtual_networks': {'key': 'properties.scope.virtualNetworks', 'type': '[ResourceId]'},
-        'subnets': {'key': 'properties.scope.subnets', 'type': '[ResourceId]'},
+        'properties': {'key': 'properties', 'type': 'ManagedNetworkProperties'},
     }
 
     def __init__(
@@ -402,21 +375,11 @@ class ManagedNetwork(TrackedResource):
         *,
         location: Optional[str] = None,
         tags: Optional[Dict[str, str]] = None,
-        management_groups: Optional[List["ResourceId"]] = None,
-        subscriptions: Optional[List["ResourceId"]] = None,
-        virtual_networks: Optional[List["ResourceId"]] = None,
-        subnets: Optional[List["ResourceId"]] = None,
+        properties: Optional["ManagedNetworkProperties"] = None,
         **kwargs
     ):
         super(ManagedNetwork, self).__init__(location=location, tags=tags, **kwargs)
-        self.provisioning_state = None
-        self.etag = None
-        self.groups = None
-        self.peerings = None
-        self.management_groups = management_groups
-        self.subscriptions = subscriptions
-        self.virtual_networks = virtual_networks
-        self.subnets = subnets
+        self.properties = properties
 
 
 class ProxyResource(Resource):

@@ -10,10 +10,7 @@ create a managed-network managed-network.
 |**--managed-network**|object|Parameters supplied to the create/update a Managed Network Resource|/something/my_option|/something/myOption|
 |--location**|string|The geo-location where the resource lives|/something/my_option|/something/myOption|
 |--tags**|dictionary|Resource tags|/something/my_option|/something/myOption|
-|--management-groups**|array|The collection of management groups covered by the Managed Network|/something/my_option|/something/myOption|
-|--subscriptions**|array|The collection of subscriptions covered by the Managed Network|/something/my_option|/something/myOption|
-|--virtual-networks**|array|The collection of virtual nets covered by the Managed Network|/something/my_option|/something/myOption|
-|--subnets**|array|The collection of  subnets covered by the Managed Network|/something/my_option|/something/myOption|
+|--properties**|object|Properties of Managed Network|/something/my_option|/something/myOption|
 ### managed-network managed-network delete
 
 delete a managed-network managed-network.
