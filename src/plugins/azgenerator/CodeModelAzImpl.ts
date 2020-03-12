@@ -1260,7 +1260,7 @@ export class CodeModelCliImpl implements CodeModelAz
         for (let param of example.Parameters) {
             let param_value = param.value;
             if (isTest) {
-                let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues);
+                let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues, [], []);
                 if (replaced_value == param_value) {
                     replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues);
                 }
@@ -1314,29 +1314,43 @@ export class CodeModelCliImpl implements CodeModelAz
 
         //find dependency relationships of internal_resources
         this.GetAllMethods(null, () => {
-            if (this.Get_Method_Name("az") == 'create') {
+            if (this.Get_Method_Name("default").toLowerCase() == 'createorupdate') {
                 let depend_resources = [];
                 let depend_parameters = [];
+
+                // recognize depends by endpoint in examples
+                for (let example of this.GetExamples()) {
+                    for (let param of example.Parameters) {
+                        let resources = [];
+                        this.resource_pool.addEndpointResource(param.value, param.isJson, param.isKeyValues, [], resources);
+                        for (let on_resource of resources)
+                            if (on_resource != this.CommandGroup_Key && depend_resources.indexOf(on_resource)<0) {
+                                depend_resources.push(on_resource);
+                                depend_parameters.push(param.name);
+                            }
+                        }
+                }
+
+                //recognize depends by parameter name
                 if (this.SelectFirstMethodParameter()) {
                     do {
                         if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
-                            let param_name = this.MethodParameter.language["az"].name;
-                            if (internal_resources[this.CommandGroup_Key].indexOf(param_name) < 0) {// if it isn't name of current resource) 
-                                let on_resource = this.resource_pool.isResource(param_name);
-                                if (on_resource)
-                                    // the resource is a dependency only when it's a parameter in an example.
-                                    for (let example of this.GetExamples()) {
-                                        for (let param of example.Parameters) {
-                                            if (param_name == param.name) {
-                                                depend_resources.push(on_resource);
-                                                depend_parameters.push(param_name);
-                                            }
+                            let param_name = this.MethodParameter.language["default"].name;
+                            let on_resource = this.resource_pool.isResource(param_name);
+                            if (on_resource && (on_resource != this.CommandGroup_Key) && depend_resources.indexOf(on_resource)<0)
+                                // the resource is a dependency only when it's a parameter in an example.
+                                for (let example of this.GetExamples()) {
+                                    for (let param of example.Parameters) {
+                                        if (param_name == param.defaultName && depend_resources.indexOf(on_resource)<0) {
+                                            depend_resources.push(on_resource);
+                                            depend_parameters.push(param_name);
                                         }
                                     }
-                            }
+                                }
                         }
                     } while (this.SelectNextMethodParameter())
                 }
+
                 this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
             }
         });
@@ -1346,19 +1360,12 @@ export class CodeModelCliImpl implements CodeModelAz
 
     public SortExamplesByDependency() {
         let depend_on = (example_a: CommandExample, example_b: CommandExample): boolean => {
-            return example_a.Parameters.some((param): boolean => {
-                if (this.resource_pool.isResource(param.name.substr(2)) == example_b.ResourceClassName) return true;
-                if (typeof param.value == 'string') {
-                    for (let resource_name of param.value.split('/')) {
-                        if (this.resource_pool.isResource(resource_name) == example_b.ResourceClassName) return true;
-                    }
-                }
-                return false;
-            });
+            // TODO: check dependency by object
+            return this.resource_pool.isDependResource(example_a.ResourceClassName, example_b.ResourceClassName);
         }
 
         // stable sort
-        this._testScenario = MergeSort(this._testScenario, (config_a: object, config_b: object): number => {
+        let compare = (config_a: object, config_b: object): number => {
             let examples_a: CommandExample[] = this.GetAllExamples(config_a['name']);
             let examples_b: CommandExample[] = this.GetAllExamples(config_b['name']);
             if (examples_a.length <= 0 || examples_b.length <= 0) {
@@ -1405,7 +1412,22 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
             }
             return 0;
-        });
+        };
+
+        let i =0;
+        while (i<this._testScenario.length) {
+            for (let j = i+1; j<this._testScenario.length;j++) {
+                if (compare(this._testScenario[i], this._testScenario[j]) >0) {
+                    let tmp = this._testScenario[i];
+                    this._testScenario[i] = this._testScenario[j];
+                    this._testScenario[j] = tmp;
+                    i--;
+                    break;
+                }
+            }
+            i++;
+        }
+        //this._testScenario = MergeSort(this._testScenario,compare);
     }
 
     public GetAllMethods(command_group?: string, callback?: () => void): any[] {
