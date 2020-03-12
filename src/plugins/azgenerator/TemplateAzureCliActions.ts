@@ -7,21 +7,16 @@ import { CodeModelAz } from "./CodeModelAz"
 import { ToCamelCase, Capitalize } from "../../utils/helper";
 import { SchemaType } from "@azure-tools/codemodel";
 import { stringify } from "querystring";
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
-    var output: string[] = [];
+    let header: HeaderGenerator = new HeaderGenerator();
 
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("");
-    output.push("import argparse");
-    output.push("from knack.util import CLIError");
-    output.push("");
-    output.push("");
-    output.push("# pylint: disable=protected-access");
+    header.addImport("argparse");
+    header.addFromImport("knack.util", ["CLIError"]);
+    header.disableProtectedAccess = true;
 
+    let output: string[] = header.getLines();
     let allActions: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstCommandGroup())
     {
