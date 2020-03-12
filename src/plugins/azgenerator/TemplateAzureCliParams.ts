@@ -53,16 +53,22 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     //output.push("from knack.arguments import CLIArgumentType");
 
     if (hasJson) output.push("from knack.arguments import CLIArgumentType");
-    output.push("from azure.cli.core.commands.parameters import (");
-    if(hasTags) output.push("    tags_type,");
+    let paramStatement: Array<string> = [];
+    if (hasTags) paramStatement.push("    tags_type");
     //output.push("    get_resource_name_completion_list,");
     //output.push("    quotes,");
-    if (hasBoolean) output.push("    get_three_state_flag,");
-    if (hasEnum) output.push("    get_enum_type,");
-    
-    if (hasResourceGroup) output.push("    resource_group_name_type,");
-    if (hasLocation) output.push("    get_location_type");
-    output.push(")");
+    if (hasBoolean) paramStatement.push("    get_three_state_flag");
+    if (hasEnum) paramStatement.push("    get_enum_type"); 
+    if (hasResourceGroup) paramStatement.push("    resource_group_name_type");
+    if (hasLocation) paramStatement.push("    get_location_type");
+    if(paramStatement.length > 0) {
+        output.push("from azure.cli.core.commands.parameters import (");
+        for(let idx = 0; idx < paramStatement.length - 1; idx++) {
+            output.push(paramStatement[idx] + ",");
+        }
+        output.push(paramStatement[paramStatement.length - 1]);
+        output.push(")");
+    }
 
     if (hasActions) {
         output.push("from azext_" + model.Extension_NameUnderscored + ".action import (")
