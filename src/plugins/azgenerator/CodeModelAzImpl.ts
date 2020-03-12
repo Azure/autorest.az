@@ -932,7 +932,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 return false;
             }
             for(let p of values(this.MethodParameter['schema']['properties'])) {
-                if(p['schema'].type == SchemaType.Object) {
+                if(p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
                     // objects.objects
                     return false;
                 } else if(p['schema'].type == SchemaType.Array) {
@@ -1266,7 +1266,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
                 param_value = replaced_value;
             }
-            let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("").split("'").join("\\'").split("\\").join("\\\\");
+            let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("").split("\\").join("\\\\").split("'").join("\\'");
             if (param.isKeyValues) {
                 slp = slp.substr(1, slp.length-2); // remove quots 
             }
