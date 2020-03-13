@@ -6,6 +6,7 @@
 import { CodeModelAz } from "./CodeModelAz"
 import { EscapeString, ToCamelCase, Capitalize } from "../../utils/helper";
 import { SchemaType } from "@azure-tools/codemodel";
+import { HeaderGenerator } from "./Header";
 
 
 let hasActions: boolean = false;
@@ -15,8 +16,6 @@ let hasJson: boolean = true;
 let actions: string[] = [];
 
 export function GenerateAzureCliParams(model: CodeModelAz): string[] {
-    let output: string[] = [];
-        
     var output_args: string[] = [];
 
     output_args.push("");
@@ -39,37 +38,31 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
             }
         } while (model.SelectNextCommandGroup());
     }
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# pylint: disable=line-too-long");
-    output.push("# pylint: disable=too-many-lines");
-    output.push("# pylint: disable=too-many-statements");
-    output.push("");
-    //output.push("from knack.arguments import CLIArgumentType");
 
-    if (hasJson) output.push("from knack.arguments import CLIArgumentType");
-    output.push("from azure.cli.core.commands.parameters import (");
-    output.push("    tags_type,");
-    //output.push("    get_resource_name_completion_list,");
-    //output.push("    quotes,");
-    if (hasBoolean) output.push("    get_three_state_flag,");
-    if (hasEnum) output.push("    get_enum_type,");
-    
-    output.push("    resource_group_name_type,");
-    output.push("    get_location_type");
-    output.push(")");
+    let header: HeaderGenerator = new HeaderGenerator();
+    header.disableLineTooLong = true;
+    header.disableTooManyLines = true;
+    header.disableTooManyStatements = true;
+
+    if (hasJson) {
+        header.addFromImport("knack.arguments", ["CLIArgumentType"]);
+    }
+
+    let parameterImports: string[] = [];
+    parameterImports.push("tags_type");
+    if (hasBoolean) parameterImports.push("get_three_state_flag");
+    if (hasEnum) parameterImports.push("get_enum_type");
+    parameterImports.push("resource_group_name_type");
+    parameterImports.push("get_location_type");
+
+    header.addFromImport("azure.cli.core.commands.parameters", parameterImports);
 
     if (hasActions) {
-        output.push("from azext_" + model.Extension_NameUnderscored + ".action import (")
-
-        for (let idx: number = 0; idx < actions.length; idx++) {
-            let action = actions[idx];
-            output.push("    " + action + (idx < actions.length - 1 ? "," : ""));
-        }
-        output.push(")")
+        header.addFromImport("azext_" + model.Extension_NameUnderscored + ".action", actions);
     }
+
+    var output: string[] = header.getLines();
+
 
     output = output.concat(output_args);
 
