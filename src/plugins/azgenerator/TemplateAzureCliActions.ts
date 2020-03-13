@@ -43,10 +43,17 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
 
                                         output.push("");
                                         output.push("");
-                                        output.push("class " + actionName + "(argparse._AppendAction):");
+                                        let baseAction = "Action";
+                                        if (model.MethodParameter_Type == SchemaType.Array) baseAction = "_Append" + baseAction;
+                                        output.push("class " + actionName + "(argparse." + baseAction + "):");
                                         output.push("    def __call__(self, parser, namespace, values, option_string=None):");
                                         output.push("        action = self.get_action(values, option_string)");
-                                        output.push("        super(" + "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name)) + ", self).__call__(parser, namespace, action, option_string)");
+                                        if (model.MethodParameter_Type == SchemaType.Array) {
+                                            output.push("        super(" + "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name)) + ", self).__call__(parser, namespace, action, option_string)");
+                                        } else {
+                                            output.push("        namespace." + model.MethodParameter_Name.toLowerCase() + " = action");
+                                        }
+                                        
                                         output.push("");
                                         output.push("    def get_action(self, values, option_string):  # pylint: disable=no-self-use");
                                         output.push("        try:");
