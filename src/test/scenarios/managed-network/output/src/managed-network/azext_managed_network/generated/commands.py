@@ -9,7 +9,7 @@ from azure.cli.core.commands import CliCommandType
 
 def load_command_table(self, _):
 
-    from ._client_factory import cf_managed_network
+    from azext_managed_network.generated._client_factory import cf_managed_network
     managed_network_managed_network = CliCommandType(
         operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_operations#ManagedNetworkOperations.{}',
         client_factory=cf_managed_network)
@@ -19,9 +19,9 @@ def load_command_table(self, _):
         g.custom_command('create', 'managed_network_managed_network_create')
         g.custom_command('update', 'managed_network_managed_network_update', supports_no_wait=True)
         g.custom_command('delete', 'managed_network_managed_network_delete', supports_no_wait=True)
-        g.wait_command('wait');
+        g.wait_command('wait')
 
-    from ._client_factory import cf_scope_assignment
+    from azext_managed_network.generated._client_factory import cf_scope_assignment
     managed_network_scope_assignment = CliCommandType(
         operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._scope_assignment_operations#ScopeAssignmentOperations.{}',
         client_factory=cf_scope_assignment)
@@ -32,7 +32,7 @@ def load_command_table(self, _):
         g.generic_update_command('update')
         g.custom_command('delete', 'managed_network_scope_assignment_delete')
 
-    from ._client_factory import cf_managed_network_group
+    from azext_managed_network.generated._client_factory import cf_managed_network_group
     managed_network_managed_network_group = CliCommandType(
         operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_group_operations#ManagedNetworkGroupOperations.{}',
         client_factory=cf_managed_network_group)
@@ -42,9 +42,9 @@ def load_command_table(self, _):
         g.custom_command('create', 'managed_network_managed_network_group_create', supports_no_wait=True)
         g.generic_update_command('update', supports_no_wait=True)
         g.custom_command('delete', 'managed_network_managed_network_group_delete', supports_no_wait=True)
-        g.wait_command('wait');
+        g.wait_command('wait')
 
-    from ._client_factory import cf_managed_network_peering_policy
+    from azext_managed_network.generated._client_factory import cf_managed_network_peering_policy
     managed_network_managed_network_peering_policy = CliCommandType(
         operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_peering_policy_operations#ManagedNetworkPeeringPolicyOperations.{}',
         client_factory=cf_managed_network_peering_policy)
@@ -54,4 +54,4 @@ def load_command_table(self, _):
         g.custom_command('create', 'managed_network_managed_network_peering_policy_create', supports_no_wait=True)
         g.generic_update_command('update', supports_no_wait=True)
         g.custom_command('delete', 'managed_network_managed_network_peering_policy_delete', supports_no_wait=True)
-        g.wait_command('wait');
+        g.wait_command('wait')

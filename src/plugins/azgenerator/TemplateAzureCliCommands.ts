@@ -30,7 +30,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
                 output.push("");
 
                 let cf_name: string = "cf_" + ((model.GetModuleOperationName() != "") ? model.GetModuleOperationName() :  model.Extension_NameUnderscored);
-                output.push("    from ._client_factory import " + cf_name);
+                output.push("    from azext_" + model.Extension_NameUnderscored + ".generated._client_factory import " + cf_name);
                 output.push("    " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + " = CliCommandType(");
                 
                 if (true)
@@ -59,7 +59,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
                 }
                 while (model.SelectNextCommand());
                 if(needWait) {
-                    output.push("        g.wait_command('wait');");
+                    output.push("        g.wait_command('wait')");
                 }
             }
         } while (model.SelectNextCommandGroup());
