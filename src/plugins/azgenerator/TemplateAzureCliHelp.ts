@@ -111,7 +111,7 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
                     line += ((line != "") ? " " : "") + element;
                 }
                 else if (element.length < 90) {
-                    line += " \\";
+                    //line += " \\";
                     line = line.split("\\").join("\\\\");
                     output.push("               " + line);
                     line = element;
