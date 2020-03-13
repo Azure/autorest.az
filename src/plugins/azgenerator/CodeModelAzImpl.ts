@@ -828,9 +828,15 @@ export class CodeModelCliImpl implements CodeModelAz
         if(this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Dictionary) {
             if((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
                 this.submethodparameters = this.MethodParameter['schema']?.['elementType']?.properties;
+                for(let parent of values(this.MethodParameter['schema']?.['elementType']?.['parents']?.all)) {
+                    this.submethodparameters = this.submethodparameters.concat(parent['properties'])
+                }
             }
         } else if(this.MethodParameter_Type == SchemaType.Object) {
             this.submethodparameters = this.MethodParameter['schema']['properties'];
+            for(let parent of values(this.MethodParameter['schema']?.['parents']?.all)) {
+                this.submethodparameters = this.submethodparameters.concat(parent['properties'])
+            }
         }
         if(this.submethodparameters == null) {
             return false;
@@ -928,6 +934,13 @@ export class CodeModelCliImpl implements CodeModelAz
                                 return false;
                             }
                         }
+                        for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                            for(let pp of values(parent['properties'])) {
+                                if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                 }
                 return true;
@@ -946,6 +959,13 @@ export class CodeModelCliImpl implements CodeModelAz
                             return false;
                         }
                     }
+                    for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                        for(let pp of values(parent['properties'])) {
+                            if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                                return false;
+                            }
+                        }
+                    }
                 }
             }
             return true;
@@ -961,6 +981,13 @@ export class CodeModelCliImpl implements CodeModelAz
                 for (let mp of values(p.properties)) {
                     if (mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
                         return false;
+                    }
+                }
+                for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                    for(let pp of values(parent['properties'])) {
+                        if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                            return false;
+                        }
                     }
                 }
             }
