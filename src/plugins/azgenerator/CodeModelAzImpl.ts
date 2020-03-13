@@ -1150,7 +1150,9 @@ export class CodeModelCliImpl implements CodeModelAz
                         //ret += `${k}=${v.substr(1, v.length-2)}`;
                         ret += `${k}=${value[k]}`;
                     }
-                    example_param.push(new ExampleParam(name, ret, false, true, defaultName));
+                    if (ret.length>0) {
+                        example_param.push(new ExampleParam(name, ret, false, true, defaultName));
+                    }
                 }
             }
             else if (isList && !isSimpleList) {
