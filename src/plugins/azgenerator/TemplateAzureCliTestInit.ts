@@ -4,13 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliTestInit(model: CodeModelAz) : string[] {
-    var output: string[] = [];
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
+    let header: HeaderGenerator = new HeaderGenerator();
+    var output: string[] = header.getLines();
     output.push("");
     return output;
 }

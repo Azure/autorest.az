@@ -79,6 +79,7 @@ export function TopoSortResource() {
                     for (let i = 0; i < depends[b].length; i++) {
                         if (depends[b][i] == a) {
                             depends[b].splice(i, 1);
+                            i--;
                         }
                     }
                 }
@@ -188,6 +189,8 @@ export class ResourcePool {
     }
 
     private prepareResource(class_name: string, object_name: string, depends: string[][], entitys: PreparerEntity[]) {
+        if (class_name == SUBNET)  return ; // use default subnet, no need to prepare it.
+
         for (let e of entitys) {
             if (e.info.class_name == class_name && e.object_name == object_name) {
                 return;
@@ -196,6 +199,7 @@ export class ResourcePool {
         for (let i = depends.length - 1; i >= 0; i--) {
             this.prepareResource(depends[i][0], depends[i][1], depends.slice(0, i), entitys);
         }
+
         let entity = new PreparerEntity(preparerInfos[class_name], object_name);
         for (let depend_resource of entity.info.depend_resources) {
             let found = false;
@@ -216,6 +220,8 @@ export class ResourcePool {
                     break;
                 }
             }
+
+            if (found) continue;
 
             //if there is no entity for this depend has been exist, create a new of it.
             const default_name = 'default';
@@ -326,24 +332,24 @@ export class ResourcePool {
         return str;
     }
 
-    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders?: string[]) {
+    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders: string[], resources: string[]) {
         if (placeholders==undefined)  placeholders = new Array();
         if(isJson) {
             let body = typeof endpoint == 'string'? JSON.parse(endpoint):endpoint;
             if (typeof body == 'object') {
                 if ( body instanceof Array) {
                     body = body.map((value) => {
-                        return this.addEndpointResource(value, typeof value=='object', isKeyValues, placeholders);
+                        return this.addEndpointResource(value, typeof value=='object', isKeyValues, placeholders, resources);
                     });
                 }
                 else if(isDict(body)) {
                     for (let k in body) {
-                        body[k] = this.addEndpointResource(body[k], typeof body[k]=='object', isKeyValues, placeholders);
+                        body[k] = this.addEndpointResource(body[k], typeof body[k]=='object', isKeyValues, placeholders, resources);
                     }
                 }
             }
             else {
-                body = this.addEndpointResource(body, false, isKeyValues, placeholders);
+                body = this.addEndpointResource(body, false, isKeyValues, placeholders, resources);
             }
 
             if (typeof endpoint == 'string') {
@@ -362,7 +368,7 @@ export class ResourcePool {
             for (let attr of endpoint.split(" ")) {
                 let kv = attr.split("=");
                 if (ret.length > 0) ret += " ";
-                ret += `${kv[0]}=${this.addEndpointResource(kv[1], isJson, false, placeholders)}`;
+                ret += `${kv[0]}=${this.addEndpointResource(kv[1], isJson, false, placeholders, resources)}`;
             }
             return ret;
         }
@@ -390,6 +396,9 @@ export class ResourcePool {
                     nodes[i + 1] = resource_object.placeholder;
                     if (placeholders.indexOf(resource_object.placeholder)<0) {
                         placeholders.push(resource_object.placeholder);
+                    }
+                    if (resources.indexOf(resource) <0) {
+                        resources.push(resource);
                     }
                 }
             }
@@ -431,6 +440,11 @@ export class ResourcePool {
     public setResourceDepends(resource_class_name: string, depend_resources: string[], depend_parameters: string[]) {
         resourceClassDepends[resource_class_name] = depend_resources;
         preparerInfos[resource_class_name] = new PreparerInfo(null, resource_class_name, depend_parameters, depend_resources);
+    }
+
+    public isDependResource(child: string, parent: string) {
+        let depends = resourceClassDepends[child];
+        return depends && depends.indexOf(parent)>=0;
     }
 }
 

@@ -4,14 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
-    var output: string[] = [];
+    let header: HeaderGenerator = new HeaderGenerator();
+    var output: string[] = header.getLines();
     model.SelectFirstCommandGroup();
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
     output.push("");
     output.push("");
     output.push("def cf_" + model.Extension_NameUnderscored + "(cli_ctx, *_):");

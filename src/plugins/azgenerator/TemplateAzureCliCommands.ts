@@ -4,20 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
-    var output: string[] = [];
+    let header: HeaderGenerator = new HeaderGenerator();
+    
+    // this can't be currently reproduced
+    // header.disableTooManyStatements = true;
+    // header.disableTooManyLocals = true;
+    header.addFromImport("azure.cli.core.commands", ["CliCommandType"]);
 
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("");
-    output.push("# pylint: disable=line-too-long");
-    output.push("# pylint: disable=too-many-lines");
-    output.push("# pylint: disable=too-many-statements");
-    output.push("# pylint: disable=too-many-locals");
-    output.push("from azure.cli.core.commands import CliCommandType");
+    let output: string[] = []
     output.push("");
     output.push("");
     output.push("def load_command_table(self, _):");
@@ -33,7 +30,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
                 output.push("");
 
                 let cf_name: string = "cf_" + ((model.GetModuleOperationName() != "") ? model.GetModuleOperationName() :  model.Extension_NameUnderscored);
-                output.push("    from ._client_factory import " + cf_name);
+                output.push("    from azext_" + model.Extension_NameUnderscored + ".generated._client_factory import " + cf_name);
                 output.push("    " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + " = CliCommandType(");
                 
                 if (true)
@@ -62,14 +59,22 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
                 }
                 while (model.SelectNextCommand());
                 if(needWait) {
-                    output.push("        g.wait_command('wait');");
+                    output.push("        g.wait_command('wait')");
                 }
             }
         } while (model.SelectNextCommandGroup());
     }
     output.push("");
 
-    return output;
+    output.forEach(element => {
+        if (element.length > 120) header.disableLineTooLong = true;
+    });
+
+    if (output.length + header.getLines().length > 1000) {
+        header.disableTooManyLines = true;
+    }
+
+    return header.getLines().concat(output);
 }
 
 function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {

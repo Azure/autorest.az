@@ -4,21 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
-    var output: string[] = [];
-
-    output.push("# coding=utf-8");
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
+    let header: HeaderGenerator = new HeaderGenerator();
+    header.disableTooManyLines = true;
+    header.disableLineTooLong = true;
+    header.addFromImport("knack.help_files", ["helps"])
+    var output: string[] = header.getLines();
     output.push("");
-    output.push("# pylint: disable=too-many-lines");
-    output.push("# pylint: disable=line-too-long");
-    output.push("from knack.help_files import helps  # pylint: disable=unused-import");
-    output.push("");
-
 
     if (model.SelectFirstCommandGroup()) {
         do {
@@ -111,7 +105,7 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
                     line += ((line != "") ? " " : "") + element;
                 }
                 else if (element.length < 90) {
-                    line += " \\";
+                    //line += " \\";
                     line = line.split("\\").join("\\\\");
                     output.push("               " + line);
                     line = element;
