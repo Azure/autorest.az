@@ -17,10 +17,12 @@ class MethodParam {
     public value: any;
     public isList: boolean;
     public isSimpleList: boolean;
-    public constructor(value, isList, isSimpleList) {
+    public submethodparameters: Property[];
+    public constructor(value, isList, isSimpleList, submethodparameters) {
         this.value = value;
         this.isList = isList;
         this.isSimpleList = isSimpleList;
+        this.submethodparameters = submethodparameters;
     }
 }
 
@@ -1115,8 +1117,12 @@ export class CodeModelCliImpl implements CodeModelAz
         if (this.SelectFirstMethodParameter()) {
             do {
                 if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
-
-                    method_param_dict.set(this.MethodParameter.language.default.name, new MethodParam(this.MethodParameter, this.MethodParameter_IsList, this.MethodParameter_IsListOfSimple));
+                    let submethodparameters = null;
+                    if (this.EnterSubMethodParameters()) {
+                        submethodparameters = this.submethodparameters;
+                        this.ExitSubMethodParameters();
+                    }
+                    method_param_dict.set(this.MethodParameter.language.default.name, new MethodParam(this.MethodParameter, this.MethodParameter_IsList, this.MethodParameter_IsListOfSimple, submethodparameters));
                 }
             } while (this.SelectNextMethodParameter());
         }
@@ -1132,23 +1138,40 @@ export class CodeModelCliImpl implements CodeModelAz
         return parameters;
     }
 
-    private AddExampleParameter(example_param: ExampleParam[], name: string, value: any, isList: boolean, isSimpleList: boolean, defaultName: string) {
+    private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any) {
+        let isList: boolean = methodParam.isList;
+        let isSimpleList: boolean = methodParam.isSimpleList;
+        let defaultName: string = methodParam.value.language.default.name;
+        let name: string = this.GetMethodParameterMapName(methodParam.value);
         if (isList) {
             if (isSimpleList) {
-                if (value instanceof Array) {
+                if (value instanceof Array) {       // spread list
                     for (let e of value) {
-                        this.AddExampleParameter(example_param, name, e, isList, isSimpleList, defaultName);
+                        this.AddExampleParameter(methodParam, example_param, e);
                     }
                 }
-                else if (typeof value == 'object') {
+                else if (typeof value == 'object') {    // KEY=VALUE form
+                    if (!methodParam.submethodparameters)
+                    {
+                        // should never been here
+                        console.warn("No submethodparameters for KEY=VALUE params")
+                        return;
+                    }
                     let ret = "";
                     for (let k in value) {
+                        let pythonName = null;
+                        for (let submethodProperty of methodParam.submethodparameters) {
+                            if (submethodProperty.language.default.name.toLowerCase() == k.toLowerCase()) {
+                                pythonName = submethodProperty.language.python.name;
+                            }
+                        }
+                        if (!pythonName)    continue; // skip if no submethodProperty matched.
                         if (ret.length > 0) {
                             ret += " ";
                         }
                         //let v = JSON.stringify(value[k]).split(/[\r\n]+/).join("");
                         //ret += `${k}=${v.substr(1, v.length-2)}`;
-                        ret += `${k}=${value[k]}`;
+                        ret += `${pythonName}=${value[k]}`;
                     }
                     if (ret.length>0) {
                         example_param.push(new ExampleParam(name, ret, false, true, defaultName));
@@ -1179,7 +1202,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
+                    this.AddExampleParameter(methodParam, example_param, value);
                     return;
                 }
             }
@@ -1199,13 +1222,13 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
+                    this.AddExampleParameter(methodParam, example_param, value);
                     return;
                 }
             }
             else if (ancestors.length == 0) {
                 // example_param.set(name, value);
-                this.AddExampleParameter(example_param, this.GetMethodParameterMapName(methodParam.value), value, methodParam.isList, methodParam.isSimpleList, methodParam.value.language.default.name);
+                this.AddExampleParameter(methodParam, example_param, value);
                 return;
             }
         }
