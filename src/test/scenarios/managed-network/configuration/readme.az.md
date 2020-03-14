@@ -71,26 +71,30 @@ cli:
     # directive on operationGroup
       - select: 'operation'
         where:
-            operationGroup: 'operations'
-            operation: 'list'
+            operationGroup: 'Operations'
+            operation: 'List'
         hidden: true
       - where:
-            parameter: location
+            parameter: 'Location'
         required: true
       - where:
-            group: 'managed_network_peering_policies'
-            param: 'managed_network_peering_policy_name'
+            group: 'ManagedNetworkPeeringPolicies'
+            param: 'managedNetworkPeeringPolicyName'
         name: 'policy_name'
       - where:
-            group: 'managed_network_groups'
-            param: 'management_groups'
+            group: 'ManagedNetworkGroups'
+            param: 'managementGroups'
         set:
             json: true
       - where:
-            group: 'managed_networks'
-            param: 'managed_networks'
+            group: 'ManagedNetworks'
+            param: 'managedNetwork'
         set:
             json: true
+      - where:
+            group: 'ManagedNetworks'
+            param: 'properties'
+        json: true
         #cli-flatten-directive:
         #    - where:
         #        type: ResourceProviderOperation
