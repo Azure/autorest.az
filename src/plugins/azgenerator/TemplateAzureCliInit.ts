@@ -9,6 +9,7 @@ import { HeaderGenerator } from "./Header";
 export function GenerateAzureCliInit(model: CodeModelAz) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     header.addFromImport("azure.cli.core", ["AzCommandsLoader"]);
+    header.addFromImport(".generated._help", ["helps"]);
     var output: string[] = header.getLines();
 
     output.push("");
