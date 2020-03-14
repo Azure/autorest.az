@@ -76,8 +76,8 @@ cli:
             param: 'managementGroups'
         json: true
       - where:
-            group: 'ManagedNetworks'
-            param: 'properties'
+            type: 'ManagedNetwork'
+            prop: 'properties'
         json: true
         #cli-flatten-directive:
         #    - where:

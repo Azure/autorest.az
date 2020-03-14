@@ -13,7 +13,6 @@ from azure.cli.core.commands.parameters import (
     get_location_type
 )
 from azext_managed_network.action import (
-    AddManagementGroups,
     AddSubscriptions,
     AddVirtualNetworks,
     AddSubnets
@@ -36,10 +35,7 @@ def load_arguments(self, _):
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource lives')
         c.argument('tags', tags_type, help='Resource tags')
-        c.argument('properties_scope_management_groups', action=AddManagementGroups, nargs='+', help='The collection of management groups covered by the Managed Network')
-        c.argument('properties_scope_subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered by the Managed Network')
-        c.argument('properties_scope_virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets covered by the Managed Network')
-        c.argument('properties_scope_subnets', action=AddSubnets, nargs='+', help='The collection of  subnets covered by the Managed Network')
+        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of Managed Network'))
 
     with self.argument_context('managed-network managed-network update') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')
