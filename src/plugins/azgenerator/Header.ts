@@ -85,16 +85,17 @@ export class HeaderGenerator
 
         if (this.fromImports.length > 0) {
             this.fromImports.forEach(element => {
-                if (element.imports.length == 1) {
-                    output.push("from " + element.from + " import " + element.imports[0]);
-                } else {
-                    output.push("from " + element.from + " import (");
-                    for (let i = 0; i < element.imports.length; i++) {
-                        output.push("    " + element.imports[i] + ((i < element.imports.length - 1) ? "," : ""));
+                if (element.imports.length > 0) {
+                    if (element.imports.length == 1) {
+                        output.push("from " + element.from + " import " + element.imports[0]);
+                    } else {
+                        output.push("from " + element.from + " import (");
+                        for (let i = 0; i < element.imports.length; i++) {
+                            output.push("    " + element.imports[i] + ((i < element.imports.length - 1) ? "," : ""));
+                        }
+                        output.push(")");
                     }
-                    output.push(")");
-                }
-
+                } 
             });
         }
 

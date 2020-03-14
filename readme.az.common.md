@@ -12,11 +12,11 @@ cli:
               - operation
     cli-directive:
         - where:
-            operation: check_name_availability
+            operation: CheckNameAvailability
           hidden: true
         - where:
-            operationGroup: operations
-            operation: list
+            operationGroup: Operations
+            operation: List
           hidden: true
     flatten:
         cli-flatten-set-enabled: true

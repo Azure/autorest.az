@@ -28,9 +28,11 @@ def managed_network_managed_network_create(cmd, client,
                                            managed_network_name,
                                            location,
                                            tags=None,
-                                           properties=None):
-    properties = json.loads(properties) if isinstance(properties, str) else properties
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, properties=properties)
+                                           properties_scope_management_groups=None,
+                                           properties_scope_subscriptions=None,
+                                           properties_scope_virtual_networks=None,
+                                           properties_scope_subnets=None):
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, management_groups=properties_scope_management_groups, subscriptions=properties_scope_subscriptions, virtual_networks=properties_scope_virtual_networks, subnets=properties_scope_subnets)
 
 
 def managed_network_managed_network_update(cmd, client,

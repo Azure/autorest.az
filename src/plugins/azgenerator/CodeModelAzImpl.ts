@@ -6,7 +6,7 @@
 import { CodeModelAz, CommandExample, ExampleParam} from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Example } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
-import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
+import { Session, startSession, Host, Channel} from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, MergeSort, deepCopy } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity} from './ScenarioTool'
@@ -829,12 +829,18 @@ export class CodeModelCliImpl implements CodeModelAz
             if((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
                 this.submethodparameters = this.MethodParameter['schema']?.['elementType']?.properties;
                 for(let parent of values(this.MethodParameter['schema']?.['elementType']?.['parents']?.all)) {
+                    if(parent['properties'] == undefined || parent['properties'] == null) {
+                        continue;
+                    }
                     this.submethodparameters = this.submethodparameters.concat(parent['properties'])
                 }
             }
         } else if(this.MethodParameter_Type == SchemaType.Object) {
             this.submethodparameters = this.MethodParameter['schema']['properties'];
             for(let parent of values(this.MethodParameter['schema']?.['parents']?.all)) {
+                if(parent['properties'] == undefined || parent['properties'] == null) {
+                    continue;
+                }
                 this.submethodparameters = this.submethodparameters.concat(parent['properties'])
             }
         }

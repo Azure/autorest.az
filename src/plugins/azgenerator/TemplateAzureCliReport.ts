@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
-import { ParameterLocation } from "@azure-tools/codemodel";
+import { ParameterLocation, SchemaType } from "@azure-tools/codemodel";
 
 export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
     var output: string[] = [];
@@ -69,34 +69,47 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     mo.push("|Option|Type|Description|Path (SDK)|Path (swagger)|");
     mo.push("|------|----|-----------|----------|--------------|");
 
+    let allRequiredParam: Map<string, boolean> = new Map<string, boolean>();
+    let allNonRequiredParam: Map<string, boolean> = new Map<string, boolean>();
+    let requiredmo: Array<string> = [];
+    let nonrequiredmo: Array<string> = [];
+    if(model.SelectFirstMethod()) {
+        do {
+            if(!model.SelectFirstMethodParameter()) {
+                continue;;
+            }
 
-    if(!model.SelectFirstOption()) {
+            // first parameters that are required
+            do
+            {
+                if(model.MethodParameter_IsFlattened || model.MethodParameter_Type == SchemaType.Constant) {
+                    continue;
+                }
+                
+                if (model.MethodParameter_IsRequired)
+                {
+                    if(allRequiredParam.has(model.MethodParameter_Name)) {
+                        continue;
+                    }
+                    allRequiredParam.set(model.MethodParameter_Name, true);
+                    requiredmo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_MapsTo + "|");
+                } else {
+                    if(allNonRequiredParam.has(model.MethodParameter_Name)) {
+                        continue;
+                    }
+                    allNonRequiredParam.set(model.MethodParameter_Name, true);
+                    nonrequiredmo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_MapsTo + "|");
+                }
+            }
+            while (model.SelectNextMethodParameter());
+        } while(model.SelectNextMethod())
+    }
+ 
+    if(requiredmo.length <= 0 && nonrequiredmo.length < 0) {
         return mo;
     }
-
-    // first parameters that are required
-    do
-    {
-        if (model.Option_In != ParameterLocation.Path && model.Option_IsRequired)
-        {
-            mo.push("|**--" + model.Option_Name + "**|" + model.Option_Type + "|" + model.Option_Description + "|" + model.Option_PathSdk + "|" + model.Option_PathSwagger + "|");
-        }
-    }
-    while (model.SelectNextOption());
-
-    if(!model.SelectFirstOption()) {
-        return mo;
-    }
-
-    // following by required parameters
-    do {
-        if (model.Option_In != ParameterLocation.Path && !model.Option_IsRequired)
-        {
-            mo.push("|--" + model.Option_Name + "**|" + model.Option_Type + "|" + model.Option_Description + "|" + model.Option_PathSdk + "|" + model.Option_PathSwagger + "|");
-        }
-    }
-    while (model.SelectNextOption());
-
+    mo = mo.concat(requiredmo);
+    mo = mo.concat(nonrequiredmo);
 
     if (model.SelectFirstExample())
     {
