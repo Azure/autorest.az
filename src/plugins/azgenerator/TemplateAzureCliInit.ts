@@ -4,18 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliInit(model: CodeModelAz) : string[] {
-    var output: string[] = [];
+    let header: HeaderGenerator = new HeaderGenerator();
+    header.addFromImport("azure.cli.core", ["AzCommandsLoader"]);
+    var output: string[] = header.getLines();
 
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("");
-    output.push("from azure.cli.core import AzCommandsLoader");
-    output.push("");
-    output.push("from .generated._help import helps  # pylint: disable=unused-import");
     output.push("");
     output.push("");
     output.push("class " + model.Extension_NameClass + "CommandsLoader(AzCommandsLoader):");

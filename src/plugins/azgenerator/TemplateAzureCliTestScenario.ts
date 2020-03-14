@@ -6,9 +6,9 @@
 import { CodeModelAz } from "./CodeModelAz"
 import { PreparerEntity, getResourceKey } from "./ScenarioTool"
 import { ToSnakeCase } from '../../utils/helper';
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
-    let head: string[] = [];
     let class_info: string[] = [];
     let initiates: string[] = [];
     let body: string[] = [];
@@ -16,10 +16,8 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     model.GatherInternalResource();
     let config: any = model.Extension_TestScenario;
 
-    head.push("# --------------------------------------------------------------------------------------------");
-    head.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    head.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    head.push("# --------------------------------------------------------------------------------------------");
+    let header: HeaderGenerator = new HeaderGenerator();
+    var head: string[] = header.getLines();
     head.push("");
     head.push("import os");
     head.push("import unittest");

@@ -5,8 +5,6 @@
 
 from azure.cli.core import AzCommandsLoader
 
-from .generated._help import helps  # pylint: disable=unused-import
-
 
 class ManagedNetworkManagementClientCommandsLoader(AzCommandsLoader):
 

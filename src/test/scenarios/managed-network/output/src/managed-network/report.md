@@ -6,13 +6,11 @@ create a managed-network managed-network.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
-|**--_managed_network**|object|Parameters supplied to the create/update a Managed Network Resource|_managed_network|_managed_network|
-|**--location**|string|The geo-location where the resource lives|location|location|
-|**--tags**|dictionary|Resource tags|tags|tags|
-|**--management_groups**|array|The collection of management groups covered by the Managed Network|properties_scope_management_groups|management_groups|
-|**--subscriptions**|array|The collection of subscriptions covered by the Managed Network|properties_scope_subscriptions|subscriptions|
-|**--virtual_networks**|array|The collection of virtual nets covered by the Managed Network|properties_scope_virtual_networks|virtual_networks|
-|**--subnets**|array|The collection of  subnets covered by the Managed Network|properties_scope_subnets|subnets|
+|**--api-version**|constant|Api Version|/something/my_option|/something/myOption|
+|**--managed-network**|object|Parameters supplied to the create/update a Managed Network Resource|/something/my_option|/something/myOption|
+|--location**|string|The geo-location where the resource lives|/something/my_option|/something/myOption|
+|--tags**|dictionary|Resource tags|/something/my_option|/something/myOption|
+|--properties**|object|Properties of Managed Network|/something/my_option|/something/myOption|
 ### managed-network managed-network delete
 
 delete a managed-network managed-network.

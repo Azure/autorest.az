@@ -5,28 +5,27 @@
 
 import { CodeModelAz } from "./CodeModelAz";
 import { SchemaType, ParameterLocation } from "@azure-tools/codemodel";
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
-    var output: string[] = [];
-
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# pylint: disable=line-too-long");
-    output.push("# pylint: disable=too-many-statements");
-    output.push("# pylint: disable=too-many-lines");
-    output.push("# pylint: disable=too-many-locals");
-    output.push("# pylint: disable=unused-argument");
-    //output.push("from knack.util import CLIError");
+    let header: HeaderGenerator = new HeaderGenerator();
+    header.disableLineTooLong = true;
+    // can't be currently reproduced
+    // header.disableTooManyStatements = true;
+    header.disableTooManyLines = true;
+    
+    // this is no longer a problem
+    // header.disableTooManyLocals = true;
+    // header.disableUnusedArgument = true;
 
     let required: any = {};
     let body: string[] = GenerateBody(model, required);
 
     if (required['json']) {
-        output.push("import json");
+        header.addImport("json");
     }
 
+    let output = header.getLines();
     output = output.concat(body);
     output.push("");
 

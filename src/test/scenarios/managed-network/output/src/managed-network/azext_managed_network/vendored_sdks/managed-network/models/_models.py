@@ -207,8 +207,6 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
     :type spokes: list[~managed_network_management_client.models.ResourceId]
     :param mesh: Gets or sets the mesh group IDs.
     :type mesh: list[~managed_network_management_client.models.ResourceId]
-    :param id: Resource Id.
-    :type id: str
     """
 
     _validation = {
@@ -224,7 +222,6 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         'hub': {'key': 'hub', 'type': 'ResourceId'},
         'spokes': {'key': 'spokes', 'type': '[ResourceId]'},
         'mesh': {'key': 'mesh', 'type': '[ResourceId]'},
-        'id': {'key': 'hub.id', 'type': 'str'},
     }
 
     def __init__(
@@ -233,7 +230,6 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
     ):
         super(HubAndSpokePeeringPolicyProperties, self).__init__(**kwargs)
         self.type = 'HubAndSpokeTopology'
-        self.id = kwargs.get('id', None)
 
 
 class Resource(msrest.serialization.Model):
@@ -335,34 +331,14 @@ class ManagedNetwork(TrackedResource):
     :type location: str
     :param tags: A set of tags. Resource tags.
     :type tags: dict[str, str]
-    :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
-     include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
-    :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
-    :ivar etag: A unique read-only string that changes whenever the resource is updated.
-    :vartype etag: str
-    :ivar groups: The collection of connectivity related Managed Network Groups within the Managed
-     Network.
-    :vartype groups: list[~managed_network_management_client.models.ManagedNetworkGroup]
-    :ivar peerings: The collection of Managed Network Peering Policies within the Managed Network.
-    :vartype peerings: list[~managed_network_management_client.models.ManagedNetworkPeeringPolicy]
-    :param management_groups: The collection of management groups covered by the Managed Network.
-    :type management_groups: list[~managed_network_management_client.models.ResourceId]
-    :param subscriptions: The collection of subscriptions covered by the Managed Network.
-    :type subscriptions: list[~managed_network_management_client.models.ResourceId]
-    :param virtual_networks: The collection of virtual nets covered by the Managed Network.
-    :type virtual_networks: list[~managed_network_management_client.models.ResourceId]
-    :param subnets: The collection of  subnets covered by the Managed Network.
-    :type subnets: list[~managed_network_management_client.models.ResourceId]
+    :param properties: Properties of Managed Network.
+    :type properties: ~managed_network_management_client.models.ManagedNetworkProperties
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'provisioning_state': {'readonly': True},
-        'etag': {'readonly': True},
-        'groups': {'readonly': True},
-        'peerings': {'readonly': True},
     }
 
     _attribute_map = {
@@ -371,14 +347,7 @@ class ManagedNetwork(TrackedResource):
         'type': {'key': 'type', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'etag': {'key': 'properties.etag', 'type': 'str'},
-        'groups': {'key': 'properties.connectivity.groups', 'type': '[ManagedNetworkGroup]'},
-        'peerings': {'key': 'properties.connectivity.peerings', 'type': '[ManagedNetworkPeeringPolicy]'},
-        'management_groups': {'key': 'properties.scope.managementGroups', 'type': '[ResourceId]'},
-        'subscriptions': {'key': 'properties.scope.subscriptions', 'type': '[ResourceId]'},
-        'virtual_networks': {'key': 'properties.scope.virtualNetworks', 'type': '[ResourceId]'},
-        'subnets': {'key': 'properties.scope.subnets', 'type': '[ResourceId]'},
+        'properties': {'key': 'properties', 'type': 'ManagedNetworkProperties'},
     }
 
     def __init__(
@@ -386,14 +355,7 @@ class ManagedNetwork(TrackedResource):
         **kwargs
     ):
         super(ManagedNetwork, self).__init__(**kwargs)
-        self.provisioning_state = None
-        self.etag = None
-        self.groups = None
-        self.peerings = None
-        self.management_groups = kwargs.get('management_groups', None)
-        self.subscriptions = kwargs.get('subscriptions', None)
-        self.virtual_networks = kwargs.get('virtual_networks', None)
-        self.subnets = kwargs.get('subnets', None)
+        self.properties = kwargs.get('properties', None)
 
 
 class ProxyResource(Resource):
@@ -787,19 +749,13 @@ class Operation(msrest.serialization.Model):
 
     :param name: Operation name: {provider}/{resource}/{operation}.
     :type name: str
-    :param provider: Service provider: Microsoft.ManagedNetwork.
-    :type provider: str
-    :param resource: Resource on which the operation is performed: Profile, endpoint, etc.
-    :type resource: str
-    :param operation: Operation type: Read, write, delete, etc.
-    :type operation: str
+    :param display: The object that represents the operation.
+    :type display: ~managed_network_management_client.models.OperationDisplay
     """
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
-        'provider': {'key': 'display.provider', 'type': 'str'},
-        'resource': {'key': 'display.resource', 'type': 'str'},
-        'operation': {'key': 'display.operation', 'type': 'str'},
+        'display': {'key': 'display', 'type': 'OperationDisplay'},
     }
 
     def __init__(
@@ -808,9 +764,7 @@ class Operation(msrest.serialization.Model):
     ):
         super(Operation, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
-        self.provider = kwargs.get('provider', None)
-        self.resource = kwargs.get('resource', None)
-        self.operation = kwargs.get('operation', None)
+        self.display = kwargs.get('display', None)
 
 
 class OperationDisplay(msrest.serialization.Model):

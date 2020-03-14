@@ -4,17 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
+import { HeaderGenerator } from "./Header";
 
 export function GenerateTopLevelImport(model: CodeModelAz, name: string) : string[] {
-    var output: string[] = [];
+    let header: HeaderGenerator = new HeaderGenerator();
+    header.disableWildcardImport = true;
+    header.disableUnusedWildcardImport = true;
+    var output: string[] = header.getLines();
 
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("");
-    output.push("# pylint: disable=wildcard-import");
-    output.push("# pylint: disable=unused-wildcard-import");
     output.push("");
     output.push("from .generated." + name + " import *  # noqa: F403");
     output.push("try:");
