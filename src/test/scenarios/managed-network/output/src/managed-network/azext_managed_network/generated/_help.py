@@ -1,12 +1,11 @@
-# coding=utf-8
 # --------------------------------------------------------------------------------------------
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-
-# pylint: disable=too-many-lines
 # pylint: disable=line-too-long
-from knack.help_files import helps  # pylint: disable=unused-import
+# pylint: disable=too-many-lines
+
+from knack.help_files import helps
 
 
 helps['managed-network managed-network'] = """
@@ -39,21 +38,18 @@ helps['managed-network managed-network create'] = """
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network managed-network create --location "eastus"
-               --properties-scope-management-groups
-               id=/providers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000
-               --properties-scope-management-groups
-               id=/providers/Microsoft.Management/managementGroups/20000000-0002-0000-0000-000000000000
-               --properties-scope-subnets id=/subscriptions/subscriptionC/resourceGroups/myResourceGroup/\\
-               providers/Microsoft.Network/virtualNetworks/VnetC/subnets/subnetA
-               --properties-scope-subnets id=/subscriptions/subscriptionC/resourceGroups/myResourceGroup/\\
-               providers/Microsoft.Network/virtualNetworks/VnetC/subnets/subnetB
-               --properties-scope-subscriptions id=subscriptionA --properties-scope-subscriptions
-               id=subscriptionB --properties-scope-virtual-networks id=/subscriptions/subscriptionC/resou\\
-               rceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA
-               --properties-scope-virtual-networks id=/subscriptions/subscriptionC/resourceGroups/myResou\\
-               rceGroup/providers/Microsoft.Network/virtualNetworks/VnetB --managed-network-name
-               "myManagedNetwork" --resource-group "myResourceGroup"
+               az managed-network managed-network create --location "eastus" --properties "{\\"scope\\":{\\"
+               managementGroups\\":[{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20000000-00
+               01-0000-0000-000000000000\\"},{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20
+               000000-0002-0000-0000-000000000000\\"}],\\"subnets\\":[{\\"id\\":\\"/subscriptions/subscriptionC
+               /resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC/subnets/
+               subnetA\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers
+               /Microsoft.Network/virtualNetworks/VnetC/subnets/subnetB\\"}],\\"subscriptions\\":[{\\"id\\":\\"
+               subscriptionA\\"},{\\"id\\":\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\":\\"/subscriptions
+               /subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/
+               VnetA\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/M
+               icrosoft.Network/virtualNetworks/VnetB\\"}]}}" --managed-network-name "myManagedNetwork"
+               --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network update'] = """
@@ -165,13 +161,13 @@ helps['managed-network managed-network-group create'] = """
     examples:
       - name: Create/Update Managed Network Group
         text: |-
-               az managed-network managed-network-group create --properties-subnets id=/subscriptionB/res\\
-               ourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subn\\
-               etA --properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/provide\\
-               rs/Microsoft.Network/virtualNetworks/VnetA --properties-virtual-networks id=/subscriptionB\\
-               /resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB
-               --group-name "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork"
-               --resource-group "myResourceGroup"
+               az managed-network managed-network-group create --properties-management-groups "[]"
+               --properties-subnets id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.\\
+               Network/virtualNetworks/VnetA/subnets/subnetA --properties-virtual-networks id=/subscripti\\
+               onB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA
+               --properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/M\\
+               icrosoft.Network/virtualNetworks/VnetB --group-name "myManagedNetworkGroup1"
+               --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-group update'] = """
@@ -180,13 +176,13 @@ helps['managed-network managed-network-group update'] = """
     examples:
       - name: Create/Update Managed Network Group
         text: |-
-               az managed-network managed-network-group create --properties-subnets id=/subscriptionB/res\\
-               ourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subn\\
-               etA --properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/provide\\
-               rs/Microsoft.Network/virtualNetworks/VnetA --properties-virtual-networks id=/subscriptionB\\
-               /resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB
-               --group-name "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork"
-               --resource-group "myResourceGroup"
+               az managed-network managed-network-group create --properties-management-groups "[]"
+               --properties-subnets id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.\\
+               Network/virtualNetworks/VnetA/subnets/subnetA --properties-virtual-networks id=/subscripti\\
+               onB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA
+               --properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/M\\
+               icrosoft.Network/virtualNetworks/VnetB --group-name "myManagedNetworkGroup1"
+               --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-group delete'] = """

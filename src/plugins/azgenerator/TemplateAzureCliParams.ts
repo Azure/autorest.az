@@ -6,17 +6,19 @@
 import { CodeModelAz } from "./CodeModelAz"
 import { EscapeString, ToCamelCase, Capitalize } from "../../utils/helper";
 import { SchemaType } from "@azure-tools/codemodel";
+import { HeaderGenerator } from "./Header";
 
 
 let hasActions: boolean = false;
 let hasBoolean: boolean = false;
 let hasEnum: boolean = false;
 let hasJson: boolean = true;
+let hasResourceGroup: boolean = false;
+let hasLocation = false;
+let hasTags = false;
 let actions: string[] = [];
 
 export function GenerateAzureCliParams(model: CodeModelAz): string[] {
-    let output: string[] = [];
-        
     var output_args: string[] = [];
 
     output_args.push("");
@@ -39,37 +41,31 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
             }
         } while (model.SelectNextCommandGroup());
     }
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# pylint: disable=line-too-long");
-    output.push("# pylint: disable=too-many-lines");
-    output.push("# pylint: disable=too-many-statements");
-    output.push("");
-    //output.push("from knack.arguments import CLIArgumentType");
 
-    if (hasJson) output.push("from knack.arguments import CLIArgumentType");
-    output.push("from azure.cli.core.commands.parameters import (");
-    output.push("    tags_type,");
-    //output.push("    get_resource_name_completion_list,");
-    //output.push("    quotes,");
-    if (hasBoolean) output.push("    get_three_state_flag,");
-    if (hasEnum) output.push("    get_enum_type,");
-    
-    output.push("    resource_group_name_type,");
-    output.push("    get_location_type");
-    output.push(")");
+    let header: HeaderGenerator = new HeaderGenerator();
+    header.disableLineTooLong = true;
+    header.disableTooManyLines = true;
+    header.disableTooManyStatements = true;
+
+    if (hasJson) {
+        header.addFromImport("knack.arguments", ["CLIArgumentType"]);
+    }
+
+    let parameterImports: string[] = [];
+    if (hasTags) parameterImports.push("tags_type");
+    if (hasBoolean) parameterImports.push("get_three_state_flag");
+    if (hasEnum) parameterImports.push("get_enum_type");
+    if (hasResourceGroup) parameterImports.push("resource_group_name_type");
+    if (hasLocation) parameterImports.push("get_location_type");
+
+    header.addFromImport("azure.cli.core.commands.parameters", parameterImports);
 
     if (hasActions) {
-        output.push("from azext_" + model.Extension_NameUnderscored + ".action import (")
-
-        for (let idx: number = 0; idx < actions.length; idx++) {
-            let action = actions[idx];
-            output.push("    " + action + (idx < actions.length - 1 ? "," : ""));
-        }
-        output.push(")")
+        header.addFromImport("azext_" + model.Extension_NameUnderscored + ".action", actions);
     }
+
+    var output: string[] = header.getLines();
+
 
     output = output.concat(output_args);
 
@@ -133,21 +129,25 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         });
                         argument += "])";
                     }
+
+                    let hasJsonLastTime = false;
         
                     if (parameterName == "resource_group_name") {
                         argument += ", resource_group_name_type";
+                        hasResourceGroup = true;
                     } else if (parameterName == "tags") {
                         argument += ", tags_type";
+                        hasTags = true;
                     } else if (parameterName == "location") {
                         argument += ", arg_type=get_location_type(self.cli_ctx)";
-                    } else if(model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                        hasLocation = true;
+                    } else if (model.MethodParameter_IsSimpleArray) {
+                        argument += ", nargs='+'";
+                    } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         hasJson = true;
-                        argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "'], help='" + EscapeString(model.MethodParameter_Description) + "')";
-                    } else {
-                        argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
-                    }
-
-                    if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
+                        hasJsonLastTime = true;
+                        argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "']";
+                    } else if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
                         let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
                         argument += ", action=" + actionName;
                         hasActions = true;
@@ -157,9 +157,13 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         }
                         argument += ", nargs='+'";
                     }
-                        
                     
-        
+                    argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
+                    if(hasJsonLastTime) {
+                        argument += ")";
+                        hasJsonLastTime = false;
+                    }            
+                    
                     argument += ")";
         
                     output_args.push(argument);

@@ -3,10 +3,8 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 # pylint: disable=line-too-long
-# pylint: disable=too-many-statements
 # pylint: disable=too-many-lines
-# pylint: disable=too-many-locals
-# pylint: disable=unused-argument
+
 import json
 
 
@@ -30,11 +28,9 @@ def managed_network_managed_network_create(cmd, client,
                                            managed_network_name,
                                            location,
                                            tags=None,
-                                           properties_scope_management_groups=None,
-                                           properties_scope_subscriptions=None,
-                                           properties_scope_virtual_networks=None,
-                                           properties_scope_subnets=None):
-    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, management_groups=properties_scope_management_groups, subscriptions=properties_scope_subscriptions, virtual_networks=properties_scope_virtual_networks, subnets=properties_scope_subnets)
+                                           properties=None):
+    properties = json.loads(properties) if isinstance(properties, str) else properties
+    return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, properties=properties)
 
 
 def managed_network_managed_network_update(cmd, client,
@@ -107,6 +103,7 @@ def managed_network_managed_network_group_create(cmd, client,
                                                  properties_subscriptions=None,
                                                  properties_virtual_networks=None,
                                                  properties_subnets=None):
+    properties_management_groups = json.loads(properties_management_groups) if isinstance(properties_management_groups, str) else properties_management_groups
     return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=group_name, location=location, management_groups=properties_management_groups, subscriptions=properties_subscriptions, virtual_networks=properties_virtual_networks, subnets=properties_subnets)
 
 
@@ -119,6 +116,7 @@ def managed_network_managed_network_group_update(cmd, client,
                                                  properties_subscriptions=None,
                                                  properties_virtual_networks=None,
                                                  properties_subnets=None):
+    properties_management_groups = json.loads(properties_management_groups) if isinstance(properties_management_groups, str) else properties_management_groups
     return client.begin_create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, managed_network_group_name=group_name, location=location, management_groups=properties_management_groups, subscriptions=properties_subscriptions, virtual_networks=properties_virtual_networks, subnets=properties_subnets)
 
 

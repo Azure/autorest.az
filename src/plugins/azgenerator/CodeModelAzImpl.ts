@@ -827,12 +827,18 @@ export class CodeModelCliImpl implements CodeModelAz
             return false;
 
         this.submethodparameters = null;
-        if(this.MethodParameter_Type == SchemaType.Array) {
+        if(this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Dictionary) {
             if((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
                 this.submethodparameters = this.MethodParameter['schema']?.['elementType']?.properties;
+                for(let parent of values(this.MethodParameter['schema']?.['elementType']?.['parents']?.all)) {
+                    this.submethodparameters = this.submethodparameters.concat(parent['properties'])
+                }
             }
-        } if(this.MethodParameter_Type == SchemaType.Object) {
+        } else if(this.MethodParameter_Type == SchemaType.Object) {
             this.submethodparameters = this.MethodParameter['schema']['properties'];
+            for(let parent of values(this.MethodParameter['schema']?.['parents']?.all)) {
+                this.submethodparameters = this.submethodparameters.concat(parent['properties'])
+            }
         }
         if(this.submethodparameters == null) {
             return false;
@@ -911,43 +917,96 @@ export class CodeModelCliImpl implements CodeModelAz
         // 2. or objects with arrays as properties but has simple element type 
         // 3. or arrays with simple element types
         // 4. or arrays with object element types but has simple properties
+        // 5. or dicts with simple element properties
+        // 6. or dicts with arrays as element properties but has simple element type 
         if(this.MethodParameter_IsFlattened) {
             return false;
         }
+        if(this.MethodParameter.language['cli'].json == true) {
+            return false;
+        }
         if (this.MethodParameter_Type == SchemaType.Array) {
-            if ((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
+            if ((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object || (this.MethodParameter['schema'])['elementType'].type == SchemaType.Dictionary) {
                 for (let p of values(this.MethodParameter['schema']?.['elementType']?.properties)) {
-                    if (p['schema'].type == SchemaType.Object) {
+                    if (p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
                         return false;
                     } else if(p['schema'].type == SchemaType.Array) {
                         for(let mp of values(p['schema']?.['elementType']?.properties)) {
-                            if(mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array) {
+                            if(mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
                                 return false;
+                            }
+                        }
+                        for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                            for(let pp of values(parent['properties'])) {
+                                if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                                    return false;
+                                }
                             }
                         }
                     }
                 }
                 return true;
             }
-        } if (this.MethodParameter_Type == SchemaType.Object) {
+        } else if (this.MethodParameter_Type == SchemaType.Object) {
             if (this.MethodParameter.schema.children != null && this.MethodParameter.schema.discriminator != null) {
                 return false;
             }
             for(let p of values(this.MethodParameter['schema']['properties'])) {
-                if(p['schema'].type == SchemaType.Object) {
+                if(p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
                     // objects.objects
                     return false;
                 } else if(p['schema'].type == SchemaType.Array) {
                     for(let mp of values(p['schema']?.['elementType']?.properties)) {
-                        if(mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array) {
+                        if(mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
                             return false;
+                        }
+                    }
+                    for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                        for(let pp of values(parent['properties'])) {
+                            if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                                return false;
+                            }
                         }
                     }
                 }
             }
             return true;
+        } else if (this.MethodParameter_Type == SchemaType.Dictionary) {
+            if (this.MethodParameter.schema.children != null && this.MethodParameter.schema.discriminator != null) {
+                return false;
+            }
+            let p = this.MethodParameter['schema']['elementType'];
+            if (p.type == SchemaType.Object || p.type == SchemaType.Dictionary) {
+                // dicts.objects or dicts.dictionaries 
+                return false;
+            } else if (p.type == SchemaType.Array) {
+                for (let mp of values(p.properties)) {
+                    if (mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
+                        return false;
+                    }
+                }
+                for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                    for(let pp of values(parent['properties'])) {
+                        if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;                
         }
         return false; 
+    }
+
+    public get MethodParameter_IsSimpleArray(): boolean
+    {
+        if(this.MethodParameter_Type == SchemaType.Array) {
+            let elementType = this.MethodParameter['schema']['elementType'].type;
+            if(elementType != SchemaType.Object && elementType != SchemaType.Array && elementType != SchemaType.Dictionary) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public get MethodParameter_IsList(): boolean
@@ -955,7 +1014,7 @@ export class CodeModelCliImpl implements CodeModelAz
         if(this.MethodParameter_IsFlattened) {
             return false;
         }
-        if (this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Object) {
+        if (this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Object || this.MethodParameter_Type == SchemaType.Dictionary) {
             return true;
         }
         return false;

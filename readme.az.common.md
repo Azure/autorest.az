@@ -18,4 +18,9 @@ cli:
             operationGroup: operations
             operation: list
           hidden: true
+    flatten:
+        cli-flatten-set-enabled: true
+        cli-flatten-payload: true
+        cli-flatten-schema: false
+        cli-flatten-all-overwrite-swagger: false
 ```

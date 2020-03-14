@@ -1,11 +1,9 @@
 import { CodeModelAz } from "./CodeModelAz"
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliTestPrepare(model: CodeModelAz) : string[] {
-    var output: string[] = [];
-    output.push("# --------------------------------------------------------------------------------------------");
-    output.push("# Copyright (c) Microsoft Corporation. All rights reserved.");
-    output.push("# Licensed under the MIT License. See License.txt in the project root for license information.");
-    output.push("# --------------------------------------------------------------------------------------------");
+    let header: HeaderGenerator = new HeaderGenerator();
+    var output: string[] = header.getLines();
     output.push("");
     output.push("import os");
     output.push("from datetime import datetime");
