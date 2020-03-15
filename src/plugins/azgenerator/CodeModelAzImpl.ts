@@ -6,7 +6,7 @@
 import { CodeModelAz, CommandExample, ExampleParam} from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Example } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
-import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
+import { Session, startSession, Host, Channel} from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, MergeSort, deepCopy } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity} from './ScenarioTool'
@@ -831,12 +831,18 @@ export class CodeModelCliImpl implements CodeModelAz
             if((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
                 this.submethodparameters = this.MethodParameter['schema']?.['elementType']?.properties;
                 for(let parent of values(this.MethodParameter['schema']?.['elementType']?.['parents']?.all)) {
+                    if(parent['properties'] == undefined || parent['properties'] == null) {
+                        continue;
+                    }
                     this.submethodparameters = this.submethodparameters.concat(parent['properties'])
                 }
             }
         } else if(this.MethodParameter_Type == SchemaType.Object) {
             this.submethodparameters = this.MethodParameter['schema']['properties'];
             for(let parent of values(this.MethodParameter['schema']?.['parents']?.all)) {
+                if(parent['properties'] == undefined || parent['properties'] == null) {
+                    continue;
+                }
                 this.submethodparameters = this.submethodparameters.concat(parent['properties'])
             }
         }
@@ -1398,7 +1404,7 @@ export class CodeModelCliImpl implements CodeModelAz
 
         //find dependency relationships of internal_resources
         this.GetAllMethods(null, () => {
-            if (this.Get_Method_Name("default").toLowerCase() == 'createorupdate') {
+            if (this.Get_Method_Name("default").toLowerCase().startsWith('create')) {
                 let depend_resources = [];
                 let depend_parameters = [];
 
@@ -1421,7 +1427,7 @@ export class CodeModelCliImpl implements CodeModelAz
                         if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
                             let param_name = this.MethodParameter.language["default"].name;
                             let on_resource = this.resource_pool.isResource(param_name);
-                            if (on_resource && (on_resource != this.CommandGroup_Key) && depend_resources.indexOf(on_resource)<0)
+                            if (on_resource && (on_resource != this.CommandGroup_Key) && depend_resources.indexOf(on_resource)<0) {
                                 // the resource is a dependency only when it's a parameter in an example.
                                 for (let example of this.GetExamples()) {
                                     for (let param of example.Parameters) {
@@ -1431,6 +1437,7 @@ export class CodeModelCliImpl implements CodeModelAz
                                         }
                                     }
                                 }
+                            }
                         }
                     } while (this.SelectNextMethodParameter())
                 }
@@ -1457,16 +1464,20 @@ export class CodeModelCliImpl implements CodeModelAz
             }
 
             if (examples_a[0].ResourceClassName == examples_b[0].ResourceClassName) {
-                if (examples_b[0].Method.toLowerCase() == "create") {
+                if (examples_b[0].Method.toLowerCase().indexOf("create") >= 0 &&
+                    examples_a[0].Method.toLowerCase().indexOf("create") < 0) {
                     return 1;
                 }
-                else if (examples_b[0].Method.toLowerCase() == "delete") {
+                else if (examples_b[0].Method.toLowerCase().indexOf("delete") >= 0 &&
+                    examples_a[0].Method.toLowerCase().indexOf("delete") < 0) {
                     return -1;
                 }
-                else if (examples_a[0].Method.toLowerCase() == "create") {
+                else if (examples_a[0].Method.toLowerCase().indexOf("create") >= 0 &&
+                    examples_b[0].Method.toLowerCase().indexOf("create") < 0) {
                     return -1;
                 }
-                else if (examples_a[0].Method.toLowerCase() == "delete") {
+                else if (examples_a[0].Method.toLowerCase().indexOf("delete") >= 0 &&
+                    examples_b[0].Method.toLowerCase().indexOf("delete") < 0) {
                     return 1;
                 }
                 else {
@@ -1498,10 +1509,10 @@ export class CodeModelCliImpl implements CodeModelAz
             return 0;
         };
 
-        let i =0;
-        while (i<this._testScenario.length) {
-            for (let j = i+1; j<this._testScenario.length;j++) {
-                if (compare(this._testScenario[i], this._testScenario[j]) >0) {
+        let i = 0;
+        while (i < this._testScenario.length) {
+            for (let j = i + 1; j < this._testScenario.length; j++) {
+                if (compare(this._testScenario[i], this._testScenario[j]) > 0 && compare(this._testScenario[j], this._testScenario[i]) < 0) {
                     let tmp = this._testScenario[i];
                     this._testScenario[i] = this._testScenario[j];
                     this._testScenario[j] = tmp;
