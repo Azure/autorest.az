@@ -1,5 +1,5 @@
 ﻿import { AnyARecord } from "dns";
-import { Example } from "@azure-tools/codemodel";
+import { Example, Parameter } from "@azure-tools/codemodel";
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -98,7 +98,9 @@ export interface CodeModelAz
     MethodParameter_IsList: boolean;
     MethodParameter_IsSimpleArray: boolean;
     MethodParameter_IsListOfSimple: boolean;
-    MethodParameter: any;
+    MethodParameter: Parameter;
+    SubMethodParameter: Parameter;
+
     MethodParameter_In: string;
     MethodParameter_IsHidden: boolean;
     MethodParameter_IsRequired: boolean;
