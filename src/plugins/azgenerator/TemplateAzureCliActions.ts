@@ -66,6 +66,12 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                                 foundProperties = true;
                                                 let ifkv = "if";
                                                 do {
+                                                    if(model.SubMethodParameter['readOnly']) {
+                                                        continue;
+                                                    }
+                                                    if(model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                                                        continue;
+                                                    }
                                                     output.push("            " + ifkv + " kl == '" + model.MethodParameter_Name + "':");
                                                     output.push("                d['" + model.MethodParameter_NamePython + "'] = v");
                                                     ifkv = "elif";

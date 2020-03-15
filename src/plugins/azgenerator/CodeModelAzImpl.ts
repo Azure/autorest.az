@@ -954,7 +954,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 return true;
             }
         } else if (this.MethodParameter_Type == SchemaType.Object) {
-            if (this.MethodParameter.schema.children != null && this.MethodParameter.schema.discriminator != null) {
+            if (this.MethodParameter.schema['children'] != null && this.MethodParameter.schema['discriminator'] != null) {
                 return false;
             }
             for(let p of values(this.MethodParameter['schema']['properties'])) {
@@ -978,7 +978,7 @@ export class CodeModelCliImpl implements CodeModelAz
             }
             return true;
         } else if (this.MethodParameter_Type == SchemaType.Dictionary) {
-            if (this.MethodParameter.schema.children != null && this.MethodParameter.schema.discriminator != null) {
+            if (this.MethodParameter.schema['children'] != null && this.MethodParameter.schema['discriminator'] != null) {
                 return false;
             }
             let p = this.MethodParameter['schema']['elementType'];
@@ -1028,8 +1028,15 @@ export class CodeModelCliImpl implements CodeModelAz
 
     
 
-    public get MethodParameter(): any {
+    public get MethodParameter(): Parameter {
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex];
+    }
+
+    public get SubMethodParameter(): Parameter {
+        if (this.submethodparameters != null) {
+            return this.submethodparameters[this.currentSubOptionIndex];
+        }
+        return null;
     }
 
     public get MethodParameter_EnumValues(): string[]
