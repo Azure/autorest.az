@@ -1214,20 +1214,20 @@ export class CodeModelCliImpl implements CodeModelAz
                     for (let k in value) {
                         let cliName = null;
                         if (methodParam.submethodparameters) {
-                        for (let submethodProperty of methodParam.submethodparameters) {
-                            if (submethodProperty.language.default.name.toLowerCase() == k.toLowerCase()) {
-                                    cliName = submethodProperty.language['az'].name;
+                            for (let submethodProperty of methodParam.submethodparameters) {
+                                if (submethodProperty.language.default.name.toLowerCase() == k.toLowerCase()) {
+                                        cliName = submethodProperty.language['az'].name;
+                                        break;
+                                }
                             }
                         }
-                            if (!cliName)    continue; // skip if no submethodProperty matched.
-                        if (ret.length > 0) {
-                            ret += " ";
-                        }
-                        }
-                        else {
+                        if (!cliName) {
                             // If no submethodparameters, keep all KEYs as the origin name
                             // This is for type of schema.Dictionary
                             cliName = k; 
+                        }
+                        if (ret.length > 0) {
+                            ret += " ";
                         }
                         //let v = JSON.stringify(value[k]).split(/[\r\n]+/).join("");
                         //ret += `${k}=${v.substr(1, v.length-2)}`;
