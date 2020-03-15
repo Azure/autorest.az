@@ -46,7 +46,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                         if (model.MethodParameter_Type == SchemaType.Array) {
                                             output.push("        super(" + "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name)) + ", self).__call__(parser, namespace, action, option_string)");
                                         } else {
-                                            output.push("        namespace." + model.MethodParameter_Name.toLowerCase() + " = action");
+                                            output.push("        namespace." + model.MethodParameter_Name.toLowerCase().replace(/-/g, '_') + " = action");
                                         }
                                         
                                         output.push("");
@@ -66,7 +66,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                                 foundProperties = true;
                                                 let ifkv = "if";
                                                 do {
-                                                    output.push("            " + ifkv + " kl == '" + model.MethodParameter_NamePython + "':");
+                                                    output.push("            " + ifkv + " kl == '" + model.MethodParameter_Name + "':");
                                                     output.push("                d['" + model.MethodParameter_NamePython + "'] = v");
                                                     ifkv = "elif";
                                                 } while (model.SelectNextMethodParameter());

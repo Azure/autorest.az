@@ -5,7 +5,7 @@ See documentation [here](doc/00-overview.md)
 ``` yaml
 use-extension:
   "@autorest/python": "5.0.0-dev.20200211.1"
-  "@autorest/clicommon": "0.3.7"
+  "@autorest/clicommon": "0.3.8"
   #"@autorest/python": "latest"
   
 python:
@@ -48,8 +48,6 @@ pipeline:
             #- az/modifiers
             - az/azgenerator
         scope: scope-az
-
-scope-clicommon: false
 
 scope-az:
     is-object: false
