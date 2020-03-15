@@ -71,10 +71,12 @@ export function TopoSortResource() {
     //let reverse_depends = { };
     let depends = deepCopy(resourceClassDepends);
     while (ret.length < Object.keys(resourceClassDepends).length) {
+        let decreasing = false;
         for (let a of resources) {
             if (a in depends && depends[a].length == 0) {
                 ret.push(a);
                 delete depends[a];
+                decreasing = true;
                 for (let b in depends) {
                     for (let i = 0; i < depends[b].length; i++) {
                         if (depends[b][i] == a) {
@@ -84,6 +86,13 @@ export function TopoSortResource() {
                     }
                 }
             }
+        }
+        if (!decreasing) {
+            // append all remains if there is loop dependency.
+            for (let d in depends) {
+                ret.push(d);
+            }
+            break;
         }
     }
     return ret;

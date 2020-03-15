@@ -1223,27 +1223,28 @@ export class CodeModelCliImpl implements CodeModelAz
                     }
                 }
                 else if (typeof value == 'object') {    // KEY=VALUE form
-                    if (!methodParam.submethodparameters)
-                    {
-                        // should never been here
-                        console.warn("No submethodparameters for KEY=VALUE params")
-                        return;
-                    }
                     let ret = "";
                     for (let k in value) {
-                        let pythonName = null;
-                        for (let submethodProperty of methodParam.submethodparameters) {
-                            if (submethodProperty.language.default.name.toLowerCase() == k.toLowerCase()) {
-                                pythonName = submethodProperty.language.python.name;
+                        let cliName = null;
+                        if (methodParam.submethodparameters) {
+                            for (let submethodProperty of methodParam.submethodparameters) {
+                                if (submethodProperty.language.default.name.toLowerCase() == k.toLowerCase()) {
+                                        cliName = submethodProperty.language['az'].name;
+                                        break;
+                                }
                             }
                         }
-                        if (!pythonName)    continue; // skip if no submethodProperty matched.
+                        if (!cliName) {
+                            // If no submethodparameters, keep all KEYs as the origin name
+                            // This is for type of schema.Dictionary
+                            cliName = k; 
+                        }
                         if (ret.length > 0) {
                             ret += " ";
                         }
                         //let v = JSON.stringify(value[k]).split(/[\r\n]+/).join("");
                         //ret += `${k}=${v.substr(1, v.length-2)}`;
-                        ret += `${pythonName}=${value[k]}`;
+                        ret += `${cliName}=${value[k]}`;
                     }
                     if (ret.length>0) {
                         example_param.push(new ExampleParam(name, ret, false, true, defaultName));
@@ -1363,7 +1364,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
                 param_value = replaced_value;
             }
-            let slp = JSON.stringify(param_value).split(/[\r\n]+/).join("").split("\\").join("\\\\").split("'").join("\\'");
+            let slp = this.ToJsonString(param_value);
             if (param.isKeyValues) {
                 slp = slp.substr(1, slp.length-2); // remove quots 
             }
@@ -1371,6 +1372,10 @@ export class CodeModelCliImpl implements CodeModelAz
         }
 
         return parameters;
+    }
+
+    private ToJsonString(str: string): string {
+        return JSON.stringify(str).split(/[\r\n]+/).join("").split("\\").join("\\\\").split("'").join("\\'")
     }
 
     public GetPreparerEntities(): any[] {
