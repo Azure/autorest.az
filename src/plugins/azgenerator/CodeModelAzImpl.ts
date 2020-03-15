@@ -1522,12 +1522,16 @@ export class CodeModelCliImpl implements CodeModelAz
         };
 
         let i = 0;
-        while (i < this._testScenario.length) {
+        let swapped = new Set<string>();    //for loop detecting
+        while (i < this._testScenario.length) { 
             for (let j = i + 1; j < this._testScenario.length; j++) {
-                if (compare(this._testScenario[i], this._testScenario[j]) > 0 && compare(this._testScenario[j], this._testScenario[i]) < 0) {
+                let swapId = `${i}<->${j}`;
+                if (swapped.has(swapId))    continue; // has loop, ignore the compare.
+                if (compare(this._testScenario[i], this._testScenario[j]) > 0) {
                     let tmp = this._testScenario[i];
                     this._testScenario[i] = this._testScenario[j];
                     this._testScenario[j] = tmp;
+                    swapped.add(swapId);
                     i--;
                     break;
                 }
