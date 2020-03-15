@@ -1441,16 +1441,20 @@ export class CodeModelCliImpl implements CodeModelAz
             }
 
             if (examples_a[0].ResourceClassName == examples_b[0].ResourceClassName) {
-                if (examples_b[0].Method.toLowerCase() == "create") {
+                if (examples_b[0].Method.toLowerCase().indexOf("create") >= 0 &&
+                    examples_a[0].Method.toLowerCase().indexOf("create") < 0) {
                     return 1;
                 }
-                else if (examples_b[0].Method.toLowerCase() == "delete") {
+                else if (examples_b[0].Method.toLowerCase().indexOf("delete") >= 0 &&
+                    examples_a[0].Method.toLowerCase().indexOf("delete") < 0) {
                     return -1;
                 }
-                else if (examples_a[0].Method.toLowerCase() == "create") {
+                else if (examples_a[0].Method.toLowerCase().indexOf("create") >= 0 &&
+                    examples_b[0].Method.toLowerCase().indexOf("create") < 0) {
                     return -1;
                 }
-                else if (examples_a[0].Method.toLowerCase() == "delete") {
+                else if (examples_a[0].Method.toLowerCase().indexOf("delete") >= 0 &&
+                    examples_b[0].Method.toLowerCase().indexOf("delete") < 0) {
                     return 1;
                 }
                 else {
@@ -1483,14 +1487,14 @@ export class CodeModelCliImpl implements CodeModelAz
         };
 
         let i = 0;
-        while (i<this._testScenario.length) {
-            for (let j = i+1; j<this._testScenario.length;j++) {
-                if (compare(this._testScenario[i], this._testScenario[j]) >0) {
+        while (i < this._testScenario.length) {
+            for (let j = i + 1; j < this._testScenario.length; j++) {
+                if (compare(this._testScenario[i], this._testScenario[j]) > 0 && compare(this._testScenario[j], this._testScenario[i]) < 0) {
                     let tmp = this._testScenario[i];
                     this._testScenario[i] = this._testScenario[j];
                     this._testScenario[j] = tmp;
-                    //i--;
-                    //break;
+                    i--;
+                    break;
                 }
             }
             i++;
