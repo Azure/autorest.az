@@ -656,6 +656,18 @@ export class CodeModelCliImpl implements CodeModelAz
         return name;
     }
 
+    public get MethodParameter_NameAz(): string
+    {
+        let name = "";
+        if (this.submethodparameters != null) {
+            name = this.submethodparameters[this.currentSubOptionIndex].language['az'].name;
+        } else {
+            name = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].language['az'].name;
+        }
+        return name;
+    }
+
+
     public get MethodParameter_NamePython(): string
     {
         if (this.submethodparameters != null)

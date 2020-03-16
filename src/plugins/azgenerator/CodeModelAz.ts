@@ -75,6 +75,7 @@ export interface CodeModelAz
     ExitSubMethodParameters(): boolean;
 
     MethodParameter_Name: string;
+    MethodParameter_NameAz: string;
     MethodParameter_NamePython: string
     MethodParameter_MapsTo: string;
     MethodParameter_Description: string;
