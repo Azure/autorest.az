@@ -1270,7 +1270,7 @@ export class CodeModelCliImpl implements CodeModelAz
         }
 
         let isCreate = (example: CommandExample): boolean => {
-            return example.HttpMethod == 'post';
+            return example.HttpMethod == 'post' || example.HttpMethod == 'put';
         }
 
         let isDelete = (example: CommandExample): boolean => {
