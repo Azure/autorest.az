@@ -29,6 +29,7 @@ export class CommandExample {
     // public MethodName: string;
     public Path: string;
     public ResourceClassName: string;
+    public HttpMethod: string;    // Get, Post, Put ...
 }
 
 export interface CodeModelAz

@@ -738,6 +738,12 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.protocol?.http?.path;
     }
 
+    public get Method_HttpMethod(): string
+    {
+        let ret = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.protocol?.http?.method || "unknown";
+        return ret.toLowerCase();
+    }
+
     public Get_Method_Name(language="az"): string
     {
        return  this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].language[language].name;
@@ -1344,6 +1350,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 example.Id = id;
                 example.Title = example_obj.title || id;
                 example.Path = this.Method_Path;
+                example.HttpMethod = this.Method_HttpMethod;
                 example.ResourceClassName = this.CommandGroup_Key;
                 let params: ExampleParam[] = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
@@ -1469,6 +1476,14 @@ export class CodeModelCliImpl implements CodeModelAz
             return this.resource_pool.isDependResource(example_a.ResourceClassName, example_b.ResourceClassName);
         }
 
+        let isCreate = (example: CommandExample): boolean => {
+            return example.HttpMethod == 'post';
+        }
+
+        let isDelete = (example: CommandExample): boolean => {
+            return example.HttpMethod == 'delete';
+        }
+
         // stable sort
         let compare = (config_a: object, config_b: object): number => {
             let examples_a: CommandExample[] = this.GetAllExamples(config_a['name']);
@@ -1478,20 +1493,16 @@ export class CodeModelCliImpl implements CodeModelAz
             }
 
             if (examples_a[0].ResourceClassName == examples_b[0].ResourceClassName) {
-                if (examples_b[0].Method.toLowerCase().indexOf("create") >= 0 &&
-                    examples_a[0].Method.toLowerCase().indexOf("create") < 0) {
+                if (isCreate(examples_b[0]) && !isCreate(examples_a[0])) {
                     return 1;
                 }
-                else if (examples_b[0].Method.toLowerCase().indexOf("delete") >= 0 &&
-                    examples_a[0].Method.toLowerCase().indexOf("delete") < 0) {
+                else if (isDelete(examples_b[0]) && !isDelete(examples_a[0])) {
                     return -1;
                 }
-                else if (examples_a[0].Method.toLowerCase().indexOf("create") >= 0 &&
-                    examples_b[0].Method.toLowerCase().indexOf("create") < 0) {
+                else if (isCreate(examples_a[0]) && !isCreate(examples_b[0])) {
                     return -1;
                 }
-                else if (examples_a[0].Method.toLowerCase().indexOf("delete") >= 0 &&
-                    examples_b[0].Method.toLowerCase().indexOf("delete") < 0) {
+                else if (isDelete(examples_a[0]) && !isDelete(examples_b[0])) {
                     return 1;
                 }
                 else {
@@ -1499,10 +1510,10 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
             }
             else if (depend_on(examples_a[0], examples_b[0])) {
-                if (examples_b[0].Method.toLowerCase() == "create") {
+                if (isCreate(examples_b[0])) {
                     return 1;
                 }
-                else if (examples_b[0].Method.toLowerCase() == "delete") {
+                else if (isDelete(examples_b[0])) {
                     return -1;
                 }
                 else {
@@ -1510,10 +1521,10 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
             }
             else if (depend_on(examples_b[0], examples_a[0])) {
-                if (examples_a[0].Method.toLowerCase() == "create") {
+                if (isCreate(examples_a[0])) {
                     return -1;
                 }
-                else if (examples_a[0].Method.toLowerCase() == "delete") {
+                else if (isDelete(examples_a[0])) {
                     return 1;
                 }
                 else {
@@ -1525,10 +1536,10 @@ export class CodeModelCliImpl implements CodeModelAz
 
         let i = 0;
         let swapped = new Set<string>();    //for loop detecting
-        while (i < this._testScenario.length) { 
+        while (i < this._testScenario.length) {
             for (let j = i + 1; j < this._testScenario.length; j++) {
                 let swapId = `${i}<->${j}`;
-                if (swapped.has(swapId))    continue; // has loop, ignore the compare.
+                if (swapped.has(swapId)) continue; // has loop, ignore the compare.
                 if (compare(this._testScenario[i], this._testScenario[j]) > 0) {
                     let tmp = this._testScenario[i];
                     this._testScenario[i] = this._testScenario[j];
