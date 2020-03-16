@@ -1168,14 +1168,12 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         //find dependency relationships of internal_resources
         this.GetAllMethods(null, () => {
-            let depend_resources = [];
-            let depend_parameters = [];
+            
+            if (this.Get_Method_Name("default").toLowerCase().startsWith('create')) {
 
-
-            if (this.SelectFirstMethodParameter()) {
-                
-                if (this.Get_Method_Name("default").toLowerCase().startsWith('create')) {
-
+                let depend_resources = [];
+                let depend_parameters = [];
+                if (this.SelectFirstMethodParameter()) {    
                     // recognize depends by endpoint in examples
                     for (let example of this.GetExamples()) {
                         for (let param of example.Parameters) {
@@ -1206,9 +1204,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                             }
                         }
                     }
-                } while (this.SelectNextMethodParameter())
+                } while (this.SelectNextMethodParameter());
+                this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
             }
-            this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
+            
         });
 
         this.SortExamplesByDependency();
