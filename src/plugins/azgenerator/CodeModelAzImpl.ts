@@ -887,10 +887,10 @@ export class CodeModelCliImpl implements CodeModelAz {
     //=================================================================================================================
 
     public SelectFirstExample(): boolean {
-        if (this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions == undefined)
+        if (this.Method.extensions == undefined)
             return false;
 
-        let example = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'];
+        let example = this.Method.extensions['x-ms-examples'];
         if (example && example.length > 0) {
             this.currentExampleIndex = 0;
             return true;
@@ -902,7 +902,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public SelectNextExample(): boolean {
-        let example = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'];
+        let example = this.Method.extensions['x-ms-examples'];
         if (example && this.currentExampleIndex < example.length - 1) {
             this.currentExampleIndex++;
             return true;
@@ -913,17 +913,17 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Example_Title(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().title;
+        return this.Method.extensions['x-ms-examples'][this.currentExampleIndex].value().title;
     }
 
     public get Example_Body(): string[] {
         // TBD
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].key();
+        return this.Method.extensions['x-ms-examples'][this.currentExampleIndex].key();
     }
 
     public get Example_Params(): any {
         // TBD
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions['x-ms-examples'][this.currentExampleIndex].value().parameters;
+        return this.Method.extensions['x-ms-examples'][this.currentExampleIndex].value().parameters;
     }
 
     public get Examples(): object {
