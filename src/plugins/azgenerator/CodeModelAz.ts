@@ -60,22 +60,6 @@ export interface CodeModelAz
 
     Command_CanSplit: boolean;
     Command_IsLongRun: boolean;
-
-    SelectFirstOption(): boolean;
-    SelectNextOption(): boolean;
-
-    Option_Name: string;
-    Option_NameUnderscored: string;
-    Option_NamePython: string;
-    Option_IsRequired: boolean;
-    Option_Description: string;
-    Option_Type: string;
-    Option_In: string;
-    Option_PathSdk: string;
-    Option_PathSwagger: string;
-    Option_EnumValues: string[];
-    Option_IsHidden: boolean;
-    Option_IsFlattened: boolean;
     
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
@@ -92,6 +76,7 @@ export interface CodeModelAz
     ExitSubMethodParameters(): boolean;
 
     MethodParameter_Name: string;
+    MethodParameter_NameAz: string;
     MethodParameter_NamePython: string
     MethodParameter_MapsTo: string;
     MethodParameter_Description: string;
