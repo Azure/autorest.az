@@ -6,7 +6,7 @@
 import { CodeModelAz, CommandExample, ExampleParam } from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Request } from '@azure-tools/codemodel';
 import { serialize, deserialize } from "@azure-tools/codegen";
-import { Session, startSession, Host, Channel} from "@azure-tools/autorest-extension-base";
+import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, MergeSort, deepCopy } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity } from './ScenarioTool'
@@ -27,8 +27,7 @@ class MethodParam {
     }
 }
 
-export class CodeModelCliImpl implements CodeModelAz
-{
+export class CodeModelCliImpl implements CodeModelAz {
     codeModel: CodeModel;
     options: any;
     extensionName: string;
@@ -38,7 +37,6 @@ export class CodeModelCliImpl implements CodeModelAz
     currentExampleIndex: number;
     preMethodIndex: number;
     currentMethodIndex: number;
-    currentRequestIndex: number;
     resource_pool: ResourcePool;
 
     suboptions: Property[];
@@ -55,7 +53,6 @@ export class CodeModelCliImpl implements CodeModelAz
         this.currentExampleIndex = -1;
         this.preMethodIndex = -1;
         this.currentMethodIndex = -1;
-        this.currentRequestIndex = -1;
         this.suboptions = null;
         this.currentSubOptionIndex = -1;
         this.submethodparameters = null;
@@ -111,67 +108,51 @@ export class CodeModelCliImpl implements CodeModelAz
                         var paramTime = 0;
                         let paramRequired: Map<string, number> = new Map<string, number>();
                         if (this.SelectFirstMethod()) {
-                            if (this.SelectFirstRequest()) {
+                            paramTime++;
+                            if (this.SelectFirstMethodParameter()) {
                                 do {
-                                    paramTime++;
-                                    if (this.SelectFirstMethodParameter()) {
-                                        do {
-                                            if (!paramRequired.has(this.MethodParameter_Name)) {
-                                                paramRequired.set(this.MethodParameter_Name, this.MethodParameter_IsRequired ? 1 : 0);
-                                            } else if (this.MethodParameter_IsRequired) {
-                                                paramRequired.set(this.MethodParameter_Name, paramRequired.get(this.MethodParameter_Name) + 1);
-                                            }
-                                        } while (this.SelectNextMethodParameter());
+                                    if (!paramRequired.has(this.MethodParameter_Name)) {
+                                        paramRequired.set(this.MethodParameter_Name, this.MethodParameter_IsRequired ? 1 : 0);
+                                    } else if (this.MethodParameter_IsRequired) {
+                                        paramRequired.set(this.MethodParameter_Name, paramRequired.get(this.MethodParameter_Name) + 1);
                                     }
-                                } while (this.SelectNextRequest());
+                                } while (this.SelectNextMethodParameter());
                             }
                             while (this.SelectNextMethod()) {
-                                if (this.SelectFirstRequest()) {
+                                paramTime++;
+                                if (this.SelectFirstMethodParameter()) {
                                     do {
-                                        paramTime++;
-                                        if (this.SelectFirstMethodParameter()) {
-                                            do {
-                                                if (!paramRequired.has(this.MethodParameter_Name)) {
-                                                    paramRequired.set(this.MethodParameter_Name, this.MethodParameter_IsRequired ? 1 : 0);
-                                                } else if (this.MethodParameter_IsRequired) {
-                                                    paramRequired.set(this.MethodParameter_Name, paramRequired.get(this.MethodParameter_Name) + 1);
-                                                }
-                                            } while (this.SelectNextMethodParameter());
+                                        if (!paramRequired.has(this.MethodParameter_Name)) {
+                                            paramRequired.set(this.MethodParameter_Name, this.MethodParameter_IsRequired ? 1 : 0);
+                                        } else if (this.MethodParameter_IsRequired) {
+                                            paramRequired.set(this.MethodParameter_Name, paramRequired.get(this.MethodParameter_Name) + 1);
                                         }
-                                    } while (this.SelectNextRequest());
+                                    } while (this.SelectNextMethodParameter());
                                 }
 
                             }
                         }
                         if (this.SelectFirstMethod()) {
-                            if (this.SelectFirstRequest()) {
+                            if (this.SelectFirstMethodParameter()) {
                                 do {
-                                    if (this.SelectFirstMethodParameter()) {
-                                        do {
-                                            let parameters = this.MethodParameter;
-                                            if (parameters.language['cli'].required) {
-                                                this.MethodParameter['RequiredByMethod'] = true;
-                                            } else {
-                                                this.MethodParameter['RequiredByMethod'] = paramRequired.get(this.MethodParameter_Name) == paramTime ? true : false;
-                                            }
-                                        } while (this.SelectNextMethodParameter());
+                                    let parameters = this.MethodParameter;
+                                    if (parameters.language['cli'].required) {
+                                        this.MethodParameter['RequiredByMethod'] = true;
+                                    } else {
+                                        this.MethodParameter['RequiredByMethod'] = paramRequired.get(this.MethodParameter_Name) == paramTime ? true : false;
                                     }
-                                } while (this.SelectNextRequest());
+                                } while (this.SelectNextMethodParameter());
                             }
                             while (this.SelectNextMethod()) {
-                                if (this.SelectFirstRequest()) {
+                                if (this.SelectFirstMethodParameter()) {
                                     do {
-                                        if (this.SelectFirstMethodParameter()) {
-                                            do {
-                                                let parameters = this.MethodParameter;
-                                                if (parameters.language['cli'].required) {
-                                                    this.MethodParameter['RequiredByMethod'] = true;
-                                                } else {
-                                                    this.MethodParameter['RequiredByMethod'] = paramRequired.get(this.MethodParameter_Name) == paramTime ? true : false;
-                                                }
-                                            } while (this.SelectNextMethodParameter());
+                                        let parameters = this.MethodParameter;
+                                        if (parameters.language['cli'].required) {
+                                            this.MethodParameter['RequiredByMethod'] = true;
+                                        } else {
+                                            this.MethodParameter['RequiredByMethod'] = paramRequired.get(this.MethodParameter_Name) == paramTime ? true : false;
                                         }
-                                    } while (this.SelectNextRequest());
+                                    } while (this.SelectNextMethodParameter());
                                 }
 
                             }
@@ -371,7 +352,6 @@ export class CodeModelCliImpl implements CodeModelAz
                 return false;
             }
             this.SelectFirstMethod();
-            this.SelectFirstRequest();
             this.SelectFirstMethodParameter();
             return true;
         } else {
@@ -404,7 +384,6 @@ export class CodeModelCliImpl implements CodeModelAz
                 return false;
             }
             this.SelectFirstMethod();
-            this.SelectFirstRequest();
             this.SelectFirstMethodParameter();
             return true;
         } else {
@@ -460,7 +439,6 @@ export class CodeModelCliImpl implements CodeModelAz
                     return false;
                 }
             }
-            this.SelectFirstRequest();
             this.SelectFirstMethodParameter();
             return true;
         } else {
@@ -478,7 +456,6 @@ export class CodeModelCliImpl implements CodeModelAz
                     return false;
                 }
             }
-            this.SelectFirstRequest();
             this.SelectFirstMethodParameter();
             return true;
         } else {
@@ -487,28 +464,9 @@ export class CodeModelCliImpl implements CodeModelAz
         }
     }
 
-    public SelectFirstRequest(): boolean {
-        if (this.Method.requests.length > 0) {
-            this.currentRequestIndex = 0;
-            this.SelectFirstMethodParameter();
-            return true;
-        }
-        this.currentRequestIndex = -1;
-        return false;
-    }
-
-    public SelectNextRequest(): boolean {
-        if (this.currentRequestIndex + 1 < this.Method.requests.length) {
-            this.currentRequestIndex++;
-            this.SelectFirstMethodParameter();
-            return true;
-        }
-        this.currentRequestIndex = -1;
-        return false;
-    }
 
     public get Request(): Request {
-        return this.Method.requests[this.currentRequestIndex];
+        return this.Method.requests[0];
     }
 
     public get Method(): Operation {
@@ -573,7 +531,7 @@ export class CodeModelCliImpl implements CodeModelAz
             let parameter = this.MethodParameter;
             const currentParameterName = parameter.language['python'].name;
             if (this.MethodParameter_IsHidden || this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1) {
-                if(this.SelectNextMethodParameter()) {
+                if (this.SelectNextMethodParameter()) {
                     return true;
                 } else {
                     return false;
@@ -604,8 +562,8 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex++;
             let parameter = this.MethodParameter;
             const currentParameterName = parameter.language['python'].name;
-            if(this.MethodParameter_IsHidden || this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1) {
-                if(this.SelectNextMethodParameter()) {
+            if (this.MethodParameter_IsHidden || this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1) {
+                if (this.SelectNextMethodParameter()) {
                     return true;
                 } else {
                     return false;
@@ -630,20 +588,20 @@ export class CodeModelCliImpl implements CodeModelAz
             return false;
 
         this.submethodparameters = null;
-        if(this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Dictionary) {
-            if((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
+        if (this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Dictionary) {
+            if ((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
                 this.submethodparameters = this.MethodParameter['schema']?.['elementType']?.properties;
-                for(let parent of values(this.MethodParameter['schema']?.['elementType']?.['parents']?.all)) {
-                    if(parent['properties'] == undefined || parent['properties'] == null) {
+                for (let parent of values(this.MethodParameter['schema']?.['elementType']?.['parents']?.all)) {
+                    if (parent['properties'] == undefined || parent['properties'] == null) {
                         continue;
                     }
                     this.submethodparameters = this.submethodparameters.concat(parent['properties'])
                 }
             }
-        } else if(this.MethodParameter_Type == SchemaType.Object) {
+        } else if (this.MethodParameter_Type == SchemaType.Object) {
             this.submethodparameters = this.MethodParameter['schema']['properties'];
-            for(let parent of values(this.MethodParameter['schema']?.['parents']?.all)) {
-                if(parent['properties'] == undefined || parent['properties'] == null) {
+            for (let parent of values(this.MethodParameter['schema']?.['parents']?.all)) {
+                if (parent['properties'] == undefined || parent['properties'] == null) {
                     continue;
                 }
                 this.submethodparameters = this.submethodparameters.concat(parent['properties'])
@@ -664,8 +622,7 @@ export class CodeModelCliImpl implements CodeModelAz
         return false;
     }
 
-    public get MethodParameter_Name(): string
-    {
+    public get MethodParameter_Name(): string {
         let name = "";
         if (this.submethodparameters != null) {
             name = this.submethodparameters[this.currentSubOptionIndex].language['az'].name;
@@ -676,8 +633,7 @@ export class CodeModelCliImpl implements CodeModelAz
         return name;
     }
 
-    public get MethodParameter_NameAz(): string
-    {
+    public get MethodParameter_NameAz(): string {
         let name = "";
         if (this.submethodparameters != null) {
             name = this.submethodparameters[this.currentSubOptionIndex].language['az'].name;
@@ -708,7 +664,7 @@ export class CodeModelCliImpl implements CodeModelAz
         for (var name of values(parameter['flattenedNames'])) {
             mapName.push(ToSnakeCase(name.toLocaleString()));
         }
-        if(mapName.length <= 0) {
+        if (mapName.length <= 0) {
             return parameter.language['az'].name.replace(/-/g, '_');
         } else {
             return mapName.join('_');
@@ -731,10 +687,10 @@ export class CodeModelCliImpl implements CodeModelAz
         // 4. or arrays with object element types but has simple properties
         // 5. or dicts with simple element properties
         // 6. or dicts with arrays as element properties but has simple element type 
-        if(this.MethodParameter_IsFlattened) {
+        if (this.MethodParameter_IsFlattened) {
             return false;
         }
-        if(this.MethodParameter.language['cli'].json == true) {
+        if (this.MethodParameter.language['cli'].json == true) {
             return false;
         }
         if (this.MethodParameter_Type == SchemaType.Array) {
@@ -742,15 +698,15 @@ export class CodeModelCliImpl implements CodeModelAz
                 for (let p of values(this.MethodParameter['schema']?.['elementType']?.properties)) {
                     if (p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
                         return false;
-                    } else if(p['schema'].type == SchemaType.Array) {
-                        for(let mp of values(p['schema']?.['elementType']?.properties)) {
-                            if(mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
+                    } else if (p['schema'].type == SchemaType.Array) {
+                        for (let mp of values(p['schema']?.['elementType']?.properties)) {
+                            if (mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
                                 return false;
                             }
                         }
-                        for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
-                            for(let pp of values(parent['properties'])) {
-                                if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                        for (let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                            for (let pp of values(parent['properties'])) {
+                                if (pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
                                     return false;
                                 }
                             }
@@ -763,19 +719,19 @@ export class CodeModelCliImpl implements CodeModelAz
             if (this.MethodParameter.schema['children'] != null && this.MethodParameter.schema['discriminator'] != null) {
                 return false;
             }
-            for(let p of values(this.MethodParameter['schema']['properties'])) {
-                if(p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
+            for (let p of values(this.MethodParameter['schema']['properties'])) {
+                if (p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
                     // objects.objects
                     return false;
-                } else if(p['schema'].type == SchemaType.Array) {
-                    for(let mp of values(p['schema']?.['elementType']?.properties)) {
-                        if(mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
+                } else if (p['schema'].type == SchemaType.Array) {
+                    for (let mp of values(p['schema']?.['elementType']?.properties)) {
+                        if (mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
                             return false;
                         }
                     }
-                    for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
-                        for(let pp of values(parent['properties'])) {
-                            if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                    for (let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                        for (let pp of values(parent['properties'])) {
+                            if (pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
                                 return false;
                             }
                         }
@@ -797,33 +753,31 @@ export class CodeModelCliImpl implements CodeModelAz
                         return false;
                     }
                 }
-                for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
-                    for(let pp of values(parent['properties'])) {
-                        if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                for (let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                    for (let pp of values(parent['properties'])) {
+                        if (pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
                             return false;
                         }
                     }
                 }
             }
-            return true;                
+            return true;
         }
         return false;
     }
 
-    public get MethodParameter_IsSimpleArray(): boolean
-    {
-        if(this.MethodParameter_Type == SchemaType.Array) {
+    public get MethodParameter_IsSimpleArray(): boolean {
+        if (this.MethodParameter_Type == SchemaType.Array) {
             let elementType = this.MethodParameter['schema']['elementType'].type;
-            if(elementType != SchemaType.Object && elementType != SchemaType.Array && elementType != SchemaType.Dictionary) {
+            if (elementType != SchemaType.Object && elementType != SchemaType.Array && elementType != SchemaType.Dictionary) {
                 return true;
             }
         }
         return false;
     }
 
-    public get MethodParameter_IsList(): boolean
-    {
-        if(this.MethodParameter_IsFlattened) {
+    public get MethodParameter_IsList(): boolean {
+        if (this.MethodParameter_IsFlattened) {
             return false;
         }
         if (this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Object || this.MethodParameter_Type == SchemaType.Dictionary) {
@@ -846,7 +800,7 @@ export class CodeModelCliImpl implements CodeModelAz
     }
 
     public get SubMethodParameter(): Parameter {
-        if(this.submethodparameters != null) {
+        if (this.submethodparameters != null) {
             return this.submethodparameters[this.currentSubOptionIndex];
         }
         return null;
@@ -983,21 +937,18 @@ export class CodeModelCliImpl implements CodeModelAz
      */
     public GetMethodParametersDict(): Map<string, MethodParam> {
         let method_param_dict: Map<string, MethodParam> = new Map<string, MethodParam>();
-        if (this.SelectFirstRequest()) {
+
+        if (this.SelectFirstMethodParameter()) {
             do {
-                if (this.SelectFirstMethodParameter()) {
-                    do {
-                        if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
-                            let submethodparameters = null;
-                            if (this.EnterSubMethodParameters()) {
-                                submethodparameters = this.submethodparameters;
-                                this.ExitSubMethodParameters();
-                            }
-                            method_param_dict.set(this.MethodParameter.language.default.name, new MethodParam(this.MethodParameter, this.MethodParameter_IsList, this.MethodParameter_IsListOfSimple, submethodparameters));
-                        }
-                    } while (this.SelectNextMethodParameter());
+                if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
+                    let submethodparameters = null;
+                    if (this.EnterSubMethodParameters()) {
+                        submethodparameters = this.submethodparameters;
+                        this.ExitSubMethodParameters();
+                    }
+                    method_param_dict.set(this.MethodParameter.language.default.name, new MethodParam(this.MethodParameter, this.MethodParameter_IsList, this.MethodParameter_IsListOfSimple, submethodparameters));
                 }
-            } while (this.SelectNextRequest());
+            } while (this.SelectNextMethodParameter());
         }
         return method_param_dict;
     }
@@ -1030,15 +981,15 @@ export class CodeModelCliImpl implements CodeModelAz
                         if (methodParam.submethodparameters) {
                             for (let submethodProperty of methodParam.submethodparameters) {
                                 if (submethodProperty.language.default.name.toLowerCase() == k.toLowerCase()) {
-                                        cliName = submethodProperty.language['az'].name;
-                                        break;
+                                    cliName = submethodProperty.language['az'].name;
+                                    break;
                                 }
                             }
                         }
                         if (!cliName) {
                             // If no submethodparameters, keep all KEYs as the origin name
                             // This is for type of schema.Dictionary
-                            cliName = k; 
+                            cliName = k;
                         }
                         if (ret.length > 0) {
                             ret += " ";
@@ -1047,7 +998,7 @@ export class CodeModelCliImpl implements CodeModelAz
                         //ret += `${k}=${v.substr(1, v.length-2)}`;
                         ret += `${cliName}=${value[k]}`;
                     }
-                    if (ret.length>0) {
+                    if (ret.length > 0) {
                         example_param.push(new ExampleParam(name, ret, false, true, defaultName));
                     }
                 }
@@ -1167,7 +1118,7 @@ export class CodeModelCliImpl implements CodeModelAz
             }
             let slp = this.ToJsonString(param_value);
             if (param.isKeyValues) {
-                slp = slp.substr(1, slp.length-2); // remove quots 
+                slp = slp.substr(1, slp.length - 2); // remove quots 
             }
             parameters.push(param.name + " " + slp);
         }
@@ -1208,7 +1159,7 @@ export class CodeModelCliImpl implements CodeModelAz
             }
             // let commands = this.CommandGroup_Name.split(" ");
             // let resource_name = commands[commands.length - 1] + "-name";
-            let resource_name = this.CommandGroup_DefaultName+"Name";
+            let resource_name = this.CommandGroup_DefaultName + "Name";
             if (internal_resources[this.CommandGroup_Key].indexOf(resource_name) < 0) {
                 internal_resources[this.CommandGroup_Key].push(resource_name);
             }
@@ -1219,48 +1170,45 @@ export class CodeModelCliImpl implements CodeModelAz
         this.GetAllMethods(null, () => {
             let depend_resources = [];
             let depend_parameters = [];
-            if (this.SelectFirstRequest()) {
 
-                if (this.Get_Method_Name("default").toLowerCase().startsWith('create')) {
+            if (this.Get_Method_Name("default").toLowerCase().startsWith('create')) {
 
 
-                    // recognize depends by endpoint in examples
-                    for (let example of this.GetExamples()) {
-                        for (let param of example.Parameters) {
-                            let resources = [];
-                            this.resource_pool.addEndpointResource(param.value, param.isJson, param.isKeyValues, [], resources);
-                            for (let on_resource of resources) {
-                                if (on_resource != this.CommandGroup_Key && depend_resources.indexOf(on_resource) < 0) {
-                                    depend_resources.push(on_resource);
-                                    depend_parameters.push(param.name);
-                                }
+                // recognize depends by endpoint in examples
+                for (let example of this.GetExamples()) {
+                    for (let param of example.Parameters) {
+                        let resources = [];
+                        this.resource_pool.addEndpointResource(param.value, param.isJson, param.isKeyValues, [], resources);
+                        for (let on_resource of resources) {
+                            if (on_resource != this.CommandGroup_Key && depend_resources.indexOf(on_resource) < 0) {
+                                depend_resources.push(on_resource);
+                                depend_parameters.push(param.name);
                             }
                         }
                     }
                 }
+            }
+
+            if (this.SelectFirstMethodParameter()) {
                 do {
-                    if (this.SelectFirstMethodParameter()) {
-                        do {
-                            if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
-                                let param_name = this.MethodParameter.language["default"].name;
-                                let on_resource = this.resource_pool.isResource(param_name);
-                                if (on_resource && (on_resource != this.CommandGroup_Key) && depend_resources.indexOf(on_resource) < 0) {
-                                    // the resource is a dependency only when it's a parameter in an example.
-                                    for (let example of this.GetExamples()) {
-                                        for (let param of example.Parameters) {
-                                            if (param_name == param.defaultName && depend_resources.indexOf(on_resource) < 0) {
-                                                depend_resources.push(on_resource);
-                                                depend_parameters.push(param_name);
-                                            }
-                                        }
+                    if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
+                        let param_name = this.MethodParameter.language["default"].name;
+                        let on_resource = this.resource_pool.isResource(param_name);
+                        if (on_resource && (on_resource != this.CommandGroup_Key) && depend_resources.indexOf(on_resource) < 0) {
+                            // the resource is a dependency only when it's a parameter in an example.
+                            for (let example of this.GetExamples()) {
+                                for (let param of example.Parameters) {
+                                    if (param_name == param.defaultName && depend_resources.indexOf(on_resource) < 0) {
+                                        depend_resources.push(on_resource);
+                                        depend_parameters.push(param_name);
                                     }
                                 }
                             }
-                        } while (this.SelectNextMethodParameter())
+                        }
                     }
-                } while (this.SelectNextRequest());
-                this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
+                } while (this.SelectNextMethodParameter())
             }
+            this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
         });
 
         this.SortExamplesByDependency();

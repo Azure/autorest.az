@@ -1,5 +1,5 @@
 ﻿import { AnyARecord } from "dns";
-import { Operation, Parameter, Request } from "@azure-tools/codemodel";
+import { Operation, Parameter } from "@azure-tools/codemodel";
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -70,10 +70,6 @@ export interface CodeModelAz
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
 
-    SelectFirstRequest(): boolean;
-    SelectNextRequest(): boolean;
-
-    Request: Request;
 
     SelectFirstMethodParameter(): boolean;
     SelectNextMethodParameter(): boolean;
