@@ -1168,46 +1168,46 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         //find dependency relationships of internal_resources
         this.GetAllMethods(null, () => {
-            
+
             if (this.Get_Method_Name("default").toLowerCase().startsWith('create')) {
 
                 let depend_resources = [];
                 let depend_parameters = [];
-                if (this.SelectFirstMethodParameter()) {    
-                    // recognize depends by endpoint in examples
-                    for (let example of this.GetExamples()) {
-                        for (let param of example.Parameters) {
-                            let resources = [];
-                            this.resource_pool.addEndpointResource(param.value, param.isJson, param.isKeyValues, [], resources);
-                            for (let on_resource of resources) {
-                                if (on_resource != this.CommandGroup_Key && depend_resources.indexOf(on_resource) < 0) {
-                                    depend_resources.push(on_resource);
-                                    depend_parameters.push(param.name);
-                                }
+                for (let example of this.GetExamples()) {
+                    for (let param of example.Parameters) {
+                        let resources = [];
+                        this.resource_pool.addEndpointResource(param.value, param.isJson, param.isKeyValues, [], resources);
+                        for (let on_resource of resources) {
+                            if (on_resource != this.CommandGroup_Key && depend_resources.indexOf(on_resource) < 0) {
+                                depend_resources.push(on_resource);
+                                depend_parameters.push(param.name);
                             }
                         }
                     }
                 }
-                do {
-                    if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
-                        let param_name = this.MethodParameter.language["default"].name;
-                        let on_resource = this.resource_pool.isResource(param_name);
-                        if (on_resource && (on_resource != this.CommandGroup_Key) && depend_resources.indexOf(on_resource) < 0) {
-                            // the resource is a dependency only when it's a parameter in an example.
-                            for (let example of this.GetExamples()) {
-                                for (let param of example.Parameters) {
-                                    if (param_name == param.defaultName && depend_resources.indexOf(on_resource) < 0) {
-                                        depend_resources.push(on_resource);
-                                        depend_parameters.push(param_name);
+                if (this.SelectFirstMethodParameter()) {
+                    // recognize depends by endpoint in examples
+                    do {
+                        if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
+                            let param_name = this.MethodParameter.language["default"].name;
+                            let on_resource = this.resource_pool.isResource(param_name);
+                            if (on_resource && (on_resource != this.CommandGroup_Key) && depend_resources.indexOf(on_resource) < 0) {
+                                // the resource is a dependency only when it's a parameter in an example.
+                                for (let example of this.GetExamples()) {
+                                    for (let param of example.Parameters) {
+                                        if (param_name == param.defaultName && depend_resources.indexOf(on_resource) < 0) {
+                                            depend_resources.push(on_resource);
+                                            depend_parameters.push(param_name);
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                } while (this.SelectNextMethodParameter());
+                    } while (this.SelectNextMethodParameter());
+                }
                 this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
             }
-            
+
         });
 
         this.SortExamplesByDependency();
