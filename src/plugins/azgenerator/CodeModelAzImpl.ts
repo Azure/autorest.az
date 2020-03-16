@@ -572,8 +572,8 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex = 0;
             let parameter = this.MethodParameter;
             const currentParameterName = parameter.language['python'].name;
-            if (this.MethodParameter_IsHidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
-                if (this.SelectNextMethodParameter()) {
+            if (this.MethodParameter_IsHidden || this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1) {
+                if(this.SelectNextMethodParameter()) {
                     return true;
                 } else {
                     return false;
@@ -604,8 +604,8 @@ export class CodeModelCliImpl implements CodeModelAz
             this.currentParameterIndex++;
             let parameter = this.MethodParameter;
             const currentParameterName = parameter.language['python'].name;
-            if (this.MethodParameter_IsHidden || currentParameterName == "subscription_id" || currentParameterName == "api_version" || currentParameterName == "host") {
-                if (this.SelectNextMethodParameter()) {
+            if(this.MethodParameter_IsHidden || this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1) {
+                if(this.SelectNextMethodParameter()) {
                     return true;
                 } else {
                     return false;
@@ -673,6 +673,17 @@ export class CodeModelCliImpl implements CodeModelAz
             name = this.MethodParameter.language['az'].name;
         }
         name = name.replace(/-/g, '_');
+        return name;
+    }
+
+    public get MethodParameter_NameAz(): string
+    {
+        let name = "";
+        if (this.submethodparameters != null) {
+            name = this.submethodparameters[this.currentSubOptionIndex].language['az'].name;
+        } else {
+            name = this.MethodParameter.language['az'].name;
+        }
         return name;
     }
 
