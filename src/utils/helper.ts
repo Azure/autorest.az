@@ -107,3 +107,70 @@ function Merge(left: any[], right: any[], comparer: (left, right) => number): an
 export function isDict(v) {
     return typeof v==='object' && v!==null && !(v instanceof Array) && !(v instanceof Date);
 }
+
+
+export function ToMultiLine(sentence: string, output: string[] = undefined, maxLength: number = 119): string[] {
+    let lastComma = -1;
+    let inStr = false;
+    let strTag = "";
+    let ret = [""];
+    let indent = 0;
+    let spaceNum = 0;
+    while (spaceNum < sentence.length && sentence[spaceNum] == ' ') spaceNum++;
+    for (let i = 0; i < sentence.length; i++) {
+        ret[ret.length - 1] += sentence[i];
+        if (sentence[i] == ',') lastComma = ret[ret.length - 1].length - 1;
+        if (inStr) {
+            if (sentence[i] == strTag && sentence[i - 1] != '\\') {
+                inStr = false;
+            }
+        }
+        else {
+            if (sentence[i] == '\'' && sentence[i - 1] != '\\') {
+                inStr = true;
+                strTag = '\'';
+            }
+            else if (sentence[i] == '\"' && sentence[i - 1] != '\\') {
+                inStr = true;
+                strTag = '\"';
+            }
+
+            if (indent == 0 && sentence[i] == '(') {
+                indent = ret[ret.length - 1].length;
+            }
+        }
+        if (ret[ret.length - 1].length >= maxLength) {
+            if (inStr) {
+                let lastNormal = ret[ret.length - 1].length - 1;
+                while (lastNormal>=0 && sentence[lastNormal] == '\\') lastNormal--;
+                if (lastNormal != ret[ret.length - 1].length - 1) {
+                    let newLine = ' '.repeat(indent>0?indent:spaceNum) + strTag + ret[ret.length - 1].substr(lastNormal + 1);
+                    ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastNormal + 1) + strTag;
+                    let currentLength = ret[ret.length - 1].length;
+                    if (ret[ret.length - 1][currentLength - 2] == strTag) {   // remove empty string in the end of line
+                        ret[ret.length - 1] = ret[ret.length - 1].substr(0, currentLength - 2);
+                    }
+                    ret.push(newLine)
+                    lastComma = -1;
+                }
+                else {
+                    ret[ret.length - 1] += strTag;
+                    ret.push(' '.repeat(indent>0?indent:spaceNum) + strTag);
+                    lastComma = -1;
+                }
+            }
+            else {
+                if (lastComma >= 0) {
+                    let newLine = ' '.repeat(indent>0?indent:spaceNum) + ret[ret.length - 1].substr(lastComma + 1).trimLeft();
+                    ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastComma + 1);
+                    ret.push(newLine);
+                    lastComma = -1;
+                }
+            }
+        }
+    }
+    if (output != undefined) {
+        for (let line of ret) output.push(line);
+    }
+    return ret;
+}

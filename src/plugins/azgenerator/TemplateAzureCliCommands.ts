@@ -5,6 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
+import { ToMultiLine } from "../../utils/helper"
 
 export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -35,7 +36,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
                 
                 if (true)
                 {
-                    output.push("        operations_tmpl='azext_" + model.Extension_NameUnderscored + ".vendored_sdks." + model.PythonOperationsName + ".operations._" + model.GetModuleOperationName() + "_operations#" + model.GetModuleOperationNameUpper() + "Operations" + ".{}',");
+                    ToMultiLine("        operations_tmpl='azext_" + model.Extension_NameUnderscored + ".vendored_sdks." + model.PythonOperationsName + ".operations._" + model.GetModuleOperationName() + "_operations#" + model.GetModuleOperationNameUpper() + "Operations" + ".{}',", output);
                 }
                 else
                 {
@@ -45,7 +46,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
                 
                 output.push("        client_factory=" + cf_name + ")");
 
-                output.push("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + ") as g:");
+                ToMultiLine("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + ") as g:", output);
                 let needWait = false;
                 do
                 {
