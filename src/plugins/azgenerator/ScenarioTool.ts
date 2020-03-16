@@ -447,8 +447,21 @@ export class ResourcePool {
     }
 
     public setResourceDepends(resource_class_name: string, depend_resources: string[], depend_parameters: string[]) {
-        resourceClassDepends[resource_class_name] = depend_resources;
-        preparerInfos[resource_class_name] = new PreparerInfo(null, resource_class_name, depend_parameters, depend_resources);
+        if ( !(resource_class_name in resourceClassDepends)) {
+            resourceClassDepends[resource_class_name] = depend_resources;
+            preparerInfos[resource_class_name] = new PreparerInfo(null, resource_class_name, depend_parameters, depend_resources);    
+        }
+        else {
+            for (let i=0; i<depend_resources.length; i++) {
+                let dependResource = depend_resources[i];
+                if (resourceClassDepends[resource_class_name].indexOf(dependResource)<0) {
+                    resourceClassDepends[resource_class_name].push(dependResource);
+                    preparerInfos[resource_class_name].depend_parameters.push(depend_parameters[i]);
+                    preparerInfos[resource_class_name].depend_resources.push(depend_resources[i]);
+                }
+            }
+        }
+        
     }
 
     public isDependResource(child: string, parent: string) {

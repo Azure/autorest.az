@@ -39,6 +39,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
             'myHubAndSpoke': self.create_random_name(prefix='cli_test_managed_network_peering_policies'[:9], length=24),
         })
 
+        # EXAMPLE: ManagedNetworksPut
         self.cmd('az managed-network managed-network create '
                  '--location "eastus" '
                  '--properties "{{\\"scope\\":{{\\"managementGroups\\":[{{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000\\"}},{{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20000000-0002-0000-0000-000000000000\\"}}],\\"subnets\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}/subnets/default\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}/subnets/default\\"}}],\\"subscriptions\\":[{{\\"id\\":\\"subscriptionA\\"}},{{\\"id\\":\\"subscriptionB\\"}}],\\"virtualNetworks\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_2}\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_3}\\"}}]}}}}" '
@@ -46,6 +47,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: ManagementNetworkGroupsPut
         self.cmd('az managed-network managed-network-group create '
                  '--properties-management-groups "[]" '
                  '--properties-subnets id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA '
@@ -56,12 +58,14 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: ScopeAssignmentsPut
         self.cmd('az managed-network scope-assignment create '
                  '--properties-assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
                  '--scope "subscriptions/subscriptionC" '
                  '--scope-assignment-name "{subscriptionCAssignment}"',
                  checks=[])
 
+        # EXAMPLE: ManagedNetworkPeeringPoliciesPut
         self.cmd('az managed-network managed-network-peering-policy create '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--policy-name "{myHubAndSpoke}" '
@@ -69,66 +73,79 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: ManagedNetworksGet
         self.cmd('az managed-network managed-network show '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: ManagedNetworksListByResourceGroup
         self.cmd('az managed-network managed-network list '
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: ManagedNetworksListBySubscription
         self.cmd('az managed-network managed-network list',
                  checks=[])
 
+        # EXAMPLE: ScopeAssignmentsGet
         self.cmd('az managed-network scope-assignment show '
                  '--scope "subscriptions/subscriptionC" '
                  '--scope-assignment-name "{subscriptionCAssignment}"',
                  checks=[])
 
+        # EXAMPLE: ScopeAssignmentsList
         self.cmd('az managed-network scope-assignment list '
                  '--scope "subscriptions/subscriptionC"',
                  checks=[])
 
+        # EXAMPLE: ManagementNetworkGroupsGet
         self.cmd('az managed-network managed-network-group show '
                  '--group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: ManagedNetworksGroupsListByManagedNetwork
         self.cmd('az managed-network managed-network-group list '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: ManagedNetworkPeeringPoliciesGet
         self.cmd('az managed-network managed-network-peering-policy show '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--policy-name "{myHubAndSpoke}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: ManagedNetworkPeeringPoliciesListByManagedNetwork
         self.cmd('az managed-network managed-network-peering-policy list '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: ManagedNetworkPeeringPoliciesDelete
         self.cmd('az managed-network managed-network-peering-policy delete '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--policy-name "{myHubAndSpoke}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: ScopeAssignmentsDelete
         self.cmd('az managed-network scope-assignment delete '
                  '--scope "subscriptions/subscriptionC" '
                  '--scope-assignment-name "{subscriptionCAssignment}"',
                  checks=[])
 
+        # EXAMPLE: ManagementNetworkGroupsDelete
         self.cmd('az managed-network managed-network-group delete '
                  '--group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: ManagedNetworksDelete
         self.cmd('az managed-network managed-network delete '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
