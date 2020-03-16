@@ -77,8 +77,13 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                                     ifkv = "elif";
                                                 } while (model.SelectNextMethodParameter());
                                             }
-                
                                         } 
+                                        model.ExitSubMethodParameters();
+                                        if (!foundProperties && preParamType == SchemaType.Dictionary) {
+                                            output.push("            d[k] = v");
+                                        }
+                                        output.push("        return d");
+                                        allActions.set(actionName, true);
                                     } 
                                 } while (model.SelectNextMethodParameter());
                             } 
