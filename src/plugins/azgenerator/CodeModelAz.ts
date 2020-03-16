@@ -90,6 +90,8 @@ export interface CodeModelAz
     MethodParameter_IsListOfSimple: boolean;
     MethodParameter: Parameter;
     MethodParameters: Array<Parameter>;
+    SubMethodParameter: Parameter;
+
     MethodParameter_In: string;
     MethodParameter_IsHidden: boolean;
     MethodParameter_IsRequired: boolean;

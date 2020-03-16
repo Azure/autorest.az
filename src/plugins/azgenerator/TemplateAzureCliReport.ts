@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
-import { ParameterLocation, StringSchema } from "@azure-tools/codemodel";
+import { ParameterLocation, SchemaType } from "@azure-tools/codemodel";
 
 export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
     var output: string[] = [];
@@ -69,63 +69,47 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     mo.push("|Option|Type|Description|Path (SDK)|Path (swagger)|");
     mo.push("|------|----|-----------|----------|--------------|");
 
-    let allParam: Map<string, boolean> = new Map<string, boolean>();
-    if (model.SelectFirstMethod()) {
+    let allRequiredParam: Map<string, boolean> = new Map<string, boolean>();
+    let allNonRequiredParam: Map<string, boolean> = new Map<string, boolean>();
+    let requiredmo: Array<string> = [];
+    let nonrequiredmo: Array<string> = [];
+    if(model.SelectFirstMethod()) {
         do {
-            if (model.SelectFirstRequest()) {
-                do {
-                    if(!model.SelectFirstMethodParameter()) {
-                        return mo;
-                    }
-                
-                    // first parameters that are required
-                    do
-                    {
-                        if (allParam.has(model.MethodParameter_Name)) {
-                            continue;
-                        }
-                        if (model.MethodParameter_In != ParameterLocation.Path && model.MethodParameter_IsRequired)
-                        {
-                            allParam.set(model.MethodParameter_Name, true);
-                            mo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_MapsTo + "|" + model.MethodParameter_NamePython + "|");
-                        }
-                    }
-                    while (model.SelectNextMethodParameter());
-                } while (model.SelectNextRequest());
+            if(!model.SelectFirstMethodParameter()) {
+                continue;;
             }
 
-        } while (model.SelectNextMethod());
-    }
-
-
-    allParam.clear();
-    if (model.SelectFirstMethod()) {
-        do {
-            if (model.SelectFirstRequest()) {
-                do {
-                    if(!model.SelectFirstMethodParameter()) {
-                        return mo;
-                    }
+            // first parameters that are required
+            do
+            {
+                if(model.MethodParameter_IsFlattened || model.MethodParameter_Type == SchemaType.Constant) {
+                    continue;
+                }
                 
-                    // first parameters that are required
-                    do
-                    {
-                        if (allParam.has(model.MethodParameter_Name)) {
-                            continue;
-                        }
-                        if (model.MethodParameter_In != ParameterLocation.Path && !model.MethodParameter_IsRequired)
-                        {
-                            allParam.set(model.MethodParameter_Name, true);
-                            mo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_MapsTo + "|" + model.MethodParameter_NamePython + "|");
-                        }
+                if (model.MethodParameter_IsRequired)
+                {
+                    if(allRequiredParam.has(model.MethodParameter_Name)) {
+                        continue;
                     }
-                    while (model.SelectNextMethodParameter());
-                } while (model.SelectNextRequest());
+                    allRequiredParam.set(model.MethodParameter_Name, true);
+                    requiredmo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_MapsTo + "|");
+                } else {
+                    if(allNonRequiredParam.has(model.MethodParameter_Name)) {
+                        continue;
+                    }
+                    allNonRequiredParam.set(model.MethodParameter_Name, true);
+                    nonrequiredmo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_MapsTo + "|");
+                }
             }
-        } while (model.SelectNextMethod());
+            while (model.SelectNextMethodParameter());
+        } while(model.SelectNextMethod())
     }
-
-
+ 
+    if(requiredmo.length <= 0 && nonrequiredmo.length < 0) {
+        return mo;
+    }
+    mo = mo.concat(requiredmo);
+    mo = mo.concat(nonrequiredmo);
 
     if (model.SelectFirstExample())
     {

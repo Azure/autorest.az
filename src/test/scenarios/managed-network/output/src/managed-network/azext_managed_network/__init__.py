@@ -4,6 +4,7 @@
 # --------------------------------------------------------------------------------------------
 
 from azure.cli.core import AzCommandsLoader
+from .generated._help import helps
 
 
 class ManagedNetworkManagementClientCommandsLoader(AzCommandsLoader):

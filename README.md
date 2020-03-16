@@ -4,8 +4,13 @@ See documentation [here](doc/00-overview.md)
 
 ``` yaml
 use-extension:
+<<<<<<< HEAD
   "@autorest/python": "/Users/zhangqiaoqiao/work/code/autorest.python"
   "@autorest/clicommon": "/Users/zhangqiaoqiao/work/code/autorest.cli.common"
+=======
+  "@autorest/python": "5.0.0-dev.20200211.1"
+  "@autorest/clicommon": "0.3.8"
+>>>>>>> master
   #"@autorest/python": "latest"
   
 python:
@@ -59,8 +64,11 @@ pipeline:
             - az/azgenerator
         scope: scope-az
 
+<<<<<<< HEAD
 #scope-clicommon: false
 
+=======
+>>>>>>> master
 scope-az:
     is-object: false
     output-artifact:
