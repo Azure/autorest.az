@@ -89,14 +89,14 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     if (methodName != "show")
     {
         if(needUpdate) {
-            output.push("        g.generic_update_command('update'" + endStr);
+            ToMultiLine("        g.generic_update_command('update'" + endStr, output);
         } else {
-            output.push("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr);
+            ToMultiLine("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr, output);
         } 
     }
     else
     {
-        output.push("        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr);
+        ToMultiLine("        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr, output);
     }
     return output;
 }
