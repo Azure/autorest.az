@@ -1242,9 +1242,11 @@ export class CodeModelCliImpl implements CodeModelAz
                         if (ret.length > 0) {
                             ret += " ";
                         }
-                        //let v = JSON.stringify(value[k]).split(/[\r\n]+/).join("");
-                        //ret += `${k}=${v.substr(1, v.length-2)}`;
-                        ret += `${cliName}=${value[k]}`;
+                        let v = this.ToJsonString(value[k]);
+                        if (v.startsWith("\"")) {
+                            v = v.substr(1, v.length-2);
+                        }
+                        ret += `${cliName}=${v}`;
                     }
                     if (ret.length>0) {
                         example_param.push(new ExampleParam(name, ret, false, true, defaultName));
@@ -1364,9 +1366,9 @@ export class CodeModelCliImpl implements CodeModelAz
                 }
                 param_value = replaced_value;
             }
-            let slp = this.ToJsonString(param_value);
-            if (param.isKeyValues) {
-                slp = slp.substr(1, slp.length-2); // remove quots 
+            let slp = param_value; 
+            if (!param.isKeyValues) {
+                slp = this.ToJsonString(slp); 
             }
             parameters.push(param.name + " " + slp);
         }
