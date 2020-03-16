@@ -6,15 +6,9 @@
     "version": "2018-09-01-preview"
   },
   "host": "management.azure.com",
-  "schemes": [
-    "https"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "securityDefinitions": {
     "azure_auth": {
       "type": "oauth2",
@@ -29,9 +23,7 @@
   "paths": {
     "/providers/Microsoft.Attestation/operations": {
       "get": {
-        "tags": [
-          "Operations"
-        ],
+        "tags": ["Operations"],
         "operationId": "Operations_List",
         "description": "Lists all of the available Azure attestation operations.",
         "x-ms-examples": {
@@ -62,9 +54,7 @@
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}": {
       "get": {
-        "tags": [
-          "AttestationProviders"
-        ],
+        "tags": ["AttestationProviders"],
         "operationId": "AttestationProviders_Get",
         "description": "Get the status of Attestation Provider.",
         "x-ms-examples": {
@@ -74,10 +64,10 @@
         },
         "parameters": [
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ResourceGroupNameParameter"
+            "$ref": "#/parameters/ResourceGroupNameParameter"
           },
           {
             "name": "providerName",
@@ -106,9 +96,7 @@
         }
       },
       "put": {
-        "tags": [
-          "AttestationProviders"
-        ],
+        "tags": ["AttestationProviders"],
         "operationId": "AttestationProviders_Create",
         "description": "Creates or updates the Attestation Provider.",
         "x-ms-examples": {
@@ -118,10 +106,10 @@
         },
         "parameters": [
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ResourceGroupNameParameter"
+            "$ref": "#/parameters/ResourceGroupNameParameter"
           },
           {
             "name": "providerName",
@@ -166,9 +154,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "AttestationProviders"
-        ],
+        "tags": ["AttestationProviders"],
         "operationId": "AttestationProviders_Update",
         "description": "Updates the Attestation Provider.",
         "x-ms-examples": {
@@ -178,10 +164,10 @@
         },
         "parameters": [
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ResourceGroupNameParameter"
+            "$ref": "#/parameters/ResourceGroupNameParameter"
           },
           {
             "name": "providerName",
@@ -220,9 +206,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "AttestationProviders"
-        ],
+        "tags": ["AttestationProviders"],
         "operationId": "AttestationProviders_Delete",
         "description": "Delete Attestation Service.",
         "x-ms-examples": {
@@ -232,10 +216,10 @@
         },
         "parameters": [
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ResourceGroupNameParameter"
+            "$ref": "#/parameters/ResourceGroupNameParameter"
           },
           {
             "name": "providerName",
@@ -269,9 +253,7 @@
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders": {
       "get": {
-        "tags": [
-          "AttestationProviders"
-        ],
+        "tags": ["AttestationProviders"],
         "operationId": "AttestationProviders_List",
         "description": "Returns a list of attestation providers in a subscription.",
         "x-ms-examples": {
@@ -284,7 +266,7 @@
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -305,9 +287,7 @@
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders": {
       "get": {
-        "tags": [
-          "AttestationProviders"
-        ],
+        "tags": ["AttestationProviders"],
         "operationId": "AttestationProviders_ListByResourceGroup",
         "description": "Returns attestation providers list in a resource group.",
         "x-ms-examples": {
@@ -317,13 +297,13 @@
         },
         "parameters": [
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ResourceGroupNameParameter"
+            "$ref": "#/parameters/ResourceGroupNameParameter"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -394,12 +374,10 @@
     },
     "AttestationProvider": {
       "description": "Attestation service response message.",
-      "required": [
-        "properties"
-      ],
+      "required": ["properties"],
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/TrackedResource"
+          "$ref": "#/definitions/TrackedResource"
         }
       ],
       "properties": {
@@ -414,9 +392,7 @@
     "StatusResult": {
       "type": "object",
       "description": "Status of attestation service.",
-      "required": [
-        "status"
-      ],
+      "required": ["status"],
       "properties": {
         "trustModel": {
           "type": "string",
@@ -425,11 +401,7 @@
         "status": {
           "type": "string",
           "description": "Status of attestation service.",
-          "enum": [
-            "Ready",
-            "NotReady",
-            "Error"
-          ],
+          "enum": ["Ready", "NotReady", "Error"],
           "x-ms-enum": {
             "name": "AttestationServiceStatus",
             "modelAsString": true
@@ -438,6 +410,100 @@
         "attestUri": {
           "type": "string",
           "description": "Gets the uri of attestation service"
+        }
+      }
+    },
+    "JSONWebKey": {
+        "type": "object",
+        "required": [
+          "use",
+          "kty",
+          "kid",
+          "alg"
+        ],
+        "properties": {
+          "alg": {
+            "description": "The \"alg\" (algorithm) parameter identifies the algorithm intended for\nuse with the key.  The values used should either be registered in the\nIANA \"JSON Web Signature and Encryption Algorithms\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name.",
+            "type": "string"
+          },
+          "crv": {
+            "description": "The \"crv\" (curve) parameter identifies the curve type",
+            "type": "string"
+          },
+          "d": {
+            "description": "RSA private exponent or ECC private key",
+            "type": "string"
+          },
+          "dp": {
+            "description": "RSA Private Key Parameter",
+            "type": "string"
+          },
+          "dq": {
+            "description": "RSA Private Key Parameter",
+            "type": "string"
+          },
+          "e": {
+            "description": "RSA public exponent, in Base64",
+            "type": "string"
+          },
+          "k": {
+            "description": "Symmetric key",
+            "type": "string"
+          },
+          "kid": {
+            "description": "The \"kid\" (key ID) parameter is used to match a specific key.  This\nis used, for instance, to choose among a set of keys within a JWK Set\nduring key rollover.  The structure of the \"kid\" value is\nunspecified.  When \"kid\" values are used within a JWK Set, different\nkeys within the JWK Set SHOULD use distinct \"kid\" values.  (One\nexample in which different keys might use the same \"kid\" value is if\nthey have different \"kty\" (key type) values but are considered to be\nequivalent alternatives by the application using them.)  The \"kid\"\nvalue is a case-sensitive string.",
+            "type": "string"
+          },
+          "kty": {
+            "description": "The \"kty\" (key type) parameter identifies the cryptographic algorithm\nfamily used with the key, such as \"RSA\" or \"EC\". \"kty\" values should\neither be registered in the IANA \"JSON Web Key Types\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name.  The \"kty\" value is a case-sensitive string.",
+            "type": "string"
+          },
+          "n": {
+            "description": "RSA modulus, in Base64",
+            "type": "string"
+          },
+          "p": {
+            "description": "RSA secret prime",
+            "type": "string"
+          },
+          "q": {
+            "description": "RSA secret prime, with p < q",
+            "type": "string"
+          },
+          "qi": {
+            "description": "RSA Private Key Parameter",
+            "type": "string"
+          },
+          "use": {
+            "description": "Use (\"public key use\") identifies the intended use of\nthe public key. The \"use\" parameter is employed to indicate whether\na public key is used for encrypting data or verifying the signature\non data. Values are commonly \"sig\" (signature) or \"enc\" (encryption).",
+            "type": "string"
+          },
+          "x": {
+            "description": "X coordinate for the Elliptic Curve point",
+            "type": "string"
+          },
+          "x5c": {
+            "description": "The \"x5c\" (X.509 certificate chain) parameter contains a chain of one\nor more PKIX certificates [RFC5280].  The certificate chain is\nrepresented as a JSON array of certificate value strings.  Each\nstring in the array is a base64-encoded (Section 4 of [RFC4648] --\nnot base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.\nThe PKIX certificate containing the key value MUST be the first\ncertificate.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "y": {
+            "description": "Y coordinate for the Elliptic Curve point",
+            "type": "string"
+          }
+        }
+      },
+    "JSONWebKeySet": {
+      "type": "object",
+      "properties": {
+        "keys": {
+          "description": "The value of the \"keys\" parameter is an array of JWK values.  By\ndefault, the order of the JWK values within the array does not imply\nan order of preference among them, although applications of JWK Sets\ncan choose to assign a meaning to the order for their purposes, if\ndesired.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JSONWebKey"
+          }
         }
       }
     },
@@ -491,10 +557,7 @@
     },
     "AttestationServiceCreationParams": {
       "description": "Parameters for creating an attestation service instance",
-      "required": [
-        "location",
-        "properties"
-      ],
+      "required": ["location", "properties"],
       "x-ms-azure-resource": true,
       "properties": {
         "location": {
@@ -523,21 +586,38 @@
         },
         "policySigningCertificates": {
           "description": "JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations",
-          "$ref": "../../../../../common-types/rfcs/rfc7517.json#/definitions/JSONWebKeySet"
+          "$ref": "#/definitions/JSONWebKeySet"
         }
       }
     }
   },
   "parameters": {
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The ID of the target subscription.",
+      "minLength": 1
+    },
+    "ResourceGroupNameParameter": {
+      "name": "resourceGroupName",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The name of the resource group. The name is case insensitive.",
+      "pattern": "^[-\\w\\._\\(\\)]+$",
+      "minLength": 1,
+      "maxLength": 90,
+      "x-ms-parameter-location": "method"
+    },
     "ApiVersionParameter": {
       "name": "api-version",
       "in": "query",
       "required": true,
       "type": "string",
       "description": "Client API version.",
-      "enum": [
-        "2018-09-01-preview"
-      ]
+      "enum": ["2018-09-01-preview"]
     }
   }
 }
