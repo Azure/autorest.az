@@ -1256,7 +1256,7 @@ export class CodeModelCliImpl implements CodeModelAz
                 } while (this.SelectNextMethodParameter())
             }
 
-            this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters);
+            this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters, this.Method_HttpMethod == 'put');
         });
 
         this.SortExamplesByDependency();

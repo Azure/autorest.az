@@ -98,7 +98,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     let internalObjects = [];
     for (let entity of (model.GetPreparerEntities() as PreparerEntity[])) {
         if (!entity.info.name) {
-            internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name)]);
+            internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name), entity.info.hasCreateExample]);
             continue;
         }
 
@@ -123,8 +123,12 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     // randomize name for internal resources
     if (internalObjects.length > 0) {
         initiates.push("        self.kwargs.update({");
-        for (let [class_name, kargs_key] of internalObjects)
-            initiates.push(`            '${kargs_key}': self.create_random_name(prefix='cli_test_${ToSnakeCase(class_name)}'[:9], length=24),`);
+        for (let [class_name, kargs_key, hasCreateExample] of internalObjects) {
+            if (hasCreateExample)
+                initiates.push(`            '${kargs_key}': self.create_random_name(prefix='cli_test_${ToSnakeCase(class_name)}'[:9], length=24),`);
+            else
+                initiates.push(`            '${kargs_key}': '${kargs_key}'`);   // keep the original name in example if there is no create example in the test-scenario
+        }
         initiates.push("        })");
         initiates.push("");
     }
