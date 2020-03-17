@@ -4,10 +4,10 @@ These settings apply only when `--az` is specified on the command line.
 
 ``` yaml $(az)
 az:
-  extensions: managed-network
+  extensions: managednetwork
   namespace: azure.mgmt.managednetwork
   package-name: azure-mgmt-managednetwork
-python-sdk-output-folder: "$(output-folder)/src/managed-network/azext_managed_network/vendored_sdks/managed-network"
+python-sdk-output-folder: "$(output-folder)/src/managednetwork/azext_managednetwork/vendored_sdks/managednetwork"
 
 
 directive:

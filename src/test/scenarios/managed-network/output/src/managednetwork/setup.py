@@ -43,7 +43,7 @@ with open('HISTORY.rst', 'r', encoding='utf-8') as f:
     HISTORY = f.read()
 
 setup(
-    name='managed_network',
+    name='managednetwork',
     version=VERSION,
     description='Microsoft Azure Command-Line Tools ManagedNetworkManagementClient Extension',
     # TODO: Update author and email, if applicable
@@ -56,5 +56,5 @@ setup(
     classifiers=CLASSIFIERS,
     packages=find_packages(),
     install_requires=DEPENDENCIES,
-    package_data={'azext_managed_network': ['azext_metadata.json']},
+    package_data={'azext_managednetwork': ['azext_metadata.json']},
 )
