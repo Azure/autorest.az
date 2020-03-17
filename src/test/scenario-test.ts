@@ -47,6 +47,7 @@ require('source-map-support').install();
         const folders = await readdir(dir);
         let result = true;
         let msg = "";
+        let finalResult = true;
         for (const each of folders) {
             console.log(`Processing: ${each}`);
             try {
@@ -74,8 +75,13 @@ require('source-map-support').install();
                 console.log(msg);
                 result = false;
                 break;
+            }           
+            if(!result) {
+                finalResult = false;
             }
+            assert.strictEqual(result, true, msg);
+            
         }
-        assert.strictEqual(result, true, msg);
+        assert.strictEqual(finalResult, true, msg);
     }
 }

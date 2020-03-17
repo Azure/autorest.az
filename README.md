@@ -22,7 +22,6 @@ cli:
             choiceValue:  'snake'
             constant:  'snake'
             type:  'pascal'
-
 require:
   - ./readme.python.md
   - ./readme.cli.md
@@ -66,13 +65,5 @@ scope-az:
         #- source-file-aznamer
         #- source-file-modifiers
         - source-file-extension
-
-
-
-no-namespace-folders: true
-license-header: MICROSOFT_MIT_NO_VERSION
-#clear-output-folder: true
-scope-codegen/emitter:
-    output-folder: "$(python-sdk-output-folder)"
 
 ```
