@@ -12,16 +12,6 @@ python:
     reason: 'make sure python flag exists to load config in python.md'
 cli:
     reason: 'make sure cli flag exists to load config in cli.md'
-    naming:
-        default:
-            parameter: 'snake'
-            property: 'snake'
-            operation: 'snake'
-            operationGroup:  'pascal'
-            choice:  'pascal'
-            choiceValue:  'snake'
-            constant:  'snake'
-            type:  'pascal'
 
 require:
   - ./readme.python.md
