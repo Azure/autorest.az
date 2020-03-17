@@ -8,10 +8,11 @@
 from typing import Any, Callable, Dict, Generic, Optional, TypeVar
 import warnings
 
-from azure.core.exceptions import map_error
+from azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.paging import ItemPaged
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
+from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from .. import models
 
@@ -50,11 +51,10 @@ class OperationOperations(object):
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: OperationListResult or the result of cls(response)
         :rtype: ~managed_network_management_client.models.OperationListResult
-        :raises: ~managed_network_management_client.models.ErrorResponseException:
+        :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.OperationListResult"]
-        error_map = kwargs.pop('error_map', {})
-        api_version = "2019-06-01-preview"
+        error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
 
         def prepare_request(next_link=None):
             if not next_link:
@@ -65,7 +65,7 @@ class OperationOperations(object):
 
             # Construct parameters
             query_parameters = {}  # type: Dict[str, Any]
-            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+            query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
@@ -80,7 +80,7 @@ class OperationOperations(object):
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.next_link, iter(list_of_elem)
+            return deserialized.nextlink or None, iter(list_of_elem)
 
         def get_next(next_link=None):
             request = prepare_request(next_link)
@@ -89,8 +89,9 @@ class OperationOperations(object):
             response = pipeline_response.http_response
 
             if response.status_code not in [200]:
+                error = self._deserialize(models.ErrorResponse, response)
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise models.ErrorResponseException.from_response(response, self._deserialize)
+                raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
             return pipeline_response
 

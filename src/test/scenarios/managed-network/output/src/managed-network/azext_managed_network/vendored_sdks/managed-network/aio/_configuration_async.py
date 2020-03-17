@@ -21,25 +21,25 @@ class ManagedNetworkManagementClientConfiguration(Configuration):
 
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: azure.core.credentials.TokenCredential
-    :param subscription_id: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-    :type subscription_id: str
+    :param subscriptionid: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+    :type subscriptionid: str
     """
 
     def __init__(
         self,
         credential: "TokenCredential",
-        subscription_id: str,
+        subscriptionid: str,
         **kwargs: Any
     ) -> None:
         if credential is None:
             raise ValueError("Parameter 'credential' must not be None.")
-        if subscription_id is None:
-            raise ValueError("Parameter 'subscription_id' must not be None.")
+        if subscriptionid is None:
+            raise ValueError("Parameter 'subscriptionid' must not be None.")
         super(ManagedNetworkManagementClientConfiguration, self).__init__(**kwargs)
 
         self.credential = credential
-        self.subscription_id = subscription_id
-        self.api_version = "2019-06-01-preview"
+        self.subscriptionid = subscriptionid
+        self.apiversion = "2019-06-01-preview"
         self.credential_scopes = ['https://management.azure.com/.default']
         kwargs.setdefault('sdk_moniker', 'azure-mgmt-managednetwork/{}'.format(VERSION))
         self._configure(**kwargs)

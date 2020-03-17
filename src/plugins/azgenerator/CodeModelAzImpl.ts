@@ -661,7 +661,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             return (parameter['originalParameter']).language['python'].name + "_" + parameter.language['python'].name;
         } else {*/
         let mapName: Array<any> = [];
-        for (var name of values(parameter['flattenedNames'])) {
+        for (var name of values(parameter?.['targetProperty']?.['flattenedNames'])) {
             mapName.push(ToSnakeCase(name.toLocaleString()));
         }
         if (mapName.length <= 0) {
@@ -1031,17 +1031,17 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return;
                 }
             }
-            else if ('flattenedNames' in methodParam.value && ancestors.length - methodParam.value['flattenedNames'].length == 0 && ancestors.length > 0) {
+            else if ('targetProperty' in methodParam.value && 'flattenedNames' in methodParam.value['targetProperty'] && ancestors.length - methodParam.value['targetProperty']['flattenedNames'].length == 0 && ancestors.length > 0) {
                 // if the method parameter has 'flattenedNames', check the names (except the last name) with example parameter full path.
                 let ancestors_ = deepCopy(ancestors) as string[];
                 let match = true;
-                for (let i = methodParam.value['flattenedNames'].length - 2; i >= 0; i--) {
+                for (let i = methodParam.value['targetProperty']['flattenedNames'].length - 2; i >= 0; i--) {
                     if (ancestors_.length <= 0) {
                         match = false;
                         break;
                     }
                     let parent = ancestors_.pop();
-                    if (methodParam.value['flattenedNames'][i] != parent) {
+                    if (methodParam.value['targetProperty']['flattenedNames'][i] != parent) {
                         match = false;
                     };
                 }

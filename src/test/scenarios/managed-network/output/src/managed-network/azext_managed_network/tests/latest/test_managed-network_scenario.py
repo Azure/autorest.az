@@ -8,6 +8,8 @@ import unittest
 
 from azure_devtools.scenario_tests import AllowLargeResponse
 from azure.cli.testsdk import ScenarioTest
+from azure.cli.testsdk import ResourceGroupPreparer
+from .preparers import VirtualNetworkPreparer
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
@@ -15,41 +17,16 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
+    def current_subscription(self):
+        subs = self.cmd('az account show').get_output_in_json()
+        return subs['id']
+
+    @ResourceGroupPreparer(name_prefix='cli_test_managed_network_myResourceGroup'[:9], key='rg')
+    @VirtualNetworkPreparer(name_prefix='cli_test_managed_network_VnetC'[:9], key='vn', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='cli_test_managed_network_VnetA'[:9], key='vn_2', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='cli_test_managed_network_VnetB'[:9], key='vn_3', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='cli_test_managed_network_myHubVnet'[:9], key='vn_4', resource_group_key='rg')
     def test_managed_network(self, resource_group):
-    
-        # EXAMPLE NOT FOUND: ManagedNetworksPut
-
-        # EXAMPLE NOT FOUND: ManagementNetworkGroupsPut
-
-        # EXAMPLE NOT FOUND: ScopeAssignmentsPut
-
-        # EXAMPLE NOT FOUND: ManagedNetworkPeeringPoliciesPut
-
-        # EXAMPLE NOT FOUND: ManagedNetworksGet
-
-        # EXAMPLE NOT FOUND: ManagedNetworksListByResourceGroup
-
-        # EXAMPLE NOT FOUND: ManagedNetworksListBySubscription
-
-        # EXAMPLE NOT FOUND: ScopeAssignmentsGet
-
-        # EXAMPLE NOT FOUND: ScopeAssignmentsList
-
-        # EXAMPLE NOT FOUND: ManagementNetworkGroupsGet
-
-        # EXAMPLE NOT FOUND: ManagedNetworksGroupsListByManagedNetwork
-
-        # EXAMPLE NOT FOUND: ManagedNetworkPeeringPoliciesGet
-
-        # EXAMPLE NOT FOUND: ManagedNetworkPeeringPoliciesListByManagedNetwork
-
-        # EXAMPLE NOT FOUND: ManagedNetworkPeeringPoliciesDelete
-
-        # EXAMPLE NOT FOUND: ScopeAssignmentsDelete
-
-        # EXAMPLE NOT FOUND: ManagementNetworkGroupsDelete
-
-        # EXAMPLE NOT FOUND: ManagedNetworksDelete
 
         self.kwargs.update({
             'subscription_id': self.current_subscription()

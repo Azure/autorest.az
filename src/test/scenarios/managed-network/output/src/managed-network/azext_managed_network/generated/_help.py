@@ -16,6 +16,10 @@ helps['managed-network managed-network'] = """
 helps['managed-network managed-network list'] = """
     type: command
     short-summary: The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
+    examples:
+      - name: Get Managed Network
+        text: |-
+               az managed-network managed-network list --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network show'] = """
@@ -52,6 +56,8 @@ helps['managed-network managed-network update'] = """
     type: command
     short-summary: Updates the specified Managed Network resource tags.
     examples:
+      - name: Create/Update Managed Network
+        text: |-
                az managed-network managed-network update --managed-network-name "myManagedNetwork"
                --resource-group "myResourceGroup"
 """
@@ -74,6 +80,10 @@ helps['managed-network scope-assignment'] = """
 helps['managed-network scope-assignment list'] = """
     type: command
     short-summary: Get the specified scope assignment.
+    examples:
+      - name: Create/Update Managed Network
+        text: |-
+               az managed-network scope-assignment list --scope "subscriptions/subscriptionC"
 """
 
 helps['managed-network scope-assignment show'] = """

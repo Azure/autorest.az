@@ -7,8 +7,7 @@
 # --------------------------------------------------------------------------
 
 try:
-    from ._models_py3 import ConnectivityCollection
-    from ._models_py3 import ErrorResponse, ErrorResponseException
+    from ._models_py3 import ErrorResponse
     from ._models_py3 import HubAndSpokePeeringPolicyProperties
     from ._models_py3 import ManagedNetwork
     from ._models_py3 import ManagedNetworkGroup
@@ -28,14 +27,12 @@ try:
     from ._models_py3 import Resource
     from ._models_py3 import ResourceId
     from ._models_py3 import ResourceProperties
-    from ._models_py3 import Scope
     from ._models_py3 import ScopeAssignment
     from ._models_py3 import ScopeAssignmentListResult
     from ._models_py3 import ScopeAssignmentProperties
     from ._models_py3 import TrackedResource
 except (SyntaxError, ImportError):
-    from ._models import ConnectivityCollection  # type: ignore
-    from ._models import ErrorResponse, ErrorResponseException  # type: ignore
+    from ._models import ErrorResponse  # type: ignore
     from ._models import HubAndSpokePeeringPolicyProperties  # type: ignore
     from ._models import ManagedNetwork  # type: ignore
     from ._models import ManagedNetworkGroup  # type: ignore
@@ -55,7 +52,6 @@ except (SyntaxError, ImportError):
     from ._models import Resource  # type: ignore
     from ._models import ResourceId  # type: ignore
     from ._models import ResourceProperties  # type: ignore
-    from ._models import Scope  # type: ignore
     from ._models import ScopeAssignment  # type: ignore
     from ._models import ScopeAssignmentListResult  # type: ignore
     from ._models import ScopeAssignmentProperties  # type: ignore
@@ -67,8 +63,7 @@ from ._managed_network_management_client_enums import (
 )
 
 __all__ = [
-    'ConnectivityCollection',
-    'ErrorResponse', 'ErrorResponseException',
+    'ErrorResponse',
     'HubAndSpokePeeringPolicyProperties',
     'ManagedNetwork',
     'ManagedNetworkGroup',
@@ -88,7 +83,6 @@ __all__ = [
     'Resource',
     'ResourceId',
     'ResourceProperties',
-    'Scope',
     'ScopeAssignment',
     'ScopeAssignmentListResult',
     'ScopeAssignmentProperties',

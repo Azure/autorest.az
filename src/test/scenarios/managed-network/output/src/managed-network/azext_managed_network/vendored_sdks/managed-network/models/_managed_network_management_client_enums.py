@@ -21,5 +21,5 @@ class Type(str, Enum):
     """Gets or sets the connectivity type of a network structure policy
     """
 
-    hub_and_spoke_topology = "HubAndSpokeTopology"
-    mesh_topology = "MeshTopology"
+    hubandspoketopology = "HubAndSpokeTopology"
+    meshtopology = "MeshTopology"
