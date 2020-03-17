@@ -279,7 +279,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get CommandGroup_DefaultName(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].name;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language.default.name;
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -946,7 +946,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         submethodparameters = this.submethodparameters;
                         this.ExitSubMethodParameters();
                     }
-                    method_param_dict.set(this.MethodParameter.language['cli'].name, new MethodParam(this.MethodParameter, this.MethodParameter_IsList, this.MethodParameter_IsListOfSimple, submethodparameters));
+                    method_param_dict.set(this.MethodParameter.language['cli'].cliKey, new MethodParam(this.MethodParameter, this.MethodParameter_IsList, this.MethodParameter_IsListOfSimple, submethodparameters));
                 }
             } while (this.SelectNextMethodParameter());
         }
@@ -965,7 +965,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any) {
         let isList: boolean = methodParam.isList;
         let isSimpleList: boolean = methodParam.isSimpleList;
-        let defaultName: string = methodParam.value.language['cli'].name;
+        let defaultName: string = methodParam.value.language['cli'].cliKey;
         let name: string = this.GetMethodParameterMapName(methodParam.value);
         if (isList) {
             if (isSimpleList) {
@@ -980,7 +980,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         let cliName = null;
                         if (methodParam.submethodparameters) {
                             for (let submethodProperty of methodParam.submethodparameters) {
-                                if (submethodProperty.language['cli'].name.toLowerCase() == k.toLowerCase()) {
+                                if (submethodProperty.language['cli'].cliKey.toLowerCase() == k.toLowerCase()) {
                                     cliName = submethodProperty.language['az'].name;
                                     break;
                                 }
@@ -1189,7 +1189,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     // recognize depends by endpoint in examples
                     do {
                         if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
-                            let param_name = this.MethodParameter.language["default"].name;
+                            let param_name = this.MethodParameter.language["cli"].cliKey;
                             let on_resource = this.resource_pool.isResource(param_name);
                             if (on_resource && (on_resource != this.CommandGroup_Key) && depend_resources.indexOf(on_resource) < 0) {
                                 // the resource is a dependency only when it's a parameter in an example.
