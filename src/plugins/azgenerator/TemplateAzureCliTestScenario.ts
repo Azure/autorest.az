@@ -127,7 +127,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
             if (hasCreateExample)
                 initiates.push(`            '${kargs_key}': self.create_random_name(prefix='cli_test_${ToSnakeCase(class_name)}'[:9], length=24),`);
             else
-                initiates.push(`            '${kargs_key}': '${kargs_key}'`);   // keep the original name in example if there is no create example in the test-scenario
+                initiates.push(`            '${kargs_key}': '${kargs_key}',`);   // keep the original name in example if there is no create example in the test-scenario
         }
         initiates.push("        })");
         initiates.push("");
