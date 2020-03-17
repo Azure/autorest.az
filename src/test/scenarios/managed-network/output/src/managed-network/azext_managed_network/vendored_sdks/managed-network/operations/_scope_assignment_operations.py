@@ -44,7 +44,7 @@ class ScopeAssignmentOperations(object):
     def get(
         self,
         scope,  # type: str
-        scopeassignmentname,  # type: str
+        scope_assignment_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ScopeAssignment"
@@ -52,8 +52,8 @@ class ScopeAssignmentOperations(object):
 
         :param scope: The base resource of the scope assignment.
         :type scope: str
-        :param scopeassignmentname: The name of the scope assignment to get.
-        :type scopeassignmentname: str
+        :param scope_assignment_name: The name of the scope assignment to get.
+        :type scope_assignment_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ScopeAssignment or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ScopeAssignment
@@ -61,18 +61,19 @@ class ScopeAssignmentOperations(object):
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ScopeAssignment"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.get.metadata['url']
         path_format_arguments = {
             'scope': self._serialize.url("scope", scope, 'str', skip_quote=True),
-            'scopeAssignmentName': self._serialize.url("scopeassignmentname", scopeassignmentname, 'str'),
+            'scopeAssignmentName': self._serialize.url("scope_assignment_name", scope_assignment_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -96,12 +97,12 @@ class ScopeAssignmentOperations(object):
         return deserialized
     get.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}'}
 
-    def createorupdate(
+    def create_or_update(
         self,
         scope,  # type: str
-        scopeassignmentname,  # type: str
+        scope_assignment_name,  # type: str
         location=None,  # type: Optional[str]
-        assignedmanagednetwork=None,  # type: Optional[str]
+        assigned_managed_network=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ScopeAssignment"
@@ -113,12 +114,12 @@ class ScopeAssignmentOperations(object):
          and 'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-
          provider}/{resource-type}/{resource-name}' for a resource.
         :type scope: str
-        :param scopeassignmentname: The name of the scope assignment to create.
-        :type scopeassignmentname: str
+        :param scope_assignment_name: The name of the scope assignment to create.
+        :type scope_assignment_name: str
         :param location: The geo-location where the resource lives.
         :type location: str
-        :param assignedmanagednetwork: The managed network ID with scope will be assigned to.
-        :type assignedmanagednetwork: str
+        :param assigned_managed_network: The managed network ID with scope will be assigned to.
+        :type assigned_managed_network: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ScopeAssignment or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ScopeAssignment or ~managed_network_management_client.models.ScopeAssignment
@@ -127,19 +128,20 @@ class ScopeAssignmentOperations(object):
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ScopeAssignment"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
 
-        _parameters = models.ScopeAssignment(location=location, assignedmanagednetwork=assignedmanagednetwork)
+        _parameters = models.ScopeAssignment(location=location, assigned_managed_network=assigned_managed_network)
+        api_version = "2019-06-01-preview"
 
         # Construct URL
-        url = self.createorupdate.metadata['url']
+        url = self.create_or_update.metadata['url']
         path_format_arguments = {
             'scope': self._serialize.url("scope", scope, 'str', skip_quote=True),
-            'scopeAssignmentName': self._serialize.url("scopeassignmentname", scopeassignmentname, 'str'),
+            'scopeAssignmentName': self._serialize.url("scope_assignment_name", scope_assignment_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -171,12 +173,12 @@ class ScopeAssignmentOperations(object):
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    createorupdate.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}'}
+    create_or_update.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}'}
 
     def delete(
         self,
         scope,  # type: str
-        scopeassignmentname,  # type: str
+        scope_assignment_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> None
@@ -184,8 +186,8 @@ class ScopeAssignmentOperations(object):
 
         :param scope: The scope of the scope assignment to delete.
         :type scope: str
-        :param scopeassignmentname: The name of the scope assignment to delete.
-        :type scopeassignmentname: str
+        :param scope_assignment_name: The name of the scope assignment to delete.
+        :type scope_assignment_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None or the result of cls(response)
         :rtype: None
@@ -193,18 +195,19 @@ class ScopeAssignmentOperations(object):
         """
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.delete.metadata['url']
         path_format_arguments = {
             'scope': self._serialize.url("scope", scope, 'str', skip_quote=True),
-            'scopeAssignmentName': self._serialize.url("scopeassignmentname", scopeassignmentname, 'str'),
+            'scopeAssignmentName': self._serialize.url("scope_assignment_name", scope_assignment_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -240,6 +243,7 @@ class ScopeAssignmentOperations(object):
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ScopeAssignmentListResult"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
@@ -254,7 +258,7 @@ class ScopeAssignmentOperations(object):
 
             # Construct parameters
             query_parameters = {}  # type: Dict[str, Any]
-            query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
@@ -269,7 +273,7 @@ class ScopeAssignmentOperations(object):
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.nextlink or None, iter(list_of_elem)
+            return deserialized.next_link or None, iter(list_of_elem)
 
         def get_next(next_link=None):
             request = prepare_request(next_link)

@@ -279,7 +279,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get CommandGroup_DefaultName(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['default'].name;
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].name;
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -946,7 +946,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         submethodparameters = this.submethodparameters;
                         this.ExitSubMethodParameters();
                     }
-                    method_param_dict.set(this.MethodParameter.language.default.name, new MethodParam(this.MethodParameter, this.MethodParameter_IsList, this.MethodParameter_IsListOfSimple, submethodparameters));
+                    method_param_dict.set(this.MethodParameter.language['cli'].name, new MethodParam(this.MethodParameter, this.MethodParameter_IsList, this.MethodParameter_IsListOfSimple, submethodparameters));
                 }
             } while (this.SelectNextMethodParameter());
         }
@@ -965,7 +965,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any) {
         let isList: boolean = methodParam.isList;
         let isSimpleList: boolean = methodParam.isSimpleList;
-        let defaultName: string = methodParam.value.language.default.name;
+        let defaultName: string = methodParam.value.language['cli'].name;
         let name: string = this.GetMethodParameterMapName(methodParam.value);
         if (isList) {
             if (isSimpleList) {
@@ -980,7 +980,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         let cliName = null;
                         if (methodParam.submethodparameters) {
                             for (let submethodProperty of methodParam.submethodparameters) {
-                                if (submethodProperty.language.default.name.toLowerCase() == k.toLowerCase()) {
+                                if (submethodProperty.language['cli'].name.toLowerCase() == k.toLowerCase()) {
                                     cliName = submethodProperty.language['az'].name;
                                     break;
                                 }
@@ -1169,7 +1169,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         //find dependency relationships of internal_resources
         this.GetAllMethods(null, () => {
 
-            if (this.Get_Method_Name("default").toLowerCase().startsWith('create')) {
+            if (this.Get_Method_Name('cli').toLowerCase().startsWith('create')) {
 
                 let depend_resources = [];
                 let depend_parameters = [];

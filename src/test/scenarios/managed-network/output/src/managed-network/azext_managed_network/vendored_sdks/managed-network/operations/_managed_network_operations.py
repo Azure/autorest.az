@@ -45,17 +45,17 @@ class ManagedNetworkOperations(object):
 
     def get(
         self,
-        resourcegroupname,  # type: str
-        managednetworkname,  # type: str
+        resource_group_name,  # type: str
+        managed_network_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ManagedNetwork"
         """The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name.
 
-        :param resourcegroupname: The name of the resource group.
-        :type resourcegroupname: str
-        :param managednetworkname: The name of the Managed Network.
-        :type managednetworkname: str
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param managed_network_name: The name of the Managed Network.
+        :type managed_network_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ManagedNetwork or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetwork
@@ -63,19 +63,20 @@ class ManagedNetworkOperations(object):
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetwork"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.get.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscriptionid", self._config.subscriptionid, 'str'),
-            'resourceGroupName': self._serialize.url("resourcegroupname", resourcegroupname, 'str'),
-            'managedNetworkName': self._serialize.url("managednetworkname", managednetworkname, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'managedNetworkName': self._serialize.url("managed_network_name", managed_network_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -99,10 +100,10 @@ class ManagedNetworkOperations(object):
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}
 
-    def createorupdate(
+    def create_or_update(
         self,
-        resourcegroupname,  # type: str
-        managednetworkname,  # type: str
+        resource_group_name,  # type: str
+        managed_network_name,  # type: str
         location=None,  # type: Optional[str]
         tags=None,  # type: Optional[Dict[str, str]]
         properties=None,  # type: Optional["models.ManagedNetworkProperties"]
@@ -111,10 +112,10 @@ class ManagedNetworkOperations(object):
         # type: (...) -> "models.ManagedNetwork"
         """The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name.
 
-        :param resourcegroupname: The name of the resource group.
-        :type resourcegroupname: str
-        :param managednetworkname: The name of the Managed Network.
-        :type managednetworkname: str
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param managed_network_name: The name of the Managed Network.
+        :type managed_network_name: str
         :param location: The geo-location where the resource lives.
         :type location: str
         :param tags: Resource tags.
@@ -130,19 +131,20 @@ class ManagedNetworkOperations(object):
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
 
         _managed_network = models.ManagedNetwork(location=location, tags=tags, properties=properties)
+        api_version = "2019-06-01-preview"
 
         # Construct URL
-        url = self.createorupdate.metadata['url']
+        url = self.create_or_update.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscriptionid", self._config.subscriptionid, 'str'),
-            'resourceGroupName': self._serialize.url("resourcegroupname", resourcegroupname, 'str'),
-            'managedNetworkName': self._serialize.url("managednetworkname", managednetworkname, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'managedNetworkName': self._serialize.url("managed_network_name", managed_network_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -174,30 +176,31 @@ class ManagedNetworkOperations(object):
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    createorupdate.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}
 
     def _delete_initial(
         self,
-        resourcegroupname,  # type: str
-        managednetworkname,  # type: str
+        resource_group_name,  # type: str
+        managed_network_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> None
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self._delete_initial.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscriptionid", self._config.subscriptionid, 'str'),
-            'resourceGroupName': self._serialize.url("resourcegroupname", resourcegroupname, 'str'),
-            'managedNetworkName': self._serialize.url("managednetworkname", managednetworkname, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'managedNetworkName': self._serialize.url("managed_network_name", managed_network_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -219,17 +222,17 @@ class ManagedNetworkOperations(object):
 
     def begin_delete(
         self,
-        resourcegroupname,  # type: str
-        managednetworkname,  # type: str
+        resource_group_name,  # type: str
+        managed_network_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> None
         """The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource group and Managed Network name.
 
-        :param resourcegroupname: The name of the resource group.
-        :type resourcegroupname: str
-        :param managednetworkname: The name of the Managed Network.
-        :type managednetworkname: str
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param managed_network_name: The name of the Managed Network.
+        :type managed_network_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
@@ -242,8 +245,8 @@ class ManagedNetworkOperations(object):
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         raw_result = self._delete_initial(
-            resourcegroupname=resourcegroupname,
-            managednetworkname=managednetworkname,
+            resource_group_name=resource_group_name,
+            managed_network_name=managed_network_name,
             cls=lambda x,y,z: x,
             **kwargs
         )
@@ -264,8 +267,8 @@ class ManagedNetworkOperations(object):
 
     def _update_initial(
         self,
-        resourcegroupname,  # type: str
-        managednetworkname,  # type: str
+        resource_group_name,  # type: str
+        managed_network_name,  # type: str
         tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
@@ -274,19 +277,20 @@ class ManagedNetworkOperations(object):
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
 
         _parameters = models.ManagedNetworkUpdate(tags=tags)
+        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self._update_initial.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscriptionid", self._config.subscriptionid, 'str'),
-            'resourceGroupName': self._serialize.url("resourcegroupname", resourcegroupname, 'str'),
-            'managedNetworkName': self._serialize.url("managednetworkname", managednetworkname, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'managedNetworkName': self._serialize.url("managed_network_name", managed_network_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -322,18 +326,18 @@ class ManagedNetworkOperations(object):
 
     def begin_update(
         self,
-        resourcegroupname,  # type: str
-        managednetworkname,  # type: str
+        resource_group_name,  # type: str
+        managed_network_name,  # type: str
         tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ManagedNetwork"
         """Updates the specified Managed Network resource tags.
 
-        :param resourcegroupname: The name of the resource group.
-        :type resourcegroupname: str
-        :param managednetworkname: The name of the Managed Network.
-        :type managednetworkname: str
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param managed_network_name: The name of the Managed Network.
+        :type managed_network_name: str
         :param tags: Resource tags.
         :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -348,8 +352,8 @@ class ManagedNetworkOperations(object):
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetwork"]
         raw_result = self._update_initial(
-            resourcegroupname=resourcegroupname,
-            managednetworkname=managednetworkname,
+            resource_group_name=resource_group_name,
+            managed_network_name=managed_network_name,
             tags=tags,
             cls=lambda x,y,z: x,
             **kwargs
@@ -372,9 +376,9 @@ class ManagedNetworkOperations(object):
         return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}
 
-    def listbyresourcegroup(
+    def list_by_resource_group(
         self,
-        resourcegroupname,  # type: str
+        resource_group_name,  # type: str
         top=None,  # type: Optional[int]
         skiptoken=None,  # type: Optional[str]
         **kwargs  # type: Any
@@ -382,8 +386,8 @@ class ManagedNetworkOperations(object):
         # type: (...) -> "models.ManagedNetworkListResult"
         """The ListByResourceGroup ManagedNetwork operation retrieves all the Managed Network resources in a resource group in a paginated format.
 
-        :param resourcegroupname: The name of the resource group.
-        :type resourcegroupname: str
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
         :param top: May be used to limit the number of results in a page for list queries.
         :type top: int
         :param skiptoken: Skiptoken is only used if a previous operation returned a partial result. If
@@ -397,14 +401,15 @@ class ManagedNetworkOperations(object):
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkListResult"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
                 # Construct URL
-                url = self.listbyresourcegroup.metadata['url']
+                url = self.list_by_resource_group.metadata['url']
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self._config.subscriptionid", self._config.subscriptionid, 'str'),
-                    'resourceGroupName': self._serialize.url("resourcegroupname", resourcegroupname, 'str'),
+                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
             else:
@@ -412,7 +417,7 @@ class ManagedNetworkOperations(object):
 
             # Construct parameters
             query_parameters = {}  # type: Dict[str, Any]
-            query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
             if top is not None:
                 query_parameters['$top'] = self._serialize.query("top", top, 'int', maximum=20, minimum=1)
             if skiptoken is not None:
@@ -431,7 +436,7 @@ class ManagedNetworkOperations(object):
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.nextlink or None, iter(list_of_elem)
+            return deserialized.next_link or None, iter(list_of_elem)
 
         def get_next(next_link=None):
             request = prepare_request(next_link)
@@ -449,9 +454,9 @@ class ManagedNetworkOperations(object):
         return ItemPaged(
             get_next, extract_data
         )
-    listbyresourcegroup.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks'}
+    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks'}
 
-    def listbysubscription(
+    def list_by_subscription(
         self,
         top=None,  # type: Optional[int]
         skiptoken=None,  # type: Optional[str]
@@ -473,13 +478,14 @@ class ManagedNetworkOperations(object):
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkListResult"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
                 # Construct URL
-                url = self.listbysubscription.metadata['url']
+                url = self.list_by_subscription.metadata['url']
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self._config.subscriptionid", self._config.subscriptionid, 'str'),
+                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
             else:
@@ -487,7 +493,7 @@ class ManagedNetworkOperations(object):
 
             # Construct parameters
             query_parameters = {}  # type: Dict[str, Any]
-            query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
             if top is not None:
                 query_parameters['$top'] = self._serialize.query("top", top, 'int', maximum=20, minimum=1)
             if skiptoken is not None:
@@ -506,7 +512,7 @@ class ManagedNetworkOperations(object):
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.nextlink or None, iter(list_of_elem)
+            return deserialized.next_link or None, iter(list_of_elem)
 
         def get_next(next_link=None):
             request = prepare_request(next_link)
@@ -524,4 +530,4 @@ class ManagedNetworkOperations(object):
         return ItemPaged(
             get_next, extract_data
         )
-    listbysubscription.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetwork/managedNetworks'}
+    list_by_subscription.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetwork/managedNetworks'}

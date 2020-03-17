@@ -217,7 +217,7 @@ helps['managed-network managed-network-peering-policy show'] = """
       - name: Get Managed Network Peering Policy
         text: |-
                az managed-network managed-network-peering-policy show --managed-network-name
-               "myManagedNetwork" --policy-name "myHubAndSpoke" --resource-group "myResourceGroup"
+               "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy create'] = """
@@ -227,12 +227,11 @@ helps['managed-network managed-network-peering-policy create'] = """
       - name: Create/Update Managed Network Peering Policy
         text: |-
                az managed-network managed-network-peering-policy create --managed-network-name
-               "myManagedNetwork" --policy-name "myHubAndSpoke" --properties "{\\"type\\":\\"HubAndSpokeTopo
-               logy\\",\\"hub\\":{\\"id\\":\\"/subscriptions/subscriptionB/resourceGroups/myResourceGroup/provi
-               ders/Microsoft.Network/virtualNetworks/myHubVnet\\"},\\"spokes\\":[{\\"id\\":\\"/subscriptions/s
-               ubscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetw
-               orks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\\"}]}" --resource-group
-               "myResourceGroup"
+               "myManagedNetwork" --properties "{\\"type\\":\\"HubAndSpokeTopology\\",\\"hub\\":{\\"id\\":\\"/subs
+               criptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtual
+               Networks/myHubVnet\\"},\\"spokes\\":[{\\"id\\":\\"/subscriptions/subscriptionB/resourceGroups/my
+               ResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedN
+               etworkGroups/myManagedNetworkGroup1\\"}]}" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy update'] = """
@@ -242,12 +241,11 @@ helps['managed-network managed-network-peering-policy update'] = """
       - name: Create/Update Managed Network Peering Policy
         text: |-
                az managed-network managed-network-peering-policy create --managed-network-name
-               "myManagedNetwork" --policy-name "myHubAndSpoke" --properties "{\\"type\\":\\"HubAndSpokeTopo
-               logy\\",\\"hub\\":{\\"id\\":\\"/subscriptions/subscriptionB/resourceGroups/myResourceGroup/provi
-               ders/Microsoft.Network/virtualNetworks/myHubVnet\\"},\\"spokes\\":[{\\"id\\":\\"/subscriptions/s
-               ubscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetw
-               orks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\\"}]}" --resource-group
-               "myResourceGroup"
+               "myManagedNetwork" --properties "{\\"type\\":\\"HubAndSpokeTopology\\",\\"hub\\":{\\"id\\":\\"/subs
+               criptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtual
+               Networks/myHubVnet\\"},\\"spokes\\":[{\\"id\\":\\"/subscriptions/subscriptionB/resourceGroups/my
+               ResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedN
+               etworkGroups/myManagedNetworkGroup1\\"}]}" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy delete'] = """
@@ -257,5 +255,5 @@ helps['managed-network managed-network-peering-policy delete'] = """
       - name: Get Managed Network Peering Policy
         text: |-
                az managed-network managed-network-peering-policy delete --managed-network-name
-               "myManagedNetwork" --policy-name "myHubAndSpoke" --resource-group "myResourceGroup"
+               "myManagedNetwork" --resource-group "myResourceGroup"
 """

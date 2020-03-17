@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 
-export function GenerateVendoredSdksInit(model: CodeModelAz) : string[] {
+export function GenerateNamespaceInit(model: CodeModelAz) : string[] {
     var output: string[] = [];
 
     output.push("# coding=utf-8");

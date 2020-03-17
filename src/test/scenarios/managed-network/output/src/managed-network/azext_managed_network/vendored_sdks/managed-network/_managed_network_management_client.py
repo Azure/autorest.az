@@ -35,22 +35,22 @@ class ManagedNetworkManagementClient(object):
     :vartype operation: managed_network_management_client.operations.OperationOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: azure.core.credentials.TokenCredential
-    :param subscriptionid: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-    :type subscriptionid: str
+    :param subscription_id: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+    :type subscription_id: str
     :param str base_url: Service URL
     """
 
     def __init__(
         self,
         credential,  # type: "TokenCredential"
-        subscriptionid,  # type: str
+        subscription_id,  # type: str
         base_url=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> None
         if not base_url:
             base_url = 'https://management.azure.com'
-        self._config = ManagedNetworkManagementClientConfiguration(credential, subscriptionid, **kwargs)
+        self._config = ManagedNetworkManagementClientConfiguration(credential, subscription_id, **kwargs)
         self._client = ARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
