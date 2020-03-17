@@ -4,7 +4,6 @@
 # --------------------------------------------------------------------------------------------
 
 from azure.cli.core import AzCommandsLoader
-from .generated._help import helps
 
 
 class ManagedNetworkManagementClientCommandsLoader(AzCommandsLoader):
@@ -19,13 +18,23 @@ class ManagedNetworkManagementClientCommandsLoader(AzCommandsLoader):
                                                                            custom_command_type=managed_network_custom)
 
     def load_command_table(self, args):
-        from .generated.commands import load_command_table
+        from azext_managed_network.generated.commands import load_command_table
         load_command_table(self, args)
+        try:
+            from azext_managed_network.manual.commands import load_command_table as load_command_table_manual
+            load_command_table_manual(self, args)
+        except ImportError:
+            pass
         return self.command_table
 
     def load_arguments(self, command):
-        from .generated._params import load_arguments
+        from azext_managed_network.generated._params import load_arguments
         load_arguments(self, command)
+        try:
+            from azext_managed_network.manual._params import load_arguments as load_arguments_manual
+            load_arguments_manual(self, command)
+        except ImportError:
+            pass
 
 
 COMMAND_LOADER_CLS = ManagedNetworkManagementClientCommandsLoader
