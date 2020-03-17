@@ -709,6 +709,13 @@ export class CodeModelCliImpl implements CodeModelAz
         return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex].request.parameters[this.currentParameterIndex].schema.type;
     }
 
+    private isComplexSchema(type: string): boolean {
+        if (type == SchemaType.Array || type == SchemaType.Object || type == SchemaType.Dictionary || type == SchemaType.Any)
+            return true;
+        else
+            return false;
+    }
+
     public get MethodParameter_IsListOfSimple(): boolean
     {
         // objects that is not base class of polymorphic and satisfy one of the four conditions
@@ -727,22 +734,23 @@ export class CodeModelCliImpl implements CodeModelAz
         if (this.MethodParameter_Type == SchemaType.Array) {
             if ((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object || (this.MethodParameter['schema'])['elementType'].type == SchemaType.Dictionary) {
                 for (let p of values(this.MethodParameter['schema']?.['elementType']?.properties)) {
-                    if (p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
-                        return false;
-                    } else if(p['schema'].type == SchemaType.Array) {
+                    if(p['schema'].type == SchemaType.Array) {
                         for(let mp of values(p['schema']?.['elementType']?.properties)) {
-                            if(mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
+                            if(this.isComplexSchema(mp['schema'].type)) {
                                 return false;
                             }
                         }
                         for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
                             for(let pp of values(parent['properties'])) {
-                                if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                                if(this.isComplexSchema(pp['schema'].type)) {
                                     return false;
                                 }
                             }
                         }
                     }
+                    else if (this.isComplexSchema(p['schema'].type)) {
+                        return false;
+                }
                 }
                 return true;
             }
@@ -751,22 +759,23 @@ export class CodeModelCliImpl implements CodeModelAz
                 return false;
             }
             for(let p of values(this.MethodParameter['schema']['properties'])) {
-                if(p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
-                    // objects.objects
-                    return false;
-                } else if(p['schema'].type == SchemaType.Array) {
+                if(p['schema'].type == SchemaType.Array) {
                     for(let mp of values(p['schema']?.['elementType']?.properties)) {
-                        if(mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
+                        if(this.isComplexSchema(mp['schema'].type)) {
                             return false;
                         }
                     }
                     for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
                         for(let pp of values(parent['properties'])) {
-                            if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                            if(this.isComplexSchema(pp['schema'].type)) {
                                 return false;
                             }
                         }
                     }
+                }
+                else if(this.isComplexSchema(p['schema'].type)) {
+                    // objects.objects
+                    return false;
                 }
             }
             return true;
@@ -775,22 +784,23 @@ export class CodeModelCliImpl implements CodeModelAz
                 return false;
             }
             let p = this.MethodParameter['schema']['elementType'];
-            if (p.type == SchemaType.Object || p.type == SchemaType.Dictionary) {
-                // dicts.objects or dicts.dictionaries 
-                return false;
-            } else if (p.type == SchemaType.Array) {
+            if (p.type == SchemaType.Array) {
                 for (let mp of values(p.properties)) {
-                    if (mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
+                    if (this.isComplexSchema(mp['schema'].type)) {
                         return false;
                     }
                 }
                 for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
                     for(let pp of values(parent['properties'])) {
-                        if(pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                        if(this.isComplexSchema(pp['schema'].type)) {
                             return false;
                         }
                     }
                 }
+            }
+            else if (this.isComplexSchema(p.type)) {
+                // dicts.objects or dicts.dictionaries 
+                return false;
             }
             return true;                
         }
@@ -801,7 +811,7 @@ export class CodeModelCliImpl implements CodeModelAz
     {
         if(this.MethodParameter_Type == SchemaType.Array) {
             let elementType = this.MethodParameter['schema']['elementType'].type;
-            if(elementType != SchemaType.Object && elementType != SchemaType.Array && elementType != SchemaType.Dictionary) {
+            if (!this.isComplexSchema(elementType)) {
                 return true;
             }
         }
@@ -813,7 +823,7 @@ export class CodeModelCliImpl implements CodeModelAz
         if(this.MethodParameter_IsFlattened) {
             return false;
         }
-        if (this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Object || this.MethodParameter_Type == SchemaType.Dictionary) {
+        if (this.isComplexSchema(this.MethodParameter_Type)) {
             return true;
         }
         return false;
