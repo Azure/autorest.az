@@ -9,9 +9,9 @@ import { HeaderGenerator } from "./Header";
 export function GenerateAzureCliInit(model: CodeModelAz) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     header.addFromImport("azure.cli.core", ["AzCommandsLoader"]);
-    header.addFromImport("azext_" + model.Extension_NameUnderscored + ".generated._help", ["helps"]);
     var output: string[] = header.getLines();
 
+    output.push("from azext_" + model.Extension_NameUnderscored + ".generated._help import helps  # pylint: disable=unused-import");
     output.push("");
     output.push("");
     output.push("class " + model.Extension_NameClass + "CommandsLoader(AzCommandsLoader):");

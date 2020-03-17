@@ -4,7 +4,7 @@
 # --------------------------------------------------------------------------------------------
 
 from azure.cli.core import AzCommandsLoader
-from azext_managed_network.generated._help import helps
+from azext_managed_network.generated._help import helps  # pylint: disable=unused-import
 
 
 class ManagedNetworkManagementClientCommandsLoader(AzCommandsLoader):
