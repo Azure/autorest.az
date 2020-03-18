@@ -10,7 +10,7 @@ require('source-map-support').install();
 
 @suite class Process {
     async runAz(directory: string) {
-        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6198 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md --output-folder=" + directory + "/tmpoutput ";
+        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6253 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md --output-folder=" + directory + "/tmpoutput ";
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => { 
             exec(cmd, function(error) {
@@ -47,6 +47,7 @@ require('source-map-support').install();
         const folders = await readdir(dir);
         let result = true;
         let msg = "";
+        let finalResult = true;
         for (const each of folders) {
             console.log(`Processing: ${each}`);
             try {
@@ -74,8 +75,13 @@ require('source-map-support').install();
                 console.log(msg);
                 result = false;
                 break;
+            }           
+            if(!result) {
+                finalResult = false;
             }
+            assert.strictEqual(result, true, msg);
+            
         }
-        assert.strictEqual(result, true, msg);
+        assert.strictEqual(finalResult, true, msg);
     }
 }

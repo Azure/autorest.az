@@ -33,7 +33,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
             if (model.SelectFirstCommand()) {
                 do {
                     output_args = output_args.concat(getCommandBody(model));
-                    if(model.Command_CanSplit) {
+                    if (model.Command_CanSplit) {
                         output_args = output_args.concat(getCommandBody(model, true));
                     }
                 }
@@ -79,9 +79,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     //let ctx = model.SelectCommand(method);
     //if (ctx == null)
     //    continue;
-    let output_args: string [] = [];
+    let output_args: string[] = [];
     output_args.push("");
-    if(needUpdate) {
+    if (needUpdate) {
         output_args.push("    with self.argument_context('" + model.Command_Name.replace(/ create/g, " update") + "') as c:");
     } else {
         output_args.push("    with self.argument_context('" + model.Command_Name + "') as c:");
@@ -89,32 +89,33 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
 
     let hasParam = false;
     let allParam: Map<string, boolean> = new Map<string, boolean>();
-    if(model.SelectFirstMethod()) {
+    if (model.SelectFirstMethod()) {
         do {
-            if(model.SelectFirstMethodParameter()) {
+
+            if (model.SelectFirstMethodParameter()) {
                 do {
-                    if(model.MethodParameter_IsFlattened) {
+                    if (model.MethodParameter_IsFlattened) {
                         continue;
                     }
-                    if(model.MethodParameter_Type == SchemaType.Constant) {
+                    if (model.MethodParameter_Type == SchemaType.Constant) {
                         continue;
                     }
                     hasParam = true;
-                    
+
                     let parameterName = model.MethodParameter_MapsTo;
-        
-                    if(allParam.has(parameterName)) {
+
+                    if (allParam.has(parameterName)) {
                         continue;
                     }
                     allParam.set(parameterName, true);
                     let argument = "        c.argument('" + parameterName + "'";
-        
+
                     // this is to handle names like "format", "type", etc
                     if (parameterName == "type" || parameterName == "format") {
                         argument = "        c.argument('_" + parameterName + "'";
                         argument += ", options_list=['--" + parameterName + "']";
                     }
-        
+
                     if (model.MethodParameter_Type == SchemaType.Boolean) {
                         hasBoolean = true;
                         argument += ", arg_type=get_three_state_flag()";
@@ -122,7 +123,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     else if (model.MethodParameter_Type == SchemaType.Choice || model.MethodParameter_Type == SchemaType.SealedChoice) {
                         hasEnum = true;
                         argument += ", arg_type=get_enum_type([";
-        
+
                         model.MethodParameter_EnumValues.forEach(element => {
                             if (!argument.endsWith("[")) argument += ", ";
                             argument += "'" + element + "'";
@@ -131,7 +132,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     }
 
                     let hasJsonLastTime = false;
-        
+
                     if (parameterName == "resource_group_name") {
                         argument += ", resource_group_name_type";
                         hasResourceGroup = true;
@@ -157,19 +158,20 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         }
                         argument += ", nargs='+'";
                     }
-                    
+
                     argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
-                    if(hasJsonLastTime) {
+                    if (hasJsonLastTime) {
                         argument += ")";
                         hasJsonLastTime = false;
-                    }            
-                    
+                    }
+
                     argument += ")";
-        
+
                     output_args.push(argument);
-                } while(model.SelectNextMethodParameter());
+
+                } while (model.SelectNextMethodParameter());
             }
-        } while(model.SelectNextMethod());
+        } while (model.SelectNextMethod());
     }
     if (!hasParam) {
         output_args.push("        pass");

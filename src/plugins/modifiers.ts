@@ -139,10 +139,19 @@ export class Modifiers {
                                 operation.language["az"]["description"] = commandDescriptionReplacer? commandDescriptionReplacer: operation.language["az"]["description"];
                             }
 
-                            for (const parameter of values(operation.request.parameters)) {
+                            for (const parameter of values(operation.parameters)) {
                                 if (parameter.language['az']['name'] != undefined && parameter.language["az"]["name"].match(parameterRegex)) {
                                     parameter.language["az"]["name"] = parameterReplacer? parameterRegex? parameter.language["az"]["name"].replace(parameterRegex, parameterReplacer): parameterReplacer: parameter.language["az"]["name"];
                                     parameter.language["az"]["description"] = paramDescriptionReplacer? paramDescriptionReplacer: parameter.language["az"]["description"];
+                                }
+                            }
+
+                            for(const request of values(operation.requests)) {
+                                for (const parameter of values(request.parameters)) {
+                                    if (parameter.language['az']['name'] != undefined && parameter.language["az"]["name"].match(parameterRegex)) {
+                                        parameter.language["az"]["name"] = parameterReplacer? parameterRegex? parameter.language["az"]["name"].replace(parameterRegex, parameterReplacer): parameterReplacer: parameter.language["az"]["name"];
+                                        parameter.language["az"]["description"] = paramDescriptionReplacer? paramDescriptionReplacer: parameter.language["az"]["description"];
+                                    }
                                 }
                             }
                         }

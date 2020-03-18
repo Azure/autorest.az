@@ -31,7 +31,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                     } 
                                     if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
                                         let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
-
+                                        
                                         if (allActions.has(actionName)) {
                                             continue;
                                         }
@@ -77,21 +77,19 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                                     ifkv = "elif";
                                                 } while (model.SelectNextMethodParameter());
                                             }
-                                        }
+                                        } 
                                         model.ExitSubMethodParameters();
                                         if (!foundProperties && preParamType == SchemaType.Dictionary) {
                                             output.push("            d[k] = v");
                                         }
                                         output.push("        return d");
                                         allActions.set(actionName, true);
-                                    }
-
+                                    } 
                                 } while (model.SelectNextMethodParameter());
-                            }
+                            } 
                         } while (model.SelectNextMethod());
                     }
-                }
-                while (model.SelectNextCommand());
+                } while (model.SelectNextCommand());
             }
         } while (model.SelectNextCommandGroup());
     }
