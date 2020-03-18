@@ -26,7 +26,7 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
                 output.push("");
                 output.push("");
                 output.push("def cf_" + model.GetModuleOperationName() + "(cli_ctx, *_):");
-                output.push("    return cf_" + model.Extension_NameUnderscored + "(cli_ctx)." + model.GetModuleOperationName());
+                output.push("    return cf_" + model.Extension_NameUnderscored + "(cli_ctx)." + model.GetModuleOperationNamePython());
             }
         } while (model.SelectNextCommandGroup());
     }

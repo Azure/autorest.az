@@ -11,7 +11,7 @@ def cf_managednetwork(cli_ctx, *_):
 
 
 def cf_mn(cli_ctx, *_):
-    return cf_managednetwork(cli_ctx).mn
+    return cf_managednetwork(cli_ctx).managed_network
 
 
 def cf_scope_assignment(cli_ctx, *_):

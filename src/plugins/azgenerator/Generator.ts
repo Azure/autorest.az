@@ -51,7 +51,6 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "manual/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "action.py"] = GenerateTopLevelImport(model, "action");  
-            files[path + "commands.py"] = GenerateTopLevelImport(model, "commands");  
             files[path + "custom.py"] = GenerateTopLevelImport(model, "custom");  
             files[path + "__init__.py"] = GenerateAzureCliInit(model);
             files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(model);

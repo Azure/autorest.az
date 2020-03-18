@@ -5,7 +5,7 @@
 
 import { CodeModelAz, CommandExample, ExampleParam } from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Request } from '@azure-tools/codemodel';
-import { serialize, deserialize, EnglishPluralizationService } from "@azure-tools/codegen";
+import { serialize, deserialize, EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, MergeSort, deepCopy } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
@@ -863,8 +863,12 @@ export class CodeModelCliImpl implements CodeModelAz {
         return ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].name);
     }
 
-    public GetModuleOperationNameUpper(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].name;
+    public GetModuleOperationNamePython(): string {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['python'].name;
+    }
+
+    public GetModuleOperationNamePythonUpper(): string {
+        return pascalCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['python'].name);
     }
 
     public GetPythonNamespace(): string {

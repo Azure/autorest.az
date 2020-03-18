@@ -99,7 +99,8 @@ export interface CodeModelAz
 
 
     GetModuleOperationName(): string;
-    GetModuleOperationNameUpper(): string;
+    GetModuleOperationNamePython(): string;
+    GetModuleOperationNamePythonUpper(): string;
     GetPythonNamespace(): string;
 
     // Python

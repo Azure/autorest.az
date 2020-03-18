@@ -11,7 +11,7 @@ def load_command_table(self, _):
 
     from azext_managednetwork.generated._client_factory import cf_mn
     managednetwork_mn = CliCommandType(
-        operations_tmpl='azext_managednetwork.vendored_sdks.managednetwork.operations._mn_operations#MnOperations.{}',
+        operations_tmpl='azext_managednetwork.vendored_sdks.managednetwork.operations._managed_network_operations#ManagedNetworkOperations.{}',
         client_factory=cf_mn)
     with self.command_group('managednetwork mn', managednetwork_mn, client_factory=cf_mn) as g:
         g.custom_command('list', 'managednetwork_mn_list')
