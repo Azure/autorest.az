@@ -1,50 +1,5 @@
 # Azure CLI Module Creation Report
 
-### managednetwork managed-network create
-
-create a managednetwork managed-network.
-
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
-|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--location**|string|The geo-location where the resource lives|location|location|
-|**--tags**|dictionary|Resource tags|tags|tags|
-|**--properties**|object|The MNC properties|properties|properties|
-### managednetwork managed-network delete
-
-delete a managednetwork managed-network.
-
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
-|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-### managednetwork managed-network list
-
-list a managednetwork managed-network.
-
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
-|**--top**|integer|May be used to limit the number of results in a page for list queries.|top|top|
-|**--skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|skiptoken|skiptoken|
-### managednetwork managed-network show
-
-show a managednetwork managed-network.
-
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
-|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-### managednetwork managed-network update
-
-update a managednetwork managed-network.
-
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
-|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--tags**|dictionary|Resource tags|tags|tags|
 ### managednetwork managed-network-group create
 
 create a managednetwork managed-network-group.
@@ -151,6 +106,51 @@ create a managednetwork managed-network-peering-policy.
 |**--policy_name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
 |**--location**|string|The geo-location where the resource lives|location|location|
 |**--properties**|object|Gets or sets the properties of a Managed Network Policy|properties|properties|
+### managednetwork mn create
+
+create a managednetwork mn.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
+|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
+|**--location**|string|The geo-location where the resource lives|location|location|
+|**--tags**|dictionary|Resource tags|tags|tags|
+|**--properties**|object|The MNC properties|properties|properties|
+### managednetwork mn delete
+
+delete a managednetwork mn.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
+|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
+### managednetwork mn list
+
+list a managednetwork mn.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
+|**--top**|integer|May be used to limit the number of results in a page for list queries.|top|top|
+|**--skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|skiptoken|skiptoken|
+### managednetwork mn show
+
+show a managednetwork mn.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
+|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
+### managednetwork mn update
+
+update a managednetwork mn.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
+|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
+|**--tags**|dictionary|Resource tags|tags|tags|
 ### managednetwork scope-assignment create
 
 create a managednetwork scope-assignment.

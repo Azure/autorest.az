@@ -5,7 +5,7 @@
 
 import { CodeModelAz, CommandExample, ExampleParam } from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Request } from '@azure-tools/codemodel';
-import { serialize, deserialize } from "@azure-tools/codegen";
+import { serialize, deserialize, EnglishPluralizationService } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, MergeSort, deepCopy } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
@@ -279,7 +279,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get CommandGroup_DefaultName(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language.default.name;
+        let eps = new EnglishPluralizationService();
+        return eps.singularize(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].cliKey);
     }
 
     //-----------------------------------------------------------------------------------------------------------------

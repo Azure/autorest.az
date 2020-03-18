@@ -50,6 +50,9 @@ cli:
             parameter: location
         required: true
       - where:
+            group: ManagedNetworks
+        name: mn
+      - where:
             group: 'ManagedNetworkPeeringPolicies'
             param: 'managedNetworkPeeringPolicyName'
         name: 'policy_name'

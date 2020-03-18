@@ -39,7 +39,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
             'myHubAndSpoke': self.create_random_name(prefix='cli_test_managed_network_peering_policies'[:9], length=24),
         })
 
-        self.cmd('az managednetwork managed-network create '
+        self.cmd('az managednetwork mn create '
                  '--location "eastus" '
                  '--properties "{{\\"scope\\":{{\\"managementGroups\\":[{{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000\\"}},{{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20000000-0002-0000-0000-000000000000\\"}}],\\"subnets\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}/subnets/default\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}/subnets/default\\"}}],\\"subscriptions\\":[{{\\"id\\":\\"subscriptionA\\"}},{{\\"id\\":\\"subscriptionB\\"}}],\\"virtualNetworks\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_2}\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_3}\\"}}]}}}}" '
                  '--managed-network-name "{myManagedNetwork}" '
@@ -69,16 +69,16 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--resource-group "{rg}"',
                  checks=[])
 
-        self.cmd('az managednetwork managed-network show '
+        self.cmd('az managednetwork mn show '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
-        self.cmd('az managednetwork managed-network list '
+        self.cmd('az managednetwork mn list '
                  '--resource-group "{rg}"',
                  checks=[])
 
-        self.cmd('az managednetwork managed-network list',
+        self.cmd('az managednetwork mn list',
                  checks=[])
 
         self.cmd('az managednetwork scope-assignment show '
@@ -129,7 +129,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  '--resource-group "{rg}"',
                  checks=[])
 
-        self.cmd('az managednetwork managed-network delete '
+        self.cmd('az managednetwork mn delete '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])

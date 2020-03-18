@@ -21,28 +21,28 @@ from azext_managednetwork.action import (
 
 def load_arguments(self, _):
 
-    with self.argument_context('managednetwork managed-network list') as c:
+    with self.argument_context('managednetwork mn list') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')
         c.argument('top', help='May be used to limit the number of results in a page for list queries.')
         c.argument('skiptoken', help='Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.')
 
-    with self.argument_context('managednetwork managed-network show') as c:
+    with self.argument_context('managednetwork mn show') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')
         c.argument('managed_network_name', help='The name of the Managed Network.')
 
-    with self.argument_context('managednetwork managed-network create') as c:
+    with self.argument_context('managednetwork mn create') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource lives')
         c.argument('tags', tags_type, help='Resource tags')
         c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='The MNC properties'))
 
-    with self.argument_context('managednetwork managed-network update') as c:
+    with self.argument_context('managednetwork mn update') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('tags', tags_type, help='Resource tags')
 
-    with self.argument_context('managednetwork managed-network delete') as c:
+    with self.argument_context('managednetwork mn delete') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')
         c.argument('managed_network_name', help='The name of the Managed Network.')
 

@@ -8,68 +8,68 @@
 from knack.help_files import helps
 
 
-helps['managednetwork managed-network'] = """
+helps['managednetwork mn'] = """
     type: group
-    short-summary: managednetwork managed-network
+    short-summary: managednetwork mn
 """
 
-helps['managednetwork managed-network list'] = """
+helps['managednetwork mn list'] = """
     type: command
     short-summary: The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
     examples:
       - name: Get Managed Network
         text: |-
-               az managednetwork managed-network list --resource-group "myResourceGroup"
+               az managednetwork mn list --resource-group "myResourceGroup"
 """
 
-helps['managednetwork managed-network show'] = """
+helps['managednetwork mn show'] = """
     type: command
     short-summary: The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name
     examples:
       - name: Get Managed Network
         text: |-
-               az managednetwork managed-network show --managed-network-name "myManagedNetwork"
-               --resource-group "myResourceGroup"
+               az managednetwork mn show --managed-network-name "myManagedNetwork" --resource-group
+               "myResourceGroup"
 """
 
-helps['managednetwork managed-network create'] = """
+helps['managednetwork mn create'] = """
     type: command
     short-summary: The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managednetwork managed-network create --location "eastus" --properties "{\\"scope\\":{\\"m
-               anagementGroups\\":[{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20000000-000
-               1-0000-0000-000000000000\\"},{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/200
-               00000-0002-0000-0000-000000000000\\"}],\\"subnets\\":[{\\"id\\":\\"/subscriptions/subscriptionC/
-               resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC/subnets/s
-               ubnetA\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/
-               Microsoft.Network/virtualNetworks/VnetC/subnets/subnetB\\"}],\\"subscriptions\\":[{\\"id\\":\\"s
-               ubscriptionA\\"},{\\"id\\":\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\":\\"/subscriptions/
-               subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/V
-               netA\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Mi
-               crosoft.Network/virtualNetworks/VnetB\\"}]}}" --managed-network-name "myManagedNetwork"
+               az managednetwork mn create --location "eastus" --properties "{\\"scope\\":{\\"managementGrou
+               ps\\":[{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-0
+               00000000000\\"},{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20000000-0002-00
+               00-0000-000000000000\\"}],\\"subnets\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroup
+               s/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC/subnets/subnetA\\"},{\\"
+               id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Net
+               work/virtualNetworks/VnetC/subnets/subnetB\\"}],\\"subscriptions\\":[{\\"id\\":\\"subscriptionA\\
+               "},{\\"id\\":\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\":\\"/subscriptions/subscriptionC
+               /resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA\\"},{\\"id
+               \\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Netwo
+               rk/virtualNetworks/VnetB\\"}]}}" --managed-network-name "myManagedNetwork"
                --resource-group "myResourceGroup"
 """
 
-helps['managednetwork managed-network update'] = """
+helps['managednetwork mn update'] = """
     type: command
     short-summary: Updates the specified Managed Network resource tags.
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managednetwork managed-network update --managed-network-name "myManagedNetwork"
-               --resource-group "myResourceGroup"
+               az managednetwork mn update --managed-network-name "myManagedNetwork" --resource-group
+               "myResourceGroup"
 """
 
-helps['managednetwork managed-network delete'] = """
+helps['managednetwork mn delete'] = """
     type: command
     short-summary: The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource group and Managed Network name
     examples:
       - name: Delete Managed Network
         text: |-
-               az managednetwork managed-network delete --managed-network-name "myManagedNetwork"
-               --resource-group "myResourceGroup"
+               az managednetwork mn delete --managed-network-name "myManagedNetwork" --resource-group
+               "myResourceGroup"
 """
 
 helps['managednetwork scope-assignment'] = """

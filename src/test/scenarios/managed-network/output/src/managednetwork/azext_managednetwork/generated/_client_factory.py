@@ -10,8 +10,8 @@ def cf_managednetwork(cli_ctx, *_):
     return get_mgmt_service_client(cli_ctx, ManagedNetworkManagementClient)
 
 
-def cf_managed_network(cli_ctx, *_):
-    return cf_managednetwork(cli_ctx).managed_network
+def cf_mn(cli_ctx, *_):
+    return cf_managednetwork(cli_ctx).mn
 
 
 def cf_scope_assignment(cli_ctx, *_):

@@ -9,16 +9,16 @@ from azure.cli.core.commands import CliCommandType
 
 def load_command_table(self, _):
 
-    from azext_managednetwork.generated._client_factory import cf_managed_network
-    managednetwork_managed_network = CliCommandType(
-        operations_tmpl='azext_managednetwork.vendored_sdks.managednetwork.operations._managed_network_operations#ManagedNetworkOperations.{}',
-        client_factory=cf_managed_network)
-    with self.command_group('managednetwork managed-network', managednetwork_managed_network, client_factory=cf_managed_network) as g:
-        g.custom_command('list', 'managednetwork_managed_network_list')
-        g.custom_show_command('show', 'managednetwork_managed_network_show')
-        g.custom_command('create', 'managednetwork_managed_network_create')
-        g.custom_command('update', 'managednetwork_managed_network_update', supports_no_wait=True)
-        g.custom_command('delete', 'managednetwork_managed_network_delete', supports_no_wait=True)
+    from azext_managednetwork.generated._client_factory import cf_mn
+    managednetwork_mn = CliCommandType(
+        operations_tmpl='azext_managednetwork.vendored_sdks.managednetwork.operations._mn_operations#MnOperations.{}',
+        client_factory=cf_mn)
+    with self.command_group('managednetwork mn', managednetwork_mn, client_factory=cf_mn) as g:
+        g.custom_command('list', 'managednetwork_mn_list')
+        g.custom_show_command('show', 'managednetwork_mn_show')
+        g.custom_command('create', 'managednetwork_mn_create')
+        g.custom_command('update', 'managednetwork_mn_update', supports_no_wait=True)
+        g.custom_command('delete', 'managednetwork_mn_delete', supports_no_wait=True)
         g.wait_command('wait')
 
     from azext_managednetwork.generated._client_factory import cf_scope_assignment

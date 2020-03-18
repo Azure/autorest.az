@@ -8,41 +8,41 @@
 import json
 
 
-def managednetwork_managed_network_list(cmd, client,
-                                        resource_group_name=None,
-                                        top=None,
-                                        skiptoken=None):
+def managednetwork_mn_list(cmd, client,
+                           resource_group_name=None,
+                           top=None,
+                           skiptoken=None):
     if resource_group_name is not None:
         return client.list_by_resource_group(resource_group_name=resource_group_name, top=top, skiptoken=skiptoken)
     return client.list_by_subscription(top=top, skiptoken=skiptoken)
 
 
-def managednetwork_managed_network_show(cmd, client,
-                                        resource_group_name,
-                                        managed_network_name):
+def managednetwork_mn_show(cmd, client,
+                           resource_group_name,
+                           managed_network_name):
     return client.get(resource_group_name=resource_group_name, managed_network_name=managed_network_name)
 
 
-def managednetwork_managed_network_create(cmd, client,
-                                          resource_group_name,
-                                          managed_network_name,
-                                          location,
-                                          tags=None,
-                                          properties=None):
+def managednetwork_mn_create(cmd, client,
+                             resource_group_name,
+                             managed_network_name,
+                             location,
+                             tags=None,
+                             properties=None):
     properties = json.loads(properties) if isinstance(properties, str) else properties
     return client.create_or_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, location=location, tags=tags, properties=properties)
 
 
-def managednetwork_managed_network_update(cmd, client,
-                                          resource_group_name,
-                                          managed_network_name,
-                                          tags=None):
+def managednetwork_mn_update(cmd, client,
+                             resource_group_name,
+                             managed_network_name,
+                             tags=None):
     return client.begin_update(resource_group_name=resource_group_name, managed_network_name=managed_network_name, tags=tags)
 
 
-def managednetwork_managed_network_delete(cmd, client,
-                                          resource_group_name,
-                                          managed_network_name):
+def managednetwork_mn_delete(cmd, client,
+                             resource_group_name,
+                             managed_network_name):
     return client.begin_delete(resource_group_name=resource_group_name, managed_network_name=managed_network_name)
 
 
