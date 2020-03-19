@@ -4,15 +4,24 @@ See documentation [here](doc/00-overview.md)
 
 ``` yaml
 use-extension:
-  "@autorest/python": "5.0.0-dev.20200211.1"
-  "@autorest/clicommon": "0.3.8"
+  "@autorest/python": "5.0.0-dev.20200314.1"
+  "@autorest/clicommon": "0.4.0"
   #"@autorest/python": "latest"
   
 python:
     reason: 'make sure python flag exists to load config in python.md'
 cli:
     reason: 'make sure cli flag exists to load config in cli.md'
-
+    naming:
+        default:
+            parameter: 'snake'
+            property: 'snake'
+            operation: 'snake'
+            operationGroup:  'pascal'
+            choice:  'pascal'
+            choiceValue:  'snake'
+            constant:  'snake'
+            type:  'pascal'
 require:
   - ./readme.python.md
   - ./readme.cli.md
@@ -56,13 +65,5 @@ scope-az:
         #- source-file-aznamer
         #- source-file-modifiers
         - source-file-extension
-
-
-
-no-namespace-folders: true
-license-header: MICROSOFT_MIT_NO_VERSION
-#clear-output-folder: true
-scope-codegen/emitter:
-    output-folder: "$(python-sdk-output-folder)"
 
 ```
