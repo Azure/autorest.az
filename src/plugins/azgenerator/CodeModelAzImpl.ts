@@ -774,6 +774,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             return true;                
         }
+        else if (this.MethodParameter_Type == SchemaType.Any) {
+            return false;
+        }
         return false;
     }
 
