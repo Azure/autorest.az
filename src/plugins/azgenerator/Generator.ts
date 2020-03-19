@@ -9,7 +9,6 @@ import { GenerateAzureCliHelp } from "./TemplateAzureCliHelp"
 import { GenerateAzureCliParams} from "./TemplateAzureCliParams"
 import { GenerateAzureCliClientFactory } from "./TemplateAzureCliClientFactory"
 import { GenerateAzureCliTestScenario } from "./TemplateAzureCliTestScenario"
-import { GenerateAzureCliTestInit } from "./TemplateAzureCliTestInit"
 import { GenerateAzureCliTestPrepare } from "./TemplateAzureCliTestPrepare"
 import { GenerateAzureCliReport } from "./TemplateAzureCliReport"
 import { GenerateAzureCliInit } from "./TemplateAzureCliInit"
@@ -22,7 +21,7 @@ import { GenerateAzureCliSetupPy } from "./TemplateAzureCliSetupPy"
 import { CodeModelAz } from "./CodeModelAz";
 import { GenerateAzureCliActions } from "./TemplateAzureCliActions"
 import { GenerateTopLevelImport } from "./TemplateAzureCliTopLevelImport"
-import { GenerateVendoredSdksInit } from "./TemplateAzureCliVendoredSdksInit"
+import { GenerateNamespaceInit } from "./TemplateAzureCliNamespaceInit"
 
 export async function GenerateAll(model: CodeModelAz,
     generateReport: any) {
@@ -43,16 +42,17 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);
             files[path + "generated/action.py"] = GenerateAzureCliActions(model);
             files[path + "generated/_help.py"] = GenerateAzureCliHelp(model);
+            files[path + "generated/__init__.py"] = GenerateNamespaceInit(model);  
+            files[path + "tests/__init__.py"] = GenerateNamespaceInit(model);
             files[path + "tests/latest/test_" + model.Extension_Name + "_scenario.py"] = GenerateAzureCliTestScenario(model);   
             files[path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(model);
-            files[path + "tests/latest/__init__.py"] = GenerateAzureCliTestInit(model);
-            files[path + "__init__.py"] = GenerateAzureCliInit(model);
+            files[path + "tests/latest/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
-            files[path + "vendored_sdks/__init__.py"] = GenerateVendoredSdksInit(model);  
+            files[path + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(model);  
+            files[path + "manual/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "action.py"] = GenerateTopLevelImport(model, "action");  
-            files[path + "commands.py"] = GenerateTopLevelImport(model, "commands");  
             files[path + "custom.py"] = GenerateTopLevelImport(model, "custom");  
-
+            files[path + "__init__.py"] = GenerateAzureCliInit(model);
             files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(model);
             files[pathTop + "README.rst"] = GenerateAzureCliReadme(model);
             files[pathTop + "setup.cfg"] = GenerateAzureCliSetupCfg(model);

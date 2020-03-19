@@ -1,5 +1,5 @@
 ﻿import { AnyARecord } from "dns";
-import { Example, Parameter } from "@azure-tools/codemodel";
+import { Operation, Parameter } from "@azure-tools/codemodel";
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -64,11 +64,13 @@ export interface CodeModelAz
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
 
+    Method: Operation;
     Method_IsFirst: boolean;
     Method_IsLast: boolean;
     Method_Name: string;
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
+
 
     SelectFirstMethodParameter(): boolean;
     SelectNextMethodParameter(): boolean;
@@ -85,6 +87,7 @@ export interface CodeModelAz
     MethodParameter_IsSimpleArray: boolean;
     MethodParameter_IsListOfSimple: boolean;
     MethodParameter: Parameter;
+    MethodParameters: Array<Parameter>;
     SubMethodParameter: Parameter;
 
     MethodParameter_In: string;
@@ -97,7 +100,8 @@ export interface CodeModelAz
 
 
     GetModuleOperationName(): string;
-    GetModuleOperationNameUpper(): string;
+    GetModuleOperationNamePython(): string;
+    GetModuleOperationNamePythonUpper(): string;
     GetPythonNamespace(): string;
 
     // Python

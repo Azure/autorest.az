@@ -2,8 +2,6 @@
 
 ``` yaml $(az)
 
-add-credential: true
-
 cli:
     naming:
         default:
@@ -23,4 +21,13 @@ cli:
         cli-flatten-payload: true
         cli-flatten-schema: false
         cli-flatten-all-overwrite-swagger: false
+```
+
+``` yaml $(python)
+add-credential: true
+no-namespace-folders: true
+license-header: MICROSOFT_MIT_NO_VERSION
+#clear-output-folder: true
+scope-codegen/emitter:
+    output-folder: "$(python-sdk-output-folder)"
 ```

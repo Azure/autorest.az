@@ -10,6 +10,11 @@ import { HeaderGenerator } from "./Header";
 export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     header.disableTooManyLines = true;
+
+    // this is no longer a problem
+    // header.disableTooManyLocals = true;
+    // header.disableUnusedArgument = true;
+
     let required: any = {};
     let body: string[] = GenerateBody(model, required);
 
@@ -72,12 +77,13 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstMethod()) {
         do {
+
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
                         continue;
                     }
-                    if(model.MethodParameter_Type == SchemaType.Constant) {
+                    if (model.MethodParameter_Type == SchemaType.Constant) {
                         continue;
                     }
 
@@ -96,12 +102,13 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
 
     if (model.SelectFirstMethod()) {
         do {
+
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
                         continue;
                     }
-                    if(model.MethodParameter_Type == SchemaType.Constant) {
+                    if (model.MethodParameter_Type == SchemaType.Constant) {
                         continue;
                     }
                     let requiredParam = model.MethodParameter_RequiredByMethod;
@@ -142,6 +149,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
 
         }
 
+
         let needIfStatement = !model.Method_IsLast;
 
         do {
@@ -152,13 +160,12 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
 
                 if (!model.Method_IsLast) {
                     ifStatement += ((model.Method_IsFirst) ? "if" : "elif");
-
                     if (model.SelectFirstMethodParameter()) {
                         do {
                             if (!model.MethodParameter_IsRequired) {
                                 continue;
                             }
-                            if(model.MethodParameter_Type == SchemaType.Constant) {
+                            if (model.MethodParameter_Type == SchemaType.Constant) {
                                 continue;
                             }
                             ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
@@ -191,7 +198,7 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let methodName = model.Method_Name;
-    if(model.Method_IsLongRun) {
+    if (model.Method_IsLongRun) {
         methodName = "begin_" + methodName;
     }
     methodCall += "client." + methodName + "(";
@@ -203,11 +210,11 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
             if (model.MethodParameter_IsFlattened) {
                 continue;
             }
-            if(model.MethodParameter_Type == SchemaType.Constant) {
+            if (model.MethodParameter_Type == SchemaType.Constant) {
                 continue;
             }
             let optionName = model.MethodParameter_MapsTo;
-            let parameterName = model.MethodParameter_NamePython; 
+            let parameterName = model.MethodParameter_NamePython;
 
             if (methodCall.endsWith("(")) {
                 // XXX - split and pop is a hack
@@ -219,6 +226,8 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
         }
         while (model.SelectNextMethodParameter());
     }
+
+
 
     methodCall += ")";
 

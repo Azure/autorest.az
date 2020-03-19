@@ -48,7 +48,7 @@ const resources = `${__dirname}/../../src/test/resources`;
             const fileName = `${__dirname}/../../src/test/resources/` + each + "/" + each + `-az-modifier.yaml`;
 
             // uncomment this line to overwrite existing file
-            // await (writeFile(fileName, serialize(codeModel)));
+            //await (writeFile(fileName, serialize(codeModel)));
 
             const supposeFile = await readFile(fileName);
 

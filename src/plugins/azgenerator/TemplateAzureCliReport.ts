@@ -111,33 +111,39 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     mo = mo.concat(requiredmo);
     mo = mo.concat(nonrequiredmo);
 
-    if (model.SelectFirstExample())
-    {
-        do
-        {
-            mo.push("");
-            mo.push ("**Example: " + model.Example_Title + "**");
-            mo.push("");
-            mo.push("```");
-
-            let next: string = model.Command_Name + " " + model.Command_MethodName + " ";
-            if(needUpdate) {
-                next = model.Command_Name.replace(/ create/g, " update") + " " + model.Command_MethodName.replace(/_create/g, "_update") + " ";
-            }
-            for (let k in model.Example_Params)
+    if (model.SelectFirstMethod()) {
+        do {
+            if (model.SelectFirstExample())
             {
-                let v: string = model.Example_Params[k];
-                if (/\s/.test(v))
+                do
                 {
-                    v = "\"" + v.replace("\"", "\\\"") + "\"";
-                }
-
-                next += k + " " + v;
-                mo.push(next);
-                next = "        ";
+                    mo.push("");
+                    mo.push ("**Example: " + model.Example_Title + "**");
+                    mo.push("");
+                    mo.push("```");
+        
+                    let next: string = model.Command_Name + " " + model.Command_MethodName + " ";
+                    if(needUpdate) {
+                        next = model.Command_Name.replace(/ create/g, " update") + " " + model.Command_MethodName.replace(/_create/g, "_update") + " ";
+                    }
+                    for (let k in model.Example_Params)
+                    {
+                        let v: string = model.Example_Params[k];
+                        if (/\s/.test(v))
+                        {
+                            v = "\"" + v.replace("\"", "\\\"") + "\"";
+                        }
+        
+                        next += k + " " + v;
+                        mo.push(next);
+                        next = "        ";
+                    }
+                    mo.push("```");
+                } while (model.SelectNextExample());
             }
-            mo.push("```");
-        } while (model.SelectNextExample());
+        } while (model.SelectNextMethod());
     }
+
+
     return mo;     
 }
