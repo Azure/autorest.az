@@ -23,23 +23,28 @@ class AttestationManagementClientScenarioTest(ScenarioTest):
 
         # EXAMPLE NOT FOUND: Operations_List
 
+        # EXAMPLE: AttestationProviders_Create
         self.cmd('az attestation attestation-provider create '
                  '--provider-name "myattestationprovider" '
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: AttestationProviders_Get
         self.cmd('az attestation attestation-provider show '
                  '--provider-name "myattestationprovider" '
                  '--resource-group "{rg}"',
                  checks=[])
 
+        # EXAMPLE: AttestationProviders_List
         self.cmd('az attestation attestation-provider list',
                  checks=[])
 
+        # EXAMPLE: AttestationProviders_ListByResourceGroup
         self.cmd('az attestation attestation-provider list '
                  '--resource-group "{rg_2}"',
                  checks=[])
 
+        # EXAMPLE: AttestationProviders_Delete
         self.cmd('az attestation attestation-provider delete '
                  '--provider-name "myattestationprovider" '
                  '--resource-group "{rg_3}"',
