@@ -103,7 +103,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     let internalObjects = [];
     for (let entity of (model.GetPreparerEntities() as PreparerEntity[])) {
         if (!entity.info.name) {
-            internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name), entity.info.hasCreateExample]);
+            internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name), entity.info.createdObjectNames.indexOf(entity.object_name)>=0]);
             continue;
         }
 
