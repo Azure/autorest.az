@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { PreparerEntity, getResourceKey } from "./ScenarioTool"
-import { ToSnakeCase } from '../../utils/helper';
+import { ToSnakeCase, ToMultiLine } from '../../utils/helper';
 import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
@@ -17,7 +17,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let config: any = model.Extension_TestScenario;
 
     let header: HeaderGenerator = new HeaderGenerator();
-    var head: string[] = header.getLines();
+    var head: string[] = [];
     head.push("");
     head.push("import os");
     head.push("import unittest");
@@ -58,7 +58,8 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                         let prefix: string = "        " + disabled + ((idx == 0) ? "self.cmd('" : "         '");
                         let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
 
-                        body.push(prefix + exampleCmd[idx] + postfix);
+                        // body.push(prefix + exampleCmd[idx] + postfix);
+                        ToMultiLine(prefix + exampleCmd[idx] + postfix, body);
                     }
                     body.push("        " + disabled + "         checks=[])");
                     body.push("");
@@ -90,7 +91,11 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let decorators: string[] = [];
     InitiateDependencies(model, imports, decorators, initiates);
 
-    return head.concat(imports, class_info, decorators, initiates, body);
+    let output = head.concat(imports, class_info, decorators, initiates, body);
+    output.forEach(element => {
+        if (element.length > 120) header.disableLineTooLong = true;
+    });
+    return header.getLines().concat(output);
 }
 
 function InitiateDependencies(model: CodeModelAz, imports: string[], decorators: string[], initiates: string[]) {
@@ -108,7 +113,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
             line += `, ${entity.info.depend_parameters[i]}='${entity.depend_parameter_values[i]}'`
         }
         line += ")";
-        decorators.push(line);
+        ToMultiLine(line, decorators);
         if (decorated.indexOf(entity.info.name) < 0) {
             if (entity.info.name == 'ResourceGroupPreparer') {
                 imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
@@ -125,7 +130,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
         initiates.push("        self.kwargs.update({");
         for (let [class_name, kargs_key, hasCreateExample] of internalObjects) {
             if (hasCreateExample)
-                initiates.push(`            '${kargs_key}': self.create_random_name(prefix='cli_test_${ToSnakeCase(class_name)}'[:9], length=24),`);
+                ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='cli_test_${ToSnakeCase(class_name)}'[:9], length=24),`, initiates);
             else
                 initiates.push(`            '${kargs_key}': '${kargs_key}',`);   // keep the original name in example if there is no create example in the test-scenario
         }

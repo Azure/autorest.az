@@ -169,6 +169,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
             }
         }
     }
+    if (ret[ret.length - 1].trim().length==0)   ret.pop();
     if (output != undefined) {
         for (let line of ret) output.push(line);
     }
