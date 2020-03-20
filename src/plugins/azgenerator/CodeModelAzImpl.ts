@@ -1104,7 +1104,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             Object.entries(this.Examples).forEach(([id, example_obj]) => {
                 let example = new CommandExample();
                 example.Method = this.Command_MethodName;
-                example.Id = id;
+                example.Id = `${this.CommandGroup_Key}/${this.MethodParameter_NameAz}/${id}`;
                 example.Title = example_obj.title || id;
                 example.Path = this.Method_Path;
                 example.HttpMethod = this.Method_HttpMethod;
@@ -1335,7 +1335,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         let ret: CommandExample[] = [];
         this.GetAllMethods(null, () => {
             for (let example of this.GetExamples()) {
-                if (id && (example.Id.toLowerCase() != id.toLowerCase())) continue;
+                if (id && (example.Id.toLowerCase() != id.toLowerCase() && !example.Id.toLowerCase().endsWith(`/${id.toLowerCase()}`))) continue;
                 if (callback) {
                     callback(example);
                 }
