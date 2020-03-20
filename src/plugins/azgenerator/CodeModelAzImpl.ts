@@ -370,8 +370,8 @@ export class CodeModelCliImpl implements CodeModelAz {
             if (operation.language['cli'].hidden || operation.language['cli'].removed) {
                 needNext = true;
             }
-            while (this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
-                let tmpOperation = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex - 1];
+            while (this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length - 1) {
+                let tmpOperation = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1];
                 if (operation.language['az'].command == tmpOperation.language['az'].command) {
                     this.currentOperationIndex++;
                     if (tmpOperation.language['cli'].hidden != true && tmpOperation.language['cli'].removed != true) {
