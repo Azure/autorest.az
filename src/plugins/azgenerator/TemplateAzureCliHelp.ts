@@ -6,12 +6,13 @@
 import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
 
+const maxShortSummary = 118
+
 export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     header.disableTooManyLines = true;
-    header.disableLineTooLong = true;
     header.addFromImport("knack.help_files", ["helps"])
-    var output: string[] = header.getLines();
+    var output: string[] = [];
     output.push("");
 
     if (model.SelectFirstCommandGroup()) {
@@ -24,8 +25,21 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
             output.push("");
             output.push("helps['" + model.CommandGroup_Name + "'] = \"\"\"");
             output.push("    type: group");
-            output.push("    short-summary: " + model.CommandGroup_Help);
-            output.push("\"\"\"");
+            //output.push("    short-summary: " + model.CommandGroup_Help);
+            let shortSummary = "    short-summary: " + model.CommandGroup_Help;
+            if (shortSummary.length> maxShortSummary) {
+                output.push("\"\"\"");
+                while (shortSummary.length>0) {
+                    let line = `"${shortSummary.substr(0, maxShortSummary)}"`;
+                    shortSummary = shortSummary.substr(maxShortSummary);
+                    output.push(line);
+                }
+            }
+            else {
+                output.push(shortSummary);
+                output.push("\"\"\"");
+            }
+            
 
             //let methods: string[] = model.CommandGroup_Commands;
 
@@ -49,7 +63,11 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
         output.push("");
     }
 
-    return output;
+    output.forEach(element => {
+        if (element.length > 120) header.disableLineTooLong = true;
+    });
+
+    return header.getLines().concat(output);
 }
 
 function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
@@ -71,7 +89,20 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
     // there will be just one method for create, update, delete, show, etc.
     // there may be a few list methods, so let's just take description from the first one.
     // as we can't use all of them
-    output.push("    short-summary: " + model.Command_Help);
+    // output.push("    short-summary: " + model.Command_Help);
+    let shortSummary = "    short-summary: " + model.Command_Help;
+    if (shortSummary.length> maxShortSummary) {
+        output.push("\"\"\"");  // end of previous three quot block
+        while (shortSummary.length>0) {
+            output.push(`"${shortSummary.substr(0, maxShortSummary)}"`);
+            shortSummary = shortSummary.substr(maxShortSummary);
+        }
+        output.push("\"\"\"");  // start of next three quot block
+    }
+    else {
+        output.push(shortSummary);
+    }
+
 
     let examplesStarted: boolean = false;
 

@@ -2,7 +2,6 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-# pylint: disable=line-too-long
 # pylint: disable=too-many-lines
 
 from knack.help_files import helps
@@ -15,7 +14,10 @@ helps['managednetwork mn'] = """
 
 helps['managednetwork mn list'] = """
     type: command
-    short-summary: The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
+"""
+"    short-summary: The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the"
+" current subscription in a paginated format."
+"""
     examples:
       - name: Get Managed Network
         text: |-
@@ -24,7 +26,10 @@ helps['managednetwork mn list'] = """
 
 helps['managednetwork mn show'] = """
     type: command
-    short-summary: The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name
+"""
+"    short-summary: The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group "
+"and Managed Network name"
+"""
     examples:
       - name: Get Managed Network
         text: |-
@@ -34,7 +39,10 @@ helps['managednetwork mn show'] = """
 
 helps['managednetwork mn create'] = """
     type: command
-    short-summary: The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name
+"""
+"    short-summary: The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource"
+" group and Managed Network name"
+"""
     examples:
       - name: Create/Update Managed Network
         text: |-
@@ -64,7 +72,10 @@ helps['managednetwork mn update'] = """
 
 helps['managednetwork mn delete'] = """
     type: command
-    short-summary: The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource group and Managed Network name
+"""
+"    short-summary: The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource"
+" group and Managed Network name"
+"""
     examples:
       - name: Delete Managed Network
         text: |-
@@ -137,7 +148,10 @@ helps['managednetwork managed-network-group'] = """
 
 helps['managednetwork managed-network-group list'] = """
     type: command
-    short-summary: The ListByManagedNetwork ManagedNetworkGroup operation retrieves all the Managed Network Groups in a specified Managed Networks in a paginated format.
+"""
+"    short-summary: The ListByManagedNetwork ManagedNetworkGroup operation retrieves all the Managed Network Groups in "
+"a specified Managed Networks in a paginated format."
+"""
     examples:
       - name: Get Managed Network Group
         text: |-
@@ -147,7 +161,10 @@ helps['managednetwork managed-network-group list'] = """
 
 helps['managednetwork managed-network-group show'] = """
     type: command
-    short-summary: The Get ManagedNetworkGroups operation gets a Managed Network Group specified by the resource group, Managed Network name, and group name
+"""
+"    short-summary: The Get ManagedNetworkGroups operation gets a Managed Network Group specified by the resource group"
+", Managed Network name, and group name"
+"""
     examples:
       - name: Get Managed Network Group
         text: |-
@@ -187,7 +204,10 @@ helps['managednetwork managed-network-group update'] = """
 
 helps['managednetwork managed-network-group delete'] = """
     type: command
-    short-summary: The Delete ManagedNetworkGroups operation deletes a Managed Network Group specified by the resource group, Managed Network name, and group name
+"""
+"    short-summary: The Delete ManagedNetworkGroups operation deletes a Managed Network Group specified by the resource"
+" group, Managed Network name, and group name"
+"""
     examples:
       - name: Delete Managed Network Group
         text: |-
@@ -202,7 +222,10 @@ helps['managednetwork managed-network-peering-policy'] = """
 
 helps['managednetwork managed-network-peering-policy list'] = """
     type: command
-    short-summary: The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering Policies in a specified Managed Network, in a paginated format.
+"""
+"    short-summary: The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering Polici"
+"es in a specified Managed Network, in a paginated format."
+"""
     examples:
       - name: Get Managed Network Group
         text: |-
@@ -212,7 +235,10 @@ helps['managednetwork managed-network-peering-policy list'] = """
 
 helps['managednetwork managed-network-peering-policy show'] = """
     type: command
-    short-summary: The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource, specified by the  resource group, Managed Network name, and peering policy name
+"""
+"    short-summary: The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource, spe"
+"cified by the  resource group, Managed Network name, and peering policy name"
+"""
     examples:
       - name: Get Managed Network Peering Policy
         text: |-
@@ -222,7 +248,10 @@ helps['managednetwork managed-network-peering-policy show'] = """
 
 helps['managednetwork managed-network-peering-policy create'] = """
     type: command
-    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
+"""
+"    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Polic"
+"y"
+"""
     examples:
       - name: Create/Update Managed Network Peering Policy
         text: |-
@@ -237,7 +266,10 @@ helps['managednetwork managed-network-peering-policy create'] = """
 
 helps['managednetwork managed-network-peering-policy update'] = """
     type: command
-    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
+"""
+"    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Polic"
+"y"
+"""
     examples:
       - name: Create/Update Managed Network Peering Policy
         text: |-
@@ -252,7 +284,10 @@ helps['managednetwork managed-network-peering-policy update'] = """
 
 helps['managednetwork managed-network-peering-policy delete'] = """
     type: command
-    short-summary: The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy, specified by the  resource group, Managed Network name, and peering policy name
+"""
+"    short-summary: The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy, specif"
+"ied by the  resource group, Managed Network name, and peering policy name"
+"""
     examples:
       - name: Get Managed Network Peering Policy
         text: |-
