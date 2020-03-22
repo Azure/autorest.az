@@ -119,7 +119,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
     while (spaceNum < sentence.length && sentence[spaceNum] == ' ') spaceNum++;
     for (let i = 0; i < sentence.length; i++) {
         ret[ret.length - 1] += sentence[i];
-        if (sentence[i] == ',') lastComma = ret[ret.length - 1].length - 1;
+        if (!inStr && sentence[i] == ',') lastComma = ret[ret.length - 1].length - 1;
         if (inStr) {
             if (sentence[i] == strTag && sentence[i - 1] != '\\') {
                 inStr = false;
