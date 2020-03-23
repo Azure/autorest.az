@@ -44,6 +44,8 @@ directive:
 #      $['x-ms-client-flatten'] = false;
 
 cli:
+    polymorphism:
+        expand-as-resource: true
     cli-directive:
     # directive on operationGroup
       - where:
@@ -64,6 +66,11 @@ cli:
             type: 'ManagedNetwork'
             prop: 'properties'
         json: true
+      - where:
+            group: managedNetworkPeeringPolicies
+            op: CreateOrUpdate
+            param: properties
+        poly-resource: true
         #cli-flatten-directive:
         #    - where:
         #        type: ResourceProviderOperation
