@@ -1344,6 +1344,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                 if (callback) {
                     callback(example);
                 }
+                if(ret.indexOf(example) > -1) {
+                    continue;
+                }
                 ret.push(example);
             }
         });
