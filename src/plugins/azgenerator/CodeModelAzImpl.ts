@@ -1200,20 +1200,25 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             }
 
-            //recognize depends by parameter name
+            //recognize depends by parameter name'
+            let createdObjectNames = [];
+            let isCreateMehod = this.Method_HttpMethod == 'put';
             if (this.SelectFirstMethodParameter()) {
                 do {
                     if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
                         let param_name = this.MethodParameter.language["cli"].cliKey;
                         let on_resource = this.resource_pool.isResource(param_name);
-                        if (on_resource && (on_resource != this.CommandGroup_Key) && depend_resources.indexOf(on_resource) < 0) {
-                            // the resource is a dependency only when it's a parameter in an example.
-                            for (let example of examples) {
-                                for (let param of example.Parameters) {
+                        for (let example of examples) {
+                            for (let param of example.Parameters) {
+                                if (on_resource && (on_resource != this.CommandGroup_Key) && depend_resources.indexOf(on_resource) < 0) {
+                                    // the resource is a dependency only when it's a parameter in an example.
                                     if (param_name == param.defaultName && depend_resources.indexOf(on_resource) < 0) {
                                         depend_resources.push(on_resource);
                                         depend_parameters.push(param_name);
                                     }
+                                }
+                                if (isCreateMehod && on_resource && on_resource == this.CommandGroup_Key && createdObjectNames.indexOf(param.value) < 0) {
+                                    createdObjectNames.push(param.value);
                                 }
                             }
                         }
@@ -1221,7 +1226,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 } while (this.SelectNextMethodParameter())
             }
 
-            this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters, this.Method_HttpMethod == 'put');
+            this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters, createdObjectNames);
         });
 
         this.SortExamplesByDependency();

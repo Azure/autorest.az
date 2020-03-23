@@ -17,10 +17,6 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
-    def current_subscription(self):
-        subs = self.cmd('az account show').get_output_in_json()
-        return subs['id']
-
     @ResourceGroupPreparer(name_prefix='cli_test_managednetwork_myResourceGroup'[:9], key='rg')
     @VirtualNetworkPreparer(name_prefix='cli_test_managednetwork_VnetC'[:9], key='vn', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='cli_test_managednetwork_VnetA'[:9], key='vn_2', resource_group_key='rg')
@@ -29,7 +25,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
     def test_managednetwork(self, resource_group):
 
         self.kwargs.update({
-            'subscription_id': self.current_subscription()
+            'subscription_id': self.get_subscription_id()
         })
 
         self.kwargs.update({
