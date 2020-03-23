@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
-import { EscapeString, ToCamelCase, Capitalize } from "../../utils/helper";
+import { EscapeString, ToCamelCase, Capitalize, ToMultiLine } from "../../utils/helper";
 import { SchemaType } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "./Header";
 
@@ -43,7 +43,6 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     }
 
     let header: HeaderGenerator = new HeaderGenerator();
-    header.disableLineTooLong = true;
     header.disableTooManyLines = true;
     header.disableTooManyStatements = true;
 
@@ -64,13 +63,18 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
         header.addFromImport("azext_" + model.Extension_NameUnderscored + ".action", actions);
     }
 
-    var output: string[] = header.getLines();
+    var output: string[] = [];
 
 
     output = output.concat(output_args);
 
     output.push("");
-    return output;
+
+    output.forEach(element => {
+        if (element.length > 120) header.disableLineTooLong = true;
+    });
+
+    return header.getLines().concat(output);
 }
 
 function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
@@ -166,10 +170,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     }
 
                     argument += ")";
-
-                    output_args.push(argument);
-
-                } while (model.SelectNextMethodParameter());
+                    
+                    ToMultiLine(argument, output_args);
+                } while(model.SelectNextMethodParameter());
             }
         } while (model.SelectNextMethod());
     }

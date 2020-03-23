@@ -9,9 +9,6 @@ import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
-    header.disableLineTooLong = true;
-    // can't be currently reproduced
-    // header.disableTooManyStatements = true;
     header.disableTooManyLines = true;
 
     // this is no longer a problem
@@ -25,11 +22,15 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
         header.addImport("json");
     }
 
-    let output = header.getLines();
+    let output = [];
     output = output.concat(body);
     output.push("");
 
-    return output;
+    output.forEach(element => {
+        if (element.length > 120) header.disableLineTooLong = true;
+    });
+
+    return header.getLines().concat(output);
 }
 
 
@@ -139,13 +140,10 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
         if (model.SelectFirstMethodParameter()) {
             do {
                 if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
-                    let access = "    " + model.MethodParameter_MapsTo;
-                    access += " = json.loads(" + model.MethodParameter_MapsTo + ") if isinstance(" + model.MethodParameter_MapsTo + ", str) else " + model.MethodParameter_MapsTo
                     required['json'] = true;
-                    output_body.push(access);
-
+                    output_body.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
+                    output_body.push("        " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
                 }
-
             }
             while (model.SelectNextMethodParameter());
 
@@ -186,8 +184,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
             // call client & return value
             // XXX - this is still a hack
 
-            let methodCall = prefix + "return " + GetMethodCall(model);
-            output_method_call.push(methodCall);
+            output_method_call = output_method_call.concat(GetMethodCall(model, prefix));
         }
         while (model.SelectNextMethod());
     }
@@ -197,14 +194,16 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     return output;
 }
 
-function GetMethodCall(model: CodeModelAz): string {
-    let methodCall: string = "";
+function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
+    let methodCall: string = prefix + "return ";
+    //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let methodName = model.Method_Name;
     if (model.Method_IsLongRun) {
         methodName = "begin_" + methodName;
     }
     methodCall += "client." + methodName + "(";
-
+    
+    let indent = " ".repeat(methodCall.length); 
     if (model.SelectFirstMethodParameter()) {
         do {
             let param = model.MethodParameter;
@@ -222,7 +221,7 @@ function GetMethodCall(model: CodeModelAz): string {
                 methodCall += parameterName + "=" + optionName;
             }
             else {
-                methodCall += ", " + parameterName + "=" + optionName;
+                methodCall += "," + "\n"+ indent + parameterName + "=" + optionName;
             }
         }
         while (model.SelectNextMethodParameter());
@@ -232,5 +231,5 @@ function GetMethodCall(model: CodeModelAz): string {
 
     methodCall += ")";
 
-    return methodCall;
+    return methodCall.split("\n");
 }

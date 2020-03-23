@@ -5,6 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
+import { ToMultiLine } from "../../utils/helper"
 
 export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -32,11 +33,11 @@ export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
                 let cf_name: string = "cf_" + ((model.GetModuleOperationName() != "") ? model.GetModuleOperationName() :  model.Extension_NameUnderscored);
                 output.push("    from azext_" + model.Extension_NameUnderscored + ".generated._client_factory import " + cf_name);
                 output.push("    " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + " = CliCommandType(");
-                output.push("        operations_tmpl='azext_" + model.Extension_NameUnderscored + ".vendored_sdks." + model.PythonOperationsName + ".operations._" + model.GetModuleOperationNamePython() + "_operations#" + model.GetModuleOperationNamePythonUpper() + "Operations" + ".{}',");
+                ToMultiLine("        operations_tmpl='azext_" + model.Extension_NameUnderscored + ".vendored_sdks." + model.PythonOperationsName + ".operations._" + model.GetModuleOperationNamePython() + "_operations#" + model.GetModuleOperationNamePythonUpper() + "Operations" + ".{}',", output);
                 
                 output.push("        client_factory=" + cf_name + ")");
 
-                output.push("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + ") as g:");
+                ToMultiLine("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + ") as g:", output);
                 let needWait = false;
                 do
                 {
@@ -79,14 +80,14 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     if (methodName != "show")
     {
         if(needUpdate) {
-            output.push("        g.generic_update_command('update'" + endStr);
+            ToMultiLine("        g.generic_update_command('update'" + endStr, output);
         } else {
-            output.push("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr);
+            ToMultiLine("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr, output);
         } 
     }
     else
     {
-        output.push("        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr);
+        ToMultiLine("        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr, output);
     }
     return output;
 }
