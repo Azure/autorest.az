@@ -33,7 +33,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     class_info.push("class " + model.Extension_NameClass + "ScenarioTest(ScenarioTest):");
     class_info.push("");
     //initiates.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + model.Extension_NameUnderscored + "')");
-    initiates.push("    def test_" + model.Extension_NameUnderscored + "(self, resource_group):");
+    // initiates.push("    def test_" + model.Extension_NameUnderscored + "(self, resource_group):");
 
     //initiates.push("");
     //initiates.push("        self.kwargs.update({");
@@ -97,6 +97,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
 function InitiateDependencies(model: CodeModelAz, imports: string[], decorators: string[], initiates: string[]) {
     let decorated = [];
     let internalObjects = [];
+    let hasResourceGroup = false;
     for (let entity of (model.GetPreparerEntities() as PreparerEntity[])) {
         if (!entity.info.name) {
             internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name), entity.info.createdObjectNames.indexOf(entity.object_name)>=0]);
@@ -113,12 +114,19 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
         if (decorated.indexOf(entity.info.name) < 0) {
             if (entity.info.name == 'ResourceGroupPreparer') {
                 imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
+                hasResourceGroup = true;
             }
             else {
                 imports.push(`from .preparers import ${entity.info.name}`);
             }
             decorated.push(entity.info.name);
         }
+    }
+    if (hasResourceGroup) {
+        initiates.unshift("    def test_" + model.Extension_NameUnderscored + "(self, resource_group):");
+    }
+    else {
+        initiates.unshift("    def test_" + model.Extension_NameUnderscored + "(self):");
     }
 
     // randomize name for internal resources
