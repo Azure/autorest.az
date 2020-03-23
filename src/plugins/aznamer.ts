@@ -14,17 +14,28 @@ export class AzNamer {
     public methodMap(operationNameOri: string, httpProtocol: string) {
         let operationName = operationNameOri.toLowerCase();
         httpProtocol = httpProtocol.toLowerCase();
-
+        let subOperationGroupName = "";
+        let ons: Array<string> = [];
+        if(operationNameOri.indexOf('#') > -1) {
+            ons = operationNameOri.split('#');
+            if(ons && ons.length == 2) {
+                subOperationGroupName = changeCamelToDash(ons[1]);
+                operationName = ons[0].toLowerCase();
+            }
+        }
         if(operationName.startsWith("create") && httpProtocol == "put") {
-            return "create";
+            return subOperationGroupName == ""? "create": subOperationGroupName + " " + "create";
         } else if(operationName.startsWith("update") && (httpProtocol == "put" || httpProtocol == "patch")) {
-            return "update";
+            return subOperationGroupName == ""? "update": subOperationGroupName + " " + "update";
         } else if(operationName.startsWith("get") && httpProtocol == "get") {
-            return "show";
+            return subOperationGroupName == ""? "show": subOperationGroupName + " " + "show";
         } else if(operationName.startsWith("list") && httpProtocol == "get") {
-            return "list";
+            return subOperationGroupName == ""? "list": subOperationGroupName + " " + "list";
         } else if(operationName.startsWith("delete") && httpProtocol == "delete") {
-            return "delete";
+            return subOperationGroupName == ""? "delete": subOperationGroupName + " " + "delete";
+        }
+        if(subOperationGroupName != "") {
+            return subOperationGroupName + " " + changeCamelToDash(ons[0]);
         }
         return changeCamelToDash(operationNameOri);
     }
@@ -133,10 +144,17 @@ export class AzNamer {
                     let operationName = "";
                     if(operation.language['cli'] != undefined) {
                         operation.language['az'] = new Language();
-                        operation.language['az']['name'] = this.methodMap(operation.language['cli']['name'], request.protocol.http.method);
+                        let commandName = this.methodMap(operation.language['cli']['name'], request.protocol.http.method);
+                        operation.language['az']['name'] = commandName;
                         operation.language['az']['description'] = operation.language['cli']['description'];
                         operationName = operationGroupName + " " +  changeCamelToDash(operation.language['az']['name']);
                         operation.language['az']['command'] = operationName;
+                        if(commandName.indexOf(" ") > -1) {
+                            operation.language['az']['subCommandGroup'] = operationGroupName + " " + commandName.split(' ')[0];
+                        }
+                        if(operation.language['cli']['name'].toLowerCase() == "createorupdate" || operation.language['cli']['name'].toLowerCase().startsWith("createorupdate#")) {
+                            operation['canSplitOperation'] = true;
+                        }
                     } else {
                         this.session.message({Channel:Channel.Warning, Text: "OperationGroup " + operationGroup.language.default.name + " operation " + operation.language.default.name + " doesn't have cli"});
                     }
@@ -149,15 +167,13 @@ export class AzNamer {
                     }
                 });
                 
-                if(operation.language['cli']['name'].toLowerCase() == "createorupdate") {
-                    operationIndex = operations.indexOf(operation);
-                }
+                
                 if(operation.language['cli']['name'].toLowerCase() == "update") {
                     hasUpdate = true;
                 }
             });
-            if(!hasUpdate && operationIndex != -1) {
-                operations[operationIndex]['canSplitOperation'] = true;
+            if(hasUpdate) {
+                operationGroup.language['az']['hasUpdate'] = hasUpdate;
             }
         });
     }

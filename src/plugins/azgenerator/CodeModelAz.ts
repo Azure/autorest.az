@@ -1,5 +1,5 @@
 ﻿import { AnyARecord } from "dns";
-import { Operation, Parameter } from "@azure-tools/codemodel";
+import { Operation, Parameter, OperationGroup } from "@azure-tools/codemodel";
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -46,12 +46,14 @@ export interface CodeModelAz
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;
 
+    CommandGroup: OperationGroup;
     CommandGroup_Name: string;
     CommandGroup_Help: string;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
 
+    Command: Operation;
     Command_Name: string;
     Command_MethodName: string;
     Command_FunctionName: string;
@@ -60,6 +62,7 @@ export interface CodeModelAz
 
     Command_CanSplit: boolean;
     Command_IsLongRun: boolean;
+    Command_SubGroupName: string;
     
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;

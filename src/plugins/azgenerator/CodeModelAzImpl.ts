@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz, CommandExample, ExampleParam } from "./CodeModelAz";
-import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Request } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Request, OperationGroup } from '@azure-tools/codemodel';
 import { serialize, deserialize, EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, MergeSort, deepCopy } from '../../utils/helper';
@@ -32,6 +32,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     options: any;
     extensionName: string;
     currentOperationGroupIndex: number;
+    currentSubOperationGroupIndex: number;
     currentOperationIndex: number;
     currentParameterIndex: number;
     currentExampleIndex: number;
@@ -40,6 +41,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     resource_pool: ResourcePool;
 
     suboptions: Property[];
+    subOperationGroups: Operation[];
     submethodparameters: Property[];
     currentSubOptionIndex: number;
     private _testScenario: any[];
@@ -48,6 +50,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.options = await this.session.getValue('az');
         this.extensionName = this.options['extensions'];
         this.currentOperationGroupIndex = -1;
+        this.currentSubOperationGroupIndex = -1;
         this.currentOperationIndex = -1;
         this.currentParameterIndex = -1;
         this.currentExampleIndex = -1;
@@ -80,12 +83,15 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     private getOrder(op: string) {
-        let opOrder = ["list", "show", "create", "update", "delete"];
-        let order = opOrder.indexOf(op.toLowerCase());
-        if (order == -1) {
-            order = opOrder.length;
+        if(op.indexOf(" ") > -1) {
+            op = op.split(" ")[1];
         }
-        return order.toLocaleString();
+        let opOrder = ["list", "show", "create", "update", "delete"];
+        let order = opOrder.indexOf(op.toLowerCase()) + 1;
+        if (order == 0) {
+            order = opOrder.length + 1;
+        }
+        return order;
     }
 
     private sortOperationByAzCommand() {
@@ -231,7 +237,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         // just enumerate through command groups in code-model-v4
         if (this.codeModel.operationGroups.length > 0) {
             this.currentOperationGroupIndex = 0;
-            if (this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].hidden || this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].removed) {
+            if (this.CommandGroup.language['cli'].hidden || this.CommandGroup.language['cli'].removed) {
                 if (this.SelectNextCommandGroup()) {
                     if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
                     return true;
@@ -250,7 +256,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     public SelectNextCommandGroup(): boolean {
         if (this.currentOperationGroupIndex < this.codeModel.operationGroups.length - 1) {
             this.currentOperationGroupIndex++;
-            if (this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].hidden || this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].removed) {
+            if (this.CommandGroup.language['cli'].hidden || this.CommandGroup.language['cli'].removed) {
                 if (this.SelectNextCommandGroup()) {
                     if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
                     return true;
@@ -266,21 +272,25 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
+    public get CommandGroup(): OperationGroup {
+        return this.codeModel.operationGroups[this.currentOperationGroupIndex];
+    }
+
     public get CommandGroup_Name(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command;
+        return this.CommandGroup.language['az'].command;
     }
 
     public get CommandGroup_Help(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].command;
+        return this.CommandGroup.language['az'].command;
     }
 
     public get CommandGroup_Key(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].$key || this.CommandGroup_Name;
+        return this.CommandGroup.$key || this.CommandGroup_Name;
     }
 
     public get CommandGroup_DefaultName(): string {
         let eps = new EnglishPluralizationService();
-        return eps.singularize(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['cli'].cliKey);
+        return eps.singularize(this.CommandGroup.language['cli'].cliKey);
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -330,16 +340,16 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public SelectFirstCommand(): boolean {
         // just enumerate through commands in command group
-        if (this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length > 0) {
+        if (this.CommandGroup.operations.length > 0) {
             this.currentOperationIndex = 0;
-            let operation = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex];
+            let operation = this.Command;
             this.preMethodIndex = this.currentOperationIndex;
             let needNext = false;
             if (operation.language['cli'].hidden || operation.language['cli'].removed) {
                 needNext = true;
             }
-            while (this.currentOperationIndex + 1 < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length) {
-                let tmpOperation = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1];
+            while (this.currentOperationIndex + 1 < this.CommandGroup.operations.length) {
+                let tmpOperation = this.CommandGroup.operations[this.currentOperationIndex + 1];
                 if (tmpOperation.language['az'].command == operation.language['az'].command) {
                     this.currentOperationIndex++;
                     if (tmpOperation.language['cli'].hidden != true && tmpOperation.language['cli'].removed != true) {
@@ -362,16 +372,16 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public SelectNextCommand(): boolean {
-        if (this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length - 1) {
+        if (this.currentOperationIndex < this.CommandGroup.operations.length - 1) {
             this.currentOperationIndex++;
             this.preMethodIndex = this.currentOperationIndex;
-            let operation = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex];
+            let operation = this.Command;
             let needNext = false;
             if (operation.language['cli'].hidden || operation.language['cli'].removed) {
                 needNext = true;
             }
-            while (this.currentOperationIndex < this.codeModel.operationGroups[this.currentOperationGroupIndex].operations.length - 1) {
-                let tmpOperation = this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex + 1];
+            while (this.currentOperationIndex < this.CommandGroup.operations.length - 1) {
+                let tmpOperation = this.CommandGroup.operations[this.currentOperationIndex + 1];
                 if (operation.language['az'].command == tmpOperation.language['az'].command) {
                     this.currentOperationIndex++;
                     if (tmpOperation.language['cli'].hidden != true && tmpOperation.language['cli'].removed != true) {
@@ -393,30 +403,41 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
+    public get Command() {
+        return this.CommandGroup.operations[this.currentOperationIndex];
+    }
+
     public get Command_FunctionName() {
         return this.Command_Name.replace(/( |-)/g, "_");
     }
 
     public get Command_Name(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].command;
+        return this.Command.language['az'].command;
     }
 
     public get Command_MethodName(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].name;
+        return this.Command.language['az'].name;
     }
 
     public get Command_Help(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].language['az'].description.replace(/\n/g, " ");
+        return this.Command.language['az'].description.replace(/\n/g, " ");
     }
 
     public get Command_CanSplit(): boolean {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex]['canSplitOperation'] ? true : false;
+        if(this.CommandGroup.language['az']['hasUpdate']) {
+            return false;
+        }
+        return this.Command['canSplitOperation'] ? true : false;
     }
 
     public get Command_IsLongRun(): boolean {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentOperationIndex].extensions?.['x-ms-long-running-operation'] ? true : false;
+        return this.Command.extensions?.['x-ms-long-running-operation'] ? true : false;
     }
 
+    public get Command_SubGroupName(): string {
+        let subCommandGroupName = this.Command.language['az']['subCommandGroup'];
+        return isNullOrUndefined(subCommandGroupName)? "": subCommandGroupName;
+    }
     //=================================================================================================================
     // Methods / Operations associated with the command.
     //
@@ -471,7 +492,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Method(): Operation {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].operations[this.currentMethodIndex];
+        return this.CommandGroup.operations[this.currentMethodIndex];
     }
 
     public get Method_IsFirst(): boolean {
@@ -866,15 +887,15 @@ export class CodeModelCliImpl implements CodeModelAz {
     //=================================================================================================================
 
     public GetModuleOperationName(): string {
-        return ToSnakeCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['az'].name);
+        return ToSnakeCase(this.CommandGroup.language['az'].name);
     }
 
     public GetModuleOperationNamePython(): string {
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['python'].name;
+        return this.CommandGroup.language['python'].name;
     }
 
     public GetModuleOperationNamePythonUpper(): string {
-        return pascalCase(this.codeModel.operationGroups[this.currentOperationGroupIndex].language['python'].name);
+        return pascalCase(this.CommandGroup.language['python'].name);
     }
 
     public GetPythonNamespace(): string {
@@ -887,7 +908,6 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get PythonOperationsName(): string {
         return this.options['namespace'].split('.').pop();
-        //return this.codeModel.operationGroups[this.currentOperationGroupIndex].language['python'].name;
     }
 
     //=================================================================================================================

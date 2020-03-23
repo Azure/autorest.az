@@ -5,7 +5,7 @@ See documentation [here](doc/00-overview.md)
 ``` yaml
 use-extension:
   "@autorest/python": "5.0.0-dev.20200314.1"
-  "@autorest/clicommon": "0.4.0"
+  "@autorest/clicommon": "/home/qiaozha/code/autorest.cli.common"
   #"@autorest/python": "latest"
   
 python:
@@ -43,7 +43,7 @@ pipeline:
         input: clicommon/identity
     az/aznamer:
         input: python/namer
-        #output-artifact: source-file-aznamer
+        output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
         #output-artifact: source-file-modifiers
@@ -53,7 +53,7 @@ pipeline:
     az/emitter:
         input:
             #- az/clicommon
-            #- az/aznamer
+            - az/aznamer
             #- az/modifiers
             - az/azgenerator
         scope: scope-az
@@ -62,7 +62,7 @@ scope-az:
     is-object: false
     output-artifact:
         #- source-file-pynamer
-        #- source-file-aznamer
+        - source-file-aznamer
         #- source-file-modifiers
         - source-file-extension
 

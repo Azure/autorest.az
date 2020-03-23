@@ -21,32 +21,19 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
             // if there's no operation in this command group
             if (!model.SelectFirstCommand())
                 continue;
-
-            output.push("");
-            output.push("helps['" + model.CommandGroup_Name + "'] = \"\"\"");
-            output.push("    type: group");
-            //output.push("    short-summary: " + model.CommandGroup_Help);
-            let shortSummary = "    short-summary: " + model.CommandGroup_Help;
-            if (shortSummary.length> maxShortSummary) {
-                output.push("\"\"\"");
-                while (shortSummary.length>0) {
-                    let line = `"${shortSummary.substr(0, maxShortSummary)}"`;
-                    shortSummary = shortSummary.substr(maxShortSummary);
-                    output.push(line);
-                }
-            }
-            else {
-                output.push(shortSummary);
-                output.push("\"\"\"");
-            }
-            
-
+                
+            output = output.concat(generateCommandGroupHelp(model));    
             //let methods: string[] = model.CommandGroup_Commands;
 
+            let allSubGroup: Map<string, boolean> = new Map<string, boolean>();
             if (model.SelectFirstCommand()) {
                 do {
 
-                    
+                    let subCommandGroupName = model.Command_SubGroupName;
+                    if(subCommandGroupName != "" && !allSubGroup.has(subCommandGroupName)) {
+                        allSubGroup.set(subCommandGroupName, true);
+                        output = output.concat(generateCommandGroupHelp(model, subCommandGroupName));
+                    }
                     let commandOutput: string [] = generateCommandHelp(model);
                     //output.push("before output.length: " + output.length);
                     output = output.concat(commandOutput);
@@ -68,6 +55,35 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
     });
 
     return header.getLines().concat(output);
+}
+
+function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = "") {
+    let output = [];
+    output.push("");
+    if(subCommandGroupName != "") {
+        output.push("helps['" + subCommandGroupName + "'] = \"\"\"")
+    } else {
+        output.push("helps['" + model.CommandGroup_Name + "'] = \"\"\"");
+    }
+    output.push("    type: group");
+    //output.push("    short-summary: " + model.CommandGroup_Help);
+    let shortSummary = "    short-summary: " + model.CommandGroup_Help;
+    if(subCommandGroupName != "") {
+        shortSummary = shortSummary + " sub group " + subCommandGroupName.split(" ").pop();
+    }
+    if (shortSummary.length> maxShortSummary) {
+        output.push("\"\"\"");
+        while (shortSummary.length>0) {
+            let line = `"${shortSummary.substr(0, maxShortSummary)}"`;
+            shortSummary = shortSummary.substr(maxShortSummary);
+            output.push(line);
+        }
+    }
+    else {
+        output.push(shortSummary);
+        output.push("\"\"\"");
+    }
+    return output;
 }
 
 function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
