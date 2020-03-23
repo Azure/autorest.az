@@ -77,12 +77,8 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     }
     let subscription_id = model.GetSubscriptionKey();
     if (subscription_id) {
-        class_info.push("    def current_subscription(self):");
-        class_info.push("        subs = self.cmd('az account show').get_output_in_json()");
-        class_info.push("        return subs['id']");
-        class_info.push("");
         initiates.push("        self.kwargs.update({");
-        initiates.push(`            '${subscription_id}': self.current_subscription()`);
+        initiates.push(`            '${subscription_id}': self.get_subscription_id()`);
         initiates.push("        })");
         initiates.push("");
     }
