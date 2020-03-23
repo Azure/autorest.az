@@ -108,6 +108,15 @@ export function isDict(v) {
     return typeof v==='object' && v!==null && !(v instanceof Array) && !(v instanceof Date);
 }
 
+function isEscaped(str: string, index: number): boolean {
+    let slashNum = 0;
+    index--;
+    while (index >= 0 && str[index] == '\\') {
+        slashNum += 1;
+        index--;
+    }
+    return slashNum % 2 == 1;
+}
 
 export function ToMultiLine(sentence: string, output: string[] = undefined, maxLength: number = 119, strMode: boolean = false): string[] {
     let lastComma = -1;
@@ -126,17 +135,17 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
     for (let i = 0; i < sentence.length; i++) {
         ret[ret.length - 1] += sentence[i];
         if (inStr) {
-            if (sentence[i] == strTag && sentence[i - 1] != '\\') {
+            if (sentence[i] == strTag && !isEscaped(sentence, i)) {
                 inStr = false;
             }
         }
         else {
             if (sentence[i] == ',') lastComma = ret[ret.length - 1].length - 1;
-            if (sentence[i] == '\'' && sentence[i - 1] != '\\') {
+            if (sentence[i] == '\'' && !isEscaped(sentence, i)) {
                 inStr = true;
                 strTag = '\'';
             }
-            else if (sentence[i] == '\"' && sentence[i - 1] != '\\') {
+            else if (sentence[i] == '\"' && !isEscaped(sentence, i)) {
                 inStr = true;
                 strTag = '\"';
             }
@@ -148,7 +157,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
         if (ret[ret.length - 1].length >= maxLength) {
             if (inStr) {
                 let lastNormal = ret[ret.length - 1].length - 1;
-                while (lastNormal >= 0 && ret[ret.length - 1][lastNormal] == '\\') lastNormal--;
+                while (lastNormal >= 0 && isEscaped(ret[ret.length - 1], lastNormal + 1)) lastNormal--;
                 if (strMode) {
                     if (lastNormal != ret[ret.length - 1].length - 1) {
                         let newLine = ret[ret.length - 1].substr(lastNormal + 1);
