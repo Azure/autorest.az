@@ -72,7 +72,12 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     let indent = " ".repeat(call.length);
     let isUpdate = updatedMethodName.startsWith("update_");
 
-    output.push(call + "cmd, client");
+    call += "cmd, client";
+    if (needUpdate) {
+        call += ", instance";
+    }
+    output.push(call);
+    
 
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstMethod()) {
