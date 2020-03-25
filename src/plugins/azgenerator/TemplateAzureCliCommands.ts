@@ -80,7 +80,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     if (methodName != "show")
     {
         if(needUpdate) {
-            ToMultiLine("        g.generic_update_command('" + model.Command.language['az'].name.replace(/create/g, 'update') + "', custom_func_name='" + functionName.replace(/_create/g, '_update') + "'" + endStr, output);
+            ToMultiLine("        g.generic_update_command('" + model.Command_MethodName.replace(/create/g, 'update') + "', setter_name='" + model.Command.language['python'].name + "', custom_func_name='" + functionName.replace(/_create/g, '_update') + "'" + endStr, output);
         } else {
             ToMultiLine("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr, output);
         } 
