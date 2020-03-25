@@ -133,12 +133,13 @@ function GetCustomCommandBody(model: CodeModelAz, required: boolean) {
                     continue;
                 }
                 let requiredParam = model.MethodParameter_RequiredByMethod;
+                output.push("    if " + model.MethodParameter_MapsTo + ":");
                 if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                     required['json'] = true;
-                    output.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
-                    output.push("        instance." + model.MethodParameter_NamePython + " = json.loads(" + model.MethodParameter_MapsTo + ")");
+                    output.push("        if isinstance(" + model.MethodParameter_MapsTo + ", str):");
+                    output.push("            instance." + model.MethodParameter_NamePython + " = json.loads(" + model.MethodParameter_MapsTo + ")");
                 } else {
-                    output.push("    instance." + model.MethodParameter_NamePython + " = " + model.MethodParameter_MapsTo);
+                    output.push("        instance." + model.MethodParameter_NamePython + " = " + model.MethodParameter_MapsTo);
                 }
             }
             while (model.SelectNextMethodParameter());

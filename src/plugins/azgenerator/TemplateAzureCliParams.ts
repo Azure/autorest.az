@@ -93,11 +93,13 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
 
     let hasParam = false;
     let allParam: Map<string, boolean> = new Map<string, boolean>();
+    let allPythonParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstMethod()) {
         do {
 
             if (model.SelectFirstMethodParameter()) {
                 do {
+                    allPythonParam.set(model.MethodParameter_NamePython, true);
                     if (model.MethodParameter_IsFlattened) {
                         continue;
                     }
@@ -107,7 +109,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     hasParam = true;
 
                     let parameterName = model.MethodParameter_MapsTo;
-
+                    if(allPythonParam.has(parameterName)) {
+                        allPythonParam.delete(parameterName);
+                    }
                     if (allParam.has(parameterName)) {
                         continue;
                     }
@@ -176,9 +180,20 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
             }
         } while (model.SelectNextMethod());
     }
+    if(allPythonParam.size > 0) {
+        let argument = "        c.ignore(";
+        for(let k of allPythonParam.keys()) {
+            argument += "'" + k + "'" + ", ";
+        }
+        argument = argument.slice(0, -2) + ")";
+        hasParam = true;
+        ToMultiLine(argument, output_args);
+    }
+
     if (!hasParam) {
         output_args.push("        pass");
     }
+
 
     return output_args;
 }
