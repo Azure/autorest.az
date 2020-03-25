@@ -22,7 +22,12 @@ export class AzNamer {
         } else if(operationName.startsWith("get") && httpProtocol == "get") {
             return "show";
         } else if(operationName.startsWith("list") && httpProtocol == "get") {
-            return "list";
+            let idx = operationName.indexOf("by");
+            if(idx > -1) {
+                return changeCamelToDash(operationNameOri.substr(0, idx));
+            } else {
+                return changeCamelToDash(operationNameOri);
+            }
         } else if(operationName.startsWith("delete") && httpProtocol == "delete") {
             return "delete";
         }
