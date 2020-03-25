@@ -43,7 +43,7 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
                 do {
                     output = output.concat(GetCommandBody(model, required));
                     if (model.Command_CanSplit) {
-                        output = output.concat(GetCommandBody(model, required, true));
+                        output = output.concat(GetCustomCommandBody(model, required));
                     }
                 }
                 while (model.SelectNextCommand());
@@ -53,8 +53,138 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
 
     return output;
 }
+ 
+function GetCustomCommandBody(model: CodeModelAz, required: boolean) {
+    let output: string[] = [];
+    output.push("");
+    output.push("");
 
-function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boolean = false) {
+    let updatedMethodName: string = model.Command_FunctionName;
+    updatedMethodName = updatedMethodName.replace(/_create/g, "_update");
+    let call = "def " + updatedMethodName + "(";
+    let indent = " ".repeat(call.length);
+    call += "instance, cmd";
+    output.push(call);
+    let allParam: Map<string, boolean> = new Map<string, boolean>();
+    if (model.SelectFirstMethod()) {
+        do {
+
+            if (model.SelectFirstMethodParameter()) {
+                do {
+                    if (model.MethodParameter_IsFlattened) {
+                        continue;
+                    }
+                    if (model.MethodParameter_Type == SchemaType.Constant) {
+                        continue;
+                    }
+
+                    let requiredParam: boolean = model.MethodParameter_RequiredByMethod;
+
+                    let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
+                    if (requiredParam && !allParam.has(name)) {
+                        allParam.set(name, true);
+                        output[output.length - 1] += ",";
+                        output.push(indent + name);
+                    }
+                } while (model.SelectNextMethodParameter());
+            }
+        } while (model.SelectNextMethod());
+    }
+    if (model.SelectFirstMethod()) {
+        do {
+
+            if (model.SelectFirstMethodParameter()) {
+                do {
+                    if (model.MethodParameter_IsFlattened) {
+                        continue;
+                    }
+                    if (model.MethodParameter_Type == SchemaType.Constant) {
+                        continue;
+                    }
+                    let requiredParam = model.MethodParameter_RequiredByMethod;
+
+                    let name = model.MethodParameter_MapsTo;
+                    if (!requiredParam && !allParam.has(name)) {
+                        allParam.set(name, true);
+                        output[output.length - 1] += ",";
+                        output.push(indent + name + "=None");
+                    }
+                } while (model.SelectNextMethodParameter());
+            }
+        }
+        while (model.SelectNextMethod());
+    }
+
+    output[output.length - 1] += "):";
+
+    if (model.SelectFirstMethod()) {
+        // create body transformation for methods that support it
+        let methodName: string = model.Command_MethodName;
+
+        // body transformation
+
+        // with x-ms-client-flatten it doesn't need this part now 
+        if (model.SelectFirstMethodParameter()) {
+            do {
+                if (model.MethodParameter_IsFlattened) {
+                    continue;
+                }
+                if (model.MethodParameter_Type == SchemaType.Constant) {
+                    continue;
+                }
+                let requiredParam = model.MethodParameter_RequiredByMethod;
+                if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                    required['json'] = true;
+                    output.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
+                    output.push("        instance." + model.MethodParameter_NamePython + " = json.loads(" + model.MethodParameter_MapsTo + ")");
+                } else {
+                    output.push("    instance." + model.MethodParameter_NamePython + " = " + model.MethodParameter_MapsTo);
+                }
+            }
+            while (model.SelectNextMethodParameter());
+        }
+        let needIfStatement = !model.Method_IsLast;
+
+        do {
+            let prefix = "    ";
+            if (needIfStatement) {
+                let ifStatement = prefix;
+                prefix += "    ";
+    
+                if (!model.Method_IsLast) {
+                    ifStatement += ((model.Method_IsFirst) ? "if" : "elif");
+                    if (model.SelectFirstMethodParameter()) {
+                        do {
+                            if (!model.MethodParameter_IsRequired) {
+                                continue;
+                            }
+                            if (model.MethodParameter_Type == SchemaType.Constant) {
+                                continue;
+                            }
+                            ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
+                            ifStatement += " " + model.MethodParameter_MapsTo + " is not None"
+                        }
+                        while (model.SelectNextMethodParameter());
+                        ifStatement += ":";
+                        output.push(ifStatement);
+                    }
+                }
+                else {
+                    ifStatement == "";
+                    prefix = "    ";
+                }
+            }
+            // call client & return value
+            // XXX - this is still a hack
+    
+            output = output.concat("    return instance");
+        }
+        while (model.SelectNextMethod());
+    }
+    return output;
+}
+
+function GetCommandBody(model: CodeModelAz, required: boolean) {
     // create, delete, list, show, update
     let output: string[] = [];
     output.push("");
@@ -65,17 +195,9 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     //
 
     let updatedMethodName: string = model.Command_FunctionName;
-    if (needUpdate) {
-        updatedMethodName = updatedMethodName.replace(/_create/g, "_update");
-    }
     let call = "def " + updatedMethodName + "(";
     let indent = " ".repeat(call.length);
-    let isUpdate = updatedMethodName.startsWith("update_");
-
     call += "cmd, client";
-    if (needUpdate) {
-        call += ", instance";
-    }
     output.push(call);
     
 
