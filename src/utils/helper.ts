@@ -108,6 +108,10 @@ export function isDict(v) {
     return typeof v==='object' && v!==null && !(v instanceof Array) && !(v instanceof Date);
 }
 
+export function ToJsonString(str: string): string {
+    return JSON.stringify(str).split(/[\r\n]+/).join("").split("\\").join("\\\\").split("'").join("\\'")
+}
+
 function isEscaped(str: string, index: number): boolean {
     let slashNum = 0;
     index--;

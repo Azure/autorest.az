@@ -79,6 +79,7 @@ export interface CodeModelAz
 
     MethodParameter_Name: string;
     MethodParameter_NameAz: string;
+    MethodParameter_IsArray: boolean
     MethodParameter_NamePython: string
     MethodParameter_MapsTo: string;
     MethodParameter_Description: string;

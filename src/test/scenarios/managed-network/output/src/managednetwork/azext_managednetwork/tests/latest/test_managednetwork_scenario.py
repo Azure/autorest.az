@@ -56,12 +56,12 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         # EXAMPLE: ManagementNetworkGroupsPut
         self.cmd('az managednetwork managed-network-group create '
                  '--properties-management-groups "[]" '
-                 '--properties-subnets id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/vir'
-                 'tualNetworks/VnetA/subnets/subnetA '
-                 '--properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Ne'
-                 'twork/virtualNetworks/VnetA '
-                 '--properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Ne'
-                 'twork/virtualNetworks/VnetB '
+                 '--properties-subnets id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/vi'
+                 'rtualNetworks/VnetA/subnets/subnetA" '
+                 '--properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.N'
+                 'etwork/virtualNetworks/VnetA" '
+                 '--properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.N'
+                 'etwork/virtualNetworks/VnetB" '
                  '--group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
