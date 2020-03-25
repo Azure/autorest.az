@@ -22,6 +22,11 @@ export class AzNamer {
         } else if(operationName.startsWith("get") && httpProtocol == "get") {
             return "show";
         } else if(operationName.startsWith("list") && httpProtocol == "get") {
+            // for list scenarios like kusto, if there's list, listbyresourcegroup, listsku, listskubyresource
+            // we should divide it into two groups 
+            // group list contains list and listbyresourcegroup
+            // group listsku contains listsku and listskubyresource
+            // a temporary way is to treat the part after 'by' as parameter distinguish part and the part before by as command.
             let idx = operationName.indexOf("by");
             if(idx > -1) {
                 return changeCamelToDash(operationNameOri.substr(0, idx));
