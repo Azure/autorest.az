@@ -14,6 +14,49 @@ from azure.cli.testsdk import ResourceGroupPreparer
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
+# EXAMPLE: Operations_List
+def step_operations_list(test):
+    # EXAMPLE NOT FOUND!
+    pass
+
+
+# EXAMPLE: AttestationProviders_Create
+def step_attestationproviders_create(test):
+    test.cmd('az attestation attestation-provider create '
+             '--provider-name "myattestationprovider" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: AttestationProviders_Get
+def step_attestationproviders_get(test):
+    test.cmd('az attestation attestation-provider show '
+             '--provider-name "myattestationprovider" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: AttestationProviders_List
+def step_attestationproviders_list(test):
+    test.cmd('az attestation attestation-provider list',
+             checks=[])
+
+
+# EXAMPLE: AttestationProviders_ListByResourceGroup
+def step_attestationproviders_listbyresourcegroup(test):
+    test.cmd('az attestation attestation-provider list '
+             '--resource-group "{rg_2}"',
+             checks=[])
+
+
+# EXAMPLE: AttestationProviders_Delete
+def step_attestationproviders_delete(test):
+    test.cmd('az attestation attestation-provider delete '
+             '--provider-name "myattestationprovider" '
+             '--resource-group "{rg_3}"',
+             checks=[])
+
+
 class AttestationManagementClientScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='cli_test_attestation_MyResourceGroup'[:9], key='rg')
@@ -21,31 +64,9 @@ class AttestationManagementClientScenarioTest(ScenarioTest):
     @ResourceGroupPreparer(name_prefix='cli_test_attestation_sample-resource-group'[:9], key='rg_3')
     def test_attestation(self, resource_group):
 
-        # EXAMPLE NOT FOUND: Operations_List
-
-        # EXAMPLE: AttestationProviders_Create
-        self.cmd('az attestation attestation-provider create '
-                 '--provider-name "myattestationprovider" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: AttestationProviders_Get
-        self.cmd('az attestation attestation-provider show '
-                 '--provider-name "myattestationprovider" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: AttestationProviders_List
-        self.cmd('az attestation attestation-provider list',
-                 checks=[])
-
-        # EXAMPLE: AttestationProviders_ListByResourceGroup
-        self.cmd('az attestation attestation-provider list '
-                 '--resource-group "{rg_2}"',
-                 checks=[])
-
-        # EXAMPLE: AttestationProviders_Delete
-        self.cmd('az attestation attestation-provider delete '
-                 '--provider-name "myattestationprovider" '
-                 '--resource-group "{rg_3}"',
-                 checks=[])
+        step_operations_list(self)
+        step_attestationproviders_create(self)
+        step_attestationproviders_get(self)
+        step_attestationproviders_list(self)
+        step_attestationproviders_listbyresourcegroup(self)
+        step_attestationproviders_delete(self)

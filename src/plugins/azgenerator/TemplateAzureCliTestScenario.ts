@@ -37,11 +37,6 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     class_info.push("");
     //initiates.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + model.Extension_NameUnderscored + "')");
     // initiates.push("    def test_" + model.Extension_NameUnderscored + "(self, resource_group):");
-
-    //initiates.push("");
-    //initiates.push("        self.kwargs.update({");
-    //initiates.push("            'name': 'test1'");
-    //initiates.push("        })");
     initiates.push("");
 
     // walk through test config
@@ -58,11 +53,11 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                 if (exampleCmd && exampleCmd.length > 0) {
                     found = true;
                     for (let idx = 0; idx < exampleCmd.length; idx++) {
-                        let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "               '");
+                        let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
                         let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
                         ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
                     }
-                    steps.push("    " + disabled + "               checks=[])");
+                    steps.push("    " + disabled + "         checks=[])");
                 }
             }
             if (!found) {

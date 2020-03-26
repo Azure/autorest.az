@@ -15,6 +15,167 @@ from .preparers import VirtualNetworkPreparer
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
+# EXAMPLE: ManagedNetworksPut
+def step_managednetworksput(test):
+    test.cmd('az managednetwork mn create '
+             '--location "eastus" '
+             '--properties "{{\\"scope\\":{{\\"managementGroups\\":[{{\\"id\\":\\"/providers/Microsoft.Management/manag'
+             'ementGroups/20000000-0001-0000-0000-000000000000\\"}},{{\\"id\\":\\"/providers/Microsoft.Management/manag'
+             'ementGroups/20000000-0002-0000-0000-000000000000\\"}}],\\"subnets\\":[{{\\"id\\":\\"/subscriptions/{subsc'
+             'ription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}/subnets/default\\"}},{{'
+             '\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetwo'
+             'rks/{vn}/subnets/default\\"}}],\\"subscriptions\\":[{{\\"id\\":\\"subscriptionA\\"}},{{\\"id\\":\\"subscr'
+             'iptionB\\"}}],\\"virtualNetworks\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/p'
+             'roviders/Microsoft.Network/virtualNetworks/{vn_2}\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/res'
+             'ourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_3}\\"}}]}}}}" '
+             '--managed-network-name "{myManagedNetwork}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: ManagementNetworkGroupsPut
+def step_managementnetworkgroupsput(test):
+    test.cmd('az managednetwork managed-network-group create '
+             '--properties-management-groups "[]" '
+             '--properties-subnets id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtua'
+             'lNetworks/VnetA/subnets/subnetA" '
+             '--properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Netwo'
+             'rk/virtualNetworks/VnetA" '
+             '--properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Netwo'
+             'rk/virtualNetworks/VnetB" '
+             '--group-name "{myManagedNetworkGroup1}" '
+             '--managed-network-name "{myManagedNetwork}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: ScopeAssignmentsPut
+def step_scopeassignmentsput(test):
+    test.cmd('az managednetwork scope-assignment create '
+             '--properties-assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Mic'
+             'rosoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
+             '--scope "subscriptions/subscriptionC" '
+             '--scope-assignment-name "{subscriptionCAssignment}"',
+             checks=[])
+
+
+# EXAMPLE: ManagedNetworkPeeringPoliciesPut
+def step_managednetworkpeeringpoliciesput(test):
+    test.cmd('az managednetwork managed-network-peering-policy create '
+             '--managed-network-name "{myManagedNetwork}" '
+             '--policy-name "{myHubAndSpoke}" '
+             '--properties "{{\\"type\\":\\"HubAndSpokeTopology\\",\\"hub\\":{{\\"id\\":\\"/subscriptions/{subscription'
+             '_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_4}\\"}},\\"spokes\\":[{{\\"id\\"'
+             ':\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/managedNetwor'
+             'ks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup1}\\"}}]}}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: ManagedNetworksGet
+def step_managednetworksget(test):
+    test.cmd('az managednetwork mn show '
+             '--managed-network-name "{myManagedNetwork}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: ManagedNetworksListByResourceGroup
+def step_managednetworkslistbyresourcegroup(test):
+    test.cmd('az managednetwork mn list '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: ManagedNetworksListBySubscription
+def step_managednetworkslistbysubscription(test):
+    test.cmd('az managednetwork mn list',
+             checks=[])
+
+
+# EXAMPLE: ScopeAssignmentsGet
+def step_scopeassignmentsget(test):
+    test.cmd('az managednetwork scope-assignment show '
+             '--scope "subscriptions/subscriptionC" '
+             '--scope-assignment-name "{subscriptionCAssignment}"',
+             checks=[])
+
+
+# EXAMPLE: ScopeAssignmentsList
+def step_scopeassignmentslist(test):
+    test.cmd('az managednetwork scope-assignment list '
+             '--scope "subscriptions/subscriptionC"',
+             checks=[])
+
+
+# EXAMPLE: ManagementNetworkGroupsGet
+def step_managementnetworkgroupsget(test):
+    test.cmd('az managednetwork managed-network-group show '
+             '--group-name "{myManagedNetworkGroup1}" '
+             '--managed-network-name "{myManagedNetwork}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: ManagedNetworksGroupsListByManagedNetwork
+def step_managednetworksgroupslistbymanagednetwork(test):
+    test.cmd('az managednetwork managed-network-group list '
+             '--managed-network-name "{myManagedNetwork}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: ManagedNetworkPeeringPoliciesGet
+def step_managednetworkpeeringpoliciesget(test):
+    test.cmd('az managednetwork managed-network-peering-policy show '
+             '--managed-network-name "{myManagedNetwork}" '
+             '--policy-name "{myHubAndSpoke}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: ManagedNetworkPeeringPoliciesListByManagedNetwork
+def step_managednetworkpeeringpolicieslistbymanagednetwork(test):
+    test.cmd('az managednetwork managed-network-peering-policy list '
+             '--managed-network-name "{myManagedNetwork}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: ManagedNetworkPeeringPoliciesDelete
+def step_managednetworkpeeringpoliciesdelete(test):
+    test.cmd('az managednetwork managed-network-peering-policy delete '
+             '--managed-network-name "{myManagedNetwork}" '
+             '--policy-name "{myHubAndSpoke}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: ScopeAssignmentsDelete
+def step_scopeassignmentsdelete(test):
+    test.cmd('az managednetwork scope-assignment delete '
+             '--scope "subscriptions/subscriptionC" '
+             '--scope-assignment-name "{subscriptionCAssignment}"',
+             checks=[])
+
+
+# EXAMPLE: ManagementNetworkGroupsDelete
+def step_managementnetworkgroupsdelete(test):
+    test.cmd('az managednetwork managed-network-group delete '
+             '--group-name "{myManagedNetworkGroup1}" '
+             '--managed-network-name "{myManagedNetwork}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: ManagedNetworksDelete
+def step_managednetworksdelete(test):
+    test.cmd('az managednetwork mn delete '
+             '--managed-network-name "{myManagedNetwork}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
 class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='cli_test_managednetwork_myResourceGroup'[:9], key='rg')
@@ -36,130 +197,20 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                                                      length=24),
         })
 
-        # EXAMPLE: ManagedNetworksPut
-        self.cmd('az managednetwork mn create '
-                 '--location "eastus" '
-                 '--properties "{{\\"scope\\":{{\\"managementGroups\\":[{{\\"id\\":\\"/providers/Microsoft.Management/m'
-                 'anagementGroups/20000000-0001-0000-0000-000000000000\\"}},{{\\"id\\":\\"/providers/Microsoft.Manageme'
-                 'nt/managementGroups/20000000-0002-0000-0000-000000000000\\"}}],\\"subnets\\":[{{\\"id\\":\\"/subscrip'
-                 'tions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}/subnets/'
-                 'default\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.N'
-                 'etwork/virtualNetworks/{vn}/subnets/default\\"}}],\\"subscriptions\\":[{{\\"id\\":\\"subscriptionA\\"'
-                 '}},{{\\"id\\":\\"subscriptionB\\"}}],\\"virtualNetworks\\":[{{\\"id\\":\\"/subscriptions/{subscriptio'
-                 'n_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_2}\\"}},{{\\"id\\":\\"/subs'
-                 'criptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_3}\\"'
-                 '}}]}}}}" '
-                 '--managed-network-name "{myManagedNetwork}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: ManagementNetworkGroupsPut
-        self.cmd('az managednetwork managed-network-group create '
-                 '--properties-management-groups "[]" '
-                 '--properties-subnets id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/vi'
-                 'rtualNetworks/VnetA/subnets/subnetA" '
-                 '--properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.N'
-                 'etwork/virtualNetworks/VnetA" '
-                 '--properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.N'
-                 'etwork/virtualNetworks/VnetB" '
-                 '--group-name "{myManagedNetworkGroup1}" '
-                 '--managed-network-name "{myManagedNetwork}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: ScopeAssignmentsPut
-        self.cmd('az managednetwork scope-assignment create '
-                 '--properties-assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers'
-                 '/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
-                 '--scope "subscriptions/subscriptionC" '
-                 '--scope-assignment-name "{subscriptionCAssignment}"',
-                 checks=[])
-
-        # EXAMPLE: ManagedNetworkPeeringPoliciesPut
-        self.cmd('az managednetwork managed-network-peering-policy create '
-                 '--managed-network-name "{myManagedNetwork}" '
-                 '--policy-name "{myHubAndSpoke}" '
-                 '--properties "{{\\"type\\":\\"HubAndSpokeTopology\\",\\"hub\\":{{\\"id\\":\\"/subscriptions/{subscrip'
-                 'tion_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_4}\\"}},\\"spokes\\":[{{'
-                 '\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/m'
-                 'anagedNetworks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup1}\\"}}]}}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: ManagedNetworksGet
-        self.cmd('az managednetwork mn show '
-                 '--managed-network-name "{myManagedNetwork}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: ManagedNetworksListByResourceGroup
-        self.cmd('az managednetwork mn list '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: ManagedNetworksListBySubscription
-        self.cmd('az managednetwork mn list',
-                 checks=[])
-
-        # EXAMPLE: ScopeAssignmentsGet
-        self.cmd('az managednetwork scope-assignment show '
-                 '--scope "subscriptions/subscriptionC" '
-                 '--scope-assignment-name "{subscriptionCAssignment}"',
-                 checks=[])
-
-        # EXAMPLE: ScopeAssignmentsList
-        self.cmd('az managednetwork scope-assignment list '
-                 '--scope "subscriptions/subscriptionC"',
-                 checks=[])
-
-        # EXAMPLE: ManagementNetworkGroupsGet
-        self.cmd('az managednetwork managed-network-group show '
-                 '--group-name "{myManagedNetworkGroup1}" '
-                 '--managed-network-name "{myManagedNetwork}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: ManagedNetworksGroupsListByManagedNetwork
-        self.cmd('az managednetwork managed-network-group list '
-                 '--managed-network-name "{myManagedNetwork}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: ManagedNetworkPeeringPoliciesGet
-        self.cmd('az managednetwork managed-network-peering-policy show '
-                 '--managed-network-name "{myManagedNetwork}" '
-                 '--policy-name "{myHubAndSpoke}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: ManagedNetworkPeeringPoliciesListByManagedNetwork
-        self.cmd('az managednetwork managed-network-peering-policy list '
-                 '--managed-network-name "{myManagedNetwork}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: ManagedNetworkPeeringPoliciesDelete
-        self.cmd('az managednetwork managed-network-peering-policy delete '
-                 '--managed-network-name "{myManagedNetwork}" '
-                 '--policy-name "{myHubAndSpoke}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: ScopeAssignmentsDelete
-        self.cmd('az managednetwork scope-assignment delete '
-                 '--scope "subscriptions/subscriptionC" '
-                 '--scope-assignment-name "{subscriptionCAssignment}"',
-                 checks=[])
-
-        # EXAMPLE: ManagementNetworkGroupsDelete
-        self.cmd('az managednetwork managed-network-group delete '
-                 '--group-name "{myManagedNetworkGroup1}" '
-                 '--managed-network-name "{myManagedNetwork}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: ManagedNetworksDelete
-        self.cmd('az managednetwork mn delete '
-                 '--managed-network-name "{myManagedNetwork}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
+        step_managednetworksput(self)
+        step_managementnetworkgroupsput(self)
+        step_scopeassignmentsput(self)
+        step_managednetworkpeeringpoliciesput(self)
+        step_managednetworksget(self)
+        step_managednetworkslistbyresourcegroup(self)
+        step_managednetworkslistbysubscription(self)
+        step_scopeassignmentsget(self)
+        step_scopeassignmentslist(self)
+        step_managementnetworkgroupsget(self)
+        step_managednetworksgroupslistbymanagednetwork(self)
+        step_managednetworkpeeringpoliciesget(self)
+        step_managednetworkpeeringpolicieslistbymanagednetwork(self)
+        step_managednetworkpeeringpoliciesdelete(self)
+        step_scopeassignmentsdelete(self)
+        step_managementnetworkgroupsdelete(self)
+        step_managednetworksdelete(self)
