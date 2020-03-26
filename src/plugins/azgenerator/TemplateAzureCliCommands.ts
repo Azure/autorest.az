@@ -6,6 +6,8 @@
 import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
 import { ToMultiLine } from "../../utils/helper"
+import { isNullOrUndefined } from "util";
+import { SchemaType } from "@azure-tools/codemodel";
 
 export function GenerateAzureCliCommands(model: CodeModelAz) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -77,10 +79,39 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     if(model.Command_IsLongRun) {
         endStr = ", supports_no_wait=True" + endStr;
     }
-    if (methodName != "show")
-    {
-        if(needUpdate) {
-            ToMultiLine("        g.generic_update_command('" + model.Command_MethodName.replace(/create/g, 'update') + "', setter_name='" + model.Command.language['python'].name + "', custom_func_name='" + functionName.replace(/_create/g, '_update') + "'" + endStr, output);
+    if (methodName != "show") {
+        if (needUpdate) {
+            let argument = "";
+            if (model.SelectFirstMethod()) {
+                let originalOperation = model.Method_GetOriginalOperation;
+                if (isNullOrUndefined(originalOperation)) {
+                    if (model.SelectFirstMethodParameter()) {
+                        do {
+                            if(!model.MethodParameter_IsFlattened && model.MethodParameter_IsList) {
+                                argument = model.MethodParameter_NamePython;
+                            }
+                        } while (model.SelectNextMethodParameter());
+                    }
+                } else {
+                    for(let param of originalOperation.parameters) {
+                        if(param.flattened != true && (param.schema.type == SchemaType.Object || param.schema.type == SchemaType.Dictionary)) {
+                            argument = param.language.python.name;
+                        }
+                    }
+                    if(!isNullOrUndefined(originalOperation.requests[0].parameters)) {
+                        for(let param of originalOperation.requests[0].parameters) {
+                            if(param.flattened != true && (param.schema.type == SchemaType.Object || param.schema.type == SchemaType.Dictionary)) {
+                                argument = param.language.python.name;
+                            }
+                        }                        
+                    }
+                }
+            } 
+            let generic_update = "        g.generic_update_command('" + model.Command_MethodName.replace(/create/g, 'update') + "', custom_func_name='" + functionName.replace(/_create/g, '_update') + "'" + endStr;
+            if(argument && argument != "" && argument != "parameters") {
+                generic_update = "        g.generic_update_command('" + model.Command_MethodName.replace(/create/g, 'update') + "', setter_arg_name= '" + argument + "', custom_func_name='" + functionName.replace(/_create/g, '_update') + "'" + endStr;
+            }
+            ToMultiLine(generic_update, output);
         } else {
             ToMultiLine("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr, output);
         } 

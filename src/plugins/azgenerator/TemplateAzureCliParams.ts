@@ -7,6 +7,7 @@ import { CodeModelAz } from "./CodeModelAz"
 import { EscapeString, ToCamelCase, Capitalize, ToMultiLine } from "../../utils/helper";
 import { SchemaType } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "./Header";
+import { isNullOrUndefined } from "util";
 
 
 let hasActions: boolean = false;
@@ -96,10 +97,28 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     let allPythonParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstMethod()) {
         do {
-
+            let originalOperation = model.Method_GetOriginalOperation;
+            if (!isNullOrUndefined(originalOperation)) {
+                for(let param of originalOperation.parameters) {
+                    if(model.Parameter_InGlobal(param)) {
+                        continue;
+                    }
+                    allPythonParam.set(param.language.python.name, true);
+                }
+                if(!isNullOrUndefined(originalOperation.requests[0].parameters)) {
+                    for(let param of originalOperation.requests[0].parameters) {
+                        if(model.Parameter_InGlobal(param)) {
+                            continue;
+                        }
+                        allPythonParam.set(param.language.python.name, true);
+                    }
+                }
+            }
             if (model.SelectFirstMethodParameter()) {
                 do {
-                    allPythonParam.set(model.MethodParameter_NamePython, true);
+                    if(isNullOrUndefined(originalOperation)) {
+                        allPythonParam.set(model.MethodParameter_NamePython, true);
+                    }
                     if (model.MethodParameter_IsFlattened) {
                         continue;
                     }
@@ -109,7 +128,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     hasParam = true;
 
                     let parameterName = model.MethodParameter_MapsTo;
-                    if(allPythonParam.has(parameterName)) {
+                    if (allPythonParam.has(parameterName)) {
                         allPythonParam.delete(parameterName);
                     }
                     if (allParam.has(parameterName)) {

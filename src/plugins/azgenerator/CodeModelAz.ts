@@ -57,6 +57,7 @@ export interface CodeModelAz
     Command_Name: string;
     Command_MethodName: string;
     Command_FunctionName: string;
+    Command_GetOriginalOperation: any;
 
     Command_Help: string;
 
@@ -73,6 +74,7 @@ export interface CodeModelAz
     Method_Name: string;
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
+    Method_GetOriginalOperation: any;
 
 
     SelectFirstMethodParameter(): boolean;
@@ -92,6 +94,9 @@ export interface CodeModelAz
     MethodParameter: Parameter;
     MethodParameters: Array<Parameter>;
     SubMethodParameter: Parameter;
+    GetMethodParameterMapName(Parameter): string;
+    Parameter_InGlobal(Parameter): boolean;
+    Parameter_IsHidden(Parameter): boolean;
 
     MethodParameter_In: string;
     MethodParameter_IsHidden: boolean;

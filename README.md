@@ -40,15 +40,13 @@ modelerfour:
 
 pipeline:
     python/m2r:
-        input: clicommon/pre-cli-poly/identity
-    clicommon/cli-poly-as-resource-modifier:
-        input: python/namer
-    az/aznamer:
         input: clicommon/identity
+    az/aznamer:
+        input: python/namer
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
-        #output-artifact: source-file-modifiers
+        output-artifact: source-file-modifiers
     az/azgenerator:
         input: az/modifiers
         output-artifact: source-file-extension
@@ -56,7 +54,7 @@ pipeline:
         input:
             #- az/clicommon
             #- az/aznamer
-            #- az/modifiers
+            - az/modifiers
             - az/azgenerator
         scope: scope-az
 
@@ -65,7 +63,7 @@ scope-az:
     output-artifact:
         #- source-file-pynamer
         #- source-file-aznamer
-        #- source-file-modifiers
+        - source-file-modifiers
         - source-file-extension
 
 ```

@@ -4,8 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { SchemaType, ParameterLocation } from "@azure-tools/codemodel";
+import { SchemaType, ParameterLocation, Operation, Parameter } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "./Header";
+import { isNullOrUndefined } from "util";
 
 export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -41,7 +42,12 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
         do {
             if (model.SelectFirstCommand()) {
                 do {
-                    output = output.concat(GetCommandBody(model, required));
+                    let originalOperation = model.Command_GetOriginalOperation
+                    if( isNullOrUndefined(originalOperation)) {
+                        output = output.concat(GetCommandBody(model, required));
+                    } else {
+                        output = output.concat(GetPolyCommandBody(model, required, originalOperation))
+                    }
                     if (model.Command_CanSplit) {
                         output = output.concat(GetCustomCommandBody(model, required));
                     }
@@ -52,6 +58,195 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
     }
 
     return output;
+}
+
+function ConstructMethodBodyParameter(model: CodeModelAz, needUpdate: boolean = false) {
+    let output_body: string[] = [];
+    if (model.SelectFirstMethodParameter()) {
+        do {
+            if(model.MethodParameter_IsFlattened) {
+                let bodyName = model.MethodParameter_Name;
+                let bodyParam = model.MethodParameter;
+                if (isNullOrUndefined(bodyParam['extensions']?.['cli-poly-as-resource-base-schema'])) {
+                    continue;
+                }
+                let prefix = "";
+                if (needUpdate) {
+                    prefix = "    instance";
+                } else {
+                    prefix = "    " + bodyName;
+                }
+                if(!needUpdate) {
+                    output_body.push(prefix + " = {}");
+                }
+                let body = model.MethodParameter;
+                while(model.SelectNextMethodParameter() && model.MethodParameter['originalParameter'] == body) {
+                    let access = prefix;
+                    let param = model.MethodParameter;
+                    let paramName = model.MethodParameter['targetProperty'].language['python'].name
+                    if(param.flattened != true) {
+                        if(needUpdate) {
+                            access += "." + paramName + " = " + model.MethodParameter_MapsTo;
+                        } else {
+                            access += "['" + paramName + "'] = " + model.MethodParameter_MapsTo;;
+                        }
+                        output_body.push(access);
+                    } else {
+                        if(needUpdate) {
+                            prefix += "." + paramName;
+                        } else {
+                            prefix += "['" + paramName + "']";
+                        }
+                        access = prefix + " = {}"
+                        body = model.MethodParameter;
+                        output_body.push(access);
+                    }
+                }
+            }
+
+        } while (model.SelectNextMethodParameter());
+    }
+    return output_body;
+}
+
+function GetPolyCommandBody(model: CodeModelAz, required: boolean, originalOperation: Operation) {
+    let output: string[] = [];
+    output.push("");
+    output.push("");
+
+    //
+    // method
+    //
+
+    let updatedMethodName: string = model.Command_FunctionName;
+    let call = "def " + updatedMethodName + "(";
+    let indent = " ".repeat(call.length);
+    call += "cmd, client";
+    output.push(call);
+    
+    let originalParameters = originalOperation.parameters;
+    if(!isNullOrUndefined(originalOperation.requests[0].parameters)) {
+        originalParameters = originalParameters.concat(originalOperation.requests[0].parameters);
+    }
+    let allParam: Map<string, boolean> = new Map<string, boolean>();
+    if (model.SelectFirstMethod()) {
+        do {
+
+            if (model.SelectFirstMethodParameter()) {
+                do {
+                    if (model.MethodParameter_IsFlattened) {
+                        continue;
+                    }
+                    if (model.MethodParameter_Type == SchemaType.Constant) {
+                        continue;
+                    }
+
+                    let requiredParam: boolean = model.MethodParameter_RequiredByMethod;
+
+                    let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
+                    if (requiredParam && !allParam.has(name)) {
+                        allParam.set(name, true);
+                        output[output.length - 1] += ",";
+                        output.push(indent + name);
+                    }
+                } while (model.SelectNextMethodParameter());
+            }
+        } while (model.SelectNextMethod());
+    }
+
+    if (model.SelectFirstMethod()) {
+        do {
+
+            if (model.SelectFirstMethodParameter()) {
+                do {
+                    if (model.MethodParameter_IsFlattened) {
+                        continue;
+                    }
+                    if (model.MethodParameter_Type == SchemaType.Constant) {
+                        continue;
+                    }
+                    let requiredParam = model.MethodParameter_RequiredByMethod;
+
+                    let name = model.MethodParameter_MapsTo;
+                    if (!requiredParam && !allParam.has(name)) {
+                        allParam.set(name, true);
+                        output[output.length - 1] += ",";
+                        output.push(indent + name + "=None");
+                    }
+                } while (model.SelectNextMethodParameter());
+            }
+        }
+        while (model.SelectNextMethod());
+    }
+
+    output[output.length - 1] += "):";
+
+    let output_body: string[] = []
+    let output_method_call: string[] = [];
+
+    if (model.SelectFirstMethod()) {
+        // create body transformation for methods that support it
+        let methodName: string = model.Command_MethodName;
+
+        // body transformation
+
+        // with x-ms-client-flatten it doesn't need this part now 
+        if (model.SelectFirstMethodParameter()) {
+            do {
+                if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                    required['json'] = true;
+                    output_body.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
+                    output_body.push("        " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
+                }
+            }
+            while (model.SelectNextMethodParameter());
+
+        }
+
+        output_body = output_body.concat(ConstructMethodBodyParameter(model));
+
+        let needIfStatement = !model.Method_IsLast;
+
+        do {
+            let prefix = "    ";
+            if (needIfStatement) {
+                let ifStatement = prefix;
+                prefix += "    ";
+
+                if (!model.Method_IsLast) {
+                    ifStatement += ((model.Method_IsFirst) ? "if" : "elif");
+                    if (model.SelectFirstMethodParameter()) {
+                        do {
+                            if (!model.MethodParameter_IsRequired) {
+                                continue;
+                            }
+                            if (model.MethodParameter_Type == SchemaType.Constant) {
+                                continue;
+                            }
+                            ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
+                            ifStatement += " " + model.MethodParameter_MapsTo + " is not None"
+                        }
+                        while (model.SelectNextMethodParameter());
+                        ifStatement += ":";
+                        output_method_call.push(ifStatement);
+                    }
+                }
+                else {
+                    ifStatement == "";
+                    prefix = "    ";
+                }
+            }
+            // call client & return value
+            // XXX - this is still a hack
+
+            output_method_call = output_method_call.concat(GetPolyMethodCall(model, prefix, originalOperation, originalParameters));
+        }
+        while (model.SelectNextMethod());
+    }
+
+    output = output.concat(output_body);
+    output = output.concat(output_method_call);
+    return output
 }
  
 function GetCustomCommandBody(model: CodeModelAz, required: boolean) {
@@ -137,13 +332,14 @@ function GetCustomCommandBody(model: CodeModelAz, required: boolean) {
                 if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                     required['json'] = true;
                     output.push("        if isinstance(" + model.MethodParameter_MapsTo + ", str):");
-                    output.push("            instance." + model.MethodParameter_NamePython + " = json.loads(" + model.MethodParameter_MapsTo + ")");
+                    output.push("            " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
                 } else {
-                    output.push("        instance." + model.MethodParameter_NamePython + " = " + model.MethodParameter_MapsTo);
+                    output.push("        " + model.MethodParameter_MapsTo + " = " + model.MethodParameter_MapsTo);
                 }
             }
             while (model.SelectNextMethodParameter());
         }
+        output = output.concat(ConstructMethodBodyParameter(model, true));
         let needIfStatement = !model.Method_IsLast;
 
         do {
@@ -320,6 +516,47 @@ function GetCommandBody(model: CodeModelAz, required: boolean) {
     output = output.concat(output_body);
     output = output.concat(output_method_call);
     return output;
+}
+
+function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: Operation, originalParameters: Parameter[]): string[] {
+    let methodCall: string = prefix + "return ";
+    //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
+    let methodName = originalOperation.language['python'].name;
+    if (model.Method_IsLongRun) {
+        methodName = "begin_" + methodName;
+    }
+    methodCall += "client." + methodName + "(";
+    
+    let indent = " ".repeat(methodCall.length); 
+    for(let param of originalParameters) {
+        if (param.flattened) {
+            continue;
+        }
+        if (param.schema.type == SchemaType.Constant) {
+            continue;
+        }
+        if(model.Parameter_InGlobal(param)) {
+            continue;
+        }
+        if(model.Parameter_IsHidden(param)) {
+            continue;
+        }
+        let optionName = model.GetMethodParameterMapName(param);
+        let parameterName = param.language['python'].name;
+
+        if (methodCall.endsWith("(")) {
+            // XXX - split and pop is a hack
+            methodCall += parameterName + "=" + optionName;
+        } else {
+            methodCall += "," + "\n" + indent + parameterName + "=" + optionName;
+        }
+    }
+
+
+
+    methodCall += ")";
+
+    return methodCall.split("\n");
 }
 
 function GetMethodCall(model: CodeModelAz, prefix: any): string[] {

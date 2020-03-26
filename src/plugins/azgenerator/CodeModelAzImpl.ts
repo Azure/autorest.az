@@ -430,6 +430,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Command['canSplitOperation'] ? true : false;
     }
 
+    public get Command_GetOriginalOperation(): any {
+        let oriOp = this.Method.extensions['cli-poly-as-resource-original-operation'];
+        return oriOp;
+    }
+
     public get Command_IsLongRun(): boolean {
         return this.Command.extensions?.['x-ms-long-running-operation'] ? true : false;
     }
@@ -538,6 +543,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Method.language[language].name;
     }
 
+    public get Method_GetOriginalOperation(): any {
+        let oriOp = this.Method.extensions['cli-poly-as-resource-original-operation'];
+        return oriOp;
+    }
     //=================================================================================================================
     // Methods Parameters.
     //
@@ -684,7 +693,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.GetMethodParameterMapName(parameter);
     }
 
-    private GetMethodParameterMapName(parameter): string {
+    public GetMethodParameterMapName(parameter): string {
         /*if(parameter['originalParameter'] != null && parameter.language['python'].name != 'location' && parameter.language['python'].name != "tags") {
             return (parameter['originalParameter']).language['python'].name + "_" + parameter.language['python'].name;
         } else {*/
@@ -854,7 +863,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_IsHidden(): boolean {
-        let operation = this.MethodParameter;
+        let operation = this.Method;
         if (operation.language['cli'].removed || operation.language['cli'].hidden) {
             return true;
         }
@@ -867,6 +876,21 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     }
 
+    public Parameter_IsHidden(parameter: Parameter): boolean {
+        if (parameter.language['cli'].removed || parameter.language['cli'].hidden) {
+            return true;
+        } else {
+            return this.MethodParameter['hidden'] ? true : false;
+        }        
+    }
+
+    public Parameter_InGlobal(parameter: Parameter): boolean {
+        if(this.codeModel.globalParameters.indexOf(parameter) > -1) {
+            return true;
+        } 
+        return false;
+    }
+  
     public get MethodParameter_IsRequired(): boolean {
         return this.MethodParameter.required;
     }
