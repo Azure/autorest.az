@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { PreparerEntity, getResourceKey } from "./ScenarioTool"
-import { ToSnakeCase, ToMultiLine } from '../../utils/helper';
+import { ToSnakeCase, ToMultiLine, deepCopy } from '../../utils/helper';
 import { HeaderGenerator } from "./Header";
 import { HttpWithBodyRequest } from "@azure-tools/codemodel";
 
@@ -15,11 +15,14 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let class_info: string[] = [];
     let initiates: string[] = [];
     let body: string[] = [];
-    
+
     model.GatherInternalResource();
-    let config: any = model.Extension_TestScenario;
+    let config: any = deepCopy(model.Extension_TestScenario);
+    config.unshift({ function: "setup" });
+    config.push({ function: "cleanup" });
+
     let header: HeaderGenerator = new HeaderGenerator();
-    
+
     head.push("");
     head.push("import os");
     head.push("import unittest");
@@ -43,34 +46,43 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     if (config) {
         for (var ci = 0; ci < config.length; ci++) {
             let exampleId: string = config[ci].name;
-            let disabled: string = config[ci].disabled ? "# " : "";
-            let setpFunction = ToFunctionName(exampleId);
-            steps.push("# EXAMPLE: " + exampleId);
-            steps.push(`def ${setpFunction}(test):`);
-            // find example by name
-            let found = false;
-            for (let exampleCmd of model.FindExampleById(exampleId)) {
-                if (exampleCmd && exampleCmd.length > 0) {
-                    found = true;
-                    for (let idx = 0; idx < exampleCmd.length; idx++) {
-                        let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
-                        let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
-                        ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
+            let functionName: string = ToFunctionName(config[ci]);
+            if (exampleId) {
+                let disabled: string = config[ci].disabled ? "# " : "";
+                steps.push("# EXAMPLE: " + exampleId);
+                steps.push(`def ${functionName}(test):`);
+                // find example by name
+                let found = false;
+                for (let exampleCmd of model.FindExampleById(exampleId)) {
+                    if (exampleCmd && exampleCmd.length > 0) {
+                        found = true;
+                        for (let idx = 0; idx < exampleCmd.length; idx++) {
+                            let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
+                            let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
+                            ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
+                        }
+                        steps.push("    " + disabled + "         checks=[])");
                     }
-                    steps.push("    " + disabled + "         checks=[])");
                 }
+                if (!found) {
+                    steps.push("    # EXAMPLE NOT FOUND!");
+                    steps.push("    pass");
+                }
+                steps.push("");
+                steps.push("");
+                body.push(`        ${functionName}(self)`)
             }
-            if (!found) {
-                steps.push("    # EXAMPLE NOT FOUND!");
+            else if (functionName) {
+                steps.push(`def ${functionName}(test):`);
                 steps.push("    pass");
+                steps.push("");
+                steps.push("");
+                body.push(`        ${functionName}(self)`)
             }
-            steps.push("");
-            steps.push("");
-            body.push(`        ${setpFunction}(self)`)
         }
     }
     body.push("")
-    
+
     let subscription_id = model.GetSubscriptionKey();
     if (subscription_id) {
         initiates.push("        self.kwargs.update({");
@@ -96,7 +108,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     let hasResourceGroup = false;
     for (let entity of (model.GetPreparerEntities() as PreparerEntity[])) {
         if (!entity.info.name) {
-            internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name), entity.info.createdObjectNames.indexOf(entity.object_name)>=0]);
+            internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name), entity.info.createdObjectNames.indexOf(entity.object_name) >= 0]);
             continue;
         }
 
@@ -139,6 +151,11 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     }
 }
 
-function ToFunctionName(name: string): string {
-    return "step_" + name.toLowerCase().split("-").join("_");
+function ToFunctionName(step: any): string {
+    let ret = undefined;
+    if (step.name)
+        ret = "step_" + step.name;
+    else if (step.function)
+        ret = step.function;
+    return ret ? ret.split("-").join("_") : ret;
 }

@@ -15,8 +15,12 @@ from .preparers import VirtualNetworkPreparer
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
+def setup(test):
+    pass
+
+
 # EXAMPLE: ManagedNetworksPut
-def step_managednetworksput(test):
+def step_ManagedNetworksPut(test):
     test.cmd('az managednetwork mn create '
              '--location "eastus" '
              '--properties "{{\\"scope\\":{{\\"managementGroups\\":[{{\\"id\\":\\"/providers/Microsoft.Management/manag'
@@ -34,7 +38,7 @@ def step_managednetworksput(test):
 
 
 # EXAMPLE: ManagementNetworkGroupsPut
-def step_managementnetworkgroupsput(test):
+def step_ManagementNetworkGroupsPut(test):
     test.cmd('az managednetwork managed-network-group create '
              '--properties-management-groups "[]" '
              '--properties-subnets id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtua'
@@ -50,7 +54,7 @@ def step_managementnetworkgroupsput(test):
 
 
 # EXAMPLE: ScopeAssignmentsPut
-def step_scopeassignmentsput(test):
+def step_ScopeAssignmentsPut(test):
     test.cmd('az managednetwork scope-assignment create '
              '--properties-assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Mic'
              'rosoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
@@ -60,7 +64,7 @@ def step_scopeassignmentsput(test):
 
 
 # EXAMPLE: ManagedNetworkPeeringPoliciesPut
-def step_managednetworkpeeringpoliciesput(test):
+def step_ManagedNetworkPeeringPoliciesPut(test):
     test.cmd('az managednetwork managed-network-peering-policy create '
              '--managed-network-name "{myManagedNetwork}" '
              '--policy-name "{myHubAndSpoke}" '
@@ -73,7 +77,7 @@ def step_managednetworkpeeringpoliciesput(test):
 
 
 # EXAMPLE: ManagedNetworksGet
-def step_managednetworksget(test):
+def step_ManagedNetworksGet(test):
     test.cmd('az managednetwork mn show '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
@@ -81,20 +85,20 @@ def step_managednetworksget(test):
 
 
 # EXAMPLE: ManagedNetworksListByResourceGroup
-def step_managednetworkslistbyresourcegroup(test):
+def step_ManagedNetworksListByResourceGroup(test):
     test.cmd('az managednetwork mn list '
              '--resource-group "{rg}"',
              checks=[])
 
 
 # EXAMPLE: ManagedNetworksListBySubscription
-def step_managednetworkslistbysubscription(test):
+def step_ManagedNetworksListBySubscription(test):
     test.cmd('az managednetwork mn list',
              checks=[])
 
 
 # EXAMPLE: ScopeAssignmentsGet
-def step_scopeassignmentsget(test):
+def step_ScopeAssignmentsGet(test):
     test.cmd('az managednetwork scope-assignment show '
              '--scope "subscriptions/subscriptionC" '
              '--scope-assignment-name "{subscriptionCAssignment}"',
@@ -102,14 +106,14 @@ def step_scopeassignmentsget(test):
 
 
 # EXAMPLE: ScopeAssignmentsList
-def step_scopeassignmentslist(test):
+def step_ScopeAssignmentsList(test):
     test.cmd('az managednetwork scope-assignment list '
              '--scope "subscriptions/subscriptionC"',
              checks=[])
 
 
 # EXAMPLE: ManagementNetworkGroupsGet
-def step_managementnetworkgroupsget(test):
+def step_ManagementNetworkGroupsGet(test):
     test.cmd('az managednetwork managed-network-group show '
              '--group-name "{myManagedNetworkGroup1}" '
              '--managed-network-name "{myManagedNetwork}" '
@@ -118,7 +122,7 @@ def step_managementnetworkgroupsget(test):
 
 
 # EXAMPLE: ManagedNetworksGroupsListByManagedNetwork
-def step_managednetworksgroupslistbymanagednetwork(test):
+def step_ManagedNetworksGroupsListByManagedNetwork(test):
     test.cmd('az managednetwork managed-network-group list '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
@@ -126,7 +130,7 @@ def step_managednetworksgroupslistbymanagednetwork(test):
 
 
 # EXAMPLE: ManagedNetworkPeeringPoliciesGet
-def step_managednetworkpeeringpoliciesget(test):
+def step_ManagedNetworkPeeringPoliciesGet(test):
     test.cmd('az managednetwork managed-network-peering-policy show '
              '--managed-network-name "{myManagedNetwork}" '
              '--policy-name "{myHubAndSpoke}" '
@@ -135,7 +139,7 @@ def step_managednetworkpeeringpoliciesget(test):
 
 
 # EXAMPLE: ManagedNetworkPeeringPoliciesListByManagedNetwork
-def step_managednetworkpeeringpolicieslistbymanagednetwork(test):
+def step_ManagedNetworkPeeringPoliciesListByManagedNetwork(test):
     test.cmd('az managednetwork managed-network-peering-policy list '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
@@ -143,7 +147,7 @@ def step_managednetworkpeeringpolicieslistbymanagednetwork(test):
 
 
 # EXAMPLE: ManagedNetworkPeeringPoliciesDelete
-def step_managednetworkpeeringpoliciesdelete(test):
+def step_ManagedNetworkPeeringPoliciesDelete(test):
     test.cmd('az managednetwork managed-network-peering-policy delete '
              '--managed-network-name "{myManagedNetwork}" '
              '--policy-name "{myHubAndSpoke}" '
@@ -152,7 +156,7 @@ def step_managednetworkpeeringpoliciesdelete(test):
 
 
 # EXAMPLE: ScopeAssignmentsDelete
-def step_scopeassignmentsdelete(test):
+def step_ScopeAssignmentsDelete(test):
     test.cmd('az managednetwork scope-assignment delete '
              '--scope "subscriptions/subscriptionC" '
              '--scope-assignment-name "{subscriptionCAssignment}"',
@@ -160,7 +164,7 @@ def step_scopeassignmentsdelete(test):
 
 
 # EXAMPLE: ManagementNetworkGroupsDelete
-def step_managementnetworkgroupsdelete(test):
+def step_ManagementNetworkGroupsDelete(test):
     test.cmd('az managednetwork managed-network-group delete '
              '--group-name "{myManagedNetworkGroup1}" '
              '--managed-network-name "{myManagedNetwork}" '
@@ -169,11 +173,15 @@ def step_managementnetworkgroupsdelete(test):
 
 
 # EXAMPLE: ManagedNetworksDelete
-def step_managednetworksdelete(test):
+def step_ManagedNetworksDelete(test):
     test.cmd('az managednetwork mn delete '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
+
+
+def cleanup(test):
+    pass
 
 
 class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
@@ -197,20 +205,22 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                                                      length=24),
         })
 
-        step_managednetworksput(self)
-        step_managementnetworkgroupsput(self)
-        step_scopeassignmentsput(self)
-        step_managednetworkpeeringpoliciesput(self)
-        step_managednetworksget(self)
-        step_managednetworkslistbyresourcegroup(self)
-        step_managednetworkslistbysubscription(self)
-        step_scopeassignmentsget(self)
-        step_scopeassignmentslist(self)
-        step_managementnetworkgroupsget(self)
-        step_managednetworksgroupslistbymanagednetwork(self)
-        step_managednetworkpeeringpoliciesget(self)
-        step_managednetworkpeeringpolicieslistbymanagednetwork(self)
-        step_managednetworkpeeringpoliciesdelete(self)
-        step_scopeassignmentsdelete(self)
-        step_managementnetworkgroupsdelete(self)
-        step_managednetworksdelete(self)
+        setup(self)
+        step_ManagedNetworksPut(self)
+        step_ManagementNetworkGroupsPut(self)
+        step_ScopeAssignmentsPut(self)
+        step_ManagedNetworkPeeringPoliciesPut(self)
+        step_ManagedNetworksGet(self)
+        step_ManagedNetworksListByResourceGroup(self)
+        step_ManagedNetworksListBySubscription(self)
+        step_ScopeAssignmentsGet(self)
+        step_ScopeAssignmentsList(self)
+        step_ManagementNetworkGroupsGet(self)
+        step_ManagedNetworksGroupsListByManagedNetwork(self)
+        step_ManagedNetworkPeeringPoliciesGet(self)
+        step_ManagedNetworkPeeringPoliciesListByManagedNetwork(self)
+        step_ManagedNetworkPeeringPoliciesDelete(self)
+        step_ScopeAssignmentsDelete(self)
+        step_ManagementNetworkGroupsDelete(self)
+        step_ManagedNetworksDelete(self)
+        cleanup(self)

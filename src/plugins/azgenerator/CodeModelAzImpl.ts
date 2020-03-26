@@ -43,6 +43,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     submethodparameters: Property[];
     currentSubOptionIndex: number;
     private _testScenario: any[];
+    private _configuredScenario: boolean;
 
     async init() {
         this.options = await this.session.getValue('az');
@@ -73,9 +74,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                 //old style of example configuration
                 this._testScenario = this.codeModel['test-scenario']
             }
+            this._configuredScenario = true;
         }
         else {
             this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
+            this._configuredScenario = false;
         }
     }
 
@@ -1122,7 +1125,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             Object.entries(this.Examples).forEach(([id, example_obj]) => {
                 let example = new CommandExample();
                 example.Method = this.Command_MethodName;
-                example.Id = `${this.CommandGroup_Key}/${this.MethodParameter_NameAz}/${id}`;
+                example.Id = `/${this.CommandGroup_Key}/${this.MethodParameter_NameAz}/${id}`;
                 example.Title = example_obj.title || id;
                 example.Path = this.Method_Path;
                 example.HttpMethod = this.Method_HttpMethod;
@@ -1262,6 +1265,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         // stable sort
         let compare = (config_a: object, config_b: object): number => {
+            if (!config_a['name'] || !config_b['name']) return 0;
             let examples_a: CommandExample[] = this.GetAllExamples(config_a['name']);
             let examples_b: CommandExample[] = this.GetAllExamples(config_b['name']);
             if (examples_a.length <= 0 || examples_b.length <= 0) {
