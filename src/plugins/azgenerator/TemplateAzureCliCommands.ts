@@ -107,10 +107,14 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     }
                 }
             } 
-            let generic_update = "        g.generic_update_command('" + model.Command_MethodName.replace(/create/g, 'update') + "', custom_func_name='" + functionName.replace(/_create/g, '_update') + "'" + endStr;
+            let generic_update = "        g.generic_update_command('" + model.Command_MethodName.replace(/create/g, 'update');
             if(argument && argument != "" && argument != "parameters") {
-                generic_update = "        g.generic_update_command('" + model.Command_MethodName.replace(/create/g, 'update') + "', setter_arg_name= '" + argument + "', custom_func_name='" + functionName.replace(/_create/g, '_update') + "'" + endStr;
+                generic_update += "', setter_arg_name = '" + argument;
             }
+            if(model.Command_IsLongRun) {
+                generic_update += "', setter_name = 'begin_create_or_update";
+            }
+            generic_update += "', custom_func_name = '" + functionName.replace(/_create/g, '_update') + "'" + endStr;
             ToMultiLine(generic_update, output);
         } else {
             ToMultiLine("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr, output);
