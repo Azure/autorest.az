@@ -31,7 +31,7 @@ export class AzNamer {
             const regex = /^(?<list>List[a-zA-Z0-9]*)(?<by>By[A-Z].*)$/;
             let isValid = false;
             let groups = operationNameOri.match(regex);
-            if(groups) {
+            if(groups && groups.length > 2) {
                 isValid = true;
             }
             if(isValid) {
