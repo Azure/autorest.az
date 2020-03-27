@@ -7,7 +7,7 @@ import { CodeModelAz, CommandExample, ExampleParam } from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Request } from '@azure-tools/codemodel';
 import { serialize, deserialize, EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
-import { ToSnakeCase, MergeSort, deepCopy } from '../../utils/helper';
+import { ToSnakeCase, MergeSort, deepCopy, Capitalize, ToCamelCase } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
@@ -162,6 +162,65 @@ export class CodeModelCliImpl implements CodeModelAz {
             } while (this.SelectNextCommandGroup());
         }
     }
+
+    private setParamAzUniqueNames(model: CodeModelAz) {
+        let allActions: Map<string, Map<string, string>> = new Map<string, Map<string, string>>();
+        let actionParamReference: Map<string, Parameter> = new Map<string, Parameter>();
+        let paramActionReference: Map<Parameter, string> = new Map<Parameter, string>();
+    
+        if (model.SelectFirstCommandGroup()) {
+            do {
+                if (model.SelectFirstCommand()) {
+                    do {
+                        let paramNameReference: Map<Parameter, string> = new Map<Parameter, string>();
+                        let nameParamReference: Map<string, Parameter> = new Map<string, Parameter>();
+                        if (model.SelectFirstMethod()) {
+                            do {
+                                if (model.SelectFirstMethodParameter()) {
+                                    do {
+                                        let paramName = model.MethodParameter_Name;
+                                        let param = model.MethodParameter;
+                                        if (nameParamReference.has(paramName) && nameParamReference.get(paramName) != param) {
+                                            // TODO resolve collision 
+
+                                        } else if (nameParamReference.has(paramName) && nameParamReference.get(paramName) == param) {
+                                            // already has this parameter within the command and the names are the same. Nothing todo in this case.
+                                        } else if (paramNameReference.has(param) && paramNameReference.get(param) != paramName) {
+                                            // already has this parameter within the command but the names are different. 
+                                        }
+                                        paramNameReference
+                                        if (model.MethodParameter_Name == 'tags') {
+                                            continue;
+                                        } 
+                                        if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
+                                            let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(model.Command_FunctionName + model.MethodParameter_Name));
+                                            let groupParamName: string = "Add" +  Capitalize(ToCamelCase(model.CommandGroup_Name + model.MethodParameter_Name));
+                                            let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
+                                            if (paramActionReference.has(model.MethodParameter)) {
+                                            } else {
+                                                if (actionParamReference.has(actionName)) {
+    
+                                                } else {
+                                                    paramActionReference.set(model.MethodParameter, actionName);
+                                                    actionParamReference.set(actionName, model.MethodParameter);
+                                                }
+                                            }
+                                            let actionNames: Map<string, string> = new Map<string, string>();
+                                            actionNames.set("groupOpParamName", groupOpParamName);
+                                            actionNames.set("groupParamName", groupParamName);
+                                            actionNames.set("actionName", actionName);  
+                                            allActions.set(groupOpParamName, actionNames);
+                                        }
+                                    } while (model.SelectNextMethodParameter())
+                                }
+                            } while (model.SelectNextMethod())
+                        }
+                    } while (model.SelectNextCommand())
+                }
+            } while (model.SelectNextCommandGroup());
+        }
+    }
+
     //=================================================================================================================
     // Extension level information
     // autorest.az will have support for multiple extensions from single swagger file.

@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { ToCamelCase, Capitalize } from "../../utils/helper";
-import { SchemaType } from "@azure-tools/codemodel";
+import { SchemaType, Parameter } from "@azure-tools/codemodel";
 import { stringify } from "querystring";
 import { HeaderGenerator } from "./Header";
 
@@ -17,7 +17,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
     header.disableProtectedAccess = true;
 
     let output: string[] = header.getLines();
-    let allActions: Map<string, boolean> = new Map<string, boolean>();
+
     if (model.SelectFirstCommandGroup()) {
         do {
             if (model.SelectFirstCommand()) {
@@ -31,10 +31,6 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                     } 
                                     if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
                                         let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
-                                        
-                                        if (allActions.has(actionName)) {
-                                            continue;
-                                        }
 
                                         output.push("");
                                         output.push("");
@@ -83,7 +79,6 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                             output.push("            d[k] = v");
                                         }
                                         output.push("        return d");
-                                        allActions.set(actionName, true);
                                     } 
                                 } while (model.SelectNextMethodParameter());
                             } 
@@ -98,3 +93,5 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
 
     return output;
 }
+
+
