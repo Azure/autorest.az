@@ -91,8 +91,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     private sortOperationByAzCommand() {
         for (let [idx, operationGroup] of this.codeModel.operationGroups.entries()) {
             operationGroup.operations.sort((a, b) => {
-                let oa = this.getOrder(a.language['az']['name']) + "_" + (100 - a.parameters.length);
-                let ob = this.getOrder(b.language['az']['name']) + "_" + (100 - b.parameters.length);
+                let oa = this.getOrder(a.language['az']['name']) + "_" + a.language['az']['name'] + "_" + (100 - a.parameters.length);
+                let ob = this.getOrder(b.language['az']['name']) + "_" + b.language['az']['name'] + "_" + (100 - b.parameters.length);
                 return oa.localeCompare(ob);
             });
             this.codeModel.operationGroups[idx] = operationGroup;
