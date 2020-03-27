@@ -29,12 +29,10 @@ export class AzNamer {
             // a temporary way is to treat the part after 'by' as parameter distinguish part and the part before by as command.
             let idx = operationNameOri.indexOf("By");
             // the split is valid only the By is not first word and the letter before By is capital and the letter after By is lowercase 
-            let isValid = true;
-            if(idx == 0 || (idx > 0 && operationNameOri[idx - 1] == operationNameOri[idx - 1].toUpperCase())) {
-                isValid = false;
-            }
-            if(idx + 2  < operationNameOri.length && operationNameOri[idx + 2] == operationNameOri[idx + 2].toLowerCase()) {
-                isValid = false;
+            const regex = /[A-Za-z0-9]By[A-Z]/g;
+            let isValid = false;
+            if(operationNameOri.match(regex)) {
+                isValid = true;
             }
             if(idx > -1 && isValid) {
                 return changeCamelToDash(operationNameOri.substr(0, idx));
