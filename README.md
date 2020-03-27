@@ -5,7 +5,7 @@ See documentation [here](doc/00-overview.md)
 ``` yaml
 use-extension:
   "@autorest/python": "5.0.0-dev.20200314.1"
-  "@autorest/clicommon": "/Users/zhangqiaoqiao/work/code/autorest.cli.common"
+  "@autorest/clicommon": "/home/qiaozha/code/autorest.cli.common"
   #"@autorest/python": "latest"
   
 python:
