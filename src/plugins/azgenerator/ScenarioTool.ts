@@ -199,16 +199,27 @@ export class ResourcePool {
         this.use_subscription = false;
     }
 
-    private prepareResource(class_name: string, object_name: string, depends: string[][], entitys: PreparerEntity[]) {
+    private prepareResource(class_name: string, object_name: string, depends: string[][], entitys: PreparerEntity[], preparings: string[][]) {
         if (class_name == SUBNET)  return ; // use default subnet, no need to prepare it.
+
+        function inPreparings(): boolean {
+            for (let [pCName, pOName] of preparings) {
+                if (class_name == pCName && object_name == pOName)  return true;
+            }
+            return false;
+        }
+        if(inPreparings()) return;
 
         for (let e of entitys) {
             if (e.info.class_name == class_name && e.object_name == object_name) {
                 return;
             }
         }
+
         for (let i = depends.length - 1; i >= 0; i--) {
-            this.prepareResource(depends[i][0], depends[i][1], depends.slice(0, i), entitys);
+            preparings.push([class_name, object_name]);
+            this.prepareResource(depends[i][0], depends[i][1], depends.slice(0, i), entitys, preparings);
+            preparings.pop();
         }
 
         let entity = new PreparerEntity(preparerInfos[class_name], object_name);
@@ -236,7 +247,9 @@ export class ResourcePool {
 
             //if there is no entity for this depend has been exist, create a new of it.
             const default_name = 'default';
-            this.prepareResource(depend_resource, default_name, [], entitys);
+            preparings.push([class_name, object_name]);
+            this.prepareResource(depend_resource, default_name, depends, entitys, preparings);
+            preparings.pop();
             entity.depend_parameter_values.push(getResourceKey(depend_resource, default_name));
         }
         entitys.push(entity);
@@ -245,7 +258,7 @@ export class ResourcePool {
     private prepareInTree(resource: string, entitys: PreparerEntity[], root: Map<string, ResourceClass>, depends: string[][]) {
         if (resource in root) {
             for (let object_name in root[resource].objects) {
-                this.prepareResource(resource, object_name, depends, entitys);
+                this.prepareResource(resource, object_name, depends, entitys, []);
             }
         }
         for (let r_name in root) {
@@ -260,7 +273,7 @@ export class ResourcePool {
     private prepareInMap(resource, entitys: PreparerEntity[]) {
         if (resource in this.map) {
             for (let o_name in this.map[resource].objects) {
-                this.prepareResource(resource, o_name, [], entitys);
+                this.prepareResource(resource, o_name, [], entitys, []);
             }
         }
     }
@@ -450,7 +463,7 @@ export class ResourcePool {
 
     public setResourceDepends(resource_class_name: string, depend_resources: string[], depend_parameters: string[], createdObjectNames: string[]) {
         if ( !(resource_class_name in resourceClassDepends)) {
-            resourceClassDepends[resource_class_name] = depend_resources;
+            resourceClassDepends[resource_class_name] = deepCopy(depend_resources);
             preparerInfos[resource_class_name] = new PreparerInfo(null, resource_class_name, depend_parameters, depend_resources);    
         }
         else {
