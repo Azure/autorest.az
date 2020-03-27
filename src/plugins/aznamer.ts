@@ -29,12 +29,8 @@ export class AzNamer {
             // a temporary way is to treat the part after 'by' as parameter distinguish part and the part before by as command.
             // the split is valid only the By is not first word and the letter before By is capital and the letter after By is lowercase 
             const regex = /^(?<list>List[a-zA-Z0-9]*)(?<by>By[A-Z].*)$/;
-            let isValid = false;
             let groups = operationNameOri.match(regex);
             if(groups && groups.length > 2) {
-                isValid = true;
-            }
-            if(isValid) {
                 return changeCamelToDash(groups[1]);
             } else {
                 return changeCamelToDash(operationNameOri);
