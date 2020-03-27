@@ -30,7 +30,21 @@ export class AzNamer {
         } else if(operationName.startsWith("get") && httpProtocol == "get") {
             return subOperationGroupName == ""? "show": subOperationGroupName + " " + "show";
         } else if(operationName.startsWith("list") && httpProtocol == "get") {
-            return subOperationGroupName == ""? "list": subOperationGroupName + " " + "list";
+            // for list scenarios like kusto, if there's list, listbyresourcegroup, listsku, listskubyresource
+            // we should divide it into two groups 
+            // group list contains list and listbyresourcegroup
+            // group listsku contains listsku and listskubyresource
+            // a temporary way is to treat the part after 'by' as parameter distinguish part and the part before by as command.
+            // the split is valid only the By is not first word and the letter before By is capital and the letter after By is lowercase 
+            const regex = /^(?<list>List[a-zA-Z0-9]*)(?<by>By[A-Z].*)$/;
+            let groups = operationNameOri.match(regex);
+            let list = "list";
+            if(groups && groups.length > 2) {
+                list = changeCamelToDash(groups[1]);
+            } else {
+                list = changeCamelToDash(operationNameOri);
+            }
+            return subOperationGroupName == ""? list: subOperationGroupName + " " + list;
         } else if(operationName.startsWith("delete") && httpProtocol == "delete") {
             return subOperationGroupName == ""? "delete": subOperationGroupName + " " + "delete";
         }
