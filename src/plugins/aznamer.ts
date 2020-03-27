@@ -27,15 +27,15 @@ export class AzNamer {
             // group list contains list and listbyresourcegroup
             // group listsku contains listsku and listskubyresource
             // a temporary way is to treat the part after 'by' as parameter distinguish part and the part before by as command.
-            let idx = operationNameOri.indexOf("By");
             // the split is valid only the By is not first word and the letter before By is capital and the letter after By is lowercase 
-            const regex = /[A-Za-z0-9]By[A-Z]/g;
+            const regex = /^(?<list>List[a-zA-Z0-9]*)(?<by>By[A-Z].*)$/;
             let isValid = false;
-            if(operationNameOri.match(regex)) {
+            let groups = operationNameOri.match(regex);
+            if(groups) {
                 isValid = true;
             }
-            if(idx > -1 && isValid) {
-                return changeCamelToDash(operationNameOri.substr(0, idx));
+            if(isValid) {
+                return changeCamelToDash(groups[1]);
             } else {
                 return changeCamelToDash(operationNameOri);
             }
