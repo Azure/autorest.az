@@ -27,8 +27,16 @@ export class AzNamer {
             // group list contains list and listbyresourcegroup
             // group listsku contains listsku and listskubyresource
             // a temporary way is to treat the part after 'by' as parameter distinguish part and the part before by as command.
-            let idx = operationName.indexOf("by");
-            if(idx > -1) {
+            let idx = operationNameOri.indexOf("By");
+            // the split is valid only the By is not first word and the letter before By is capital and the letter after By is lowercase 
+            let isValid = true;
+            if(idx == 0 || (idx > 0 && operationNameOri[idx - 1] == operationNameOri[idx - 1].toUpperCase())) {
+                isValid = false;
+            }
+            if(idx + 2  < operationNameOri.length && operationNameOri[idx + 2] == operationNameOri[idx + 2].toLowerCase()) {
+                isValid = false;
+            }
+            if(idx > -1 && isValid) {
                 return changeCamelToDash(operationNameOri.substr(0, idx));
             } else {
                 return changeCamelToDash(operationNameOri);
