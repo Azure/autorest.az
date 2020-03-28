@@ -790,6 +790,9 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (this.MethodParameter_IsFlattened) {
             return false;
         }
+        if (this.MethodParameter.language['cli'].json == true) {
+            return true;
+        }
         if (this.MethodParameter_Type == SchemaType.Any || this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Object || this.MethodParameter_Type == SchemaType.Dictionary) {
             return true;
         }
