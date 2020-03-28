@@ -139,7 +139,6 @@ export class AzNamer {
                 operation.parameters.forEach(parameter => {
                     if(parameter.language['cli'] != undefined) {
                         this.getAzName(parameter);
-                        parameter.language['az']['mapsto'] = parameter.language['az'].name.replace(/-/g, '_');
                     }
                 });
                 operation.requests.forEach(request => {
@@ -157,7 +156,6 @@ export class AzNamer {
                         request.parameters.forEach(parameter => {
                             if(parameter.language['cli'] != undefined) {
                                 this.getAzName(parameter);
-                                parameter.language['az']['mapsto'] = parameter.language['az'].name.replace(/-/g, '_');
                             }
                         });                        
                     }

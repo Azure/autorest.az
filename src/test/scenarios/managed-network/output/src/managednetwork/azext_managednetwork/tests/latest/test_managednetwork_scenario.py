@@ -62,7 +62,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  'alNetworks/VnetA '
                  '--virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtu'
                  'alNetworks/VnetB '
-                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
+                 '--group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
@@ -114,7 +114,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         # EXAMPLE: ManagementNetworkGroupsGet
         self.cmd('az managednetwork managed-network-group show '
-                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
+                 '--group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
@@ -153,7 +153,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         # EXAMPLE: ManagementNetworkGroupsDelete
         self.cmd('az managednetwork managed-network-group delete '
-                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
+                 '--group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])

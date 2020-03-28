@@ -159,6 +159,26 @@ export class Modifiers {
                 }
             }
         }
+        // add NameMapsTo after modifier
+        this.codeModel.operationGroups.map(operationGroup => {
+            let operations = operationGroup.operations;
+            operations.map(operation => {
+                operation.parameters.forEach(parameter => {
+                    if(parameter.language['az'] != undefined) {
+                        parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
+                    }
+                });
+                operation.requests.forEach(request => {
+                    if(request.parameters) {
+                        request.parameters.forEach(parameter => {
+                            if(parameter.language['az'] != undefined) {
+                                parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
+                            }
+                        });                        
+                    }
+                });
+            });
+        });
         return this.codeModel;
     }
 }

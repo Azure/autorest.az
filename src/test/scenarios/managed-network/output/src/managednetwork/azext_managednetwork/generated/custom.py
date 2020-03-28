@@ -112,16 +112,16 @@ def managednetwork_managed_network_group_list(cmd, client,
 def managednetwork_managed_network_group_show(cmd, client,
                                               resource_group_name,
                                               managed_network_name,
-                                              managed_network_group_name):
+                                              group_name):
     return client.get(resource_group_name=resource_group_name,
                       managed_network_name=managed_network_name,
-                      managed_network_group_name=managed_network_group_name)
+                      managed_network_group_name=group_name)
 
 
 def managednetwork_managed_network_group_create(cmd, client,
                                                 resource_group_name,
                                                 managed_network_name,
-                                                managed_network_group_name,
+                                                group_name,
                                                 location,
                                                 management_groups=None,
                                                 subscriptions=None,
@@ -131,7 +131,7 @@ def managednetwork_managed_network_group_create(cmd, client,
         management_groups = json.loads(management_groups)
     return client.begin_create_or_update(resource_group_name=resource_group_name,
                                          managed_network_name=managed_network_name,
-                                         managed_network_group_name=managed_network_group_name,
+                                         managed_network_group_name=group_name,
                                          location=location,
                                          management_groups=management_groups,
                                          subscriptions=subscriptions,
@@ -142,7 +142,7 @@ def managednetwork_managed_network_group_create(cmd, client,
 def managednetwork_managed_network_group_update(cmd, client,
                                                 resource_group_name,
                                                 managed_network_name,
-                                                managed_network_group_name,
+                                                group_name,
                                                 location,
                                                 management_groups=None,
                                                 subscriptions=None,
@@ -152,7 +152,7 @@ def managednetwork_managed_network_group_update(cmd, client,
         management_groups = json.loads(management_groups)
     return client.begin_create_or_update(resource_group_name=resource_group_name,
                                          managed_network_name=managed_network_name,
-                                         managed_network_group_name=managed_network_group_name,
+                                         managed_network_group_name=group_name,
                                          location=location,
                                          management_groups=management_groups,
                                          subscriptions=subscriptions,
@@ -163,10 +163,10 @@ def managednetwork_managed_network_group_update(cmd, client,
 def managednetwork_managed_network_group_delete(cmd, client,
                                                 resource_group_name,
                                                 managed_network_name,
-                                                managed_network_group_name):
+                                                group_name):
     return client.begin_delete(resource_group_name=resource_group_name,
                                managed_network_name=managed_network_name,
-                               managed_network_group_name=managed_network_group_name)
+                               managed_network_group_name=group_name)
 
 
 def managednetwork_managed_network_peering_policy_list(cmd, client,

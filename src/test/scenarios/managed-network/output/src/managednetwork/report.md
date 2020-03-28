@@ -8,7 +8,7 @@ create a managednetwork managed-network-group.
 |------|----|-----------|----------|--------------|
 |**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|managed_network_group_name|
+|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|group_name|
 |**--location**|string|The geo-location where the resource lives|location|location|
 |**--management_groups**|array|The collection of management groups covered by the Managed Network|management_groups|management_groups|
 |**--subscriptions**|array|The collection of subscriptions covered by the Managed Network|subscriptions|subscriptions|
@@ -22,7 +22,7 @@ delete a managednetwork managed-network-group.
 |------|----|-----------|----------|--------------|
 |**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|managed_network_group_name|
+|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|group_name|
 ### managednetwork managed-network-group list
 
 list a managednetwork managed-network-group.
@@ -41,7 +41,7 @@ show a managednetwork managed-network-group.
 |------|----|-----------|----------|--------------|
 |**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|managed_network_group_name|
+|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|group_name|
 ### managednetwork managed-network-group update
 
 create a managednetwork managed-network-group.
@@ -50,7 +50,7 @@ create a managednetwork managed-network-group.
 |------|----|-----------|----------|--------------|
 |**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|managed_network_group_name|
+|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|group_name|
 |**--location**|string|The geo-location where the resource lives|location|location|
 |**--management_groups**|array|The collection of management groups covered by the Managed Network|management_groups|management_groups|
 |**--subscriptions**|array|The collection of subscriptions covered by the Managed Network|subscriptions|subscriptions|

@@ -92,12 +92,12 @@ def load_arguments(self, _):
     with self.argument_context('managednetwork managed-network-group show') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
+        c.argument('group_name', help='The name of the Managed Network Group.')
 
     with self.argument_context('managednetwork managed-network-group create') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
+        c.argument('group_name', help='The name of the Managed Network Group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource live'
                    's')
         c.argument('management_groups', arg_type=CLIArgumentType(options_list=['--management-groups'], help='The collec'
@@ -112,7 +112,7 @@ def load_arguments(self, _):
     with self.argument_context('managednetwork managed-network-group update') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
+        c.argument('group_name', help='The name of the Managed Network Group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource live'
                    's')
         c.argument('management_groups', arg_type=CLIArgumentType(options_list=['--management-groups'], help='The collec'
@@ -127,7 +127,7 @@ def load_arguments(self, _):
     with self.argument_context('managednetwork managed-network-group delete') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')
         c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('managed_network_group_name', help='The name of the Managed Network Group.')
+        c.argument('group_name', help='The name of the Managed Network Group.')
 
     with self.argument_context('managednetwork managed-network-peering-policy list') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')

@@ -2332,6 +2332,7 @@ globalParameters:
     az:
       name: subscription-id
       description: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+      mapsto: subscription_id
     cli:
       name: subscriptionId
       description: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
@@ -2354,6 +2355,7 @@ globalParameters:
     az:
       name: $host
       description: server parameter
+      mapsto: $host
     cli:
       name: $host
       description: server parameter
@@ -2373,6 +2375,7 @@ globalParameters:
     az:
       name: api-version
       description: Api Version
+      mapsto: api_version
     cli:
       name: ApiVersion
       description: Api Version
@@ -2401,6 +2404,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -2420,6 +2424,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -2533,6 +2538,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -2552,6 +2558,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -2575,6 +2582,7 @@ operationGroups:
           az:
             name: _managed_network
             description: Parameters supplied to the create/update a Managed Network Resource
+            mapsto: _managed_network
           cli:
             name: _managed_network
             description: Parameters supplied to the create/update a Managed Network Resource
@@ -2596,6 +2604,7 @@ operationGroups:
           az:
             name: location
             description: The geo-location where the resource lives
+            mapsto: location
           cli: *ref_78
         protocol: {}
       - &ref_85
@@ -2612,6 +2621,7 @@ operationGroups:
           az:
             name: tags
             description: Resource tags
+            mapsto: tags
           cli: *ref_80
         protocol: {}
       - &ref_86
@@ -2628,6 +2638,7 @@ operationGroups:
           az:
             name: properties
             description: The MNC properties
+            mapsto: properties
           cli: *ref_83
         protocol: {}
       signatureParameters:
@@ -2797,6 +2808,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -2816,6 +2828,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -2921,6 +2934,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -2940,6 +2954,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -2963,6 +2978,7 @@ operationGroups:
           az:
             name: _parameters
             description: Parameters supplied to update application gateway tags and/or scope.
+            mapsto: _parameters
           cli:
             name: _parameters
             description: Parameters supplied to update application gateway tags and/or scope.
@@ -2984,6 +3000,7 @@ operationGroups:
           az:
             name: tags
             description: Resource tags
+            mapsto: tags
           cli: *ref_94
         protocol: {}
       signatureParameters:
@@ -3139,6 +3156,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -3157,6 +3175,7 @@ operationGroups:
         az:
           name: top
           description: May be used to limit the number of results in a page for list queries.
+          mapsto: top
         cli:
           name: top
           description: May be used to limit the number of results in a page for list queries.
@@ -3179,6 +3198,7 @@ operationGroups:
           description: >-
             Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point
             to use for subsequent calls.
+          mapsto: skiptoken
         cli:
           name: skiptoken
           description: >-
@@ -3299,6 +3319,7 @@ operationGroups:
         az:
           name: top
           description: May be used to limit the number of results in a page for list queries.
+          mapsto: top
         cli:
           name: top
           description: May be used to limit the number of results in a page for list queries.
@@ -3321,6 +3342,7 @@ operationGroups:
           description: >-
             Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point
             to use for subsequent calls.
+          mapsto: skiptoken
         cli:
           name: skiptoken
           description: >-
@@ -3455,6 +3477,7 @@ operationGroups:
         az:
           name: scope
           description: The base resource of the scope assignment.
+          mapsto: scope
         cli:
           name: scope
           description: The base resource of the scope assignment.
@@ -3474,6 +3497,7 @@ operationGroups:
         az:
           name: scope-assignment-name
           description: The name of the scope assignment to get.
+          mapsto: scope_assignment_name
         cli:
           name: scopeAssignmentName
           description: The name of the scope assignment to get.
@@ -3575,6 +3599,7 @@ operationGroups:
             The base resource of the scope assignment to create. The scope can be any REST resource instance. For example, use 'subscriptions/{subscription-id}' for a subscription,
             'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for a resource group, and
             'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}' for a resource.
+          mapsto: scope
         cli:
           name: scope
           description: >-
@@ -3597,6 +3622,7 @@ operationGroups:
         az:
           name: scope-assignment-name
           description: The name of the scope assignment to create.
+          mapsto: scope_assignment_name
         cli:
           name: scopeAssignmentName
           description: The name of the scope assignment to create.
@@ -3621,6 +3647,7 @@ operationGroups:
           az:
             name: _parameters
             description: Parameters supplied to the specify which Managed Network this scope is being assigned
+            mapsto: _parameters
           cli:
             name: _parameters
             description: Parameters supplied to the specify which Managed Network this scope is being assigned
@@ -3642,6 +3669,7 @@ operationGroups:
           az:
             name: location
             description: The geo-location where the resource lives
+            mapsto: location
           cli: *ref_78
         protocol: {}
       - &ref_110
@@ -3657,6 +3685,7 @@ operationGroups:
           az:
             name: assigned-managed-network
             description: The managed network ID with scope will be assigned to.
+            mapsto: assigned_managed_network
           cli: *ref_22
         protocol: {}
       signatureParameters:
@@ -3776,6 +3805,7 @@ operationGroups:
         az:
           name: scope
           description: The scope of the scope assignment to delete.
+          mapsto: scope
         cli:
           name: scope
           description: The scope of the scope assignment to delete.
@@ -3795,6 +3825,7 @@ operationGroups:
         az:
           name: scope-assignment-name
           description: The name of the scope assignment to delete.
+          mapsto: scope_assignment_name
         cli:
           name: scopeAssignmentName
           description: The name of the scope assignment to delete.
@@ -3875,6 +3906,7 @@ operationGroups:
         az:
           name: scope
           description: The base resource of the scope assignment.
+          mapsto: scope
         cli:
           name: scope
           description: The base resource of the scope assignment.
@@ -3990,6 +4022,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4009,6 +4042,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4028,6 +4062,7 @@ operationGroups:
         az:
           name: managed-network-group-name
           description: The name of the Managed Network Group.
+          mapsto: managed_network_group_name
         cli:
           name: managedNetworkGroupName
           description: The name of the Managed Network Group.
@@ -4133,6 +4168,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4152,6 +4188,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4171,6 +4208,7 @@ operationGroups:
         az:
           name: managed-network-group-name
           description: The name of the Managed Network Group.
+          mapsto: managed_network_group_name
         cli:
           name: managedNetworkGroupName
           description: The name of the Managed Network Group.
@@ -4194,6 +4232,7 @@ operationGroups:
           az:
             name: _managed_network_group
             description: Parameters supplied to the create/update a Managed Network Group resource
+            mapsto: _managed_network_group
           cli:
             name: _managed_network_group
             description: Parameters supplied to the create/update a Managed Network Group resource
@@ -4215,6 +4254,7 @@ operationGroups:
           az:
             name: location
             description: The geo-location where the resource lives
+            mapsto: location
           cli: *ref_78
         protocol: {}
       - schema: *ref_25
@@ -4229,6 +4269,7 @@ operationGroups:
           az:
             name: kind
             description: Responsibility role under which this Managed Network Group will be created
+            mapsto: kind
           cli: *ref_122
         protocol: {}
       - &ref_128
@@ -4246,6 +4287,7 @@ operationGroups:
           az:
             name: management-groups
             description: The collection of management groups covered by the Managed Network
+            mapsto: management_groups
           cli: *ref_27
         protocol: {}
       - &ref_129
@@ -4261,6 +4303,7 @@ operationGroups:
           az:
             name: subscriptions
             description: The collection of subscriptions covered by the Managed Network
+            mapsto: subscriptions
           cli: *ref_29
         protocol: {}
       - &ref_130
@@ -4276,6 +4319,7 @@ operationGroups:
           az:
             name: virtual-networks
             description: The collection of virtual nets covered by the Managed Network
+            mapsto: virtual_networks
           cli: *ref_31
         protocol: {}
       - &ref_131
@@ -4291,6 +4335,7 @@ operationGroups:
           az:
             name: subnets
             description: The collection of  subnets covered by the Managed Network
+            mapsto: subnets
           cli: *ref_33
         protocol: {}
       signatureParameters:
@@ -4437,6 +4482,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4456,6 +4502,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4475,6 +4522,7 @@ operationGroups:
         az:
           name: managed-network-group-name
           description: The name of the Managed Network Group.
+          mapsto: managed_network_group_name
         cli:
           name: managedNetworkGroupName
           description: The name of the Managed Network Group.
@@ -4582,6 +4630,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4601,6 +4650,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4619,6 +4669,7 @@ operationGroups:
         az:
           name: top
           description: May be used to limit the number of results in a page for list queries.
+          mapsto: top
         cli:
           name: top
           description: May be used to limit the number of results in a page for list queries.
@@ -4641,6 +4692,7 @@ operationGroups:
           description: >-
             Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point
             to use for subsequent calls.
+          mapsto: skiptoken
         cli:
           name: skiptoken
           description: >-
@@ -4768,6 +4820,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4787,6 +4840,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4806,6 +4860,7 @@ operationGroups:
         az:
           name: policy-name
           description: The name of the Managed Network Peering Policy.
+          mapsto: policy_name
         cli:
           name: policyName
           description: The name of the Managed Network Peering Policy.
@@ -4909,6 +4964,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4928,6 +4984,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4947,6 +5004,7 @@ operationGroups:
         az:
           name: policy-name
           description: The name of the Managed Network Peering Policy.
+          mapsto: policy_name
         cli:
           name: policyName
           description: The name of the Managed Network Peering Policy.
@@ -4970,6 +5028,7 @@ operationGroups:
           az:
             name: _managed_network_policy
             description: Parameters supplied to create/update a Managed Network Peering Policy
+            mapsto: _managed_network_policy
           cli:
             name: _managed_network_policy
             description: Parameters supplied to create/update a Managed Network Peering Policy
@@ -4991,6 +5050,7 @@ operationGroups:
           az:
             name: location
             description: The geo-location where the resource lives
+            mapsto: location
           cli: *ref_78
         protocol: {}
       - &ref_150
@@ -5006,6 +5066,7 @@ operationGroups:
           az:
             name: properties
             description: Gets or sets the properties of a Managed Network Policy
+            mapsto: properties
           cli: *ref_148
         protocol: {}
       signatureParameters:
@@ -5143,6 +5204,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -5162,6 +5224,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -5181,6 +5244,7 @@ operationGroups:
         az:
           name: policy-name
           description: The name of the Managed Network Peering Policy.
+          mapsto: policy_name
         cli:
           name: policyName
           description: The name of the Managed Network Peering Policy.
@@ -5288,6 +5352,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -5307,6 +5372,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -5325,6 +5391,7 @@ operationGroups:
         az:
           name: top
           description: May be used to limit the number of results in a page for list queries.
+          mapsto: top
         cli:
           name: top
           description: May be used to limit the number of results in a page for list queries.
@@ -5347,6 +5414,7 @@ operationGroups:
           description: >-
             Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point
             to use for subsequent calls.
+          mapsto: skiptoken
         cli:
           name: skiptoken
           description: >-

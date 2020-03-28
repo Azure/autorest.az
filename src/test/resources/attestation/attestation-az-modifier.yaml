@@ -1938,6 +1938,7 @@ globalParameters:
     az:
       name: subscription-id
       description: The ID of the target subscription.
+      mapsto: subscription_id
     cli:
       name: subscriptionId
       description: The ID of the target subscription.
@@ -1960,6 +1961,7 @@ globalParameters:
     az:
       name: $host
       description: server parameter
+      mapsto: $host
     cli:
       name: $host
       description: server parameter
@@ -1979,6 +1981,7 @@ globalParameters:
     az:
       name: api-version
       description: Api Version
+      mapsto: api_version
     cli:
       name: ApiVersion
       description: Api Version
@@ -2103,6 +2106,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group. The name is case insensitive.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group. The name is case insensitive.
@@ -2122,6 +2126,7 @@ operationGroups:
         az:
           name: provider-name
           description: Name of the attestation service instance
+          mapsto: provider_name
         cli:
           name: providerName
           description: Name of the attestation service instance
@@ -2222,6 +2227,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group. The name is case insensitive.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group. The name is case insensitive.
@@ -2241,6 +2247,7 @@ operationGroups:
         az:
           name: provider-name
           description: Name of the attestation service
+          mapsto: provider_name
         cli:
           name: providerName
           description: Name of the attestation service
@@ -2265,6 +2272,7 @@ operationGroups:
           az:
             name: _creation_params
             description: Client supplied parameters.
+            mapsto: _creation_params
           cli:
             name: _creation_params
             description: Client supplied parameters.
@@ -2287,6 +2295,7 @@ operationGroups:
           az:
             name: location
             description: The supported Azure location where the attestation service instance should be created.
+            mapsto: location
           cli: *ref_64
         protocol: {}
       - &ref_70
@@ -2303,6 +2312,7 @@ operationGroups:
           az:
             name: tags
             description: The tags that will be assigned to the attestation service instance.
+            mapsto: tags
           cli: *ref_66
         protocol: {}
       - &ref_71
@@ -2319,6 +2329,7 @@ operationGroups:
           az:
             name: properties
             description: Properties of the attestation service instance
+            mapsto: properties
           cli: *ref_68
         protocol: {}
       signatureParameters:
@@ -2446,6 +2457,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group. The name is case insensitive.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group. The name is case insensitive.
@@ -2465,6 +2477,7 @@ operationGroups:
         az:
           name: provider-name
           description: Name of the attestation service
+          mapsto: provider_name
         cli:
           name: providerName
           description: Name of the attestation service
@@ -2489,6 +2502,7 @@ operationGroups:
           az:
             name: _update_params
             description: Client supplied parameters.
+            mapsto: _update_params
           cli:
             name: _update_params
             description: Client supplied parameters.
@@ -2510,6 +2524,7 @@ operationGroups:
           az:
             name: tags
             description: The tags that will be assigned to the attestation service instance.
+            mapsto: tags
           cli: *ref_77
         protocol: {}
       signatureParameters:
@@ -2613,6 +2628,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group. The name is case insensitive.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group. The name is case insensitive.
@@ -2632,6 +2648,7 @@ operationGroups:
         az:
           name: provider-name
           description: Name of the attestation service
+          mapsto: provider_name
         cli:
           name: providerName
           description: Name of the attestation service
@@ -2814,6 +2831,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group. The name is case insensitive.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group. The name is case insensitive.
