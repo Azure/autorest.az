@@ -82,6 +82,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
+
     private getOrder(op: string) {
         if(op.indexOf(" ") > -1) {
             op = op.split(" ")[1];
@@ -162,6 +163,28 @@ export class CodeModelCliImpl implements CodeModelAz {
                                 }
 
                             }
+                        }
+                        if(this.SelectFirstMethod()) {
+                            do {
+                                if (this.Method_CanSplit) {
+                                    let listCount = 0;
+                                    let param = null;
+                                    if (this.SelectFirstMethodParameter()) {
+                                        do {
+                                            if (this.MethodParameter_IsFlattened) {
+                                                continue;
+                                            }
+                                            if (this.MethodParameter_IsList) {
+                                                listCount++;
+                                                param = this.MethodParameter;
+                                            }
+                                        } while (this.SelectNextMethodParameter());
+                                    }
+                                    if (listCount == 1) {
+                                        this.Method['genericSetterParam'] = param;
+                                    }
+                                }
+                            } while (this.SelectNextMethod())
                         }
                     } while (this.SelectNextCommand());
                 }
@@ -427,7 +450,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         if(this.CommandGroup.language['az']['hasUpdate']) {
             return false;
         }
-        return this.Command['canSplitOperation'] ? true : false;
+        this.SelectFirstMethod();
+        if(this.Method_IsLast && this.Method_IsFirst) {
+            return this.Command['canSplitOperation'] ? true : false;
+        } 
+        return false;   
     }
 
     public get Command_GetOriginalOperation(): any {
@@ -537,6 +564,17 @@ export class CodeModelCliImpl implements CodeModelAz {
     {
         let ret = this.Method.requests[0].protocol?.http?.method || "unknown";
         return ret.toLowerCase();
+    }
+
+    public get Method_CanSplit(): boolean {
+        if(this.CommandGroup.language['az']['hasUpdate']) {
+            return false;
+        }
+        return this.Method['canSplitOperation'] ? true : false;
+    }
+
+    public Method_GenericSetterParameter(op: Operation = this.Method): Parameter {
+        return op['genericSetterParam'];
     }
 
     public Get_Method_Name(language = "az"): string {

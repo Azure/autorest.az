@@ -75,6 +75,8 @@ export interface CodeModelAz
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
     Method_GetOriginalOperation: any;
+    Method_CanSplit: boolean;
+    Method_GenericSetterParameter(Operation): Parameter;
 
 
     SelectFirstMethodParameter(): boolean;
