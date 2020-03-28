@@ -46,7 +46,7 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                                     output.push("    def __call__(self, parser, namespace, values, option_string=None):");
                                     output.push("        action = self.get_action(values, option_string)");
                                     if (model.MethodParameter_Type == SchemaType.Array) {
-                                        output.push("        super(" + "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name)) + ", self).__call__(parser, namespace, action, option_string)");
+                                        output.push("        super(" + actionName + ", self).__call__(parser, namespace, action, option_string)");
                                     } else {
                                         output.push("        namespace." + model.MethodParameter_MapsTo.toLowerCase().replace(/-/g, '_') + " = action");
                                     }

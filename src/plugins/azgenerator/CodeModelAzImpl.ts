@@ -199,23 +199,35 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             let preFlattenedNames = preParam?.['targetProperty']?.['flattenedNames'];
                                             let preParamFlattenedName = preParam.language['az'].mapsto;
                                             let paramFlattenedName = param.language['az'].mapsto;
-                                            if (preFlattenedNames) {
-                                                for (let name of preFlattenedNames) {
-                                                    preMapName.push(ToSnakeCase(name));
-                                                }
-                                            }
-                                            if (preMapName.length > 0) {
-                                                preParamFlattenedName = preMapName.join('_');
-                                            }
                                             let flattenedNames = param?.['targetProperty']?.['flattenedNames'];
                                             let mapName: Array<string> = [];
+                                            let flattenedLen = -1; 
+                                            let preFlattenedLen = -1;
                                             if (flattenedNames) {
-                                                for (let name of flattenedNames) {
-                                                    mapName.push(ToSnakeCase(name));
+                                                flattenedLen = flattenedNames.length;
+                                            }
+                                            if (preFlattenedNames) {
+                                                preFlattenedLen = preFlattenedNames.length;
+                                            }
+                                            let tmpName = paramFlattenedName;
+                                            let preTmpName = preParamFlattenedName;
+                                            while(tmpName != preTmpName && (flattenedLen > 0 || preFlattenedLen > 0)) {
+                                                if(flattenedLen > 0) {
+                                                    flattenedLen--;
+                                                    mapName.push(flattenedNames[flattenedLen]);
+                                                    tmpName = mapName.reverse().join('_');
+                                                }
+                                                if(preFlattenedLen > 0) {
+                                                    preFlattenedLen--;
+                                                    preMapName.push(preFlattenedNames[preFlattenedLen]);
+                                                    preTmpName = preMapName.reverse().join('_');
                                                 }
                                             }
-                                            if (mapName.length > 0) {
-                                                paramFlattenedName = mapName.join('_');
+                                            if (preTmpName != preParamFlattenedName) {
+                                                preParamFlattenedName = preTmpName;
+                                            }
+                                            if (tmpName != paramFlattenedName) {
+                                                paramFlattenedName = tmpName;
                                             }
                                             if (paramFlattenedName != preParamFlattenedName) {
                                                 this.Parameter_SetAzNameMapsTo(preParamFlattenedName, preParam);
