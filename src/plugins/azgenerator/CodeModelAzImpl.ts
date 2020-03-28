@@ -694,6 +694,9 @@ export class CodeModelCliImpl implements CodeModelAz {
         // 4. or arrays with object element types but has simple properties
         // 5. or dicts with simple element properties
         // 6. or dicts with arrays as element properties but has simple element type 
+        if (this.MethodParameter_Type == SchemaType.Any) {
+            return false;
+        }
         if (this.MethodParameter_IsFlattened) {
             return false;
         }
@@ -787,7 +790,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (this.MethodParameter_IsFlattened) {
             return false;
         }
-        if (this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Object || this.MethodParameter_Type == SchemaType.Dictionary) {
+        if (this.MethodParameter.language['cli'].json == true) {
+            return true;
+        }
+        if (this.MethodParameter_Type == SchemaType.Any || this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Object || this.MethodParameter_Type == SchemaType.Dictionary) {
             return true;
         }
         return false;
