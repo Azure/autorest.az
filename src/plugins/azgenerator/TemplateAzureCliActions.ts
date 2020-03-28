@@ -8,6 +8,7 @@ import { ToCamelCase, Capitalize } from "../../utils/helper";
 import { SchemaType, Parameter } from "@azure-tools/codemodel";
 import { stringify } from "querystring";
 import { HeaderGenerator } from "./Header";
+import { isNullOrUndefined } from "util";
 
 export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -26,12 +27,11 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                         do {
                             if (model.SelectFirstMethodParameter()) {
                                 do {
-                                    if (model.MethodParameter_Name == 'tags') {
+                                    let actionName = model.Parameter_ActionName();
+                                    if (isNullOrUndefined(actionName)) {
                                         continue;
                                     } 
                                     if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
-                                        let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
-
                                         output.push("");
                                         output.push("");
                                         let baseAction = "Action";
