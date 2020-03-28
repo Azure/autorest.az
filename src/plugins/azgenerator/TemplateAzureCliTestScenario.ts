@@ -29,6 +29,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     head.push("");
     head.push("from azure_devtools.scenario_tests import AllowLargeResponse");
     head.push("from azure.cli.testsdk import ScenarioTest");
+    head.push("from .. import try_manual");
     //head.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
     steps.push("");
     steps.push("");
@@ -50,6 +51,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
             if (exampleId) {
                 let disabled: string = config[ci].disabled ? "# " : "";
                 steps.push("# EXAMPLE: " + exampleId);
+                steps.push("@try_manual");
                 steps.push(`def ${functionName}(test):`);
                 // find example by name
                 let found = false;
@@ -73,6 +75,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                 body.push(`        ${functionName}(self)`)
             }
             else if (functionName) {
+                steps.push("@try_manual");
                 steps.push(`def ${functionName}(test):`);
                 steps.push("    pass");
                 steps.push("");
@@ -157,5 +160,13 @@ function ToFunctionName(step: any): string {
         ret = "step_" + step.name;
     else if (step.function)
         ret = step.function;
-    return ret ? ret.split("-").join("_") : ret;
+    if (!ret)   return undefined;
+
+    let funcname = "";
+    var letterNumber = /^[0-9a-zA-Z]+$/;
+    ret = (ret as string).toLowerCase();
+    for (let i=0;i<ret.length;i++) {
+        funcname += ret[i].match(letterNumber)? ret[i]: '_';
+    }
+    return funcname;
 }

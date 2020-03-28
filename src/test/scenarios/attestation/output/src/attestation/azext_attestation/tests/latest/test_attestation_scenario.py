@@ -8,24 +8,28 @@ import unittest
 
 from azure_devtools.scenario_tests import AllowLargeResponse
 from azure.cli.testsdk import ScenarioTest
+from .. import try_manual
 from azure.cli.testsdk import ResourceGroupPreparer
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
+@try_manual
 def setup(test):
     pass
 
 
 # EXAMPLE: Operations_List
-def step_Operations_List(test):
+@try_manual
+def step_operations_list(test):
     # EXAMPLE NOT FOUND!
     pass
 
 
 # EXAMPLE: AttestationProviders_Create
-def step_AttestationProviders_Create(test):
+@try_manual
+def step_attestationproviders_create(test):
     test.cmd('az attestation attestation-provider create '
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg}"',
@@ -33,38 +37,44 @@ def step_AttestationProviders_Create(test):
 
 
 # EXAMPLE: AttestationProviders_Get
-def step_AttestationProviders_Get(test):
+@try_manual
+def step_attestationproviders_get(test):
     test.cmd('az attestation attestation-provider show '
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg}"',
              checks=[])
 
 
+@try_manual
 def mytest(test):
     pass
 
 
 # EXAMPLE: AttestationProviders_List
-def step_AttestationProviders_List(test):
+@try_manual
+def step_attestationproviders_list(test):
     test.cmd('az attestation attestation-provider list',
              checks=[])
 
 
 # EXAMPLE: AttestationProviders_ListByResourceGroup
-def step_AttestationProviders_ListByResourceGroup(test):
+@try_manual
+def step_attestationproviders_listbyresourcegroup(test):
     test.cmd('az attestation attestation-provider list '
              '--resource-group "{rg_2}"',
              checks=[])
 
 
 # EXAMPLE: AttestationProviders_Delete
-def step_AttestationProviders_Delete(test):
+@try_manual
+def step_attestationproviders_delete(test):
     test.cmd('az attestation attestation-provider delete '
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg_3}"',
              checks=[])
 
 
+@try_manual
 def cleanup(test):
     pass
 
@@ -77,11 +87,11 @@ class AttestationManagementClientScenarioTest(ScenarioTest):
     def test_attestation(self, resource_group):
 
         setup(self)
-        step_Operations_List(self)
-        step_AttestationProviders_Create(self)
-        step_AttestationProviders_Get(self)
+        step_operations_list(self)
+        step_attestationproviders_create(self)
+        step_attestationproviders_get(self)
         mytest(self)
-        step_AttestationProviders_List(self)
-        step_AttestationProviders_ListByResourceGroup(self)
-        step_AttestationProviders_Delete(self)
+        step_attestationproviders_list(self)
+        step_attestationproviders_listbyresourcegroup(self)
+        step_attestationproviders_delete(self)
         cleanup(self)

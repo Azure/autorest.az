@@ -1125,7 +1125,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             Object.entries(this.Examples).forEach(([id, example_obj]) => {
                 let example = new CommandExample();
                 example.Method = this.Command_MethodName;
-                example.Id = `/${this.CommandGroup_Key}/${this.MethodParameter_NameAz}/${id}`;
+                example.Id = `/${this.CommandGroup_Key}/${this.Method_HttpMethod}/${id}`;
                 example.Title = example_obj.title || id;
                 example.Path = this.Method_Path;
                 example.HttpMethod = this.Method_HttpMethod;
