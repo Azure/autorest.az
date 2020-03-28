@@ -5,7 +5,7 @@
 
 import { CodeModelAz, CommandExample, ExampleParam } from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Request } from '@azure-tools/codemodel';
-import { serialize, deserialize, EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
+import { serialize, deserialize, EnglishPluralizationService, pascalCase, map } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, MergeSort, deepCopy, Capitalize, ToCamelCase } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
@@ -211,18 +211,18 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             }
                                             let tmpName = paramFlattenedName;
                                             let preTmpName = preParamFlattenedName;
-                                            while(tmpName != preTmpName && (flattenedLen > 0 || preFlattenedLen > 0)) {
+                                            while(flattenedLen > 0 || preFlattenedLen > 0) {
                                                 if(flattenedLen > 0) {
                                                     flattenedLen--;
                                                     mapName.push(flattenedNames[flattenedLen]);
-                                                    tmpName = mapName.reverse().join('_');
                                                 }
                                                 if(preFlattenedLen > 0) {
                                                     preFlattenedLen--;
                                                     preMapName.push(preFlattenedNames[preFlattenedLen]);
-                                                    preTmpName = preMapName.reverse().join('_');
                                                 }
                                             }
+                                            tmpName = mapName.reverse().join('_');
+                                            preTmpName = preMapName.reverse().join('_');
                                             if (preTmpName != preParamFlattenedName) {
                                                 preParamFlattenedName = preTmpName;
                                             }
@@ -230,6 +230,48 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                 paramFlattenedName = tmpName;
                                             }
                                             if (paramFlattenedName != preParamFlattenedName) {
+                                                let mapChanged = false;
+                                                if (mapName[flattenedLen - 1].toLowerCase() == "properties" || mapName[flattenedLen - 1].toLowerCase() == "parameters") {
+                                                    mapChanged = true;
+                                                    mapName.pop();
+                                                } else {
+                                                    let names = this.Method_Name.split(' ');
+                                                    if (names.length > 1) {
+                                                        if (mapName[flattenedLen - 1].toLowerCase() == names[0].replace(/-/g, '')) {
+                                                            mapChanged = true;
+                                                            mapName.pop();
+                                                        }
+                                                    }
+                                                }
+                                                let tryTmpName = "";
+                                                if (mapChanged && mapName.length > 0) {
+                                                    tryTmpName = mapName.reverse().join('_');
+                                                }
+                                                let preMapChanged = false;
+                                                if (preMapName[preFlattenedLen - 1].toLowerCase() == "properties" || preMapName[preFlattenedLen - 1].toLowerCase() == "parameters") {
+                                                    preMapChanged = true;
+                                                    preMapName.pop();
+                                                } else {
+                                                    let names = this.Method_Name.split(' ');
+                                                    if (names.length > 1) {
+                                                        if (preMapName[preFlattenedLen - 1].toLowerCase() == names[0].replace(/-/g, '')) {
+                                                            preMapChanged = true;
+                                                            preMapName.pop();
+                                                        }
+                                                    }
+                                                }
+                                                let tryPreTmpName = "";
+                                                if (preMapChanged && preMapName.length > 0) {
+                                                    tryPreTmpName = preMapName.reverse().join('_');
+                                                }
+                                                if (tryTmpName != "" && tryPreTmpName != "" && tryTmpName != tryPreTmpName) {
+                                                    paramFlattenedName = tryTmpName;
+                                                    preParamFlattenedName = tryPreTmpName;
+                                                } else if (tryTmpName != "" && tryTmpName != preParamFlattenedName) {
+                                                    paramFlattenedName = tryTmpName;
+                                                } else if (tryPreTmpName != "" && tryPreTmpName != paramFlattenedName) {
+                                                    preParamFlattenedName = tryPreTmpName;
+                                                }
                                                 this.Parameter_SetAzNameMapsTo(preParamFlattenedName, preParam);
                                                 nameParamReference.set(preParamFlattenedName, preParam);
                                                 this.Parameter_SetAzNameMapsTo(paramFlattenedName, param);
