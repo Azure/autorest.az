@@ -193,7 +193,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         let paramName = this.MethodParameter_MapsTo;
                                         let param = this.MethodParameter;
                                         let originParam = this.MethodParameter;
-                                        if (nameParamReference.has(paramName) && nameParamReference.get(paramName) != param) {
+                                        if (nameParamReference.has(paramName) && nameParamReference.get(paramName).schema != param.schema) {
                                             let preParam = nameParamReference.get(paramName);
                                             let preMapName: Array<string> = [];
                                             let preFlattenedNames = preParam?.['targetProperty']?.['flattenedNames'];
@@ -227,9 +227,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                 this.session.message({ Channel: Channel.Warning, Text: "parameter " + paramFlattenedName + " has two different references but they have the same flattened name" });
                                             }
                                         } else {
-                                            // both nameParamReference and paramNameReference don't have the parameter
-                                            // either one of nameParamReference and paramNameReference has the parameter and equals to the paramName and the other one don't have. seems unlikely to happened? 
-                                            // or both nameParamReference and paramNameReference have the parameter and they are the same.
+                                            // nameParamReference doesn't have the parameter
+                                            // or nameParamReference has the parameter and they are the same.
                                             nameParamReference.set(paramName, param);
                                         }
                                         if (this.MethodParameter_Name == 'tags') {
