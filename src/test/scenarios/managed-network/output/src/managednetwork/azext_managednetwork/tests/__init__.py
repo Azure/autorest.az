@@ -35,7 +35,7 @@ def try_manual(func):
         try:
             func_to_call = import_manual_function(func)
             print("Will call manual function for {}()".format(func.__name__))
-        except ImportError:
+        except (ImportError, AttributeError):
             pass
         return func_to_call(test_class)
     return wrapper

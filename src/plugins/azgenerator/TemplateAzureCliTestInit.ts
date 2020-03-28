@@ -45,7 +45,7 @@ export function GenerateAzureCliTestInit(model: CodeModelAz) : string[] {
     output.push('        try:');
     output.push('            func_to_call = import_manual_function(func)');
     output.push('            print("Will call manual function for {}()".format(func.__name__))');
-    output.push('        except ImportError:');
+    output.push('        except (ImportError, AttributeError):');
     output.push('            pass');
     output.push('        return func_to_call(test_class)');
     output.push('    return wrapper');
