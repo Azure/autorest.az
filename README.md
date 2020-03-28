@@ -3,13 +3,19 @@
 See documentation [here](doc/00-overview.md)
 
 ``` yaml
+
+clear-output-folder: false
+python:
+    clear-output-folder: false
+    reason: 'make sure python flag exists to load config in python.md'
+debug-output-folder: $(output-folder)/_az_debug
+az-output-folder: $(output-folder)
+
 use-extension:
   "@autorest/python": "5.0.0-dev.20200314.1"
   "@autorest/clicommon": "0.4.0"
   #"@autorest/python": "latest"
   
-python:
-    reason: 'make sure python flag exists to load config in python.md'
 cli:
     reason: 'make sure cli flag exists to load config in cli.md'
     naming:
@@ -22,6 +28,7 @@ cli:
             choiceValue:  'snake'
             constant:  'snake'
             type:  'pascal'
+
 require:
   - ./readme.python.md
   - ./readme.cli.md
@@ -65,5 +72,8 @@ scope-az:
         #- source-file-aznamer
         #- source-file-modifiers
         - source-file-extension
+    output-folder: $(az-output-folder)
 
+scope-clicommon:
+    output-folder: $(debug-output-folder)
 ```
