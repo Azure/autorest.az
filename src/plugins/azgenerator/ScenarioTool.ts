@@ -392,7 +392,12 @@ export class ResourcePool {
             for (let attr of endpoint.split(" ")) {
                 let kv = attr.split("=");
                 if (ret.length > 0) ret += " ";
-                ret += `${kv[0]}=${this.addEndpointResource(kv[1], isJson, false, placeholders, resources)}`;
+                if (kv[1].length>=2 && kv[1][0]=='"' && kv[1][kv[1].length-1]== '"') {
+                    ret += `${kv[0]}="${this.addEndpointResource(kv[1].substr(1, kv[1].length-2), isJson, false, placeholders, resources)}"`;
+                }
+                else {
+                    ret += `${kv[0]}=${this.addEndpointResource(kv[1], isJson, false, placeholders, resources)}`;
+                }
             }
             return ret;
         }

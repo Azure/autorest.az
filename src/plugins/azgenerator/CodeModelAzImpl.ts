@@ -1252,7 +1252,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters, createdObjectNames);
         });
 
-        this.SortExamplesByDependency();
+        if (!this._configuredScenario)   this.SortExamplesByDependency();
     }
 
     public SortExamplesByDependency() {
