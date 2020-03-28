@@ -153,7 +153,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         hasJsonLastTime = true;
                         argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "']";
                     } else if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
-                        let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
+                        let actionName: string = model.Parameter_ActionName(model.MethodParameter);
                         argument += ", action=" + actionName;
                         hasActions = true;
 

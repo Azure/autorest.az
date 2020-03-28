@@ -55,22 +55,22 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         # EXAMPLE: ManagementNetworkGroupsPut
         self.cmd('az managednetwork managed-network-group create '
-                 '--properties-management-groups "[]" '
-                 '--properties-subnets id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/vir'
-                 'tualNetworks/VnetA/subnets/subnetA '
-                 '--properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Ne'
-                 'twork/virtualNetworks/VnetA '
-                 '--properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Ne'
-                 'twork/virtualNetworks/VnetB '
-                 '--group-name "{myManagedNetworkGroup1}" '
+                 '--management-groups "[]" '
+                 '--subnets id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetwork'
+                 's/VnetA/subnets/subnetA '
+                 '--virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtu'
+                 'alNetworks/VnetA '
+                 '--virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtu'
+                 'alNetworks/VnetB '
+                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
 
         # EXAMPLE: ScopeAssignmentsPut
         self.cmd('az managednetwork scope-assignment create '
-                 '--properties-assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers'
-                 '/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
+                 '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.'
+                 'ManagedNetwork/managedNetworks/{myManagedNetwork}" '
                  '--scope "subscriptions/subscriptionC" '
                  '--scope-assignment-name "{subscriptionCAssignment}"',
                  checks=[])
@@ -114,7 +114,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         # EXAMPLE: ManagementNetworkGroupsGet
         self.cmd('az managednetwork managed-network-group show '
-                 '--group-name "{myManagedNetworkGroup1}" '
+                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])
@@ -153,7 +153,7 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         # EXAMPLE: ManagementNetworkGroupsDelete
         self.cmd('az managednetwork managed-network-group delete '
-                 '--group-name "{myManagedNetworkGroup1}" '
+                 '--managed-network-group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
                  checks=[])

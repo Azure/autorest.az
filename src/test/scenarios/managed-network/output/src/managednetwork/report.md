@@ -8,12 +8,12 @@ create a managednetwork managed-network-group.
 |------|----|-----------|----------|--------------|
 |**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|group_name|
+|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|managed_network_group_name|
 |**--location**|string|The geo-location where the resource lives|location|location|
-|**--management_groups**|array|The collection of management groups covered by the Managed Network|management_groups|properties_management_groups|
-|**--subscriptions**|array|The collection of subscriptions covered by the Managed Network|subscriptions|properties_subscriptions|
-|**--virtual_networks**|array|The collection of virtual nets covered by the Managed Network|virtual_networks|properties_virtual_networks|
-|**--subnets**|array|The collection of  subnets covered by the Managed Network|subnets|properties_subnets|
+|**--management_groups**|array|The collection of management groups covered by the Managed Network|management_groups|management_groups|
+|**--subscriptions**|array|The collection of subscriptions covered by the Managed Network|subscriptions|subscriptions|
+|**--virtual_networks**|array|The collection of virtual nets covered by the Managed Network|virtual_networks|virtual_networks|
+|**--subnets**|array|The collection of  subnets covered by the Managed Network|subnets|subnets|
 ### managednetwork managed-network-group delete
 
 delete a managednetwork managed-network-group.
@@ -22,7 +22,7 @@ delete a managednetwork managed-network-group.
 |------|----|-----------|----------|--------------|
 |**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|group_name|
+|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|managed_network_group_name|
 ### managednetwork managed-network-group list
 
 list a managednetwork managed-network-group.
@@ -41,7 +41,7 @@ show a managednetwork managed-network-group.
 |------|----|-----------|----------|--------------|
 |**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|group_name|
+|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|managed_network_group_name|
 ### managednetwork managed-network-group update
 
 create a managednetwork managed-network-group.
@@ -50,12 +50,12 @@ create a managednetwork managed-network-group.
 |------|----|-----------|----------|--------------|
 |**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|group_name|
+|**--group_name**|string|The name of the Managed Network Group.|managed_network_group_name|managed_network_group_name|
 |**--location**|string|The geo-location where the resource lives|location|location|
-|**--management_groups**|array|The collection of management groups covered by the Managed Network|management_groups|properties_management_groups|
-|**--subscriptions**|array|The collection of subscriptions covered by the Managed Network|subscriptions|properties_subscriptions|
-|**--virtual_networks**|array|The collection of virtual nets covered by the Managed Network|virtual_networks|properties_virtual_networks|
-|**--subnets**|array|The collection of  subnets covered by the Managed Network|subnets|properties_subnets|
+|**--management_groups**|array|The collection of management groups covered by the Managed Network|management_groups|management_groups|
+|**--subscriptions**|array|The collection of subscriptions covered by the Managed Network|subscriptions|subscriptions|
+|**--virtual_networks**|array|The collection of virtual nets covered by the Managed Network|virtual_networks|virtual_networks|
+|**--subnets**|array|The collection of  subnets covered by the Managed Network|subnets|subnets|
 ### managednetwork managed-network-peering-policy create
 
 create a managednetwork managed-network-peering-policy.
@@ -160,7 +160,7 @@ create a managednetwork scope-assignment.
 |**--scope**|string|The base resource of the scope assignment to create. The scope can be any REST resource instance. For example, use 'subscriptions/{subscription-id}' for a subscription, 'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for a resource group, and 'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}' for a resource.|scope|scope|
 |**--scope_assignment_name**|string|The name of the scope assignment to create.|scope_assignment_name|scope_assignment_name|
 |**--location**|string|The geo-location where the resource lives|location|location|
-|**--assigned_managed_network**|string|The managed network ID with scope will be assigned to.|assigned_managed_network|properties_assigned_managed_network|
+|**--assigned_managed_network**|string|The managed network ID with scope will be assigned to.|assigned_managed_network|assigned_managed_network|
 ### managednetwork scope-assignment delete
 
 delete a managednetwork scope-assignment.
@@ -193,4 +193,4 @@ create a managednetwork scope-assignment.
 |**--scope**|string|The base resource of the scope assignment to create. The scope can be any REST resource instance. For example, use 'subscriptions/{subscription-id}' for a subscription, 'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for a resource group, and 'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}' for a resource.|scope|scope|
 |**--scope_assignment_name**|string|The name of the scope assignment to create.|scope_assignment_name|scope_assignment_name|
 |**--location**|string|The geo-location where the resource lives|location|location|
-|**--assigned_managed_network**|string|The managed network ID with scope will be assigned to.|assigned_managed_network|properties_assigned_managed_network|
+|**--assigned_managed_network**|string|The managed network ID with scope will be assigned to.|assigned_managed_network|assigned_managed_network|

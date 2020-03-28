@@ -55,7 +55,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     suboptions: Property[];
     submethodparameters: Property[];
     currentSubOptionIndex: number;
-    paramActionNameReference: Map<Parameter, string>;
+    paramActionNameReference: Map<Schema, string>;
     private _testScenario: any[];
 
     async init() {
@@ -179,7 +179,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     private setParamAzUniqueNames() {
-        this.paramActionNameReference = new Map<Parameter, string>();
+        this.paramActionNameReference = new Map<Schema, string>();
         let nameActionReference: Map<string, ActionParam> = new Map<string, ActionParam>();
         if (this.SelectFirstCommandGroup()) {
             do {
@@ -192,6 +192,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                     do {
                                         let paramName = this.MethodParameter_MapsTo;
                                         let param = this.MethodParameter;
+                                        let originParam = this.MethodParameter;
                                         if (nameParamReference.has(paramName) && nameParamReference.get(paramName) != param) {
                                             let preParam = nameParamReference.get(paramName);
                                             let preMapName: Array<string> = [];
@@ -236,10 +237,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         }
                                         if (this.MethodParameter_IsList && this.MethodParameter_IsListOfSimple) {
                                             let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" +  this.MethodParameter_Name));
-                                            let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Name + "_" + this.MethodParameter_Name));
+                                            let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.MethodParameter_Name));
                                             let actionName: string = "Add" + Capitalize(ToCamelCase(this.MethodParameter_Name));
                                             let action = new ActionParam(groupOpParamName, groupParamName, actionName, param);
-                                            if (nameActionReference.has(actionName) && nameActionReference.get(actionName) != action) {
+                                            if (nameActionReference.has(actionName) && nameActionReference.get(actionName).action.schema != originParam.schema) {
                                                 let preAction = nameActionReference.get(actionName);
                                                 nameActionReference.delete(actionName);
                                                 let preActionUniqueName = preAction.actionName;
@@ -251,13 +252,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                     actionUniqueName = action.groupOpActionName;
                                                     preActionUniqueName = preAction.groupOpActionName;
                                                 }
-                                                this.paramActionNameReference.set(preAction.action, preActionUniqueName);
-                                                this.paramActionNameReference.set(param, actionUniqueName);
+                                                this.paramActionNameReference.set(preAction.action.schema, preActionUniqueName);
+                                                this.paramActionNameReference.set(param.schema, actionUniqueName);
                                                 nameActionReference.set(preActionUniqueName, preAction);
                                                 nameActionReference.set(actionUniqueName, action);
-                                            } else {
+                                            } else if(!this.paramActionNameReference.has(originParam.schema)) {
                                                 nameActionReference.set(actionName, action);
-                                                this.paramActionNameReference.set(param, actionName);
+                                                this.paramActionNameReference.set(param.schema, actionName);
                                             }
                                         }
                                     } while (this.SelectNextMethodParameter())
@@ -741,8 +742,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_ActionName(param: Parameter = this.MethodParameter) {
-        if(this.paramActionNameReference.has(param)) {
-            return this.paramActionNameReference.get(param);
+        if(this.paramActionNameReference.has(param.schema)) {
+            return this.paramActionNameReference.get(param.schema);
         }
         return null;
     }
