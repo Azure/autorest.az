@@ -4,3 +4,7 @@ dist/
 package-lock.json
 tmpoutput
 .history
+
+*.njsproj
+*.user
+*.orig

@@ -94,8 +94,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     private sortOperationByAzCommand() {
         for (let [idx, operationGroup] of this.codeModel.operationGroups.entries()) {
             operationGroup.operations.sort((a, b) => {
-                let oa = this.getOrder(a.language['az']['name']) + "_" + (100 - a.parameters.length);
-                let ob = this.getOrder(b.language['az']['name']) + "_" + (100 - b.parameters.length);
+                let oa = this.getOrder(a.language['az']['name']) + "_" + a.language['az']['name'] + "_" + (100 - a.parameters.length);
+                let ob = this.getOrder(b.language['az']['name']) + "_" + b.language['az']['name'] + "_" + (100 - b.parameters.length);
                 return oa.localeCompare(ob);
             });
             this.codeModel.operationGroups[idx] = operationGroup;
@@ -705,6 +705,9 @@ export class CodeModelCliImpl implements CodeModelAz {
         // 4. or arrays with object element types but has simple properties
         // 5. or dicts with simple element properties
         // 6. or dicts with arrays as element properties but has simple element type 
+        if (this.MethodParameter_Type == SchemaType.Any) {
+            return false;
+        }
         if (this.MethodParameter_IsFlattened) {
             return false;
         }
@@ -798,7 +801,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (this.MethodParameter_IsFlattened) {
             return false;
         }
-        if (this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Object || this.MethodParameter_Type == SchemaType.Dictionary) {
+        if (this.MethodParameter.language['cli'].json == true) {
+            return true;
+        }
+        if (this.MethodParameter_Type == SchemaType.Any || this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Object || this.MethodParameter_Type == SchemaType.Dictionary) {
             return true;
         }
         return false;
