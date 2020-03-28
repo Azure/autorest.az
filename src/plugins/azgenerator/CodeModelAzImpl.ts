@@ -193,97 +193,67 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         let paramName = this.MethodParameter_MapsTo;
                                         let param = this.MethodParameter;
                                         let originParam = this.MethodParameter;
-                                        if (nameParamReference.has(paramName) && nameParamReference.get(paramName).schema != param.schema) {
-                                            let preParam = nameParamReference.get(paramName);
+                                        let flattenedNames = param?.['targetProperty']?.['flattenedNames'];
+                                        let mapName: Array<string> = [];
+                                        let flattenedLen = -1;
+                                        let paramFlattenedName = param.language['az'].mapsto;
+                                        let tmpName = paramFlattenedName;
+                                        let names = this.Method_Name.split(' ');
+                                        if (flattenedNames) {
+                                            flattenedLen = flattenedNames.length;
+                                            for(let item of flattenedNames) {
+                                                mapName.push(ToSnakeCase(item));
+                                            }
+                                            if (mapName[0] == 'properties' || mapName[0] == 'parameters') {
+                                                delete mapName[0];
+                                            } else if (names.length > 1 && mapName[flattenedLen - 1].toLowerCase() == names[0].replace(/-/g, '')) {
+                                                delete mapName[0];
+                                            }
+                                            if(mapName.length > 0) {
+                                                paramFlattenedName = mapName.join("_");
+                                            }
+                                        }
+                                        if (nameParamReference.has(paramFlattenedName) && nameParamReference.get(paramName).schema != param.schema) {
+                                            let preParam = nameParamReference.get(paramFlattenedName);
                                             let preMapName: Array<string> = [];
                                             let preFlattenedNames = preParam?.['targetProperty']?.['flattenedNames'];
                                             let preParamFlattenedName = preParam.language['az'].mapsto;
-                                            let paramFlattenedName = param.language['az'].mapsto;
-                                            let flattenedNames = param?.['targetProperty']?.['flattenedNames'];
-                                            let mapName: Array<string> = [];
-                                            let flattenedLen = -1; 
-                                            let preFlattenedLen = -1;
-                                            if (flattenedNames) {
-                                                flattenedLen = flattenedNames.length;
-                                            }
-                                            if (preFlattenedNames) {
-                                                preFlattenedLen = preFlattenedNames.length;
-                                            }
-                                            let tmpName = paramFlattenedName;
                                             let preTmpName = preParamFlattenedName;
-                                            while(flattenedLen > 0 || preFlattenedLen > 0) {
-                                                if(flattenedLen > 0) {
-                                                    flattenedLen--;
-                                                    mapName.push(flattenedNames[flattenedLen]);
+                                            if (preFlattenedNames) {
+                                                for(let item of preFlattenedNames) {
+                                                    preMapName.push(ToSnakeCase(item));
                                                 }
-                                                if(preFlattenedLen > 0) {
-                                                    preFlattenedLen--;
-                                                    preMapName.push(preFlattenedNames[preFlattenedLen]);
+                                                if (preMapName.length > 0) {
+                                                    preTmpName = preMapName.join('_');
                                                 }
                                             }
-                                            tmpName = mapName.reverse().join('_');
-                                            preTmpName = preMapName.reverse().join('_');
+                                            if (flattenedNames) {
+                                                mapName = [];
+                                                for(let item of flattenedNames) {
+                                                    mapName.push(ToSnakeCase(item));
+                                                }
+                                                if(mapName.length > 0) {
+                                                    tmpName = mapName.join("_");
+                                                }
+                                            }
                                             if (preTmpName != preParamFlattenedName) {
                                                 preParamFlattenedName = preTmpName;
-                                            }
-                                            if (tmpName != paramFlattenedName) {
+                                            } else if (tmpName != paramFlattenedName) {
                                                 paramFlattenedName = tmpName;
                                             }
                                             if (paramFlattenedName != preParamFlattenedName) {
-                                                let mapChanged = false;
-                                                if (mapName[flattenedLen - 1].toLowerCase() == "properties" || mapName[flattenedLen - 1].toLowerCase() == "parameters") {
-                                                    mapChanged = true;
-                                                    mapName.pop();
-                                                } else {
-                                                    let names = this.Method_Name.split(' ');
-                                                    if (names.length > 1) {
-                                                        if (mapName[flattenedLen - 1].toLowerCase() == names[0].replace(/-/g, '')) {
-                                                            mapChanged = true;
-                                                            mapName.pop();
-                                                        }
-                                                    }
-                                                }
-                                                let tryTmpName = "";
-                                                if (mapChanged && mapName.length > 0) {
-                                                    tryTmpName = mapName.reverse().join('_');
-                                                }
-                                                let preMapChanged = false;
-                                                if (preMapName[preFlattenedLen - 1].toLowerCase() == "properties" || preMapName[preFlattenedLen - 1].toLowerCase() == "parameters") {
-                                                    preMapChanged = true;
-                                                    preMapName.pop();
-                                                } else {
-                                                    let names = this.Method_Name.split(' ');
-                                                    if (names.length > 1) {
-                                                        if (preMapName[preFlattenedLen - 1].toLowerCase() == names[0].replace(/-/g, '')) {
-                                                            preMapChanged = true;
-                                                            preMapName.pop();
-                                                        }
-                                                    }
-                                                }
-                                                let tryPreTmpName = "";
-                                                if (preMapChanged && preMapName.length > 0) {
-                                                    tryPreTmpName = preMapName.reverse().join('_');
-                                                }
-                                                if (tryTmpName != "" && tryPreTmpName != "" && tryTmpName != tryPreTmpName) {
-                                                    paramFlattenedName = tryTmpName;
-                                                    preParamFlattenedName = tryPreTmpName;
-                                                } else if (tryTmpName != "" && tryTmpName != preParamFlattenedName) {
-                                                    paramFlattenedName = tryTmpName;
-                                                } else if (tryPreTmpName != "" && tryPreTmpName != paramFlattenedName) {
-                                                    preParamFlattenedName = tryPreTmpName;
-                                                }
                                                 this.Parameter_SetAzNameMapsTo(preParamFlattenedName, preParam);
                                                 nameParamReference.set(preParamFlattenedName, preParam);
                                                 this.Parameter_SetAzNameMapsTo(paramFlattenedName, param);
                                                 nameParamReference.set(paramName, param);
                                             } else {
-                                                // if the flattenedName within one command is the same but has two different reference. there's no way to split them.
+                                                // if the full flattenedName within one command is the same but has two different reference. there's no way to split them.
                                                 this.session.message({ Channel: Channel.Warning, Text: "parameter " + paramFlattenedName + " has two different references but they have the same flattened name" });
                                             }
                                         } else {
                                             // nameParamReference doesn't have the parameter
                                             // or nameParamReference has the parameter and they are the same.
-                                            nameParamReference.set(paramName, param);
+                                            nameParamReference.set(paramFlattenedName, param);
                                         }
                                         if (this.MethodParameter_Name == 'tags') {
                                             continue;
