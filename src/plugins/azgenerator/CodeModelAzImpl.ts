@@ -259,9 +259,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             continue;
                                         }
                                         if (this.MethodParameter_IsList && this.MethodParameter_IsListOfSimple) {
-                                            let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" +  this.MethodParameter_Name));
-                                            let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.MethodParameter_Name));
-                                            let actionName: string = "Add" + Capitalize(ToCamelCase(this.MethodParameter_Name));
+                                            let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" +  this.MethodParameter_MapsTo));
+                                            let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.MethodParameter_MapsTo));
+                                            let actionName: string = "Add" + Capitalize(ToCamelCase(this.MethodParameter_MapsTo));
                                             let action = new ActionParam(groupOpParamName, groupParamName, actionName, param);
                                             if (nameActionReference.has(actionName) && nameActionReference.get(actionName).action.schema != originParam.schema) {
                                                 let preAction = nameActionReference.get(actionName);
