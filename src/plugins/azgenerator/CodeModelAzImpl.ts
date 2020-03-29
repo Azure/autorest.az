@@ -195,18 +195,16 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         let originParam = this.MethodParameter;
                                         let flattenedNames = param?.['targetProperty']?.['flattenedNames'];
                                         let mapName: Array<string> = [];
-                                        let flattenedLen = -1;
                                         let paramFlattenedName = param.language['az'].mapsto;
                                         let tmpName = paramFlattenedName;
                                         let names = this.Method_Name.split(' ');
-                                        if (flattenedNames) {
-                                            flattenedLen = flattenedNames.length;
+                                        if (flattenedNames && flattenedNames.length > 0) {
                                             for(let item of flattenedNames) {
                                                 mapName.push(ToSnakeCase(item));
                                             }
                                             if (mapName[0] == 'properties' || mapName[0] == 'parameters') {
                                                 delete mapName[0];
-                                            } else if (names.length > 1 && mapName[flattenedLen - 1].toLowerCase() == names[0].replace(/-/g, '')) {
+                                            } else if (names.length > 1 && mapName[0].toLowerCase() == names[0].replace(/-/g, '')) {
                                                 delete mapName[0];
                                             }
                                             if(mapName.length > 0) {
@@ -215,26 +213,14 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         }
                                         if (nameParamReference.has(paramFlattenedName) && nameParamReference.get(paramName).schema != param.schema) {
                                             let preParam = nameParamReference.get(paramFlattenedName);
-                                            let preMapName: Array<string> = [];
                                             let preFlattenedNames = preParam?.['targetProperty']?.['flattenedNames'];
                                             let preParamFlattenedName = preParam.language['az'].mapsto;
                                             let preTmpName = preParamFlattenedName;
-                                            if (preFlattenedNames) {
-                                                for(let item of preFlattenedNames) {
-                                                    preMapName.push(ToSnakeCase(item));
-                                                }
-                                                if (preMapName.length > 0) {
-                                                    preTmpName = preMapName.join('_');
-                                                }
+                                            if (preFlattenedNames && preFlattenedNames.length > 0) {
+                                                preTmpName = preFlattenedNames.map(pfn => ToSnakeCase(pfn)).join('_');
                                             }
-                                            if (flattenedNames) {
-                                                mapName = [];
-                                                for(let item of flattenedNames) {
-                                                    mapName.push(ToSnakeCase(item));
-                                                }
-                                                if(mapName.length > 0) {
-                                                    tmpName = mapName.join("_");
-                                                }
+                                            if (flattenedNames && flattenedNames.length > 0) {
+                                                tmpName = flattenedNames.map(fn => ToSnakeCase(fn)).join('_');
                                             }
                                             if (preTmpName != preParamFlattenedName) {
                                                 preParamFlattenedName = preTmpName;
