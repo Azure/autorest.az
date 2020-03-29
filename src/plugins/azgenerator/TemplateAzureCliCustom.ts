@@ -43,7 +43,13 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
             if (model.SelectFirstCommand()) {
                 do {
                     let originalOperation = model.Command_GetOriginalOperation;
-                    let genericParameter = model.Command_GenericSetterParameter(model.Command);
+                    let genericParameter = null;
+                    if(!isNullOrUndefined(originalOperation)) {
+                        genericParameter = model.Command_GenericSetterParameter(originalOperation);
+                    } else {
+                        genericParameter = model.Command_GenericSetterParameter(model.Command);
+                    }
+
                     let needGeneric = false;
                     if(!isNullOrUndefined(genericParameter)) {
                         needGeneric = true;

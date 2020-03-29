@@ -210,7 +210,7 @@ def managednetwork_managed_network_peering_policy_hub_and_spoke_topology_create(
                                          properties=properties)
 
 
-def managednetwork_managed_network_peering_policy_hub_and_spoke_topology_update(cmd, client,
+def managednetwork_managed_network_peering_policy_hub_and_spoke_topology_update(instance, cmd,
                                                                                 resource_group_name,
                                                                                 managed_network_name,
                                                                                 policy_name,
@@ -219,16 +219,11 @@ def managednetwork_managed_network_peering_policy_hub_and_spoke_topology_update(
                                                                                 hub=None,
                                                                                 spokes=None,
                                                                                 mesh=None):
-    properties = {}
-    properties['type'] = type
-    properties['hub'] = hub
-    properties['spokes'] = spokes
-    properties['mesh'] = mesh
-    return client.begin_create_or_update(resource_group_name=resource_group_name,
-                                         managed_network_name=managed_network_name,
-                                         managed_network_peering_policy_name=policy_name,
-                                         location=location,
-                                         properties=properties)
+    instance.type = type
+    instance.hub = hub
+    instance.spokes = spokes
+    instance.mesh = mesh
+    return instance
 
 
 def managednetwork_managed_network_peering_policy_mesh_topology_create(cmd, client,
@@ -252,7 +247,7 @@ def managednetwork_managed_network_peering_policy_mesh_topology_create(cmd, clie
                                          properties=properties)
 
 
-def managednetwork_managed_network_peering_policy_mesh_topology_update(cmd, client,
+def managednetwork_managed_network_peering_policy_mesh_topology_update(instance, cmd,
                                                                        resource_group_name,
                                                                        managed_network_name,
                                                                        policy_name,
@@ -261,16 +256,11 @@ def managednetwork_managed_network_peering_policy_mesh_topology_update(cmd, clie
                                                                        hub=None,
                                                                        spokes=None,
                                                                        mesh=None):
-    properties = {}
-    properties['type'] = type
-    properties['hub'] = hub
-    properties['spokes'] = spokes
-    properties['mesh'] = mesh
-    return client.begin_create_or_update(resource_group_name=resource_group_name,
-                                         managed_network_name=managed_network_name,
-                                         managed_network_peering_policy_name=policy_name,
-                                         location=location,
-                                         properties=properties)
+    instance.type = type
+    instance.hub = hub
+    instance.spokes = spokes
+    instance.mesh = mesh
+    return instance
 
 
 def managednetwork_managed_network_peering_policy_delete(cmd, client,
