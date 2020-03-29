@@ -58,6 +58,7 @@ export interface CodeModelAz
     Command_MethodName: string;
     Command_FunctionName: string;
     Command_GetOriginalOperation: any;
+    Command_GenericSetterParameter(Operation): Parameter;
 
     Command_Help: string;
 

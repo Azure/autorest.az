@@ -539,6 +539,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Command.language['az'].name;
     }
 
+    public Command_GenericSetterParameter(op: Operation = this.Command): Parameter {
+        return op['genericSetterParam'];
+    }
+
     public get Command_Help(): string {
         return this.Command.language['az'].description.replace(/\n/g, " ");
     }
@@ -674,7 +678,6 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Method_GenericSetterParameter(op: Operation = this.Method): Parameter {
-        this.session.message({Channel: Channel.Warning, Text: "generic_update Method_Name: " + op.language['az'].name});
         return op['genericSetterParam'];
     }
 
