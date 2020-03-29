@@ -53,7 +53,7 @@ pipeline:
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
-        output-artifact: source-file-modifiers
+        #output-artifact: source-file-modifiers
     az/azgenerator:
         input: az/modifiers
         output-artifact: source-file-extension
@@ -61,7 +61,7 @@ pipeline:
         input:
             #- az/clicommon
             #- az/aznamer
-            - az/modifiers
+            #- az/modifiers
             - az/azgenerator
         scope: scope-az
 
@@ -70,7 +70,7 @@ scope-az:
     output-artifact:
         #- source-file-pynamer
         #- source-file-aznamer
-        - source-file-modifiers
+        #- source-file-modifiers
         - source-file-extension
     output-folder: $(az-output-folder)
 

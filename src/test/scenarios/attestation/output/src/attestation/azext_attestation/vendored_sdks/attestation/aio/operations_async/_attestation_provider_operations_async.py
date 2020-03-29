@@ -59,7 +59,6 @@ class AttestationProviderOperations:
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProvider"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2018-09-01-preview"
 
         # Construct URL
         url = self.get.metadata['url']
@@ -72,7 +71,7 @@ class AttestationProviderOperations:
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -126,7 +125,6 @@ class AttestationProviderOperations:
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
 
         _creation_params = models.AttestationServiceCreationParams(location=location, tags=tags, properties=properties)
-        api_version = "2018-09-01-preview"
 
         # Construct URL
         url = self.create.metadata['url']
@@ -139,7 +137,7 @@ class AttestationProviderOperations:
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -196,7 +194,6 @@ class AttestationProviderOperations:
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
 
         _update_params = models.AttestationServicePatchParams(tags=tags)
-        api_version = "2018-09-01-preview"
 
         # Construct URL
         url = self.update.metadata['url']
@@ -209,7 +206,7 @@ class AttestationProviderOperations:
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -256,7 +253,6 @@ class AttestationProviderOperations:
         """
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2018-09-01-preview"
 
         # Construct URL
         url = self.delete.metadata['url']
@@ -269,7 +265,7 @@ class AttestationProviderOperations:
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -301,7 +297,6 @@ class AttestationProviderOperations:
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProviderListResult"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2018-09-01-preview"
 
         # Construct URL
         url = self.list.metadata['url']
@@ -312,7 +307,7 @@ class AttestationProviderOperations:
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -351,7 +346,6 @@ class AttestationProviderOperations:
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProviderListResult"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2018-09-01-preview"
 
         # Construct URL
         url = self.list_by_resource_group.metadata['url']
@@ -363,7 +357,7 @@ class AttestationProviderOperations:
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]

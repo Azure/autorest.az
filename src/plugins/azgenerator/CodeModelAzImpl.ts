@@ -170,28 +170,6 @@ export class CodeModelCliImpl implements CodeModelAz {
 
                             }
                         }
-                        if(this.SelectFirstMethod()) {
-                            do {
-                                if (this.Method_CanSplit) {
-                                    let listCount = 0;
-                                    let param = null;
-                                    if (this.SelectFirstMethodParameter()) {
-                                        do {
-                                            if (this.MethodParameter_IsFlattened) {
-                                                continue;
-                                            }
-                                            if (this.MethodParameter_IsList) {
-                                                listCount++;
-                                                param = this.MethodParameter;
-                                            }
-                                        } while (this.SelectNextMethodParameter());
-                                    }
-                                    if (listCount == 1) {
-                                        this.Method['genericSetterParam'] = param;
-                                    }
-                                }
-                            } while (this.SelectNextMethod())
-                        }
                     } while (this.SelectNextCommand());
                 }
             } while (this.SelectNextCommandGroup());
@@ -696,6 +674,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Method_GenericSetterParameter(op: Operation = this.Method): Parameter {
+        this.session.message({Channel: Channel.Warning, Text: "generic_update Method_Name: " + op.language['az'].name});
         return op['genericSetterParam'];
     }
 

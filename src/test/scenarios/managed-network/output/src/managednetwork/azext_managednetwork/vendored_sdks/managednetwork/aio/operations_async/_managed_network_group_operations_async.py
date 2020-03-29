@@ -65,7 +65,6 @@ class ManagedNetworkGroupOperations:
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkGroup"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self.get.metadata['url']
@@ -79,7 +78,7 @@ class ManagedNetworkGroupOperations:
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -119,7 +118,6 @@ class ManagedNetworkGroupOperations:
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
 
         _managed_network_group = models.ManagedNetworkGroup(location=location, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
-        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self._create_or_update_initial.metadata['url']
@@ -133,7 +131,7 @@ class ManagedNetworkGroupOperations:
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -247,7 +245,6 @@ class ManagedNetworkGroupOperations:
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-06-01-preview"
 
         # Construct URL
         url = self._delete_initial.metadata['url']
@@ -261,7 +258,7 @@ class ManagedNetworkGroupOperations:
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -356,7 +353,6 @@ class ManagedNetworkGroupOperations:
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkGroupListResult"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
@@ -373,7 +369,7 @@ class ManagedNetworkGroupOperations:
 
             # Construct parameters
             query_parameters = {}  # type: Dict[str, Any]
-            query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+            query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
             if top is not None:
                 query_parameters['$top'] = self._serialize.query("top", top, 'int', maximum=20, minimum=1)
             if skiptoken is not None:

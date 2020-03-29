@@ -76,13 +76,26 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
                  checks=[])
 
         # EXAMPLE: ManagedNetworkPeeringPoliciesPut
-        self.cmd('az managednetwork managed-network-peering-policy create '
+        self.cmd('az managednetwork managed-network-peering-policy hub-and-spoke-topology create '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--policy-name "{myHubAndSpoke}" '
-                 '--properties "{{\\"type\\":\\"HubAndSpokeTopology\\",\\"hub\\":{{\\"id\\":\\"/subscriptions/{subscrip'
-                 'tion_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_4}\\"}},\\"spokes\\":[{{'
-                 '\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/m'
-                 'anagedNetworks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup1}\\"}}]}}" '
+                 '--type "HubAndSpokeTopology" '
+                 '--hub id=/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetw'
+                 'orks/{vn_4} '
+                 '--spokes id=/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/m'
+                 'anagedNetworks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup1} '
+                 '--resource-group "{rg}"',
+                 checks=[])
+
+        # EXAMPLE: ManagedNetworkPeeringPoliciesPut
+        self.cmd('az managednetwork managed-network-peering-policy mesh-topology create '
+                 '--managed-network-name "{myManagedNetwork}" '
+                 '--policy-name "{myHubAndSpoke}" '
+                 '--type "HubAndSpokeTopology" '
+                 '--hub id=/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetw'
+                 'orks/{vn_4} '
+                 '--spokes id=/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/m'
+                 'anagedNetworks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup1} '
                  '--resource-group "{rg}"',
                  checks=[])
 

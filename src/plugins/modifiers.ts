@@ -160,13 +160,22 @@ export class Modifiers {
                 }
             }
         }
-        // add NameMapsTo after modifier
+        // add NameMapsTo after modifier and if generic update exists, set the setter_arg_name
         this.codeModel.operationGroups.forEach(operationGroup => {
             let operations = operationGroup.operations;
             operations.forEach(operation => {
+                let listCnt = 0;
+                let param = null;
                 operation.parameters.forEach(parameter => {
                     if(!isNullOrUndefined(parameter.language['az'])) {
                         parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
+                        if(operation.language['az'].name.endsWith("create") && parameter['flattened'] != true) {
+                            let paramType = parameter.schema.type;
+                            if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
+                                param = parameter;
+                                listCnt++;
+                            }
+                        }
                     }
                 });
                 operation.requests.forEach(request => {
@@ -174,10 +183,20 @@ export class Modifiers {
                         request.parameters.forEach(parameter => {
                             if(!isNullOrUndefined(parameter.language['az'])) {
                                 parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
+                                if(operation.language['az'].name.endsWith("create") && parameter['flattened'] != true) {
+                                    let paramType = parameter.schema.type;
+                                    if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
+                                        param = parameter;
+                                        listCnt++;
+                                    }
+                                }
                             }
                         });                        
                     }
                 });
+                if(operation.language['az'].name.endsWith("create") && listCnt == 1) {
+                    operation['genericSetterParam'] = param;
+                }
             });
         });
         return this.codeModel;

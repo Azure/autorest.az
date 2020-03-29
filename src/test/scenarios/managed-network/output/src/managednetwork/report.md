@@ -56,17 +56,6 @@ create a managednetwork managed-network-group.
 |**--subscriptions**|array|The collection of subscriptions covered by the Managed Network|subscriptions|subscriptions|
 |**--virtual_networks**|array|The collection of virtual nets covered by the Managed Network|virtual_networks|virtual_networks|
 |**--subnets**|array|The collection of  subnets covered by the Managed Network|subnets|subnets|
-### managednetwork managed-network-peering-policy create
-
-create a managednetwork managed-network-peering-policy.
-
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
-|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--policy_name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
-|**--location**|string|The geo-location where the resource lives|location|location|
-|**--properties**|object|Gets or sets the properties of a Managed Network Policy|properties|properties|
 ### managednetwork managed-network-peering-policy delete
 
 delete a managednetwork managed-network-peering-policy.
@@ -76,6 +65,34 @@ delete a managednetwork managed-network-peering-policy.
 |**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
 |**--policy_name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
+### managednetwork managed-network-peering-policy hub-and-spoke-topology create
+
+hub-and-spoke-topology create a managednetwork managed-network-peering-policy.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
+|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
+|**--policy_name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
+|**--hub_and_spoke_topology_type**|choice|Gets or sets the connectivity type of a network structure policy|hubandspoketopology_type|type|
+|**--location**|string|The geo-location where the resource lives|location|location|
+|**--hub_and_spoke_topology_hub**|object|Gets or sets the hub virtual network ID|hubandspoketopology_hub|hub|
+|**--hub_and_spoke_topology_spokes**|array|Gets or sets the spokes group IDs|hubandspoketopology_spokes|spokes|
+|**--hub_and_spoke_topology_mesh**|array|Gets or sets the mesh group IDs|hubandspoketopology_mesh|mesh|
+### managednetwork managed-network-peering-policy hub-and-spoke-topology update
+
+hub-and-spoke-topology create a managednetwork managed-network-peering-policy.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
+|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
+|**--policy_name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
+|**--hub_and_spoke_topology_type**|choice|Gets or sets the connectivity type of a network structure policy|hubandspoketopology_type|type|
+|**--location**|string|The geo-location where the resource lives|location|location|
+|**--hub_and_spoke_topology_hub**|object|Gets or sets the hub virtual network ID|hubandspoketopology_hub|hub|
+|**--hub_and_spoke_topology_spokes**|array|Gets or sets the spokes group IDs|hubandspoketopology_spokes|spokes|
+|**--hub_and_spoke_topology_mesh**|array|Gets or sets the mesh group IDs|hubandspoketopology_mesh|mesh|
 ### managednetwork managed-network-peering-policy list
 
 list a managednetwork managed-network-peering-policy.
@@ -86,6 +103,34 @@ list a managednetwork managed-network-peering-policy.
 |**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
 |**--top**|integer|May be used to limit the number of results in a page for list queries.|top|top|
 |**--skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|skiptoken|skiptoken|
+### managednetwork managed-network-peering-policy mesh-topology create
+
+mesh-topology create a managednetwork managed-network-peering-policy.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
+|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
+|**--policy_name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
+|**--mesh_topology_type**|choice|Gets or sets the connectivity type of a network structure policy|meshtopology_type|type|
+|**--location**|string|The geo-location where the resource lives|location|location|
+|**--mesh_topology_hub**|object|Gets or sets the hub virtual network ID|meshtopology_hub|hub|
+|**--mesh_topology_spokes**|array|Gets or sets the spokes group IDs|meshtopology_spokes|spokes|
+|**--mesh_topology_mesh**|array|Gets or sets the mesh group IDs|meshtopology_mesh|mesh|
+### managednetwork managed-network-peering-policy mesh-topology update
+
+mesh-topology create a managednetwork managed-network-peering-policy.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
+|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
+|**--policy_name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
+|**--mesh_topology_type**|choice|Gets or sets the connectivity type of a network structure policy|meshtopology_type|type|
+|**--location**|string|The geo-location where the resource lives|location|location|
+|**--mesh_topology_hub**|object|Gets or sets the hub virtual network ID|meshtopology_hub|hub|
+|**--mesh_topology_spokes**|array|Gets or sets the spokes group IDs|meshtopology_spokes|spokes|
+|**--mesh_topology_mesh**|array|Gets or sets the mesh group IDs|meshtopology_mesh|mesh|
 ### managednetwork managed-network-peering-policy show
 
 show a managednetwork managed-network-peering-policy.
@@ -95,17 +140,6 @@ show a managednetwork managed-network-peering-policy.
 |**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
 |**--policy_name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
-### managednetwork managed-network-peering-policy update
-
-create a managednetwork managed-network-peering-policy.
-
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--resource_group_name**|string|The name of the resource group.|resource_group_name|resource_group_name|
-|**--managed_network_name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
-|**--policy_name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
-|**--location**|string|The geo-location where the resource lives|location|location|
-|**--properties**|object|Gets or sets the properties of a Managed Network Policy|properties|properties|
 ### managednetwork mn create
 
 create a managednetwork mn.
