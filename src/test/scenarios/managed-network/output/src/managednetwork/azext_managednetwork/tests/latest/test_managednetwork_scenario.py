@@ -55,13 +55,13 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         # EXAMPLE: ManagementNetworkGroupsPut
         self.cmd('az managednetwork managed-network-group create '
-                 '--properties-management-groups "[]" '
-                 '--properties-subnets id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/vir'
-                 'tualNetworks/VnetA/subnets/subnetA '
-                 '--properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Ne'
-                 'twork/virtualNetworks/VnetA '
-                 '--properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Ne'
-                 'twork/virtualNetworks/VnetB '
+                 '--management-groups "[]" '
+                 '--subnets id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetwork'
+                 's/VnetA/subnets/subnetA '
+                 '--virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtu'
+                 'alNetworks/VnetA '
+                 '--virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtu'
+                 'alNetworks/VnetB '
                  '--group-name "{myManagedNetworkGroup1}" '
                  '--managed-network-name "{myManagedNetwork}" '
                  '--resource-group "{rg}"',
@@ -69,8 +69,8 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
         # EXAMPLE: ScopeAssignmentsPut
         self.cmd('az managednetwork scope-assignment create '
-                 '--properties-assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers'
-                 '/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
+                 '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.'
+                 'ManagedNetwork/managedNetworks/{myManagedNetwork}" '
                  '--scope "subscriptions/subscriptionC" '
                  '--scope-assignment-name "{subscriptionCAssignment}"',
                  checks=[])

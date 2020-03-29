@@ -13,6 +13,7 @@ import {
 } from "@azure-tools/autorest-extension-base";
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
+import { isNullOrUndefined } from "util";
 
 let directives: Array<any> = [];
 
@@ -159,6 +160,26 @@ export class Modifiers {
                 }
             }
         }
+        // add NameMapsTo after modifier
+        this.codeModel.operationGroups.forEach(operationGroup => {
+            let operations = operationGroup.operations;
+            operations.forEach(operation => {
+                operation.parameters.forEach(parameter => {
+                    if(!isNullOrUndefined(parameter.language['az'])) {
+                        parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
+                    }
+                });
+                operation.requests.forEach(request => {
+                    if(request.parameters) {
+                        request.parameters.forEach(parameter => {
+                            if(!isNullOrUndefined(parameter.language['az'])) {
+                                parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
+                            }
+                        });                        
+                    }
+                });
+            });
+        });
         return this.codeModel;
     }
 }

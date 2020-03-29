@@ -64,8 +64,7 @@ def load_arguments(self, _):
         c.argument('scope_assignment_name', help='The name of the scope assignment to create.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource live'
                    's')
-        c.argument('properties_assigned_managed_network',
-                   help='The managed network ID with scope will be assigned to.')
+        c.argument('assigned_managed_network', help='The managed network ID with scope will be assigned to.')
 
     with self.argument_context('managednetwork scope-assignment update') as c:
         c.argument('scope', help='The base resource of the scope assignment to create. The scope can be any REST resour'
@@ -76,8 +75,7 @@ def load_arguments(self, _):
         c.argument('scope_assignment_name', help='The name of the scope assignment to create.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource live'
                    's')
-        c.argument('properties_assigned_managed_network',
-                   help='The managed network ID with scope will be assigned to.')
+        c.argument('assigned_managed_network', help='The managed network ID with scope will be assigned to.')
 
     with self.argument_context('managednetwork scope-assignment delete') as c:
         c.argument('scope', help='The scope of the scope assignment to delete.')
@@ -102,14 +100,14 @@ def load_arguments(self, _):
         c.argument('group_name', help='The name of the Managed Network Group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource live'
                    's')
-        c.argument('properties_management_groups', arg_type=CLIArgumentType(options_list=['--properties-management-grou'
-                   'ps'], help='The collection of management groups covered by the Managed Network'))
-        c.argument('properties_subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscription'
-                   's covered by the Managed Network')
-        c.argument('properties_virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual'
-                   ' nets covered by the Managed Network')
-        c.argument('properties_subnets', action=AddSubnets, nargs='+', help='The collection of  subnets covered by the '
-                   'Managed Network')
+        c.argument('management_groups', arg_type=CLIArgumentType(options_list=['--management-groups'], help='The collec'
+                   'tion of management groups covered by the Managed Network'))
+        c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered b'
+                   'y the Managed Network')
+        c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets cover'
+                   'ed by the Managed Network')
+        c.argument('subnets', action=AddSubnets, nargs='+', help='The collection of  subnets covered by the Managed Net'
+                   'work')
 
     with self.argument_context('managednetwork managed-network-group update') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')
@@ -117,14 +115,14 @@ def load_arguments(self, _):
         c.argument('group_name', help='The name of the Managed Network Group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource live'
                    's')
-        c.argument('properties_management_groups', arg_type=CLIArgumentType(options_list=['--properties-management-grou'
-                   'ps'], help='The collection of management groups covered by the Managed Network'))
-        c.argument('properties_subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscription'
-                   's covered by the Managed Network')
-        c.argument('properties_virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual'
-                   ' nets covered by the Managed Network')
-        c.argument('properties_subnets', action=AddSubnets, nargs='+', help='The collection of  subnets covered by the '
-                   'Managed Network')
+        c.argument('management_groups', arg_type=CLIArgumentType(options_list=['--management-groups'], help='The collec'
+                   'tion of management groups covered by the Managed Network'))
+        c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered b'
+                   'y the Managed Network')
+        c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets cover'
+                   'ed by the Managed Network')
+        c.argument('subnets', action=AddSubnets, nargs='+', help='The collection of  subnets covered by the Managed Net'
+                   'work')
 
     with self.argument_context('managednetwork managed-network-group delete') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group.')

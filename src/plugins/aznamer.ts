@@ -3,6 +3,7 @@ import { Session, startSession, Host, Channel } from "@azure-tools/autorest-exte
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { changeCamelToDash } from '../utils/helper';
+import { isNullOrUndefined } from "util";
 
 export class AzNamer {
     codeModel: CodeModel;
@@ -134,10 +135,9 @@ export class AzNamer {
         if(extensionName == '' || extensionName == undefined) {
             this.session.message({Channel:Channel.Error, Text:"probably missing readme.az.md possible settings are:\naz:\n  extensions: managed-network\n  namespace: azure.mgmt.managednetwork\n  package-name: azure-mgmt-managednetwork\npython-sdk-output-folder: \"$(output-folder)/src/managed-network/azext_managed_network/vendored_sdks/managed-network\"\n"})
         }
-        this.codeModel.operationGroups.map(operationGroup => {
-            let index = this.codeModel.operationGroups.indexOf(operationGroup);
+        this.codeModel.operationGroups.forEach(operationGroup => {
             let operationGroupName = "";
-            if(operationGroup.language['cli'] != undefined) {
+            if(!isNullOrUndefined(operationGroup.language['cli'])) {
                 operationGroup.language['az'] = new Language();
                 operationGroup.language['az']['name'] = operationGroup.language['cli']['name'];
                 operationGroup.language['az']['description'] = operationGroup.language['cli']['description'];
@@ -148,9 +148,9 @@ export class AzNamer {
             let operations = operationGroup.operations;
             var hasUpdate = false;
             var operationIndex = -1;
-            operations.map(operation => {
+            operations.forEach(operation => {
                 operation.parameters.forEach(parameter => {
-                    if(parameter.language['cli'] != undefined) {
+                    if(!isNullOrUndefined(parameter.language['cli'])) {
                         this.getAzName(parameter);
                     }
                 });
