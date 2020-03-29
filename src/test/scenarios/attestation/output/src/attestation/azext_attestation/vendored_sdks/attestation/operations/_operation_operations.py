@@ -54,13 +54,14 @@ class OperationOperations(object):
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.OperationList"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        api_version = "2018-09-01-preview"
 
         # Construct URL
         url = self.list.metadata['url']
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("self._config.apiversion", self._config.apiversion, 'str')
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
