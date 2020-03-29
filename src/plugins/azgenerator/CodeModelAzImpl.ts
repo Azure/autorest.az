@@ -28,16 +28,7 @@ class MethodParam {
 }
 
 class ActionParam {
-    public groupOpActionName: string;
-    public groupActionName: string;
-    public action: Parameter;
-    public actionName: string;
-    public constructor(groupOpActionName, groupActionName, actionName, action) {
-        this.groupOpActionName = groupOpActionName;
-        this.groupActionName = groupActionName;
-        this.actionName = actionName;
-        this.action = action;
-    }
+    public constructor(public groupOpActionName: string, public groupActionName: string, public actionName: string, public action: Parameter) {}
 }
 
 export class CodeModelCliImpl implements CodeModelAz {
