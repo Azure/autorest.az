@@ -84,7 +84,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                 if (!isNullOrUndefined(originalOperation)) {
                     geneParam = model.Method_GenericSetterParameter(originalOperation);
                 } else {
-                    geneParam = model.Method_GenericSetterParameter(this.Method);
+                    geneParam = model.Method_GenericSetterParameter(model.Method);
                 }
                 if (!isNullOrUndefined(geneParam)) {
                     argument = geneParam.language['python'].name;

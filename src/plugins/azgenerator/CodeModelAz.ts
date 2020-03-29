@@ -72,6 +72,7 @@ export interface CodeModelAz
     Method_IsFirst: boolean;
     Method_IsLast: boolean;
     Method_Name: string;
+    Method_NameAz: string;
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
     Method_GetOriginalOperation: any;

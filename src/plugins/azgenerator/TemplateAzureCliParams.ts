@@ -100,7 +100,10 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
             let originalOperation = model.Method_GetOriginalOperation;
             if (!isNullOrUndefined(originalOperation)) {
                 for(let param of originalOperation.parameters) {
-                    if(model.Parameter_InGlobal(param)) {
+                    if (model.Parameter_InGlobal(param)) {
+                        continue;
+                    }
+                    if (param['flattened'] == true) {
                         continue;
                     }
                     allPythonParam.set(param.language.python.name, true);
@@ -110,15 +113,15 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         if(model.Parameter_InGlobal(param)) {
                             continue;
                         }
+                        if (param['flattened'] == true) {
+                            continue;
+                        }
                         allPythonParam.set(param.language.python.name, true);
                     }
                 }
             }
             if (model.SelectFirstMethodParameter()) {
                 do {
-                    if(isNullOrUndefined(originalOperation)) {
-                        allPythonParam.set(model.MethodParameter_NamePython, true);
-                    }
                     if (model.MethodParameter_IsFlattened) {
                         continue;
                     }
@@ -126,7 +129,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         continue;
                     }
                     hasParam = true;
-
+                    if(isNullOrUndefined(originalOperation)) {
+                        allPythonParam.set(model.MethodParameter_NamePython, true);
+                    }
                     let parameterName = model.MethodParameter_MapsTo;
                     if (allPythonParam.has(parameterName)) {
                         allPythonParam.delete(parameterName);

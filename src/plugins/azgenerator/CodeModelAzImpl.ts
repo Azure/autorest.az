@@ -216,22 +216,31 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         let flattenedNames = param?.['targetProperty']?.['flattenedNames'];
                                         let mapName: Array<string> = [];
                                         let paramFlattenedName = param.language['az'].mapsto;
-                                        let tmpName = paramFlattenedName;
-                                        let names = this.Method_Name.split(' ');
+                                        let names = this.Method_NameAz.split(' ');
                                         if (flattenedNames && flattenedNames.length > 0) {
                                             for(let item of flattenedNames) {
                                                 mapName.push(ToSnakeCase(item));
                                             }
-                                            if (mapName[0] == 'properties' || mapName[0] == 'parameters') {
-                                                delete mapName[0];
-                                            } else if (names.length > 1 && mapName[0].toLowerCase() == names[0].replace(/-/g, '')) {
-                                                delete mapName[0];
+                                            mapName.reverse();
+                                            if (mapName[mapName.length - 1] == 'properties' || mapName[mapName.length - 1] == 'parameters') {
+                                                mapName.pop();
+                                            } else if (names.length > 1 && mapName[length - 1] == names[0].replace(/-/g, '_')) {
+                                                mapName.pop();
                                             }
                                             if(mapName.length > 0) {
-                                                paramFlattenedName = mapName.join("_");
+                                                paramFlattenedName = mapName.reverse().join("_");
+                                            }
+                                        } else if (names.length > 1) {
+                                            let subgroup: string = names[0];
+                                            this.session.message({Channel: Channel.Warning, Text: subgroup + " paramFlattenedName: " + paramFlattenedName});
+                                            subgroup = subgroup.replace(/-/g, '_');
+                                            if (paramFlattenedName.startsWith(subgroup)) {
+                                                paramFlattenedName = paramFlattenedName.substr(subgroup.length + 1);
                                             }
                                         }
-                                        if (nameParamReference.has(paramFlattenedName) && nameParamReference.get(paramName).schema != param.schema) {
+                                        if (nameParamReference.has(paramFlattenedName) && nameParamReference.get(paramFlattenedName).schema != param.schema) {
+                                            this.session.message({Channel: Channel.Warning, Text: "after paramFlattenedName:" + paramFlattenedName});
+                                            let tmpName = paramFlattenedName;
                                             let preParam = nameParamReference.get(paramFlattenedName);
                                             let preFlattenedNames = preParam?.['targetProperty']?.['flattenedNames'];
                                             let preParamFlattenedName = preParam.language['az'].mapsto;
@@ -259,6 +268,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         } else {
                                             // nameParamReference doesn't have the parameter
                                             // or nameParamReference has the parameter and they are the same.
+                                            this.Parameter_SetAzNameMapsTo(paramFlattenedName, param);
                                             nameParamReference.set(paramFlattenedName, param);
                                         }
                                         if (this.MethodParameter_Name == 'tags') {
@@ -661,6 +671,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Method.language['python'].name;
     }
 
+    public get Method_NameAz(): string {
+        return this.Method.language['az'].name;
+    }
+
     public get Method_BodyParameterName(): string {
         return null;
     }
@@ -955,7 +969,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     public get MethodParameter_IsSimpleArray(): boolean {
         if (this.MethodParameter_Type == SchemaType.Array) {
             let elementType = this.MethodParameter['schema']['elementType'].type;
-            if (elementType != SchemaType.Object && elementType != SchemaType.Array && elementType != SchemaType.Dictionary) {
+            if (elementType != SchemaType.Any && elementType != SchemaType.Object && elementType != SchemaType.Array && elementType != SchemaType.Dictionary) {
                 return true;
             }
         }
