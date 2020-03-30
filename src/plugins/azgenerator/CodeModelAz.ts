@@ -25,13 +25,15 @@ export class ExampleParam {
     value: any;
     isJson: boolean;
     isKeyValues: boolean;
+    keys: string[];
     defaultName: string;
-    methodParam: MethodParam
-    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, defaultName: string, methodParam: MethodParam) {
+    methodParam: MethodParam;
+    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, keys:string[], defaultName: string, methodParam: MethodParam) {
         this.name = name;
         this.value = value;
         this.isJson = isJson;
         this.isKeyValues = isKeyValues;
+        this.keys = keys;
         this.defaultName = defaultName;
         this.methodParam = methodParam;
     }

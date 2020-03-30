@@ -990,6 +990,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 else if (typeof value == 'object') {    // KEY=VALUE form
                     let ret = "";
+                    let keys = [];
                     for (let k in value) {
                         let cliName = null;
                         if (methodParam.submethodparameters) {
@@ -1023,18 +1024,24 @@ export class CodeModelCliImpl implements CodeModelAz {
                             // }
                             ret += `${cliName}=${v}`;
                         }
+                        keys.push(cliName)
                     }
                     if (ret.length > 0) {
-                        example_param.push(new ExampleParam(name, ret, false, true, defaultName, methodParam));
+                        example_param.push(new ExampleParam(name, ret, false, true, keys, defaultName, methodParam));
                     }
                 }
             }
             else if (isList && !isSimpleList) {
-                example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, defaultName, methodParam));
+                if (typeof value == 'string')  {
+                    example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam));
+                }
+                else {
+                    example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, [], defaultName, methodParam));
+                }
             }
         }
         else if (typeof value != 'object') {     
-            example_param.push(new ExampleParam(name, value, false, false, defaultName, methodParam));
+            example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam));
         }
         else {
             // ignore object values if not isList.
@@ -1109,7 +1116,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 // }
             }
             param_name = param_name.split("_").join("-");
-            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.defaultName, param.methodParam));
+            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.keys, param.defaultName, param.methodParam));
         };
         return ret;
     }

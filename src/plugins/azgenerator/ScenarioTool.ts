@@ -361,6 +361,9 @@ export class ResourcePool {
         for (let subparam of exampleParam.methodParam.submethodparameters || []) {
             if (attr.toLowerCase().startsWith(subparam.language['cli'].cliKey.toLowerCase() + "="))  return true;
         }
+        for (let k of exampleParam.keys) {
+            if (attr.toLowerCase().startsWith(k.toLowerCase() + "="))  return true;
+        }
         return false;
 
     }
@@ -409,10 +412,12 @@ export class ResourcePool {
                 let kv = attr.split("=");
                 if (ret.length > 0) ret += " ";
                 if (kv[1].length>=2 && kv[1][0]=='"' && kv[1][kv[1].length-1]== '"') {
-                    ret += `${kv[0]}="${this.addEndpointResource(kv[1].substr(1, kv[1].length-2), isJson, false, placeholders, resources, exampleParam)}"`;
+                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length-2), isJson, false, placeholders, resources, exampleParam);
+                    ret += `${kv[0]}="${this.formatable(v, placeholders)}"`;
                 }
                 else {
-                    ret += `${kv[0]}=${this.addEndpointResource(kv[1], isJson, false, placeholders, resources, exampleParam)}`;
+                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length-2), isJson, false, placeholders, resources, exampleParam);
+                    ret += `${kv[0]}=${this.formatable(v, placeholders)}`;
                 }
             }
             return ret;
