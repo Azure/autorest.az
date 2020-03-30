@@ -210,14 +210,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             }
                                         } else if (names.length > 1) {
                                             let subgroup: string = names[0];
-                                            this.session.message({Channel: Channel.Warning, Text: subgroup + " paramFlattenedName: " + paramFlattenedName});
                                             subgroup = subgroup.replace(/-/g, '_');
                                             if (paramFlattenedName.startsWith(subgroup)) {
                                                 paramFlattenedName = paramFlattenedName.substr(subgroup.length + 1);
                                             }
                                         }
                                         if (nameParamReference.has(paramFlattenedName) && nameParamReference.get(paramFlattenedName).schema != param.schema) {
-                                            this.session.message({Channel: Channel.Warning, Text: "after paramFlattenedName:" + paramFlattenedName});
                                             let tmpName = paramFlattenedName;
                                             let preParam = nameParamReference.get(paramFlattenedName);
                                             let preFlattenedNames = preParam?.['targetProperty']?.['flattenedNames'];

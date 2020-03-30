@@ -2522,6 +2522,7 @@ operationGroups:
     protocol: {}
   - apiVersions:
     - version: 2019-06-01-preview
+    canSplitOperation: true
     parameters:
     - *ref_70
     - *ref_71
@@ -3452,6 +3453,7 @@ operationGroups:
       name: ManagedNetwork
       description: ''
       command: managed-network managed-network
+      hasUpdate: true
     cli:
       name: ManagedNetwork
       description: ''
@@ -4948,6 +4950,44 @@ operationGroups:
   - apiVersions:
     - version: 2019-06-01-preview
     canSplitOperation: true
+    genericSetterParam: &ref_150
+      schema: *ref_7
+      implementation: Method
+      originalParameter: &ref_146
+        schema: *ref_23
+        flattened: true
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-client-flatten: true
+        language:
+          default:
+            name: _managed_network_policy
+            description: Parameters supplied to create/update a Managed Network Peering Policy
+          az:
+            name: _managed_network_policy
+            description: Parameters supplied to create/update a Managed Network Peering Policy
+            mapsto: _managed_network_policy
+          cli:
+            name: _managed_network_policy
+            description: Parameters supplied to create/update a Managed Network Peering Policy
+            cliKey: managedNetworkPolicy
+        protocol:
+          http:
+            in: body
+            style: json
+      pathToProperty: []
+      targetProperty: *ref_147
+      language:
+        default:
+          name: properties
+          description: Gets or sets the properties of a Managed Network Policy
+        az:
+          name: properties
+          description: Gets or sets the properties of a Managed Network Policy
+          mapsto: properties
+        cli: *ref_148
+      protocol: {}
     parameters:
     - *ref_70
     - *ref_71
@@ -5014,29 +5054,7 @@ operationGroups:
           in: path
     requests:
     - parameters:
-      - &ref_146
-        schema: *ref_23
-        flattened: true
-        implementation: Method
-        required: true
-        extensions:
-          x-ms-client-flatten: true
-        language:
-          default:
-            name: _managed_network_policy
-            description: Parameters supplied to create/update a Managed Network Peering Policy
-          az:
-            name: _managed_network_policy
-            description: Parameters supplied to create/update a Managed Network Peering Policy
-            mapsto: _managed_network_policy
-          cli:
-            name: _managed_network_policy
-            description: Parameters supplied to create/update a Managed Network Peering Policy
-            cliKey: managedNetworkPolicy
-        protocol:
-          http:
-            in: body
-            style: json
+      - *ref_146
       - &ref_149
         schema: *ref_39
         implementation: Method
@@ -5053,22 +5071,7 @@ operationGroups:
             mapsto: location
           cli: *ref_78
         protocol: {}
-      - &ref_150
-        schema: *ref_7
-        implementation: Method
-        originalParameter: *ref_146
-        pathToProperty: []
-        targetProperty: *ref_147
-        language:
-          default:
-            name: properties
-            description: Gets or sets the properties of a Managed Network Policy
-          az:
-            name: properties
-            description: Gets or sets the properties of a Managed Network Policy
-            mapsto: properties
-          cli: *ref_148
-        protocol: {}
+      - *ref_150
       signatureParameters:
       - *ref_149
       - *ref_150
