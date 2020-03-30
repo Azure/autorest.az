@@ -203,7 +203,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             mapName.reverse();
                                             if (mapName[mapName.length - 1] == 'properties' || mapName[mapName.length - 1] == 'parameters') {
                                                 mapName.pop();
-                                            } else if (names.length > 1 && mapName[length - 1] == names[0].replace(/-/g, '_')) {
+                                            } else if (names.length > 1 && mapName[mapName.length - 1] == names[0].replace(/-/g, '_')) {
                                                 mapName.pop();
                                             }
                                             if(mapName.length > 0) {
