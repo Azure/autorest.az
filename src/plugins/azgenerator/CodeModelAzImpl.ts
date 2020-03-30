@@ -1302,17 +1302,16 @@ export class CodeModelCliImpl implements CodeModelAz {
         };
 
         
-        let scenarioExamples = [];
+        let scenarioExamples: Map<string, CommandExample> = new Map<string, CommandExample>();
         let commandExamples = this.GetAllExamples();
         for (let i=0; i<this._testScenario.length; i++) {
-            let example = undefined;
             for (let commandExample of commandExamples) {
                 if (this.matchExample(commandExample, this._testScenario[i]['name'])) {
-                    example = commandExample;
+                    scenarioExamples.set(this._testScenario[i]['name'], commandExample);
                     break;
                 }
             }
-            scenarioExamples.push(example);
+            
         }
 
         let i = 0;
@@ -1321,7 +1320,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             for (let j = i + 1; j < this._testScenario.length; j++) {
                 let swapId = `${i}<->${j}`;
                 if (swapped.has(swapId)) continue; // has loop, ignore the compare.
-                if (compare(scenarioExamples[i], scenarioExamples[j]) > 0) {
+                if (compare(scenarioExamples.get(this._testScenario[i]['name']), scenarioExamples.get(this._testScenario[j]['name'])) > 0) {
                     let tmp = this._testScenario[i];
                     this._testScenario[i] = this._testScenario[j];
                     this._testScenario[j] = tmp;
