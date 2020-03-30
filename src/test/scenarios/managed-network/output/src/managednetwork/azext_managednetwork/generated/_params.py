@@ -152,8 +152,8 @@ def load_arguments(self, _):
         c.argument('policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource live'
                    's')
-        c.argument('_type', arg_type=get_enum_type(['HubAndSpokeTopology', 'MeshTopology']), help='Gets or sets the con'
-                   'nectivity type of a network structure policy')
+        c.argument('type_', options_list=['--type'], arg_type=get_enum_type(['HubAndSpokeTopology', 'MeshTopology']),
+                   help='Gets or sets the connectivity type of a network structure policy')
         c.argument('hub', action=AddHub, nargs='+', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='+', help='Gets or sets the spokes group IDs')
         c.argument('mesh', action=AddMesh, nargs='+', help='Gets or sets the mesh group IDs')
@@ -164,8 +164,8 @@ def load_arguments(self, _):
         c.argument('policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource live'
                    's')
-        c.argument('_type', arg_type=get_enum_type(['HubAndSpokeTopology', 'MeshTopology']), help='Gets or sets the con'
-                   'nectivity type of a network structure policy')
+        c.argument('type_', options_list=['--type'], arg_type=get_enum_type(['HubAndSpokeTopology', 'MeshTopology']),
+                   help='Gets or sets the connectivity type of a network structure policy')
         c.argument('hub', action=AddHub, nargs='+', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='+', help='Gets or sets the spokes group IDs')
         c.argument('mesh', action=AddMesh, nargs='+', help='Gets or sets the mesh group IDs')
@@ -177,8 +177,8 @@ def load_arguments(self, _):
         c.argument('policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource live'
                    's')
-        c.argument('_type', arg_type=get_enum_type(['HubAndSpokeTopology', 'MeshTopology']), help='Gets or sets the con'
-                   'nectivity type of a network structure policy')
+        c.argument('type_', options_list=['--type'], arg_type=get_enum_type(['HubAndSpokeTopology', 'MeshTopology']),
+                   help='Gets or sets the connectivity type of a network structure policy')
         c.argument('hub', action=AddHub, nargs='+', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='+', help='Gets or sets the spokes group IDs')
         c.argument('mesh', action=AddMesh, nargs='+', help='Gets or sets the mesh group IDs')
@@ -189,8 +189,8 @@ def load_arguments(self, _):
         c.argument('policy_name', help='The name of the Managed Network Peering Policy.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The geo-location where the resource live'
                    's')
-        c.argument('_type', arg_type=get_enum_type(['HubAndSpokeTopology', 'MeshTopology']), help='Gets or sets the con'
-                   'nectivity type of a network structure policy')
+        c.argument('type_', options_list=['--type'], arg_type=get_enum_type(['HubAndSpokeTopology', 'MeshTopology']),
+                   help='Gets or sets the connectivity type of a network structure policy')
         c.argument('hub', action=AddHub, nargs='+', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='+', help='Gets or sets the spokes group IDs')
         c.argument('mesh', action=AddMesh, nargs='+', help='Gets or sets the mesh group IDs')

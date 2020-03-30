@@ -87,8 +87,8 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                 }
                 
                 let optionName = model.MethodParameter_MapsTo;
-                if (optionName.startsWith("_")) {
-                    optionName = optionName.substr(1);
+                if (optionName.endsWith("_")) {
+                    optionName = optionName.substr(0, optionName.length - 1);
                 }
                 optionName = optionName.replace(/_/g, '-');
                 if (model.MethodParameter_IsRequired)

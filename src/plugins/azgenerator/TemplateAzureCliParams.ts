@@ -159,9 +159,10 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                     let argument = "        c.argument('" + parameterName + "'";
 
                     // this is to handle names like "format", "type", etc
-                    if (parameterName == "type" || parameterName == "format") {
+                    if (parameterName.endsWith("_")) {
+
                         argument = "        c.argument('" + parameterName + "'";
-                        argument += ", options_list=['--" + parameterName + "']";
+                        argument += ", options_list=['--" + parameterName.substr(0, parameterName.length - 1) + "']";
                     }
 
                     if (model.MethodParameter_Type == SchemaType.Boolean) {

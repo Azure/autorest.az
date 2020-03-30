@@ -234,10 +234,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                 paramFlattenedName = tmpName;
                                             }
                                             if (pythonReserveWord.indexOf(paramFlattenedName) > -1) {
-                                                paramFlattenedName = "_" + paramFlattenedName;
+                                                paramFlattenedName += "_";
                                             } 
                                             if (pythonReserveWord.indexOf(preParamFlattenedName) > -1) {
-                                                preParamFlattenedName = "_" + preParamFlattenedName;
+                                                preParamFlattenedName += "_";
                                             }
                                             if (paramFlattenedName != preParamFlattenedName) {
                                                 this.Parameter_SetAzNameMapsTo(preParamFlattenedName, preParam);
@@ -252,7 +252,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             // nameParamReference doesn't have the parameter
                                             // or nameParamReference has the parameter and they are the same.
                                             if (pythonReserveWord.indexOf(paramFlattenedName) > -1) {
-                                                paramFlattenedName = "_" + paramFlattenedName;
+                                                paramFlattenedName += "_";
                                             }
                                             this.Parameter_SetAzNameMapsTo(paramFlattenedName, param);
                                             nameParamReference.set(paramFlattenedName, param);
@@ -1179,8 +1179,8 @@ export class CodeModelCliImpl implements CodeModelAz {
         let defaultName: string = methodParam.value.language['cli'].cliKey;
         let name: string = methodParam.value.language['az'].mapsto;;
         // means python reserved word
-        if(name.startsWith("_")) {
-            name = name.substr(1);
+        if(name.endsWith("_")) {
+            name = name.substr(0, name.length - 1);
         }
         if (isList) {
             if (isSimpleList) {
