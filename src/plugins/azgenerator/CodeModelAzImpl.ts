@@ -285,6 +285,33 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                 nameActionReference.set(actionName, action);
                                                 this.paramActionNameReference.set(param.schema, actionName);
                                             }
+                                        } else if (this.Parameter_IsPolyOfSimple()) {
+                                            for(let child of this.MethodParameter.schema['children'].all) {
+                                                let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" + child.language['az'].mapsto));
+                                                let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + child.language['az'].mapsto));
+                                                let actionName: string = "Add" + Capitalize(ToCamelCase(child.language['az'].mapsto));
+                                                let action = new ActionParam(groupOpParamName, groupParamName, actionName, param);
+                                                if (nameActionReference.has(actionName) && nameActionReference.get(actionName).action.schema != originParam.schema) {
+                                                    let preAction = nameActionReference.get(actionName);
+                                                    nameActionReference.delete(actionName);
+                                                    let preActionUniqueName = preAction.actionName;
+                                                    let actionUniqueName = actionName;
+                                                    if (preAction.groupActionName != action.groupActionName) {
+                                                        actionUniqueName = action.groupActionName;
+                                                        preActionUniqueName = preAction.groupActionName;
+                                                    } else if (preAction.groupOpActionName != action.groupOpActionName) {
+                                                        actionUniqueName = action.groupOpActionName;
+                                                        preActionUniqueName = preAction.groupOpActionName;
+                                                    }
+                                                    this.paramActionNameReference.set(preAction.action.schema, preActionUniqueName);
+                                                    this.paramActionNameReference.set(param.schema, actionUniqueName);
+                                                    nameActionReference.set(preActionUniqueName, preAction);
+                                                    nameActionReference.set(actionUniqueName, action);
+                                                } else if(!this.paramActionNameReference.has(originParam.schema)) {
+                                                    nameActionReference.set(actionName, action);
+                                                    this.paramActionNameReference.set(param.schema, actionName);
+                                                }
+                                            }          
                                         }
                                     } while (this.SelectNextMethodParameter())
                                 }
@@ -866,7 +893,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.MethodParameter.schema.type;
     }
 
+    public get MethodParameter_IsList(): boolean {
+        return this.Parameter_IsList(this.MethodParameter);
+    }
+
     public get MethodParameter_IsListOfSimple(): boolean {
+        return this.Parameter_IsListOfSimple(this.MethodParameter);
+    }
+
+    public Parameter_IsListOfSimple(param: Parameter = this.MethodParameter): boolean {
         // objects that is not base class of polymorphic and satisfy one of the four conditions
         // 1. objects with simple properties 
         // 2. or objects with arrays as properties but has simple element type 
@@ -906,7 +941,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 return true;
             }
         } else if (this.MethodParameter_Type == SchemaType.Object) {
-            if (this.MethodParameter.schema['children'] != null && this.MethodParameter.schema['discriminator'] != null) {
+            if (!isNullOrUndefined(this.MethodParameter.schema['children']) && !isNullOrUndefined(this.MethodParameter.schema['discriminator'])) {
                 return false;
             }
             for (let p of values(this.MethodParameter['schema']['properties'])) {
@@ -956,6 +991,21 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
+    public Parameter_IsPolyOfSimple(param: Parameter = this.MethodParameter): boolean {
+        if (param?.schema?.type == SchemaType.Object && !isNullOrUndefined(param.schema['children']) && !isNullOrUndefined(param.schema['discriminator'])) {
+            let isSimplePoly = true;
+            for(let child of param.schema['children'].all) {
+                if(this.Parameter_IsList(child) && this.Parameter_IsListOfSimple(child)) {
+                    continue;
+                }
+                isSimplePoly = false;
+                break;
+            }
+            return isSimplePoly;
+        }
+        return false;
+    }
+
     public get MethodParameter_IsSimpleArray(): boolean {
         if (this.MethodParameter_Type == SchemaType.Array) {
             let elementType = this.MethodParameter['schema']['elementType'].type;
@@ -966,7 +1016,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
-    public get MethodParameter_IsList(): boolean {
+    public Parameter_IsList(param: Parameter = this.MethodParameter): boolean {
         if (this.MethodParameter_IsFlattened) {
             return false;
         }

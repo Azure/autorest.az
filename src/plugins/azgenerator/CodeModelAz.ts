@@ -95,6 +95,9 @@ export interface CodeModelAz
     MethodParameter_IsList: boolean;
     MethodParameter_IsSimpleArray: boolean;
     MethodParameter_IsListOfSimple: boolean;
+    Parameter_IsList(Parameter): boolean;
+    Parameter_IsListOfSimple(Parameter): boolean;
+    Parameter_IsPolyOfSimple(Parameter): boolean;
     Parameter_ActionName(Parameter): string;
     Parameter_SetAzNameMapsTo(string, Parameter): void;
     MethodParameter: Parameter;
