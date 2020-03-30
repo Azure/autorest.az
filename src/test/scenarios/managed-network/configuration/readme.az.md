@@ -44,8 +44,6 @@ directive:
 #      $['x-ms-client-flatten'] = false;
 
 cli:
-    polymorphism:
-        expand-as-resource: true
     cli-directive:
     # directive on operationGroup
       - where:
