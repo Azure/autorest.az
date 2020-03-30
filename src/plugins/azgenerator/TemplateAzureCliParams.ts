@@ -34,8 +34,18 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
             if (model.SelectFirstCommand()) {
                 do {
                     output_args = output_args.concat(getCommandBody(model));
-                    if (model.Command_CanSplit) {
-                        output_args = output_args.concat(getCommandBody(model, true));
+                    let originalOperation = model.Command_GetOriginalOperation;
+                    let genericParam = model.Command_GenericSetterParameter(model.Command);
+                    if(!isNullOrUndefined(originalOperation)) {
+                        genericParam = model.Command_GenericSetterParameter(originalOperation);
+                    }
+                    let needGeneric = false;
+                    if (!isNullOrUndefined(genericParam)) {
+                        needGeneric = true;
+                    }
+                    let needUpdate = model.Command_CanSplit;
+                    if (needUpdate) {
+                        output_args = output_args.concat(getCommandBody(model, needUpdate, needGeneric));
                     }
                 }
                 while (model.SelectNextCommand());
@@ -78,7 +88,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     return header.getLines().concat(output);
 }
 
-function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
+function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGeneric: boolean = false) {
     //let method: string = methods[mi];
 
     //let ctx = model.SelectCommand(method);
@@ -106,6 +116,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     if (param['flattened'] == true) {
                         continue;
                     }
+                    if (param?.schema?.type == SchemaType.Constant || param['readOnly']) {
+                        continue;
+                    }
                     allPythonParam.set(param.language.python.name, true);
                 }
                 if(!isNullOrUndefined(originalOperation.requests[0].parameters)) {
@@ -114,6 +127,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                             continue;
                         }
                         if (param['flattened'] == true) {
+                            continue;
+                        }
+                        if (param?.schema?.type == SchemaType.Constant || param['readOnly']) {
                             continue;
                         }
                         allPythonParam.set(param.language.python.name, true);
@@ -125,7 +141,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     if (model.MethodParameter_IsFlattened) {
                         continue;
                     }
-                    if (model.MethodParameter_Type == SchemaType.Constant) {
+                    if (model.MethodParameter_Type == SchemaType.Constant || model.MethodParameter['readOnly']) {
                         continue;
                     }
                     hasParam = true;
@@ -144,7 +160,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
 
                     // this is to handle names like "format", "type", etc
                     if (parameterName == "type" || parameterName == "format") {
-                        argument = "        c.argument('_" + parameterName + "'";
+                        argument = "        c.argument('" + parameterName + "'";
                         argument += ", options_list=['--" + parameterName + "']";
                     }
 
@@ -204,7 +220,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
             }
         } while (model.SelectNextMethod());
     }
-    if(allPythonParam.size > 0) {
+    if(needGeneric && allPythonParam.size > 0) {
         let argument = "        c.ignore(";
         for(let k of allPythonParam.keys()) {
             argument += "'" + k + "'" + ", ";

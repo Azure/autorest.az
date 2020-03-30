@@ -86,19 +86,24 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     continue;
                 }
                 
+                let optionName = model.MethodParameter_MapsTo;
+                if (optionName.startsWith("_")) {
+                    optionName = optionName.substr(1);
+                }
+                optionName = optionName.replace(/_/g, '-');
                 if (model.MethodParameter_IsRequired)
                 {
-                    if(allRequiredParam.has(model.MethodParameter_Name)) {
+                    if(allRequiredParam.has(optionName)) {
                         continue;
                     }
-                    allRequiredParam.set(model.MethodParameter_Name, true);
-                    requiredmo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_MapsTo + "|");
+                    allRequiredParam.set(optionName, true);
+                    requiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_Name + "|");
                 } else {
-                    if(allNonRequiredParam.has(model.MethodParameter_Name)) {
+                    if(allNonRequiredParam.has(optionName)) {
                         continue;
                     }
-                    allNonRequiredParam.set(model.MethodParameter_Name, true);
-                    nonrequiredmo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_MapsTo + "|");
+                    allNonRequiredParam.set(optionName, true);
+                    nonrequiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_Name + "|");
                 }
             }
             while (model.SelectNextMethodParameter());
