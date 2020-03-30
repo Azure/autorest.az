@@ -976,7 +976,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return parameters;
     }
 
-    private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any) {
+    private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any): boolean {
         let isList: boolean = methodParam.isList;
         let isSimpleList: boolean = methodParam.isSimpleList;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
@@ -1033,9 +1033,14 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, defaultName, methodParam));
             }
         }
-        else if (typeof value != 'object') {     // ignore object values if not isList.
+        else if (typeof value != 'object') {     
             example_param.push(new ExampleParam(name, value, false, false, defaultName, methodParam));
         }
+        else {
+            // ignore object values if not isList.
+            return false;
+        }
+        return true;
     }
 
     public FlattenExampleParameter(method_param: Map<string, MethodParam>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
@@ -1079,8 +1084,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             else if (ancestors.length == 0) {
                 // example_param.set(name, value);
-                this.AddExampleParameter(methodParam, example_param, value);
-                return;
+                if (this.AddExampleParameter(methodParam, example_param, value)) return;
             }
         }
 
