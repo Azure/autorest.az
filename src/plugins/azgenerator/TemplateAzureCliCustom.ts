@@ -91,7 +91,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 while(model.SelectNextMethodParameter() && model.MethodParameter['originalParameter'] == body) {
                     let access = prefix;
                     let param = model.MethodParameter;
-                    let paramName = model.MethodParameter['targetProperty'].language['python'].name
+                    let paramName = this.Parameter_NamePython(model.MethodParameter['targetProperty']);
                     if(param.flattened != true) {
                         if(needGeneric) {
                             access += "." + paramName + " = " + model.MethodParameter_MapsTo;
@@ -313,8 +313,8 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
         if(model.Parameter_IsHidden(param)) {
             continue;
         }
-        let optionName = model.GetMethodParameterMapName(param);
-        let parameterName = param.language['python'].name;
+        let optionName = model.Parameter_MapsTo(param);
+        let parameterName = model.Parameter_NamePython(param);
 
         if (methodCall.endsWith("(")) {
             // XXX - split and pop is a hack

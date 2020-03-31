@@ -742,8 +742,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
         if (this.MethodParameters.length > 0) {
             this.currentParameterIndex = 0;
-            let parameter = this.MethodParameter;
-            const currentParameterName = parameter.language['python'].name;
             if (this.MethodParameter_IsHidden || this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1) {
                 if (this.SelectNextMethodParameter()) {
                     return true;
@@ -774,8 +772,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
         if (this.currentParameterIndex < this.MethodParameters.length - 1) {
             this.currentParameterIndex++;
-            let parameter = this.MethodParameter;
-            const currentParameterName = parameter.language['python'].name;
             if (this.MethodParameter_IsHidden || this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1) {
                 if (this.SelectNextMethodParameter()) {
                     return true;
@@ -856,14 +852,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_Name(): string {
-        let name = "";
-        if (this.submethodparameters != null) {
-            name = this.submethodparameters[this.currentSubOptionIndex].language['az'].name;
-        } else {
-            name = this.MethodParameter.language['az'].name;
-        }
-        name = name.replace(/-/g, '_');
-        return name;
+        return this.Parameter_Name(this.MethodParameter);
     }
 
     public get MethodParameter_NameAz(): string {
@@ -1101,7 +1090,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         } 
         return false;
     }
-  
+
+    public Parameter_Name(param: Parameter = this.MethodParameter): string {
+        return param.language['az'].name.replace(/-/g, '_');
+    }
+
     public Parameter_NameAz(param: Parameter = this.MethodParameter): string {
         return param.language['az'].name;
     }
@@ -1259,7 +1252,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         if (methodParam.submethodparameters) {
                             for (let submethodProperty of methodParam.submethodparameters) {
                                 if (submethodProperty.language['cli'].cliKey.toLowerCase() == k.toLowerCase()) {
-                                    cliName = submethodProperty.language['az'].name;
+                                    cliName = this.Parameter_NameAz(submethodProperty);
                                     break;
                                 }
                             }
