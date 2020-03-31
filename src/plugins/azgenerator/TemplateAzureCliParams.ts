@@ -197,6 +197,8 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         if(model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             for(let child of model.MethodParameter.schema['children'].all) {
                                 let actionName: string = model.Schema_ActionName(child);
+                                let paramName = model.Schema_MapsTo(child);
+                                let argument = "        c.argument('" + paramName + "'";
                                 argument += ", action=" + actionName;
                                 hasActions = true;
                                 if (actions.indexOf(actionName) < 0) {
