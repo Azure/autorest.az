@@ -143,6 +143,7 @@ export class Modifiers {
                             for (const parameter of values(operation.parameters)) {
                                 if (parameter.language['az']['name'] != undefined && parameter.language["az"]["name"].match(parameterRegex)) {
                                     parameter.language["az"]["name"] = parameterReplacer? parameterRegex? parameter.language["az"]["name"].replace(parameterRegex, parameterReplacer): parameterReplacer: parameter.language["az"]["name"];
+                                    parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
                                     parameter.language["az"]["description"] = paramDescriptionReplacer? paramDescriptionReplacer: parameter.language["az"]["description"];
                                 }
                             }
@@ -151,6 +152,7 @@ export class Modifiers {
                                 for (const parameter of values(request.parameters)) {
                                     if (parameter.language['az']['name'] != undefined && parameter.language["az"]["name"].match(parameterRegex)) {
                                         parameter.language["az"]["name"] = parameterReplacer? parameterRegex? parameter.language["az"]["name"].replace(parameterRegex, parameterReplacer): parameterReplacer: parameter.language["az"]["name"];
+                                        parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
                                         parameter.language["az"]["description"] = paramDescriptionReplacer? paramDescriptionReplacer: parameter.language["az"]["description"];
                                     }
                                 }
@@ -168,7 +170,6 @@ export class Modifiers {
                 let param = null;
                 operation.parameters.forEach(parameter => {
                     if(!isNullOrUndefined(parameter.language['az'])) {
-                        parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
                         if(operation.language['az'].name.endsWith("create") && parameter['flattened'] != true) {
                             let paramType = parameter.schema.type;
                             if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
@@ -182,7 +183,6 @@ export class Modifiers {
                     if(request.parameters) {
                         request.parameters.forEach(parameter => {
                             if(!isNullOrUndefined(parameter.language['az'])) {
-                                parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
                                 if(operation.language['az'].name.endsWith("create") && parameter['flattened'] != true) {
                                     let paramType = parameter.schema.type;
                                     if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {

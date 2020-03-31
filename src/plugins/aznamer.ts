@@ -71,6 +71,7 @@ export class AzNamer {
         obj.language['az'] = new Language();
         obj.language['az']['name'] = obj.language['cli']? obj.language['cli']['name']: obj.language['python']['name'];
         obj.language['az']['name'] = changeCamelToDash(obj.language['az']['name']);
+        obj.language['az']['mapsto'] = obj.language['az']['name'].replace(/-/g, '_');
         obj.language['az']['description'] = obj.language['cli']? obj.language['cli']['description']: obj.language['python']['description'];;
     } 
 
