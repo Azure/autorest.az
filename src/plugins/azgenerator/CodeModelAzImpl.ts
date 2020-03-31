@@ -804,10 +804,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (this.MethodParameter_IsFlattened) {
             return false;
         }
-        
-        if (this.MethodParameter.language['cli'].json == true) {
-            return true;
-        }
 
         if (this.isComplexSchema(this.MethodParameter_Type)) {
             return true;
