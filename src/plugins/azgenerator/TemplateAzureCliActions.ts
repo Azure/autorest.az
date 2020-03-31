@@ -32,7 +32,7 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                                     let actionName = model.Parameter_ActionName(model.MethodParameter);
                                     if (isNullOrUndefined(actionName)) {
                                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                                            for(let child of model.MethodParameter['children'].all) {
+                                            for(let child of model.MethodParameter.schema['children'].all) {
                                                 actionName = model.Parameter_ActionName(child);
                                                 output = output.concat(GetAction(model, actionName, child));
                                             }   

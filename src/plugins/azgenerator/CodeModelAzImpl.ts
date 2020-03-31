@@ -871,6 +871,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return param.language['az'].mapsto;
     }
 
+    public Schema_MapsTo(schema: Schema): string {
+        return schema.language['az'].mapsto;
+    }
+
     public get MethodParameter_Description(): string {
         return this.Parameter_Description(this.MethodParameter);
     }

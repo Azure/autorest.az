@@ -91,7 +91,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 while(model.SelectNextMethodParameter() && model.MethodParameter['originalParameter'] == body) {
                     let access = prefix;
                     let param = model.MethodParameter;
-                    let paramName = this.Parameter_NamePython(model.MethodParameter['targetProperty']);
+                    let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
                     if(param.flattened != true) {
                         if(needGeneric) {
                             access += "." + paramName + " = " + model.MethodParameter_MapsTo;
@@ -177,7 +177,7 @@ function GetSingleCommandDef(model: CodeModelAz, needUpdate: boolean = false, ne
 
                     if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                         for(let child of model.MethodParameter.schema['children'].all) {
-                            let name = model.Parameter_MapsTo(child);
+                            let name = model.Schema_MapsTo(child);
                             allParam.set(name, true);
                             output[output.length - 1] += ",";
                             output.push(indent + name + "=None");                            
@@ -226,12 +226,12 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
             do {
                 if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                     if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                        let baseName = model.Parameter_MapsTo(model.MethodParameter);
+                        let baseName = model.MethodParameter_MapsTo;
                         let baseRequired = model.MethodParameter_RequiredByMethod;
                         output_body.push("    " + "all_" + baseName + " = []");
                         let childNames = [];
                         for(let child of model.MethodParameter.schema['children'].all) {
-                            let childName = model.Parameter_MapsTo(child)
+                            let childName = model.Schema_MapsTo(child)
                             childNames.push(childName);
                             output_body.push("    if " + childName + " is not None:");
                             output_body.push("        " + "all_" + baseName + ".append(" + childName + ")");

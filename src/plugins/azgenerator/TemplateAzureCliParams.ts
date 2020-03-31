@@ -203,7 +203,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                                     actions.push(actionName);
                                 }
                                 argument += ", nargs='+'";  
-                                argument += ", help='" + EscapeString(model.Parameter_Description(child)) + "')";
+                                argument += ", help='" + EscapeString(model.Schema_Description(child)) + "')";
                                 ToMultiLine(argument, output_args);                      
                             }
                             continue;

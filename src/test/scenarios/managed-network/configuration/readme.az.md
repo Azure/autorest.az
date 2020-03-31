@@ -64,11 +64,11 @@ cli:
             type: 'ManagedNetwork'
             prop: 'properties'
         json: true
-      - where:
-            group: managedNetworkPeeringPolicies
-            op: CreateOrUpdate
-            param: properties
-        poly-resource: true
+      #- where:
+      #      group: managedNetworkPeeringPolicies
+      #      op: CreateOrUpdate
+      #      param: properties
+      #  poly-resource: true
         #cli-flatten-directive:
         #    - where:
         #        type: ResourceProviderOperation
