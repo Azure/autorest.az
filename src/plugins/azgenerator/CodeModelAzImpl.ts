@@ -687,7 +687,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     private isComplexSchema(type: string): boolean {
-        if (type == SchemaType.Array || type == SchemaType.Object || type == SchemaType.Dictionary || type == SchemaType.Any)
+        if (type == SchemaType.Array || type == SchemaType.Object || type == SchemaType.Dictionary || type == SchemaType.Any ||
+            this.MethodParameter.language['cli'].json == true)
             return true;
         else
             return false;
@@ -807,7 +808,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (this.MethodParameter.language['cli'].json == true) {
             return true;
         }
-        
+
         if (this.isComplexSchema(this.MethodParameter_Type)) {
             return true;
         }
