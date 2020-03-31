@@ -287,9 +287,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             }
                                         } else if (this.Parameter_IsPolyOfSimple()) {
                                             for(let child of this.MethodParameter.schema['children'].all) {
-                                                let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" + this.Parameter_MapsTo(child)));
-                                                let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.Parameter_MapsTo(child)));
-                                                let actionName: string = "Add" + Capitalize(ToCamelCase(this.Parameter_MapsTo(child)));
+                                                let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" + this.Schema_MapsTo(child)));
+                                                let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.Schema_MapsTo(child)));
+                                                let actionName: string = "Add" + Capitalize(ToCamelCase(this.Schema_MapsTo(child)));
                                                 let action = new ActionParam(groupOpParamName, groupParamName, actionName, child);
                                                 if (nameActionReference.has(actionName) && nameActionReference.get(actionName).action.schema != originParam.schema) {
                                                     let preAction = nameActionReference.get(actionName);
@@ -304,12 +304,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                         preActionUniqueName = preAction.groupOpActionName;
                                                     }
                                                     this.paramActionNameReference.set(preAction.action.schema, preActionUniqueName);
-                                                    this.paramActionNameReference.set(param.schema, actionUniqueName);
+                                                    this.paramActionNameReference.set(child, actionUniqueName);
                                                     nameActionReference.set(preActionUniqueName, preAction);
                                                     nameActionReference.set(actionUniqueName, action);
                                                 } else if(!this.paramActionNameReference.has(originParam.schema)) {
                                                     nameActionReference.set(actionName, action);
-                                                    this.paramActionNameReference.set(param.schema, actionName);
+                                                    this.paramActionNameReference.set(child, actionName);
                                                 }
                                             }          
                                         }
@@ -844,9 +844,9 @@ export class CodeModelCliImpl implements CodeModelAz {
         param.language['az']['mapsto'] = newName;
     }
 
-    public Parameter_ActionName(param: Parameter = this.MethodParameter) {
-        if(this.paramActionNameReference.has(param.schema)) {
-            return this.paramActionNameReference.get(param.schema);
+    public Schema_ActionName(schema: Schema = this.MethodParameter.schema) {
+        if(this.paramActionNameReference.has(schema)) {
+            return this.paramActionNameReference.get(schema);
         }
         return null;
     }
@@ -892,7 +892,14 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_Type(param: Parameter = this.MethodParameter): string {
-        return param?.schema.type;
+        return this.Schema_Type(param?.schema);
+    }
+
+    public Schema_Type(schema: Schema = this.MethodParameter.schema): string {
+        if (isNullOrUndefined(schema)) {
+            return undefined;
+        }
+        return schema.type;
     }
 
     public Parameter_IsFlattened(param: Parameter = this.MethodParameter): boolean {
@@ -989,11 +996,100 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
+
+    public Schema_IsListOfSimple(schema: Schema = this.MethodParameter.schema): boolean {
+        // objects that is not base class of polymorphic and satisfy one of the four conditions
+        // 1. objects with simple properties 
+        // 2. or objects with arrays as properties but has simple element type 
+        // 3. or arrays with simple element types
+        // 4. or arrays with object element types but has simple properties
+        // 5. or dicts with simple element properties
+        // 6. or dicts with arrays as element properties but has simple element type 
+        if (this.Schema_Type(schema) == SchemaType.Any) {
+            return false;
+        }
+
+        if (schema.language['cli'].json == true) {
+            return false;
+        }
+        if (this.Schema_Type(schema) == SchemaType.Array) {
+            if (schema['elementType'].type == SchemaType.Object || schema['elementType'].type == SchemaType.Dictionary) {
+                for (let p of values(schema['elementType']?.properties)) {
+                    if (p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
+                        return false;
+                    } else if (p['schema'].type == SchemaType.Array) {
+                        for (let mp of values(p['schema']?.['elementType']?.properties)) {
+                            if (mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
+                                return false;
+                            }
+                        }
+                        for (let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                            for (let pp of values(parent['properties'])) {
+                                if (pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+        } else if (this.Schema_Type(schema) == SchemaType.Object) {
+            if (!isNullOrUndefined(schema['children']) && !isNullOrUndefined(schema['discriminator'])) {
+                return false;
+            }
+            for (let p of values(schema['properties'])) {
+                if (p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
+                    // objects.objects
+                    return false;
+                } else if (p['schema'].type == SchemaType.Array) {
+                    for (let mp of values(p['schema']?.['elementType']?.properties)) {
+                        if (mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
+                            return false;
+                        }
+                    }
+                    for (let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                        for (let pp of values(parent['properties'])) {
+                            if (pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        } else if (this.Schema_Type(schema) == SchemaType.Dictionary) {
+            if (schema['children'] != null && schema['discriminator'] != null) {
+                return false;
+            }
+            let p = schema['elementType'];
+            if (p.type == SchemaType.Object || p.type == SchemaType.Dictionary) {
+                // dicts.objects or dicts.dictionaries 
+                return false;
+            } else if (p.type == SchemaType.Array) {
+                for (let mp of values(p.properties)) {
+                    if (mp['schema'].type == SchemaType.Object || mp['schema'].type == SchemaType.Array || mp['schema'].type == SchemaType.Dictionary) {
+                        return false;
+                    }
+                }
+                for (let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
+                    for (let pp of values(parent['properties'])) {
+                        if (pp['schema'].type == SchemaType.Object || pp['schema'].type == SchemaType.Array || pp['schema'].type == SchemaType.Dictionary) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     public Parameter_IsPolyOfSimple(param: Parameter = this.MethodParameter): boolean {
         if (param?.schema?.type == SchemaType.Object && !isNullOrUndefined(param.schema['children']) && !isNullOrUndefined(param.schema['discriminator'])) {
             let isSimplePoly = true;
             for(let child of param.schema['children'].all) {
-                if(this.Parameter_IsList(child) && this.Parameter_IsListOfSimple(child)) {
+                if(this.Schema_IsList(child) && this.Schema_IsListOfSimple(child)) {
                     continue;
                 }
                 isSimplePoly = false;
@@ -1027,7 +1123,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
-
+    public Schema_IsList(schema: Schema = this.MethodParameter.schema): boolean {
+        if (schema.language['cli'].json == true) {
+            return true;
+        }
+        if (this.Schema_Type(schema) == SchemaType.Any || this.Schema_Type(schema) == SchemaType.Array || this.Schema_Type(schema) == SchemaType.Object || this.Schema_Type(schema) == SchemaType.Dictionary) {
+            return true;
+        }
+        return false;
+    }
 
     public get MethodParameter(): Parameter {
         return this.MethodParameters[this.currentParameterIndex];
@@ -1089,7 +1193,11 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_Description(param: Parameter = this.MethodParameter): string {
-        return EscapeString(param.language['az'].description);
+        return param.language['az'].description.replace(/\\n/g, ' ');
+    }
+
+    public Schema_Description(schema: Schema): string {
+        return schema.language['az'].description.replace(/\\n/g, ' ');
     }
 
     public Parameter_InGlobal(parameter: Parameter): boolean {

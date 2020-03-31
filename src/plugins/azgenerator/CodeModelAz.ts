@@ -107,10 +107,11 @@ export interface CodeModelAz
     MethodParameter_RequiredByMethod: boolean;
     MethodParameter_EnumValues: string[];
     Parameter_Type(Parameter): string;
+    Schema_Type(Schema): string;
     Parameter_IsList(Parameter): boolean;
     Parameter_IsListOfSimple(Parameter): boolean;
     Parameter_IsPolyOfSimple(Parameter): boolean;
-    Parameter_ActionName(Parameter): string;
+    Schema_ActionName(Schema): string;
     Parameter_SetAzNameMapsTo(string, Parameter): void;
     Parameter_InGlobal(Parameter): boolean;
     Parameter_IsHidden(Parameter): boolean;
@@ -121,6 +122,7 @@ export interface CodeModelAz
     Parameter_NameAz(Parameter): string;
     Parameter_NamePython(Parameter): string;
     Parameter_Description(Parameter): string;
+    Schema_Description(Schema): string;
 
     GetModuleOperationName(): string;
     GetModuleOperationNamePython(): string;

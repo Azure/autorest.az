@@ -29,11 +29,11 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                         do {
                             if (model.SelectFirstMethodParameter()) {
                                 do {
-                                    let actionName = model.Parameter_ActionName(model.MethodParameter);
+                                    let actionName = model.Schema_ActionName(model.MethodParameter.schema);
                                     if (isNullOrUndefined(actionName)) {
                                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                                             for(let child of model.MethodParameter.schema['children'].all) {
-                                                actionName = model.Parameter_ActionName(child);
+                                                actionName = model.Schema_ActionName(child);
                                                 output = output.concat(GetAction(model, actionName, child));
                                             }   
                                         }

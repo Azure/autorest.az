@@ -196,7 +196,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                     } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if(model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             for(let child of model.MethodParameter.schema['children'].all) {
-                                let actionName: string = model.Parameter_ActionName(child);
+                                let actionName: string = model.Schema_ActionName(child);
                                 argument += ", action=" + actionName;
                                 hasActions = true;
                                 if (actions.indexOf(actionName) < 0) {
@@ -212,7 +212,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         hasJsonLastTime = true;
                         argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "']";
                     } else if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
-                        let actionName: string = model.Parameter_ActionName(model.MethodParameter);
+                        let actionName: string = model.Schema_ActionName(model.MethodParameter.schema);
                         argument += ", action=" + actionName;
                         hasActions = true;
 
