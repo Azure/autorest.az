@@ -194,6 +194,20 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                     } else if (model.MethodParameter_IsSimpleArray) {
                         argument += ", nargs='+'";
                     } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                        if(model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                            for(let child of model.MethodParameter.schema['children'].all) {
+                                let actionName: string = model.Parameter_ActionName(child);
+                                argument += ", action=" + actionName;
+                                hasActions = true;
+                                if (actions.indexOf(actionName) < 0) {
+                                    actions.push(actionName);
+                                }
+                                argument += ", nargs='+'";  
+                                argument += ", help='" + EscapeString(model.Parameter_Description(child)) + "')";
+                                ToMultiLine(argument, output_args);                      
+                            }
+                            continue;
+                        }
                         hasJson = true;
                         hasJsonLastTime = true;
                         argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "']";

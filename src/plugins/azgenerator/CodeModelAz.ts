@@ -119,6 +119,7 @@ export interface CodeModelAz
     Parameter_Name(): string;
     Parameter_NameAz(Parameter): string;
     Parameter_NamePython(Parameter): string;
+    Parameter_Description(Parameter): string;
 
     GetModuleOperationName(): string;
     GetModuleOperationNamePython(): string;

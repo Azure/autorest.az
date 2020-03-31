@@ -7,7 +7,7 @@ import { CodeModelAz, CommandExample, ExampleParam } from "./CodeModelAz";
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Request, OperationGroup } from '@azure-tools/codemodel';
 import { serialize, deserialize, EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
-import { ToSnakeCase, MergeSort, deepCopy, Capitalize, ToCamelCase } from '../../utils/helper';
+import { ToSnakeCase, MergeSort, deepCopy, Capitalize, ToCamelCase, EscapeString } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
@@ -872,7 +872,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_Description(): string {
-        return this.MethodParameter.language['az'].description.replace(/\n/g, " ");
+        return this.Parameter_Description(this.MethodParameter);
     }
 
     public get MethodParameter_Type(): string {
@@ -1082,6 +1082,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         } else {
             return this.MethodParameter['hidden'] ? true : false;
         }        
+    }
+
+    public Parameter_Description(param: Parameter = this.MethodParameter): string {
+        return EscapeString(param.language['az'].description);
     }
 
     public Parameter_InGlobal(parameter: Parameter): boolean {

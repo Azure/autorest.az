@@ -117,7 +117,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     return output_body;
 }
 
-function GetSingleCommnadDef(model: CodeModelAz, needUpdate: boolean = false, needGeneric: boolean = false) {
+function GetSingleCommandDef(model: CodeModelAz, needUpdate: boolean = false, needGeneric: boolean = false) {
 
     let output: string[] = [];
     let updatedMethodName: string = model.Command_FunctionName;
@@ -146,10 +146,14 @@ function GetSingleCommnadDef(model: CodeModelAz, needUpdate: boolean = false, ne
                         continue;
                     }
 
+                    if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                        continue;
+                    }
+
                     let requiredParam: boolean = model.MethodParameter_RequiredByMethod;
 
                     let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
-                    if (requiredParam && !allParam.has(name)) {
+                    if (requiredParam && !allParam.has(name)) {  
                         allParam.set(name, true);
                         output[output.length - 1] += ",";
                         output.push(indent + name);
@@ -168,6 +172,16 @@ function GetSingleCommnadDef(model: CodeModelAz, needUpdate: boolean = false, ne
                         continue;
                     }
                     if (model.MethodParameter_Type == SchemaType.Constant) {
+                        continue;
+                    }
+
+                    if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                        for(let child of model.MethodParameter.schema['children'].all) {
+                            let name = model.Parameter_MapsTo(child);
+                            allParam.set(name, true);
+                            output[output.length - 1] += ",";
+                            output.push(indent + name + "=None");                            
+                        }
                         continue;
                     }
                     let requiredParam = model.MethodParameter_RequiredByMethod;
@@ -211,6 +225,27 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
         if (model.SelectFirstMethodParameter()) {
             do {
                 if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                    if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                        let baseName = model.Parameter_MapsTo(model.MethodParameter);
+                        let baseRequired = model.MethodParameter_RequiredByMethod;
+                        output_body.push("    " + "all_" + baseName + " = []");
+                        let childNames = [];
+                        for(let child of model.MethodParameter.schema['children'].all) {
+                            let childName = model.Parameter_MapsTo(child)
+                            childNames.push(childName);
+                            output_body.push("    if " + childName + " is not None:");
+                            output_body.push("        " + "all_" + baseName + ".append(" + childName + ")");
+                        }
+                        output_body.push("    if len(" + "all_" + baseName + ") > 1:");
+                        output_body.push("        raise CLIError('at most one of  " + childNames.join(",") + " is needed for " + baseName + "!')");   
+                        if(baseRequired) {
+                            output_body.push("    if len(" + "all_" + baseName + ") != 1:");
+                            output_body.push("        raise CLIError('" + baseName + " is required. but none of " + childNames.join(",") + " is provided!')");
+                        }
+                        output_body.push("    " + baseName + " = len(all_" + baseName + ") == 1? all_" + baseName + "[0]: None")
+                        
+                        continue;
+                    }
                     required['json'] = true;
                     output_body.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
                     output_body.push("        " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
@@ -285,7 +320,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     output.push("");
     output.push("");
 
-    output = output.concat(GetSingleCommnadDef(model, needUpdate, needGeneric));
+    output = output.concat(GetSingleCommandDef(model, needUpdate, needGeneric));
     output = output.concat(GetSingleCommandBody(model, required, originalOperation, needGeneric))
     return output;
 }
