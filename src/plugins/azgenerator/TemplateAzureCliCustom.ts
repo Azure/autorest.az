@@ -240,9 +240,9 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                         output_body.push("        raise CLIError('at most one of  " + childNames.join(",") + " is needed for " + baseName + "!')");   
                         if(baseRequired) {
                             output_body.push("    if len(" + "all_" + baseName + ") != 1:");
-                            output_body.push("        raise CLIError('" + baseName + " is required. but none of " + childNames.join(",") + " is provided!')");
+                            output_body.push("        raise CLIError('" + baseName + " is required. but none of " + childNames.join(", ") + " is provided!')");
                         }
-                        output_body.push("    " + baseName + " = len(all_" + baseName + ") == 1? all_" + baseName + "[0]: None")
+                        output_body.push("    " + baseName + " = all_" + baseName + "[0] if len(all_" + baseName + ") == 1 else None")
                         
                         continue;
                     }
