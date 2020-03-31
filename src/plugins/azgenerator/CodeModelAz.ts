@@ -88,24 +88,17 @@ export interface CodeModelAz
 
     MethodParameter_Name: string;
     MethodParameter_NameAz: string;
-    MethodParameter_NamePython: string
+    MethodParameter_NamePython: string;
     MethodParameter_MapsTo: string;
     MethodParameter_Description: string;
     MethodParameter_Type: string;
     MethodParameter_IsList: boolean;
     MethodParameter_IsSimpleArray: boolean;
     MethodParameter_IsListOfSimple: boolean;
-    Parameter_IsList(Parameter): boolean;
-    Parameter_IsListOfSimple(Parameter): boolean;
-    Parameter_IsPolyOfSimple(Parameter): boolean;
-    Parameter_ActionName(Parameter): string;
-    Parameter_SetAzNameMapsTo(string, Parameter): void;
     MethodParameter: Parameter;
     MethodParameters: Array<Parameter>;
     SubMethodParameter: Parameter;
-    GetMethodParameterMapName(Parameter): string;
-    Parameter_InGlobal(Parameter): boolean;
-    Parameter_IsHidden(Parameter): boolean;
+
 
     MethodParameter_In: string;
     MethodParameter_IsHidden: boolean;
@@ -113,8 +106,18 @@ export interface CodeModelAz
     MethodParameter_IsFlattened: boolean;
     MethodParameter_RequiredByMethod: boolean;
     MethodParameter_EnumValues: string[];
-
-
+    Parameter_Type(Parameter): string;
+    Parameter_IsList(Parameter): boolean;
+    Parameter_IsListOfSimple(Parameter): boolean;
+    Parameter_IsPolyOfSimple(Parameter): boolean;
+    Parameter_ActionName(Parameter): string;
+    Parameter_SetAzNameMapsTo(string, Parameter): void;
+    Parameter_InGlobal(Parameter): boolean;
+    Parameter_IsHidden(Parameter): boolean;
+    Parameter_IsFlattened(Parameter): boolean;
+    Parameter_MapsTo(Parameter): string;
+    Parameter_NameAz(Parameter): string;
+    Parameter_NamePython(Parameter): string;
 
     GetModuleOperationName(): string;
     GetModuleOperationNamePython(): string;

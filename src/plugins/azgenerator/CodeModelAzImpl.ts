@@ -18,7 +18,7 @@ class MethodParam {
     public value: any;
     public isList: boolean;
     public isSimpleList: boolean;
-    public submethodparameters: Property[];
+    public submethodparameters: Parameter[];
     public constructor(value, isList, isSimpleList, submethodparameters) {
         this.value = value;
         this.isList = isList;
@@ -46,7 +46,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     suboptions: Property[];
     subOperationGroups: Operation[];
-    submethodparameters: Property[];
+    submethodparameters: Parameter[];
     currentSubOptionIndex: number;
     paramActionNameReference: Map<Schema, string>;
     private _testScenario: any[];
@@ -194,7 +194,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         let originParam = this.MethodParameter;
                                         let flattenedNames = param?.['targetProperty']?.['flattenedNames'];
                                         let mapName: Array<string> = [];
-                                        let paramFlattenedName = param.language['az'].mapsto;
+                                        let paramFlattenedName = this.Parameter_MapsTo(param);
                                         let names = this.Method_NameAz.split(' ');
                                         if (flattenedNames && flattenedNames.length > 0) {
                                             for(let item of flattenedNames) {
@@ -220,7 +220,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             let tmpName = paramFlattenedName;
                                             let preParam = nameParamReference.get(paramFlattenedName);
                                             let preFlattenedNames = preParam?.['targetProperty']?.['flattenedNames'];
-                                            let preParamFlattenedName = preParam.language['az'].mapsto;
+                                            let preParamFlattenedName = this.Parameter_MapsTo(preParam);
                                             let preTmpName = preParamFlattenedName;
                                             if (preFlattenedNames && preFlattenedNames.length > 0) {
                                                 preTmpName = preFlattenedNames.map(pfn => ToSnakeCase(pfn)).join('_');
@@ -287,10 +287,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             }
                                         } else if (this.Parameter_IsPolyOfSimple()) {
                                             for(let child of this.MethodParameter.schema['children'].all) {
-                                                let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" + child.language['az'].mapsto));
-                                                let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + child.language['az'].mapsto));
-                                                let actionName: string = "Add" + Capitalize(ToCamelCase(child.language['az'].mapsto));
-                                                let action = new ActionParam(groupOpParamName, groupParamName, actionName, param);
+                                                let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" + this.Parameter_MapsTo(child)));
+                                                let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.Parameter_MapsTo(child)));
+                                                let actionName: string = "Add" + Capitalize(ToCamelCase(this.Parameter_MapsTo(child)));
+                                                let action = new ActionParam(groupOpParamName, groupParamName, actionName, child);
                                                 if (nameActionReference.has(actionName) && nameActionReference.get(actionName).action.schema != originParam.schema) {
                                                     let preAction = nameActionReference.get(actionName);
                                                     nameActionReference.delete(actionName);
@@ -790,41 +790,49 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public EnterSubMethodParameters(): boolean {
+        this.submethodparameters =  this.GetSubParameters(this.MethodParameter);
+        if(isNullOrUndefined(this.submethodparameters)) {
+           return false; 
+        }
+        return true;
+    }
+
+    public GetSubParameters(param: Parameter = this.MethodParameter): Parameter[] {
         // this should only works for 
         // 1. objects with simple properties 
         // 2. or objects with arrays as properties but has simple element type 
         // 3. or arrays with simple element types
         // 4. or arrays with object element types but has simple properties
-        if (!this.MethodParameter_IsList) {
-            return false;
+        if (!this.Parameter_IsList(param)) {
+            return null
         }
-        if (!this.MethodParameter_IsListOfSimple)
-            return false;
+        if (!this.Parameter_IsListOfSimple(param))
+            return null;
 
-        this.submethodparameters = null;
-        if (this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Dictionary) {
-            if ((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object) {
-                this.submethodparameters = this.MethodParameter['schema']?.['elementType']?.properties;
-                for (let parent of values(this.MethodParameter['schema']?.['elementType']?.['parents']?.all)) {
+        let submethodparameters = [];
+        if (this.Parameter_Type(param) == SchemaType.Array || this.Parameter_Type(param) == SchemaType.Dictionary) {
+            if ((param['schema'])['elementType'].type == SchemaType.Object) {
+                submethodparameters = param['schema']?.['elementType']?.properties;
+                for (let parent of values(param['schema']?.['elementType']?.['parents']?.all)) {
                     if (parent['properties'] == undefined || parent['properties'] == null) {
                         continue;
                     }
-                    this.submethodparameters = this.submethodparameters.concat(parent['properties'])
+                    submethodparameters = submethodparameters.concat(parent['properties'])
                 }
             }
-        } else if (this.MethodParameter_Type == SchemaType.Object) {
-            this.submethodparameters = this.MethodParameter['schema']['properties'];
-            for (let parent of values(this.MethodParameter['schema']?.['parents']?.all)) {
+        } else if (this.Parameter_Type(param) == SchemaType.Object) {
+            submethodparameters = param['schema']['properties'];
+            for (let parent of values(param['schema']?.['parents']?.all)) {
                 if (parent['properties'] == undefined || parent['properties'] == null) {
                     continue;
                 }
-                this.submethodparameters = this.submethodparameters.concat(parent['properties'])
+                submethodparameters = submethodparameters.concat(parent['properties'])
             }
         }
-        if (this.submethodparameters == null) {
-            return false;
+        if(submethodparameters.length == 0) {
+            return null;
         }
-        return true;
+        return submethodparameters;
     }
 
     public ExitSubMethodParameters(): boolean {
@@ -859,29 +867,18 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_NameAz(): string {
-        let name = "";
-        if (this.submethodparameters != null) {
-            name = this.submethodparameters[this.currentSubOptionIndex].language['az'].name;
-        } else {
-            name = this.MethodParameter.language['az'].name;
-        }
-        return name;
+        return this.Parameter_NameAz(this.MethodParameter);
     }
 
     public get MethodParameter_NamePython(): string {
-        if (this.submethodparameters != null) {
-            return this.submethodparameters[this.currentSubOptionIndex]?.language?.python?.name;
-        }
-        let parameter = this.MethodParameter;
-        return parameter.language['python'].name;
+        return this.Parameter_NamePython(this.MethodParameter);
     }
 
     public get MethodParameter_MapsTo(): string {
-        let parameter = this.MethodParameter;
-        return this.GetMethodParameterMapName(parameter);
+        return this.Parameter_MapsTo(this.MethodParameter);
     }
 
-    public GetMethodParameterMapName(param: Parameter = this.MethodParameter): string {
+    public Parameter_MapsTo(param: Parameter = this.MethodParameter): string {
         return param.language['az'].mapsto;
     }
 
@@ -890,7 +887,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_Type(): string {
-        return this.MethodParameter.schema.type;
+        return this.Parameter_Type(this.MethodParameter);
     }
 
     public get MethodParameter_IsList(): boolean {
@@ -901,6 +898,14 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Parameter_IsListOfSimple(this.MethodParameter);
     }
 
+    public Parameter_Type(param: Parameter = this.MethodParameter): string {
+        return param?.schema.type;
+    }
+
+    public Parameter_IsFlattened(param: Parameter = this.MethodParameter): boolean {
+        return param['flattened'] ? true : false;
+    }
+
     public Parameter_IsListOfSimple(param: Parameter = this.MethodParameter): boolean {
         // objects that is not base class of polymorphic and satisfy one of the four conditions
         // 1. objects with simple properties 
@@ -909,18 +914,18 @@ export class CodeModelCliImpl implements CodeModelAz {
         // 4. or arrays with object element types but has simple properties
         // 5. or dicts with simple element properties
         // 6. or dicts with arrays as element properties but has simple element type 
-        if (this.MethodParameter_Type == SchemaType.Any) {
+        if (this.Parameter_Type(param) == SchemaType.Any) {
             return false;
         }
-        if (this.MethodParameter_IsFlattened) {
+        if (this.Parameter_IsFlattened(param)) {
             return false;
         }
-        if (this.MethodParameter.language['cli'].json == true) {
+        if (param.language['cli'].json == true) {
             return false;
         }
-        if (this.MethodParameter_Type == SchemaType.Array) {
-            if ((this.MethodParameter['schema'])['elementType'].type == SchemaType.Object || (this.MethodParameter['schema'])['elementType'].type == SchemaType.Dictionary) {
-                for (let p of values(this.MethodParameter['schema']?.['elementType']?.properties)) {
+        if (this.Parameter_Type(param) == SchemaType.Array) {
+            if ((param['schema'])['elementType'].type == SchemaType.Object || (param['schema'])['elementType'].type == SchemaType.Dictionary) {
+                for (let p of values(param['schema']?.['elementType']?.properties)) {
                     if (p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
                         return false;
                     } else if (p['schema'].type == SchemaType.Array) {
@@ -940,11 +945,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 return true;
             }
-        } else if (this.MethodParameter_Type == SchemaType.Object) {
-            if (!isNullOrUndefined(this.MethodParameter.schema['children']) && !isNullOrUndefined(this.MethodParameter.schema['discriminator'])) {
+        } else if (this.Parameter_Type(param) == SchemaType.Object) {
+            if (!isNullOrUndefined(param.schema['children']) && !isNullOrUndefined(param.schema['discriminator'])) {
                 return false;
             }
-            for (let p of values(this.MethodParameter['schema']['properties'])) {
+            for (let p of values(param['schema']['properties'])) {
                 if (p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
                     // objects.objects
                     return false;
@@ -964,11 +969,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             }
             return true;
-        } else if (this.MethodParameter_Type == SchemaType.Dictionary) {
-            if (this.MethodParameter.schema['children'] != null && this.MethodParameter.schema['discriminator'] != null) {
+        } else if (this.Parameter_Type(param) == SchemaType.Dictionary) {
+            if (param.schema['children'] != null && param.schema['discriminator'] != null) {
                 return false;
             }
-            let p = this.MethodParameter['schema']['elementType'];
+            let p = param['schema']['elementType'];
             if (p.type == SchemaType.Object || p.type == SchemaType.Dictionary) {
                 // dicts.objects or dicts.dictionaries 
                 return false;
@@ -1017,13 +1022,13 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_IsList(param: Parameter = this.MethodParameter): boolean {
-        if (this.MethodParameter_IsFlattened) {
+        if (this.Parameter_IsFlattened(param)) {
             return false;
         }
-        if (this.MethodParameter.language['cli'].json == true) {
+        if (param.language['cli'].json == true) {
             return true;
         }
-        if (this.MethodParameter_Type == SchemaType.Any || this.MethodParameter_Type == SchemaType.Array || this.MethodParameter_Type == SchemaType.Object || this.MethodParameter_Type == SchemaType.Dictionary) {
+        if (this.Parameter_Type(param) == SchemaType.Any || this.Parameter_Type(param) == SchemaType.Array || this.Parameter_Type(param) == SchemaType.Object || this.Parameter_Type(param) == SchemaType.Dictionary) {
             return true;
         }
         return false;
@@ -1097,12 +1102,20 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
   
+    public Parameter_NameAz(param: Parameter = this.MethodParameter): string {
+        return param.language['az'].name;
+    }
+
+    public Parameter_NamePython(param: Parameter = this.MethodParameter): string {
+        return param.language['python'].name;
+    }
+
     public get MethodParameter_IsRequired(): boolean {
         return this.MethodParameter.required;
     }
 
     public get MethodParameter_IsFlattened(): boolean {
-        return this.MethodParameter['flattened'] ? true : false;
+        return this.Parameter_IsFlattened(this.MethodParameter);
     }
 
     public get MethodParameter_RequiredByMethod(): boolean {
@@ -1227,7 +1240,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         let isList: boolean = methodParam.isList;
         let isSimpleList: boolean = methodParam.isSimpleList;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
-        let name: string = methodParam.value.language['az'].mapsto;;
+        let name: string = this.Parameter_MapsTo(methodParam.value);
         // means python reserved word
         if(name.endsWith("_")) {
             name = name.substr(0, name.length - 1);

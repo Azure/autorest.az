@@ -113,7 +113,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                     if (model.Parameter_InGlobal(param)) {
                         continue;
                     }
-                    if (param['flattened'] == true) {
+                    if (model.Parameter_IsFlattened(param) == true) {
                         continue;
                     }
                     if (param?.schema?.type == SchemaType.Constant || param['readOnly']) {
@@ -126,7 +126,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         if(model.Parameter_InGlobal(param)) {
                             continue;
                         }
-                        if (param['flattened'] == true) {
+                        if (model.Parameter_IsFlattened(param) == true) {
                             continue;
                         }
                         if (param?.schema?.type == SchemaType.Constant || param['readOnly']) {
