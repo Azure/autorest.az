@@ -73,22 +73,22 @@ def managednetwork_scope_assignment_create(cmd, client,
                                            scope,
                                            scope_assignment_name,
                                            location,
-                                           properties_assigned_managed_network=None):
+                                           assigned_managed_network=None):
     return client.create_or_update(scope=scope,
                                    scope_assignment_name=scope_assignment_name,
                                    location=location,
-                                   assigned_managed_network=properties_assigned_managed_network)
+                                   assigned_managed_network=assigned_managed_network)
 
 
 def managednetwork_scope_assignment_update(cmd, client,
                                            scope,
                                            scope_assignment_name,
                                            location,
-                                           properties_assigned_managed_network=None):
+                                           assigned_managed_network=None):
     return client.create_or_update(scope=scope,
                                    scope_assignment_name=scope_assignment_name,
                                    location=location,
-                                   assigned_managed_network=properties_assigned_managed_network)
+                                   assigned_managed_network=assigned_managed_network)
 
 
 def managednetwork_scope_assignment_delete(cmd, client,
@@ -123,20 +123,20 @@ def managednetwork_managed_network_group_create(cmd, client,
                                                 managed_network_name,
                                                 group_name,
                                                 location,
-                                                properties_management_groups=None,
-                                                properties_subscriptions=None,
-                                                properties_virtual_networks=None,
-                                                properties_subnets=None):
-    if isinstance(properties_management_groups, str):
-        properties_management_groups = json.loads(properties_management_groups)
+                                                management_groups=None,
+                                                subscriptions=None,
+                                                virtual_networks=None,
+                                                subnets=None):
+    if isinstance(management_groups, str):
+        management_groups = json.loads(management_groups)
     return client.begin_create_or_update(resource_group_name=resource_group_name,
                                          managed_network_name=managed_network_name,
                                          managed_network_group_name=group_name,
                                          location=location,
-                                         management_groups=properties_management_groups,
-                                         subscriptions=properties_subscriptions,
-                                         virtual_networks=properties_virtual_networks,
-                                         subnets=properties_subnets)
+                                         management_groups=management_groups,
+                                         subscriptions=subscriptions,
+                                         virtual_networks=virtual_networks,
+                                         subnets=subnets)
 
 
 def managednetwork_managed_network_group_update(cmd, client,
@@ -144,20 +144,20 @@ def managednetwork_managed_network_group_update(cmd, client,
                                                 managed_network_name,
                                                 group_name,
                                                 location,
-                                                properties_management_groups=None,
-                                                properties_subscriptions=None,
-                                                properties_virtual_networks=None,
-                                                properties_subnets=None):
-    if isinstance(properties_management_groups, str):
-        properties_management_groups = json.loads(properties_management_groups)
+                                                management_groups=None,
+                                                subscriptions=None,
+                                                virtual_networks=None,
+                                                subnets=None):
+    if isinstance(management_groups, str):
+        management_groups = json.loads(management_groups)
     return client.begin_create_or_update(resource_group_name=resource_group_name,
                                          managed_network_name=managed_network_name,
                                          managed_network_group_name=group_name,
                                          location=location,
-                                         management_groups=properties_management_groups,
-                                         subscriptions=properties_subscriptions,
-                                         virtual_networks=properties_virtual_networks,
-                                         subnets=properties_subnets)
+                                         management_groups=management_groups,
+                                         subscriptions=subscriptions,
+                                         virtual_networks=virtual_networks,
+                                         subnets=subnets)
 
 
 def managednetwork_managed_network_group_delete(cmd, client,
@@ -189,14 +189,20 @@ def managednetwork_managed_network_peering_policy_show(cmd, client,
                       managed_network_peering_policy_name=policy_name)
 
 
-def managednetwork_managed_network_peering_policy_create(cmd, client,
-                                                         resource_group_name,
-                                                         managed_network_name,
-                                                         policy_name,
-                                                         location,
-                                                         properties=None):
-    if isinstance(properties, str):
-        properties = json.loads(properties)
+def managednetwork_managed_network_peering_policy_hub_and_spoke_topology_create(cmd, client,
+                                                                                resource_group_name,
+                                                                                managed_network_name,
+                                                                                policy_name,
+                                                                                location,
+                                                                                type_,
+                                                                                hub=None,
+                                                                                spokes=None,
+                                                                                mesh=None):
+    properties = {}
+    properties['type'] = type_
+    properties['hub'] = hub
+    properties['spokes'] = spokes
+    properties['mesh'] = mesh
     return client.begin_create_or_update(resource_group_name=resource_group_name,
                                          managed_network_name=managed_network_name,
                                          managed_network_peering_policy_name=policy_name,
@@ -204,19 +210,57 @@ def managednetwork_managed_network_peering_policy_create(cmd, client,
                                          properties=properties)
 
 
-def managednetwork_managed_network_peering_policy_update(cmd, client,
-                                                         resource_group_name,
-                                                         managed_network_name,
-                                                         policy_name,
-                                                         location,
-                                                         properties=None):
-    if isinstance(properties, str):
-        properties = json.loads(properties)
+def managednetwork_managed_network_peering_policy_hub_and_spoke_topology_update(instance, cmd,
+                                                                                resource_group_name,
+                                                                                managed_network_name,
+                                                                                policy_name,
+                                                                                location,
+                                                                                type_,
+                                                                                hub=None,
+                                                                                spokes=None,
+                                                                                mesh=None):
+    instance.type = type_
+    instance.hub = hub
+    instance.spokes = spokes
+    instance.mesh = mesh
+    return instance
+
+
+def managednetwork_managed_network_peering_policy_mesh_topology_create(cmd, client,
+                                                                       resource_group_name,
+                                                                       managed_network_name,
+                                                                       policy_name,
+                                                                       location,
+                                                                       type_,
+                                                                       hub=None,
+                                                                       spokes=None,
+                                                                       mesh=None):
+    properties = {}
+    properties['type'] = type_
+    properties['hub'] = hub
+    properties['spokes'] = spokes
+    properties['mesh'] = mesh
     return client.begin_create_or_update(resource_group_name=resource_group_name,
                                          managed_network_name=managed_network_name,
                                          managed_network_peering_policy_name=policy_name,
                                          location=location,
                                          properties=properties)
+
+
+def managednetwork_managed_network_peering_policy_mesh_topology_update(instance, cmd,
+                                                                       resource_group_name,
+                                                                       managed_network_name,
+                                                                       policy_name,
+                                                                       location,
+                                                                       type_,
+                                                                       hub=None,
+                                                                       spokes=None,
+                                                                       mesh=None):
+    instance.type = type_
+    instance.hub = hub
+    instance.spokes = spokes
+    instance.mesh = mesh
+    return instance
 
 
 def managednetwork_managed_network_peering_policy_delete(cmd, client,

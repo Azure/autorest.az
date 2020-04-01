@@ -122,6 +122,7 @@ class ManagedNetworkGroupOperations(object):
 
         _managed_network_group = models.ManagedNetworkGroup(location=location, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
         api_version = "2019-06-01-preview"
+        content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
         url = self._create_or_update_initial.metadata['url']
@@ -139,8 +140,8 @@ class ManagedNetworkGroupOperations(object):
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = kwargs.pop('content_type', 'application/json')
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]

@@ -2905,6 +2905,7 @@ operationGroups:
       name: AttestationProvider
       description: ''
       command: attestation attestation-provider
+      hasUpdate: true
     cli:
       name: AttestationProvider
       description: ''

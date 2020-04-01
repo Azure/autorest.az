@@ -13,6 +13,7 @@ import {
 } from "@azure-tools/autorest-extension-base";
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
+import { isNullOrUndefined } from "util";
 
 let directives: Array<any> = [];
 
@@ -142,6 +143,7 @@ export class Modifiers {
                             for (const parameter of values(operation.parameters)) {
                                 if (parameter.language['az']['name'] != undefined && parameter.language["az"]["name"].match(parameterRegex)) {
                                     parameter.language["az"]["name"] = parameterReplacer? parameterRegex? parameter.language["az"]["name"].replace(parameterRegex, parameterReplacer): parameterReplacer: parameter.language["az"]["name"];
+                                    parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
                                     parameter.language["az"]["description"] = paramDescriptionReplacer? paramDescriptionReplacer: parameter.language["az"]["description"];
                                 }
                             }
@@ -150,6 +152,7 @@ export class Modifiers {
                                 for (const parameter of values(request.parameters)) {
                                     if (parameter.language['az']['name'] != undefined && parameter.language["az"]["name"].match(parameterRegex)) {
                                         parameter.language["az"]["name"] = parameterReplacer? parameterRegex? parameter.language["az"]["name"].replace(parameterRegex, parameterReplacer): parameterReplacer: parameter.language["az"]["name"];
+                                        parameter.language['az']['mapsto'] = parameter.language['az']['name'].replace(/-/g, '_');
                                         parameter.language["az"]["description"] = paramDescriptionReplacer? paramDescriptionReplacer: parameter.language["az"]["description"];
                                     }
                                 }
@@ -159,6 +162,43 @@ export class Modifiers {
                 }
             }
         }
+        // add NameMapsTo after modifier and if generic update exists, set the setter_arg_name
+        this.codeModel.operationGroups.forEach(operationGroup => {
+            let operations = operationGroup.operations;
+            operations.forEach(operation => {
+                let listCnt = 0;
+                let param = null;
+                operation.parameters.forEach(parameter => {
+                    if(!isNullOrUndefined(parameter.language['az'])) {
+                        if(operation.language['az'].name.endsWith("create") && parameter['flattened'] != true) {
+                            let paramType = parameter.schema.type;
+                            if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
+                                param = parameter;
+                                listCnt++;
+                            }
+                        }
+                    }
+                });
+                operation.requests.forEach(request => {
+                    if(request.parameters) {
+                        request.parameters.forEach(parameter => {
+                            if(!isNullOrUndefined(parameter.language['az'])) {
+                                if(operation.language['az'].name.endsWith("create") && parameter['flattened'] != true) {
+                                    let paramType = parameter.schema.type;
+                                    if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
+                                        param = parameter;
+                                        listCnt++;
+                                    }
+                                }
+                            }
+                        });                        
+                    }
+                });
+                if(operation.language['az'].name.endsWith("create") && listCnt == 1) {
+                    operation['genericSetterParam'] = param;
+                }
+            });
+        });
         return this.codeModel;
     }
 }

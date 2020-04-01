@@ -2517,6 +2517,7 @@ operationGroups:
     protocol: {}
   - apiVersions:
     - version: 2019-06-01-preview
+    canSplitOperation: true
     parameters:
     - *ref_70
     - *ref_71
@@ -3430,6 +3431,7 @@ operationGroups:
       name: ManagedNetwork
       description: ''
       command: managed-network managed-network
+      hasUpdate: true
     cli:
       name: ManagedNetwork
       description: ''
