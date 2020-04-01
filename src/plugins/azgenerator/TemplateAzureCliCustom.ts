@@ -24,6 +24,10 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
         header.addImport("json");
     }
 
+    if (required['clierror']) {
+        header.addFromImport("knack.util", ["CLIError"]);
+    }
+
     let output = [];
     output = output.concat(body);
     output.push("");
@@ -240,6 +244,7 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                         }
                         if (childNames.length > 0) {
                             output_body.push("    if len(" + "all_" + baseName + ") > 1:");
+                            required['clierror'] = true;
                             ToMultiLine("        raise CLIError('at most one of  " + childNames.join(",") + " is needed for " + baseName + "!')", output_body);   
                             if(baseRequired) {
                                 output_body.push("    if len(" + "all_" + baseName + ") != 1:");
@@ -248,11 +253,6 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                             ToMultiLine("    " + baseName + " = all_" + baseName + "[0] if len(all_" + baseName + ") == 1 else None", output_body)
                         } else {
                             output_body.pop();
-                        }
-                        if(!isNullOrUndefined(this.MethodParameter)) {
-                            required['json'] = true;
-                            output_body.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
-                            output_body.push("        " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
                         }
                         continue;
                     }
@@ -344,7 +344,8 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     }
     methodCall += "client." + methodName + "(";
     
-    let indent = " ".repeat(methodCall.length); 
+    let indent = " ".repeat(methodCall.length);
+    let cnt = 0;
     for(let param of originalParameters) {
         if (param.flattened) {
             continue;
@@ -366,6 +367,14 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
             methodCall += parameterName + "=" + optionName;
         } else {
             methodCall += "," + "\n" + indent + parameterName + "=" + optionName;
+        }
+
+        if (model.Parameter_IsPolyOfSimple(param)) {
+            let baseParam = param;
+            cnt++;
+            while(cnt < originalParameters.length && originalParameters[cnt]['polyBaseParam'] == baseParam) {
+                cnt++;
+            }
         }
     }
 
@@ -395,6 +404,7 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
             if (model.MethodParameter_Type == SchemaType.Constant) {
                 continue;
             }
+
             let optionName = model.MethodParameter_MapsTo;
             let parameterName = model.MethodParameter_NamePython;
 
@@ -404,6 +414,10 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
             }
             else {
                 methodCall += "," + "\n"+ indent + parameterName + "=" + optionName;
+            }
+            if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                let baseParam = model.MethodParameter;
+                while(model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam);
             }
         }
         while (model.SelectNextMethodParameter());
