@@ -1,7 +1,8 @@
 
 import * as path from "path"
-import { CommandExample } from "./CodeModelAz";
+import { CommandExample, ExampleParam } from "./CodeModelAz";
 import { deepCopy, isDict } from "../../utils/helper"
+import { Example } from "@azure-tools/codemodel";
 
 function MethodToOrder(method: string): number {
     if (method == 'create') return 0;
@@ -356,24 +357,34 @@ export class ResourcePool {
         return str;
     }
 
-    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders: string[], resources: string[]) {
+    private isSubParam(exampleParam: ExampleParam, attr: string): boolean {
+        for (let subparam of exampleParam.methodParam.submethodparameters || []) {
+            if (attr.toLowerCase().startsWith(subparam.language['cli'].cliKey.toLowerCase() + "="))  return true;
+        }
+        for (let k of exampleParam.keys) {
+            if (attr.toLowerCase().startsWith(k.toLowerCase() + "="))  return true;
+        }
+        return false;
+
+    }
+    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders: string[], resources: string[], exampleParam: ExampleParam) {
         if (placeholders==undefined)  placeholders = new Array();
         if(isJson) {
             let body = typeof endpoint == 'string'? JSON.parse(endpoint):endpoint;
             if (typeof body == 'object') {
                 if ( body instanceof Array) {
                     body = body.map((value) => {
-                        return this.addEndpointResource(value, typeof value=='object', isKeyValues, placeholders, resources);
+                        return this.addEndpointResource(value, typeof value=='object', isKeyValues, placeholders, resources, exampleParam);
                     });
                 }
                 else if(isDict(body)) {
                     for (let k in body) {
-                        body[k] = this.addEndpointResource(body[k], typeof body[k]=='object', isKeyValues, placeholders, resources);
+                        body[k] = this.addEndpointResource(body[k], typeof body[k]=='object', isKeyValues, placeholders, resources, exampleParam);
                     }
                 }
             }
             else {
-                body = this.addEndpointResource(body, false, isKeyValues, placeholders, resources);
+                body = this.addEndpointResource(body, false, isKeyValues, placeholders, resources, exampleParam);
             }
 
             if (typeof endpoint == 'string') {
@@ -389,10 +400,25 @@ export class ResourcePool {
         //if the input is in form of "key1=value2 key2=value2 ...", then analyse the values one by one
         if (isKeyValues) {
             let ret = "";
-            for (let attr of endpoint.split(" ")) {
+            let attrs = endpoint.split(" ");
+            for (let i=1; i< attrs.length; i++) {
+                if(!this.isSubParam(exampleParam, attrs[i])) {
+                    attrs[i-1] += ' ' + attrs[i];
+                    attrs.splice(i, 1);
+                    i--;
+                }
+            }
+            for (let attr of attrs) {
                 let kv = attr.split("=");
                 if (ret.length > 0) ret += " ";
-                ret += `${kv[0]}=${this.addEndpointResource(kv[1], isJson, false, placeholders, resources)}`;
+                if (kv[1].length>=2 && kv[1][0]=='"' && kv[1][kv[1].length-1]== '"') {
+                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length-2), isJson, false, placeholders, resources, exampleParam);
+                    ret += `${kv[0]}="${this.formatable(v, placeholders)}"`;
+                }
+                else {
+                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length-2), isJson, false, placeholders, resources, exampleParam);
+                    ret += `${kv[0]}=${this.formatable(v, placeholders)}`;
+                }
             }
             return ret;
         }
