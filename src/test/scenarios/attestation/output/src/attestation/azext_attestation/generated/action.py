@@ -6,3 +6,4 @@
 
 import argparse
 from knack.util import CLIError
+from collections import defaultdict

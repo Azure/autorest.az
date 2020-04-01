@@ -158,11 +158,20 @@ helps['managednetwork managed-network-group create'] = """
     examples:
       - name: Create/Update Managed Network Group
         text: |-
+<<<<<<< HEAD
                az managednetwork managed-network-group create --management-groups "[]" --subnets id=/subscriptionB/reso\
 urceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA --virtual-networks id=/sub\
 scriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA --virtual-networks id=/subs\
 criptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB --group-name "myManagedNetwo\
 rkGroup1" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
+=======
+               az managednetwork managed-network-group create --properties-management-groups "[]" --properties-subnets \
+id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --\
+properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetwor\
+ks/VnetA" --properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/v\
+irtualNetworks/VnetB" --group-name "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group \
+"myResourceGroup"
+>>>>>>> a2360225f8f56af64fe60dcd2c61e71e9bb5e410
 """
 
 helps['managednetwork managed-network-group update'] = """
