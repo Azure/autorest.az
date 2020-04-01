@@ -811,18 +811,22 @@ export class CodeModelCliImpl implements CodeModelAz {
         let submethodparameters = [];
         if (this.Parameter_Type(param) == SchemaType.Array || this.Parameter_Type(param) == SchemaType.Dictionary) {
             if ((param['schema'])['elementType'].type == SchemaType.Object) {
-                submethodparameters = param['schema']?.['elementType']?.properties;
+                if(!isNullOrUndefined(param['schema']?.['elementType']?.properties)) {
+                    submethodparameters = param['schema']?.['elementType']?.properties;
+                }
                 for (let parent of values(param['schema']?.['elementType']?.['parents']?.all)) {
-                    if (parent['properties'] == undefined || parent['properties'] == null) {
+                    if (isNullOrUndefined(parent['properties'])) {
                         continue;
                     }
                     submethodparameters = submethodparameters.concat(parent['properties'])
                 }
             }
         } else if (this.Parameter_Type(param) == SchemaType.Object) {
-            submethodparameters = param['schema']['properties'];
+            if (!isNullOrUndefined(param['schema']['properties'])) {
+                submethodparameters = param['schema']['properties'];
+            }
             for (let parent of values(param['schema']?.['parents']?.all)) {
-                if (parent['properties'] == undefined || parent['properties'] == null) {
+                if (isNullOrUndefined(parent['properties'])) {
                     continue;
                 }
                 submethodparameters = submethodparameters.concat(parent['properties'])
