@@ -70,9 +70,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     public constructor(protected session: Session<CodeModel>) {
         this.codeModel = session.model;
         this.resource_pool = new ResourcePool();
-        this.session.message({Channel: Channel.Warning, Text: " before dealingSimplePolymorphism!" });
         this.dealingSimplePolymorphism();
-        this.session.message({Channel: Channel.Warning, Text: " after dealingSimplePolymorphism!" });
         this.setParamAzUniqueNames();
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
@@ -326,34 +324,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                 this.paramActionNameReference.set(param.schema, actionName);
                                             }
                                         } 
-                                        /*else if (this.Parameter_IsPolyOfSimple()) {
-                                            for(let child of this.MethodParameter.schema['children'].all) {
-                                                let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" + this.Schema_MapsTo(child)));
-                                                let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.Schema_MapsTo(child)));
-                                                let actionName: string = "Add" + Capitalize(ToCamelCase(this.Schema_MapsTo(child)));
-                                                let action = new ActionParam(groupOpParamName, groupParamName, actionName, child);
-                                                if (nameActionReference.has(actionName) && nameActionReference.get(actionName).action.schema != originParam.schema) {
-                                                    let preAction = nameActionReference.get(actionName);
-                                                    nameActionReference.delete(actionName);
-                                                    let preActionUniqueName = preAction.actionName;
-                                                    let actionUniqueName = actionName;
-                                                    if (preAction.groupActionName != action.groupActionName) {
-                                                        actionUniqueName = action.groupActionName;
-                                                        preActionUniqueName = preAction.groupActionName;
-                                                    } else if (preAction.groupOpActionName != action.groupOpActionName) {
-                                                        actionUniqueName = action.groupOpActionName;
-                                                        preActionUniqueName = preAction.groupOpActionName;
-                                                    }
-                                                    this.paramActionNameReference.set(preAction.action.schema, preActionUniqueName);
-                                                    this.paramActionNameReference.set(child, actionUniqueName);
-                                                    nameActionReference.set(preActionUniqueName, preAction);
-                                                    nameActionReference.set(actionUniqueName, action);
-                                                } else if(!this.paramActionNameReference.has(originParam.schema)) {
-                                                    nameActionReference.set(actionName, action);
-                                                    this.paramActionNameReference.set(child, actionName);
-                                                }
-                                            }         
-                                        }*/
                                     } while (this.SelectNextMethodParameter())
                                 }
                             } while (this.SelectNextMethod())

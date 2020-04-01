@@ -8,7 +8,6 @@ configure-factory-repo a datafactory factory.
 |------|----|-----------|----------|--------------|
 |**--location-id**|string|The location identifier.|location_id|location_id|
 |**--factory-resource-id**|string|The factory resource id.|factory_resource_id|factory_resource_id|
-|**--repo-configuration**|object|Git repo information of the factory.|repo_configuration|repo_configuration|
 |**--factory-vsts-configuration**|object|Factory's VSTS repo information.|FactoryVstsConfiguration|factory_vsts_configuration|
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|FactoryGitHubConfiguration|factory_git_hub_configuration|
 ### datafactory factory create
@@ -23,7 +22,6 @@ create a datafactory factory.
 |**--location**|string|The resource location.|location|location|
 |**--tags**|dictionary|The resource tags.|tags|tags|
 |**--identity**|object|Managed service identity of the factory.|identity|identity|
-|**--repo-configuration**|object|Git repo information of the factory.|repo_configuration|repo_configuration|
 |**--factory-vsts-configuration**|object|Factory's VSTS repo information.|FactoryVstsConfiguration|factory_vsts_configuration|
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|FactoryGitHubConfiguration|factory_git_hub_configuration|
 ### datafactory factory delete

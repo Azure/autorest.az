@@ -181,12 +181,6 @@ function GetSingleCommandDef(model: CodeModelAz, needUpdate: boolean = false, ne
                     }
 
                     if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                        /*for(let child of model.MethodParameter.schema['children'].all) {
-                            let name = model.Schema_MapsTo(child);
-                            allParam.set(name, true);
-                            output[output.length - 1] += ",";
-                            output.push(indent + name + "=None");                            
-                        }*/
                         continue;
                     }
                     let requiredParam = model.MethodParameter_RequiredByMethod;
@@ -245,7 +239,7 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                         if (childNames.length > 0) {
                             output_body.push("    if len(" + "all_" + baseName + ") > 1:");
                             required['clierror'] = true;
-                            ToMultiLine("        raise CLIError('at most one of  " + childNames.join(",") + " is needed for " + baseName + "!')", output_body);   
+                            ToMultiLine("        raise CLIError('at most one of  " + childNames.join(", ") + " is needed for " + baseName + "!')", output_body);   
                             if(baseRequired) {
                                 output_body.push("    if len(" + "all_" + baseName + ") != 1:");
                                 ToMultiLine("        raise CLIError('" + baseName + " is required. but none of " + childNames.join(", ") + " is provided!')", output_body);

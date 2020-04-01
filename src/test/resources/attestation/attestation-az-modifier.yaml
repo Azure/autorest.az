@@ -12,6 +12,7 @@ schemas:
       az:
         name: string
         description: simple string
+        mapsto: string
       cli:
         name: String
         description: simple string
@@ -27,6 +28,7 @@ schemas:
       az:
         name: operations-definition-name
         description: Name of the operation.
+        mapsto: operations_definition_name
       cli:
         name: OperationsDefinitionName
         description: Name of the operation.
@@ -42,6 +44,7 @@ schemas:
       az:
         name: operations-display-definition-provider
         description: Resource provider of the operation.
+        mapsto: operations_display_definition_provider
       cli:
         name: OperationsDisplayDefinitionProvider
         description: Resource provider of the operation.
@@ -57,6 +60,7 @@ schemas:
       az:
         name: operations-display-definition-resource
         description: Resource for the operation.
+        mapsto: operations_display_definition_resource
       cli:
         name: OperationsDisplayDefinitionResource
         description: Resource for the operation.
@@ -72,6 +76,7 @@ schemas:
       az:
         name: operations-display-definition-operation
         description: Short description of the operation.
+        mapsto: operations_display_definition_operation
       cli:
         name: OperationsDisplayDefinitionOperation
         description: Short description of the operation.
@@ -87,6 +92,7 @@ schemas:
       az:
         name: operations-display-definition-description
         description: Description of the operation.
+        mapsto: operations_display_definition_description
       cli:
         name: OperationsDisplayDefinitionDescription
         description: Description of the operation.
@@ -102,6 +108,7 @@ schemas:
       az:
         name: cloud-error-body-code
         description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        mapsto: cloud_error_body_code
       cli:
         name: CloudErrorBodyCode
         description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
@@ -117,6 +124,7 @@ schemas:
       az:
         name: cloud-error-body-message
         description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
+        mapsto: cloud_error_body_message
       cli:
         name: CloudErrorBodyMessage
         description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
@@ -133,6 +141,7 @@ schemas:
       az:
         name: string
         description: ''
+        mapsto: string
       cli:
         name: String
         description: ''
@@ -151,6 +160,7 @@ schemas:
       az:
         name: string
         description: ''
+        mapsto: string
       cli:
         name: String
         description: ''
@@ -166,6 +176,7 @@ schemas:
       az:
         name: string
         description: ''
+        mapsto: string
       cli:
         name: String
         description: ''
@@ -181,6 +192,7 @@ schemas:
       az:
         name: resource-id
         description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
+        mapsto: resource_id
       cli:
         name: ResourceId
         description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
@@ -196,6 +208,7 @@ schemas:
       az:
         name: resource-name
         description: The name of the resource
+        mapsto: resource_name
       cli:
         name: ResourceName
         description: The name of the resource
@@ -211,6 +224,7 @@ schemas:
       az:
         name: resource-type
         description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+        mapsto: resource_type
       cli:
         name: ResourceType
         description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
@@ -230,6 +244,7 @@ schemas:
       az:
         name: tracked-resource-location
         description: The geo-location where the resource lives
+        mapsto: tracked_resource_location
       cli:
         name: TrackedResourceLocation
         description: The geo-location where the resource lives
@@ -245,6 +260,7 @@ schemas:
       az:
         name: status-result-trust-model
         description: Trust model for the attestation service instance.
+        mapsto: status_result_trust_model
       cli:
         name: StatusResultTrustModel
         description: Trust model for the attestation service instance.
@@ -260,6 +276,7 @@ schemas:
       az:
         name: status-result-attest-uri
         description: Gets the uri of attestation service
+        mapsto: status_result_attest_uri
       cli:
         name: StatusResultAttestUri
         description: Gets the uri of attestation service
@@ -275,6 +292,7 @@ schemas:
       az:
         name: attestation-service-creation-params-location
         description: The supported Azure location where the attestation service instance should be created.
+        mapsto: attestation_service_creation_params_location
       cli:
         name: AttestationServiceCreationParamsLocation
         description: The supported Azure location where the attestation service instance should be created.
@@ -290,6 +308,7 @@ schemas:
       az:
         name: attestation-service-creation-specific-params-attestation-policy
         description: Name of attestation policy.
+        mapsto: attestation_service_creation_specific_params_attestation_policy
       cli:
         name: AttestationServiceCreationSpecificParamsAttestationPolicy
         description: Name of attestation policy.
@@ -315,6 +334,7 @@ schemas:
           IANA "JSON Web Signature and Encryption Algorithms" registry
           established by [JWA] or be a value that contains a Collision-
           Resistant Name.
+        mapsto: json_web_key_alg
       cli:
         name: JsonWebKeyAlg
         description: |-
@@ -335,6 +355,7 @@ schemas:
       az:
         name: json-web-key-crv
         description: The "crv" (curve) parameter identifies the curve type
+        mapsto: json_web_key_crv
       cli:
         name: JsonWebKeyCrv
         description: The "crv" (curve) parameter identifies the curve type
@@ -350,6 +371,7 @@ schemas:
       az:
         name: json-web-key-d
         description: RSA private exponent or ECC private key
+        mapsto: json_web_key_d
       cli:
         name: JsonWebKeyD
         description: RSA private exponent or ECC private key
@@ -365,6 +387,7 @@ schemas:
       az:
         name: json-web-key-dp
         description: RSA Private Key Parameter
+        mapsto: json_web_key_dp
       cli:
         name: JsonWebKeyDp
         description: RSA Private Key Parameter
@@ -380,6 +403,7 @@ schemas:
       az:
         name: json-web-key-dq
         description: RSA Private Key Parameter
+        mapsto: json_web_key_dq
       cli:
         name: JsonWebKeyDq
         description: RSA Private Key Parameter
@@ -395,6 +419,7 @@ schemas:
       az:
         name: json-web-key-e
         description: 'RSA public exponent, in Base64'
+        mapsto: json_web_key_e
       cli:
         name: JsonWebKeyE
         description: 'RSA public exponent, in Base64'
@@ -410,6 +435,7 @@ schemas:
       az:
         name: json-web-key-k
         description: Symmetric key
+        mapsto: json_web_key_k
       cli:
         name: JsonWebKeyK
         description: Symmetric key
@@ -443,6 +469,7 @@ schemas:
           they have different "kty" (key type) values but are considered to be
           equivalent alternatives by the application using them.)  The "kid"
           value is a case-sensitive string.
+        mapsto: json_web_key_kid
       cli:
         name: JsonWebKeyKid
         description: |-
@@ -477,6 +504,7 @@ schemas:
           either be registered in the IANA "JSON Web Key Types" registry
           established by [JWA] or be a value that contains a Collision-
           Resistant Name.  The "kty" value is a case-sensitive string.
+        mapsto: json_web_key_kty
       cli:
         name: JsonWebKeyKty
         description: |-
@@ -497,6 +525,7 @@ schemas:
       az:
         name: json-web-key-n
         description: 'RSA modulus, in Base64'
+        mapsto: json_web_key_n
       cli:
         name: JsonWebKeyN
         description: 'RSA modulus, in Base64'
@@ -512,6 +541,7 @@ schemas:
       az:
         name: json-web-key-p
         description: RSA secret prime
+        mapsto: json_web_key_p
       cli:
         name: JsonWebKeyP
         description: RSA secret prime
@@ -527,6 +557,7 @@ schemas:
       az:
         name: json-web-key-q
         description: 'RSA secret prime, with p < q'
+        mapsto: json_web_key_q
       cli:
         name: JsonWebKeyQ
         description: 'RSA secret prime, with p < q'
@@ -542,6 +573,7 @@ schemas:
       az:
         name: json-web-key-qi
         description: RSA Private Key Parameter
+        mapsto: json_web_key_qi
       cli:
         name: JsonWebKeyQi
         description: RSA Private Key Parameter
@@ -565,6 +597,7 @@ schemas:
           the public key. The "use" parameter is employed to indicate whether
           a public key is used for encrypting data or verifying the signature
           on data. Values are commonly "sig" (signature) or "enc" (encryption).
+        mapsto: json_web_key_use
       cli:
         name: JsonWebKeyUse
         description: |-
@@ -584,6 +617,7 @@ schemas:
       az:
         name: json-web-key-x
         description: X coordinate for the Elliptic Curve point
+        mapsto: json_web_key_x
       cli:
         name: JsonWebKeyX
         description: X coordinate for the Elliptic Curve point
@@ -599,6 +633,7 @@ schemas:
       az:
         name: json-web-key-x5-c-item
         description: ''
+        mapsto: json_web_key_x5_c_item
       cli:
         name: JsonWebKeyX5CItem
         description: ''
@@ -614,6 +649,7 @@ schemas:
       az:
         name: json-web-key-y
         description: Y coordinate for the Elliptic Curve point
+        mapsto: json_web_key_y
       cli:
         name: JsonWebKeyY
         description: Y coordinate for the Elliptic Curve point
@@ -629,6 +665,7 @@ schemas:
         az:
           name: ready
           description: ''
+          mapsto: ready
         cli:
           name: Ready
           description: ''
@@ -641,6 +678,7 @@ schemas:
         az:
           name: not-ready
           description: ''
+          mapsto: not_ready
         cli:
           name: NotReady
           description: ''
@@ -653,6 +691,7 @@ schemas:
         az:
           name: error
           description: ''
+          mapsto: error
         cli:
           name: Error
           description: ''
@@ -668,6 +707,7 @@ schemas:
       az:
         name: attestation-service-status
         description: Status of attestation service.
+        mapsto: attestation_service_status
       cli:
         name: AttestationServiceStatus
         description: Status of attestation service.
@@ -686,6 +726,7 @@ schemas:
       az:
         name: api-version20180901-preview
         description: Api Version (2018-09-01-preview)
+        mapsto: api_version20180901_preview
       cli:
         name: ApiVersion20180901Preview
         description: Api Version (2018-09-01-preview)
@@ -701,6 +742,7 @@ schemas:
       az:
         name: tracked-resource-tags
         description: Resource tags.
+        mapsto: tracked_resource_tags
       cli:
         name: TrackedResourceTags
         description: Resource tags.
@@ -715,6 +757,7 @@ schemas:
       az:
         name: attestation-service-creation-params-tags
         description: The tags that will be assigned to the attestation service instance.
+        mapsto: attestation_service_creation_params_tags
       cli:
         name: AttestationServiceCreationParamsTags
         description: The tags that will be assigned to the attestation service instance.
@@ -729,6 +772,7 @@ schemas:
       az:
         name: attestation-service-patch-params-tags
         description: The tags that will be assigned to the attestation service instance.
+        mapsto: attestation_service_patch_params_tags
       cli:
         name: AttestationServicePatchParamsTags
         description: The tags that will be assigned to the attestation service instance.
@@ -757,6 +801,7 @@ schemas:
               az:
                 name: name
                 description: Name of the operation.
+                mapsto: name
               cli:
                 name: name
                 description: Name of the operation.
@@ -776,6 +821,7 @@ schemas:
                   az:
                     name: provider
                     description: Resource provider of the operation.
+                    mapsto: provider
                   cli:
                     name: provider
                     description: Resource provider of the operation.
@@ -790,6 +836,7 @@ schemas:
                   az:
                     name: resource
                     description: Resource for the operation.
+                    mapsto: resource
                   cli:
                     name: resource
                     description: Resource for the operation.
@@ -804,6 +851,7 @@ schemas:
                   az:
                     name: operation
                     description: Short description of the operation.
+                    mapsto: operation
                   cli:
                     name: operation
                     description: Short description of the operation.
@@ -818,6 +866,7 @@ schemas:
                   az:
                     name: description
                     description: Description of the operation.
+                    mapsto: description
                   cli:
                     name: description
                     description: Description of the operation.
@@ -835,6 +884,7 @@ schemas:
                 az:
                   name: operations-display-definition
                   description: Display object with properties of the operation.
+                  mapsto: operations_display_definition
                 cli:
                   name: OperationsDisplayDefinition
                   description: Display object with properties of the operation.
@@ -848,6 +898,7 @@ schemas:
               az:
                 name: display
                 description: Display object with properties of the operation.
+                mapsto: display
               cli:
                 name: display
                 description: Display object with properties of the operation.
@@ -865,6 +916,7 @@ schemas:
             az:
               name: operations-definition
               description: Definition object with the name and properties of an operation.
+              mapsto: operations_definition
             cli:
               name: OperationsDefinition
               description: Definition object with the name and properties of an operation.
@@ -877,6 +929,7 @@ schemas:
           az:
             name: operation-list-value
             description: List of supported operations.
+            mapsto: operation_list_value
           cli:
             name: OperationListValue
             description: List of supported operations.
@@ -889,6 +942,7 @@ schemas:
         az:
           name: value
           description: List of supported operations.
+          mapsto: value
         cli:
           name: value
           description: List of supported operations.
@@ -906,6 +960,7 @@ schemas:
       az:
         name: operation-list
         description: List of supported operations.
+        mapsto: operation_list
       cli:
         name: OperationList
         description: List of supported operations.
@@ -932,6 +987,7 @@ schemas:
             az:
               name: code
               description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+              mapsto: code
             cli:
               name: code
               description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
@@ -946,6 +1002,7 @@ schemas:
             az:
               name: message
               description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
+              mapsto: message
             cli:
               name: message
               description: 'A message describing the error, intended to be suitable for displaying in a user interface.'
@@ -965,6 +1022,7 @@ schemas:
           az:
             name: cloud-error-body
             description: An error response from Attestation.
+            mapsto: cloud_error_body
           cli:
             name: CloudErrorBody
             description: An error response from Attestation.
@@ -978,6 +1036,7 @@ schemas:
         az:
           name: error
           description: An error response from Attestation.
+          mapsto: error
         cli:
           name: error
           description: An error response from Attestation.
@@ -997,6 +1056,7 @@ schemas:
       az:
         name: cloud-error
         description: An error response from Attestation.
+        mapsto: cloud_error
       cli:
         name: CloudError
         description: An error response from Attestation.
@@ -1039,6 +1099,7 @@ schemas:
                 az:
                   name: trust-model
                   description: Trust model for the attestation service instance.
+                  mapsto: trust_model
                 cli:
                   name: trustModel
                   description: Trust model for the attestation service instance.
@@ -1057,6 +1118,7 @@ schemas:
                 az:
                   name: status
                   description: Status of attestation service.
+                  mapsto: status
                 cli:
                   name: status
                   description: Status of attestation service.
@@ -1075,6 +1137,7 @@ schemas:
                 az:
                   name: attest-uri
                   description: Gets the uri of attestation service
+                  mapsto: attest_uri
                 cli:
                   name: attestUri
                   description: Gets the uri of attestation service
@@ -1092,6 +1155,7 @@ schemas:
               az:
                 name: attestation-provider
                 description: Attestation service response message.
+                mapsto: attestation_provider
               cli:
                 name: AttestationProvider
                 description: Attestation service response message.
@@ -1115,6 +1179,7 @@ schemas:
             az:
               name: tags
               description: Resource tags.
+              mapsto: tags
             cli:
               name: tags
               description: Resource tags.
@@ -1130,6 +1195,7 @@ schemas:
             az:
               name: location
               description: The geo-location where the resource lives
+              mapsto: location
             cli:
               name: location
               description: The geo-location where the resource lives
@@ -1147,6 +1213,7 @@ schemas:
           az:
             name: tracked-resource
             description: The resource model definition for a ARM tracked top level resource
+            mapsto: tracked_resource
           cli:
             name: TrackedResource
             description: The resource model definition for a ARM tracked top level resource
@@ -1166,6 +1233,7 @@ schemas:
         az:
           name: id
           description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
+          mapsto: id
         cli:
           name: id
           description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
@@ -1181,6 +1249,7 @@ schemas:
         az:
           name: name
           description: The name of the resource
+          mapsto: name
         cli:
           name: name
           description: The name of the resource
@@ -1196,6 +1265,7 @@ schemas:
         az:
           name: type
           description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+          mapsto: type
         cli:
           name: type
           description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
@@ -1215,6 +1285,7 @@ schemas:
       az:
         name: resource
         description: ''
+        mapsto: resource
       cli:
         name: Resource
         description: ''
@@ -1238,6 +1309,7 @@ schemas:
         az:
           name: location
           description: The supported Azure location where the attestation service instance should be created.
+          mapsto: location
         cli: &ref_64
           name: location
           description: The supported Azure location where the attestation service instance should be created.
@@ -1254,6 +1326,7 @@ schemas:
         az:
           name: tags
           description: The tags that will be assigned to the attestation service instance.
+          mapsto: tags
         cli: &ref_66
           name: tags
           description: The tags that will be assigned to the attestation service instance.
@@ -1274,6 +1347,7 @@ schemas:
             az:
               name: attestation-policy
               description: Name of attestation policy.
+              mapsto: attestation_policy
             cli:
               name: attestationPolicy
               description: Name of attestation policy.
@@ -1313,6 +1387,7 @@ schemas:
                           IANA "JSON Web Signature and Encryption Algorithms" registry
                           established by [JWA] or be a value that contains a Collision-
                           Resistant Name.
+                        mapsto: alg
                       cli:
                         name: alg
                         description: |-
@@ -1333,6 +1408,7 @@ schemas:
                       az:
                         name: crv
                         description: The "crv" (curve) parameter identifies the curve type
+                        mapsto: crv
                       cli:
                         name: crv
                         description: The "crv" (curve) parameter identifies the curve type
@@ -1348,6 +1424,7 @@ schemas:
                       az:
                         name: d
                         description: RSA private exponent or ECC private key
+                        mapsto: d
                       cli:
                         name: d
                         description: RSA private exponent or ECC private key
@@ -1363,6 +1440,7 @@ schemas:
                       az:
                         name: dp
                         description: RSA Private Key Parameter
+                        mapsto: dp
                       cli:
                         name: dp
                         description: RSA Private Key Parameter
@@ -1378,6 +1456,7 @@ schemas:
                       az:
                         name: dq
                         description: RSA Private Key Parameter
+                        mapsto: dq
                       cli:
                         name: dq
                         description: RSA Private Key Parameter
@@ -1393,6 +1472,7 @@ schemas:
                       az:
                         name: e
                         description: 'RSA public exponent, in Base64'
+                        mapsto: e
                       cli:
                         name: e
                         description: 'RSA public exponent, in Base64'
@@ -1408,6 +1488,7 @@ schemas:
                       az:
                         name: k
                         description: Symmetric key
+                        mapsto: k
                       cli:
                         name: k
                         description: Symmetric key
@@ -1441,6 +1522,7 @@ schemas:
                           they have different "kty" (key type) values but are considered to be
                           equivalent alternatives by the application using them.)  The "kid"
                           value is a case-sensitive string.
+                        mapsto: kid
                       cli:
                         name: kid
                         description: |-
@@ -1475,6 +1557,7 @@ schemas:
                           either be registered in the IANA "JSON Web Key Types" registry
                           established by [JWA] or be a value that contains a Collision-
                           Resistant Name.  The "kty" value is a case-sensitive string.
+                        mapsto: kty
                       cli:
                         name: kty
                         description: |-
@@ -1495,6 +1578,7 @@ schemas:
                       az:
                         name: 'n'
                         description: 'RSA modulus, in Base64'
+                        mapsto: 'n'
                       cli:
                         name: 'n'
                         description: 'RSA modulus, in Base64'
@@ -1510,6 +1594,7 @@ schemas:
                       az:
                         name: p
                         description: RSA secret prime
+                        mapsto: p
                       cli:
                         name: p
                         description: RSA secret prime
@@ -1525,6 +1610,7 @@ schemas:
                       az:
                         name: q
                         description: 'RSA secret prime, with p < q'
+                        mapsto: q
                       cli:
                         name: q
                         description: 'RSA secret prime, with p < q'
@@ -1540,6 +1626,7 @@ schemas:
                       az:
                         name: qi
                         description: RSA Private Key Parameter
+                        mapsto: qi
                       cli:
                         name: qi
                         description: RSA Private Key Parameter
@@ -1563,6 +1650,7 @@ schemas:
                           the public key. The "use" parameter is employed to indicate whether
                           a public key is used for encrypting data or verifying the signature
                           on data. Values are commonly "sig" (signature) or "enc" (encryption).
+                        mapsto: use
                       cli:
                         name: use
                         description: |-
@@ -1582,6 +1670,7 @@ schemas:
                       az:
                         name: x
                         description: X coordinate for the Elliptic Curve point
+                        mapsto: x
                       cli:
                         name: x
                         description: X coordinate for the Elliptic Curve point
@@ -1613,6 +1702,7 @@ schemas:
                             not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.
                             The PKIX certificate containing the key value MUST be the first
                             certificate.
+                          mapsto: json_web_key_x5_c
                         cli:
                           name: JsonWebKeyX5C
                           description: |-
@@ -1647,6 +1737,7 @@ schemas:
                           not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.
                           The PKIX certificate containing the key value MUST be the first
                           certificate.
+                        mapsto: x5_c
                       cli:
                         name: x5C
                         description: |-
@@ -1669,6 +1760,7 @@ schemas:
                       az:
                         name: 'y'
                         description: Y coordinate for the Elliptic Curve point
+                        mapsto: 'y'
                       cli:
                         name: 'y'
                         description: Y coordinate for the Elliptic Curve point
@@ -1686,6 +1778,7 @@ schemas:
                     az:
                       name: json-web-key
                       description: ''
+                      mapsto: json_web_key
                     cli:
                       name: JsonWebKey
                       description: ''
@@ -1708,6 +1801,7 @@ schemas:
                       an order of preference among them, although applications of JWK Sets
                       can choose to assign a meaning to the order for their purposes, if
                       desired.
+                    mapsto: json_web_key_set_keys
                   cli:
                     name: JsonWebKeySetKeys
                     description: |-
@@ -1735,6 +1829,7 @@ schemas:
                     an order of preference among them, although applications of JWK Sets
                     can choose to assign a meaning to the order for their purposes, if
                     desired.
+                  mapsto: keys
                 cli:
                   name: keys
                   description: |-
@@ -1757,6 +1852,7 @@ schemas:
               az:
                 name: json-web-key-set
                 description: ''
+                mapsto: json_web_key_set
               cli:
                 name: JsonWebKeySet
                 description: ''
@@ -1770,6 +1866,7 @@ schemas:
             az:
               name: policy-signing-certificates
               description: JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations
+              mapsto: policy_signing_certificates
             cli:
               name: policySigningCertificates
               description: JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations
@@ -1787,6 +1884,7 @@ schemas:
           az:
             name: attestation-service-creation-specific-params
             description: Client supplied parameters used to create a new attestation service instance.
+            mapsto: attestation_service_creation_specific_params
           cli:
             name: AttestationServiceCreationSpecificParams
             description: Client supplied parameters used to create a new attestation service instance.
@@ -1801,6 +1899,7 @@ schemas:
         az:
           name: properties
           description: Properties of the attestation service instance
+          mapsto: properties
         cli: &ref_68
           name: properties
           description: Properties of the attestation service instance
@@ -1820,6 +1919,7 @@ schemas:
       az:
         name: attestation-service-creation-params
         description: Parameters for creating an attestation service instance
+        mapsto: attestation_service_creation_params
       cli:
         name: AttestationServiceCreationParams
         description: Parameters for creating an attestation service instance
@@ -1843,6 +1943,7 @@ schemas:
         az:
           name: tags
           description: The tags that will be assigned to the attestation service instance.
+          mapsto: tags
         cli: &ref_77
           name: tags
           description: The tags that will be assigned to the attestation service instance.
@@ -1862,6 +1963,7 @@ schemas:
       az:
         name: attestation-service-patch-params
         description: Parameters for patching an attestation service instance
+        mapsto: attestation_service_patch_params
       cli:
         name: AttestationServicePatchParams
         description: Parameters for patching an attestation service instance
@@ -1884,6 +1986,7 @@ schemas:
           az:
             name: attestation-provider-list-result-value
             description: Attestation Provider array.
+            mapsto: attestation_provider_list_result_value
           cli:
             name: AttestationProviderListResultValue
             description: Attestation Provider array.
@@ -1896,6 +1999,7 @@ schemas:
         az:
           name: value
           description: Attestation Provider array.
+          mapsto: value
         cli:
           name: value
           description: Attestation Provider array.
@@ -1913,6 +2017,7 @@ schemas:
       az:
         name: attestation-provider-list-result
         description: Attestation Providers List.
+        mapsto: attestation_provider_list_result
       cli:
         name: AttestationProviderListResult
         description: Attestation Providers List.
@@ -2954,6 +3059,7 @@ language:
   az:
     name: attestation-management-client
     description: ''
+    mapsto: attestation_management_client
   cli:
     name: AttestationManagementClient
     description: ''

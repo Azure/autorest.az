@@ -85,7 +85,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                 if(model.MethodParameter_IsFlattened || model.MethodParameter_Type == SchemaType.Constant) {
                     continue;
                 }
-                
+                if(model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                    continue;
+                }
                 let optionName = model.MethodParameter_MapsTo;
                 if (optionName.endsWith("_")) {
                     optionName = optionName.substr(0, optionName.length - 1);
