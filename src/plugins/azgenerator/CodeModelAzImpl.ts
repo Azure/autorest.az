@@ -191,14 +191,16 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             continue;
                                         }
                                         if (this.Parameter_IsPolyOfSimple(this.MethodParameter)) {
+                                            let allChildParam: Array<Parameter> = [];
                                             for(let child of this.MethodParameter.schema['children'].all) {
                                                 let childParam = new Parameter(child.language.default.name, child.language.default.description, child, child.language);
                                                 childParam.language = child.language
                                                 childParam['polyBaseParam'] = this.MethodParameter;
-                                                let addResult = this.MethodParameters_AddPolySubClass(this.MethodParameter, childParam);
-                                                if(!addResult) {
-                                                    this.session.message({Channel:Channel.Warning, Text: "dealingSimplePolymorphisme error! baseClass: " + this.MethodParameter_MapsTo + " subClass: " + this.Parameter_MapsTo(childParam)});
-                                                }
+                                                allChildParam.push(childParam);
+                                            }
+                                            let addResult = this.MethodParameters_AddPolySubClass(this.MethodParameter, allChildParam);
+                                            if(!addResult) {
+                                                this.session.message({Channel:Channel.Warning, Text: "dealingSimplePolymorphisme error! baseClass: " + this.MethodParameter_MapsTo});
                                             }
                                         }
                                     } while (this.SelectNextMethodParameter());
@@ -1048,8 +1050,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_IsPolyOfSimple(param: Parameter = this.MethodParameter): boolean {
-        if(this.MethodParameter['isPolyOfSimple']) {
-            return true;
+        if(!isNullOrUndefined(this.MethodParameter['isPolyOfSimple'])) {
+            return this.MethodParameter['isPolyOfSimple'];
         }
         if (param?.schema?.type == SchemaType.Object && !isNullOrUndefined(param.schema['children']) && !isNullOrUndefined(param.schema['discriminator'])) {
             let isSimplePoly = true;
@@ -1062,6 +1064,8 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             if (isSimplePoly) {
                 this.MethodParameter['isPolyOfSimple'] = true;
+            } else {
+                this.MethodParameter['isPolyOfSimple'] = false;
             }
             return isSimplePoly;
         }
@@ -1110,23 +1114,18 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Method.parameters.concat(this.Request.parameters);
     }
 
-    public MethodParameters_AddPolySubClass(oriParam: Parameter, param: Parameter): boolean {
-        if (isNullOrUndefined(param) || isNullOrUndefined(oriParam)) {
+    public MethodParameters_AddPolySubClass(oriParam: Parameter, params: Parameter[]): boolean {
+        if (isNullOrUndefined(params) || isNullOrUndefined(oriParam) || params.length <= 0) {
             return false;
         }
         if (this.Method.parameters.indexOf(oriParam) > -1) {
-            if(this.Method.parameters.indexOf(param) < 0) {
-                this.Method.parameters.push(param);
-                return true;
-            }
-            return false;
+            this.Method.parameters.splice(this.Method.parameters.indexOf(oriParam) + 1, 0, ...params);
+            return true;
         }
         if (!isNullOrUndefined(this.Request) && !isNullOrUndefined(this.Request.parameters)) {
             if (this.Request.parameters.indexOf(oriParam) > -1) {
-                if (this.Request.parameters.indexOf(param) < 0) {
-                    this.Request.parameters.push(param);
-                    return true;
-                }
+                this.Request.parameters.splice(this.Request.parameters.indexOf(oriParam) + 1, 0, ...params)
+                return true;
             }
         }
         return false;
