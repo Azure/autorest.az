@@ -195,7 +195,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         argument += ", nargs='+'";
                     } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if(model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                            for(let child of model.MethodParameter.schema['children'].all) {
+                            /*for(let child of model.MethodParameter.schema['children'].all) {
                                 let actionName: string = model.Schema_ActionName(child);
                                 let paramName = model.Schema_MapsTo(child);
                                 let argument = "        c.argument('" + paramName + "'";
@@ -207,7 +207,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                                 argument += ", nargs='+'";  
                                 argument += ", help='" + EscapeString(model.Schema_Description(child)) + "')";
                                 ToMultiLine(argument, output_args);                      
-                            }
+                            }*/
                             continue;
                         }
                         hasJson = true;

@@ -106,6 +106,7 @@ export interface CodeModelAz
     MethodParameter_IsFlattened: boolean;
     MethodParameter_RequiredByMethod: boolean;
     MethodParameter_EnumValues: string[];
+    MethodParameters_AddPolySubClass(oriParam, para): boolean;
     Parameter_Type(Parameter): string;
     Schema_Type(Schema): string;
     Parameter_IsList(Parameter): boolean;

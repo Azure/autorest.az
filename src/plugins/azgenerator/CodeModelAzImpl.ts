@@ -70,6 +70,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     public constructor(protected session: Session<CodeModel>) {
         this.codeModel = session.model;
         this.resource_pool = new ResourcePool();
+        this.session.message({Channel: Channel.Warning, Text: " before dealingSimplePolymorphism!" });
+        this.dealingSimplePolymorphism();
+        this.session.message({Channel: Channel.Warning, Text: " after dealingSimplePolymorphism!" });
         this.setParamAzUniqueNames();
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
@@ -176,6 +179,39 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
+
+    private dealingSimplePolymorphism() {
+        if (this.SelectFirstCommandGroup()) {
+            do {
+                if (this.SelectFirstCommand()) {
+                    do {
+                        if (this.SelectFirstMethod()) {
+                            do {
+                                if (this.SelectFirstMethodParameter()) {
+                                    do {
+                                        if (this.MethodParameter_IsFlattened) {
+                                            continue;
+                                        }
+                                        if (this.Parameter_IsPolyOfSimple(this.MethodParameter)) {
+                                            for(let child of this.MethodParameter.schema['children'].all) {
+                                                let childParam = new Parameter(child.language.default.name, child.language.default.description, child);
+                                                childParam['polyBaseParam'] = this.MethodParameter;
+                                                let addResult = this.MethodParameters_AddPolySubClass(this.MethodParameter, childParam);
+                                                if(!addResult) {
+                                                    this.session.message({Channel:Channel.Warning, Text: "dealingSimplePolymorphisme error! baseClass: " + this.MethodParameter_MapsTo + " subClass: " + this.Parameter_MapsTo(childParam)});
+                                                }
+                                            }
+                                        }
+                                    } while (this.SelectNextMethodParameter());
+                                }
+                            } while (this.SelectNextMethod());
+                        }
+                    } while (this.SelectNextCommand());
+                }
+            } while (this.SelectNextCommandGroup());
+        }
+    }
+
     private setParamAzUniqueNames() {
         this.paramActionNameReference = new Map<Schema, string>();
         let nameActionReference: Map<string, ActionParam> = new Map<string, ActionParam>();
@@ -260,6 +296,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         if (this.MethodParameter_Name == 'tags') {
                                             continue;
                                         }
+                                        if (this.Parameter_IsPolyOfSimple()) {
+                                            continue;
+                                        }
                                         if (this.MethodParameter_IsList && this.MethodParameter_IsListOfSimple) {
                                             let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" +  this.MethodParameter_MapsTo));
                                             let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.MethodParameter_MapsTo));
@@ -285,7 +324,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                 nameActionReference.set(actionName, action);
                                                 this.paramActionNameReference.set(param.schema, actionName);
                                             }
-                                        } else if (this.Parameter_IsPolyOfSimple()) {
+                                        } 
+                                        /*else if (this.Parameter_IsPolyOfSimple()) {
                                             for(let child of this.MethodParameter.schema['children'].all) {
                                                 let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" + this.Schema_MapsTo(child)));
                                                 let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.Schema_MapsTo(child)));
@@ -311,8 +351,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                     nameActionReference.set(actionName, action);
                                                     this.paramActionNameReference.set(child, actionName);
                                                 }
-                                            }          
-                                        }
+                                            }         
+                                        }*/
                                     } while (this.SelectNextMethodParameter())
                                 }
                             } while (this.SelectNextMethod())
@@ -1086,6 +1126,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_IsPolyOfSimple(param: Parameter = this.MethodParameter): boolean {
+        if(this.MethodParameter['isPolyOfSimple']) {
+            return true;
+        }
         if (param?.schema?.type == SchemaType.Object && !isNullOrUndefined(param.schema['children']) && !isNullOrUndefined(param.schema['discriminator'])) {
             let isSimplePoly = true;
             for(let child of param.schema['children'].all) {
@@ -1094,6 +1137,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 isSimplePoly = false;
                 break;
+            }
+            if (isSimplePoly) {
+                this.MethodParameter['isPolyOfSimple'] = true;
             }
             return isSimplePoly;
         }
@@ -1142,6 +1188,28 @@ export class CodeModelCliImpl implements CodeModelAz {
             return this.Method.parameters;
         }
         return this.Method.parameters.concat(this.Request.parameters);
+    }
+
+    public MethodParameters_AddPolySubClass(oriParam: Parameter, param: Parameter): boolean {
+        if (isNullOrUndefined(param) || isNullOrUndefined(oriParam)) {
+            return false;
+        }
+        if (this.Method.parameters.indexOf(oriParam) > -1) {
+            if(this.Method.parameters.indexOf(param) < 0) {
+                this.Method.parameters.push(param);
+                return true;
+            }
+            return false;
+        }
+        if (!isNullOrUndefined(this.Request) && !isNullOrUndefined(this.Request.parameters)) {
+            if (this.Request.parameters.indexOf(oriParam) > -1) {
+                if (this.Request.parameters.indexOf(param) < 0) {
+                    this.Request.parameters.push(param);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public get SubMethodParameter(): Parameter {
