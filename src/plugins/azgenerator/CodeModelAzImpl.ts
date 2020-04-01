@@ -957,7 +957,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (this.Schema_Type(schema) == SchemaType.Any) {
             return false;
         }
-        if (schema.language['cli'].json == true) {
+        if (schema?.language?.['cli']?.json == true) {
             return false;
         }
         if (this.Schema_Type(schema) == SchemaType.Array) {
@@ -1314,7 +1314,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         submethodparameters = this.submethodparameters;
                         this.ExitSubMethodParameters();
                     }
-                    method_param_dict.set(this.MethodParameter.language['cli'].cliKey, new MethodParam(this.MethodParameter, this.MethodParameter_IsList, this.MethodParameter_IsListOfSimple, submethodparameters));
+                    method_param_dict.set(this.MethodParameter.language['cli'].cliKey, new MethodParam(this.MethodParameter, this.Parameter_IsList(this.MethodParameter), this.MethodParameter_IsListOfSimple, submethodparameters));
                 }
             } while (this.SelectNextMethodParameter());
         }
