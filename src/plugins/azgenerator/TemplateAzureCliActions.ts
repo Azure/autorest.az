@@ -102,12 +102,12 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter) {
                 if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
                     continue;
                 }
-                output.push("            " + ifkv + " kl == '" + model.MethodParameter_NameAz + "':");
+                output.push("            " + ifkv + " kl == '" + model.Parameter_NameAz(model.SubMethodParameter) + "':");
                 if (model.MethodParameter_IsArray) {
-                    output.push("                d['" + model.MethodParameter_NamePython + "'] = v");
+                    output.push("                d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = v");
                 }
                 else {
-                    output.push("                d['" + model.MethodParameter_NamePython + "'] = v[0]");
+                    output.push("                d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = v[0]");
                 }
                 ifkv = "elif";
             } while (model.SelectNextMethodParameter());

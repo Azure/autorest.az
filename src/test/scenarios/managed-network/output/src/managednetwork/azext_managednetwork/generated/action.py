@@ -14,6 +14,7 @@ class AddSubscriptions(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddSubscriptions, self).__call__(parser, namespace, action, option_string)
 
+
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
             properties = defaultdict(list)
@@ -35,6 +36,7 @@ class AddVirtualNetworks(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
         super(AddVirtualNetworks, self).__call__(parser, namespace, action, option_string)
+
 
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
@@ -58,6 +60,7 @@ class AddSubnets(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddSubnets, self).__call__(parser, namespace, action, option_string)
 
+
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
             properties = defaultdict(list)
@@ -80,9 +83,13 @@ class AddHub(argparse.Action):
         action = self.get_action(values, option_string)
         namespace.hub = action
 
+
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
-            properties = dict(x.split('=', 1) for x in values)
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
         except ValueError:
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
@@ -90,7 +97,7 @@ class AddHub(argparse.Action):
             kl = k.lower()
             v = properties[k]
             if kl == 'id':
-                d['id'] = v
+                d['id'] = v[0]
         return d
 
 
@@ -99,9 +106,13 @@ class AddSpokes(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddSpokes, self).__call__(parser, namespace, action, option_string)
 
+
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
-            properties = dict(x.split('=', 1) for x in values)
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
         except ValueError:
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
@@ -109,7 +120,7 @@ class AddSpokes(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
             if kl == 'id':
-                d['id'] = v
+                d['id'] = v[0]
         return d
 
 
@@ -118,9 +129,13 @@ class AddMesh(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddMesh, self).__call__(parser, namespace, action, option_string)
 
+
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
-            properties = dict(x.split('=', 1) for x in values)
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
         except ValueError:
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
@@ -128,5 +143,5 @@ class AddMesh(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
             if kl == 'id':
-                d['id'] = v
+                d['id'] = v[0]
         return d

@@ -8,10 +8,113 @@ import unittest
 
 from azure_devtools.scenario_tests import AllowLargeResponse
 from azure.cli.testsdk import ScenarioTest
+from .. import try_manual
 from azure.cli.testsdk import ResourceGroupPreparer
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
+
+
+@try_manual
+def setup(test):
+    pass
+
+
+# EXAMPLE: /Factories/put/Factories_CreateOrUpdate
+@try_manual
+def step__factories_put_factories_createorupdate(test):
+    test.cmd('az datafactory factory create '
+             '--location "East US" '
+             '--factory-name "{exampleFactoryName}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /Factories/get/Factories_Get
+@try_manual
+def step__factories_get_factories_get(test):
+    test.cmd('az datafactory factory show '
+             '--factory-name "{exampleFactoryName}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /Factories/get/Factories_ListByResourceGroup
+@try_manual
+def step__factories_get_factories_listbyresourcegroup(test):
+    test.cmd('az datafactory factory list '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /Factories/get/Factories_List
+@try_manual
+def step__factories_get_factories_list(test):
+    test.cmd('az datafactory factory list',
+             checks=[])
+
+
+# EXAMPLE: /Factories/post/Factories_GetGitHubAccessToken
+@try_manual
+def step__factories_post_factories_getgithubaccesstoken(test):
+    test.cmd('az datafactory factory get-git-hub-access-token '
+             '--factory-name "{exampleFactoryName}" '
+             '--git-hub-access-code "some" '
+             '--git-hub-access-token-base-url "some" '
+             '--git-hub-client-id "some" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /Factories/post/Factories_GetDataPlaneAccess
+@try_manual
+def step__factories_post_factories_getdataplaneaccess(test):
+    test.cmd('az datafactory factory get-data-plane-access '
+             '--factory-name "{exampleFactoryName}" '
+             '--access-resource-path "" '
+             '--expire-time "2018-11-10T09:46:20.2659347Z" '
+             '--permissions "r" '
+             '--profile-name "DefaultProfile" '
+             '--start-time "2018-11-10T02:46:20.2659347Z" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /Factories/patch/Factories_Update
+@try_manual
+def step__factories_patch_factories_update(test):
+    test.cmd('az datafactory factory update '
+             '--factory-name "{exampleFactoryName}" '
+             '--tags exampleTag="exampleValue" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
+@try_manual
+def step__factories_post_factories_configurefactoryrepo(test):
+    test.cmd('az datafactory factory configure-factory-repo '
+             '--factory-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.DataFacto'
+             'ry/factories/{exampleFactoryName}" '
+             '--repo-configuration "{{\\"type\\":\\"FactoryVSTSConfiguration\\",\\"accountName\\":\\"ADF\\",\\"collabor'
+             'ationBranch\\":\\"master\\",\\"lastCommitId\\":\\"\\",\\"projectName\\":\\"project\\",\\"repositoryName\\'
+             '":\\"repo\\",\\"rootFolder\\":\\"/\\",\\"tenantId\\":\\"\\"}}" '
+             '--location-id "East US"',
+             checks=[])
+
+
+# EXAMPLE: /Factories/delete/Factories_Delete
+@try_manual
+def step__factories_delete_factories_delete(test):
+    test.cmd('az datafactory factory delete '
+             '--factory-name "{exampleFactoryName}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+@try_manual
+def cleanup(test):
+    pass
 
 
 class DataFactoryManagementClientScenarioTest(ScenarioTest):
@@ -27,67 +130,14 @@ class DataFactoryManagementClientScenarioTest(ScenarioTest):
             'exampleFactoryName': self.create_random_name(prefix='cli_test_factories'[:9], length=24),
         })
 
-        # EXAMPLE: Factories/resource-group-name/Factories_CreateOrUpdate
-        self.cmd('az datafactory factory create '
-                 '--location "East US" '
-                 '--factory-name "{exampleFactoryName}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: Factories/resource-group-name/Factories_Get
-        self.cmd('az datafactory factory show '
-                 '--factory-name "{exampleFactoryName}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: Factories/resource-group-name/Factories_ListByResourceGroup
-        self.cmd('az datafactory factory list '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: Factories/api-version/Factories_List
-        self.cmd('az datafactory factory list',
-                 checks=[])
-
-        # EXAMPLE: Factories/resource-group-name/Factories_GetGitHubAccessToken
-        self.cmd('az datafactory factory get-git-hub-access-token '
-                 '--factory-name "{exampleFactoryName}" '
-                 '--git-hub-access-code "some" '
-                 '--git-hub-access-token-base-url "some" '
-                 '--git-hub-client-id "some" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: Factories/resource-group-name/Factories_GetDataPlaneAccess
-        self.cmd('az datafactory factory get-data-plane-access '
-                 '--factory-name "{exampleFactoryName}" '
-                 '--access-resource-path "" '
-                 '--expire-time "2018-11-10T09:46:20.2659347Z" '
-                 '--permissions "r" '
-                 '--profile-name "DefaultProfile" '
-                 '--start-time "2018-11-10T02:46:20.2659347Z" '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: Factories/resource-group-name/Factories_Update
-        self.cmd('az datafactory factory update '
-                 '--factory-name "{exampleFactoryName}" '
-                 '--tags exampleTag=exampleValue '
-                 '--resource-group "{rg}"',
-                 checks=[])
-
-        # EXAMPLE: Factories/location-id/Factories_ConfigureFactoryRepo
-        self.cmd('az datafactory factory configure-factory-repo '
-                 '--factory-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.DataF'
-                 'actory/factories/{exampleFactoryName}" '
-                 '--repo-configuration "{{\\"type\\":\\"FactoryVSTSConfiguration\\",\\"accountName\\":\\"ADF\\",\\"coll'
-                 'aborationBranch\\":\\"master\\",\\"lastCommitId\\":\\"\\",\\"projectName\\":\\"project\\",\\"reposito'
-                 'ryName\\":\\"repo\\",\\"rootFolder\\":\\"/\\",\\"tenantId\\":\\"\\"}}" '
-                 '--location-id "East US"',
-                 checks=[])
-
-        # EXAMPLE: Factories/resource-group-name/Factories_Delete
-        self.cmd('az datafactory factory delete '
-                 '--factory-name "{exampleFactoryName}" '
-                 '--resource-group "{rg}"',
-                 checks=[])
+        setup(self)
+        step__factories_put_factories_createorupdate(self)
+        step__factories_get_factories_get(self)
+        step__factories_get_factories_listbyresourcegroup(self)
+        step__factories_get_factories_list(self)
+        step__factories_post_factories_getgithubaccesstoken(self)
+        step__factories_post_factories_getdataplaneaccess(self)
+        step__factories_patch_factories_update(self)
+        step__factories_post_factories_configurefactoryrepo(self)
+        step__factories_delete_factories_delete(self)
+        cleanup(self)

@@ -46,8 +46,8 @@ helps['datafactory factory update'] = """
     examples:
       - name: Factories_Update
         text: |-
-               az datafactory factory update --factory-name "exampleFactoryName" --tags exampleTag=exampleValue --resou\
-rce-group "exampleResourceGroup"
+               az datafactory factory update --factory-name "exampleFactoryName" --tags exampleTag="exampleValue" --res\
+ource-group "exampleResourceGroup"
 """
 
 helps['datafactory factory delete'] = """
