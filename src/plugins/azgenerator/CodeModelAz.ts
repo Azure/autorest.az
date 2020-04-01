@@ -1,23 +1,41 @@
 ﻿import { AnyARecord } from "dns";
 import { Operation, Parameter } from "@azure-tools/codemodel";
+import { Property } from '@azure-tools/codemodel';
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+export class MethodParam {
+    public value: any;
+    public isList: boolean;
+    public isSimpleList: boolean;
+    public submethodparameters: Property[];
+    public constructor(value, isList, isSimpleList, submethodparameters) {
+        this.value = value;
+        this.isList = isList;
+        this.isSimpleList = isSimpleList;
+        this.submethodparameters = submethodparameters;
+    }
+}
+
 export class ExampleParam {
     name: string;
     value: any;
     isJson: boolean;
     isKeyValues: boolean;
+    keys: string[];
     defaultName: string;
-    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, defaultName: string) {
+    methodParam: MethodParam;
+    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, keys:string[], defaultName: string, methodParam: MethodParam) {
         this.name = name;
         this.value = value;
         this.isJson = isJson;
         this.isKeyValues = isKeyValues;
+        this.keys = keys;
         this.defaultName = defaultName;
+        this.methodParam = methodParam;
     }
 }
 export class CommandExample {
@@ -79,6 +97,7 @@ export interface CodeModelAz
 
     MethodParameter_Name: string;
     MethodParameter_NameAz: string;
+    MethodParameter_IsArray: boolean
     MethodParameter_NamePython: string
     MethodParameter_MapsTo: string;
     MethodParameter_Description: string;

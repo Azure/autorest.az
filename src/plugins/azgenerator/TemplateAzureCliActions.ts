@@ -14,6 +14,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
 
     header.addImport("argparse");
     header.addFromImport("knack.util", ["CLIError"]);
+    header.addFromImport("collections", ["defaultdict"]);
     header.disableProtectedAccess = true;
 
     let output: string[] = header.getLines();
@@ -52,7 +53,10 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                         output.push("");
                                         output.push("    def get_action(self, values, option_string):  # pylint: disable=no-self-use");
                                         output.push("        try:");
-                                        output.push("            properties = dict(x.split('=', 1) for x in values)");
+                                        output.push("            properties = defaultdict(list)");
+                                        output.push("            for (k, v) in (x.split('=', 1) for x in values):");
+                                        output.push("                properties[k].append(v)");
+                                        output.push("            properties = dict(properties)");
                                         output.push("        except ValueError:");
                                         output.push("            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))");
                                         output.push("        d = {}");
@@ -73,7 +77,12 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                                                         continue;
                                                     }
                                                     output.push("            " + ifkv + " kl == '" + model.MethodParameter_NameAz + "':");
-                                                    output.push("                d['" + model.MethodParameter_NamePython + "'] = v");
+                                                    if (model.MethodParameter_IsArray) {
+                                                        output.push("                d['" + model.MethodParameter_NamePython + "'] = v");
+                                                    }
+                                                    else {
+                                                        output.push("                d['" + model.MethodParameter_NamePython + "'] = v[0]");
+                                                    }
                                                     ifkv = "elif";
                                                 } while (model.SelectNextMethodParameter());
                                             }

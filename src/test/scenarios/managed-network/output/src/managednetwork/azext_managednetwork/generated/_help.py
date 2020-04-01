@@ -159,11 +159,11 @@ helps['managednetwork managed-network-group create'] = """
       - name: Create/Update Managed Network Group
         text: |-
                az managednetwork managed-network-group create --properties-management-groups "[]" --properties-subnets \
-id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA --pr\
-operties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/\
-VnetA --properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtua\
-lNetworks/VnetB --group-name "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group "myRes\
-ourceGroup"
+id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --\
+properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetwor\
+ks/VnetA" --properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/v\
+irtualNetworks/VnetB" --group-name "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group \
+"myResourceGroup"
 """
 
 helps['managednetwork managed-network-group update'] = """
@@ -173,11 +173,11 @@ helps['managednetwork managed-network-group update'] = """
       - name: Create/Update Managed Network Group
         text: |-
                az managednetwork managed-network-group create --properties-management-groups "[]" --properties-subnets \
-id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA --pr\
-operties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/\
-VnetA --properties-virtual-networks id=/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtua\
-lNetworks/VnetB --group-name "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group "myRes\
-ourceGroup"
+id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --\
+properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetwor\
+ks/VnetA" --properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/v\
+irtualNetworks/VnetB" --group-name "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group \
+"myResourceGroup"
 """
 
 helps['managednetwork managed-network-group delete'] = """

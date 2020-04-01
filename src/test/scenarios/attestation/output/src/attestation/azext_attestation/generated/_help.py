@@ -48,7 +48,7 @@ helps['attestation attestation-provider update'] = """
       - name: AttestationProviders_Update
         text: |-
                az attestation attestation-provider update --provider-name "myattestationprovider" --resource-group "MyR\
-esourceGroup" --tags Property1=Value1 Property2=Value2 Property3=Value3
+esourceGroup" --tags Property1="Value1" Property2="Value2" Property3="Value3"
 """
 
 helps['attestation attestation-provider delete'] = """

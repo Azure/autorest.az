@@ -5,76 +5,87 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { PreparerEntity, getResourceKey } from "./ScenarioTool"
-import { ToSnakeCase, ToMultiLine } from '../../utils/helper';
+import { ToSnakeCase, ToMultiLine, deepCopy } from '../../utils/helper';
 import { HeaderGenerator } from "./Header";
+import { HttpWithBodyRequest } from "@azure-tools/codemodel";
 
 export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
+    var head: string[] = [];
+    let steps: string[] = [];
     let class_info: string[] = [];
     let initiates: string[] = [];
     let body: string[] = [];
-    
+
     model.GatherInternalResource();
-    let config: any = model.Extension_TestScenario;
+    let config: any = deepCopy(model.Extension_TestScenario);
+    config.unshift({ function: "setup" });
+    config.push({ function: "cleanup" });
 
     let header: HeaderGenerator = new HeaderGenerator();
-    var head: string[] = [];
+
     head.push("");
     head.push("import os");
     head.push("import unittest");
     head.push("");
     head.push("from azure_devtools.scenario_tests import AllowLargeResponse");
     head.push("from azure.cli.testsdk import ScenarioTest");
+    head.push("from .. import try_manual");
     //head.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
-    class_info.push("");
-    class_info.push("");
-    class_info.push("TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))");
-    class_info.push("");
-    class_info.push("");
+    steps.push("");
+    steps.push("");
+    steps.push("TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))");
+    steps.push("");
+    steps.push("");
+
     class_info.push("class " + model.Extension_NameClass + "ScenarioTest(ScenarioTest):");
     class_info.push("");
     //initiates.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + model.Extension_NameUnderscored + "')");
     // initiates.push("    def test_" + model.Extension_NameUnderscored + "(self, resource_group):");
-
-    //initiates.push("");
-    //initiates.push("        self.kwargs.update({");
-    //initiates.push("            'name': 'test1'");
-    //initiates.push("        })");
     initiates.push("");
 
-    let has_example = false;
     // walk through test config
     if (config) {
         for (var ci = 0; ci < config.length; ci++) {
             let exampleId: string = config[ci].name;
-            let disabled: string = config[ci].disabled ? "# " : "";
-            // find example by name
-
-            let found = false;
-            for (let exampleCmd of model.FindExampleById(config[ci].name)) {
-                if (exampleCmd && exampleCmd.length > 0) {
-                    found = true;
-                    body.push("        # EXAMPLE: " + config[ci].name);
-                    for (let idx = 0; idx < exampleCmd.length; idx++) {
-                        let prefix: string = "        " + disabled + ((idx == 0) ? "self.cmd('" : "         '");
-                        let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
-
-                        // body.push(prefix + exampleCmd[idx] + postfix);
-                        ToMultiLine(prefix + exampleCmd[idx] + postfix, body);
+            let functionName: string = ToFunctionName(config[ci]);
+            if (exampleId) {
+                let disabled: string = config[ci].disabled ? "# " : "";
+                steps.push("# EXAMPLE: " + exampleId);
+                steps.push("@try_manual");
+                steps.push(`def ${functionName}(test):`);
+                // find example by name
+                let found = false;
+                for (let exampleCmd of model.FindExampleById(exampleId)) {
+                    if (exampleCmd && exampleCmd.length > 0) {
+                        found = true;
+                        for (let idx = 0; idx < exampleCmd.length; idx++) {
+                            let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
+                            let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
+                            ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
+                        }
+                        steps.push("    " + disabled + "         checks=[])");
                     }
-                    body.push("        " + disabled + "         checks=[])");
-                    body.push("");
-                    has_example = true;
                 }
+                if (!found) {
+                    steps.push("    # EXAMPLE NOT FOUND!");
+                    steps.push("    pass");
+                }
+                steps.push("");
+                steps.push("");
+                body.push(`        ${functionName}(self)`)
             }
-            if (!found) {
-                body.push("        # EXAMPLE NOT FOUND: " + config[ci].name);
-                body.push("");
+            else if (functionName) {
+                steps.push("@try_manual");
+                steps.push(`def ${functionName}(test):`);
+                steps.push("    pass");
+                steps.push("");
+                steps.push("");
+                body.push(`        ${functionName}(self)`)
             }
         }
     }
-    if (!has_example) {
-        body.push("        pass")
-    }
+    body.push("")
+
     let subscription_id = model.GetSubscriptionKey();
     if (subscription_id) {
         initiates.push("        self.kwargs.update({");
@@ -87,7 +98,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let decorators: string[] = [];
     InitiateDependencies(model, imports, decorators, initiates);
 
-    let output = head.concat(imports, class_info, decorators, initiates, body);
+    let output = head.concat(imports, steps, class_info, decorators, initiates, body);
     output.forEach(element => {
         if (element.length > 120) header.disableLineTooLong = true;
     });
@@ -100,7 +111,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     let hasResourceGroup = false;
     for (let entity of (model.GetPreparerEntities() as PreparerEntity[])) {
         if (!entity.info.name) {
-            internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name), entity.info.createdObjectNames.indexOf(entity.object_name)>=0]);
+            internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name), entity.info.createdObjectNames.indexOf(entity.object_name) >= 0]);
             continue;
         }
 
@@ -141,4 +152,21 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
         initiates.push("        })");
         initiates.push("");
     }
+}
+
+function ToFunctionName(step: any): string {
+    let ret = undefined;
+    if (step.name)
+        ret = "step_" + step.name;
+    else if (step.function)
+        ret = step.function;
+    if (!ret)   return undefined;
+
+    let funcname = "";
+    var letterNumber = /^[0-9a-zA-Z]+$/;
+    ret = (ret as string).toLowerCase();
+    for (let i=0;i<ret.length;i++) {
+        funcname += ret[i].match(letterNumber)? ret[i]: '_';
+    }
+    return funcname;
 }

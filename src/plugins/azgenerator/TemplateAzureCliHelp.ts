@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
-import { ToMultiLine } from "../../utils/helper"
+import { ToMultiLine, ToJsonString } from "../../utils/helper"
 
 const maxShortSummary = 119
 
@@ -100,9 +100,9 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
         //parameters.push(method);
 
         for (let param of example.Parameters) {
-            let slp = JSON.stringify(param.value).split(/[\r\n]+/).join("");
-            if (param.isKeyValues) {
-                slp = slp.substr(1, slp.length - 2); // remove quots 
+            let slp = param.value; 
+            if (!param.isKeyValues) {
+                slp = ToJsonString(slp); 
             }
             //parameters += " " + k + " " + slp;
             parameters.push(param.name);
@@ -111,7 +111,6 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
         output.push("      - name: " + example.Title);
         output.push("        text: |-");
         let line = "               " + parameters.join(' ');
-        line = line.split("\\").join("\\\\");
         ToMultiLine(line, output, 119, true);
     }
 
