@@ -136,6 +136,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                     }
                 }
             }
+            let baseParam = null;
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
@@ -198,6 +199,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         argument += ", nargs='+'";
                     } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if(model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                            baseParam = model.MethodParameter;
                             continue;
                         }
                         hasJson = true;
@@ -219,7 +221,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         argument += ")";
                         hasJsonLastTime = false;
                     }
-
+                    if (!isNullOrUndefined(baseParam) && model.MethodParameter['polyBaseParam'] == baseParam) {
+                        argument += ", arg_group='" + Capitalize(ToCamelCase(model.Parameter_MapsTo(baseParam))) + "'";
+                    }
                     argument += ")";
                     
                     ToMultiLine(argument, output_args);

@@ -38,9 +38,9 @@ def load_arguments(self, _):
         c.argument('tags', tags_type, help='The resource tags.')
         c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information.')
+                   'epo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information.')
+                   'itHub repo information.', arg_group='RepoConfiguration')
 
     with self.argument_context('datafactory factory update') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The resource group name.')
@@ -56,9 +56,9 @@ def load_arguments(self, _):
         c.argument('location_id', help='The location identifier.')
         c.argument('factory_resource_id', help='The factory resource id.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information.')
+                   'epo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information.')
+                   'itHub repo information.', arg_group='RepoConfiguration')
 
     with self.argument_context('datafactory factory get-data-plane-access') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The resource group name.')
