@@ -5,6 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { ParameterLocation, SchemaType } from "@azure-tools/codemodel";
+import { isNullOrUndefined } from "util";
 
 export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
     var output: string[] = [];
@@ -80,12 +81,16 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
             }
 
             // first parameters that are required
+            let originalOperation = model.Method_GetOriginalOperation;
             do
             {
                 if(model.MethodParameter_IsFlattened || model.MethodParameter_Type == SchemaType.Constant) {
                     continue;
                 }
                 if(model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                    continue;
+                }
+                if(!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
                     continue;
                 }
                 let optionName = model.MethodParameter_MapsTo;

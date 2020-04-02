@@ -74,7 +74,6 @@ hub-and-spoke-topology create a managednetwork managed-network-peering-policy.
 |**--resource-group-name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
 |**--policy-name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
-|**--type**|choice|Gets or sets the connectivity type of a network structure policy|hubandspoketopology_type|hub_and_spoke_topology_type|
 |**--location**|string|The geo-location where the resource lives|location|location|
 |**--hub**|object|Gets or sets the hub virtual network ID|hubandspoketopology_hub|hub_and_spoke_topology_hub|
 |**--spokes**|array|Gets or sets the spokes group IDs|hubandspoketopology_spokes|hub_and_spoke_topology_spokes|
@@ -88,7 +87,6 @@ hub-and-spoke-topology create a managednetwork managed-network-peering-policy.
 |**--resource-group-name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
 |**--policy-name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
-|**--type**|choice|Gets or sets the connectivity type of a network structure policy|hubandspoketopology_type|hub_and_spoke_topology_type|
 |**--location**|string|The geo-location where the resource lives|location|location|
 |**--hub**|object|Gets or sets the hub virtual network ID|hubandspoketopology_hub|hub_and_spoke_topology_hub|
 |**--spokes**|array|Gets or sets the spokes group IDs|hubandspoketopology_spokes|hub_and_spoke_topology_spokes|
@@ -112,7 +110,6 @@ mesh-topology create a managednetwork managed-network-peering-policy.
 |**--resource-group-name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
 |**--policy-name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
-|**--type**|choice|Gets or sets the connectivity type of a network structure policy|meshtopology_type|mesh_topology_type|
 |**--location**|string|The geo-location where the resource lives|location|location|
 |**--hub**|object|Gets or sets the hub virtual network ID|meshtopology_hub|mesh_topology_hub|
 |**--spokes**|array|Gets or sets the spokes group IDs|meshtopology_spokes|mesh_topology_spokes|
@@ -126,7 +123,6 @@ mesh-topology create a managednetwork managed-network-peering-policy.
 |**--resource-group-name**|string|The name of the resource group.|resource_group_name|resource_group_name|
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|managed_network_name|
 |**--policy-name**|string|The name of the Managed Network Peering Policy.|managed_network_peering_policy_name|policy_name|
-|**--type**|choice|Gets or sets the connectivity type of a network structure policy|meshtopology_type|mesh_topology_type|
 |**--location**|string|The geo-location where the resource lives|location|location|
 |**--hub**|object|Gets or sets the hub virtual network ID|meshtopology_hub|mesh_topology_hub|
 |**--spokes**|array|Gets or sets the spokes group IDs|meshtopology_spokes|mesh_topology_spokes|
