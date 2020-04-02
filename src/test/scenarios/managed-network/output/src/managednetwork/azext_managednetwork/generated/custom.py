@@ -194,12 +194,11 @@ def managednetwork_managed_network_peering_policy_hub_and_spoke_topology_create(
                                                                                 managed_network_name,
                                                                                 policy_name,
                                                                                 location,
-                                                                                type_,
                                                                                 hub=None,
                                                                                 spokes=None,
                                                                                 mesh=None):
     properties = {}
-    properties['type'] = type_
+    properties['type'] = 'HubAndSpokeTopology'
     properties['hub'] = hub
     properties['spokes'] = spokes
     properties['mesh'] = mesh
@@ -215,11 +214,10 @@ def managednetwork_managed_network_peering_policy_hub_and_spoke_topology_update(
                                                                                 managed_network_name,
                                                                                 policy_name,
                                                                                 location,
-                                                                                type_,
                                                                                 hub=None,
                                                                                 spokes=None,
                                                                                 mesh=None):
-    instance.type = type_
+    instance.type = 'HubAndSpokeTopology'
     instance.hub = hub
     instance.spokes = spokes
     instance.mesh = mesh
@@ -231,12 +229,11 @@ def managednetwork_managed_network_peering_policy_mesh_topology_create(cmd, clie
                                                                        managed_network_name,
                                                                        policy_name,
                                                                        location,
-                                                                       type_,
                                                                        hub=None,
                                                                        spokes=None,
                                                                        mesh=None):
     properties = {}
-    properties['type'] = type_
+    properties['type'] = 'MeshTopology'
     properties['hub'] = hub
     properties['spokes'] = spokes
     properties['mesh'] = mesh
@@ -252,11 +249,10 @@ def managednetwork_managed_network_peering_policy_mesh_topology_update(instance,
                                                                        managed_network_name,
                                                                        policy_name,
                                                                        location,
-                                                                       type_,
                                                                        hub=None,
                                                                        spokes=None,
                                                                        mesh=None):
-    instance.type = type_
+    instance.type = 'MeshTopology'
     instance.hub = hub
     instance.spokes = spokes
     instance.mesh = mesh

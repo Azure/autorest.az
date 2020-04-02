@@ -181,11 +181,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             continue;
                                         }
                                         if (this.Parameter_IsPolyOfSimple(this.MethodParameter)) {
+                                            let polyBaseParam = this.MethodParameter;
                                             let allChildParam: Array<Parameter> = [];
                                             for(let child of this.MethodParameter.schema['children'].all) {
                                                 let childParam = new Parameter(child.language.default.name, child.language.default.description, child, child.language);
                                                 childParam.language = child.language
-                                                childParam['polyBaseParam'] = this.MethodParameter;
+                                                childParam['polyBaseParam'] = polyBaseParam;
                                                 allChildParam.push(childParam);
                                             }
                                             let addResult = this.MethodParameters_AddPolySubClass(this.MethodParameter, allChildParam);

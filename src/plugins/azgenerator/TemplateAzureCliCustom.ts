@@ -7,7 +7,7 @@ import { CodeModelAz } from "./CodeModelAz";
 import { SchemaType, ParameterLocation, Operation, Parameter } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "./Header";
 import { isNullOrUndefined } from "util";
-import { ToMultiLine } from '../../utils/helper';
+import { ToMultiLine, ToCamelCase, Capitalize } from '../../utils/helper';
 
 export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -75,6 +75,11 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
 
 function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean = false) {
     let output_body: string[] = [];
+    let opNames = model.Method_NameAz.split(' ');
+    let valueToMatch = null;
+    if(opNames.length > 1) {
+        valueToMatch = Capitalize(ToCamelCase(opNames[0]));
+    }
     if (model.SelectFirstMethodParameter()) {
         do {
             if(model.MethodParameter_IsFlattened) {
@@ -97,11 +102,20 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                     let access = prefix;
                     let param = model.MethodParameter;
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
+                    if(!isNullOrUndefined(valueToMatch) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
+                        if(needGeneric) {
+                            access += "." + paramName + " = '" + valueToMatch + "'";
+                        } else {
+                            access += "['" + paramName + "'] = '" + valueToMatch + "'";
+                        }
+                        output_body.push(access);
+                        continue;
+                    }
                     if(param.flattened != true) {
                         if(needGeneric) {
                             access += "." + paramName + " = " + model.MethodParameter_MapsTo;
                         } else {
-                            access += "['" + paramName + "'] = " + model.MethodParameter_MapsTo;;
+                            access += "['" + paramName + "'] = " + model.MethodParameter_MapsTo;
                         }
                         output_body.push(access);
                     } else {
@@ -122,7 +136,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     return output_body;
 }
 
-function GetSingleCommandDef(model: CodeModelAz, needUpdate: boolean = false, needGeneric: boolean = false) {
+function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, needUpdate: boolean = false, needGeneric: boolean = false) {
 
     let output: string[] = [];
     let updatedMethodName: string = model.Command_FunctionName;
@@ -155,6 +169,9 @@ function GetSingleCommandDef(model: CodeModelAz, needUpdate: boolean = false, ne
                         continue;
                     }
 
+                    if(!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
+                        continue;
+                    }
                     let requiredParam: boolean = model.MethodParameter_RequiredByMethod;
 
                     let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
@@ -181,6 +198,10 @@ function GetSingleCommandDef(model: CodeModelAz, needUpdate: boolean = false, ne
                     }
 
                     if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                        continue;
+                    }
+                    
+                    if(!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
                         continue;
                     }
                     let requiredParam = model.MethodParameter_RequiredByMethod;
@@ -324,7 +345,7 @@ function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boole
     output.push("");
     output.push("");
 
-    output = output.concat(GetSingleCommandDef(model, needUpdate, needGeneric));
+    output = output.concat(GetSingleCommandDef(model, originalOperation, needUpdate, needGeneric));
     output = output.concat(GetSingleCommandBody(model, required, originalOperation, needGeneric))
     return output;
 }

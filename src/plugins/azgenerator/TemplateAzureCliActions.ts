@@ -33,6 +33,16 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                                     let actionName = model.Schema_ActionName(model.MethodParameter.schema);
                                     if (isNullOrUndefined(actionName)) {
                                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                                            let baseParam = model.MethodParameter;
+                                            while (model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam) {
+                                                let keyToMatch = baseParam.schema?.['discriminator']?.property?.language['python']?.name;
+                                                let valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
+                                                let subActionName = model.Schema_ActionName(model.MethodParameter.schema);
+                                                if (isNullOrUndefined(subActionName) || allActions.has(subActionName)) {
+                                                    continue;
+                                                }
+                                                output = output.concat(GetAction(model, subActionName, model.MethodParameter, keyToMatch, valueToMatch))
+                                            }
                                             continue;  
                                         }
                                         continue;
@@ -57,7 +67,7 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
 }
 
 
-function GetAction(model: CodeModelAz, actionName: string, param: Parameter) {
+function GetAction(model: CodeModelAz, actionName: string, param: Parameter, keyToMatch: string = null, valueToMatch: string = null) {
     let output: string[] = [];
     allActions.set(actionName, true);
 
@@ -102,6 +112,9 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter) {
                 if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
                     continue;
                 }
+                if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch) && model.Parameter_NamePython(model.SubMethodParameter) == keyToMatch) {
+                    continue;
+                }
                 output.push("            " + ifkv + " kl == '" + model.Parameter_NameAz(model.SubMethodParameter) + "':");
                 if (model.MethodParameter_IsArray) {
                     output.push("                d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = v");
@@ -116,6 +129,9 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter) {
     model.ExitSubMethodParameters();
     if (!foundProperties && preParamType == SchemaType.Dictionary) {
         output.push("            d[k] = v");
+    }
+    if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch)) {
+        output.push("        d['" + keyToMatch + "'] = '" + valueToMatch + "'");
     }
     output.push("        return d");
     return output;

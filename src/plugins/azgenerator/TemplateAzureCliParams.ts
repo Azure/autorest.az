@@ -145,10 +145,13 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         continue;
                     }
                     hasParam = true;
-                    if(isNullOrUndefined(originalOperation)) {
+                    if (isNullOrUndefined(originalOperation)) {
                         allPythonParam.set(model.MethodParameter_NamePython, true);
                     }
                     let parameterName = model.MethodParameter_MapsTo;
+                    if(!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
+                        continue;
+                    }
                     if (allPythonParam.has(parameterName)) {
                         allPythonParam.delete(parameterName);
                     }

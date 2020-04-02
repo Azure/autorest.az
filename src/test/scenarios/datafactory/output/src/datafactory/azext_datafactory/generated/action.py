@@ -52,8 +52,6 @@ class AddFactoryVstsConfiguration(argparse.Action):
                 d['project_name'] = v[0]
             elif kl == 'tenant-id':
                 d['tenant_id'] = v[0]
-            elif kl == 'type':
-                d['type'] = v[0]
             elif kl == 'account-name':
                 d['account_name'] = v[0]
             elif kl == 'repository-name':
@@ -64,6 +62,7 @@ class AddFactoryVstsConfiguration(argparse.Action):
                 d['root_folder'] = v[0]
             elif kl == 'last-commit-id':
                 d['last_commit_id'] = v[0]
+        d['type'] = 'FactoryVSTSConfiguration'
         return d
 
 
@@ -87,8 +86,6 @@ class AddFactoryGitHubConfiguration(argparse.Action):
             v = properties[k]
             if kl == 'host-name':
                 d['host_name'] = v[0]
-            elif kl == 'type':
-                d['type'] = v[0]
             elif kl == 'account-name':
                 d['account_name'] = v[0]
             elif kl == 'repository-name':
@@ -99,4 +96,5 @@ class AddFactoryGitHubConfiguration(argparse.Action):
                 d['root_folder'] = v[0]
             elif kl == 'last-commit-id':
                 d['last_commit_id'] = v[0]
+        d['type'] = 'FactoryGitHubConfiguration'
         return d
