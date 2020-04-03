@@ -21,20 +21,20 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
 @try_manual
-def setup(test):
+def setup(test, rg, rg_2, rg_3):
     pass
 
 
 # EXAMPLE: Operations_List
 @try_manual
-def step_operations_list(test):
+def step_operations_list(test, rg, rg_2, rg_3):
     # EXAMPLE NOT FOUND!
     pass
 
 
 # EXAMPLE: AttestationProviders_Create
 @try_manual
-def step_attestationproviders_create(test):
+def step_attestationproviders_create(test, rg, rg_2, rg_3):
     test.cmd('az attestation attestation-provider create '
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg}"',
@@ -43,7 +43,7 @@ def step_attestationproviders_create(test):
 
 # EXAMPLE: AttestationProviders_Get
 @try_manual
-def step_attestationproviders_get(test):
+def step_attestationproviders_get(test, rg, rg_2, rg_3):
     test.cmd('az attestation attestation-provider show '
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg}"',
@@ -51,20 +51,20 @@ def step_attestationproviders_get(test):
 
 
 @try_manual
-def mytest(test):
+def mytest(test, rg, rg_2, rg_3):
     pass
 
 
 # EXAMPLE: AttestationProviders_List
 @try_manual
-def step_attestationproviders_list(test):
+def step_attestationproviders_list(test, rg, rg_2, rg_3):
     test.cmd('az attestation attestation-provider list',
              checks=[])
 
 
 # EXAMPLE: AttestationProviders_ListByResourceGroup
 @try_manual
-def step_attestationproviders_listbyresourcegroup(test):
+def step_attestationproviders_listbyresourcegroup(test, rg, rg_2, rg_3):
     test.cmd('az attestation attestation-provider list '
              '--resource-group "{rg_2}"',
              checks=[])
@@ -72,7 +72,7 @@ def step_attestationproviders_listbyresourcegroup(test):
 
 # EXAMPLE: AttestationProviders_Delete
 @try_manual
-def step_attestationproviders_delete(test):
+def step_attestationproviders_delete(test, rg, rg_2, rg_3):
     test.cmd('az attestation attestation-provider delete '
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg_3}"',
@@ -80,23 +80,24 @@ def step_attestationproviders_delete(test):
 
 
 @try_manual
-def cleanup(test):
+def cleanup(test, rg, rg_2, rg_3):
     pass
 
 
 class AttestationManagementClientScenarioTest(ScenarioTest):
 
-    @ResourceGroupPreparer(name_prefix='cli_test_attestation_MyResourceGroup'[:9], key='rg')
-    @ResourceGroupPreparer(name_prefix='cli_test_attestation_testrg1'[:9], key='rg_2')
-    @ResourceGroupPreparer(name_prefix='cli_test_attestation_sample-resource-group'[:9], key='rg_3')
-    def test_attestation(self, resource_group):
+    @ResourceGroupPreparer(name_prefix='clitestattestation_MyResourceGroup'[:7], key='rg', parameter_name='rg')
+    @ResourceGroupPreparer(name_prefix='clitestattestation_testrg1'[:7], key='rg_2', parameter_name='rg_2')
+    @ResourceGroupPreparer(name_prefix='clitestattestation_sample-resource-group'[:7], key='rg_3', parameter_name='rg_3'
+                           '')
+    def test_attestation(self, rg, rg_2, rg_3):
 
-        setup(self)
-        step_operations_list(self)
-        step_attestationproviders_create(self)
-        step_attestationproviders_get(self)
-        mytest(self)
-        step_attestationproviders_list(self)
-        step_attestationproviders_listbyresourcegroup(self)
-        step_attestationproviders_delete(self)
-        cleanup(self)
+        setup(self, rg, rg_2, rg_3)
+        step_operations_list(self, rg, rg_2, rg_3)
+        step_attestationproviders_create(self, rg, rg_2, rg_3)
+        step_attestationproviders_get(self, rg, rg_2, rg_3)
+        mytest(self, rg, rg_2, rg_3)
+        step_attestationproviders_list(self, rg, rg_2, rg_3)
+        step_attestationproviders_listbyresourcegroup(self, rg, rg_2, rg_3)
+        step_attestationproviders_delete(self, rg, rg_2, rg_3)
+        cleanup(self, rg, rg_2, rg_3)
