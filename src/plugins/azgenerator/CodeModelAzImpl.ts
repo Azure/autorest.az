@@ -1185,17 +1185,30 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_IsHidden(): boolean {
-        let operation = this.Method;
-        if (operation.language['cli'].removed || operation.language['cli'].hidden) {
-            return true;
-        }
+
         let parameter = this.MethodParameter;
-        if (parameter?.language?.['cli']?.removed || parameter?.language?.['cli']?.hidden) {
-            return true;
-        } else {
-            return this.MethodParameter['hidden'] ? true : false;
+
+        if (!parameter.language['az'].hasOwnProperty('hidden')) {
+            if (parameter?.language?.['cli']?.removed || parameter?.language?.['cli']?.hidden) {
+                if (parameter.schema.defaultValue == undefined && parameter.required == true) {
+                    parameter.language['az'].hidden = false;
+                    this.session.message({
+                        Channel: Channel.Warning,
+                        Text: "OperationGroup " + this.GetModuleOperationName()
+                            + " operation " + this.Method_Name
+                            + " parameter " + parameter.language['az'].name
+                            + " should not be hidden while it is required without default value"
+                    });
+                }
+                else {
+                    parameter.language['az'].hidden = true;
+                }
+            } else {
+                parameter.language['az'].hidden = this.MethodParameter['hidden'] ? true : false;
+            }
         }
 
+        return parameter.language['az'].hidden;
     }
 
     public Parameter_IsHidden(parameter: Parameter): boolean {
