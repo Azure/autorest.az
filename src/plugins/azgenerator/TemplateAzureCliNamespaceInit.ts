@@ -20,5 +20,6 @@ export function GenerateNamespaceInit(model: CodeModelAz) : string[] {
     output.push("# --------------------------------------------------------------------------");
     output.push("");
     output.push("__path__ = __import__('pkgutil').extend_path(__path__, __name__)");
+    output.push("");
     return output;
 }

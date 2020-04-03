@@ -416,7 +416,7 @@ export class ResourcePool {
                     ret += `${kv[0]}="${this.formatable(v, placeholders)}"`;
                 }
                 else {
-                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length-2), isJson, false, placeholders, resources, exampleParam);
+                    let v = this.addEndpointResource(kv[1], isJson, false, placeholders, resources, exampleParam);
                     ret += `${kv[0]}=${this.formatable(v, placeholders)}`;
                 }
             }
