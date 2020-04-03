@@ -33,7 +33,7 @@ export function GenerateAzureCliTestInit(model: CodeModelAz) : string[] {
     output.push('        if not decorated_path.startswith(module_path):');
     output.push('            raise Exception("Decorator can only be used in submodules!")');
     output.push('        manual_path = os.path.join(');
-    output.push('            decorated_path[module_path.rfind(os.path.sep)+1:])');
+    output.push('            decorated_path[module_path.rfind(os.path.sep) + 1:])');
     output.push('        manual_file_path, manual_file_name = os.path.split(manual_path)');
     output.push('        module_name, _ = os.path.splitext(manual_file_name)');
     output.push('        manual_module = "..manual." + \\');
