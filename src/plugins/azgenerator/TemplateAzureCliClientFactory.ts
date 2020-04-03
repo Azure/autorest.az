@@ -19,7 +19,7 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
     if (model.Extension_ClientSubscriptionBound || model.Extension_ClientBaseUrlBound)
     {
         output.push("    return get_mgmt_service_client(cli_ctx, " + model.PythonMgmtClient + ",");
-        output.push("                                   subscription_bound=" + (model.Extension_ClientSubscriptionBound ? "True" : "False"));
+        output.push("                                   subscription_bound=" + (model.Extension_ClientSubscriptionBound ? "True" : "False") + ",");
         output.push("                                   base_url_bound=" + (model.Extension_ClientBaseUrlBound ? "True" : "False") + ")");
     }
     else
