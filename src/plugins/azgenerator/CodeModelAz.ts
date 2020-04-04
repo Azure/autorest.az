@@ -60,6 +60,8 @@ export interface CodeModelAz
     Extension_NameUnderscored: string;
     Extension_NameClass: string;
     Extension_TestScenario: any;
+    Extension_ClientSubscriptionBound: boolean;
+    Extension_ClientBaseUrlBound: boolean;
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;
