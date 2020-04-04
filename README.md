@@ -54,8 +54,10 @@ pipeline:
     az/modifiers:
         input: az/aznamer
         #output-artifact: source-file-modifiers
-    az/azgenerator:
+    az/merger:
         input: az/modifiers
+    az/azgenerator:
+        input: az/merger
         output-artifact: source-file-extension
     az/emitter:
         input:
