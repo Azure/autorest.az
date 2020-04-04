@@ -46,24 +46,28 @@ export function GenerateDefaultTestScenario(
 const SUBSCRIPTIONS = "subscriptions";
 const RESOUREGROUP = "resource-group";
 const VIRTUALNETWORK = "virtual-network";
+const STORAGEACCOUNT = "storage-account";
 const SUBNET = "subnet";
 
 let resourceClassDepends = {
     [RESOUREGROUP]: [],
     [VIRTUALNETWORK]: [RESOUREGROUP,],
     [SUBNET]: [VIRTUALNETWORK, RESOUREGROUP],
+    [STORAGEACCOUNT]: [RESOUREGROUP,],
 }
 
 let resourceLanguages = {
     [RESOUREGROUP]: ['resource-group', 'resourceGroupName', 'resourceGroups'],
     [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworkName', 'virtualNetworks'],
     [SUBNET]: ['subnet', 'subnetName', 'subnets'],
+    [STORAGEACCOUNT]: ['storage-account', 'storageAccountName', 'storageAccounts'],
 }
 
 let resourceClassKeys = {
     [RESOUREGROUP]: 'rg',
     [VIRTUALNETWORK]: 'vn',
     [SUBNET]: 'sn',
+    [STORAGEACCOUNT]: 'sa',
 }
 
 export function TopoSortResource() {
@@ -117,6 +121,7 @@ const preparerInfos = {
     [RESOUREGROUP]: new PreparerInfo('ResourceGroupPreparer', RESOUREGROUP, [], []),
     [VIRTUALNETWORK]: new PreparerInfo('VirtualNetworkPreparer', VIRTUALNETWORK, ['resource_group_key'], [RESOUREGROUP]),
     [SUBNET]: new PreparerInfo('VnetSubnetPreparer', SUBNET, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
+    [STORAGEACCOUNT]: new PreparerInfo('StorageAccountPreparer', STORAGEACCOUNT, ['resource_group_parameter_name'], [RESOUREGROUP]),
 }
 
 export class PreparerEntity {

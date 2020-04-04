@@ -13,7 +13,7 @@ az-output-folder: $(output-folder)
 
 use-extension:
   "@autorest/python": "5.0.0-dev.20200326.1"
-  "@autorest/clicommon": "0.4.2"
+  "@autorest/clicommon": "/Users/zhangqiaoqiao/work/code/autorest.cli.common"
   #"@autorest/python": "latest"
   
 cli:
@@ -48,20 +48,22 @@ modelerfour:
 pipeline:
     python/m2r:
         input: clicommon/identity
-    az/aznamer:
+    az/merger:
         input: python/namer
+        #output-artifact: source-file-merger
+    az/aznamer:
+        input: az/merger
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
         #output-artifact: source-file-modifiers
-    az/merger:
-        input: az/modifiers
     az/azgenerator:
-        input: az/merger
+        input: az/modifiers
         output-artifact: source-file-extension
     az/emitter:
         input:
             #- az/clicommon
+            #- az/merger
             #- az/aznamer
             #- az/modifiers
             - az/azgenerator
@@ -73,6 +75,7 @@ scope-az:
         #- source-file-pynamer
         #- source-file-aznamer
         #- source-file-modifiers
+        #- source-file-merger
         - source-file-extension
     output-folder: $(az-output-folder)
 

@@ -16,6 +16,7 @@ from azure.cli.core.commands.parameters import (
     resource_group_name_type,
     get_location_type
 )
+from azext_attestation.action import AddPolicySigningCertificatesKeys
 
 
 def load_arguments(self, _):
@@ -36,8 +37,11 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The supported Azure location where the a'
                    'ttestation service instance should be created.')
         c.argument('tags', tags_type, help='The tags that will be assigned to the attestation service instance.')
-        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of the attest'
-                   'ation service instance'))
+        c.argument('attestation_policy', help='Name of attestation policy.')
+        c.argument('policy_signing_certificates_keys', action=AddPolicySigningCertificatesKeys, nargs='+', help='The va'
+                   'lue of the "keys" parameter is an array of JWK values.  By default, the order of the JWK values wit'
+                   'hin the array does not imply an order of preference among them, although applications of JWK Sets c'
+                   'an choose to assign a meaning to the order for their purposes, if desired.')
 
     with self.argument_context('attestation attestation-provider update') as c:
         c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group. The name is c'

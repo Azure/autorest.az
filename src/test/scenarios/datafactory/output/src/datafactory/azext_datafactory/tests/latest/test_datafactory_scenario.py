@@ -21,13 +21,13 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
 @try_manual
-def setup(test):
+def setup(test, rg):
     pass
 
 
 # EXAMPLE: /Factories/put/Factories_CreateOrUpdate
 @try_manual
-def step__factories_put_factories_createorupdate(test):
+def step__factories_put_factories_createorupdate(test, rg):
     test.cmd('az datafactory factory create '
              '--location "East US" '
              '--factory-name "{exampleFactoryName}" '
@@ -37,7 +37,7 @@ def step__factories_put_factories_createorupdate(test):
 
 # EXAMPLE: /Factories/get/Factories_Get
 @try_manual
-def step__factories_get_factories_get(test):
+def step__factories_get_factories_get(test, rg):
     test.cmd('az datafactory factory show '
              '--factory-name "{exampleFactoryName}" '
              '--resource-group "{rg}"',
@@ -46,7 +46,7 @@ def step__factories_get_factories_get(test):
 
 # EXAMPLE: /Factories/get/Factories_ListByResourceGroup
 @try_manual
-def step__factories_get_factories_listbyresourcegroup(test):
+def step__factories_get_factories_listbyresourcegroup(test, rg):
     test.cmd('az datafactory factory list '
              '--resource-group "{rg}"',
              checks=[])
@@ -54,14 +54,14 @@ def step__factories_get_factories_listbyresourcegroup(test):
 
 # EXAMPLE: /Factories/get/Factories_List
 @try_manual
-def step__factories_get_factories_list(test):
+def step__factories_get_factories_list(test, rg):
     test.cmd('az datafactory factory list',
              checks=[])
 
 
 # EXAMPLE: /Factories/post/Factories_GetGitHubAccessToken
 @try_manual
-def step__factories_post_factories_getgithubaccesstoken(test):
+def step__factories_post_factories_getgithubaccesstoken(test, rg):
     test.cmd('az datafactory factory get-git-hub-access-token '
              '--factory-name "{exampleFactoryName}" '
              '--git-hub-access-code "some" '
@@ -73,7 +73,7 @@ def step__factories_post_factories_getgithubaccesstoken(test):
 
 # EXAMPLE: /Factories/post/Factories_GetDataPlaneAccess
 @try_manual
-def step__factories_post_factories_getdataplaneaccess(test):
+def step__factories_post_factories_getdataplaneaccess(test, rg):
     test.cmd('az datafactory factory get-data-plane-access '
              '--factory-name "{exampleFactoryName}" '
              '--access-resource-path "" '
@@ -87,7 +87,7 @@ def step__factories_post_factories_getdataplaneaccess(test):
 
 # EXAMPLE: /Factories/patch/Factories_Update
 @try_manual
-def step__factories_patch_factories_update(test):
+def step__factories_patch_factories_update(test, rg):
     test.cmd('az datafactory factory update '
              '--factory-name "{exampleFactoryName}" '
              '--tags exampleTag="exampleValue" '
@@ -97,7 +97,7 @@ def step__factories_patch_factories_update(test):
 
 # EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
 @try_manual
-def step__factories_post_factories_configurefactoryrepo(test):
+def step__factories_post_factories_configurefactoryrepo(test, rg):
     test.cmd('az datafactory factory configure-factory-repo '
              '--factory-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.DataFacto'
              'ry/factories/{exampleFactoryName}" '
@@ -110,7 +110,7 @@ def step__factories_post_factories_configurefactoryrepo(test):
 
 # EXAMPLE: /Factories/delete/Factories_Delete
 @try_manual
-def step__factories_delete_factories_delete(test):
+def step__factories_delete_factories_delete(test, rg):
     test.cmd('az datafactory factory delete '
              '--factory-name "{exampleFactoryName}" '
              '--resource-group "{rg}"',
@@ -118,31 +118,31 @@ def step__factories_delete_factories_delete(test):
 
 
 @try_manual
-def cleanup(test):
+def cleanup(test, rg):
     pass
 
 
 class DataFactoryManagementClientScenarioTest(ScenarioTest):
 
-    @ResourceGroupPreparer(name_prefix='cli_test_datafactory_exampleResourceGroup'[:9], key='rg')
-    def test_datafactory(self, resource_group):
+    @ResourceGroupPreparer(name_prefix='clitestdatafactory_exampleResourceGroup'[:7], key='rg', parameter_name='rg')
+    def test_datafactory(self, rg):
 
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
         })
 
         self.kwargs.update({
-            'exampleFactoryName': self.create_random_name(prefix='cli_test_factories'[:9], length=24),
+            'exampleFactoryName': self.create_random_name(prefix='clitestfactories'[:7], length=24),
         })
 
-        setup(self)
-        step__factories_put_factories_createorupdate(self)
-        step__factories_get_factories_get(self)
-        step__factories_get_factories_listbyresourcegroup(self)
-        step__factories_get_factories_list(self)
-        step__factories_post_factories_getgithubaccesstoken(self)
-        step__factories_post_factories_getdataplaneaccess(self)
-        step__factories_patch_factories_update(self)
-        step__factories_post_factories_configurefactoryrepo(self)
-        step__factories_delete_factories_delete(self)
-        cleanup(self)
+        setup(self, rg)
+        step__factories_put_factories_createorupdate(self, rg)
+        step__factories_get_factories_get(self, rg)
+        step__factories_get_factories_listbyresourcegroup(self, rg)
+        step__factories_get_factories_list(self, rg)
+        step__factories_post_factories_getgithubaccesstoken(self, rg)
+        step__factories_post_factories_getdataplaneaccess(self, rg)
+        step__factories_patch_factories_update(self, rg)
+        step__factories_post_factories_configurefactoryrepo(self, rg)
+        step__factories_delete_factories_delete(self, rg)
+        cleanup(self, rg)

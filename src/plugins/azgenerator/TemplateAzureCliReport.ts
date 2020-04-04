@@ -104,13 +104,13 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         continue;
                     }
                     allRequiredParam.set(optionName, true);
-                    requiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_Name + "|");
+                    requiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_Name + "|");
                 } else {
                     if(allNonRequiredParam.has(optionName)) {
                         continue;
                     }
                     allNonRequiredParam.set(optionName, true);
-                    nonrequiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_Name + "|");
+                    nonrequiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_Name + "|");
                 }
             }
             while (model.SelectNextMethodParameter());
