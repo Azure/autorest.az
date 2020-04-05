@@ -115,7 +115,7 @@ helps['managednetwork scope-assignment update'] = """
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managednetwork scope-assignment create --properties-assigned-managed-network "/subscriptions/subscrip\
+               az managednetwork scope-assignment update --properties-assigned-managed-network "/subscriptions/subscrip\
 tionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope "subs\
 criptions/subscriptionC" --scope-assignment-name "subscriptionCAssignment"
 """
@@ -177,7 +177,7 @@ helps['managednetwork managed-network-group update'] = """
     examples:
       - name: Create/Update Managed Network Group
         text: |-
-               az managednetwork managed-network-group create --properties-management-groups "[]" --properties-subnets \
+               az managednetwork managed-network-group update --properties-management-groups "[]" --properties-subnets \
 id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --\
 properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetwor\
 ks/VnetA" --properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/v\
@@ -242,7 +242,7 @@ helps['managednetwork managed-network-peering-policy update'] = """
     examples:
       - name: Create/Update Managed Network Peering Policy
         text: |-
-               az managednetwork managed-network-peering-policy create --managed-network-name "myManagedNetwork" --poli\
+               az managednetwork managed-network-peering-policy update --managed-network-name "myManagedNetwork" --poli\
 cy-name "myHubAndSpoke" --properties "{\\"type\\":\\"HubAndSpokeTopology\\",\\"hub\\":{\\"id\\":\\"/subscriptions/subsc\
 riptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myHubVnet\\"},\\"spokes\\":[{\\"id\
 \\":\\"/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/m\

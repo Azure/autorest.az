@@ -1167,8 +1167,8 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GetExampleItems(example: CommandExample, isTest: boolean): string[] {
         let parameters: string[] = [];
-        parameters.push("az " + this.CommandGroup_Name.split("_").join("-") + " " + example.Method)
-
+        parameters.push("az " + this.Command_Name);
+        
         for (let param of example.Parameters) {
             let param_value = param.value;
             if (isTest) {

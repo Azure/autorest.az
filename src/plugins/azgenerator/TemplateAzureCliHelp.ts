@@ -70,11 +70,8 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
     //    continue;
     let output: string[] = [];
     output.push("");
-    if (needUpdate) {
-        output.push("helps['" + model.Command_Name.replace(/ create/gi, " update") + "'] = \"\"\"");
-    } else {
-        output.push("helps['" + model.Command_Name + "'] = \"\"\"");
-    }
+    let commandHead = needUpdate? model.Command_Name.replace(/ create/gi, " update"): model.Command_Name;
+    output.push("helps['" + commandHead + "'] = \"\"\"");
     output.push("    type: command");
 
     // there will be just one method for create, update, delete, show, etc.
@@ -96,7 +93,7 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
         let parameters: string[] = [];
 
         parameters.push("az");
-        parameters = parameters.concat(model.Command_Name.split(" "));
+        parameters = parameters.concat(commandHead.split(" "));
         //parameters.push(method);
 
         for (let param of example.Parameters) {
