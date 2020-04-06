@@ -980,6 +980,9 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (this.Schema_Type(schema) == SchemaType.Array) {
             if (schema['elementType'].type == SchemaType.Object || schema['elementType'].type == SchemaType.Dictionary) {
                 for (let p of values(schema['elementType']?.properties)) {
+                    if (p['readOnly']) {
+                        continue;
+                    }
                     if (p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
                         return false;
                     } else if (p['schema'].type == SchemaType.Array) {
@@ -998,7 +1001,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                     else if (this.isComplexSchema(p['schema'].type)) {
                         return false;
-                }
+                    }
                 }
                 return true;
             }
@@ -1007,6 +1010,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                 return false;
             }
             for (let p of values(schema['properties'])) {
+                if (p['readOnly']) {
+                    continue;
+                }
                 if (p['schema'].type == SchemaType.Object || p['schema'].type == SchemaType.Dictionary) {
                     // objects.objects
                     return false;
@@ -1040,12 +1046,18 @@ export class CodeModelCliImpl implements CodeModelAz {
                 return false;
             } else if (p.type == SchemaType.Array) {
                 for (let mp of values(p.properties)) {
+                    if (mp['readOnly']) {
+                        continue;
+                    }
                     if (this.isComplexSchema(mp['schema'].type)) {
                         return false;
                     }
                 }
                 for(let parent of values(p['schema']?.['elementType']?.['parents']?.all)) {
                     for(let pp of values(parent['properties'])) {
+                        if (pp['readOnly']) {
+                            continue;
+                        }
                         if(this.isComplexSchema(pp['schema'].type)) {
                             return false;
                         }
