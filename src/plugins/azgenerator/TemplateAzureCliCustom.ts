@@ -165,8 +165,10 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
                         continue;
                     }
 
-                    if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                        continue;
+                    if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                        if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                            continue;
+                        }
                     }
 
                     if(!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
@@ -196,14 +198,17 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
                     if (model.MethodParameter_Type == SchemaType.Constant) {
                         continue;
                     }
-
-                    if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                        continue;
+                      
+                    if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                        if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                            continue;
+                        }
                     }
                     
                     if(!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
                         continue;
                     }
+
                     let requiredParam = model.MethodParameter_RequiredByMethod;
 
                     let name = model.MethodParameter_MapsTo;
@@ -214,8 +219,7 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
                     }
                 } while (model.SelectNextMethodParameter());
             }
-        }
-        while (model.SelectNextMethod());
+        } while (model.SelectNextMethod());
     }
 
     output[output.length - 1] += "):";
