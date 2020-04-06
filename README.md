@@ -13,7 +13,7 @@ az-output-folder: $(output-folder)
 
 use-extension:
   "@autorest/python": "5.0.0-dev.20200326.1"
-  "@autorest/clicommon": "0.4.3"
+  "@autorest/clicommon": "0.4.4"
   #"@autorest/python": "latest"
   
 cli:
