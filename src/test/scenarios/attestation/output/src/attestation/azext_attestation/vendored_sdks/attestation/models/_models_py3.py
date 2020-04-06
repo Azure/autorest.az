@@ -190,60 +190,41 @@ class AttestationServiceCreationParams(msrest.serialization.Model):
     :type location: str
     :param tags: A set of tags. The tags that will be assigned to the attestation service instance.
     :type tags: dict[str, str]
-    :param properties: Required. Properties of the attestation service instance.
-    :type properties: ~azure.mgmt.attestation.models.AttestationServiceCreationSpecificParams
+    :param attestation_policy: Name of attestation policy.
+    :type attestation_policy: str
+    :param keys: The value of the "keys" parameter is an array of JWK values.  By
+     default, the order of the JWK values within the array does not imply
+     an order of preference among them, although applications of JWK Sets
+     can choose to assign a meaning to the order for their purposes, if
+     desired.
+    :type keys: list[~azure.mgmt.attestation.models.JsonWebKey]
     """
 
     _validation = {
         'location': {'required': True},
-        'properties': {'required': True},
     }
 
     _attribute_map = {
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
-        'properties': {'key': 'properties', 'type': 'AttestationServiceCreationSpecificParams'},
+        'attestation_policy': {'key': 'properties.attestationPolicy', 'type': 'str'},
+        'keys': {'key': 'properties.policySigningCertificates.keys', 'type': '[JsonWebKey]'},
     }
 
     def __init__(
         self,
         *,
         location: str,
-        properties: "AttestationServiceCreationSpecificParams",
         tags: Optional[Dict[str, str]] = None,
+        attestation_policy: Optional[str] = None,
+        keys: Optional[List["JsonWebKey"]] = None,
         **kwargs
     ):
         super(AttestationServiceCreationParams, self).__init__(**kwargs)
         self.location = location
         self.tags = tags
-        self.properties = properties
-
-
-class AttestationServiceCreationSpecificParams(msrest.serialization.Model):
-    """Client supplied parameters used to create a new attestation service instance.
-
-    :param attestation_policy: Name of attestation policy.
-    :type attestation_policy: str
-    :param policy_signing_certificates: JSON Web Key Set defining a set of X.509 Certificates that
-     will represent the parent certificate for the signing certificate used for policy operations.
-    :type policy_signing_certificates: ~azure.mgmt.attestation.models.JsonWebKeySet
-    """
-
-    _attribute_map = {
-        'attestation_policy': {'key': 'attestationPolicy', 'type': 'str'},
-        'policy_signing_certificates': {'key': 'policySigningCertificates', 'type': 'JsonWebKeySet'},
-    }
-
-    def __init__(
-        self,
-        *,
-        attestation_policy: Optional[str] = None,
-        policy_signing_certificates: Optional["JsonWebKeySet"] = None,
-        **kwargs
-    ):
-        super(AttestationServiceCreationSpecificParams, self).__init__(**kwargs)
         self.attestation_policy = attestation_policy
-        self.policy_signing_certificates = policy_signing_certificates
+        self.keys = keys
 
 
 class AttestationServicePatchParams(msrest.serialization.Model):
@@ -428,31 +409,6 @@ class JsonWebKey(msrest.serialization.Model):
         self.x = x
         self.x5_c = x5_c
         self.y = y
-
-
-class JsonWebKeySet(msrest.serialization.Model):
-    """JsonWebKeySet.
-
-    :param keys: The value of the "keys" parameter is an array of JWK values.  By
-     default, the order of the JWK values within the array does not imply
-     an order of preference among them, although applications of JWK Sets
-     can choose to assign a meaning to the order for their purposes, if
-     desired.
-    :type keys: list[~azure.mgmt.attestation.models.JsonWebKey]
-    """
-
-    _attribute_map = {
-        'keys': {'key': 'keys', 'type': '[JsonWebKey]'},
-    }
-
-    def __init__(
-        self,
-        *,
-        keys: Optional[List["JsonWebKey"]] = None,
-        **kwargs
-    ):
-        super(JsonWebKeySet, self).__init__(**kwargs)
-        self.keys = keys
 
 
 class OperationList(msrest.serialization.Model):

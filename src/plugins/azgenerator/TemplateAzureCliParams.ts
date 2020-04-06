@@ -7,6 +7,7 @@ import { CodeModelAz } from "./CodeModelAz"
 import { EscapeString, ToCamelCase, Capitalize, ToMultiLine } from "../../utils/helper";
 import { SchemaType } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "./Header";
+import { isNullOrUndefined } from "util";
 
 
 let hasActions: boolean = false;
@@ -33,8 +34,18 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
             if (model.SelectFirstCommand()) {
                 do {
                     output_args = output_args.concat(getCommandBody(model));
-                    if (model.Command_CanSplit) {
-                        output_args = output_args.concat(getCommandBody(model, true));
+                    let originalOperation = model.Command_GetOriginalOperation;
+                    let genericParam = model.Command_GenericSetterParameter(model.Command);
+                    if(!isNullOrUndefined(originalOperation)) {
+                        genericParam = model.Command_GenericSetterParameter(originalOperation);
+                    }
+                    let needGeneric = false;
+                    if (!isNullOrUndefined(genericParam)) {
+                        needGeneric = true;
+                    }
+                    let needUpdate = model.Command_CanSplit;
+                    if (needUpdate) {
+                        output_args = output_args.concat(getCommandBody(model, needUpdate, needGeneric));
                     }
                 }
                 while (model.SelectNextCommand());
@@ -77,7 +88,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     return header.getLines().concat(output);
 }
 
-function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
+function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGeneric: boolean = false) {
     //let method: string = methods[mi];
 
     //let ctx = model.SelectCommand(method);
@@ -93,21 +104,58 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
 
     let hasParam = false;
     let allParam: Map<string, boolean> = new Map<string, boolean>();
+    let allPythonParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstMethod()) {
         do {
-
+            let originalOperation = model.Method_GetOriginalOperation;
+            if (!isNullOrUndefined(originalOperation)) {
+                for(let param of originalOperation.parameters) {
+                    if (model.Parameter_InGlobal(param)) {
+                        continue;
+                    }
+                    if (model.Parameter_IsFlattened(param) == true) {
+                        continue;
+                    }
+                    if (param?.schema?.type == SchemaType.Constant || param['readOnly']) {
+                        continue;
+                    }
+                    allPythonParam.set(param.language.python.name, true);
+                }
+                if(!isNullOrUndefined(originalOperation.requests[0].parameters)) {
+                    for(let param of originalOperation.requests[0].parameters) {
+                        if(model.Parameter_InGlobal(param)) {
+                            continue;
+                        }
+                        if (model.Parameter_IsFlattened(param) == true) {
+                            continue;
+                        }
+                        if (param?.schema?.type == SchemaType.Constant || param['readOnly']) {
+                            continue;
+                        }
+                        allPythonParam.set(param.language.python.name, true);
+                    }
+                }
+            }
+            let baseParam = null;
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
                         continue;
                     }
-                    if (model.MethodParameter_Type == SchemaType.Constant) {
+                    if (model.MethodParameter_Type == SchemaType.Constant || model.MethodParameter['readOnly']) {
                         continue;
                     }
                     hasParam = true;
-
+                    if (isNullOrUndefined(originalOperation)) {
+                        allPythonParam.set(model.MethodParameter_NamePython, true);
+                    }
                     let parameterName = model.MethodParameter_MapsTo;
-
+                    if(!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
+                        continue;
+                    }
+                    if (allPythonParam.has(parameterName)) {
+                        allPythonParam.delete(parameterName);
+                    }
                     if (allParam.has(parameterName)) {
                         continue;
                     }
@@ -115,9 +163,10 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     let argument = "        c.argument('" + parameterName + "'";
 
                     // this is to handle names like "format", "type", etc
-                    if (parameterName == "type" || parameterName == "format") {
-                        argument = "        c.argument('_" + parameterName + "'";
-                        argument += ", options_list=['--" + parameterName + "']";
+                    if (parameterName.endsWith("_")) {
+
+                        argument = "        c.argument('" + parameterName + "'";
+                        argument += ", options_list=['--" + parameterName.substr(0, parameterName.length - 1) + "']";
                     }
 
                     if (model.MethodParameter_Type == SchemaType.Boolean) {
@@ -149,11 +198,15 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     } else if (model.MethodParameter_IsSimpleArray) {
                         argument += ", nargs='+'";
                     } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                        if(model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                            baseParam = model.MethodParameter;
+                            continue;
+                        }
                         hasJson = true;
                         hasJsonLastTime = true;
                         argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "']";
                     } else if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
-                        let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
+                        let actionName: string = model.Schema_ActionName(model.MethodParameter.schema);
                         argument += ", action=" + actionName;
                         hasActions = true;
 
@@ -168,7 +221,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         argument += ")";
                         hasJsonLastTime = false;
                     }
-
+                    if (!isNullOrUndefined(baseParam) && model.MethodParameter['polyBaseParam'] == baseParam) {
+                        argument += ", arg_group='" + Capitalize(ToCamelCase(model.Parameter_MapsTo(baseParam))) + "'";
+                    }
                     argument += ")";
                     
                     ToMultiLine(argument, output_args);
@@ -176,9 +231,20 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
             }
         } while (model.SelectNextMethod());
     }
+    if(needGeneric && allPythonParam.size > 0) {
+        let argument = "        c.ignore(";
+        for(let k of allPythonParam.keys()) {
+            argument += "'" + k + "'" + ", ";
+        }
+        argument = argument.slice(0, -2) + ")";
+        hasParam = true;
+        ToMultiLine(argument, output_args);
+    }
+
     if (!hasParam) {
         output_args.push("        pass");
     }
+
 
     return output_args;
 }

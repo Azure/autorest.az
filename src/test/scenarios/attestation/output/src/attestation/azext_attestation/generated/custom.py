@@ -9,8 +9,6 @@
 # --------------------------------------------------------------------------
 # pylint: disable=too-many-lines
 
-import json
-
 
 def attestation_attestation_provider_list(cmd, client,
                                           resource_group_name=None):
@@ -30,15 +28,15 @@ def attestation_attestation_provider_create(cmd, client,
                                             resource_group_name,
                                             provider_name,
                                             location,
-                                            properties,
-                                            tags=None):
-    if isinstance(properties, str):
-        properties = json.loads(properties)
+                                            tags=None,
+                                            attestation_policy=None,
+                                            policy_signing_certificates_keys=None):
     return client.create(resource_group_name=resource_group_name,
                          provider_name=provider_name,
                          location=location,
                          tags=tags,
-                         properties=properties)
+                         attestation_policy=attestation_policy,
+                         keys=policy_signing_certificates_keys)
 
 
 def attestation_attestation_provider_update(cmd, client,

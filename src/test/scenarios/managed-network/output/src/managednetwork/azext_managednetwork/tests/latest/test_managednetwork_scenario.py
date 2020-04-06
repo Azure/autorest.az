@@ -49,13 +49,13 @@ def step_managednetworksput(test, rg):
 @try_manual
 def step_managementnetworkgroupsput(test, rg):
     test.cmd('az managednetwork managed-network-group create '
-             '--properties-management-groups "[]" '
-             '--properties-subnets id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtua'
-             'lNetworks/VnetA/subnets/subnetA" '
-             '--properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Netwo'
-             'rk/virtualNetworks/VnetA" '
-             '--properties-virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Netwo'
-             'rk/virtualNetworks/VnetB" '
+             '--management-groups "[]" '
+             '--subnets id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/V'
+             'netA/subnets/subnetA" '
+             '--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualN'
+             'etworks/VnetA" '
+             '--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualN'
+             'etworks/VnetB" '
              '--group-name "{myManagedNetworkGroup1}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
@@ -66,8 +66,8 @@ def step_managementnetworkgroupsput(test, rg):
 @try_manual
 def step_scopeassignmentsput(test, rg):
     test.cmd('az managednetwork scope-assignment create '
-             '--properties-assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Mic'
-             'rosoft.ManagedNetwork/managedNetworks/{myManagedNetwork}" '
+             '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Mana'
+             'gedNetwork/managedNetworks/{myManagedNetwork}" '
              '--scope "subscriptions/subscriptionC" '
              '--scope-assignment-name "{subscriptionCAssignment}"',
              checks=[])
@@ -76,13 +76,14 @@ def step_scopeassignmentsput(test, rg):
 # EXAMPLE: ManagedNetworkPeeringPoliciesPut
 @try_manual
 def step_managednetworkpeeringpoliciesput(test, rg):
-    test.cmd('az managednetwork managed-network-peering-policy create '
+    test.cmd('az managednetwork managed-network-peering-policy hub-and-spoke-topology create '
              '--managed-network-name "{myManagedNetwork}" '
              '--policy-name "{myHubAndSpoke}" '
-             '--properties "{{\\"type\\":\\"HubAndSpokeTopology\\",\\"hub\\":{{\\"id\\":\\"/subscriptions/{subscription'
-             '_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_4}\\"}},\\"spokes\\":[{{\\"id\\"'
-             ':\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/managedNetwor'
-             'ks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup1}\\"}}]}}" '
+             '--type "HubAndSpokeTopology" '
+             '--hub id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetwork'
+             's/{vn_4}" '
+             '--spokes id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/mana'
+             'gedNetworks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup1}" '
              '--resource-group "{rg}"',
              checks=[])
 
