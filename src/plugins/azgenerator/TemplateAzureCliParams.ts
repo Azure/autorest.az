@@ -69,6 +69,9 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     if (hasLocation) parameterImports.push("get_location_type");
 
     header.addFromImport("azure.cli.core.commands.parameters", parameterImports);
+    if (hasLocation) {
+        header.addFromImport('azure.cli.core.commands.validators', ['get_default_location_from_resource_group']);
+    }
 
     if (hasActions) {
         header.addFromImport("azext_" + model.Extension_NameUnderscored + ".action", actions);
@@ -185,16 +188,20 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                     }
 
                     let hasJsonLastTime = false;
-
+                    let needSkip = false;
                     if (parameterName == "resource_group_name") {
                         argument += ", resource_group_name_type";
                         hasResourceGroup = true;
+                        needSkip = true;
                     } else if (parameterName == "tags") {
                         argument += ", tags_type";
                         hasTags = true;
+                        needSkip = true;
                     } else if (parameterName == "location") {
                         argument += ", arg_type=get_location_type(self.cli_ctx)";
+                        argument += ", validator=get_default_location_from_resource_group";
                         hasLocation = true;
+                        needSkip = true;
                     } else if (model.MethodParameter_IsSimpleArray) {
                         argument += ", nargs='+'";
                     } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
@@ -216,14 +223,18 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         argument += ", nargs='+'";
                     }
 
-                    argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
-                    if (hasJsonLastTime) {
-                        argument += ")";
-                        hasJsonLastTime = false;
+                    if (!needSkip) {
+                        argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
+                    
+                        if (hasJsonLastTime) {
+                            argument += ")";
+                            hasJsonLastTime = false;
+                        }
+                        if (!isNullOrUndefined(baseParam) && model.MethodParameter['polyBaseParam'] == baseParam) {
+                            argument += ", arg_group='" + Capitalize(ToCamelCase(model.Parameter_MapsTo(baseParam))) + "'";
+                        }
                     }
-                    if (!isNullOrUndefined(baseParam) && model.MethodParameter['polyBaseParam'] == baseParam) {
-                        argument += ", arg_group='" + Capitalize(ToCamelCase(model.Parameter_MapsTo(baseParam))) + "'";
-                    }
+                    
                     argument += ")";
                     
                     ToMultiLine(argument, output_args);
