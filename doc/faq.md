@@ -7,37 +7,6 @@ Configuration can be put in either *xxx.cli.md* or *xxx.az.md* in *Azure/azure-r
 * xxx.az.md: the customization will only be applied to azure cli
 > Example can be found at [here](https://github.com/Azure/azure-rest-api-specs/tree/master/specification/logic/resource-manager)
 
-#### How to rename a parameter, operation or operationGroup
-
-There are two ways to rename a parameter:
-
-###### Option 1: using cli directive 
-
-This is supported in both xxx.cli.md and xxx.az.md
-
-Example:
-``` yaml
-cli:
-  cli-directive:
-    - where:
-        group: 'GroupNameOrRegex'
-        op: 'OperationNameOrRegex'
-        param: 'paramNameOrRegex'
-      name: 'new_name_in_snake_naming_convention'
-    - where:
-        group: 'GroupNameOrRegex'
-        op: 'OperationNameOrRegex'
-      name: 'new_name_in_snake_naming_convention'
-    - where:
-        group: 'GroupNameOrRegex'
-      name: 'new_name_in_snake_naming_convention'
-```
-More detail can be found in clicommon repo at [here](https://github.com/Azure/autorest.clicommon)
-
-###### Option 2: using az directive
-
-this is only supported in xxx.az.md, details can be found at [here](02-customizations.md)
-
 #### How to hide an operation, operationGroup, parameter
 
 Example:
@@ -57,7 +26,7 @@ cli:
         group: 'GroupNameOrRegex'
       hidden: true
 ```
-More detail can be found in clicommon repo at [here](https://github.com/Azure/autorest.clicommon)
+Check [here](https://github.com/Azure/autorest.clicommon/blob/master/doc/cli-directive.md) for how to figure out the names to use in cli-directive
 
 > Warning: when you want to hide a required parameter, please make sure the default value is provided for the parameter in swagger. We are working on the support for you to provide a default value through directive now
 
@@ -88,7 +57,38 @@ cli:
         group: 'GroupNameOrRegex'
       required: true
 ```
-More detail can be found in clicommon repo at [here](https://github.com/Azure/autorest.clicommon)
+Check [here](https://github.com/Azure/autorest.clicommon/blob/master/doc/cli-directive.md) for how to figure out the names to use in cli-directive
+
+#### How to rename a parameter, operation or operationGroup
+
+There are two ways to rename a parameter:
+
+###### Option 1: using cli directive 
+
+This is supported in both xxx.cli.md and xxx.az.md
+
+Example:
+``` yaml
+cli:
+  cli-directive:
+    - where:
+        group: 'GroupNameOrRegex'
+        op: 'OperationNameOrRegex'
+        param: 'paramNameOrRegex'
+      name: 'new_name_in_snake_naming_convention'
+    - where:
+        group: 'GroupNameOrRegex'
+        op: 'OperationNameOrRegex'
+      name: 'new_name_in_snake_naming_convention'
+    - where:
+        group: 'GroupNameOrRegex'
+      name: 'new_name_in_snake_naming_convention'
+```
+Check [here](https://github.com/Azure/autorest.clicommon/blob/master/doc/cli-directive.md) for how to figure out the names to use in cli-directive
+
+###### Option 2: using az directive
+
+this is only supported in xxx.az.md, details can be found at [here](02-customizations.md)
 
 #### How to set the help message of parameter, operation, group
 
@@ -116,7 +116,12 @@ cli:
         op: 'OperationNameOrRegex'
         param: 'paramNameOrRegex'
       json: true
+    - where:
+        type: 'typeNameOrRegex'
+        prop: 'propertyNameOrRegex'
+      json: true
 ```
+Check [here](https://github.com/Azure/autorest.clicommon/blob/master/doc/cli-directive.md) for how to figure out the names to use in cli-directive
 
 #### How is object type parameter handled
 
@@ -154,11 +159,17 @@ cli:
         param: 'paramNameOrRegex'
       flatten: false
     - where:
+        type: 'typeNameOrRegex'
+        prop: 'propertyNameOrRegex'
+      flatten: true
+    - where:
         group: 'GroupNameOrRegex'
         op: 'OperationNameOrRegex'
         param: 'paramNameOrRegex'
       json: true
 ```
+Check [here](https://github.com/Azure/autorest.clicommon/blob/master/doc/cli-directive.md) for how to figure out the names to use in cli-directive
+
 #### How is Dictionary type parameter handled
 
 ###### 1) Action parameter will be used if the value type of the dictionary only contains simple properties (i.e. string, int...))
@@ -178,6 +189,7 @@ cli:
         param: 'paramNameOrRegex'
       json: true
 ```
+Check [here](https://github.com/Azure/autorest.clicommon/blob/master/doc/cli-directive.md) for how to figure out the names to use in cli-directive
 
 ###### 2) Otherwise, Json parameter will be used
 Example:
@@ -243,6 +255,7 @@ cli:
             param: 'properties'
         poly-resource: true
 ```
+Check [here](https://github.com/Azure/autorest.clicommon/blob/master/doc/cli-directive.md) for how to figure out the names to use in cli-directive
 ``` batch
 # the generated command will looks like:
 az command dataset sql create --arguments_for_sql ...
