@@ -3,6 +3,7 @@ import { Session, startSession, Host, Channel } from "@azure-tools/autorest-exte
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { changeCamelToDash } from '../utils/helper';
+import { isNullOrUndefined } from "util";
 
 export class AzNamer {
     codeModel: CodeModel;
@@ -14,13 +15,21 @@ export class AzNamer {
     public methodMap(operationNameOri: string, httpProtocol: string) {
         let operationName = operationNameOri.toLowerCase();
         httpProtocol = httpProtocol.toLowerCase();
-
+        let subOperationGroupName = "";
+        let ons: Array<string> = [];
+        if(operationNameOri.indexOf('#') > -1) {
+            ons = operationNameOri.split('#');
+            if(ons && ons.length == 2) {
+                subOperationGroupName = changeCamelToDash(ons[1]);
+                operationName = ons[0].toLowerCase();
+            }
+        }
         if(operationName.startsWith("create") && httpProtocol == "put") {
-            return "create";
+            return subOperationGroupName == ""? "create": subOperationGroupName + " " + "create";
         } else if(operationName.startsWith("update") && (httpProtocol == "put" || httpProtocol == "patch")) {
-            return "update";
+            return subOperationGroupName == ""? "update": subOperationGroupName + " " + "update";
         } else if(operationName.startsWith("get") && httpProtocol == "get") {
-            return "show";
+            return subOperationGroupName == ""? "show": subOperationGroupName + " " + "show";
         } else if(operationName.startsWith("list") && httpProtocol == "get") {
             // for list scenarios like kusto, if there's list, listbyresourcegroup, listsku, listskubyresource
             // we should divide it into two groups 
@@ -30,13 +39,18 @@ export class AzNamer {
             // the split is valid only the By is not first word and the letter before By is capital and the letter after By is lowercase 
             const regex = /^(?<list>List[a-zA-Z0-9]*)(?<by>By[A-Z].*)$/;
             let groups = operationNameOri.match(regex);
+            let list = "list";
             if(groups && groups.length > 2) {
-                return changeCamelToDash(groups[1]);
+                list = changeCamelToDash(groups[1]);
             } else {
-                return changeCamelToDash(operationNameOri);
+                list = changeCamelToDash(operationNameOri);
             }
+            return subOperationGroupName == ""? list: subOperationGroupName + " " + list;
         } else if(operationName.startsWith("delete") && httpProtocol == "delete") {
-            return "delete";
+            return subOperationGroupName == ""? "delete": subOperationGroupName + " " + "delete";
+        }
+        if(subOperationGroupName != "") {
+            return subOperationGroupName + " " + changeCamelToDash(ons[0]);
         }
         return changeCamelToDash(operationNameOri);
     }
@@ -57,6 +71,7 @@ export class AzNamer {
         obj.language['az'] = new Language();
         obj.language['az']['name'] = obj.language['cli']? obj.language['cli']['name']: obj.language['python']['name'];
         obj.language['az']['name'] = changeCamelToDash(obj.language['az']['name']);
+        obj.language['az']['mapsto'] = obj.language['az']['name'].replace(/-/g, '_');
         obj.language['az']['description'] = obj.language['cli']? obj.language['cli']['description']: obj.language['python']['description'];;
     } 
 
@@ -121,10 +136,9 @@ export class AzNamer {
         if(extensionName == '' || extensionName == undefined) {
             this.session.message({Channel:Channel.Error, Text:"probably missing readme.az.md possible settings are:\naz:\n  extensions: managed-network\n  namespace: azure.mgmt.managednetwork\n  package-name: azure-mgmt-managednetwork\npython-sdk-output-folder: \"$(output-folder)/src/managed-network/azext_managed_network/vendored_sdks/managed-network\"\n"})
         }
-        this.codeModel.operationGroups.map(operationGroup => {
-            let index = this.codeModel.operationGroups.indexOf(operationGroup);
+        this.codeModel.operationGroups.forEach(operationGroup => {
             let operationGroupName = "";
-            if(operationGroup.language['cli'] != undefined) {
+            if(!isNullOrUndefined(operationGroup.language['cli'])) {
                 operationGroup.language['az'] = new Language();
                 operationGroup.language['az']['name'] = operationGroup.language['cli']['name'];
                 operationGroup.language['az']['description'] = operationGroup.language['cli']['description'];
@@ -135,9 +149,9 @@ export class AzNamer {
             let operations = operationGroup.operations;
             var hasUpdate = false;
             var operationIndex = -1;
-            operations.map(operation => {
+            operations.forEach(operation => {
                 operation.parameters.forEach(parameter => {
-                    if(parameter.language['cli'] != undefined) {
+                    if(!isNullOrUndefined(parameter.language['cli'])) {
                         this.getAzName(parameter);
                     }
                 });
@@ -145,10 +159,17 @@ export class AzNamer {
                     let operationName = "";
                     if(operation.language['cli'] != undefined) {
                         operation.language['az'] = new Language();
-                        operation.language['az']['name'] = this.methodMap(operation.language['cli']['name'], request.protocol.http.method);
+                        let commandName = this.methodMap(operation.language['cli']['name'], request.protocol.http.method);
+                        operation.language['az']['name'] = commandName;
                         operation.language['az']['description'] = operation.language['cli']['description'];
                         operationName = operationGroupName + " " +  changeCamelToDash(operation.language['az']['name']);
                         operation.language['az']['command'] = operationName;
+                        if(commandName.indexOf(" ") > -1) {
+                            operation.language['az']['subCommandGroup'] = operationGroupName + " " + commandName.split(' ')[0];
+                        }
+                        if(operation.language['cli']['name'].toLowerCase() == "createorupdate" || operation.language['cli']['name'].toLowerCase().startsWith("createorupdate#")) {
+                            operation['canSplitOperation'] = true;
+                        }
                     } else {
                         this.session.message({Channel:Channel.Warning, Text: "OperationGroup " + operationGroup.language.default.name + " operation " + operation.language.default.name + " doesn't have cli"});
                     }
@@ -161,15 +182,13 @@ export class AzNamer {
                     }
                 });
                 
-                if(operation.language['cli']['name'].toLowerCase() == "createorupdate") {
-                    operationIndex = operations.indexOf(operation);
-                }
+                
                 if(operation.language['cli']['name'].toLowerCase() == "update") {
                     hasUpdate = true;
                 }
             });
-            if(!hasUpdate && operationIndex != -1) {
-                operations[operationIndex]['canSplitOperation'] = true;
+            if(hasUpdate) {
+                operationGroup.language['az']['hasUpdate'] = hasUpdate;
             }
         });
     }

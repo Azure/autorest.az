@@ -10,11 +10,9 @@ try:
     from ._models_py3 import AttestationProvider
     from ._models_py3 import AttestationProviderListResult
     from ._models_py3 import AttestationServiceCreationParams
-    from ._models_py3 import AttestationServiceCreationSpecificParams
     from ._models_py3 import AttestationServicePatchParams
     from ._models_py3 import CloudErrorBody
     from ._models_py3 import JsonWebKey
-    from ._models_py3 import JsonWebKeySet
     from ._models_py3 import OperationList
     from ._models_py3 import OperationsDefinition
     from ._models_py3 import OperationsDisplayDefinition
@@ -24,11 +22,9 @@ except (SyntaxError, ImportError):
     from ._models import AttestationProvider  # type: ignore
     from ._models import AttestationProviderListResult  # type: ignore
     from ._models import AttestationServiceCreationParams  # type: ignore
-    from ._models import AttestationServiceCreationSpecificParams  # type: ignore
     from ._models import AttestationServicePatchParams  # type: ignore
     from ._models import CloudErrorBody  # type: ignore
     from ._models import JsonWebKey  # type: ignore
-    from ._models import JsonWebKeySet  # type: ignore
     from ._models import OperationList  # type: ignore
     from ._models import OperationsDefinition  # type: ignore
     from ._models import OperationsDisplayDefinition  # type: ignore
@@ -43,11 +39,9 @@ __all__ = [
     'AttestationProvider',
     'AttestationProviderListResult',
     'AttestationServiceCreationParams',
-    'AttestationServiceCreationSpecificParams',
     'AttestationServicePatchParams',
     'CloudErrorBody',
     'JsonWebKey',
-    'JsonWebKeySet',
     'OperationList',
     'OperationsDefinition',
     'OperationsDisplayDefinition',

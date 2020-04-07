@@ -128,6 +128,7 @@ class ScopeAssignmentOperations:
 
         _parameters = models.ScopeAssignment(location=location, assigned_managed_network=assigned_managed_network)
         api_version = "2019-06-01-preview"
+        content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
         url = self.create_or_update.metadata['url']
@@ -143,8 +144,8 @@ class ScopeAssignmentOperations:
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = kwargs.pop('content_type', 'application/json')
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]

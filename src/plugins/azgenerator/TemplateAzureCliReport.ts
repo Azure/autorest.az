@@ -5,6 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { ParameterLocation, SchemaType } from "@azure-tools/codemodel";
+import { isNullOrUndefined } from "util";
 
 export function GenerateAzureCliReport(model: CodeModelAz) : string[] {
     var output: string[] = [];
@@ -80,25 +81,36 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
             }
 
             // first parameters that are required
+            let originalOperation = model.Method_GetOriginalOperation;
             do
             {
                 if(model.MethodParameter_IsFlattened || model.MethodParameter_Type == SchemaType.Constant) {
                     continue;
                 }
-                
+                if(model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                    continue;
+                }
+                if(!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
+                    continue;
+                }
+                let optionName = model.MethodParameter_MapsTo;
+                if (optionName.endsWith("_")) {
+                    optionName = optionName.substr(0, optionName.length - 1);
+                }
+                optionName = optionName.replace(/_/g, '-');
                 if (model.MethodParameter_IsRequired)
                 {
-                    if(allRequiredParam.has(model.MethodParameter_Name)) {
+                    if(allRequiredParam.has(optionName)) {
                         continue;
                     }
-                    allRequiredParam.set(model.MethodParameter_Name, true);
-                    requiredmo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_MapsTo + "|");
+                    allRequiredParam.set(optionName, true);
+                    requiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_Name + "|");
                 } else {
-                    if(allNonRequiredParam.has(model.MethodParameter_Name)) {
+                    if(allNonRequiredParam.has(optionName)) {
                         continue;
                     }
-                    allNonRequiredParam.set(model.MethodParameter_Name, true);
-                    nonrequiredmo.push("|**--" + model.MethodParameter_Name + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_NamePython + "|" + model.MethodParameter_MapsTo + "|");
+                    allNonRequiredParam.set(optionName, true);
+                    nonrequiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_Name + "|");
                 }
             }
             while (model.SelectNextMethodParameter());

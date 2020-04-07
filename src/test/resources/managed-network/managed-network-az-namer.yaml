@@ -19,6 +19,7 @@ schemas:
       az:
         name: integer
         description: ''
+        mapsto: integer
       cli:
         name: Integer
         description: ''
@@ -33,6 +34,7 @@ schemas:
       az:
         name: string
         description: simple string
+        mapsto: string
       cli:
         name: String
         description: simple string
@@ -48,6 +50,7 @@ schemas:
       az:
         name: string
         description: ''
+        mapsto: string
       cli:
         name: String
         description: ''
@@ -63,6 +66,7 @@ schemas:
       az:
         name: resource-id
         description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
+        mapsto: resource_id
       cli:
         name: ResourceId
         description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
@@ -78,6 +82,7 @@ schemas:
       az:
         name: resource-name
         description: The name of the resource
+        mapsto: resource_name
       cli:
         name: ResourceName
         description: The name of the resource
@@ -93,6 +98,7 @@ schemas:
       az:
         name: resource-type
         description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+        mapsto: resource_type
       cli:
         name: ResourceType
         description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
@@ -112,6 +118,7 @@ schemas:
       az:
         name: resource-location
         description: The geo-location where the resource lives
+        mapsto: resource_location
       cli:
         name: ResourceLocation
         description: The geo-location where the resource lives
@@ -127,6 +134,7 @@ schemas:
       az:
         name: resource-properties-etag
         description: A unique read-only string that changes whenever the resource is updated.
+        mapsto: resource_properties_etag
       cli:
         name: ResourcePropertiesEtag
         description: A unique read-only string that changes whenever the resource is updated.
@@ -142,6 +150,7 @@ schemas:
       az:
         name: resource-id
         description: Resource Id
+        mapsto: resource_id
       cli:
         name: ResourceId
         description: Resource Id
@@ -157,6 +166,7 @@ schemas:
       az:
         name: error-response-code
         description: The error code.
+        mapsto: error_response_code
       cli:
         name: ErrorResponseCode
         description: The error code.
@@ -172,6 +182,7 @@ schemas:
       az:
         name: error-response-message
         description: The error message.
+        mapsto: error_response_message
       cli:
         name: ErrorResponseMessage
         description: The error message.
@@ -187,6 +198,7 @@ schemas:
       az:
         name: managed-network-list-result-next-link
         description: Gets the URL to get the next page of results.
+        mapsto: managed_network_list_result_next_link
       cli:
         name: ManagedNetworkListResultNextLink
         description: Gets the URL to get the next page of results.
@@ -202,6 +214,7 @@ schemas:
       az:
         name: scope-assignment-properties-assigned-managed-network
         description: The managed network ID with scope will be assigned to.
+        mapsto: scope_assignment_properties_assigned_managed_network
       cli:
         name: ScopeAssignmentPropertiesAssignedManagedNetwork
         description: The managed network ID with scope will be assigned to.
@@ -217,6 +230,7 @@ schemas:
       az:
         name: scope-assignment-list-result-next-link
         description: Gets the URL to get the next set of results.
+        mapsto: scope_assignment_list_result_next_link
       cli:
         name: ScopeAssignmentListResultNextLink
         description: Gets the URL to get the next set of results.
@@ -232,6 +246,7 @@ schemas:
       az:
         name: managed-network-group-list-result-next-link
         description: Gets the URL to get the next set of results.
+        mapsto: managed_network_group_list_result_next_link
       cli:
         name: ManagedNetworkGroupListResultNextLink
         description: Gets the URL to get the next set of results.
@@ -247,6 +262,7 @@ schemas:
       az:
         name: managed-network-peering-policy-list-result-next-link
         description: Gets the URL to get the next page of results.
+        mapsto: managed_network_peering_policy_list_result_next_link
       cli:
         name: ManagedNetworkPeeringPolicyListResultNextLink
         description: Gets the URL to get the next page of results.
@@ -262,6 +278,7 @@ schemas:
       az:
         name: operation-name
         description: 'Operation name: {provider}/{resource}/{operation}'
+        mapsto: operation_name
       cli:
         name: OperationName
         description: 'Operation name: {provider}/{resource}/{operation}'
@@ -277,6 +294,7 @@ schemas:
       az:
         name: operation-display-provider
         description: 'Service provider: Microsoft.ManagedNetwork'
+        mapsto: operation_display_provider
       cli:
         name: OperationDisplayProvider
         description: 'Service provider: Microsoft.ManagedNetwork'
@@ -292,6 +310,7 @@ schemas:
       az:
         name: operation-display-resource
         description: 'Resource on which the operation is performed: Profile, endpoint, etc.'
+        mapsto: operation_display_resource
       cli:
         name: OperationDisplayResource
         description: 'Resource on which the operation is performed: Profile, endpoint, etc.'
@@ -307,6 +326,7 @@ schemas:
       az:
         name: operation-display-operation
         description: 'Operation type: Read, write, delete, etc.'
+        mapsto: operation_display_operation
       cli:
         name: OperationDisplayOperation
         description: 'Operation type: Read, write, delete, etc.'
@@ -322,6 +342,7 @@ schemas:
       az:
         name: operation-list-result-next-link
         description: URL to get the next set of operation list results if there are any.
+        mapsto: operation_list_result_next_link
       cli:
         name: OperationListResultNextLink
         description: URL to get the next set of operation list results if there are any.
@@ -337,6 +358,7 @@ schemas:
         az:
           name: updating
           description: ''
+          mapsto: updating
         cli:
           name: Updating
           description: ''
@@ -349,6 +371,7 @@ schemas:
         az:
           name: deleting
           description: ''
+          mapsto: deleting
         cli:
           name: Deleting
           description: ''
@@ -361,6 +384,7 @@ schemas:
         az:
           name: failed
           description: ''
+          mapsto: failed
         cli:
           name: Failed
           description: ''
@@ -373,6 +397,7 @@ schemas:
         az:
           name: succeeded
           description: ''
+          mapsto: succeeded
         cli:
           name: Succeeded
           description: ''
@@ -388,6 +413,7 @@ schemas:
       az:
         name: provisioning-state
         description: Provisioning state of the ManagedNetwork resource.
+        mapsto: provisioning_state
       cli:
         name: ProvisioningState
         description: Provisioning state of the ManagedNetwork resource.
@@ -403,6 +429,7 @@ schemas:
         az:
           name: hub-and-spoke-topology
           description: ''
+          mapsto: hub_and_spoke_topology
         cli:
           name: HubAndSpokeTopology
           description: ''
@@ -415,6 +442,7 @@ schemas:
         az:
           name: mesh-topology
           description: ''
+          mapsto: mesh_topology
         cli:
           name: MeshTopology
           description: ''
@@ -430,6 +458,7 @@ schemas:
       az:
         name: type
         description: Gets or sets the connectivity type of a network structure policy
+        mapsto: type
       cli:
         name: Type
         description: Gets or sets the connectivity type of a network structure policy
@@ -448,6 +477,7 @@ schemas:
       az:
         name: api-version20190601-preview
         description: Api Version (2019-06-01-preview)
+        mapsto: api_version20190601_preview
       cli:
         name: ApiVersion20190601Preview
         description: Api Version (2019-06-01-preview)
@@ -466,6 +496,7 @@ schemas:
       az:
         name: kind
         description: Responsibility role under which this Managed Network Group will be created
+        mapsto: kind
       cli:
         name: Kind
         description: Responsibility role under which this Managed Network Group will be created
@@ -481,6 +512,7 @@ schemas:
       az:
         name: tracked-resource-tags
         description: Resource tags
+        mapsto: tracked_resource_tags
       cli:
         name: TrackedResourceTags
         description: Resource tags
@@ -495,6 +527,7 @@ schemas:
       az:
         name: managed-network-update-tags
         description: Resource tags
+        mapsto: managed_network_update_tags
       cli:
         name: ManagedNetworkUpdateTags
         description: Resource tags
@@ -564,6 +597,7 @@ schemas:
                                   az:
                                     name: id
                                     description: Resource Id
+                                    mapsto: id
                                   cli:
                                     name: id
                                     description: Resource Id
@@ -582,6 +616,7 @@ schemas:
                                 az:
                                   name: resource-id
                                   description: Generic pointer to a resource
+                                  mapsto: resource_id
                                 cli:
                                   name: ResourceId
                                   description: Generic pointer to a resource
@@ -594,6 +629,7 @@ schemas:
                               az:
                                 name: managed-network-group-properties-management-groups
                                 description: The collection of management groups covered by the Managed Network
+                                mapsto: managed_network_group_properties_management_groups
                               cli:
                                 name: ManagedNetworkGroupPropertiesManagementGroups
                                 description: The collection of management groups covered by the Managed Network
@@ -606,6 +642,7 @@ schemas:
                             az:
                               name: management-groups
                               description: The collection of management groups covered by the Managed Network
+                              mapsto: management_groups
                             cli: &ref_27
                               name: managementGroups
                               description: The collection of management groups covered by the Managed Network
@@ -624,6 +661,7 @@ schemas:
                               az:
                                 name: managed-network-group-properties-subscriptions
                                 description: The collection of subscriptions covered by the Managed Network
+                                mapsto: managed_network_group_properties_subscriptions
                               cli:
                                 name: ManagedNetworkGroupPropertiesSubscriptions
                                 description: The collection of subscriptions covered by the Managed Network
@@ -636,6 +674,7 @@ schemas:
                             az:
                               name: subscriptions
                               description: The collection of subscriptions covered by the Managed Network
+                              mapsto: subscriptions
                             cli: &ref_29
                               name: subscriptions
                               description: The collection of subscriptions covered by the Managed Network
@@ -653,6 +692,7 @@ schemas:
                               az:
                                 name: managed-network-group-properties-virtual-networks
                                 description: The collection of virtual nets covered by the Managed Network
+                                mapsto: managed_network_group_properties_virtual_networks
                               cli:
                                 name: ManagedNetworkGroupPropertiesVirtualNetworks
                                 description: The collection of virtual nets covered by the Managed Network
@@ -665,6 +705,7 @@ schemas:
                             az:
                               name: virtual-networks
                               description: The collection of virtual nets covered by the Managed Network
+                              mapsto: virtual_networks
                             cli: &ref_31
                               name: virtualNetworks
                               description: The collection of virtual nets covered by the Managed Network
@@ -682,6 +723,7 @@ schemas:
                               az:
                                 name: managed-network-group-properties-subnets
                                 description: The collection of  subnets covered by the Managed Network
+                                mapsto: managed_network_group_properties_subnets
                               cli:
                                 name: ManagedNetworkGroupPropertiesSubnets
                                 description: The collection of  subnets covered by the Managed Network
@@ -694,6 +736,7 @@ schemas:
                             az:
                               name: subnets
                               description: The collection of  subnets covered by the Managed Network
+                              mapsto: subnets
                             cli: &ref_33
                               name: subnets
                               description: The collection of  subnets covered by the Managed Network
@@ -714,6 +757,7 @@ schemas:
                           az:
                             name: managed-network-group-properties
                             description: Properties of a Managed Network Group
+                            mapsto: managed_network_group_properties
                           cli:
                             name: ManagedNetworkGroupProperties
                             description: Properties of a Managed Network Group
@@ -746,6 +790,7 @@ schemas:
                                 az:
                                   name: hub
                                   description: Gets or sets the hub virtual network ID
+                                  mapsto: hub
                                 cli:
                                   name: hub
                                   description: Gets or sets the hub virtual network ID
@@ -763,6 +808,7 @@ schemas:
                                   az:
                                     name: hub-and-spoke-peering-policy-properties-spokes
                                     description: Gets or sets the spokes group IDs
+                                    mapsto: hub_and_spoke_peering_policy_properties_spokes
                                   cli:
                                     name: HubAndSpokePeeringPolicyPropertiesSpokes
                                     description: Gets or sets the spokes group IDs
@@ -775,6 +821,7 @@ schemas:
                                 az:
                                   name: spokes
                                   description: Gets or sets the spokes group IDs
+                                  mapsto: spokes
                                 cli:
                                   name: spokes
                                   description: Gets or sets the spokes group IDs
@@ -795,6 +842,7 @@ schemas:
                               az:
                                 name: hub-and-spoke-peering-policy-properties
                                 description: Properties of a Hub and Spoke Peering Policy
+                                mapsto: hub_and_spoke_peering_policy_properties
                               cli:
                                 name: HubAndSpokePeeringPolicyProperties
                                 description: Properties of a Hub and Spoke Peering Policy
@@ -824,6 +872,7 @@ schemas:
                                   az:
                                     name: mesh-peering-policy-properties-mesh
                                     description: Gets or sets the mesh group IDs
+                                    mapsto: mesh_peering_policy_properties_mesh
                                   cli:
                                     name: MeshPeeringPolicyPropertiesMesh
                                     description: Gets or sets the mesh group IDs
@@ -836,6 +885,7 @@ schemas:
                                 az:
                                   name: mesh
                                   description: Gets or sets the mesh group IDs
+                                  mapsto: mesh
                                 cli:
                                   name: mesh
                                   description: Gets or sets the mesh group IDs
@@ -856,6 +906,7 @@ schemas:
                               az:
                                 name: mesh-peering-policy-properties
                                 description: Properties of a Mesh Peering Policy
+                                mapsto: mesh_peering_policy_properties
                               cli:
                                 name: MeshPeeringPolicyProperties
                                 description: Properties of a Mesh Peering Policy
@@ -883,6 +934,7 @@ schemas:
                               az:
                                 name: type
                                 description: Gets or sets the connectivity type of a network structure policy
+                                mapsto: type
                               cli:
                                 name: type
                                 description: Gets or sets the connectivity type of a network structure policy
@@ -906,6 +958,7 @@ schemas:
                             az:
                               name: hub
                               description: Gets or sets the hub virtual network ID
+                              mapsto: hub
                             cli:
                               name: hub
                               description: Gets or sets the hub virtual network ID
@@ -923,6 +976,7 @@ schemas:
                               az:
                                 name: managed-network-peering-policy-properties-spokes
                                 description: Gets or sets the spokes group IDs
+                                mapsto: managed_network_peering_policy_properties_spokes
                               cli:
                                 name: ManagedNetworkPeeringPolicyPropertiesSpokes
                                 description: Gets or sets the spokes group IDs
@@ -936,6 +990,7 @@ schemas:
                             az:
                               name: spokes
                               description: Gets or sets the spokes group IDs
+                              mapsto: spokes
                             cli:
                               name: spokes
                               description: Gets or sets the spokes group IDs
@@ -953,6 +1008,7 @@ schemas:
                               az:
                                 name: managed-network-peering-policy-properties-mesh
                                 description: Gets or sets the mesh group IDs
+                                mapsto: managed_network_peering_policy_properties_mesh
                               cli:
                                 name: ManagedNetworkPeeringPolicyPropertiesMesh
                                 description: Gets or sets the mesh group IDs
@@ -966,6 +1022,7 @@ schemas:
                             az:
                               name: mesh
                               description: Gets or sets the mesh group IDs
+                              mapsto: mesh
                             cli:
                               name: mesh
                               description: Gets or sets the mesh group IDs
@@ -984,6 +1041,7 @@ schemas:
                           az:
                             name: managed-network-peering-policy-properties
                             description: Properties of a Managed Network Peering Policy
+                            mapsto: managed_network_peering_policy_properties
                           cli:
                             name: ManagedNetworkPeeringPolicyProperties
                             description: Properties of a Managed Network Peering Policy
@@ -1009,6 +1067,7 @@ schemas:
                             az:
                               name: assigned-managed-network
                               description: The managed network ID with scope will be assigned to.
+                              mapsto: assigned_managed_network
                             cli: &ref_22
                               name: assignedManagedNetwork
                               description: The managed network ID with scope will be assigned to.
@@ -1029,6 +1088,7 @@ schemas:
                           az:
                             name: scope-assignment-properties
                             description: Properties of Managed Network
+                            mapsto: scope_assignment_properties
                           cli:
                             name: ScopeAssignmentProperties
                             description: Properties of Managed Network
@@ -1052,6 +1112,7 @@ schemas:
                         az:
                           name: provisioning-state
                           description: Provisioning state of the ManagedNetwork resource.
+                          mapsto: provisioning_state
                         cli: &ref_20
                           name: provisioningState
                           description: Provisioning state of the ManagedNetwork resource.
@@ -1067,6 +1128,7 @@ schemas:
                         az:
                           name: etag
                           description: A unique read-only string that changes whenever the resource is updated.
+                          mapsto: etag
                         cli: &ref_21
                           name: etag
                           description: A unique read-only string that changes whenever the resource is updated.
@@ -1085,6 +1147,7 @@ schemas:
                       az:
                         name: resource-properties
                         description: Base for resource properties.
+                        mapsto: resource_properties
                       cli:
                         name: ResourceProperties
                         description: Base for resource properties.
@@ -1131,6 +1194,7 @@ schemas:
                                   az:
                                     name: properties
                                     description: Gets or sets the properties of a Managed Network Policy
+                                    mapsto: properties
                                   cli: &ref_148
                                     name: properties
                                     description: Gets or sets the properties of a Managed Network Policy
@@ -1149,6 +1213,7 @@ schemas:
                                 az:
                                   name: managed-network-peering-policy
                                   description: The Managed Network Peering Policy resource
+                                  mapsto: managed_network_peering_policy
                                 cli:
                                   name: ManagedNetworkPeeringPolicy
                                   description: The Managed Network Peering Policy resource
@@ -1178,6 +1243,7 @@ schemas:
                                   az:
                                     name: provisioning-state
                                     description: Provisioning state of the ManagedNetwork resource.
+                                    mapsto: provisioning_state
                                   cli: *ref_20
                                 protocol: {}
                               - schema: *ref_17
@@ -1193,6 +1259,7 @@ schemas:
                                   az:
                                     name: etag
                                     description: A unique read-only string that changes whenever the resource is updated.
+                                    mapsto: etag
                                   cli: *ref_21
                                 protocol: {}
                               - &ref_108
@@ -1208,6 +1275,7 @@ schemas:
                                   az:
                                     name: assigned-managed-network
                                     description: The managed network ID with scope will be assigned to.
+                                    mapsto: assigned_managed_network
                                   cli: *ref_22
                                 protocol: {}
                               serializationFormats:
@@ -1223,6 +1291,7 @@ schemas:
                                 az:
                                   name: scope-assignment
                                   description: The Managed Network resource
+                                  mapsto: scope_assignment
                                 cli:
                                   name: ScopeAssignment
                                   description: The Managed Network resource
@@ -1250,6 +1319,7 @@ schemas:
                             az:
                               name: proxy-resource
                               description: The resource model definition for a ARM proxy resource. It will have everything other than required location and tags
+                              mapsto: proxy_resource
                             cli:
                               name: ProxyResource
                               description: The resource model definition for a ARM proxy resource. It will have everything other than required location and tags
@@ -1269,6 +1339,7 @@ schemas:
                           az:
                             name: kind
                             description: Responsibility role under which this Managed Network Group will be created
+                            mapsto: kind
                           cli: &ref_122
                             name: kind
                             description: Responsibility role under which this Managed Network Group will be created
@@ -1287,6 +1358,7 @@ schemas:
                           az:
                             name: provisioning-state
                             description: Provisioning state of the ManagedNetwork resource.
+                            mapsto: provisioning_state
                           cli: *ref_20
                         protocol: {}
                       - schema: *ref_17
@@ -1302,6 +1374,7 @@ schemas:
                           az:
                             name: etag
                             description: A unique read-only string that changes whenever the resource is updated.
+                            mapsto: etag
                           cli: *ref_21
                         protocol: {}
                       - &ref_123
@@ -1317,6 +1390,7 @@ schemas:
                           az:
                             name: management-groups
                             description: The collection of management groups covered by the Managed Network
+                            mapsto: management_groups
                           cli: *ref_27
                         protocol: {}
                       - &ref_124
@@ -1332,6 +1406,7 @@ schemas:
                           az:
                             name: subscriptions
                             description: The collection of subscriptions covered by the Managed Network
+                            mapsto: subscriptions
                           cli: *ref_29
                         protocol: {}
                       - &ref_125
@@ -1347,6 +1422,7 @@ schemas:
                           az:
                             name: virtual-networks
                             description: The collection of virtual nets covered by the Managed Network
+                            mapsto: virtual_networks
                           cli: *ref_31
                         protocol: {}
                       - &ref_126
@@ -1362,6 +1438,7 @@ schemas:
                           az:
                             name: subnets
                             description: The collection of  subnets covered by the Managed Network
+                            mapsto: subnets
                           cli: *ref_33
                         protocol: {}
                       serializationFormats:
@@ -1377,6 +1454,7 @@ schemas:
                         az:
                           name: managed-network-group
                           description: The Managed Network Group resource
+                          mapsto: managed_network_group
                         cli:
                           name: ManagedNetworkGroup
                           description: The Managed Network Group resource
@@ -1389,6 +1467,7 @@ schemas:
                       az:
                         name: connectivity-collection-groups
                         description: The collection of connectivity related Managed Network Groups within the Managed Network
+                        mapsto: connectivity_collection_groups
                       cli:
                         name: ConnectivityCollectionGroups
                         description: The collection of connectivity related Managed Network Groups within the Managed Network
@@ -1405,6 +1484,7 @@ schemas:
                     az:
                       name: groups
                       description: The collection of connectivity related Managed Network Groups within the Managed Network
+                      mapsto: groups
                     cli:
                       name: groups
                       description: The collection of connectivity related Managed Network Groups within the Managed Network
@@ -1422,6 +1502,7 @@ schemas:
                       az:
                         name: connectivity-collection-peerings
                         description: The collection of Managed Network Peering Policies within the Managed Network
+                        mapsto: connectivity_collection_peerings
                       cli:
                         name: ConnectivityCollectionPeerings
                         description: The collection of Managed Network Peering Policies within the Managed Network
@@ -1438,6 +1519,7 @@ schemas:
                     az:
                       name: peerings
                       description: The collection of Managed Network Peering Policies within the Managed Network
+                      mapsto: peerings
                     cli:
                       name: peerings
                       description: The collection of Managed Network Peering Policies within the Managed Network
@@ -1455,6 +1537,7 @@ schemas:
                       az:
                         name: scope-management-groups
                         description: The collection of management groups covered by the Managed Network
+                        mapsto: scope_management_groups
                       cli:
                         name: ScopeManagementGroups
                         description: The collection of management groups covered by the Managed Network
@@ -1470,6 +1553,7 @@ schemas:
                     az:
                       name: management-groups
                       description: The collection of management groups covered by the Managed Network
+                      mapsto: management_groups
                     cli:
                       name: managementGroups
                       description: The collection of management groups covered by the Managed Network
@@ -1487,6 +1571,7 @@ schemas:
                       az:
                         name: scope-subscriptions
                         description: The collection of subscriptions covered by the Managed Network
+                        mapsto: scope_subscriptions
                       cli:
                         name: ScopeSubscriptions
                         description: The collection of subscriptions covered by the Managed Network
@@ -1502,6 +1587,7 @@ schemas:
                     az:
                       name: subscriptions
                       description: The collection of subscriptions covered by the Managed Network
+                      mapsto: subscriptions
                     cli:
                       name: subscriptions
                       description: The collection of subscriptions covered by the Managed Network
@@ -1519,6 +1605,7 @@ schemas:
                       az:
                         name: scope-virtual-networks
                         description: The collection of virtual nets covered by the Managed Network
+                        mapsto: scope_virtual_networks
                       cli:
                         name: ScopeVirtualNetworks
                         description: The collection of virtual nets covered by the Managed Network
@@ -1534,6 +1621,7 @@ schemas:
                     az:
                       name: virtual-networks
                       description: The collection of virtual nets covered by the Managed Network
+                      mapsto: virtual_networks
                     cli:
                       name: virtualNetworks
                       description: The collection of virtual nets covered by the Managed Network
@@ -1551,6 +1639,7 @@ schemas:
                       az:
                         name: scope-subnets
                         description: The collection of  subnets covered by the Managed Network
+                        mapsto: scope_subnets
                       cli:
                         name: ScopeSubnets
                         description: The collection of  subnets covered by the Managed Network
@@ -1566,6 +1655,7 @@ schemas:
                     az:
                       name: subnets
                       description: The collection of  subnets covered by the Managed Network
+                      mapsto: subnets
                     cli:
                       name: subnets
                       description: The collection of  subnets covered by the Managed Network
@@ -1584,6 +1674,7 @@ schemas:
                   az:
                     name: managed-network-properties
                     description: Properties of Managed Network
+                    mapsto: managed_network_properties
                   cli:
                     name: ManagedNetworkProperties
                     description: Properties of Managed Network
@@ -1599,6 +1690,7 @@ schemas:
                 az:
                   name: properties
                   description: The MNC properties
+                  mapsto: properties
                 cli: &ref_83
                   name: properties
                   description: The MNC properties
@@ -1618,6 +1710,7 @@ schemas:
               az:
                 name: managed-network
                 description: The Managed Network resource
+                mapsto: managed_network
               cli:
                 name: ManagedNetwork
                 description: The Managed Network resource
@@ -1642,6 +1735,7 @@ schemas:
             az:
               name: tags
               description: Resource tags
+              mapsto: tags
             cli: &ref_80
               name: tags
               description: Resource tags
@@ -1660,6 +1754,7 @@ schemas:
           az:
             name: tracked-resource
             description: The resource model definition for a ARM tracked top level resource
+            mapsto: tracked_resource
           cli:
             name: TrackedResource
             description: The resource model definition for a ARM tracked top level resource
@@ -1684,6 +1779,7 @@ schemas:
         az:
           name: id
           description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
+          mapsto: id
         cli:
           name: id
           description: 'Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
@@ -1699,6 +1795,7 @@ schemas:
         az:
           name: name
           description: The name of the resource
+          mapsto: name
         cli:
           name: name
           description: The name of the resource
@@ -1714,6 +1811,7 @@ schemas:
         az:
           name: type
           description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+          mapsto: type
         cli:
           name: type
           description: The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
@@ -1729,6 +1827,7 @@ schemas:
         az:
           name: location
           description: The geo-location where the resource lives
+          mapsto: location
         cli: &ref_78
           name: location
           description: The geo-location where the resource lives
@@ -1750,6 +1849,7 @@ schemas:
       az:
         name: resource
         description: The general resource model definition
+        mapsto: resource
       cli:
         name: Resource
         description: The general resource model definition
@@ -1780,6 +1880,7 @@ schemas:
         az:
           name: code
           description: The error code.
+          mapsto: code
         cli:
           name: code
           description: The error code.
@@ -1795,6 +1896,7 @@ schemas:
         az:
           name: message
           description: The error message.
+          mapsto: message
         cli:
           name: message
           description: The error message.
@@ -1812,6 +1914,7 @@ schemas:
       az:
         name: error-response
         description: The error response that indicates why an operation has failed.
+        mapsto: error_response
       cli:
         name: ErrorResponse
         description: The error response that indicates why an operation has failed.
@@ -1832,6 +1935,7 @@ schemas:
         az:
           name: tags
           description: Resource tags
+          mapsto: tags
         cli: &ref_94
           name: tags
           description: Resource tags
@@ -1849,6 +1953,7 @@ schemas:
       az:
         name: managed-network-update
         description: Update Tags of Managed Network
+        mapsto: managed_network_update
       cli:
         name: ManagedNetworkUpdate
         description: Update Tags of Managed Network
@@ -1871,6 +1976,7 @@ schemas:
           az:
             name: managed-network-list-result-value
             description: Gets a page of ManagedNetworks
+            mapsto: managed_network_list_result_value
           cli:
             name: ManagedNetworkListResultValue
             description: Gets a page of ManagedNetworks
@@ -1883,6 +1989,7 @@ schemas:
         az:
           name: value
           description: Gets a page of ManagedNetworks
+          mapsto: value
         cli:
           name: value
           description: Gets a page of ManagedNetworks
@@ -1897,6 +2004,7 @@ schemas:
         az:
           name: next-link
           description: Gets the URL to get the next page of results.
+          mapsto: next_link
         cli:
           name: nextLink
           description: Gets the URL to get the next page of results.
@@ -1914,6 +2022,7 @@ schemas:
       az:
         name: managed-network-list-result
         description: Result of the request to list Managed Network. It contains a list of Managed Networks and a URL link to get the next set of results.
+        mapsto: managed_network_list_result
       cli:
         name: ManagedNetworkListResult
         description: Result of the request to list Managed Network. It contains a list of Managed Networks and a URL link to get the next set of results.
@@ -1938,6 +2047,7 @@ schemas:
           az:
             name: scope-assignment-list-result-value
             description: Gets a page of ScopeAssignment
+            mapsto: scope_assignment_list_result_value
           cli:
             name: ScopeAssignmentListResultValue
             description: Gets a page of ScopeAssignment
@@ -1950,6 +2060,7 @@ schemas:
         az:
           name: value
           description: Gets a page of ScopeAssignment
+          mapsto: value
         cli:
           name: value
           description: Gets a page of ScopeAssignment
@@ -1964,6 +2075,7 @@ schemas:
         az:
           name: next-link
           description: Gets the URL to get the next set of results.
+          mapsto: next_link
         cli:
           name: nextLink
           description: Gets the URL to get the next set of results.
@@ -1981,6 +2093,7 @@ schemas:
       az:
         name: scope-assignment-list-result
         description: Result of the request to list ScopeAssignment. It contains a list of groups and a URL link to get the next set of results.
+        mapsto: scope_assignment_list_result
       cli:
         name: ScopeAssignmentListResult
         description: Result of the request to list ScopeAssignment. It contains a list of groups and a URL link to get the next set of results.
@@ -2003,6 +2116,7 @@ schemas:
           az:
             name: managed-network-group-list-result-value
             description: Gets a page of ManagedNetworkGroup
+            mapsto: managed_network_group_list_result_value
           cli:
             name: ManagedNetworkGroupListResultValue
             description: Gets a page of ManagedNetworkGroup
@@ -2015,6 +2129,7 @@ schemas:
         az:
           name: value
           description: Gets a page of ManagedNetworkGroup
+          mapsto: value
         cli:
           name: value
           description: Gets a page of ManagedNetworkGroup
@@ -2029,6 +2144,7 @@ schemas:
         az:
           name: next-link
           description: Gets the URL to get the next set of results.
+          mapsto: next_link
         cli:
           name: nextLink
           description: Gets the URL to get the next set of results.
@@ -2046,6 +2162,7 @@ schemas:
       az:
         name: managed-network-group-list-result
         description: Result of the request to list Managed Network Groups. It contains a list of groups and a URL link to get the next set of results.
+        mapsto: managed_network_group_list_result
       cli:
         name: ManagedNetworkGroupListResult
         description: Result of the request to list Managed Network Groups. It contains a list of groups and a URL link to get the next set of results.
@@ -2068,6 +2185,7 @@ schemas:
           az:
             name: managed-network-peering-policy-list-result-value
             description: Gets a page of Peering Policies
+            mapsto: managed_network_peering_policy_list_result_value
           cli:
             name: ManagedNetworkPeeringPolicyListResultValue
             description: Gets a page of Peering Policies
@@ -2080,6 +2198,7 @@ schemas:
         az:
           name: value
           description: Gets a page of Peering Policies
+          mapsto: value
         cli:
           name: value
           description: Gets a page of Peering Policies
@@ -2094,6 +2213,7 @@ schemas:
         az:
           name: next-link
           description: Gets the URL to get the next page of results.
+          mapsto: next_link
         cli:
           name: nextLink
           description: Gets the URL to get the next page of results.
@@ -2111,6 +2231,7 @@ schemas:
       az:
         name: managed-network-peering-policy-list-result
         description: Result of the request to list Managed Network Peering Policies. It contains a list of policies and a URL link to get the next set of results.
+        mapsto: managed_network_peering_policy_list_result
       cli:
         name: ManagedNetworkPeeringPolicyListResult
         description: Result of the request to list Managed Network Peering Policies. It contains a list of policies and a URL link to get the next set of results.
@@ -2139,6 +2260,7 @@ schemas:
               az:
                 name: name
                 description: 'Operation name: {provider}/{resource}/{operation}'
+                mapsto: name
               cli:
                 name: name
                 description: 'Operation name: {provider}/{resource}/{operation}'
@@ -2158,6 +2280,7 @@ schemas:
                   az:
                     name: provider
                     description: 'Service provider: Microsoft.ManagedNetwork'
+                    mapsto: provider
                   cli:
                     name: provider
                     description: 'Service provider: Microsoft.ManagedNetwork'
@@ -2172,6 +2295,7 @@ schemas:
                   az:
                     name: resource
                     description: 'Resource on which the operation is performed: Profile, endpoint, etc.'
+                    mapsto: resource
                   cli:
                     name: resource
                     description: 'Resource on which the operation is performed: Profile, endpoint, etc.'
@@ -2186,6 +2310,7 @@ schemas:
                   az:
                     name: operation
                     description: 'Operation type: Read, write, delete, etc.'
+                    mapsto: operation
                   cli:
                     name: operation
                     description: 'Operation type: Read, write, delete, etc.'
@@ -2203,6 +2328,7 @@ schemas:
                 az:
                   name: operation-display
                   description: The object that represents the operation.
+                  mapsto: operation_display
                 cli:
                   name: OperationDisplay
                   description: The object that represents the operation.
@@ -2216,6 +2342,7 @@ schemas:
               az:
                 name: display
                 description: The object that represents the operation.
+                mapsto: display
               cli:
                 name: display
                 description: The object that represents the operation.
@@ -2233,6 +2360,7 @@ schemas:
             az:
               name: operation
               description: REST API operation
+              mapsto: operation
             cli:
               name: Operation
               description: REST API operation
@@ -2245,6 +2373,7 @@ schemas:
           az:
             name: operation-list-result-value
             description: List of Resource Provider operations supported by the Managed Network resource provider.
+            mapsto: operation_list_result_value
           cli:
             name: OperationListResultValue
             description: List of Resource Provider operations supported by the Managed Network resource provider.
@@ -2257,6 +2386,7 @@ schemas:
         az:
           name: value
           description: List of Resource Provider operations supported by the Managed Network resource provider.
+          mapsto: value
         cli:
           name: value
           description: List of Resource Provider operations supported by the Managed Network resource provider.
@@ -2271,6 +2401,7 @@ schemas:
         az:
           name: next-link
           description: URL to get the next set of operation list results if there are any.
+          mapsto: next_link
         cli:
           name: nextLink
           description: URL to get the next set of operation list results if there are any.
@@ -2288,6 +2419,7 @@ schemas:
       az:
         name: operation-list-result
         description: Result of the request to list Managed Network operations. It contains a list of operations and a URL link to get the next set of results.
+        mapsto: operation_list_result
       cli:
         name: OperationListResult
         description: Result of the request to list Managed Network operations. It contains a list of operations and a URL link to get the next set of results.
@@ -2332,6 +2464,7 @@ globalParameters:
     az:
       name: subscription-id
       description: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+      mapsto: subscription_id
     cli:
       name: subscriptionId
       description: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
@@ -2354,6 +2487,7 @@ globalParameters:
     az:
       name: $host
       description: server parameter
+      mapsto: $host
     cli:
       name: $host
       description: server parameter
@@ -2373,6 +2507,7 @@ globalParameters:
     az:
       name: api-version
       description: Api Version
+      mapsto: api_version
     cli:
       name: ApiVersion
       description: Api Version
@@ -2401,6 +2536,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -2420,6 +2556,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -2517,6 +2654,7 @@ operationGroups:
     protocol: {}
   - apiVersions:
     - version: 2019-06-01-preview
+    canSplitOperation: true
     parameters:
     - *ref_70
     - *ref_71
@@ -2533,6 +2671,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -2552,6 +2691,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -2575,6 +2715,7 @@ operationGroups:
           az:
             name: _managed_network
             description: Parameters supplied to the create/update a Managed Network Resource
+            mapsto: _managed_network
           cli:
             name: _managed_network
             description: Parameters supplied to the create/update a Managed Network Resource
@@ -2596,6 +2737,7 @@ operationGroups:
           az:
             name: location
             description: The geo-location where the resource lives
+            mapsto: location
           cli: *ref_78
         protocol: {}
       - &ref_85
@@ -2612,6 +2754,7 @@ operationGroups:
           az:
             name: tags
             description: Resource tags
+            mapsto: tags
           cli: *ref_80
         protocol: {}
       - &ref_86
@@ -2628,6 +2771,7 @@ operationGroups:
           az:
             name: properties
             description: The MNC properties
+            mapsto: properties
           cli: *ref_83
         protocol: {}
       signatureParameters:
@@ -2797,6 +2941,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -2816,6 +2961,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -2921,6 +3067,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -2940,6 +3087,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -2963,6 +3111,7 @@ operationGroups:
           az:
             name: _parameters
             description: Parameters supplied to update application gateway tags and/or scope.
+            mapsto: _parameters
           cli:
             name: _parameters
             description: Parameters supplied to update application gateway tags and/or scope.
@@ -2984,6 +3133,7 @@ operationGroups:
           az:
             name: tags
             description: Resource tags
+            mapsto: tags
           cli: *ref_94
         protocol: {}
       signatureParameters:
@@ -3139,6 +3289,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -3157,6 +3308,7 @@ operationGroups:
         az:
           name: top
           description: May be used to limit the number of results in a page for list queries.
+          mapsto: top
         cli:
           name: top
           description: May be used to limit the number of results in a page for list queries.
@@ -3179,6 +3331,7 @@ operationGroups:
           description: >-
             Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point
             to use for subsequent calls.
+          mapsto: skiptoken
         cli:
           name: skiptoken
           description: >-
@@ -3299,6 +3452,7 @@ operationGroups:
         az:
           name: top
           description: May be used to limit the number of results in a page for list queries.
+          mapsto: top
         cli:
           name: top
           description: May be used to limit the number of results in a page for list queries.
@@ -3321,6 +3475,7 @@ operationGroups:
           description: >-
             Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point
             to use for subsequent calls.
+          mapsto: skiptoken
         cli:
           name: skiptoken
           description: >-
@@ -3430,6 +3585,7 @@ operationGroups:
       name: ManagedNetwork
       description: ''
       command: managed-network managed-network
+      hasUpdate: true
     cli:
       name: ManagedNetwork
       description: ''
@@ -3455,6 +3611,7 @@ operationGroups:
         az:
           name: scope
           description: The base resource of the scope assignment.
+          mapsto: scope
         cli:
           name: scope
           description: The base resource of the scope assignment.
@@ -3474,6 +3631,7 @@ operationGroups:
         az:
           name: scope-assignment-name
           description: The name of the scope assignment to get.
+          mapsto: scope_assignment_name
         cli:
           name: scopeAssignmentName
           description: The name of the scope assignment to get.
@@ -3575,6 +3733,7 @@ operationGroups:
             The base resource of the scope assignment to create. The scope can be any REST resource instance. For example, use 'subscriptions/{subscription-id}' for a subscription,
             'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for a resource group, and
             'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}' for a resource.
+          mapsto: scope
         cli:
           name: scope
           description: >-
@@ -3597,6 +3756,7 @@ operationGroups:
         az:
           name: scope-assignment-name
           description: The name of the scope assignment to create.
+          mapsto: scope_assignment_name
         cli:
           name: scopeAssignmentName
           description: The name of the scope assignment to create.
@@ -3621,6 +3781,7 @@ operationGroups:
           az:
             name: _parameters
             description: Parameters supplied to the specify which Managed Network this scope is being assigned
+            mapsto: _parameters
           cli:
             name: _parameters
             description: Parameters supplied to the specify which Managed Network this scope is being assigned
@@ -3642,6 +3803,7 @@ operationGroups:
           az:
             name: location
             description: The geo-location where the resource lives
+            mapsto: location
           cli: *ref_78
         protocol: {}
       - &ref_110
@@ -3657,6 +3819,7 @@ operationGroups:
           az:
             name: assigned-managed-network
             description: The managed network ID with scope will be assigned to.
+            mapsto: assigned_managed_network
           cli: *ref_22
         protocol: {}
       signatureParameters:
@@ -3776,6 +3939,7 @@ operationGroups:
         az:
           name: scope
           description: The scope of the scope assignment to delete.
+          mapsto: scope
         cli:
           name: scope
           description: The scope of the scope assignment to delete.
@@ -3795,6 +3959,7 @@ operationGroups:
         az:
           name: scope-assignment-name
           description: The name of the scope assignment to delete.
+          mapsto: scope_assignment_name
         cli:
           name: scopeAssignmentName
           description: The name of the scope assignment to delete.
@@ -3875,6 +4040,7 @@ operationGroups:
         az:
           name: scope
           description: The base resource of the scope assignment.
+          mapsto: scope
         cli:
           name: scope
           description: The base resource of the scope assignment.
@@ -3990,6 +4156,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4009,6 +4176,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4028,6 +4196,7 @@ operationGroups:
         az:
           name: managed-network-group-name
           description: The name of the Managed Network Group.
+          mapsto: managed_network_group_name
         cli:
           name: managedNetworkGroupName
           description: The name of the Managed Network Group.
@@ -4133,6 +4302,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4152,6 +4322,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4171,6 +4342,7 @@ operationGroups:
         az:
           name: managed-network-group-name
           description: The name of the Managed Network Group.
+          mapsto: managed_network_group_name
         cli:
           name: managedNetworkGroupName
           description: The name of the Managed Network Group.
@@ -4194,6 +4366,7 @@ operationGroups:
           az:
             name: _managed_network_group
             description: Parameters supplied to the create/update a Managed Network Group resource
+            mapsto: _managed_network_group
           cli:
             name: _managed_network_group
             description: Parameters supplied to the create/update a Managed Network Group resource
@@ -4215,6 +4388,7 @@ operationGroups:
           az:
             name: location
             description: The geo-location where the resource lives
+            mapsto: location
           cli: *ref_78
         protocol: {}
       - schema: *ref_25
@@ -4229,6 +4403,7 @@ operationGroups:
           az:
             name: kind
             description: Responsibility role under which this Managed Network Group will be created
+            mapsto: kind
           cli: *ref_122
         protocol: {}
       - &ref_128
@@ -4246,6 +4421,7 @@ operationGroups:
           az:
             name: management-groups
             description: The collection of management groups covered by the Managed Network
+            mapsto: management_groups
           cli: *ref_27
         protocol: {}
       - &ref_129
@@ -4261,6 +4437,7 @@ operationGroups:
           az:
             name: subscriptions
             description: The collection of subscriptions covered by the Managed Network
+            mapsto: subscriptions
           cli: *ref_29
         protocol: {}
       - &ref_130
@@ -4276,6 +4453,7 @@ operationGroups:
           az:
             name: virtual-networks
             description: The collection of virtual nets covered by the Managed Network
+            mapsto: virtual_networks
           cli: *ref_31
         protocol: {}
       - &ref_131
@@ -4291,6 +4469,7 @@ operationGroups:
           az:
             name: subnets
             description: The collection of  subnets covered by the Managed Network
+            mapsto: subnets
           cli: *ref_33
         protocol: {}
       signatureParameters:
@@ -4437,6 +4616,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4456,6 +4636,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4475,6 +4656,7 @@ operationGroups:
         az:
           name: managed-network-group-name
           description: The name of the Managed Network Group.
+          mapsto: managed_network_group_name
         cli:
           name: managedNetworkGroupName
           description: The name of the Managed Network Group.
@@ -4582,6 +4764,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4601,6 +4784,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4619,6 +4803,7 @@ operationGroups:
         az:
           name: top
           description: May be used to limit the number of results in a page for list queries.
+          mapsto: top
         cli:
           name: top
           description: May be used to limit the number of results in a page for list queries.
@@ -4641,6 +4826,7 @@ operationGroups:
           description: >-
             Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point
             to use for subsequent calls.
+          mapsto: skiptoken
         cli:
           name: skiptoken
           description: >-
@@ -4768,6 +4954,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4787,6 +4974,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4806,6 +4994,7 @@ operationGroups:
         az:
           name: policy-name
           description: The name of the Managed Network Peering Policy.
+          mapsto: policy_name
         cli:
           name: policyName
           description: The name of the Managed Network Peering Policy.
@@ -4909,6 +5098,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -4928,6 +5118,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -4947,6 +5138,7 @@ operationGroups:
         az:
           name: policy-name
           description: The name of the Managed Network Peering Policy.
+          mapsto: policy_name
         cli:
           name: policyName
           description: The name of the Managed Network Peering Policy.
@@ -4970,6 +5162,7 @@ operationGroups:
           az:
             name: _managed_network_policy
             description: Parameters supplied to create/update a Managed Network Peering Policy
+            mapsto: _managed_network_policy
           cli:
             name: _managed_network_policy
             description: Parameters supplied to create/update a Managed Network Peering Policy
@@ -4991,6 +5184,7 @@ operationGroups:
           az:
             name: location
             description: The geo-location where the resource lives
+            mapsto: location
           cli: *ref_78
         protocol: {}
       - &ref_150
@@ -5006,6 +5200,7 @@ operationGroups:
           az:
             name: properties
             description: Gets or sets the properties of a Managed Network Policy
+            mapsto: properties
           cli: *ref_148
         protocol: {}
       signatureParameters:
@@ -5143,6 +5338,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -5162,6 +5358,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -5181,6 +5378,7 @@ operationGroups:
         az:
           name: policy-name
           description: The name of the Managed Network Peering Policy.
+          mapsto: policy_name
         cli:
           name: policyName
           description: The name of the Managed Network Peering Policy.
@@ -5288,6 +5486,7 @@ operationGroups:
         az:
           name: resource-group-name
           description: The name of the resource group.
+          mapsto: resource_group_name
         cli:
           name: resourceGroupName
           description: The name of the resource group.
@@ -5307,6 +5506,7 @@ operationGroups:
         az:
           name: managed-network-name
           description: The name of the Managed Network.
+          mapsto: managed_network_name
         cli:
           name: managedNetworkName
           description: The name of the Managed Network.
@@ -5325,6 +5525,7 @@ operationGroups:
         az:
           name: top
           description: May be used to limit the number of results in a page for list queries.
+          mapsto: top
         cli:
           name: top
           description: May be used to limit the number of results in a page for list queries.
@@ -5347,6 +5548,7 @@ operationGroups:
           description: >-
             Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point
             to use for subsequent calls.
+          mapsto: skiptoken
         cli:
           name: skiptoken
           description: >-
@@ -5553,6 +5755,7 @@ language:
   az:
     name: managed-network-management-client
     description: ''
+    mapsto: managed_network_management_client
   cli:
     name: ManagedNetworkManagementClient
     description: ''

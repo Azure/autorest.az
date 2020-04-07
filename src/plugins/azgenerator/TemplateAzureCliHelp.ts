@@ -22,23 +22,20 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
             // if there's no operation in this command group
             if (!model.SelectFirstCommand())
                 continue;
-
-            output.push("");
-            output.push("helps['" + model.CommandGroup_Name + "'] = \"\"\"");
-            output.push("    type: group");
-            //output.push("    short-summary: " + model.CommandGroup_Help);
-            let shortSummary = "    short-summary: " + model.CommandGroup_Help;
-            ToMultiLine(shortSummary, output, 119, true);
-            output.push("\"\"\"");
-
-
+                
+            output = output.concat(generateCommandGroupHelp(model));    
             //let methods: string[] = model.CommandGroup_Commands;
 
+            let allSubGroup: Map<string, boolean> = new Map<string, boolean>();
             if (model.SelectFirstCommand()) {
                 do {
 
-
-                    let commandOutput: string[] = generateCommandHelp(model);
+                    let subCommandGroupName = model.Command_SubGroupName;
+                    if(subCommandGroupName != "" && !allSubGroup.has(subCommandGroupName)) {
+                        allSubGroup.set(subCommandGroupName, true);
+                        output = output.concat(generateCommandGroupHelp(model, subCommandGroupName));
+                    }
+                    let commandOutput: string [] = generateCommandHelp(model);
                     //output.push("before output.length: " + output.length);
                     output = output.concat(commandOutput);
                     //output.push("after output.length: " + output.length);
@@ -59,6 +56,25 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
     });
 
     return header.getLines().concat(output);
+}
+
+function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = "") {
+    let output = [];
+    output.push("");
+    if(subCommandGroupName != "") {
+        output.push("helps['" + subCommandGroupName + "'] = \"\"\"")
+    } else {
+        output.push("helps['" + model.CommandGroup_Name + "'] = \"\"\"");
+    }
+    output.push("    type: group");
+    //output.push("    short-summary: " + model.CommandGroup_Help);
+    let shortSummary = "    short-summary: " + model.CommandGroup_Help;
+    if(subCommandGroupName != "") {
+        shortSummary = shortSummary + " sub group " + subCommandGroupName.split(" ").pop();
+    }
+    ToMultiLine(shortSummary, output, 119, true);
+    output.push("\"\"\"");
+    return output;
 }
 
 function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {

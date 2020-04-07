@@ -5,11 +5,14 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { ToCamelCase, Capitalize } from "../../utils/helper";
-import { SchemaType } from "@azure-tools/codemodel";
+import { SchemaType, Parameter } from "@azure-tools/codemodel";
 import { stringify } from "querystring";
 import { HeaderGenerator } from "./Header";
+import { isNullOrUndefined } from "util";
 
-export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
+
+let allActions: Map<string, boolean> = new Map<string, boolean>();
+export function GenerateAzureCliActions(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
 
     header.addImport("argparse");
@@ -18,7 +21,7 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
     header.disableProtectedAccess = true;
 
     let output: string[] = header.getLines();
-    let allActions: Map<string, boolean> = new Map<string, boolean>();
+
     if (model.SelectFirstCommandGroup()) {
         do {
             if (model.SelectFirstCommand()) {
@@ -27,75 +30,30 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
                         do {
                             if (model.SelectFirstMethodParameter()) {
                                 do {
-                                    if (model.MethodParameter_Name == 'tags') {
-                                        continue;
-                                    } 
-                                    if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
-                                        let actionName: string = "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name));
-                                        
-                                        if (allActions.has(actionName)) {
-                                            continue;
-                                        }
-
-                                        output.push("");
-                                        output.push("");
-                                        let baseAction = "Action";
-                                        if (model.MethodParameter_Type == SchemaType.Array) baseAction = "_Append" + baseAction;
-                                        output.push("class " + actionName + "(argparse." + baseAction + "):");
-                                        output.push("    def __call__(self, parser, namespace, values, option_string=None):");
-                                        output.push("        action = self.get_action(values, option_string)");
-                                        if (model.MethodParameter_Type == SchemaType.Array) {
-                                            output.push("        super(" + "Add" + Capitalize(ToCamelCase(model.MethodParameter_Name)) + ", self).__call__(parser, namespace, action, option_string)");
-                                        } else {
-                                            output.push("        namespace." + model.MethodParameter_MapsTo.toLowerCase().replace(/-/g, '_') + " = action");
-                                        }
-                                        
-                                        output.push("");
-                                        output.push("    def get_action(self, values, option_string):  # pylint: disable=no-self-use");
-                                        output.push("        try:");
-                                        output.push("            properties = defaultdict(list)");
-                                        output.push("            for (k, v) in (x.split('=', 1) for x in values):");
-                                        output.push("                properties[k].append(v)");
-                                        output.push("            properties = dict(properties)");
-                                        output.push("        except ValueError:");
-                                        output.push("            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))");
-                                        output.push("        d = {}");
-                                        output.push("        for k in properties:");
-                                        output.push("            kl = k.lower()");
-                                        output.push("            v = properties[k]");
-                                        let foundProperties = false;
-                                        let preParamType = model.MethodParameter_Type;
-                                        if (model.EnterSubMethodParameters()) {
-                                            if (model.SelectFirstMethodParameter()) {
-                                                foundProperties = true;
-                                                let ifkv = "if";
-                                                do {
-                                                    if(model.SubMethodParameter['readOnly']) {
-                                                        continue;
-                                                    }
-                                                    if(model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
-                                                        continue;
-                                                    }
-                                                    output.push("            " + ifkv + " kl == '" + model.MethodParameter_NameAz + "':");
-                                                    if (model.MethodParameter_IsArray) {
-                                                        output.push("                d['" + model.MethodParameter_NamePython + "'] = v");
-                                                    }
-                                                    else {
-                                                        output.push("                d['" + model.MethodParameter_NamePython + "'] = v[0]");
-                                                    }
-                                                    ifkv = "elif";
-                                                } while (model.SelectNextMethodParameter());
+                                    let actionName = model.Schema_ActionName(model.MethodParameter.schema);
+                                    if (isNullOrUndefined(actionName)) {
+                                        if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                                            let baseParam = model.MethodParameter;
+                                            while (model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam) {
+                                                let keyToMatch = baseParam.schema?.['discriminator']?.property?.language['python']?.name;
+                                                let valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
+                                                let subActionName = model.Schema_ActionName(model.MethodParameter.schema);
+                                                if (isNullOrUndefined(subActionName) || allActions.has(subActionName)) {
+                                                    continue;
+                                                }
+                                                output = output.concat(GetAction(model, subActionName, model.MethodParameter, keyToMatch, valueToMatch))
                                             }
-                                        } 
-                                        model.ExitSubMethodParameters();
-                                        if (!foundProperties && preParamType == SchemaType.Dictionary) {
-                                            output.push("            d[k] = v");
+                                            continue;  
                                         }
-                                        output.push("        return d");
-                                        allActions.set(actionName, true);
-                                    } 
+                                        continue;
+                                    }
+                                    if (allActions.has(actionName)) {
+                                        continue;
+                                    }
+                                    output = output.concat(GetAction(model, actionName, model.MethodParameter))
+
                                 } while (model.SelectNextMethodParameter());
-                            } 
+                            }
                         } while (model.SelectNextMethod());
                     }
                 } while (model.SelectNextCommand());
@@ -105,5 +63,76 @@ export function GenerateAzureCliActions(model: CodeModelAz) : string[] {
 
     output.push("");
 
+    return output;
+}
+
+
+function GetAction(model: CodeModelAz, actionName: string, param: Parameter, keyToMatch: string = null, valueToMatch: string = null) {
+    let output: string[] = [];
+    allActions.set(actionName, true);
+
+    output.push("");
+    output.push("");
+    let baseAction = "Action";
+    let paramType = param?.schema?.type;
+    if (paramType == SchemaType.Array) baseAction = "_Append" + baseAction;
+    output.push("class " + actionName + "(argparse." + baseAction + "):");
+    output.push("    def __call__(self, parser, namespace, values, option_string=None):");
+    output.push("        action = self.get_action(values, option_string)");
+    if (paramType == SchemaType.Array) {
+        output.push("        super(" + actionName + ", self).__call__(parser, namespace, action, option_string)");
+    } else {
+        output.push("        namespace." + model.Parameter_MapsTo(param) + " = action");
+    }
+
+    output.push("");
+    output.push("");
+    output.push("    def get_action(self, values, option_string):  # pylint: disable=no-self-use");
+    output.push("        try:");
+    output.push("            properties = defaultdict(list)");
+    output.push("            for (k, v) in (x.split('=', 1) for x in values):");
+    output.push("                properties[k].append(v)");
+    output.push("            properties = dict(properties)");
+    output.push("        except ValueError:");
+    output.push("            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))");
+    output.push("        d = {}");
+    output.push("        for k in properties:");
+    output.push("            kl = k.lower()");
+    output.push("            v = properties[k]");
+    let foundProperties = false;
+    let preParamType = paramType;
+    if (model.EnterSubMethodParameters()) {
+        if (model.SelectFirstMethodParameter()) {
+            foundProperties = true;
+            let ifkv = "if";
+            do {
+                if (model.SubMethodParameter['readOnly']) {
+                    continue;
+                }
+                if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                    continue;
+                }
+                if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch) && model.Parameter_NamePython(model.SubMethodParameter) == keyToMatch) {
+                    continue;
+                }
+                output.push("            " + ifkv + " kl == '" + model.Parameter_NameAz(model.SubMethodParameter) + "':");
+                if (model.MethodParameter_IsArray) {
+                    output.push("                d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = v");
+                }
+                else {
+                    output.push("                d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = v[0]");
+                }
+                ifkv = "elif";
+            } while (model.SelectNextMethodParameter());
+        }
+    }
+    model.ExitSubMethodParameters();
+    if (!foundProperties && preParamType == SchemaType.Dictionary) {
+        output.push("            d[k] = v");
+    }
+    if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch)) {
+        output.push("        d['" + keyToMatch + "'] = '" + valueToMatch + "'");
+    }
+    output.push("        return d");
     return output;
 }
