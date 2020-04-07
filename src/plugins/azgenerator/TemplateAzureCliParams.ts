@@ -16,6 +16,7 @@ let hasEnum: boolean = false;
 let hasJson: boolean = true;
 let hasResourceGroup: boolean = false;
 let hasLocation = false;
+let hasLocationValidator = false;
 let hasTags = false;
 let actions: string[] = [];
 
@@ -69,7 +70,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     if (hasLocation) parameterImports.push("get_location_type");
 
     header.addFromImport("azure.cli.core.commands.parameters", parameterImports);
-    if (hasLocation) {
+    if (hasLocationValidator) {
         header.addFromImport('azure.cli.core.commands.validators', ['get_default_location_from_resource_group']);
     }
 
@@ -199,7 +200,10 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         needSkip = true;
                     } else if (parameterName == "location") {
                         argument += ", arg_type=get_location_type(self.cli_ctx)";
-                        argument += ", validator=get_default_location_from_resource_group";
+                        if (hasResourceGroup) {
+                            argument += ", validator=get_default_location_from_resource_group";
+                            hasLocationValidator = true;
+                        }
                         hasLocation = true;
                         needSkip = true;
                     } else if (model.MethodParameter_IsSimpleArray) {
