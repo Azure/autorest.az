@@ -8,9 +8,7 @@ import { CodeModelAz } from "./CodeModelAz"
 export function GenerateAzureCliSetupCfg(model: CodeModelAz) : string[] {
     var output: string[] = [];
 
-    output.push("[bdist_wheel]");
-    output.push("universal=1");
-    output.push("");
+    output.push("#setup.cfg");
      
     return output;
 }
