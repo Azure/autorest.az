@@ -55,7 +55,7 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "custom.py"] = GenerateTopLevelImport(model, "custom");  
             files[path + "__init__.py"] = GenerateAzureCliInit(model);
             files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(model);
-            files[pathTop + "README.rst"] = GenerateAzureCliReadme(model);
+            files[pathTop + "README.md"] = GenerateAzureCliReadme(model);
             files[pathTop + "setup.cfg"] = GenerateAzureCliSetupCfg(model);
             files[pathTop + "setup.py"] = GenerateAzureCliSetupPy(model);  
 

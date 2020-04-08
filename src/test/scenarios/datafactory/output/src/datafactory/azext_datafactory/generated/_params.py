@@ -16,6 +16,7 @@ from azure.cli.core.commands.parameters import (
     resource_group_name_type,
     get_location_type
 )
+from azure.cli.core.commands.validators import get_default_location_from_resource_group
 from azext_datafactory.action import (
     AddIdentity,
     AddFactoryVstsConfiguration,
@@ -26,21 +27,22 @@ from azext_datafactory.action import (
 def load_arguments(self, _):
 
     with self.argument_context('datafactory factory list') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The resource group name.')
+        c.argument('resource_group_name', resource_group_name_type)
 
     with self.argument_context('datafactory factory show') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The resource group name.')
+        c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
         c.argument('if_none_match', help='ETag of the factory entity. Should only be specified for get. If the ETag mat'
                    'ches the existing entity tag, or if * was provided, then no content will be returned.')
 
     with self.argument_context('datafactory factory create') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The resource group name.')
+        c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
         c.argument('if_match', help='ETag of the factory entity. Should only be specified for update, for which it shou'
                    'ld match existing entity or can be * for unconditional update.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The resource location.')
-        c.argument('tags', tags_type, help='The resource tags.')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+                   validator=get_default_location_from_resource_group)
+        c.argument('tags', tags_type)
         c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
                    'epo information.', arg_group='RepoConfiguration')
@@ -48,13 +50,13 @@ def load_arguments(self, _):
                    'itHub repo information.', arg_group='RepoConfiguration')
 
     with self.argument_context('datafactory factory update') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The resource group name.')
+        c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
-        c.argument('tags', tags_type, help='The resource tags.')
+        c.argument('tags', tags_type)
         c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory.')
 
     with self.argument_context('datafactory factory delete') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The resource group name.')
+        c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
 
     with self.argument_context('datafactory factory configure-factory-repo') as c:
@@ -66,7 +68,7 @@ def load_arguments(self, _):
                    'itHub repo information.', arg_group='RepoConfiguration')
 
     with self.argument_context('datafactory factory get-data-plane-access') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The resource group name.')
+        c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
         c.argument('permissions', help='The string with permissions for Data Plane access. Currently only \'r\' is supp'
                    'orted which grants read only access.')
@@ -79,7 +81,7 @@ def load_arguments(self, _):
                    'd by default the token will expire in eight hours.')
 
     with self.argument_context('datafactory factory get-git-hub-access-token') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The resource group name.')
+        c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
         c.argument('git_hub_access_code', help='GitHub access code.')
         c.argument('git_hub_client_id', help='GitHub application client ID.')
