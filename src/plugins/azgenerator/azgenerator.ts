@@ -16,6 +16,7 @@ export async function processRequest(host: Host) {
             do {
                 let path = "azext_" + model.Extension_Name.replace("-", "_") + "/";
                 session.protectFiles(path + "manual");
+                session.protectFiles(path + "tests/latest/recordings")
             } while (model.SelectNextExtension());
         }
         for (let f in files) {
