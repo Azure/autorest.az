@@ -1364,7 +1364,6 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any, polySubParam: MethodParam): boolean {
-        if (this.isDiscriminator(methodParam.value) || this.isDiscriminator(polySubParam?.value) ) return false;
         let isList: boolean = methodParam.isList;
         let isSimpleList: boolean = methodParam.isSimpleList;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
@@ -1595,6 +1594,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                 let params: ExampleParam[] = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
                 if (this.filterExampleByPoly(example_obj, example)) {
+                    for (let i=0;i<example.Parameters.length; i++) {
+                        if (this.isDiscriminator(example.Parameters[i].methodParam.value) )
+                        {
+                            example.Parameters.splice(i, 1);
+                            i--;
+                        }
+                    }
                     examples.push(example);
                 }
             });
