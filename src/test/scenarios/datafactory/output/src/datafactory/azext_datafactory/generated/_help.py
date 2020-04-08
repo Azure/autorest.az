@@ -72,10 +72,9 @@ helps['datafactory factory configure-factory-repo'] = """
       - name: Factories_ConfigureFactoryRepo
         text: |-
                az datafactory factory configure-factory-repo --factory-resource-id "/subscriptions/12345678-1234-1234-1\
-234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName" --rep\
-o-configuration "{\\"type\\":\\"FactoryVSTSConfiguration\\",\\"accountName\\":\\"ADF\\",\\"collaborationBranch\\":\\"ma\
-ster\\",\\"lastCommitId\\":\\"\\",\\"projectName\\":\\"project\\",\\"repositoryName\\":\\"repo\\",\\"rootFolder\\":\\"/\
-\\",\\"tenantId\\":\\"\\"}" --location-id "East US"
+234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName" --fac\
+tory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-name="project" repos\
+itory-name="repo" root-folder="/" tenant-id="" --location-id "East US"
 """
 
 helps['datafactory factory get-data-plane-access'] = """
