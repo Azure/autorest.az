@@ -56,11 +56,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.submethodparameters = null;
         this._clientBaseUrlBound = this.options['client-base-url-bound'];
         this._clientSubscriptionBound = this.options['client-subscription-bound'];
-        if (this.SelectFirstExtension()) {
-            do {
-
-            } while (this.SelectNextExtension());
-        }
         //this.sortOperationByAzCommand();
     }
 
