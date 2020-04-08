@@ -79,7 +79,6 @@ def step_managednetworkpeeringpoliciesput(test, rg):
     test.cmd('az managednetwork managed-network-peering-policy hub-and-spoke-topology create '
              '--managed-network-name "{myManagedNetwork}" '
              '--policy-name "{myHubAndSpoke}" '
-             '--type "HubAndSpokeTopology" '
              '--hub id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetwork'
              's/{vn_4}" '
              '--spokes id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/mana'

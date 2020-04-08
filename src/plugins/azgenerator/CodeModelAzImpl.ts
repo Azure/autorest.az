@@ -1359,12 +1359,20 @@ export class CodeModelCliImpl implements CodeModelAz {
         return parameters;
     }
 
+    private isDiscriminator(param: any): boolean {
+        return (this.Command_GetOriginalOperation && param?.targetProperty?.['isDiscriminator'] )? true: false;
+    }
+
     private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any, polySubParam: MethodParam): boolean {
+        if (this.isDiscriminator(methodParam.value) || this.isDiscriminator(polySubParam?.value) ) return false;
         let isList: boolean = methodParam.isList;
         let isSimpleList: boolean = methodParam.isSimpleList;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
         let name: string = this.Parameter_MapsTo(methodParam.value);
         if (polySubParam) {
+            isList = polySubParam.isList;
+            isSimpleList = polySubParam.isSimpleList;
+            defaultName = polySubParam.value.language['cli'].cliKey;
             name = this.Parameter_MapsTo(polySubParam.value);
         }
         // means python reserved word

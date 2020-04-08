@@ -101,9 +101,8 @@ def step__factories_post_factories_configurefactoryrepo(test, rg):
     test.cmd('az datafactory factory configure-factory-repo '
              '--factory-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.DataFacto'
              'ry/factories/{exampleFactoryName}" '
-             '--factory-vsts-configuration "{{\\"accountName\\":\\"ADF\\",\\"collaborationBranch\\":\\"master\\",\\"las'
-             'tCommitId\\":\\"\\",\\"projectName\\":\\"project\\",\\"repositoryName\\":\\"repo\\",\\"rootFolder\\":\\"/'
-             '\\",\\"tenantId\\":\\"\\"}}" '
+             '--factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-n'
+             'ame="project" repository-name="repo" root-folder="/" tenant-id="" '
              '--location-id "East US"',
              checks=[])
 
