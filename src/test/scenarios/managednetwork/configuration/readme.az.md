@@ -7,7 +7,7 @@ az:
   extensions: managednetwork
   namespace: azure.mgmt.managednetwork
   package-name: azure-mgmt-managednetwork
-python-sdk-output-folder: "$(output-folder)/src/managednetwork/azext_managednetwork/vendored_sdks/managednetwork"
+python-sdk-output-folder: "$(output-folder)/azext_managednetwork/vendored_sdks/managednetwork"
 
 
 directive:
