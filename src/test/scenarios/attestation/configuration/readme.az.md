@@ -7,5 +7,5 @@ az:
   extensions: attestation
   package-name: azure-mgmt-attestation
   namespace: azure.mgmt.attestation
-python-sdk-output-folder: "$(output-folder)/src/attestation/azext_attestation/vendored_sdks/attestation"
+python-sdk-output-folder: "$(output-folder)/azext_attestation/vendored_sdks/attestation"
 ```

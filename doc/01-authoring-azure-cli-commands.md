@@ -43,7 +43,7 @@ Things that need to be installed:
 
 ### Command to Run AutoRest
 
-    autorest --az --version=3.0.6212 --output-folder=/_/azure-cli-extensions /_/azure-rest-api-specs/specification/attestation/resource-manager/readme.md
+    autorest --az --version=3.0.6253 --output-folder=/_/azure-cli-extensions/src/<extension-name> /_/azure-rest-api-specs/specification/attestation/resource-manager/readme.md
 
 When you run above command AutoRest will download and use most recent npm packages.
 
@@ -77,7 +77,7 @@ Add following line to **readme.az.md**:
     ``` yaml $(az)
     az:
       ...
-      python-sdk-output-folder: "$(output-folder)/src/<extension-name>/azext_<extension-name>/vendored_sdks/<sdk-namespace-name>"
+      python-sdk-output-folder: "$(output-folder)/azext_<extension-name>/vendored_sdks/<sdk-namespace-name>"
     ```
 
 NOTE: In the future this step may be automated, but for now it's necessary it matches extension folder structure.

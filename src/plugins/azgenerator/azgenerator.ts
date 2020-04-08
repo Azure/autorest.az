@@ -12,7 +12,13 @@ export async function processRequest(host: Host) {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema); 
         let model = new CodeModelCliImpl(session);
         let files: any = await GenerateAll(model, true);
-
+        if (model.SelectFirstExtension()) {
+            do {
+                let path = "azext_" + model.Extension_Name.replace("-", "_") + "/";
+                session.protectFiles(path + "manual");
+                session.protectFiles(path + "tests/latest/recordings")
+            } while (model.SelectNextExtension());
+        }
         for (let f in files) {
             host.WriteFile(f, files[f].join('\r\n'));
         }

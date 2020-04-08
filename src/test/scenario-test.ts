@@ -9,8 +9,8 @@ import { exec } from 'child_process';
 require('source-map-support').install();
 
 @suite class Process {
-    async runAz(directory: string) {
-        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6253 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md --output-folder=" + directory + "/tmpoutput ";
+    async runAz(directory: string, each: string) {
+        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6253 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md --output-folder=" + directory + "/tmpoutput/src/" + each;
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => { 
             exec(cmd, function(error) {
@@ -51,7 +51,7 @@ require('source-map-support').install();
         for (const each of folders) {
             console.log(`Processing: ${each}`);
             try {
-                await this.runAz(dir + each).then(res => {
+                await this.runAz(dir + each, each).then(res => {
                     if(res == false) {
                         msg = "Run autorest not successfully!";
                     }
@@ -61,7 +61,7 @@ require('source-map-support').install();
                     result = err;
                 });
                 if(result) {
-                    await this.compare(dir + each + "/output/", dir + each + "/tmpoutput/").then(res1 => {           
+                    await this.compare(dir + each + "/output/src/" + each, dir + each + "/tmpoutput/src/" + each).then(res1 => {           
                         if(res1 == false) {
                             msg = "The generated files have changed!";
                         }

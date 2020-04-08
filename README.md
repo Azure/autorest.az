@@ -4,9 +4,7 @@ See documentation [here](doc/00-overview.md)
 
 ``` yaml
 
-clear-output-folder: false
 python:
-    clear-output-folder: false
     reason: 'make sure python flag exists to load config in python.md'
 debug-output-folder: $(output-folder)/_az_debug
 az-output-folder: $(output-folder)
