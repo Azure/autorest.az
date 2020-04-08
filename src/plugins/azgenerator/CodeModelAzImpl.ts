@@ -1337,7 +1337,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         if (this.SelectFirstMethodParameter()) {
             do {
-                if (this.MethodParameter.implementation == 'Method' && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
+                if ((this.MethodParameter.implementation == 'Method' || (this.MethodParameter as any).polyBaseParam) && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
                     let submethodparameters = null;
                     if (this.EnterSubMethodParameters()) {
                         submethodparameters = this.submethodparameters;
@@ -1359,20 +1359,30 @@ export class CodeModelCliImpl implements CodeModelAz {
         return parameters;
     }
 
-    private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any): boolean {
+    private isDiscriminator(param: any): boolean {
+        return (this.Command_GetOriginalOperation && param?.targetProperty?.['isDiscriminator'] )? true: false;
+    }
+
+    private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any, polySubParam: MethodParam): boolean {
         let isList: boolean = methodParam.isList;
         let isSimpleList: boolean = methodParam.isSimpleList;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
         let name: string = this.Parameter_MapsTo(methodParam.value);
+        if (polySubParam) {
+            isList = polySubParam.isList;
+            isSimpleList = polySubParam.isSimpleList;
+            defaultName = polySubParam.value.language['cli'].cliKey;
+            name = this.Parameter_MapsTo(polySubParam.value);
+        }
         // means python reserved word
-        if(name.endsWith("_")) {
+        if (name.endsWith("_")) {
             name = name.substr(0, name.length - 1);
         }
         if (isList) {
             if (isSimpleList) {
                 if (value instanceof Array) {       // spread list
                     for (let e of value) {
-                        this.AddExampleParameter(methodParam, example_param, e);
+                        this.AddExampleParameter(methodParam, example_param, e, polySubParam);
                     }
                 }
                 else if (typeof value == 'object') {    // KEY=VALUE form
@@ -1380,11 +1390,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                     let keys = [];
                     for (let k in value) {
                         let cliName = null;
-                        if (methodParam.submethodparameters) {
-                            for (let submethodProperty of methodParam.submethodparameters) {
-                                if (submethodProperty.language['cli'].cliKey.toLowerCase() == k.toLowerCase()) {
-                                    cliName = this.Parameter_NameAz(submethodProperty);
-                                    break;
+                        for (let param of [methodParam, polySubParam]) {
+                            if (param?.submethodparameters) {
+                                for (let submethodProperty of param.submethodparameters) {
+                                    if (submethodProperty.language['cli'].cliKey.toLowerCase() == k.toLowerCase()) {
+                                        cliName = this.Parameter_NameAz(submethodProperty);
+                                    }
                                 }
                             }
                         }
@@ -1393,7 +1404,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                             // This is for type of schema.Dictionary
                             cliName = k;
                         }
-                        if (value[k] instanceof Array){
+                        if (value[k] instanceof Array) {
                             for (let v of value[k]) {
                                 if (ret.length > 0) {
                                     ret += " ";
@@ -1419,7 +1430,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             }
             else if (isList && !isSimpleList) {
-                if (typeof value == 'string')  {
+                if (typeof value == 'string') {
                     example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam));
                 }
                 else {
@@ -1427,7 +1438,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             }
         }
-        else if (typeof value != 'object') {     
+        else if (typeof value != 'object') {
             example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam));
         }
         else {
@@ -1440,6 +1451,26 @@ export class CodeModelCliImpl implements CodeModelAz {
     public FlattenExampleParameter(method_param: Map<string, MethodParam>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
         if (typeof method_param.get(name) !== 'undefined') {
             let methodParam = method_param.get(name);
+
+            let polySubParam: MethodParam = null;
+            let netValue = typeof value === 'object' && value !== null ? deepCopy(value) : value;
+            if (methodParam.value['isPolyOfSimple']) {
+                let keyToMatch = methodParam.value.schema.discriminator?.property?.language?.default?.name;
+                if (keyToMatch) {
+                    for (let mpKey of method_param.keys()) {
+                        let polySubParamObj = method_param.get(mpKey).value;
+                        if (polySubParamObj['polyBaseParam'] == methodParam.value) {
+                            let valueToMatch = polySubParamObj.schema.extensions['x-ms-discriminator-value'];
+                            if (netValue[keyToMatch] == valueToMatch) {
+                                polySubParam = method_param.get(mpKey);
+                                delete netValue[keyToMatch];
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
             if ('pathToProperty' in methodParam.value && ancestors.length - methodParam.value['pathToProperty'].length == 1) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
                 let ancestors_ = deepCopy(ancestors) as string[];
@@ -1452,7 +1483,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(methodParam, example_param, value);
+                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam);
                     return;
                 }
             }
@@ -1472,13 +1503,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(methodParam, example_param, value);
+                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam);
                     return;
                 }
             }
             else if (ancestors.length == 0) {
                 // example_param.set(name, value);
-                if (this.AddExampleParameter(methodParam, example_param, value)) return;
+                if (this.AddExampleParameter(methodParam, example_param, netValue, polySubParam)) return;
             }
         }
 
@@ -1508,6 +1539,46 @@ export class CodeModelCliImpl implements CodeModelAz {
         return ret;
     }
 
+    private filterExampleByPoly(example_obj: any, example: CommandExample): boolean {
+        function getPolyClass(model): string {
+            let cliKey = model.Method.language['cli'].cliKey;
+            if (cliKey) {
+                let names = cliKey.split('#');
+                if (names.length > 1) {
+                    return names[1];
+                }
+            }
+            return '';
+        }
+        let valueToMatch = getPolyClass(this);
+        if (!valueToMatch) return true;
+
+        function matchPolyClass(example: CommandExample, keyToMatch: string, valueToMatch: string) {
+            for (let param of example.Parameters) {
+                if (('--' + keyToMatch).toLowerCase() == param.name.toLowerCase() && typeof param.value == 'string') {
+                    return valueToMatch.toLowerCase() == param.value.toLowerCase();
+                }
+            }
+            return true;
+        }
+
+        // check polymophism here
+        let originalOperation = this.Method_GetOriginalOperation;
+        if (!isNullOrUndefined(originalOperation)) {
+            if (this.SelectFirstMethodParameter()) {
+                do {
+                    if (!isNullOrUndefined(this.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema'])) {
+                        let originalSchema = this.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema'];
+                        let keyToMatch = (originalSchema as any).discriminator.property.language.default.name; //type
+                        if (!matchPolyClass(example, keyToMatch, valueToMatch)) {
+                            return false;
+                        }
+                    }
+                } while (this.SelectNextMethodParameter())
+            }
+        }
+        return true;
+    }
 
     public GetExamples(): CommandExample[] {
         let examples: CommandExample[] = [];
@@ -1522,7 +1593,16 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.ResourceClassName = this.CommandGroup_Key;
                 let params: ExampleParam[] = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
-                examples.push(example);
+                if (this.filterExampleByPoly(example_obj, example)) {
+                    for (let i=0;i<example.Parameters.length; i++) {
+                        if (this.isDiscriminator(example.Parameters[i].methodParam.value) )
+                        {
+                            example.Parameters.splice(i, 1);
+                            i--;
+                        }
+                    }
+                    examples.push(example);
+                }
             });
         }
         return examples;
@@ -1530,7 +1610,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GetExampleItems(example: CommandExample, isTest: boolean): string[] {
         let parameters: string[] = [];
-        parameters.push("az " + this.CommandGroup_Name.split("_").join("-") + " " + example.Method)
+        parameters.push("az " + this.Command_Name);
 
         for (let param of example.Parameters) {
             let param_value = param.value;
@@ -1543,7 +1623,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             let slp = param_value;
             if (!param.isKeyValues) {
-                slp = ToJsonString(slp); 
+                slp = ToJsonString(slp);
             }
             parameters.push(param.name + " " + slp);
         }
