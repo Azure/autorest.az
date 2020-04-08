@@ -12,7 +12,6 @@ import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
 import { isNullOrUndefined } from "util";
-import { deepEqual } from "assert";
 
 
 class ActionParam {
