@@ -16,27 +16,25 @@ from azure.cli.core.commands.parameters import (
     resource_group_name_type,
     get_location_type
 )
+from azure.cli.core.commands.validators import get_default_location_from_resource_group
 from azext_attestation.action import AddPolicySigningCertificatesKeys
 
 
 def load_arguments(self, _):
 
     with self.argument_context('attestation attestation-provider list') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group. The name is c'
-                   'ase insensitive.')
+        c.argument('resource_group_name', resource_group_name_type)
 
     with self.argument_context('attestation attestation-provider show') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group. The name is c'
-                   'ase insensitive.')
+        c.argument('resource_group_name', resource_group_name_type)
         c.argument('provider_name', help='Name of the attestation service instance')
 
     with self.argument_context('attestation attestation-provider create') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group. The name is c'
-                   'ase insensitive.')
+        c.argument('resource_group_name', resource_group_name_type)
         c.argument('provider_name', help='Name of the attestation service')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx), help='The supported Azure location where the a'
-                   'ttestation service instance should be created.')
-        c.argument('tags', tags_type, help='The tags that will be assigned to the attestation service instance.')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+                   validator=get_default_location_from_resource_group)
+        c.argument('tags', tags_type)
         c.argument('attestation_policy', help='Name of attestation policy.')
         c.argument('policy_signing_certificates_keys', action=AddPolicySigningCertificatesKeys, nargs='+', help='The va'
                    'lue of the "keys" parameter is an array of JWK values.  By default, the order of the JWK values wit'
@@ -44,12 +42,10 @@ def load_arguments(self, _):
                    'an choose to assign a meaning to the order for their purposes, if desired.')
 
     with self.argument_context('attestation attestation-provider update') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group. The name is c'
-                   'ase insensitive.')
+        c.argument('resource_group_name', resource_group_name_type)
         c.argument('provider_name', help='Name of the attestation service')
-        c.argument('tags', tags_type, help='The tags that will be assigned to the attestation service instance.')
+        c.argument('tags', tags_type)
 
     with self.argument_context('attestation attestation-provider delete') as c:
-        c.argument('resource_group_name', resource_group_name_type, help='The name of the resource group. The name is c'
-                   'ase insensitive.')
+        c.argument('resource_group_name', resource_group_name_type)
         c.argument('provider_name', help='Name of the attestation service')

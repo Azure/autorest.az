@@ -36,8 +36,6 @@ export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
     output.push("    'Intended Audience :: System Administrators',");
     output.push("    'Programming Language :: Python',");
     output.push("    'Programming Language :: Python :: 3',");
-    output.push("    'Programming Language :: Python :: 3.4',");
-    output.push("    'Programming Language :: Python :: 3.5',");
     output.push("    'Programming Language :: Python :: 3.6',");
     output.push("    'Programming Language :: Python :: 3.7',");
     output.push("    'Programming Language :: Python :: 3.8',");
@@ -47,7 +45,7 @@ export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
     output.push("# TODO: Add any additional SDK dependencies here");
     output.push("DEPENDENCIES = []");
     output.push("");
-    output.push("with open('README.rst', 'r', encoding='utf-8') as f:");
+    output.push("with open('README.md', 'r', encoding='utf-8') as f:");
     output.push("    README = f.read()");
     output.push("with open('HISTORY.rst', 'r', encoding='utf-8') as f:");
     output.push("    HISTORY = f.read()");
