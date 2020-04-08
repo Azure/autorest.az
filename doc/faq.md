@@ -7,6 +7,11 @@ Configuration can be put in either *xxx.cli.md* or *xxx.az.md* in *Azure/azure-r
 * xxx.az.md: the customization will only be applied to azure cli
 > Example can be found at [here](https://github.com/Azure/azure-rest-api-specs/tree/master/specification/logic/resource-manager)
 
+## What should the output-folder be and what would the clear-output-folder clear
+* the output-folder has been changed into <azure-cli-extensions-repo>/src/<extension-name>
+* the clear-output-folder would clear everything under <azure-cli-extensions-repo>/src/<extension-name> except the manual folder which is <azure-cli-extensions-repo>/src/<extension-name>/azext_<extension-name>/manual now.
+
+
 ## How to hide an operation, operationGroup, parameter
 
 Example:
