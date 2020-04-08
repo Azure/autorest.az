@@ -144,7 +144,7 @@ After flatten, the command would looks like:
 ``` batch
 az command --property1 value1 --property2 value ...
 ```
-If the default flatten determined by codegen isn't good enough, you can explicitly set flatten or unflatten like below:
+If the default flatten determined by codegen isn't good enough, you can explicitly set flatten, unflatten or json to indicate no flatten needed like below:
 ``` yaml
 cli:
   cli-directive:
