@@ -8,4 +8,11 @@ az:
   package-name: azure-mgmt-datafactory
   namespace: azure.mgmt.datafactory
 python-sdk-output-folder: "$(output-folder)/azext_datafactory/vendored_sdks/datafactory"
+
+directive:
+    - where:
+        group: datafactory factory
+      set:
+        group: datafactory
+
 ```
