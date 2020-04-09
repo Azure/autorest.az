@@ -85,7 +85,7 @@ def cleanup(test, rg, rg_2, rg_3):
 
 
 @try_manual
-def call_scenario(self, rg, rg_2, rg_3):
+def call_scenario(test, rg, rg_2, rg_3):
     setup(test, rg, rg_2, rg_3)
     step_operations_list(test, rg, rg_2, rg_3)
     step_attestationproviders_create(test, rg, rg_2, rg_3)
@@ -106,4 +106,4 @@ class AttestationManagementClientScenarioTest(ScenarioTest):
                            '')
     def test_attestation(self, rg, rg_2, rg_3):
 
-        call_scenario(test, rg, rg_2, rg_3)
+        call_scenario(self, rg, rg_2, rg_3)

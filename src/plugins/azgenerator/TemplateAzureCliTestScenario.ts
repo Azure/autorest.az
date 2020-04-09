@@ -74,7 +74,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     }
 
     funcScenario.push("@try_manual");
-    funcScenario.push(...ToMultiLine(`def call_scenario(self${parameterLine()}):`));
+    funcScenario.push(...ToMultiLine(`def call_scenario(test${parameterLine()}):`));
 
     // go through the examples to generate steps
     for (var ci = 0; ci < config.length; ci++) {
@@ -117,7 +117,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     }
     funcScenario.push("");
     funcScenario.push("");
-    body.push(`        call_scenario(test${parameterLine()})`);
+    body.push(`        call_scenario(self${parameterLine()})`);
     body.push("");
 
     let output = head.concat(imports, steps, funcScenario, class_info, decorators, initiates, body);

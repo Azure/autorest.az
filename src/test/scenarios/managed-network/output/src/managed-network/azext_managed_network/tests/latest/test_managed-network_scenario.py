@@ -210,7 +210,7 @@ def cleanup(test, rg):
 
 
 @try_manual
-def call_scenario(self, rg):
+def call_scenario(test, rg):
     setup(test, rg)
     step_managednetworksput(test, rg)
     step_managementnetworkgroupsput(test, rg)
@@ -253,4 +253,4 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
             'myHubAndSpoke': self.create_random_name(prefix='clitestmanaged_network_peering_policies'[:7], length=24),
         })
 
-        call_scenario(test, rg)
+        call_scenario(self, rg)

@@ -30,20 +30,20 @@ def try_manual(func):
             ".".join(manual_file_path.split(os.path.sep) + [module_name, ])
         return getattr(import_module(manual_module, package=__name__), origin_func.__name__)
 
-def get_func_to_call():
-    func_to_call = func
-    try:
-        func_to_call = import_manual_function(func)
-        print("func_to_call: {}()".format(func.__name__))
-    except (ImportError, AttributeError):
-        pass
-    return func_to_call
+    def get_func_to_call():
+        func_to_call = func
+        try:
+            func_to_call = import_manual_function(func)
+            print("func_to_call: {}()".format(func.__name__))
+        except (ImportError, AttributeError):
+            pass
+        return func_to_call
 
-def wrapper(*args, **kwargs):
-    func_to_call = get_func_to_call()
-    return func_to_call(*args, **kwargs)
+    def wrapper(*args, **kwargs):
+        func_to_call = get_func_to_call()
+        return func_to_call(*args, **kwargs)
 
-if inspect.isclass(func):
-    return get_func_to_call()
-else:
-    return wrapper
+    if inspect.isclass(func):
+        return get_func_to_call()
+    else:
+        return wrapper

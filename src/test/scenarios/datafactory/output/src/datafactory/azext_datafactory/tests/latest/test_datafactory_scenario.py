@@ -122,7 +122,7 @@ def cleanup(test, rg):
 
 
 @try_manual
-def call_scenario(self, rg):
+def call_scenario(test, rg):
     setup(test, rg)
     step__factories_put_factories_createorupdate(test, rg)
     step__factories_get_factories_get(test, rg)
@@ -150,4 +150,4 @@ class DataFactoryManagementClientScenarioTest(ScenarioTest):
             'exampleFactoryName': self.create_random_name(prefix='clitestfactories'[:7], length=24),
         })
 
-        call_scenario(test, rg)
+        call_scenario(self, rg)
