@@ -209,6 +209,30 @@ def cleanup(test, rg):
     pass
 
 
+@try_manual
+def call_scenario(self, rg):
+    setup(test, rg)
+    step_managednetworksput(test, rg)
+    step_managementnetworkgroupsput(test, rg)
+    step_scopeassignmentsput(test, rg)
+    step_managednetworkpeeringpoliciesput(test, rg)
+    step_managednetworksget(test, rg)
+    step_managednetworkslistbyresourcegroup(test, rg)
+    step_managednetworkslistbysubscription(test, rg)
+    step_scopeassignmentsget(test, rg)
+    step_scopeassignmentslist(test, rg)
+    step_managementnetworkgroupsget(test, rg)
+    step_managednetworksgroupslistbymanagednetwork(test, rg)
+    step_managednetworkpeeringpoliciesget(test, rg)
+    step_managednetworkpeeringpolicieslistbymanagednetwork(test, rg)
+    step_managednetworkpeeringpoliciesdelete(test, rg)
+    step_scopeassignmentsdelete(test, rg)
+    step_managementnetworkgroupsdelete(test, rg)
+    step_managednetworksdelete(test, rg)
+    cleanup(test, rg)
+
+
+@try_manual
 class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
@@ -229,22 +253,4 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
             'myHubAndSpoke': self.create_random_name(prefix='clitestmanaged_network_peering_policies'[:7], length=24),
         })
 
-        setup(self, rg)
-        step_managednetworksput(self, rg)
-        step_managementnetworkgroupsput(self, rg)
-        step_scopeassignmentsput(self, rg)
-        step_managednetworkpeeringpoliciesput(self, rg)
-        step_managednetworksget(self, rg)
-        step_managednetworkslistbyresourcegroup(self, rg)
-        step_managednetworkslistbysubscription(self, rg)
-        step_scopeassignmentsget(self, rg)
-        step_scopeassignmentslist(self, rg)
-        step_managementnetworkgroupsget(self, rg)
-        step_managednetworksgroupslistbymanagednetwork(self, rg)
-        step_managednetworkpeeringpoliciesget(self, rg)
-        step_managednetworkpeeringpolicieslistbymanagednetwork(self, rg)
-        step_managednetworkpeeringpoliciesdelete(self, rg)
-        step_scopeassignmentsdelete(self, rg)
-        step_managementnetworkgroupsdelete(self, rg)
-        step_managednetworksdelete(self, rg)
-        cleanup(self, rg)
+        call_scenario(test, rg)

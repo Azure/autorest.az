@@ -15,6 +15,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let class_info: string[] = [];
     let initiates: string[] = [];
     let body: string[] = [];
+    let funcScenario: string[] = [];
 
     model.GatherInternalResource();
     let config: any = deepCopy(model.Extension_TestScenario);
@@ -37,6 +38,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     steps.push("");
     steps.push("");
 
+    class_info.push("@try_manual");
     class_info.push("class " + model.Extension_NameClass + "ScenarioTest(ScenarioTest):");
     class_info.push("");
     //initiates.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + model.Extension_NameUnderscored + "')");
@@ -71,6 +73,9 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
         return ret;
     }
 
+    funcScenario.push("@try_manual");
+    funcScenario.push(...ToMultiLine(`def call_scenario(self${parameterLine()}):`));
+
     // go through the examples to generate steps
     for (var ci = 0; ci < config.length; ci++) {
         let exampleId: string = config[ci].name;
@@ -99,7 +104,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
             }
             steps.push("");
             steps.push("");
-            body.push(...ToMultiLine(`        ${functionName}(self${parameterLine()})`));
+            funcScenario.push(...ToMultiLine(`    ${functionName}(test${parameterLine()})`));
         }
         else if (functionName) {
             steps.push("@try_manual");
@@ -107,12 +112,15 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
             steps.push("    pass");
             steps.push("");
             steps.push("");
-            body.push(...ToMultiLine(`        ${functionName}(self${parameterLine()})`));
+            funcScenario.push(...ToMultiLine(`    ${functionName}(test${parameterLine()})`));
         }
     }
-    body.push("")
+    funcScenario.push("");
+    funcScenario.push("");
+    body.push(`        call_scenario(test${parameterLine()})`);
+    body.push("");
 
-    let output = head.concat(imports, steps, class_info, decorators, initiates, body);
+    let output = head.concat(imports, steps, funcScenario, class_info, decorators, initiates, body);
     output.forEach(element => {
         if (element.length > 120) header.disableLineTooLong = true;
     });

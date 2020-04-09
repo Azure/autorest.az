@@ -121,6 +121,22 @@ def cleanup(test, rg):
     pass
 
 
+@try_manual
+def call_scenario(self, rg):
+    setup(test, rg)
+    step__factories_put_factories_createorupdate(test, rg)
+    step__factories_get_factories_get(test, rg)
+    step__factories_get_factories_listbyresourcegroup(test, rg)
+    step__factories_get_factories_list(test, rg)
+    step__factories_post_factories_getgithubaccesstoken(test, rg)
+    step__factories_post_factories_getdataplaneaccess(test, rg)
+    step__factories_patch_factories_update(test, rg)
+    step__factories_post_factories_configurefactoryrepo(test, rg)
+    step__factories_delete_factories_delete(test, rg)
+    cleanup(test, rg)
+
+
+@try_manual
 class DataFactoryManagementClientScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestdatafactory_exampleResourceGroup'[:7], key='rg', parameter_name='rg')
@@ -134,14 +150,4 @@ class DataFactoryManagementClientScenarioTest(ScenarioTest):
             'exampleFactoryName': self.create_random_name(prefix='clitestfactories'[:7], length=24),
         })
 
-        setup(self, rg)
-        step__factories_put_factories_createorupdate(self, rg)
-        step__factories_get_factories_get(self, rg)
-        step__factories_get_factories_listbyresourcegroup(self, rg)
-        step__factories_get_factories_list(self, rg)
-        step__factories_post_factories_getgithubaccesstoken(self, rg)
-        step__factories_post_factories_getdataplaneaccess(self, rg)
-        step__factories_patch_factories_update(self, rg)
-        step__factories_post_factories_configurefactoryrepo(self, rg)
-        step__factories_delete_factories_delete(self, rg)
-        cleanup(self, rg)
+        call_scenario(test, rg)
