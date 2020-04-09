@@ -122,7 +122,6 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
 function InitiateDependencies(model: CodeModelAz, imports: string[], decorators: string[], initiates: string[]): string[] {
     let decorated = [];
     let internalObjects = [];
-    let hasResourceGroup = false;
     let parameterNames = [];
     for (let entity of (model.GetPreparerEntities() as PreparerEntity[])) {
         if (!entity.info.name) {
@@ -145,7 +144,6 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
         if (decorated.indexOf(entity.info.name) < 0) {
             if (entity.info.name == 'ResourceGroupPreparer') {
                 imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
-                hasResourceGroup = true;
             }
             else if (entity.info.name == 'StorageAccountPreparer') {
                 imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
