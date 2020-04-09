@@ -46,7 +46,7 @@ class ResourceProperties(msrest.serialization.Model):
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
-     include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
+     include: "Updating", "Deleting", "Failed", "Succeeded".
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
@@ -82,13 +82,13 @@ class ManagedNetworkPeeringPolicyProperties(ResourceProperties):
     All required parameters must be populated in order to send to Azure.
 
     :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
-     include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
+     include: "Updating", "Deleting", "Failed", "Succeeded".
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
     :param type: Required. Gets or sets the connectivity type of a network structure
-     policy.Constant filled by server.  Possible values include: 'HubAndSpokeTopology',
-     'MeshTopology'.
+     policy.Constant filled by server.  Possible values include: "HubAndSpokeTopology",
+     "MeshTopology".
     :type type: str or ~managed_network_management_client.models.Type
     :param hub: Gets or sets the hub virtual network ID.
     :type hub: ~managed_network_management_client.models.ResourceId
@@ -136,13 +136,13 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
     All required parameters must be populated in order to send to Azure.
 
     :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
-     include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
+     include: "Updating", "Deleting", "Failed", "Succeeded".
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
     :param type: Required. Gets or sets the connectivity type of a network structure
-     policy.Constant filled by server.  Possible values include: 'HubAndSpokeTopology',
-     'MeshTopology'.
+     policy.Constant filled by server.  Possible values include: "HubAndSpokeTopology",
+     "MeshTopology".
     :type type: str or ~managed_network_management_client.models.Type
     :param hub: Gets or sets the hub virtual network ID.
     :type hub: ~managed_network_management_client.models.ResourceId
@@ -357,7 +357,7 @@ class ManagedNetworkGroup(ProxyResource):
      value: "Connectivity".
     :vartype kind: str
     :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
-     include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
+     include: "Updating", "Deleting", "Failed", "Succeeded".
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
@@ -438,7 +438,7 @@ class ManagedNetworkGroupProperties(ResourceProperties):
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
-     include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
+     include: "Updating", "Deleting", "Failed", "Succeeded".
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
@@ -571,7 +571,7 @@ class ManagedNetworkProperties(ResourceProperties):
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
-     include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
+     include: "Updating", "Deleting", "Failed", "Succeeded".
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
@@ -648,13 +648,13 @@ class MeshPeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
     All required parameters must be populated in order to send to Azure.
 
     :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
-     include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
+     include: "Updating", "Deleting", "Failed", "Succeeded".
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
     :param type: Required. Gets or sets the connectivity type of a network structure
-     policy.Constant filled by server.  Possible values include: 'HubAndSpokeTopology',
-     'MeshTopology'.
+     policy.Constant filled by server.  Possible values include: "HubAndSpokeTopology",
+     "MeshTopology".
     :type type: str or ~managed_network_management_client.models.Type
     :param hub: Gets or sets the hub virtual network ID.
     :type hub: ~managed_network_management_client.models.ResourceId
@@ -796,7 +796,7 @@ class ScopeAssignment(ProxyResource):
     :param location: The geo-location where the resource lives.
     :type location: str
     :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
-     include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
+     include: "Updating", "Deleting", "Failed", "Succeeded".
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
@@ -861,7 +861,7 @@ class ScopeAssignmentProperties(ResourceProperties):
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
-     include: 'Updating', 'Deleting', 'Failed', 'Succeeded'.
+     include: "Updating", "Deleting", "Failed", "Succeeded".
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str

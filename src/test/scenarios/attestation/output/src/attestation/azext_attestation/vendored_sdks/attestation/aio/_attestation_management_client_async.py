@@ -25,7 +25,7 @@ class AttestationManagementClient(object):
     :ivar attestation_provider: AttestationProviderOperations operations
     :vartype attestation_provider: azure.mgmt.attestation.aio.operations_async.AttestationProviderOperations
     :param credential: Credential needed for the client to connect to Azure.
-    :type credential: azure.core.credentials.TokenCredential
+    :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The ID of the target subscription.
     :type subscription_id: str
     :param str base_url: Service URL
@@ -33,7 +33,7 @@ class AttestationManagementClient(object):
 
     def __init__(
         self,
-        credential: "TokenCredential",
+        credential: "AsyncTokenCredential",
         subscription_id: str,
         base_url: Optional[str] = None,
         **kwargs: Any

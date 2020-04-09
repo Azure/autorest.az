@@ -10,8 +10,8 @@ debug-output-folder: $(output-folder)/_az_debug
 az-output-folder: $(output-folder)
 
 use-extension:
-  "@autorest/python": "5.0.0-dev.20200326.1"
-  "@autorest/clicommon": "0.4.4"
+  "@autorest/python": "5.0.0-preview.1-dev.20200406.1"
+  "@autorest/clicommon": "0.4.5"
   #"@autorest/python": "latest"
   
 cli:
