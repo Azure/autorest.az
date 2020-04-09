@@ -20,12 +20,16 @@ let directives: Array<any> = [];
 interface WhereCommandDirective {
     select?: string;
     where: {
+        "group": string;
+        "group-description": string;
         "command"?: string;
         "command-description"?: string;
         "parameter-name"?: string;
         "parameter-description"?: string;
     };
     set?: {
+        "group": string;
+        "group-description": string;
         "command"?: string;
         "command-description"?: string;
         "parameter-name"?: string;
@@ -71,7 +75,7 @@ function isWhereCommandDirective(it: any): it is WhereCommandDirective {
     const directive = it;
     const where = directive.where;
     const set = directive.set;
-    if (where && (where["command"] || where['parameter-name'])) {
+    if (where && (where["command"] || where['parameter-name'] || where['group'])) {
         const prohibitedFilters = [
             "model-name",
             "property-name",
@@ -123,18 +127,27 @@ export class Modifiers {
                 };
                 if (isWhereCommandDirective(directive)) {
                     const selectType = directive.select;
+                    const groupRegex = getPatternToMatch(directive.where["group"]);
                     const parameterRegex = getPatternToMatch(directive.where["parameter-name"]);
                     const commandRegex = getPatternToMatch(directive.where["command"]);
                     const parameterReplacer = directive.set !== undefined? directive.set["parameter-name"]: undefined;
                     const paramDescriptionReplacer = directive.set !== undefined? directive.set["parameter-description"]: undefined;
                     const commandReplacer = directive.set !== undefined ? directive.set["command"] : undefined;
                     const commandDescriptionReplacer = directive.set !== undefined? directive.set["command-description"]: undefined;
+                    const groupReplacer = directive.set !== undefined ? directive.set["group"] : undefined;
+                    const groupDescriptionReplacer = directive.set !== undefined? directive.set["group-description"]: undefined;
                     
                     for (const operationGroup of values(this.codeModel.operationGroups)) {
                         //operationGroup
-
+                        if (!isNullOrUndefined(operationGroup.language['az']['command']) && operationGroup.language['az']['command'].match(groupRegex)) {
+                            operationGroup.language['az']['command'] = groupReplacer? groupRegex? operationGroup.language['az']['command'].replace(groupRegex, groupReplacer): groupReplacer: operationGroup.language['az']['command'];
+                            operationGroup.language['az']['description'] = groupDescriptionReplacer? groupDescriptionReplacer: operationGroup.language['az']['description'];
+                        }
                         for (const operation of values(operationGroup.operations)) {
                             //operation
+                            if (!isNullOrUndefined(operationGroup.language['az']['name']) && operationGroup.language['az']['name'].match(groupRegex)) {
+                                operation.language['az']['command'] = operationGroup.language['az']['command'] + " " + operation.language['az']['name'];
+                            }
                             if (operation.language['az']['command'] != undefined && operation.language["az"]["command"].match(commandRegex)) {
                                 operation.language["az"]["command"] = commandReplacer? commandRegex? operation.language["az"]["command"].replace(commandRegex, commandReplacer): commandReplacer: operation.language["az"]["command"];
                                 operation.language["az"]["description"] = commandDescriptionReplacer? commandDescriptionReplacer: operation.language["az"]["description"];
