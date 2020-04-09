@@ -65,7 +65,7 @@ def step_managementnetworkgroupsput(test, rg):
 # EXAMPLE: ScopeAssignmentsPut
 @try_manual
 def step_scopeassignmentsput(test, rg):
-    test.cmd('az managed-network scope-assignment create '
+    test.cmd('az managed-network mn scope-assignment create '
              '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Mana'
              'gedNetwork/managedNetworks/{myManagedNetwork}" '
              '--scope "subscriptions/subscriptionC" '
@@ -114,7 +114,7 @@ def step_managednetworkslistbysubscription(test, rg):
 # EXAMPLE: ScopeAssignmentsGet
 @try_manual
 def step_scopeassignmentsget(test, rg):
-    test.cmd('az managed-network scope-assignment show '
+    test.cmd('az managed-network mn scope-assignment show '
              '--scope "subscriptions/subscriptionC" '
              '--scope-assignment-name "{subscriptionCAssignment}"',
              checks=[])
@@ -123,7 +123,7 @@ def step_scopeassignmentsget(test, rg):
 # EXAMPLE: ScopeAssignmentsList
 @try_manual
 def step_scopeassignmentslist(test, rg):
-    test.cmd('az managed-network scope-assignment list '
+    test.cmd('az managed-network mn scope-assignment list '
              '--scope "subscriptions/subscriptionC"',
              checks=[])
 
@@ -179,7 +179,7 @@ def step_managednetworkpeeringpoliciesdelete(test, rg):
 # EXAMPLE: ScopeAssignmentsDelete
 @try_manual
 def step_scopeassignmentsdelete(test, rg):
-    test.cmd('az managed-network scope-assignment delete '
+    test.cmd('az managed-network mn scope-assignment delete '
              '--scope "subscriptions/subscriptionC" '
              '--scope-assignment-name "{subscriptionCAssignment}"',
              checks=[])

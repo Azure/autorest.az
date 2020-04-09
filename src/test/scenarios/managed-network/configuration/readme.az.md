@@ -20,7 +20,7 @@ directive:
       set:
         group: managed-network mn group
     - where:
-        group: managed_network scope_assignment
+        group: managed-network scope-assignment
       set:
         group: managed-network mn scope-assignment
 

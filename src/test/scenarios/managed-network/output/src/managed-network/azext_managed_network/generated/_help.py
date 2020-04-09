@@ -76,60 +76,60 @@ group and Managed Network name
 "
 """
 
-helps['managed-network scope-assignment'] = """
+helps['managed-network mn scope-assignment'] = """
     type: group
-    short-summary: managed-network scope-assignment
+    short-summary: managed-network mn scope-assignment
 """
 
-helps['managed-network scope-assignment list'] = """
+helps['managed-network mn scope-assignment list'] = """
     type: command
     short-summary: Get the specified scope assignment.
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network scope-assignment list --scope "subscriptions/subscriptionC"
+               az managed-network mn scope-assignment list --scope "subscriptions/subscriptionC"
 """
 
-helps['managed-network scope-assignment show'] = """
+helps['managed-network mn scope-assignment show'] = """
     type: command
     short-summary: Get the specified scope assignment.
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network scope-assignment show --scope "subscriptions/subscriptionC" --scope-assignment-name "\
-subscriptionCAssignment"
+               az managed-network mn scope-assignment show --scope "subscriptions/subscriptionC" --scope-assignment-nam\
+e "subscriptionCAssignment"
 """
 
-helps['managed-network scope-assignment create'] = """
+helps['managed-network mn scope-assignment create'] = """
     type: command
     short-summary: Creates a scope assignment.
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network scope-assignment create --assigned-managed-network "/subscriptions/subscriptionA/reso\
-urceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope "subscriptions/\
-subscriptionC" --scope-assignment-name "subscriptionCAssignment"
+               az managed-network mn scope-assignment create --assigned-managed-network "/subscriptions/subscriptionA/r\
+esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope "subscriptio\
+ns/subscriptionC" --scope-assignment-name "subscriptionCAssignment"
 """
 
-helps['managed-network scope-assignment update'] = """
+helps['managed-network mn scope-assignment update'] = """
     type: command
     short-summary: Creates a scope assignment.
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network scope-assignment update --assigned-managed-network "/subscriptions/subscriptionA/reso\
-urceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope "subscriptions/\
-subscriptionC" --scope-assignment-name "subscriptionCAssignment"
+               az managed-network mn scope-assignment update --assigned-managed-network "/subscriptions/subscriptionA/r\
+esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope "subscriptio\
+ns/subscriptionC" --scope-assignment-name "subscriptionCAssignment"
 """
 
-helps['managed-network scope-assignment delete'] = """
+helps['managed-network mn scope-assignment delete'] = """
     type: command
     short-summary: Deletes a scope assignment.
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network scope-assignment delete --scope "subscriptions/subscriptionC" --scope-assignment-name\
- "subscriptionCAssignment"
+               az managed-network mn scope-assignment delete --scope "subscriptions/subscriptionC" --scope-assignment-n\
+ame "subscriptionCAssignment"
 """
 
 helps['managed-network mn group'] = """

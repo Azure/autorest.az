@@ -62,43 +62,43 @@ def managed_network_mn_delete(cmd, client,
                                managed_network_name=managed_network_name)
 
 
-def managed_network_scope_assignment_list(cmd, client,
-                                          scope):
+def managed_network_mn_scope_assignment_list(cmd, client,
+                                             scope):
     return client.list(scope=scope)
 
 
-def managed_network_scope_assignment_show(cmd, client,
-                                          scope,
-                                          scope_assignment_name):
+def managed_network_mn_scope_assignment_show(cmd, client,
+                                             scope,
+                                             scope_assignment_name):
     return client.get(scope=scope,
                       scope_assignment_name=scope_assignment_name)
 
 
-def managed_network_scope_assignment_create(cmd, client,
-                                            scope,
-                                            scope_assignment_name,
-                                            location,
-                                            assigned_managed_network=None):
+def managed_network_mn_scope_assignment_create(cmd, client,
+                                               scope,
+                                               scope_assignment_name,
+                                               location,
+                                               assigned_managed_network=None):
     return client.create_or_update(scope=scope,
                                    scope_assignment_name=scope_assignment_name,
                                    location=location,
                                    assigned_managed_network=assigned_managed_network)
 
 
-def managed_network_scope_assignment_update(cmd, client,
-                                            scope,
-                                            scope_assignment_name,
-                                            location,
-                                            assigned_managed_network=None):
+def managed_network_mn_scope_assignment_update(cmd, client,
+                                               scope,
+                                               scope_assignment_name,
+                                               location,
+                                               assigned_managed_network=None):
     return client.create_or_update(scope=scope,
                                    scope_assignment_name=scope_assignment_name,
                                    location=location,
                                    assigned_managed_network=assigned_managed_network)
 
 
-def managed_network_scope_assignment_delete(cmd, client,
-                                            scope,
-                                            scope_assignment_name):
+def managed_network_mn_scope_assignment_delete(cmd, client,
+                                               scope,
+                                               scope_assignment_name):
     return client.delete(scope=scope,
                          scope_assignment_name=scope_assignment_name)
 

@@ -32,13 +32,13 @@ def load_command_table(self, _):
         operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._scope_assignment_operations#Sco'
         'peAssignmentOperations.{}',
         client_factory=cf_scope_assignment)
-    with self.command_group('managed-network scope-assignment', managed_network_scope_assignment,
-                            client_factory=cf_scope_assignment, is_experimental=True) as g:
-        g.custom_command('list', 'managed_network_scope_assignment_list')
-        g.custom_show_command('show', 'managed_network_scope_assignment_show')
-        g.custom_command('create', 'managed_network_scope_assignment_create')
-        g.custom_command('update', 'managed_network_scope_assignment_update')
-        g.custom_command('delete', 'managed_network_scope_assignment_delete')
+    with self.command_group('managed-network mn scope-assignment', managed_network_scope_assignment,
+                            client_factory=cf_scope_assignment) as g:
+        g.custom_command('list', 'managed_network_mn_scope_assignment_list')
+        g.custom_show_command('show', 'managed_network_mn_scope_assignment_show')
+        g.custom_command('create', 'managed_network_mn_scope_assignment_create')
+        g.custom_command('update', 'managed_network_mn_scope_assignment_update')
+        g.custom_command('delete', 'managed_network_mn_scope_assignment_delete')
 
     from azext_managed_network.generated._client_factory import cf_managed_network_group
     managed_network_managed_network_group = CliCommandType(
