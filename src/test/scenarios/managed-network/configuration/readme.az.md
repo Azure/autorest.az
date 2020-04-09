@@ -11,37 +11,18 @@ python-sdk-output-folder: "$(output-folder)/azext_managed_network/vendored_sdks/
 
 
 directive:
-  - where:
-      parameter-name: managed-network-group-name
-    set:
-      parameter-name: group-name
-#  - from: swagger-document
-#    where: $..parameters[?(@.in=='body')]
-#    transform: >
-#      $['x-ms-client-flatten'] = true;
-#    reason: Flatten everything for Azure CLI
-#  - from: swagger-document
-#    where: $.definitions[*].properties.*
-#    transform: >
-#      $['x-ms-client-flatten'] = true;
-#    reason: Flatten everything for Azure CLI
-#  - from: swagger-document
-#    where: $.definitions[?(@.discriminator)]
-#    transform: >
-#      $['x-ms-client-flatten'] = false;
-#  - from: swagger-document
-#    where: $.definitions[?(@.discriminator)].properties.*
-#    transform: >
-#      $['x-ms-client-flatten'] = false;
-#  - from: swagger-document
-#    where: $.definitions.ManagedNetworkPeeringPolicy.properties.*
-#    transform: >
-#      $['x-ms-client-flatten'] = false;
-#    reason: manually don't flatten the polymorphic base class
-#  - from: swagger-document
-#    where: $.definitions[*].properties.[?(@.type=='array')]
-#    transform: >
-#      $['x-ms-client-flatten'] = false;
+    - where:
+        parameter-name: managed-network-group-name
+      set:
+        parameter-name: group-name
+    - where:
+        group: managed-network managed-network-group
+      set:
+        group: managed-network mn group
+    - where:
+        group: managed_network scope_assignment
+      set:
+        group: managed-network mn scope-assignment
 
 cli:
     cli-directive:

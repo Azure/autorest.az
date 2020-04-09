@@ -103,35 +103,35 @@ def managed_network_scope_assignment_delete(cmd, client,
                          scope_assignment_name=scope_assignment_name)
 
 
-def managed_network_managed_network_group_list(cmd, client,
-                                               resource_group_name,
-                                               managed_network_name,
-                                               top=None,
-                                               skiptoken=None):
+def managed_network_mn_group_list(cmd, client,
+                                  resource_group_name,
+                                  managed_network_name,
+                                  top=None,
+                                  skiptoken=None):
     return client.list_by_managed_network(resource_group_name=resource_group_name,
                                           managed_network_name=managed_network_name,
                                           top=top,
                                           skiptoken=skiptoken)
 
 
-def managed_network_managed_network_group_show(cmd, client,
-                                               resource_group_name,
-                                               managed_network_name,
-                                               group_name):
+def managed_network_mn_group_show(cmd, client,
+                                  resource_group_name,
+                                  managed_network_name,
+                                  group_name):
     return client.get(resource_group_name=resource_group_name,
                       managed_network_name=managed_network_name,
                       managed_network_group_name=group_name)
 
 
-def managed_network_managed_network_group_create(cmd, client,
-                                                 resource_group_name,
-                                                 managed_network_name,
-                                                 group_name,
-                                                 location,
-                                                 management_groups=None,
-                                                 subscriptions=None,
-                                                 virtual_networks=None,
-                                                 subnets=None):
+def managed_network_mn_group_create(cmd, client,
+                                    resource_group_name,
+                                    managed_network_name,
+                                    group_name,
+                                    location,
+                                    management_groups=None,
+                                    subscriptions=None,
+                                    virtual_networks=None,
+                                    subnets=None):
     if isinstance(management_groups, str):
         management_groups = json.loads(management_groups)
     return client.begin_create_or_update(resource_group_name=resource_group_name,
@@ -144,15 +144,15 @@ def managed_network_managed_network_group_create(cmd, client,
                                          subnets=subnets)
 
 
-def managed_network_managed_network_group_update(cmd, client,
-                                                 resource_group_name,
-                                                 managed_network_name,
-                                                 group_name,
-                                                 location,
-                                                 management_groups=None,
-                                                 subscriptions=None,
-                                                 virtual_networks=None,
-                                                 subnets=None):
+def managed_network_mn_group_update(cmd, client,
+                                    resource_group_name,
+                                    managed_network_name,
+                                    group_name,
+                                    location,
+                                    management_groups=None,
+                                    subscriptions=None,
+                                    virtual_networks=None,
+                                    subnets=None):
     if isinstance(management_groups, str):
         management_groups = json.loads(management_groups)
     return client.begin_create_or_update(resource_group_name=resource_group_name,
@@ -165,10 +165,10 @@ def managed_network_managed_network_group_update(cmd, client,
                                          subnets=subnets)
 
 
-def managed_network_managed_network_group_delete(cmd, client,
-                                                 resource_group_name,
-                                                 managed_network_name,
-                                                 group_name):
+def managed_network_mn_group_delete(cmd, client,
+                                    resource_group_name,
+                                    managed_network_name,
+                                    group_name):
     return client.begin_delete(resource_group_name=resource_group_name,
                                managed_network_name=managed_network_name,
                                managed_network_group_name=group_name)

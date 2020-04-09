@@ -139,13 +139,15 @@ export class Modifiers {
                     
                     for (const operationGroup of values(this.codeModel.operationGroups)) {
                         //operationGroup
+                        let groupChanged = false;
                         if (!isNullOrUndefined(operationGroup.language['az']['command']) && operationGroup.language['az']['command'].match(groupRegex)) {
                             operationGroup.language['az']['command'] = groupReplacer? groupRegex? operationGroup.language['az']['command'].replace(groupRegex, groupReplacer): groupReplacer: operationGroup.language['az']['command'];
                             operationGroup.language['az']['description'] = groupDescriptionReplacer? groupDescriptionReplacer: operationGroup.language['az']['description'];
+                            groupChanged = true;
                         }
                         for (const operation of values(operationGroup.operations)) {
                             //operation
-                            if (!isNullOrUndefined(operationGroup.language['az']['name']) && operationGroup.language['az']['name'].match(groupRegex)) {
+                            if (groupChanged) {
                                 operation.language['az']['command'] = operationGroup.language['az']['command'] + " " + operation.language['az']['name'];
                             }
                             if (operation.language['az']['command'] != undefined && operation.language["az"]["command"].match(commandRegex)) {

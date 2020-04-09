@@ -28,7 +28,7 @@ def setup(test, rg):
 # EXAMPLE: /Factories/put/Factories_CreateOrUpdate
 @try_manual
 def step__factories_put_factories_createorupdate(test, rg):
-    test.cmd('az datafactory factory create '
+    test.cmd('az datafactory create '
              '--location "East US" '
              '--factory-name "{exampleFactoryName}" '
              '--resource-group "{rg}"',
@@ -38,7 +38,7 @@ def step__factories_put_factories_createorupdate(test, rg):
 # EXAMPLE: /Factories/get/Factories_Get
 @try_manual
 def step__factories_get_factories_get(test, rg):
-    test.cmd('az datafactory factory show '
+    test.cmd('az datafactory show '
              '--factory-name "{exampleFactoryName}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -47,7 +47,7 @@ def step__factories_get_factories_get(test, rg):
 # EXAMPLE: /Factories/get/Factories_ListByResourceGroup
 @try_manual
 def step__factories_get_factories_listbyresourcegroup(test, rg):
-    test.cmd('az datafactory factory list '
+    test.cmd('az datafactory list '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -55,14 +55,14 @@ def step__factories_get_factories_listbyresourcegroup(test, rg):
 # EXAMPLE: /Factories/get/Factories_List
 @try_manual
 def step__factories_get_factories_list(test, rg):
-    test.cmd('az datafactory factory list',
+    test.cmd('az datafactory list',
              checks=[])
 
 
 # EXAMPLE: /Factories/post/Factories_GetGitHubAccessToken
 @try_manual
 def step__factories_post_factories_getgithubaccesstoken(test, rg):
-    test.cmd('az datafactory factory get-git-hub-access-token '
+    test.cmd('az datafactory get-git-hub-access-token '
              '--factory-name "{exampleFactoryName}" '
              '--git-hub-access-code "some" '
              '--git-hub-access-token-base-url "some" '
@@ -74,7 +74,7 @@ def step__factories_post_factories_getgithubaccesstoken(test, rg):
 # EXAMPLE: /Factories/post/Factories_GetDataPlaneAccess
 @try_manual
 def step__factories_post_factories_getdataplaneaccess(test, rg):
-    test.cmd('az datafactory factory get-data-plane-access '
+    test.cmd('az datafactory get-data-plane-access '
              '--factory-name "{exampleFactoryName}" '
              '--access-resource-path "" '
              '--expire-time "2018-11-10T09:46:20.2659347Z" '
@@ -88,7 +88,7 @@ def step__factories_post_factories_getdataplaneaccess(test, rg):
 # EXAMPLE: /Factories/patch/Factories_Update
 @try_manual
 def step__factories_patch_factories_update(test, rg):
-    test.cmd('az datafactory factory update '
+    test.cmd('az datafactory update '
              '--factory-name "{exampleFactoryName}" '
              '--tags exampleTag="exampleValue" '
              '--resource-group "{rg}"',
@@ -98,7 +98,7 @@ def step__factories_patch_factories_update(test, rg):
 # EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
 @try_manual
 def step__factories_post_factories_configurefactoryrepo(test, rg):
-    test.cmd('az datafactory factory configure-factory-repo '
+    test.cmd('az datafactory configure-factory-repo '
              '--factory-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.DataFacto'
              'ry/factories/{exampleFactoryName}" '
              '--factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-n'
@@ -110,7 +110,7 @@ def step__factories_post_factories_configurefactoryrepo(test, rg):
 # EXAMPLE: /Factories/delete/Factories_Delete
 @try_manual
 def step__factories_delete_factories_delete(test, rg):
-    test.cmd('az datafactory factory delete '
+    test.cmd('az datafactory delete '
              '--factory-name "{exampleFactoryName}" '
              '--resource-group "{rg}"',
              checks=[])

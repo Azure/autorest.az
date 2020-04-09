@@ -12,31 +12,31 @@
 from knack.util import CLIError
 
 
-def datafactory_factory_list(cmd, client,
-                             resource_group_name=None):
+def datafactory_list(cmd, client,
+                     resource_group_name=None):
     if resource_group_name is not None:
         return client.list_by_resource_group(resource_group_name=resource_group_name)
     return client.list()
 
 
-def datafactory_factory_show(cmd, client,
-                             resource_group_name,
-                             factory_name,
-                             if_none_match=None):
+def datafactory_show(cmd, client,
+                     resource_group_name,
+                     factory_name,
+                     if_none_match=None):
     return client.get(resource_group_name=resource_group_name,
                       factory_name=factory_name,
                       if_none_match=if_none_match)
 
 
-def datafactory_factory_create(cmd, client,
-                               resource_group_name,
-                               factory_name,
-                               if_match=None,
-                               location=None,
-                               tags=None,
-                               identity=None,
-                               factory_vsts_configuration=None,
-                               factory_git_hub_configuration=None):
+def datafactory_create(cmd, client,
+                       resource_group_name,
+                       factory_name,
+                       if_match=None,
+                       location=None,
+                       tags=None,
+                       identity=None,
+                       factory_vsts_configuration=None,
+                       factory_git_hub_configuration=None):
     all_repo_configuration = []
     if factory_vsts_configuration is not None:
         all_repo_configuration.append(factory_vsts_configuration)
@@ -55,29 +55,29 @@ def datafactory_factory_create(cmd, client,
                                    repo_configuration=repo_configuration)
 
 
-def datafactory_factory_update(cmd, client,
-                               resource_group_name,
-                               factory_name,
-                               tags=None,
-                               identity=None):
+def datafactory_update(cmd, client,
+                       resource_group_name,
+                       factory_name,
+                       tags=None,
+                       identity=None):
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          tags=tags,
                          identity=identity)
 
 
-def datafactory_factory_delete(cmd, client,
-                               resource_group_name,
-                               factory_name):
+def datafactory_delete(cmd, client,
+                       resource_group_name,
+                       factory_name):
     return client.delete(resource_group_name=resource_group_name,
                          factory_name=factory_name)
 
 
-def datafactory_factory_configure_factory_repo(cmd, client,
-                                               location_id,
-                                               factory_resource_id=None,
-                                               factory_vsts_configuration=None,
-                                               factory_git_hub_configuration=None):
+def datafactory_configure_factory_repo(cmd, client,
+                                       location_id,
+                                       factory_resource_id=None,
+                                       factory_vsts_configuration=None,
+                                       factory_git_hub_configuration=None):
     all_repo_configuration = []
     if factory_vsts_configuration is not None:
         all_repo_configuration.append(factory_vsts_configuration)
@@ -92,14 +92,14 @@ def datafactory_factory_configure_factory_repo(cmd, client,
                                          repo_configuration=repo_configuration)
 
 
-def datafactory_factory_get_data_plane_access(cmd, client,
-                                              resource_group_name,
-                                              factory_name,
-                                              permissions=None,
-                                              access_resource_path=None,
-                                              profile_name=None,
-                                              start_time=None,
-                                              expire_time=None):
+def datafactory_get_data_plane_access(cmd, client,
+                                      resource_group_name,
+                                      factory_name,
+                                      permissions=None,
+                                      access_resource_path=None,
+                                      profile_name=None,
+                                      start_time=None,
+                                      expire_time=None):
     return client.get_data_plane_access(resource_group_name=resource_group_name,
                                         factory_name=factory_name,
                                         permissions=permissions,
@@ -109,12 +109,12 @@ def datafactory_factory_get_data_plane_access(cmd, client,
                                         expire_time=expire_time)
 
 
-def datafactory_factory_get_git_hub_access_token(cmd, client,
-                                                 resource_group_name,
-                                                 factory_name,
-                                                 git_hub_access_code,
-                                                 git_hub_access_token_base_url,
-                                                 git_hub_client_id=None):
+def datafactory_get_git_hub_access_token(cmd, client,
+                                         resource_group_name,
+                                         factory_name,
+                                         git_hub_access_code,
+                                         git_hub_access_token_base_url,
+                                         git_hub_client_id=None):
     return client.get_git_hub_access_token(resource_group_name=resource_group_name,
                                            factory_name=factory_name,
                                            git_hub_access_code=git_hub_access_code,

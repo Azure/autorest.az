@@ -48,7 +48,7 @@ def step_managednetworksput(test, rg):
 # EXAMPLE: ManagementNetworkGroupsPut
 @try_manual
 def step_managementnetworkgroupsput(test, rg):
-    test.cmd('az managed-network managed-network-group create '
+    test.cmd('az managed-network mn group create '
              '--management-groups "[]" '
              '--subnets id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/V'
              'netA/subnets/subnetA" '
@@ -131,7 +131,7 @@ def step_scopeassignmentslist(test, rg):
 # EXAMPLE: ManagementNetworkGroupsGet
 @try_manual
 def step_managementnetworkgroupsget(test, rg):
-    test.cmd('az managed-network managed-network-group show '
+    test.cmd('az managed-network mn group show '
              '--group-name "{myManagedNetworkGroup1}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
@@ -141,7 +141,7 @@ def step_managementnetworkgroupsget(test, rg):
 # EXAMPLE: ManagedNetworksGroupsListByManagedNetwork
 @try_manual
 def step_managednetworksgroupslistbymanagednetwork(test, rg):
-    test.cmd('az managed-network managed-network-group list '
+    test.cmd('az managed-network mn group list '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -188,7 +188,7 @@ def step_scopeassignmentsdelete(test, rg):
 # EXAMPLE: ManagementNetworkGroupsDelete
 @try_manual
 def step_managementnetworkgroupsdelete(test, rg):
-    test.cmd('az managed-network managed-network-group delete '
+    test.cmd('az managed-network mn group delete '
              '--group-name "{myManagedNetworkGroup1}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',

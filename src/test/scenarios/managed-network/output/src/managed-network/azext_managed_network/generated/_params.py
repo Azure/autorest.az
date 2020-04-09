@@ -90,7 +90,7 @@ def load_arguments(self, _):
         c.argument('scope', help='The scope of the scope assignment to delete.')
         c.argument('scope_assignment_name', help='The name of the scope assignment to delete.')
 
-    with self.argument_context('managed-network managed-network-group list') as c:
+    with self.argument_context('managed-network mn group list') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('top', help='May be used to limit the number of results in a page for list queries.')
@@ -98,27 +98,12 @@ def load_arguments(self, _):
                    'evious response contains a nextLink element, the value of the nextLink element will include a skipt'
                    'oken parameter that specifies a starting point to use for subsequent calls.')
 
-    with self.argument_context('managed-network managed-network-group show') as c:
+    with self.argument_context('managed-network mn group show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('group_name', help='The name of the Managed Network Group.')
 
-    with self.argument_context('managed-network managed-network-group create') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('group_name', help='The name of the Managed Network Group.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
-                   validator=get_default_location_from_resource_group)
-        c.argument('management_groups', arg_type=CLIArgumentType(options_list=['--management-groups'], help='The collec'
-                   'tion of management groups covered by the Managed Network'))
-        c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered b'
-                   'y the Managed Network')
-        c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets cover'
-                   'ed by the Managed Network')
-        c.argument('subnets', action=AddSubnets, nargs='+', help='The collection of  subnets covered by the Managed Net'
-                   'work')
-
-    with self.argument_context('managed-network managed-network-group update') as c:
+    with self.argument_context('managed-network mn group create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('group_name', help='The name of the Managed Network Group.')
@@ -133,7 +118,22 @@ def load_arguments(self, _):
         c.argument('subnets', action=AddSubnets, nargs='+', help='The collection of  subnets covered by the Managed Net'
                    'work')
 
-    with self.argument_context('managed-network managed-network-group delete') as c:
+    with self.argument_context('managed-network mn group update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.')
+        c.argument('group_name', help='The name of the Managed Network Group.')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+                   validator=get_default_location_from_resource_group)
+        c.argument('management_groups', arg_type=CLIArgumentType(options_list=['--management-groups'], help='The collec'
+                   'tion of management groups covered by the Managed Network'))
+        c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered b'
+                   'y the Managed Network')
+        c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets cover'
+                   'ed by the Managed Network')
+        c.argument('subnets', action=AddSubnets, nargs='+', help='The collection of  subnets covered by the Managed Net'
+                   'work')
+
+    with self.argument_context('managed-network mn group delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
         c.argument('group_name', help='The name of the Managed Network Group.')

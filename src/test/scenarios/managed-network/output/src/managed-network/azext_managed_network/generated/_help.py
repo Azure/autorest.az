@@ -132,68 +132,68 @@ helps['managed-network scope-assignment delete'] = """
  "subscriptionCAssignment"
 """
 
-helps['managed-network managed-network-group'] = """
+helps['managed-network mn group'] = """
     type: group
-    short-summary: managed-network managed-network-group
+    short-summary: managed-network mn group
 """
 
-helps['managed-network managed-network-group list'] = """
+helps['managed-network mn group list'] = """
     type: command
     short-summary: The ListByManagedNetwork ManagedNetworkGroup operation retrieves all the Managed Network Groups in a\
  specified Managed Networks in a paginated format.
     examples:
       - name: Get Managed Network Group
         text: |-
-               az managed-network managed-network-group list --managed-network-name "myManagedNetwork" --resource-group\
- "myResourceGroup"
+               az managed-network mn group list --managed-network-name "myManagedNetwork" --resource-group "myResourceG\
+roup"
 """
 
-helps['managed-network managed-network-group show'] = """
+helps['managed-network mn group show'] = """
     type: command
     short-summary: The Get ManagedNetworkGroups operation gets a Managed Network Group specified by the resource group,\
  Managed Network name, and group name
     examples:
       - name: Get Managed Network Group
         text: |-
-               az managed-network managed-network-group show --group-name "myManagedNetworkGroup1" --managed-network-na\
-me "myManagedNetwork" --resource-group "myResourceGroup"
+               az managed-network mn group show --group-name "myManagedNetworkGroup1" --managed-network-name "myManaged\
+Network" --resource-group "myResourceGroup"
 """
 
-helps['managed-network managed-network-group create'] = """
+helps['managed-network mn group create'] = """
     type: command
     short-summary: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
     examples:
       - name: Create/Update Managed Network Group
         text: |-
-               az managed-network managed-network-group create --management-groups "[]" --subnets id="/subscriptionB/re\
-sourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --virtual-networks id="\
-/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" --virtual-networks id=\
-"/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" --group-name "myManag\
-edNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
+               az managed-network mn group create --management-groups "[]" --subnets id="/subscriptionB/resourceGroups/\
+myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --virtual-networks id="/subscription\
+B/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" --virtual-networks id="/subscriptio\
+nB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" --group-name "myManagedNetworkGrou\
+p1" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
-helps['managed-network managed-network-group update'] = """
+helps['managed-network mn group update'] = """
     type: command
     short-summary: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
     examples:
       - name: Create/Update Managed Network Group
         text: |-
-               az managed-network managed-network-group update --management-groups "[]" --subnets id="/subscriptionB/re\
-sourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --virtual-networks id="\
-/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" --virtual-networks id=\
-"/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" --group-name "myManag\
-edNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
+               az managed-network mn group update --management-groups "[]" --subnets id="/subscriptionB/resourceGroups/\
+myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --virtual-networks id="/subscription\
+B/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" --virtual-networks id="/subscriptio\
+nB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" --group-name "myManagedNetworkGrou\
+p1" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
-helps['managed-network managed-network-group delete'] = """
+helps['managed-network mn group delete'] = """
     type: command
     short-summary: The Delete ManagedNetworkGroups operation deletes a Managed Network Group specified by the resource \
 group, Managed Network name, and group name
     examples:
       - name: Delete Managed Network Group
         text: |-
-               az managed-network managed-network-group delete --group-name "myManagedNetworkGroup1" --managed-network-\
-name "myManagedNetwork" --resource-group "myResourceGroup"
+               az managed-network mn group delete --group-name "myManagedNetworkGroup1" --managed-network-name "myManag\
+edNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy'] = """
