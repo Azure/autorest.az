@@ -88,7 +88,7 @@ class TrackedResource(Resource):
     ):
         super(TrackedResource, self).__init__(**kwargs)
         self.tags = kwargs.get('tags', None)
-        self.location = kwargs.get('location', None)
+        self.location = kwargs['location']
 
 
 class AttestationProvider(TrackedResource):
@@ -112,8 +112,8 @@ class AttestationProvider(TrackedResource):
     :type location: str
     :param trust_model: Trust model for the attestation service instance.
     :type trust_model: str
-    :param status: Required. Status of attestation service. Possible values include: 'Ready',
-     'NotReady', 'Error'.
+    :param status: Required. Status of attestation service. Possible values include: "Ready",
+     "NotReady", "Error".
     :type status: str or ~azure.mgmt.attestation.models.AttestationServiceStatus
     :param attest_uri: Gets the uri of attestation service.
     :type attest_uri: str
@@ -144,7 +144,7 @@ class AttestationProvider(TrackedResource):
     ):
         super(AttestationProvider, self).__init__(**kwargs)
         self.trust_model = kwargs.get('trust_model', None)
-        self.status = kwargs.get('status', None)
+        self.status = kwargs['status']
         self.attest_uri = kwargs.get('attest_uri', None)
 
 
@@ -203,7 +203,7 @@ class AttestationServiceCreationParams(msrest.serialization.Model):
         **kwargs
     ):
         super(AttestationServiceCreationParams, self).__init__(**kwargs)
-        self.location = kwargs.get('location', None)
+        self.location = kwargs['location']
         self.tags = kwargs.get('tags', None)
         self.attestation_policy = kwargs.get('attestation_policy', None)
         self.keys = kwargs.get('keys', None)
@@ -351,20 +351,20 @@ class JsonWebKey(msrest.serialization.Model):
         **kwargs
     ):
         super(JsonWebKey, self).__init__(**kwargs)
-        self.alg = kwargs.get('alg', None)
+        self.alg = kwargs['alg']
         self.crv = kwargs.get('crv', None)
         self.d = kwargs.get('d', None)
         self.dp = kwargs.get('dp', None)
         self.dq = kwargs.get('dq', None)
         self.e = kwargs.get('e', None)
         self.k = kwargs.get('k', None)
-        self.kid = kwargs.get('kid', None)
-        self.kty = kwargs.get('kty', None)
+        self.kid = kwargs['kid']
+        self.kty = kwargs['kty']
         self.n = kwargs.get('n', None)
         self.p = kwargs.get('p', None)
         self.q = kwargs.get('q', None)
         self.qi = kwargs.get('qi', None)
-        self.use = kwargs.get('use', None)
+        self.use = kwargs['use']
         self.x = kwargs.get('x', None)
         self.x5_c = kwargs.get('x5_c', None)
         self.y = kwargs.get('y', None)

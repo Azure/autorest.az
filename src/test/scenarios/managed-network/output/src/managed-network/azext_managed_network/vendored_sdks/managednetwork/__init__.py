@@ -8,3 +8,9 @@
 
 from ._managed_network_management_client import ManagedNetworkManagementClient
 __all__ = ['ManagedNetworkManagementClient']
+
+try:
+    from .patch import patch_sdk
+    patch_sdk()
+except ImportError:
+    pass
