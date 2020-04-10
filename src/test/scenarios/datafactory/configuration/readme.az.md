@@ -7,7 +7,7 @@ extensions: datafactory
 az:
   package-name: azure-mgmt-datafactory
   namespace: azure.mgmt.datafactory
-python-sdk-output-folder: "$(az-output-folder)/azext_datafactory/vendored_sdks/datafactory"
+python-sdk-output-folder: "$(output-folder)/azext_datafactory/vendored_sdks/datafactory"
 
 directive:
     - where:
