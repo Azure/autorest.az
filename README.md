@@ -6,8 +6,11 @@ See documentation [here](doc/00-overview.md)
 
 python:
     reason: 'make sure python flag exists to load config in python.md'
+
 debug-output-folder: $(output-folder)/_az_debug
 az-output-folder: $(output-folder)/src/$(extensions)
+output-folder: $(az-output-folder)
+
 
 use-extension:
   "@autorest/python": "5.0.0-preview.1-dev.20200406.1"
@@ -75,7 +78,7 @@ scope-az:
         #- source-file-modifiers
         #- source-file-merger
         - source-file-extension
-    output-folder: $(az-output-folder)
+    output-folder: $(output-folder)
 
 scope-clicommon:
     output-folder: $(debug-output-folder)
