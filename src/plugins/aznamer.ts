@@ -130,11 +130,10 @@ export class AzNamer {
 
     async processOperationGroup() {
 
-        let azSettings = await this.session.getValue('az');
-        let extensionName = azSettings['extensions'];
+        let extensionName = await this.session.getValue('extensions');
         //console.error(extensionName);
         if(extensionName == '' || extensionName == undefined) {
-            this.session.message({Channel:Channel.Error, Text:"probably missing readme.az.md possible settings are:\naz:\n  extensions: managed-network\n  namespace: azure.mgmt.managednetwork\n  package-name: azure-mgmt-managednetwork\npython-sdk-output-folder: \"$(output-folder)/src/managed-network/azext_managed_network/vendored_sdks/managed-network\"\n"})
+            this.session.message({Channel:Channel.Error, Text:"probably missing readme.az.md possible settings are:\nextensions: managed-network\naz:\n  namespace: azure.mgmt.managednetwork\n  package-name: azure-mgmt-managednetwork\npython-sdk-output-folder: \"$(output-folder)/src/managed-network/azext_managed_network/vendored_sdks/managed-network\"\n"})
         }
         this.codeModel.operationGroups.forEach(operationGroup => {
             let operationGroupName = "";

@@ -43,7 +43,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     async init() {
         this.options = await this.session.getValue('az');
-        this.extensionName = this.options['extensions'];
+        this.extensionName = await this.session.getValue('extensions');
         this.currentOperationGroupIndex = -1;
         this.currentSubOperationGroupIndex = -1;
         this.currentOperationIndex = -1;

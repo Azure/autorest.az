@@ -7,7 +7,7 @@ See documentation [here](doc/00-overview.md)
 python:
     reason: 'make sure python flag exists to load config in python.md'
 debug-output-folder: $(output-folder)/_az_debug
-az-output-folder: $(output-folder)
+az-output-folder: $(output-folder)/src/$(extensions)
 
 use-extension:
   "@autorest/python": "5.0.0-preview.1-dev.20200406.1"
