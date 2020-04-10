@@ -43,17 +43,23 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
-        c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory.')
+        c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory. Expect val'
+                   'ue: KEY1=VALUE1 KEY2=VALUE2 ...')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information.', arg_group='RepoConfiguration')
+                   'epo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: project-name, tena'
+                   'nt-id, account-name, repository-name, collaboration-branch, root-folder, last-commit-id.',
+                   arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information.', arg_group='RepoConfiguration')
+                   'itHub repo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: host-name, '
+                   'account-name, repository-name, collaboration-branch, root-folder, last-commit-id.', arg_group='Repo'
+                   'Configuration')
 
     with self.argument_context('datafactory factory update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
         c.argument('tags', tags_type)
-        c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory.')
+        c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory. Expect val'
+                   'ue: KEY1=VALUE1 KEY2=VALUE2 ...')
 
     with self.argument_context('datafactory factory delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -63,9 +69,13 @@ def load_arguments(self, _):
         c.argument('location_id', help='The location identifier.')
         c.argument('factory_resource_id', help='The factory resource id.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information.', arg_group='RepoConfiguration')
+                   'epo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: project-name, tena'
+                   'nt-id, account-name, repository-name, collaboration-branch, root-folder, last-commit-id.',
+                   arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information.', arg_group='RepoConfiguration')
+                   'itHub repo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: host-name, '
+                   'account-name, repository-name, collaboration-branch, root-folder, last-commit-id.', arg_group='Repo'
+                   'Configuration')
 
     with self.argument_context('datafactory factory get-data-plane-access') as c:
         c.argument('resource_group_name', resource_group_name_type)

@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { EscapeString, ToCamelCase, Capitalize, ToMultiLine } from "../../utils/helper";
-import { SchemaType } from "@azure-tools/codemodel";
+import { SchemaType, Parameter } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "./Header";
 import { isNullOrUndefined } from "util";
 
@@ -228,7 +228,49 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                     }
 
                     if (!needSkip) {
-                        argument += ", help='" + EscapeString(model.MethodParameter_Description) + "'";
+                        argument += ", help='" + EscapeString(model.MethodParameter_Description).trimRight();
+                        if (model.MethodParameter_IsList) {
+                            let netDescription = model.MethodParameter_Description.trim();
+                            if (netDescription.length>0 && netDescription[netDescription.length-1].match(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)) {
+                                argument += ".";
+                            }
+                            if (model.MethodParameter_IsListOfSimple) {
+                                let options = [];
+                                if (!isNullOrUndefined(model.Schema_ActionName(model.MethodParameter.schema))) {
+                                    if (baseParam && model.MethodParameter['polyBaseParam'] == baseParam) {
+                                        let keyToMatch = baseParam.schema?.['discriminator']?.property?.language['python']?.name;
+                                        let valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
+                                        options = GetActionOptions(model, model.MethodParameter, keyToMatch, valueToMatch);
+                                    }
+                                    else {
+                                        options = GetActionOptions(model, model.MethodParameter);
+                                    }
+                                }
+                                if (options.length>0) {
+                                    if (options.length>1) {
+                                        argument += " Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are:";
+                                        for (let i =0; i<options.length; i++) {
+                                            argument += " " + options[i];
+                                            if (i<options.length-1) {
+                                                argument += ",";
+                                            }
+                                        }
+                                        argument += ".";
+                                    }
+                                    else {
+                                        argument += ` Expect value: ${options[0]}=xx.`;
+                                    }
+                                }
+                                else {
+                                    argument += " Expect value: KEY1=VALUE1 KEY2=VALUE2 ...";
+                                }
+
+                            }
+                            else {
+                                argument += " Expected value: json-string/@json-file.";
+                            }
+                        }
+                        argument += "'";
                     
                         if (hasJsonLastTime) {
                             argument += ")";
@@ -262,4 +304,36 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
 
 
     return output_args;
+}
+
+
+
+function GetActionOptions(model: CodeModelAz, param: Parameter, keyToMatch: string = null, valueToMatch: string = null): string[] {
+    let options = [];
+
+    let paramType = param?.schema?.type;
+    if (!SchemaType.Object || !SchemaType.Array) {
+        return options;
+    }
+    if (model.EnterSubMethodParameters()) {
+        if (model.SelectFirstMethodParameter()) {
+            do {
+                if (model.SubMethodParameter['readOnly']) {
+                    continue;
+                }
+                if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                    continue;
+                }
+                if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch) && model.Parameter_NamePython(model.SubMethodParameter) == keyToMatch) {
+                    continue;
+                }
+                let azName =model.Parameter_NameAz(model.SubMethodParameter)
+                if (azName) {
+                    options.push(azName);
+                }
+            } while (model.SelectNextMethodParameter());
+        }
+    }
+    model.ExitSubMethodParameters();
+    return options;
 }
