@@ -68,8 +68,8 @@ class CloudError(msrest.serialization.Model):
         **kwargs
     ):
         super(CloudError, self).__init__(**kwargs)
-        self.code = kwargs.get('code', None)
-        self.message = kwargs.get('message', None)
+        self.code = kwargs['code']
+        self.message = kwargs['message']
         self.target = kwargs.get('target', None)
         self.details = kwargs.get('details', None)
 
@@ -241,10 +241,10 @@ class FactoryRepoConfiguration(msrest.serialization.Model):
     ):
         super(FactoryRepoConfiguration, self).__init__(**kwargs)
         self.type = None
-        self.account_name = kwargs.get('account_name', None)
-        self.repository_name = kwargs.get('repository_name', None)
-        self.collaboration_branch = kwargs.get('collaboration_branch', None)
-        self.root_folder = kwargs.get('root_folder', None)
+        self.account_name = kwargs['account_name']
+        self.repository_name = kwargs['repository_name']
+        self.collaboration_branch = kwargs['collaboration_branch']
+        self.root_folder = kwargs['root_folder']
         self.last_commit_id = kwargs.get('last_commit_id', None)
 
 
@@ -360,7 +360,7 @@ class FactoryListResponse(msrest.serialization.Model):
         **kwargs
     ):
         super(FactoryListResponse, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs['value']
         self.next_link = kwargs.get('next_link', None)
 
 
@@ -459,7 +459,7 @@ class FactoryVstsConfiguration(FactoryRepoConfiguration):
     ):
         super(FactoryVstsConfiguration, self).__init__(**kwargs)
         self.type = 'FactoryVSTSConfiguration'
-        self.project_name = kwargs.get('project_name', None)
+        self.project_name = kwargs['project_name']
         self.tenant_id = kwargs.get('tenant_id', None)
 
 
@@ -492,9 +492,9 @@ class GitHubAccessTokenRequest(msrest.serialization.Model):
         **kwargs
     ):
         super(GitHubAccessTokenRequest, self).__init__(**kwargs)
-        self.git_hub_access_code = kwargs.get('git_hub_access_code', None)
+        self.git_hub_access_code = kwargs['git_hub_access_code']
         self.git_hub_client_id = kwargs.get('git_hub_client_id', None)
-        self.git_hub_access_token_base_url = kwargs.get('git_hub_access_token_base_url', None)
+        self.git_hub_access_token_base_url = kwargs['git_hub_access_token_base_url']
 
 
 class GitHubAccessTokenResponse(msrest.serialization.Model):

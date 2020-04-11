@@ -34,7 +34,7 @@ class ManagedNetworkManagementClient(object):
     :ivar operation: OperationOperations operations
     :vartype operation: managed_network_management_client.aio.operations_async.OperationOperations
     :param credential: Credential needed for the client to connect to Azure.
-    :type credential: azure.core.credentials.TokenCredential
+    :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
     :type subscription_id: str
     :param str base_url: Service URL
@@ -42,7 +42,7 @@ class ManagedNetworkManagementClient(object):
 
     def __init__(
         self,
-        credential: "TokenCredential",
+        credential: "AsyncTokenCredential",
         subscription_id: str,
         base_url: Optional[str] = None,
         **kwargs: Any

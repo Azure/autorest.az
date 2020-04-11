@@ -22,7 +22,7 @@ class DataFactoryManagementClient(object):
     :ivar factory: FactoryOperations operations
     :vartype factory: azure.mgmt.datafactory.aio.operations_async.FactoryOperations
     :param credential: Credential needed for the client to connect to Azure.
-    :type credential: azure.core.credentials.TokenCredential
+    :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The subscription identifier.
     :type subscription_id: str
     :param str base_url: Service URL
@@ -30,7 +30,7 @@ class DataFactoryManagementClient(object):
 
     def __init__(
         self,
-        credential: "TokenCredential",
+        credential: "AsyncTokenCredential",
         subscription_id: str,
         base_url: Optional[str] = None,
         **kwargs: Any

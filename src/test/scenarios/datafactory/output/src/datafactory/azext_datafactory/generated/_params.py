@@ -26,16 +26,16 @@ from azext_datafactory.action import (
 
 def load_arguments(self, _):
 
-    with self.argument_context('datafactory factory list') as c:
+    with self.argument_context('datafactory list') as c:
         c.argument('resource_group_name', resource_group_name_type)
 
-    with self.argument_context('datafactory factory show') as c:
+    with self.argument_context('datafactory show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
         c.argument('if_none_match', help='ETag of the factory entity. Should only be specified for get. If the ETag mat'
                    'ches the existing entity tag, or if * was provided, then no content will be returned.')
 
-    with self.argument_context('datafactory factory create') as c:
+    with self.argument_context('datafactory create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
         c.argument('if_match', help='ETag of the factory entity. Should only be specified for update, for which it shou'
@@ -54,18 +54,18 @@ def load_arguments(self, _):
                    'account-name, repository-name, collaboration-branch, root-folder, last-commit-id.', arg_group='Repo'
                    'Configuration')
 
-    with self.argument_context('datafactory factory update') as c:
+    with self.argument_context('datafactory update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
         c.argument('tags', tags_type)
         c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory. Expect val'
                    'ue: KEY1=VALUE1 KEY2=VALUE2 ...')
 
-    with self.argument_context('datafactory factory delete') as c:
+    with self.argument_context('datafactory delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
 
-    with self.argument_context('datafactory factory configure-factory-repo') as c:
+    with self.argument_context('datafactory configure-factory-repo') as c:
         c.argument('location_id', help='The location identifier.')
         c.argument('factory_resource_id', help='The factory resource id.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
@@ -77,7 +77,7 @@ def load_arguments(self, _):
                    'account-name, repository-name, collaboration-branch, root-folder, last-commit-id.', arg_group='Repo'
                    'Configuration')
 
-    with self.argument_context('datafactory factory get-data-plane-access') as c:
+    with self.argument_context('datafactory get-data-plane-access') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
         c.argument('permissions', help='The string with permissions for Data Plane access. Currently only \'r\' is supp'
@@ -90,7 +90,7 @@ def load_arguments(self, _):
         c.argument('expire_time', help='Expiration time for the token. Maximum duration for the token is eight hours an'
                    'd by default the token will expire in eight hours.')
 
-    with self.argument_context('datafactory factory get-git-hub-access-token') as c:
+    with self.argument_context('datafactory get-git-hub-access-token') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
         c.argument('git_hub_access_code', help='GitHub access code.')

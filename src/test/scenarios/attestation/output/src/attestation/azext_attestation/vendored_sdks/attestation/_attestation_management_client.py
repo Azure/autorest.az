@@ -25,7 +25,7 @@ class AttestationManagementClient(object):
     :ivar attestation_provider: AttestationProviderOperations operations
     :vartype attestation_provider: azure.mgmt.attestation.operations.AttestationProviderOperations
     :param credential: Credential needed for the client to connect to Azure.
-    :type credential: azure.core.credentials.TokenCredential
+    :type credential: ~azure.core.credentials.TokenCredential
     :param subscription_id: The ID of the target subscription.
     :type subscription_id: str
     :param str base_url: Service URL
