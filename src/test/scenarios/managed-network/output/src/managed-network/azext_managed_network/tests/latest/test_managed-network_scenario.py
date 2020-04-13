@@ -31,15 +31,15 @@ def setup(test, rg):
 def step_managednetworksput(test, rg):
     test.cmd('az managed-network mn create '
              '--location "eastus" '
-             '--properties "{{\\"scope\\":{{\\"managementGroups\\":[{{\\"id\\":\\"/providers/Microsoft.Management/manag'
-             'ementGroups/20000000-0001-0000-0000-000000000000\\"}},{{\\"id\\":\\"/providers/Microsoft.Management/manag'
-             'ementGroups/20000000-0002-0000-0000-000000000000\\"}}],\\"subnets\\":[{{\\"id\\":\\"/subscriptions/{subsc'
-             'ription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}/subnets/default\\"}},{{'
-             '\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetwo'
-             'rks/{vn}/subnets/default\\"}}],\\"subscriptions\\":[{{\\"id\\":\\"subscriptionA\\"}},{{\\"id\\":\\"subscr'
-             'iptionB\\"}}],\\"virtualNetworks\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/p'
-             'roviders/Microsoft.Network/virtualNetworks/{vn_2}\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/res'
-             'ourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_3}\\"}}]}}}}" '
+             '--properties "{{\\"managementGroups\\":[{{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20'
+             '000000-0001-0000-0000-000000000000\\"}},{{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20'
+             '000000-0002-0000-0000-000000000000\\"}}],\\"subscriptions\\":[{{\\"id\\":\\"subscriptionA\\"}},{{\\"id\\"'
+             ':\\"subscriptionB\\"}}],\\"virtualNetworks\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGro'
+             'ups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}\\"}},{{\\"id\\":\\"/subscriptions/{subscription'
+             '_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_2}\\"}}],\\"subnets\\":[{{\\"id'
+             '\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{'
+             'vn_3}/subnets/default\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M'
+             'icrosoft.Network/virtualNetworks/{vn_3}/subnets/default\\"}}]}}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -236,9 +236,9 @@ def call_scenario(test, rg):
 class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
-    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn', resource_group_key='rg')
-    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn_2', resource_group_key='rg')
-    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_3', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
     def test_managed_network(self, rg):
 

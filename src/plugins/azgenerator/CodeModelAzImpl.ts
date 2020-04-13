@@ -1447,6 +1447,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam));
                 }
                 else {
+                    // JSON form
                     example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, [], defaultName, methodParam));
                 }
             }
@@ -1459,6 +1460,44 @@ export class CodeModelCliImpl implements CodeModelAz {
             return false;
         }
         return true;
+    }
+
+    private FlattenProperty(paramSchema: any, exampleValue: any) {
+        if (paramSchema?.type == 'array' && exampleValue instanceof Array) {
+            return exampleValue.map(x => this.FlattenProperty(paramSchema?.elementType, x));
+        }
+        if (['object', 'dictionary'].indexOf(paramSchema?.type) >= 0 && paramSchema?.properties && typeof exampleValue == 'object' && !(exampleValue instanceof Array)) {
+            let ret = deepCopy(exampleValue);
+            for (let subProperty of paramSchema?.properties) {
+                if (subProperty.flattenedNames && subProperty.flattenedNames.length > 0) {
+                    let subValue = exampleValue;
+                    let i = 0;
+                    for (; i < subProperty.flattenedNames.length; i++) {
+                        if (isNullOrUndefined(subValue)) break;
+                        let k = subProperty.flattenedNames[i];
+                        let v = subValue[k];
+                        if (v === undefined) break;
+                        subValue = v;
+                    }
+                    if (i == subProperty.flattenedNames.length) {
+                        ret[subProperty?.language['cli'].cliKey] = subValue;
+                    }
+                }
+            }
+            for (let subProperty of paramSchema?.properties) {
+                if (subProperty.flattenedNames && subProperty.flattenedNames.length > 0) {
+                    delete ret[subProperty.flattenedNames[0]];
+                }
+            }
+            for (let subProperty of paramSchema?.properties) {
+                let k = subProperty?.language['cli'].cliKey;
+                if (exampleValue[k]) {
+                    exampleValue[k] = this.FlattenProperty(subProperty, exampleValue[k]);
+                }
+            }
+            return ret;
+        }
+        return deepCopy(exampleValue);
     }
 
     public FlattenExampleParameter(method_param: Map<string, MethodParam>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
@@ -1483,7 +1522,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                 }
             }
-
+            netValue = this.FlattenProperty(methodParam.value?.schema, netValue);
             if ('pathToProperty' in methodParam.value && ancestors.length - methodParam.value['pathToProperty'].length == 1) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
                 let ancestors_ = deepCopy(ancestors) as string[];
