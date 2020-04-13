@@ -150,12 +150,12 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
      policy.Constant filled by server.  Possible values include: "HubAndSpokeTopology",
      "MeshTopology".
     :type type: str or ~managed_network_management_client.models.Type
+    :param mesh: Gets or sets the mesh group IDs.
+    :type mesh: list[~managed_network_management_client.models.ResourceId]
     :param hub: Gets or sets the hub virtual network ID.
     :type hub: ~managed_network_management_client.models.ResourceId
     :param spokes: Gets or sets the spokes group IDs.
     :type spokes: list[~managed_network_management_client.models.ResourceId]
-    :param mesh: Gets or sets the mesh group IDs.
-    :type mesh: list[~managed_network_management_client.models.ResourceId]
     """
 
     _validation = {
@@ -168,21 +168,23 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
+        'mesh': {'key': 'mesh', 'type': '[ResourceId]'},
         'hub': {'key': 'hub', 'type': 'ResourceId'},
         'spokes': {'key': 'spokes', 'type': '[ResourceId]'},
-        'mesh': {'key': 'mesh', 'type': '[ResourceId]'},
     }
 
     def __init__(
         self,
         *,
+        mesh: Optional[List["ResourceId"]] = None,
         hub: Optional["ResourceId"] = None,
         spokes: Optional[List["ResourceId"]] = None,
-        mesh: Optional[List["ResourceId"]] = None,
         **kwargs
     ):
-        super(HubAndSpokePeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, mesh=mesh, **kwargs)
+        super(HubAndSpokePeeringPolicyProperties, self).__init__(mesh=mesh, **kwargs)
         self.type = 'HubAndSpokeTopology'
+        self.hub = hub
+        self.spokes = spokes
 
 
 class Resource(msrest.serialization.Model):
@@ -738,8 +740,9 @@ class MeshPeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         mesh: Optional[List["ResourceId"]] = None,
         **kwargs
     ):
-        super(MeshPeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, mesh=mesh, **kwargs)
+        super(MeshPeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, **kwargs)
         self.type = 'MeshTopology'
+        self.mesh = mesh
 
 
 class Operation(msrest.serialization.Model):
