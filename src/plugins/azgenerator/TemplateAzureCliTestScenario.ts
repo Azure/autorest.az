@@ -102,6 +102,19 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                 steps.push("    # EXAMPLE NOT FOUND!");
                 steps.push("    pass");
             }
+            else {
+                for (let exampleCmd of model.FindExampleWaitById(exampleId)) {
+                    if (exampleCmd && exampleCmd.length > 0) {
+                        found = true;
+                        for (let idx = 0; idx < exampleCmd.length; idx++) {
+                            let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
+                            let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
+                            ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
+                        }
+                        steps.push("    " + disabled + "         checks=[])");
+                    }
+                }
+            }
             steps.push("");
             steps.push("");
             funcScenario.push(...ToMultiLine(`    ${functionName}(test${parameterLine()})`));

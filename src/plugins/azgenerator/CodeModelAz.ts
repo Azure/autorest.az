@@ -48,6 +48,9 @@ export class CommandExample {
     public Path: string;
     public ResourceClassName: string;
     public HttpMethod: string;    // Get, Post, Put ...
+    public MethodResponses: any[];
+    public Method_IsLongRun: boolean;
+    public CommandGroup_Key: string;
 }
 
 export interface CodeModelAz
@@ -165,4 +168,5 @@ export interface CodeModelAz
     GetSubscriptionKey(): string;
     GetPreparerEntities(): any[];
     GatherInternalResource();
+    FindExampleWaitById(id: string): string[][];
 }

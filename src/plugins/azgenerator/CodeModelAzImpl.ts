@@ -1645,6 +1645,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.ResourceClassName = this.CommandGroup_Key;
                 let params: ExampleParam[] = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
+                example.MethodResponses = this.Method.responses || [];
+                example.Method_IsLongRun = this.Method.extensions?.['x-ms-long-running-operation'] ? true : false;
+                example.CommandGroup_Key = this.CommandGroup_Key;
                 if (this.filterExampleByPoly(example_obj, example)) {
                     for (let i=0;i<example.Parameters.length; i++) {
                         if (this.isDiscriminator(example.Parameters[i].methodParam.value) )
@@ -1683,6 +1686,35 @@ export class CodeModelCliImpl implements CodeModelAz {
         return parameters;
     }
 
+    public GetExampleWait(example: CommandExample): string[] {
+        let parameters: string[] = [];
+        if (example.HttpMethod.toLowerCase() == 'put' && example.Method_IsLongRun && example.MethodResponses.length > 0 && (example.MethodResponses[0].schema?.properties || []).find(property => {
+            return property?.language?.cli?.cliKey == "provisioningState";
+        })) {
+            let words = this.Command_Name.split(' ');
+            words = words.slice(0, words.length - 1);
+            words.push('wait');
+            parameters.push(`az ${words.join(' ')} --created`);
+            for (let param of example.Parameters) {
+                let paramKey = param.methodParam.value.language?.cli?.cliKey;
+                if (paramKey == 'resourceGroupName' || this.resource_pool.isResource(paramKey) == example.CommandGroup_Key) {
+                    let param_value = param.value;
+                    let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues, [], [], param);
+                    if (replaced_value == param_value) {
+                        replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues);
+                    }
+                    param_value = replaced_value;
+                    let slp = param_value;
+                    if (!param.isKeyValues) {
+                        slp = ToJsonString(slp);
+                    }
+                    parameters.push(param.name + " " + slp);
+                }
+            }
+        }
+        return parameters;
+    }
+
     public GetPreparerEntities(): any[] {
         return this.resource_pool.createPreparerEntities();
     }
@@ -1700,6 +1732,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         let ret: string[][] = [];
         this.GetAllExamples(id, (example) => {
             ret.push(this.GetExampleItems(example, true));
+        });
+        return ret;
+    }
+
+    public FindExampleWaitById(id: string): string[][] {
+        let ret: string[][] = [];
+        this.GetAllExamples(id, (example) => {
+            let waitCmd = this.GetExampleWait(example);
+            if (waitCmd.length>0) ret.push(waitCmd);
         });
         return ret;
     }
