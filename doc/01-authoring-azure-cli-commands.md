@@ -12,7 +12,7 @@ You will need to clone following directories locally.
 
     git clone git@github.com:Azure/azure-rest-api-specs.git
     git clone git@github.com:Azure/azure-cli-extensions.git
-    git clone git@github.com:Azure/azure-cli.git  # currently you need to checkout azure-core-preview branch and then build az
+    
 
 For simplicity let's assume they are cloned under **c:\dev** directory on Windows machine.
 
@@ -22,7 +22,7 @@ For simplicity let's assume they are cloned under **c:\dev** directory on Window
 >
 > git clone https://github.com/Azure/azure-cli.git
 >
-> switch to **azure_core** branch.
+> switch to **azure-core-preview** branch.
 >
 > Set up your environment using **azdev setup**.
 
@@ -46,7 +46,7 @@ Things that need to be installed:
 If you want to run **az** using your local code you need to clone following repositories:
   git clone git@github.com:Azure/autorest.az.git  # you also need to add --use=your-autorest.az-folder to the autorest command below.
 
-  
+
 ### to run autorest.az you need to have readme.az.md readme.cli.md readme.python.md in your swagger service resource-manager folder
 ### the readme.python.md can follow the python sdk guideLine 
 
