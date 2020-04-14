@@ -65,7 +65,7 @@ Minimal **readme.cli.md** file must exist:
       namespace: azure.mgmt.healthcareapis
     ```
 
-### Python SDK
+### az-readme-example
 
 Python SDK will be automatically generated, however appropriate folder needs to be specified.
 Add following line to **readme.az.md**:
