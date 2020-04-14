@@ -10,8 +10,9 @@ Install AutoRest tools, or alternatively you can use Docker container.
 
 You will need to clone following directories locally.
 
-    git clone https://github.com/Azure/azure-rest-api-specs
-    git clone https://github.com/Azure/azure-cli-extensions.git
+    git clone git@github.com:Azure/azure-rest-api-specs.git
+    git clone git@github.com:Azure/azure-cli-extensions.git
+    git clone git@github.com:Azure/azure-cli.git  # currently you need to checkout azure-core-preview branch and then build az
 
 For simplicity let's assume they are cloned under **c:\dev** directory on Windows machine.
 
@@ -43,10 +44,9 @@ Things that need to be installed:
 ### Command to Run AutoRest with clicommon/az Extensions as Source Code
 
 If you want to run **az** using your local code you need to clone following repositories:
-azure-cli  # currently you need to checkout azure-core-preview branch and then build az
-azure-cli-extensions
-autorest.az  # if you want to run az with the autorest.az code folder you need to add --use=your-autorest.az-folder to the autorest command below.
-    ...
+  git clone git@github.com:Azure/autorest.az.git  # you also need to add --use=your-autorest.az-folder to the autorest command below.
+
+  
 ### to run autorest.az you need to have readme.az.md readme.cli.md readme.python.md in your swagger service resource-manager folder
 ### the readme.python.md can follow the python sdk guideLine 
 
