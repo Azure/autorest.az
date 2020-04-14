@@ -10,8 +10,9 @@ Install AutoRest tools, or alternatively you can use Docker container.
 
 You will need to clone following directories locally.
 
-    git clone https://github.com/Azure/azure-rest-api-specs
-    git clone https://github.com/Azure/azure-cli-extensions.git
+    git clone git@github.com:Azure/azure-rest-api-specs.git
+    git clone git@github.com:Azure/azure-cli-extensions.git
+    
 
 For simplicity let's assume they are cloned under **c:\dev** directory on Windows machine.
 
@@ -21,7 +22,7 @@ For simplicity let's assume they are cloned under **c:\dev** directory on Window
 >
 > git clone https://github.com/Azure/azure-cli.git
 >
-> switch to **azure_core** branch.
+> switch to **azure-core-preview** branch.
 >
 > Set up your environment using **azdev setup**.
 
@@ -39,23 +40,19 @@ Things that need to be installed:
 - Autorest Beta (instructions)
 - Tools needed to test extensions...
 
-## Run AutoRest to Generate Azure CLI Extensions
-
-### Command to Run AutoRest
-
-    autorest --az --version=3.0.6253 --output-folder=/_/azure-cli-extensions/src/<extension-name> /_/azure-rest-api-specs/specification/attestation/resource-manager/readme.md
-
-When you run above command AutoRest will download and use most recent npm packages.
 
 ### Command to Run AutoRest with clicommon/az Extensions as Source Code
 
 If you want to run **az** using your local code you need to clone following repositories:
+  
+  git clone git@github.com:Azure/autorest.az.git  # you also need to add --use=your-autorest.az-folder to the autorest command below.
 
 
+### to run autorest.az you need to have readme.az.md readme.cli.md readme.python.md in your swagger service resource-manager folder
+### the readme.python.md can follow the python sdk guideLine 
 
-    ...
 
-### Prepare Minimal **readme.az.md** and **readme.cli.md** File
+### Prepare Minimal **readme.az.md** and **readme.cli.md** File 
 
 Minimal **readme.cli.md** file must exist: 
 
@@ -77,10 +74,22 @@ Add following line to **readme.az.md**:
     ``` yaml $(az)
     az:
       ...
-      python-sdk-output-folder: "$(output-folder)/azext_<extension-name>/vendored_sdks/<sdk-namespace-name>"
+      extensions: datafactory
+      package-name: azure-mgmt-datafactory
+      namespace: azure.mgmt.datafactory
+    az-output-folder: $(azure-cli-extension-folder)/src/datafactory 
+    python-sdk-output-folder: "$(az-output-folder)/azext_datafactory/vendored_sdks/datafactory"
     ```
 
 NOTE: In the future this step may be automated, but for now it's necessary it matches extension folder structure.
+
+## Run AutoRest to Generate Azure CLI Extensions
+
+### Command to Run AutoRest
+
+    autorest --az --version=3.0.6271 --azure-cli-extension-folder=/_/azure-cli-extensions/ /_/azure-rest-api-specs/specification/attestation/resource-manager/readme.md
+
+When you run above command AutoRest will download and use most recent npm packages.
 
 ### Integration Test
 

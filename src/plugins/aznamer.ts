@@ -129,7 +129,14 @@ export class AzNamer {
     }
 
     async processOperationGroup() {
-
+        let azExtensionFolder = "";
+        try {
+            azExtensionFolder = await this.session.getValue('azure-cli-extension-folder');
+        } catch(e) {
+            this.session.message({Channel: Channel.Error, Text:"--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \n"}); 
+        }
+        
+        
         let azSettings = await this.session.getValue('az');
         let extensionName = azSettings['extensions'];
         //console.error(extensionName);
