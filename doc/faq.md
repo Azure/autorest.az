@@ -40,9 +40,9 @@ az extension add --source=<cli-extension-whl-link-from-swagger-pipeline>
 * we can add or remove subgroup by using directive
 * Let's say we want to
 * Remove subgroup:
-  > datashare share -> datashare
+  > az datashare share -> az datashare
 * Add subgroup:
-  > datashare trigger -> datashare consumer trigger
+  > az datashare trigger -> az datashare consumer trigger
 
 * we should add below configuration in to readme.az.md to make it work.
 ``` yaml
