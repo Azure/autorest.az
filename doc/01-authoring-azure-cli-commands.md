@@ -44,6 +44,7 @@ Things that need to be installed:
 ### Command to Run AutoRest with clicommon/az Extensions as Source Code
 
 If you want to run **az** using your local code you need to clone following repositories:
+  
   git clone git@github.com:Azure/autorest.az.git  # you also need to add --use=your-autorest.az-folder to the autorest command below.
 
 
