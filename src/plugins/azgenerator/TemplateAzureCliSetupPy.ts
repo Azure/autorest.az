@@ -18,11 +18,6 @@ export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
     output.push("");
     output.push("from codecs import open");
     output.push("from setuptools import setup, find_packages");
-    output.push("try:");
-    output.push("    from azure_bdist_wheel import cmdclass");
-    output.push("except ImportError:");
-    output.push("    from distutils import log as logger");
-    output.push("    logger.warn(\"Wheel is not available, disabling bdist_wheel hook\")");
     output.push("");
     output.push("# TODO: Confirm this is the right version number you want and it matches your");
     output.push("# HISTORY.rst entry.");
