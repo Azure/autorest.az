@@ -129,7 +129,15 @@ export class AzNamer {
     }
 
     async processOperationGroup() {
-
+        let azExtensionFolder = "";
+        try {
+            azExtensionFolder = await this.session.getValue('azure-cli-extension-folder');
+        } catch(e) {
+            this.session.message({Channel: Channel.Fatal, Text:"--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"}); 
+            throw e;
+        }
+        
+        
         let azSettings = await this.session.getValue('az');
         let extensionName = azSettings['extensions'];
         //console.error(extensionName);

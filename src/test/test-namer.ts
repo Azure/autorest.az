@@ -24,9 +24,11 @@ const resources = `${__dirname}/../../src/test/resources/`;
         const folders = await readdir(resources);
         for(var each of folders) {
             let cfg = {
+                "azure-cli-extension-folder": true,
                 az:{
                     extensions:each
                 }
+               
             }
             const session = await createTestSession<CodeModel>(cfg, resources + "/" + each, [each + '-cli-common.yaml'], []);
     

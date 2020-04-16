@@ -7,9 +7,61 @@ Configuration can be put in either *xxx.cli.md* or *xxx.az.md* in *Azure/azure-r
 * xxx.az.md: the customization will only be applied to azure cli
 > Example can be found at [here](https://github.com/Azure/azure-rest-api-specs/tree/master/specification/logic/resource-manager)
 
-## What should the output-folder be and what would the clear-output-folder clear
-* the output-folder has been changed into <azure-cli-extensions-repo>/src/extension-name
-* the clear-output-folder would clear everything under <azure-cli-extensions-repo>/src/extension-name except the manual folder which is <azure-cli-extensions-repo>/src/extension-name/azext_extension_name/manual now.
+
+## How to install the codegen extension from the swagger pipeline
+* Before the Azure CLI next release (2020.04.21). You need to build azure-cli with the dev branch which contains the new azure-core. So that the codegen extension can work.
+* The steps are
+``` yaml
+git clone git@github.com:Azure/azure-cli.git
+git clone git@github.com:Azure/azure-cli-extensions.git
+cd azure-cli
+git checkout dev
+# you need to get your python3 as python ready.
+python -m virtualenv env
+source env/bin/activate
+pip install azdev
+azdev setup -c -r ../azure-cli-extensions/
+
+# after the azdev setup you get the az
+
+# When the Azure CLI with new azure core feature released. you can skip all the step above. just run 
+pip install azure-cli 
+
+# Then run below command.
+az extension add --source=<cli-extension-whl-link-from-swagger-pipeline>
+```
+
+## what would the clear-output-folder clear
+* Instead of using --output-folder in the command line to specify which folder you want the extension to be generated. we use --azure-cli-extension-folder=path-to-local-azure-cli-extensions-repo now. 
+* the clear-output-folder would clear everything under path-to-local-azure-cli-extensions-repo/src/extension-name except the manual folder which is path-to-local-azure-cli-extensions-repo/src/extension-name/azext_extension_name/manual now.
+
+
+## How to add/remove subgroup 
+* we can add or remove subgroup by using directive
+* Let's say we want to
+* Remove subgroup:
+> For example: to remove the `share` subgroup and change the command from  
+>   `az datashare share --argument value`  
+>   into  
+>   `az datashare --argument value`  
+* Add subgroup:  
+> For example: to add `trigger` subgroup into the `consumer` subgroup and change the command from  
+>   `az datashare trigger --argument value`   
+>   into  
+>   `az datashare consumer trigger --argument value`  
+>   here the subgroup `consumer` does not have to be pre-exist.
+* we should add below configuration in to readme.az.md to make it work.
+``` yaml
+directive:
+    - where:
+          group: datashare share
+      set:
+          group: datashare 
+    - where:
+          group: datashare trigger
+      set:
+          group: datashare consumer trigger
+```
 
 
 ## How to hide an operation, operationGroup, parameter
