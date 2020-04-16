@@ -23,6 +23,12 @@ export function GenerateDefaultTestScenario(
 
     let testScenario = [];
 
+    
+    examples = examples.sort((e1, e2) => {
+        if (e1.Id == e2.Id) return 0;
+        return e1.Id > e2.Id? 1: -1;
+    });
+
     let sorted: CommandExample[] = examples.sort((e1, e2) => {
         let isDelete1 = e1.HttpMethod.toLowerCase() == 'delete';
         let isDelete2 = e2.HttpMethod.toLowerCase() == 'delete';

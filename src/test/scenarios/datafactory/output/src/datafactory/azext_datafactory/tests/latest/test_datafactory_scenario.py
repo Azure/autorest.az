@@ -44,18 +44,18 @@ def step__factories_get_factories_get(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Factories/get/Factories_List
-@try_manual
-def step__factories_get_factories_list(test, rg):
-    test.cmd('az datafactory list',
-             checks=[])
-
-
 # EXAMPLE: /Factories/get/Factories_ListByResourceGroup
 @try_manual
 def step__factories_get_factories_listbyresourcegroup(test, rg):
     test.cmd('az datafactory list '
              '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /Factories/get/Factories_List
+@try_manual
+def step__factories_get_factories_list(test, rg):
+    test.cmd('az datafactory list',
              checks=[])
 
 
@@ -126,8 +126,8 @@ def call_scenario(test, rg):
     setup(test, rg)
     step__factories_put_factories_createorupdate(test, rg)
     step__factories_get_factories_get(test, rg)
-    step__factories_get_factories_list(test, rg)
     step__factories_get_factories_listbyresourcegroup(test, rg)
+    step__factories_get_factories_list(test, rg)
     step__factories_post_factories_getgithubaccesstoken(test, rg)
     step__factories_post_factories_getdataplaneaccess(test, rg)
     step__factories_post_factories_configurefactoryrepo(test, rg)

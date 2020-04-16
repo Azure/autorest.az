@@ -1814,7 +1814,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         });
 
         if (!this._configuredScenario) {
-            this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool);
+            //this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool);
             this.SortExamplesByDependency();
         }
     }
