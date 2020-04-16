@@ -23,9 +23,8 @@ export function GenerateDefaultTestScenario(
 
     let testScenario = [];
 
-    
+    // sort to make it examples stable
     examples = examples.sort((e1, e2) => {
-        if (e1.Id == e2.Id) return 0;
         return e1.Id > e2.Id? 1: -1;
     });
 
@@ -46,8 +45,9 @@ export function GenerateDefaultTestScenario(
         }
     })
 
+
     for (var i = 0; i < sorted.length; i++) {
-        var example: CommandExample = examples[i];
+        var example: CommandExample = sorted[i];
         console.warn("    - name: " + example.Id);
         testScenario.push({ name: example.Id })
     }
@@ -81,7 +81,7 @@ export function GenerateDefaultTestScenarioByDependency(
         }
     })
     for (var i = 0; i < sorted.length; i++) {
-        var example: CommandExample = examples[i];
+        var example: CommandExample = sorted[i];
         testScenario.push({ name: example.Id })
     }
     return testScenario;
