@@ -59,15 +59,15 @@ def step__factories_get_factories_listbyresourcegroup(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Factories/post/Factories_GetGitHubAccessToken
+# EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
 @try_manual
-def step__factories_post_factories_getgithubaccesstoken(test, rg):
-    test.cmd('az datafactory get-git-hub-access-token '
-             '--factory-name "{exampleFactoryName}" '
-             '--git-hub-access-code "some" '
-             '--git-hub-access-token-base-url "some" '
-             '--git-hub-client-id "some" '
-             '--resource-group "{rg}"',
+def step__factories_post_factories_configurefactoryrepo(test, rg):
+    test.cmd('az datafactory configure-factory-repo '
+             '--factory-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.DataFacto'
+             'ry/factories/{exampleFactoryName}" '
+             '--factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-n'
+             'ame="project" repository-name="repo" root-folder="/" tenant-id="" '
+             '--location-id "East US"',
              checks=[])
 
 
@@ -85,15 +85,15 @@ def step__factories_post_factories_getdataplaneaccess(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
+# EXAMPLE: /Factories/post/Factories_GetGitHubAccessToken
 @try_manual
-def step__factories_post_factories_configurefactoryrepo(test, rg):
-    test.cmd('az datafactory configure-factory-repo '
-             '--factory-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.DataFacto'
-             'ry/factories/{exampleFactoryName}" '
-             '--factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-n'
-             'ame="project" repository-name="repo" root-folder="/" tenant-id="" '
-             '--location-id "East US"',
+def step__factories_post_factories_getgithubaccesstoken(test, rg):
+    test.cmd('az datafactory get-git-hub-access-token '
+             '--factory-name "{exampleFactoryName}" '
+             '--git-hub-access-code "some" '
+             '--git-hub-access-token-base-url "some" '
+             '--git-hub-client-id "some" '
+             '--resource-group "{rg}"',
              checks=[])
 
 
@@ -128,9 +128,9 @@ def call_scenario(test, rg):
     step__factories_get_factories_get(test, rg)
     step__factories_get_factories_list(test, rg)
     step__factories_get_factories_listbyresourcegroup(test, rg)
-    step__factories_post_factories_getgithubaccesstoken(test, rg)
-    step__factories_post_factories_getdataplaneaccess(test, rg)
     step__factories_post_factories_configurefactoryrepo(test, rg)
+    step__factories_post_factories_getdataplaneaccess(test, rg)
+    step__factories_post_factories_getgithubaccesstoken(test, rg)
     step__factories_patch_factories_update(test, rg)
     step__factories_delete_factories_delete(test, rg)
     cleanup(test, rg)

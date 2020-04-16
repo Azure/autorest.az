@@ -5,9 +5,9 @@ import { deepCopy, isDict } from "../../utils/helper"
 import { Example } from "@azure-tools/codemodel";
 
 
-function MethodToOrder(httpMethod: string, cliMethod: string): number {
+function MethodToOrder(httpMethod: string): number {
     if (httpMethod == 'put') return 0;
-    else if (httpMethod == 'get') return cliMethod == 'show' ? 1 : 2;
+    else if (httpMethod == 'get') return 1;
     else if (httpMethod == 'post') return 4;
     else if (httpMethod == 'patch') return 5;
     else return 3;
@@ -25,7 +25,8 @@ export function GenerateDefaultTestScenario(
 
     // sort to make it examples stable
     examples = examples.sort((e1, e2) => {
-        return e1.Id > e2.Id? 1: -1;
+        if (e1.Id == e2.Id) return e1.Method > e2.Method ? 1 : -1;
+        return e1.Id > e2.Id ? 1 : -1;
     });
 
     let sorted: CommandExample[] = examples.sort((e1, e2) => {
@@ -33,15 +34,20 @@ export function GenerateDefaultTestScenario(
         let isDelete2 = e2.HttpMethod.toLowerCase() == 'delete';
         if (isDelete1 && !isDelete2) return 1;
         if (isDelete2 && !isDelete1) return -1;
-        if (isDelete1 && isDelete2) return e1.ResourceClassName.length > e2.ResourceClassName.length ? -1 : 1;
+        if (isDelete1 && isDelete2) {
+            if (e1.ResourceClassName.length == e2.ResourceClassName.length) return e1.ResourceClassName > e2.ResourceClassName ? 1 : -1;
+            return e1.ResourceClassName.length > e2.ResourceClassName.length ? -1 : 1;
+        }
 
         if (e1.ResourceClassName == e2.ResourceClassName) {
-            let n1 = MethodToOrder(e1.HttpMethod, e1.Method);
-            let n2 = MethodToOrder(e2.HttpMethod, e2.Method);
+            let n1 = MethodToOrder(e1.HttpMethod);
+            let n2 = MethodToOrder(e2.HttpMethod);
+            if (n1 == n2) return e1.Id > e2.Id ? 1 : -1;
             return n1 > n2 ? 1 : -1;
         }
         else {
-            return (e1.ResourceClassName.length > e2.ResourceClassName.length) ? 1 : -1;
+            if (e1.ResourceClassName.length == e2.ResourceClassName.length) return e1.ResourceClassName > e2.ResourceClassName ? 1 : -1;
+            return e1.ResourceClassName.length > e2.ResourceClassName.length ? -1 : 1;
         }
     })
 
@@ -56,35 +62,26 @@ export function GenerateDefaultTestScenario(
 }
 
 export function GenerateDefaultTestScenarioByDependency(
-    examples: CommandExample[], resource_pool: ResourcePool): any[] {
+    examples: CommandExample[], resource_pool: ResourcePool, originalScenario: any[]): any[] {
 
     let depend_on = (example_a: CommandExample, example_b: CommandExample): boolean => {
         return resource_pool.isDependResource(example_a.ResourceClassName, example_b.ResourceClassName);
     }
-    let testScenario = [];
-
-    let sorted: CommandExample[] = examples.sort((e1, e2) => {
-        let isDelete1 = e1.HttpMethod.toLowerCase() == 'delete';
-        let isDelete2 = e2.HttpMethod.toLowerCase() == 'delete';
-        if (isDelete1 && !isDelete2) return 1;
-        if (isDelete2 && !isDelete1) return -1;
-        if (isDelete1 && isDelete2) return depend_on(e1, e2) ? -1 : 1;
-
-        if (e1.ResourceClassName == e2.ResourceClassName) {
-            let n1 = MethodToOrder(e1.HttpMethod, e1.Method);
-            let n2 = MethodToOrder(e2.HttpMethod, e2.Method);
-            return n1 > n2 ? 1 : -1;
+    let getExample = (name) => {
+        for (let example of examples) {
+            if (example.Id == name) return example;
         }
-        else {
-            if (depend_on(e1, e2)) return 1;
-            return (e1.ResourceClassName.length > e2.ResourceClassName.length) ? 1 : -1;
-        }
-    })
-    for (var i = 0; i < sorted.length; i++) {
-        var example: CommandExample = sorted[i];
-        testScenario.push({ name: example.Id })
+        return null;
     }
-    return testScenario;
+
+    return originalScenario.sort((s1, s2) => {
+        let e1 = getExample(s1.name);
+        let e2 = getExample(s2.name);
+        if (!e1 || !e2) return 0;
+        if (depend_on(e1, e2)) return 1;
+        if (depend_on(e1, e2)) return -1;
+        return 0;
+    });
 }
 
 
