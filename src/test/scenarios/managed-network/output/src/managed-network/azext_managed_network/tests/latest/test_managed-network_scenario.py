@@ -251,10 +251,10 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         })
 
         self.kwargs.update({
-            'myManagedNetwork': self.create_random_name(prefix='clitestmanaged_networks'[:7], length=24),
-            'subscriptionCAssignment': self.create_random_name(prefix='clitestscope_assignments'[:7], length=24),
-            'myManagedNetworkGroup1': self.create_random_name(prefix='clitestmanaged_network_groups'[:7], length=24),
-            'myHubAndSpoke': self.create_random_name(prefix='clitestmanaged_network_peering_policies'[:7], length=24),
+            'myManagedNetwork': self.create_random_name(prefix='managed_networks'[:8], length=16),
+            'subscriptionCAssignment': self.create_random_name(prefix='scope_assignments'[:8], length=17),
+            'myManagedNetworkGroup1': self.create_random_name(prefix='managed_network_groups'[:11], length=22),
+            'myHubAndSpoke': self.create_random_name(prefix='managed_network_peering_policies'[:16], length=32),
         })
 
         call_scenario(self, rg)

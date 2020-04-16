@@ -44,13 +44,13 @@ export function GenerateAzureCliTestInit(model: CodeModelAz) : string[] {
     output.push('        func_to_call = func');
     output.push('        try:');
     output.push('            func_to_call = import_manual_function(func)');
-    output.push('            print("func_to_call: {}()".format(func.__name__))');
     output.push('        except (ImportError, AttributeError):');
     output.push('            pass');
     output.push('        return func_to_call');
     output.push('');
     output.push('    def wrapper(*args, **kwargs):');
     output.push('        func_to_call = get_func_to_call()');
+    output.push('        print("running {}()...".format(func.__name__))');
     output.push('        return func_to_call(*args, **kwargs)');
     output.push('');
     output.push('    if inspect.isclass(func):');
