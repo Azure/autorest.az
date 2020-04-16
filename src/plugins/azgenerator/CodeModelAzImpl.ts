@@ -9,7 +9,7 @@ import { serialize, deserialize, EnglishPluralizationService, pascalCase } from 
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeString } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity } from './ScenarioTool'
+import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
 import { isNullOrUndefined } from "util";
 
@@ -1647,7 +1647,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.Parameters = this.ConvertToCliParameters(params);
                 example.MethodResponses = this.Method.responses || [];
                 example.Method_IsLongRun = this.Method.extensions?.['x-ms-long-running-operation'] ? true : false;
-                example.CommandGroup_Key = this.CommandGroup_Key;
                 if (this.filterExampleByPoly(example_obj, example)) {
                     for (let i=0;i<example.Parameters.length; i++) {
                         if (this.isDiscriminator(example.Parameters[i].methodParam.value) )
@@ -1697,7 +1696,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             parameters.push(`az ${words.join(' ')} --created`);
             for (let param of example.Parameters) {
                 let paramKey = param.methodParam.value.language?.cli?.cliKey;
-                if (paramKey == 'resourceGroupName' || this.resource_pool.isResource(paramKey) == example.CommandGroup_Key) {
+                if (paramKey == 'resourceGroupName' || this.resource_pool.isResource(paramKey) == example.ResourceClassName) {
                     let param_value = param.value;
                     let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues, [], [], param);
                     if (replaced_value == param_value) {
@@ -1809,7 +1808,10 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters, createdObjectNames);
         });
 
-        if (!this._configuredScenario)   this.SortExamplesByDependency();
+        if (!this._configuredScenario) {
+            this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool);
+            this.SortExamplesByDependency();
+        }
     }
 
     public SortExamplesByDependency() {

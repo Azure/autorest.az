@@ -60,7 +60,10 @@ def step_managementnetworkgroupsput(test, rg):
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
-    test.cmd('az managed-network mn group wait --created', checks=[])
+    test.cmd('az managed-network mn group wait --created '
+             '--group-name "{myManagedNetworkGroup1}" '
+             '--resource-group "{rg}"',
+             checks=[])
 
 
 # EXAMPLE: ScopeAssignmentsPut

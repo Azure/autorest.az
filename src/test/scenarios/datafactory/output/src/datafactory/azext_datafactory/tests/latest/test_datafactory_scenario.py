@@ -44,18 +44,18 @@ def step__factories_get_factories_get(test, rg):
              checks=[])
 
 
+# EXAMPLE: /Factories/get/Factories_List
+@try_manual
+def step__factories_get_factories_list(test, rg):
+    test.cmd('az datafactory list',
+             checks=[])
+
+
 # EXAMPLE: /Factories/get/Factories_ListByResourceGroup
 @try_manual
 def step__factories_get_factories_listbyresourcegroup(test, rg):
     test.cmd('az datafactory list '
              '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Factories/get/Factories_List
-@try_manual
-def step__factories_get_factories_list(test, rg):
-    test.cmd('az datafactory list',
              checks=[])
 
 
@@ -85,16 +85,6 @@ def step__factories_post_factories_getdataplaneaccess(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Factories/patch/Factories_Update
-@try_manual
-def step__factories_patch_factories_update(test, rg):
-    test.cmd('az datafactory update '
-             '--factory-name "{exampleFactoryName}" '
-             '--tags exampleTag="exampleValue" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
 # EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
 @try_manual
 def step__factories_post_factories_configurefactoryrepo(test, rg):
@@ -104,6 +94,16 @@ def step__factories_post_factories_configurefactoryrepo(test, rg):
              '--factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-n'
              'ame="project" repository-name="repo" root-folder="/" tenant-id="" '
              '--location-id "East US"',
+             checks=[])
+
+
+# EXAMPLE: /Factories/patch/Factories_Update
+@try_manual
+def step__factories_patch_factories_update(test, rg):
+    test.cmd('az datafactory update '
+             '--factory-name "{exampleFactoryName}" '
+             '--tags exampleTag="exampleValue" '
+             '--resource-group "{rg}"',
              checks=[])
 
 
@@ -126,12 +126,12 @@ def call_scenario(test, rg):
     setup(test, rg)
     step__factories_put_factories_createorupdate(test, rg)
     step__factories_get_factories_get(test, rg)
-    step__factories_get_factories_listbyresourcegroup(test, rg)
     step__factories_get_factories_list(test, rg)
+    step__factories_get_factories_listbyresourcegroup(test, rg)
     step__factories_post_factories_getgithubaccesstoken(test, rg)
     step__factories_post_factories_getdataplaneaccess(test, rg)
-    step__factories_patch_factories_update(test, rg)
     step__factories_post_factories_configurefactoryrepo(test, rg)
+    step__factories_patch_factories_update(test, rg)
     step__factories_delete_factories_delete(test, rg)
     cleanup(test, rg)
 

@@ -50,7 +50,6 @@ export class CommandExample {
     public HttpMethod: string;    // Get, Post, Put ...
     public MethodResponses: any[];
     public Method_IsLongRun: boolean;
-    public CommandGroup_Key: string;
 }
 
 export interface CodeModelAz
