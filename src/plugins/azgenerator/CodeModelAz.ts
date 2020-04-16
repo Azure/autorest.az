@@ -168,4 +168,5 @@ export interface CodeModelAz
     GetPreparerEntities(): any[];
     GatherInternalResource();
     FindExampleWaitById(id: string): string[][];
+    RandomizeNames: boolean;
 }

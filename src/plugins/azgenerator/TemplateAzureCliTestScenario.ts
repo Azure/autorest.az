@@ -185,7 +185,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     if (internalObjects.length > 0) {
         initiates.push("        self.kwargs.update({");
         for (let [class_name, kargs_key, hasCreateExample] of internalObjects) {
-            if (hasCreateExample)
+            if (hasCreateExample && model.RandomizeNames)
             {
                 let snakeName = ToSnakeCase(class_name);
                 ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='${snakeName}'[:${Math.floor(snakeName.length/2)}], length=${snakeName.length}),`, initiates);

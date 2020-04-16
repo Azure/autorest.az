@@ -107,6 +107,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
 
     }
+    
+    public get RandomizeNames(): boolean {
+        if (this.options?.['randomize-names']) return true;
+        return false;
+    }
 
     private calcOptionRequiredByMethod() {
         if (this.SelectFirstCommandGroup()) {

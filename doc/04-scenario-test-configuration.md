@@ -228,3 +228,11 @@ class AttestationManagementClientScenarioTest(ScenarioTest):
         g.call_scenario(self, rg, rg_2, rg_3)
 ~~~
 Of course it's suggested to envelop the xxPreparer into seperate python module in elsewhere.
+
+## How to randomize resource names
+Since some RP don't support randomized name resource name well, resource names will not be randomized by default. If you want to enable it, please add randomize-names configuration like below in readme.az.md
+~~~
+az:
+  ...
+  randomize-names: true
+~~~

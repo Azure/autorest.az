@@ -147,7 +147,7 @@ class DataFactoryManagementClientScenarioTest(ScenarioTest):
         })
 
         self.kwargs.update({
-            'exampleFactoryName': self.create_random_name(prefix='factories'[:4], length=9),
+            'exampleFactoryName': 'exampleFactoryName',
         })
 
         call_scenario(self, rg)
