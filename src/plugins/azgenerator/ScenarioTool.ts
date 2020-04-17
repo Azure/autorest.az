@@ -35,8 +35,7 @@ export function GenerateDefaultTestScenario(
         if (isDelete1 && !isDelete2) return 1;
         if (isDelete2 && !isDelete1) return -1;
         if (isDelete1 && isDelete2) {
-            if (e1.ResourceClassName.length == e2.ResourceClassName.length) return e1.ResourceClassName > e2.ResourceClassName ? 1 : -1;
-            return e1.ResourceClassName.length > e2.ResourceClassName.length ? -1 : 1;
+            return e1.ResourceClassName > e2.ResourceClassName ? 1 : -1;
         }
 
         if (e1.ResourceClassName == e2.ResourceClassName) {
@@ -46,8 +45,7 @@ export function GenerateDefaultTestScenario(
             return n1 > n2 ? 1 : -1;
         }
         else {
-            if (e1.ResourceClassName.length == e2.ResourceClassName.length) return e1.ResourceClassName > e2.ResourceClassName ? 1 : -1;
-            return e1.ResourceClassName.length > e2.ResourceClassName.length ? -1 : 1;
+            return e1.ResourceClassName > e2.ResourceClassName ? 1 : -1;
         }
     })
 
@@ -79,7 +77,7 @@ export function GenerateDefaultTestScenarioByDependency(
         let e2 = getExample(s2.name);
         if (!e1 || !e2) return 0;
         if (depend_on(e1, e2)) return 1;
-        if (depend_on(e1, e2)) return -1;
+        if (depend_on(e2, e1)) return -1;
         return 0;
     });
 }
