@@ -44,6 +44,13 @@ def step__factories_get_factories_get(test, rg):
              checks=[])
 
 
+# EXAMPLE: /Factories/get/Factories_List
+@try_manual
+def step__factories_get_factories_list(test, rg):
+    test.cmd('az datafactory list',
+             checks=[])
+
+
 # EXAMPLE: /Factories/get/Factories_ListByResourceGroup
 @try_manual
 def step__factories_get_factories_listbyresourcegroup(test, rg):
@@ -52,22 +59,15 @@ def step__factories_get_factories_listbyresourcegroup(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Factories/get/Factories_List
+# EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
 @try_manual
-def step__factories_get_factories_list(test, rg):
-    test.cmd('az datafactory list',
-             checks=[])
-
-
-# EXAMPLE: /Factories/post/Factories_GetGitHubAccessToken
-@try_manual
-def step__factories_post_factories_getgithubaccesstoken(test, rg):
-    test.cmd('az datafactory get-git-hub-access-token '
-             '--factory-name "{exampleFactoryName}" '
-             '--git-hub-access-code "some" '
-             '--git-hub-access-token-base-url "some" '
-             '--git-hub-client-id "some" '
-             '--resource-group "{rg}"',
+def step__factories_post_factories_configurefactoryrepo(test, rg):
+    test.cmd('az datafactory configure-factory-repo '
+             '--factory-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.DataFacto'
+             'ry/factories/{exampleFactoryName}" '
+             '--factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-n'
+             'ame="project" repository-name="repo" root-folder="/" tenant-id="" '
+             '--location-id "East US"',
              checks=[])
 
 
@@ -85,6 +85,18 @@ def step__factories_post_factories_getdataplaneaccess(test, rg):
              checks=[])
 
 
+# EXAMPLE: /Factories/post/Factories_GetGitHubAccessToken
+@try_manual
+def step__factories_post_factories_getgithubaccesstoken(test, rg):
+    test.cmd('az datafactory get-git-hub-access-token '
+             '--factory-name "{exampleFactoryName}" '
+             '--git-hub-access-code "some" '
+             '--git-hub-access-token-base-url "some" '
+             '--git-hub-client-id "some" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
 # EXAMPLE: /Factories/patch/Factories_Update
 @try_manual
 def step__factories_patch_factories_update(test, rg):
@@ -92,18 +104,6 @@ def step__factories_patch_factories_update(test, rg):
              '--factory-name "{exampleFactoryName}" '
              '--tags exampleTag="exampleValue" '
              '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
-@try_manual
-def step__factories_post_factories_configurefactoryrepo(test, rg):
-    test.cmd('az datafactory configure-factory-repo '
-             '--factory-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.DataFacto'
-             'ry/factories/{exampleFactoryName}" '
-             '--factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-n'
-             'ame="project" repository-name="repo" root-folder="/" tenant-id="" '
-             '--location-id "East US"',
              checks=[])
 
 
@@ -121,6 +121,22 @@ def cleanup(test, rg):
     pass
 
 
+@try_manual
+def call_scenario(test, rg):
+    setup(test, rg)
+    step__factories_put_factories_createorupdate(test, rg)
+    step__factories_get_factories_get(test, rg)
+    step__factories_get_factories_list(test, rg)
+    step__factories_get_factories_listbyresourcegroup(test, rg)
+    step__factories_post_factories_configurefactoryrepo(test, rg)
+    step__factories_post_factories_getdataplaneaccess(test, rg)
+    step__factories_post_factories_getgithubaccesstoken(test, rg)
+    step__factories_patch_factories_update(test, rg)
+    step__factories_delete_factories_delete(test, rg)
+    cleanup(test, rg)
+
+
+@try_manual
 class DataFactoryManagementClientScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestdatafactory_exampleResourceGroup'[:7], key='rg', parameter_name='rg')
@@ -131,17 +147,7 @@ class DataFactoryManagementClientScenarioTest(ScenarioTest):
         })
 
         self.kwargs.update({
-            'exampleFactoryName': self.create_random_name(prefix='clitestfactories'[:7], length=24),
+            'exampleFactoryName': 'exampleFactoryName',
         })
 
-        setup(self, rg)
-        step__factories_put_factories_createorupdate(self, rg)
-        step__factories_get_factories_get(self, rg)
-        step__factories_get_factories_listbyresourcegroup(self, rg)
-        step__factories_get_factories_list(self, rg)
-        step__factories_post_factories_getgithubaccesstoken(self, rg)
-        step__factories_post_factories_getdataplaneaccess(self, rg)
-        step__factories_patch_factories_update(self, rg)
-        step__factories_post_factories_configurefactoryrepo(self, rg)
-        step__factories_delete_factories_delete(self, rg)
-        cleanup(self, rg)
+        call_scenario(self, rg)

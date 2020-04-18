@@ -31,15 +31,15 @@ def setup(test, rg):
 def step_managednetworksput(test, rg):
     test.cmd('az managed-network mn create '
              '--location "eastus" '
-             '--properties "{{\\"scope\\":{{\\"managementGroups\\":[{{\\"id\\":\\"/providers/Microsoft.Management/manag'
-             'ementGroups/20000000-0001-0000-0000-000000000000\\"}},{{\\"id\\":\\"/providers/Microsoft.Management/manag'
-             'ementGroups/20000000-0002-0000-0000-000000000000\\"}}],\\"subnets\\":[{{\\"id\\":\\"/subscriptions/{subsc'
-             'ription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}/subnets/default\\"}},{{'
-             '\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetwo'
-             'rks/{vn}/subnets/default\\"}}],\\"subscriptions\\":[{{\\"id\\":\\"subscriptionA\\"}},{{\\"id\\":\\"subscr'
-             'iptionB\\"}}],\\"virtualNetworks\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/p'
-             'roviders/Microsoft.Network/virtualNetworks/{vn_2}\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/res'
-             'ourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_3}\\"}}]}}}}" '
+             '--properties "{{\\"managementGroups\\":[{{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20'
+             '000000-0001-0000-0000-000000000000\\"}},{{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20'
+             '000000-0002-0000-0000-000000000000\\"}}],\\"subscriptions\\":[{{\\"id\\":\\"subscriptionA\\"}},{{\\"id\\"'
+             ':\\"subscriptionB\\"}}],\\"virtualNetworks\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGro'
+             'ups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}\\"}},{{\\"id\\":\\"/subscriptions/{subscription'
+             '_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_2}\\"}}],\\"subnets\\":[{{\\"id'
+             '\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{'
+             'vn_3}/subnets/default\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M'
+             'icrosoft.Network/virtualNetworks/{vn_3}/subnets/default\\"}}]}}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -58,6 +58,10 @@ def step_managementnetworkgroupsput(test, rg):
              'etworks/VnetB" '
              '--group-name "{myManagedNetworkGroup1}" '
              '--managed-network-name "{myManagedNetwork}" '
+             '--resource-group "{rg}"',
+             checks=[])
+    test.cmd('az managed-network mn group wait --created '
+             '--group-name "{myManagedNetworkGroup1}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -209,12 +213,36 @@ def cleanup(test, rg):
     pass
 
 
+@try_manual
+def call_scenario(test, rg):
+    setup(test, rg)
+    step_managednetworksput(test, rg)
+    step_managementnetworkgroupsput(test, rg)
+    step_scopeassignmentsput(test, rg)
+    step_managednetworkpeeringpoliciesput(test, rg)
+    step_managednetworksget(test, rg)
+    step_managednetworkslistbyresourcegroup(test, rg)
+    step_managednetworkslistbysubscription(test, rg)
+    step_scopeassignmentsget(test, rg)
+    step_scopeassignmentslist(test, rg)
+    step_managementnetworkgroupsget(test, rg)
+    step_managednetworksgroupslistbymanagednetwork(test, rg)
+    step_managednetworkpeeringpoliciesget(test, rg)
+    step_managednetworkpeeringpolicieslistbymanagednetwork(test, rg)
+    step_managednetworkpeeringpoliciesdelete(test, rg)
+    step_scopeassignmentsdelete(test, rg)
+    step_managementnetworkgroupsdelete(test, rg)
+    step_managednetworksdelete(test, rg)
+    cleanup(test, rg)
+
+
+@try_manual
 class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
-    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn', resource_group_key='rg')
-    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn_2', resource_group_key='rg')
-    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_3', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
     def test_managed_network(self, rg):
 
@@ -223,28 +251,10 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         })
 
         self.kwargs.update({
-            'myManagedNetwork': self.create_random_name(prefix='clitestmanaged_networks'[:7], length=24),
-            'subscriptionCAssignment': self.create_random_name(prefix='clitestscope_assignments'[:7], length=24),
-            'myManagedNetworkGroup1': self.create_random_name(prefix='clitestmanaged_network_groups'[:7], length=24),
-            'myHubAndSpoke': self.create_random_name(prefix='clitestmanaged_network_peering_policies'[:7], length=24),
+            'myManagedNetwork': self.create_random_name(prefix='managed_networks'[:8], length=16),
+            'subscriptionCAssignment': self.create_random_name(prefix='scope_assignments'[:8], length=17),
+            'myManagedNetworkGroup1': self.create_random_name(prefix='managed_network_groups'[:11], length=22),
+            'myHubAndSpoke': self.create_random_name(prefix='managed_network_peering_policies'[:16], length=32),
         })
 
-        setup(self, rg)
-        step_managednetworksput(self, rg)
-        step_managementnetworkgroupsput(self, rg)
-        step_scopeassignmentsput(self, rg)
-        step_managednetworkpeeringpoliciesput(self, rg)
-        step_managednetworksget(self, rg)
-        step_managednetworkslistbyresourcegroup(self, rg)
-        step_managednetworkslistbysubscription(self, rg)
-        step_scopeassignmentsget(self, rg)
-        step_scopeassignmentslist(self, rg)
-        step_managementnetworkgroupsget(self, rg)
-        step_managednetworksgroupslistbymanagednetwork(self, rg)
-        step_managednetworkpeeringpoliciesget(self, rg)
-        step_managednetworkpeeringpolicieslistbymanagednetwork(self, rg)
-        step_managednetworkpeeringpoliciesdelete(self, rg)
-        step_scopeassignmentsdelete(self, rg)
-        step_managementnetworkgroupsdelete(self, rg)
-        step_managednetworksdelete(self, rg)
-        cleanup(self, rg)
+        call_scenario(self, rg)

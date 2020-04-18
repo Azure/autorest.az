@@ -40,15 +40,23 @@ export function GenerateAzureCliTestInit(model: CodeModelAz) : string[] {
     output.push('            ".".join(manual_file_path.split(os.path.sep) + [module_name, ])');
     output.push('        return getattr(import_module(manual_module, package=__name__), origin_func.__name__)');
     output.push('');
-    output.push('    def wrapper(*args, **kwargs):');
+    output.push('    def get_func_to_call():');
     output.push('        func_to_call = func');
     output.push('        try:');
     output.push('            func_to_call = import_manual_function(func)');
-    output.push('            print("Will call manual function for {}()".format(func.__name__))');
     output.push('        except (ImportError, AttributeError):');
     output.push('            pass');
+    output.push('        return func_to_call');
+    output.push('');
+    output.push('    def wrapper(*args, **kwargs):');
+    output.push('        func_to_call = get_func_to_call()');
+    output.push('        print("running {}()...".format(func.__name__))');
     output.push('        return func_to_call(*args, **kwargs)');
-    output.push('    return wrapper');
+    output.push('');
+    output.push('    if inspect.isclass(func):');
+    output.push('        return get_func_to_call()');
+    output.push('    else:');
+    output.push('        return wrapper');
     output.push('');
     return output;
 }

@@ -7,6 +7,7 @@ az:
   extensions: managed-network
   namespace: azure.mgmt.managednetwork
   package-name: azure-mgmt-managednetwork
+  randomize-names: true
 az-output-folder: $(azure-cli-extension-folder)/src/managed-network
 python-sdk-output-folder: $(az-output-folder)/azext_managed_network/vendored_sdks/managednetwork
 

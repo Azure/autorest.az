@@ -4,11 +4,12 @@ import { CommandExample, ExampleParam } from "./CodeModelAz";
 import { deepCopy, isDict } from "../../utils/helper"
 import { Example } from "@azure-tools/codemodel";
 
-function MethodToOrder(method: string): number {
-    if (method == 'create') return 0;
-    else if (method == 'show') return 1;
-    else if (method == 'list') return 2;
-    else if (method == 'delete') return 4;
+
+function MethodToOrder(httpMethod: string): number {
+    if (httpMethod == 'put') return 0;
+    else if (httpMethod == 'get') return 1;
+    else if (httpMethod == 'post') return 4;
+    else if (httpMethod == 'patch') return 5;
     else return 3;
 }
 
@@ -22,18 +23,35 @@ export function GenerateDefaultTestScenario(
 
     let testScenario = [];
 
+    // sort to make it examples stable
+    examples = examples.sort((e1, e2) => {
+        if (e1.Id == e2.Id) return e1.Method > e2.Method ? 1 : -1;
+        return e1.Id > e2.Id ? 1 : -1;
+    });
+
     let sorted: CommandExample[] = examples.sort((e1, e2) => {
-        let n1 = MethodToOrder(e1.Method);
-        let n2 = MethodToOrder(e2.Method);
-        if (n1 == n2) {
-            if (e1.Method == "create") return (e1.Path.length > e2.Path.length) ? 1 : -1;
-            else return (e1.Path.length > e2.Path.length) ? -1 : 1;
+        let isDelete1 = e1.HttpMethod.toLowerCase() == 'delete';
+        let isDelete2 = e2.HttpMethod.toLowerCase() == 'delete';
+        if (isDelete1 && !isDelete2) return 1;
+        if (isDelete2 && !isDelete1) return -1;
+        if (isDelete1 && isDelete2) {
+            return e1.ResourceClassName > e2.ResourceClassName ? 1 : -1;
         }
-        return (n1 > n2) ? 1 : -1;
+
+        if (e1.ResourceClassName == e2.ResourceClassName) {
+            let n1 = MethodToOrder(e1.HttpMethod);
+            let n2 = MethodToOrder(e2.HttpMethod);
+            if (n1 == n2) return e1.Id > e2.Id ? 1 : -1;
+            return n1 > n2 ? 1 : -1;
+        }
+        else {
+            return e1.ResourceClassName > e2.ResourceClassName ? 1 : -1;
+        }
     })
 
+
     for (var i = 0; i < sorted.length; i++) {
-        var example: CommandExample = examples[i];
+        var example: CommandExample = sorted[i];
         console.warn("    - name: " + example.Id);
         testScenario.push({ name: example.Id })
     }
@@ -41,6 +59,28 @@ export function GenerateDefaultTestScenario(
     return testScenario;
 }
 
+export function GenerateDefaultTestScenarioByDependency(
+    examples: CommandExample[], resource_pool: ResourcePool, originalScenario: any[]): any[] {
+
+    let depend_on = (example_a: CommandExample, example_b: CommandExample): boolean => {
+        return resource_pool.isDependResource(example_a.ResourceClassName, example_b.ResourceClassName);
+    }
+    let getExample = (name) => {
+        for (let example of examples) {
+            if (example.Id == name) return example;
+        }
+        return null;
+    }
+
+    return originalScenario.sort((s1, s2) => {
+        let e1 = getExample(s1.name);
+        let e2 = getExample(s2.name);
+        if (!e1 || !e2) return 0;
+        if (depend_on(e1, e2)) return 1;
+        if (depend_on(e2, e1)) return -1;
+        return 0;
+    });
+}
 
 
 const SUBSCRIPTIONS = "subscriptions";
@@ -206,15 +246,15 @@ export class ResourcePool {
     }
 
     private prepareResource(class_name: string, object_name: string, depends: string[][], entitys: PreparerEntity[], preparings: string[][]) {
-        if (class_name == SUBNET)  return ; // use default subnet, no need to prepare it.
+        if (class_name == SUBNET) return; // use default subnet, no need to prepare it.
 
         function inPreparings(): boolean {
             for (let [pCName, pOName] of preparings) {
-                if (class_name == pCName && object_name == pOName)  return true;
+                if (class_name == pCName && object_name == pOName) return true;
             }
             return false;
         }
-        if(inPreparings()) return;
+        if (inPreparings()) return;
 
         for (let e of entitys) {
             if (e.info.class_name == class_name && e.object_name == object_name) {
@@ -354,7 +394,7 @@ export class ResourcePool {
         return null;
     }
 
-    private formatable(str:string, placeholders: string[]) {
+    private formatable(str: string, placeholders: string[]) {
         str = str.split("{").join("{{").split("}").join("}}");
         for (let placeholder of placeholders) {
             str = str.split(`{${placeholder}}`).join(placeholder);
@@ -364,27 +404,27 @@ export class ResourcePool {
 
     private isSubParam(exampleParam: ExampleParam, attr: string): boolean {
         for (let subparam of exampleParam.methodParam.submethodparameters || []) {
-            if (attr.toLowerCase().startsWith(subparam.language['cli'].cliKey.toLowerCase() + "="))  return true;
+            if (attr.toLowerCase().startsWith(subparam.language['cli'].cliKey.toLowerCase() + "=")) return true;
         }
         for (let k of exampleParam.keys) {
-            if (attr.toLowerCase().startsWith(k.toLowerCase() + "="))  return true;
+            if (attr.toLowerCase().startsWith(k.toLowerCase() + "=")) return true;
         }
         return false;
 
     }
     public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders: string[], resources: string[], exampleParam: ExampleParam) {
-        if (placeholders==undefined)  placeholders = new Array();
-        if(isJson) {
-            let body = typeof endpoint == 'string'? JSON.parse(endpoint):endpoint;
+        if (placeholders == undefined) placeholders = new Array();
+        if (isJson) {
+            let body = typeof endpoint == 'string' ? JSON.parse(endpoint) : endpoint;
             if (typeof body == 'object') {
-                if ( body instanceof Array) {
+                if (body instanceof Array) {
                     body = body.map((value) => {
-                        return this.addEndpointResource(value, typeof value=='object', isKeyValues, placeholders, resources, exampleParam);
+                        return this.addEndpointResource(value, typeof value == 'object', isKeyValues, placeholders, resources, exampleParam);
                     });
                 }
-                else if(isDict(body)) {
+                else if (isDict(body)) {
                     for (let k in body) {
-                        body[k] = this.addEndpointResource(body[k], typeof body[k]=='object', isKeyValues, placeholders, resources, exampleParam);
+                        body[k] = this.addEndpointResource(body[k], typeof body[k] == 'object', isKeyValues, placeholders, resources, exampleParam);
                     }
                 }
             }
@@ -406,9 +446,9 @@ export class ResourcePool {
         if (isKeyValues) {
             let ret = "";
             let attrs = endpoint.split(" ");
-            for (let i=1; i< attrs.length; i++) {
-                if(!this.isSubParam(exampleParam, attrs[i])) {
-                    attrs[i-1] += ' ' + attrs[i];
+            for (let i = 1; i < attrs.length; i++) {
+                if (!this.isSubParam(exampleParam, attrs[i])) {
+                    attrs[i - 1] += ' ' + attrs[i];
                     attrs.splice(i, 1);
                     i--;
                 }
@@ -416,8 +456,8 @@ export class ResourcePool {
             for (let attr of attrs) {
                 let kv = attr.split("=");
                 if (ret.length > 0) ret += " ";
-                if (kv[1].length>=2 && kv[1][0]=='"' && kv[1][kv[1].length-1]== '"') {
-                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length-2), isJson, false, placeholders, resources, exampleParam);
+                if (kv[1].length >= 2 && kv[1][0] == '"' && kv[1][kv[1].length - 1] == '"') {
+                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, false, placeholders, resources, exampleParam);
                     ret += `${kv[0]}="${this.formatable(v, placeholders)}"`;
                 }
                 else {
@@ -433,7 +473,7 @@ export class ResourcePool {
             return endpoint;
         }
         nodes[2] = `{${ResourcePool.KEY_SUBSCRIPTIONID}}`;
-        if (placeholders.indexOf(nodes[2])<0) {
+        if (placeholders.indexOf(nodes[2]) < 0) {
             placeholders.push(nodes[2]);
         }
         this.use_subscription = true;
@@ -449,10 +489,10 @@ export class ResourcePool {
                 else {
                     resource_object = this.addTreeResource(resource, nodes[i + 1], resource_object);
                     nodes[i + 1] = resource_object.placeholder;
-                    if (placeholders.indexOf(resource_object.placeholder)<0) {
+                    if (placeholders.indexOf(resource_object.placeholder) < 0) {
                         placeholders.push(resource_object.placeholder);
                     }
-                    if (resources.indexOf(resource) <0) {
+                    if (resources.indexOf(resource) < 0) {
                         resources.push(resource);
                     }
                 }
@@ -493,14 +533,14 @@ export class ResourcePool {
     }
 
     public setResourceDepends(resource_class_name: string, depend_resources: string[], depend_parameters: string[], createdObjectNames: string[]) {
-        if ( !(resource_class_name in resourceClassDepends)) {
+        if (!(resource_class_name in resourceClassDepends)) {
             resourceClassDepends[resource_class_name] = deepCopy(depend_resources);
-            preparerInfos[resource_class_name] = new PreparerInfo(null, resource_class_name, depend_parameters, depend_resources);    
+            preparerInfos[resource_class_name] = new PreparerInfo(null, resource_class_name, depend_parameters, depend_resources);
         }
         else {
-            for (let i=0; i<depend_resources.length; i++) {
+            for (let i = 0; i < depend_resources.length; i++) {
                 let dependResource = depend_resources[i];
-                if (resourceClassDepends[resource_class_name].indexOf(dependResource)<0) {
+                if (resourceClassDepends[resource_class_name].indexOf(dependResource) < 0) {
                     resourceClassDepends[resource_class_name].push(dependResource);
                     preparerInfos[resource_class_name].depend_parameters.push(depend_parameters[i]);
                     preparerInfos[resource_class_name].depend_resources.push(depend_resources[i]);
@@ -513,12 +553,12 @@ export class ResourcePool {
                 preparerInfos[resource_class_name].createdObjectNames.push(objectName);
             }
         }
-        
+
     }
 
     public isDependResource(child: string, parent: string) {
         let depends = resourceClassDepends[child];
-        return depends && depends.indexOf(parent)>=0;
+        return depends && depends.indexOf(parent) >= 0;
     }
 }
 

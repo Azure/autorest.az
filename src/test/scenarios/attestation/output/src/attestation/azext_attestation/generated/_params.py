@@ -39,7 +39,9 @@ def load_arguments(self, _):
         c.argument('policy_signing_certificates_keys', action=AddPolicySigningCertificatesKeys, nargs='+', help='The va'
                    'lue of the "keys" parameter is an array of JWK values.  By default, the order of the JWK values wit'
                    'hin the array does not imply an order of preference among them, although applications of JWK Sets c'
-                   'an choose to assign a meaning to the order for their purposes, if desired.')
+                   'an choose to assign a meaning to the order for their purposes, if desired. Expect value: KEY1=VALUE'
+                   '1 KEY2=VALUE2 ... , available KEYs are: alg, crv, d, dp, dq, e, k, kid, kty, n, p, q, qi, use, x, x'
+                   '5-c, y.')
 
     with self.argument_context('attestation attestation-provider update') as c:
         c.argument('resource_group_name', resource_group_name_type)

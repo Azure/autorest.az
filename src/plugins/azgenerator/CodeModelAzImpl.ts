@@ -9,7 +9,7 @@ import { serialize, deserialize, EnglishPluralizationService, pascalCase } from 
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeString } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { GenerateDefaultTestScenario, ResourcePool, getResourceKey, PreparerEntity } from './ScenarioTool'
+import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
 import { isNullOrUndefined } from "util";
 
@@ -106,6 +106,11 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.codeModel.operationGroups[idx] = operationGroup;
         }
 
+    }
+    
+    public get RandomizeNames(): boolean {
+        if (this.options?.['randomize-names']) return true;
+        return false;
     }
 
     private calcOptionRequiredByMethod() {
@@ -1447,6 +1452,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam));
                 }
                 else {
+                    // JSON form
                     example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, [], defaultName, methodParam));
                 }
             }
@@ -1459,6 +1465,44 @@ export class CodeModelCliImpl implements CodeModelAz {
             return false;
         }
         return true;
+    }
+
+    private FlattenProperty(paramSchema: any, exampleValue: any) {
+        if (paramSchema?.type == 'array' && exampleValue instanceof Array) {
+            return exampleValue.map(x => this.FlattenProperty(paramSchema?.elementType, x));
+        }
+        if (['object', 'dictionary'].indexOf(paramSchema?.type) >= 0 && paramSchema?.properties && typeof exampleValue == 'object' && !(exampleValue instanceof Array)) {
+            let ret = deepCopy(exampleValue);
+            for (let subProperty of paramSchema?.properties) {
+                if (subProperty.flattenedNames && subProperty.flattenedNames.length > 0) {
+                    let subValue = exampleValue;
+                    let i = 0;
+                    for (; i < subProperty.flattenedNames.length; i++) {
+                        if (isNullOrUndefined(subValue)) break;
+                        let k = subProperty.flattenedNames[i];
+                        let v = subValue[k];
+                        if (v === undefined) break;
+                        subValue = v;
+                    }
+                    if (i == subProperty.flattenedNames.length) {
+                        ret[subProperty?.language['cli'].cliKey] = subValue;
+                    }
+                }
+            }
+            for (let subProperty of paramSchema?.properties) {
+                if (subProperty.flattenedNames && subProperty.flattenedNames.length > 0) {
+                    delete ret[subProperty.flattenedNames[0]];
+                }
+            }
+            for (let subProperty of paramSchema?.properties) {
+                let k = subProperty?.language['cli'].cliKey;
+                if (exampleValue[k]) {
+                    exampleValue[k] = this.FlattenProperty(subProperty, exampleValue[k]);
+                }
+            }
+            return ret;
+        }
+        return deepCopy(exampleValue);
     }
 
     public FlattenExampleParameter(method_param: Map<string, MethodParam>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
@@ -1483,7 +1527,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                 }
             }
-
+            netValue = this.FlattenProperty(methodParam.value?.schema, netValue);
             if ('pathToProperty' in methodParam.value && ancestors.length - methodParam.value['pathToProperty'].length == 1) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
                 let ancestors_ = deepCopy(ancestors) as string[];
@@ -1606,6 +1650,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.ResourceClassName = this.CommandGroup_Key;
                 let params: ExampleParam[] = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
+                example.MethodResponses = this.Method.responses || [];
+                example.Method_IsLongRun = this.Method.extensions?.['x-ms-long-running-operation'] ? true : false;
                 if (this.filterExampleByPoly(example_obj, example)) {
                     for (let i=0;i<example.Parameters.length; i++) {
                         if (this.isDiscriminator(example.Parameters[i].methodParam.value) )
@@ -1644,6 +1690,35 @@ export class CodeModelCliImpl implements CodeModelAz {
         return parameters;
     }
 
+    public GetExampleWait(example: CommandExample): string[] {
+        let parameters: string[] = [];
+        if (example.HttpMethod.toLowerCase() == 'put' && example.Method_IsLongRun && example.MethodResponses.length > 0 && (example.MethodResponses[0].schema?.properties || []).find(property => {
+            return property?.language?.cli?.cliKey == "provisioningState";
+        })) {
+            let words = this.Command_Name.split(' ');
+            words = words.slice(0, words.length - 1);
+            words.push('wait');
+            parameters.push(`az ${words.join(' ')} --created`);
+            for (let param of example.Parameters) {
+                let paramKey = param.methodParam.value.language?.cli?.cliKey;
+                if (paramKey == 'resourceGroupName' || this.resource_pool.isResource(paramKey) == example.ResourceClassName) {
+                    let param_value = param.value;
+                    let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues, [], [], param);
+                    if (replaced_value == param_value) {
+                        replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues);
+                    }
+                    param_value = replaced_value;
+                    let slp = param_value;
+                    if (!param.isKeyValues) {
+                        slp = ToJsonString(slp);
+                    }
+                    parameters.push(param.name + " " + slp);
+                }
+            }
+        }
+        return parameters;
+    }
+
     public GetPreparerEntities(): any[] {
         return this.resource_pool.createPreparerEntities();
     }
@@ -1661,6 +1736,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         let ret: string[][] = [];
         this.GetAllExamples(id, (example) => {
             ret.push(this.GetExampleItems(example, true));
+        });
+        return ret;
+    }
+
+    public FindExampleWaitById(id: string): string[][] {
+        let ret: string[][] = [];
+        this.GetAllExamples(id, (example) => {
+            let waitCmd = this.GetExampleWait(example);
+            if (waitCmd.length>0) ret.push(waitCmd);
         });
         return ret;
     }
@@ -1729,7 +1813,10 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters, createdObjectNames);
         });
 
-        if (!this._configuredScenario)   this.SortExamplesByDependency();
+        if (!this._configuredScenario) {
+            this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool, this._testScenario);
+            this.SortExamplesByDependency();
+        }
     }
 
     public SortExamplesByDependency() {

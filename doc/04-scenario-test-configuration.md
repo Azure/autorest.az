@@ -70,38 +70,22 @@ Below is a briefed generated code tree view:
 ~~~ 
 The content of test_attestation_scenario.py here is like:
 ~~~
-# --------------------------------------------------------------------------------------------
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License. See License.txt in the project root for license information.
-# --------------------------------------------------------------------------------------------
-
-import os
-import unittest
-
-from azure_devtools.scenario_tests import AllowLargeResponse
-from azure.cli.testsdk import ScenarioTest
-from .. import try_manual
-from azure.cli.testsdk import ResourceGroupPreparer
-
-
-TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
-
 
 @try_manual
-def setup(test):
+def setup(test, rg, rg_2, rg_3):
     pass
 
 
 # EXAMPLE: Operations_List
 @try_manual
-def step_operations_list(test):
+def step_operations_list(test, rg, rg_2, rg_3):
     # EXAMPLE NOT FOUND!
     pass
 
 
 # EXAMPLE: AttestationProviders_Create
 @try_manual
-def step_attestationproviders_create(test):
+def step_attestationproviders_create(test, rg, rg_2, rg_3):
     test.cmd('az attestation attestation-provider create '
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg}"',
@@ -110,7 +94,7 @@ def step_attestationproviders_create(test):
 
 # EXAMPLE: AttestationProviders_Get
 @try_manual
-def step_attestationproviders_get(test):
+def step_attestationproviders_get(test, rg, rg_2, rg_3):
     test.cmd('az attestation attestation-provider show '
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg}"',
@@ -118,20 +102,20 @@ def step_attestationproviders_get(test):
 
 
 @try_manual
-def mytest(test):
+def mytest(test, rg, rg_2, rg_3):
     pass
 
 
 # EXAMPLE: AttestationProviders_List
 @try_manual
-def step_attestationproviders_list(test):
+def step_attestationproviders_list(test, rg, rg_2, rg_3):
     test.cmd('az attestation attestation-provider list',
              checks=[])
 
 
 # EXAMPLE: AttestationProviders_ListByResourceGroup
 @try_manual
-def step_attestationproviders_listbyresourcegroup(test):
+def step_attestationproviders_listbyresourcegroup(test, rg, rg_2, rg_3):
     test.cmd('az attestation attestation-provider list '
              '--resource-group "{rg_2}"',
              checks=[])
@@ -139,7 +123,7 @@ def step_attestationproviders_listbyresourcegroup(test):
 
 # EXAMPLE: AttestationProviders_Delete
 @try_manual
-def step_attestationproviders_delete(test):
+def step_attestationproviders_delete(test, rg, rg_2, rg_3):
     test.cmd('az attestation attestation-provider delete '
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg_3}"',
@@ -147,28 +131,36 @@ def step_attestationproviders_delete(test):
 
 
 @try_manual
-def cleanup(test):
+def cleanup(test, rg, rg_2, rg_3):
     pass
 
 
+@try_manual
+def call_scenario(self, rg, rg_2, rg_3):
+    setup(test, rg, rg_2, rg_3)
+    step_operations_list(test, rg, rg_2, rg_3)
+    step_attestationproviders_create(test, rg, rg_2, rg_3)
+    step_attestationproviders_get(test, rg, rg_2, rg_3)
+    mytest(test, rg, rg_2, rg_3)
+    step_attestationproviders_list(test, rg, rg_2, rg_3)
+    step_attestationproviders_listbyresourcegroup(test, rg, rg_2, rg_3)
+    step_attestationproviders_delete(test, rg, rg_2, rg_3)
+    cleanup(test, rg, rg_2, rg_3)
+
+
+@try_manual
 class AttestationManagementClientScenarioTest(ScenarioTest):
 
-    @ResourceGroupPreparer(name_prefix='cli_test_attestation_MyResourceGroup'[:9], key='rg')
-    @ResourceGroupPreparer(name_prefix='cli_test_attestation_testrg1'[:9], key='rg_2')
-    @ResourceGroupPreparer(name_prefix='cli_test_attestation_sample-resource-group'[:9], key='rg_3')
-    def test_attestation(self, resource_group):
+    @ResourceGroupPreparer(name_prefix='clitestattestation_MyResourceGroup'[:7], key='rg', parameter_name='rg')
+    @ResourceGroupPreparer(name_prefix='clitestattestation_testrg1'[:7], key='rg_2', parameter_name='rg_2')
+    @ResourceGroupPreparer(name_prefix='clitestattestation_sample-resource-group'[:7], key='rg_3', parameter_name='rg_3'
+                           '')
+    def test_attestation(self, rg, rg_2, rg_3):
 
-        setup(self)
-        step_operations_list(self)
-        step_attestationproviders_create(self)
-        step_attestationproviders_get(self)
-        mytest(self)
-        step_attestationproviders_list(self)
-        step_attestationproviders_listbyresourcegroup(self)
-        step_attestationproviders_delete(self)
-        cleanup(self)
+        call_scenario(test, rg, rg_2, rg_3)
 
 ~~~
+### Customize step functions
 All test steps are invoked one by one in the bottom of above sample test scenario. Let's say you want to override test step functions step_attestationproviders_create() and mytest() in this scenario, you can:
 
 1. Create the test program file with exactly the same relative path with the auto-generated one.
@@ -194,9 +186,53 @@ Below is the tree view after adding the manual test file:
 ~~~ 
 The content of the manual test_attestation_scenario.py can be:
 ~~~
-def step_attestationproviders_create(test):
+def step_attestationproviders_create(test, rg, rg_2, rg_3):
     print("Doing manual attestation create test code")
 
-def mytest(test):
+def mytest(test, rg, rg_2, rg_3):
     print("Doing fully customizing test.")
+~~~
+### Customize TestClass or Customize Resource Preparers
+If you need to customize the test class(such as use a new resource preparer), you can also override the test class in file manual/tests/latest/test_xxxx_scenario.py. Below is an example to write an preparer and use it manually.
+~~~
+from azure.cli.testsdk import ScenarioTest
+from azure.cli.testsdk import ResourceGroupPreparer
+from azure.cli.testsdk.preparers import NoTrafficRecordingPreparer
+from azure_devtools.scenario_tests import SingleValueReplacer
+from azure.cli.testsdk.reverse_dependency import get_dummy_cli
+
+
+class xxPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):  # sample for customized preparer
+    def __init__(self, **kargs):
+        super(xxPreparer, self).__init__('xx', 10)
+        self.cli_ctx = get_dummy_cli()
+        self.parameter_name = 'xx'
+        self.key = 'xx'
+
+    def create_resource(self, name, **kwargs):
+        print("Will create resource of xx")
+
+    def remove_resource(self, name, **kwargs):
+        print("Will remove resource of xx")
+
+
+class AttestationManagementClientScenarioTest(ScenarioTest):
+
+    @ResourceGroupPreparer(name_prefix='clitestattestation_MyResourceGroup'[:7], key='rg', parameter_name='rg')
+    @ResourceGroupPreparer(name_prefix='clitestattestation_testrg1'[:7], key='rg_2', parameter_name='rg_2')
+    @ResourceGroupPreparer(name_prefix='clitestattestation_sample-resource-group'[:7], key='rg_3', parameter_name='rg_3'
+                           '')
+    @xxPreparer()                                                           # sample to use customized preparer
+    def test_attestation(self, rg, rg_2, rg_3):
+        from ....tests.latest import test_attestation_scenario as g         # sample to call generated code
+        g.call_scenario(self, rg, rg_2, rg_3)
+~~~
+Of course it's suggested to envelop the xxPreparer into seperate python module in elsewhere.
+
+## How to randomize resource names
+Since some RP don't support randomized name resource name well, resource names will not be randomized by default. If you want to enable it, please add randomize-names configuration like below in readme.az.md
+~~~
+az:
+  ...
+  randomize-names: true
 ~~~
