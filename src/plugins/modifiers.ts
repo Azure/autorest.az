@@ -181,7 +181,7 @@ export class Modifiers {
                             operationGroup.language['az']['command'] = groupReplacer? groupRegex? operationGroup.language['az']['command'].replace(groupRegex, groupReplacer): groupReplacer: operationGroup.language['az']['command'];
                             operationGroup.language['az']['description'] = groupDescriptionReplacer? groupDescriptionReplacer: operationGroup.language['az']['description'];
                         }
-                        
+
                         for (const operation of values(operationGroup.operations)) {
                             //operation
                             if (groupChanged) {
@@ -190,8 +190,8 @@ export class Modifiers {
                             if (operation.language['az']['command'] != undefined && operation.language["az"]["command"].match(commandRegex)) {
                                 operation.language["az"]["command"] = commandReplacer? commandRegex? operation.language["az"]["command"].replace(commandRegex, commandReplacer): commandReplacer: operation.language["az"]["command"];
                                 operation.language["az"]["description"] = commandDescriptionReplacer? commandDescriptionReplacer: operation.language["az"]["description"];
+                                groupChanged = true;
                             }
-
                             for (const parameter of values(operation.parameters)) {
                                 if (parameter.language['az']['name'] != undefined && parameter.language["az"]["name"].match(parameterRegex)) {
                                     parameter.language["az"]["name"] = parameterReplacer? parameterRegex? parameter.language["az"]["name"].replace(parameterRegex, parameterReplacer): parameterReplacer: parameter.language["az"]["name"];
@@ -199,7 +199,6 @@ export class Modifiers {
                                     parameter.language["az"]["description"] = paramDescriptionReplacer? paramDescriptionReplacer: parameter.language["az"]["description"];
                                 }
                             }
-
                             for(const request of values(operation.requests)) {
                                 for (const parameter of values(request.parameters)) {
                                     if (parameter.language['az']['name'] != undefined && parameter.language["az"]["name"].match(parameterRegex)) {
