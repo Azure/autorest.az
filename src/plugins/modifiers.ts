@@ -16,6 +16,7 @@ import {
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { isNullOrUndefined } from "util";
+import { ToCamelCase } from "../utils/helper";
 
 let directives: Array<any> = [];
 
@@ -145,8 +146,10 @@ export class Modifiers {
                         if (!isNullOrUndefined(operationGroup.language['az']['command']) && operationGroup.language['az']['command'].match(groupRegex)) {
 
                             if (groupSplitter) {
+                                let name = ToCamelCase(groupSplitter['group'].split(' ').pop());
                                 // splitting operation
-                                let splittedOperationGroup = new OperationGroup("splitted-operation", operationGroup);
+                                let splittedOperationGroup = new OperationGroup(name, operationGroup);
+                                splittedOperationGroup['$key'] = name;
                                 //splittedOperationGroup.language['az'] = {};
                                 splittedOperationGroup.language['az'] = {}
                                 splittedOperationGroup.language['az']['name'] = operationGroup.language['az']['name'];
