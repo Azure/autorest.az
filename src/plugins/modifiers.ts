@@ -3,7 +3,9 @@ import {
     codeModelSchema,
     ObjectSchema,
     SchemaType,
-    Property
+    Property,
+    OperationGroup,
+    Operation
 } from "@azure-tools/codemodel";
 import {
     Session,
@@ -34,6 +36,7 @@ interface WhereCommandDirective {
         "command-description"?: string;
         "parameter-name"?: string;
         "parameter-description"?: string;
+        "split"?: string;
         default?: {
             name: string;
             description: string;
@@ -135,6 +138,7 @@ export class Modifiers {
                     const commandReplacer = directive.set !== undefined ? directive.set["command"] : undefined;
                     const commandDescriptionReplacer = directive.set !== undefined? directive.set["command-description"]: undefined;
                     const groupReplacer = directive.set !== undefined ? directive.set["group"] : undefined;
+                    const groupSplitter: any = directive.set !== undefined ? directive.set["split"] : undefined;
                     const groupDescriptionReplacer = directive.set !== undefined? directive.set["group-description"]: undefined;
                     
                     for (const operationGroup of values(this.codeModel.operationGroups)) {
@@ -143,6 +147,33 @@ export class Modifiers {
                         if (!isNullOrUndefined(operationGroup.language['az']['command']) && operationGroup.language['az']['command'].match(groupRegex)) {
                             operationGroup.language['az']['command'] = groupReplacer? groupRegex? operationGroup.language['az']['command'].replace(groupRegex, groupReplacer): groupReplacer: operationGroup.language['az']['command'];
                             operationGroup.language['az']['description'] = groupDescriptionReplacer? groupDescriptionReplacer: operationGroup.language['az']['description'];
+
+                            // splitting operation
+                            let splittedOperationGroup = new OperationGroup("splitted-operation", operationGroup);
+                            //splittedOperationGroup.language['az'] = {};
+                            splittedOperationGroup.language['az'] = {}
+                            splittedOperationGroup.language['az']['name'] = operationGroup.language['az']['name'];
+                            splittedOperationGroup.language['az']['description'] = operationGroup.language['az']['description'];
+                            splittedOperationGroup.language['az']['command'] = operationGroup.language['az']['command'] = groupSplitter['command'];
+                            // split operations
+                            splittedOperationGroup.operations = [];
+
+                            let oldGroupOperations: Operation[] = [];
+                            // do actual splitting
+                            for (const operation of values(operationGroup.operations)) {
+                                groupSplitter['commands'].forEach(op => {
+                                    const opRegex = getPatternToMatch(op);
+                                    if (operation.language['az']['command'].match(opRegex)) {
+                                        splittedOperationGroup.operations.push(operation);
+                                    } else {
+                                        oldGroupOperations.push(operation);
+                                    }
+                                });
+                            }
+
+                            operationGroup.operations = oldGroupOperations;
+                            this.codeModel.operationGroups.push(splittedOperationGroup);
+
                             groupChanged = true;
                         }
                         for (const operation of values(operationGroup.operations)) {
