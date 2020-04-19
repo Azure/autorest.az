@@ -170,6 +170,10 @@ export class Modifiers {
 
                                 operationGroup.operations = oldGroupOperations;
                                 this.codeModel.operationGroups.push(splittedOperationGroup);
+
+                                for (const operation of values(splittedOperationGroup.operations)) {
+                                    operation.language['az']['command'] = splittedOperationGroup.language['az']['command'] + " " + operation.language['az']['name'];
+                                }
                             }
                         }
                     }
