@@ -144,38 +144,39 @@ export class Modifiers {
 
                     if (groupSplitter) {
                         for (const operationGroup of values(this.codeModel.operationGroups)) {
-                        if (!isNullOrUndefined(operationGroup.language['az']['command']) && operationGroup.language['az']['command'].match(groupRegex)) {
+                            if (!isNullOrUndefined(operationGroup.language['az']['command']) && operationGroup.language['az']['command'].match(groupRegex)) {
 
-                            let name = ToCamelCase(groupSplitter['group'].split(' ').pop());
-                            // splitting operation
-                            let splittedOperationGroup = new OperationGroup(name, operationGroup);
-                            splittedOperationGroup['$key'] = name;
-                            //splittedOperationGroup.language['az'] = {};
-                            splittedOperationGroup.language['az'] = {}
-                            splittedOperationGroup.language['az']['name'] = operationGroup.language['az']['name'];
-                            splittedOperationGroup.language['az']['description'] = operationGroup.language['az']['description'];
-                            splittedOperationGroup.language['az']['command'] = groupSplitter['group'];
-                            // split operations
-                            splittedOperationGroup.operations = [];
+                                let name = ToCamelCase(groupSplitter['group'].split(' ').pop());
+                                // splitting operation
+                                let splittedOperationGroup = new OperationGroup(name, operationGroup);
+                                splittedOperationGroup['$key'] = name;
+                                //splittedOperationGroup.language['az'] = {};
+                                splittedOperationGroup.language['az'] = {}
+                                splittedOperationGroup.language['az']['name'] = operationGroup.language['az']['name'];
+                                splittedOperationGroup.language['az']['description'] = operationGroup.language['az']['description'];
+                                splittedOperationGroup.language['az']['command'] = groupSplitter['group'];
+                                // split operations
+                                splittedOperationGroup.operations = [];
 
-                            let oldGroupOperations: Operation[] = [];
-                            // do actual splitting
-                            for (const operation of values(operationGroup.operations)) {
-                                groupSplitter['commands'].forEach(op => {
-                                    const opRegex = getPatternToMatch(op);
-                                    if (operation.language['az']['command'].match(opRegex)) {
-                                        splittedOperationGroup.operations.push(operation);
-                                    } else {
-                                        oldGroupOperations.push(operation);
-                                    }
-                                });
-                            }
+                                let oldGroupOperations: Operation[] = [];
+                                // do actual splitting
+                                for (const operation of values(operationGroup.operations)) {
+                                    groupSplitter['commands'].forEach(op => {
+                                        const opRegex = getPatternToMatch(op);
+                                        if (operation.language['az']['command'].match(opRegex)) {
+                                            splittedOperationGroup.operations.push(operation);
+                                        } else {
+                                            oldGroupOperations.push(operation);
+                                        }
+                                    });
+                                }
 
-                            operationGroup.operations = oldGroupOperations;
-                            this.codeModel.operationGroups.push(splittedOperationGroup);
+                                operationGroup.operations = oldGroupOperations;
+                                this.codeModel.operationGroups.push(splittedOperationGroup);
 
-                            for (const operation of values(splittedOperationGroup.operations)) {
-                                operation.language['az']['command'] = splittedOperationGroup.language['az']['command'] + " " + operation.language['az']['name'];
+                                for (const operation of values(splittedOperationGroup.operations)) {
+                                    operation.language['az']['command'] = splittedOperationGroup.language['az']['command'] + " " + operation.language['az']['name'];
+                                }
                             }
                         }
                     }
