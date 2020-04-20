@@ -127,7 +127,7 @@ export class Modifiers {
                 };
                 if (isWhereCommandDirective(directive)) {
                     const selectType = directive.select;
-                    const groupRegex = directive.where["group"];
+                    const groupRegex = getPatternToMatch(directive.where["group"]);
                     const parameterRegex = getPatternToMatch(directive.where["parameter-name"]);
                     const commandRegex = getPatternToMatch(directive.where["command"]);
                     const parameterReplacer = directive.set !== undefined? directive.set["parameter-name"]: undefined;
@@ -140,7 +140,7 @@ export class Modifiers {
                     for (const operationGroup of values(this.codeModel.operationGroups)) {
                         //operationGroup
                         let groupChanged = false;
-                        if (!isNullOrUndefined(operationGroup.language['az']['command']) && operationGroup.language['az']['command'] == groupRegex) {
+                        if (!isNullOrUndefined(operationGroup.language['az']['command']) && operationGroup.language['az']['command'].match(groupRegex)) {
                             operationGroup.language['az']['command'] = groupReplacer? groupRegex? operationGroup.language['az']['command'].replace(groupRegex, groupReplacer): groupReplacer: operationGroup.language['az']['command'];
                             operationGroup.language['az']['description'] = groupDescriptionReplacer? groupDescriptionReplacer: operationGroup.language['az']['description'];
                             groupChanged = true;
