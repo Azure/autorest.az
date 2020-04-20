@@ -1527,7 +1527,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                 }
             }
-            netValue = this.FlattenProperty(methodParam.value?.schema, netValue);
+            if (polySubParam) {
+                netValue = this.FlattenProperty(polySubParam.value?.schema, netValue);
+            }
+            else {
+                netValue = this.FlattenProperty(methodParam.value?.schema, netValue);
+            }
             if ('pathToProperty' in methodParam.value && ancestors.length - methodParam.value['pathToProperty'].length == 1) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
                 let ancestors_ = deepCopy(ancestors) as string[];
