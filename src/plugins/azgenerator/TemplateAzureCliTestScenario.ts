@@ -15,6 +15,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let class_info: string[] = [];
     let initiates: string[] = [];
     let body: string[] = [];
+    let funcScenario: string[] = [];
 
     model.GatherInternalResource();
     let config: any = deepCopy(model.Extension_TestScenario);
@@ -37,6 +38,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     steps.push("");
     steps.push("");
 
+    class_info.push("@try_manual");
     class_info.push("class " + model.Extension_NameClass + "ScenarioTest(ScenarioTest):");
     class_info.push("");
     //initiates.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + model.Extension_NameUnderscored + "')");
@@ -71,6 +73,9 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
         return ret;
     }
 
+    funcScenario.push("@try_manual");
+    funcScenario.push(...ToMultiLine(`def call_scenario(test${parameterLine()}):`));
+
     // go through the examples to generate steps
     for (var ci = 0; ci < config.length; ci++) {
         let exampleId: string = config[ci].name;
@@ -97,9 +102,22 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                 steps.push("    # EXAMPLE NOT FOUND!");
                 steps.push("    pass");
             }
+            else {
+                for (let exampleCmd of model.FindExampleWaitById(exampleId)) {
+                    if (exampleCmd && exampleCmd.length > 0) {
+                        found = true;
+                        for (let idx = 0; idx < exampleCmd.length; idx++) {
+                            let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
+                            let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
+                            ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
+                        }
+                        steps.push("    " + disabled + "         checks=[])");
+                    }
+                }
+            }
             steps.push("");
             steps.push("");
-            body.push(...ToMultiLine(`        ${functionName}(self${parameterLine()})`));
+            funcScenario.push(...ToMultiLine(`    ${functionName}(test${parameterLine()})`));
         }
         else if (functionName) {
             steps.push("@try_manual");
@@ -107,12 +125,15 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
             steps.push("    pass");
             steps.push("");
             steps.push("");
-            body.push(...ToMultiLine(`        ${functionName}(self${parameterLine()})`));
+            funcScenario.push(...ToMultiLine(`    ${functionName}(test${parameterLine()})`));
         }
     }
-    body.push("")
+    funcScenario.push("");
+    funcScenario.push("");
+    body.push(`        call_scenario(self${parameterLine()})`);
+    body.push("");
 
-    let output = head.concat(imports, steps, class_info, decorators, initiates, body);
+    let output = head.concat(imports, steps, funcScenario, class_info, decorators, initiates, body);
     output.forEach(element => {
         if (element.length > 120) header.disableLineTooLong = true;
     });
@@ -122,7 +143,6 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
 function InitiateDependencies(model: CodeModelAz, imports: string[], decorators: string[], initiates: string[]): string[] {
     let decorated = [];
     let internalObjects = [];
-    let hasResourceGroup = false;
     let parameterNames = [];
     for (let entity of (model.GetPreparerEntities() as PreparerEntity[])) {
         if (!entity.info.name) {
@@ -145,7 +165,6 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
         if (decorated.indexOf(entity.info.name) < 0) {
             if (entity.info.name == 'ResourceGroupPreparer') {
                 imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
-                hasResourceGroup = true;
             }
             else if (entity.info.name == 'StorageAccountPreparer') {
                 imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
@@ -166,8 +185,11 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     if (internalObjects.length > 0) {
         initiates.push("        self.kwargs.update({");
         for (let [class_name, kargs_key, hasCreateExample] of internalObjects) {
-            if (hasCreateExample)
-                ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='clitest${ToSnakeCase(class_name)}'[:7], length=24),`, initiates);
+            if (hasCreateExample && model.RandomizeNames)
+            {
+                let snakeName = ToSnakeCase(class_name);
+                ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='${snakeName}'[:${Math.floor(snakeName.length/2)}], length=${snakeName.length}),`, initiates);
+            }
             else
                 initiates.push(`            '${kargs_key}': '${kargs_key}',`);   // keep the original name in example if there is no create example in the test-scenario
         }

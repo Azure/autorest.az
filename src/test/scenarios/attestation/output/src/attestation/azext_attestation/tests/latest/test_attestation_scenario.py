@@ -84,6 +84,20 @@ def cleanup(test, rg, rg_2, rg_3):
     pass
 
 
+@try_manual
+def call_scenario(test, rg, rg_2, rg_3):
+    setup(test, rg, rg_2, rg_3)
+    step_operations_list(test, rg, rg_2, rg_3)
+    step_attestationproviders_create(test, rg, rg_2, rg_3)
+    step_attestationproviders_get(test, rg, rg_2, rg_3)
+    mytest(test, rg, rg_2, rg_3)
+    step_attestationproviders_list(test, rg, rg_2, rg_3)
+    step_attestationproviders_listbyresourcegroup(test, rg, rg_2, rg_3)
+    step_attestationproviders_delete(test, rg, rg_2, rg_3)
+    cleanup(test, rg, rg_2, rg_3)
+
+
+@try_manual
 class AttestationManagementClientScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestattestation_MyResourceGroup'[:7], key='rg', parameter_name='rg')
@@ -92,12 +106,4 @@ class AttestationManagementClientScenarioTest(ScenarioTest):
                            '')
     def test_attestation(self, rg, rg_2, rg_3):
 
-        setup(self, rg, rg_2, rg_3)
-        step_operations_list(self, rg, rg_2, rg_3)
-        step_attestationproviders_create(self, rg, rg_2, rg_3)
-        step_attestationproviders_get(self, rg, rg_2, rg_3)
-        mytest(self, rg, rg_2, rg_3)
-        step_attestationproviders_list(self, rg, rg_2, rg_3)
-        step_attestationproviders_listbyresourcegroup(self, rg, rg_2, rg_3)
-        step_attestationproviders_delete(self, rg, rg_2, rg_3)
-        cleanup(self, rg, rg_2, rg_3)
+        call_scenario(self, rg, rg_2, rg_3)

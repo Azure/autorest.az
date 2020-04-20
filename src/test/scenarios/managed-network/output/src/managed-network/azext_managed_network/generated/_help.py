@@ -44,15 +44,15 @@ group and Managed Network name
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network mn create --location "eastus" --properties "{\\"scope\\":{\\"managementGroups\\":[{\\\
-"id\\":\\"/providers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000\\"},{\\"id\\":\\"/provi\
-ders/Microsoft.Management/managementGroups/20000000-0002-0000-0000-000000000000\\"}],\\"subnets\\":[{\\"id\\":\\"/subsc\
-riptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC/subnets/subnetA\
-\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetwor\
-ks/VnetC/subnets/subnetB\\"}],\\"subscriptions\\":[{\\"id\\":\\"subscriptionA\\"},{\\"id\\":\\"subscriptionB\\"}],\\"vi\
-rtualNetworks\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/\
-virtualNetworks/VnetA\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.\
-Network/virtualNetworks/VnetB\\"}]}}" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
+               az managed-network mn create --location "eastus" --properties "{\\"managementGroups\\":[{\\"id\\":\\"/pr\
+oviders/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000\\"},{\\"id\\":\\"/providers/Microsof\
+t.Management/managementGroups/20000000-0002-0000-0000-000000000000\\"}],\\"subscriptions\\":[{\\"id\\":\\"subscriptionA\
+\\"},{\\"id\\":\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/my\
+ResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceG\
+roups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB\\"}],\\"subnets\\":[{\\"id\\":\\"/subscriptions\
+/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC/subnets/subnetA\\"},{\\\
+"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetC\
+/subnets/subnetB\\"}]}" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network mn update'] = """
