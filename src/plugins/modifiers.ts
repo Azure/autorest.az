@@ -221,7 +221,6 @@ export class Modifiers {
                 }
             }
         }
-
         // add NameMapsTo after modifier and if generic update exists, set the setter_arg_name
         this.codeModel.operationGroups.forEach(operationGroup => {
             let operations = operationGroup.operations;
