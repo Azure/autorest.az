@@ -56,13 +56,24 @@ directive:
     - where:
           group: datashare share
       set:
-          group: datashare 
+          group: datashare
     - where:
           group: datashare trigger
       set:
           group: datashare consumer trigger
 ```
 
+* RegExp support 
+> In the case above. if you have two subgroup `datashare share` `datashare share-subscription` and  
+> you only want to remove the `share` subgroup and keep the `share-subscription` subgroup.  
+> You can use the following configuration
+``` yaml
+directive:
+  - where:
+      group: ^datashare share$
+    set:
+      group: datashare
+```
 
 ## How to hide an operation, operationGroup, parameter
 
