@@ -35,7 +35,7 @@ python setup.py sdist bdist_wheel
 pip install azdev
 azdev extension build <extension-name>
 ```
-you will find the wheel file in the <extension-folder>/dist folder 
+you will find the wheel file in the `<extension-folder>/dist` folder 
 
 #### Then install the latest az and run the command below to install the extension
 ``` yaml
