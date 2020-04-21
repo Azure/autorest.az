@@ -41,8 +41,7 @@ you will find the wheel file in the `<extension-folder>/dist` folder
 ``` yaml
 az extension add --source=<cli-extension-whl-path>
 ```
-If you choose to build the wheel file in the python original way to build the wheel file and install the extension with latest az.  
-that means you don't need to clone azure-cli-extension folder at all.  
+If you choose to build the wheel file in the python original way and install the extension with latest az. You don't need to clone azure-cli-extension folder at all.  
 
 ## what would the clear-output-folder clear
 * Instead of using --output-folder in the command line to specify which folder you want the extension to be generated. we use --azure-cli-extension-folder=path-to-local-azure-cli-extensions-repo now. 
