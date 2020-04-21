@@ -17,14 +17,14 @@ az extension add --source=<cli-extension-whl-link-from-swagger-pipeline>
 
 ## How to install the codegen extension from the generated code  
 There're two ways to install the extension
-* install the extension in a dev mode.  
+### install the extension in a dev mode.  
 ```yaml
 pip install azdev
 azdev extension add <extension-name>
 ```
-* build the extension and install the extension in a non-dev mode
+### build the extension and install the extension in a non-dev mode
 
-### how to build the generated file into a wheel file
+#### two ways to build the generated file into a wheel file
 
 1. use python original way
 ``` yaml
@@ -37,7 +37,7 @@ azdev extension build <extension-name>
 ```
 you will find the wheel file in the <extension-folder>/dist folder 
 
-### Then install the latest az and run the command below to install the extension
+#### Then install the latest az and run the command below to install the extension
 ``` yaml
 az extension add --source=<cli-extension-whl-path>
 ```
