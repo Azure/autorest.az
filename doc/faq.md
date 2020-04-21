@@ -9,25 +9,8 @@ Configuration can be put in either *xxx.cli.md* or *xxx.az.md* in *Azure/azure-r
 
 
 ## How to install the codegen extension from the swagger pipeline
-* Before the Azure CLI next release (2020.04.21). You need to build azure-cli with the dev branch which contains the new azure-core. So that the codegen extension can work.
-* The steps are
+* Please install the latest Azure CLI and try this.
 ``` yaml
-git clone git@github.com:Azure/azure-cli.git
-git clone git@github.com:Azure/azure-cli-extensions.git
-cd azure-cli
-git checkout dev
-# you need to get your python3 as python ready.
-python -m virtualenv env
-source env/bin/activate
-pip install azdev
-azdev setup -c -r ../azure-cli-extensions/
-
-# after the azdev setup you get the az
-
-# When the Azure CLI with new azure core feature released. you can skip all the step above. just run 
-pip install azure-cli 
-
-# Then run below command.
 az extension add --source=<cli-extension-whl-link-from-swagger-pipeline>
 ```
 
