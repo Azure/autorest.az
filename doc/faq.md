@@ -23,21 +23,25 @@ pip install azdev
 azdev extension add <extension-name>
 ```
 * build the extension and install the extension in a non-dev mode
+
+### how to build the generated file into a wheel file
+
+1. use python original way
 ``` yaml
-# how to build the generated file into a wheel file
-
-# 1. use python original way
 python setup.py sdist bdist_wheel
-
-# 3. use azdev to build the wheel file
+```
+2. use azdev to build the wheel file
+``` yaml
 pip install azdev
 azdev extension build <extension-name>
-# you will find the wheel file in the <extension-folder>/dist folder 
+```
+you will find the wheel file in the <extension-folder>/dist folder 
 
-# Then install the latest az and run the command below to install the extension
+### Then install the latest az and run the command below to install the extension
+``` yaml
 az extension add --source=<cli-extension-whl-path>
 ```
-If you choose to use the python original way to build the wheel file and install the extension with latest az.  
+If you choose to build the wheel file in the python original way to build the wheel file and install the extension with latest az.  
 that means you don't need to clone azure-cli-extension folder at all.  
 
 ## what would the clear-output-folder clear
