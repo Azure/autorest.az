@@ -21,7 +21,7 @@ export class Merger {
         this.codeModel.operationGroups.forEach(operationGroup => {
             let operations = operationGroup.operations;
             operationGroup.operations.forEach(operation => {
-                if(!isNullOrUndefined(operation.extensions['cli-operations'])) {
+                if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-operations'])) {
                     operations = operations.concat(operation.extensions['cli-operations']);
                 }
             });

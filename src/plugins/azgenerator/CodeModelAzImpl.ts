@@ -615,8 +615,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Command_GetOriginalOperation(): any {
-        let oriOp = this.Command.extensions['cli-poly-as-resource-original-operation'];
-        return oriOp;
+        return this.Command.extensions?.['cli-poly-as-resource-original-operation'];
     }
 
     public get Command_IsLongRun(): boolean {
@@ -742,8 +741,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Method_GetOriginalOperation(): any {
-        let oriOp = this.Method.extensions['cli-poly-as-resource-original-operation'];
-        return oriOp;
+        return this.Method.extensions?.['cli-poly-as-resource-original-operation'];
     }
     //=================================================================================================================
     // Methods Parameters.
