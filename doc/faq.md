@@ -17,31 +17,31 @@ az extension add --source=<cli-extension-whl-link-from-swagger-pipeline>
 
 ## How to install the codegen extension from the generated code  
 There're two ways to install the extension
-### install the extension in a dev mode.  
+### 1. install the extension in a dev mode.  
 ```yaml
 pip install azdev
 azdev extension add <extension-name>
 ```
-### build the extension and install the extension in a non-dev mode
+### 2. build the extension and install the extension in a non-dev mode
 
-#### two ways to build the generated file into a wheel file
+#### step 1: choose one of the two ways to build the generated file into a wheel file
 
-1. use python original way
+a. use python original way
 ``` yaml
 python setup.py sdist bdist_wheel
 ```
-2. use azdev to build the wheel file
+b. use azdev to build the wheel file
 ``` yaml
 pip install azdev
 azdev extension build <extension-name>
 ```
 you will find the wheel file in the `<extension-folder>/dist` folder 
 
-#### Then install the latest az and run the command below to install the extension
+#### step 2: install the latest az and run the command below to install the extension
 ``` yaml
 az extension add --source=<cli-extension-whl-path>
 ```
-If you choose to build the wheel file in the python original way and install the extension with latest az. You don't need to clone either `azure-cli-extensions` or `azure-cli` repo  at all.  
+If you choose to build the wheel file in the python original way and install the extension with latest az. You don't need to clone either `azure-cli-extensions` or `azure-cli` repo or install `azdev` at all.  
 
 ## what would the clear-output-folder clear
 * Instead of using --output-folder in the command line to specify which folder you want the extension to be generated. we use --azure-cli-extension-folder=path-to-local-azure-cli-extensions-repo now. 
