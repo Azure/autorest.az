@@ -307,7 +307,11 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                                 continue;
                             }
                             ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
-                            ifStatement += " " + model.MethodParameter_MapsTo + " is not None"
+                            if(model.MethodParameter_MapsTo == "resource_group_name") {
+                                ifStatement += " " + model.MethodParameter_MapsTo;
+                            } else {
+                                ifStatement += " " + model.MethodParameter_MapsTo + " is not None"
+                            }
                         }
                         while (model.SelectNextMethodParameter());
                         ifStatement += ":";
