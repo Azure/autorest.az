@@ -1505,10 +1505,18 @@ export class CodeModelCliImpl implements CodeModelAz {
         return deepCopy(exampleValue);
     }
 
-    public FlattenExampleParameter(method_param: Map<string, MethodParam>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
-        if (typeof method_param.get(name) !== 'undefined') {
-            let methodParam = method_param.get(name);
+    private matchMethodParam(method_param: Map<string, MethodParam>, paramName: string): any {
+        for (let mpKey of method_param.keys()) {
+            if (mpKey && paramName && mpKey.toLowerCase() == paramName.toLowerCase()) {
+                return method_param.get(mpKey);
+            }
+        }
+        return undefined;
+    }
 
+    public FlattenExampleParameter(method_param: Map<string, MethodParam>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
+        let methodParam = this.matchMethodParam(method_param, name);
+        if (typeof methodParam !== 'undefined') {
             let polySubParam: MethodParam = null;
             let netValue = typeof value === 'object' && value !== null ? deepCopy(value) : value;
             if (methodParam.value['isPolyOfSimple']) {
@@ -1539,7 +1547,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 let match = true;
                 for (let i = methodParam.value['pathToProperty'].length - 1; i >= 0; i--) {
                     let parent = ancestors_.pop();
-                    if (methodParam.value['pathToProperty'][i].language.az.name != parent) {
+                    if (methodParam.value['pathToProperty'][i].language.az.name.toLowerCase() != parent.toLowerCase()) {
                         match = false;
                     };
                 }
@@ -1559,7 +1567,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         break;
                     }
                     let parent = ancestors_.pop();
-                    if (methodParam.value['targetProperty']['flattenedNames'][i] != parent) {
+                    if (methodParam.value['targetProperty']['flattenedNames'][i].toLowerCase() != parent.toLowerCase()) {
                         match = false;
                     };
                 }
