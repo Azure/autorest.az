@@ -19,9 +19,12 @@ export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
     output.push("from codecs import open");
     output.push("from setuptools import setup, find_packages");
     output.push("");
-    output.push("# TODO: Confirm this is the right version number you want and it matches your");
     output.push("# HISTORY.rst entry.");
     output.push("VERSION = '0.1.0'");
+    output.push("try:");
+    output.push("    from .manual.version import VERSION");
+    output.push("except ImportError:");
+    output.push("    pass");
     output.push("")
     output.push("# The full list of classifiers is available at");
     output.push("# https://pypi.python.org/pypi?%3Aaction=list_classifiers");
@@ -37,8 +40,11 @@ export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
     output.push("    'License :: OSI Approved :: MIT License',");
     output.push("]");
     output.push("");
-    output.push("# TODO: Add any additional SDK dependencies here");
     output.push("DEPENDENCIES = []");
+    output.push("try:");
+    output.push("    from .manual.dependency import DEPENDENCIES");
+    output.push("except ImportError:");
+    output.push("    pass");
     output.push("");
     output.push("with open('README.md', 'r', encoding='utf-8') as f:");
     output.push("    README = f.read()");
@@ -49,11 +55,9 @@ export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
     output.push("    name='" + model.Extension_NameUnderscored + "',");
     output.push("    version=VERSION,");
     output.push("    description='Microsoft Azure Command-Line Tools " + model.Extension_NameClass + " Extension',");
-    output.push("    # TODO: Update author and email, if applicable");
     output.push("    author='Microsoft Corporation',");
     output.push("    author_email='azpycli@microsoft.com',");
-    output.push("    # TODO: consider pointing directly to your source code instead of the generic repo");
-    output.push("    url='https://github.com/Azure/azure-cli-extensions',");
+    output.push("    url='https://github.com/Azure/azure-cli-extensions/tree/master/src/" + model.Extension_Name + "',");
     output.push("    long_description=README + '\\n\\n' + HISTORY,");
     output.push("    license='MIT',");
     output.push("    classifiers=CLASSIFIERS,");
