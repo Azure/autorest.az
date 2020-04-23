@@ -834,32 +834,13 @@
     "FakeFactoryIdentity": {
       "description": "This is only for az test.",
       "properties": {
-        "type": {
+        "name": {
           "type": "string",
-          "description": "The identity type. Currently the only supported type is 'SystemAssigned'.",
-          "enum": [
-            "SystemAssigned"
-          ],
-          "x-ms-enum": {
-            "name": "FakeFactoryIdentityType",
-            "modelAsString": true
-          }
-        },
-        "principalId": {
-          "type": "string",
-          "format": "uuid",
-          "readOnly": true,
-          "description": "The principal id of the identity."
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "uuid",
-          "readOnly": true,
-          "description": "The client tenant id of the identity."
+          "description": ".."
         }
       },
       "required": [
-        "type"
+        "name"
       ]
     }
   },

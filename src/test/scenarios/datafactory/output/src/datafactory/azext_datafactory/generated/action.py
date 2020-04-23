@@ -123,4 +123,6 @@ class AddFakeIdentity(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+            if kl == 'name':
+                d['name'] = v[0]
         return d
