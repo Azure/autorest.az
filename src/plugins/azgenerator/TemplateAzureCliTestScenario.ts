@@ -146,7 +146,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     let parameterNames = [];
     for (let entity of (model.GetPreparerEntities() as PreparerEntity[])) {
         if (!entity.info.name) {
-            internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name), entity.info.createdObjectNames.indexOf(entity.object_name) >= 0]);
+            internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name), entity.info.createdObjectNames.indexOf(entity.object_name) >= 0, entity.object_name]);
             continue;
         }
 
@@ -184,14 +184,14 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     // randomize name for internal resources
     if (internalObjects.length > 0) {
         initiates.push("        self.kwargs.update({");
-        for (let [class_name, kargs_key, hasCreateExample] of internalObjects) {
+        for (let [class_name, kargs_key, hasCreateExample, object_name] of internalObjects) {
             if (hasCreateExample && model.RandomizeNames)
             {
                 let snakeName = ToSnakeCase(class_name);
                 ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='${snakeName}'[:${Math.floor(snakeName.length/2)}], length=${snakeName.length}),`, initiates);
             }
             else
-                initiates.push(`            '${kargs_key}': '${kargs_key}',`);   // keep the original name in example if there is no create example in the test-scenario
+                initiates.push(`            '${kargs_key}': '${object_name}',`);   // keep the original name in example if there is no create example in the test-scenario
         }
         initiates.push("        })");
         initiates.push("");
