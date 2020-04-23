@@ -243,6 +243,7 @@ class FactoryOperations:
         tags: Optional[Dict[str, str]] = None,
         identity: Optional["models.FactoryIdentity"] = None,
         repo_configuration: Optional["models.FactoryRepoConfiguration"] = None,
+        fake_identity: Optional["models.FakeFactoryIdentity"] = None,
         **kwargs
     ) -> "models.Factory":
         """Creates or updates a factory.
@@ -262,6 +263,8 @@ class FactoryOperations:
         :type identity: ~azure.mgmt.datafactory.models.FactoryIdentity
         :param repo_configuration: Git repo information of the factory.
         :type repo_configuration: ~azure.mgmt.datafactory.models.FactoryRepoConfiguration
+        :param fake_identity: This is only for az test.
+        :type fake_identity: ~azure.mgmt.datafactory.models.FakeFactoryIdentity
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: Factory or the result of cls(response)
         :rtype: ~azure.mgmt.datafactory.models.Factory
@@ -270,7 +273,7 @@ class FactoryOperations:
         cls = kwargs.pop('cls', None)  # type: ClsType["models.Factory"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
 
-        _factory = models.Factory(location=location, tags=tags, identity=identity, repo_configuration=repo_configuration)
+        _factory = models.Factory(location=location, tags=tags, identity=identity, repo_configuration=repo_configuration, fake_identity=fake_identity)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 

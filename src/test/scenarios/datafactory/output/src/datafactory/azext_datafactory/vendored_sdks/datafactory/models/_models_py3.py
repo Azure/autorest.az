@@ -166,6 +166,8 @@ class Factory(Resource):
     :vartype version: str
     :param repo_configuration: Git repo information of the factory.
     :type repo_configuration: ~azure.mgmt.datafactory.models.FactoryRepoConfiguration
+    :param fake_identity: This is only for az test.
+    :type fake_identity: ~azure.mgmt.datafactory.models.FakeFactoryIdentity
     """
 
     _validation = {
@@ -191,6 +193,7 @@ class Factory(Resource):
         'create_time': {'key': 'properties.createTime', 'type': 'iso-8601'},
         'version': {'key': 'properties.version', 'type': 'str'},
         'repo_configuration': {'key': 'properties.repoConfiguration', 'type': 'FactoryRepoConfiguration'},
+        'fake_identity': {'key': 'properties.fakeIdentity', 'type': 'FakeFactoryIdentity'},
     }
 
     def __init__(
@@ -201,6 +204,7 @@ class Factory(Resource):
         additional_properties: Optional[Dict[str, object]] = None,
         identity: Optional["FactoryIdentity"] = None,
         repo_configuration: Optional["FactoryRepoConfiguration"] = None,
+        fake_identity: Optional["FakeFactoryIdentity"] = None,
         **kwargs
     ):
         super(Factory, self).__init__(location=location, tags=tags, **kwargs)
@@ -210,6 +214,7 @@ class Factory(Resource):
         self.create_time = None
         self.version = None
         self.repo_configuration = repo_configuration
+        self.fake_identity = fake_identity
 
 
 class FactoryRepoConfiguration(msrest.serialization.Model):
@@ -511,6 +516,45 @@ class FactoryVstsConfiguration(FactoryRepoConfiguration):
         self.type = 'FactoryVSTSConfiguration'
         self.project_name = project_name
         self.tenant_id = tenant_id
+
+
+class FakeFactoryIdentity(msrest.serialization.Model):
+    """This is only for az test.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar type: Required. The identity type. Currently the only supported type is 'SystemAssigned'.
+     Default value: "SystemAssigned".
+    :vartype type: str
+    :ivar principal_id: The principal id of the identity.
+    :vartype principal_id: str
+    :ivar tenant_id: The client tenant id of the identity.
+    :vartype tenant_id: str
+    """
+
+    _validation = {
+        'type': {'required': True, 'constant': True},
+        'principal_id': {'readonly': True},
+        'tenant_id': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'principal_id': {'key': 'principalId', 'type': 'str'},
+        'tenant_id': {'key': 'tenantId', 'type': 'str'},
+    }
+
+    type = "SystemAssigned"
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(FakeFactoryIdentity, self).__init__(**kwargs)
+        self.principal_id = None
+        self.tenant_id = None
 
 
 class GitHubAccessTokenRequest(msrest.serialization.Model):
