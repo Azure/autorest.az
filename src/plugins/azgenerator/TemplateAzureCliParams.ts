@@ -7,7 +7,7 @@ import { CodeModelAz } from "./CodeModelAz"
 import { EscapeString, ToCamelCase, Capitalize, ToMultiLine } from "../../utils/helper";
 import { SchemaType, Parameter } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "./Header";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, isArray } from "util";
 
 
 let hasActions: boolean = false;
@@ -171,7 +171,37 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
 
                         argument = "        c.argument('" + parameterName + "'";
                         argument += ", options_list=['--" + parameterName.substr(0, parameterName.length - 1) + "']";
+                    } else if (parameterName.endsWith('name') && parameterName.replace(/_name|_/g, '') == model.CommandGroup_DefaultName.toLowerCase()) {
+                        argument = "        c.argument('" + parameterName + "'";
+                        argument += ", options_list=['--name', '-n']";
+                    } else if(!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
+                        argument = "        c.argument('" + parameterName + "'";
+                        let alias = model.MethodParameter?.language?.['cli']?.['alias'];
+                        let aliases: string[] = [];
+                        if(typeof alias === "string") {
+                            aliases.push(alias);
+                            
+                        }
+                        if (isArray(alias)) {
+                            aliases = alias;
+                        }
+                        if(aliases.length > 0) {
+                            let alias_str = [];
+                            for(let alias of aliases) {
+                                alias = alias.replace(/'/g, '');
+                                if(alias.length == 1) {
+                                    alias = "'-" + alias + "'";
+                                } else if(alias.length > 1) {
+                                    alias = "'--" + alias + "'";
+                                }
+                                alias_str.push(alias);
+                            }
+                            argument += ", options_list=[" + alias_str.join(', ') + "]";
+                        }
+                        
                     }
+
+
 
                     if (model.MethodParameter_Type == SchemaType.Boolean) {
                         hasBoolean = true;
