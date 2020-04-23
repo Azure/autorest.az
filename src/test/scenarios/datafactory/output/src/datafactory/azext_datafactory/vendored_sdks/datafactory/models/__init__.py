@@ -17,6 +17,7 @@ try:
     from ._models_py3 import FactoryRepoUpdate
     from ._models_py3 import FactoryUpdateParameters
     from ._models_py3 import FactoryVstsConfiguration
+    from ._models_py3 import FakeFactoryIdentity
     from ._models_py3 import GitHubAccessTokenRequest
     from ._models_py3 import GitHubAccessTokenResponse
     from ._models_py3 import Resource
@@ -32,6 +33,7 @@ except (SyntaxError, ImportError):
     from ._models import FactoryRepoUpdate  # type: ignore
     from ._models import FactoryUpdateParameters  # type: ignore
     from ._models import FactoryVstsConfiguration  # type: ignore
+    from ._models import FakeFactoryIdentity  # type: ignore
     from ._models import GitHubAccessTokenRequest  # type: ignore
     from ._models import GitHubAccessTokenResponse  # type: ignore
     from ._models import Resource  # type: ignore
@@ -48,6 +50,7 @@ __all__ = [
     'FactoryRepoUpdate',
     'FactoryUpdateParameters',
     'FactoryVstsConfiguration',
+    'FakeFactoryIdentity',
     'GitHubAccessTokenRequest',
     'GitHubAccessTokenResponse',
     'Resource',

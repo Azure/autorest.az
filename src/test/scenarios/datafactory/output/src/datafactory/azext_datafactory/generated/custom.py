@@ -36,7 +36,8 @@ def datafactory_create(cmd, client,
                        tags=None,
                        identity=None,
                        factory_vsts_configuration=None,
-                       factory_git_hub_configuration=None):
+                       factory_git_hub_configuration=None,
+                       fake_identity=None):
     all_repo_configuration = []
     if factory_vsts_configuration is not None:
         all_repo_configuration.append(factory_vsts_configuration)
