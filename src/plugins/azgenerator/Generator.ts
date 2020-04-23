@@ -35,7 +35,7 @@ export async function GenerateAll(model: CodeModelAz,
         do
         {
             let pathTop = "";
-            let path = "azext_" + model.Extension_Name.replace("-", "_") + "/";
+            let path = "azext_" + model.Extension_Name.split("-").join("_") + "/";
             
             files[path + "generated/_params.py"] = GenerateAzureCliParams(model);
             files[path + "generated/commands.py"] = GenerateAzureCliCommands(model);

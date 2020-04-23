@@ -754,6 +754,10 @@
         "repoConfiguration": {
           "$ref": "#/definitions/FactoryRepoConfiguration",
           "description": "Git repo information of the factory."
+        },
+        "fakeIdentity": {
+          "$ref": "#/definitions/FakeFactoryIdentity",
+          "description": "This is only for az test."
         }
       }
     },
@@ -825,6 +829,18 @@
       },
       "required": [
         "type"
+      ]
+    },
+    "FakeFactoryIdentity": {
+      "description": "This is only for az test.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": ".."
+        }
+      },
+      "required": [
+        "name"
       ]
     }
   },

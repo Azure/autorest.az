@@ -166,6 +166,8 @@ class Factory(Resource):
     :vartype version: str
     :param repo_configuration: Git repo information of the factory.
     :type repo_configuration: ~azure.mgmt.datafactory.models.FactoryRepoConfiguration
+    :param fake_identity: This is only for az test.
+    :type fake_identity: ~azure.mgmt.datafactory.models.FakeFactoryIdentity
     """
 
     _validation = {
@@ -191,6 +193,7 @@ class Factory(Resource):
         'create_time': {'key': 'properties.createTime', 'type': 'iso-8601'},
         'version': {'key': 'properties.version', 'type': 'str'},
         'repo_configuration': {'key': 'properties.repoConfiguration', 'type': 'FactoryRepoConfiguration'},
+        'fake_identity': {'key': 'properties.fakeIdentity', 'type': 'FakeFactoryIdentity'},
     }
 
     def __init__(
@@ -201,6 +204,7 @@ class Factory(Resource):
         additional_properties: Optional[Dict[str, object]] = None,
         identity: Optional["FactoryIdentity"] = None,
         repo_configuration: Optional["FactoryRepoConfiguration"] = None,
+        fake_identity: Optional["FakeFactoryIdentity"] = None,
         **kwargs
     ):
         super(Factory, self).__init__(location=location, tags=tags, **kwargs)
@@ -210,6 +214,7 @@ class Factory(Resource):
         self.create_time = None
         self.version = None
         self.repo_configuration = repo_configuration
+        self.fake_identity = fake_identity
 
 
 class FactoryRepoConfiguration(msrest.serialization.Model):
@@ -511,6 +516,33 @@ class FactoryVstsConfiguration(FactoryRepoConfiguration):
         self.type = 'FactoryVSTSConfiguration'
         self.project_name = project_name
         self.tenant_id = tenant_id
+
+
+class FakeFactoryIdentity(msrest.serialization.Model):
+    """This is only for az test.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param name: Required. ..
+    :type name: str
+    """
+
+    _validation = {
+        'name': {'required': True},
+    }
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        name: str,
+        **kwargs
+    ):
+        super(FakeFactoryIdentity, self).__init__(**kwargs)
+        self.name = name
 
 
 class GitHubAccessTokenRequest(msrest.serialization.Model):
