@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .vscode/
+.vs/
 package-lock.json
 tmpoutput
 .history
