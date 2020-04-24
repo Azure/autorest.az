@@ -1384,16 +1384,19 @@ export class CodeModelCliImpl implements CodeModelAz {
         let isSimpleList: boolean = methodParam.isSimpleList;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
         let name: string = this.Parameter_MapsTo(methodParam.value);
+        if (!isNullOrUndefined(methodParam.value.language['az']['alias'])) {
+            name = methodParam.value.language['az']['alias'][0];
+        }
         if (polySubParam) {
             isList = polySubParam.isList;
             isSimpleList = polySubParam.isSimpleList;
             defaultName = polySubParam.value.language['cli'].cliKey;
             name = this.Parameter_MapsTo(polySubParam.value);
+            if (!isNullOrUndefined(polySubParam.value.language['az']['alias'])) {
+                name = polySubParam.value.language['az']['alias'][0];
+            }
         }
-        // means python reserved word
-        if (name.endsWith("_")) {
-            name = name.substr(0, name.length - 1);
-        }
+
         if (isList) {
             if (isSimpleList) {
                 if (value instanceof Array) {       // spread list
