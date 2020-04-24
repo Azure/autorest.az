@@ -166,7 +166,7 @@ const preparerInfos = {
     [VIRTUALNETWORK]: new PreparerInfo('VirtualNetworkPreparer', VIRTUALNETWORK, ['resource_group_key'], [RESOUREGROUP]),
     [SUBNET]: new PreparerInfo('VnetSubnetPreparer', SUBNET, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
     [STORAGEACCOUNT]: new PreparerInfo('StorageAccountPreparer', STORAGEACCOUNT, ['resource_group_parameter_name'], [RESOUREGROUP]),
-    [NETWORKINTERFACE]: new PreparerInfo('VnetNicPreparer', SUBNET, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
+    [NETWORKINTERFACE]: new PreparerInfo('VnetNicPreparer', NETWORKINTERFACE, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
 }
 
 export class PreparerEntity {
