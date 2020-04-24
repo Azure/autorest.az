@@ -88,12 +88,14 @@ const RESOUREGROUP = "resource-group";
 const VIRTUALNETWORK = "virtual-network";
 const STORAGEACCOUNT = "storage-account";
 const SUBNET = "subnet";
+const NETWORKINTERFACE = "network-interface";
 
 let resourceClassDepends = {
     [RESOUREGROUP]: [],
     [VIRTUALNETWORK]: [RESOUREGROUP,],
     [SUBNET]: [VIRTUALNETWORK, RESOUREGROUP],
     [STORAGEACCOUNT]: [RESOUREGROUP,],
+    [NETWORKINTERFACE]: [VIRTUALNETWORK, RESOUREGROUP],
 }
 
 let resourceLanguages = {
@@ -101,6 +103,7 @@ let resourceLanguages = {
     [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworkName', 'virtualNetworks'],
     [SUBNET]: ['subnet', 'subnetName', 'subnets'],
     [STORAGEACCOUNT]: ['storage-account', 'storageAccountName', 'storageAccounts'],
+    [NETWORKINTERFACE]: ['network-interface', 'networkInterfaceName', 'networkInterfaces'],
 }
 
 let resourceClassKeys = {
@@ -108,6 +111,7 @@ let resourceClassKeys = {
     [VIRTUALNETWORK]: 'vn',
     [SUBNET]: 'sn',
     [STORAGEACCOUNT]: 'sa',
+    [NETWORKINTERFACE]: 'nic',
 }
 
 export function TopoSortResource() {
@@ -162,6 +166,7 @@ const preparerInfos = {
     [VIRTUALNETWORK]: new PreparerInfo('VirtualNetworkPreparer', VIRTUALNETWORK, ['resource_group_key'], [RESOUREGROUP]),
     [SUBNET]: new PreparerInfo('VnetSubnetPreparer', SUBNET, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
     [STORAGEACCOUNT]: new PreparerInfo('StorageAccountPreparer', STORAGEACCOUNT, ['resource_group_parameter_name'], [RESOUREGROUP]),
+    [NETWORKINTERFACE]: new PreparerInfo('VnetNicPreparer', SUBNET, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
 }
 
 export class PreparerEntity {
