@@ -171,7 +171,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         argument = "        c.argument('" + parameterName + "'";
                         argument += ", options_list=['--" + parameterName.substr(0, parameterName.length - 1) + "']";
                         model.MethodParameter.language['az']['alias'] = Array(parameterName.substr(0, parameterName.length - 1));
-                    } else if (parameterName.endsWith('name') && parameterName.replace(/_name|_/g, '') == model.CommandGroup_DefaultName.toLowerCase() || !isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
+                    } else if (parameterName.endsWith('name') && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase() || !isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
                         argument = "        c.argument('" + parameterName + "'";
                         let aliases: string[] = [];
                         aliases.push('name');
@@ -180,8 +180,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                             let alias = model.MethodParameter?.language?.['cli']?.['alias'];
                             
                             if(typeof alias === "string") {
-                                aliases.push(alias);
-                                
+                                aliases.push(alias);  
                             }
                             if (isArray(alias)) {
                                 aliases = aliases.concat(alias);

@@ -11,7 +11,7 @@ import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeStr
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, isArray } from "util";
 
 
 class ActionParam {
@@ -1384,7 +1384,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         let isSimpleList: boolean = methodParam.isSimpleList;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
         let name: string = this.Parameter_MapsTo(methodParam.value);
-        if (!isNullOrUndefined(methodParam.value.language['az']['alias'])) {
+        if (!isNullOrUndefined(methodParam.value.language?.['az']?.['alias']) && isArray(methodParam.value.language['az']['alias']) && methodParam.value.language['az']['alias'].length > 0) {
             name = methodParam.value.language['az']['alias'][0];
         }
         if (polySubParam) {
@@ -1392,7 +1392,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             isSimpleList = polySubParam.isSimpleList;
             defaultName = polySubParam.value.language['cli'].cliKey;
             name = this.Parameter_MapsTo(polySubParam.value);
-            if (!isNullOrUndefined(polySubParam.value.language['az']['alias'])) {
+            if (!isNullOrUndefined(polySubParam.value.language?.['az']?.['alias']) && isArray(polySubParam.value.language['az']['alias']) && polySubParam.value.language['az']['alias'].length > 0) {
                 name = polySubParam.value.language['az']['alias'][0];
             }
         }

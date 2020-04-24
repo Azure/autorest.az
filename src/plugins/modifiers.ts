@@ -156,21 +156,18 @@ export class Modifiers {
                                     let oldCommandArr = oldCommand.split(' ');
                                     let newCommand = operation.language["az"]["command"].replace(commandRegex, commandReplacer);
                                     let newCommandArr = newCommand.split(' ');
-                                    if(oldCommandArr[oldCommandArr.length-1] != newCommandArr[newCommandArr.length - 1]) {
-                                        operation.language['az']['name'] = newCommandArr[newCommandArr.length - 1];
-                                    }
+                                    operation.language['az']['name'] = newCommandArr[newCommandArr.length - 1];
+
                                     let oldGroupArr = oldCommandArr.slice(0, oldCommandArr.length-1);
                                     let oldGroup = oldGroupArr.join(' ');
                                     
                                     let newGroupArr = newCommandArr.slice(0, newCommandArr.length-1);
                                     if(oldGroupArr[0] != newGroupArr[0]) {
-                                        this.session.message({Channel:Channel.Warning, Text: "Trying to change the extension-name of a command is not allowed!"});
+                                        this.session.message({Channel:Channel.Warning, Text: "Trying to change the extension-name of a single command is not allowed!\n if you want to change the whole extension-name you can change the configuration in readme.az.md \n"});
                                         continue;
                                     }
                                     let newGroup = newGroupArr.join(' ');
-                                    if(oldGroup != newGroup) {
-                                        operationGroup.language['az']['command'] = newGroup;
-                                    }
+                                    operationGroup.language['az']['command'] = newGroup;
                                     
                                     if(oldCommand != newCommand) {
                                         operation.language["az"]["command"] = newCommand;
