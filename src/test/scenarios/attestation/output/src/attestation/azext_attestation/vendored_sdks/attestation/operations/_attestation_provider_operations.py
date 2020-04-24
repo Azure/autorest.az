@@ -63,11 +63,12 @@ class AttestationProviderOperations(object):
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProvider"]
-        error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
         api_version = "2018-09-01-preview"
 
         # Construct URL
-        url = self.get.metadata['url']
+        url = self.get.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
@@ -98,7 +99,7 @@ class AttestationProviderOperations(object):
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
 
     def create(
         self,
@@ -107,7 +108,7 @@ class AttestationProviderOperations(object):
         location,  # type: str
         tags=None,  # type: Optional[Dict[str, str]]
         attestation_policy=None,  # type: Optional[str]
-        keys=None,  # type: Optional[List["JsonWebKey"]]
+        keys=None,  # type: Optional[List["models.JsonWebKey"]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.AttestationProvider"
@@ -132,18 +133,19 @@ class AttestationProviderOperations(object):
         :type keys: list[~azure.mgmt.attestation.models.JsonWebKey]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: AttestationProvider or the result of cls(response)
-        :rtype: ~azure.mgmt.attestation.models.AttestationProvider or ~azure.mgmt.attestation.models.AttestationProvider
+        :rtype: ~azure.mgmt.attestation.models.AttestationProvider
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProvider"]
-        error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
 
         _creation_params = models.AttestationServiceCreationParams(location=location, tags=tags, attestation_policy=attestation_policy, keys=keys)
         api_version = "2018-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
-        url = self.create.metadata['url']
+        url = self.create.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
@@ -184,7 +186,7 @@ class AttestationProviderOperations(object):
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}
+    create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
 
     def update(
         self,
@@ -208,14 +210,15 @@ class AttestationProviderOperations(object):
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProvider"]
-        error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
 
         _update_params = models.AttestationServicePatchParams(tags=tags)
         api_version = "2018-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
-        url = self.update.metadata['url']
+        url = self.update.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
@@ -251,7 +254,7 @@ class AttestationProviderOperations(object):
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}
+    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
 
     def delete(
         self,
@@ -272,11 +275,12 @@ class AttestationProviderOperations(object):
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
         api_version = "2018-09-01-preview"
 
         # Construct URL
-        url = self.delete.metadata['url']
+        url = self.delete.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
@@ -303,7 +307,7 @@ class AttestationProviderOperations(object):
         if cls:
           return cls(pipeline_response, None, {})
 
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
 
     def list(
         self,
@@ -318,11 +322,12 @@ class AttestationProviderOperations(object):
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProviderListResult"]
-        error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
         api_version = "2018-09-01-preview"
 
         # Construct URL
-        url = self.list.metadata['url']
+        url = self.list.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
         }
@@ -351,7 +356,7 @@ class AttestationProviderOperations(object):
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders'}
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders'}  # type: ignore
 
     def list_by_resource_group(
         self,
@@ -369,11 +374,12 @@ class AttestationProviderOperations(object):
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProviderListResult"]
-        error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
         api_version = "2018-09-01-preview"
 
         # Construct URL
-        url = self.list_by_resource_group.metadata['url']
+        url = self.list_by_resource_group.metadata['url']  # type: ignore
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
@@ -403,4 +409,4 @@ class AttestationProviderOperations(object):
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders'}
+    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders'}  # type: ignore

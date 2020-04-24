@@ -10,6 +10,8 @@ from typing import Dict, List, Optional, Union
 
 import msrest.serialization
 
+from ._attestation_management_client_enums import *
+
 
 class Resource(msrest.serialization.Model):
     """Resource.

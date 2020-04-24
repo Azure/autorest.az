@@ -57,11 +57,12 @@ class OperationOperations(object):
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.OperationList"]
-        error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
         api_version = "2018-09-01-preview"
 
         # Construct URL
-        url = self.list.metadata['url']
+        url = self.list.metadata['url']  # type: ignore
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
@@ -86,4 +87,4 @@ class OperationOperations(object):
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    list.metadata = {'url': '/providers/Microsoft.Attestation/operations'}
+    list.metadata = {'url': '/providers/Microsoft.Attestation/operations'}  # type: ignore
