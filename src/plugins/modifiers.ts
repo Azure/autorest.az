@@ -151,7 +151,31 @@ export class Modifiers {
                                 operation.language['az']['command'] = operationGroup.language['az']['command'] + " " + operation.language['az']['name'];
                             }
                             if (operation.language['az']['command'] != undefined && operation.language["az"]["command"].match(commandRegex)) {
-                                operation.language["az"]["command"] = commandReplacer? commandRegex? operation.language["az"]["command"].replace(commandRegex, commandReplacer): commandReplacer: operation.language["az"]["command"];
+                                if(!isNullOrUndefined(commandRegex) && !isNullOrUndefined(commandReplacer)) {
+                                    let oldCommand = operation.language["az"]["command"];
+                                    let oldCommandArr = oldCommand.split(' ');
+                                    let newCommand = operation.language["az"]["command"].replace(commandRegex, commandReplacer);
+                                    let newCommandArr = newCommand.split(' ');
+                                    if(oldCommandArr[oldCommandArr.length-1] != newCommandArr[newCommandArr.length - 1]) {
+                                        operation.language['az']['name'] = newCommandArr[newCommandArr.length - 1];
+                                    }
+                                    let oldGroupArr = oldCommandArr.slice(0, oldCommandArr.length-1);
+                                    let oldGroup = oldGroupArr.join(' ');
+                                    
+                                    let newGroupArr = newCommandArr.slice(0, newCommandArr.length-1);
+                                    if(oldGroupArr[0] != newGroupArr[0]) {
+                                        this.session.message({Channel:Channel.Warning, Text: "Trying to change the extension-name of a command is not allowed!"});
+                                        continue;
+                                    }
+                                    let newGroup = newGroupArr.join(' ');
+                                    if(oldGroup != newGroup) {
+                                        operationGroup.language['az']['command'] = newGroup;
+                                    }
+                                    
+                                    if(oldCommand != newCommand) {
+                                        operation.language["az"]["command"] = newCommand;
+                                    }
+                                }
                                 operation.language["az"]["description"] = commandDescriptionReplacer? commandDescriptionReplacer: operation.language["az"]["description"];
                             }
 

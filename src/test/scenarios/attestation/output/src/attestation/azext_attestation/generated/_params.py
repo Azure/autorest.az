@@ -22,7 +22,7 @@ from azext_attestation.action import AddPolicySigningCertificatesKeys
 
 def load_arguments(self, _):
 
-    with self.argument_context('attestation attestation-provider list') as c:
+    with self.argument_context('attestation provider list') as c:
         c.argument('resource_group_name', resource_group_name_type)
 
     with self.argument_context('attestation attestation-provider show') as c:
@@ -51,3 +51,6 @@ def load_arguments(self, _):
     with self.argument_context('attestation attestation-provider delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('provider_name', help='Name of the attestation service')
+
+    with self.argument_context('attestation provider list-attestation') as c:
+        pass

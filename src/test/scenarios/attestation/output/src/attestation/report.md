@@ -2,7 +2,7 @@
 
 ### attestation attestation-provider create
 
-create a attestation attestation-provider.
+create a attestation provider.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -18,22 +18,15 @@ can choose to assign a meaning to the order for their purposes, if
 desired.|keys|
 ### attestation attestation-provider delete
 
-delete a attestation attestation-provider.
+delete a attestation provider.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|
 |**--provider-name**|string|Name of the attestation service|provider_name|
-### attestation attestation-provider list
-
-list a attestation attestation-provider.
-
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|
 ### attestation attestation-provider show
 
-show a attestation attestation-provider.
+show a attestation provider.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -41,10 +34,23 @@ show a attestation attestation-provider.
 |**--provider-name**|string|Name of the attestation service instance|provider_name|
 ### attestation attestation-provider update
 
-update a attestation attestation-provider.
+update a attestation provider.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|
 |**--provider-name**|string|Name of the attestation service|provider_name|
 |**--tags**|dictionary|The tags that will be assigned to the attestation service instance.|tags|
+### attestation provider list
+
+list a attestation provider.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|
+### attestation provider list-attestation
+
+list-attestation a attestation provider.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|

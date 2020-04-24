@@ -12,18 +12,18 @@
 from knack.help_files import helps
 
 
-helps['attestation attestation-provider'] = """
+helps['attestation provider'] = """
     type: group
-    short-summary: attestation attestation-provider
+    short-summary: attestation provider
 """
 
-helps['attestation attestation-provider list'] = """
+helps['attestation provider list'] = """
     type: command
-    short-summary: Returns a list of attestation providers in a subscription.
+    short-summary: Returns attestation providers list in a resource group.
     examples:
       - name: AttestationProviders_ListByResourceGroup
         text: |-
-               az attestation attestation-provider list --resource-group "testrg1"
+               az attestation provider list --resource-group "testrg1"
 """
 
 helps['attestation attestation-provider show'] = """
@@ -64,4 +64,13 @@ helps['attestation attestation-provider delete'] = """
         text: |-
                az attestation attestation-provider delete --provider-name "myattestationprovider" --resource-group "sam\
 ple-resource-group"
+"""
+
+helps['attestation provider list-attestation'] = """
+    type: command
+    short-summary: Returns a list of attestation providers in a subscription.
+    examples:
+      - name: AttestationProviders_List
+        text: |-
+               az attestation provider list-attestation
 """

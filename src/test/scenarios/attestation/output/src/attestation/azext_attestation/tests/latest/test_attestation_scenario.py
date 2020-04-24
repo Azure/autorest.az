@@ -58,14 +58,14 @@ def mytest(test, rg, rg_2, rg_3):
 # EXAMPLE: AttestationProviders_List
 @try_manual
 def step_attestationproviders_list(test, rg, rg_2, rg_3):
-    test.cmd('az attestation attestation-provider list',
+    test.cmd('az attestation provider list-attestation',
              checks=[])
 
 
 # EXAMPLE: AttestationProviders_ListByResourceGroup
 @try_manual
 def step_attestationproviders_listbyresourcegroup(test, rg, rg_2, rg_3):
-    test.cmd('az attestation attestation-provider list '
+    test.cmd('az attestation provider list '
              '--resource-group "{rg_2}"',
              checks=[])
 
