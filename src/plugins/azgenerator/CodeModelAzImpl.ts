@@ -1703,6 +1703,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GetExampleWait(example: CommandExample): string[] {
         let parameters: string[] = [];
+        let foundResource = false;
         if (example.HttpMethod.toLowerCase() == 'put' && example.Method_IsLongRun && example.MethodResponses.length > 0 && (example.MethodResponses[0].schema?.properties || []).find(property => {
             return property?.language?.cli?.cliKey == "provisioningState";
         })) {
@@ -1725,9 +1726,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                     parameters.push(param.name + " " + slp);
                 }
+                if (this.resource_pool.isResource(paramKey) == example.ResourceClassName) foundResource = true;
             }
         }
-        return parameters;
+        return foundResource? parameters: [];
     }
 
     public GetPreparerEntities(): any[] {
