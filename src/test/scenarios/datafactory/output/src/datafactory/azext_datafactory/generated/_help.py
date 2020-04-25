@@ -32,7 +32,7 @@ helps['datafactory show'] = """
     examples:
       - name: Factories_Get
         text: |-
-               az datafactory show --factory-name "exampleFactoryName" --resource-group "exampleResourceGroup"
+               az datafactory show --name "exampleFactoryName" --resource-group "exampleResourceGroup"
 """
 
 helps['datafactory create'] = """
@@ -41,8 +41,8 @@ helps['datafactory create'] = """
     examples:
       - name: Factories_CreateOrUpdate
         text: |-
-               az datafactory create --location "East US" --factory-name "exampleFactoryName" --resource-group "example\
-ResourceGroup"
+               az datafactory create --location "East US" --name "exampleFactoryName" --resource-group "exampleResource\
+Group"
 """
 
 helps['datafactory update'] = """
@@ -51,8 +51,8 @@ helps['datafactory update'] = """
     examples:
       - name: Factories_Update
         text: |-
-               az datafactory update --factory-name "exampleFactoryName" --tags exampleTag="exampleValue" --resource-gr\
-oup "exampleResourceGroup"
+               az datafactory update --name "exampleFactoryName" --tags exampleTag="exampleValue" --resource-group "exa\
+mpleResourceGroup"
 """
 
 helps['datafactory delete'] = """
@@ -61,7 +61,7 @@ helps['datafactory delete'] = """
     examples:
       - name: Factories_Delete
         text: |-
-               az datafactory delete --factory-name "exampleFactoryName" --resource-group "exampleResourceGroup"
+               az datafactory delete --name "exampleFactoryName" --resource-group "exampleResourceGroup"
 """
 
 helps['datafactory configure-factory-repo'] = """
@@ -82,9 +82,9 @@ helps['datafactory get-data-plane-access'] = """
     examples:
       - name: Factories_GetDataPlaneAccess
         text: |-
-               az datafactory get-data-plane-access --factory-name "exampleFactoryName" --access-resource-path "" --exp\
-ire-time "2018-11-10T09:46:20.2659347Z" --permissions "r" --profile-name "DefaultProfile" --start-time "2018-11-10T02:4\
-6:20.2659347Z" --resource-group "exampleResourceGroup"
+               az datafactory get-data-plane-access --name "exampleFactoryName" --access-resource-path "" --expire-time\
+ "2018-11-10T09:46:20.2659347Z" --permissions "r" --profile-name "DefaultProfile" --start-time "2018-11-10T02:46:20.265\
+9347Z" --resource-group "exampleResourceGroup"
 """
 
 helps['datafactory get-git-hub-access-token'] = """
@@ -93,6 +93,6 @@ helps['datafactory get-git-hub-access-token'] = """
     examples:
       - name: Factories_GetGitHubAccessToken
         text: |-
-               az datafactory get-git-hub-access-token --factory-name "exampleFactoryName" --git-hub-access-code "some"\
- --git-hub-access-token-base-url "some" --git-hub-client-id "some" --resource-group "exampleResourceGroup"
+               az datafactory get-git-hub-access-token --name "exampleFactoryName" --git-hub-access-code "some" --git-h\
+ub-access-token-base-url "some" --git-hub-client-id "some" --resource-group "exampleResourceGroup"
 """

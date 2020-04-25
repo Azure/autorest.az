@@ -40,7 +40,7 @@ def step_managednetworksput(test, rg):
              '\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{'
              'vn_3}/subnets/default\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M'
              'icrosoft.Network/virtualNetworks/{vn_3}/subnets/default\\"}}]}}" '
-             '--managed-network-name "{myManagedNetwork}" '
+             '--name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -73,7 +73,7 @@ def step_scopeassignmentsput(test, rg):
              '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Mana'
              'gedNetwork/managedNetworks/{myManagedNetwork}" '
              '--scope "subscriptions/subscriptionC" '
-             '--scope-assignment-name "{subscriptionCAssignment}"',
+             '--name "{subscriptionCAssignment}"',
              checks=[])
 
 
@@ -95,7 +95,7 @@ def step_managednetworkpeeringpoliciesput(test, rg):
 @try_manual
 def step_managednetworksget(test, rg):
     test.cmd('az managed-network mn show '
-             '--managed-network-name "{myManagedNetwork}" '
+             '--name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -120,7 +120,7 @@ def step_managednetworkslistbysubscription(test, rg):
 def step_scopeassignmentsget(test, rg):
     test.cmd('az managed-network mn scope-assignment show '
              '--scope "subscriptions/subscriptionC" '
-             '--scope-assignment-name "{subscriptionCAssignment}"',
+             '--name "{subscriptionCAssignment}"',
              checks=[])
 
 
@@ -185,7 +185,7 @@ def step_managednetworkpeeringpoliciesdelete(test, rg):
 def step_scopeassignmentsdelete(test, rg):
     test.cmd('az managed-network mn scope-assignment delete '
              '--scope "subscriptions/subscriptionC" '
-             '--scope-assignment-name "{subscriptionCAssignment}"',
+             '--name "{subscriptionCAssignment}"',
              checks=[])
 
 
@@ -203,7 +203,7 @@ def step_managementnetworkgroupsdelete(test, rg):
 @try_manual
 def step_managednetworksdelete(test, rg):
     test.cmd('az managed-network mn delete '
-             '--managed-network-name "{myManagedNetwork}" '
+             '--name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
 

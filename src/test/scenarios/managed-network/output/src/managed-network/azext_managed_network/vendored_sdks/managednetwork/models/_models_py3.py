@@ -128,7 +128,7 @@ class ManagedNetworkPeeringPolicyProperties(ResourceProperties):
         **kwargs
     ):
         super(ManagedNetworkPeeringPolicyProperties, self).__init__(**kwargs)
-        self.type = 'ManagedNetworkPeeringPolicyProperties'
+        self.type: str = 'ManagedNetworkPeeringPolicyProperties'
         self.hub = hub
         self.spokes = spokes
         self.mesh = mesh
@@ -182,7 +182,7 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         **kwargs
     ):
         super(HubAndSpokePeeringPolicyProperties, self).__init__(mesh=mesh, **kwargs)
-        self.type = 'HubAndSpokeTopology'
+        self.type: str = 'HubAndSpokeTopology'
         self.hub = hub
         self.spokes = spokes
 
@@ -741,7 +741,7 @@ class MeshPeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         **kwargs
     ):
         super(MeshPeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, **kwargs)
-        self.type = 'MeshTopology'
+        self.type: str = 'MeshTopology'
         self.mesh = mesh
 
 

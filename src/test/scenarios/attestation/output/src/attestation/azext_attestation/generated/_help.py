@@ -12,18 +12,33 @@
 from knack.help_files import helps
 
 
+helps['attestation'] = """
+    type: group
+    short-summary: attestation
+"""
+
+helps['attestation create-provider'] = """
+    type: command
+    short-summary: Creates or updates the Attestation Provider.
+    examples:
+      - name: AttestationProviders_Create
+        text: |-
+               az attestation create-provider --provider-name "myattestationprovider" --resource-group "MyResourceGroup\
+"
+"""
+
+helps['attestation list-operation'] = """
+    type: command
+    short-summary: Lists all of the available Azure attestation operations.
+    examples:
+      - name: Operations_List
+        text: |-
+               az attestation list-operation
+"""
+
 helps['attestation attestation-provider'] = """
     type: group
     short-summary: attestation attestation-provider
-"""
-
-helps['attestation attestation-provider list'] = """
-    type: command
-    short-summary: Returns a list of attestation providers in a subscription.
-    examples:
-      - name: AttestationProviders_ListByResourceGroup
-        text: |-
-               az attestation attestation-provider list --resource-group "testrg1"
 """
 
 helps['attestation attestation-provider show'] = """
@@ -34,16 +49,6 @@ helps['attestation attestation-provider show'] = """
         text: |-
                az attestation attestation-provider show --provider-name "myattestationprovider" --resource-group "MyRes\
 ourceGroup"
-"""
-
-helps['attestation attestation-provider create'] = """
-    type: command
-    short-summary: Creates or updates the Attestation Provider.
-    examples:
-      - name: AttestationProviders_Create
-        text: |-
-               az attestation attestation-provider create --provider-name "myattestationprovider" --resource-group "MyR\
-esourceGroup"
 """
 
 helps['attestation attestation-provider update'] = """
@@ -64,4 +69,13 @@ helps['attestation attestation-provider delete'] = """
         text: |-
                az attestation attestation-provider delete --provider-name "myattestationprovider" --resource-group "sam\
 ple-resource-group"
+"""
+
+helps['attestation attestation-provider list-attestation'] = """
+    type: command
+    short-summary: Returns a list of attestation providers in a subscription.
+    examples:
+      - name: AttestationProviders_ListByResourceGroup
+        text: |-
+               az attestation attestation-provider list-attestation --resource-group "testrg1"
 """

@@ -271,7 +271,7 @@ class FactoryRepoConfiguration(msrest.serialization.Model):
         **kwargs
     ):
         super(FactoryRepoConfiguration, self).__init__(**kwargs)
-        self.type = None
+        self.type: Optional[str] = None
         self.account_name = account_name
         self.repository_name = repository_name
         self.collaboration_branch = collaboration_branch
@@ -330,7 +330,7 @@ class FactoryGitHubConfiguration(FactoryRepoConfiguration):
         **kwargs
     ):
         super(FactoryGitHubConfiguration, self).__init__(account_name=account_name, repository_name=repository_name, collaboration_branch=collaboration_branch, root_folder=root_folder, last_commit_id=last_commit_id, **kwargs)
-        self.type = 'FactoryGitHubConfiguration'
+        self.type: str = 'FactoryGitHubConfiguration'
         self.host_name = host_name
 
 
@@ -513,7 +513,7 @@ class FactoryVstsConfiguration(FactoryRepoConfiguration):
         **kwargs
     ):
         super(FactoryVstsConfiguration, self).__init__(account_name=account_name, repository_name=repository_name, collaboration_branch=collaboration_branch, root_folder=root_folder, last_commit_id=last_commit_id, **kwargs)
-        self.type = 'FactoryVSTSConfiguration'
+        self.type: str = 'FactoryVSTSConfiguration'
         self.project_name = project_name
         self.tenant_id = tenant_id
 
