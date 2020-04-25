@@ -145,7 +145,6 @@ export class Modifiers {
                     const commandDescriptionReplacer = directive.set !== undefined? directive.set["command-description"]: undefined;
                     const groupReplacer = directive.set !== undefined ? directive.set["group"] : undefined;
                     const groupDescriptionReplacer = directive.set !== undefined? directive.set["group-description"]: undefined;
-                    let allGroup = [];
                     for (const operationGroup of values(this.codeModel.operationGroups)) {
                         //operationGroup
                         let groupChanged = false;
@@ -166,7 +165,6 @@ export class Modifiers {
                             if (groupChanged) {
                                 operation.language['az']['command'] = operationGroup.language['az']['command'] + " " + operation.language['az']['name'];
                             }
-                            if (allGroup)
                             if (operation.language['az']['command'] != undefined && operation.language["az"]["command"].match(commandRegex)) {
                                 if(!isNullOrUndefined(commandRegex) && !isNullOrUndefined(commandReplacer)) {
                                     let oldCommand = operation.language["az"]["command"];
