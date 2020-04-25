@@ -12,18 +12,23 @@
 from knack.help_files import helps
 
 
-helps['attestation provider'] = """
+helps['attestation'] = """
     type: group
-    short-summary: attestation provider
+    short-summary: attestation
 """
 
-helps['attestation provider list'] = """
+helps['attestation list-operation'] = """
     type: command
-    short-summary: Returns attestation providers list in a resource group.
+    short-summary: Lists all of the available Azure attestation operations.
     examples:
-      - name: AttestationProviders_ListByResourceGroup
+      - name: Operations_List
         text: |-
-               az attestation provider list --resource-group "testrg1"
+               az attestation list-operation
+"""
+
+helps['attestation attestation-provider'] = """
+    type: group
+    short-summary: attestation attestation-provider
 """
 
 helps['attestation attestation-provider show'] = """
@@ -66,11 +71,11 @@ helps['attestation attestation-provider delete'] = """
 ple-resource-group"
 """
 
-helps['attestation provider list-attestation'] = """
+helps['attestation attestation-provider list-attestation'] = """
     type: command
     short-summary: Returns a list of attestation providers in a subscription.
     examples:
-      - name: AttestationProviders_List
+      - name: AttestationProviders_ListByResourceGroup
         text: |-
-               az attestation provider list-attestation
+               az attestation attestation-provider list-attestation --resource-group "testrg1"
 """

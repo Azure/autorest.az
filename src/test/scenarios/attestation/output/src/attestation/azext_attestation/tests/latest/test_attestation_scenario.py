@@ -28,8 +28,8 @@ def setup(test, rg, rg_2, rg_3):
 # EXAMPLE: Operations_List
 @try_manual
 def step_operations_list(test, rg, rg_2, rg_3):
-    # EXAMPLE NOT FOUND!
-    pass
+    test.cmd('az attestation list-operation',
+             checks=[])
 
 
 # EXAMPLE: AttestationProviders_Create
@@ -58,14 +58,14 @@ def mytest(test, rg, rg_2, rg_3):
 # EXAMPLE: AttestationProviders_List
 @try_manual
 def step_attestationproviders_list(test, rg, rg_2, rg_3):
-    test.cmd('az attestation provider list-attestation',
+    test.cmd('az attestation attestation-provider list-attestation',
              checks=[])
 
 
 # EXAMPLE: AttestationProviders_ListByResourceGroup
 @try_manual
 def step_attestationproviders_listbyresourcegroup(test, rg, rg_2, rg_3):
-    test.cmd('az attestation provider list '
+    test.cmd('az attestation attestation-provider list-attestation '
              '--resource-group "{rg_2}"',
              checks=[])
 
