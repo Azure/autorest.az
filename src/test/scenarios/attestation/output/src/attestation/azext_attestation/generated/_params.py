@@ -22,14 +22,7 @@ from azext_attestation.action import AddPolicySigningCertificatesKeys
 
 def load_arguments(self, _):
 
-    with self.argument_context('attestation list-operation') as c:
-        pass
-
-    with self.argument_context('attestation attestation-provider show') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('provider_name', help='Name of the attestation service instance')
-
-    with self.argument_context('attestation attestation-provider create') as c:
+    with self.argument_context('attestation create-provider') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('provider_name', help='Name of the attestation service')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
@@ -42,6 +35,13 @@ def load_arguments(self, _):
                    'an choose to assign a meaning to the order for their purposes, if desired. Expect value: KEY1=VALUE'
                    '1 KEY2=VALUE2 ... , available KEYs are: alg, crv, d, dp, dq, e, k, kid, kty, n, p, q, qi, use, x, x'
                    '5-c, y.')
+
+    with self.argument_context('attestation list-operation') as c:
+        pass
+
+    with self.argument_context('attestation attestation-provider show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('provider_name', help='Name of the attestation service instance')
 
     with self.argument_context('attestation attestation-provider update') as c:
         c.argument('resource_group_name', resource_group_name_type)

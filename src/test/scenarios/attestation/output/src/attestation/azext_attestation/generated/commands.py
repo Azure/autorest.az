@@ -19,6 +19,7 @@ def load_command_table(self, _):
         'ns.{}',
         client_factory=cf_operation)
     with self.command_group('attestation', attestation_operation, client_factory=cf_operation) as g:
+        g.custom_command('create-provider', 'attestation_create_provider')
         g.custom_command('list-operation', 'attestation_list_operation')
 
     from azext_attestation.generated._client_factory import cf_attestation_provider
@@ -29,7 +30,6 @@ def load_command_table(self, _):
     with self.command_group('attestation attestation-provider', attestation_attestation_provider,
                             client_factory=cf_attestation_provider, is_experimental=True) as g:
         g.custom_show_command('show', 'attestation_attestation_provider_show')
-        g.custom_command('create', 'attestation_attestation_provider_create')
         g.custom_command('update', 'attestation_attestation_provider_update')
         g.custom_command('delete', 'attestation_attestation_provider_delete')
         g.custom_command('list-attestation', 'attestation_attestation_provider_list_attestation')

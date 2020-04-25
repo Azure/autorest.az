@@ -35,7 +35,7 @@ def step_operations_list(test, rg, rg_2, rg_3):
 # EXAMPLE: AttestationProviders_Create
 @try_manual
 def step_attestationproviders_create(test, rg, rg_2, rg_3):
-    test.cmd('az attestation attestation-provider create '
+    test.cmd('az attestation create-provider '
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg}"',
              checks=[])

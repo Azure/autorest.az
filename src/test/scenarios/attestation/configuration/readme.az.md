@@ -19,4 +19,8 @@ directive:
         command: attestation operation list
       set:
         command: attestation list-operation
+    - where:
+        command: attestation attestation-provider create
+      set:
+        command: attestation create-provider
 ```

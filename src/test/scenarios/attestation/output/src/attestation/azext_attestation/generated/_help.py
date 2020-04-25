@@ -17,6 +17,16 @@ helps['attestation'] = """
     short-summary: attestation
 """
 
+helps['attestation create-provider'] = """
+    type: command
+    short-summary: Creates or updates the Attestation Provider.
+    examples:
+      - name: AttestationProviders_Create
+        text: |-
+               az attestation create-provider --provider-name "myattestationprovider" --resource-group "MyResourceGroup\
+"
+"""
+
 helps['attestation list-operation'] = """
     type: command
     short-summary: Lists all of the available Azure attestation operations.
@@ -39,16 +49,6 @@ helps['attestation attestation-provider show'] = """
         text: |-
                az attestation attestation-provider show --provider-name "myattestationprovider" --resource-group "MyRes\
 ourceGroup"
-"""
-
-helps['attestation attestation-provider create'] = """
-    type: command
-    short-summary: Creates or updates the Attestation Provider.
-    examples:
-      - name: AttestationProviders_Create
-        text: |-
-               az attestation attestation-provider create --provider-name "myattestationprovider" --resource-group "MyR\
-esourceGroup"
 """
 
 helps['attestation attestation-provider update'] = """
