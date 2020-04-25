@@ -199,7 +199,7 @@ export class Modifiers {
                                                 this.codeModel.operationGroups[newIndex].operations.push(operation);
                                                 operationGroup.operations.splice(opIndex, 1);
                                             } else {
-                                                this.session.message({Channel:Channel.Warning, Text: "Trying to change the group-name of a command in a group with other commands exists is not allowed!\nYou can use the group directive to change the group-name.\n"});
+                                                this.session.message({Channel:Channel.Warning, Text: "Trying to change the group-name of a command in a group with other commands exists is not allowed!\nYou can move the command to an pre-existing command group. \nYou can use the group directive to change the group-name.\n"});
                                                 operation.language['az']['name'] = oriName;
                                             }             
                                             continue;
