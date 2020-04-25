@@ -182,6 +182,7 @@ export class Modifiers {
                                     oldCommandArr.pop();
                                     let oldGroup = oldCommandArr.join(' ');
                                     if (oldGroup != newGroup) {
+                                        // if there's only one command in the operationGroup it's okay to change the group name
                                         if(operationGroup.operations.length == 1) {
                                             operationGroup.language['az']['command'] = newGroup;
                                             let oldIndex = this.allCommandGroups.indexOf(oldGroup);
@@ -190,6 +191,7 @@ export class Modifiers {
                                             }
                                             this.allCommandGroups.push(newGroup);
                                         } else {
+                                            // else if the new group is already exists then we can move the operation into that operationGroup
                                             let newIndex = this.allCommandGroups.indexOf(newGroup);
                                             if (newIndex > -1) {
                                                 operation.language["az"]["command"] = newCommand;
@@ -197,13 +199,14 @@ export class Modifiers {
                                                 this.codeModel.operationGroups[newIndex].operations.push(operation);
                                                 operationGroup.operations.splice(opIndex, 1);
                                             } else {
+                                                // otherwise it's not allowed to change the group name in command directive.
+                                                // but before that we should change operation az name back.
                                                 this.session.message({Channel:Channel.Warning, Text: "Trying to change the group-name of a command in a group with other commands exists is not allowed!\nYou can move the command to an pre-existing command group. \nYou can use the group directive to change the group-name.\n"});
                                                 operation.language['az']['name'] = oriName;
                                             }             
                                             continue;
                                         }
                                     }
-                                    //operationGroup.language['az']['command'] = newGroup;
                                     operation.language["az"]["command"] = newCommand;
                                 }
                                 operation.language["az"]["description"] = commandDescriptionReplacer? commandDescriptionReplacer: operation.language["az"]["description"];
