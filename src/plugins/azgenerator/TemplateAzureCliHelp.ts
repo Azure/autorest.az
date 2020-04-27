@@ -8,7 +8,8 @@ import { HeaderGenerator } from "./Header";
 import { ToMultiLine, ToJsonString } from "../../utils/helper"
 
 const maxShortSummary = 119
-
+let showExampleStr = "";
+let allSupportWaited = ['create', 'update', 'delete'];
 export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     header.disableTooManyLines = true;
@@ -27,6 +28,8 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
             //let methods: string[] = model.CommandGroup_Commands;
 
             let allSubGroup: Map<string, boolean> = new Map<string, boolean>();
+            let hasWait = false;
+            let allLongRunCommand = [];
             if (model.SelectFirstCommand()) {
                 do {
 
@@ -34,6 +37,18 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
                     if(subCommandGroupName != "" && !allSubGroup.has(subCommandGroupName)) {
                         allSubGroup.set(subCommandGroupName, true);
                         output = output.concat(generateCommandGroupHelp(model, subCommandGroupName));
+                    }
+                    if(model.Command_IsLongRun) {
+                        hasWait = true;
+                        let waitParam = "";
+                        if (allSupportWaited.indexOf(model.Command_MethodName) < 0) {
+                            waitParam = "create";
+                        } else {
+                            waitParam = model.Command_MethodName;
+                        }
+                        if(allLongRunCommand.indexOf(waitParam + "d") < 0) {
+                            allLongRunCommand.push(waitParam + "d");
+                        }
                     }
                     let commandOutput: string [] = generateCommandHelp(model);
                     //output.push("before output.length: " + output.length);
@@ -45,6 +60,9 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
                     }
                 }
                 while (model.SelectNextCommand());
+                if (hasWait) {
+                    output = output.concat(generateWaitCommandHelp(model.CommandGroup_Name, allLongRunCommand));
+                }
             }
         } while (model.SelectNextCommandGroup());;
 
@@ -56,6 +74,23 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
     });
 
     return header.getLines().concat(output);
+}
+
+function generateWaitCommandHelp(commandGroup, allLongRunCommand) {
+    let output = [];
+    output.push("");
+    output.push("helps['" + commandGroup + " wait'] = \"\"\"");
+    output.push("    type: command");
+    output.push("    short-summary: Place the CLI in a waiting state until a condition of the " + commandGroup + " is met.");
+    output.push("    examples:");
+    for(let waitParam of allLongRunCommand) {
+        output.push("      - name: Pause executing next line of CLI script until the " + commandGroup + " is successfully provisioned.");
+        output.push("        text: |-");
+        let line = showExampleStr.replace(/ show /g, ' wait ') + " " + waitParam;
+        ToMultiLine(line, output, 119, true);
+    }
+    output.push("\"\"\"");
+    return output;
 }
 
 function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = "") {
@@ -124,6 +159,9 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
         output.push("      - name: " + example.Title);
         output.push("        text: |-");
         let line = "               " + parameters.join(' ');
+        if (model.Command_MethodName == 'show') {
+            showExampleStr = line;
+        }
         ToMultiLine(line, output, 119, true);
     }
 
