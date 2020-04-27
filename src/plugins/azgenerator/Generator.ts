@@ -35,7 +35,8 @@ export async function GenerateAll(model: CodeModelAz,
         do
         {
             let pathTop = "";
-            let path = "azext_" + model.Extension_Name.split("-").join("_") + "/";
+            let formattedExtensionName = model.Extension_Name.split("-").join("_");
+            let path = "azext_" + formattedExtensionName + "/";
             
             files[path + "generated/_params.py"] = GenerateAzureCliParams(model);
             files[path + "generated/commands.py"] = GenerateAzureCliCommands(model);
@@ -46,7 +47,7 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "generated/_help.py"] = GenerateAzureCliHelp(model);
             files[path + "generated/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "tests/__init__.py"] = GenerateAzureCliTestInit(model);
-            files[path + "tests/latest/test_" + model.Extension_Name + "_scenario.py"] = GenerateAzureCliTestScenario(model);   
+            files[path + "tests/latest/test_" + formattedExtensionName + "_scenario.py"] = GenerateAzureCliTestScenario(model);   
             files[path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(model);
             files[path + "tests/latest/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
