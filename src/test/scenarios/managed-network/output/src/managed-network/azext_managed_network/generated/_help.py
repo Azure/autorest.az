@@ -7,7 +7,6 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
-# pylint: disable=line-too-long
 # pylint: disable=too-many-lines
 
 from knack.help_files import helps
@@ -323,7 +322,8 @@ icy-name "myHubAndSpoke" --resource-group "myResourceGroup"
 
 helps['managed-network managed-network-peering-policy wait'] = """
     type: command
-    short-summary: Place the CLI in a waiting state until a condition of the managed-network managed-network-peering-policy is met.
+    short-summary: Place the CLI in a waiting state until a condition of the managed-network managed-network-peering-po\
+licy is met.
     examples:
       - name: Pause executing next line of CLI script until the managed-network managed-network-peering-policy is succe\
 ssfully created.
