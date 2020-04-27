@@ -84,9 +84,10 @@ function generateWaitCommandHelp(commandGroup, allLongRunCommand) {
     output.push("    short-summary: Place the CLI in a waiting state until a condition of the " + commandGroup + " is met.");
     output.push("    examples:");
     for(let waitParam of allLongRunCommand) {
-        output.push("      - name: Pause executing next line of CLI script until the " + commandGroup + " is successfully provisioned.");
+        let name = "      - name: Pause executing next line of CLI script until the " + commandGroup + " is successfully " + waitParam +  ".";
+        ToMultiLine(name, output, 119, true);
         output.push("        text: |-");
-        let line = showExampleStr.replace(/ show /g, ' wait ') + " " + waitParam;
+        let line = showExampleStr.replace(/ show /g, ' wait ') + " --" + waitParam;
         ToMultiLine(line, output, 119, true);
     }
     output.push("\"\"\"");

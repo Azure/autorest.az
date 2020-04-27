@@ -79,12 +79,12 @@ helps['managed-network mn wait'] = """
     type: command
     short-summary: Place the CLI in a waiting state until a condition of the managed-network mn is met.
     examples:
-      - name: Pause executing next line of CLI script until the managed-network mn is successfully provisioned.
+      - name: Pause executing next line of CLI script until the managed-network mn is successfully updated.
         text: |-
-               az managed-network mn wait --name "myManagedNetwork" --resource-group "myResourceGroup" updated
-      - name: Pause executing next line of CLI script until the managed-network mn is successfully provisioned.
+               az managed-network mn wait --name "myManagedNetwork" --resource-group "myResourceGroup" --updated
+      - name: Pause executing next line of CLI script until the managed-network mn is successfully deleted.
         text: |-
-               az managed-network mn wait --name "myManagedNetwork" --resource-group "myResourceGroup" deleted
+               az managed-network mn wait --name "myManagedNetwork" --resource-group "myResourceGroup" --deleted
 """
 
 helps['managed-network mn scope-assignment'] = """
@@ -211,14 +211,14 @@ helps['managed-network mn group wait'] = """
     type: command
     short-summary: Place the CLI in a waiting state until a condition of the managed-network mn group is met.
     examples:
-      - name: Pause executing next line of CLI script until the managed-network mn group is successfully provisioned.
+      - name: Pause executing next line of CLI script until the managed-network mn group is successfully created.
         text: |-
                az managed-network mn group wait --group-name "myManagedNetworkGroup1" --managed-network-name "myManaged\
-Network" --resource-group "myResourceGroup" created
-      - name: Pause executing next line of CLI script until the managed-network mn group is successfully provisioned.
+Network" --resource-group "myResourceGroup" --created
+      - name: Pause executing next line of CLI script until the managed-network mn group is successfully deleted.
         text: |-
                az managed-network mn group wait --group-name "myManagedNetworkGroup1" --managed-network-name "myManaged\
-Network" --resource-group "myResourceGroup" deleted
+Network" --resource-group "myResourceGroup" --deleted
 """
 
 helps['managed-network managed-network-peering-policy'] = """
@@ -325,12 +325,14 @@ helps['managed-network managed-network-peering-policy wait'] = """
     type: command
     short-summary: Place the CLI in a waiting state until a condition of the managed-network managed-network-peering-policy is met.
     examples:
-      - name: Pause executing next line of CLI script until the managed-network managed-network-peering-policy is successfully provisioned.
+      - name: Pause executing next line of CLI script until the managed-network managed-network-peering-policy is succe\
+ssfully created.
         text: |-
                az managed-network managed-network-peering-policy wait --managed-network-name "myManagedNetwork" --polic\
-y-name "myHubAndSpoke" --resource-group "myResourceGroup" created
-      - name: Pause executing next line of CLI script until the managed-network managed-network-peering-policy is successfully provisioned.
+y-name "myHubAndSpoke" --resource-group "myResourceGroup" --created
+      - name: Pause executing next line of CLI script until the managed-network managed-network-peering-policy is succe\
+ssfully deleted.
         text: |-
                az managed-network managed-network-peering-policy wait --managed-network-name "myManagedNetwork" --polic\
-y-name "myHubAndSpoke" --resource-group "myResourceGroup" deleted
+y-name "myHubAndSpoke" --resource-group "myResourceGroup" --deleted
 """
