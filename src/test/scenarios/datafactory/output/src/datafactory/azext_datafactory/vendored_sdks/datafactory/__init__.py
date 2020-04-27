@@ -6,11 +6,11 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._data_factory_management_client import DataFactoryManagementClient
+from ._dfaz_management_client import DFAZManagementClient
 from ._version import VERSION
 
 __version__ = VERSION
-__all__ = ['DataFactoryManagementClient']
+__all__ = ['DFAZManagementClient']
 
 try:
     from ._patch import patch_sdk

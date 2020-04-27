@@ -20,8 +20,8 @@ if TYPE_CHECKING:
     from azure.core.credentials import TokenCredential
 
 
-class DataFactoryManagementClientConfiguration(Configuration):
-    """Configuration for DataFactoryManagementClient.
+class DFAZManagementClientConfiguration(Configuration):
+    """Configuration for DFAZManagementClient.
 
     Note that all parameters used to create this instance are saved as instance
     attributes.
@@ -43,7 +43,7 @@ class DataFactoryManagementClientConfiguration(Configuration):
             raise ValueError("Parameter 'credential' must not be None.")
         if subscription_id is None:
             raise ValueError("Parameter 'subscription_id' must not be None.")
-        super(DataFactoryManagementClientConfiguration, self).__init__(**kwargs)
+        super(DFAZManagementClientConfiguration, self).__init__(**kwargs)
 
         self.credential = credential
         self.subscription_id = subscription_id
