@@ -26,9 +26,6 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
 
     head.push("");
     head.push("import os");
-    head.push("import unittest");
-    head.push("");
-    head.push("from azure_devtools.scenario_tests import AllowLargeResponse");
     head.push("from azure.cli.testsdk import ScenarioTest");
     head.push("from .. import try_manual");
     //head.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
