@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 
-export function GenerateAzureCliTestInit(model: CodeModelAz) : string[] {
+export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     var output: string[] = [];
 
     output.push("# coding=utf-8");
