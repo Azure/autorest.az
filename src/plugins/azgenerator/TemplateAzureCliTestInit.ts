@@ -75,8 +75,8 @@ export function GenerateAzureCliTestInit(model: CodeModelAz) : string[] {
     output.push('    if exceptions:');
     output.push('        if len(exceptions) <= 1:');
     output.push('            raise exceptions[0][1][1]');
-    output.push('        message = "{}\nFollowed with exceptions in other steps:\n".format(str(exceptions[0][1][1]))');
-    output.push('        message += "\n".join(["{}: {}".format(h[0], h[1][1]) for h in exceptions[1:]])');
+    output.push('        message = "{}\\nFollowed with exceptions in other steps:\\n".format(str(exceptions[0][1][1]))');
+    output.push('        message += "\\n".join(["{}: {}".format(h[0], h[1][1]) for h in exceptions[1:]])');
     output.push('        raise exceptions[0][1][0](message).with_traceback(exceptions[0][1][2])');
     output.push('');
 

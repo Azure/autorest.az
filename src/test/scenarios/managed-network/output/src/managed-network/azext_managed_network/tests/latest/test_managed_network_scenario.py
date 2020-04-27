@@ -9,11 +9,8 @@
 # --------------------------------------------------------------------------
 
 import os
-import unittest
-
-from azure_devtools.scenario_tests import AllowLargeResponse
 from azure.cli.testsdk import ScenarioTest
-from .. import try_manual
+from .. import try_manual, raise_if
 from azure.cli.testsdk import ResourceGroupPreparer
 from .preparers import VirtualNetworkPreparer
 
@@ -258,3 +255,4 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         })
 
         call_scenario(self, rg)
+        raise_if()
