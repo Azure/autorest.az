@@ -44,7 +44,7 @@ with open('HISTORY.rst', 'r', encoding='utf-8') as f:
 setup(
     name='datafactory',
     version=VERSION,
-    description='Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension',
+    description='Microsoft Azure Command-Line Tools DFAZManagementClient Extension',
     author='Microsoft Corporation',
     author_email='azpycli@microsoft.com',
     url='https://github.com/Azure/azure-cli-extensions/tree/master/src/datafactory',

@@ -137,7 +137,7 @@ def call_scenario(test, rg):
 
 
 @try_manual
-class DataFactoryManagementClientScenarioTest(ScenarioTest):
+class DFAZManagementClientScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestdatafactory_exampleResourceGroup'[:7], key='rg', parameter_name='rg')
     def test_datafactory(self, rg):

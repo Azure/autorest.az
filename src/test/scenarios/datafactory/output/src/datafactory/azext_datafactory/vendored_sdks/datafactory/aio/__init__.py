@@ -6,5 +6,5 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._data_factory_management_client_async import DataFactoryManagementClient
-__all__ = ['DataFactoryManagementClient']
+from ._dfaz_management_client_async import DFAZManagementClient
+__all__ = ['DFAZManagementClient']
