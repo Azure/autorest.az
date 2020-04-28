@@ -15,5 +15,9 @@ def cf_attestation(cli_ctx, *_):
     return get_mgmt_service_client(cli_ctx, AttestationManagementClient)
 
 
+def cf_operation(cli_ctx, *_):
+    return cf_attestation(cli_ctx).operation
+
+
 def cf_attestation_provider(cli_ctx, *_):
     return cf_attestation(cli_ctx).attestation_provider

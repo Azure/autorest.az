@@ -24,6 +24,7 @@ create a datafactory.
 |**--identity**|object|Managed service identity of the factory.|identity|
 |**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|
+|**--fake-identity**|object|This is only for az test.|fake_identity|
 ### datafactory delete
 
 delete a datafactory.

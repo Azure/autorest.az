@@ -30,7 +30,7 @@ def setup(test, rg):
 def step__factories_put_factories_createorupdate(test, rg):
     test.cmd('az datafactory create '
              '--location "East US" '
-             '--factory-name "{exampleFactoryName}" '
+             '--name "{exampleFactoryName}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -39,7 +39,7 @@ def step__factories_put_factories_createorupdate(test, rg):
 @try_manual
 def step__factories_get_factories_get(test, rg):
     test.cmd('az datafactory show '
-             '--factory-name "{exampleFactoryName}" '
+             '--name "{exampleFactoryName}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -75,7 +75,7 @@ def step__factories_post_factories_configurefactoryrepo(test, rg):
 @try_manual
 def step__factories_post_factories_getdataplaneaccess(test, rg):
     test.cmd('az datafactory get-data-plane-access '
-             '--factory-name "{exampleFactoryName}" '
+             '--name "{exampleFactoryName}" '
              '--access-resource-path "" '
              '--expire-time "2018-11-10T09:46:20.2659347Z" '
              '--permissions "r" '
@@ -89,7 +89,7 @@ def step__factories_post_factories_getdataplaneaccess(test, rg):
 @try_manual
 def step__factories_post_factories_getgithubaccesstoken(test, rg):
     test.cmd('az datafactory get-git-hub-access-token '
-             '--factory-name "{exampleFactoryName}" '
+             '--name "{exampleFactoryName}" '
              '--git-hub-access-code "some" '
              '--git-hub-access-token-base-url "some" '
              '--git-hub-client-id "some" '
@@ -101,7 +101,7 @@ def step__factories_post_factories_getgithubaccesstoken(test, rg):
 @try_manual
 def step__factories_patch_factories_update(test, rg):
     test.cmd('az datafactory update '
-             '--factory-name "{exampleFactoryName}" '
+             '--name "{exampleFactoryName}" '
              '--tags exampleTag="exampleValue" '
              '--resource-group "{rg}"',
              checks=[])
@@ -111,7 +111,7 @@ def step__factories_patch_factories_update(test, rg):
 @try_manual
 def step__factories_delete_factories_delete(test, rg):
     test.cmd('az datafactory delete '
-             '--factory-name "{exampleFactoryName}" '
+             '--name "{exampleFactoryName}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -137,7 +137,7 @@ def call_scenario(test, rg):
 
 
 @try_manual
-class DataFactoryManagementClientScenarioTest(ScenarioTest):
+class DFAZManagementClientScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestdatafactory_exampleResourceGroup'[:7], key='rg', parameter_name='rg')
     def test_datafactory(self, rg):

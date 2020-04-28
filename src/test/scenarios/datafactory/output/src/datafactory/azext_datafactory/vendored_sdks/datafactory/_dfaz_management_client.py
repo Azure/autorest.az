@@ -15,13 +15,13 @@ if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any, Optional
 
-from ._configuration import DataFactoryManagementClientConfiguration
+from ._configuration import DFAZManagementClientConfiguration
 from .operations import FactoryOperations
 from . import models
 
 
-class DataFactoryManagementClient(object):
-    """DataFactoryManagementClient.
+class DFAZManagementClient(object):
+    """The DFAZ Client.
 
     :ivar factory: FactoryOperations operations
     :vartype factory: azure.mgmt.datafactory.operations.FactoryOperations
@@ -30,6 +30,7 @@ class DataFactoryManagementClient(object):
     :param subscription_id: The subscription identifier.
     :type subscription_id: str
     :param str base_url: Service URL
+    :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
     """
 
     def __init__(
@@ -42,7 +43,7 @@ class DataFactoryManagementClient(object):
         # type: (...) -> None
         if not base_url:
             base_url = 'https://management.azure.com'
-        self._config = DataFactoryManagementClientConfiguration(credential, subscription_id, **kwargs)
+        self._config = DFAZManagementClientConfiguration(credential, subscription_id, **kwargs)
         self._client = ARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
@@ -57,7 +58,7 @@ class DataFactoryManagementClient(object):
         self._client.close()
 
     def __enter__(self):
-        # type: () -> DataFactoryManagementClient
+        # type: () -> DFAZManagementClient
         self._client.__enter__()
         return self
 

@@ -11,7 +11,7 @@ import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeStr
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, isArray } from "util";
 
 
 class ActionParam {
@@ -1384,16 +1384,19 @@ export class CodeModelCliImpl implements CodeModelAz {
         let isSimpleList: boolean = methodParam.isSimpleList;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
         let name: string = this.Parameter_MapsTo(methodParam.value);
+        if (!isNullOrUndefined(methodParam.value.language?.['az']?.['alias']) && isArray(methodParam.value.language['az']['alias']) && methodParam.value.language['az']['alias'].length > 0) {
+            name = methodParam.value.language['az']['alias'][0];
+        }
         if (polySubParam) {
             isList = polySubParam.isList;
             isSimpleList = polySubParam.isSimpleList;
             defaultName = polySubParam.value.language['cli'].cliKey;
             name = this.Parameter_MapsTo(polySubParam.value);
+            if (!isNullOrUndefined(polySubParam.value.language?.['az']?.['alias']) && isArray(polySubParam.value.language['az']['alias']) && polySubParam.value.language['az']['alias'].length > 0) {
+                name = polySubParam.value.language['az']['alias'][0];
+            }
         }
-        // means python reserved word
-        if (name.endsWith("_")) {
-            name = name.substr(0, name.length - 1);
-        }
+
         if (isList) {
             if (isSimpleList) {
                 if (value instanceof Array) {       // spread list
@@ -1703,6 +1706,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GetExampleWait(example: CommandExample): string[] {
         let parameters: string[] = [];
+        let foundResource = false;
         if (example.HttpMethod.toLowerCase() == 'put' && example.Method_IsLongRun && example.MethodResponses.length > 0 && (example.MethodResponses[0].schema?.properties || []).find(property => {
             return property?.language?.cli?.cliKey == "provisioningState";
         })) {
@@ -1725,9 +1729,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                     parameters.push(param.name + " " + slp);
                 }
+                if (this.resource_pool.isResource(paramKey) == example.ResourceClassName) foundResource = true;
             }
         }
-        return parameters;
+        return foundResource? parameters: [];
     }
 
     public GetPreparerEntities(): any[] {

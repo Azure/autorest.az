@@ -7,7 +7,7 @@ import { CodeModelAz } from "./CodeModelAz"
 import { EscapeString, ToCamelCase, Capitalize, ToMultiLine } from "../../utils/helper";
 import { SchemaType, Parameter } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "./Header";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, isArray } from "util";
 
 
 let hasActions: boolean = false;
@@ -26,7 +26,6 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     output_args.push("");
     output_args.push("");
     output_args.push("def load_arguments(self, _):");
-    //output.push("    name_arg_type = CLIArgumentType(options_list=('--name', '-n'), metavar='NAME')");
 
     if (model.SelectFirstCommandGroup()) {
         do {
@@ -171,7 +170,46 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
 
                         argument = "        c.argument('" + parameterName + "'";
                         argument += ", options_list=['--" + parameterName.substr(0, parameterName.length - 1) + "']";
+                        model.MethodParameter.language['az']['alias'] = Array(parameterName.substr(0, parameterName.length - 1));
+                    } else if (parameterName.endsWith('name') && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase() || !isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
+                        argument = "        c.argument('" + parameterName + "'";
+                        let aliases: string[] = [];
+                        aliases.push('name');
+                        aliases.push('n');
+                        if(!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
+                            let alias = model.MethodParameter?.language?.['cli']?.['alias'];
+                            
+                            if(typeof alias === "string") {
+                                aliases.push(alias);  
+                            }
+                            if (isArray(alias)) {
+                                aliases = aliases.concat(alias);
+                            }
+                        }
+                        if(aliases.length > 0) {
+                            let alias_str = [];
+                            let ori_alias = [];
+                            for(let alias of aliases) {
+                                alias = alias.replace(/'/g, '');
+                                let tmpAlias = alias;
+                                if(alias.length == 1) {
+                                    alias = "'-" + alias + "'";
+                                } else if(alias.length > 1) {
+                                    alias = "'--" + alias + "'";
+                                }
+                                if(alias_str.indexOf(alias) < 0) {
+                                    alias_str.push(alias);
+                                    ori_alias.push(tmpAlias)
+                                }
+                                
+                            }
+                            model.MethodParameter.language['az']['alias'] = ori_alias;
+                            argument += ", options_list=[" + alias_str.join(', ') + "]";
+                        }
+                        
                     }
+
+
 
                     if (model.MethodParameter_Type == SchemaType.Boolean) {
                         hasBoolean = true;

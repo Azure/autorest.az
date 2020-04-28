@@ -23,8 +23,8 @@
   "paths": {
     "/providers/Microsoft.Attestation/operations": {
       "get": {
-        "tags": ["Operations"],
-        "operationId": "Operations_List",
+        "tags": ["Operation"],
+        "operationId": "Operation_List",
         "description": "Lists all of the available Azure attestation operations.",
         "x-ms-examples": {
           "Operations_List": {

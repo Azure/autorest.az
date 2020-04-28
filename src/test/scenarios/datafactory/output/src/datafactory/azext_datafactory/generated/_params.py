@@ -20,7 +20,8 @@ from azure.cli.core.commands.validators import get_default_location_from_resourc
 from azext_datafactory.action import (
     AddIdentity,
     AddFactoryVstsConfiguration,
-    AddFactoryGitHubConfiguration
+    AddFactoryGitHubConfiguration,
+    AddFakeIdentity
 )
 
 
@@ -31,13 +32,13 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory show') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
         c.argument('if_none_match', help='ETag of the factory entity. Should only be specified for get. If the ETag mat'
                    'ches the existing entity tag, or if * was provided, then no content will be returned.')
 
     with self.argument_context('datafactory create') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
         c.argument('if_match', help='ETag of the factory entity. Should only be specified for update, for which it shou'
                    'ld match existing entity or can be * for unconditional update.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
@@ -53,17 +54,19 @@ def load_arguments(self, _):
                    'itHub repo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: host-name, '
                    'account-name, repository-name, collaboration-branch, root-folder, last-commit-id.', arg_group='Repo'
                    'Configuration')
+        c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test. Expect value: na'
+                   'me=xx.')
 
     with self.argument_context('datafactory update') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
         c.argument('tags', tags_type)
         c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory. Expect val'
                    'ue: KEY1=VALUE1 KEY2=VALUE2 ...')
 
     with self.argument_context('datafactory delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
 
     with self.argument_context('datafactory configure-factory-repo') as c:
         c.argument('location_id', help='The location identifier.')
@@ -79,7 +82,7 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory get-data-plane-access') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
         c.argument('permissions', help='The string with permissions for Data Plane access. Currently only \'r\' is supp'
                    'orted which grants read only access.')
         c.argument('access_resource_path', help='The resource path to get access relative to factory. Currently only em'
@@ -92,7 +95,7 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory get-git-hub-access-token') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
         c.argument('git_hub_access_code', help='GitHub access code.')
         c.argument('git_hub_client_id', help='GitHub application client ID.')
         c.argument('git_hub_access_token_base_url', help='GitHub access token base URL.')

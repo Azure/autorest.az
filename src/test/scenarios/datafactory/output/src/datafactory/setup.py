@@ -9,9 +9,12 @@
 from codecs import open
 from setuptools import setup, find_packages
 
-# TODO: Confirm this is the right version number you want and it matches your
 # HISTORY.rst entry.
 VERSION = '0.1.0'
+try:
+    from .manual.version import VERSION
+except ImportError:
+    pass
 
 # The full list of classifiers is available at
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -27,8 +30,11 @@ CLASSIFIERS = [
     'License :: OSI Approved :: MIT License',
 ]
 
-# TODO: Add any additional SDK dependencies here
 DEPENDENCIES = []
+try:
+    from .manual.dependency import DEPENDENCIES
+except ImportError:
+    pass
 
 with open('README.md', 'r', encoding='utf-8') as f:
     README = f.read()
@@ -38,12 +44,10 @@ with open('HISTORY.rst', 'r', encoding='utf-8') as f:
 setup(
     name='datafactory',
     version=VERSION,
-    description='Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension',
-    # TODO: Update author and email, if applicable
+    description='Microsoft Azure Command-Line Tools DFAZManagementClient Extension',
     author='Microsoft Corporation',
     author_email='azpycli@microsoft.com',
-    # TODO: consider pointing directly to your source code instead of the generic repo
-    url='https://github.com/Azure/azure-cli-extensions',
+    url='https://github.com/Azure/azure-cli-extensions/tree/master/src/datafactory',
     long_description=README + '\n\n' + HISTORY,
     license='MIT',
     classifiers=CLASSIFIERS,

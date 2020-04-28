@@ -16,4 +16,14 @@ directive:
       set:
         group: datafactory
 
+
+cli:
+    cli-directive:
+    # directive on operationGroup
+      - where:
+            parameter: factoryName
+        alias:
+            - name
+            - n
+
 ```

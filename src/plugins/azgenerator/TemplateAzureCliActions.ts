@@ -28,30 +28,30 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                 do {
                     if (model.SelectFirstMethod()) {
                         do {
+                            let baseParam = null;
                             if (model.SelectFirstMethodParameter()) {
                                 do {
+                                    if (baseParam && model.MethodParameter['polyBaseParam'] == baseParam) {
+                                        let keyToMatch = baseParam.schema?.['discriminator']?.property?.language['python']?.name;
+                                        let valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
+                                        let subActionName = model.Schema_ActionName(model.MethodParameter.schema);
+                                        if (isNullOrUndefined(subActionName) || allActions.has(subActionName)) {
+                                            continue;
+                                        }
+                                        output = output.concat(GetAction(model, subActionName, model.MethodParameter, keyToMatch, valueToMatch))
+                                    }
                                     let actionName = model.Schema_ActionName(model.MethodParameter.schema);
                                     if (isNullOrUndefined(actionName)) {
                                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                                            let baseParam = model.MethodParameter;
-                                            while (model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam) {
-                                                let keyToMatch = baseParam.schema?.['discriminator']?.property?.language['python']?.name;
-                                                let valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
-                                                let subActionName = model.Schema_ActionName(model.MethodParameter.schema);
-                                                if (isNullOrUndefined(subActionName) || allActions.has(subActionName)) {
-                                                    continue;
-                                                }
-                                                output = output.concat(GetAction(model, subActionName, model.MethodParameter, keyToMatch, valueToMatch))
-                                            }
-                                            continue;  
+                                            baseParam = model.MethodParameter;
+                                        }       
+                                    }
+                                    else {
+                                        if (allActions.has(actionName)) {
+                                            continue;
                                         }
-                                        continue;
+                                        output = output.concat(GetAction(model, actionName, model.MethodParameter))
                                     }
-                                    if (allActions.has(actionName)) {
-                                        continue;
-                                    }
-                                    output = output.concat(GetAction(model, actionName, model.MethodParameter))
-
                                 } while (model.SelectNextMethodParameter());
                             }
                         } while (model.SelectNextMethod());

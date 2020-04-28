@@ -11,13 +11,13 @@ from typing import Any, Optional
 from azure.mgmt.core import AsyncARMPipelineClient
 from msrest import Deserializer, Serializer
 
-from ._configuration_async import DataFactoryManagementClientConfiguration
+from ._configuration_async import DFAZManagementClientConfiguration
 from .operations_async import FactoryOperations
 from .. import models
 
 
-class DataFactoryManagementClient(object):
-    """DataFactoryManagementClient.
+class DFAZManagementClient(object):
+    """The DFAZ Client.
 
     :ivar factory: FactoryOperations operations
     :vartype factory: azure.mgmt.datafactory.aio.operations_async.FactoryOperations
@@ -26,6 +26,7 @@ class DataFactoryManagementClient(object):
     :param subscription_id: The subscription identifier.
     :type subscription_id: str
     :param str base_url: Service URL
+    :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
     """
 
     def __init__(
@@ -37,7 +38,7 @@ class DataFactoryManagementClient(object):
     ) -> None:
         if not base_url:
             base_url = 'https://management.azure.com'
-        self._config = DataFactoryManagementClientConfiguration(credential, subscription_id, **kwargs)
+        self._config = DFAZManagementClientConfiguration(credential, subscription_id, **kwargs)
         self._client = AsyncARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
@@ -50,7 +51,7 @@ class DataFactoryManagementClient(object):
     async def close(self) -> None:
         await self._client.close()
 
-    async def __aenter__(self) -> "DataFactoryManagementClient":
+    async def __aenter__(self) -> "DFAZManagementClient":
         await self._client.__aenter__()
         return self
 
