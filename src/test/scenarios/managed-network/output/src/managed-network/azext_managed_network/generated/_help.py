@@ -74,6 +74,18 @@ group and Managed Network name
                az managed-network mn delete --name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
+helps['managed-network mn wait'] = """
+    type: command
+    short-summary: Place the CLI in a waiting state until a condition of the managed-network mn is met.
+    examples:
+      - name: Pause executing next line of CLI script until the managed-network mn is successfully updated.
+        text: |-
+               az managed-network mn wait --name "myManagedNetwork" --resource-group "myResourceGroup" --updated
+      - name: Pause executing next line of CLI script until the managed-network mn is successfully deleted.
+        text: |-
+               az managed-network mn wait --name "myManagedNetwork" --resource-group "myResourceGroup" --deleted
+"""
+
 helps['managed-network mn scope-assignment'] = """
     type: group
     short-summary: managed-network mn scope-assignment
@@ -194,6 +206,20 @@ group, Managed Network name, and group name
 edNetwork" --resource-group "myResourceGroup"
 """
 
+helps['managed-network mn group wait'] = """
+    type: command
+    short-summary: Place the CLI in a waiting state until a condition of the managed-network mn group is met.
+    examples:
+      - name: Pause executing next line of CLI script until the managed-network mn group is successfully created.
+        text: |-
+               az managed-network mn group wait --group-name "myManagedNetworkGroup1" --managed-network-name "myManaged\
+Network" --resource-group "myResourceGroup" --created
+      - name: Pause executing next line of CLI script until the managed-network mn group is successfully deleted.
+        text: |-
+               az managed-network mn group wait --group-name "myManagedNetworkGroup1" --managed-network-name "myManaged\
+Network" --resource-group "myResourceGroup" --deleted
+"""
+
 helps['managed-network managed-network-peering-policy'] = """
     type: group
     short-summary: managed-network managed-network-peering-policy
@@ -292,4 +318,21 @@ ed by the  resource group, Managed Network name, and peering policy name
         text: |-
                az managed-network managed-network-peering-policy delete --managed-network-name "myManagedNetwork" --pol\
 icy-name "myHubAndSpoke" --resource-group "myResourceGroup"
+"""
+
+helps['managed-network managed-network-peering-policy wait'] = """
+    type: command
+    short-summary: Place the CLI in a waiting state until a condition of the managed-network managed-network-peering-po\
+licy is met.
+    examples:
+      - name: Pause executing next line of CLI script until the managed-network managed-network-peering-policy is succe\
+ssfully created.
+        text: |-
+               az managed-network managed-network-peering-policy wait --managed-network-name "myManagedNetwork" --polic\
+y-name "myHubAndSpoke" --resource-group "myResourceGroup" --created
+      - name: Pause executing next line of CLI script until the managed-network managed-network-peering-policy is succe\
+ssfully deleted.
+        text: |-
+               az managed-network managed-network-peering-policy wait --managed-network-name "myManagedNetwork" --polic\
+y-name "myHubAndSpoke" --resource-group "myResourceGroup" --deleted
 """

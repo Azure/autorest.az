@@ -12,7 +12,7 @@ from azure.cli.core import AzCommandsLoader
 from azext_datafactory.generated._help import helps  # pylint: disable=unused-import
 
 
-class DataFactoryManagementClientCommandsLoader(AzCommandsLoader):
+class DFAZManagementClientCommandsLoader(AzCommandsLoader):
 
     def __init__(self, cli_ctx=None):
         from azure.cli.core.commands import CliCommandType
@@ -20,8 +20,8 @@ class DataFactoryManagementClientCommandsLoader(AzCommandsLoader):
         datafactory_custom = CliCommandType(
             operations_tmpl='azext_datafactory.custom#{}',
             client_factory=cf_datafactory)
-        super(DataFactoryManagementClientCommandsLoader, self).__init__(cli_ctx=cli_ctx,
-                                                                        custom_command_type=datafactory_custom)
+        super(DFAZManagementClientCommandsLoader, self).__init__(cli_ctx=cli_ctx,
+                                                                 custom_command_type=datafactory_custom)
 
     def load_command_table(self, args):
         from azext_datafactory.generated.commands import load_command_table
@@ -43,4 +43,4 @@ class DataFactoryManagementClientCommandsLoader(AzCommandsLoader):
             pass
 
 
-COMMAND_LOADER_CLS = DataFactoryManagementClientCommandsLoader
+COMMAND_LOADER_CLS = DFAZManagementClientCommandsLoader
