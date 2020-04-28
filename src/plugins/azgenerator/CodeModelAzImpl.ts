@@ -381,7 +381,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Extension_NameUnderscored() {
-        return this.extensionName.split("-").join("_");
+        return this.extensionName.replace(/-/g, '_');
     }
 
     public get Extension_NameClass(): string {
