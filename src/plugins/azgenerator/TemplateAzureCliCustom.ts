@@ -244,50 +244,57 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
         let methodName: string = model.Command_MethodName;
 
         // body transformation
-
-        // with x-ms-client-flatten it doesn't need this part now 
-        if (model.SelectFirstMethodParameter()) {
-            do {
-                if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
-                    if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                        let baseParam = model.MethodParameter;
-                        let baseName = model.MethodParameter_MapsTo;
-                        let baseRequired = model.MethodParameter_RequiredByMethod;
-                        output_body.push("    " + "all_" + baseName + " = []");
-                        let childNames = [];
-                        while (model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam) {
-                            let childName = model.MethodParameter_MapsTo;
-                            childNames.push(childName);
-                            output_body.push("    if " + childName + " is not None:");
-                            output_body.push("        " + "all_" + baseName + ".append(" + childName + ")");
-                        }
-                        if (childNames.length > 0) {
-                            output_body.push("    if len(" + "all_" + baseName + ") > 1:");
-                            required['clierror'] = true;
-                            ToMultiLine("        raise CLIError('at most one of  " + childNames.join(", ") + " is needed for " + baseName + "!')", output_body);   
-                            if(baseRequired) {
-                                output_body.push("    if len(" + "all_" + baseName + ") != 1:");
-                                ToMultiLine("        raise CLIError('" + baseName + " is required. but none of " + childNames.join(", ") + " is provided!')", output_body);
+        let allPolyBaseParam:Map<string, boolean> = new Map<string, boolean>();
+        do {
+            if (model.SelectFirstMethodParameter()) {
+                do {
+                    if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                        if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                            let baseParam = model.MethodParameter;
+                            let baseName = model.MethodParameter_MapsTo;
+                            if(allPolyBaseParam.has(baseName)) {
+                                continue;
                             }
-                            ToMultiLine("    " + baseName + " = all_" + baseName + "[0] if len(all_" + baseName + ") == 1 else None", output_body)
-                        } else {
-                            output_body.pop();
+                            allPolyBaseParam.set(baseName, true);
+                            let baseRequired = model.MethodParameter_RequiredByMethod;
+                            output_body.push("    " + "all_" + baseName + " = []");
+                            let childNames = [];
+                            while (model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam) {
+                                let childName = model.MethodParameter_MapsTo;
+                                childNames.push(childName);
+                                output_body.push("    if " + childName + " is not None:");
+                                output_body.push("        " + "all_" + baseName + ".append(" + childName + ")");
+                            }
+                            if (childNames.length > 0) {
+                                output_body.push("    if len(" + "all_" + baseName + ") > 1:");
+                                required['clierror'] = true;
+                                ToMultiLine("        raise CLIError('at most one of  " + childNames.join(", ") + " is needed for " + baseName + "!')", output_body);   
+                                if(baseRequired) {
+                                    output_body.push("    if len(" + "all_" + baseName + ") != 1:");
+                                    ToMultiLine("        raise CLIError('" + baseName + " is required. but none of " + childNames.join(", ") + " is provided!')", output_body);
+                                }
+                                ToMultiLine("    " + baseName + " = all_" + baseName + "[0] if len(all_" + baseName + ") == 1 else None", output_body)
+                            } else {
+                                output_body.pop();
+                            }
+                            continue;
                         }
-                        continue;
+                        required['json'] = true;
+                        output_body.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
+                        output_body.push("        " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
                     }
-                    required['json'] = true;
-                    output_body.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
-                    output_body.push("        " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
                 }
+                while (model.SelectNextMethodParameter());
+    
             }
-            while (model.SelectNextMethodParameter());
 
-        }
+            if(!isNullOrUndefined(originalOperation)) {
+                output_body = output_body.concat(ConstructMethodBodyParameter(model, needGeneric));
+            }
+        } while (model.SelectNextMethod());
 
-        if(!isNullOrUndefined(originalOperation)) {
-            output_body = output_body.concat(ConstructMethodBodyParameter(model, needGeneric));
-        }
-        
+
+        model.SelectFirstMethod();
         let needIfStatement = !model.Method_IsLast;
 
         do {
@@ -304,6 +311,9 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                                 continue;
                             }
                             if (model.MethodParameter_Type == SchemaType.Constant) {
+                                continue;
+                            }
+                            if (model.MethodParameter_IsFlattened) {
                                 continue;
                             }
                             ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
