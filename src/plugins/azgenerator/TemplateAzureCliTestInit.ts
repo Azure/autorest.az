@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 
-export function GenerateAzureCliTestInit(model: CodeModelAz) : string[] {
+export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     var output: string[] = [];
 
     output.push("# coding=utf-8");
@@ -20,9 +20,12 @@ export function GenerateAzureCliTestInit(model: CodeModelAz) : string[] {
     output.push("# --------------------------------------------------------------------------");
     output.push("import inspect");
     output.push("import os");
+    output.push("import sys");
+    output.push("import traceback");
     output.push("");
     output.push("");
     output.push("__path__ = __import__('pkgutil').extend_path(__path__, __name__)");
+    output.push("exceptions = []");
     output.push('');
     output.push('');
     output.push('def try_manual(func):');
@@ -44,6 +47,7 @@ export function GenerateAzureCliTestInit(model: CodeModelAz) : string[] {
     output.push('        func_to_call = func');
     output.push('        try:');
     output.push('            func_to_call = import_manual_function(func)');
+    output.push('            print("Found manual override for {}(...)".format(func.__name__))')
     output.push('        except (ImportError, AttributeError):');
     output.push('            pass');
     output.push('        return func_to_call');
@@ -51,12 +55,30 @@ export function GenerateAzureCliTestInit(model: CodeModelAz) : string[] {
     output.push('    def wrapper(*args, **kwargs):');
     output.push('        func_to_call = get_func_to_call()');
     output.push('        print("running {}()...".format(func.__name__))');
-    output.push('        return func_to_call(*args, **kwargs)');
+    output.push('        try:');
+    output.push('            return func_to_call(*args, **kwargs)');
+    output.push('        except BaseException as e:');
+    output.push('            print("--------------------------------------")');
+    output.push('            print("step exception: ", e)');
+    output.push('            print("--------------------------------------", file=sys.stderr)');
+    output.push('            print("step exception in {}: {}".format(func.__name__, e), file=sys.stderr)');
+    output.push('            traceback.print_exc()');
+    output.push('            exceptions.append((func.__name__, sys.exc_info()))');
     output.push('');
     output.push('    if inspect.isclass(func):');
     output.push('        return get_func_to_call()');
     output.push('    else:');
     output.push('        return wrapper');
     output.push('');
+    output.push('');
+    output.push('def raise_if():');
+    output.push('    if exceptions:');
+    output.push('        if len(exceptions) <= 1:');
+    output.push('            raise exceptions[0][1][1]');
+    output.push('        message = "{}\\nFollowed with exceptions in other steps:\\n".format(str(exceptions[0][1][1]))');
+    output.push('        message += "\\n".join(["{}: {}".format(h[0], h[1][1]) for h in exceptions[1:]])');
+    output.push('        raise exceptions[0][1][0](message).with_traceback(exceptions[0][1][2])');
+    output.push('');
+
     return output;
 }
