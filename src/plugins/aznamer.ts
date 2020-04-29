@@ -28,7 +28,7 @@ export class AzNamer {
             return subOperationGroupName == ""? "create": subOperationGroupName + " " + "create";
         } else if(operationName.startsWith("update") && (httpProtocol == "put" || httpProtocol == "patch")) {
             return subOperationGroupName == ""? "update": subOperationGroupName + " " + "update";
-        } else if(operationName.startsWith("get") && httpProtocol == "get") {
+        } else if(operationName == "get" && httpProtocol == "get") {
             return subOperationGroupName == ""? "show": subOperationGroupName + " " + "show";
         } else if(operationName.startsWith("list") && httpProtocol == "get") {
             // for list scenarios like kusto, if there's list, listbyresourcegroup, listsku, listskubyresource
