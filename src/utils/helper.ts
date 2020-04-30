@@ -3,6 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as fs from 'fs';
+import { createDiffieHellman } from 'crypto';
+import { Key } from 'readline';
+import { Dictionary } from '@azure-tools/linq';
 
 export function changeCamelToDash(str: string) {
     str = str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
@@ -214,4 +217,27 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
         for (let line of ret) output.push(line);
     }
     return ret;
+}
+
+
+export function parse_resource_id(path: string) {
+    let baseRegex: RegExp = /\/subscriptions\/(?<subscription>[^\/]*)(\/resourceGroups\/(?<resource_group>[^\/]*))?(\/providers\/(?<namespace>[^\/]*)\/(?<type>[^\/]*)\/(?<name>[^\/]*)(?<children>.*))?/gi;
+    let childRegex: RegExp = /(\/providers\/(?<child_namespace>[^\/]*))?\/(?<child_type>[^\/]*)\/(?<child_name>[^\/]*)/gi;
+    let mp: RegExpExecArray = baseRegex.exec(path);
+    if (mp) {
+        let groups  = mp.groups;
+        let children: RegExpExecArray = null;
+        let count = 0;
+        let childStr: string = groups["children"];
+        let result = null;
+        while (result = childRegex.exec(childStr)) {
+            count++;
+            for(let key of ['child_namespace', 'child_type', 'child_name']) {
+                groups[key + "_" + count] = result["groups"][key];
+            }       
+        }
+        groups["last_child_num"] = "" + count;
+        return groups;
+    }
+    return {};
 }
