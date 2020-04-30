@@ -18,7 +18,6 @@ from azure.cli.core.commands.parameters import (
 )
 from azure.cli.core.commands.validators import get_default_location_from_resource_group
 from azext_datafactory.action import (
-    AddIdentity,
     AddFactoryVstsConfiguration,
     AddFactoryGitHubConfiguration,
     AddFakeIdentity
@@ -44,8 +43,6 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
-        c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory. Expect val'
-                   'ue: KEY1=VALUE1 KEY2=VALUE2 ...')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
                    'epo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: project-name, tena'
                    'nt-id, account-name, repository-name, collaboration-branch, root-folder, last-commit-id.',
@@ -62,8 +59,6 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.', id_part='name')
         c.argument('tags', tags_type)
-        c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory. Expect val'
-                   'ue: KEY1=VALUE1 KEY2=VALUE2 ...')
 
     with self.argument_context('datafactory delete') as c:
         c.argument('resource_group_name', resource_group_name_type)

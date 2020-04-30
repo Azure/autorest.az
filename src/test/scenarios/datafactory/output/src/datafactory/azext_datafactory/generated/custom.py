@@ -34,7 +34,6 @@ def datafactory_create(cmd, client,
                        if_match=None,
                        location=None,
                        tags=None,
-                       identity=None,
                        factory_vsts_configuration=None,
                        factory_git_hub_configuration=None,
                        fake_identity=None,
@@ -53,7 +52,7 @@ def datafactory_create(cmd, client,
                                    if_match=if_match,
                                    location=location,
                                    tags=tags,
-                                   identity=identity,
+                                   identity=None,
                                    repo_configuration=repo_configuration,
                                    zones=zones)
 
@@ -61,12 +60,11 @@ def datafactory_create(cmd, client,
 def datafactory_update(cmd, client,
                        resource_group_name,
                        factory_name,
-                       tags=None,
-                       identity=None):
+                       tags=None):
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          tags=tags,
-                         identity=identity)
+                         identity=None)
 
 
 def datafactory_delete(cmd, client,

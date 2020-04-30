@@ -21,7 +21,6 @@ create a datafactory.
 |**--if-match**|string|ETag of the factory entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
 |**--location**|string|The resource location.|location|
 |**--tags**|dictionary|The resource tags.|tags|
-|**--identity**|object|Managed service identity of the factory.|identity|
 |**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|
 |**--fake-identity**|object|This is only for az test.|fake_identity|
@@ -83,4 +82,3 @@ update a datafactory.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|
 |**--factory-name**|string|The factory name.|factory_name|
 |**--tags**|dictionary|The resource tags.|tags|
-|**--identity**|object|Managed service identity of the factory.|identity|

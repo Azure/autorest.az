@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as fs from 'fs';
+import { isNullOrUndefined } from 'util';
 
 export function changeCamelToDash(str: string) {
     str = str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
@@ -110,6 +111,26 @@ export function isDict(v) {
 
 export function ToJsonString(_in: any): string {
     return JSON.stringify(_in).split(/[\r\n]+/).join("").split("\\").join("\\\\").split("'").join("\\'")
+}
+
+export function ToPythonString(value: any, type: string): string {
+    let str = value;
+
+    if (!isNullOrUndefined(str)) {
+        if (type == 'boolean') {
+            if (Boolean(value)) {
+                str = "True";
+            }
+            else {
+                str = "False";
+            }
+        }
+        else {
+            str = JSON.stringify(str)
+        }
+    }
+
+    return str;
 }
 
 function isEscaped(str: string, index: number): boolean {
