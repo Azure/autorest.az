@@ -1383,13 +1383,13 @@ export class CodeModelCliImpl implements CodeModelAz {
         return method_param_dict;
     }
 
-    public GetExampleParameters(example_obj): ExampleParam[] {
+    public GetExampleParameters(example_obj): [ExampleParam[], Map<string, MethodParam>] {
         let parameters: ExampleParam[] = [];
         let method_param_dict: Map<string, MethodParam> = this.GetMethodParametersDict();
         Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
             this.FlattenExampleParameter(method_param_dict, parameters, param_name, param_value, []);
         })
-        return parameters;
+        return [parameters, method_param_dict];
     }
 
     private isDiscriminator(param: any): boolean {
@@ -1679,8 +1679,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.Path = this.Method_Path;
                 example.HttpMethod = this.Method_HttpMethod;
                 example.ResourceClassName = this.CommandGroup_Key;
-                let params: ExampleParam[] = this.GetExampleParameters(example_obj);
+                const [params, methodParams] = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
+                example.MethodParams = methodParams;
                 example.MethodResponses = this.Method.responses || [];
                 example.Method_IsLongRun = this.Method.extensions?.['x-ms-long-running-operation'] ? true : false;
                 if (this.filterExampleByPoly(example_obj, example)) {
@@ -1702,6 +1703,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         let parameters: string[] = [];
         parameters.push("az " + this.Command_Name);
 
+        let hasRG = false;
         for (let param of example.Parameters) {
             let param_value = param.value;
             if (isTest) {
@@ -1716,6 +1718,14 @@ export class CodeModelCliImpl implements CodeModelAz {
                 slp = ToJsonString(slp);
             }
             parameters.push(param.name + " " + slp);
+
+            if (["--resource-group", "-g"].indexOf(param.name) >=0) {
+                hasRG = true;
+            }
+        }
+
+        if (isTest && !hasRG && this.matchMethodParam(example.MethodParams, "resourceGroupName")) {
+            parameters.push('-g ""');
         }
 
         return parameters;
