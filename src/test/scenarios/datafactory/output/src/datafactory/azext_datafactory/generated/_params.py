@@ -54,8 +54,9 @@ def load_arguments(self, _):
                    'itHub repo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: host-name, '
                    'account-name, repository-name, collaboration-branch, root-folder, last-commit-id.', arg_group='Repo'
                    'Configuration')
-        c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test. Expect value: na'
-                   'me=xx.')
+        c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test. Expect value: KE'
+                   'Y1=VALUE1 KEY2=VALUE2 ... , available KEYs are: name, zones-inside.')
+        c.argument('zones', nargs='+', help='This is only for az test.')
 
     with self.argument_context('datafactory update') as c:
         c.argument('resource_group_name', resource_group_name_type)

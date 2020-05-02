@@ -758,6 +758,10 @@
         "fakeIdentity": {
           "$ref": "#/definitions/FakeFactoryIdentity",
           "description": "This is only for az test."
+        },
+        "zones": {
+          "$ref": "#/definitions/Zone",
+          "description": "This is only for az test."
         }
       }
     },
@@ -831,12 +835,26 @@
         "type"
       ]
     },
+    "Zone": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "sample of simple array"
+    },
     "FakeFactoryIdentity": {
       "description": "This is only for az test.",
       "properties": {
         "name": {
           "type": "string",
           "description": ".."
+        },
+        "zonesInside": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "sample of simple array"
         }
       },
       "required": [

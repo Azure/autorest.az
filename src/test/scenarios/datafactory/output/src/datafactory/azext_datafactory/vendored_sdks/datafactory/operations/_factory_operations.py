@@ -18,7 +18,7 @@ from .. import models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Callable, Dict, Generic, Iterable, Optional, TypeVar
+    from typing import Any, Callable, Dict, Generic, Iterable, List, Optional, TypeVar
 
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
@@ -254,6 +254,7 @@ class FactoryOperations(object):
         identity=None,  # type: Optional["models.FactoryIdentity"]
         repo_configuration=None,  # type: Optional["models.FactoryRepoConfiguration"]
         fake_identity=None,  # type: Optional["models.FakeFactoryIdentity"]
+        zones=None,  # type: Optional[List[str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.Factory"
@@ -276,6 +277,8 @@ class FactoryOperations(object):
         :type repo_configuration: ~azure.mgmt.datafactory.models.FactoryRepoConfiguration
         :param fake_identity: This is only for az test.
         :type fake_identity: ~azure.mgmt.datafactory.models.FakeFactoryIdentity
+        :param zones: This is only for az test.
+        :type zones: list[str]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: Factory or the result of cls(response)
         :rtype: ~azure.mgmt.datafactory.models.Factory
@@ -285,7 +288,7 @@ class FactoryOperations(object):
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _factory = models.Factory(location=location, tags=tags, identity=identity, repo_configuration=repo_configuration, fake_identity=fake_identity)
+        _factory = models.Factory(location=location, tags=tags, identity=identity, repo_configuration=repo_configuration, fake_identity=fake_identity, zones=zones)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 

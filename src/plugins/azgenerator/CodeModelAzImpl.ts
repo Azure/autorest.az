@@ -313,7 +313,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         if (this.Parameter_IsPolyOfSimple()) {
                                             continue;
                                         }
-                                        if (this.MethodParameter_IsList && this.MethodParameter_IsListOfSimple) {
+                                        if (this.MethodParameter_IsList && this.MethodParameter_IsListOfSimple && !this.MethodParameter_IsSimpleArray) {
                                             let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" +  this.MethodParameter_MapsTo));
                                             let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.MethodParameter_MapsTo));
                                             let actionName: string = "Add" + Capitalize(ToCamelCase(this.MethodParameter_MapsTo));
@@ -989,7 +989,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         // 2. or objects with arrays as properties but has simple element type 
         // 3. or arrays with simple element types
         // 4. or arrays with object element types but has simple properties
-        // 5. or dicts with simple element properties
+        // 5. or dicts with simpleSchema_ActionName element properties
         // 6. or dicts with arrays as element properties but has simple element type 
         if (this.Schema_Type(schema) == SchemaType.Any) {
             return false;
@@ -1024,6 +1024,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                 }
                 return true;
+            }
+            else {
+                return !this.isComplexSchema(schema['elementType'].type);
             }
         } else if (this.Schema_Type(schema) == SchemaType.Object) {
             if (!isNullOrUndefined(schema['children']) && !isNullOrUndefined(schema['discriminator'])) {

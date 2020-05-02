@@ -168,6 +168,8 @@ class Factory(Resource):
     :type repo_configuration: ~azure.mgmt.datafactory.models.FactoryRepoConfiguration
     :param fake_identity: This is only for az test.
     :type fake_identity: ~azure.mgmt.datafactory.models.FakeFactoryIdentity
+    :param zones: This is only for az test.
+    :type zones: list[str]
     """
 
     _validation = {
@@ -194,6 +196,7 @@ class Factory(Resource):
         'version': {'key': 'properties.version', 'type': 'str'},
         'repo_configuration': {'key': 'properties.repoConfiguration', 'type': 'FactoryRepoConfiguration'},
         'fake_identity': {'key': 'properties.fakeIdentity', 'type': 'FakeFactoryIdentity'},
+        'zones': {'key': 'properties.zones', 'type': '[str]'},
     }
 
     def __init__(
@@ -205,6 +208,7 @@ class Factory(Resource):
         identity: Optional["FactoryIdentity"] = None,
         repo_configuration: Optional["FactoryRepoConfiguration"] = None,
         fake_identity: Optional["FakeFactoryIdentity"] = None,
+        zones: Optional[List[str]] = None,
         **kwargs
     ):
         super(Factory, self).__init__(location=location, tags=tags, **kwargs)
@@ -215,6 +219,7 @@ class Factory(Resource):
         self.version = None
         self.repo_configuration = repo_configuration
         self.fake_identity = fake_identity
+        self.zones = zones
 
 
 class FactoryRepoConfiguration(msrest.serialization.Model):
@@ -525,6 +530,8 @@ class FakeFactoryIdentity(msrest.serialization.Model):
 
     :param name: Required. ..
     :type name: str
+    :param zones_inside: sample of simple array.
+    :type zones_inside: list[str]
     """
 
     _validation = {
@@ -533,16 +540,19 @@ class FakeFactoryIdentity(msrest.serialization.Model):
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
+        'zones_inside': {'key': 'zonesInside', 'type': '[str]'},
     }
 
     def __init__(
         self,
         *,
         name: str,
+        zones_inside: Optional[List[str]] = None,
         **kwargs
     ):
         super(FakeFactoryIdentity, self).__init__(**kwargs)
         self.name = name
+        self.zones_inside = zones_inside
 
 
 class GitHubAccessTokenRequest(msrest.serialization.Model):

@@ -125,4 +125,6 @@ class AddFakeIdentity(argparse.Action):
             v = properties[k]
             if kl == 'name':
                 d['name'] = v[0]
+            elif kl == 'zones-inside':
+                d['zones_inside'] = v
         return d
