@@ -989,7 +989,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         // 2. or objects with arrays as properties but has simple element type 
         // 3. or arrays with simple element types
         // 4. or arrays with object element types but has simple properties
-        // 5. or dicts with simpleSchema_ActionName element properties
+        // 5. or dicts with simple element properties
         // 6. or dicts with arrays as element properties but has simple element type 
         if (this.Schema_Type(schema) == SchemaType.Any) {
             return false;
