@@ -7,7 +7,7 @@ import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeMo
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Request, OperationGroup } from '@azure-tools/codemodel';
 import { serialize, deserialize, EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
-import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeString } from '../../utils/helper';
+import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeString, parseResourceId } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
@@ -146,9 +146,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                             }
                         }
                         if (this.SelectFirstMethod()) {
+                            let id_groups = parseResourceId(this.Method.requests[0].protocol.http.path);
                             if (this.SelectFirstMethodParameter()) {
                                 do {
                                     let parameters = this.MethodParameter;
+                                    let defaultName = parameters.language['cli']['cliKey'];
                                     if (parameters.language['cli'].required) {
                                         this.MethodParameter['RequiredByMethod'] = true;
                                     } else {
