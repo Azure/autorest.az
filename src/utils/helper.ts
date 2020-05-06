@@ -3,12 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as fs from 'fs';
-import { createDiffieHellman } from 'crypto';
-import { Key } from 'readline';
-import { Dictionary } from '@azure-tools/linq';
-import { Channel, Session } from '@azure-tools/autorest-extension-base';
-import { CodeModel } from '@azure-tools/codemodel';
-import { serialize, deserialize, EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 
 export function changeCamelToDash(str: string) {
     str = str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
@@ -223,7 +217,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
 }
 
 
-export function parseResourceId(session: Session<CodeModel>, mpath: string): Map<string, string> {
+export function parseResourceId(mpath: string): Map<string, string> {
     let baseRegex: RegExp = /\/subscriptions\/(?<subscription>[^\/]*)(\/resourceGroups\/(?<resource_group>[^\/]*))?(\/providers\/(?<namespace>[^\/]*)\/(?<type>[^\/]*)\/(?<name>[^\/]*)(?<children>.*))?/g;
     let childRegex: RegExp = /(\/providers\/(?<child_namespace>[^\/]*))?\/(?<child_type>[^\/]*)\/(?<child_name>[^\/]*)/g;
     let mp: RegExpExecArray = baseRegex.exec(mpath);

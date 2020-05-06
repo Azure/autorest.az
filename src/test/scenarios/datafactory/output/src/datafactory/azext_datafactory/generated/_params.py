@@ -38,7 +38,7 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory create') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.', id_part='name')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
         c.argument('if_match', help='ETag of the factory entity. Should only be specified for update, for which it shou'
                    'ld match existing entity or can be * for unconditional update.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
@@ -66,10 +66,10 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.', id_part='name')
 
     with self.argument_context('datafactory configure-factory-repo') as c:
-        c.argument('location_id', help='The location identifier.')
+        c.argument('location_id', help='The location identifier.', id_part='name')
         c.argument('factory_resource_id', help='The factory resource id.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
                    'epo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: project-name, tena'
@@ -82,7 +82,7 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory get-data-plane-access') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.', id_part='name')
         c.argument('permissions', help='The string with permissions for Data Plane access. Currently only \'r\' is supp'
                    'orted which grants read only access.')
         c.argument('access_resource_path', help='The resource path to get access relative to factory. Currently only em'
@@ -95,7 +95,7 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory get-git-hub-access-token') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.', id_part='name')
         c.argument('git_hub_access_code', help='GitHub access code.')
         c.argument('git_hub_client_id', help='GitHub application client ID.')
         c.argument('git_hub_access_token_base_url', help='GitHub access token base URL.')

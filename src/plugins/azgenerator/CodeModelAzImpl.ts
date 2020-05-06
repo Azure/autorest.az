@@ -147,9 +147,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         }
                         if (this.SelectFirstMethod()) {
                             let id_groups = new Map<string, string>();
-                            if(this.Method_NameAz == 'show' || this.Method_NameAz == 'create' || this.Method_NameAz == 'update') {
-                                id_groups = parseResourceId(this.session, this.Request.protocol.http.path);
-                            }
+                            id_groups = parseResourceId(this.Request.protocol.http.path);
                             
                             if (this.SelectFirstMethodParameter()) {
                                 do {
