@@ -1699,7 +1699,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return examples;
     }
 
-    public GetExampleItems(example: CommandExample, isTest: boolean): string[] {
+    public GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[] {
         let parameters: string[] = [];
         parameters.push("az " + this.Command_Name);
 
@@ -1724,7 +1724,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
         }
 
-        if (isTest && !hasRG && this.matchMethodParam(example.MethodParams, "resourceGroupName")) {
+        if (isTest && !hasRG && commandParams && commandParams[this.Command_Name]&& commandParams[this.Command_Name].has("resourceGroupName")) {
             parameters.push('-g ""');
         }
 
@@ -1775,10 +1775,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public FindExampleById(id: string): string[][] {
+    public FindExampleById(id: string, commandParams?: any): string[][] {
         let ret: string[][] = [];
         this.GetAllExamples(id, (example) => {
-            ret.push(this.GetExampleItems(example, true));
+            ret.push(this.GetExampleItems(example, true, commandParams));
         });
         return ret;
     }
@@ -1860,6 +1860,19 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool, this._testScenario);
             this.SortExamplesByDependency();
         }
+
+        let commandParams = {};
+        this.GetAllMethods(null, () => {
+            if (!commandParams[this.Command_Name]) commandParams[this.Command_Name] = new Set();
+            if (this.SelectFirstMethodParameter()) {
+                do {
+                    if ((this.MethodParameter.implementation == 'Method' || (this.MethodParameter as any).polyBaseParam) && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
+                        commandParams[this.Command_Name].add(this.MethodParameter.language['cli'].cliKey);
+                    }
+                } while (this.SelectNextMethodParameter());
+            }
+        });
+        return commandParams;
     }
 
     public SortExamplesByDependency() {

@@ -162,7 +162,7 @@ export interface CodeModelAz
 
     SelectFirstExample(): boolean;
     SelectNextExample(): boolean;
-    FindExampleById(id: string): string[][];
+    FindExampleById(id: string, commandParams: any): string[][];
     Example_Body: string[];
     Example_Title: string;
     Example_Params: any;
