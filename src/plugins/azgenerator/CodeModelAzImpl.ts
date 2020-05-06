@@ -1724,7 +1724,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
         }
 
-        if (isTest && !hasRG && commandParams && commandParams[this.Command_Name]&& commandParams[this.Command_Name].has("resourceGroupName")) {
+        if (isTest && !hasRG && commandParams && commandParams[this.Command_Name] && commandParams[this.Command_Name].has("resourceGroupName")) {
             parameters.push('-g ""');
         }
 
