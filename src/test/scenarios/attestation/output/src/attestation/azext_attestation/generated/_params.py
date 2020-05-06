@@ -41,11 +41,11 @@ def load_arguments(self, _):
 
     with self.argument_context('attestation attestation-provider show') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('provider_name', help='Name of the attestation service instance')
+        c.argument('provider_name', help='Name of the attestation service instance', id_part='name')
 
     with self.argument_context('attestation attestation-provider update') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('provider_name', help='Name of the attestation service')
+        c.argument('provider_name', help='Name of the attestation service', id_part='name')
         c.argument('tags', tags_type)
 
     with self.argument_context('attestation attestation-provider delete') as c:

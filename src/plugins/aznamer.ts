@@ -72,7 +72,10 @@ export class AzNamer {
         obj.language['az']['name'] = obj.language['cli']? obj.language['cli']['name']: obj.language['python']['name'];
         obj.language['az']['name'] = changeCamelToDash(obj.language['az']['name']);
         obj.language['az']['mapsto'] = obj.language['az']['name'].replace(/-/g, '_');
-        obj.language['az']['description'] = obj.language['cli']? obj.language['cli']['description']: obj.language['python']['description'];;
+        obj.language['az']['description'] = obj.language['cli']? obj.language['cli']['description']: obj.language['python']['description'];
+        if(!isNullOrUndefined(obj.language['cli']['id_part'])) {
+            obj.language['az']['id_part'] = obj.language['cli']['id_part'];
+        }
     } 
 
     processGlobalParam() {
@@ -165,7 +168,7 @@ export class AzNamer {
                 });
                 operation.requests.forEach(request => {
                     let operationName = "";
-                    if(operation.language['cli'] != undefined) {
+                    if(!isNullOrUndefined(operation.language['cli'])) {
                         operation.language['az'] = new Language();
                         let commandName = this.methodMap(operation.language['cli']['name'], request.protocol.http.method);
                         operation.language['az']['name'] = commandName;

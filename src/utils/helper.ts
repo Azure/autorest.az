@@ -6,6 +6,9 @@ import * as fs from 'fs';
 import { createDiffieHellman } from 'crypto';
 import { Key } from 'readline';
 import { Dictionary } from '@azure-tools/linq';
+import { Channel, Session } from '@azure-tools/autorest-extension-base';
+import { CodeModel } from '@azure-tools/codemodel';
+import { serialize, deserialize, EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 
 export function changeCamelToDash(str: string) {
     str = str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
@@ -220,11 +223,11 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
 }
 
 
-export function parseResourceId(path: string): Map<string, string> {
-    let baseRegex: RegExp = /\/subscriptions\/(?<subscription>[^\/]*)(\/resourceGroups\/(?<resource_group>[^\/]*))?(\/providers\/(?<namespace>[^\/]*)\/(?<type>[^\/]*)\/(?<name>[^\/]*)(?<children>.*))?/gi;
-    let childRegex: RegExp = /(\/providers\/(?<child_namespace>[^\/]*))?\/(?<child_type>[^\/]*)\/(?<child_name>[^\/]*)/gi;
-    let mp: RegExpExecArray = baseRegex.exec(path);
-    let ret = new Map<string, string>();
+export function parseResourceId(session: Session<CodeModel>, mpath: string): Map<string, string> {
+    let baseRegex: RegExp = /\/subscriptions\/(?<subscription>[^\/]*)(\/resourceGroups\/(?<resource_group>[^\/]*))?(\/providers\/(?<namespace>[^\/]*)\/(?<type>[^\/]*)\/(?<name>[^\/]*)(?<children>.*))?/g;
+    let childRegex: RegExp = /(\/providers\/(?<child_namespace>[^\/]*))?\/(?<child_type>[^\/]*)\/(?<child_name>[^\/]*)/g;
+    let mp: RegExpExecArray = baseRegex.exec(mpath);
+    let ret: Map<string, string> = new Map<string, string>();
     if (mp) {
         let groups  = mp.groups;
         ret.set('subscription', groups['subscription']);
@@ -244,7 +247,6 @@ export function parseResourceId(path: string): Map<string, string> {
             }  
         }
         ret.set("last_child_num", "" + count);
-        return ret;
     }
     return ret;
 }

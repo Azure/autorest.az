@@ -32,13 +32,13 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory show') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.', id_part='name')
         c.argument('if_none_match', help='ETag of the factory entity. Should only be specified for get. If the ETag mat'
                    'ches the existing entity tag, or if * was provided, then no content will be returned.')
 
     with self.argument_context('datafactory create') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.', id_part='name')
         c.argument('if_match', help='ETag of the factory entity. Should only be specified for update, for which it shou'
                    'ld match existing entity or can be * for unconditional update.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
@@ -59,7 +59,7 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory update') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.')
+        c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.', id_part='name')
         c.argument('tags', tags_type)
         c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory. Expect val'
                    'ue: KEY1=VALUE1 KEY2=VALUE2 ...')

@@ -119,6 +119,7 @@ export interface CodeModelAz
     MethodParameter_IsList: boolean;
     MethodParameter_IsSimpleArray: boolean;
     MethodParameter_IsListOfSimple: boolean;
+    MethodParameter_IdPart: string;
     MethodParameter: Parameter;
     MethodParameters: Array<Parameter>;
     SubMethodParameter: Parameter;

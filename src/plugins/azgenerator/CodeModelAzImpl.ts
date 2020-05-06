@@ -146,11 +146,24 @@ export class CodeModelCliImpl implements CodeModelAz {
                             }
                         }
                         if (this.SelectFirstMethod()) {
-                            let id_groups = parseResourceId(this.Method.requests[0].protocol.http.path);
+                            let id_groups = new Map<string, string>();
+                            if(this.Method_NameAz == 'show' || this.Method_NameAz == 'create' || this.Method_NameAz == 'update') {
+                                id_groups = parseResourceId(this.session, this.Request.protocol.http.path);
+                            }
+                            
                             if (this.SelectFirstMethodParameter()) {
                                 do {
                                     let parameters = this.MethodParameter;
                                     let defaultName = parameters.language['cli']['cliKey'];
+                                    let defaultToMatch = '{' + defaultName + '}';
+                                    
+                                    if(!isNullOrUndefined(id_groups)) {
+                                        for(let k of id_groups.entries()) {
+                                            if(k[1] == defaultToMatch && defaultName != 'resourceGroupName') {
+                                                this.MethodParameter.language['az']['id_part'] = k[0];
+                                            }
+                                        }
+                                    }
                                     if (parameters.language['cli'].required) {
                                         this.MethodParameter['RequiredByMethod'] = true;
                                     } else {
@@ -882,6 +895,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_NameAz(): string {
         return this.Parameter_NameAz(this.MethodParameter);
+    }
+
+    public get MethodParameter_IdPart(): string {
+        return this.MethodParameter.language['az']['id_part'];
     }
 
     public get MethodParameter_IsArray(): boolean {
