@@ -1025,9 +1025,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 return true;
             }
-            else {
-                return !this.isComplexSchema(schema['elementType'].type);
-            }
         } else if (this.Schema_Type(schema) == SchemaType.Object) {
             if (!isNullOrUndefined(schema['children']) && !isNullOrUndefined(schema['discriminator'])) {
                 return false;
