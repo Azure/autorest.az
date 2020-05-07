@@ -84,29 +84,40 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
 
-    private getOrder(op: string) {
-        if(op.indexOf(" ") > -1) {
-            op = op.split(" ")[1];
-        }
-        let opOrder = ["list", "show", "create", "update", "delete"];
-        let order = opOrder.indexOf(op.toLowerCase()) + 1;
-        if (order == 0) {
-            order = opOrder.length + 1;
-        }
-        return order;
-    }
-
     private sortOperationByAzCommand() {
         for (let [idx, operationGroup] of this.codeModel.operationGroups.entries()) {
-            operationGroup.operations.sort((a, b) => {
-                let oa = this.getOrder(a.language['az']['name']) + "_" + a.language['az']['name'] + "_" + (100 - a.parameters.length);
-                let ob = this.getOrder(b.language['az']['name']) + "_" + b.language['az']['name'] + "_" + (100 - b.parameters.length);
-                return oa.localeCompare(ob);
+            operationGroup.operations.sort(function(a, b) {
+                function getOrder(op: string) {
+                    if(op.indexOf(" ") > -1) {
+                        op = op.split(" ").last;
+                    }
+                    let opOrder = ["list", "show", "create", "update", "delete"];
+                    let order = opOrder.indexOf(op.toLowerCase()) + 1;
+                    if (order == 0) {
+                        order = opOrder.length + 1;
+                    }
+                    return order;
+                }
+                let oa = getOrder(a.language['az']['name']);
+                let ob = getOrder(b.language['az']['name']);
+                if(oa < ob) {
+                    return -1;
+                } else if(oa > ob) {
+                    return 1;
+                } else {
+                    let la = a.language['az']['name'];
+                    let lb = b.language['az']['name'];
+                    if(la != lb) {
+                        return la.localeCompare(lb);
+                    }
+                    return a.parameters.length > b.parameters.length? -1: 1;
+                }
             });
             this.codeModel.operationGroups[idx] = operationGroup;
         }
 
     }
+    
     
     public get RandomizeNames(): boolean {
         if (this.options?.['randomize-names']) return true;
