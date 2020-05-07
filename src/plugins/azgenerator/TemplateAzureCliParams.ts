@@ -267,7 +267,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
 
                     if (!needSkip) {
                         argument += ", help='" + EscapeString(model.MethodParameter_Description).trimRight();
-                        if (model.MethodParameter_IsList) {
+                        if (model.MethodParameter_IsList && !model.MethodParameter_IsSimpleArray) {
                             let netDescription = model.MethodParameter_Description.trim();
                             if (netDescription.length>0 && netDescription[netDescription.length-1].match(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)) {
                                 argument += ".";
