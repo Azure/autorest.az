@@ -318,7 +318,12 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                             argument += ", arg_group='" + Capitalize(ToCamelCase(model.Parameter_MapsTo(baseParam))) + "'";
                         }
                     }
-                    
+                    if(!model.Method_NameAz.startsWith('list') && !model.Method_NameAz.split(' ').last.startsWith('create') || needUpdate) {
+                        if(!isNullOrUndefined(model.MethodParameter_IdPart)) {
+                            argument += ", id_part='" + model.MethodParameter_IdPart + "'";
+                        }
+                    }
+                        
                     argument += ")";
                     
                     ToMultiLine(argument, output_args);

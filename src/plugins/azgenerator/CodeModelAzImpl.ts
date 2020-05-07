@@ -7,7 +7,7 @@ import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeMo
 import { CodeModel, SchemaType, Schema, ParameterLocation, Operation, Value, Parameter, VirtualParameter, Property, Request, OperationGroup } from '@azure-tools/codemodel';
 import { serialize, deserialize, EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
-import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeString } from '../../utils/helper';
+import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeString, parseResourceId } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
 import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
@@ -146,9 +146,22 @@ export class CodeModelCliImpl implements CodeModelAz {
                             }
                         }
                         if (this.SelectFirstMethod()) {
+                            let id_groups = new Map<string, string>();
+                            id_groups = parseResourceId(this.Request.protocol.http.path);
+                            
                             if (this.SelectFirstMethodParameter()) {
                                 do {
                                     let parameters = this.MethodParameter;
+                                    let defaultName = parameters.language['cli']['cliKey'];
+                                    let defaultToMatch = '{' + defaultName + '}';
+                                    
+                                    if(!isNullOrUndefined(id_groups)) {
+                                        for(let k of id_groups.entries()) {
+                                            if(k[1] == defaultToMatch && defaultName != 'resourceGroupName') {
+                                                this.MethodParameter.language['az']['id_part'] = k[0];
+                                            }
+                                        }
+                                    }
                                     if (parameters.language['cli'].required) {
                                         this.MethodParameter['RequiredByMethod'] = true;
                                     } else {
@@ -880,6 +893,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_NameAz(): string {
         return this.Parameter_NameAz(this.MethodParameter);
+    }
+
+    public get MethodParameter_IdPart(): string {
+        return this.MethodParameter.language['az']['id_part'];
     }
 
     public get MethodParameter_IsArray(): boolean {

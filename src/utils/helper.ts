@@ -215,3 +215,32 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
     }
     return ret;
 }
+
+
+export function parseResourceId(mpath: string): Map<string, string> {
+    let baseRegex: RegExp = /\/subscriptions\/(?<subscription>[^\/]*)(\/resourceGroups\/(?<resource_group>[^\/]*))?(\/providers\/(?<namespace>[^\/]*)\/(?<type>[^\/]*)\/(?<name>[^\/]*)(?<children>.*))?/g;
+    let childRegex: RegExp = /(\/providers\/(?<child_namespace>[^\/]*))?\/(?<child_type>[^\/]*)\/(?<child_name>[^\/]*)/g;
+    let mp: RegExpExecArray = baseRegex.exec(mpath);
+    let ret: Map<string, string> = new Map<string, string>();
+    if (mp) {
+        let groups  = mp.groups;
+        ret.set('subscription', groups['subscription']);
+        ret.set('resource_group', groups['resource_group']);
+        ret.set('namespace', groups['namespace']);
+        ret.set('type', groups['type']);
+        ret.set('name', groups['name']);
+        ret.set('children', groups['children']);
+        let children: RegExpExecArray = null;
+        let count = 0;
+        let childStr: string = groups["children"];
+        let result = null;
+        while (result = childRegex.exec(childStr)) {
+            count++;
+            for(let key of ['child_namespace', 'child_type', 'child_name']) {
+                ret.set(key + "_" + count, result["groups"][key]);
+            }  
+        }
+        ret.set("last_child_num", "" + count);
+    }
+    return ret;
+}
