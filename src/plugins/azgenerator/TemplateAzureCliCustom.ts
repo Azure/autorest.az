@@ -248,7 +248,7 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
         do {
             if (model.SelectFirstMethodParameter()) {
                 do {
-                    if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                    if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple && !model.MethodParameter_IsSimpleArray) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             let baseParam = model.MethodParameter;
                             let baseName = model.MethodParameter_MapsTo;

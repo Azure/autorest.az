@@ -313,7 +313,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         if (this.Parameter_IsPolyOfSimple()) {
                                             continue;
                                         }
-                                        if (this.MethodParameter_IsList && this.MethodParameter_IsListOfSimple) {
+                                        if (this.MethodParameter_IsList && this.MethodParameter_IsListOfSimple && !this.MethodParameter_IsSimpleArray) {
                                             let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" +  this.MethodParameter_MapsTo));
                                             let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.MethodParameter_MapsTo));
                                             let actionName: string = "Add" + Capitalize(ToCamelCase(this.MethodParameter_MapsTo));

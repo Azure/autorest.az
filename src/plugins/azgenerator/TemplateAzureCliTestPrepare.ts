@@ -1,7 +1,7 @@
 import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
 
-export function GenerateAzureCliTestPrepare(model: CodeModelAz) : string[] {
+export function GenerateAzureCliTestPrepare(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     var output: string[] = header.getLines();
     output.push("");

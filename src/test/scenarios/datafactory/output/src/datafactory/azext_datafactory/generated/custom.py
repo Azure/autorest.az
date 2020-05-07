@@ -37,7 +37,8 @@ def datafactory_create(cmd, client,
                        identity=None,
                        factory_vsts_configuration=None,
                        factory_git_hub_configuration=None,
-                       fake_identity=None):
+                       fake_identity=None,
+                       zones=None):
     all_repo_configuration = []
     if factory_vsts_configuration is not None:
         all_repo_configuration.append(factory_vsts_configuration)
@@ -53,7 +54,8 @@ def datafactory_create(cmd, client,
                                    location=location,
                                    tags=tags,
                                    identity=identity,
-                                   repo_configuration=repo_configuration)
+                                   repo_configuration=repo_configuration,
+                                   zones=zones)
 
 
 def datafactory_update(cmd, client,
