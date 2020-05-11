@@ -403,7 +403,11 @@ export class CodeModelCliImpl implements CodeModelAz {
     public get Extension_Name() {
         return this.extensionName;
     }
-
+     
+    public get Extension_Mode() {
+        return this.codeModel.info['extensionMode'];
+    }
+    
     public get Extension_NameUnderscored() {
         return this.extensionName.replace(/-/g, '_');
     }

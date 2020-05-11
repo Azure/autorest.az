@@ -18,8 +18,7 @@ def load_command_table(self, _):
         operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_operations#Mana'
         'gedNetworkOperations.{}',
         client_factory=cf_mn)
-    with self.command_group('managed-network mn', managed_network_mn, client_factory=cf_mn,
-                            is_experimental=True) as g:
+    with self.command_group('managed-network mn', managed_network_mn, client_factory=cf_mn) as g:
         g.custom_command('list', 'managed_network_mn_list')
         g.custom_show_command('show', 'managed_network_mn_show')
         g.custom_command('create', 'managed_network_mn_create')
@@ -61,7 +60,7 @@ def load_command_table(self, _):
         client_factory=cf_managed_network_peering_policy)
     with self.command_group('managed-network managed-network-peering-policy',
                             managed_network_managed_network_peering_policy,
-                            client_factory=cf_managed_network_peering_policy, is_experimental=True) as g:
+                            client_factory=cf_managed_network_peering_policy) as g:
         g.custom_command('list', 'managed_network_managed_network_peering_policy_list')
         g.custom_show_command('show', 'managed_network_managed_network_peering_policy_show')
         g.custom_command('hub-and-spoke-topology create', 'managed_network_managed_network_peering_policy_hub_and_spoke'

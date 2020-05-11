@@ -37,7 +37,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 output.push("        client_factory=" + cf_name + ")");
                 let groupinfos = model.CommandGroup_Name.split(' ');
                 let extraInfo = "";
-                if(groupinfos.length == 2) {
+                if(groupinfos.length == 2 && model.Extension_Mode == 'experimental') {
                     extraInfo = ", is_experimental=True";
                 }
                 ToMultiLine("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + extraInfo + ") as g:", output);
