@@ -1398,13 +1398,13 @@ export class CodeModelCliImpl implements CodeModelAz {
         return method_param_dict;
     }
 
-    public GetExampleParameters(example_obj): ExampleParam[] {
+    public GetExampleParameters(example_obj): [ExampleParam[], Map<string, MethodParam>] {
         let parameters: ExampleParam[] = [];
         let method_param_dict: Map<string, MethodParam> = this.GetMethodParametersDict();
         Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
             this.FlattenExampleParameter(method_param_dict, parameters, param_name, param_value, []);
         })
-        return parameters;
+        return [parameters, method_param_dict];
     }
 
     private isDiscriminator(param: any): boolean {
@@ -1694,8 +1694,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.Path = this.Method_Path;
                 example.HttpMethod = this.Method_HttpMethod;
                 example.ResourceClassName = this.CommandGroup_Key;
-                let params: ExampleParam[] = this.GetExampleParameters(example_obj);
+                const [params, methodParams] = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
+                example.MethodParams = methodParams;
                 example.MethodResponses = this.Method.responses || [];
                 example.Method_IsLongRun = this.Method.extensions?.['x-ms-long-running-operation'] ? true : false;
                 if (this.filterExampleByPoly(example_obj, example)) {
@@ -1713,10 +1714,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         return examples;
     }
 
-    public GetExampleItems(example: CommandExample, isTest: boolean): string[] {
+    public GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[] {
         let parameters: string[] = [];
         parameters.push("az " + this.Command_Name);
 
+        let hasRG = false;
         for (let param of example.Parameters) {
             let param_value = param.value;
             if (isTest) {
@@ -1731,6 +1733,14 @@ export class CodeModelCliImpl implements CodeModelAz {
                 slp = ToJsonString(slp);
             }
             parameters.push(param.name + " " + slp);
+
+            if (["--resource-group", "-g"].indexOf(param.name) >=0) {
+                hasRG = true;
+            }
+        }
+
+        if (isTest && !hasRG && commandParams && commandParams[this.Command_Name] && commandParams[this.Command_Name].has("resourceGroupName")) {
+            parameters.push('-g ""');
         }
 
         return parameters;
@@ -1780,10 +1790,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public FindExampleById(id: string): string[][] {
+    public FindExampleById(id: string, commandParams?: any): string[][] {
         let ret: string[][] = [];
         this.GetAllExamples(id, (example) => {
-            ret.push(this.GetExampleItems(example, true));
+            ret.push(this.GetExampleItems(example, true, commandParams));
         });
         return ret;
     }
@@ -1865,6 +1875,19 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool, this._testScenario);
             this.SortExamplesByDependency();
         }
+
+        let commandParams = {};
+        this.GetAllMethods(null, () => {
+            if (!commandParams[this.Command_Name]) commandParams[this.Command_Name] = new Set();
+            if (this.SelectFirstMethodParameter()) {
+                do {
+                    if ((this.MethodParameter.implementation == 'Method' || (this.MethodParameter as any).polyBaseParam) && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type != 'constant') {
+                        commandParams[this.Command_Name].add(this.MethodParameter.language['cli'].cliKey);
+                    }
+                } while (this.SelectNextMethodParameter());
+            }
+        });
+        return commandParams;
     }
 
     public SortExamplesByDependency() {

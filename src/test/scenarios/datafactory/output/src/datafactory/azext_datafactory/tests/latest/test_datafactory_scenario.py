@@ -44,7 +44,8 @@ def step__factories_get_factories_get(test, rg):
 # EXAMPLE: /Factories/get/Factories_List
 @try_manual
 def step__factories_get_factories_list(test, rg):
-    test.cmd('az datafactory list',
+    test.cmd('az datafactory list '
+             '-g ""',
              checks=[])
 
 

@@ -108,7 +108,8 @@ def step_managednetworkslistbyresourcegroup(test, rg):
 # EXAMPLE: ManagedNetworksListBySubscription
 @try_manual
 def step_managednetworkslistbysubscription(test, rg):
-    test.cmd('az managed-network mn list',
+    test.cmd('az managed-network mn list '
+             '-g ""',
              checks=[])
 
 
