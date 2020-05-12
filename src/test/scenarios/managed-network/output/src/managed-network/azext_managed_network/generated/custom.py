@@ -44,18 +44,16 @@ def managed_network_mn_update(cmd, client,
                               resource_group_name,
                               managed_network_name,
                               tags=None):
-    return sdk_no_wait(no_wait, client.begin_update,
-                                                   resource_group_name=resource_group_name,
-                                                   managed_network_name=managed_network_name,
-                                                   tags=tags)
+    return client.begin_update(resource_group_name=resource_group_name,
+                               managed_network_name=managed_network_name,
+                               tags=tags)
 
 
 def managed_network_mn_delete(cmd, client,
                               resource_group_name,
                               managed_network_name):
-    return sdk_no_wait(no_wait, client.begin_delete,
-                                                   resource_group_name=resource_group_name,
-                                                   managed_network_name=managed_network_name)
+    return client.begin_delete(resource_group_name=resource_group_name,
+                               managed_network_name=managed_network_name)
 
 
 def managed_network_mn_get_modify(cmd, client,

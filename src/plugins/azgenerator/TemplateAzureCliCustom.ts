@@ -440,7 +440,7 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let methodName = model.Method_Name;
-    if (model.Method_IsLongRun) {
+    if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
         methodName = "begin_" + methodName;
         methodCall += "sdk_no_wait(no_wait, " + "client." + methodName;
     } else {
