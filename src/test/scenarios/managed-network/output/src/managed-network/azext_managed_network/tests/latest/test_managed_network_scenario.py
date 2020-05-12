@@ -91,7 +91,7 @@ def step_managednetworkpeeringpoliciesput(test, rg):
 # EXAMPLE: ManagedNetworksGet
 @try_manual
 def step_managednetworksget(test, rg):
-    test.cmd('az managed-network mn show '
+    test.cmd('az managed-network mn get-modify '
              '--name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])

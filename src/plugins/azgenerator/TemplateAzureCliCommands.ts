@@ -43,7 +43,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 ToMultiLine("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + extraInfo + ") as g:", output);
                 let needWait = false;
                 do {
-                    if (model.Command_IsLongRun) {
+                    if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
                         needWait = true;
                     }
                     output = output.concat(getCommandBody(model));

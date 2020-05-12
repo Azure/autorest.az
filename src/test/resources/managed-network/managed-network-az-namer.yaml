@@ -3585,6 +3585,7 @@ operationGroups:
       name: ManagedNetwork
       description: ''
       command: managed-network managed-network
+      hasShowCommand: true
       hasUpdate: true
     cli:
       name: ManagedNetwork
@@ -4131,6 +4132,7 @@ operationGroups:
       name: ScopeAssignment
       description: ''
       command: managed-network scope-assignment
+      hasShowCommand: true
     cli:
       name: ScopeAssignment
       description: ''
@@ -4929,6 +4931,7 @@ operationGroups:
       name: ManagedNetworkGroup
       description: ''
       command: managed-network managed-network-group
+      hasShowCommand: true
     cli:
       name: ManagedNetworkGroup
       description: ''
@@ -5649,6 +5652,7 @@ operationGroups:
       name: ManagedNetworkPeeringPolicy
       description: ''
       command: managed-network managed-network-peering-policy
+      hasShowCommand: true
     cli:
       name: ManagedNetworkPeeringPolicy
       description: ''

@@ -25,13 +25,6 @@ def managed_network_mn_list(cmd, client,
                                        skiptoken=skiptoken)
 
 
-def managed_network_mn_show(cmd, client,
-                            resource_group_name,
-                            managed_network_name):
-    return client.get(resource_group_name=resource_group_name,
-                      managed_network_name=managed_network_name)
-
-
 def managed_network_mn_create(cmd, client,
                               resource_group_name,
                               managed_network_name,
@@ -65,6 +58,13 @@ def managed_network_mn_delete(cmd, client,
     return sdk_no_wait(no_wait, client.begin_delete,
                                                    resource_group_name=resource_group_name,
                                                    managed_network_name=managed_network_name)
+
+
+def managed_network_mn_get_modify(cmd, client,
+                                  resource_group_name,
+                                  managed_network_name):
+    return client.get_modify(resource_group_name=resource_group_name,
+                             managed_network_name=managed_network_name)
 
 
 def managed_network_mn_scope_assignment_list(cmd, client,
