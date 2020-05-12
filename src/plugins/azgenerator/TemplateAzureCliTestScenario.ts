@@ -17,7 +17,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let body: string[] = [];
     let funcScenario: string[] = [];
 
-    model.GatherInternalResource();
+    let commandParams = model.GatherInternalResource();
     let config: any = deepCopy(model.Extension_TestScenario);
     config.unshift({ function: "setup" });
     config.push({ function: "cleanup" });
@@ -46,7 +46,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     for (var ci = 0; ci < config.length; ci++) {
         let exampleId: string = config[ci].name;
         if (exampleId) {
-            model.FindExampleById(exampleId);
+            model.FindExampleById(exampleId, commandParams);
         }
     }
 
@@ -84,7 +84,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
             steps.push(...ToMultiLine(`def ${functionName}(test${parameterLine()}):`));
             // find example by name
             let found = false;
-            for (let exampleCmd of model.FindExampleById(exampleId)) {
+            for (let exampleCmd of model.FindExampleById(exampleId, commandParams)) {
                 if (exampleCmd && exampleCmd.length > 0) {
                     found = true;
                     for (let idx = 0; idx < exampleCmd.length; idx++) {
