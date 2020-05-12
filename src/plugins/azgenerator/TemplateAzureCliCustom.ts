@@ -160,7 +160,7 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperatio
     let hasLongRun = false;
     if (model.SelectFirstMethod()) {
         do {
-            if(model.Method_IsLongRun) {
+            if(model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
                 required['nowait'] = true,
                 hasLongRun = true;
             }
@@ -444,6 +444,9 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
         methodName = "begin_" + methodName;
         methodCall += "sdk_no_wait(no_wait, " + "client." + methodName;
     } else {
+        if(model.Method_IsLongRun) {
+            methodName = "begin_" + methodName;
+        }
         methodCall += "client." + methodName + "(";
     }
     

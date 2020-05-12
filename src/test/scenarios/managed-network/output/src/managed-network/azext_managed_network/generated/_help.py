@@ -74,18 +74,6 @@ nd Managed Network name
                az managed-network mn get-modify --name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
-helps['managed-network mn wait'] = """
-    type: command
-    short-summary: Place the CLI in a waiting state until a condition of the managed-network mn is met.
-    examples:
-      - name: Pause executing next line of CLI script until the managed-network mn is successfully updated.
-        text: |-
- --updated
-      - name: Pause executing next line of CLI script until the managed-network mn is successfully deleted.
-        text: |-
- --deleted
-"""
-
 helps['managed-network mn scope-assignment'] = """
     type: group
     short-summary: managed-network mn scope-assignment
