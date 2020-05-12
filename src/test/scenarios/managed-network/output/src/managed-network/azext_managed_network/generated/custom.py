@@ -10,6 +10,7 @@
 # pylint: disable=too-many-lines
 
 import json
+from azure.cli.core.util import sdk_no_wait
 
 
 def managed_network_mn_list(cmd, client,
@@ -49,17 +50,21 @@ def managed_network_mn_create(cmd, client,
 def managed_network_mn_update(cmd, client,
                               resource_group_name,
                               managed_network_name,
-                              tags=None):
-    return client.begin_update(resource_group_name=resource_group_name,
-                               managed_network_name=managed_network_name,
-                               tags=tags)
+                              tags=None,
+                              no_wait=False):
+    return sdk_no_wait(no_wait, client.begin_update,
+                                                   resource_group_name=resource_group_name,
+                                                   managed_network_name=managed_network_name,
+                                                   tags=tags)
 
 
 def managed_network_mn_delete(cmd, client,
                               resource_group_name,
-                              managed_network_name):
-    return client.begin_delete(resource_group_name=resource_group_name,
-                               managed_network_name=managed_network_name)
+                              managed_network_name,
+                              no_wait=False):
+    return sdk_no_wait(no_wait, client.begin_delete,
+                                                   resource_group_name=resource_group_name,
+                                                   managed_network_name=managed_network_name)
 
 
 def managed_network_mn_scope_assignment_list(cmd, client,
@@ -131,17 +136,19 @@ def managed_network_mn_group_create(cmd, client,
                                     management_groups=None,
                                     subscriptions=None,
                                     virtual_networks=None,
-                                    subnets=None):
+                                    subnets=None,
+                                    no_wait=False):
     if isinstance(management_groups, str):
         management_groups = json.loads(management_groups)
-    return client.begin_create_or_update(resource_group_name=resource_group_name,
-                                         managed_network_name=managed_network_name,
-                                         managed_network_group_name=group_name,
-                                         location=location,
-                                         management_groups=management_groups,
-                                         subscriptions=subscriptions,
-                                         virtual_networks=virtual_networks,
-                                         subnets=subnets)
+    return sdk_no_wait(no_wait, client.begin_create_or_update,
+                                                             resource_group_name=resource_group_name,
+                                                             managed_network_name=managed_network_name,
+                                                             managed_network_group_name=group_name,
+                                                             location=location,
+                                                             management_groups=management_groups,
+                                                             subscriptions=subscriptions,
+                                                             virtual_networks=virtual_networks,
+                                                             subnets=subnets)
 
 
 def managed_network_mn_group_update(cmd, client,
@@ -152,26 +159,30 @@ def managed_network_mn_group_update(cmd, client,
                                     management_groups=None,
                                     subscriptions=None,
                                     virtual_networks=None,
-                                    subnets=None):
+                                    subnets=None,
+                                    no_wait=False):
     if isinstance(management_groups, str):
         management_groups = json.loads(management_groups)
-    return client.begin_create_or_update(resource_group_name=resource_group_name,
-                                         managed_network_name=managed_network_name,
-                                         managed_network_group_name=group_name,
-                                         location=location,
-                                         management_groups=management_groups,
-                                         subscriptions=subscriptions,
-                                         virtual_networks=virtual_networks,
-                                         subnets=subnets)
+    return sdk_no_wait(no_wait, client.begin_create_or_update,
+                                                             resource_group_name=resource_group_name,
+                                                             managed_network_name=managed_network_name,
+                                                             managed_network_group_name=group_name,
+                                                             location=location,
+                                                             management_groups=management_groups,
+                                                             subscriptions=subscriptions,
+                                                             virtual_networks=virtual_networks,
+                                                             subnets=subnets)
 
 
 def managed_network_mn_group_delete(cmd, client,
                                     resource_group_name,
                                     managed_network_name,
-                                    group_name):
-    return client.begin_delete(resource_group_name=resource_group_name,
-                               managed_network_name=managed_network_name,
-                               managed_network_group_name=group_name)
+                                    group_name,
+                                    no_wait=False):
+    return sdk_no_wait(no_wait, client.begin_delete,
+                                                   resource_group_name=resource_group_name,
+                                                   managed_network_name=managed_network_name,
+                                                   managed_network_group_name=group_name)
 
 
 def managed_network_managed_network_peering_policy_list(cmd, client,
@@ -201,17 +212,19 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_create
                                                                                  location,
                                                                                  hub=None,
                                                                                  spokes=None,
-                                                                                 mesh=None):
+                                                                                 mesh=None,
+                                                                                 no_wait=False):
     properties = {}
     properties['type'] = 'HubAndSpokeTopology'
     properties['hub'] = hub
     properties['spokes'] = spokes
     properties['mesh'] = mesh
-    return client.begin_create_or_update(resource_group_name=resource_group_name,
-                                         managed_network_name=managed_network_name,
-                                         managed_network_peering_policy_name=policy_name,
-                                         location=location,
-                                         properties=properties)
+    return sdk_no_wait(no_wait, client.begin_create_or_update,
+                                                             resource_group_name=resource_group_name,
+                                                             managed_network_name=managed_network_name,
+                                                             managed_network_peering_policy_name=policy_name,
+                                                             location=location,
+                                                             properties=properties)
 
 
 def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update(instance, cmd,
@@ -221,7 +234,8 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update
                                                                                  location,
                                                                                  hub=None,
                                                                                  spokes=None,
-                                                                                 mesh=None):
+                                                                                 mesh=None,
+                                                                                 no_wait=False):
     instance.type = 'HubAndSpokeTopology'
     instance.hub = hub
     instance.spokes = spokes
@@ -236,17 +250,19 @@ def managed_network_managed_network_peering_policy_mesh_topology_create(cmd, cli
                                                                         location,
                                                                         hub=None,
                                                                         spokes=None,
-                                                                        mesh=None):
+                                                                        mesh=None,
+                                                                        no_wait=False):
     properties = {}
     properties['type'] = 'MeshTopology'
     properties['hub'] = hub
     properties['spokes'] = spokes
     properties['mesh'] = mesh
-    return client.begin_create_or_update(resource_group_name=resource_group_name,
-                                         managed_network_name=managed_network_name,
-                                         managed_network_peering_policy_name=policy_name,
-                                         location=location,
-                                         properties=properties)
+    return sdk_no_wait(no_wait, client.begin_create_or_update,
+                                                             resource_group_name=resource_group_name,
+                                                             managed_network_name=managed_network_name,
+                                                             managed_network_peering_policy_name=policy_name,
+                                                             location=location,
+                                                             properties=properties)
 
 
 def managed_network_managed_network_peering_policy_mesh_topology_update(instance, cmd,
@@ -256,7 +272,8 @@ def managed_network_managed_network_peering_policy_mesh_topology_update(instance
                                                                         location,
                                                                         hub=None,
                                                                         spokes=None,
-                                                                        mesh=None):
+                                                                        mesh=None,
+                                                                        no_wait=False):
     instance.type = 'MeshTopology'
     instance.hub = hub
     instance.spokes = spokes
@@ -267,7 +284,9 @@ def managed_network_managed_network_peering_policy_mesh_topology_update(instance
 def managed_network_managed_network_peering_policy_delete(cmd, client,
                                                           resource_group_name,
                                                           managed_network_name,
-                                                          policy_name):
-    return client.begin_delete(resource_group_name=resource_group_name,
-                               managed_network_name=managed_network_name,
-                               managed_network_peering_policy_name=policy_name)
+                                                          policy_name,
+                                                          no_wait=False):
+    return sdk_no_wait(no_wait, client.begin_delete,
+                                                   resource_group_name=resource_group_name,
+                                                   managed_network_name=managed_network_name,
+                                                   managed_network_peering_policy_name=policy_name)

@@ -28,6 +28,10 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
         header.addFromImport("knack.util", ["CLIError"]);
     }
 
+    if(required['nowait']) {
+        header.addFromImport("azure.cli.core.util", ["sdk_no_wait"]);
+    }
+
     let output = [];
     output = output.concat(body);
     output.push("");
@@ -136,7 +140,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     return output_body;
 }
 
-function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, needUpdate: boolean = false, needGeneric: boolean = false) {
+function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperation: Operation, needUpdate: boolean = false, needGeneric: boolean = false) {
 
     let output: string[] = [];
     let updatedMethodName: string = model.Command_FunctionName;
@@ -153,9 +157,13 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
     output.push(call);
     
     let allParam: Map<string, boolean> = new Map<string, boolean>();
+    let hasLongRun = false;
     if (model.SelectFirstMethod()) {
         do {
-
+            if(model.Method_IsLongRun) {
+                required['nowait'] = true,
+                hasLongRun = true;
+            }
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
@@ -222,6 +230,10 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
         } while (model.SelectNextMethod());
     }
 
+    if(hasLongRun) {
+        output[output.length - 1] += ",";
+        output.push(indent + "no_wait=False");
+    }
     output[output.length - 1] += "):";
     return output;
 }
@@ -357,13 +369,13 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
     return output;
 }
 
-function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boolean = false, originalOperation: Operation = null, needGeneric: boolean = false) {
+function GetCommandBody(model: CodeModelAz, required: any, needUpdate: boolean = false, originalOperation: Operation = null, needGeneric: boolean = false) {
     // create, delete, list, show, update
     let output: string[] = [];
     output.push("");
     output.push("");
 
-    output = output.concat(GetSingleCommandDef(model, originalOperation, needUpdate, needGeneric));
+    output = output.concat(GetSingleCommandDef(model, required, originalOperation, needUpdate, needGeneric));
     output = output.concat(GetSingleCommandBody(model, required, originalOperation, needGeneric))
     return output;
 }
@@ -374,8 +386,11 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     let methodName = originalOperation.language['python'].name;
     if (model.Method_IsLongRun) {
         methodName = "begin_" + methodName;
+        methodCall += "sdk_no_wait(no_wait, " + "client." + methodName;
+    } else {
+        methodCall += "client." + methodName + "(";
     }
-    methodCall += "client." + methodName + "(";
+    
     
     let indent = " ".repeat(methodCall.length);
     let cnt = 0;
@@ -424,8 +439,11 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
     let methodName = model.Method_Name;
     if (model.Method_IsLongRun) {
         methodName = "begin_" + methodName;
+        methodCall += "sdk_no_wait(no_wait, " + "client." + methodName;
+    } else {
+        methodCall += "client." + methodName + "(";
     }
-    methodCall += "client." + methodName + "(";
+    
     
     let indent = " ".repeat(methodCall.length); 
     if (model.SelectFirstMethodParameter()) {
