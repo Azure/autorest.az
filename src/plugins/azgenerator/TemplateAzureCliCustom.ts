@@ -384,10 +384,13 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let methodName = originalOperation.language['python'].name;
-    if (model.Method_IsLongRun) {
+    if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
         methodName = "begin_" + methodName;
         methodCall += "sdk_no_wait(no_wait, " + "client." + methodName;
     } else {
+        if(model.Method_IsLongRun) {
+            methodName = "begin_" + methodName;
+        }
         methodCall += "client." + methodName + "(";
     }
     

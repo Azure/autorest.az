@@ -74,6 +74,7 @@ export interface CodeModelAz
     CommandGroup_Name: string;
     CommandGroup_Help: string;
     CommandGroup_DefaultName: string;
+    CommandGroup_HasShowCommand: boolean;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;

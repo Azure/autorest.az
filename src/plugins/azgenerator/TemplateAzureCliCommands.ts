@@ -76,7 +76,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     let functionName = model.Command_FunctionName;
     let methodName = model.Command_MethodName;
     let endStr = ")";
-    if (model.Command_IsLongRun) {
+    if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
         endStr = ", supports_no_wait=True" + endStr;
     }
     if (methodName != "show") {

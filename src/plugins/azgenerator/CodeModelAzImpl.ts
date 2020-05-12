@@ -492,6 +492,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.CommandGroup.$key || this.CommandGroup_Name;
     }
 
+    public get CommandGroup_HasShowCommand(): boolean {
+        return this.CommandGroup.language['az']['hasShowCommand'];
+    }
+
     public get CommandGroup_DefaultName(): string {
         let eps = new EnglishPluralizationService();
         return eps.singularize(this.CommandGroup.language['cli'].cliKey);

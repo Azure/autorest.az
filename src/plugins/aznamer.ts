@@ -172,6 +172,9 @@ export class AzNamer {
                         operation.language['az'] = new Language();
                         let commandName = this.methodMap(operation.language['cli']['name'], request.protocol.http.method);
                         operation.language['az']['name'] = commandName;
+                        if(commandName == "show") {
+                            operationGroup.language['az']['hasShowCommand'] = true;
+                        }
                         operation.language['az']['description'] = operation.language['cli']['description'];
                         operationName = operationGroupName + " " +  changeCamelToDash(operation.language['az']['name']);
                         operation.language['az']['command'] = operationName;
