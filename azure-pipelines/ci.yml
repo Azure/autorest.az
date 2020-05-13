@@ -5,19 +5,19 @@ variables:
   NodeVersion: '10.x'
 
 jobs:
-  - job: Linter
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - task: TSLint@1
-        inputs:
-          RuleLibrary: 'tslint'
-          Ruleset: 'tsrecommended'
-          FileSelectionType: 'fileGlob'
-          Files: '**\*.ts'
-          OutputFormat: 'json'
-          ToolVersion: 'latest'
-          TypeScriptVersion: 'latest'
+  #- job: Linter
+  #  pool:
+  #    vmImage: 'vs2017-win2016'
+  #  steps:
+  #    - task: TSLint@1
+  #      inputs:
+  #        RuleLibrary: 'tslint'
+  #        Ruleset: 'tsrecommended'
+  #        FileSelectionType: 'fileGlob'
+  #        Files: '**\*.ts'
+  #        OutputFormat: 'json'
+  #        ToolVersion: 'latest'
+  #        TypeScriptVersion: 'latest'
 
   - job: 'Build'
 
@@ -79,23 +79,14 @@ jobs:
       vmImage: "windows-2019"
 
     steps:
-      - task:  CredScan@3
+      - task:  CredScan@2
         inputs:
           toolMajorVersion: 'V1'
       - task: PostAnalysis@1
         inputs:
-          AllTools: false
-          APIScan: false
-          BinSkim: false
-          CodesignValidation: false
-          CredScan: true
-          FortifySCA: false
-          FxCop: false
-          ModernCop: false
-          PoliCheck: false
-          RoslynAnalyzers: false
-          SDLNativeRules: false
-          Semmle: false
-          TSLint: false
+          AllTools: true
+          BinSkimBreakOn: 'Error'
+          RoslynAnalyzersBreakOn: 'Error'
+          TSLintBreakOn: 'Error'
           ToolLogsNotFoundAction: 'Standard'
 
