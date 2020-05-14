@@ -64,9 +64,9 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
                         needGeneric = true;
                     }
                     let needUpdate = model.Command_CanSplit;
-                    output = output.concat(GetCommandBody(model, required, false, originalOperation, false));
+                    output = output.concat(GetCommandBody(model, required, false, originalOperation, false, genericParameter));
                     if (needUpdate) {
-                        output = output.concat(GetCommandBody(model, required, needUpdate, originalOperation, needGeneric));
+                        output = output.concat(GetCommandBody(model, required, needUpdate, originalOperation, needGeneric, genericParameter));
                     }
                 }
                 while (model.SelectNextCommand());
@@ -140,7 +140,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     return output_body;
 }
 
-function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperation: Operation, needUpdate: boolean = false, needGeneric: boolean = false) {
+function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperation: Operation, needUpdate: boolean = false, needGeneric: boolean = false, genericParameter: Parameter = null) {
 
     let output: string[] = [];
     let updatedMethodName: string = model.Command_FunctionName;
@@ -173,6 +173,9 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperatio
                         continue;
                     }
 
+                    if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                        continue;
+                    }
                     if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             continue;
@@ -207,6 +210,10 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperatio
                         continue;
                     }
                       
+                    if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                        continue;
+                    } 
+
                     if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             continue;
@@ -238,7 +245,7 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperatio
     return output;
 }
 
-function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: Operation = null, needGeneric: boolean = false) {
+function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: Operation = null, needGeneric: boolean = false, genericParameter: Parameter = null, needUpdate: boolean = false) {
     let originalParameters = null;
     if(!isNullOrUndefined(originalOperation)) {
         originalParameters = originalOperation.parameters;
@@ -246,11 +253,10 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
             originalParameters = originalParameters.concat(originalOperation.requests[0].parameters);
         }
     }
-
+    
     let output: string[] = [];
     let output_body: string[] = []
     let output_method_call: string[] = [];
-
     if (model.SelectFirstMethod()) {
         // create body transformation for methods that support it
         let methodName: string = model.Command_MethodName;
@@ -260,10 +266,14 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
         do {
             if (model.SelectFirstMethodParameter()) {
                 do {
+                    if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                        continue;
+                    }
                     if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple && !model.MethodParameter_IsSimpleArray) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             let baseParam = model.MethodParameter;
                             let baseName = model.MethodParameter_MapsTo;
+                            
                             if(allPolyBaseParam.has(baseName)) {
                                 continue;
                             }
@@ -369,14 +379,14 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
     return output;
 }
 
-function GetCommandBody(model: CodeModelAz, required: any, needUpdate: boolean = false, originalOperation: Operation = null, needGeneric: boolean = false) {
+function GetCommandBody(model: CodeModelAz, required: any, needUpdate: boolean = false, originalOperation: Operation = null, needGeneric: boolean = false, genericParameter: Parameter = null) {
     // create, delete, list, show, update
     let output: string[] = [];
     output.push("");
     output.push("");
 
-    output = output.concat(GetSingleCommandDef(model, required, originalOperation, needUpdate, needGeneric));
-    output = output.concat(GetSingleCommandBody(model, required, originalOperation, needGeneric))
+    output = output.concat(GetSingleCommandDef(model, required, originalOperation, needUpdate, needGeneric, genericParameter));
+    output = output.concat(GetSingleCommandBody(model, required, originalOperation, needGeneric, genericParameter, needUpdate))
     return output;
 }
 

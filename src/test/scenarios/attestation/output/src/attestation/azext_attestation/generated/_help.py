@@ -41,6 +41,20 @@ helps['attestation attestation-provider'] = """
     short-summary: attestation attestation-provider
 """
 
+helps['attestation attestation-provider provider'] = """
+    type: group
+    short-summary: attestation attestation-provider sub group provider
+"""
+
+helps['attestation attestation-provider provider list'] = """
+    type: command
+    short-summary: Returns a list of attestation providers in a subscription.
+    examples:
+      - name: AttestationProviders_ListByResourceGroup
+        text: |-
+               az attestation attestation-provider provider list --resource-group "testrg1"
+"""
+
 helps['attestation attestation-provider show'] = """
     type: command
     short-summary: Get the status of Attestation Provider.
@@ -69,13 +83,4 @@ helps['attestation attestation-provider delete'] = """
         text: |-
                az attestation attestation-provider delete --provider-name "myattestationprovider" --resource-group "sam\
 ple-resource-group"
-"""
-
-helps['attestation attestation-provider list-attestation'] = """
-    type: command
-    short-summary: Returns a list of attestation providers in a subscription.
-    examples:
-      - name: AttestationProviders_ListByResourceGroup
-        text: |-
-               az attestation attestation-provider list-attestation --resource-group "testrg1"
 """

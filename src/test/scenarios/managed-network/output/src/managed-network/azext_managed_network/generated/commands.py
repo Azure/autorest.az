@@ -50,7 +50,7 @@ def load_command_table(self, _):
         g.custom_command('create', 'managed_network_mn_group_create', supports_no_wait=True)
         g.custom_command('update', 'managed_network_mn_group_update', supports_no_wait=True)
         g.custom_command('delete', 'managed_network_mn_group_delete', supports_no_wait=True)
-        g.wait_command('wait')
+        g.custom_wait_command('wait', 'managed_network_mn_group_show')
 
     from azext_managed_network.generated._client_factory import cf_managed_network_peering_policy
     managed_network_managed_network_peering_policy = CliCommandType(
@@ -73,4 +73,4 @@ def load_command_table(self, _):
                                  '_update', custom_func_name = 'managed_network_managed_network_peering_policy_mesh_top'
                                  'ology_update', supports_no_wait=True)
         g.custom_command('delete', 'managed_network_managed_network_peering_policy_delete', supports_no_wait=True)
-        g.wait_command('wait')
+        g.custom_wait_command('wait', 'managed_network_managed_network_peering_policy_show')

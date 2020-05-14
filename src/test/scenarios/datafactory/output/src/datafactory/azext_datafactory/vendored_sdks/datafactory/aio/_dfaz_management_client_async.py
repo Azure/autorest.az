@@ -13,6 +13,8 @@ from msrest import Deserializer, Serializer
 
 from ._configuration_async import DFAZManagementClientConfiguration
 from .operations_async import FactoryOperations
+from .operations_async import TriggerOperations
+from .operations_async import IntegrationRuntimeOperations
 from .. import models
 
 
@@ -21,6 +23,10 @@ class DFAZManagementClient(object):
 
     :ivar factory: FactoryOperations operations
     :vartype factory: azure.mgmt.datafactory.aio.operations_async.FactoryOperations
+    :ivar trigger: TriggerOperations operations
+    :vartype trigger: azure.mgmt.datafactory.aio.operations_async.TriggerOperations
+    :ivar integration_runtime: IntegrationRuntimeOperations operations
+    :vartype integration_runtime: azure.mgmt.datafactory.aio.operations_async.IntegrationRuntimeOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The subscription identifier.
@@ -46,6 +52,10 @@ class DFAZManagementClient(object):
         self._deserialize = Deserializer(client_models)
 
         self.factory = FactoryOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.trigger = TriggerOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.integration_runtime = IntegrationRuntimeOperations(
             self._client, self._config, self._serialize, self._deserialize)
 
     async def close(self) -> None:

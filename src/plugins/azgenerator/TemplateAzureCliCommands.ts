@@ -9,6 +9,7 @@ import { ToMultiLine } from "../../utils/helper"
 import { isNullOrUndefined } from "util";
 import { SchemaType } from "@azure-tools/codemodel";
 
+let showCommandFunctionName = undefined;
 export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
 
@@ -53,7 +54,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 }
                 while (model.SelectNextCommand());
                 if (needWait) {
-                    output.push("        g.wait_command('wait')");
+                    output.push("        g.custom_wait_command('wait', '" + showCommandFunctionName + "')");
                 }
             }
         } while (model.SelectNextCommandGroup());
@@ -113,6 +114,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
         }
     }
     else {
+        showCommandFunctionName = functionName;
         ToMultiLine("        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr, output);
     }
     return output;

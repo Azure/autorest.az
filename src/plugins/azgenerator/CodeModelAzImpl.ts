@@ -159,13 +159,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                         if (this.SelectFirstMethod()) {
                             let id_groups = new Map<string, string>();
                             id_groups = parseResourceId(this.Request.protocol.http.path);
-                            
+                            let hasName = false;
                             if (this.SelectFirstMethodParameter()) {
                                 do {
                                     let parameters = this.MethodParameter;
                                     let defaultName = parameters.language['cli']['cliKey'];
                                     let defaultToMatch = '{' + defaultName + '}';
-                                    
                                     if(!isNullOrUndefined(id_groups)) {
                                         for(let k of id_groups.entries()) {
                                             if(k[1] == defaultToMatch && defaultName != 'resourceGroupName') {
@@ -178,20 +177,43 @@ export class CodeModelCliImpl implements CodeModelAz {
                                     } else {
                                         this.MethodParameter['RequiredByMethod'] = paramRequired.get(this.MethodParameter_Name) == paramTime ? true : false;
                                     }
+                                    if (this.MethodParameter_MapsTo == 'name') {
+                                        hasName = true;
+                                    }
                                 } while (this.SelectNextMethodParameter());
+                                if (hasName) {
+                                    this.Method['hasName'] = true;
+                                }
                             }
                             while (this.SelectNextMethod()) {
+                                let id_groups = new Map<string, string>();
+                                id_groups = parseResourceId(this.Request.protocol.http.path);
+                                let hasName = false;
                                 if (this.SelectFirstMethodParameter()) {
                                     do {
                                         let parameters = this.MethodParameter;
+                                        let defaultName = parameters.language['cli']['cliKey'];
+                                        let defaultToMatch = '{' + defaultName + '}';
+                                        if(!isNullOrUndefined(id_groups)) {
+                                            for(let k of id_groups.entries()) {
+                                                if(k[1] == defaultToMatch && defaultName != 'resourceGroupName') {
+                                                    this.MethodParameter.language['az']['id_part'] = k[0];
+                                                }
+                                            }
+                                        }
                                         if (parameters.language['cli'].required) {
                                             this.MethodParameter['RequiredByMethod'] = true;
                                         } else {
                                             this.MethodParameter['RequiredByMethod'] = paramRequired.get(this.MethodParameter_Name) == paramTime ? true : false;
                                         }
+                                        if (this.MethodParameter_MapsTo == 'name') {
+                                            hasName = true;
+                                        }
                                     } while (this.SelectNextMethodParameter());
+                                    if (hasName) {
+                                        this.Method['hasName'] = true;
+                                    }
                                 }
-
                             }
                         }
                     } while (this.SelectNextCommand());
