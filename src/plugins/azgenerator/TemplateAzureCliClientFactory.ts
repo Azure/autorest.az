@@ -16,7 +16,7 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
     output.push("    from azure.cli.core.commands.client_factory import get_mgmt_service_client");
     output.push("    from ..vendored_sdks." + model.PythonOperationsName + " import " + model.PythonMgmtClient);
 
-    if (model.Extension_ClientSubscriptionBound || model.Extension_ClientBaseUrlBound)
+    if (model.Extension_ClientSubscriptionBound != undefined || model.Extension_ClientBaseUrlBound != undefined)
     {
         output.push("    return get_mgmt_service_client(cli_ctx, " + model.PythonMgmtClient + ",");
         output.push("                                   subscription_bound=" + (model.Extension_ClientSubscriptionBound ? "True" : "False") + ",");
