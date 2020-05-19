@@ -40,6 +40,8 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 let extraInfo = "";
                 if(groupinfos.length == 2 && model.Extension_Mode == 'experimental') {
                     extraInfo = ", is_experimental=True";
+                } else if(groupinfos.length == 2 && model.Extension_Mode == 'preview') {
+                    extraInfo = ", is_preview=True";
                 }
                 ToMultiLine("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + extraInfo + ") as g:", output);
                 let needWait = false;
