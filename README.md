@@ -11,7 +11,7 @@ output-folder: $(az-output-folder)
 debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
-  "@autorest/python": "5.0.0-preview.3"
+  "@autorest/python": "5.0.0-preview.7"
   "@autorest/clicommon": "0.4.8"
   #"@autorest/python": "latest"
   
