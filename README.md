@@ -6,6 +6,7 @@ See documentation [here](doc/00-overview.md)
 
 python:
     reason: 'make sure python flag exists to load config in python.md'
+azure-arm: true
 
 output-folder: $(az-output-folder)
 debug-output-folder: $(az-output-folder)/_az_debug

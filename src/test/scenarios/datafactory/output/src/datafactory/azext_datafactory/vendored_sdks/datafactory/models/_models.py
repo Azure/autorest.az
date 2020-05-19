@@ -13,7 +13,7 @@ class AccessPolicyResponse(msrest.serialization.Model):
     """Get Data Plane read only token response definition.
 
     :param policy: The user access policy.
-    :type policy: ~azure.mgmt.datafactory.models.UserAccessPolicy
+    :type policy: ~dfaz_management_client.models.UserAccessPolicy
     :param access_token: Data Plane read only access token.
     :type access_token: str
     :param data_plane_url: Data Plane service base URL.
@@ -346,7 +346,7 @@ class CloudError(msrest.serialization.Model):
     :param target: Property name/path in request associated with error.
     :type target: str
     :param details: Array with additional error details.
-    :type details: list[~azure.mgmt.datafactory.models.CloudError]
+    :type details: list[~dfaz_management_client.models.CloudError]
     """
 
     _validation = {
@@ -3495,8 +3495,13 @@ class TriggerListResponse(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
+<<<<<<< HEAD
     :param value: Required. List of triggers.
     :type value: list[~azure.mgmt.datafactory.models.TriggerResource]
+=======
+    :param value: Required. List of factories.
+    :type value: list[~dfaz_management_client.models.Factory]
+>>>>>>> 0a1c66d... add azure-arm to set default mgmt credential scope
     :param next_link: The link to the next page of results, if any remaining results exist.
     :type next_link: str
     """
@@ -3522,10 +3527,17 @@ class TriggerListResponse(msrest.serialization.Model):
 class TriggerPipelineReference(msrest.serialization.Model):
     """Pipeline that needs to be triggered with the given parameters.
 
+<<<<<<< HEAD
     :param pipeline_reference: Pipeline reference.
     :type pipeline_reference: ~azure.mgmt.datafactory.models.PipelineReference
     :param parameters: Pipeline parameters.
     :type parameters: dict[str, object]
+=======
+    :param factory_resource_id: The factory resource id.
+    :type factory_resource_id: str
+    :param repo_configuration: Git repo information of the factory.
+    :type repo_configuration: ~dfaz_management_client.models.FactoryRepoConfiguration
+>>>>>>> 0a1c66d... add azure-arm to set default mgmt credential scope
     """
 
     _attribute_map = {
@@ -3545,6 +3557,7 @@ class TriggerPipelineReference(msrest.serialization.Model):
 class TriggerQueryResponse(msrest.serialization.Model):
     """A query of triggers.
 
+<<<<<<< HEAD
     All required parameters must be populated in order to send to Azure.
 
     :param value: Required. List of triggers.
@@ -3552,6 +3565,12 @@ class TriggerQueryResponse(msrest.serialization.Model):
     :param continuation_token: The continuation token for getting the next page of results, if any
      remaining results exist, null otherwise.
     :type continuation_token: str
+=======
+    :param tags: A set of tags. The resource tags.
+    :type tags: dict[str, str]
+    :param identity: Managed service identity of the factory.
+    :type identity: ~dfaz_management_client.models.FactoryIdentity
+>>>>>>> 0a1c66d... add azure-arm to set default mgmt credential scope
     """
 
     _validation = {

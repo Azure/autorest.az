@@ -114,7 +114,7 @@ class AttestationProvider(TrackedResource):
     :type trust_model: str
     :param status: Required. Status of attestation service. Possible values include: "Ready",
      "NotReady", "Error".
-    :type status: str or ~azure.mgmt.attestation.models.AttestationServiceStatus
+    :type status: str or ~attestation_management_client.models.AttestationServiceStatus
     :param attest_uri: Gets the uri of attestation service.
     :type attest_uri: str
     """
@@ -152,7 +152,7 @@ class AttestationProviderListResult(msrest.serialization.Model):
     """Attestation Providers List.
 
     :param value: Attestation Provider array.
-    :type value: list[~azure.mgmt.attestation.models.AttestationProvider]
+    :type value: list[~attestation_management_client.models.AttestationProvider]
     """
 
     _attribute_map = {
@@ -184,7 +184,7 @@ class AttestationServiceCreationParams(msrest.serialization.Model):
      an order of preference among them, although applications of JWK Sets
      can choose to assign a meaning to the order for their purposes, if
      desired.
-    :type keys: list[~azure.mgmt.attestation.models.JsonWebKey]
+    :type keys: list[~attestation_management_client.models.JsonWebKey]
     """
 
     _validation = {
@@ -374,7 +374,7 @@ class OperationList(msrest.serialization.Model):
     """List of supported operations.
 
     :param value: List of supported operations.
-    :type value: list[~azure.mgmt.attestation.models.OperationsDefinition]
+    :type value: list[~attestation_management_client.models.OperationsDefinition]
     """
 
     _attribute_map = {
@@ -395,7 +395,7 @@ class OperationsDefinition(msrest.serialization.Model):
     :param name: Name of the operation.
     :type name: str
     :param display: Display object with properties of the operation.
-    :type display: ~azure.mgmt.attestation.models.OperationsDisplayDefinition
+    :type display: ~attestation_management_client.models.OperationsDisplayDefinition
     """
 
     _attribute_map = {

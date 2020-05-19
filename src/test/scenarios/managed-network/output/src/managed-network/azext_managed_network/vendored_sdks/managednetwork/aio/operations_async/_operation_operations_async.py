@@ -48,7 +48,7 @@ class OperationOperations:
         """Lists all of the available MNC operations.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of OperationListResult or the result of cls(response)
+        :return: An iterator like instance of either OperationListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~managed_network_management_client.models.OperationListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
