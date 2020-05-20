@@ -393,19 +393,22 @@ function GetCommandBody(model: CodeModelAz, required: any, needUpdate: boolean =
 function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: Operation, originalParameters: Parameter[]): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
+    let indent = "";
     let methodName = originalOperation.language['python'].name;
     if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
         methodName = "begin_" + methodName;
-        methodCall += "sdk_no_wait(no_wait, " + "client." + methodName;
+        methodCall += "sdk_no_wait(";
+        indent = " ".repeat(methodCall.length);
+        methodCall += "no_wait," + "\n" + indent + "client." + methodName;
+        
     } else {
         if(model.Method_IsLongRun) {
             methodName = "begin_" + methodName;
         }
         methodCall += "client." + methodName + "(";
+        indent = " ".repeat(methodCall.length);
     }
     
-    
-    let indent = " ".repeat(methodCall.length);
     let cnt = 0;
     for(let param of originalParameters) {
         if (param.flattened) {
@@ -450,18 +453,21 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let methodName = model.Method_Name;
+    let indent = "";
     if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
         methodName = "begin_" + methodName;
-        methodCall += "sdk_no_wait(no_wait, " + "client." + methodName;
+        methodCall += "sdk_no_wait(";
+        indent = " ".repeat(methodCall.length);
+        methodCall += "no_wait," + "\n" + indent + "client." + methodName;
     } else {
         if(model.Method_IsLongRun) {
             methodName = "begin_" + methodName;
         }
         methodCall += "client." + methodName + "(";
+        indent = " ".repeat(methodCall.length); 
     }
     
-    
-    let indent = " ".repeat(methodCall.length); 
+
     if (model.SelectFirstMethodParameter()) {
         do {
             let param = model.MethodParameter;

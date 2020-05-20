@@ -202,10 +202,11 @@ def datafactory_trigger_start(cmd, client,
                               factory_name,
                               trigger_name,
                               no_wait=False):
-    return sdk_no_wait(no_wait, client.begin_start,
-                                                  resource_group_name=resource_group_name,
-                                                  factory_name=factory_name,
-                                                  trigger_name=trigger_name)
+    return sdk_no_wait(no_wait,
+                       client.begin_start,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       trigger_name=trigger_name)
 
 
 def datafactory_trigger_stop(cmd, client,
@@ -213,10 +214,11 @@ def datafactory_trigger_stop(cmd, client,
                              factory_name,
                              trigger_name,
                              no_wait=False):
-    return sdk_no_wait(no_wait, client.begin_stop,
-                                                 resource_group_name=resource_group_name,
-                                                 factory_name=factory_name,
-                                                 trigger_name=trigger_name)
+    return sdk_no_wait(no_wait,
+                       client.begin_stop,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       trigger_name=trigger_name)
 
 
 def datafactory_trigger_subscribe_to_event(cmd, client,
@@ -224,10 +226,11 @@ def datafactory_trigger_subscribe_to_event(cmd, client,
                                            factory_name,
                                            trigger_name,
                                            no_wait=False):
-    return sdk_no_wait(no_wait, client.begin_subscribe_to_event,
-                                                               resource_group_name=resource_group_name,
-                                                               factory_name=factory_name,
-                                                               trigger_name=trigger_name)
+    return sdk_no_wait(no_wait,
+                       client.begin_subscribe_to_event,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       trigger_name=trigger_name)
 
 
 def datafactory_trigger_unsubscribe_from_event(cmd, client,
@@ -235,10 +238,11 @@ def datafactory_trigger_unsubscribe_from_event(cmd, client,
                                                factory_name,
                                                trigger_name,
                                                no_wait=False):
-    return sdk_no_wait(no_wait, client.begin_unsubscribe_from_event,
-                                                                   resource_group_name=resource_group_name,
-                                                                   factory_name=factory_name,
-                                                                   trigger_name=trigger_name)
+    return sdk_no_wait(no_wait,
+                       client.begin_unsubscribe_from_event,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       trigger_name=trigger_name)
 
 
 def datafactory_integration_runtime_list(cmd, client,
@@ -380,10 +384,11 @@ def datafactory_integration_runtime_start(cmd, client,
                                           factory_name,
                                           integration_runtime_name,
                                           no_wait=False):
-    return sdk_no_wait(no_wait, client.begin_start,
-                                                  resource_group_name=resource_group_name,
-                                                  factory_name=factory_name,
-                                                  integration_runtime_name=integration_runtime_name)
+    return sdk_no_wait(no_wait,
+                       client.begin_start,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       integration_runtime_name=integration_runtime_name)
 
 
 def datafactory_integration_runtime_stop(cmd, client,
@@ -391,10 +396,11 @@ def datafactory_integration_runtime_stop(cmd, client,
                                          factory_name,
                                          integration_runtime_name,
                                          no_wait=False):
-    return sdk_no_wait(no_wait, client.begin_stop,
-                                                 resource_group_name=resource_group_name,
-                                                 factory_name=factory_name,
-                                                 integration_runtime_name=integration_runtime_name)
+    return sdk_no_wait(no_wait,
+                       client.begin_stop,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       integration_runtime_name=integration_runtime_name)
 
 
 def datafactory_integration_runtime_sync_credentials(cmd, client,
