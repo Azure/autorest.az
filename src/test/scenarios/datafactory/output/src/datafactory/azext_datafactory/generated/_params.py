@@ -47,15 +47,10 @@ def load_arguments(self, _):
         c.argument('identity', action=AddIdentity, nargs='+', help='Managed service identity of the factory. Expect val'
                    'ue: KEY1=VALUE1 KEY2=VALUE2 ...')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: project-name, tena'
-                   'nt-id, account-name, repository-name, collaboration-branch, root-folder, last-commit-id.',
-                   arg_group='RepoConfiguration')
+                   'epo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: host-name, '
-                   'account-name, repository-name, collaboration-branch, root-folder, last-commit-id.', arg_group='Repo'
-                   'Configuration')
-        c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test. Expect value: KE'
-                   'Y1=VALUE1 KEY2=VALUE2 ... , available KEYs are: name, zones-inside.')
+                   'itHub repo information.', arg_group='RepoConfiguration')
+        c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
         c.argument('zones', nargs='+', help='This is only for az test.')
 
     with self.argument_context('datafactory update') as c:
@@ -73,13 +68,9 @@ def load_arguments(self, _):
         c.argument('location_id', help='The location identifier.', id_part='name')
         c.argument('factory_resource_id', help='The factory resource id.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: project-name, tena'
-                   'nt-id, account-name, repository-name, collaboration-branch, root-folder, last-commit-id.',
-                   arg_group='RepoConfiguration')
+                   'epo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: host-name, '
-                   'account-name, repository-name, collaboration-branch, root-folder, last-commit-id.', arg_group='Repo'
-                   'Configuration')
+                   'itHub repo information.', arg_group='RepoConfiguration')
 
     with self.argument_context('datafactory get-data-plane-access') as c:
         c.argument('resource_group_name', resource_group_name_type)

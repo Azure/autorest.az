@@ -300,19 +300,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                                     }
                                 }
                                 if (options.length>0) {
-                                    if (options.length>1) {
-                                        argument += " Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are:";
-                                        for (let i =0; i<options.length; i++) {
-                                            argument += " " + options[i];
-                                            if (i<options.length-1) {
-                                                argument += ",";
-                                            }
-                                        }
-                                        argument += ".";
-                                    }
-                                    else {
-                                        argument += ` Expect value: ${options[0]}=xx.`;
-                                    }
+                                    // for those object has known KEYs, the help is in the _help.py file
                                 }
                                 else {
                                     argument += " Expect value: KEY1=VALUE1 KEY2=VALUE2 ...";
