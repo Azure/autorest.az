@@ -802,11 +802,11 @@ export class CodeModelCliImpl implements CodeModelAz {
     //
     // This interface is designed to enumerate all parameters of the selected method and their mapping to Python SDK.
     //=================================================================================================================
-    public SelectFirstMethodParameter(): boolean {
+    public SelectFirstMethodParameter(containHidden: boolean = false): boolean {
         if (this.submethodparameters != null) {
             this.currentSubOptionIndex = 0;
             let parameter = this.submethodparameters[this.currentSubOptionIndex];
-            if (parameter?.language['cli']?.hidden || parameter?.language['cli']?.removed) {
+            if (this.Parameter_IsHidden(parameter) && !containHidden) {
                 if (!this.SelectNextMethodParameter()) {
                     return false;
                 }
@@ -815,7 +815,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
         if (this.MethodParameters.length > 0) {
             this.currentParameterIndex = 0;
-            if (this.MethodParameter_IsHidden || this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1) {
+            if ((this.MethodParameter_IsHidden && !containHidden) || this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1) {
                 if (this.SelectNextMethodParameter()) {
                     return true;
                 } else {
@@ -828,7 +828,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public SelectNextMethodParameter(): boolean {
+    public SelectNextMethodParameter(containHidden: boolean = false): boolean {
         if (this.submethodparameters != null) {
             this.currentSubOptionIndex++;
 
@@ -836,7 +836,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 return false;
             }
             let parameter = this.submethodparameters[this.currentSubOptionIndex];
-            if (parameter?.language['cli']?.hidden || parameter?.language['cli']?.removed) {
+            if (this.Parameter_IsHidden(parameter) && !containHidden) {
                 if (!this.SelectNextMethodParameter()) {
                     return false;
                 }
@@ -845,7 +845,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
         if (this.currentParameterIndex < this.MethodParameters.length - 1) {
             this.currentParameterIndex++;
-            if (this.MethodParameter_IsHidden || this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1) {
+            if ((this.MethodParameter_IsHidden && !containHidden) || this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1) {
                 if (this.SelectNextMethodParameter()) {
                     return true;
                 } else {
@@ -858,12 +858,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public EnterSubMethodParameters(): boolean {
-        this.submethodparameters =  this.GetSubParameters(this.MethodParameter);
-        if(isNullOrUndefined(this.submethodparameters)) {
-           return false; 
+    public EnterSubMethodParameters(param: Parameter = this.MethodParameter): boolean {
+        let subParams = this.GetSubParameters(param);
+        if (isNullOrUndefined(subParams)) {
+            return false;
         }
-        return true;
+        else {
+            this.submethodparameters = subParams;
+            return true;
+        }
     }
 
     public GetSubParameters(param: Parameter = this.MethodParameter): Parameter[] {
@@ -1246,16 +1249,35 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_IsHidden(): boolean {
+        return this.Parameter_IsHidden(this.MethodParameter);
+    }
 
-        let parameter = this.MethodParameter;
-
+    public Parameter_IsHidden(parameter: Parameter): boolean {
         if (!parameter.language['az'].hasOwnProperty('hidden')) {
+            // Handle complex
+            let shouldHidden = undefined;
+            if (this.EnterSubMethodParameters(parameter))
+            {
+                shouldHidden = true;
+                if (this.SelectFirstMethodParameter()) {
+                    do {
+                        if (this.Parameter_Type(this.SubMethodParameter) != SchemaType.Constant
+                            && this.SubMethodParameter['readOnly'] != true) {
+                            shouldHidden = false;
+                            break;
+                        }
+                    } while (this.SelectNextMethodParameter())
+                }
+                this.ExitSubMethodParameters();
+            }
+
+            // Handle simple parameter
             if (parameter?.language?.['cli']?.removed || parameter?.language?.['cli']?.hidden) {
-                if (parameter.schema.defaultValue == undefined && parameter.required == true) {
+                if (this.Parameter_DefaultValue(parameter) == undefined && parameter.required == true) {
                     parameter.language['az'].hidden = false;
                     this.session.message({
                         Channel: Channel.Warning,
-                        Text: "OperationGroup " + this.GetModuleOperationName()
+                        Text: "OperationGroup " + this.CommandGroup.language['az'].name
                             + " operation " + this.Method_Name
                             + " parameter " + parameter.language['az'].name
                             + " should not be hidden while it is required without default value"
@@ -1265,19 +1287,27 @@ export class CodeModelCliImpl implements CodeModelAz {
                     parameter.language['az'].hidden = true;
                 }
             } else {
-                parameter.language['az'].hidden = this.MethodParameter['hidden'] ? true : false;
+                parameter.language['az'].hidden = this.MethodParameter['hidden'] ?? shouldHidden ?? false;
             }
         }
 
         return parameter.language['az'].hidden;
     }
 
-    public Parameter_IsHidden(parameter: Parameter): boolean {
-        if (parameter.language['cli'].removed || parameter.language['cli'].hidden) {
-            return true;
-        } else {
-            return this.MethodParameter['hidden'] ? true : false;
-        }        
+    public get MethodParameters_DefaultValue(): string | undefined {
+        return this.Parameter_DefaultValue(this.MethodParameter);
+    }
+
+    public Parameter_DefaultValue(parameter: Parameter): string | undefined{
+        if (!parameter.language['az'].hasOwnProperty('default-value')) {
+            if (parameter?.language?.['cli']?.hasOwnProperty('default-value')) {
+                parameter.language['az']['default-value'] = parameter.language['cli']['default-value'];
+            } else {
+                parameter.language['az']['default-value'] = parameter.schema.defaultValue;
+            }
+        }
+
+        return parameter.language['az']['default-value'];
     }
 
     public Parameter_Description(param: Parameter = this.MethodParameter): string {
