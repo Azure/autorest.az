@@ -6,9 +6,12 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from typing import Dict, List, Optional
+import datetime
+from typing import Dict, List, Optional, Union
 
 import msrest.serialization
+
+from ._dfaz_management_client_enums import *
 
 
 class AccessPolicyResponse(msrest.serialization.Model):
@@ -40,6 +43,338 @@ class AccessPolicyResponse(msrest.serialization.Model):
         self.policy = policy
         self.access_token = access_token
         self.data_plane_url = data_plane_url
+
+
+class Trigger(msrest.serialization.Model):
+    """Azure data factory nested object which contains information about creating pipeline run.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: ChainingTrigger, MultiplePipelineTrigger, RerunTumblingWindowTrigger, TumblingWindowTrigger.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Trigger type.Constant filled by server.
+    :type type: str
+    :param description: Trigger description.
+    :type description: str
+    :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
+     called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
+    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :param annotations: List of tags that can be used for describing the trigger.
+    :type annotations: list[object]
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'runtime_state': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'runtime_state': {'key': 'runtimeState', 'type': 'str'},
+        'annotations': {'key': 'annotations', 'type': '[object]'},
+    }
+
+    _subtype_map = {
+        'type': {'ChainingTrigger': 'ChainingTrigger', 'MultiplePipelineTrigger': 'MultiplePipelineTrigger', 'RerunTumblingWindowTrigger': 'RerunTumblingWindowTrigger', 'TumblingWindowTrigger': 'TumblingWindowTrigger'}
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        description: Optional[str] = None,
+        annotations: Optional[List[object]] = None,
+        **kwargs
+    ):
+        super(Trigger, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.type: str = 'Trigger'
+        self.description = description
+        self.runtime_state = None
+        self.annotations = annotations
+
+
+class MultiplePipelineTrigger(Trigger):
+    """Base class for all triggers that support one to many model for trigger to pipeline.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: BlobEventsTrigger, BlobTrigger, ScheduleTrigger.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Trigger type.Constant filled by server.
+    :type type: str
+    :param description: Trigger description.
+    :type description: str
+    :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
+     called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
+    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :param annotations: List of tags that can be used for describing the trigger.
+    :type annotations: list[object]
+    :param pipelines: Pipelines that need to be started.
+    :type pipelines: list[object]
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'runtime_state': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'runtime_state': {'key': 'runtimeState', 'type': 'str'},
+        'annotations': {'key': 'annotations', 'type': '[object]'},
+        'pipelines': {'key': 'pipelines', 'type': '[object]'},
+    }
+
+    _subtype_map = {
+        'type': {'BlobEventsTrigger': 'BlobEventsTrigger', 'BlobTrigger': 'BlobTrigger', 'ScheduleTrigger': 'ScheduleTrigger'}
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        description: Optional[str] = None,
+        annotations: Optional[List[object]] = None,
+        pipelines: Optional[List[object]] = None,
+        **kwargs
+    ):
+        super(MultiplePipelineTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, **kwargs)
+        self.type: str = 'MultiplePipelineTrigger'
+        self.pipelines = pipelines
+
+
+class BlobEventsTrigger(MultiplePipelineTrigger):
+    """Trigger that runs every time a Blob event occurs.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Trigger type.Constant filled by server.
+    :type type: str
+    :param description: Trigger description.
+    :type description: str
+    :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
+     called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
+    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :param annotations: List of tags that can be used for describing the trigger.
+    :type annotations: list[object]
+    :param pipelines: Pipelines that need to be started.
+    :type pipelines: list[object]
+    :param blob_path_begins_with: The blob path must begin with the pattern provided for trigger to
+     fire. For example, '/records/blobs/december/' will only fire the trigger for blobs in the
+     december folder under the records container. At least one of these must be provided:
+     blobPathBeginsWith, blobPathEndsWith.
+    :type blob_path_begins_with: str
+    :param blob_path_ends_with: The blob path must end with the pattern provided for trigger to
+     fire. For example, 'december/boxes.csv' will only fire the trigger for blobs named boxes in a
+     december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith.
+    :type blob_path_ends_with: str
+    :param ignore_empty_blobs: If set to true, blobs with zero bytes will be ignored.
+    :type ignore_empty_blobs: bool
+    :param events: Required. The type of events that cause this trigger to fire.
+    :type events: list[str or ~azure.mgmt.datafactory.models.BlobEventTypes]
+    :param scope: Required. The ARM resource ID of the Storage Account.
+    :type scope: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'runtime_state': {'readonly': True},
+        'events': {'required': True},
+        'scope': {'required': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'runtime_state': {'key': 'runtimeState', 'type': 'str'},
+        'annotations': {'key': 'annotations', 'type': '[object]'},
+        'pipelines': {'key': 'pipelines', 'type': '[object]'},
+        'blob_path_begins_with': {'key': 'typeProperties.blobPathBeginsWith', 'type': 'str'},
+        'blob_path_ends_with': {'key': 'typeProperties.blobPathEndsWith', 'type': 'str'},
+        'ignore_empty_blobs': {'key': 'typeProperties.ignoreEmptyBlobs', 'type': 'bool'},
+        'events': {'key': 'typeProperties.events', 'type': '[str]'},
+        'scope': {'key': 'typeProperties.scope', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        events: List[Union[str, "BlobEventTypes"]],
+        scope: str,
+        additional_properties: Optional[Dict[str, object]] = None,
+        description: Optional[str] = None,
+        annotations: Optional[List[object]] = None,
+        pipelines: Optional[List[object]] = None,
+        blob_path_begins_with: Optional[str] = None,
+        blob_path_ends_with: Optional[str] = None,
+        ignore_empty_blobs: Optional[bool] = None,
+        **kwargs
+    ):
+        super(BlobEventsTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, pipelines=pipelines, **kwargs)
+        self.type: str = 'BlobEventsTrigger'
+        self.blob_path_begins_with = blob_path_begins_with
+        self.blob_path_ends_with = blob_path_ends_with
+        self.ignore_empty_blobs = ignore_empty_blobs
+        self.events = events
+        self.scope = scope
+
+
+class BlobTrigger(MultiplePipelineTrigger):
+    """Trigger that runs every time the selected Blob container changes.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Trigger type.Constant filled by server.
+    :type type: str
+    :param description: Trigger description.
+    :type description: str
+    :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
+     called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
+    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :param annotations: List of tags that can be used for describing the trigger.
+    :type annotations: list[object]
+    :param pipelines: Pipelines that need to be started.
+    :type pipelines: list[object]
+    :param folder_path: Required. The path of the container/folder that will trigger the pipeline.
+    :type folder_path: str
+    :param max_concurrency: Required. The max number of parallel files to handle when it is
+     triggered.
+    :type max_concurrency: int
+    :param linked_service: Required. The Azure Storage linked service reference.
+    :type linked_service: object
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'runtime_state': {'readonly': True},
+        'folder_path': {'required': True},
+        'max_concurrency': {'required': True},
+        'linked_service': {'required': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'runtime_state': {'key': 'runtimeState', 'type': 'str'},
+        'annotations': {'key': 'annotations', 'type': '[object]'},
+        'pipelines': {'key': 'pipelines', 'type': '[object]'},
+        'folder_path': {'key': 'typeProperties.folderPath', 'type': 'str'},
+        'max_concurrency': {'key': 'typeProperties.maxConcurrency', 'type': 'int'},
+        'linked_service': {'key': 'typeProperties.linkedService', 'type': 'object'},
+    }
+
+    def __init__(
+        self,
+        *,
+        folder_path: str,
+        max_concurrency: int,
+        linked_service: object,
+        additional_properties: Optional[Dict[str, object]] = None,
+        description: Optional[str] = None,
+        annotations: Optional[List[object]] = None,
+        pipelines: Optional[List[object]] = None,
+        **kwargs
+    ):
+        super(BlobTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, pipelines=pipelines, **kwargs)
+        self.type: str = 'BlobTrigger'
+        self.folder_path = folder_path
+        self.max_concurrency = max_concurrency
+        self.linked_service = linked_service
+
+
+class ChainingTrigger(Trigger):
+    """Trigger that allows the referenced pipeline to depend on other pipeline runs based on runDimension Name/Value pairs. Upstream pipelines should declare the same runDimension Name and their runs should have the values for those runDimensions. The referenced pipeline run would be triggered if the values for the runDimension match for all upstream pipeline runs.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Trigger type.Constant filled by server.
+    :type type: str
+    :param description: Trigger description.
+    :type description: str
+    :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
+     called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
+    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :param annotations: List of tags that can be used for describing the trigger.
+    :type annotations: list[object]
+    :param pipeline: Required. Pipeline for which runs are created when all upstream pipelines
+     complete successfully.
+    :type pipeline: object
+    :param depends_on: Required. Upstream Pipelines.
+    :type depends_on: list[object]
+    :param run_dimension: Required. Run Dimension property that needs to be emitted by upstream
+     pipelines.
+    :type run_dimension: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'runtime_state': {'readonly': True},
+        'pipeline': {'required': True},
+        'depends_on': {'required': True},
+        'run_dimension': {'required': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'runtime_state': {'key': 'runtimeState', 'type': 'str'},
+        'annotations': {'key': 'annotations', 'type': '[object]'},
+        'pipeline': {'key': 'pipeline', 'type': 'object'},
+        'depends_on': {'key': 'typeProperties.dependsOn', 'type': '[object]'},
+        'run_dimension': {'key': 'typeProperties.runDimension', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        pipeline: object,
+        depends_on: List[object],
+        run_dimension: str,
+        additional_properties: Optional[Dict[str, object]] = None,
+        description: Optional[str] = None,
+        annotations: Optional[List[object]] = None,
+        **kwargs
+    ):
+        super(ChainingTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, **kwargs)
+        self.type: str = 'ChainingTrigger'
+        self.pipeline = pipeline
+        self.depends_on = depends_on
+        self.run_dimension = run_dimension
 
 
 class CloudError(msrest.serialization.Model):
@@ -83,6 +418,255 @@ class CloudError(msrest.serialization.Model):
         self.message = message
         self.target = target
         self.details = details
+
+
+class CustomSetupBase(msrest.serialization.Model):
+    """The base definition of the custom setup.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: CmdkeySetup, ComponentSetup, EnvironmentVariableSetup.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. The type of custom setup.Constant filled by server.
+    :type type: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'type': {'CmdkeySetup': 'CmdkeySetup', 'ComponentSetup': 'ComponentSetup', 'EnvironmentVariableSetup': 'EnvironmentVariableSetup'}
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(CustomSetupBase, self).__init__(**kwargs)
+        self.type: Optional[str] = None
+
+
+class CmdkeySetup(CustomSetupBase):
+    """The custom setup of running cmdkey commands.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. The type of custom setup.Constant filled by server.
+    :type type: str
+    :param target_name: Required. The server name of data source access.
+    :type target_name: object
+    :param user_name: Required. The user name of data source access.
+    :type user_name: object
+    :param password: Required. The password of data source access.
+    :type password: object
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'target_name': {'required': True},
+        'user_name': {'required': True},
+        'password': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'target_name': {'key': 'typeProperties.targetName', 'type': 'object'},
+        'user_name': {'key': 'typeProperties.userName', 'type': 'object'},
+        'password': {'key': 'typeProperties.password', 'type': 'object'},
+    }
+
+    def __init__(
+        self,
+        *,
+        target_name: object,
+        user_name: object,
+        password: object,
+        **kwargs
+    ):
+        super(CmdkeySetup, self).__init__(**kwargs)
+        self.type: str = 'CmdkeySetup'
+        self.target_name = target_name
+        self.user_name = user_name
+        self.password = password
+
+
+class ComponentSetup(CustomSetupBase):
+    """The custom setup of installing 3rd party components.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. The type of custom setup.Constant filled by server.
+    :type type: str
+    :param component_name: Required. The name of the 3rd party component.
+    :type component_name: str
+    :param license_key: The license key to activate the component.
+    :type license_key: object
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'component_name': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'component_name': {'key': 'typeProperties.componentName', 'type': 'str'},
+        'license_key': {'key': 'typeProperties.licenseKey', 'type': 'object'},
+    }
+
+    def __init__(
+        self,
+        *,
+        component_name: str,
+        license_key: Optional[object] = None,
+        **kwargs
+    ):
+        super(ComponentSetup, self).__init__(**kwargs)
+        self.type: str = 'ComponentSetup'
+        self.component_name = component_name
+        self.license_key = license_key
+
+
+class CreateLinkedIntegrationRuntimeRequest(msrest.serialization.Model):
+    """The linked integration runtime information.
+
+    :param name: The name of the linked integration runtime.
+    :type name: str
+    :param subscription_id: The ID of the subscription that the linked integration runtime belongs
+     to.
+    :type subscription_id: str
+    :param data_factory_name: The name of the data factory that the linked integration runtime
+     belongs to.
+    :type data_factory_name: str
+    :param data_factory_location: The location of the data factory that the linked integration
+     runtime belongs to.
+    :type data_factory_location: str
+    """
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'subscription_id': {'key': 'subscriptionId', 'type': 'str'},
+        'data_factory_name': {'key': 'dataFactoryName', 'type': 'str'},
+        'data_factory_location': {'key': 'dataFactoryLocation', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        name: Optional[str] = None,
+        subscription_id: Optional[str] = None,
+        data_factory_name: Optional[str] = None,
+        data_factory_location: Optional[str] = None,
+        **kwargs
+    ):
+        super(CreateLinkedIntegrationRuntimeRequest, self).__init__(**kwargs)
+        self.name = name
+        self.subscription_id = subscription_id
+        self.data_factory_name = data_factory_name
+        self.data_factory_location = data_factory_location
+
+
+class DependencyReference(msrest.serialization.Model):
+    """Referenced dependency.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: SelfDependencyTumblingWindowTriggerReference, TriggerDependencyReference.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. The type of dependency reference.Constant filled by server.
+    :type type: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'type': {'SelfDependencyTumblingWindowTriggerReference': 'SelfDependencyTumblingWindowTriggerReference', 'TriggerDependencyReference': 'TriggerDependencyReference'}
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(DependencyReference, self).__init__(**kwargs)
+        self.type: Optional[str] = None
+
+
+class EntityReference(msrest.serialization.Model):
+    """The entity reference.
+
+    :param type: The type of this referenced entity. Possible values include:
+     "IntegrationRuntimeReference", "LinkedServiceReference".
+    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeEntityReferenceType
+    :param reference_name: The name of this referenced entity.
+    :type reference_name: str
+    """
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'reference_name': {'key': 'referenceName', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        type: Optional[Union[str, "IntegrationRuntimeEntityReferenceType"]] = None,
+        reference_name: Optional[str] = None,
+        **kwargs
+    ):
+        super(EntityReference, self).__init__(**kwargs)
+        self.type = type
+        self.reference_name = reference_name
+
+
+class EnvironmentVariableSetup(CustomSetupBase):
+    """The custom setup of setting environment variable.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. The type of custom setup.Constant filled by server.
+    :type type: str
+    :param variable_name: Required. The name of the environment variable.
+    :type variable_name: str
+    :param variable_value: Required. The value of the environment variable.
+    :type variable_value: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'variable_name': {'required': True},
+        'variable_value': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'variable_name': {'key': 'typeProperties.variableName', 'type': 'str'},
+        'variable_value': {'key': 'typeProperties.variableValue', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        variable_name: str,
+        variable_value: str,
+        **kwargs
+    ):
+        super(EnvironmentVariableSetup, self).__init__(**kwargs)
+        self.type: str = 'EnvironmentVariableSetup'
+        self.variable_name = variable_name
+        self.variable_value = variable_value
 
 
 class Resource(msrest.serialization.Model):
@@ -612,6 +1196,2902 @@ class GitHubAccessTokenResponse(msrest.serialization.Model):
     ):
         super(GitHubAccessTokenResponse, self).__init__(**kwargs)
         self.git_hub_access_token = git_hub_access_token
+
+
+class IntegrationRuntime(msrest.serialization.Model):
+    """Azure Data Factory nested object which serves as a compute resource for activities.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: ManagedIntegrationRuntime, SelfHostedIntegrationRuntime.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
+     include: "Managed", "SelfHosted".
+    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :param description: Integration runtime description.
+    :type description: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'type': {'Managed': 'ManagedIntegrationRuntime', 'SelfHosted': 'SelfHostedIntegrationRuntime'}
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        description: Optional[str] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntime, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.type: str = 'IntegrationRuntime'
+        self.description = description
+
+
+class IntegrationRuntimeAuthKeys(msrest.serialization.Model):
+    """The integration runtime authentication keys.
+
+    :param auth_key1: The primary integration runtime authentication key.
+    :type auth_key1: str
+    :param auth_key2: The secondary integration runtime authentication key.
+    :type auth_key2: str
+    """
+
+    _attribute_map = {
+        'auth_key1': {'key': 'authKey1', 'type': 'str'},
+        'auth_key2': {'key': 'authKey2', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        auth_key1: Optional[str] = None,
+        auth_key2: Optional[str] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeAuthKeys, self).__init__(**kwargs)
+        self.auth_key1 = auth_key1
+        self.auth_key2 = auth_key2
+
+
+class IntegrationRuntimeComputeProperties(msrest.serialization.Model):
+    """The compute resource properties for managed integration runtime.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param location: The location for managed integration runtime. The supported regions could be
+     found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-
+     activities.
+    :type location: str
+    :param node_size: The node size requirement to managed integration runtime.
+    :type node_size: str
+    :param number_of_nodes: The required number of nodes for managed integration runtime.
+    :type number_of_nodes: int
+    :param max_parallel_executions_per_node: Maximum parallel executions count per node for managed
+     integration runtime.
+    :type max_parallel_executions_per_node: int
+    :param data_flow_properties: Data flow properties for managed integration runtime.
+    :type data_flow_properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeDataFlowProperties
+    :param v_net_properties: VNet properties for managed integration runtime.
+    :type v_net_properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeVNetProperties
+    """
+
+    _validation = {
+        'number_of_nodes': {'minimum': 1},
+        'max_parallel_executions_per_node': {'minimum': 1},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'location': {'key': 'location', 'type': 'str'},
+        'node_size': {'key': 'nodeSize', 'type': 'str'},
+        'number_of_nodes': {'key': 'numberOfNodes', 'type': 'int'},
+        'max_parallel_executions_per_node': {'key': 'maxParallelExecutionsPerNode', 'type': 'int'},
+        'data_flow_properties': {'key': 'dataFlowProperties', 'type': 'IntegrationRuntimeDataFlowProperties'},
+        'v_net_properties': {'key': 'vNetProperties', 'type': 'IntegrationRuntimeVNetProperties'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        location: Optional[str] = None,
+        node_size: Optional[str] = None,
+        number_of_nodes: Optional[int] = None,
+        max_parallel_executions_per_node: Optional[int] = None,
+        data_flow_properties: Optional["IntegrationRuntimeDataFlowProperties"] = None,
+        v_net_properties: Optional["IntegrationRuntimeVNetProperties"] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeComputeProperties, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.location = location
+        self.node_size = node_size
+        self.number_of_nodes = number_of_nodes
+        self.max_parallel_executions_per_node = max_parallel_executions_per_node
+        self.data_flow_properties = data_flow_properties
+        self.v_net_properties = v_net_properties
+
+
+class IntegrationRuntimeConnectionInfo(msrest.serialization.Model):
+    """Connection information for encrypting the on-premises data source credentials.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :ivar service_token: The token generated in service. Callers use this token to authenticate to
+     integration runtime.
+    :vartype service_token: str
+    :ivar identity_cert_thumbprint: The integration runtime SSL certificate thumbprint. Click-Once
+     application uses it to do server validation.
+    :vartype identity_cert_thumbprint: str
+    :ivar host_service_uri: The on-premises integration runtime host URL.
+    :vartype host_service_uri: str
+    :ivar version: The integration runtime version.
+    :vartype version: str
+    :ivar public_key: The public key for encrypting a credential when transferring the credential
+     to the integration runtime.
+    :vartype public_key: str
+    :ivar is_identity_cert_exprired: Whether the identity certificate is expired.
+    :vartype is_identity_cert_exprired: bool
+    """
+
+    _validation = {
+        'service_token': {'readonly': True},
+        'identity_cert_thumbprint': {'readonly': True},
+        'host_service_uri': {'readonly': True},
+        'version': {'readonly': True},
+        'public_key': {'readonly': True},
+        'is_identity_cert_exprired': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'service_token': {'key': 'serviceToken', 'type': 'str'},
+        'identity_cert_thumbprint': {'key': 'identityCertThumbprint', 'type': 'str'},
+        'host_service_uri': {'key': 'hostServiceUri', 'type': 'str'},
+        'version': {'key': 'version', 'type': 'str'},
+        'public_key': {'key': 'publicKey', 'type': 'str'},
+        'is_identity_cert_exprired': {'key': 'isIdentityCertExprired', 'type': 'bool'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeConnectionInfo, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.service_token = None
+        self.identity_cert_thumbprint = None
+        self.host_service_uri = None
+        self.version = None
+        self.public_key = None
+        self.is_identity_cert_exprired = None
+
+
+class IntegrationRuntimeCustomSetupScriptProperties(msrest.serialization.Model):
+    """Custom setup script properties for a managed dedicated integration runtime.
+
+    :param blob_container_uri: The URI of the Azure blob container that contains the custom setup
+     script.
+    :type blob_container_uri: str
+    :param sas_token: The SAS token of the Azure blob container.
+    :type sas_token: object
+    """
+
+    _attribute_map = {
+        'blob_container_uri': {'key': 'blobContainerUri', 'type': 'str'},
+        'sas_token': {'key': 'sasToken', 'type': 'object'},
+    }
+
+    def __init__(
+        self,
+        *,
+        blob_container_uri: Optional[str] = None,
+        sas_token: Optional[object] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeCustomSetupScriptProperties, self).__init__(**kwargs)
+        self.blob_container_uri = blob_container_uri
+        self.sas_token = sas_token
+
+
+class IntegrationRuntimeDataFlowProperties(msrest.serialization.Model):
+    """Data flow properties for managed integration runtime.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param compute_type: Compute type of the cluster which will execute data flow job. Possible
+     values include: "General", "MemoryOptimized", "ComputeOptimized".
+    :type compute_type: str or ~azure.mgmt.datafactory.models.DataFlowComputeType
+    :param core_count: Core count of the cluster which will execute data flow job. Supported values
+     are: 8, 16, 32, 48, 80, 144 and 272.
+    :type core_count: int
+    :param time_to_live: Time to live (in minutes) setting of the cluster which will execute data
+     flow job.
+    :type time_to_live: int
+    """
+
+    _validation = {
+        'time_to_live': {'minimum': 0},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'compute_type': {'key': 'computeType', 'type': 'str'},
+        'core_count': {'key': 'coreCount', 'type': 'int'},
+        'time_to_live': {'key': 'timeToLive', 'type': 'int'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        compute_type: Optional[Union[str, "DataFlowComputeType"]] = None,
+        core_count: Optional[int] = None,
+        time_to_live: Optional[int] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeDataFlowProperties, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.compute_type = compute_type
+        self.core_count = core_count
+        self.time_to_live = time_to_live
+
+
+class IntegrationRuntimeDataProxyProperties(msrest.serialization.Model):
+    """Data proxy properties for a managed dedicated integration runtime.
+
+    :param connect_via: The self-hosted integration runtime reference.
+    :type connect_via: ~azure.mgmt.datafactory.models.EntityReference
+    :param staging_linked_service: The staging linked service reference.
+    :type staging_linked_service: ~azure.mgmt.datafactory.models.EntityReference
+    :param path: The path to contain the staged data in the Blob storage.
+    :type path: str
+    """
+
+    _attribute_map = {
+        'connect_via': {'key': 'connectVia', 'type': 'EntityReference'},
+        'staging_linked_service': {'key': 'stagingLinkedService', 'type': 'EntityReference'},
+        'path': {'key': 'path', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        connect_via: Optional["EntityReference"] = None,
+        staging_linked_service: Optional["EntityReference"] = None,
+        path: Optional[str] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeDataProxyProperties, self).__init__(**kwargs)
+        self.connect_via = connect_via
+        self.staging_linked_service = staging_linked_service
+        self.path = path
+
+
+class IntegrationRuntimeListResponse(msrest.serialization.Model):
+    """A list of integration runtime resources.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param value: Required. List of integration runtimes.
+    :type value: list[~azure.mgmt.datafactory.models.IntegrationRuntimeResource]
+    :param next_link: The link to the next page of results, if any remaining results exist.
+    :type next_link: str
+    """
+
+    _validation = {
+        'value': {'required': True},
+    }
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[IntegrationRuntimeResource]'},
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        value: List["IntegrationRuntimeResource"],
+        next_link: Optional[str] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeListResponse, self).__init__(**kwargs)
+        self.value = value
+        self.next_link = next_link
+
+
+class IntegrationRuntimeMonitoringData(msrest.serialization.Model):
+    """Get monitoring data response.
+
+    :param name: Integration runtime name.
+    :type name: str
+    :param nodes: Integration runtime node monitoring data.
+    :type nodes: list[~azure.mgmt.datafactory.models.IntegrationRuntimeNodeMonitoringData]
+    """
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'nodes': {'key': 'nodes', 'type': '[IntegrationRuntimeNodeMonitoringData]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        name: Optional[str] = None,
+        nodes: Optional[List["IntegrationRuntimeNodeMonitoringData"]] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeMonitoringData, self).__init__(**kwargs)
+        self.name = name
+        self.nodes = nodes
+
+
+class IntegrationRuntimeNodeIpAddress(msrest.serialization.Model):
+    """The IP address of self-hosted integration runtime node.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar ip_address: The IP address of self-hosted integration runtime node.
+    :vartype ip_address: str
+    """
+
+    _validation = {
+        'ip_address': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'ip_address': {'key': 'ipAddress', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(IntegrationRuntimeNodeIpAddress, self).__init__(**kwargs)
+        self.ip_address = None
+
+
+class IntegrationRuntimeNodeMonitoringData(msrest.serialization.Model):
+    """Monitoring data for integration runtime node.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :ivar node_name: Name of the integration runtime node.
+    :vartype node_name: str
+    :ivar available_memory_in_mb: Available memory (MB) on the integration runtime node.
+    :vartype available_memory_in_mb: int
+    :ivar cpu_utilization: CPU percentage on the integration runtime node.
+    :vartype cpu_utilization: int
+    :ivar concurrent_jobs_limit: Maximum concurrent jobs on the integration runtime node.
+    :vartype concurrent_jobs_limit: int
+    :ivar concurrent_jobs_running: The number of jobs currently running on the integration runtime
+     node.
+    :vartype concurrent_jobs_running: int
+    :ivar max_concurrent_jobs: The maximum concurrent jobs in this integration runtime.
+    :vartype max_concurrent_jobs: int
+    :ivar sent_bytes: Sent bytes on the integration runtime node.
+    :vartype sent_bytes: float
+    :ivar received_bytes: Received bytes on the integration runtime node.
+    :vartype received_bytes: float
+    """
+
+    _validation = {
+        'node_name': {'readonly': True},
+        'available_memory_in_mb': {'readonly': True},
+        'cpu_utilization': {'readonly': True},
+        'concurrent_jobs_limit': {'readonly': True},
+        'concurrent_jobs_running': {'readonly': True},
+        'max_concurrent_jobs': {'readonly': True},
+        'sent_bytes': {'readonly': True},
+        'received_bytes': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'node_name': {'key': 'nodeName', 'type': 'str'},
+        'available_memory_in_mb': {'key': 'availableMemoryInMB', 'type': 'int'},
+        'cpu_utilization': {'key': 'cpuUtilization', 'type': 'int'},
+        'concurrent_jobs_limit': {'key': 'concurrentJobsLimit', 'type': 'int'},
+        'concurrent_jobs_running': {'key': 'concurrentJobsRunning', 'type': 'int'},
+        'max_concurrent_jobs': {'key': 'maxConcurrentJobs', 'type': 'int'},
+        'sent_bytes': {'key': 'sentBytes', 'type': 'float'},
+        'received_bytes': {'key': 'receivedBytes', 'type': 'float'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeNodeMonitoringData, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.node_name = None
+        self.available_memory_in_mb = None
+        self.cpu_utilization = None
+        self.concurrent_jobs_limit = None
+        self.concurrent_jobs_running = None
+        self.max_concurrent_jobs = None
+        self.sent_bytes = None
+        self.received_bytes = None
+
+
+class IntegrationRuntimeReference(msrest.serialization.Model):
+    """Integration runtime reference type.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar type: Required. Type of integration runtime. Default value:
+     "IntegrationRuntimeReference".
+    :vartype type: str
+    :param reference_name: Required. Reference integration runtime name.
+    :type reference_name: str
+    :param parameters: Arguments for integration runtime.
+    :type parameters: object
+    """
+
+    _validation = {
+        'type': {'required': True, 'constant': True},
+        'reference_name': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'reference_name': {'key': 'referenceName', 'type': 'str'},
+        'parameters': {'key': 'parameters', 'type': 'object'},
+    }
+
+    type = "IntegrationRuntimeReference"
+
+    def __init__(
+        self,
+        *,
+        reference_name: str,
+        parameters: Optional[object] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeReference, self).__init__(**kwargs)
+        self.reference_name = reference_name
+        self.parameters = parameters
+
+
+class IntegrationRuntimeRegenerateKeyParameters(msrest.serialization.Model):
+    """Parameters to regenerate the authentication key.
+
+    :param key_name: The name of the authentication key to regenerate. Possible values include:
+     "authKey1", "authKey2".
+    :type key_name: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeAuthKeyName
+    """
+
+    _attribute_map = {
+        'key_name': {'key': 'keyName', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        key_name: Optional[Union[str, "IntegrationRuntimeAuthKeyName"]] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeRegenerateKeyParameters, self).__init__(**kwargs)
+        self.key_name = key_name
+
+
+class SubResource(msrest.serialization.Model):
+    """Azure Data Factory nested resource, which belongs to a factory.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: The resource identifier.
+    :vartype id: str
+    :ivar name: The resource name.
+    :vartype name: str
+    :ivar type: The resource type.
+    :vartype type: str
+    :ivar etag: Etag identifies change in the resource.
+    :vartype etag: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'etag': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'etag': {'key': 'etag', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(SubResource, self).__init__(**kwargs)
+        self.id = None
+        self.name = None
+        self.type = None
+        self.etag = None
+
+
+class IntegrationRuntimeResource(SubResource):
+    """Integration runtime resource type.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar id: The resource identifier.
+    :vartype id: str
+    :ivar name: The resource name.
+    :vartype name: str
+    :ivar type: The resource type.
+    :vartype type: str
+    :ivar etag: Etag identifies change in the resource.
+    :vartype etag: str
+    :param properties: Required. Integration runtime properties.
+    :type properties: object
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'etag': {'readonly': True},
+        'properties': {'required': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'etag': {'key': 'etag', 'type': 'str'},
+        'properties': {'key': 'properties', 'type': 'object'},
+    }
+
+    def __init__(
+        self,
+        *,
+        properties: object,
+        **kwargs
+    ):
+        super(IntegrationRuntimeResource, self).__init__(**kwargs)
+        self.properties = properties
+
+
+class IntegrationRuntimeSsisCatalogInfo(msrest.serialization.Model):
+    """Catalog information for managed dedicated integration runtime.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param catalog_server_endpoint: The catalog database server URL.
+    :type catalog_server_endpoint: str
+    :param catalog_admin_user_name: The administrator user name of catalog database.
+    :type catalog_admin_user_name: str
+    :param catalog_admin_password: The password of the administrator user account of the catalog
+     database.
+    :type catalog_admin_password: object
+    :param catalog_pricing_tier: The pricing tier for the catalog database. The valid values could
+     be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. Possible values
+     include: "Basic", "Standard", "Premium", "PremiumRS".
+    :type catalog_pricing_tier: str or
+     ~azure.mgmt.datafactory.models.IntegrationRuntimeSsisCatalogPricingTier
+    """
+
+    _validation = {
+        'catalog_admin_user_name': {'max_length': 128, 'min_length': 1},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'catalog_server_endpoint': {'key': 'catalogServerEndpoint', 'type': 'str'},
+        'catalog_admin_user_name': {'key': 'catalogAdminUserName', 'type': 'str'},
+        'catalog_admin_password': {'key': 'catalogAdminPassword', 'type': 'object'},
+        'catalog_pricing_tier': {'key': 'catalogPricingTier', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        catalog_server_endpoint: Optional[str] = None,
+        catalog_admin_user_name: Optional[str] = None,
+        catalog_admin_password: Optional[object] = None,
+        catalog_pricing_tier: Optional[Union[str, "IntegrationRuntimeSsisCatalogPricingTier"]] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeSsisCatalogInfo, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.catalog_server_endpoint = catalog_server_endpoint
+        self.catalog_admin_user_name = catalog_admin_user_name
+        self.catalog_admin_password = catalog_admin_password
+        self.catalog_pricing_tier = catalog_pricing_tier
+
+
+class IntegrationRuntimeSsisProperties(msrest.serialization.Model):
+    """SSIS properties for managed integration runtime.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param catalog_info: Catalog information for managed dedicated integration runtime.
+    :type catalog_info: ~azure.mgmt.datafactory.models.IntegrationRuntimeSsisCatalogInfo
+    :param license_type: License type for bringing your own license scenario. Possible values
+     include: "BasePrice", "LicenseIncluded".
+    :type license_type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeLicenseType
+    :param custom_setup_script_properties: Custom setup script properties for a managed dedicated
+     integration runtime.
+    :type custom_setup_script_properties:
+     ~azure.mgmt.datafactory.models.IntegrationRuntimeCustomSetupScriptProperties
+    :param data_proxy_properties: Data proxy properties for a managed dedicated integration
+     runtime.
+    :type data_proxy_properties:
+     ~azure.mgmt.datafactory.models.IntegrationRuntimeDataProxyProperties
+    :param edition: The edition for the SSIS Integration Runtime. Possible values include:
+     "Standard", "Enterprise".
+    :type edition: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeEdition
+    :param express_custom_setup_properties: Custom setup without script properties for a SSIS
+     integration runtime.
+    :type express_custom_setup_properties: list[~azure.mgmt.datafactory.models.CustomSetupBase]
+    :param package_stores: Package stores for the SSIS Integration Runtime.
+    :type package_stores: list[~azure.mgmt.datafactory.models.PackageStore]
+    """
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'catalog_info': {'key': 'catalogInfo', 'type': 'IntegrationRuntimeSsisCatalogInfo'},
+        'license_type': {'key': 'licenseType', 'type': 'str'},
+        'custom_setup_script_properties': {'key': 'customSetupScriptProperties', 'type': 'IntegrationRuntimeCustomSetupScriptProperties'},
+        'data_proxy_properties': {'key': 'dataProxyProperties', 'type': 'IntegrationRuntimeDataProxyProperties'},
+        'edition': {'key': 'edition', 'type': 'str'},
+        'express_custom_setup_properties': {'key': 'expressCustomSetupProperties', 'type': '[CustomSetupBase]'},
+        'package_stores': {'key': 'packageStores', 'type': '[PackageStore]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        catalog_info: Optional["IntegrationRuntimeSsisCatalogInfo"] = None,
+        license_type: Optional[Union[str, "IntegrationRuntimeLicenseType"]] = None,
+        custom_setup_script_properties: Optional["IntegrationRuntimeCustomSetupScriptProperties"] = None,
+        data_proxy_properties: Optional["IntegrationRuntimeDataProxyProperties"] = None,
+        edition: Optional[Union[str, "IntegrationRuntimeEdition"]] = None,
+        express_custom_setup_properties: Optional[List["CustomSetupBase"]] = None,
+        package_stores: Optional[List["PackageStore"]] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeSsisProperties, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.catalog_info = catalog_info
+        self.license_type = license_type
+        self.custom_setup_script_properties = custom_setup_script_properties
+        self.data_proxy_properties = data_proxy_properties
+        self.edition = edition
+        self.express_custom_setup_properties = express_custom_setup_properties
+        self.package_stores = package_stores
+
+
+class IntegrationRuntimeStatus(msrest.serialization.Model):
+    """Integration runtime status.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: ManagedIntegrationRuntimeStatus, SelfHostedIntegrationRuntimeStatus.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
+     include: "Managed", "SelfHosted".
+    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :ivar data_factory_name: The data factory name which the integration runtime belong to.
+    :vartype data_factory_name: str
+    :ivar state: The state of integration runtime. Possible values include: "Initial", "Stopped",
+     "Started", "Starting", "Stopping", "NeedRegistration", "Online", "Limited", "Offline",
+     "AccessDenied".
+    :vartype state: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeState
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'data_factory_name': {'readonly': True},
+        'state': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'data_factory_name': {'key': 'dataFactoryName', 'type': 'str'},
+        'state': {'key': 'state', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'type': {'Managed': 'ManagedIntegrationRuntimeStatus', 'SelfHosted': 'SelfHostedIntegrationRuntimeStatus'}
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeStatus, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.type: str = 'IntegrationRuntimeStatus'
+        self.data_factory_name = None
+        self.state = None
+
+
+class IntegrationRuntimeStatusListResponse(msrest.serialization.Model):
+    """A list of integration runtime status.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param value: Required. List of integration runtime status.
+    :type value: list[~azure.mgmt.datafactory.models.IntegrationRuntimeStatusResponse]
+    :param next_link: The link to the next page of results, if any remaining results exist.
+    :type next_link: str
+    """
+
+    _validation = {
+        'value': {'required': True},
+    }
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[IntegrationRuntimeStatusResponse]'},
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        value: List["IntegrationRuntimeStatusResponse"],
+        next_link: Optional[str] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeStatusListResponse, self).__init__(**kwargs)
+        self.value = value
+        self.next_link = next_link
+
+
+class IntegrationRuntimeStatusResponse(msrest.serialization.Model):
+    """Integration runtime status response.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar name: The integration runtime name.
+    :vartype name: str
+    :param properties: Required. Integration runtime properties.
+    :type properties: object
+    """
+
+    _validation = {
+        'name': {'readonly': True},
+        'properties': {'required': True},
+    }
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'properties': {'key': 'properties', 'type': 'object'},
+    }
+
+    def __init__(
+        self,
+        *,
+        properties: object,
+        **kwargs
+    ):
+        super(IntegrationRuntimeStatusResponse, self).__init__(**kwargs)
+        self.name = None
+        self.properties = properties
+
+
+class IntegrationRuntimeVNetProperties(msrest.serialization.Model):
+    """VNet properties for managed integration runtime.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param v_net_id: The ID of the VNet that this integration runtime will join.
+    :type v_net_id: str
+    :param subnet: The name of the subnet this integration runtime will join.
+    :type subnet: str
+    :param public_i_ps: Resource IDs of the public IP addresses that this integration runtime will
+     use.
+    :type public_i_ps: list[str]
+    """
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'v_net_id': {'key': 'vNetId', 'type': 'str'},
+        'subnet': {'key': 'subnet', 'type': 'str'},
+        'public_i_ps': {'key': 'publicIPs', 'type': '[str]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        v_net_id: Optional[str] = None,
+        subnet: Optional[str] = None,
+        public_i_ps: Optional[List[str]] = None,
+        **kwargs
+    ):
+        super(IntegrationRuntimeVNetProperties, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.v_net_id = v_net_id
+        self.subnet = subnet
+        self.public_i_ps = public_i_ps
+
+
+class LinkedIntegrationRuntime(msrest.serialization.Model):
+    """The linked integration runtime information.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar name: The name of the linked integration runtime.
+    :vartype name: str
+    :ivar subscription_id: The subscription ID for which the linked integration runtime belong to.
+    :vartype subscription_id: str
+    :ivar data_factory_name: The name of the data factory for which the linked integration runtime
+     belong to.
+    :vartype data_factory_name: str
+    :ivar data_factory_location: The location of the data factory for which the linked integration
+     runtime belong to.
+    :vartype data_factory_location: str
+    :ivar create_time: The creating time of the linked integration runtime.
+    :vartype create_time: ~datetime.datetime
+    """
+
+    _validation = {
+        'name': {'readonly': True},
+        'subscription_id': {'readonly': True},
+        'data_factory_name': {'readonly': True},
+        'data_factory_location': {'readonly': True},
+        'create_time': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'subscription_id': {'key': 'subscriptionId', 'type': 'str'},
+        'data_factory_name': {'key': 'dataFactoryName', 'type': 'str'},
+        'data_factory_location': {'key': 'dataFactoryLocation', 'type': 'str'},
+        'create_time': {'key': 'createTime', 'type': 'iso-8601'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(LinkedIntegrationRuntime, self).__init__(**kwargs)
+        self.name = None
+        self.subscription_id = None
+        self.data_factory_name = None
+        self.data_factory_location = None
+        self.create_time = None
+
+
+class LinkedIntegrationRuntimeType(msrest.serialization.Model):
+    """The base definition of a linked integration runtime.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: LinkedIntegrationRuntimeKeyAuthorization, LinkedIntegrationRuntimeRbacAuthorization.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param authorization_type: Required. The authorization type for integration runtime
+     sharing.Constant filled by server.
+    :type authorization_type: str
+    """
+
+    _validation = {
+        'authorization_type': {'required': True},
+    }
+
+    _attribute_map = {
+        'authorization_type': {'key': 'authorizationType', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'authorization_type': {'Key': 'LinkedIntegrationRuntimeKeyAuthorization', 'RBAC': 'LinkedIntegrationRuntimeRbacAuthorization'}
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(LinkedIntegrationRuntimeType, self).__init__(**kwargs)
+        self.authorization_type: Optional[str] = None
+
+
+class LinkedIntegrationRuntimeKeyAuthorization(LinkedIntegrationRuntimeType):
+    """The key authorization type integration runtime.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param authorization_type: Required. The authorization type for integration runtime
+     sharing.Constant filled by server.
+    :type authorization_type: str
+    :param key: Required. The key used for authorization.
+    :type key: object
+    """
+
+    _validation = {
+        'authorization_type': {'required': True},
+        'key': {'required': True},
+    }
+
+    _attribute_map = {
+        'authorization_type': {'key': 'authorizationType', 'type': 'str'},
+        'key': {'key': 'key', 'type': 'object'},
+    }
+
+    def __init__(
+        self,
+        *,
+        key: object,
+        **kwargs
+    ):
+        super(LinkedIntegrationRuntimeKeyAuthorization, self).__init__(**kwargs)
+        self.authorization_type: str = 'Key'
+        self.key = key
+
+
+class LinkedIntegrationRuntimeRbacAuthorization(LinkedIntegrationRuntimeType):
+    """The role based access control (RBAC) authorization type integration runtime.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param authorization_type: Required. The authorization type for integration runtime
+     sharing.Constant filled by server.
+    :type authorization_type: str
+    :param resource_id: Required. The resource identifier of the integration runtime to be shared.
+    :type resource_id: str
+    """
+
+    _validation = {
+        'authorization_type': {'required': True},
+        'resource_id': {'required': True},
+    }
+
+    _attribute_map = {
+        'authorization_type': {'key': 'authorizationType', 'type': 'str'},
+        'resource_id': {'key': 'resourceId', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        resource_id: str,
+        **kwargs
+    ):
+        super(LinkedIntegrationRuntimeRbacAuthorization, self).__init__(**kwargs)
+        self.authorization_type: str = 'RBAC'
+        self.resource_id = resource_id
+
+
+class LinkedIntegrationRuntimeRequest(msrest.serialization.Model):
+    """Data factory name for linked integration runtime request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param linked_factory_name: Required. The data factory name for linked integration runtime.
+    :type linked_factory_name: str
+    """
+
+    _validation = {
+        'linked_factory_name': {'required': True},
+    }
+
+    _attribute_map = {
+        'linked_factory_name': {'key': 'factoryName', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        linked_factory_name: str,
+        **kwargs
+    ):
+        super(LinkedIntegrationRuntimeRequest, self).__init__(**kwargs)
+        self.linked_factory_name = linked_factory_name
+
+
+class ManagedIntegrationRuntime(IntegrationRuntime):
+    """Managed integration runtime, including managed elastic and managed dedicated integration runtimes.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
+     include: "Managed", "SelfHosted".
+    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :param description: Integration runtime description.
+    :type description: str
+    :ivar state: Integration runtime state, only valid for managed dedicated integration runtime.
+     Possible values include: "Initial", "Stopped", "Started", "Starting", "Stopping",
+     "NeedRegistration", "Online", "Limited", "Offline", "AccessDenied".
+    :vartype state: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeState
+    :param compute_properties: The compute resource for managed integration runtime.
+    :type compute_properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeComputeProperties
+    :param ssis_properties: SSIS properties for managed integration runtime.
+    :type ssis_properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeSsisProperties
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'state': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'state': {'key': 'state', 'type': 'str'},
+        'compute_properties': {'key': 'typeProperties.computeProperties', 'type': 'IntegrationRuntimeComputeProperties'},
+        'ssis_properties': {'key': 'typeProperties.ssisProperties', 'type': 'IntegrationRuntimeSsisProperties'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        description: Optional[str] = None,
+        compute_properties: Optional["IntegrationRuntimeComputeProperties"] = None,
+        ssis_properties: Optional["IntegrationRuntimeSsisProperties"] = None,
+        **kwargs
+    ):
+        super(ManagedIntegrationRuntime, self).__init__(additional_properties=additional_properties, description=description, **kwargs)
+        self.type: str = 'Managed'
+        self.state = None
+        self.compute_properties = compute_properties
+        self.ssis_properties = ssis_properties
+
+
+class ManagedIntegrationRuntimeError(msrest.serialization.Model):
+    """Error definition for managed integration runtime.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :ivar time: The time when the error occurred.
+    :vartype time: ~datetime.datetime
+    :ivar code: Error code.
+    :vartype code: str
+    :ivar parameters: Managed integration runtime error parameters.
+    :vartype parameters: list[str]
+    :ivar message: Error message.
+    :vartype message: str
+    """
+
+    _validation = {
+        'time': {'readonly': True},
+        'code': {'readonly': True},
+        'parameters': {'readonly': True},
+        'message': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'time': {'key': 'time', 'type': 'iso-8601'},
+        'code': {'key': 'code', 'type': 'str'},
+        'parameters': {'key': 'parameters', 'type': '[str]'},
+        'message': {'key': 'message', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        **kwargs
+    ):
+        super(ManagedIntegrationRuntimeError, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.time = None
+        self.code = None
+        self.parameters = None
+        self.message = None
+
+
+class ManagedIntegrationRuntimeNode(msrest.serialization.Model):
+    """Properties of integration runtime node.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :ivar node_id: The managed integration runtime node id.
+    :vartype node_id: str
+    :ivar status: The managed integration runtime node status. Possible values include: "Starting",
+     "Available", "Recycling", "Unavailable".
+    :vartype status: str or ~azure.mgmt.datafactory.models.ManagedIntegrationRuntimeNodeStatus
+    :param errors: The errors that occurred on this integration runtime node.
+    :type errors: list[~azure.mgmt.datafactory.models.ManagedIntegrationRuntimeError]
+    """
+
+    _validation = {
+        'node_id': {'readonly': True},
+        'status': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'node_id': {'key': 'nodeId', 'type': 'str'},
+        'status': {'key': 'status', 'type': 'str'},
+        'errors': {'key': 'errors', 'type': '[ManagedIntegrationRuntimeError]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        errors: Optional[List["ManagedIntegrationRuntimeError"]] = None,
+        **kwargs
+    ):
+        super(ManagedIntegrationRuntimeNode, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.node_id = None
+        self.status = None
+        self.errors = errors
+
+
+class ManagedIntegrationRuntimeOperationResult(msrest.serialization.Model):
+    """Properties of managed integration runtime operation result.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :ivar type: The operation type. Could be start or stop.
+    :vartype type: str
+    :ivar start_time: The start time of the operation.
+    :vartype start_time: ~datetime.datetime
+    :ivar result: The operation result.
+    :vartype result: str
+    :ivar error_code: The error code.
+    :vartype error_code: str
+    :ivar parameters: Managed integration runtime error parameters.
+    :vartype parameters: list[str]
+    :ivar activity_id: The activity id for the operation request.
+    :vartype activity_id: str
+    """
+
+    _validation = {
+        'type': {'readonly': True},
+        'start_time': {'readonly': True},
+        'result': {'readonly': True},
+        'error_code': {'readonly': True},
+        'parameters': {'readonly': True},
+        'activity_id': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'start_time': {'key': 'startTime', 'type': 'iso-8601'},
+        'result': {'key': 'result', 'type': 'str'},
+        'error_code': {'key': 'errorCode', 'type': 'str'},
+        'parameters': {'key': 'parameters', 'type': '[str]'},
+        'activity_id': {'key': 'activityId', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        **kwargs
+    ):
+        super(ManagedIntegrationRuntimeOperationResult, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.type = None
+        self.start_time = None
+        self.result = None
+        self.error_code = None
+        self.parameters = None
+        self.activity_id = None
+
+
+class ManagedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
+    """Managed integration runtime status.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
+     include: "Managed", "SelfHosted".
+    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :ivar data_factory_name: The data factory name which the integration runtime belong to.
+    :vartype data_factory_name: str
+    :ivar state: The state of integration runtime. Possible values include: "Initial", "Stopped",
+     "Started", "Starting", "Stopping", "NeedRegistration", "Online", "Limited", "Offline",
+     "AccessDenied".
+    :vartype state: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeState
+    :ivar create_time: The time at which the integration runtime was created, in ISO8601 format.
+    :vartype create_time: ~datetime.datetime
+    :ivar nodes: The list of nodes for managed integration runtime.
+    :vartype nodes: list[~azure.mgmt.datafactory.models.ManagedIntegrationRuntimeNode]
+    :ivar other_errors: The errors that occurred on this integration runtime.
+    :vartype other_errors: list[~azure.mgmt.datafactory.models.ManagedIntegrationRuntimeError]
+    :ivar last_operation: The last operation result that occurred on this integration runtime.
+    :vartype last_operation:
+     ~azure.mgmt.datafactory.models.ManagedIntegrationRuntimeOperationResult
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'data_factory_name': {'readonly': True},
+        'state': {'readonly': True},
+        'create_time': {'readonly': True},
+        'nodes': {'readonly': True},
+        'other_errors': {'readonly': True},
+        'last_operation': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'data_factory_name': {'key': 'dataFactoryName', 'type': 'str'},
+        'state': {'key': 'state', 'type': 'str'},
+        'create_time': {'key': 'typeProperties.createTime', 'type': 'iso-8601'},
+        'nodes': {'key': 'typeProperties.nodes', 'type': '[ManagedIntegrationRuntimeNode]'},
+        'other_errors': {'key': 'typeProperties.otherErrors', 'type': '[ManagedIntegrationRuntimeError]'},
+        'last_operation': {'key': 'typeProperties.lastOperation', 'type': 'ManagedIntegrationRuntimeOperationResult'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        **kwargs
+    ):
+        super(ManagedIntegrationRuntimeStatus, self).__init__(additional_properties=additional_properties, **kwargs)
+        self.type: str = 'Managed'
+        self.create_time = None
+        self.nodes = None
+        self.other_errors = None
+        self.last_operation = None
+
+
+class PackageStore(msrest.serialization.Model):
+    """Package store for the SSIS integration runtime.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param name: Required. The name of the package store.
+    :type name: str
+    :param package_store_linked_service: Required. The package store linked service reference.
+    :type package_store_linked_service: ~azure.mgmt.datafactory.models.EntityReference
+    """
+
+    _validation = {
+        'name': {'required': True},
+        'package_store_linked_service': {'required': True},
+    }
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'package_store_linked_service': {'key': 'packageStoreLinkedService', 'type': 'EntityReference'},
+    }
+
+    def __init__(
+        self,
+        *,
+        name: str,
+        package_store_linked_service: "EntityReference",
+        **kwargs
+    ):
+        super(PackageStore, self).__init__(**kwargs)
+        self.name = name
+        self.package_store_linked_service = package_store_linked_service
+
+
+class RecurrenceSchedule(msrest.serialization.Model):
+    """The recurrence schedule.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param minutes: The minutes.
+    :type minutes: list[int]
+    :param hours: The hours.
+    :type hours: list[int]
+    :param week_days: The days of the week.
+    :type week_days: list[str or ~azure.mgmt.datafactory.models.DaysOfWeek]
+    :param month_days: The month days.
+    :type month_days: list[int]
+    :param monthly_occurrences: The monthly occurrences.
+    :type monthly_occurrences: list[~azure.mgmt.datafactory.models.RecurrenceScheduleOccurrence]
+    """
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'minutes': {'key': 'minutes', 'type': '[int]'},
+        'hours': {'key': 'hours', 'type': '[int]'},
+        'week_days': {'key': 'weekDays', 'type': '[str]'},
+        'month_days': {'key': 'monthDays', 'type': '[int]'},
+        'monthly_occurrences': {'key': 'monthlyOccurrences', 'type': '[RecurrenceScheduleOccurrence]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        minutes: Optional[List[int]] = None,
+        hours: Optional[List[int]] = None,
+        week_days: Optional[List[Union[str, "DaysOfWeek"]]] = None,
+        month_days: Optional[List[int]] = None,
+        monthly_occurrences: Optional[List["RecurrenceScheduleOccurrence"]] = None,
+        **kwargs
+    ):
+        super(RecurrenceSchedule, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.minutes = minutes
+        self.hours = hours
+        self.week_days = week_days
+        self.month_days = month_days
+        self.monthly_occurrences = monthly_occurrences
+
+
+class RecurrenceScheduleOccurrence(msrest.serialization.Model):
+    """The recurrence schedule occurrence.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param day: The day of the week. Possible values include: "Sunday", "Monday", "Tuesday",
+     "Wednesday", "Thursday", "Friday", "Saturday".
+    :type day: str or ~azure.mgmt.datafactory.models.DayOfWeek
+    :param occurrence: The occurrence.
+    :type occurrence: int
+    """
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'day': {'key': 'day', 'type': 'str'},
+        'occurrence': {'key': 'occurrence', 'type': 'int'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        day: Optional[Union[str, "DayOfWeek"]] = None,
+        occurrence: Optional[int] = None,
+        **kwargs
+    ):
+        super(RecurrenceScheduleOccurrence, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.day = day
+        self.occurrence = occurrence
+
+
+class RerunTumblingWindowTrigger(Trigger):
+    """Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Trigger type.Constant filled by server.
+    :type type: str
+    :param description: Trigger description.
+    :type description: str
+    :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
+     called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
+    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :param annotations: List of tags that can be used for describing the trigger.
+    :type annotations: list[object]
+    :param parent_trigger: Required. The parent trigger reference.
+    :type parent_trigger: object
+    :param requested_start_time: Required. The start time for the time period for which restatement
+     is initiated. Only UTC time is currently supported.
+    :type requested_start_time: ~datetime.datetime
+    :param requested_end_time: Required. The end time for the time period for which restatement is
+     initiated. Only UTC time is currently supported.
+    :type requested_end_time: ~datetime.datetime
+    :param rerun_concurrency: Required. The max number of parallel time windows (ready for
+     execution) for which a rerun is triggered.
+    :type rerun_concurrency: int
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'runtime_state': {'readonly': True},
+        'parent_trigger': {'required': True},
+        'requested_start_time': {'required': True},
+        'requested_end_time': {'required': True},
+        'rerun_concurrency': {'required': True, 'maximum': 50, 'minimum': 1},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'runtime_state': {'key': 'runtimeState', 'type': 'str'},
+        'annotations': {'key': 'annotations', 'type': '[object]'},
+        'parent_trigger': {'key': 'typeProperties.parentTrigger', 'type': 'object'},
+        'requested_start_time': {'key': 'typeProperties.requestedStartTime', 'type': 'iso-8601'},
+        'requested_end_time': {'key': 'typeProperties.requestedEndTime', 'type': 'iso-8601'},
+        'rerun_concurrency': {'key': 'typeProperties.rerunConcurrency', 'type': 'int'},
+    }
+
+    def __init__(
+        self,
+        *,
+        parent_trigger: object,
+        requested_start_time: datetime.datetime,
+        requested_end_time: datetime.datetime,
+        rerun_concurrency: int,
+        additional_properties: Optional[Dict[str, object]] = None,
+        description: Optional[str] = None,
+        annotations: Optional[List[object]] = None,
+        **kwargs
+    ):
+        super(RerunTumblingWindowTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, **kwargs)
+        self.type: str = 'RerunTumblingWindowTrigger'
+        self.parent_trigger = parent_trigger
+        self.requested_start_time = requested_start_time
+        self.requested_end_time = requested_end_time
+        self.rerun_concurrency = rerun_concurrency
+
+
+class RetryPolicy(msrest.serialization.Model):
+    """Execution policy for an activity.
+
+    :param count: Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with
+     resultType integer), minimum: 0.
+    :type count: object
+    :param interval_in_seconds: Interval between retries in seconds. Default is 30.
+    :type interval_in_seconds: int
+    """
+
+    _validation = {
+        'interval_in_seconds': {'maximum': 86400, 'minimum': 30},
+    }
+
+    _attribute_map = {
+        'count': {'key': 'count', 'type': 'object'},
+        'interval_in_seconds': {'key': 'intervalInSeconds', 'type': 'int'},
+    }
+
+    def __init__(
+        self,
+        *,
+        count: Optional[object] = None,
+        interval_in_seconds: Optional[int] = None,
+        **kwargs
+    ):
+        super(RetryPolicy, self).__init__(**kwargs)
+        self.count = count
+        self.interval_in_seconds = interval_in_seconds
+
+
+class ScheduleTrigger(MultiplePipelineTrigger):
+    """Trigger that creates pipeline runs periodically, on schedule.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Trigger type.Constant filled by server.
+    :type type: str
+    :param description: Trigger description.
+    :type description: str
+    :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
+     called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
+    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :param annotations: List of tags that can be used for describing the trigger.
+    :type annotations: list[object]
+    :param pipelines: Pipelines that need to be started.
+    :type pipelines: list[object]
+    :param recurrence: Required. Recurrence schedule configuration.
+    :type recurrence: ~azure.mgmt.datafactory.models.ScheduleTriggerRecurrence
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'runtime_state': {'readonly': True},
+        'recurrence': {'required': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'runtime_state': {'key': 'runtimeState', 'type': 'str'},
+        'annotations': {'key': 'annotations', 'type': '[object]'},
+        'pipelines': {'key': 'pipelines', 'type': '[object]'},
+        'recurrence': {'key': 'typeProperties.recurrence', 'type': 'ScheduleTriggerRecurrence'},
+    }
+
+    def __init__(
+        self,
+        *,
+        recurrence: "ScheduleTriggerRecurrence",
+        additional_properties: Optional[Dict[str, object]] = None,
+        description: Optional[str] = None,
+        annotations: Optional[List[object]] = None,
+        pipelines: Optional[List[object]] = None,
+        **kwargs
+    ):
+        super(ScheduleTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, pipelines=pipelines, **kwargs)
+        self.type: str = 'ScheduleTrigger'
+        self.recurrence = recurrence
+
+
+class ScheduleTriggerRecurrence(msrest.serialization.Model):
+    """The workflow trigger recurrence.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param frequency: The frequency. Possible values include: "NotSpecified", "Minute", "Hour",
+     "Day", "Week", "Month", "Year".
+    :type frequency: str or ~azure.mgmt.datafactory.models.RecurrenceFrequency
+    :param interval: The interval.
+    :type interval: int
+    :param start_time: The start time.
+    :type start_time: ~datetime.datetime
+    :param end_time: The end time.
+    :type end_time: ~datetime.datetime
+    :param time_zone: The time zone.
+    :type time_zone: str
+    :param schedule: The recurrence schedule.
+    :type schedule: ~azure.mgmt.datafactory.models.RecurrenceSchedule
+    """
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'frequency': {'key': 'frequency', 'type': 'str'},
+        'interval': {'key': 'interval', 'type': 'int'},
+        'start_time': {'key': 'startTime', 'type': 'iso-8601'},
+        'end_time': {'key': 'endTime', 'type': 'iso-8601'},
+        'time_zone': {'key': 'timeZone', 'type': 'str'},
+        'schedule': {'key': 'schedule', 'type': 'RecurrenceSchedule'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        frequency: Optional[Union[str, "RecurrenceFrequency"]] = None,
+        interval: Optional[int] = None,
+        start_time: Optional[datetime.datetime] = None,
+        end_time: Optional[datetime.datetime] = None,
+        time_zone: Optional[str] = None,
+        schedule: Optional["RecurrenceSchedule"] = None,
+        **kwargs
+    ):
+        super(ScheduleTriggerRecurrence, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.frequency = frequency
+        self.interval = interval
+        self.start_time = start_time
+        self.end_time = end_time
+        self.time_zone = time_zone
+        self.schedule = schedule
+
+
+class SecretBase(msrest.serialization.Model):
+    """The base definition of a secret type.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: SecureString.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. Type of the secret.Constant filled by server.
+    :type type: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'type': {'SecureString': 'SecureString'}
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(SecretBase, self).__init__(**kwargs)
+        self.type: Optional[str] = None
+
+
+class SecureString(SecretBase):
+    """Azure Data Factory secure string definition. The string value will be masked with asterisks '*' during Get or List API calls.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. Type of the secret.Constant filled by server.
+    :type type: str
+    :param value: Required. Value of secure string.
+    :type value: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'value': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'value': {'key': 'value', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        value: str,
+        **kwargs
+    ):
+        super(SecureString, self).__init__(**kwargs)
+        self.type: str = 'SecureString'
+        self.value = value
+
+
+class SelfDependencyTumblingWindowTriggerReference(DependencyReference):
+    """Self referenced tumbling window trigger dependency.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. The type of dependency reference.Constant filled by server.
+    :type type: str
+    :param offset: Required. Timespan applied to the start time of a tumbling window when
+     evaluating dependency.
+    :type offset: str
+    :param size: The size of the window when evaluating the dependency. If undefined the frequency
+     of the tumbling window will be used.
+    :type size: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'offset': {'required': True, 'max_length': 15, 'min_length': 8, 'pattern': r'-((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))'},
+        'size': {'max_length': 15, 'min_length': 8, 'pattern': r'((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))'},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'offset': {'key': 'offset', 'type': 'str'},
+        'size': {'key': 'size', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        offset: str,
+        size: Optional[str] = None,
+        **kwargs
+    ):
+        super(SelfDependencyTumblingWindowTriggerReference, self).__init__(**kwargs)
+        self.type: str = 'SelfDependencyTumblingWindowTriggerReference'
+        self.offset = offset
+        self.size = size
+
+
+class SelfHostedIntegrationRuntime(IntegrationRuntime):
+    """Self-hosted integration runtime.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
+     include: "Managed", "SelfHosted".
+    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :param description: Integration runtime description.
+    :type description: str
+    :param linked_info: The base definition of a linked integration runtime.
+    :type linked_info: ~azure.mgmt.datafactory.models.LinkedIntegrationRuntimeType
+    """
+
+    _validation = {
+        'type': {'required': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'linked_info': {'key': 'typeProperties.linkedInfo', 'type': 'LinkedIntegrationRuntimeType'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        description: Optional[str] = None,
+        linked_info: Optional["LinkedIntegrationRuntimeType"] = None,
+        **kwargs
+    ):
+        super(SelfHostedIntegrationRuntime, self).__init__(additional_properties=additional_properties, description=description, **kwargs)
+        self.type: str = 'SelfHosted'
+        self.linked_info = linked_info
+
+
+class SelfHostedIntegrationRuntimeNode(msrest.serialization.Model):
+    """Properties of Self-hosted integration runtime node.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :ivar node_name: Name of the integration runtime node.
+    :vartype node_name: str
+    :ivar machine_name: Machine name of the integration runtime node.
+    :vartype machine_name: str
+    :ivar host_service_uri: URI for the host machine of the integration runtime.
+    :vartype host_service_uri: str
+    :ivar status: Status of the integration runtime node. Possible values include:
+     "NeedRegistration", "Online", "Limited", "Offline", "Upgrading", "Initializing",
+     "InitializeFailed".
+    :vartype status: str or ~azure.mgmt.datafactory.models.SelfHostedIntegrationRuntimeNodeStatus
+    :ivar capabilities: The integration runtime capabilities dictionary.
+    :vartype capabilities: dict[str, str]
+    :ivar version_status: Status of the integration runtime node version.
+    :vartype version_status: str
+    :ivar version: Version of the integration runtime node.
+    :vartype version: str
+    :ivar register_time: The time at which the integration runtime node was registered in ISO8601
+     format.
+    :vartype register_time: ~datetime.datetime
+    :ivar last_connect_time: The most recent time at which the integration runtime was connected in
+     ISO8601 format.
+    :vartype last_connect_time: ~datetime.datetime
+    :ivar expiry_time: The time at which the integration runtime will expire in ISO8601 format.
+    :vartype expiry_time: ~datetime.datetime
+    :ivar last_start_time: The time the node last started up.
+    :vartype last_start_time: ~datetime.datetime
+    :ivar last_stop_time: The integration runtime node last stop time.
+    :vartype last_stop_time: ~datetime.datetime
+    :ivar last_update_result: The result of the last integration runtime node update. Possible
+     values include: "None", "Succeed", "Fail".
+    :vartype last_update_result: str or
+     ~azure.mgmt.datafactory.models.IntegrationRuntimeUpdateResult
+    :ivar last_start_update_time: The last time for the integration runtime node update start.
+    :vartype last_start_update_time: ~datetime.datetime
+    :ivar last_end_update_time: The last time for the integration runtime node update end.
+    :vartype last_end_update_time: ~datetime.datetime
+    :ivar is_active_dispatcher: Indicates whether this node is the active dispatcher for
+     integration runtime requests.
+    :vartype is_active_dispatcher: bool
+    :ivar concurrent_jobs_limit: Maximum concurrent jobs on the integration runtime node.
+    :vartype concurrent_jobs_limit: int
+    :ivar max_concurrent_jobs: The maximum concurrent jobs in this integration runtime.
+    :vartype max_concurrent_jobs: int
+    """
+
+    _validation = {
+        'node_name': {'readonly': True},
+        'machine_name': {'readonly': True},
+        'host_service_uri': {'readonly': True},
+        'status': {'readonly': True},
+        'capabilities': {'readonly': True},
+        'version_status': {'readonly': True},
+        'version': {'readonly': True},
+        'register_time': {'readonly': True},
+        'last_connect_time': {'readonly': True},
+        'expiry_time': {'readonly': True},
+        'last_start_time': {'readonly': True},
+        'last_stop_time': {'readonly': True},
+        'last_update_result': {'readonly': True},
+        'last_start_update_time': {'readonly': True},
+        'last_end_update_time': {'readonly': True},
+        'is_active_dispatcher': {'readonly': True},
+        'concurrent_jobs_limit': {'readonly': True},
+        'max_concurrent_jobs': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'node_name': {'key': 'nodeName', 'type': 'str'},
+        'machine_name': {'key': 'machineName', 'type': 'str'},
+        'host_service_uri': {'key': 'hostServiceUri', 'type': 'str'},
+        'status': {'key': 'status', 'type': 'str'},
+        'capabilities': {'key': 'capabilities', 'type': '{str}'},
+        'version_status': {'key': 'versionStatus', 'type': 'str'},
+        'version': {'key': 'version', 'type': 'str'},
+        'register_time': {'key': 'registerTime', 'type': 'iso-8601'},
+        'last_connect_time': {'key': 'lastConnectTime', 'type': 'iso-8601'},
+        'expiry_time': {'key': 'expiryTime', 'type': 'iso-8601'},
+        'last_start_time': {'key': 'lastStartTime', 'type': 'iso-8601'},
+        'last_stop_time': {'key': 'lastStopTime', 'type': 'iso-8601'},
+        'last_update_result': {'key': 'lastUpdateResult', 'type': 'str'},
+        'last_start_update_time': {'key': 'lastStartUpdateTime', 'type': 'iso-8601'},
+        'last_end_update_time': {'key': 'lastEndUpdateTime', 'type': 'iso-8601'},
+        'is_active_dispatcher': {'key': 'isActiveDispatcher', 'type': 'bool'},
+        'concurrent_jobs_limit': {'key': 'concurrentJobsLimit', 'type': 'int'},
+        'max_concurrent_jobs': {'key': 'maxConcurrentJobs', 'type': 'int'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        **kwargs
+    ):
+        super(SelfHostedIntegrationRuntimeNode, self).__init__(**kwargs)
+        self.additional_properties = additional_properties
+        self.node_name = None
+        self.machine_name = None
+        self.host_service_uri = None
+        self.status = None
+        self.capabilities = None
+        self.version_status = None
+        self.version = None
+        self.register_time = None
+        self.last_connect_time = None
+        self.expiry_time = None
+        self.last_start_time = None
+        self.last_stop_time = None
+        self.last_update_result = None
+        self.last_start_update_time = None
+        self.last_end_update_time = None
+        self.is_active_dispatcher = None
+        self.concurrent_jobs_limit = None
+        self.max_concurrent_jobs = None
+
+
+class SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
+    """Self-hosted integration runtime status.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
+     include: "Managed", "SelfHosted".
+    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :ivar data_factory_name: The data factory name which the integration runtime belong to.
+    :vartype data_factory_name: str
+    :ivar state: The state of integration runtime. Possible values include: "Initial", "Stopped",
+     "Started", "Starting", "Stopping", "NeedRegistration", "Online", "Limited", "Offline",
+     "AccessDenied".
+    :vartype state: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeState
+    :ivar create_time: The time at which the integration runtime was created, in ISO8601 format.
+    :vartype create_time: ~datetime.datetime
+    :ivar task_queue_id: The task queue id of the integration runtime.
+    :vartype task_queue_id: str
+    :ivar internal_channel_encryption: It is used to set the encryption mode for node-node
+     communication channel (when more than 2 self-hosted integration runtime nodes exist). Possible
+     values include: "NotSet", "SslEncrypted", "NotEncrypted".
+    :vartype internal_channel_encryption: str or
+     ~azure.mgmt.datafactory.models.IntegrationRuntimeInternalChannelEncryptionMode
+    :ivar version: Version of the integration runtime.
+    :vartype version: str
+    :param nodes: The list of nodes for this integration runtime.
+    :type nodes: list[~azure.mgmt.datafactory.models.SelfHostedIntegrationRuntimeNode]
+    :ivar scheduled_update_date: The date at which the integration runtime will be scheduled to
+     update, in ISO8601 format.
+    :vartype scheduled_update_date: ~datetime.datetime
+    :ivar update_delay_offset: The time in the date scheduled by service to update the integration
+     runtime, e.g., PT03H is 3 hours.
+    :vartype update_delay_offset: str
+    :ivar local_time_zone_offset: The local time zone offset in hours.
+    :vartype local_time_zone_offset: str
+    :ivar capabilities: Object with additional information about integration runtime capabilities.
+    :vartype capabilities: dict[str, str]
+    :ivar service_urls: The URLs for the services used in integration runtime backend service.
+    :vartype service_urls: list[str]
+    :ivar auto_update: Whether Self-hosted integration runtime auto update has been turned on.
+     Possible values include: "On", "Off".
+    :vartype auto_update: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeAutoUpdate
+    :ivar version_status: Status of the integration runtime version.
+    :vartype version_status: str
+    :param links: The list of linked integration runtimes that are created to share with this
+     integration runtime.
+    :type links: list[~azure.mgmt.datafactory.models.LinkedIntegrationRuntime]
+    :ivar pushed_version: The version that the integration runtime is going to update to.
+    :vartype pushed_version: str
+    :ivar latest_version: The latest version on download center.
+    :vartype latest_version: str
+    :ivar auto_update_eta: The estimated time when the self-hosted integration runtime will be
+     updated.
+    :vartype auto_update_eta: ~datetime.datetime
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'data_factory_name': {'readonly': True},
+        'state': {'readonly': True},
+        'create_time': {'readonly': True},
+        'task_queue_id': {'readonly': True},
+        'internal_channel_encryption': {'readonly': True},
+        'version': {'readonly': True},
+        'scheduled_update_date': {'readonly': True},
+        'update_delay_offset': {'readonly': True},
+        'local_time_zone_offset': {'readonly': True},
+        'capabilities': {'readonly': True},
+        'service_urls': {'readonly': True},
+        'auto_update': {'readonly': True},
+        'version_status': {'readonly': True},
+        'pushed_version': {'readonly': True},
+        'latest_version': {'readonly': True},
+        'auto_update_eta': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'data_factory_name': {'key': 'dataFactoryName', 'type': 'str'},
+        'state': {'key': 'state', 'type': 'str'},
+        'create_time': {'key': 'typeProperties.createTime', 'type': 'iso-8601'},
+        'task_queue_id': {'key': 'typeProperties.taskQueueId', 'type': 'str'},
+        'internal_channel_encryption': {'key': 'typeProperties.internalChannelEncryption', 'type': 'str'},
+        'version': {'key': 'typeProperties.version', 'type': 'str'},
+        'nodes': {'key': 'typeProperties.nodes', 'type': '[SelfHostedIntegrationRuntimeNode]'},
+        'scheduled_update_date': {'key': 'typeProperties.scheduledUpdateDate', 'type': 'iso-8601'},
+        'update_delay_offset': {'key': 'typeProperties.updateDelayOffset', 'type': 'str'},
+        'local_time_zone_offset': {'key': 'typeProperties.localTimeZoneOffset', 'type': 'str'},
+        'capabilities': {'key': 'typeProperties.capabilities', 'type': '{str}'},
+        'service_urls': {'key': 'typeProperties.serviceUrls', 'type': '[str]'},
+        'auto_update': {'key': 'typeProperties.autoUpdate', 'type': 'str'},
+        'version_status': {'key': 'typeProperties.versionStatus', 'type': 'str'},
+        'links': {'key': 'typeProperties.links', 'type': '[LinkedIntegrationRuntime]'},
+        'pushed_version': {'key': 'typeProperties.pushedVersion', 'type': 'str'},
+        'latest_version': {'key': 'typeProperties.latestVersion', 'type': 'str'},
+        'auto_update_eta': {'key': 'typeProperties.autoUpdateETA', 'type': 'iso-8601'},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, object]] = None,
+        nodes: Optional[List["SelfHostedIntegrationRuntimeNode"]] = None,
+        links: Optional[List["LinkedIntegrationRuntime"]] = None,
+        **kwargs
+    ):
+        super(SelfHostedIntegrationRuntimeStatus, self).__init__(additional_properties=additional_properties, **kwargs)
+        self.type: str = 'SelfHosted'
+        self.create_time = None
+        self.task_queue_id = None
+        self.internal_channel_encryption = None
+        self.version = None
+        self.nodes = nodes
+        self.scheduled_update_date = None
+        self.update_delay_offset = None
+        self.local_time_zone_offset = None
+        self.capabilities = None
+        self.service_urls = None
+        self.auto_update = None
+        self.version_status = None
+        self.links = links
+        self.pushed_version = None
+        self.latest_version = None
+        self.auto_update_eta = None
+
+
+class SsisObjectMetadata(msrest.serialization.Model):
+    """SSIS object metadata.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: SsisEnvironment, SsisFolder, SsisPackage, SsisProject.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. Type of metadata.Constant filled by server.  Possible values include:
+     "Folder", "Project", "Package", "Environment".
+    :type type: str or ~azure.mgmt.datafactory.models.SsisObjectMetadataType
+    :param id: Metadata id.
+    :type id: long
+    :param name: Metadata name.
+    :type name: str
+    :param description: Metadata description.
+    :type description: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'id': {'key': 'id', 'type': 'long'},
+        'name': {'key': 'name', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'type': {'Environment': 'SsisEnvironment', 'Folder': 'SsisFolder', 'Package': 'SsisPackage', 'Project': 'SsisProject'}
+    }
+
+    def __init__(
+        self,
+        *,
+        id: Optional[int] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        **kwargs
+    ):
+        super(SsisObjectMetadata, self).__init__(**kwargs)
+        self.type: Optional[str] = None
+        self.id = id
+        self.name = name
+        self.description = description
+
+
+class SsisEnvironment(SsisObjectMetadata):
+    """Ssis environment.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. Type of metadata.Constant filled by server.  Possible values include:
+     "Folder", "Project", "Package", "Environment".
+    :type type: str or ~azure.mgmt.datafactory.models.SsisObjectMetadataType
+    :param id: Metadata id.
+    :type id: long
+    :param name: Metadata name.
+    :type name: str
+    :param description: Metadata description.
+    :type description: str
+    :param folder_id: Folder id which contains environment.
+    :type folder_id: long
+    :param variables: Variable in environment.
+    :type variables: list[~azure.mgmt.datafactory.models.SsisVariable]
+    """
+
+    _validation = {
+        'type': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'id': {'key': 'id', 'type': 'long'},
+        'name': {'key': 'name', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'folder_id': {'key': 'folderId', 'type': 'long'},
+        'variables': {'key': 'variables', 'type': '[SsisVariable]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        id: Optional[int] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        folder_id: Optional[int] = None,
+        variables: Optional[List["SsisVariable"]] = None,
+        **kwargs
+    ):
+        super(SsisEnvironment, self).__init__(id=id, name=name, description=description, **kwargs)
+        self.type: str = 'Environment'
+        self.folder_id = folder_id
+        self.variables = variables
+
+
+class SsisEnvironmentReference(msrest.serialization.Model):
+    """Ssis environment reference.
+
+    :param id: Environment reference id.
+    :type id: long
+    :param environment_folder_name: Environment folder name.
+    :type environment_folder_name: str
+    :param environment_name: Environment name.
+    :type environment_name: str
+    :param reference_type: Reference type.
+    :type reference_type: str
+    """
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'long'},
+        'environment_folder_name': {'key': 'environmentFolderName', 'type': 'str'},
+        'environment_name': {'key': 'environmentName', 'type': 'str'},
+        'reference_type': {'key': 'referenceType', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        id: Optional[int] = None,
+        environment_folder_name: Optional[str] = None,
+        environment_name: Optional[str] = None,
+        reference_type: Optional[str] = None,
+        **kwargs
+    ):
+        super(SsisEnvironmentReference, self).__init__(**kwargs)
+        self.id = id
+        self.environment_folder_name = environment_folder_name
+        self.environment_name = environment_name
+        self.reference_type = reference_type
+
+
+class SsisFolder(SsisObjectMetadata):
+    """Ssis folder.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. Type of metadata.Constant filled by server.  Possible values include:
+     "Folder", "Project", "Package", "Environment".
+    :type type: str or ~azure.mgmt.datafactory.models.SsisObjectMetadataType
+    :param id: Metadata id.
+    :type id: long
+    :param name: Metadata name.
+    :type name: str
+    :param description: Metadata description.
+    :type description: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'id': {'key': 'id', 'type': 'long'},
+        'name': {'key': 'name', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        id: Optional[int] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        **kwargs
+    ):
+        super(SsisFolder, self).__init__(id=id, name=name, description=description, **kwargs)
+        self.type: str = 'Folder'
+
+
+class SsisObjectMetadataListResponse(msrest.serialization.Model):
+    """A list of SSIS object metadata.
+
+    :param value: List of SSIS object metadata.
+    :type value: list[~azure.mgmt.datafactory.models.SsisObjectMetadata]
+    :param next_link: The link to the next page of results, if any remaining results exist.
+    :type next_link: str
+    """
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[SsisObjectMetadata]'},
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        value: Optional[List["SsisObjectMetadata"]] = None,
+        next_link: Optional[str] = None,
+        **kwargs
+    ):
+        super(SsisObjectMetadataListResponse, self).__init__(**kwargs)
+        self.value = value
+        self.next_link = next_link
+
+
+class SsisPackage(SsisObjectMetadata):
+    """Ssis Package.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. Type of metadata.Constant filled by server.  Possible values include:
+     "Folder", "Project", "Package", "Environment".
+    :type type: str or ~azure.mgmt.datafactory.models.SsisObjectMetadataType
+    :param id: Metadata id.
+    :type id: long
+    :param name: Metadata name.
+    :type name: str
+    :param description: Metadata description.
+    :type description: str
+    :param folder_id: Folder id which contains package.
+    :type folder_id: long
+    :param project_version: Project version which contains package.
+    :type project_version: long
+    :param project_id: Project id which contains package.
+    :type project_id: long
+    :param parameters: Parameters in package.
+    :type parameters: list[~azure.mgmt.datafactory.models.SsisParameter]
+    """
+
+    _validation = {
+        'type': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'id': {'key': 'id', 'type': 'long'},
+        'name': {'key': 'name', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'folder_id': {'key': 'folderId', 'type': 'long'},
+        'project_version': {'key': 'projectVersion', 'type': 'long'},
+        'project_id': {'key': 'projectId', 'type': 'long'},
+        'parameters': {'key': 'parameters', 'type': '[SsisParameter]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        id: Optional[int] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        folder_id: Optional[int] = None,
+        project_version: Optional[int] = None,
+        project_id: Optional[int] = None,
+        parameters: Optional[List["SsisParameter"]] = None,
+        **kwargs
+    ):
+        super(SsisPackage, self).__init__(id=id, name=name, description=description, **kwargs)
+        self.type: str = 'Package'
+        self.folder_id = folder_id
+        self.project_version = project_version
+        self.project_id = project_id
+        self.parameters = parameters
+
+
+class SsisParameter(msrest.serialization.Model):
+    """Ssis parameter.
+
+    :param id: Parameter id.
+    :type id: long
+    :param name: Parameter name.
+    :type name: str
+    :param description: Parameter description.
+    :type description: str
+    :param data_type: Parameter type.
+    :type data_type: str
+    :param required: Whether parameter is required.
+    :type required: bool
+    :param sensitive: Whether parameter is sensitive.
+    :type sensitive: bool
+    :param design_default_value: Design default value of parameter.
+    :type design_default_value: str
+    :param default_value: Default value of parameter.
+    :type default_value: str
+    :param sensitive_default_value: Default sensitive value of parameter.
+    :type sensitive_default_value: str
+    :param value_type: Parameter value type.
+    :type value_type: str
+    :param value_set: Parameter value set.
+    :type value_set: bool
+    :param variable: Parameter reference variable.
+    :type variable: str
+    """
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'long'},
+        'name': {'key': 'name', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'data_type': {'key': 'dataType', 'type': 'str'},
+        'required': {'key': 'required', 'type': 'bool'},
+        'sensitive': {'key': 'sensitive', 'type': 'bool'},
+        'design_default_value': {'key': 'designDefaultValue', 'type': 'str'},
+        'default_value': {'key': 'defaultValue', 'type': 'str'},
+        'sensitive_default_value': {'key': 'sensitiveDefaultValue', 'type': 'str'},
+        'value_type': {'key': 'valueType', 'type': 'str'},
+        'value_set': {'key': 'valueSet', 'type': 'bool'},
+        'variable': {'key': 'variable', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        id: Optional[int] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        data_type: Optional[str] = None,
+        required: Optional[bool] = None,
+        sensitive: Optional[bool] = None,
+        design_default_value: Optional[str] = None,
+        default_value: Optional[str] = None,
+        sensitive_default_value: Optional[str] = None,
+        value_type: Optional[str] = None,
+        value_set: Optional[bool] = None,
+        variable: Optional[str] = None,
+        **kwargs
+    ):
+        super(SsisParameter, self).__init__(**kwargs)
+        self.id = id
+        self.name = name
+        self.description = description
+        self.data_type = data_type
+        self.required = required
+        self.sensitive = sensitive
+        self.design_default_value = design_default_value
+        self.default_value = default_value
+        self.sensitive_default_value = sensitive_default_value
+        self.value_type = value_type
+        self.value_set = value_set
+        self.variable = variable
+
+
+class SsisProject(SsisObjectMetadata):
+    """Ssis project.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. Type of metadata.Constant filled by server.  Possible values include:
+     "Folder", "Project", "Package", "Environment".
+    :type type: str or ~azure.mgmt.datafactory.models.SsisObjectMetadataType
+    :param id: Metadata id.
+    :type id: long
+    :param name: Metadata name.
+    :type name: str
+    :param description: Metadata description.
+    :type description: str
+    :param folder_id: Folder id which contains project.
+    :type folder_id: long
+    :param version: Project version.
+    :type version: long
+    :param environment_refs: Environment reference in project.
+    :type environment_refs: list[~azure.mgmt.datafactory.models.SsisEnvironmentReference]
+    :param parameters: Parameters in project.
+    :type parameters: list[~azure.mgmt.datafactory.models.SsisParameter]
+    """
+
+    _validation = {
+        'type': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'id': {'key': 'id', 'type': 'long'},
+        'name': {'key': 'name', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'folder_id': {'key': 'folderId', 'type': 'long'},
+        'version': {'key': 'version', 'type': 'long'},
+        'environment_refs': {'key': 'environmentRefs', 'type': '[SsisEnvironmentReference]'},
+        'parameters': {'key': 'parameters', 'type': '[SsisParameter]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        id: Optional[int] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        folder_id: Optional[int] = None,
+        version: Optional[int] = None,
+        environment_refs: Optional[List["SsisEnvironmentReference"]] = None,
+        parameters: Optional[List["SsisParameter"]] = None,
+        **kwargs
+    ):
+        super(SsisProject, self).__init__(id=id, name=name, description=description, **kwargs)
+        self.type: str = 'Project'
+        self.folder_id = folder_id
+        self.version = version
+        self.environment_refs = environment_refs
+        self.parameters = parameters
+
+
+class SsisVariable(msrest.serialization.Model):
+    """Ssis variable.
+
+    :param id: Variable id.
+    :type id: long
+    :param name: Variable name.
+    :type name: str
+    :param description: Variable description.
+    :type description: str
+    :param data_type: Variable type.
+    :type data_type: str
+    :param sensitive: Whether variable is sensitive.
+    :type sensitive: bool
+    :param value: Variable value.
+    :type value: str
+    :param sensitive_value: Variable sensitive value.
+    :type sensitive_value: str
+    """
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'long'},
+        'name': {'key': 'name', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'data_type': {'key': 'dataType', 'type': 'str'},
+        'sensitive': {'key': 'sensitive', 'type': 'bool'},
+        'value': {'key': 'value', 'type': 'str'},
+        'sensitive_value': {'key': 'sensitiveValue', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        id: Optional[int] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        data_type: Optional[str] = None,
+        sensitive: Optional[bool] = None,
+        value: Optional[str] = None,
+        sensitive_value: Optional[str] = None,
+        **kwargs
+    ):
+        super(SsisVariable, self).__init__(**kwargs)
+        self.id = id
+        self.name = name
+        self.description = description
+        self.data_type = data_type
+        self.sensitive = sensitive
+        self.value = value
+        self.sensitive_value = sensitive_value
+
+
+class TriggerDependencyReference(DependencyReference):
+    """Trigger referenced dependency.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: TumblingWindowTriggerDependencyReference.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. The type of dependency reference.Constant filled by server.
+    :type type: str
+    :param reference_trigger: Required. Referenced trigger.
+    :type reference_trigger: ~azure.mgmt.datafactory.models.TriggerReference
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'reference_trigger': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'reference_trigger': {'key': 'referenceTrigger', 'type': 'TriggerReference'},
+    }
+
+    _subtype_map = {
+        'type': {'TumblingWindowTriggerDependencyReference': 'TumblingWindowTriggerDependencyReference'}
+    }
+
+    def __init__(
+        self,
+        *,
+        reference_trigger: "TriggerReference",
+        **kwargs
+    ):
+        super(TriggerDependencyReference, self).__init__(**kwargs)
+        self.type: str = 'TriggerDependencyReference'
+        self.reference_trigger = reference_trigger
+
+
+class TriggerFilterParameters(msrest.serialization.Model):
+    """Query parameters for triggers.
+
+    :param continuation_token: The continuation token for getting the next page of results. Null
+     for first page.
+    :type continuation_token: str
+    :param parent_trigger_name: The name of the parent TumblingWindowTrigger to get the child rerun
+     triggers.
+    :type parent_trigger_name: str
+    """
+
+    _attribute_map = {
+        'continuation_token': {'key': 'continuationToken', 'type': 'str'},
+        'parent_trigger_name': {'key': 'parentTriggerName', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        continuation_token: Optional[str] = None,
+        parent_trigger_name: Optional[str] = None,
+        **kwargs
+    ):
+        super(TriggerFilterParameters, self).__init__(**kwargs)
+        self.continuation_token = continuation_token
+        self.parent_trigger_name = parent_trigger_name
+
+
+class TriggerListResponse(msrest.serialization.Model):
+    """A list of trigger resources.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param value: Required. List of triggers.
+    :type value: list[~azure.mgmt.datafactory.models.TriggerResource]
+    :param next_link: The link to the next page of results, if any remaining results exist.
+    :type next_link: str
+    """
+
+    _validation = {
+        'value': {'required': True},
+    }
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[TriggerResource]'},
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        value: List["TriggerResource"],
+        next_link: Optional[str] = None,
+        **kwargs
+    ):
+        super(TriggerListResponse, self).__init__(**kwargs)
+        self.value = value
+        self.next_link = next_link
+
+
+class TriggerQueryResponse(msrest.serialization.Model):
+    """A query of triggers.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param value: Required. List of triggers.
+    :type value: list[~azure.mgmt.datafactory.models.TriggerResource]
+    :param continuation_token: The continuation token for getting the next page of results, if any
+     remaining results exist, null otherwise.
+    :type continuation_token: str
+    """
+
+    _validation = {
+        'value': {'required': True},
+    }
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[TriggerResource]'},
+        'continuation_token': {'key': 'continuationToken', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        value: List["TriggerResource"],
+        continuation_token: Optional[str] = None,
+        **kwargs
+    ):
+        super(TriggerQueryResponse, self).__init__(**kwargs)
+        self.value = value
+        self.continuation_token = continuation_token
+
+
+class TriggerReference(msrest.serialization.Model):
+    """Trigger reference type.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar type: Required. Trigger reference type. Default value: "TriggerReference".
+    :vartype type: str
+    :param reference_name: Required. Reference trigger name.
+    :type reference_name: str
+    """
+
+    _validation = {
+        'type': {'required': True, 'constant': True},
+        'reference_name': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'reference_name': {'key': 'referenceName', 'type': 'str'},
+    }
+
+    type = "TriggerReference"
+
+    def __init__(
+        self,
+        *,
+        reference_name: str,
+        **kwargs
+    ):
+        super(TriggerReference, self).__init__(**kwargs)
+        self.reference_name = reference_name
+
+
+class TriggerResource(SubResource):
+    """Trigger resource type.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar id: The resource identifier.
+    :vartype id: str
+    :ivar name: The resource name.
+    :vartype name: str
+    :ivar type: The resource type.
+    :vartype type: str
+    :ivar etag: Etag identifies change in the resource.
+    :vartype etag: str
+    :param properties: Required. Properties of the trigger.
+    :type properties: object
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'etag': {'readonly': True},
+        'properties': {'required': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'etag': {'key': 'etag', 'type': 'str'},
+        'properties': {'key': 'properties', 'type': 'object'},
+    }
+
+    def __init__(
+        self,
+        *,
+        properties: object,
+        **kwargs
+    ):
+        super(TriggerResource, self).__init__(**kwargs)
+        self.properties = properties
+
+
+class TriggerSubscriptionOperationStatus(msrest.serialization.Model):
+    """Defines the response of a trigger subscription operation.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar trigger_name: Trigger name.
+    :vartype trigger_name: str
+    :ivar status: Event Subscription Status. Possible values include: "Enabled", "Provisioning",
+     "Deprovisioning", "Disabled", "Unknown".
+    :vartype status: str or ~azure.mgmt.datafactory.models.EventSubscriptionStatus
+    """
+
+    _validation = {
+        'trigger_name': {'readonly': True},
+        'status': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'trigger_name': {'key': 'triggerName', 'type': 'str'},
+        'status': {'key': 'status', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(TriggerSubscriptionOperationStatus, self).__init__(**kwargs)
+        self.trigger_name = None
+        self.status = None
+
+
+class TumblingWindowTrigger(Trigger):
+    """Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill scenarios (when start time is in the past).
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, object]
+    :param type: Required. Trigger type.Constant filled by server.
+    :type type: str
+    :param description: Trigger description.
+    :type description: str
+    :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
+     called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
+    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :param annotations: List of tags that can be used for describing the trigger.
+    :type annotations: list[object]
+    :param pipeline: Required. Pipeline for which runs are created when an event is fired for
+     trigger window that is ready.
+    :type pipeline: object
+    :param frequency: Required. The frequency of the time windows. Possible values include:
+     "Minute", "Hour".
+    :type frequency: str or ~azure.mgmt.datafactory.models.TumblingWindowFrequency
+    :param interval: Required. The interval of the time windows. The minimum interval allowed is 15
+     Minutes.
+    :type interval: int
+    :param start_time: Required. The start time for the time period for the trigger during which
+     events are fired for windows that are ready. Only UTC time is currently supported.
+    :type start_time: ~datetime.datetime
+    :param end_time: The end time for the time period for the trigger during which events are fired
+     for windows that are ready. Only UTC time is currently supported.
+    :type end_time: ~datetime.datetime
+    :param delay: Specifies how long the trigger waits past due time before triggering new run. It
+     doesn't alter window start and end time. The default is 0. Type: string (or Expression with
+     resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+    :type delay: object
+    :param max_concurrency: Required. The max number of parallel time windows (ready for execution)
+     for which a new run is triggered.
+    :type max_concurrency: int
+    :param retry_policy: Retry policy that will be applied for failed pipeline runs.
+    :type retry_policy: ~azure.mgmt.datafactory.models.RetryPolicy
+    :param depends_on: Triggers that this trigger depends on. Only tumbling window triggers are
+     supported.
+    :type depends_on: list[~azure.mgmt.datafactory.models.DependencyReference]
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'runtime_state': {'readonly': True},
+        'pipeline': {'required': True},
+        'frequency': {'required': True},
+        'interval': {'required': True},
+        'start_time': {'required': True},
+        'max_concurrency': {'required': True, 'maximum': 50, 'minimum': 1},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'type': {'key': 'type', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'runtime_state': {'key': 'runtimeState', 'type': 'str'},
+        'annotations': {'key': 'annotations', 'type': '[object]'},
+        'pipeline': {'key': 'pipeline', 'type': 'object'},
+        'frequency': {'key': 'typeProperties.frequency', 'type': 'str'},
+        'interval': {'key': 'typeProperties.interval', 'type': 'int'},
+        'start_time': {'key': 'typeProperties.startTime', 'type': 'iso-8601'},
+        'end_time': {'key': 'typeProperties.endTime', 'type': 'iso-8601'},
+        'delay': {'key': 'typeProperties.delay', 'type': 'object'},
+        'max_concurrency': {'key': 'typeProperties.maxConcurrency', 'type': 'int'},
+        'retry_policy': {'key': 'typeProperties.retryPolicy', 'type': 'RetryPolicy'},
+        'depends_on': {'key': 'typeProperties.dependsOn', 'type': '[DependencyReference]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        pipeline: object,
+        frequency: Union[str, "TumblingWindowFrequency"],
+        interval: int,
+        start_time: datetime.datetime,
+        max_concurrency: int,
+        additional_properties: Optional[Dict[str, object]] = None,
+        description: Optional[str] = None,
+        annotations: Optional[List[object]] = None,
+        end_time: Optional[datetime.datetime] = None,
+        delay: Optional[object] = None,
+        retry_policy: Optional["RetryPolicy"] = None,
+        depends_on: Optional[List["DependencyReference"]] = None,
+        **kwargs
+    ):
+        super(TumblingWindowTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, **kwargs)
+        self.type: str = 'TumblingWindowTrigger'
+        self.pipeline = pipeline
+        self.frequency = frequency
+        self.interval = interval
+        self.start_time = start_time
+        self.end_time = end_time
+        self.delay = delay
+        self.max_concurrency = max_concurrency
+        self.retry_policy = retry_policy
+        self.depends_on = depends_on
+
+
+class TumblingWindowTriggerDependencyReference(TriggerDependencyReference):
+    """Referenced tumbling window trigger dependency.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. The type of dependency reference.Constant filled by server.
+    :type type: str
+    :param reference_trigger: Required. Referenced trigger.
+    :type reference_trigger: ~azure.mgmt.datafactory.models.TriggerReference
+    :param offset: Timespan applied to the start time of a tumbling window when evaluating
+     dependency.
+    :type offset: str
+    :param size: The size of the window when evaluating the dependency. If undefined the frequency
+     of the tumbling window will be used.
+    :type size: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'reference_trigger': {'required': True},
+        'offset': {'max_length': 15, 'min_length': 8, 'pattern': r'-?((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))'},
+        'size': {'max_length': 15, 'min_length': 8, 'pattern': r'((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))'},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'reference_trigger': {'key': 'referenceTrigger', 'type': 'TriggerReference'},
+        'offset': {'key': 'offset', 'type': 'str'},
+        'size': {'key': 'size', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        reference_trigger: "TriggerReference",
+        offset: Optional[str] = None,
+        size: Optional[str] = None,
+        **kwargs
+    ):
+        super(TumblingWindowTriggerDependencyReference, self).__init__(reference_trigger=reference_trigger, **kwargs)
+        self.type: str = 'TumblingWindowTriggerDependencyReference'
+        self.offset = offset
+        self.size = size
+
+
+class UpdateIntegrationRuntimeRequest(msrest.serialization.Model):
+    """Update integration runtime request.
+
+    :param auto_update: Enables or disables the auto-update feature of the self-hosted integration
+     runtime. See https://go.microsoft.com/fwlink/?linkid=854189.
+    :type auto_update: object
+    :param update_delay_offset: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The
+     integration runtime auto update will happen on that time.
+    :type update_delay_offset: str
+    """
+
+    _attribute_map = {
+        'auto_update': {'key': 'autoUpdate', 'type': 'object'},
+        'update_delay_offset': {'key': 'updateDelayOffset', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        auto_update: Optional[object] = None,
+        update_delay_offset: Optional[str] = None,
+        **kwargs
+    ):
+        super(UpdateIntegrationRuntimeRequest, self).__init__(**kwargs)
+        self.auto_update = auto_update
+        self.update_delay_offset = update_delay_offset
 
 
 class UserAccessPolicy(msrest.serialization.Model):

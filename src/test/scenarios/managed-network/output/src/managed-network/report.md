@@ -99,6 +99,14 @@ delete a managed-network mn.
 |------|----|-----------|----------|--------------|
 |**--resource-group-name**|string|The name of the resource group.|resource_group_name|
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|
+### managed-network mn get-modify
+
+get-modify a managed-network mn.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The name of the resource group.|resource_group_name|
+|**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|
 ### managed-network mn group create
 
 create a managed-network mn group.
@@ -207,14 +215,6 @@ create a managed-network mn scope-assignment.
 |**--scope-assignment-name**|string|The name of the scope assignment to create.|scope_assignment_name|
 |**--location**|string|The geo-location where the resource lives|location|
 |**--assigned-managed-network**|string|The managed network ID with scope will be assigned to.|assigned_managed_network|
-### managed-network mn show
-
-show a managed-network mn.
-
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--resource-group-name**|string|The name of the resource group.|resource_group_name|
-|**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|
 ### managed-network mn update
 
 update a managed-network mn.

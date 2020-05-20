@@ -43,7 +43,7 @@ class ManagedNetworkOperations:
         self._deserialize = deserializer
         self._config = config
 
-    async def get(
+    async def get_modify(
         self,
         resource_group_name: str,
         managed_network_name: str,
@@ -66,7 +66,7 @@ class ManagedNetworkOperations:
         api_version = "2019-06-01-preview"
 
         # Construct URL
-        url = self.get.metadata['url']  # type: ignore
+        url = self.get_modify.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
@@ -98,7 +98,7 @@ class ManagedNetworkOperations:
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}  # type: ignore
+    get_modify.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}  # type: ignore
 
     async def create_or_update(
         self,

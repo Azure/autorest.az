@@ -3028,6 +3028,7 @@ operationGroups:
       name: AttestationProvider
       description: ''
       command: attestation attestation-provider
+      hasShowCommand: true
       hasUpdate: true
     cli:
       name: AttestationProvider

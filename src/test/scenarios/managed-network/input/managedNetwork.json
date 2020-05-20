@@ -39,7 +39,7 @@
         "tags": [
           "ManagedNetworks"
         ],
-        "operationId": "ManagedNetworks_Get",
+        "operationId": "ManagedNetworks_GetModify",
         "description": "The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name",
         "parameters": [
           {

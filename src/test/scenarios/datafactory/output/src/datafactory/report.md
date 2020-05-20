@@ -58,6 +58,160 @@ get-git-hub-access-token a datafactory.
 |**--git-hub-access-code**|string|GitHub access code.|git_hub_access_code|
 |**--git-hub-access-token-base-url**|string|GitHub access token base URL.|git_hub_access_token_base_url|
 |**--git-hub-client-id**|string|GitHub application client ID.|git_hub_client_id|
+### datafactory integration-runtime create
+
+create a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+|**--properties**|any|Integration runtime properties.|properties|
+|**--if-match**|string|ETag of the integration runtime entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
+### datafactory integration-runtime delete
+
+delete a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+### datafactory integration-runtime get-connection-info
+
+get-connection-info a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+### datafactory integration-runtime get-monitoring-data
+
+get-monitoring-data a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+### datafactory integration-runtime get-status
+
+get-status a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+### datafactory integration-runtime linked-integration-runtime create
+
+linked-integration-runtime create a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+|**--name**|string|The name of the linked integration runtime.|name|
+|**--subscription-id**|string|The ID of the subscription that the linked integration runtime belongs to.|subscription_id|
+|**--data-factory-name**|string|The name of the data factory that the linked integration runtime belongs to.|data_factory_name|
+|**--data-factory-location**|string|The location of the data factory that the linked integration runtime belongs to.|data_factory_location|
+### datafactory integration-runtime list
+
+list a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+### datafactory integration-runtime list-auth-key
+
+list-auth-key a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+### datafactory integration-runtime regenerate-auth-key
+
+regenerate-auth-key a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+|**--regenerate-key-parameters**|any|The parameters for regenerating integration runtime authentication key.|regenerate_key_parameters|
+### datafactory integration-runtime remove-link
+
+remove-link a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+|**--linked-factory-name**|string|The data factory name for linked integration runtime.|linked_factory_name|
+### datafactory integration-runtime show
+
+show a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+|**--if-none-match**|string|ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.|if_none_match|
+### datafactory integration-runtime start
+
+start a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+### datafactory integration-runtime stop
+
+stop a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+### datafactory integration-runtime sync-credentials
+
+sync-credentials a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+### datafactory integration-runtime update
+
+update a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+|**--auto-update**|any|Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.|auto_update|
+|**--update-delay-offset**|string|The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.|update_delay_offset|
+### datafactory integration-runtime upgrade
+
+upgrade a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
 ### datafactory list
 
 list a datafactory.
@@ -74,6 +228,110 @@ show a datafactory.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|
 |**--factory-name**|string|The factory name.|factory_name|
 |**--if-none-match**|string|ETag of the factory entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.|if_none_match|
+### datafactory trigger create
+
+create a datafactory trigger.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--trigger-name**|string|The trigger name.|trigger_name|
+|**--properties**|any|Properties of the trigger.|properties|
+|**--if-match**|string|ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
+### datafactory trigger delete
+
+delete a datafactory trigger.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--trigger-name**|string|The trigger name.|trigger_name|
+### datafactory trigger get-event-subscription-status
+
+get-event-subscription-status a datafactory trigger.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--trigger-name**|string|The trigger name.|trigger_name|
+### datafactory trigger list
+
+list a datafactory trigger.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+### datafactory trigger query-by-factory
+
+query-by-factory a datafactory trigger.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--continuation-token**|string|The continuation token for getting the next page of results. Null for first page.|continuation_token|
+|**--parent-trigger-name**|string|The name of the parent TumblingWindowTrigger to get the child rerun triggers|parent_trigger_name|
+### datafactory trigger show
+
+show a datafactory trigger.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--trigger-name**|string|The trigger name.|trigger_name|
+|**--if-none-match**|string|ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.|if_none_match|
+### datafactory trigger start
+
+start a datafactory trigger.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--trigger-name**|string|The trigger name.|trigger_name|
+### datafactory trigger stop
+
+stop a datafactory trigger.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--trigger-name**|string|The trigger name.|trigger_name|
+### datafactory trigger subscribe-to-event
+
+subscribe-to-event a datafactory trigger.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--trigger-name**|string|The trigger name.|trigger_name|
+### datafactory trigger unsubscribe-from-event
+
+unsubscribe-from-event a datafactory trigger.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--trigger-name**|string|The trigger name.|trigger_name|
+### datafactory trigger update
+
+create a datafactory trigger.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--trigger-name**|string|The trigger name.|trigger_name|
+|**--properties**|any|Properties of the trigger.|properties|
+|**--if-match**|string|ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
 ### datafactory update
 
 update a datafactory.

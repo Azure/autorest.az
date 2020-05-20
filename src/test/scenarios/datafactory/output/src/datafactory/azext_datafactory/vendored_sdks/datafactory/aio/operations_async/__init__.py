@@ -7,7 +7,11 @@
 # --------------------------------------------------------------------------
 
 from ._factory_operations_async import FactoryOperations
+from ._trigger_operations_async import TriggerOperations
+from ._integration_runtime_operations_async import IntegrationRuntimeOperations
 
 __all__ = [
     'FactoryOperations',
+    'TriggerOperations',
+    'IntegrationRuntimeOperations',
 ]

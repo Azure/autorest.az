@@ -40,7 +40,7 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
                         allSubGroup.set(subCommandGroupName, true);
                         output = output.concat(generateCommandGroupHelp(model, subCommandGroupName));
                     }
-                    if(model.Command_IsLongRun) {
+                    if(model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
                         hasWait = true;
                         let waitParam = "";
                         if (allSupportWaited.indexOf(model.Command_MethodName) < 0) {
