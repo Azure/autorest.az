@@ -146,9 +146,9 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
     let call = "def " + updatedMethodName + "(";
     let indent = " ".repeat(call.length);
     if(needGeneric) {
-        call += "instance, cmd";
+        call += "instance";
     } else {
-        call += "cmd, client";
+        call += "client";
     }
     output.push(call);
     
