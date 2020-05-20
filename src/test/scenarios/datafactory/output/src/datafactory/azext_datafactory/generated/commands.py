@@ -59,9 +59,10 @@ def load_command_table(self, _):
                             client_factory=cf_integration_runtime, is_experimental=True) as g:
         g.custom_command('list', 'datafactory_integration_runtime_list')
         g.custom_show_command('show', 'datafactory_integration_runtime_show')
-        g.custom_command('create', 'datafactory_integration_runtime_create')
         g.custom_command('linked-integration-runtime create', 'datafactory_integration_runtime_linked_integration_runti'
                          'me_create')
+        g.custom_command('managed create', 'datafactory_integration_runtime_managed_create')
+        g.custom_command('self-hosted create', 'datafactory_integration_runtime_self_hosted_create')
         g.custom_command('update', 'datafactory_integration_runtime_update')
         g.custom_command('delete', 'datafactory_integration_runtime_delete')
         g.custom_command('get-connection-info', 'datafactory_integration_runtime_get_connection_info')

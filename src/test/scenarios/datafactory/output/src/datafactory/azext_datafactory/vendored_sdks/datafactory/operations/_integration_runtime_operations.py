@@ -124,7 +124,7 @@ class IntegrationRuntimeOperations(object):
         resource_group_name,  # type: str
         factory_name,  # type: str
         integration_runtime_name,  # type: str
-        properties,  # type: object
+        properties,  # type: "models.IntegrationRuntime"
         if_match=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
@@ -138,7 +138,7 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :param properties: Integration runtime properties.
-        :type properties: object
+        :type properties: ~azure.mgmt.datafactory.models.IntegrationRuntime
         :param if_match: ETag of the integration runtime entity. Should only be specified for update,
          for which it should match existing entity or can be * for unconditional update.
         :type if_match: str
@@ -272,7 +272,7 @@ class IntegrationRuntimeOperations(object):
         resource_group_name,  # type: str
         factory_name,  # type: str
         integration_runtime_name,  # type: str
-        auto_update=None,  # type: Optional[object]
+        auto_update=None,  # type: Optional[Union[str, "models.IntegrationRuntimeAutoUpdate"]]
         update_delay_offset=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
@@ -287,7 +287,7 @@ class IntegrationRuntimeOperations(object):
         :type integration_runtime_name: str
         :param auto_update: Enables or disables the auto-update feature of the self-hosted integration
          runtime. See https://go.microsoft.com/fwlink/?linkid=854189.
-        :type auto_update: object
+        :type auto_update: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeAutoUpdate
         :param update_delay_offset: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The
          integration runtime auto update will happen on that time.
         :type update_delay_offset: str
@@ -469,7 +469,7 @@ class IntegrationRuntimeOperations(object):
         integration_runtime_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> object
+        # type: (...) -> "models.IntegrationRuntimeConnectionInfo"
         """Gets the on-premises integration runtime connection information for encrypting the on-premises data source credentials.
 
         :param resource_group_name: The resource group name.
@@ -479,11 +479,11 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: object or the result of cls(response)
-        :rtype: object
+        :return: IntegrationRuntimeConnectionInfo or the result of cls(response)
+        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeConnectionInfo
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[object]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeConnectionInfo"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2018-06-01"
@@ -515,7 +515,7 @@ class IntegrationRuntimeOperations(object):
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('object', pipeline_response)
+        deserialized = self._deserialize('IntegrationRuntimeConnectionInfo', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
@@ -528,10 +528,10 @@ class IntegrationRuntimeOperations(object):
         resource_group_name,  # type: str
         factory_name,  # type: str
         integration_runtime_name,  # type: str
-        regenerate_key_parameters,  # type: object
+        key_name=None,  # type: Optional[Union[str, "models.IntegrationRuntimeAuthKeyName"]]
         **kwargs  # type: Any
     ):
-        # type: (...) -> object
+        # type: (...) -> "models.IntegrationRuntimeAuthKeys"
         """Regenerates the authentication key for an integration runtime.
 
         :param resource_group_name: The resource group name.
@@ -540,17 +540,18 @@ class IntegrationRuntimeOperations(object):
         :type factory_name: str
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
-        :param regenerate_key_parameters: The parameters for regenerating integration runtime
-         authentication key.
-        :type regenerate_key_parameters: object
+        :param key_name: The name of the authentication key to regenerate.
+        :type key_name: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeAuthKeyName
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: object or the result of cls(response)
-        :rtype: object
+        :return: IntegrationRuntimeAuthKeys or the result of cls(response)
+        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeAuthKeys
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[object]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeAuthKeys"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _regenerate_key_parameters = models.IntegrationRuntimeRegenerateKeyParameters(key_name=key_name)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -575,7 +576,7 @@ class IntegrationRuntimeOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(regenerate_key_parameters, 'object')
+        body_content = self._serialize.body(_regenerate_key_parameters, 'IntegrationRuntimeRegenerateKeyParameters')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -586,7 +587,7 @@ class IntegrationRuntimeOperations(object):
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('object', pipeline_response)
+        deserialized = self._deserialize('IntegrationRuntimeAuthKeys', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
@@ -601,7 +602,7 @@ class IntegrationRuntimeOperations(object):
         integration_runtime_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> object
+        # type: (...) -> "models.IntegrationRuntimeAuthKeys"
         """Retrieves the authentication keys for an integration runtime.
 
         :param resource_group_name: The resource group name.
@@ -611,11 +612,11 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: object or the result of cls(response)
-        :rtype: object
+        :return: IntegrationRuntimeAuthKeys or the result of cls(response)
+        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeAuthKeys
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[object]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeAuthKeys"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2018-06-01"
@@ -647,7 +648,7 @@ class IntegrationRuntimeOperations(object):
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('object', pipeline_response)
+        deserialized = self._deserialize('IntegrationRuntimeAuthKeys', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
@@ -914,7 +915,7 @@ class IntegrationRuntimeOperations(object):
         integration_runtime_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> object
+        # type: (...) -> "models.IntegrationRuntimeMonitoringData"
         """Get the integration runtime monitoring data, which includes the monitor data for all the nodes under this integration runtime.
 
         :param resource_group_name: The resource group name.
@@ -924,11 +925,11 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: object or the result of cls(response)
-        :rtype: object
+        :return: IntegrationRuntimeMonitoringData or the result of cls(response)
+        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeMonitoringData
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[object]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeMonitoringData"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2018-06-01"
@@ -960,7 +961,7 @@ class IntegrationRuntimeOperations(object):
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('object', pipeline_response)
+        deserialized = self._deserialize('IntegrationRuntimeMonitoringData', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})

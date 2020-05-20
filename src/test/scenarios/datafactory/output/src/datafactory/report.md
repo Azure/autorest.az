@@ -57,17 +57,6 @@ get-git-hub-access-token a datafactory.
 |**--git-hub-access-code**|string|GitHub access code.|git_hub_access_code|
 |**--git-hub-access-token-base-url**|string|GitHub access token base URL.|git_hub_access_token_base_url|
 |**--git-hub-client-id**|string|GitHub application client ID.|git_hub_client_id|
-### datafactory integration-runtime create
-
-create a datafactory integration-runtime.
-
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--resource-group-name**|string|The resource group name.|resource_group_name|
-|**--factory-name**|string|The factory name.|factory_name|
-|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
-|**--properties**|any|Integration runtime properties.|properties|
-|**--if-match**|string|ETag of the integration runtime entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
 ### datafactory integration-runtime delete
 
 delete a datafactory integration-runtime.
@@ -134,6 +123,19 @@ list-auth-key a datafactory integration-runtime.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|
 |**--factory-name**|string|The factory name.|factory_name|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+### datafactory integration-runtime managed create
+
+managed create a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+|**--if-match**|string|ETag of the integration runtime entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
+|**--description**|string|Integration runtime description.|managed_description|
+|**--type-properties-compute-properties**|object|The compute resource for managed integration runtime.|managed_compute_properties|
+|**--type-properties-ssis-properties**|object|SSIS properties for managed integration runtime.|managed_ssis_properties|
 ### datafactory integration-runtime regenerate-auth-key
 
 regenerate-auth-key a datafactory integration-runtime.
@@ -143,7 +145,7 @@ regenerate-auth-key a datafactory integration-runtime.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|
 |**--factory-name**|string|The factory name.|factory_name|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
-|**--regenerate-key-parameters**|any|The parameters for regenerating integration runtime authentication key.|regenerate_key_parameters|
+|**--key-name**|choice|The name of the authentication key to regenerate.|key_name|
 ### datafactory integration-runtime remove-link
 
 remove-link a datafactory integration-runtime.
@@ -154,6 +156,18 @@ remove-link a datafactory integration-runtime.
 |**--factory-name**|string|The factory name.|factory_name|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
 |**--linked-factory-name**|string|The data factory name for linked integration runtime.|linked_factory_name|
+### datafactory integration-runtime self-hosted create
+
+self-hosted create a datafactory integration-runtime.
+
+|Option|Type|Description|Path (SDK)|Path (swagger)|
+|------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|
+|**--factory-name**|string|The factory name.|factory_name|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
+|**--if-match**|string|ETag of the integration runtime entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
+|**--description**|string|Integration runtime description.|self_hosted_description|
+|**--type-properties-linked-info**|object|The base definition of a linked integration runtime.|self_hosted_linked_info|
 ### datafactory integration-runtime show
 
 show a datafactory integration-runtime.
@@ -200,7 +214,7 @@ update a datafactory integration-runtime.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|
 |**--factory-name**|string|The factory name.|factory_name|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
-|**--auto-update**|any|Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.|auto_update|
+|**--auto-update**|choice|Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.|auto_update|
 |**--update-delay-offset**|string|The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.|update_delay_offset|
 ### datafactory integration-runtime upgrade
 
@@ -236,7 +250,7 @@ create a datafactory trigger.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|
 |**--factory-name**|string|The factory name.|factory_name|
 |**--trigger-name**|string|The trigger name.|trigger_name|
-|**--properties**|any|Properties of the trigger.|properties|
+|**--properties**|object|Properties of the trigger.|properties|
 |**--if-match**|string|ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
 ### datafactory trigger delete
 
@@ -329,7 +343,7 @@ create a datafactory trigger.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|
 |**--factory-name**|string|The factory name.|factory_name|
 |**--trigger-name**|string|The trigger name.|trigger_name|
-|**--properties**|any|Properties of the trigger.|properties|
+|**--properties**|object|Properties of the trigger.|properties|
 |**--if-match**|string|ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
 ### datafactory update
 

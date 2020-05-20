@@ -191,7 +191,7 @@ class TriggerOperations:
         resource_group_name: str,
         factory_name: str,
         trigger_name: str,
-        properties: object,
+        properties: "models.Trigger",
         if_match: Optional[str] = None,
         **kwargs
     ) -> "models.TriggerResource":
@@ -204,7 +204,7 @@ class TriggerOperations:
         :param trigger_name: The trigger name.
         :type trigger_name: str
         :param properties: Properties of the trigger.
-        :type properties: object
+        :type properties: ~azure.mgmt.datafactory.models.Trigger
         :param if_match: ETag of the trigger entity.  Should only be specified for update, for which it
          should match existing entity or can be * for unconditional update.
         :type if_match: str

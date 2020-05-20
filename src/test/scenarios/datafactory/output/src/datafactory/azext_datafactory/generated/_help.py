@@ -333,17 +333,6 @@ helps['datafactory integration-runtime show'] = """
 ntime" --resource-group "exampleResourceGroup"
 """
 
-helps['datafactory integration-runtime create'] = """
-    type: command
-    short-summary: Creates or updates an integration runtime.
-    examples:
-      - name: IntegrationRuntimes_Create
-        text: |-
-               az datafactory integration-runtime create --factory-name "exampleFactoryName" --properties "{\\"type\\":\
-\\"SelfHosted\\",\\"description\\":\\"A selfhosted integration runtime\\"}" --name "exampleIntegrationRuntime" --resour\
-ce-group "exampleResourceGroup"
-"""
-
 helps['datafactory integration-runtime linked-integration-runtime'] = """
     type: group
     short-summary: datafactory integration-runtime sub group linked-integration-runtime
@@ -359,6 +348,36 @@ helps['datafactory integration-runtime linked-integration-runtime create'] = """
 e87bc1c83" --data-factory-location "West US" --data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" --subscription-\
 id "061774c7-4b5a-4159-a55b-365581830283" --factory-name "exampleFactoryName" --integration-runtime-name "exampleIntegr\
 ationRuntime" --resource-group "exampleResourceGroup" --subscription-id "12345678-1234-1234-1234-12345678abc"
+"""
+
+helps['datafactory integration-runtime managed'] = """
+    type: group
+    short-summary: datafactory integration-runtime sub group managed
+"""
+
+helps['datafactory integration-runtime managed create'] = """
+    type: command
+    short-summary: Creates or updates an integration runtime.
+    examples:
+      - name: IntegrationRuntimes_Create
+        text: |-
+               az datafactory integration-runtime managed create --factory-name "exampleFactoryName" --description "A s\
+elfhosted integration runtime" --name "exampleIntegrationRuntime" --resource-group "exampleResourceGroup"
+"""
+
+helps['datafactory integration-runtime self-hosted'] = """
+    type: group
+    short-summary: datafactory integration-runtime sub group self-hosted
+"""
+
+helps['datafactory integration-runtime self-hosted create'] = """
+    type: command
+    short-summary: Creates or updates an integration runtime.
+    examples:
+      - name: IntegrationRuntimes_Create
+        text: |-
+               az datafactory integration-runtime self-hosted create --factory-name "exampleFactoryName" --description \
+"A selfhosted integration runtime" --name "exampleIntegrationRuntime" --resource-group "exampleResourceGroup"
 """
 
 helps['datafactory integration-runtime update'] = """
@@ -430,8 +449,7 @@ helps['datafactory integration-runtime regenerate-auth-key'] = """
       - name: IntegrationRuntimes_RegenerateAuthKey
         text: |-
                az datafactory integration-runtime regenerate-auth-key --factory-name "exampleFactoryName" --name "examp\
-leIntegrationRuntime" --regenerate-key-parameters "{\\"keyName\\":\\"authKey2\\"}" --resource-group "exampleResourceGro\
-up"
+leIntegrationRuntime" --key-name "authKey2" --resource-group "exampleResourceGroup"
 """
 
 helps['datafactory integration-runtime remove-link'] = """

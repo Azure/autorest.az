@@ -261,21 +261,6 @@ def datafactory_integration_runtime_show(cmd, client,
                       if_none_match=if_none_match)
 
 
-def datafactory_integration_runtime_create(cmd, client,
-                                           resource_group_name,
-                                           factory_name,
-                                           integration_runtime_name,
-                                           properties,
-                                           if_match=None):
-    if isinstance(properties, str):
-        properties = json.loads(properties)
-    return client.create_or_update(resource_group_name=resource_group_name,
-                                   factory_name=factory_name,
-                                   integration_runtime_name=integration_runtime_name,
-                                   if_match=if_match,
-                                   properties=properties)
-
-
 def datafactory_integration_runtime_linked_integration_runtime_create(cmd, client,
                                                                       resource_group_name,
                                                                       factory_name,
@@ -293,14 +278,56 @@ def datafactory_integration_runtime_linked_integration_runtime_create(cmd, clien
                                                     data_factory_location=data_factory_location)
 
 
+def datafactory_integration_runtime_managed_create(cmd, client,
+                                                   resource_group_name,
+                                                   factory_name,
+                                                   integration_runtime_name,
+                                                   if_match=None,
+                                                   description=None,
+                                                   type_properties_compute_properties=None,
+                                                   type_properties_ssis_properties=None):
+    if isinstance(type_properties_compute_properties, str):
+        type_properties_compute_properties = json.loads(type_properties_compute_properties)
+    if isinstance(type_properties_ssis_properties, str):
+        type_properties_ssis_properties = json.loads(type_properties_ssis_properties)
+    properties = {}
+    properties['type'] = 'Managed'
+    properties['description'] = description
+    properties['compute_properties'] = type_properties_compute_properties
+    properties['ssis_properties'] = type_properties_ssis_properties
+    return client.create_or_update(resource_group_name=resource_group_name,
+                                   factory_name=factory_name,
+                                   integration_runtime_name=integration_runtime_name,
+                                   if_match=if_match,
+                                   properties=properties)
+
+
+def datafactory_integration_runtime_self_hosted_create(cmd, client,
+                                                       resource_group_name,
+                                                       factory_name,
+                                                       integration_runtime_name,
+                                                       if_match=None,
+                                                       description=None,
+                                                       type_properties_linked_info=None):
+    if isinstance(type_properties_linked_info, str):
+        type_properties_linked_info = json.loads(type_properties_linked_info)
+    properties = {}
+    properties['type'] = 'SelfHosted'
+    properties['description'] = description
+    properties['linked_info'] = type_properties_linked_info
+    return client.create_or_update(resource_group_name=resource_group_name,
+                                   factory_name=factory_name,
+                                   integration_runtime_name=integration_runtime_name,
+                                   if_match=if_match,
+                                   properties=properties)
+
+
 def datafactory_integration_runtime_update(cmd, client,
                                            resource_group_name,
                                            factory_name,
                                            integration_runtime_name,
                                            auto_update=None,
                                            update_delay_offset=None):
-    if isinstance(auto_update, str):
-        auto_update = json.loads(auto_update)
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          integration_runtime_name=integration_runtime_name,
@@ -357,13 +384,11 @@ def datafactory_integration_runtime_regenerate_auth_key(cmd, client,
                                                         resource_group_name,
                                                         factory_name,
                                                         integration_runtime_name,
-                                                        regenerate_key_parameters):
-    if isinstance(regenerate_key_parameters, str):
-        regenerate_key_parameters = json.loads(regenerate_key_parameters)
+                                                        key_name=None):
     return client.regenerate_auth_key(resource_group_name=resource_group_name,
                                       factory_name=factory_name,
                                       integration_runtime_name=integration_runtime_name,
-                                      regenerate_key_parameters=regenerate_key_parameters)
+                                      key_name=key_name)
 
 
 def datafactory_integration_runtime_remove_link(cmd, client,
