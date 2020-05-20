@@ -125,7 +125,7 @@ class MultiplePipelineTrigger(Trigger):
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     :param pipelines: Pipelines that need to be started.
-    :type pipelines: list[object]
+    :type pipelines: list[~azure.mgmt.datafactory.models.TriggerPipelineReference]
     """
 
     _validation = {
@@ -139,7 +139,7 @@ class MultiplePipelineTrigger(Trigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
-        'pipelines': {'key': 'pipelines', 'type': '[object]'},
+        'pipelines': {'key': 'pipelines', 'type': '[TriggerPipelineReference]'},
     }
 
     _subtype_map = {
@@ -152,7 +152,7 @@ class MultiplePipelineTrigger(Trigger):
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
-        pipelines: Optional[List[object]] = None,
+        pipelines: Optional[List["TriggerPipelineReference"]] = None,
         **kwargs
     ):
         super(MultiplePipelineTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, **kwargs)
@@ -180,7 +180,7 @@ class BlobEventsTrigger(MultiplePipelineTrigger):
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     :param pipelines: Pipelines that need to be started.
-    :type pipelines: list[object]
+    :type pipelines: list[~azure.mgmt.datafactory.models.TriggerPipelineReference]
     :param blob_path_begins_with: The blob path must begin with the pattern provided for trigger to
      fire. For example, '/records/blobs/december/' will only fire the trigger for blobs in the
      december folder under the records container. At least one of these must be provided:
@@ -211,7 +211,7 @@ class BlobEventsTrigger(MultiplePipelineTrigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
-        'pipelines': {'key': 'pipelines', 'type': '[object]'},
+        'pipelines': {'key': 'pipelines', 'type': '[TriggerPipelineReference]'},
         'blob_path_begins_with': {'key': 'typeProperties.blobPathBeginsWith', 'type': 'str'},
         'blob_path_ends_with': {'key': 'typeProperties.blobPathEndsWith', 'type': 'str'},
         'ignore_empty_blobs': {'key': 'typeProperties.ignoreEmptyBlobs', 'type': 'bool'},
@@ -227,7 +227,7 @@ class BlobEventsTrigger(MultiplePipelineTrigger):
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
-        pipelines: Optional[List[object]] = None,
+        pipelines: Optional[List["TriggerPipelineReference"]] = None,
         blob_path_begins_with: Optional[str] = None,
         blob_path_ends_with: Optional[str] = None,
         ignore_empty_blobs: Optional[bool] = None,
@@ -262,14 +262,14 @@ class BlobTrigger(MultiplePipelineTrigger):
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     :param pipelines: Pipelines that need to be started.
-    :type pipelines: list[object]
+    :type pipelines: list[~azure.mgmt.datafactory.models.TriggerPipelineReference]
     :param folder_path: Required. The path of the container/folder that will trigger the pipeline.
     :type folder_path: str
     :param max_concurrency: Required. The max number of parallel files to handle when it is
      triggered.
     :type max_concurrency: int
     :param linked_service: Required. The Azure Storage linked service reference.
-    :type linked_service: object
+    :type linked_service: ~azure.mgmt.datafactory.models.LinkedServiceReference
     """
 
     _validation = {
@@ -286,10 +286,10 @@ class BlobTrigger(MultiplePipelineTrigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
-        'pipelines': {'key': 'pipelines', 'type': '[object]'},
+        'pipelines': {'key': 'pipelines', 'type': '[TriggerPipelineReference]'},
         'folder_path': {'key': 'typeProperties.folderPath', 'type': 'str'},
         'max_concurrency': {'key': 'typeProperties.maxConcurrency', 'type': 'int'},
-        'linked_service': {'key': 'typeProperties.linkedService', 'type': 'object'},
+        'linked_service': {'key': 'typeProperties.linkedService', 'type': 'LinkedServiceReference'},
     }
 
     def __init__(
@@ -297,11 +297,11 @@ class BlobTrigger(MultiplePipelineTrigger):
         *,
         folder_path: str,
         max_concurrency: int,
-        linked_service: object,
+        linked_service: "LinkedServiceReference",
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
-        pipelines: Optional[List[object]] = None,
+        pipelines: Optional[List["TriggerPipelineReference"]] = None,
         **kwargs
     ):
         super(BlobTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, pipelines=pipelines, **kwargs)
@@ -332,9 +332,9 @@ class ChainingTrigger(Trigger):
     :type annotations: list[object]
     :param pipeline: Required. Pipeline for which runs are created when all upstream pipelines
      complete successfully.
-    :type pipeline: object
+    :type pipeline: ~azure.mgmt.datafactory.models.TriggerPipelineReference
     :param depends_on: Required. Upstream Pipelines.
-    :type depends_on: list[object]
+    :type depends_on: list[~azure.mgmt.datafactory.models.PipelineReference]
     :param run_dimension: Required. Run Dimension property that needs to be emitted by upstream
      pipelines.
     :type run_dimension: str
@@ -354,16 +354,16 @@ class ChainingTrigger(Trigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
-        'pipeline': {'key': 'pipeline', 'type': 'object'},
-        'depends_on': {'key': 'typeProperties.dependsOn', 'type': '[object]'},
+        'pipeline': {'key': 'pipeline', 'type': 'TriggerPipelineReference'},
+        'depends_on': {'key': 'typeProperties.dependsOn', 'type': '[PipelineReference]'},
         'run_dimension': {'key': 'typeProperties.runDimension', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
-        pipeline: object,
-        depends_on: List[object],
+        pipeline: "TriggerPipelineReference",
+        depends_on: List["PipelineReference"],
         run_dimension: str,
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
@@ -464,7 +464,7 @@ class CmdkeySetup(CustomSetupBase):
     :param user_name: Required. The user name of data source access.
     :type user_name: object
     :param password: Required. The password of data source access.
-    :type password: object
+    :type password: ~azure.mgmt.datafactory.models.SecretBase
     """
 
     _validation = {
@@ -478,7 +478,7 @@ class CmdkeySetup(CustomSetupBase):
         'type': {'key': 'type', 'type': 'str'},
         'target_name': {'key': 'typeProperties.targetName', 'type': 'object'},
         'user_name': {'key': 'typeProperties.userName', 'type': 'object'},
-        'password': {'key': 'typeProperties.password', 'type': 'object'},
+        'password': {'key': 'typeProperties.password', 'type': 'SecretBase'},
     }
 
     def __init__(
@@ -486,7 +486,7 @@ class CmdkeySetup(CustomSetupBase):
         *,
         target_name: object,
         user_name: object,
-        password: object,
+        password: "SecretBase",
         **kwargs
     ):
         super(CmdkeySetup, self).__init__(**kwargs)
@@ -506,7 +506,7 @@ class ComponentSetup(CustomSetupBase):
     :param component_name: Required. The name of the 3rd party component.
     :type component_name: str
     :param license_key: The license key to activate the component.
-    :type license_key: object
+    :type license_key: ~azure.mgmt.datafactory.models.SecretBase
     """
 
     _validation = {
@@ -517,14 +517,14 @@ class ComponentSetup(CustomSetupBase):
     _attribute_map = {
         'type': {'key': 'type', 'type': 'str'},
         'component_name': {'key': 'typeProperties.componentName', 'type': 'str'},
-        'license_key': {'key': 'typeProperties.licenseKey', 'type': 'object'},
+        'license_key': {'key': 'typeProperties.licenseKey', 'type': 'SecretBase'},
     }
 
     def __init__(
         self,
         *,
         component_name: str,
-        license_key: Optional[object] = None,
+        license_key: Optional["SecretBase"] = None,
         **kwargs
     ):
         super(ComponentSetup, self).__init__(**kwargs)
@@ -1396,19 +1396,19 @@ class IntegrationRuntimeCustomSetupScriptProperties(msrest.serialization.Model):
      script.
     :type blob_container_uri: str
     :param sas_token: The SAS token of the Azure blob container.
-    :type sas_token: object
+    :type sas_token: ~azure.mgmt.datafactory.models.SecureString
     """
 
     _attribute_map = {
         'blob_container_uri': {'key': 'blobContainerUri', 'type': 'str'},
-        'sas_token': {'key': 'sasToken', 'type': 'object'},
+        'sas_token': {'key': 'sasToken', 'type': 'SecureString'},
     }
 
     def __init__(
         self,
         *,
         blob_container_uri: Optional[str] = None,
-        sas_token: Optional[object] = None,
+        sas_token: Optional["SecureString"] = None,
         **kwargs
     ):
         super(IntegrationRuntimeCustomSetupScriptProperties, self).__init__(**kwargs)
@@ -1655,7 +1655,7 @@ class IntegrationRuntimeReference(msrest.serialization.Model):
     :param reference_name: Required. Reference integration runtime name.
     :type reference_name: str
     :param parameters: Arguments for integration runtime.
-    :type parameters: object
+    :type parameters: dict[str, object]
     """
 
     _validation = {
@@ -1666,7 +1666,7 @@ class IntegrationRuntimeReference(msrest.serialization.Model):
     _attribute_map = {
         'type': {'key': 'type', 'type': 'str'},
         'reference_name': {'key': 'referenceName', 'type': 'str'},
-        'parameters': {'key': 'parameters', 'type': 'object'},
+        'parameters': {'key': 'parameters', 'type': '{object}'},
     }
 
     type = "IntegrationRuntimeReference"
@@ -1675,7 +1675,7 @@ class IntegrationRuntimeReference(msrest.serialization.Model):
         self,
         *,
         reference_name: str,
-        parameters: Optional[object] = None,
+        parameters: Optional[Dict[str, object]] = None,
         **kwargs
     ):
         super(IntegrationRuntimeReference, self).__init__(**kwargs)
@@ -1761,7 +1761,7 @@ class IntegrationRuntimeResource(SubResource):
     :ivar etag: Etag identifies change in the resource.
     :vartype etag: str
     :param properties: Required. Integration runtime properties.
-    :type properties: object
+    :type properties: ~azure.mgmt.datafactory.models.IntegrationRuntime
     """
 
     _validation = {
@@ -1777,13 +1777,13 @@ class IntegrationRuntimeResource(SubResource):
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
-        'properties': {'key': 'properties', 'type': 'object'},
+        'properties': {'key': 'properties', 'type': 'IntegrationRuntime'},
     }
 
     def __init__(
         self,
         *,
-        properties: object,
+        properties: "IntegrationRuntime",
         **kwargs
     ):
         super(IntegrationRuntimeResource, self).__init__(**kwargs)
@@ -1802,7 +1802,7 @@ class IntegrationRuntimeSsisCatalogInfo(msrest.serialization.Model):
     :type catalog_admin_user_name: str
     :param catalog_admin_password: The password of the administrator user account of the catalog
      database.
-    :type catalog_admin_password: object
+    :type catalog_admin_password: ~azure.mgmt.datafactory.models.SecureString
     :param catalog_pricing_tier: The pricing tier for the catalog database. The valid values could
      be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. Possible values
      include: "Basic", "Standard", "Premium", "PremiumRS".
@@ -1818,7 +1818,7 @@ class IntegrationRuntimeSsisCatalogInfo(msrest.serialization.Model):
         'additional_properties': {'key': '', 'type': '{object}'},
         'catalog_server_endpoint': {'key': 'catalogServerEndpoint', 'type': 'str'},
         'catalog_admin_user_name': {'key': 'catalogAdminUserName', 'type': 'str'},
-        'catalog_admin_password': {'key': 'catalogAdminPassword', 'type': 'object'},
+        'catalog_admin_password': {'key': 'catalogAdminPassword', 'type': 'SecureString'},
         'catalog_pricing_tier': {'key': 'catalogPricingTier', 'type': 'str'},
     }
 
@@ -1828,7 +1828,7 @@ class IntegrationRuntimeSsisCatalogInfo(msrest.serialization.Model):
         additional_properties: Optional[Dict[str, object]] = None,
         catalog_server_endpoint: Optional[str] = None,
         catalog_admin_user_name: Optional[str] = None,
-        catalog_admin_password: Optional[object] = None,
+        catalog_admin_password: Optional["SecureString"] = None,
         catalog_pricing_tier: Optional[Union[str, "IntegrationRuntimeSsisCatalogPricingTier"]] = None,
         **kwargs
     ):
@@ -2000,7 +2000,7 @@ class IntegrationRuntimeStatusResponse(msrest.serialization.Model):
     :ivar name: The integration runtime name.
     :vartype name: str
     :param properties: Required. Integration runtime properties.
-    :type properties: object
+    :type properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeStatus
     """
 
     _validation = {
@@ -2010,13 +2010,13 @@ class IntegrationRuntimeStatusResponse(msrest.serialization.Model):
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
-        'properties': {'key': 'properties', 'type': 'object'},
+        'properties': {'key': 'properties', 'type': 'IntegrationRuntimeStatus'},
     }
 
     def __init__(
         self,
         *,
-        properties: object,
+        properties: "IntegrationRuntimeStatus",
         **kwargs
     ):
         super(IntegrationRuntimeStatusResponse, self).__init__(**kwargs)
@@ -2151,7 +2151,7 @@ class LinkedIntegrationRuntimeKeyAuthorization(LinkedIntegrationRuntimeType):
      sharing.Constant filled by server.
     :type authorization_type: str
     :param key: Required. The key used for authorization.
-    :type key: object
+    :type key: ~azure.mgmt.datafactory.models.SecureString
     """
 
     _validation = {
@@ -2161,13 +2161,13 @@ class LinkedIntegrationRuntimeKeyAuthorization(LinkedIntegrationRuntimeType):
 
     _attribute_map = {
         'authorization_type': {'key': 'authorizationType', 'type': 'str'},
-        'key': {'key': 'key', 'type': 'object'},
+        'key': {'key': 'key', 'type': 'SecureString'},
     }
 
     def __init__(
         self,
         *,
-        key: object,
+        key: "SecureString",
         **kwargs
     ):
         super(LinkedIntegrationRuntimeKeyAuthorization, self).__init__(**kwargs)
@@ -2233,6 +2233,46 @@ class LinkedIntegrationRuntimeRequest(msrest.serialization.Model):
     ):
         super(LinkedIntegrationRuntimeRequest, self).__init__(**kwargs)
         self.linked_factory_name = linked_factory_name
+
+
+class LinkedServiceReference(msrest.serialization.Model):
+    """Linked service reference type.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar type: Required. Linked service reference type. Default value: "LinkedServiceReference".
+    :vartype type: str
+    :param reference_name: Required. Reference LinkedService name.
+    :type reference_name: str
+    :param parameters: Arguments for LinkedService.
+    :type parameters: dict[str, object]
+    """
+
+    _validation = {
+        'type': {'required': True, 'constant': True},
+        'reference_name': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'reference_name': {'key': 'referenceName', 'type': 'str'},
+        'parameters': {'key': 'parameters', 'type': '{object}'},
+    }
+
+    type = "LinkedServiceReference"
+
+    def __init__(
+        self,
+        *,
+        reference_name: str,
+        parameters: Optional[Dict[str, object]] = None,
+        **kwargs
+    ):
+        super(LinkedServiceReference, self).__init__(**kwargs)
+        self.reference_name = reference_name
+        self.parameters = parameters
 
 
 class ManagedIntegrationRuntime(IntegrationRuntime):
@@ -2535,6 +2575,46 @@ class PackageStore(msrest.serialization.Model):
         self.package_store_linked_service = package_store_linked_service
 
 
+class PipelineReference(msrest.serialization.Model):
+    """Pipeline reference type.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar type: Required. Pipeline reference type. Default value: "PipelineReference".
+    :vartype type: str
+    :param reference_name: Required. Reference pipeline name.
+    :type reference_name: str
+    :param name: Reference name.
+    :type name: str
+    """
+
+    _validation = {
+        'type': {'required': True, 'constant': True},
+        'reference_name': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'reference_name': {'key': 'referenceName', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+    }
+
+    type = "PipelineReference"
+
+    def __init__(
+        self,
+        *,
+        reference_name: str,
+        name: Optional[str] = None,
+        **kwargs
+    ):
+        super(PipelineReference, self).__init__(**kwargs)
+        self.reference_name = reference_name
+        self.name = name
+
+
 class RecurrenceSchedule(msrest.serialization.Model):
     """The recurrence schedule.
 
@@ -2739,7 +2819,7 @@ class ScheduleTrigger(MultiplePipelineTrigger):
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     :param pipelines: Pipelines that need to be started.
-    :type pipelines: list[object]
+    :type pipelines: list[~azure.mgmt.datafactory.models.TriggerPipelineReference]
     :param recurrence: Required. Recurrence schedule configuration.
     :type recurrence: ~azure.mgmt.datafactory.models.ScheduleTriggerRecurrence
     """
@@ -2756,7 +2836,7 @@ class ScheduleTrigger(MultiplePipelineTrigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
-        'pipelines': {'key': 'pipelines', 'type': '[object]'},
+        'pipelines': {'key': 'pipelines', 'type': '[TriggerPipelineReference]'},
         'recurrence': {'key': 'typeProperties.recurrence', 'type': 'ScheduleTriggerRecurrence'},
     }
 
@@ -2767,7 +2847,7 @@ class ScheduleTrigger(MultiplePipelineTrigger):
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
-        pipelines: Optional[List[object]] = None,
+        pipelines: Optional[List["TriggerPipelineReference"]] = None,
         **kwargs
     ):
         super(ScheduleTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, pipelines=pipelines, **kwargs)
@@ -3772,6 +3852,32 @@ class TriggerListResponse(msrest.serialization.Model):
         self.next_link = next_link
 
 
+class TriggerPipelineReference(msrest.serialization.Model):
+    """Pipeline that needs to be triggered with the given parameters.
+
+    :param pipeline_reference: Pipeline reference.
+    :type pipeline_reference: ~azure.mgmt.datafactory.models.PipelineReference
+    :param parameters: Pipeline parameters.
+    :type parameters: dict[str, object]
+    """
+
+    _attribute_map = {
+        'pipeline_reference': {'key': 'pipelineReference', 'type': 'PipelineReference'},
+        'parameters': {'key': 'parameters', 'type': '{object}'},
+    }
+
+    def __init__(
+        self,
+        *,
+        pipeline_reference: Optional["PipelineReference"] = None,
+        parameters: Optional[Dict[str, object]] = None,
+        **kwargs
+    ):
+        super(TriggerPipelineReference, self).__init__(**kwargs)
+        self.pipeline_reference = pipeline_reference
+        self.parameters = parameters
+
+
 class TriggerQueryResponse(msrest.serialization.Model):
     """A query of triggers.
 
@@ -3856,7 +3962,7 @@ class TriggerResource(SubResource):
     :ivar etag: Etag identifies change in the resource.
     :vartype etag: str
     :param properties: Required. Properties of the trigger.
-    :type properties: object
+    :type properties: ~azure.mgmt.datafactory.models.Trigger
     """
 
     _validation = {
@@ -3872,13 +3978,13 @@ class TriggerResource(SubResource):
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
-        'properties': {'key': 'properties', 'type': 'object'},
+        'properties': {'key': 'properties', 'type': 'Trigger'},
     }
 
     def __init__(
         self,
         *,
-        properties: object,
+        properties: "Trigger",
         **kwargs
     ):
         super(TriggerResource, self).__init__(**kwargs)
@@ -3937,7 +4043,7 @@ class TumblingWindowTrigger(Trigger):
     :type annotations: list[object]
     :param pipeline: Required. Pipeline for which runs are created when an event is fired for
      trigger window that is ready.
-    :type pipeline: object
+    :type pipeline: ~azure.mgmt.datafactory.models.TriggerPipelineReference
     :param frequency: Required. The frequency of the time windows. Possible values include:
      "Minute", "Hour".
     :type frequency: str or ~azure.mgmt.datafactory.models.TumblingWindowFrequency
@@ -3980,7 +4086,7 @@ class TumblingWindowTrigger(Trigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
-        'pipeline': {'key': 'pipeline', 'type': 'object'},
+        'pipeline': {'key': 'pipeline', 'type': 'TriggerPipelineReference'},
         'frequency': {'key': 'typeProperties.frequency', 'type': 'str'},
         'interval': {'key': 'typeProperties.interval', 'type': 'int'},
         'start_time': {'key': 'typeProperties.startTime', 'type': 'iso-8601'},
@@ -3994,7 +4100,7 @@ class TumblingWindowTrigger(Trigger):
     def __init__(
         self,
         *,
-        pipeline: object,
+        pipeline: "TriggerPipelineReference",
         frequency: Union[str, "TumblingWindowFrequency"],
         interval: int,
         start_time: datetime.datetime,
@@ -4070,22 +4176,23 @@ class UpdateIntegrationRuntimeRequest(msrest.serialization.Model):
     """Update integration runtime request.
 
     :param auto_update: Enables or disables the auto-update feature of the self-hosted integration
-     runtime. See https://go.microsoft.com/fwlink/?linkid=854189.
-    :type auto_update: object
+     runtime. See https://go.microsoft.com/fwlink/?linkid=854189. Possible values include: "On",
+     "Off".
+    :type auto_update: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeAutoUpdate
     :param update_delay_offset: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The
      integration runtime auto update will happen on that time.
     :type update_delay_offset: str
     """
 
     _attribute_map = {
-        'auto_update': {'key': 'autoUpdate', 'type': 'object'},
+        'auto_update': {'key': 'autoUpdate', 'type': 'str'},
         'update_delay_offset': {'key': 'updateDelayOffset', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
-        auto_update: Optional[object] = None,
+        auto_update: Optional[Union[str, "IntegrationRuntimeAutoUpdate"]] = None,
         update_delay_offset: Optional[str] = None,
         **kwargs
     ):

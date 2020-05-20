@@ -55,6 +55,7 @@ try:
     from ._models_py3 import LinkedIntegrationRuntimeRbacAuthorization
     from ._models_py3 import LinkedIntegrationRuntimeRequest
     from ._models_py3 import LinkedIntegrationRuntimeType
+    from ._models_py3 import LinkedServiceReference
     from ._models_py3 import ManagedIntegrationRuntime
     from ._models_py3 import ManagedIntegrationRuntimeError
     from ._models_py3 import ManagedIntegrationRuntimeNode
@@ -62,6 +63,7 @@ try:
     from ._models_py3 import ManagedIntegrationRuntimeStatus
     from ._models_py3 import MultiplePipelineTrigger
     from ._models_py3 import PackageStore
+    from ._models_py3 import PipelineReference
     from ._models_py3 import RecurrenceSchedule
     from ._models_py3 import RecurrenceScheduleOccurrence
     from ._models_py3 import RerunTumblingWindowTrigger
@@ -89,6 +91,7 @@ try:
     from ._models_py3 import TriggerDependencyReference
     from ._models_py3 import TriggerFilterParameters
     from ._models_py3 import TriggerListResponse
+    from ._models_py3 import TriggerPipelineReference
     from ._models_py3 import TriggerQueryResponse
     from ._models_py3 import TriggerReference
     from ._models_py3 import TriggerResource
@@ -146,6 +149,7 @@ except (SyntaxError, ImportError):
     from ._models import LinkedIntegrationRuntimeRbacAuthorization  # type: ignore
     from ._models import LinkedIntegrationRuntimeRequest  # type: ignore
     from ._models import LinkedIntegrationRuntimeType  # type: ignore
+    from ._models import LinkedServiceReference  # type: ignore
     from ._models import ManagedIntegrationRuntime  # type: ignore
     from ._models import ManagedIntegrationRuntimeError  # type: ignore
     from ._models import ManagedIntegrationRuntimeNode  # type: ignore
@@ -153,6 +157,7 @@ except (SyntaxError, ImportError):
     from ._models import ManagedIntegrationRuntimeStatus  # type: ignore
     from ._models import MultiplePipelineTrigger  # type: ignore
     from ._models import PackageStore  # type: ignore
+    from ._models import PipelineReference  # type: ignore
     from ._models import RecurrenceSchedule  # type: ignore
     from ._models import RecurrenceScheduleOccurrence  # type: ignore
     from ._models import RerunTumblingWindowTrigger  # type: ignore
@@ -180,6 +185,7 @@ except (SyntaxError, ImportError):
     from ._models import TriggerDependencyReference  # type: ignore
     from ._models import TriggerFilterParameters  # type: ignore
     from ._models import TriggerListResponse  # type: ignore
+    from ._models import TriggerPipelineReference  # type: ignore
     from ._models import TriggerQueryResponse  # type: ignore
     from ._models import TriggerReference  # type: ignore
     from ._models import TriggerResource  # type: ignore
@@ -262,6 +268,7 @@ __all__ = [
     'LinkedIntegrationRuntimeRbacAuthorization',
     'LinkedIntegrationRuntimeRequest',
     'LinkedIntegrationRuntimeType',
+    'LinkedServiceReference',
     'ManagedIntegrationRuntime',
     'ManagedIntegrationRuntimeError',
     'ManagedIntegrationRuntimeNode',
@@ -269,6 +276,7 @@ __all__ = [
     'ManagedIntegrationRuntimeStatus',
     'MultiplePipelineTrigger',
     'PackageStore',
+    'PipelineReference',
     'RecurrenceSchedule',
     'RecurrenceScheduleOccurrence',
     'RerunTumblingWindowTrigger',
@@ -296,6 +304,7 @@ __all__ = [
     'TriggerDependencyReference',
     'TriggerFilterParameters',
     'TriggerListResponse',
+    'TriggerPipelineReference',
     'TriggerQueryResponse',
     'TriggerReference',
     'TriggerResource',

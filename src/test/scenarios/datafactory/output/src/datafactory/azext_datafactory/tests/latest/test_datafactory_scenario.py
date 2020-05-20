@@ -108,9 +108,20 @@ def step__factories_get_factories_get(test, rg):
 # EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
 @try_manual
 def step__integrationruntimes_put_integrationruntimes_create(test, rg):
-    test.cmd('az datafactory integration-runtime create '
+    test.cmd('az datafactory integration-runtime managed create '
              '--factory-name "{exampleFactoryName}" '
-             '--properties "{{\\"type\\":\\"SelfHosted\\",\\"description\\":\\"A selfhosted integration runtime\\"}}" '
+             '--description "A selfhosted integration runtime" '
+             '--name "{exampleIntegrationRuntime}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
+@try_manual
+def step__integrationruntimes_put_integrationruntimes_create(test, rg):
+    test.cmd('az datafactory integration-runtime managed create '
+             '--factory-name "{exampleFactoryName}" '
+             '--description "A selfhosted integration runtime" '
              '--name "{exampleIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -186,17 +197,7 @@ def step__integrationruntimes_post_integrationruntimes_regenerateauthkey(test, r
     test.cmd('az datafactory integration-runtime regenerate-auth-key '
              '--factory-name "{exampleFactoryName}" '
              '--name "{exampleIntegrationRuntime}" '
-             '--regenerate-key-parameters "{{\\"keyName\\":\\"authKey2\\"}}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Start
-@try_manual
-def step__integrationruntimes_post_integrationruntimes_start(test, rg):
-    test.cmd('az datafactory integration-runtime start '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{IntegrationRuntimes_2}" '
+             '--key-name "authKey2" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -213,6 +214,16 @@ def step__triggers_put_triggers_create(test, rg):
              '16T00:55:13.8441801Z\\",\\"frequency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39'
              ':13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}}}}" '
              '--name "{exampleTrigger}"',
+             checks=[])
+
+
+# EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Stop
+@try_manual
+def step__integrationruntimes_post_integrationruntimes_stop(test, rg):
+    test.cmd('az datafactory integration-runtime stop '
+             '--factory-name "{exampleFactoryName}" '
+             '--name "{IntegrationRuntimes_2}" '
+             '--resource-group "{rg}"',
              checks=[])
 
 
@@ -372,10 +383,10 @@ def step__integrationruntimes_get_integrationruntimes_get(test, rg):
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Stop
+# EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Start
 @try_manual
-def step__integrationruntimes_post_integrationruntimes_stop(test, rg):
-    test.cmd('az datafactory integration-runtime stop '
+def step__integrationruntimes_post_integrationruntimes_start(test, rg):
+    test.cmd('az datafactory integration-runtime start '
              '--factory-name "{exampleFactoryName}" '
              '--name "{IntegrationRuntimes_2}" '
              '--resource-group "{rg}"',
@@ -418,6 +429,7 @@ def call_scenario(test, rg):
     step__factories_patch_factories_update(test, rg)
     step__factories_get_factories_get(test, rg)
     step__integrationruntimes_put_integrationruntimes_create(test, rg)
+    step__integrationruntimes_put_integrationruntimes_create(test, rg)
     step__integrationruntimes_get_integrationruntimes_listbyfactory(test, rg)
     step__integrationruntimes_post_integrationruntimes_createlinkedintegrationruntime(test, rg)
     step__integrationruntimes_post_integrationruntimes_getconnectioninfo(test, rg)
@@ -425,8 +437,8 @@ def call_scenario(test, rg):
     step__integrationruntimes_post_integrationruntimes_getstatus(test, rg)
     step__integrationruntimes_post_integrationruntimes_listauthkeys(test, rg)
     step__integrationruntimes_post_integrationruntimes_regenerateauthkey(test, rg)
-    step__integrationruntimes_post_integrationruntimes_start(test, rg)
     step__triggers_put_triggers_create(test, rg)
+    step__integrationruntimes_post_integrationruntimes_stop(test, rg)
     step__integrationruntimes_post_integrationruntimes_synccredentials(test, rg)
     step__integrationruntimes_post_integrationruntimes_upgrade(test, rg)
     step__integrationruntimes_post_integrationruntimes_upgrade(test, rg)
@@ -442,7 +454,7 @@ def call_scenario(test, rg):
     step__triggers_post_triggers_unsubscribefromevents(test, rg)
     step__triggers_delete_triggers_delete(test, rg)
     step__integrationruntimes_get_integrationruntimes_get(test, rg)
-    step__integrationruntimes_post_integrationruntimes_stop(test, rg)
+    step__integrationruntimes_post_integrationruntimes_start(test, rg)
     step__integrationruntimes_delete_integrationruntimes_delete(test, rg)
     step__factories_delete_factories_delete(test, rg)
     cleanup(test, rg)

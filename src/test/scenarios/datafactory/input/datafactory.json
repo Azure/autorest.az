@@ -1279,7 +1279,7 @@
             "200": {
               "description": "OK.",
               "schema": {
-                "$ref": "./definitions/IntegrationRuntimeConnectionInfo"
+                "$ref": "#/definitions/IntegrationRuntimeConnectionInfo"
               }
             },
             "default": {
@@ -1325,7 +1325,7 @@
               "in": "body",
               "required": true,
               "schema": {
-                "$ref": "./definitions/IntegrationRuntimeRegenerateKeyParameters"
+                "$ref": "#/definitions/IntegrationRuntimeRegenerateKeyParameters"
               }
             }
           ],
@@ -1333,7 +1333,7 @@
             "200": {
               "description": "OK.",
               "schema": {
-                "$ref": "./definitions/IntegrationRuntimeAuthKeys"
+                "$ref": "#/definitions/IntegrationRuntimeAuthKeys"
               }
             },
             "default": {
@@ -1378,7 +1378,7 @@
             "200": {
               "description": "OK.",
               "schema": {
-                "$ref": "./definitions/IntegrationRuntimeAuthKeys"
+                "$ref": "#/definitions/IntegrationRuntimeAuthKeys"
               }
             },
             "default": {
@@ -1560,7 +1560,7 @@
             "200": {
               "description": "OK.",
               "schema": {
-                "$ref": "./definitions/IntegrationRuntimeMonitoringData"
+                "$ref": "#/definitions/IntegrationRuntimeMonitoringData"
               }
             },
             "default": {
@@ -2220,7 +2220,7 @@
         ],
         "properties": {
           "properties": {
-            "$ref": "./definitions/Trigger",
+            "$ref": "#/definitions/Trigger",
             "description": "Properties of the trigger."
           }
         },
@@ -2300,11 +2300,48 @@
           "pipelines": {
             "type": "array",
             "items": {
-              "$ref": "./definitions/TriggerPipelineReference"
+              "$ref": "#/definitions/TriggerPipelineReference"
             },
             "description": "Pipelines that need to be started."
           }
         }
+      },
+      "TriggerPipelineReference": {
+        "description": "Pipeline that needs to be triggered with the given parameters.",
+        "properties": {
+          "pipelineReference": {
+            "description": "Pipeline reference.",
+            "$ref": "#/definitions/PipelineReference"
+          },
+          "parameters": {
+            "description": "Pipeline parameters.",
+            "$ref": "#/definitions/ParameterValueSpecification"
+          }
+        }
+      },
+      "PipelineReference": {
+        "description": "Pipeline reference type.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Pipeline reference type.",
+            "enum": [
+              "PipelineReference"
+            ]
+          },
+          "referenceName": {
+            "type": "string",
+            "description": "Reference pipeline name."
+          },
+          "name": {
+            "type": "string",
+            "description": "Reference name."
+          }
+        },
+        "required": [
+          "type",
+          "referenceName"
+        ]
       },
       "ScheduleTrigger": {
         "description": "Trigger that creates pipeline runs periodically, on schedule.",
@@ -2504,7 +2541,7 @@
               },
               "linkedService": {
                 "description": "The Azure Storage linked service reference.",
-                "$ref": "./definitions/LinkedServiceReference"
+                "$ref": "#/definitions/LinkedServiceReference"
               }
             },
             "required": [
@@ -2516,6 +2553,30 @@
         },
         "required": [
           "typeProperties"
+        ]
+      },
+      "LinkedServiceReference": {
+        "description": "Linked service reference type.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Linked service reference type.",
+            "enum": [
+              "LinkedServiceReference"
+            ]
+          },
+          "referenceName": {
+            "type": "string",
+            "description": "Reference LinkedService name."
+          },
+          "parameters": {
+            "$ref": "#/definitions/ParameterValueSpecification",
+            "description": "Arguments for LinkedService."
+          }
+        },
+        "required": [
+          "type",
+          "referenceName"
         ]
       },
       "BlobEventsTrigger": {
@@ -2587,7 +2648,7 @@
         ],
         "properties": {
           "pipeline": {
-            "$ref": "./definitions/TriggerPipelineReference",
+            "$ref": "#/definitions/TriggerPipelineReference",
             "description": "Pipeline for which runs are created when an event is fired for trigger window that is ready."
           },
           "typeProperties": {
@@ -2837,7 +2898,7 @@
         ],
         "properties": {
           "pipeline": {
-            "$ref": "./definitions/TriggerPipelineReference",
+            "$ref": "#/definitions/TriggerPipelineReference",
             "description": "Pipeline for which runs are created when all upstream pipelines complete successfully."
           },
           "typeProperties": {
@@ -2847,7 +2908,7 @@
               "dependsOn": {
                 "type": "array",
                 "items": {
-                  "$ref": "./definitions/PipelineReference"
+                  "$ref": "#/definitions/PipelineReference"
                 },
                 "description": "Upstream Pipelines."
               },
@@ -2902,7 +2963,7 @@
             "description": "Reference integration runtime name."
           },
           "parameters": {
-            "$ref": "./definitions/ParameterValueSpecification",
+            "$ref": "#/definitions/ParameterValueSpecification",
             "description": "Arguments for integration runtime."
           }
         },
@@ -2927,7 +2988,7 @@
         ],
         "properties": {
           "properties": {
-            "$ref": "./definitions/IntegrationRuntime",
+            "$ref": "#/definitions/IntegrationRuntime",
             "description": "Integration runtime properties."
           }
         },
@@ -2944,7 +3005,7 @@
             "readOnly": true
           },
           "properties": {
-            "$ref": "./definitions/IntegrationRuntimeStatus",
+            "$ref": "#/definitions/IntegrationRuntimeStatus",
             "description": "Integration runtime properties."
           }
         },
@@ -2978,7 +3039,7 @@
         "properties": {
           "autoUpdate": {
             "description": "Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.",
-            "$ref": "./definitions/IntegrationRuntimeAutoUpdate"
+            "$ref": "#/definitions/IntegrationRuntimeAutoUpdate"
           },
           "updateDelayOffset": {
             "description": "The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.",
@@ -3257,7 +3318,7 @@
           },
           "catalogAdminPassword": {
             "description": "The password of the administrator user account of the catalog database.",
-            "$ref": "./definitions/SecureString"
+            "$ref": "#/definitions/SecureString"
           },
           "catalogPricingTier": {
             "description": "The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/",
@@ -3288,7 +3349,7 @@
           },
           "sasToken": {
             "description": "The SAS token of the Azure blob container.",
-            "$ref": "./definitions/SecureString"
+            "$ref": "#/definitions/SecureString"
           }
         }
       },
@@ -3375,7 +3436,7 @@
           },
           "password": {
             "description": "The password of data source access.",
-            "$ref": "./definitions/SecretBase"
+            "$ref": "#/definitions/SecretBase"
           }
         },
         "required": [
@@ -3450,7 +3511,7 @@
           },
           "licenseKey": {
             "description": "The license key to activate the component.",
-            "$ref": "./definitions/SecretBase"
+            "$ref": "#/definitions/SecretBase"
           }
         },
         "required": [
@@ -3531,7 +3592,7 @@
         "properties": {
           "key": {
             "description": "The key used for authorization.",
-            "$ref": "./definitions/SecureString"
+            "$ref": "#/definitions/SecureString"
           }
         },
         "required": [

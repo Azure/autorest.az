@@ -13,6 +13,7 @@
 from knack.arguments import CLIArgumentType
 from azure.cli.core.commands.parameters import (
     tags_type,
+    get_enum_type,
     resource_group_name_type,
     get_location_type
 )
@@ -173,15 +174,6 @@ def load_arguments(self, _):
         c.argument('if_none_match', help='ETag of the integration runtime entity. Should only be specified for get. If '
                    'the ETag matches the existing entity tag, or if * was provided, then no content will be returned.')
 
-    with self.argument_context('datafactory integration-runtime create') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', help='The factory name.')
-        c.argument('integration_runtime_name', options_list=['--name', '-n'], help='The integration runtime name.')
-        c.argument('if_match', help='ETag of the integration runtime entity. Should only be specified for update, for w'
-                   'hich it should match existing entity or can be * for unconditional update.')
-        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Integration runtime prop'
-                   'erties. Expected value: json-string/@json-file.'))
-
     with self.argument_context('datafactory integration-runtime linked-integration-runtime create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
@@ -194,14 +186,38 @@ def load_arguments(self, _):
         c.argument('data_factory_location', help='The location of the data factory that the linked integration runtime '
                    'belongs to.')
 
+    with self.argument_context('datafactory integration-runtime managed create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('factory_name', help='The factory name.')
+        c.argument('integration_runtime_name', options_list=['--name', '-n'], help='The integration runtime name.')
+        c.argument('if_match', help='ETag of the integration runtime entity. Should only be specified for update, for w'
+                   'hich it should match existing entity or can be * for unconditional update.')
+        c.argument('description', help='Integration runtime description.')
+        c.argument('type_properties_compute_properties', arg_type=CLIArgumentType(options_list=['--type-properties-comp'
+                   'ute-properties'], help='The compute resource for managed integration runtime. Expected value: json-'
+                   'string/@json-file.'))
+        c.argument('type_properties_ssis_properties', arg_type=CLIArgumentType(options_list=['--type-properties-ssis-pr'
+                   'operties'], help='SSIS properties for managed integration runtime. Expected value: json-string/@jso'
+                   'n-file.'))
+
+    with self.argument_context('datafactory integration-runtime self-hosted create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('factory_name', help='The factory name.')
+        c.argument('integration_runtime_name', options_list=['--name', '-n'], help='The integration runtime name.')
+        c.argument('if_match', help='ETag of the integration runtime entity. Should only be specified for update, for w'
+                   'hich it should match existing entity or can be * for unconditional update.')
+        c.argument('description', help='Integration runtime description.')
+        c.argument('type_properties_linked_info', arg_type=CLIArgumentType(options_list=['--type-properties-linked-info'
+                   ''], help='The base definition of a linked integration runtime. Expected value: json-string/@json-fi'
+                   'le.'))
+
     with self.argument_context('datafactory integration-runtime update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.', id_part='name')
         c.argument('integration_runtime_name', options_list=['--name', '-n'], help='The integration runtime name.',
                    id_part='child_name_1')
-        c.argument('auto_update', arg_type=CLIArgumentType(options_list=['--auto-update'], help='Enables or disables th'
-                   'e auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?'
-                   'linkid=854189. Expected value: json-string/@json-file.'))
+        c.argument('auto_update', arg_type=get_enum_type(['On', 'Off']), help='Enables or disables the auto-update feat'
+                   'ure of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.')
         c.argument('update_delay_offset', help='The time offset (in hours) in the day, e.g., PT03H is 3 hours. The inte'
                    'gration runtime auto update will happen on that time.')
 
@@ -239,9 +255,8 @@ def load_arguments(self, _):
         c.argument('factory_name', help='The factory name.', id_part='name')
         c.argument('integration_runtime_name', options_list=['--name', '-n'], help='The integration runtime name.',
                    id_part='child_name_1')
-        c.argument('regenerate_key_parameters', arg_type=CLIArgumentType(options_list=['--regenerate-key-parameters'],
-                   help='The parameters for regenerating integration runtime authentication key. Expected value: json-s'
-                   'tring/@json-file.'))
+        c.argument('key_name', arg_type=get_enum_type(['authKey1', 'authKey2']), help='The name of the authentication k'
+                   'ey to regenerate.')
 
     with self.argument_context('datafactory integration-runtime remove-link') as c:
         c.argument('resource_group_name', resource_group_name_type)
