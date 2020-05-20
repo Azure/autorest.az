@@ -28,6 +28,10 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
         header.addFromImport("knack.util", ["CLIError"]);
     }
 
+    if(required['nowait']) {
+        header.addFromImport("azure.cli.core.util", ["sdk_no_wait"]);
+    }
+
     let output = [];
     output = output.concat(body);
     output.push("");
@@ -60,9 +64,9 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
                         needGeneric = true;
                     }
                     let needUpdate = model.Command_CanSplit;
-                    output = output.concat(GetCommandBody(model, required, false, originalOperation, false));
+                    output = output.concat(GetCommandBody(model, required, false, originalOperation, false, genericParameter));
                     if (needUpdate) {
-                        output = output.concat(GetCommandBody(model, required, needUpdate, originalOperation, needGeneric));
+                        output = output.concat(GetCommandBody(model, required, needUpdate, originalOperation, needGeneric, genericParameter));
                     }
                 }
                 while (model.SelectNextCommand());
@@ -153,7 +157,7 @@ function ConstructValuation(isGeneric: boolean, prefix: string, classNames: stri
 
 }
 
-function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, needUpdate: boolean = false, needGeneric: boolean = false) {
+function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperation: Operation, needUpdate: boolean = false, needGeneric: boolean = false, genericParameter: Parameter = null) {
 
     let output: string[] = [];
     let updatedMethodName: string = model.Command_FunctionName;
@@ -170,9 +174,13 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
     output.push(call);
 
     let allParam: Map<string, boolean> = new Map<string, boolean>();
+    let hasLongRun = false;
     if (model.SelectFirstMethod()) {
         do {
-
+            if(model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
+                required['nowait'] = true,
+                hasLongRun = true;
+            }
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
@@ -182,6 +190,9 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
                         continue;
                     }
 
+                    if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                        continue;
+                    }
                     if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             continue;
@@ -215,6 +226,10 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
                     if (model.MethodParameter_Type == SchemaType.Constant) {
                         continue;
                     }
+                      
+                    if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                        continue;
+                    } 
 
                     if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
@@ -239,11 +254,15 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
         } while (model.SelectNextMethod());
     }
 
+    if(hasLongRun) {
+        output[output.length - 1] += ",";
+        output.push(indent + "no_wait=False");
+    }
     output[output.length - 1] += "):";
     return output;
 }
 
-function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: Operation = null, needGeneric: boolean = false) {
+function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: Operation = null, needGeneric: boolean = false, genericParameter: Parameter = null, needUpdate: boolean = false) {
     let originalParameters = null;
     if (!isNullOrUndefined(originalOperation)) {
         originalParameters = originalOperation.parameters;
@@ -251,11 +270,10 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
             originalParameters = originalParameters.concat(originalOperation.requests[0].parameters);
         }
     }
-
+    
     let output: string[] = [];
     let output_body: string[] = []
     let output_method_call: string[] = [];
-
     if (model.SelectFirstMethod()) {
         // create body transformation for methods that support it
         let methodName: string = model.Command_MethodName;
@@ -265,6 +283,9 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
         do {
             if (model.SelectFirstMethodParameter()) {
                 do {
+                    if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                        continue;
+                    }
                     if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple && !model.MethodParameter_IsSimpleArray) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             let baseParam = model.MethodParameter;
@@ -379,27 +400,36 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
     return output;
 }
 
-function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boolean = false, originalOperation: Operation = null, needGeneric: boolean = false) {
+function GetCommandBody(model: CodeModelAz, required: any, needUpdate: boolean = false, originalOperation: Operation = null, needGeneric: boolean = false, genericParameter: Parameter = null) {
     // create, delete, list, show, update
     let output: string[] = [];
     output.push("");
     output.push("");
 
-    output = output.concat(GetSingleCommandDef(model, originalOperation, needUpdate, needGeneric));
-    output = output.concat(GetSingleCommandBody(model, required, originalOperation, needGeneric))
+    output = output.concat(GetSingleCommandDef(model, required, originalOperation, needUpdate, needGeneric, genericParameter));
+    output = output.concat(GetSingleCommandBody(model, required, originalOperation, needGeneric, genericParameter, needUpdate))
     return output;
 }
 
 function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: Operation, originalParameters: Parameter[]): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
+    let indent = "";
     let methodName = originalOperation.language['python'].name;
-    if (model.Method_IsLongRun) {
+    if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
         methodName = "begin_" + methodName;
+        methodCall += "sdk_no_wait(";
+        indent = " ".repeat(methodCall.length);
+        methodCall += "no_wait," + "\n" + indent + "client." + methodName;
+        
+    } else {
+        if(model.Method_IsLongRun) {
+            methodName = "begin_" + methodName;
+        }
+        methodCall += "client." + methodName + "(";
+        indent = " ".repeat(methodCall.length);
     }
-    methodCall += "client." + methodName + "(";
-
-    let indent = " ".repeat(methodCall.length);
+    
     let cnt = 0;
     for (let param of originalParameters) {
         if (param.flattened) {
@@ -444,12 +474,21 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let methodName = model.Method_Name;
-    if (model.Method_IsLongRun) {
+    let indent = "";
+    if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
         methodName = "begin_" + methodName;
+        methodCall += "sdk_no_wait(";
+        indent = " ".repeat(methodCall.length);
+        methodCall += "no_wait," + "\n" + indent + "client." + methodName;
+    } else {
+        if(model.Method_IsLongRun) {
+            methodName = "begin_" + methodName;
+        }
+        methodCall += "client." + methodName + "(";
+        indent = " ".repeat(methodCall.length); 
     }
-    methodCall += "client." + methodName + "(";
+    
 
-    let indent = " ".repeat(methodCall.length);
     if (model.SelectFirstMethodParameter(true)) {
         do {
             let param = model.MethodParameter;

@@ -12,18 +12,26 @@ python-sdk-output-folder: "$(az-output-folder)/azext_datafactory/vendored_sdks/d
 
 directive:
     - where:
-        group: datafactory factory
+          group: datafactory factory
       set:
-        group: datafactory
-
+          group: datafactory
+    - where:
+          command: datafactory integration-runtime create-linked-integration-runtime
+      set:
+          command: datafactory integration-runtime linked-integration-runtime create
 
 cli:
     cli-directive:
     # directive on operationGroup
       - where:
+            group: datafactory
             parameter: factoryName
         alias:
             - name
             - n
-
+      - where:
+            group: IntegrationRuntimes
+            op: CreateOrUpdate
+            param: properties
+        poly-resource: true
 ```

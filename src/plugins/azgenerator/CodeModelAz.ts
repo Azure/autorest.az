@@ -65,6 +65,7 @@ export interface CodeModelAz
     Extension_TestScenario: any;
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
+    Extension_Mode: string;
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;
@@ -73,6 +74,7 @@ export interface CodeModelAz
     CommandGroup_Name: string;
     CommandGroup_Help: string;
     CommandGroup_DefaultName: string;
+    CommandGroup_HasShowCommand: boolean;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;

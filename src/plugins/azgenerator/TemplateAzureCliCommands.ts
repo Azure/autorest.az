@@ -9,6 +9,7 @@ import { ToMultiLine } from "../../utils/helper"
 import { isNullOrUndefined } from "util";
 import { SchemaType } from "@azure-tools/codemodel";
 
+let showCommandFunctionName = undefined;
 export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
 
@@ -37,13 +38,15 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 output.push("        client_factory=" + cf_name + ")");
                 let groupinfos = model.CommandGroup_Name.split(' ');
                 let extraInfo = "";
-                if(groupinfos.length == 2) {
+                if(groupinfos.length == 2 && model.Extension_Mode == 'experimental') {
                     extraInfo = ", is_experimental=True";
+                } else if(groupinfos.length == 2 && model.Extension_Mode == 'preview') {
+                    extraInfo = ", is_preview=True";
                 }
                 ToMultiLine("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + extraInfo + ") as g:", output);
                 let needWait = false;
                 do {
-                    if (model.Command_IsLongRun) {
+                    if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
                         needWait = true;
                     }
                     output = output.concat(getCommandBody(model));
@@ -53,7 +56,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 }
                 while (model.SelectNextCommand());
                 if (needWait) {
-                    output.push("        g.wait_command('wait')");
+                    output.push("        g.custom_wait_command('wait', '" + showCommandFunctionName + "')");
                 }
             }
         } while (model.SelectNextCommandGroup());
@@ -76,7 +79,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     let functionName = model.Command_FunctionName;
     let methodName = model.Command_MethodName;
     let endStr = ")";
-    if (model.Command_IsLongRun) {
+    if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
         endStr = ", supports_no_wait=True" + endStr;
     }
     if (methodName != "show") {
@@ -113,6 +116,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
         }
     }
     else {
+        showCommandFunctionName = functionName;
         ToMultiLine("        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr, output);
     }
     return output;

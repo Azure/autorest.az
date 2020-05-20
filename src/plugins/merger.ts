@@ -32,12 +32,14 @@ export class Merger {
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
+    const extensionMode = await host.GetValue('extension-mode');
     //host.Message({Channel:Channel.Warning, Text:"in aznamer processRequest"});
 
     //console.error(extensionName);
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         const plugin = await new Merger(session);
+        plugin.codeModel.info['extensionMode'] = extensionMode;
         const result = await plugin.process();
         host.WriteFile('azmerger-temp-output.yaml', serialize(result));
     } catch (E) {

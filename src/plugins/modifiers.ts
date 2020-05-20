@@ -177,10 +177,13 @@ export class Modifiers {
                                         this.session.message({Channel:Channel.Warning, Text: "Trying to change the extension-name of a single command is not allowed!\n if you want to change the whole extension-name you can change the configuration in readme.az.md \n"});
                                         continue;
                                     }
+                                    let newAzName = newCommandArr.length > 2? newCommandArr.slice(2, newCommandArr.length).join(" "): newCommandArr.last;
+                                    this.session.message({Channel: Channel.Warning, Text: " newAzName:" + newAzName});
                                     newCommandArr.pop();
-                                    let newGroup = newCommandArr.join(' ');
+                                    let newGroup = newCommandArr.length >= 2? newCommandArr[0] + " " + newCommandArr[1]: newCommandArr.join(" ");
+                                    
                                     oldCommandArr.pop();
-                                    let oldGroup = oldCommandArr.join(' ');
+                                    let oldGroup = oldCommandArr.length >= 2? oldCommandArr[0] + " " + oldCommandArr[1]: oldCommandArr.join(" ");
                                     if (oldGroup != newGroup) {
                                         // if there's only one command in the operationGroup it's okay to change the group name
                                         if(operationGroup.operations.length == 1) {
@@ -208,6 +211,10 @@ export class Modifiers {
                                         }
                                     }
                                     operation.language["az"]["command"] = newCommand;
+                                    if(newCommandArr.length > 2) {
+                                        operation.language["az"]["name"] = newAzName;
+                                        operation.language["az"]["subCommandGroup"] = newCommandArr.join(" ");
+                                    }
                                 }
                                 operation.language["az"]["description"] = commandDescriptionReplacer? commandDescriptionReplacer: operation.language["az"]["description"];
                             }
