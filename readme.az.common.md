@@ -1,6 +1,7 @@
 # configuration for az common
 
 ``` yaml $(az)
+extension-mode: experimental
 
 cli:
     naming:

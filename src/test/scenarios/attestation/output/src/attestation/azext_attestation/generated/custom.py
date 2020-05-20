@@ -29,6 +29,13 @@ def attestation_list_operation(cmd, client):
     return client.list()
 
 
+def attestation_attestation_provider_provider_list(cmd, client,
+                                                   resource_group_name=None):
+    if resource_group_name:
+        return client.list_by_resource_group(resource_group_name=resource_group_name)
+    return client.list()
+
+
 def attestation_attestation_provider_show(cmd, client,
                                           resource_group_name,
                                           provider_name):
@@ -50,10 +57,3 @@ def attestation_attestation_provider_delete(cmd, client,
                                             provider_name):
     return client.delete(resource_group_name=resource_group_name,
                          provider_name=provider_name)
-
-
-def attestation_attestation_provider_list_attestation(cmd, client,
-                                                      resource_group_name=None):
-    if resource_group_name:
-        return client.list_by_resource_group(resource_group_name=resource_group_name)
-    return client.list()

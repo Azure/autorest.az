@@ -8,9 +8,9 @@ delete a attestation attestation-provider.
 |------|----|-----------|----------|--------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|
 |**--provider-name**|string|Name of the attestation service|provider_name|
-### attestation attestation-provider list-attestation
+### attestation attestation-provider provider list
 
-list-attestation a attestation attestation-provider.
+provider list a attestation attestation-provider.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|

@@ -30,10 +30,19 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     if (model.SelectFirstCommandGroup()) {
         do {
             //let methods: string[] = model.CommandGroup_Commands;
-
+            let needWait = false;
+            let show_output = [];
             if (model.SelectFirstCommand()) {
                 do {
-                    output_args = output_args.concat(getCommandBody(model));
+                    if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
+                        needWait = true;
+                    }
+                    let command_output = getCommandBody(model);
+                    if (model.Command_MethodName == "show") {
+                        show_output = command_output
+                    } 
+                    
+                    output_args = output_args.concat(command_output);
                     let originalOperation = model.Command_GetOriginalOperation;
                     let genericParam = model.Command_GenericSetterParameter(model.Command);
                     if(!isNullOrUndefined(originalOperation)) {
@@ -49,6 +58,10 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
                     }
                 }
                 while (model.SelectNextCommand());
+                if (needWait && show_output.length > 1) {
+                    show_output[1] = show_output[1].replace(/ show'/g, " wait'");
+                    output_args = output_args.concat(show_output);
+                }
             }
         } while (model.SelectNextCommandGroup());
     }
@@ -174,8 +187,10 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                     } else if (parameterName.endsWith('name') && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase() || !isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
                         argument = "        c.argument('" + parameterName + "'";
                         let aliases: string[] = [];
-                        aliases.push('name');
-                        aliases.push('n');
+                        if(!model.Method['hasName']) {
+                            aliases.push('name');
+                            aliases.push('n');
+                        }
                         if(!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
                             let alias = model.MethodParameter?.language?.['cli']?.['alias'];
                             

@@ -27,16 +27,6 @@ current subscription in a paginated format.
                az managed-network mn list --resource-group "myResourceGroup"
 """
 
-helps['managed-network mn show'] = """
-    type: command
-    short-summary: The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group a\
-nd Managed Network name
-    examples:
-      - name: Get Managed Network
-        text: |-
-               az managed-network mn show --name "myManagedNetwork" --resource-group "myResourceGroup"
-"""
-
 helps['managed-network mn create'] = """
     type: command
     short-summary: The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource \
@@ -74,16 +64,14 @@ group and Managed Network name
                az managed-network mn delete --name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
-helps['managed-network mn wait'] = """
+helps['managed-network mn get-modify'] = """
     type: command
-    short-summary: Place the CLI in a waiting state until a condition of the managed-network mn is met.
+    short-summary: The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group a\
+nd Managed Network name
     examples:
-      - name: Pause executing next line of CLI script until the managed-network mn is successfully updated.
+      - name: Get Managed Network
         text: |-
-               az managed-network mn wait --name "myManagedNetwork" --resource-group "myResourceGroup" --updated
-      - name: Pause executing next line of CLI script until the managed-network mn is successfully deleted.
-        text: |-
-               az managed-network mn wait --name "myManagedNetwork" --resource-group "myResourceGroup" --deleted
+               az managed-network mn get-modify --name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network mn scope-assignment'] = """

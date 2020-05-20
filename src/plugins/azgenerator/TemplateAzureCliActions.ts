@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz"
-import { ToCamelCase, Capitalize } from "../../utils/helper";
+import { ToCamelCase, Capitalize, ToPythonString } from "../../utils/helper";
 import { SchemaType, Parameter } from "@azure-tools/codemodel";
 import { stringify } from "querystring";
 import { HeaderGenerator } from "./Header";
@@ -94,6 +94,18 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
     output.push("        except ValueError:");
     output.push("            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))");
     output.push("        d = {}");
+
+    if (model.EnterSubMethodParameters()) {
+        if (model.SelectFirstMethodParameter(true)) {
+            do {
+                if (model.Parameter_DefaultValue(model.SubMethodParameter) !== undefined)
+                {
+                    output.push("        d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = " + ToPythonString(model.Parameter_DefaultValue(model.SubMethodParameter), model.Parameter_Type(model.SubMethodParameter)));
+                }
+            } while (model.SelectNextMethodParameter(true));
+        }
+    }
+
     output.push("        for k in properties:");
     output.push("            kl = k.lower()");
     output.push("            v = properties[k]");

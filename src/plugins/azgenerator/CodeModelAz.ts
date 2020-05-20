@@ -65,6 +65,7 @@ export interface CodeModelAz
     Extension_TestScenario: any;
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
+    Extension_Mode: string;
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;
@@ -73,6 +74,7 @@ export interface CodeModelAz
     CommandGroup_Name: string;
     CommandGroup_Help: string;
     CommandGroup_DefaultName: string;
+    CommandGroup_HasShowCommand: boolean;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
@@ -105,9 +107,9 @@ export interface CodeModelAz
     Method_GenericSetterParameter(Operation): Parameter;
 
 
-    SelectFirstMethodParameter(): boolean;
-    SelectNextMethodParameter(): boolean;
-    EnterSubMethodParameters(): boolean;
+    SelectFirstMethodParameter(containHidden?: boolean): boolean;
+    SelectNextMethodParameter(containHidden?: boolean): boolean;
+    EnterSubMethodParameters(param?: Parameter): boolean;
     ExitSubMethodParameters(): boolean;
 
     MethodParameter_Name: string;
@@ -133,6 +135,7 @@ export interface CodeModelAz
     MethodParameter_RequiredByMethod: boolean;
     MethodParameter_EnumValues: string[];
     MethodParameters_AddPolySubClass(oriParam, para): boolean;
+    MethodParameters_DefaultValue: any | undefined;
     Parameter_Type(Parameter): string;
     Schema_Type(Schema): string;
     Parameter_IsList(Parameter): boolean;
@@ -149,6 +152,7 @@ export interface CodeModelAz
     Parameter_NameAz(Parameter): string;
     Parameter_NamePython(Parameter): string;
     Parameter_Description(Parameter): string;
+    Parameter_DefaultValue(Parameter): any | undefined;
     Schema_Description(Schema): string;
 
     GetModuleOperationName(): string;

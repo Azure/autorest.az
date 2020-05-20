@@ -36,11 +36,6 @@ def load_arguments(self, _):
                    'evious response contains a nextLink element, the value of the nextLink element will include a skipt'
                    'oken parameter that specifies a starting point to use for subsequent calls.')
 
-    with self.argument_context('managed-network mn show') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', options_list=['--name', '-n'], help='The name of the Managed Network.',
-                   id_part='name')
-
     with self.argument_context('managed-network mn create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', options_list=['--name', '-n'], help='The name of the Managed Network.')
@@ -57,6 +52,11 @@ def load_arguments(self, _):
         c.argument('tags', tags_type)
 
     with self.argument_context('managed-network mn delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', options_list=['--name', '-n'], help='The name of the Managed Network.',
+                   id_part='name')
+
+    with self.argument_context('managed-network mn get-modify') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', options_list=['--name', '-n'], help='The name of the Managed Network.',
                    id_part='name')
@@ -146,6 +146,11 @@ def load_arguments(self, _):
         c.argument('managed_network_name', help='The name of the Managed Network.', id_part='name')
         c.argument('group_name', help='The name of the Managed Network Group.', id_part='child_name_1')
 
+    with self.argument_context('managed-network mn group wait') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.', id_part='name')
+        c.argument('group_name', help='The name of the Managed Network Group.', id_part='child_name_1')
+
     with self.argument_context('managed-network managed-network-peering-policy list') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.')
@@ -202,6 +207,11 @@ def load_arguments(self, _):
         c.ignore('managed_network_peering_policy_name', 'properties')
 
     with self.argument_context('managed-network managed-network-peering-policy delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.', id_part='name')
+        c.argument('policy_name', help='The name of the Managed Network Peering Policy.', id_part='child_name_1')
+
+    with self.argument_context('managed-network managed-network-peering-policy wait') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.', id_part='name')
         c.argument('policy_name', help='The name of the Managed Network Peering Policy.', id_part='child_name_1')

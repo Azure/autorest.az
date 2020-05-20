@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "./CodeModelAz";
-import { SchemaType, ParameterLocation, Operation, Parameter } from "@azure-tools/codemodel";
+import { SchemaType, Operation, Parameter } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "./Header";
 import { isNullOrUndefined } from "util";
-import { ToMultiLine, ToCamelCase, Capitalize } from '../../utils/helper';
+import { ToMultiLine, ToCamelCase, Capitalize, ToPythonString } from '../../utils/helper';
 
 export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -26,6 +26,10 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
 
     if (required['clierror']) {
         header.addFromImport("knack.util", ["CLIError"]);
+    }
+
+    if(required['nowait']) {
+        header.addFromImport("azure.cli.core.util", ["sdk_no_wait"]);
     }
 
     let output = [];
@@ -49,20 +53,20 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
                 do {
                     let originalOperation = model.Command_GetOriginalOperation;
                     let genericParameter = null;
-                    if(!isNullOrUndefined(originalOperation)) {
+                    if (!isNullOrUndefined(originalOperation)) {
                         genericParameter = model.Command_GenericSetterParameter(originalOperation);
                     } else {
                         genericParameter = model.Command_GenericSetterParameter(model.Command);
                     }
 
                     let needGeneric = false;
-                    if(!isNullOrUndefined(genericParameter)) {
+                    if (!isNullOrUndefined(genericParameter)) {
                         needGeneric = true;
                     }
                     let needUpdate = model.Command_CanSplit;
-                    output = output.concat(GetCommandBody(model, required, false, originalOperation, false));
+                    output = output.concat(GetCommandBody(model, required, false, originalOperation, false, genericParameter));
                     if (needUpdate) {
-                        output = output.concat(GetCommandBody(model, required, needUpdate, originalOperation, needGeneric));
+                        output = output.concat(GetCommandBody(model, required, needUpdate, originalOperation, needGeneric, genericParameter));
                     }
                 }
                 while (model.SelectNextCommand());
@@ -77,85 +81,106 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     let output_body: string[] = [];
     let opNames = model.Method_NameAz.split(' ');
     let valueToMatch = null;
-    if(opNames.length > 1) {
+    if (opNames.length > 1) {
         valueToMatch = Capitalize(ToCamelCase(opNames[0]));
     }
-    if (model.SelectFirstMethodParameter()) {
+    if (model.SelectFirstMethodParameter(true)) {
+        let originalParameterStack: Parameter[] = [];
+        let originalParameterNameStack: string[] = [];
+        let prefixIndent = "    ";
+
         do {
-            if(model.MethodParameter_IsFlattened) {
-                let bodyName = model.MethodParameter_Name;
-                let bodyParam = model.MethodParameter;
-                if (isNullOrUndefined(bodyParam['extensions']?.['cli-poly-as-resource-base-schema'])) {
+            if (model.MethodParameter_IsFlattened) {
+                if (isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema'])) {
                     continue;
                 }
-                let prefix = "";
-                if (needGeneric) {
-                    prefix = "    instance";
-                } else {
-                    prefix = "    " + bodyName;
-                }
-                if(!needGeneric) {
-                    output_body.push(prefix + " = {}");
-                }
-                let body = model.MethodParameter;
-                while(model.SelectNextMethodParameter() && model.MethodParameter['originalParameter'] == body) {
-                    let access = prefix;
-                    let param = model.MethodParameter;
-                    let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
-                    if(!isNullOrUndefined(valueToMatch) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
-                        if(needGeneric) {
-                            access += "." + paramName + " = '" + valueToMatch + "'";
-                        } else {
-                            access += "['" + paramName + "'] = '" + valueToMatch + "'";
-                        }
-                        output_body.push(access);
-                        continue;
-                    }
-                    if(param.flattened != true) {
-                        if(needGeneric) {
-                            access += "." + paramName + " = " + model.MethodParameter_MapsTo;
-                        } else {
-                            access += "['" + paramName + "'] = " + model.MethodParameter_MapsTo;
-                        }
-                        output_body.push(access);
-                    } else {
-                        if(needGeneric) {
-                            prefix += "." + paramName;
-                        } else {
-                            prefix += "['" + paramName + "']";
-                        }
-                        access = prefix + " = {}"
-                        body = model.MethodParameter;
-                        output_body.push(access);
-                    }
+                originalParameterStack.push(model.MethodParameter);
+                originalParameterNameStack.push(model.MethodParameter_Name);
+                if (!needGeneric) {
+                    output_body.push(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
                 }
             }
+            else if (originalParameterStack.length > 0)
+                if (model.MethodParameter['originalParameter'] == originalParameterStack[originalParameterStack.length - 1]) {
+                    let access = "";
+                    let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
 
-        } while (model.SelectNextMethodParameter());
+                    if (!isNullOrUndefined(valueToMatch) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
+                        access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, "'" + valueToMatch + "'");
+                    }
+                    else {
+                        if (!model.MethodParameter_IsHidden) {
+                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type));
+                        }
+                        else if (!isNullOrUndefined(model.MethodParameters_DefaultValue)) {
+                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type));
+                        }
+                    }
+                    output_body.push(access);
+                }
+                else {
+                    originalParameterStack.pop();
+                    originalParameterNameStack.pop();
+                }
+        } while (model.SelectNextMethodParameter(true));
     }
     return output_body;
 }
 
-function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, needUpdate: boolean = false, needGeneric: boolean = false) {
+function ConstructValuation(isGeneric: boolean, prefix: string, classNames: string[], paramName: string, value: string, defaultValue: string = null): string {
+    let str = "";
+    if (isNullOrUndefined(defaultValue)) {
+        let left = "";
+        if (isGeneric) {
+            left = prefix + "instance.";
+            for (var i = 1; i < classNames.length; ++i) {
+                left = left + classNames[i] + ".";
+            }
+            left = left + paramName;
+        }
+        else {
+            left = prefix + classNames[0];
+            for (var i = 1; i < classNames.length; ++i) {
+                left = left + "['" + classNames[i] + "']";
+            }
+
+            if (!isNullOrUndefined(paramName)) {
+                left = left + "['" + paramName + "']";
+            }
+        }
+        str = left + " = " + value;
+    }
+    else {
+        str = ConstructValuation(isGeneric, prefix, classNames, paramName, defaultValue) + " if " + value + " == None else " + value;
+    }
+    return str;
+
+}
+
+function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperation: Operation, needUpdate: boolean = false, needGeneric: boolean = false, genericParameter: Parameter = null) {
 
     let output: string[] = [];
     let updatedMethodName: string = model.Command_FunctionName;
-    if(needUpdate) {
+    if (needUpdate) {
         updatedMethodName = updatedMethodName.replace(/_create/g, '_update');
     }
     let call = "def " + updatedMethodName + "(";
     let indent = " ".repeat(call.length);
-    if(needGeneric) {
+    if (needGeneric) {
         call += "instance, cmd";
     } else {
         call += "cmd, client";
     }
     output.push(call);
-    
+
     let allParam: Map<string, boolean> = new Map<string, boolean>();
+    let hasLongRun = false;
     if (model.SelectFirstMethod()) {
         do {
-
+            if(model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
+                required['nowait'] = true,
+                hasLongRun = true;
+            }
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
@@ -165,19 +190,22 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
                         continue;
                     }
 
+                    if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                        continue;
+                    }
                     if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             continue;
                         }
                     }
 
-                    if(!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
+                    if (!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
                         continue;
                     }
                     let requiredParam: boolean = model.MethodParameter_RequiredByMethod;
 
                     let name = model.MethodParameter_MapsTo; // PythonParameterName(element.Name);
-                    if (requiredParam && !allParam.has(name)) {  
+                    if (requiredParam && !allParam.has(name)) {
                         allParam.set(name, true);
                         output[output.length - 1] += ",";
                         output.push(indent + name);
@@ -199,13 +227,17 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
                         continue;
                     }
                       
+                    if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                        continue;
+                    } 
+
                     if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             continue;
                         }
                     }
-                    
-                    if(!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
+
+                    if (!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
                         continue;
                     }
 
@@ -222,37 +254,43 @@ function GetSingleCommandDef(model: CodeModelAz, originalOperation: Operation, n
         } while (model.SelectNextMethod());
     }
 
+    if(hasLongRun) {
+        output[output.length - 1] += ",";
+        output.push(indent + "no_wait=False");
+    }
     output[output.length - 1] += "):";
     return output;
 }
 
-function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: Operation = null, needGeneric: boolean = false) {
+function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: Operation = null, needGeneric: boolean = false, genericParameter: Parameter = null, needUpdate: boolean = false) {
     let originalParameters = null;
-    if(!isNullOrUndefined(originalOperation)) {
+    if (!isNullOrUndefined(originalOperation)) {
         originalParameters = originalOperation.parameters;
-        if(!isNullOrUndefined(originalOperation.requests[0].parameters)) {
+        if (!isNullOrUndefined(originalOperation.requests[0].parameters)) {
             originalParameters = originalParameters.concat(originalOperation.requests[0].parameters);
         }
     }
-
+    
     let output: string[] = [];
     let output_body: string[] = []
     let output_method_call: string[] = [];
-
     if (model.SelectFirstMethod()) {
         // create body transformation for methods that support it
         let methodName: string = model.Command_MethodName;
 
         // body transformation
-        let allPolyBaseParam:Map<string, boolean> = new Map<string, boolean>();
+        let allPolyBaseParam: Map<string, boolean> = new Map<string, boolean>();
         do {
             if (model.SelectFirstMethodParameter()) {
                 do {
+                    if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                        continue;
+                    }
                     if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple && !model.MethodParameter_IsSimpleArray) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             let baseParam = model.MethodParameter;
                             let baseName = model.MethodParameter_MapsTo;
-                            if(allPolyBaseParam.has(baseName)) {
+                            if (allPolyBaseParam.has(baseName)) {
                                 continue;
                             }
                             allPolyBaseParam.set(baseName, true);
@@ -268,8 +306,8 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                             if (childNames.length > 0) {
                                 output_body.push("    if len(" + "all_" + baseName + ") > 1:");
                                 required['clierror'] = true;
-                                ToMultiLine("        raise CLIError('at most one of  " + childNames.join(", ") + " is needed for " + baseName + "!')", output_body);   
-                                if(baseRequired) {
+                                ToMultiLine("        raise CLIError('at most one of  " + childNames.join(", ") + " is needed for " + baseName + "!')", output_body);
+                                if (baseRequired) {
                                     output_body.push("    if len(" + "all_" + baseName + ") != 1:");
                                     ToMultiLine("        raise CLIError('" + baseName + " is required. but none of " + childNames.join(", ") + " is provided!')", output_body);
                                 }
@@ -283,12 +321,17 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                         output_body.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
                         output_body.push("        " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
                     }
+                    else if (model.MethodParameters_DefaultValue !== undefined) {
+                        // model is simple type with default value
+                        output_body.push("    if " + model.MethodParameter_MapsTo + " == None:");
+                        output_body.push("        " + model.MethodParameter_MapsTo + " = " + ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type));
+                    }
                 }
                 while (model.SelectNextMethodParameter());
-    
+
             }
 
-            if(!isNullOrUndefined(originalOperation)) {
+            if (!isNullOrUndefined(originalOperation)) {
                 output_body = output_body.concat(ConstructMethodBodyParameter(model, needGeneric));
             }
         } while (model.SelectNextMethod());
@@ -317,7 +360,7 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                                 continue;
                             }
                             ifStatement += ((ifStatement.endsWith("if")) ? "" : " and");
-                            if(model.MethodParameter_MapsTo == "resource_group_name") {
+                            if (model.MethodParameter_MapsTo == "resource_group_name") {
                                 ifStatement += " " + model.MethodParameter_MapsTo;
                             } else {
                                 ifStatement += " " + model.MethodParameter_MapsTo + " is not None"
@@ -335,14 +378,14 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
             }
             // call client & return value
             // XXX - this is still a hack
-            if(!isNullOrUndefined(originalOperation)) {
-                if(needGeneric) {
+            if (!isNullOrUndefined(originalOperation)) {
+                if (needGeneric) {
                     output_method_call = output_method_call.concat("    return instance");
                 } else {
                     output_method_call = output_method_call.concat(GetPolyMethodCall(model, prefix, originalOperation, originalParameters));
-                }  
+                }
             } else {
-                if(needGeneric) {
+                if (needGeneric) {
                     output_method_call = output_method_call.concat("    return instance");
                 } else {
                     output_method_call = output_method_call.concat(GetMethodCall(model, prefix));
@@ -353,43 +396,52 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
     }
 
     output = output.concat(output_body);
-    output = output.concat(output_method_call);   
+    output = output.concat(output_method_call);
     return output;
 }
 
-function GetCommandBody(model: CodeModelAz, required: boolean, needUpdate: boolean = false, originalOperation: Operation = null, needGeneric: boolean = false) {
+function GetCommandBody(model: CodeModelAz, required: any, needUpdate: boolean = false, originalOperation: Operation = null, needGeneric: boolean = false, genericParameter: Parameter = null) {
     // create, delete, list, show, update
     let output: string[] = [];
     output.push("");
     output.push("");
 
-    output = output.concat(GetSingleCommandDef(model, originalOperation, needUpdate, needGeneric));
-    output = output.concat(GetSingleCommandBody(model, required, originalOperation, needGeneric))
+    output = output.concat(GetSingleCommandDef(model, required, originalOperation, needUpdate, needGeneric, genericParameter));
+    output = output.concat(GetSingleCommandBody(model, required, originalOperation, needGeneric, genericParameter, needUpdate))
     return output;
 }
 
 function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: Operation, originalParameters: Parameter[]): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
+    let indent = "";
     let methodName = originalOperation.language['python'].name;
-    if (model.Method_IsLongRun) {
+    if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
         methodName = "begin_" + methodName;
+        methodCall += "sdk_no_wait(";
+        indent = " ".repeat(methodCall.length);
+        methodCall += "no_wait," + "\n" + indent + "client." + methodName;
+        
+    } else {
+        if(model.Method_IsLongRun) {
+            methodName = "begin_" + methodName;
+        }
+        methodCall += "client." + methodName + "(";
+        indent = " ".repeat(methodCall.length);
     }
-    methodCall += "client." + methodName + "(";
     
-    let indent = " ".repeat(methodCall.length);
     let cnt = 0;
-    for(let param of originalParameters) {
+    for (let param of originalParameters) {
         if (param.flattened) {
             continue;
         }
         if (param.schema.type == SchemaType.Constant) {
             continue;
         }
-        if(model.Parameter_InGlobal(param)) {
+        if (model.Parameter_InGlobal(param)) {
             continue;
         }
-        if(model.Parameter_IsHidden(param)) {
+        if (model.Parameter_IsHidden(param)) {
             continue;
         }
         let optionName = model.Parameter_MapsTo(param);
@@ -405,7 +457,7 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
         if (model.Parameter_IsPolyOfSimple(param)) {
             let baseParam = param;
             cnt++;
-            while(cnt < originalParameters.length && originalParameters[cnt]['polyBaseParam'] == baseParam) {
+            while (cnt < originalParameters.length && originalParameters[cnt]['polyBaseParam'] == baseParam) {
                 cnt++;
             }
         }
@@ -422,13 +474,22 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let methodName = model.Method_Name;
-    if (model.Method_IsLongRun) {
+    let indent = "";
+    if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
         methodName = "begin_" + methodName;
+        methodCall += "sdk_no_wait(";
+        indent = " ".repeat(methodCall.length);
+        methodCall += "no_wait," + "\n" + indent + "client." + methodName;
+    } else {
+        if(model.Method_IsLongRun) {
+            methodName = "begin_" + methodName;
+        }
+        methodCall += "client." + methodName + "(";
+        indent = " ".repeat(methodCall.length); 
     }
-    methodCall += "client." + methodName + "(";
     
-    let indent = " ".repeat(methodCall.length); 
-    if (model.SelectFirstMethodParameter()) {
+
+    if (model.SelectFirstMethodParameter(true)) {
         do {
             let param = model.MethodParameter;
             if (model.MethodParameter_IsFlattened) {
@@ -438,25 +499,35 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
                 continue;
             }
 
-            let optionName = model.MethodParameter_MapsTo;
-            let parameterName = model.MethodParameter_NamePython;
+            let parameterPair = '';
+
+            if (model.MethodParameter_IsHidden) {
+                if (model.MethodParameters_DefaultValue) {
+                    parameterPair = model.MethodParameter_NamePython + "=" + ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type);
+                }
+                else {
+                    parameterPair = model.MethodParameter_NamePython + "=None";
+                }
+            }
+            else {
+                parameterPair = model.MethodParameter_NamePython + "=" + model.MethodParameter_MapsTo;
+            }
 
             if (methodCall.endsWith("(")) {
                 // XXX - split and pop is a hack
-                methodCall += parameterName + "=" + optionName;
+                methodCall += parameterPair;
             }
             else {
-                methodCall += "," + "\n"+ indent + parameterName + "=" + optionName;
+                methodCall += "," + "\n" + indent + parameterPair;
             }
+
             if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                 let baseParam = model.MethodParameter;
-                while(model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam);
+                while (model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam);
             }
         }
-        while (model.SelectNextMethodParameter());
+        while (model.SelectNextMethodParameter(true));
     }
-
-
 
     methodCall += ")";
 

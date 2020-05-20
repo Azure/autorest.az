@@ -17,3 +17,11 @@ def cf_datafactory(cli_ctx, *_):
 
 def cf_factory(cli_ctx, *_):
     return cf_datafactory(cli_ctx).factory
+
+
+def cf_trigger(cli_ctx, *_):
+    return cf_datafactory(cli_ctx).trigger
+
+
+def cf_integration_runtime(cli_ctx, *_):
+    return cf_datafactory(cli_ctx).integration_runtime

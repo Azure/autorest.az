@@ -9,7 +9,9 @@
 # --------------------------------------------------------------------------
 # pylint: disable=too-many-lines
 
+import json
 from knack.util import CLIError
+from azure.cli.core.util import sdk_no_wait
 
 
 def datafactory_list(cmd, client,
@@ -34,7 +36,6 @@ def datafactory_create(cmd, client,
                        if_match=None,
                        location=None,
                        tags=None,
-                       identity=None,
                        factory_vsts_configuration=None,
                        factory_git_hub_configuration=None,
                        fake_identity=None,
@@ -53,7 +54,7 @@ def datafactory_create(cmd, client,
                                    if_match=if_match,
                                    location=location,
                                    tags=tags,
-                                   identity=identity,
+                                   identity=None,
                                    repo_configuration=repo_configuration,
                                    zones=zones)
 
@@ -61,12 +62,11 @@ def datafactory_create(cmd, client,
 def datafactory_update(cmd, client,
                        resource_group_name,
                        factory_name,
-                       tags=None,
-                       identity=None):
+                       tags=None):
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          tags=tags,
-                         identity=identity)
+                         identity=None)
 
 
 def datafactory_delete(cmd, client,
@@ -123,3 +123,322 @@ def datafactory_get_git_hub_access_token(cmd, client,
                                            git_hub_access_code=git_hub_access_code,
                                            git_hub_client_id=git_hub_client_id,
                                            git_hub_access_token_base_url=git_hub_access_token_base_url)
+
+
+def datafactory_trigger_list(cmd, client,
+                             resource_group_name,
+                             factory_name):
+    return client.list_by_factory(resource_group_name=resource_group_name,
+                                  factory_name=factory_name)
+
+
+def datafactory_trigger_show(cmd, client,
+                             resource_group_name,
+                             factory_name,
+                             trigger_name,
+                             if_none_match=None):
+    return client.get(resource_group_name=resource_group_name,
+                      factory_name=factory_name,
+                      trigger_name=trigger_name,
+                      if_none_match=if_none_match)
+
+
+def datafactory_trigger_create(cmd, client,
+                               resource_group_name,
+                               factory_name,
+                               trigger_name,
+                               properties,
+                               if_match=None):
+    if isinstance(properties, str):
+        properties = json.loads(properties)
+    return client.create_or_update(resource_group_name=resource_group_name,
+                                   factory_name=factory_name,
+                                   trigger_name=trigger_name,
+                                   if_match=if_match,
+                                   properties=properties)
+
+
+def datafactory_trigger_update(instance, cmd,
+                               resource_group_name,
+                               factory_name,
+                               trigger_name,
+                               if_match=None):
+    return instance
+
+
+def datafactory_trigger_delete(cmd, client,
+                               resource_group_name,
+                               factory_name,
+                               trigger_name):
+    return client.delete(resource_group_name=resource_group_name,
+                         factory_name=factory_name,
+                         trigger_name=trigger_name)
+
+
+def datafactory_trigger_get_event_subscription_status(cmd, client,
+                                                      resource_group_name,
+                                                      factory_name,
+                                                      trigger_name):
+    return client.get_event_subscription_status(resource_group_name=resource_group_name,
+                                                factory_name=factory_name,
+                                                trigger_name=trigger_name)
+
+
+def datafactory_trigger_query_by_factory(cmd, client,
+                                         resource_group_name,
+                                         factory_name,
+                                         continuation_token=None,
+                                         parent_trigger_name=None):
+    return client.query_by_factory(resource_group_name=resource_group_name,
+                                   factory_name=factory_name,
+                                   continuation_token=continuation_token,
+                                   parent_trigger_name=parent_trigger_name)
+
+
+def datafactory_trigger_start(cmd, client,
+                              resource_group_name,
+                              factory_name,
+                              trigger_name,
+                              no_wait=False):
+    return sdk_no_wait(no_wait,
+                       client.begin_start,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       trigger_name=trigger_name)
+
+
+def datafactory_trigger_stop(cmd, client,
+                             resource_group_name,
+                             factory_name,
+                             trigger_name,
+                             no_wait=False):
+    return sdk_no_wait(no_wait,
+                       client.begin_stop,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       trigger_name=trigger_name)
+
+
+def datafactory_trigger_subscribe_to_event(cmd, client,
+                                           resource_group_name,
+                                           factory_name,
+                                           trigger_name,
+                                           no_wait=False):
+    return sdk_no_wait(no_wait,
+                       client.begin_subscribe_to_event,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       trigger_name=trigger_name)
+
+
+def datafactory_trigger_unsubscribe_from_event(cmd, client,
+                                               resource_group_name,
+                                               factory_name,
+                                               trigger_name,
+                                               no_wait=False):
+    return sdk_no_wait(no_wait,
+                       client.begin_unsubscribe_from_event,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       trigger_name=trigger_name)
+
+
+def datafactory_integration_runtime_list(cmd, client,
+                                         resource_group_name,
+                                         factory_name):
+    return client.list_by_factory(resource_group_name=resource_group_name,
+                                  factory_name=factory_name)
+
+
+def datafactory_integration_runtime_show(cmd, client,
+                                         resource_group_name,
+                                         factory_name,
+                                         integration_runtime_name,
+                                         if_none_match=None):
+    return client.get(resource_group_name=resource_group_name,
+                      factory_name=factory_name,
+                      integration_runtime_name=integration_runtime_name,
+                      if_none_match=if_none_match)
+
+
+def datafactory_integration_runtime_linked_integration_runtime_create(cmd, client,
+                                                                      resource_group_name,
+                                                                      factory_name,
+                                                                      integration_runtime_name,
+                                                                      name=None,
+                                                                      subscription_id=None,
+                                                                      data_factory_name=None,
+                                                                      data_factory_location=None):
+    return client.create_linked_integration_runtime(resource_group_name=resource_group_name,
+                                                    factory_name=factory_name,
+                                                    integration_runtime_name=integration_runtime_name,
+                                                    name=name,
+                                                    subscription_id=subscription_id,
+                                                    data_factory_name=data_factory_name,
+                                                    data_factory_location=data_factory_location)
+
+
+def datafactory_integration_runtime_managed_create(cmd, client,
+                                                   resource_group_name,
+                                                   factory_name,
+                                                   integration_runtime_name,
+                                                   if_match=None,
+                                                   description=None,
+                                                   type_properties_compute_properties=None,
+                                                   type_properties_ssis_properties=None):
+    if isinstance(type_properties_compute_properties, str):
+        type_properties_compute_properties = json.loads(type_properties_compute_properties)
+    if isinstance(type_properties_ssis_properties, str):
+        type_properties_ssis_properties = json.loads(type_properties_ssis_properties)
+    properties = {}
+    properties['type'] = 'Managed'
+    properties['description'] = description
+    properties['compute_properties'] = type_properties_compute_properties
+    properties['ssis_properties'] = type_properties_ssis_properties
+    return client.create_or_update(resource_group_name=resource_group_name,
+                                   factory_name=factory_name,
+                                   integration_runtime_name=integration_runtime_name,
+                                   if_match=if_match,
+                                   properties=properties)
+
+
+def datafactory_integration_runtime_self_hosted_create(cmd, client,
+                                                       resource_group_name,
+                                                       factory_name,
+                                                       integration_runtime_name,
+                                                       if_match=None,
+                                                       description=None,
+                                                       type_properties_linked_info=None):
+    if isinstance(type_properties_linked_info, str):
+        type_properties_linked_info = json.loads(type_properties_linked_info)
+    properties = {}
+    properties['type'] = 'SelfHosted'
+    properties['description'] = description
+    properties['linked_info'] = type_properties_linked_info
+    return client.create_or_update(resource_group_name=resource_group_name,
+                                   factory_name=factory_name,
+                                   integration_runtime_name=integration_runtime_name,
+                                   if_match=if_match,
+                                   properties=properties)
+
+
+def datafactory_integration_runtime_update(cmd, client,
+                                           resource_group_name,
+                                           factory_name,
+                                           integration_runtime_name,
+                                           auto_update=None,
+                                           update_delay_offset=None):
+    return client.update(resource_group_name=resource_group_name,
+                         factory_name=factory_name,
+                         integration_runtime_name=integration_runtime_name,
+                         auto_update=auto_update,
+                         update_delay_offset=update_delay_offset)
+
+
+def datafactory_integration_runtime_delete(cmd, client,
+                                           resource_group_name,
+                                           factory_name,
+                                           integration_runtime_name):
+    return client.delete(resource_group_name=resource_group_name,
+                         factory_name=factory_name,
+                         integration_runtime_name=integration_runtime_name)
+
+
+def datafactory_integration_runtime_get_connection_info(cmd, client,
+                                                        resource_group_name,
+                                                        factory_name,
+                                                        integration_runtime_name):
+    return client.get_connection_info(resource_group_name=resource_group_name,
+                                      factory_name=factory_name,
+                                      integration_runtime_name=integration_runtime_name)
+
+
+def datafactory_integration_runtime_get_monitoring_data(cmd, client,
+                                                        resource_group_name,
+                                                        factory_name,
+                                                        integration_runtime_name):
+    return client.get_monitoring_data(resource_group_name=resource_group_name,
+                                      factory_name=factory_name,
+                                      integration_runtime_name=integration_runtime_name)
+
+
+def datafactory_integration_runtime_get_status(cmd, client,
+                                               resource_group_name,
+                                               factory_name,
+                                               integration_runtime_name):
+    return client.get_status(resource_group_name=resource_group_name,
+                             factory_name=factory_name,
+                             integration_runtime_name=integration_runtime_name)
+
+
+def datafactory_integration_runtime_list_auth_key(cmd, client,
+                                                  resource_group_name,
+                                                  factory_name,
+                                                  integration_runtime_name):
+    return client.list_auth_key(resource_group_name=resource_group_name,
+                                factory_name=factory_name,
+                                integration_runtime_name=integration_runtime_name)
+
+
+def datafactory_integration_runtime_regenerate_auth_key(cmd, client,
+                                                        resource_group_name,
+                                                        factory_name,
+                                                        integration_runtime_name,
+                                                        key_name=None):
+    return client.regenerate_auth_key(resource_group_name=resource_group_name,
+                                      factory_name=factory_name,
+                                      integration_runtime_name=integration_runtime_name,
+                                      key_name=key_name)
+
+
+def datafactory_integration_runtime_remove_link(cmd, client,
+                                                resource_group_name,
+                                                factory_name,
+                                                integration_runtime_name,
+                                                linked_factory_name):
+    return client.remove_link(resource_group_name=resource_group_name,
+                              factory_name=factory_name,
+                              integration_runtime_name=integration_runtime_name,
+                              linked_factory_name=linked_factory_name)
+
+
+def datafactory_integration_runtime_start(cmd, client,
+                                          resource_group_name,
+                                          factory_name,
+                                          integration_runtime_name,
+                                          no_wait=False):
+    return sdk_no_wait(no_wait,
+                       client.begin_start,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       integration_runtime_name=integration_runtime_name)
+
+
+def datafactory_integration_runtime_stop(cmd, client,
+                                         resource_group_name,
+                                         factory_name,
+                                         integration_runtime_name,
+                                         no_wait=False):
+    return sdk_no_wait(no_wait,
+                       client.begin_stop,
+                       resource_group_name=resource_group_name,
+                       factory_name=factory_name,
+                       integration_runtime_name=integration_runtime_name)
+
+
+def datafactory_integration_runtime_sync_credentials(cmd, client,
+                                                     resource_group_name,
+                                                     factory_name,
+                                                     integration_runtime_name):
+    return client.sync_credentials(resource_group_name=resource_group_name,
+                                   factory_name=factory_name,
+                                   integration_runtime_name=integration_runtime_name)
+
+
+def datafactory_integration_runtime_upgrade(cmd, client,
+                                            resource_group_name,
+                                            factory_name,
+                                            integration_runtime_name):
+    return client.upgrade(resource_group_name=resource_group_name,
+                          factory_name=factory_name,
+                          integration_runtime_name=integration_runtime_name)
