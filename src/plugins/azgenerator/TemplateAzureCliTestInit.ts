@@ -22,6 +22,7 @@ export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     output.push("import os");
     output.push("import sys");
     output.push("import traceback");
+    output.push("from azure.core.exceptions import AzureError");
     output.push("");
     output.push("");
     output.push("__path__ = __import__('pkgutil').extend_path(__path__, __name__)");
@@ -57,7 +58,7 @@ export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     output.push('        print("running {}()...".format(func.__name__))');
     output.push('        try:');
     output.push('            return func_to_call(*args, **kwargs)');
-    output.push('        except BaseException as e:');
+    output.push('        except (AssertionError, AzureError) as e:');
     output.push('            print("--------------------------------------")');
     output.push('            print("step exception: ", e)');
     output.push('            print("--------------------------------------", file=sys.stderr)');
@@ -67,8 +68,7 @@ export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     output.push('');
     output.push('    if inspect.isclass(func):');
     output.push('        return get_func_to_call()');
-    output.push('    else:');
-    output.push('        return wrapper');
+    output.push('    return wrapper');
     output.push('');
     output.push('');
     output.push('def raise_if():');
