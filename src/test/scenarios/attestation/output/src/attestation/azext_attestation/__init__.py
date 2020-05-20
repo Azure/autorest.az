@@ -20,8 +20,8 @@ class AttestationManagementClientCommandsLoader(AzCommandsLoader):
         attestation_custom = CliCommandType(
             operations_tmpl='azext_attestation.custom#{}',
             client_factory=cf_attestation)
-        super(AttestationManagementClientCommandsLoader, self).__init__(cli_ctx=cli_ctx,
-                                                                        custom_command_type=attestation_custom)
+        parent = super(AttestationManagementClientCommandsLoader, self)
+        parent.__init__(cli_ctx=cli_ctx, custom_command_type=attestation_custom)
 
     def load_command_table(self, args):
         from azext_attestation.generated.commands import load_command_table

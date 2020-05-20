@@ -19,7 +19,6 @@ class AddIdentity(argparse.Action):
         action = self.get_action(values, option_string)
         namespace.identity = action
 
-
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
             properties = defaultdict(list)
@@ -39,7 +38,6 @@ class AddFactoryVstsConfiguration(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
         namespace.factory_vsts_configuration = action
-
 
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
@@ -76,7 +74,6 @@ class AddFactoryGitHubConfiguration(argparse.Action):
         action = self.get_action(values, option_string)
         namespace.factory_git_hub_configuration = action
 
-
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
             properties = defaultdict(list)
@@ -109,7 +106,6 @@ class AddFakeIdentity(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
         namespace.fake_identity = action
-
 
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:

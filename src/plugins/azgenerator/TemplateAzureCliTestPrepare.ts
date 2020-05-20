@@ -38,7 +38,7 @@ export function GenerateAzureCliTestPrepare(model: CodeModelAz): string[] {
     output.push("        self.resource_group_key = resource_group_key");
     output.push("        self.dev_setting_name = os.environ.get(dev_setting_name, None)");
     output.push("");
-    output.push("    def create_resource(self, name, **_):");
+    output.push("    def create_resource(self, name, **kwargs):");
     output.push("        if self.dev_setting_name:");
     output.push("            return {self.parameter_name: self.dev_setting_name, }");
     output.push("");
@@ -61,7 +61,7 @@ export function GenerateAzureCliTestPrepare(model: CodeModelAz): string[] {
     output.push("        self.test_class_instance.kwargs[self.key] = name");
     output.push("        return {self.parameter_name: name}");
     output.push("");
-    output.push("    def remove_resource(self, name, **_):");
+    output.push("    def remove_resource(self, name, **kwargs):");
     output.push("        # delete vnet if test is being recorded and if the vnet is not a dev rg");
     output.push("        if not self.dev_setting_name:");
     output.push("            self.live_only_execute(");
@@ -89,7 +89,7 @@ export function GenerateAzureCliTestPrepare(model: CodeModelAz): string[] {
     output.push("        self.address_prefixes = address_prefixes");
     output.push("        self.dev_setting_name = os.environ.get(dev_setting_name, None)");
     output.push("");
-    output.push("    def create_resource(self, name, **_):");
+    output.push("    def create_resource(self, name, **kwargs):");
     output.push("        if self.dev_setting_name:");
     output.push("            return {self.parameter_name: self.dev_setting_name, }");
     output.push("");
@@ -118,7 +118,7 @@ export function GenerateAzureCliTestPrepare(model: CodeModelAz): string[] {
     output.push("        self.test_class_instance.kwargs[self.key] = 'default'");
     output.push("        return {self.parameter_name: name}");
     output.push("");
-    output.push("    def remove_resource(self, name, **_):");
+    output.push("    def remove_resource(self, name, **kwargs):");
     output.push("        pass");
     // output.push("        # delete vnet if test is being recorded and if the vnet is not a dev rg");
     // output.push("        if not self.dev_setting_name:");
@@ -147,7 +147,7 @@ export function GenerateAzureCliTestPrepare(model: CodeModelAz): string[] {
     output.push("        self.vnet = [vnet_key, None]");
     output.push("        self.dev_setting_name = os.environ.get(dev_setting_name, None)");
     output.push("");
-    output.push("    def create_resource(self, name, **_):");
+    output.push("    def create_resource(self, name, **kwargs):");
     output.push("        if self.dev_setting_name:");
     output.push("            return {self.parameter_name: self.dev_setting_name, }");
     output.push("");
@@ -168,7 +168,7 @@ export function GenerateAzureCliTestPrepare(model: CodeModelAz): string[] {
     output.push("        self.test_class_instance.kwargs[self.key] = name");
     output.push("        return {self.parameter_name: name}");
     output.push("");
-    output.push("    def remove_resource(self, name, **_):");
+    output.push("    def remove_resource(self, name, **kwargs):");
     output.push("        if not self.dev_setting_name:");
     output.push("            self.live_only_execute(");
     output.push("                self.cli_ctx,");
