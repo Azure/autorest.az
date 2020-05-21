@@ -858,8 +858,8 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public EnterSubMethodParameters(param: Parameter = this.MethodParameter): boolean {
-        let subParams = this.GetSubParameters(param);
+    public EnterSubMethodParameters(param: Parameter = this.MethodParameter, requiredSimple: boolean = true): boolean {
+        let subParams = this.GetSubParameters(param, requiredSimple);
         if (isNullOrUndefined(subParams)) {
             return false;
         }
@@ -869,7 +869,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public GetSubParameters(param: Parameter = this.MethodParameter): Parameter[] {
+    public GetSubParameters(param: Parameter = this.MethodParameter, requiredSimple: boolean = true): Parameter[] {
         // this should only works for 
         // 1. objects with simple properties 
         // 2. or objects with arrays as properties but has simple element type 
@@ -878,7 +878,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (!this.Parameter_IsList(param)) {
             return null
         }
-        if (!this.Parameter_IsListOfSimple(param))
+        if (requiredSimple && !this.Parameter_IsListOfSimple(param))
             return null;
 
         let submethodparameters = [];
@@ -1003,7 +1003,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_IsFlattened(param: Parameter = this.MethodParameter): boolean {
-        return param['flattened'] ? true : false;
+        return param?.['flattened'] ? true : false;
     }
 
     public Parameter_IsListOfSimple(param: Parameter = this.MethodParameter): boolean {
@@ -1164,8 +1164,14 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_IsSimpleArray(): boolean {
-        if (this.MethodParameter_Type == SchemaType.Array) {
-            let elementType = this.MethodParameter['schema']['elementType'].type;
+        if (this.Parameter_IsSimpleArray(this.MethodParameter)) {
+        }
+        return false;
+    }
+
+    public Parameter_IsSimpleArray(param: Parameter): boolean {
+        if (this.Parameter_Type(param) == SchemaType.Array) {
+            let elementType = param?.['schema']?.['elementType']?.type;
             if (!this.isComplexSchema(elementType)) {
                 return true;
             }
@@ -1178,7 +1184,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             return false;
         }
 
-        if (this.isComplexSchema(this.MethodParameter_Type)) {
+        if (this.isComplexSchema(this.Parameter_Type(param))) {
             return true;
         }
         return false;
@@ -1294,7 +1300,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return parameter.language['az'].hidden;
     }
 
-    public get MethodParameters_DefaultValue(): string | undefined {
+    public get MethodParameter_DefaultValue(): string | undefined {
         return this.Parameter_DefaultValue(this.MethodParameter);
     }
 

@@ -77,7 +77,43 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
     return output;
 }
 
-function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean = false) {
+function ConstructSingleLineForMethodBody(model: CodeModelAz, needGeneric: boolean = false, originalParameterStack: Parameter[], originalParameterNameStack: string[], prefixIndent: string, valueToMatch: string) {
+    let output_body = [];
+    if (model.MethodParameter_IsFlattened) {
+        if (isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema'])) {
+            return output_body;
+        }
+        originalParameterStack.push(model.MethodParameter);
+        originalParameterNameStack.push(model.MethodParameter_Name);
+        if (!needGeneric) {
+            output_body.push(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
+        }
+    } else if (originalParameterStack.length > 0) {
+        if (model.MethodParameter['originalParameter'] == originalParameterStack[originalParameterStack.length - 1]) {
+            let access = "";
+            let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
+
+            if (!isNullOrUndefined(valueToMatch) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
+                access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, "'" + valueToMatch + "'");
+            }
+            else {
+                if (!model.MethodParameter_IsHidden) {
+                    access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
+                }
+                else if (!isNullOrUndefined(model.MethodParameter_DefaultValue)) {
+                    access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
+                }
+            }
+            output_body.push(access);
+        } else {
+            originalParameterStack.pop();
+            originalParameterNameStack.pop();
+        }
+    }
+    return output_body;
+}
+
+function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean = false, genericParameter: Parameter = null) {
     let output_body: string[] = [];
     let opNames = model.Method_NameAz.split(' ');
     let valueToMatch = null;
@@ -90,38 +126,24 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
         let prefixIndent = "    ";
 
         do {
-            if (model.MethodParameter_IsFlattened) {
-                if (isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema'])) {
-                    continue;
-                }
-                originalParameterStack.push(model.MethodParameter);
-                originalParameterNameStack.push(model.MethodParameter_Name);
-                if (!needGeneric) {
-                    output_body.push(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
-                }
-            }
-            else if (originalParameterStack.length > 0)
-                if (model.MethodParameter['originalParameter'] == originalParameterStack[originalParameterStack.length - 1]) {
-                    let access = "";
-                    let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
 
-                    if (!isNullOrUndefined(valueToMatch) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
-                        access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, "'" + valueToMatch + "'");
+            if (needGeneric && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                if (model.EnterSubMethodParameters(genericParameter, false)) {
+                    if (model.SelectFirstMethodParameter()) {
+                        do {
+                            if (model.SubMethodParameter['readOnly']) {
+                                continue;
+                            }
+                            if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                                continue;
+                            }
+                            let name = model.Parameter_MapsTo(model.SubMethodParameter);
+                        } while (model.SelectNextMethodParameter());
                     }
-                    else {
-                        if (!model.MethodParameter_IsHidden) {
-                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type));
-                        }
-                        else if (!isNullOrUndefined(model.MethodParameters_DefaultValue)) {
-                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type));
-                        }
-                    }
-                    output_body.push(access);
+                    model.ExitSubMethodParameters();
                 }
-                else {
-                    originalParameterStack.pop();
-                    originalParameterNameStack.pop();
-                }
+                continue;
+            }     
         } while (model.SelectNextMethodParameter(true));
     }
     return output_body;
@@ -227,7 +249,26 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperatio
                         continue;
                     }
                       
-                    if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                    if (needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                        if (model.EnterSubMethodParameters(genericParameter, false)) {
+                            if (model.SelectFirstMethodParameter()) {
+                                do {
+                                    if (model.SubMethodParameter['readOnly']) {
+                                        continue;
+                                    }
+                                    if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                                        continue;
+                                    }
+                                    let name = model.Parameter_MapsTo(model.SubMethodParameter);
+                                    if (!allParam.has(name)) {
+                                        allParam.set(name, true);
+                                        output[output.length - 1] += ",";
+                                        output.push(indent + name + "=None");
+                                    }
+                                } while (model.SelectNextMethodParameter());
+                            }
+                            model.ExitSubMethodParameters();
+                        }
                         continue;
                     } 
 
@@ -262,6 +303,52 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperatio
     return output;
 }
 
+function buildValue(model: CodeModelAz, param: Parameter, allPolyBaseParam: Map<string, boolean>, required: any) {
+    let output_body = [];
+    if (model.Parameter_IsList(param) && !model.Parameter_IsListOfSimple(param) && !model.Parameter_IsSimpleArray(param)) {
+        if (param == model.MethodParameter && model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+            let baseParam = model.MethodParameter;
+            let baseName = model.MethodParameter_MapsTo;
+            if (allPolyBaseParam.has(baseName)) {
+                return output_body;
+            }
+            allPolyBaseParam.set(baseName, true);
+            let baseRequired = model.MethodParameter_RequiredByMethod;
+            output_body.push("    " + "all_" + baseName + " = []");
+            let childNames = [];
+            while (model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam) {
+                let childName = model.MethodParameter_MapsTo;
+                childNames.push(childName);
+                output_body.push("    if " + childName + " is not None:");
+                output_body.push("        " + "all_" + baseName + ".append(" + childName + ")");
+            }
+            if (childNames.length > 0) {
+                output_body.push("    if len(" + "all_" + baseName + ") > 1:");
+                required['clierror'] = true;
+                ToMultiLine("        raise CLIError('at most one of  " + childNames.join(", ") + " is needed for " + baseName + "!')", output_body);
+                if (baseRequired) {
+                    output_body.push("    if len(" + "all_" + baseName + ") != 1:");
+                    ToMultiLine("        raise CLIError('" + baseName + " is required. but none of " + childNames.join(", ") + " is provided!')", output_body);
+                }
+                ToMultiLine("    " + baseName + " = all_" + baseName + "[0] if len(all_" + baseName + ") == 1 else None", output_body)
+            } else {
+                output_body.pop();
+            }
+        } else if (model.Parameter_IsList(param) && !model.Parameter_IsListOfSimple(param)) {
+            required['json'] = true;
+            output_body.push("    if isinstance(" + model.Parameter_MapsTo(param) + ", str):");
+            output_body.push("        " + model.Parameter_MapsTo(param) + " = json.loads(" + model.Parameter_MapsTo(param) + ")");
+        }
+        
+    }
+    else if (model.Parameter_DefaultValue(param) !== undefined) {
+        // model is simple type with default value
+        output_body.push("    if " + model.Parameter_MapsTo(param) + " == None:");
+        output_body.push("        " + model.Parameter_MapsTo(param) + " = " + ToPythonString(model.Parameter_DefaultValue(param), model.Parameter_Type(param)));
+    }
+    return output_body;    
+}
+
 function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: Operation = null, needGeneric: boolean = false, genericParameter: Parameter = null, needUpdate: boolean = false) {
     let originalParameters = null;
     if (!isNullOrUndefined(originalOperation)) {
@@ -284,55 +371,30 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                        if (model.EnterSubMethodParameters(genericParameter, false)) {
+                            if (model.SelectFirstMethodParameter()) {
+                                do {
+                                    if (model.SubMethodParameter['readOnly']) {
+                                        continue;
+                                    }
+                                    if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                                        continue;
+                                    }
+                                    output_body = output_body.concat(buildValue(model, model.SubMethodParameter, allPolyBaseParam, required));
+                                } while (model.SelectNextMethodParameter());
+                            }
+                            model.ExitSubMethodParameters();
+                        }
                         continue;
                     }
-                    if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple && !model.MethodParameter_IsSimpleArray) {
-                        if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                            let baseParam = model.MethodParameter;
-                            let baseName = model.MethodParameter_MapsTo;
-                            if (allPolyBaseParam.has(baseName)) {
-                                continue;
-                            }
-                            allPolyBaseParam.set(baseName, true);
-                            let baseRequired = model.MethodParameter_RequiredByMethod;
-                            output_body.push("    " + "all_" + baseName + " = []");
-                            let childNames = [];
-                            while (model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam) {
-                                let childName = model.MethodParameter_MapsTo;
-                                childNames.push(childName);
-                                output_body.push("    if " + childName + " is not None:");
-                                output_body.push("        " + "all_" + baseName + ".append(" + childName + ")");
-                            }
-                            if (childNames.length > 0) {
-                                output_body.push("    if len(" + "all_" + baseName + ") > 1:");
-                                required['clierror'] = true;
-                                ToMultiLine("        raise CLIError('at most one of  " + childNames.join(", ") + " is needed for " + baseName + "!')", output_body);
-                                if (baseRequired) {
-                                    output_body.push("    if len(" + "all_" + baseName + ") != 1:");
-                                    ToMultiLine("        raise CLIError('" + baseName + " is required. but none of " + childNames.join(", ") + " is provided!')", output_body);
-                                }
-                                ToMultiLine("    " + baseName + " = all_" + baseName + "[0] if len(all_" + baseName + ") == 1 else None", output_body)
-                            } else {
-                                output_body.pop();
-                            }
-                            continue;
-                        }
-                        required['json'] = true;
-                        output_body.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
-                        output_body.push("        " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
-                    }
-                    else if (model.MethodParameters_DefaultValue !== undefined) {
-                        // model is simple type with default value
-                        output_body.push("    if " + model.MethodParameter_MapsTo + " == None:");
-                        output_body.push("        " + model.MethodParameter_MapsTo + " = " + ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type));
-                    }
+                    output_body = output_body.concat(buildValue(model, model.MethodParameter, allPolyBaseParam, required));
                 }
                 while (model.SelectNextMethodParameter());
 
             }
 
             if (!isNullOrUndefined(originalOperation)) {
-                output_body = output_body.concat(ConstructMethodBodyParameter(model, needGeneric));
+                output_body = output_body.concat(ConstructMethodBodyParameter(model, needGeneric, genericParameter));
             }
         } while (model.SelectNextMethod());
 
@@ -502,8 +564,8 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
             let parameterPair = '';
 
             if (model.MethodParameter_IsHidden) {
-                if (model.MethodParameters_DefaultValue) {
-                    parameterPair = model.MethodParameter_NamePython + "=" + ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type);
+                if (model.MethodParameter_DefaultValue) {
+                    parameterPair = model.MethodParameter_NamePython + "=" + ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type);
                 }
                 else {
                     parameterPair = model.MethodParameter_NamePython + "=None";
