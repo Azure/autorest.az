@@ -5,35 +5,190 @@
 
 trigger: none
 pr: none
+schedules:
+- cron: "0 20 * * *"
+  displayName: "4AM (UTC +8) daily release"
+  branches:
+    include:
+    - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+variables:
+  VAR_REPO_URL: $(Build.Repository.Uri)
+  VAR_REPO_BRANCHNAME: $(Build.SourceBranchName)
+  VAR_BUILD_NUMBER: $(Build.BuildNumber)
+  VAR_BUILD_VERSION: $(Build.SourceVersion)
+  VAR_BUILD_RESION: $(Build.Reason)
+  VAR_ARIFACT_NAME: "drop"
+  VAR_BUILD_ARTIFACT_STAGING_DIRECTORY: $(Build.ArtifactStagingDirectory)
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.17.0'
-  displayName: 'Install Node.js'
+stages:
+- stage: Build
+  jobs:
+    - job: BuildSourceCode
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.17.0'
+        displayName: 'Install Node.js'
+      - script: |
+          echo "[$(date -u)] LOG: ENSURE LATEST NPM IS INSTALLED"
+          npm install -g npm
 
-- script: |
-    # ensure latest npm is installed
-    npm install -g npm 
+          echo "[$(date -u)] LOG: MAKE SURE THE VERSIONS ARE ALL SYNCHRONIZED AND PULL IN DEPENDENCIES"
+          npx @microsoft/rush sync-versions
+          npx @microsoft/rush update 
 
-    # make sure the versions are all synchronized and pull in dependencies
-    npx @microsoft/rush sync-versions
-    npx @microsoft/rush update 
+          echo "[$(date -u)] LOG: COMPILE THE CODE"
+          npx @microsoft/rush rebuild 
 
-    # compile the code
-    npx @microsoft/rush rebuild 
+          echo "[$(date -u)] LOG: BUILD PACKAGE"
+          npx @microsoft/rush publish --publish --pack --release-folder $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY) --include-all --tag latest
+        displayName: 'Build and Pack'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
+          ArtifactName: '$(VAR_ARIFACT_NAME)'
+          publishLocation: 'Container'
 
-    # build the packages
-    npx @microsoft/rush publish --publish --pack --include-all --tag latest
+- stage: Test
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+    - job: E2E
 
-    # publish the packages (tag as preview by default)
-    echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc 
-    for file in common/temp/artifacts/packages/*.tgz 
-    do
-     common/temp/pnpm-local/node_modules/.bin/pnpm publish $file --tag latest --access public || echo no-worries 
-    done
-    rm ./.npmrc
+- stage: PrivateRelease
+  dependsOn: Test
+  condition: or(succeeded(), ne(variables['USER_SKIP_TEST'], 'true'))
+  jobs:
+    - job: Github
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.17.0'
+        displayName: 'Install Node.js'
+      - script: |
+          LAST_TAG_COMMIT_HASH=$(git rev-list --tags --max-count=1)
+          echo "[$(date -u)] LOG: LAST_TAG_COMMIT_HASH: $LAST_TAG_COMMIT_HASH"
 
+          LAST_TAG=$(git describe --tags $LAST_TAG_COMMIT_HASH)
+          echo "[$(date -u)] LOG: LAST_TAG: $LAST_TAG"
+          echo "[$(date -u)] LOG: VAR_BUILD_VERSION: $VAR_BUILD_VERSION"
+          echo "[$(date -u)] LOG: VAR_BUILD_RESION: $VAR_BUILD_RESION"
+          if [ "$LAST_TAG_COMMIT_HASH" = "$VAR_BUILD_VERSION" ]; then echo "Cancel pipeline as no new commit"; exit 1; fi
+        name: Validation
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          buildType: 'current'
+          downloadType: 'single'
+          artifactName: '$(VAR_ARIFACT_NAME)'
+          downloadPath: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
+      - script: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
+          RELEASE_VERSION="$CURRENT_VERSION-b.$VAR_BUILD_NUMBER"
+          echo "[$(date -u)] LOG: RELEASE VERSION: $RELEASE_VERSION"
+          echo "##vso[task.setvariable variable=release;isOutput=true]$RELEASE_VERSION"
+        name: GetVersions
+      - task: GitHubRelease@1
+        inputs:
+          gitHubConnection: 'amecodegenbot'
+          repositoryName: 'LianwMS/autorest.az'
+          action: 'create'
+          target: '$(Build.SourceVersion)'
+          tagSource: 'userSpecifiedTag'
+          tag: '$(GetVersions.release)'
+          assets: |
+            $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)/$(VAR_ARIFACT_NAME)/*.tgz
+          isPreRelease: true
+          changeLogCompareToRelease: 'lastNonDraftRelease'
+          changeLogType: 'commitBased'
+
+- stage: PublicRelease
+  dependsOn: Test
+  condition: or(succeeded(), ne(variables['USER_SKIP_TEST'], 'true'))
+  jobs:
+    - deployment: npmjs
+      environment: az-npm-release
+      pool:
+        vmImage: 'ubuntu-latest'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - task: NodeTool@0
+                inputs:
+                  versionSpec: '10.17.0'
+                displayName: 'Install Node.js'
+              - task: DownloadBuildArtifacts@0
+                inputs:
+                  buildType: 'current'
+                  downloadType: 'single'
+                  artifactName: '$(VAR_ARIFACT_NAME)'
+                  downloadPath: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
+              - script: |
+                  echo "[$(date -u)] LOG: ENSURE LATEST NPM IS INSTALLED"
+                  npm install -g npm 
+
+                  echo "[$(date -u)] LOG: PUBLISH THE PACKAGES"
+                  echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc 
+                  for file in $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)/$(VAR_ARIFACT_NAME)/*.tgz
+                  do
+                    echo "[$(date -u)] LOG: FILE: $file"
+                    common/temp/pnpm-local/node_modules/.bin/pnpm publish $file --tag latest --access public || echo no-worries 
+                  done
+                  rm ./.npmrc
+                displayName: Publish
+                #failOnStderr: true
+
+- stage: Version
+  dependsOn: PublicRelease
+  condition: succeeded()
+  pool:
+    vmImage: 'ubuntu-latest'
+  jobs:
+  - job: VersionBump
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '10.17.0'
+      displayName: 'Install Node.js'
+    - script: |
+        REPO_URL_REPLACE="$(USER_GITHUB_TOKEN)@github"
+        REPO_URL_PAT=${VAR_REPO_URL/'github'/$REPO_URL_REPLACE}
+
+        echo "[$(date -u)] LOG: CONFIG NAME, EMAIL AND REMOTE"
+        git config --global user.name '$(USER_NAME)'
+        git config --global user.email '$(USER_EMAIL)'
+        git remote add originpat $REPO_URL_PAT
+        git remote -v
+      displayName: 'Config'
+    - script: |
+        CURRENT_VERSION=$(node -p "require('./package.json').version")
+        echo "[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
+
+        echo "[$(date -u)] LOG: ADD TAG: $CURRENT_VERSION"
+        git tag $CURRENT_VERSION
+
+        echo "[$(date -u)] LOG: PUSH TAG:"
+        git push originpat --tags
+      displayName: 'Add Public Release Tag'
+    - script: |
+        echo "[$(date -u)] LOG: CHECKOUT TO $VAR_REPO_BRANCHNAME"
+        git checkout $VAR_REPO_BRANCHNAME -f
+        git pull
+
+        CURRENT_VERSION=$(node -p "require('./package.json').version")
+        echo "[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
+
+        USER_NEW_VERSION=$(npm version --git-tag-version=false patch)
+
+        echo "[$(date -u)] LOG: NEW VERSION: $USER_NEW_VERSION"
+
+        echo "[$(date -u)] LOG: COMMIT and PUSH"
+        git commit -a -m "$(USER_COMMIT_MESSAGE) $USER_NEW_VERSION"
+        git push originpat
+      displayName: 'Version Bump'
