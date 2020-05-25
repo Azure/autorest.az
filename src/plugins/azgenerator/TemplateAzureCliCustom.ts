@@ -77,32 +77,42 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
     return output;
 }
 
-function ConstructSingleLineForMethodBody(model: CodeModelAz, needGeneric: boolean = false, originalParameterStack: Parameter[], originalParameterNameStack: string[], prefixIndent: string, valueToMatch: string) {
+function ConstructSingleLineForMethodBody(model: CodeModelAz, needGeneric: boolean = false, param: Parameter, originalParameterStack: Parameter[], originalParameterNameStack: string[], prefixIndent: string, valueToMatch: string) {
     let output_body = [];
-    if (model.MethodParameter_IsFlattened) {
-        if (isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema'])) {
+    if (model.Parameter_IsFlattened(param)) {
+        if (isNullOrUndefined(param['extensions']?.['cli-poly-as-resource-base-schema'])) {
             return output_body;
         }
-        originalParameterStack.push(model.MethodParameter);
-        originalParameterNameStack.push(model.MethodParameter_Name);
+        originalParameterStack.push(param);
+        originalParameterNameStack.push(model.Parameter_Name(param));
         if (!needGeneric) {
             output_body.push(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
         }
     } else if (originalParameterStack.length > 0) {
-        if (model.MethodParameter['originalParameter'] == originalParameterStack[originalParameterStack.length - 1]) {
+        if (param['originalParameter'] == originalParameterStack[originalParameterStack.length - 1]) {
             let access = "";
-            let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
+            let paramName = model.Parameter_NamePython(param['targetProperty']);
 
-            if (!isNullOrUndefined(valueToMatch) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
+            if (!isNullOrUndefined(valueToMatch) && param['targetProperty']?.['isDiscriminator']) {
                 access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, "'" + valueToMatch + "'");
             }
             else {
-                if (!model.MethodParameter_IsHidden) {
-                    access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
+                if (!model.Parameter_IsHidden(param)) {
+                    access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.Parameter_MapsTo(param), ToPythonString(model.Parameter_DefaultValue(param), model.Parameter_Type(param)));
                 }
-                else if (!isNullOrUndefined(model.MethodParameter_DefaultValue)) {
-                    access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
+                else if (!isNullOrUndefined(model.Parameter_DefaultValue(param))) {
+                    access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, ToPythonString(model.Parameter_DefaultValue(param), model.Parameter_Type(param)));
                 }
+            }
+            output_body.push(access);
+        } else if (needGeneric) {
+            let access = "";
+            let paramName = model.Parameter_NamePython(param);
+            if (!model.Parameter_IsHidden(param)) {
+                access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.Parameter_MapsTo(param), ToPythonString(model.Parameter_DefaultValue(param), model.Parameter_Type(param)));
+            }
+            else if (!isNullOrUndefined(model.Parameter_DefaultValue(param))) {
+                access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, ToPythonString(model.Parameter_DefaultValue(param), model.Parameter_Type(param)));
             }
             output_body.push(access);
         } else {
@@ -128,8 +138,10 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
         do {
 
             if (needGeneric && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+                originalParameterStack.push(model.MethodParameter);
+                originalParameterNameStack.push(model.MethodParameter_Name);
                 if (model.EnterSubMethodParameters(genericParameter, false)) {
-                    if (model.SelectFirstMethodParameter()) {
+                    if (model.SelectFirstMethodParameter(true)) {
                         do {
                             if (model.SubMethodParameter['readOnly']) {
                                 continue;
@@ -137,14 +149,14 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                             if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
                                 continue;
                             }
-                            output_body = output_body.concat(ConstructSingleLineForMethodBody(model, needGeneric, originalParameterStack, originalParameterNameStack, prefixIndent, valueToMatch));
-                        } while (model.SelectNextMethodParameter());
+                            output_body = output_body.concat(ConstructSingleLineForMethodBody(model, needGeneric, model.SubMethodParameter, originalParameterStack, originalParameterNameStack, prefixIndent, valueToMatch));
+                        } while (model.SelectNextMethodParameter(true));
                     }
                     model.ExitSubMethodParameters();
                 }
                 continue;
             } 
-            output_body = output_body.concat(ConstructSingleLineForMethodBody(model, needGeneric, originalParameterStack, originalParameterNameStack, prefixIndent, valueToMatch));
+            output_body = output_body.concat(ConstructSingleLineForMethodBody(model, needGeneric, model.MethodParameter, originalParameterStack, originalParameterNameStack, prefixIndent, valueToMatch));
         } while (model.SelectNextMethodParameter(true));
     }
     return output_body;
@@ -394,7 +406,7 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
 
             }
 
-            if (!isNullOrUndefined(originalOperation)) {
+            if (!isNullOrUndefined(originalOperation) || needGeneric) {
                 output_body = output_body.concat(ConstructMethodBodyParameter(model, needGeneric, genericParameter));
             }
         } while (model.SelectNextMethod());

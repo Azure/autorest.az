@@ -148,7 +148,7 @@ export interface CodeModelAz
     Parameter_IsFlattened(Parameter): boolean;
     Parameter_MapsTo(Parameter): string;
     Schema_MapsTo(Schema);
-    Parameter_Name(): string;
+    Parameter_Name(Parameter): string;
     Parameter_NameAz(Parameter): string;
     Parameter_NamePython(Parameter): string;
     Parameter_Description(Parameter): string;

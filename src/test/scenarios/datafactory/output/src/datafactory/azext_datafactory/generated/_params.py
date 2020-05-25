@@ -49,7 +49,8 @@ def load_arguments(self, _):
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
                    'itHub repo information.', arg_group='RepoConfiguration')
         c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
-        c.argument('zones', nargs='+', help='This is only for az test.')
+        c.argument('zones', arg_type=CLIArgumentType(options_list=['--zones'], help='This is only for az test. Expected'
+                   ' value: json-string/@json-file.'))
 
     with self.argument_context('datafactory update') as c:
         c.argument('resource_group_name', resource_group_name_type)
