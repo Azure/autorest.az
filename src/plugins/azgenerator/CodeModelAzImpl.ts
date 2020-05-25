@@ -1658,9 +1658,9 @@ export class CodeModelCliImpl implements CodeModelAz {
         return deepCopy(exampleValue);
     }
 
-    private matchMethodParam(method_param_list: MethodParam[], paramName: string): any[] {
-        if (!paramName) return undefined;
-        let ret = [];
+    private matchMethodParam(method_param_list: MethodParam[], paramName: string): MethodParam[] {
+        let ret: MethodParam[] = [];
+        if (!paramName) return ret;
         for (let method_param of method_param_list) {
             let serializedName = method_param.value.targetProperty?.serializedName;
             if (!serializedName) serializedName = method_param.value.language['cli'].cliKey;
