@@ -137,13 +137,14 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                             if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
                                 continue;
                             }
-                            let name = model.Parameter_MapsTo(model.SubMethodParameter);
+                            output_body = output_body.concat(ConstructSingleLineForMethodBody(model, needGeneric, originalParameterStack, originalParameterNameStack, prefixIndent, valueToMatch));
                         } while (model.SelectNextMethodParameter());
                     }
                     model.ExitSubMethodParameters();
                 }
                 continue;
-            }     
+            } 
+            output_body = output_body.concat(ConstructSingleLineForMethodBody(model, needGeneric, originalParameterStack, originalParameterNameStack, prefixIndent, valueToMatch));
         } while (model.SelectNextMethodParameter(true));
     }
     return output_body;
