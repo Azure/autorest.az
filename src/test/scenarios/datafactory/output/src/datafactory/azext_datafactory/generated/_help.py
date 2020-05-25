@@ -457,7 +457,7 @@ helps['datafactory integration-runtime remove-link'] = """
     short-summary: Remove all linked integration runtimes under specific data factory in a self-hosted integration runt\
 ime.
     examples:
-      - name: IntegrationRuntimes_Upgrade
+      - name: IntegrationRuntimes_RemoveLinks
         text: |-
                az datafactory integration-runtime remove-link --factory-name "exampleFactoryName" --name "exampleIntegr\
 ationRuntime" --resource-group "exampleResourceGroup"
