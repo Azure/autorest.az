@@ -212,6 +212,16 @@ def step__integrationruntimes_post_integrationruntimes_regenerateauthkey(test, r
              checks=[])
 
 
+# EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_RemoveLinks
+@try_manual
+def step__integrationruntimes_post_integrationruntimes_removelinks(test, rg):
+    test.cmd('az datafactory integration-runtime remove-link '
+             '--factory-name "{exampleFactoryName}" '
+             '--name "{exampleIntegrationRuntime}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
 # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Start
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_start(test, rg):
@@ -245,17 +255,7 @@ def step__integrationruntimes_post_integrationruntimes_synccredentials(test, rg)
 # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Upgrade
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_upgrade(test, rg):
-    test.cmd('az datafactory integration-runtime remove-link '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Upgrade
-@try_manual
-def step__integrationruntimes_post_integrationruntimes_upgrade(test, rg):
-    test.cmd('az datafactory integration-runtime remove-link '
+    test.cmd('az datafactory integration-runtime upgrade '
              '--factory-name "{exampleFactoryName}" '
              '--name "{exampleIntegrationRuntime}" '
              '--resource-group "{rg}"',
@@ -438,10 +438,10 @@ def call_scenario(test, rg):
     step__integrationruntimes_post_integrationruntimes_getstatus(test, rg)
     step__integrationruntimes_post_integrationruntimes_listauthkeys(test, rg)
     step__integrationruntimes_post_integrationruntimes_regenerateauthkey(test, rg)
+    step__integrationruntimes_post_integrationruntimes_removelinks(test, rg)
     step__integrationruntimes_post_integrationruntimes_start(test, rg)
     step__integrationruntimes_post_integrationruntimes_stop(test, rg)
     step__integrationruntimes_post_integrationruntimes_synccredentials(test, rg)
-    step__integrationruntimes_post_integrationruntimes_upgrade(test, rg)
     step__integrationruntimes_post_integrationruntimes_upgrade(test, rg)
     step__integrationruntimes_patch_integrationruntimes_update(test, rg)
     step__triggers_put_triggers_create(test, rg)

@@ -1621,7 +1621,7 @@
           ],
           "operationId": "IntegrationRuntimes_RemoveLinks",
           "x-ms-examples": {
-            "IntegrationRuntimes_Upgrade": {
+            "IntegrationRuntimes_RemoveLinks": {
               "$ref": "./examples/IntegrationRuntimes_RemoveLinks.json"
             }
           },
