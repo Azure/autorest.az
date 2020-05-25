@@ -32,6 +32,15 @@ def step__factories_put_factories_createorupdate(test, rg):
              checks=[])
 
 
+# EXAMPLE: /Factories/get/Factories_Get
+@try_manual
+def step__factories_get_factories_get(test, rg):
+    test.cmd('az datafactory show '
+             '--name "{exampleFactoryName}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
 # EXAMPLE: /Factories/get/Factories_List
 @try_manual
 def step__factories_get_factories_list(test, rg):
@@ -96,15 +105,6 @@ def step__factories_patch_factories_update(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Factories/get/Factories_Get
-@try_manual
-def step__factories_get_factories_get(test, rg):
-    test.cmd('az datafactory show '
-             '--name "{exampleFactoryName}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
 # EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
 @try_manual
 def step__integrationruntimes_put_integrationruntimes_create(test, rg):
@@ -122,6 +122,16 @@ def step__integrationruntimes_put_integrationruntimes_create(test, rg):
     test.cmd('az datafactory integration-runtime managed create '
              '--factory-name "{exampleFactoryName}" '
              '--description "A selfhosted integration runtime" '
+             '--name "{exampleIntegrationRuntime}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /IntegrationRuntimes/get/IntegrationRuntimes_Get
+@try_manual
+def step__integrationruntimes_get_integrationruntimes_get(test, rg):
+    test.cmd('az datafactory integration-runtime show '
+             '--factory-name "{exampleFactoryName}" '
              '--name "{exampleIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -202,18 +212,23 @@ def step__integrationruntimes_post_integrationruntimes_regenerateauthkey(test, r
              checks=[])
 
 
-# EXAMPLE: /Triggers/put/Triggers_Create
+# EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_RemoveLinks
 @try_manual
-def step__triggers_put_triggers_create(test, rg):
-    test.cmd('az datafactory trigger create '
+def step__integrationruntimes_post_integrationruntimes_removelinks(test, rg):
+    test.cmd('az datafactory integration-runtime remove-link '
              '--factory-name "{exampleFactoryName}" '
-             '--resource-group "{rg}" '
-             '--properties "{{\\"type\\":\\"ScheduleTrigger\\",\\"pipelines\\":[{{\\"parameters\\":{{\\"OutputBlobNameL'
-             'ist\\":[\\"exampleoutput.csv\\"]}},\\"pipelineReference\\":{{\\"type\\":\\"PipelineReference\\",\\"refere'
-             'nceName\\":\\"examplePipeline\\"}}}}],\\"typeProperties\\":{{\\"recurrence\\":{{\\"endTime\\":\\"2018-06-'
-             '16T00:55:13.8441801Z\\",\\"frequency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39'
-             ':13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}}}}" '
-             '--name "{exampleTrigger}"',
+             '--name "{exampleIntegrationRuntime}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Start
+@try_manual
+def step__integrationruntimes_post_integrationruntimes_start(test, rg):
+    test.cmd('az datafactory integration-runtime start '
+             '--factory-name "{exampleFactoryName}" '
+             '--name "{IntegrationRuntimes_2}" '
+             '--resource-group "{rg}"',
              checks=[])
 
 
@@ -240,17 +255,7 @@ def step__integrationruntimes_post_integrationruntimes_synccredentials(test, rg)
 # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Upgrade
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_upgrade(test, rg):
-    test.cmd('az datafactory integration-runtime remove-link '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Upgrade
-@try_manual
-def step__integrationruntimes_post_integrationruntimes_upgrade(test, rg):
-    test.cmd('az datafactory integration-runtime remove-link '
+    test.cmd('az datafactory integration-runtime upgrade '
              '--factory-name "{exampleFactoryName}" '
              '--name "{exampleIntegrationRuntime}" '
              '--resource-group "{rg}"',
@@ -266,6 +271,21 @@ def step__integrationruntimes_patch_integrationruntimes_update(test, rg):
              '--resource-group "{rg}" '
              '--auto-update "Off" '
              '--update-delay-offset "\\"PT3H\\""',
+             checks=[])
+
+
+# EXAMPLE: /Triggers/put/Triggers_Create
+@try_manual
+def step__triggers_put_triggers_create(test, rg):
+    test.cmd('az datafactory trigger create '
+             '--factory-name "{exampleFactoryName}" '
+             '--resource-group "{rg}" '
+             '--properties "{{\\"type\\":\\"ScheduleTrigger\\",\\"pipelines\\":[{{\\"parameters\\":{{\\"OutputBlobNameL'
+             'ist\\":[\\"exampleoutput.csv\\"]}},\\"pipelineReference\\":{{\\"type\\":\\"PipelineReference\\",\\"refere'
+             'nceName\\":\\"examplePipeline\\"}}}}],\\"typeProperties\\":{{\\"recurrence\\":{{\\"endTime\\":\\"2018-06-'
+             '16T00:55:13.8441801Z\\",\\"frequency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39'
+             ':13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}}}}" '
+             '--name "{exampleTrigger}"',
              checks=[])
 
 
@@ -363,36 +383,6 @@ def step__triggers_post_triggers_unsubscribefromevents(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Triggers/delete/Triggers_Delete
-@try_manual
-def step__triggers_delete_triggers_delete(test, rg):
-    test.cmd('az datafactory trigger delete '
-             '--factory-name "{exampleFactoryName}" '
-             '--resource-group "{rg}" '
-             '--name "{exampleTrigger}"',
-             checks=[])
-
-
-# EXAMPLE: /IntegrationRuntimes/get/IntegrationRuntimes_Get
-@try_manual
-def step__integrationruntimes_get_integrationruntimes_get(test, rg):
-    test.cmd('az datafactory integration-runtime show '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Start
-@try_manual
-def step__integrationruntimes_post_integrationruntimes_start(test, rg):
-    test.cmd('az datafactory integration-runtime start '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{IntegrationRuntimes_2}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
 # EXAMPLE: /IntegrationRuntimes/delete/IntegrationRuntimes_Delete
 @try_manual
 def step__integrationruntimes_delete_integrationruntimes_delete(test, rg):
@@ -400,6 +390,16 @@ def step__integrationruntimes_delete_integrationruntimes_delete(test, rg):
              '--factory-name "{exampleFactoryName}" '
              '--name "{exampleIntegrationRuntime}" '
              '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /Triggers/delete/Triggers_Delete
+@try_manual
+def step__triggers_delete_triggers_delete(test, rg):
+    test.cmd('az datafactory trigger delete '
+             '--factory-name "{exampleFactoryName}" '
+             '--resource-group "{rg}" '
+             '--name "{exampleTrigger}"',
              checks=[])
 
 
@@ -421,15 +421,16 @@ def cleanup(test, rg):
 def call_scenario(test, rg):
     setup(test, rg)
     step__factories_put_factories_createorupdate(test, rg)
+    step__factories_get_factories_get(test, rg)
     step__factories_get_factories_list(test, rg)
     step__factories_get_factories_listbyresourcegroup(test, rg)
     step__factories_post_factories_configurefactoryrepo(test, rg)
     step__factories_post_factories_getdataplaneaccess(test, rg)
     step__factories_post_factories_getgithubaccesstoken(test, rg)
     step__factories_patch_factories_update(test, rg)
-    step__factories_get_factories_get(test, rg)
     step__integrationruntimes_put_integrationruntimes_create(test, rg)
     step__integrationruntimes_put_integrationruntimes_create(test, rg)
+    step__integrationruntimes_get_integrationruntimes_get(test, rg)
     step__integrationruntimes_get_integrationruntimes_listbyfactory(test, rg)
     step__integrationruntimes_post_integrationruntimes_createlinkedintegrationruntime(test, rg)
     step__integrationruntimes_post_integrationruntimes_getconnectioninfo(test, rg)
@@ -437,12 +438,13 @@ def call_scenario(test, rg):
     step__integrationruntimes_post_integrationruntimes_getstatus(test, rg)
     step__integrationruntimes_post_integrationruntimes_listauthkeys(test, rg)
     step__integrationruntimes_post_integrationruntimes_regenerateauthkey(test, rg)
-    step__triggers_put_triggers_create(test, rg)
+    step__integrationruntimes_post_integrationruntimes_removelinks(test, rg)
+    step__integrationruntimes_post_integrationruntimes_start(test, rg)
     step__integrationruntimes_post_integrationruntimes_stop(test, rg)
     step__integrationruntimes_post_integrationruntimes_synccredentials(test, rg)
     step__integrationruntimes_post_integrationruntimes_upgrade(test, rg)
-    step__integrationruntimes_post_integrationruntimes_upgrade(test, rg)
     step__integrationruntimes_patch_integrationruntimes_update(test, rg)
+    step__triggers_put_triggers_create(test, rg)
     step__triggers_put_triggers_update(test, rg)
     step__triggers_get_triggers_get(test, rg)
     step__triggers_get_triggers_listbyfactory(test, rg)
@@ -452,10 +454,8 @@ def call_scenario(test, rg):
     step__triggers_post_triggers_stop(test, rg)
     step__triggers_post_triggers_subscribetoevents(test, rg)
     step__triggers_post_triggers_unsubscribefromevents(test, rg)
-    step__triggers_delete_triggers_delete(test, rg)
-    step__integrationruntimes_get_integrationruntimes_get(test, rg)
-    step__integrationruntimes_post_integrationruntimes_start(test, rg)
     step__integrationruntimes_delete_integrationruntimes_delete(test, rg)
+    step__triggers_delete_triggers_delete(test, rg)
     step__factories_delete_factories_delete(test, rg)
     cleanup(test, rg)
 
