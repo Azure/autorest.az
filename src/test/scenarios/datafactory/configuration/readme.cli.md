@@ -40,7 +40,7 @@ cli:
     - name: /Triggers/post/Triggers_Stop
     - name: /Triggers/post/Triggers_SubscribeToEvents
     - name: /Triggers/post/Triggers_UnsubscribeFromEvents
-    - name: /Factories/delete/Factories_Delete
     - name: /IntegrationRuntimes/delete/IntegrationRuntimes_Delete
     - name: /Triggers/delete/Triggers_Delete
+    - name: /Factories/delete/Factories_Delete
 ```
