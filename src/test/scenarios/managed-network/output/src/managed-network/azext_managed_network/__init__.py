@@ -20,8 +20,8 @@ class ManagedNetworkManagementClientCommandsLoader(AzCommandsLoader):
         managed_network_custom = CliCommandType(
             operations_tmpl='azext_managed_network.custom#{}',
             client_factory=cf_managed_network)
-        super(ManagedNetworkManagementClientCommandsLoader, self).__init__(cli_ctx=cli_ctx,
-                                                                           custom_command_type=managed_network_custom)
+        parent = super(ManagedNetworkManagementClientCommandsLoader, self)
+        parent.__init__(cli_ctx=cli_ctx, custom_command_type=managed_network_custom)
 
     def load_command_table(self, args):
         from azext_managed_network.generated.commands import load_command_table

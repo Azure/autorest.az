@@ -11,8 +11,6 @@ export function GenerateAzureCliValidators(model: CodeModelAz) : string[] {
     var output: string[] = header.getLines();
 
     output.push("");
-    output.push("");
-    output.push("");
  
     return output;
 }

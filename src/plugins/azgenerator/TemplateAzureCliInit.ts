@@ -5,6 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
+import { ToMultiLine } from "../../utils/helper"
 
 export function GenerateAzureCliInit(model: CodeModelAz) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -22,9 +23,8 @@ export function GenerateAzureCliInit(model: CodeModelAz) : string[] {
     output.push("        " + model.Extension_NameUnderscored + "_custom = CliCommandType(");
     output.push("            operations_tmpl='azext_" + model.Extension_NameUnderscored + ".custom#{}',");
     output.push("            client_factory=cf_" + model.Extension_NameUnderscored + ")");
-    let pfx = "        super(" + model.Extension_NameClass + "CommandsLoader, self).__init__(";
-    output.push(pfx + "cli_ctx=cli_ctx,");
-    output.push(" ".repeat(pfx.length) + "custom_command_type=" + model.Extension_NameUnderscored + "_custom)");
+    output.push(`        parent = super(${model.Extension_NameClass}CommandsLoader, self)`);
+    ToMultiLine(`        parent.__init__(cli_ctx=cli_ctx, custom_command_type=${model.Extension_NameUnderscored}_custom)`, output);
     output.push("");
     output.push("    def load_command_table(self, args):");
     output.push("        from azext_" + model.Extension_NameUnderscored + ".generated.commands import load_command_table");
