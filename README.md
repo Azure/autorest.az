@@ -37,6 +37,7 @@ require:
 pipeline-model: v3
 
 modelerfour:
+    lenient-model-deduplication: true
     group-parameters: true
     flatten-models: true
     flatten-payloads: true

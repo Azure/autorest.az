@@ -26,11 +26,11 @@ class DFAZManagementClient(object):
     """The DFAZ Client.
 
     :ivar factory: FactoryOperations operations
-    :vartype factory: azure.mgmt.datafactory.aio.operations_async.FactoryOperations
+    :vartype factory: dfaz_management_client.aio.operations_async.FactoryOperations
     :ivar trigger: TriggerOperations operations
-    :vartype trigger: azure.mgmt.datafactory.aio.operations_async.TriggerOperations
+    :vartype trigger: dfaz_management_client.aio.operations_async.TriggerOperations
     :ivar integration_runtime: IntegrationRuntimeOperations operations
-    :vartype integration_runtime: azure.mgmt.datafactory.aio.operations_async.IntegrationRuntimeOperations
+    :vartype integration_runtime: dfaz_management_client.aio.operations_async.IntegrationRuntimeOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The subscription identifier.

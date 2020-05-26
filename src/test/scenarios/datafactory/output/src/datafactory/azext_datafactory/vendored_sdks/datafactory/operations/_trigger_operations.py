@@ -32,7 +32,7 @@ class TriggerOperations(object):
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~azure.mgmt.datafactory.models
+    :type models: ~dfaz_management_client.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -61,8 +61,8 @@ class TriggerOperations(object):
         :param factory_name: The factory name.
         :type factory_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of TriggerListResponse or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.datafactory.models.TriggerListResponse]
+        :return: An iterator like instance of either TriggerListResponse or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~dfaz_management_client.models.TriggerListResponse]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.TriggerListResponse"]
@@ -141,8 +141,8 @@ class TriggerOperations(object):
          triggers.
         :type parent_trigger_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: TriggerQueryResponse or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.TriggerQueryResponse
+        :return: TriggerQueryResponse, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.TriggerQueryResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.TriggerQueryResponse"]
@@ -187,7 +187,7 @@ class TriggerOperations(object):
         deserialized = self._deserialize('TriggerQueryResponse', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     query_by_factory.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/querytriggers'}  # type: ignore
@@ -211,13 +211,13 @@ class TriggerOperations(object):
         :param trigger_name: The trigger name.
         :type trigger_name: str
         :param properties: Properties of the trigger.
-        :type properties: ~azure.mgmt.datafactory.models.Trigger
+        :type properties: ~dfaz_management_client.models.Trigger
         :param if_match: ETag of the trigger entity.  Should only be specified for update, for which it
          should match existing entity or can be * for unconditional update.
         :type if_match: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: TriggerResource or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.TriggerResource
+        :return: TriggerResource, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.TriggerResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.TriggerResource"]
@@ -265,7 +265,7 @@ class TriggerOperations(object):
         deserialized = self._deserialize('TriggerResource', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}'}  # type: ignore
@@ -291,8 +291,8 @@ class TriggerOperations(object):
          matches the existing entity tag, or if * was provided, then no content will be returned.
         :type if_none_match: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: TriggerResource or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.TriggerResource or None
+        :return: TriggerResource, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.TriggerResource or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.TriggerResource"]
@@ -334,7 +334,7 @@ class TriggerOperations(object):
             deserialized = self._deserialize('TriggerResource', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}'}  # type: ignore
@@ -356,7 +356,7 @@ class TriggerOperations(object):
         :param trigger_name: The trigger name.
         :type trigger_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None or the result of cls(response)
+        :return: None, or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -392,7 +392,7 @@ class TriggerOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}'}  # type: ignore
 
@@ -441,7 +441,7 @@ class TriggerOperations(object):
             deserialized = self._deserialize('TriggerSubscriptionOperationStatus', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _subscribe_to_event_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/subscribeToEvents'}  # type: ignore
@@ -467,8 +467,8 @@ class TriggerOperations(object):
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns TriggerSubscriptionOperationStatus
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.datafactory.models.TriggerSubscriptionOperationStatus]
+        :return: An instance of LROPoller that returns either TriggerSubscriptionOperationStatus or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~dfaz_management_client.models.TriggerSubscriptionOperationStatus]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
@@ -484,6 +484,9 @@ class TriggerOperations(object):
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('TriggerSubscriptionOperationStatus', pipeline_response)
@@ -515,8 +518,8 @@ class TriggerOperations(object):
         :param trigger_name: The trigger name.
         :type trigger_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: TriggerSubscriptionOperationStatus or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.TriggerSubscriptionOperationStatus
+        :return: TriggerSubscriptionOperationStatus, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.TriggerSubscriptionOperationStatus
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.TriggerSubscriptionOperationStatus"]
@@ -554,7 +557,7 @@ class TriggerOperations(object):
         deserialized = self._deserialize('TriggerSubscriptionOperationStatus', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_event_subscription_status.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/getEventSubscriptionStatus'}  # type: ignore
@@ -604,7 +607,7 @@ class TriggerOperations(object):
             deserialized = self._deserialize('TriggerSubscriptionOperationStatus', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _unsubscribe_from_event_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/unsubscribeFromEvents'}  # type: ignore
@@ -630,8 +633,8 @@ class TriggerOperations(object):
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns TriggerSubscriptionOperationStatus
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.datafactory.models.TriggerSubscriptionOperationStatus]
+        :return: An instance of LROPoller that returns either TriggerSubscriptionOperationStatus or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~dfaz_management_client.models.TriggerSubscriptionOperationStatus]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
@@ -647,6 +650,9 @@ class TriggerOperations(object):
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('TriggerSubscriptionOperationStatus', pipeline_response)
@@ -701,7 +707,7 @@ class TriggerOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     _start_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/start'}  # type: ignore
 
@@ -726,7 +732,7 @@ class TriggerOperations(object):
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns None
+        :return: An instance of LROPoller that returns either None or the result of cls(response)
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -743,6 +749,9 @@ class TriggerOperations(object):
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -794,7 +803,7 @@ class TriggerOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     _stop_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/stop'}  # type: ignore
 
@@ -819,7 +828,7 @@ class TriggerOperations(object):
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns None
+        :return: An instance of LROPoller that returns either None or the result of cls(response)
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -836,6 +845,9 @@ class TriggerOperations(object):
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             if cls:
