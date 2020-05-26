@@ -940,7 +940,11 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_IdPart(): string {
-        return this.MethodParameter.language['az']['id_part'];
+        return this.Parameter_IdPart(this.MethodParameter)
+    }
+
+    public Parameter_IdPart(param: Parameter): string {
+        return param.language?.['az']?.['id_part'];
     }
 
     public get MethodParameter_IsArray(): boolean {
@@ -1236,10 +1240,14 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_EnumValues(): string[] {
-        let mtype = this.MethodParameter.schema.type;
+        return this.Parameter_EnumValues(this.MethodParameter);
+    }
+
+    public Parameter_EnumValues(param: Parameter = this.MethodParameter): string[] {
+        let mtype = param.schema.type;
         if (mtype == SchemaType.Choice || mtype == SchemaType.SealedChoice) {
             var enumArray = [];
-            let schema = this.MethodParameter.schema;
+            let schema = param.schema;
             for (var item of schema['choices']) {
                 enumArray.push(item['value']);
             }

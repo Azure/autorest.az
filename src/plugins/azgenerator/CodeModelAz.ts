@@ -154,6 +154,8 @@ export interface CodeModelAz
     Parameter_Description(Parameter): string;
     Parameter_DefaultValue(Parameter): any | undefined;
     Parameter_IsSimpleArray(Parameter): boolean;
+    Parameter_EnumValues(Parameter): string[];
+    Parameter_IdPart(Parameter): string;
     Schema_Description(Schema): string;
 
     GetModuleOperationName(): string;
