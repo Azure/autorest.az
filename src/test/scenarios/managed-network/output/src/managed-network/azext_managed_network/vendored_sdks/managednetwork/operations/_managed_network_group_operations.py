@@ -64,7 +64,7 @@ class ManagedNetworkGroupOperations(object):
         :param managed_network_group_name: The name of the Managed Network Group.
         :type managed_network_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagedNetworkGroup or the result of cls(response)
+        :return: ManagedNetworkGroup, or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetworkGroup
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -104,7 +104,7 @@ class ManagedNetworkGroupOperations(object):
         deserialized = self._deserialize('ManagedNetworkGroup', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkGroups/{managedNetworkGroupName}'}  # type: ignore
@@ -171,7 +171,7 @@ class ManagedNetworkGroupOperations(object):
             deserialized = self._deserialize('ManagedNetworkGroup', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkGroups/{managedNetworkGroupName}'}  # type: ignore
@@ -212,7 +212,7 @@ class ManagedNetworkGroupOperations(object):
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns ManagedNetworkGroup
+        :return: An instance of LROPoller that returns either ManagedNetworkGroup or the result of cls(response)
         :rtype: ~azure.core.polling.LROPoller[~managed_network_management_client.models.ManagedNetworkGroup]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -234,6 +234,9 @@ class ManagedNetworkGroupOperations(object):
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ManagedNetworkGroup', pipeline_response)
@@ -289,7 +292,7 @@ class ManagedNetworkGroupOperations(object):
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkGroups/{managedNetworkGroupName}'}  # type: ignore
 
@@ -314,7 +317,7 @@ class ManagedNetworkGroupOperations(object):
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns None
+        :return: An instance of LROPoller that returns either None or the result of cls(response)
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -331,6 +334,9 @@ class ManagedNetworkGroupOperations(object):
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -364,7 +370,7 @@ class ManagedNetworkGroupOperations(object):
      a skiptoken parameter that specifies a starting point to use for subsequent calls.
         :type skiptoken: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of ManagedNetworkGroupListResult or the result of cls(response)
+        :return: An iterator like instance of either ManagedNetworkGroupListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~managed_network_management_client.models.ManagedNetworkGroupListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

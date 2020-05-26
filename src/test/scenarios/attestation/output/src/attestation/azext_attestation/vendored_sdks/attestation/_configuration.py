@@ -11,14 +11,13 @@ from typing import TYPE_CHECKING
 from azure.core.configuration import Configuration
 from azure.core.pipeline import policies
 
-from ._version import VERSION
-
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any
 
     from azure.core.credentials import TokenCredential
 
+VERSION = "unknown"
 
 class AttestationManagementClientConfiguration(Configuration):
     """Configuration for AttestationManagementClient.
@@ -50,7 +49,7 @@ class AttestationManagementClientConfiguration(Configuration):
         self.api_version = "2018-09-01-preview"
         self.credential_scopes = ['https://management.azure.com/.default']
         self.credential_scopes.extend(kwargs.pop('credential_scopes', []))
-        kwargs.setdefault('sdk_moniker', 'mgmt-attestation/{}'.format(VERSION))
+        kwargs.setdefault('sdk_moniker', 'attestationmanagementclient/{}'.format(VERSION))
         self._configure(**kwargs)
 
     def _configure(

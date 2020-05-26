@@ -6,10 +6,14 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from typing import Any, Optional
+from typing import Any, Optional, TYPE_CHECKING
 
 from azure.mgmt.core import AsyncARMPipelineClient
 from msrest import Deserializer, Serializer
+
+if TYPE_CHECKING:
+    # pylint: disable=unused-import,ungrouped-imports
+    from azure.core.credentials_async import AsyncTokenCredential
 
 from ._configuration_async import DFAZManagementClientConfiguration
 from .operations_async import FactoryOperations
@@ -22,11 +26,11 @@ class DFAZManagementClient(object):
     """The DFAZ Client.
 
     :ivar factory: FactoryOperations operations
-    :vartype factory: azure.mgmt.datafactory.aio.operations_async.FactoryOperations
+    :vartype factory: dfaz_management_client.aio.operations_async.FactoryOperations
     :ivar trigger: TriggerOperations operations
-    :vartype trigger: azure.mgmt.datafactory.aio.operations_async.TriggerOperations
+    :vartype trigger: dfaz_management_client.aio.operations_async.TriggerOperations
     :ivar integration_runtime: IntegrationRuntimeOperations operations
-    :vartype integration_runtime: azure.mgmt.datafactory.aio.operations_async.IntegrationRuntimeOperations
+    :vartype integration_runtime: dfaz_management_client.aio.operations_async.IntegrationRuntimeOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The subscription identifier.

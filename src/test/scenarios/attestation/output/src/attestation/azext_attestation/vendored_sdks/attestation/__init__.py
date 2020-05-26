@@ -7,9 +7,6 @@
 # --------------------------------------------------------------------------
 
 from ._attestation_management_client import AttestationManagementClient
-from ._version import VERSION
-
-__version__ = VERSION
 __all__ = ['AttestationManagementClient']
 
 try:

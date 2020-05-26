@@ -18,7 +18,7 @@ class AccessPolicyResponse(msrest.serialization.Model):
     """Get Data Plane read only token response definition.
 
     :param policy: The user access policy.
-    :type policy: ~azure.mgmt.datafactory.models.UserAccessPolicy
+    :type policy: ~dfaz_management_client.models.UserAccessPolicy
     :param access_token: Data Plane read only access token.
     :type access_token: str
     :param data_plane_url: Data Plane service base URL.
@@ -64,7 +64,7 @@ class Trigger(msrest.serialization.Model):
     :type description: str
     :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
      called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
-    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     """
@@ -121,11 +121,11 @@ class MultiplePipelineTrigger(Trigger):
     :type description: str
     :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
      called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
-    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     :param pipelines: Pipelines that need to be started.
-    :type pipelines: list[~azure.mgmt.datafactory.models.TriggerPipelineReference]
+    :type pipelines: list[~dfaz_management_client.models.TriggerPipelineReference]
     """
 
     _validation = {
@@ -176,11 +176,11 @@ class BlobEventsTrigger(MultiplePipelineTrigger):
     :type description: str
     :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
      called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
-    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     :param pipelines: Pipelines that need to be started.
-    :type pipelines: list[~azure.mgmt.datafactory.models.TriggerPipelineReference]
+    :type pipelines: list[~dfaz_management_client.models.TriggerPipelineReference]
     :param blob_path_begins_with: The blob path must begin with the pattern provided for trigger to
      fire. For example, '/records/blobs/december/' will only fire the trigger for blobs in the
      december folder under the records container. At least one of these must be provided:
@@ -193,7 +193,7 @@ class BlobEventsTrigger(MultiplePipelineTrigger):
     :param ignore_empty_blobs: If set to true, blobs with zero bytes will be ignored.
     :type ignore_empty_blobs: bool
     :param events: Required. The type of events that cause this trigger to fire.
-    :type events: list[str or ~azure.mgmt.datafactory.models.BlobEventTypes]
+    :type events: list[str or ~dfaz_management_client.models.BlobEventTypes]
     :param scope: Required. The ARM resource ID of the Storage Account.
     :type scope: str
     """
@@ -258,18 +258,18 @@ class BlobTrigger(MultiplePipelineTrigger):
     :type description: str
     :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
      called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
-    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     :param pipelines: Pipelines that need to be started.
-    :type pipelines: list[~azure.mgmt.datafactory.models.TriggerPipelineReference]
+    :type pipelines: list[~dfaz_management_client.models.TriggerPipelineReference]
     :param folder_path: Required. The path of the container/folder that will trigger the pipeline.
     :type folder_path: str
     :param max_concurrency: Required. The max number of parallel files to handle when it is
      triggered.
     :type max_concurrency: int
     :param linked_service: Required. The Azure Storage linked service reference.
-    :type linked_service: ~azure.mgmt.datafactory.models.LinkedServiceReference
+    :type linked_service: ~dfaz_management_client.models.LinkedServiceReference
     """
 
     _validation = {
@@ -327,14 +327,14 @@ class ChainingTrigger(Trigger):
     :type description: str
     :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
      called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
-    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     :param pipeline: Required. Pipeline for which runs are created when all upstream pipelines
      complete successfully.
-    :type pipeline: ~azure.mgmt.datafactory.models.TriggerPipelineReference
+    :type pipeline: ~dfaz_management_client.models.TriggerPipelineReference
     :param depends_on: Required. Upstream Pipelines.
-    :type depends_on: list[~azure.mgmt.datafactory.models.PipelineReference]
+    :type depends_on: list[~dfaz_management_client.models.PipelineReference]
     :param run_dimension: Required. Run Dimension property that needs to be emitted by upstream
      pipelines.
     :type run_dimension: str
@@ -389,7 +389,7 @@ class CloudError(msrest.serialization.Model):
     :param target: Property name/path in request associated with error.
     :type target: str
     :param details: Array with additional error details.
-    :type details: list[~azure.mgmt.datafactory.models.CloudError]
+    :type details: list[~dfaz_management_client.models.CloudError]
     """
 
     _validation = {
@@ -464,7 +464,7 @@ class CmdkeySetup(CustomSetupBase):
     :param user_name: Required. The user name of data source access.
     :type user_name: object
     :param password: Required. The password of data source access.
-    :type password: ~azure.mgmt.datafactory.models.SecretBase
+    :type password: ~dfaz_management_client.models.SecretBase
     """
 
     _validation = {
@@ -506,7 +506,7 @@ class ComponentSetup(CustomSetupBase):
     :param component_name: Required. The name of the 3rd party component.
     :type component_name: str
     :param license_key: The license key to activate the component.
-    :type license_key: ~azure.mgmt.datafactory.models.SecretBase
+    :type license_key: ~dfaz_management_client.models.SecretBase
     """
 
     _validation = {
@@ -609,7 +609,7 @@ class EntityReference(msrest.serialization.Model):
 
     :param type: The type of this referenced entity. Possible values include:
      "IntegrationRuntimeReference", "LinkedServiceReference".
-    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeEntityReferenceType
+    :type type: str or ~dfaz_management_client.models.IntegrationRuntimeEntityReferenceType
     :param reference_name: The name of this referenced entity.
     :type reference_name: str
     """
@@ -741,7 +741,7 @@ class Factory(Resource):
      collection.
     :type additional_properties: dict[str, object]
     :param identity: Managed service identity of the factory.
-    :type identity: ~azure.mgmt.datafactory.models.FactoryIdentity
+    :type identity: ~dfaz_management_client.models.FactoryIdentity
     :ivar provisioning_state: Factory provisioning state, example Succeeded.
     :vartype provisioning_state: str
     :ivar create_time: Time the factory was created in ISO8601 format.
@@ -749,9 +749,9 @@ class Factory(Resource):
     :ivar version: Version of the factory.
     :vartype version: str
     :param repo_configuration: Git repo information of the factory.
-    :type repo_configuration: ~azure.mgmt.datafactory.models.FactoryRepoConfiguration
+    :type repo_configuration: ~dfaz_management_client.models.FactoryRepoConfiguration
     :param fake_identity: This is only for az test.
-    :type fake_identity: ~azure.mgmt.datafactory.models.FakeFactoryIdentity
+    :type fake_identity: ~dfaz_management_client.models.FakeFactoryIdentity
     :param zones: This is only for az test.
     :type zones: list[str]
     """
@@ -968,7 +968,7 @@ class FactoryListResponse(msrest.serialization.Model):
     All required parameters must be populated in order to send to Azure.
 
     :param value: Required. List of factories.
-    :type value: list[~azure.mgmt.datafactory.models.Factory]
+    :type value: list[~dfaz_management_client.models.Factory]
     :param next_link: The link to the next page of results, if any remaining results exist.
     :type next_link: str
     """
@@ -1000,7 +1000,7 @@ class FactoryRepoUpdate(msrest.serialization.Model):
     :param factory_resource_id: The factory resource id.
     :type factory_resource_id: str
     :param repo_configuration: Git repo information of the factory.
-    :type repo_configuration: ~azure.mgmt.datafactory.models.FactoryRepoConfiguration
+    :type repo_configuration: ~dfaz_management_client.models.FactoryRepoConfiguration
     """
 
     _attribute_map = {
@@ -1026,7 +1026,7 @@ class FactoryUpdateParameters(msrest.serialization.Model):
     :param tags: A set of tags. The resource tags.
     :type tags: dict[str, str]
     :param identity: Managed service identity of the factory.
-    :type identity: ~azure.mgmt.datafactory.models.FactoryIdentity
+    :type identity: ~dfaz_management_client.models.FactoryIdentity
     """
 
     _attribute_map = {
@@ -1211,7 +1211,7 @@ class IntegrationRuntime(msrest.serialization.Model):
     :type additional_properties: dict[str, object]
     :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
      include: "Managed", "SelfHosted".
-    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :type type: str or ~dfaz_management_client.models.IntegrationRuntimeType
     :param description: Integration runtime description.
     :type description: str
     """
@@ -1287,9 +1287,9 @@ class IntegrationRuntimeComputeProperties(msrest.serialization.Model):
      integration runtime.
     :type max_parallel_executions_per_node: int
     :param data_flow_properties: Data flow properties for managed integration runtime.
-    :type data_flow_properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeDataFlowProperties
+    :type data_flow_properties: ~dfaz_management_client.models.IntegrationRuntimeDataFlowProperties
     :param v_net_properties: VNet properties for managed integration runtime.
-    :type v_net_properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeVNetProperties
+    :type v_net_properties: ~dfaz_management_client.models.IntegrationRuntimeVNetProperties
     """
 
     _validation = {
@@ -1396,7 +1396,7 @@ class IntegrationRuntimeCustomSetupScriptProperties(msrest.serialization.Model):
      script.
     :type blob_container_uri: str
     :param sas_token: The SAS token of the Azure blob container.
-    :type sas_token: ~azure.mgmt.datafactory.models.SecureString
+    :type sas_token: ~dfaz_management_client.models.SecureString
     """
 
     _attribute_map = {
@@ -1424,7 +1424,7 @@ class IntegrationRuntimeDataFlowProperties(msrest.serialization.Model):
     :type additional_properties: dict[str, object]
     :param compute_type: Compute type of the cluster which will execute data flow job. Possible
      values include: "General", "MemoryOptimized", "ComputeOptimized".
-    :type compute_type: str or ~azure.mgmt.datafactory.models.DataFlowComputeType
+    :type compute_type: str or ~dfaz_management_client.models.DataFlowComputeType
     :param core_count: Core count of the cluster which will execute data flow job. Supported values
      are: 8, 16, 32, 48, 80, 144 and 272.
     :type core_count: int
@@ -1464,9 +1464,9 @@ class IntegrationRuntimeDataProxyProperties(msrest.serialization.Model):
     """Data proxy properties for a managed dedicated integration runtime.
 
     :param connect_via: The self-hosted integration runtime reference.
-    :type connect_via: ~azure.mgmt.datafactory.models.EntityReference
+    :type connect_via: ~dfaz_management_client.models.EntityReference
     :param staging_linked_service: The staging linked service reference.
-    :type staging_linked_service: ~azure.mgmt.datafactory.models.EntityReference
+    :type staging_linked_service: ~dfaz_management_client.models.EntityReference
     :param path: The path to contain the staged data in the Blob storage.
     :type path: str
     """
@@ -1497,7 +1497,7 @@ class IntegrationRuntimeListResponse(msrest.serialization.Model):
     All required parameters must be populated in order to send to Azure.
 
     :param value: Required. List of integration runtimes.
-    :type value: list[~azure.mgmt.datafactory.models.IntegrationRuntimeResource]
+    :type value: list[~dfaz_management_client.models.IntegrationRuntimeResource]
     :param next_link: The link to the next page of results, if any remaining results exist.
     :type next_link: str
     """
@@ -1529,7 +1529,7 @@ class IntegrationRuntimeMonitoringData(msrest.serialization.Model):
     :param name: Integration runtime name.
     :type name: str
     :param nodes: Integration runtime node monitoring data.
-    :type nodes: list[~azure.mgmt.datafactory.models.IntegrationRuntimeNodeMonitoringData]
+    :type nodes: list[~dfaz_management_client.models.IntegrationRuntimeNodeMonitoringData]
     """
 
     _attribute_map = {
@@ -1688,7 +1688,7 @@ class IntegrationRuntimeRegenerateKeyParameters(msrest.serialization.Model):
 
     :param key_name: The name of the authentication key to regenerate. Possible values include:
      "authKey1", "authKey2".
-    :type key_name: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeAuthKeyName
+    :type key_name: str or ~dfaz_management_client.models.IntegrationRuntimeAuthKeyName
     """
 
     _attribute_map = {
@@ -1761,7 +1761,7 @@ class IntegrationRuntimeResource(SubResource):
     :ivar etag: Etag identifies change in the resource.
     :vartype etag: str
     :param properties: Required. Integration runtime properties.
-    :type properties: ~azure.mgmt.datafactory.models.IntegrationRuntime
+    :type properties: ~dfaz_management_client.models.IntegrationRuntime
     """
 
     _validation = {
@@ -1802,12 +1802,12 @@ class IntegrationRuntimeSsisCatalogInfo(msrest.serialization.Model):
     :type catalog_admin_user_name: str
     :param catalog_admin_password: The password of the administrator user account of the catalog
      database.
-    :type catalog_admin_password: ~azure.mgmt.datafactory.models.SecureString
+    :type catalog_admin_password: ~dfaz_management_client.models.SecureString
     :param catalog_pricing_tier: The pricing tier for the catalog database. The valid values could
      be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. Possible values
      include: "Basic", "Standard", "Premium", "PremiumRS".
     :type catalog_pricing_tier: str or
-     ~azure.mgmt.datafactory.models.IntegrationRuntimeSsisCatalogPricingTier
+     ~dfaz_management_client.models.IntegrationRuntimeSsisCatalogPricingTier
     """
 
     _validation = {
@@ -1847,26 +1847,26 @@ class IntegrationRuntimeSsisProperties(msrest.serialization.Model):
      collection.
     :type additional_properties: dict[str, object]
     :param catalog_info: Catalog information for managed dedicated integration runtime.
-    :type catalog_info: ~azure.mgmt.datafactory.models.IntegrationRuntimeSsisCatalogInfo
+    :type catalog_info: ~dfaz_management_client.models.IntegrationRuntimeSsisCatalogInfo
     :param license_type: License type for bringing your own license scenario. Possible values
      include: "BasePrice", "LicenseIncluded".
-    :type license_type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeLicenseType
+    :type license_type: str or ~dfaz_management_client.models.IntegrationRuntimeLicenseType
     :param custom_setup_script_properties: Custom setup script properties for a managed dedicated
      integration runtime.
     :type custom_setup_script_properties:
-     ~azure.mgmt.datafactory.models.IntegrationRuntimeCustomSetupScriptProperties
+     ~dfaz_management_client.models.IntegrationRuntimeCustomSetupScriptProperties
     :param data_proxy_properties: Data proxy properties for a managed dedicated integration
      runtime.
     :type data_proxy_properties:
-     ~azure.mgmt.datafactory.models.IntegrationRuntimeDataProxyProperties
+     ~dfaz_management_client.models.IntegrationRuntimeDataProxyProperties
     :param edition: The edition for the SSIS Integration Runtime. Possible values include:
      "Standard", "Enterprise".
-    :type edition: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeEdition
+    :type edition: str or ~dfaz_management_client.models.IntegrationRuntimeEdition
     :param express_custom_setup_properties: Custom setup without script properties for a SSIS
      integration runtime.
-    :type express_custom_setup_properties: list[~azure.mgmt.datafactory.models.CustomSetupBase]
+    :type express_custom_setup_properties: list[~dfaz_management_client.models.CustomSetupBase]
     :param package_stores: Package stores for the SSIS Integration Runtime.
-    :type package_stores: list[~azure.mgmt.datafactory.models.PackageStore]
+    :type package_stores: list[~dfaz_management_client.models.PackageStore]
     """
 
     _attribute_map = {
@@ -1919,13 +1919,13 @@ class IntegrationRuntimeStatus(msrest.serialization.Model):
     :type additional_properties: dict[str, object]
     :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
      include: "Managed", "SelfHosted".
-    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :type type: str or ~dfaz_management_client.models.IntegrationRuntimeType
     :ivar data_factory_name: The data factory name which the integration runtime belong to.
     :vartype data_factory_name: str
     :ivar state: The state of integration runtime. Possible values include: "Initial", "Stopped",
      "Started", "Starting", "Stopping", "NeedRegistration", "Online", "Limited", "Offline",
      "AccessDenied".
-    :vartype state: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeState
+    :vartype state: str or ~dfaz_management_client.models.IntegrationRuntimeState
     """
 
     _validation = {
@@ -1964,7 +1964,7 @@ class IntegrationRuntimeStatusListResponse(msrest.serialization.Model):
     All required parameters must be populated in order to send to Azure.
 
     :param value: Required. List of integration runtime status.
-    :type value: list[~azure.mgmt.datafactory.models.IntegrationRuntimeStatusResponse]
+    :type value: list[~dfaz_management_client.models.IntegrationRuntimeStatusResponse]
     :param next_link: The link to the next page of results, if any remaining results exist.
     :type next_link: str
     """
@@ -2000,7 +2000,7 @@ class IntegrationRuntimeStatusResponse(msrest.serialization.Model):
     :ivar name: The integration runtime name.
     :vartype name: str
     :param properties: Required. Integration runtime properties.
-    :type properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeStatus
+    :type properties: ~dfaz_management_client.models.IntegrationRuntimeStatus
     """
 
     _validation = {
@@ -2151,7 +2151,7 @@ class LinkedIntegrationRuntimeKeyAuthorization(LinkedIntegrationRuntimeType):
      sharing.Constant filled by server.
     :type authorization_type: str
     :param key: Required. The key used for authorization.
-    :type key: ~azure.mgmt.datafactory.models.SecureString
+    :type key: ~dfaz_management_client.models.SecureString
     """
 
     _validation = {
@@ -2287,17 +2287,17 @@ class ManagedIntegrationRuntime(IntegrationRuntime):
     :type additional_properties: dict[str, object]
     :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
      include: "Managed", "SelfHosted".
-    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :type type: str or ~dfaz_management_client.models.IntegrationRuntimeType
     :param description: Integration runtime description.
     :type description: str
     :ivar state: Integration runtime state, only valid for managed dedicated integration runtime.
      Possible values include: "Initial", "Stopped", "Started", "Starting", "Stopping",
      "NeedRegistration", "Online", "Limited", "Offline", "AccessDenied".
-    :vartype state: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeState
+    :vartype state: str or ~dfaz_management_client.models.IntegrationRuntimeState
     :param compute_properties: The compute resource for managed integration runtime.
-    :type compute_properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeComputeProperties
+    :type compute_properties: ~dfaz_management_client.models.IntegrationRuntimeComputeProperties
     :param ssis_properties: SSIS properties for managed integration runtime.
-    :type ssis_properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeSsisProperties
+    :type ssis_properties: ~dfaz_management_client.models.IntegrationRuntimeSsisProperties
     """
 
     _validation = {
@@ -2389,9 +2389,9 @@ class ManagedIntegrationRuntimeNode(msrest.serialization.Model):
     :vartype node_id: str
     :ivar status: The managed integration runtime node status. Possible values include: "Starting",
      "Available", "Recycling", "Unavailable".
-    :vartype status: str or ~azure.mgmt.datafactory.models.ManagedIntegrationRuntimeNodeStatus
+    :vartype status: str or ~dfaz_management_client.models.ManagedIntegrationRuntimeNodeStatus
     :param errors: The errors that occurred on this integration runtime node.
-    :type errors: list[~azure.mgmt.datafactory.models.ManagedIntegrationRuntimeError]
+    :type errors: list[~dfaz_management_client.models.ManagedIntegrationRuntimeError]
     """
 
     _validation = {
@@ -2489,22 +2489,22 @@ class ManagedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
     :type additional_properties: dict[str, object]
     :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
      include: "Managed", "SelfHosted".
-    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :type type: str or ~dfaz_management_client.models.IntegrationRuntimeType
     :ivar data_factory_name: The data factory name which the integration runtime belong to.
     :vartype data_factory_name: str
     :ivar state: The state of integration runtime. Possible values include: "Initial", "Stopped",
      "Started", "Starting", "Stopping", "NeedRegistration", "Online", "Limited", "Offline",
      "AccessDenied".
-    :vartype state: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeState
+    :vartype state: str or ~dfaz_management_client.models.IntegrationRuntimeState
     :ivar create_time: The time at which the integration runtime was created, in ISO8601 format.
     :vartype create_time: ~datetime.datetime
     :ivar nodes: The list of nodes for managed integration runtime.
-    :vartype nodes: list[~azure.mgmt.datafactory.models.ManagedIntegrationRuntimeNode]
+    :vartype nodes: list[~dfaz_management_client.models.ManagedIntegrationRuntimeNode]
     :ivar other_errors: The errors that occurred on this integration runtime.
-    :vartype other_errors: list[~azure.mgmt.datafactory.models.ManagedIntegrationRuntimeError]
+    :vartype other_errors: list[~dfaz_management_client.models.ManagedIntegrationRuntimeError]
     :ivar last_operation: The last operation result that occurred on this integration runtime.
     :vartype last_operation:
-     ~azure.mgmt.datafactory.models.ManagedIntegrationRuntimeOperationResult
+     ~dfaz_management_client.models.ManagedIntegrationRuntimeOperationResult
     """
 
     _validation = {
@@ -2550,7 +2550,7 @@ class PackageStore(msrest.serialization.Model):
     :param name: Required. The name of the package store.
     :type name: str
     :param package_store_linked_service: Required. The package store linked service reference.
-    :type package_store_linked_service: ~azure.mgmt.datafactory.models.EntityReference
+    :type package_store_linked_service: ~dfaz_management_client.models.EntityReference
     """
 
     _validation = {
@@ -2626,11 +2626,11 @@ class RecurrenceSchedule(msrest.serialization.Model):
     :param hours: The hours.
     :type hours: list[int]
     :param week_days: The days of the week.
-    :type week_days: list[str or ~azure.mgmt.datafactory.models.DaysOfWeek]
+    :type week_days: list[str or ~dfaz_management_client.models.DaysOfWeek]
     :param month_days: The month days.
     :type month_days: list[int]
     :param monthly_occurrences: The monthly occurrences.
-    :type monthly_occurrences: list[~azure.mgmt.datafactory.models.RecurrenceScheduleOccurrence]
+    :type monthly_occurrences: list[~dfaz_management_client.models.RecurrenceScheduleOccurrence]
     """
 
     _attribute_map = {
@@ -2670,7 +2670,7 @@ class RecurrenceScheduleOccurrence(msrest.serialization.Model):
     :type additional_properties: dict[str, object]
     :param day: The day of the week. Possible values include: "Sunday", "Monday", "Tuesday",
      "Wednesday", "Thursday", "Friday", "Saturday".
-    :type day: str or ~azure.mgmt.datafactory.models.DayOfWeek
+    :type day: str or ~dfaz_management_client.models.DayOfWeek
     :param occurrence: The occurrence.
     :type occurrence: int
     """
@@ -2711,7 +2711,7 @@ class RerunTumblingWindowTrigger(Trigger):
     :type description: str
     :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
      called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
-    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     :param parent_trigger: Required. The parent trigger reference.
@@ -2815,13 +2815,13 @@ class ScheduleTrigger(MultiplePipelineTrigger):
     :type description: str
     :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
      called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
-    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     :param pipelines: Pipelines that need to be started.
-    :type pipelines: list[~azure.mgmt.datafactory.models.TriggerPipelineReference]
+    :type pipelines: list[~dfaz_management_client.models.TriggerPipelineReference]
     :param recurrence: Required. Recurrence schedule configuration.
-    :type recurrence: ~azure.mgmt.datafactory.models.ScheduleTriggerRecurrence
+    :type recurrence: ~dfaz_management_client.models.ScheduleTriggerRecurrence
     """
 
     _validation = {
@@ -2863,7 +2863,7 @@ class ScheduleTriggerRecurrence(msrest.serialization.Model):
     :type additional_properties: dict[str, object]
     :param frequency: The frequency. Possible values include: "NotSpecified", "Minute", "Hour",
      "Day", "Week", "Month", "Year".
-    :type frequency: str or ~azure.mgmt.datafactory.models.RecurrenceFrequency
+    :type frequency: str or ~dfaz_management_client.models.RecurrenceFrequency
     :param interval: The interval.
     :type interval: int
     :param start_time: The start time.
@@ -2873,7 +2873,7 @@ class ScheduleTriggerRecurrence(msrest.serialization.Model):
     :param time_zone: The time zone.
     :type time_zone: str
     :param schedule: The recurrence schedule.
-    :type schedule: ~azure.mgmt.datafactory.models.RecurrenceSchedule
+    :type schedule: ~dfaz_management_client.models.RecurrenceSchedule
     """
 
     _attribute_map = {
@@ -3022,11 +3022,11 @@ class SelfHostedIntegrationRuntime(IntegrationRuntime):
     :type additional_properties: dict[str, object]
     :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
      include: "Managed", "SelfHosted".
-    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :type type: str or ~dfaz_management_client.models.IntegrationRuntimeType
     :param description: Integration runtime description.
     :type description: str
     :param linked_info: The base definition of a linked integration runtime.
-    :type linked_info: ~azure.mgmt.datafactory.models.LinkedIntegrationRuntimeType
+    :type linked_info: ~dfaz_management_client.models.LinkedIntegrationRuntimeType
     """
 
     _validation = {
@@ -3070,7 +3070,7 @@ class SelfHostedIntegrationRuntimeNode(msrest.serialization.Model):
     :ivar status: Status of the integration runtime node. Possible values include:
      "NeedRegistration", "Online", "Limited", "Offline", "Upgrading", "Initializing",
      "InitializeFailed".
-    :vartype status: str or ~azure.mgmt.datafactory.models.SelfHostedIntegrationRuntimeNodeStatus
+    :vartype status: str or ~dfaz_management_client.models.SelfHostedIntegrationRuntimeNodeStatus
     :ivar capabilities: The integration runtime capabilities dictionary.
     :vartype capabilities: dict[str, str]
     :ivar version_status: Status of the integration runtime node version.
@@ -3092,7 +3092,7 @@ class SelfHostedIntegrationRuntimeNode(msrest.serialization.Model):
     :ivar last_update_result: The result of the last integration runtime node update. Possible
      values include: "None", "Succeed", "Fail".
     :vartype last_update_result: str or
-     ~azure.mgmt.datafactory.models.IntegrationRuntimeUpdateResult
+     ~dfaz_management_client.models.IntegrationRuntimeUpdateResult
     :ivar last_start_update_time: The last time for the integration runtime node update start.
     :vartype last_start_update_time: ~datetime.datetime
     :ivar last_end_update_time: The last time for the integration runtime node update end.
@@ -3189,13 +3189,13 @@ class SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
     :type additional_properties: dict[str, object]
     :param type: Required. Type of integration runtime.Constant filled by server.  Possible values
      include: "Managed", "SelfHosted".
-    :type type: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeType
+    :type type: str or ~dfaz_management_client.models.IntegrationRuntimeType
     :ivar data_factory_name: The data factory name which the integration runtime belong to.
     :vartype data_factory_name: str
     :ivar state: The state of integration runtime. Possible values include: "Initial", "Stopped",
      "Started", "Starting", "Stopping", "NeedRegistration", "Online", "Limited", "Offline",
      "AccessDenied".
-    :vartype state: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeState
+    :vartype state: str or ~dfaz_management_client.models.IntegrationRuntimeState
     :ivar create_time: The time at which the integration runtime was created, in ISO8601 format.
     :vartype create_time: ~datetime.datetime
     :ivar task_queue_id: The task queue id of the integration runtime.
@@ -3204,11 +3204,11 @@ class SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
      communication channel (when more than 2 self-hosted integration runtime nodes exist). Possible
      values include: "NotSet", "SslEncrypted", "NotEncrypted".
     :vartype internal_channel_encryption: str or
-     ~azure.mgmt.datafactory.models.IntegrationRuntimeInternalChannelEncryptionMode
+     ~dfaz_management_client.models.IntegrationRuntimeInternalChannelEncryptionMode
     :ivar version: Version of the integration runtime.
     :vartype version: str
     :param nodes: The list of nodes for this integration runtime.
-    :type nodes: list[~azure.mgmt.datafactory.models.SelfHostedIntegrationRuntimeNode]
+    :type nodes: list[~dfaz_management_client.models.SelfHostedIntegrationRuntimeNode]
     :ivar scheduled_update_date: The date at which the integration runtime will be scheduled to
      update, in ISO8601 format.
     :vartype scheduled_update_date: ~datetime.datetime
@@ -3223,12 +3223,12 @@ class SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
     :vartype service_urls: list[str]
     :ivar auto_update: Whether Self-hosted integration runtime auto update has been turned on.
      Possible values include: "On", "Off".
-    :vartype auto_update: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeAutoUpdate
+    :vartype auto_update: str or ~dfaz_management_client.models.IntegrationRuntimeAutoUpdate
     :ivar version_status: Status of the integration runtime version.
     :vartype version_status: str
     :param links: The list of linked integration runtimes that are created to share with this
      integration runtime.
-    :type links: list[~azure.mgmt.datafactory.models.LinkedIntegrationRuntime]
+    :type links: list[~dfaz_management_client.models.LinkedIntegrationRuntime]
     :ivar pushed_version: The version that the integration runtime is going to update to.
     :vartype pushed_version: str
     :ivar latest_version: The latest version on download center.
@@ -3319,7 +3319,7 @@ class SsisObjectMetadata(msrest.serialization.Model):
 
     :param type: Required. Type of metadata.Constant filled by server.  Possible values include:
      "Folder", "Project", "Package", "Environment".
-    :type type: str or ~azure.mgmt.datafactory.models.SsisObjectMetadataType
+    :type type: str or ~dfaz_management_client.models.SsisObjectMetadataType
     :param id: Metadata id.
     :type id: long
     :param name: Metadata name.
@@ -3365,7 +3365,7 @@ class SsisEnvironment(SsisObjectMetadata):
 
     :param type: Required. Type of metadata.Constant filled by server.  Possible values include:
      "Folder", "Project", "Package", "Environment".
-    :type type: str or ~azure.mgmt.datafactory.models.SsisObjectMetadataType
+    :type type: str or ~dfaz_management_client.models.SsisObjectMetadataType
     :param id: Metadata id.
     :type id: long
     :param name: Metadata name.
@@ -3375,7 +3375,7 @@ class SsisEnvironment(SsisObjectMetadata):
     :param folder_id: Folder id which contains environment.
     :type folder_id: long
     :param variables: Variable in environment.
-    :type variables: list[~azure.mgmt.datafactory.models.SsisVariable]
+    :type variables: list[~dfaz_management_client.models.SsisVariable]
     """
 
     _validation = {
@@ -3450,7 +3450,7 @@ class SsisFolder(SsisObjectMetadata):
 
     :param type: Required. Type of metadata.Constant filled by server.  Possible values include:
      "Folder", "Project", "Package", "Environment".
-    :type type: str or ~azure.mgmt.datafactory.models.SsisObjectMetadataType
+    :type type: str or ~dfaz_management_client.models.SsisObjectMetadataType
     :param id: Metadata id.
     :type id: long
     :param name: Metadata name.
@@ -3486,7 +3486,7 @@ class SsisObjectMetadataListResponse(msrest.serialization.Model):
     """A list of SSIS object metadata.
 
     :param value: List of SSIS object metadata.
-    :type value: list[~azure.mgmt.datafactory.models.SsisObjectMetadata]
+    :type value: list[~dfaz_management_client.models.SsisObjectMetadata]
     :param next_link: The link to the next page of results, if any remaining results exist.
     :type next_link: str
     """
@@ -3515,7 +3515,7 @@ class SsisPackage(SsisObjectMetadata):
 
     :param type: Required. Type of metadata.Constant filled by server.  Possible values include:
      "Folder", "Project", "Package", "Environment".
-    :type type: str or ~azure.mgmt.datafactory.models.SsisObjectMetadataType
+    :type type: str or ~dfaz_management_client.models.SsisObjectMetadataType
     :param id: Metadata id.
     :type id: long
     :param name: Metadata name.
@@ -3529,7 +3529,7 @@ class SsisPackage(SsisObjectMetadata):
     :param project_id: Project id which contains package.
     :type project_id: long
     :param parameters: Parameters in package.
-    :type parameters: list[~azure.mgmt.datafactory.models.SsisParameter]
+    :type parameters: list[~dfaz_management_client.models.SsisParameter]
     """
 
     _validation = {
@@ -3650,7 +3650,7 @@ class SsisProject(SsisObjectMetadata):
 
     :param type: Required. Type of metadata.Constant filled by server.  Possible values include:
      "Folder", "Project", "Package", "Environment".
-    :type type: str or ~azure.mgmt.datafactory.models.SsisObjectMetadataType
+    :type type: str or ~dfaz_management_client.models.SsisObjectMetadataType
     :param id: Metadata id.
     :type id: long
     :param name: Metadata name.
@@ -3662,9 +3662,9 @@ class SsisProject(SsisObjectMetadata):
     :param version: Project version.
     :type version: long
     :param environment_refs: Environment reference in project.
-    :type environment_refs: list[~azure.mgmt.datafactory.models.SsisEnvironmentReference]
+    :type environment_refs: list[~dfaz_management_client.models.SsisEnvironmentReference]
     :param parameters: Parameters in project.
-    :type parameters: list[~azure.mgmt.datafactory.models.SsisParameter]
+    :type parameters: list[~dfaz_management_client.models.SsisParameter]
     """
 
     _validation = {
@@ -3764,7 +3764,7 @@ class TriggerDependencyReference(DependencyReference):
     :param type: Required. The type of dependency reference.Constant filled by server.
     :type type: str
     :param reference_trigger: Required. Referenced trigger.
-    :type reference_trigger: ~azure.mgmt.datafactory.models.TriggerReference
+    :type reference_trigger: ~dfaz_management_client.models.TriggerReference
     """
 
     _validation = {
@@ -3826,7 +3826,7 @@ class TriggerListResponse(msrest.serialization.Model):
     All required parameters must be populated in order to send to Azure.
 
     :param value: Required. List of triggers.
-    :type value: list[~azure.mgmt.datafactory.models.TriggerResource]
+    :type value: list[~dfaz_management_client.models.TriggerResource]
     :param next_link: The link to the next page of results, if any remaining results exist.
     :type next_link: str
     """
@@ -3856,7 +3856,7 @@ class TriggerPipelineReference(msrest.serialization.Model):
     """Pipeline that needs to be triggered with the given parameters.
 
     :param pipeline_reference: Pipeline reference.
-    :type pipeline_reference: ~azure.mgmt.datafactory.models.PipelineReference
+    :type pipeline_reference: ~dfaz_management_client.models.PipelineReference
     :param parameters: Pipeline parameters.
     :type parameters: dict[str, object]
     """
@@ -3884,7 +3884,7 @@ class TriggerQueryResponse(msrest.serialization.Model):
     All required parameters must be populated in order to send to Azure.
 
     :param value: Required. List of triggers.
-    :type value: list[~azure.mgmt.datafactory.models.TriggerResource]
+    :type value: list[~dfaz_management_client.models.TriggerResource]
     :param continuation_token: The continuation token for getting the next page of results, if any
      remaining results exist, null otherwise.
     :type continuation_token: str
@@ -3962,7 +3962,7 @@ class TriggerResource(SubResource):
     :ivar etag: Etag identifies change in the resource.
     :vartype etag: str
     :param properties: Required. Properties of the trigger.
-    :type properties: ~azure.mgmt.datafactory.models.Trigger
+    :type properties: ~dfaz_management_client.models.Trigger
     """
 
     _validation = {
@@ -4000,7 +4000,7 @@ class TriggerSubscriptionOperationStatus(msrest.serialization.Model):
     :vartype trigger_name: str
     :ivar status: Event Subscription Status. Possible values include: "Enabled", "Provisioning",
      "Deprovisioning", "Disabled", "Unknown".
-    :vartype status: str or ~azure.mgmt.datafactory.models.EventSubscriptionStatus
+    :vartype status: str or ~dfaz_management_client.models.EventSubscriptionStatus
     """
 
     _validation = {
@@ -4038,15 +4038,15 @@ class TumblingWindowTrigger(Trigger):
     :type description: str
     :ivar runtime_state: Indicates if trigger is running or not. Updated when Start/Stop APIs are
      called on the Trigger. Possible values include: "Started", "Stopped", "Disabled".
-    :vartype runtime_state: str or ~azure.mgmt.datafactory.models.TriggerRuntimeState
+    :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
     :param pipeline: Required. Pipeline for which runs are created when an event is fired for
      trigger window that is ready.
-    :type pipeline: ~azure.mgmt.datafactory.models.TriggerPipelineReference
+    :type pipeline: ~dfaz_management_client.models.TriggerPipelineReference
     :param frequency: Required. The frequency of the time windows. Possible values include:
      "Minute", "Hour".
-    :type frequency: str or ~azure.mgmt.datafactory.models.TumblingWindowFrequency
+    :type frequency: str or ~dfaz_management_client.models.TumblingWindowFrequency
     :param interval: Required. The interval of the time windows. The minimum interval allowed is 15
      Minutes.
     :type interval: int
@@ -4064,10 +4064,10 @@ class TumblingWindowTrigger(Trigger):
      for which a new run is triggered.
     :type max_concurrency: int
     :param retry_policy: Retry policy that will be applied for failed pipeline runs.
-    :type retry_policy: ~azure.mgmt.datafactory.models.RetryPolicy
+    :type retry_policy: ~dfaz_management_client.models.RetryPolicy
     :param depends_on: Triggers that this trigger depends on. Only tumbling window triggers are
      supported.
-    :type depends_on: list[~azure.mgmt.datafactory.models.DependencyReference]
+    :type depends_on: list[~dfaz_management_client.models.DependencyReference]
     """
 
     _validation = {
@@ -4135,7 +4135,7 @@ class TumblingWindowTriggerDependencyReference(TriggerDependencyReference):
     :param type: Required. The type of dependency reference.Constant filled by server.
     :type type: str
     :param reference_trigger: Required. Referenced trigger.
-    :type reference_trigger: ~azure.mgmt.datafactory.models.TriggerReference
+    :type reference_trigger: ~dfaz_management_client.models.TriggerReference
     :param offset: Timespan applied to the start time of a tumbling window when evaluating
      dependency.
     :type offset: str
@@ -4178,7 +4178,7 @@ class UpdateIntegrationRuntimeRequest(msrest.serialization.Model):
     :param auto_update: Enables or disables the auto-update feature of the self-hosted integration
      runtime. See https://go.microsoft.com/fwlink/?linkid=854189. Possible values include: "On",
      "Off".
-    :type auto_update: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeAutoUpdate
+    :type auto_update: str or ~dfaz_management_client.models.IntegrationRuntimeAutoUpdate
     :param update_delay_offset: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The
      integration runtime auto update will happen on that time.
     :type update_delay_offset: str

@@ -25,7 +25,7 @@ class AttestationProviderOperations:
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~azure.mgmt.attestation.models
+    :type models: ~attestation_management_client.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -53,8 +53,8 @@ class AttestationProviderOperations:
         :param provider_name: Name of the attestation service instance.
         :type provider_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AttestationProvider or the result of cls(response)
-        :rtype: ~azure.mgmt.attestation.models.AttestationProvider
+        :return: AttestationProvider, or the result of cls(response)
+        :rtype: ~attestation_management_client.models.AttestationProvider
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProvider"]
@@ -91,7 +91,7 @@ class AttestationProviderOperations:
         deserialized = self._deserialize('AttestationProvider', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
@@ -124,10 +124,10 @@ class AttestationProviderOperations:
          an order of preference among them, although applications of JWK Sets
          can choose to assign a meaning to the order for their purposes, if
          desired.
-        :type keys: list[~azure.mgmt.attestation.models.JsonWebKey]
+        :type keys: list[~attestation_management_client.models.JsonWebKey]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AttestationProvider or the result of cls(response)
-        :rtype: ~azure.mgmt.attestation.models.AttestationProvider
+        :return: AttestationProvider, or the result of cls(response)
+        :rtype: ~attestation_management_client.models.AttestationProvider
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProvider"]
@@ -177,7 +177,7 @@ class AttestationProviderOperations:
             deserialized = self._deserialize('AttestationProvider', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
@@ -198,8 +198,8 @@ class AttestationProviderOperations:
         :param tags: The tags that will be assigned to the attestation service instance.
         :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AttestationProvider or the result of cls(response)
-        :rtype: ~azure.mgmt.attestation.models.AttestationProvider
+        :return: AttestationProvider, or the result of cls(response)
+        :rtype: ~attestation_management_client.models.AttestationProvider
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProvider"]
@@ -244,7 +244,7 @@ class AttestationProviderOperations:
         deserialized = self._deserialize('AttestationProvider', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
@@ -262,7 +262,7 @@ class AttestationProviderOperations:
         :param provider_name: Name of the attestation service.
         :type provider_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None or the result of cls(response)
+        :return: None, or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -297,7 +297,7 @@ class AttestationProviderOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
 
@@ -308,8 +308,8 @@ class AttestationProviderOperations:
         """Returns a list of attestation providers in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AttestationProviderListResult or the result of cls(response)
-        :rtype: ~azure.mgmt.attestation.models.AttestationProviderListResult
+        :return: AttestationProviderListResult, or the result of cls(response)
+        :rtype: ~attestation_management_client.models.AttestationProviderListResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProviderListResult"]
@@ -344,7 +344,7 @@ class AttestationProviderOperations:
         deserialized = self._deserialize('AttestationProviderListResult', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders'}  # type: ignore
@@ -359,8 +359,8 @@ class AttestationProviderOperations:
         :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AttestationProviderListResult or the result of cls(response)
-        :rtype: ~azure.mgmt.attestation.models.AttestationProviderListResult
+        :return: AttestationProviderListResult, or the result of cls(response)
+        :rtype: ~attestation_management_client.models.AttestationProviderListResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProviderListResult"]
@@ -396,7 +396,7 @@ class AttestationProviderOperations:
         deserialized = self._deserialize('AttestationProviderListResult', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders'}  # type: ignore

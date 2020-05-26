@@ -29,7 +29,7 @@ class OperationOperations(object):
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~azure.mgmt.attestation.models
+    :type models: ~attestation_management_client.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -52,8 +52,8 @@ class OperationOperations(object):
         """Lists all of the available Azure attestation operations.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: OperationList or the result of cls(response)
-        :rtype: ~azure.mgmt.attestation.models.OperationList
+        :return: OperationList, or the result of cls(response)
+        :rtype: ~attestation_management_client.models.OperationList
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.OperationList"]
@@ -84,7 +84,7 @@ class OperationOperations(object):
         deserialized = self._deserialize('OperationList', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list.metadata = {'url': '/providers/Microsoft.Attestation/operations'}  # type: ignore

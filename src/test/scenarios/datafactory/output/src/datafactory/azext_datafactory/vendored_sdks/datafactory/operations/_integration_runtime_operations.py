@@ -32,7 +32,7 @@ class IntegrationRuntimeOperations(object):
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~azure.mgmt.datafactory.models
+    :type models: ~dfaz_management_client.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -61,8 +61,8 @@ class IntegrationRuntimeOperations(object):
         :param factory_name: The factory name.
         :type factory_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of IntegrationRuntimeListResponse or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.datafactory.models.IntegrationRuntimeListResponse]
+        :return: An iterator like instance of either IntegrationRuntimeListResponse or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~dfaz_management_client.models.IntegrationRuntimeListResponse]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeListResponse"]
@@ -138,13 +138,13 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :param properties: Integration runtime properties.
-        :type properties: ~azure.mgmt.datafactory.models.IntegrationRuntime
+        :type properties: ~dfaz_management_client.models.IntegrationRuntime
         :param if_match: ETag of the integration runtime entity. Should only be specified for update,
          for which it should match existing entity or can be * for unconditional update.
         :type if_match: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: IntegrationRuntimeResource or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeResource
+        :return: IntegrationRuntimeResource, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.IntegrationRuntimeResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeResource"]
@@ -192,7 +192,7 @@ class IntegrationRuntimeOperations(object):
         deserialized = self._deserialize('IntegrationRuntimeResource', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}'}  # type: ignore
@@ -219,8 +219,8 @@ class IntegrationRuntimeOperations(object):
          returned.
         :type if_none_match: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: IntegrationRuntimeResource or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeResource or None
+        :return: IntegrationRuntimeResource, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.IntegrationRuntimeResource or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeResource"]
@@ -262,7 +262,7 @@ class IntegrationRuntimeOperations(object):
             deserialized = self._deserialize('IntegrationRuntimeResource', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}'}  # type: ignore
@@ -287,13 +287,13 @@ class IntegrationRuntimeOperations(object):
         :type integration_runtime_name: str
         :param auto_update: Enables or disables the auto-update feature of the self-hosted integration
          runtime. See https://go.microsoft.com/fwlink/?linkid=854189.
-        :type auto_update: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeAutoUpdate
+        :type auto_update: str or ~dfaz_management_client.models.IntegrationRuntimeAutoUpdate
         :param update_delay_offset: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The
          integration runtime auto update will happen on that time.
         :type update_delay_offset: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: IntegrationRuntimeResource or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeResource
+        :return: IntegrationRuntimeResource, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.IntegrationRuntimeResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeResource"]
@@ -339,7 +339,7 @@ class IntegrationRuntimeOperations(object):
         deserialized = self._deserialize('IntegrationRuntimeResource', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}'}  # type: ignore
@@ -361,7 +361,7 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None or the result of cls(response)
+        :return: None, or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -397,7 +397,7 @@ class IntegrationRuntimeOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}'}  # type: ignore
 
@@ -418,8 +418,8 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: IntegrationRuntimeStatusResponse or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeStatusResponse
+        :return: IntegrationRuntimeStatusResponse, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.IntegrationRuntimeStatusResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeStatusResponse"]
@@ -457,7 +457,7 @@ class IntegrationRuntimeOperations(object):
         deserialized = self._deserialize('IntegrationRuntimeStatusResponse', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_status.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/getStatus'}  # type: ignore
@@ -479,8 +479,8 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: IntegrationRuntimeConnectionInfo or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeConnectionInfo
+        :return: IntegrationRuntimeConnectionInfo, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.IntegrationRuntimeConnectionInfo
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeConnectionInfo"]
@@ -518,7 +518,7 @@ class IntegrationRuntimeOperations(object):
         deserialized = self._deserialize('IntegrationRuntimeConnectionInfo', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_connection_info.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/getConnectionInfo'}  # type: ignore
@@ -541,10 +541,10 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :param key_name: The name of the authentication key to regenerate.
-        :type key_name: str or ~azure.mgmt.datafactory.models.IntegrationRuntimeAuthKeyName
+        :type key_name: str or ~dfaz_management_client.models.IntegrationRuntimeAuthKeyName
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: IntegrationRuntimeAuthKeys or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeAuthKeys
+        :return: IntegrationRuntimeAuthKeys, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.IntegrationRuntimeAuthKeys
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeAuthKeys"]
@@ -590,7 +590,7 @@ class IntegrationRuntimeOperations(object):
         deserialized = self._deserialize('IntegrationRuntimeAuthKeys', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     regenerate_auth_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/regenerateAuthKey'}  # type: ignore
@@ -612,8 +612,8 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: IntegrationRuntimeAuthKeys or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeAuthKeys
+        :return: IntegrationRuntimeAuthKeys, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.IntegrationRuntimeAuthKeys
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeAuthKeys"]
@@ -651,7 +651,7 @@ class IntegrationRuntimeOperations(object):
         deserialized = self._deserialize('IntegrationRuntimeAuthKeys', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list_auth_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/listAuthKeys'}  # type: ignore
@@ -701,7 +701,7 @@ class IntegrationRuntimeOperations(object):
             deserialized = self._deserialize('IntegrationRuntimeStatusResponse', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _start_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/start'}  # type: ignore
@@ -727,8 +727,8 @@ class IntegrationRuntimeOperations(object):
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns IntegrationRuntimeStatusResponse
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.datafactory.models.IntegrationRuntimeStatusResponse]
+        :return: An instance of LROPoller that returns either IntegrationRuntimeStatusResponse or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~dfaz_management_client.models.IntegrationRuntimeStatusResponse]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
@@ -744,6 +744,9 @@ class IntegrationRuntimeOperations(object):
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('IntegrationRuntimeStatusResponse', pipeline_response)
@@ -798,7 +801,7 @@ class IntegrationRuntimeOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     _stop_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/stop'}  # type: ignore
 
@@ -823,7 +826,7 @@ class IntegrationRuntimeOperations(object):
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns None
+        :return: An instance of LROPoller that returns either None or the result of cls(response)
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -840,6 +843,9 @@ class IntegrationRuntimeOperations(object):
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -868,7 +874,7 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None or the result of cls(response)
+        :return: None, or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -904,7 +910,7 @@ class IntegrationRuntimeOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     sync_credentials.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/syncCredentials'}  # type: ignore
 
@@ -925,8 +931,8 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: IntegrationRuntimeMonitoringData or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeMonitoringData
+        :return: IntegrationRuntimeMonitoringData, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.IntegrationRuntimeMonitoringData
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeMonitoringData"]
@@ -964,7 +970,7 @@ class IntegrationRuntimeOperations(object):
         deserialized = self._deserialize('IntegrationRuntimeMonitoringData', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_monitoring_data.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/monitoringData'}  # type: ignore
@@ -986,7 +992,7 @@ class IntegrationRuntimeOperations(object):
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None or the result of cls(response)
+        :return: None, or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1022,7 +1028,7 @@ class IntegrationRuntimeOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     upgrade.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/upgrade'}  # type: ignore
 
@@ -1046,7 +1052,7 @@ class IntegrationRuntimeOperations(object):
         :param linked_factory_name: The data factory name for linked integration runtime.
         :type linked_factory_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None or the result of cls(response)
+        :return: None, or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1090,7 +1096,7 @@ class IntegrationRuntimeOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     remove_link.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/removeLinks'}  # type: ignore
 
@@ -1126,8 +1132,8 @@ class IntegrationRuntimeOperations(object):
          runtime belongs to.
         :type data_factory_location: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: IntegrationRuntimeStatusResponse or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.IntegrationRuntimeStatusResponse
+        :return: IntegrationRuntimeStatusResponse, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.IntegrationRuntimeStatusResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeStatusResponse"]
@@ -1173,7 +1179,7 @@ class IntegrationRuntimeOperations(object):
         deserialized = self._deserialize('IntegrationRuntimeStatusResponse', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create_linked_integration_runtime.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/linkedIntegrationRuntime'}  # type: ignore

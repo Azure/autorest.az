@@ -11,14 +11,13 @@ from typing import TYPE_CHECKING
 from azure.core.configuration import Configuration
 from azure.core.pipeline import policies
 
-from ._version import VERSION
-
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any
 
     from azure.core.credentials import TokenCredential
 
+VERSION = "unknown"
 
 class DFAZManagementClientConfiguration(Configuration):
     """Configuration for DFAZManagementClient.
@@ -50,7 +49,7 @@ class DFAZManagementClientConfiguration(Configuration):
         self.api_version = "2018-06-01"
         self.credential_scopes = ['https://management.azure.com/.default']
         self.credential_scopes.extend(kwargs.pop('credential_scopes', []))
-        kwargs.setdefault('sdk_moniker', 'mgmt-datafactory/{}'.format(VERSION))
+        kwargs.setdefault('sdk_moniker', 'dfazmanagementclient/{}'.format(VERSION))
         self._configure(**kwargs)
 
     def _configure(
