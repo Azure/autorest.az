@@ -93,8 +93,6 @@ stages:
           echo "[$(date -u)] LOG: RELEASE VERSION: $RELEASE_VERSION"
           echo "##vso[task.setvariable variable=release;isOutput=true]$RELEASE_VERSION"
           echo "[$(date -u)] LOG: Build.Repository.ID: $(Build.Repository.ID)"
-          echo "[$(date -u)] LOG: Build.Repository.Name: $(Build.Repository.Name)"
-          echo "[$(date -u)] LOG: Build.Repository.Provider: $(Build.Repository.Provider)"
         name: GetVersions
       - task: GitHubRelease@1
         inputs:
@@ -111,6 +109,7 @@ stages:
           isPreRelease: true
           changeLogCompareToRelease: 'lastNonDraftRelease'
           changeLogType: 'issueBased'
+          changeLogLabels: 
 
 - stage: PublicRelease
   dependsOn: Test
