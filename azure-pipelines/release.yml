@@ -96,7 +96,7 @@ stages:
       - task: GitHubRelease@1
         inputs:
           gitHubConnection: 'amecodegenbot'
-          repositoryName: 'LianwMS/autorest.az'
+          repositoryName: 'Azure/autorest.az'
           action: 'create'
           target: '$(Build.SourceVersion)'
           tagSource: 'userSpecifiedTag'
