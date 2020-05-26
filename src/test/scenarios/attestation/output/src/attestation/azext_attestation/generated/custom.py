@@ -10,7 +10,7 @@
 # pylint: disable=too-many-lines
 
 
-def attestation_create_provider(cmd, client,
+def attestation_create_provider(client,
                                 resource_group_name,
                                 provider_name,
                                 location,
@@ -25,25 +25,25 @@ def attestation_create_provider(cmd, client,
                          keys=policy_signing_certificates_keys)
 
 
-def attestation_list_operation(cmd, client):
+def attestation_list_operation(client):
     return client.list()
 
 
-def attestation_attestation_provider_provider_list(cmd, client,
+def attestation_attestation_provider_provider_list(client,
                                                    resource_group_name=None):
     if resource_group_name:
         return client.list_by_resource_group(resource_group_name=resource_group_name)
     return client.list()
 
 
-def attestation_attestation_provider_show(cmd, client,
+def attestation_attestation_provider_show(client,
                                           resource_group_name,
                                           provider_name):
     return client.get(resource_group_name=resource_group_name,
                       provider_name=provider_name)
 
 
-def attestation_attestation_provider_update(cmd, client,
+def attestation_attestation_provider_update(client,
                                             resource_group_name,
                                             provider_name,
                                             tags=None):
@@ -52,7 +52,7 @@ def attestation_attestation_provider_update(cmd, client,
                          tags=tags)
 
 
-def attestation_attestation_provider_delete(cmd, client,
+def attestation_attestation_provider_delete(client,
                                             resource_group_name,
                                             provider_name):
     return client.delete(resource_group_name=resource_group_name,
