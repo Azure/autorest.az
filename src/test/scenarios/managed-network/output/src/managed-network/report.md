@@ -15,6 +15,7 @@ hub-and-spoke-topology create a managed-network managed-network-peering-policy.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The name of the resource group.|resource_group_name|
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|
 |**--policy-name**|string|The name of the Managed Network Peering Policy.|policy_name|
 |**--location**|string|The geo-location where the resource lives|location|
@@ -27,6 +28,7 @@ hub-and-spoke-topology create a managed-network managed-network-peering-policy.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The name of the resource group.|resource_group_name|
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|
 |**--policy-name**|string|The name of the Managed Network Peering Policy.|policy_name|
 |**--location**|string|The geo-location where the resource lives|location|
@@ -49,6 +51,7 @@ mesh-topology create a managed-network managed-network-peering-policy.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The name of the resource group.|resource_group_name|
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|
 |**--policy-name**|string|The name of the Managed Network Peering Policy.|policy_name|
 |**--location**|string|The geo-location where the resource lives|location|
@@ -61,6 +64,7 @@ mesh-topology create a managed-network managed-network-peering-policy.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
+|**--resource-group-name**|string|The name of the resource group.|resource_group_name|
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|
 |**--policy-name**|string|The name of the Managed Network Peering Policy.|policy_name|
 |**--location**|string|The geo-location where the resource lives|location|
