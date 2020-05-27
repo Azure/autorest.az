@@ -13,7 +13,7 @@ import { isNullOrUndefined, isArray } from "util";
 let hasActions: boolean = false;
 let hasBoolean: boolean = false;
 let hasEnum: boolean = false;
-let hasJson: boolean = true;
+let hasJson: boolean = false;
 let hasResourceGroup: boolean = false;
 let hasLocation = false;
 let hasLocationValidator = false;

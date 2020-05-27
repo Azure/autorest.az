@@ -20,8 +20,8 @@ class DFAZManagementClientCommandsLoader(AzCommandsLoader):
         datafactory_custom = CliCommandType(
             operations_tmpl='azext_datafactory.custom#{}',
             client_factory=cf_datafactory)
-        super(DFAZManagementClientCommandsLoader, self).__init__(cli_ctx=cli_ctx,
-                                                                 custom_command_type=datafactory_custom)
+        parent = super(DFAZManagementClientCommandsLoader, self)
+        parent.__init__(cli_ctx=cli_ctx, custom_command_type=datafactory_custom)
 
     def load_command_table(self, args):
         from azext_datafactory.generated.commands import load_command_table

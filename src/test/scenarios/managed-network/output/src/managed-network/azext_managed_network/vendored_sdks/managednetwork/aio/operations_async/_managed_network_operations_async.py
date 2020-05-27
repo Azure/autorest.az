@@ -56,7 +56,7 @@ class ManagedNetworkOperations:
         :param managed_network_name: The name of the Managed Network.
         :type managed_network_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagedNetwork or the result of cls(response)
+        :return: ManagedNetwork, or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetwork
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -95,7 +95,7 @@ class ManagedNetworkOperations:
         deserialized = self._deserialize('ManagedNetwork', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_modify.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}  # type: ignore
@@ -122,7 +122,7 @@ class ManagedNetworkOperations:
         :param properties: The MNC properties.
         :type properties: ~managed_network_management_client.models.ManagedNetworkProperties
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagedNetwork or the result of cls(response)
+        :return: ManagedNetwork, or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetwork
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -174,7 +174,7 @@ class ManagedNetworkOperations:
             deserialized = self._deserialize('ManagedNetwork', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}  # type: ignore
@@ -217,7 +217,7 @@ class ManagedNetworkOperations:
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}  # type: ignore
 
@@ -238,7 +238,7 @@ class ManagedNetworkOperations:
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None
+        :return: None, or the result of cls(response)
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -254,6 +254,9 @@ class ManagedNetworkOperations:
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -320,7 +323,7 @@ class ManagedNetworkOperations:
             deserialized = self._deserialize('ManagedNetwork', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}  # type: ignore
@@ -345,7 +348,7 @@ class ManagedNetworkOperations:
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: ManagedNetwork
+        :return: ManagedNetwork, or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetwork
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -362,6 +365,9 @@ class ManagedNetworkOperations:
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ManagedNetwork', pipeline_response)
@@ -394,7 +400,7 @@ class ManagedNetworkOperations:
      a skiptoken parameter that specifies a starting point to use for subsequent calls.
         :type skiptoken: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of ManagedNetworkListResult or the result of cls(response)
+        :return: An iterator like instance of either ManagedNetworkListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~managed_network_management_client.models.ManagedNetworkListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -471,7 +477,7 @@ class ManagedNetworkOperations:
      a skiptoken parameter that specifies a starting point to use for subsequent calls.
         :type skiptoken: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of ManagedNetworkListResult or the result of cls(response)
+        :return: An iterator like instance of either ManagedNetworkListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~managed_network_management_client.models.ManagedNetworkListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

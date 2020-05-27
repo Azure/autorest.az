@@ -26,7 +26,7 @@ class FactoryOperations:
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~azure.mgmt.datafactory.models
+    :type models: ~dfaz_management_client.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -48,8 +48,8 @@ class FactoryOperations:
         """Lists factories under the specified subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of FactoryListResponse or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.datafactory.models.FactoryListResponse]
+        :return: An iterator like instance of either FactoryListResponse or the result of cls(response)
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~dfaz_management_client.models.FactoryListResponse]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.FactoryListResponse"]
@@ -118,10 +118,10 @@ class FactoryOperations:
         :param factory_resource_id: The factory resource id.
         :type factory_resource_id: str
         :param repo_configuration: Git repo information of the factory.
-        :type repo_configuration: ~azure.mgmt.datafactory.models.FactoryRepoConfiguration
+        :type repo_configuration: ~dfaz_management_client.models.FactoryRepoConfiguration
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Factory or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.Factory
+        :return: Factory, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.Factory
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.Factory"]
@@ -165,7 +165,7 @@ class FactoryOperations:
         deserialized = self._deserialize('Factory', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     configure_factory_repo.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepo'}  # type: ignore
@@ -180,8 +180,8 @@ class FactoryOperations:
         :param resource_group_name: The resource group name.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of FactoryListResponse or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.datafactory.models.FactoryListResponse]
+        :return: An iterator like instance of either FactoryListResponse or the result of cls(response)
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~dfaz_management_client.models.FactoryListResponse]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.FactoryListResponse"]
@@ -264,16 +264,16 @@ class FactoryOperations:
         :param tags: The resource tags.
         :type tags: dict[str, str]
         :param identity: Managed service identity of the factory.
-        :type identity: ~azure.mgmt.datafactory.models.FactoryIdentity
+        :type identity: ~dfaz_management_client.models.FactoryIdentity
         :param repo_configuration: Git repo information of the factory.
-        :type repo_configuration: ~azure.mgmt.datafactory.models.FactoryRepoConfiguration
+        :type repo_configuration: ~dfaz_management_client.models.FactoryRepoConfiguration
         :param fake_identity: This is only for az test.
-        :type fake_identity: ~azure.mgmt.datafactory.models.FakeFactoryIdentity
+        :type fake_identity: ~dfaz_management_client.models.FakeFactoryIdentity
         :param zones: This is only for az test.
         :type zones: list[str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Factory or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.Factory
+        :return: Factory, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.Factory
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.Factory"]
@@ -320,7 +320,7 @@ class FactoryOperations:
         deserialized = self._deserialize('Factory', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}'}  # type: ignore
@@ -342,10 +342,10 @@ class FactoryOperations:
         :param tags: The resource tags.
         :type tags: dict[str, str]
         :param identity: Managed service identity of the factory.
-        :type identity: ~azure.mgmt.datafactory.models.FactoryIdentity
+        :type identity: ~dfaz_management_client.models.FactoryIdentity
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Factory or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.Factory
+        :return: Factory, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.Factory
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.Factory"]
@@ -390,7 +390,7 @@ class FactoryOperations:
         deserialized = self._deserialize('Factory', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}'}  # type: ignore
@@ -412,8 +412,8 @@ class FactoryOperations:
          matches the existing entity tag, or if * was provided, then no content will be returned.
         :type if_none_match: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Factory or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.Factory or None
+        :return: Factory, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.Factory or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.Factory"]
@@ -454,7 +454,7 @@ class FactoryOperations:
             deserialized = self._deserialize('Factory', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}'}  # type: ignore
@@ -472,7 +472,7 @@ class FactoryOperations:
         :param factory_name: The factory name.
         :type factory_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None or the result of cls(response)
+        :return: None, or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -507,7 +507,7 @@ class FactoryOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}'}  # type: ignore
 
@@ -533,8 +533,8 @@ class FactoryOperations:
         :param git_hub_client_id: GitHub application client ID.
         :type git_hub_client_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: GitHubAccessTokenResponse or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.GitHubAccessTokenResponse
+        :return: GitHubAccessTokenResponse, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.GitHubAccessTokenResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.GitHubAccessTokenResponse"]
@@ -579,7 +579,7 @@ class FactoryOperations:
         deserialized = self._deserialize('GitHubAccessTokenResponse', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_git_hub_access_token.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/getGitHubAccessToken'}  # type: ignore
@@ -616,8 +616,8 @@ class FactoryOperations:
          hours and by default the token will expire in eight hours.
         :type expire_time: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AccessPolicyResponse or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.AccessPolicyResponse
+        :return: AccessPolicyResponse, or the result of cls(response)
+        :rtype: ~dfaz_management_client.models.AccessPolicyResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AccessPolicyResponse"]
@@ -662,7 +662,7 @@ class FactoryOperations:
         deserialized = self._deserialize('AccessPolicyResponse', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_data_plane_access.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/getDataPlaneAccess'}  # type: ignore

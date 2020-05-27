@@ -7,9 +7,6 @@
 # --------------------------------------------------------------------------
 
 from ._dfaz_management_client import DFAZManagementClient
-from ._version import VERSION
-
-__version__ = VERSION
 __all__ = ['DFAZManagementClient']
 
 try:

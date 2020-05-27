@@ -19,7 +19,6 @@ class AddPolicySigningCertificatesKeys(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddPolicySigningCertificatesKeys, self).__call__(parser, namespace, action, option_string)
 
-
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
             properties = defaultdict(list)

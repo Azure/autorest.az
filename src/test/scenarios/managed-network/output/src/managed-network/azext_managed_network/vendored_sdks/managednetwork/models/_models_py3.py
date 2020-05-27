@@ -150,12 +150,12 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
      policy.Constant filled by server.  Possible values include: "HubAndSpokeTopology",
      "MeshTopology".
     :type type: str or ~managed_network_management_client.models.Type
-    :param mesh: Gets or sets the mesh group IDs.
-    :type mesh: list[~managed_network_management_client.models.ResourceId]
     :param hub: Gets or sets the hub virtual network ID.
     :type hub: ~managed_network_management_client.models.ResourceId
     :param spokes: Gets or sets the spokes group IDs.
     :type spokes: list[~managed_network_management_client.models.ResourceId]
+    :param mesh: Gets or sets the mesh group IDs.
+    :type mesh: list[~managed_network_management_client.models.ResourceId]
     """
 
     _validation = {
@@ -168,23 +168,21 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
-        'mesh': {'key': 'mesh', 'type': '[ResourceId]'},
         'hub': {'key': 'hub', 'type': 'ResourceId'},
         'spokes': {'key': 'spokes', 'type': '[ResourceId]'},
+        'mesh': {'key': 'mesh', 'type': '[ResourceId]'},
     }
 
     def __init__(
         self,
         *,
-        mesh: Optional[List["ResourceId"]] = None,
         hub: Optional["ResourceId"] = None,
         spokes: Optional[List["ResourceId"]] = None,
+        mesh: Optional[List["ResourceId"]] = None,
         **kwargs
     ):
-        super(HubAndSpokePeeringPolicyProperties, self).__init__(mesh=mesh, **kwargs)
+        super(HubAndSpokePeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, mesh=mesh, **kwargs)
         self.type: str = 'HubAndSpokeTopology'
-        self.hub = hub
-        self.spokes = spokes
 
 
 class Resource(msrest.serialization.Model):
@@ -322,46 +320,7 @@ class ManagedNetwork(TrackedResource):
         self.properties = properties
 
 
-class ProxyResource(Resource):
-    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
-
-    :ivar id: Fully qualified resource Id for the resource. Ex -
-     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
-    :vartype id: str
-    :ivar name: The name of the resource.
-    :vartype name: str
-    :ivar type: The type of the resource. Ex- Microsoft.Compute/virtualMachines or
-     Microsoft.Storage/storageAccounts.
-    :vartype type: str
-    :param location: The geo-location where the resource lives.
-    :type location: str
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-    }
-
-    def __init__(
-        self,
-        *,
-        location: Optional[str] = None,
-        **kwargs
-    ):
-        super(ProxyResource, self).__init__(location=location, **kwargs)
-
-
-class ManagedNetworkGroup(ProxyResource):
+class ManagedNetworkGroup(Resource):
     """The Managed Network Group resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -540,7 +499,7 @@ class ManagedNetworkListResult(msrest.serialization.Model):
         self.next_link = next_link
 
 
-class ManagedNetworkPeeringPolicy(ProxyResource):
+class ManagedNetworkPeeringPolicy(Resource):
     """The Managed Network Peering Policy resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -740,9 +699,8 @@ class MeshPeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         mesh: Optional[List["ResourceId"]] = None,
         **kwargs
     ):
-        super(MeshPeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, **kwargs)
+        super(MeshPeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, mesh=mesh, **kwargs)
         self.type: str = 'MeshTopology'
-        self.mesh = mesh
 
 
 class Operation(msrest.serialization.Model):
@@ -829,6 +787,45 @@ class OperationListResult(msrest.serialization.Model):
         self.next_link = next_link
 
 
+class ProxyResource(Resource):
+    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Fully qualified resource Id for the resource. Ex -
+     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+    :vartype id: str
+    :ivar name: The name of the resource.
+    :vartype name: str
+    :ivar type: The type of the resource. Ex- Microsoft.Compute/virtualMachines or
+     Microsoft.Storage/storageAccounts.
+    :vartype type: str
+    :param location: The geo-location where the resource lives.
+    :type location: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'location': {'key': 'location', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        location: Optional[str] = None,
+        **kwargs
+    ):
+        super(ProxyResource, self).__init__(location=location, **kwargs)
+
+
 class ResourceId(msrest.serialization.Model):
     """Generic pointer to a resource.
 
@@ -850,7 +847,7 @@ class ResourceId(msrest.serialization.Model):
         self.id = id
 
 
-class ScopeAssignment(ProxyResource):
+class ScopeAssignment(Resource):
     """The Managed Network resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.

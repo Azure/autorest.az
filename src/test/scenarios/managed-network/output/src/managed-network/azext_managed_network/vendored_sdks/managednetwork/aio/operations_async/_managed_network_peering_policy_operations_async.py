@@ -59,7 +59,7 @@ class ManagedNetworkPeeringPolicyOperations:
         :param managed_network_peering_policy_name: The name of the Managed Network Peering Policy.
         :type managed_network_peering_policy_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagedNetworkPeeringPolicy or the result of cls(response)
+        :return: ManagedNetworkPeeringPolicy, or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetworkPeeringPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -99,7 +99,7 @@ class ManagedNetworkPeeringPolicyOperations:
         deserialized = self._deserialize('ManagedNetworkPeeringPolicy', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}'}  # type: ignore
@@ -162,7 +162,7 @@ class ManagedNetworkPeeringPolicyOperations:
             deserialized = self._deserialize('ManagedNetworkPeeringPolicy', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}'}  # type: ignore
@@ -193,7 +193,7 @@ class ManagedNetworkPeeringPolicyOperations:
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: ManagedNetworkPeeringPolicy
+        :return: ManagedNetworkPeeringPolicy, or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetworkPeeringPolicy
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -212,6 +212,9 @@ class ManagedNetworkPeeringPolicyOperations:
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ManagedNetworkPeeringPolicy', pipeline_response)
@@ -266,7 +269,7 @@ class ManagedNetworkPeeringPolicyOperations:
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}'}  # type: ignore
 
@@ -290,7 +293,7 @@ class ManagedNetworkPeeringPolicyOperations:
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None
+        :return: None, or the result of cls(response)
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -307,6 +310,9 @@ class ManagedNetworkPeeringPolicyOperations:
             cls=lambda x,y,z: x,
             **kwargs
         )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -339,7 +345,7 @@ class ManagedNetworkPeeringPolicyOperations:
      a skiptoken parameter that specifies a starting point to use for subsequent calls.
         :type skiptoken: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of ManagedNetworkPeeringPolicyListResult or the result of cls(response)
+        :return: An iterator like instance of either ManagedNetworkPeeringPolicyListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~managed_network_management_client.models.ManagedNetworkPeeringPolicyListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

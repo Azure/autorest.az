@@ -5,6 +5,7 @@
 
 import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
+import { isNullOrUndefined } from "util";
 
 export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -16,7 +17,7 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
     output.push("    from azure.cli.core.commands.client_factory import get_mgmt_service_client");
     output.push("    from ..vendored_sdks." + model.PythonOperationsName + " import " + model.PythonMgmtClient);
 
-    if (model.Extension_ClientSubscriptionBound || model.Extension_ClientBaseUrlBound)
+    if (!isNullOrUndefined(model.Extension_ClientSubscriptionBound) || !isNullOrUndefined(model.Extension_ClientBaseUrlBound))
     {
         output.push("    return get_mgmt_service_client(cli_ctx, " + model.PythonMgmtClient + ",");
         output.push("                                   subscription_bound=" + (model.Extension_ClientSubscriptionBound ? "True" : "False") + ",");

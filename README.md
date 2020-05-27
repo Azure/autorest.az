@@ -6,13 +6,14 @@ See documentation [here](doc/00-overview.md)
 
 python:
     reason: 'make sure python flag exists to load config in python.md'
+azure-arm: true
 
 output-folder: $(az-output-folder)
 debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
-  "@autorest/python": "5.0.0-preview.3"
-  "@autorest/clicommon": "0.4.8"
+  "@autorest/python": "5.0.0-preview.7"
+  "@autorest/clicommon": "0.4.9"
   #"@autorest/python": "latest"
   
 cli:
@@ -36,6 +37,7 @@ require:
 pipeline-model: v3
 
 modelerfour:
+    lenient-model-deduplication: true
     group-parameters: true
     flatten-models: true
     flatten-payloads: true

@@ -49,7 +49,7 @@ class ManagedNetworkManagementClientConfiguration(Configuration):
         self.api_version = "2019-06-01-preview"
         self.credential_scopes = ['https://management.azure.com/.default']
         self.credential_scopes.extend(kwargs.pop('credential_scopes', []))
-        kwargs.setdefault('sdk_moniker', 'mgmt-managednetwork/{}'.format(VERSION))
+        kwargs.setdefault('sdk_moniker', 'managednetworkmanagementclient/{}'.format(VERSION))
         self._configure(**kwargs)
 
     def _configure(

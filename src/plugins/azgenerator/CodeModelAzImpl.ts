@@ -1145,8 +1145,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_IsPolyOfSimple(param: Parameter = this.MethodParameter): boolean {
-        if(!isNullOrUndefined(this.MethodParameter['isPolyOfSimple'])) {
-            return this.MethodParameter['isPolyOfSimple'];
+        if(!isNullOrUndefined(param['isPolyOfSimple'])) {
+            return param['isPolyOfSimple'];
         }
         if (param?.schema?.type == SchemaType.Object && !isNullOrUndefined(param.schema['children']) && !isNullOrUndefined(param.schema['discriminator'])) {
             let isSimplePoly = true;
@@ -1158,9 +1158,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                 break;
             }
             if (isSimplePoly) {
-                this.MethodParameter['isPolyOfSimple'] = true;
+                param['isPolyOfSimple'] = true;
             } else {
-                this.MethodParameter['isPolyOfSimple'] = false;
+                param['isPolyOfSimple'] = false;
             }
             return isSimplePoly;
         }

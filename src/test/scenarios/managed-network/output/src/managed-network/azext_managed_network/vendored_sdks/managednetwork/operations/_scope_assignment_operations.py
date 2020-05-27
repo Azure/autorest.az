@@ -59,7 +59,7 @@ class ScopeAssignmentOperations(object):
         :param scope_assignment_name: The name of the scope assignment to get.
         :type scope_assignment_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ScopeAssignment or the result of cls(response)
+        :return: ScopeAssignment, or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ScopeAssignment
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -97,7 +97,7 @@ class ScopeAssignmentOperations(object):
         deserialized = self._deserialize('ScopeAssignment', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}'}  # type: ignore
@@ -126,7 +126,7 @@ class ScopeAssignmentOperations(object):
         :param assigned_managed_network: The managed network ID with scope will be assigned to.
         :type assigned_managed_network: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ScopeAssignment or the result of cls(response)
+        :return: ScopeAssignment, or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ScopeAssignment
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -177,7 +177,7 @@ class ScopeAssignmentOperations(object):
             deserialized = self._deserialize('ScopeAssignment', pipeline_response)
 
         if cls:
-          return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create_or_update.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}'}  # type: ignore
@@ -196,7 +196,7 @@ class ScopeAssignmentOperations(object):
         :param scope_assignment_name: The name of the scope assignment to delete.
         :type scope_assignment_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None or the result of cls(response)
+        :return: None, or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -230,7 +230,7 @@ class ScopeAssignmentOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-          return cls(pipeline_response, None, {})
+            return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}'}  # type: ignore
 
@@ -245,7 +245,7 @@ class ScopeAssignmentOperations(object):
         :param scope: The base resource of the scope assignment.
         :type scope: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of ScopeAssignmentListResult or the result of cls(response)
+        :return: An iterator like instance of either ScopeAssignmentListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~managed_network_management_client.models.ScopeAssignmentListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

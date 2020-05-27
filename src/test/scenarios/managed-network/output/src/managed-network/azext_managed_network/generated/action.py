@@ -19,7 +19,6 @@ class AddSubscriptions(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddSubscriptions, self).__call__(parser, namespace, action, option_string)
 
-
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
             properties = defaultdict(list)
@@ -41,7 +40,6 @@ class AddVirtualNetworks(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
         super(AddVirtualNetworks, self).__call__(parser, namespace, action, option_string)
-
 
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
@@ -65,7 +63,6 @@ class AddSubnets(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddSubnets, self).__call__(parser, namespace, action, option_string)
 
-
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
             properties = defaultdict(list)
@@ -87,7 +84,6 @@ class AddHub(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
         namespace.hub = action
-
 
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
@@ -111,7 +107,6 @@ class AddSpokes(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddSpokes, self).__call__(parser, namespace, action, option_string)
 
-
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
             properties = defaultdict(list)
@@ -133,7 +128,6 @@ class AddMesh(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
         super(AddMesh, self).__call__(parser, namespace, action, option_string)
-
 
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:

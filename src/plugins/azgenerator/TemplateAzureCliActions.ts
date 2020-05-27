@@ -84,8 +84,6 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
     } else {
         output.push("        namespace." + model.Parameter_MapsTo(param) + " = action");
     }
-
-    output.push("");
     output.push("");
     output.push("    def get_action(self, values, option_string):  # pylint: disable=no-self-use");
     output.push("        try:");
