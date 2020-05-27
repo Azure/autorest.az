@@ -230,8 +230,9 @@ function GetActionOptions( model: CodeModelAz, param: Parameter, keyToMatch: str
                 }
             } while (model.SelectNextMethodParameter());
         }
+        model.ExitSubMethodParameters();
     }
-    model.ExitSubMethodParameters();
+    
     return options;
 }
 

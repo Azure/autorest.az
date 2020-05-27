@@ -34,6 +34,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     suboptions: Property[];
     subOperationGroups: Operation[];
     submethodparameters: Parameter[];
+    substack: Array<[Parameter[], number]>;
     currentSubOptionIndex: number;
     paramActionNameReference: Map<Schema, string>;
     private _testScenario: any[];
@@ -54,6 +55,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.suboptions = null;
         this.currentSubOptionIndex = -1;
         this.submethodparameters = null;
+        this.substack = new Array<[Parameter[], number]>();
         this._clientBaseUrlBound = this.options['client-base-url-bound'];
         this._clientSubscriptionBound = this.options['client-subscription-bound'];
         //this.sortOperationByAzCommand();
@@ -864,7 +866,15 @@ export class CodeModelCliImpl implements CodeModelAz {
             return false;
         }
         else {
+            if (isNullOrUndefined(this.substack)) {
+                this.substack = new Array<[Parameter[], number]>();
+            }
+            // reserve previous status
+            if (!isNullOrUndefined(this.submethodparameters)) {
+                this.substack.push([this.submethodparameters, this.currentSubOptionIndex]);
+            }
             this.submethodparameters = subParams;
+            this.currentSubOptionIndex = 0;
             return true;
         }
     }
@@ -913,8 +923,15 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public ExitSubMethodParameters(): boolean {
         if (this.submethodparameters != null) {
-            this.submethodparameters = null;
-            this.currentSubOptionIndex = -1;
+            if (this.substack.length > 0) {
+                let lastsub = this.substack.last;
+                this.submethodparameters = lastsub[0];
+                this.currentSubOptionIndex = lastsub[1];
+                this.substack.pop();       
+            } else {
+                this.submethodparameters = null;
+                this.currentSubOptionIndex = -1;
+            }
             return true;
         }
         return false;
