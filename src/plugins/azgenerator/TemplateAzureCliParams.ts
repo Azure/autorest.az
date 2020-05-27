@@ -47,7 +47,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
                         needGeneric = true;
                     }
                     let needUpdate = model.Command_CanSplit;
-                    let command_output = getCommandBody(model, needUpdate, needGeneric, genericParam);
+                    let command_output = getCommandBody(model, false, false, null);
                     if (model.Command_MethodName == "show") {
                         show_output = command_output
                     } 
@@ -164,7 +164,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                     }
                     if (needGeneric && !isNullOrUndefined(genericParam) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParam)) {
                         if (model.EnterSubMethodParameters(genericParam, false)) {
-                            if (model.SelectFirstMethodParameter(true)) {
+                            if (model.SelectFirstMethodParameter()) {
                                 do {
                                     if (model.SubMethodParameter['readOnly']) {
                                         continue;
@@ -174,7 +174,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                                     }
                                     hasParam = true;
                                     output_args = output_args.concat(getSingleArgument(model, originalOperation, model.SubMethodParameter, allParam, allPythonParam, baseParam, needUpdate));
-                                } while (model.SelectNextMethodParameter(true));
+                                } while (model.SelectNextMethodParameter());
                             }
                             model.ExitSubMethodParameters();
                         }
@@ -404,7 +404,8 @@ function GetActionOptions(model: CodeModelAz, param: Parameter, keyToMatch: stri
                 }
             } while (model.SelectNextMethodParameter());
         }
+        model.ExitSubMethodParameters();
     }
-    model.ExitSubMethodParameters();
+    
     return options;
 }

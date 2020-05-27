@@ -11,6 +11,7 @@ export async function processRequest(host: Host) {
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema); 
         let model = new CodeModelCliImpl(session);
+        model.init();
         let files: any = await GenerateAll(model, true);
         if (model.SelectFirstExtension()) {
             do {

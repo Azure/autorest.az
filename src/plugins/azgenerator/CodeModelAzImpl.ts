@@ -34,6 +34,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     suboptions: Property[];
     subOperationGroups: Operation[];
     submethodparameters: Parameter[];
+    substack: Array<[Parameter[], number]>;
     currentSubOptionIndex: number;
     paramActionNameReference: Map<Schema, string>;
     private _testScenario: any[];
@@ -54,6 +55,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.suboptions = null;
         this.currentSubOptionIndex = -1;
         this.submethodparameters = null;
+        this.substack = new Array<[Parameter[], number]>();
         this._clientBaseUrlBound = this.options['client-base-url-bound'];
         this._clientSubscriptionBound = this.options['client-subscription-bound'];
         //this.sortOperationByAzCommand();
@@ -266,112 +268,44 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (this.SelectFirstCommandGroup()) {
             do {
                 if (this.SelectFirstCommand()) {
+                    let originalOperation = this.Command_GetOriginalOperation;
                     do {
+                        let genericParam = this.Command_GenericSetterParameter(
+                          this.Command
+                        );
+                        if (!isNullOrUndefined(originalOperation)) {
+                          genericParam = this.Command_GenericSetterParameter(
+                            originalOperation
+                          );
+                        }
+                        let needGeneric = false;
+                        if (!isNullOrUndefined(genericParam)) {
+                          needGeneric = true;
+                        }
+                        let needUpdate = this.Command_CanSplit;
                         let nameParamReference: Map<string, Parameter> = new Map<string, Parameter>();
                         if (this.SelectFirstMethod()) {
                             do {
                                 if (this.SelectFirstMethodParameter()) {
                                     do {
-                                        let paramName = this.MethodParameter_MapsTo;
-                                        let param = this.MethodParameter;
-                                        let originParam = this.MethodParameter;
-                                        let flattenedNames = param?.['targetProperty']?.['flattenedNames'];
-                                        let mapName: Array<string> = [];
-                                        let paramFlattenedName = this.Parameter_MapsTo(param);
-                                        let names = this.Method_NameAz.split(' ');
-                                        if (flattenedNames && flattenedNames.length > 0) {
-                                            for(let item of flattenedNames) {
-                                                mapName.push(ToSnakeCase(item));
-                                            }
-                                            mapName.reverse();
-                                            if (mapName[mapName.length - 1] == 'properties' || mapName[mapName.length - 1] == 'parameters') {
-                                                mapName.pop();
-                                            } else if (names.length > 1 && mapName[mapName.length - 1] == names[0].replace(/-/g, '_')) {
-                                                mapName.pop();
-                                            }
-                                            if(mapName.length > 0) {
-                                                paramFlattenedName = mapName.reverse().join("_");
-                                            }
-                                        } else if (names.length > 1) {
-                                            let subgroup: string = names[0];
-                                            subgroup = subgroup.replace(/-/g, '_');
-                                            if (paramFlattenedName.startsWith(subgroup)) {
-                                                paramFlattenedName = paramFlattenedName.substr(subgroup.length + 1);
-                                            }
-                                        }
-                                        if (nameParamReference.has(paramFlattenedName) && nameParamReference.get(paramFlattenedName).schema != param.schema) {
-                                            let tmpName = paramFlattenedName;
-                                            let preParam = nameParamReference.get(paramFlattenedName);
-                                            let preFlattenedNames = preParam?.['targetProperty']?.['flattenedNames'];
-                                            let preParamFlattenedName = this.Parameter_MapsTo(preParam);
-                                            let preTmpName = preParamFlattenedName;
-                                            if (preFlattenedNames && preFlattenedNames.length > 0) {
-                                                preTmpName = preFlattenedNames.map(pfn => ToSnakeCase(pfn)).join('_');
-                                            }
-                                            if (flattenedNames && flattenedNames.length > 0) {
-                                                tmpName = flattenedNames.map(fn => ToSnakeCase(fn)).join('_');
-                                            }
-                                            if (preTmpName != preParamFlattenedName) {
-                                                preParamFlattenedName = preTmpName;
-                                            } else if (tmpName != paramFlattenedName) {
-                                                paramFlattenedName = tmpName;
-                                            }
-                                            if (pythonReserveWord.indexOf(paramFlattenedName) > -1) {
-                                                paramFlattenedName += "_";
-                                            } 
-                                            if (pythonReserveWord.indexOf(preParamFlattenedName) > -1) {
-                                                preParamFlattenedName += "_";
-                                            }
-                                            if (paramFlattenedName != preParamFlattenedName) {
-                                                this.Parameter_SetAzNameMapsTo(preParamFlattenedName, preParam);
-                                                nameParamReference.set(preParamFlattenedName, preParam);
-                                                this.Parameter_SetAzNameMapsTo(paramFlattenedName, param);
-                                                nameParamReference.set(paramName, param);
-                                            } else {
-                                                // if the full flattenedName within one command is the same but has two different reference. there's no way to split them.
-                                                this.session.message({ Channel: Channel.Warning, Text: "parameter " + paramFlattenedName + " has two different references but they have the same flattened name" });
-                                            }
-                                        } else {
-                                            // nameParamReference doesn't have the parameter
-                                            // or nameParamReference has the parameter and they are the same.
-                                            if (pythonReserveWord.indexOf(paramFlattenedName) > -1) {
-                                                paramFlattenedName += "_";
-                                            }
-                                            this.Parameter_SetAzNameMapsTo(paramFlattenedName, param);
-                                            nameParamReference.set(paramFlattenedName, param);
-                                        }
-                                        if (this.MethodParameter_Name == 'tags') {
-                                            continue;
-                                        }
-                                        if (this.Parameter_IsPolyOfSimple()) {
-                                            continue;
-                                        }
-                                        if (this.MethodParameter_IsList && this.MethodParameter_IsListOfSimple && !this.MethodParameter_IsSimpleArray) {
-                                            let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" +  this.MethodParameter_MapsTo));
-                                            let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.MethodParameter_MapsTo));
-                                            let actionName: string = "Add" + Capitalize(ToCamelCase(this.MethodParameter_MapsTo));
-                                            let action = new ActionParam(groupOpParamName, groupParamName, actionName, param);
-                                            if (nameActionReference.has(actionName) && nameActionReference.get(actionName).action.schema != originParam.schema) {
-                                                let preAction = nameActionReference.get(actionName);
-                                                nameActionReference.delete(actionName);
-                                                let preActionUniqueName = preAction.actionName;
-                                                let actionUniqueName = actionName;
-                                                if (preAction.groupActionName != action.groupActionName) {
-                                                    actionUniqueName = action.groupActionName;
-                                                    preActionUniqueName = preAction.groupActionName;
-                                                } else if (preAction.groupOpActionName != action.groupOpActionName) {
-                                                    actionUniqueName = action.groupOpActionName;
-                                                    preActionUniqueName = preAction.groupOpActionName;
+                                        if (needGeneric && !isNullOrUndefined(genericParam) && this.MethodParameter_MapsTo == this.Parameter_MapsTo(genericParam)) {
+                                            if (this.EnterSubMethodParameters(genericParam, false)) {
+                                                if (this.SelectFirstMethodParameter()) {
+                                                    do {
+                                                        if (this.SubMethodParameter['readOnly']) {
+                                                            continue;
+                                                        }
+                                                        if (this.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                                                            continue;
+                                                        }
+                                                        this.FindAllMethodParameters(this.SubMethodParameter, nameActionReference, pythonReserveWord, nameParamReference);
+                                                    } while (this.SelectNextMethodParameter());
                                                 }
-                                                this.paramActionNameReference.set(preAction.action.schema, preActionUniqueName);
-                                                this.paramActionNameReference.set(param.schema, actionUniqueName);
-                                                nameActionReference.set(preActionUniqueName, preAction);
-                                                nameActionReference.set(actionUniqueName, action);
-                                            } else if(!this.paramActionNameReference.has(originParam.schema)) {
-                                                nameActionReference.set(actionName, action);
-                                                this.paramActionNameReference.set(param.schema, actionName);
+                                                this.ExitSubMethodParameters();
                                             }
-                                        } 
+                                            continue;
+                                        }
+                                        this.FindAllMethodParameters(this.MethodParameter, nameActionReference, pythonReserveWord, nameParamReference);
                                     } while (this.SelectNextMethodParameter())
                                 }
                             } while (this.SelectNextMethod())
@@ -382,6 +316,109 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
+    private FindAllMethodParameters(mparam: Parameter, nameActionReference: Map<string, ActionParam>, pythonReserveWord: string[], nameParamReference: Map<string, Parameter>) {
+        let paramName = this.Parameter_MapsTo(mparam);
+        let param = mparam;
+        let originParam = mparam;
+        let flattenedNames = param?.['targetProperty']?.['flattenedNames'];
+        let mapName: Array<string> = [];
+        let paramFlattenedName = this.Parameter_MapsTo(param);
+        let names = this.Method_NameAz.split(' ');
+        if (flattenedNames && flattenedNames.length > 0) {
+            for(let item of flattenedNames) {
+                mapName.push(ToSnakeCase(item));
+            }
+            mapName.reverse();
+            if (mapName[mapName.length - 1] == 'properties' || mapName[mapName.length - 1] == 'parameters') {
+                mapName.pop();
+            } else if (names.length > 1 && mapName[mapName.length - 1] == names[0].replace(/-/g, '_')) {
+                mapName.pop();
+            }
+            if(mapName.length > 0) {
+                paramFlattenedName = mapName.reverse().join("_");
+            }
+        } else if (names.length > 1) {
+            let subgroup: string = names[0];
+            subgroup = subgroup.replace(/-/g, '_');
+            if (paramFlattenedName.startsWith(subgroup)) {
+                paramFlattenedName = paramFlattenedName.substr(subgroup.length + 1);
+            }
+        }
+        if (nameParamReference.has(paramFlattenedName) && nameParamReference.get(paramFlattenedName).schema != param.schema) {
+            let tmpName = paramFlattenedName;
+            let preParam = nameParamReference.get(paramFlattenedName);
+            let preFlattenedNames = preParam?.['targetProperty']?.['flattenedNames'];
+            let preParamFlattenedName = this.Parameter_MapsTo(preParam);
+            let preTmpName = preParamFlattenedName;
+            if (preFlattenedNames && preFlattenedNames.length > 0) {
+                preTmpName = preFlattenedNames.map(pfn => ToSnakeCase(pfn)).join('_');
+            }
+            if (flattenedNames && flattenedNames.length > 0) {
+                tmpName = flattenedNames.map(fn => ToSnakeCase(fn)).join('_');
+            }
+            if (preTmpName != preParamFlattenedName) {
+                preParamFlattenedName = preTmpName;
+            } else if (tmpName != paramFlattenedName) {
+                paramFlattenedName = tmpName;
+            }
+            if (pythonReserveWord.indexOf(paramFlattenedName) > -1) {
+                paramFlattenedName += "_";
+            } 
+            if (pythonReserveWord.indexOf(preParamFlattenedName) > -1) {
+                preParamFlattenedName += "_";
+            }
+            if (paramFlattenedName != preParamFlattenedName) {
+                this.Parameter_SetAzNameMapsTo(preParamFlattenedName, preParam);
+                nameParamReference.set(preParamFlattenedName, preParam);
+                this.Parameter_SetAzNameMapsTo(paramFlattenedName, param);
+                nameParamReference.set(paramName, param);
+            } else {
+                // if the full flattenedName within one command is the same but has two different reference. there's no way to split them.
+                this.session.message({ Channel: Channel.Warning, Text: "parameter " + paramFlattenedName + " has two different references but they have the same flattened name" });
+            }
+        } else {
+            // nameParamReference doesn't have the parameter
+            // or nameParamReference has the parameter and they are the same.
+            if (pythonReserveWord.indexOf(paramFlattenedName) > -1) {
+                paramFlattenedName += "_";
+            }
+            this.Parameter_SetAzNameMapsTo(paramFlattenedName, param);
+            nameParamReference.set(paramFlattenedName, param);
+        }
+        if (this.Parameter_Name(mparam) == 'tags') {
+            return;
+        }
+        if (this.Parameter_IsPolyOfSimple(mparam)) {
+            return;
+        }
+        if (this.Parameter_IsList(mparam) && this.Parameter_IsListOfSimple(mparam) && !this.Parameter_IsSimpleArray(mparam)) {
+            let groupOpParamName: string = "Add" + Capitalize(ToCamelCase(this.Command_FunctionName + "_" +  this.Parameter_MapsTo(mparam)));
+            let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.Parameter_MapsTo(mparam)));
+            let actionName: string = "Add" + Capitalize(ToCamelCase(this.Parameter_MapsTo(mparam)));
+            let action = new ActionParam(groupOpParamName, groupParamName, actionName, param);
+            if (nameActionReference.has(actionName) && nameActionReference.get(actionName).action.schema != originParam.schema) {
+                let preAction = nameActionReference.get(actionName);
+                nameActionReference.delete(actionName);
+                let preActionUniqueName = preAction.actionName;
+                let actionUniqueName = actionName;
+                if (preAction.groupActionName != action.groupActionName) {
+                    actionUniqueName = action.groupActionName;
+                    preActionUniqueName = preAction.groupActionName;
+                } else if (preAction.groupOpActionName != action.groupOpActionName) {
+                    actionUniqueName = action.groupOpActionName;
+                    preActionUniqueName = preAction.groupOpActionName;
+                }
+                this.paramActionNameReference.set(preAction.action.schema, preActionUniqueName);
+                this.paramActionNameReference.set(param.schema, actionUniqueName);
+                nameActionReference.set(preActionUniqueName, preAction);
+                nameActionReference.set(actionUniqueName, action);
+            } else if(!this.paramActionNameReference.has(originParam.schema)) {
+                nameActionReference.set(actionName, action);
+                this.paramActionNameReference.set(param.schema, actionName);
+            }
+        } 
+
+    }
     //=================================================================================================================
     // Extension level information
     // autorest.az will have support for multiple extensions from single swagger file.
@@ -864,7 +901,15 @@ export class CodeModelCliImpl implements CodeModelAz {
             return false;
         }
         else {
+            if (isNullOrUndefined(this.substack)) {
+                this.substack = new Array<[Parameter[], number]>();
+            }
+            // reserve previous status
+            if (!isNullOrUndefined(this.submethodparameters)) {
+                this.substack.push([this.submethodparameters, this.currentSubOptionIndex]);
+            }
             this.submethodparameters = subParams;
+            this.currentSubOptionIndex = 0;
             return true;
         }
     }
@@ -913,8 +958,15 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public ExitSubMethodParameters(): boolean {
         if (this.submethodparameters != null) {
-            this.submethodparameters = null;
-            this.currentSubOptionIndex = -1;
+            if (this.substack.length > 0) {
+                let lastsub = this.substack.last;
+                this.submethodparameters = lastsub[0];
+                this.currentSubOptionIndex = lastsub[1];
+                this.substack.pop();       
+            } else {
+                this.submethodparameters = null;
+                this.currentSubOptionIndex = -1;
+            }
             return true;
         }
         return false;
@@ -1301,7 +1353,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     parameter.language['az'].hidden = true;
                 }
             } else {
-                parameter.language['az'].hidden = this.MethodParameter['hidden'] ?? shouldHidden ?? false;
+                parameter.language['az'].hidden = parameter['hidden'] ?? shouldHidden ?? false;
             }
         }
 

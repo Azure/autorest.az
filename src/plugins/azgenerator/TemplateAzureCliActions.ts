@@ -25,33 +25,41 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
     if (model.SelectFirstCommandGroup()) {
         do {
             if (model.SelectFirstCommand()) {
+                let originalOperation = model.Command_GetOriginalOperation;
                 do {
+                    let genericParam = model.Command_GenericSetterParameter(model.Command);
+                    if (!isNullOrUndefined(originalOperation)) {
+                        genericParam = model.Command_GenericSetterParameter(originalOperation);
+                    }
+                    let needGeneric = false;
+                    if (!isNullOrUndefined(genericParam)) {
+                        needGeneric = true;
+                    }
+                    let needUpdate = model.Command_CanSplit;
                     if (model.SelectFirstMethod()) {
                         do {
                             let baseParam = null;
                             if (model.SelectFirstMethodParameter()) {
                                 do {
-                                    if (baseParam && model.MethodParameter['polyBaseParam'] == baseParam) {
-                                        let keyToMatch = baseParam.schema?.['discriminator']?.property?.language['python']?.name;
-                                        let valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
-                                        let subActionName = model.Schema_ActionName(model.MethodParameter.schema);
-                                        if (isNullOrUndefined(subActionName) || allActions.has(subActionName)) {
-                                            continue;
+
+                                    if (needGeneric && !isNullOrUndefined(genericParam) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParam)) {
+                                        if (model.EnterSubMethodParameters(genericParam, false)) {
+                                            if (model.SelectFirstMethodParameter(true)) {
+                                                do {
+                                                    if (model.SubMethodParameter['readOnly']) {
+                                                        continue;
+                                                    }
+                                                    if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                                                        continue;
+                                                    }
+                                                    output = output.concat(GetActionOutput(model, model.SubMethodParameter, baseParam));
+                                                } while (model.SelectNextMethodParameter(true));
+                                            }
+                                            model.ExitSubMethodParameters();
                                         }
-                                        output = output.concat(GetAction(model, subActionName, model.MethodParameter, keyToMatch, valueToMatch))
+                                        continue;
                                     }
-                                    let actionName = model.Schema_ActionName(model.MethodParameter.schema);
-                                    if (isNullOrUndefined(actionName)) {
-                                        if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                                            baseParam = model.MethodParameter;
-                                        }       
-                                    }
-                                    else {
-                                        if (allActions.has(actionName)) {
-                                            continue;
-                                        }
-                                        output = output.concat(GetAction(model, actionName, model.MethodParameter))
-                                    }
+                                    output = output.concat(GetActionOutput(model, model.MethodParameter, baseParam));
                                 } while (model.SelectNextMethodParameter());
                             }
                         } while (model.SelectNextMethod());
@@ -63,6 +71,40 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
 
     output.push("");
 
+    return output;
+}
+
+function GetActionOutput(model: CodeModelAz, param: Parameter, baseParam: Parameter) {
+    let output = [];
+    if (baseParam && param["polyBaseParam"] == baseParam) {
+        let keyToMatch =
+            baseParam.schema?.["discriminator"]?.property?.language["python"]?.name;
+        let valueToMatch = param.schema?.["discriminatorValue"];
+        let subActionName = model.Schema_ActionName(param.schema);
+        if (isNullOrUndefined(subActionName) || allActions.has(subActionName)) {
+            return output;
+        }
+        output = output.concat(
+            GetAction(
+                model,
+                subActionName,
+                param,
+                keyToMatch,
+                valueToMatch
+            )
+        );
+    }
+    let actionName = model.Schema_ActionName(param.schema);
+    if (isNullOrUndefined(actionName)) {
+        if (model.Parameter_IsPolyOfSimple(param)) {
+            baseParam = param;
+        }
+    } else {
+        if (allActions.has(actionName)) {
+            return output;
+        }
+        output = output.concat(GetAction(model, actionName, param));
+    }
     return output;
 }
 
@@ -98,12 +140,12 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
     if (model.EnterSubMethodParameters()) {
         if (model.SelectFirstMethodParameter(true)) {
             do {
-                if (model.Parameter_DefaultValue(model.SubMethodParameter) !== undefined)
-                {
+                if (model.Parameter_DefaultValue(model.SubMethodParameter) !== undefined) {
                     output.push("        d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = " + ToPythonString(model.Parameter_DefaultValue(model.SubMethodParameter), model.Parameter_Type(model.SubMethodParameter)));
                 }
             } while (model.SelectNextMethodParameter(true));
         }
+        model.ExitSubMethodParameters();
     }
 
     output.push("        for k in properties:");
@@ -135,8 +177,9 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
                 ifkv = "elif";
             } while (model.SelectNextMethodParameter());
         }
+        model.ExitSubMethodParameters();
     }
-    model.ExitSubMethodParameters();
+    
     if (!foundProperties && preParamType == SchemaType.Dictionary) {
         output.push("            d[k] = v");
     }
