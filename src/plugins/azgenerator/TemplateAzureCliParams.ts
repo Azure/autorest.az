@@ -379,7 +379,8 @@ function GetActionOptions(model: CodeModelAz, param: Parameter, keyToMatch: stri
                 }
             } while (model.SelectNextMethodParameter());
         }
+        model.ExitSubMethodParameters();
     }
-    model.ExitSubMethodParameters();
+   
     return options;
 }

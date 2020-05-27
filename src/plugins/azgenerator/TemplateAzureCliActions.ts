@@ -104,6 +104,7 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
                 }
             } while (model.SelectNextMethodParameter(true));
         }
+        model.ExitSubMethodParameters();
     }
 
     output.push("        for k in properties:");
@@ -135,8 +136,9 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
                 ifkv = "elif";
             } while (model.SelectNextMethodParameter());
         }
+        model.ExitSubMethodParameters();
     }
-    model.ExitSubMethodParameters();
+    
     if (!foundProperties && preParamType == SchemaType.Dictionary) {
         output.push("            d[k] = v");
     }
