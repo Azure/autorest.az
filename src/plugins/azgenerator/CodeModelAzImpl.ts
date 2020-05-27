@@ -1304,7 +1304,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     parameter.language['az'].hidden = true;
                 }
             } else {
-                parameter.language['az'].hidden = this.MethodParameter['hidden'] ?? shouldHidden ?? false;
+                parameter.language['az'].hidden = parameter['hidden'] ?? shouldHidden ?? false;
             }
         }
 
