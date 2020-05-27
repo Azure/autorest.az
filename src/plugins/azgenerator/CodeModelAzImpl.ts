@@ -30,13 +30,14 @@ export class CodeModelCliImpl implements CodeModelAz {
     preMethodIndex: number;
     currentMethodIndex: number;
     resource_pool: ResourcePool;
-
     suboptions: Property[];
     subOperationGroups: Operation[];
     submethodparameters: Parameter[];
     substack: Array<[Parameter[], number]>;
     currentSubOptionIndex: number;
     paramActionNameReference: Map<Schema, string>;
+    nameActionReference: Map<string, ActionParam>;
+    nameParamReference: Map<string, Parameter>;
     private _testScenario: any[];
     private _configuredScenario: boolean;
     private _clientSubscriptionBound: boolean;
@@ -263,7 +264,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     private setParamAzUniqueNames() {
         this.paramActionNameReference = new Map<Schema, string>();
-        let nameActionReference: Map<string, ActionParam> = new Map<string, ActionParam>();
+        this.nameActionReference = new Map<string, ActionParam>();
         let pythonReserveWord = ['all', 'id', 'format', 'type'];
         if (this.SelectFirstCommandGroup()) {
             do {
@@ -283,7 +284,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                           needGeneric = true;
                         }
                         let needUpdate = this.Command_CanSplit;
-                        let nameParamReference: Map<string, Parameter> = new Map<string, Parameter>();
+                        this.nameParamReference = new Map<string, Parameter>();
                         if (this.SelectFirstMethod()) {
                             do {
                                 if (this.SelectFirstMethodParameter()) {
@@ -298,14 +299,14 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                         if (this.SubMethodParameter['schema']?.type == SchemaType.Constant) {
                                                             continue;
                                                         }
-                                                        this.FindAllMethodParameters(this.SubMethodParameter, nameActionReference, pythonReserveWord, nameParamReference);
+                                                        this.FindAllMethodParameters(this.SubMethodParameter, pythonReserveWord);
                                                     } while (this.SelectNextMethodParameter());
                                                 }
                                                 this.ExitSubMethodParameters();
                                             }
                                             continue;
                                         }
-                                        this.FindAllMethodParameters(this.MethodParameter, nameActionReference, pythonReserveWord, nameParamReference);
+                                        this.FindAllMethodParameters(this.MethodParameter, pythonReserveWord);
                                     } while (this.SelectNextMethodParameter())
                                 }
                             } while (this.SelectNextMethod())
@@ -316,7 +317,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    private FindAllMethodParameters(mparam: Parameter, nameActionReference: Map<string, ActionParam>, pythonReserveWord: string[], nameParamReference: Map<string, Parameter>) {
+    private FindAllMethodParameters(mparam: Parameter, pythonReserveWord: string[]) {
         let paramName = this.Parameter_MapsTo(mparam);
         let param = mparam;
         let originParam = mparam;
@@ -344,9 +345,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                 paramFlattenedName = paramFlattenedName.substr(subgroup.length + 1);
             }
         }
-        if (nameParamReference.has(paramFlattenedName) && nameParamReference.get(paramFlattenedName).schema != param.schema) {
+        if (this.nameParamReference.has(paramFlattenedName) && this.nameParamReference.get(paramFlattenedName).schema != param.schema) {
             let tmpName = paramFlattenedName;
-            let preParam = nameParamReference.get(paramFlattenedName);
+            let preParam = this.nameParamReference.get(paramFlattenedName);
             let preFlattenedNames = preParam?.['targetProperty']?.['flattenedNames'];
             let preParamFlattenedName = this.Parameter_MapsTo(preParam);
             let preTmpName = preParamFlattenedName;
@@ -369,9 +370,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             if (paramFlattenedName != preParamFlattenedName) {
                 this.Parameter_SetAzNameMapsTo(preParamFlattenedName, preParam);
-                nameParamReference.set(preParamFlattenedName, preParam);
+                this.nameParamReference.set(preParamFlattenedName, preParam);
                 this.Parameter_SetAzNameMapsTo(paramFlattenedName, param);
-                nameParamReference.set(paramName, param);
+                this.nameParamReference.set(paramName, param);
             } else {
                 // if the full flattenedName within one command is the same but has two different reference. there's no way to split them.
                 this.session.message({ Channel: Channel.Warning, Text: "parameter " + paramFlattenedName + " has two different references but they have the same flattened name" });
@@ -383,7 +384,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 paramFlattenedName += "_";
             }
             this.Parameter_SetAzNameMapsTo(paramFlattenedName, param);
-            nameParamReference.set(paramFlattenedName, param);
+            this.nameParamReference.set(paramFlattenedName, param);
         }
         if (this.Parameter_Name(mparam) == 'tags') {
             return;
@@ -396,9 +397,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             let groupParamName: string = "Add" + Capitalize(ToCamelCase(this.CommandGroup_Key + "_" + this.Parameter_MapsTo(mparam)));
             let actionName: string = "Add" + Capitalize(ToCamelCase(this.Parameter_MapsTo(mparam)));
             let action = new ActionParam(groupOpParamName, groupParamName, actionName, param);
-            if (nameActionReference.has(actionName) && nameActionReference.get(actionName).action.schema != originParam.schema) {
-                let preAction = nameActionReference.get(actionName);
-                nameActionReference.delete(actionName);
+            if (this.nameActionReference.has(actionName) && this.nameActionReference.get(actionName).action.schema != originParam.schema) {
+                let preAction = this.nameActionReference.get(actionName);
+                this.nameActionReference.delete(actionName);
                 let preActionUniqueName = preAction.actionName;
                 let actionUniqueName = actionName;
                 if (preAction.groupActionName != action.groupActionName) {
@@ -410,10 +411,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 this.paramActionNameReference.set(preAction.action.schema, preActionUniqueName);
                 this.paramActionNameReference.set(param.schema, actionUniqueName);
-                nameActionReference.set(preActionUniqueName, preAction);
-                nameActionReference.set(actionUniqueName, action);
+                this.nameActionReference.set(preActionUniqueName, preAction);
+                this.nameActionReference.set(actionUniqueName, action);
             } else if(!this.paramActionNameReference.has(originParam.schema)) {
-                nameActionReference.set(actionName, action);
+                this.nameActionReference.set(actionName, action);
                 this.paramActionNameReference.set(param.schema, actionName);
             }
         } 

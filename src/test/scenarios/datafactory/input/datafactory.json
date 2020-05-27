@@ -707,6 +707,15 @@
           },
           {
             "$ref": "#/parameters/api-version"
+          },
+          {
+            "name": "FakeIdentity",
+            "description": "This is only for az test.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FakeFactoryIdentity1"
+            }
           }
         ],
         "responses": {
@@ -2018,6 +2027,23 @@
       },
       "required": ["name"]
     },
+    "FakeFactoryIdentity1": {
+        "description": "This is only for az test.",
+        "properties": {
+          "name1": {
+            "type": "string",
+            "description": ".."
+          },
+          "zonesInside1": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "sample of simple array"
+          }
+        },
+        "required": ["name1"]
+      },
     "TriggerQueryResponse": {
       "description": "A query of triggers.",
       "type": "object",
