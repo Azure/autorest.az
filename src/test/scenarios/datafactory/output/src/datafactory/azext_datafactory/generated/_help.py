@@ -358,6 +358,41 @@ helps['datafactory integration-runtime managed'] = """
 helps['datafactory integration-runtime managed create'] = """
     type: command
     short-summary: Creates or updates an integration runtime.
+    parameters:
+      - name: --factory-vsts-configuration
+        short-summary: Factory's VSTS repo information.
+        long-summary: |
+            Usage: --factory-vsts-configuration project-name=XX tenant-id=XX type=XX account-name=XX repository-name=XX\
+ collaboration-branch=XX root-folder=XX last-commit-id=XX
+
+            project-name: Required. VSTS project name.
+            tenant-id: VSTS tenant id.
+            type: Required. Type of repo configuration.
+            account-name: Required. Account name.
+            repository-name: Required. Repository name.
+            collaboration-branch: Required. Collaboration branch.
+            root-folder: Required. Root folder.
+            last-commit-id: Last commit id.
+      - name: --factory-git-hub-configuration
+        short-summary: Factory's GitHub repo information.
+        long-summary: |
+            Usage: --factory-git-hub-configuration host-name=XX type=XX account-name=XX repository-name=XX collaboratio\
+n-branch=XX root-folder=XX last-commit-id=XX
+
+            host-name: GitHub Enterprise host name. For example: https://github.mydomain.com
+            type: Required. Type of repo configuration.
+            account-name: Required. Account name.
+            repository-name: Required. Repository name.
+            collaboration-branch: Required. Collaboration branch.
+            root-folder: Required. Root folder.
+            last-commit-id: Last commit id.
+      - name: --fake-identity
+        short-summary: This is only for az test.
+        long-summary: |
+            Usage: --fake-identity name=XX zones-inside=XX
+
+            name: Required. ..
+            zones-inside: sample of simple array
     examples:
       - name: IntegrationRuntimes_Create
         text: |-

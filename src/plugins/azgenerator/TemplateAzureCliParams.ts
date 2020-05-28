@@ -406,6 +406,10 @@ function GetActionOptions(model: CodeModelAz, param: Parameter, keyToMatch: stri
         }
         model.ExitSubMethodParameters();
     }
+<<<<<<< HEAD
     
+=======
+   
+>>>>>>> master
     return options;
 }

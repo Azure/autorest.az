@@ -194,6 +194,12 @@ def load_arguments(self, _):
         c.argument('if_match', help='ETag of the integration runtime entity. Should only be specified for update, for w'
                    'hich it should match existing entity or can be * for unconditional update.')
         c.argument('description', help='Integration runtime description.')
+        c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
+                   'epo information.', arg_group='RepoConfiguration')
+        c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
+                   'itHub repo information.', arg_group='RepoConfiguration')
+        c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
+        c.argument('zones', nargs='+', help='This is only for az test.')
         c.argument('type_properties_compute_properties', arg_type=CLIArgumentType(options_list=['--type-properties-comp'
                    'ute-properties'], help='The compute resource for managed integration runtime. Expected value: json-'
                    'string/@json-file.'))

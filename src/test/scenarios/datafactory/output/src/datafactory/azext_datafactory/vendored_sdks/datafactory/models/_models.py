@@ -2099,6 +2099,12 @@ class ManagedIntegrationRuntime(IntegrationRuntime):
      Possible values include: "Initial", "Stopped", "Started", "Starting", "Stopping",
      "NeedRegistration", "Online", "Limited", "Offline", "AccessDenied".
     :vartype state: str or ~dfaz_management_client.models.IntegrationRuntimeState
+    :param repo_configuration: Git repo information of the factory.
+    :type repo_configuration: ~dfaz_management_client.models.FactoryRepoConfiguration
+    :param fake_identity: This is only for az test.
+    :type fake_identity: ~dfaz_management_client.models.FakeFactoryIdentity
+    :param zones: This is only for az test.
+    :type zones: list[str]
     :param compute_properties: The compute resource for managed integration runtime.
     :type compute_properties: ~dfaz_management_client.models.IntegrationRuntimeComputeProperties
     :param ssis_properties: SSIS properties for managed integration runtime.
@@ -2115,6 +2121,9 @@ class ManagedIntegrationRuntime(IntegrationRuntime):
         'type': {'key': 'type', 'type': 'str'},
         'description': {'key': 'description', 'type': 'str'},
         'state': {'key': 'state', 'type': 'str'},
+        'repo_configuration': {'key': 'repoConfiguration', 'type': 'FactoryRepoConfiguration'},
+        'fake_identity': {'key': 'fakeIdentity', 'type': 'FakeFactoryIdentity'},
+        'zones': {'key': 'zones', 'type': '[str]'},
         'compute_properties': {'key': 'typeProperties.computeProperties', 'type': 'IntegrationRuntimeComputeProperties'},
         'ssis_properties': {'key': 'typeProperties.ssisProperties', 'type': 'IntegrationRuntimeSsisProperties'},
     }
@@ -2126,6 +2135,9 @@ class ManagedIntegrationRuntime(IntegrationRuntime):
         super(ManagedIntegrationRuntime, self).__init__(**kwargs)
         self.type = 'Managed'
         self.state = None
+        self.repo_configuration = kwargs.get('repo_configuration', None)
+        self.fake_identity = kwargs.get('fake_identity', None)
+        self.zones = kwargs.get('zones', None)
         self.compute_properties = kwargs.get('compute_properties', None)
         self.ssis_properties = kwargs.get('ssis_properties', None)
 
