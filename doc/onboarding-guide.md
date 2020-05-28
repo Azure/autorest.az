@@ -21,6 +21,6 @@ Send mail to amecodegen@microsoft.com when your swagger is ready, then we will
 > ** we are improving the process here with Azure CLI team now
 
 ## Step Next. CLI is ready when swagger is ready
-1. After your service has onboarded using autorest.az, you can start reviewing your CLI code/command along with swagger PR which means the Azure CLI support can be ready very soon for your new features/changes. More detail can be found in this [10-minutes video](https://msit.microsoftstream.com/video/71cea3ff-0400-a9f4-01b4-f1ea9e9b130e)
+* Autorest.az has been integrated into swagger PR. It means you can start reviewing your CLI code/command immediately when your swagger PR is filed for your new features/changes, so your new features/changes can have Azure CLI support very soon. Hopefully, **your CLI is ready to merge/release when your swagger is ready to merge. :shipit:** (Check this [10-minutes video](https://msit.microsoftstream.com/video/71cea3ff-0400-a9f4-01b4-f1ea9e9b130e) for more details)
 > ** we are working on the process here with Azure CLI and swagger team now
 
