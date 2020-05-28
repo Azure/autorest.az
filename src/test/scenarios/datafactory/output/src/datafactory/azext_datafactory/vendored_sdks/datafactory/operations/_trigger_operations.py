@@ -20,7 +20,7 @@ from .. import models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Callable, Dict, Generic, Iterable, Optional, TypeVar, Union
+    from typing import Any, Callable, Dict, Generic, Iterable, List, Optional, TypeVar, Union
 
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
@@ -401,13 +401,18 @@ class TriggerOperations(object):
         resource_group_name,  # type: str
         factory_name,  # type: str
         trigger_name,  # type: str
+        name1,  # type: str
+        zones_inside1=None,  # type: Optional[List[str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.TriggerSubscriptionOperationStatus"
         cls = kwargs.pop('cls', None)  # type: ClsType["models.TriggerSubscriptionOperationStatus"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _fake_identity = models.FakeFactoryIdentity1(name1=name1, zones_inside1=zones_inside1)
         api_version = "2018-06-01"
+        content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
         url = self._subscribe_to_event_initial.metadata['url']  # type: ignore
@@ -425,10 +430,15 @@ class TriggerOperations(object):
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
         # Construct and send request
-        request = self._client.post(url, query_parameters, header_parameters)
+        body_content_kwargs = {}  # type: Dict[str, Any]
+        body_content = self._serialize.body(_fake_identity, 'FakeFactoryIdentity1')
+        body_content_kwargs['content'] = body_content
+        request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
+
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
@@ -451,6 +461,8 @@ class TriggerOperations(object):
         resource_group_name,  # type: str
         factory_name,  # type: str
         trigger_name,  # type: str
+        name1,  # type: str
+        zones_inside1=None,  # type: Optional[List[str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
@@ -462,6 +474,10 @@ class TriggerOperations(object):
         :type factory_name: str
         :param trigger_name: The trigger name.
         :type trigger_name: str
+        :param name1: ..
+        :type name1: str
+        :param zones_inside1: sample of simple array.
+        :type zones_inside1: list[str]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
@@ -481,6 +497,8 @@ class TriggerOperations(object):
             resource_group_name=resource_group_name,
             factory_name=factory_name,
             trigger_name=trigger_name,
+            name1=name1,
+            zones_inside1=zones_inside1,
             cls=lambda x,y,z: x,
             **kwargs
         )

@@ -28,6 +28,7 @@ try:
     from ._models_py3 import FactoryUpdateParameters
     from ._models_py3 import FactoryVstsConfiguration
     from ._models_py3 import FakeFactoryIdentity
+    from ._models_py3 import FakeFactoryIdentity1
     from ._models_py3 import GitHubAccessTokenRequest
     from ._models_py3 import GitHubAccessTokenResponse
     from ._models_py3 import IntegrationRuntime
@@ -96,6 +97,7 @@ try:
     from ._models_py3 import TriggerReference
     from ._models_py3 import TriggerResource
     from ._models_py3 import TriggerSubscriptionOperationStatus
+    from ._models_py3 import TriggerTestAction
     from ._models_py3 import TumblingWindowTrigger
     from ._models_py3 import TumblingWindowTriggerDependencyReference
     from ._models_py3 import UpdateIntegrationRuntimeRequest
@@ -122,6 +124,7 @@ except (SyntaxError, ImportError):
     from ._models import FactoryUpdateParameters  # type: ignore
     from ._models import FactoryVstsConfiguration  # type: ignore
     from ._models import FakeFactoryIdentity  # type: ignore
+    from ._models import FakeFactoryIdentity1  # type: ignore
     from ._models import GitHubAccessTokenRequest  # type: ignore
     from ._models import GitHubAccessTokenResponse  # type: ignore
     from ._models import IntegrationRuntime  # type: ignore
@@ -190,6 +193,7 @@ except (SyntaxError, ImportError):
     from ._models import TriggerReference  # type: ignore
     from ._models import TriggerResource  # type: ignore
     from ._models import TriggerSubscriptionOperationStatus  # type: ignore
+    from ._models import TriggerTestAction  # type: ignore
     from ._models import TumblingWindowTrigger  # type: ignore
     from ._models import TumblingWindowTriggerDependencyReference  # type: ignore
     from ._models import UpdateIntegrationRuntimeRequest  # type: ignore
@@ -241,6 +245,7 @@ __all__ = [
     'FactoryUpdateParameters',
     'FactoryVstsConfiguration',
     'FakeFactoryIdentity',
+    'FakeFactoryIdentity1',
     'GitHubAccessTokenRequest',
     'GitHubAccessTokenResponse',
     'IntegrationRuntime',
@@ -309,6 +314,7 @@ __all__ = [
     'TriggerReference',
     'TriggerResource',
     'TriggerSubscriptionOperationStatus',
+    'TriggerTestAction',
     'TumblingWindowTrigger',
     'TumblingWindowTriggerDependencyReference',
     'UpdateIntegrationRuntimeRequest',

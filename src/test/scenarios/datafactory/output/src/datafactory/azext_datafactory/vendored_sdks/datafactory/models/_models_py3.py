@@ -67,6 +67,8 @@ class Trigger(msrest.serialization.Model):
     :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
+    :param test_action: testAction in createorupdate only will be shown in update.
+    :type test_action: ~dfaz_management_client.models.TriggerTestAction
     """
 
     _validation = {
@@ -80,6 +82,7 @@ class Trigger(msrest.serialization.Model):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
+        'test_action': {'key': 'testAction', 'type': 'TriggerTestAction'},
     }
 
     _subtype_map = {
@@ -92,6 +95,7 @@ class Trigger(msrest.serialization.Model):
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
+        test_action: Optional["TriggerTestAction"] = None,
         **kwargs
     ):
         super(Trigger, self).__init__(**kwargs)
@@ -100,6 +104,7 @@ class Trigger(msrest.serialization.Model):
         self.description = description
         self.runtime_state = None
         self.annotations = annotations
+        self.test_action = test_action
 
 
 class MultiplePipelineTrigger(Trigger):
@@ -124,6 +129,8 @@ class MultiplePipelineTrigger(Trigger):
     :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
+    :param test_action: testAction in createorupdate only will be shown in update.
+    :type test_action: ~dfaz_management_client.models.TriggerTestAction
     :param pipelines: Pipelines that need to be started.
     :type pipelines: list[~dfaz_management_client.models.TriggerPipelineReference]
     """
@@ -139,6 +146,7 @@ class MultiplePipelineTrigger(Trigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
+        'test_action': {'key': 'testAction', 'type': 'TriggerTestAction'},
         'pipelines': {'key': 'pipelines', 'type': '[TriggerPipelineReference]'},
     }
 
@@ -152,10 +160,11 @@ class MultiplePipelineTrigger(Trigger):
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
+        test_action: Optional["TriggerTestAction"] = None,
         pipelines: Optional[List["TriggerPipelineReference"]] = None,
         **kwargs
     ):
-        super(MultiplePipelineTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, **kwargs)
+        super(MultiplePipelineTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, test_action=test_action, **kwargs)
         self.type: str = 'MultiplePipelineTrigger'
         self.pipelines = pipelines
 
@@ -179,6 +188,8 @@ class BlobEventsTrigger(MultiplePipelineTrigger):
     :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
+    :param test_action: testAction in createorupdate only will be shown in update.
+    :type test_action: ~dfaz_management_client.models.TriggerTestAction
     :param pipelines: Pipelines that need to be started.
     :type pipelines: list[~dfaz_management_client.models.TriggerPipelineReference]
     :param blob_path_begins_with: The blob path must begin with the pattern provided for trigger to
@@ -211,6 +222,7 @@ class BlobEventsTrigger(MultiplePipelineTrigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
+        'test_action': {'key': 'testAction', 'type': 'TriggerTestAction'},
         'pipelines': {'key': 'pipelines', 'type': '[TriggerPipelineReference]'},
         'blob_path_begins_with': {'key': 'typeProperties.blobPathBeginsWith', 'type': 'str'},
         'blob_path_ends_with': {'key': 'typeProperties.blobPathEndsWith', 'type': 'str'},
@@ -227,13 +239,14 @@ class BlobEventsTrigger(MultiplePipelineTrigger):
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
+        test_action: Optional["TriggerTestAction"] = None,
         pipelines: Optional[List["TriggerPipelineReference"]] = None,
         blob_path_begins_with: Optional[str] = None,
         blob_path_ends_with: Optional[str] = None,
         ignore_empty_blobs: Optional[bool] = None,
         **kwargs
     ):
-        super(BlobEventsTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, pipelines=pipelines, **kwargs)
+        super(BlobEventsTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, test_action=test_action, pipelines=pipelines, **kwargs)
         self.type: str = 'BlobEventsTrigger'
         self.blob_path_begins_with = blob_path_begins_with
         self.blob_path_ends_with = blob_path_ends_with
@@ -261,6 +274,8 @@ class BlobTrigger(MultiplePipelineTrigger):
     :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
+    :param test_action: testAction in createorupdate only will be shown in update.
+    :type test_action: ~dfaz_management_client.models.TriggerTestAction
     :param pipelines: Pipelines that need to be started.
     :type pipelines: list[~dfaz_management_client.models.TriggerPipelineReference]
     :param folder_path: Required. The path of the container/folder that will trigger the pipeline.
@@ -286,6 +301,7 @@ class BlobTrigger(MultiplePipelineTrigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
+        'test_action': {'key': 'testAction', 'type': 'TriggerTestAction'},
         'pipelines': {'key': 'pipelines', 'type': '[TriggerPipelineReference]'},
         'folder_path': {'key': 'typeProperties.folderPath', 'type': 'str'},
         'max_concurrency': {'key': 'typeProperties.maxConcurrency', 'type': 'int'},
@@ -301,10 +317,11 @@ class BlobTrigger(MultiplePipelineTrigger):
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
+        test_action: Optional["TriggerTestAction"] = None,
         pipelines: Optional[List["TriggerPipelineReference"]] = None,
         **kwargs
     ):
-        super(BlobTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, pipelines=pipelines, **kwargs)
+        super(BlobTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, test_action=test_action, pipelines=pipelines, **kwargs)
         self.type: str = 'BlobTrigger'
         self.folder_path = folder_path
         self.max_concurrency = max_concurrency
@@ -330,6 +347,8 @@ class ChainingTrigger(Trigger):
     :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
+    :param test_action: testAction in createorupdate only will be shown in update.
+    :type test_action: ~dfaz_management_client.models.TriggerTestAction
     :param pipeline: Required. Pipeline for which runs are created when all upstream pipelines
      complete successfully.
     :type pipeline: ~dfaz_management_client.models.TriggerPipelineReference
@@ -354,6 +373,7 @@ class ChainingTrigger(Trigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
+        'test_action': {'key': 'testAction', 'type': 'TriggerTestAction'},
         'pipeline': {'key': 'pipeline', 'type': 'TriggerPipelineReference'},
         'depends_on': {'key': 'typeProperties.dependsOn', 'type': '[PipelineReference]'},
         'run_dimension': {'key': 'typeProperties.runDimension', 'type': 'str'},
@@ -368,9 +388,10 @@ class ChainingTrigger(Trigger):
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
+        test_action: Optional["TriggerTestAction"] = None,
         **kwargs
     ):
-        super(ChainingTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, **kwargs)
+        super(ChainingTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, test_action=test_action, **kwargs)
         self.type: str = 'ChainingTrigger'
         self.pipeline = pipeline
         self.depends_on = depends_on
@@ -1137,6 +1158,38 @@ class FakeFactoryIdentity(msrest.serialization.Model):
         super(FakeFactoryIdentity, self).__init__(**kwargs)
         self.name = name
         self.zones_inside = zones_inside
+
+
+class FakeFactoryIdentity1(msrest.serialization.Model):
+    """This is only for az test.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param name1: Required. ..
+    :type name1: str
+    :param zones_inside1: sample of simple array.
+    :type zones_inside1: list[str]
+    """
+
+    _validation = {
+        'name1': {'required': True},
+    }
+
+    _attribute_map = {
+        'name1': {'key': 'name1', 'type': 'str'},
+        'zones_inside1': {'key': 'zonesInside1', 'type': '[str]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        name1: str,
+        zones_inside1: Optional[List[str]] = None,
+        **kwargs
+    ):
+        super(FakeFactoryIdentity1, self).__init__(**kwargs)
+        self.name1 = name1
+        self.zones_inside1 = zones_inside1
 
 
 class GitHubAccessTokenRequest(msrest.serialization.Model):
@@ -2729,6 +2782,8 @@ class RerunTumblingWindowTrigger(Trigger):
     :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
+    :param test_action: testAction in createorupdate only will be shown in update.
+    :type test_action: ~dfaz_management_client.models.TriggerTestAction
     :param parent_trigger: Required. The parent trigger reference.
     :type parent_trigger: object
     :param requested_start_time: Required. The start time for the time period for which restatement
@@ -2757,6 +2812,7 @@ class RerunTumblingWindowTrigger(Trigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
+        'test_action': {'key': 'testAction', 'type': 'TriggerTestAction'},
         'parent_trigger': {'key': 'typeProperties.parentTrigger', 'type': 'object'},
         'requested_start_time': {'key': 'typeProperties.requestedStartTime', 'type': 'iso-8601'},
         'requested_end_time': {'key': 'typeProperties.requestedEndTime', 'type': 'iso-8601'},
@@ -2773,9 +2829,10 @@ class RerunTumblingWindowTrigger(Trigger):
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
+        test_action: Optional["TriggerTestAction"] = None,
         **kwargs
     ):
-        super(RerunTumblingWindowTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, **kwargs)
+        super(RerunTumblingWindowTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, test_action=test_action, **kwargs)
         self.type: str = 'RerunTumblingWindowTrigger'
         self.parent_trigger = parent_trigger
         self.requested_start_time = requested_start_time
@@ -2833,6 +2890,8 @@ class ScheduleTrigger(MultiplePipelineTrigger):
     :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
+    :param test_action: testAction in createorupdate only will be shown in update.
+    :type test_action: ~dfaz_management_client.models.TriggerTestAction
     :param pipelines: Pipelines that need to be started.
     :type pipelines: list[~dfaz_management_client.models.TriggerPipelineReference]
     :param recurrence: Required. Recurrence schedule configuration.
@@ -2851,6 +2910,7 @@ class ScheduleTrigger(MultiplePipelineTrigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
+        'test_action': {'key': 'testAction', 'type': 'TriggerTestAction'},
         'pipelines': {'key': 'pipelines', 'type': '[TriggerPipelineReference]'},
         'recurrence': {'key': 'typeProperties.recurrence', 'type': 'ScheduleTriggerRecurrence'},
     }
@@ -2862,10 +2922,11 @@ class ScheduleTrigger(MultiplePipelineTrigger):
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
+        test_action: Optional["TriggerTestAction"] = None,
         pipelines: Optional[List["TriggerPipelineReference"]] = None,
         **kwargs
     ):
-        super(ScheduleTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, pipelines=pipelines, **kwargs)
+        super(ScheduleTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, test_action=test_action, pipelines=pipelines, **kwargs)
         self.type: str = 'ScheduleTrigger'
         self.recurrence = recurrence
 
@@ -4037,6 +4098,32 @@ class TriggerSubscriptionOperationStatus(msrest.serialization.Model):
         self.status = None
 
 
+class TriggerTestAction(msrest.serialization.Model):
+    """testAction in createorupdate only will be shown in update.
+
+    :param action_val1: ..
+    :type action_val1: str
+    :param action_val2: sample of simple array.
+    :type action_val2: list[str]
+    """
+
+    _attribute_map = {
+        'action_val1': {'key': 'actionVal1', 'type': 'str'},
+        'action_val2': {'key': 'actionVal2', 'type': '[str]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        action_val1: Optional[str] = None,
+        action_val2: Optional[List[str]] = None,
+        **kwargs
+    ):
+        super(TriggerTestAction, self).__init__(**kwargs)
+        self.action_val1 = action_val1
+        self.action_val2 = action_val2
+
+
 class TumblingWindowTrigger(Trigger):
     """Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill scenarios (when start time is in the past).
 
@@ -4056,6 +4143,8 @@ class TumblingWindowTrigger(Trigger):
     :vartype runtime_state: str or ~dfaz_management_client.models.TriggerRuntimeState
     :param annotations: List of tags that can be used for describing the trigger.
     :type annotations: list[object]
+    :param test_action: testAction in createorupdate only will be shown in update.
+    :type test_action: ~dfaz_management_client.models.TriggerTestAction
     :param pipeline: Required. Pipeline for which runs are created when an event is fired for
      trigger window that is ready.
     :type pipeline: ~dfaz_management_client.models.TriggerPipelineReference
@@ -4101,6 +4190,7 @@ class TumblingWindowTrigger(Trigger):
         'description': {'key': 'description', 'type': 'str'},
         'runtime_state': {'key': 'runtimeState', 'type': 'str'},
         'annotations': {'key': 'annotations', 'type': '[object]'},
+        'test_action': {'key': 'testAction', 'type': 'TriggerTestAction'},
         'pipeline': {'key': 'pipeline', 'type': 'TriggerPipelineReference'},
         'frequency': {'key': 'typeProperties.frequency', 'type': 'str'},
         'interval': {'key': 'typeProperties.interval', 'type': 'int'},
@@ -4123,13 +4213,14 @@ class TumblingWindowTrigger(Trigger):
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
         annotations: Optional[List[object]] = None,
+        test_action: Optional["TriggerTestAction"] = None,
         end_time: Optional[datetime.datetime] = None,
         delay: Optional[object] = None,
         retry_policy: Optional["RetryPolicy"] = None,
         depends_on: Optional[List["DependencyReference"]] = None,
         **kwargs
     ):
-        super(TumblingWindowTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, **kwargs)
+        super(TumblingWindowTrigger, self).__init__(additional_properties=additional_properties, description=description, annotations=annotations, test_action=test_action, **kwargs)
         self.type: str = 'TumblingWindowTrigger'
         self.pipeline = pipeline
         self.frequency = frequency

@@ -306,7 +306,7 @@ function getSingleArgument(model: CodeModelAz, originalOperation: any, param: Pa
         needSkip = true;
     } else if (model.Parameter_IsSimpleArray(param)) {
         argument += ", nargs='+'";
-    } else if (model.Parameter_IsList(param) && !model.Parameter_IsListOfSimple(param)) {
+    } else if (model.Parameter_IsList(param) && !model.Parameter_IsListOfSimple(param) && !model.Parameter_IsSimpleArray(param)) {
         if(model.Parameter_IsPolyOfSimple(param)) {
             baseParam = param;
             return output_args;
@@ -327,7 +327,7 @@ function getSingleArgument(model: CodeModelAz, originalOperation: any, param: Pa
 
     if (!needSkip) {
         argument += ", help='" + EscapeString(model.Parameter_Description(param)).trimRight();
-        if (model.Parameter_IsList(param) && !model.Parameter_IsListOfSimple(param)) {
+        if (model.Parameter_IsList(param) && !model.Parameter_IsListOfSimple(param) && !model.Parameter_IsSimpleArray(param)) {
             let netDescription = model.Parameter_Description(param).trim();
             if (netDescription.length>0 && netDescription[netDescription.length-1].match(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)) {
                 argument += ".";

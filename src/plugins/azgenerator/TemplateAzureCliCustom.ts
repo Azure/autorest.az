@@ -247,7 +247,7 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperatio
                     if(needUpdate && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
                         continue;
                     }
-                    if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
+                    if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple && !model.MethodParameter_IsSimpleArray) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             continue;
                         }
@@ -366,7 +366,7 @@ function buildValue(model: CodeModelAz, param: Parameter, allPolyBaseParam: Map<
             } else {
                 output_body.pop();
             }
-        } else if (model.Parameter_IsList(param) && !model.Parameter_IsListOfSimple(param)) {
+        } else if (model.Parameter_IsList(param) && !model.Parameter_IsListOfSimple(param) && !model.Parameter_IsSimpleArray(param)) {
             required['json'] = true;
             output_body.push("    if isinstance(" + model.Parameter_MapsTo(param) + ", str):");
             output_body.push("        " + model.Parameter_MapsTo(param) + " = json.loads(" + model.Parameter_MapsTo(param) + ")");

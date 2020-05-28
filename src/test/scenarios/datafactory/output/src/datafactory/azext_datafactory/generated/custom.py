@@ -164,14 +164,16 @@ def datafactory_trigger_update(instance,
                                factory_name,
                                trigger_name,
                                if_match=None,
-                               type=None,
+                               type_=None,
                                description=None,
-                               annotations=None):
+                               annotations=None,
+                               test_action=None):
     if isinstance(annotations, str):
         annotations = json.loads(annotations)
-    instance.type = type
+    instance.type = type_
     instance.description = description
     instance.annotations = annotations
+    instance.test_action = test_action
     return instance
 
 
@@ -232,12 +234,16 @@ def datafactory_trigger_subscribe_to_event(client,
                                            resource_group_name,
                                            factory_name,
                                            trigger_name,
+                                           name1,
+                                           zones_inside1=None,
                                            no_wait=False):
     return sdk_no_wait(no_wait,
                        client.begin_subscribe_to_event,
                        resource_group_name=resource_group_name,
                        factory_name=factory_name,
-                       trigger_name=trigger_name)
+                       trigger_name=trigger_name,
+                       name1=name1,
+                       zones_inside1=zones_inside1)
 
 
 def datafactory_trigger_unsubscribe_from_event(client,
@@ -316,7 +322,6 @@ def datafactory_integration_runtime_managed_create(client,
     properties['type'] = 'Managed'
     properties['description'] = description
     properties['repo_configuration'] = repo_configuration
-    properties['fake_identity'] = fake_identity
     properties['zones'] = zones
     properties['compute_properties'] = type_properties_compute_properties
     properties['ssis_properties'] = type_properties_ssis_properties
@@ -333,13 +338,13 @@ def datafactory_integration_runtime_self_hosted_create(client,
                                                        integration_runtime_name,
                                                        if_match=None,
                                                        description=None,
-                                                       type_properties_linked_info=None):
-    if isinstance(type_properties_linked_info, str):
-        type_properties_linked_info = json.loads(type_properties_linked_info)
+                                                       self_hosted_linked_info=None):
+    if isinstance(self_hosted_linked_info, str):
+        self_hosted_linked_info = json.loads(self_hosted_linked_info)
     properties = {}
     properties['type'] = 'SelfHosted'
     properties['description'] = description
-    properties['linked_info'] = type_properties_linked_info
+    properties['linked_info'] = self_hosted_linked_info
     return client.create_or_update(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    integration_runtime_name=integration_runtime_name,

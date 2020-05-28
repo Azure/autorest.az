@@ -171,7 +171,7 @@ self-hosted create a datafactory integration-runtime.
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
 |**--if-match**|string|ETag of the integration runtime entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
 |**--description**|string|Integration runtime description.|self_hosted_description|
-|**--type-properties-linked-info**|object|The base definition of a linked integration runtime.|self_hosted_linked_info|
+|**--self-hosted-linked-info**|object|The base definition of a linked integration runtime.|self_hosted_linked_info|
 ### datafactory integration-runtime show
 
 show a datafactory integration-runtime.
@@ -329,6 +329,8 @@ subscribe-to-event a datafactory trigger.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|
 |**--factory-name**|string|The factory name.|factory_name|
 |**--trigger-name**|string|The trigger name.|trigger_name|
+|**--name1**|string|..|name1|
+|**--zones-inside1**|array|sample of simple array|zones_inside1|
 ### datafactory trigger unsubscribe-from-event
 
 unsubscribe-from-event a datafactory trigger.

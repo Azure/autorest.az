@@ -1222,6 +1222,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_IsSimpleArray(): boolean {
         if (this.Parameter_IsSimpleArray(this.MethodParameter)) {
+            return true;
         }
         return false;
     }

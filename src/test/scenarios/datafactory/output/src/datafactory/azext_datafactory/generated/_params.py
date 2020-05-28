@@ -21,7 +21,8 @@ from azure.cli.core.commands.validators import get_default_location_from_resourc
 from azext_datafactory.action import (
     AddFactoryVstsConfiguration,
     AddFactoryGitHubConfiguration,
-    AddFakeIdentity
+    AddFakeIdentity,
+    AddTestAction
 )
 
 
@@ -45,12 +46,11 @@ def load_arguments(self, _):
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information.', arg_group='RepoConfiguration')
+                   'epo information.')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information.', arg_group='RepoConfiguration')
+                   'itHub repo information.')
         c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
-        c.argument('zones', arg_type=CLIArgumentType(options_list=['--zones'], help='This is only for az test. Expected'
-                   ' value: json-string/@json-file.'))
+        c.argument('zones', nargs='+', help='This is only for az test.')
 
     with self.argument_context('datafactory update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -65,9 +65,9 @@ def load_arguments(self, _):
         c.argument('location_id', help='The location identifier.', id_part='name')
         c.argument('factory_resource_id', help='The factory resource id.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information.', arg_group='RepoConfiguration')
+                   'epo information.')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information.', arg_group='RepoConfiguration')
+                   'itHub repo information.')
 
     with self.argument_context('datafactory get-data-plane-access') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -115,8 +115,13 @@ def load_arguments(self, _):
         c.argument('trigger_name', options_list=['--name', '-n'], help='The trigger name.', id_part='child_name_1')
         c.argument('if_match', help='ETag of the trigger entity.  Should only be specified for update, for which it sho'
                    'uld match existing entity or can be * for unconditional update.')
-        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of the trigge'
-                   'r. Expected value: json-string/@json-file.'))
+        c.argument('type_', options_list=['--type'], help='Trigger type.')
+        c.argument('description', help='Trigger description.')
+        c.argument('annotations', arg_type=CLIArgumentType(options_list=['--annotations'], help='List of tags that can '
+                   'be used for describing the trigger. Expected value: json-string/@json-file.'))
+        c.argument('test_action', action=AddTestAction, nargs='+', help='testAction in createorupdate only will be show'
+                   'n in update')
+        c.ignore('type')
 
     with self.argument_context('datafactory trigger delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -150,6 +155,8 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.', id_part='name')
         c.argument('trigger_name', options_list=['--name', '-n'], help='The trigger name.', id_part='child_name_1')
+        c.argument('name1', help='..')
+        c.argument('zones_inside1', nargs='+', help='sample of simple array')
 
     with self.argument_context('datafactory trigger unsubscribe-from-event') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -195,9 +202,9 @@ def load_arguments(self, _):
                    'hich it should match existing entity or can be * for unconditional update.')
         c.argument('description', help='Integration runtime description.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information.', arg_group='RepoConfiguration')
+                   'epo information.')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information.', arg_group='RepoConfiguration')
+                   'itHub repo information.')
         c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
         c.argument('zones', nargs='+', help='This is only for az test.')
         c.argument('type_properties_compute_properties', arg_type=CLIArgumentType(options_list=['--type-properties-comp'
@@ -214,9 +221,8 @@ def load_arguments(self, _):
         c.argument('if_match', help='ETag of the integration runtime entity. Should only be specified for update, for w'
                    'hich it should match existing entity or can be * for unconditional update.')
         c.argument('description', help='Integration runtime description.')
-        c.argument('type_properties_linked_info', arg_type=CLIArgumentType(options_list=['--type-properties-linked-info'
-                   ''], help='The base definition of a linked integration runtime. Expected value: json-string/@json-fi'
-                   'le.'))
+        c.argument('self_hosted_linked_info', arg_type=CLIArgumentType(options_list=['--self-hosted-linked-info'],
+                   help='The base definition of a linked integration runtime. Expected value: json-string/@json-file.'))
 
     with self.argument_context('datafactory integration-runtime update') as c:
         c.argument('resource_group_name', resource_group_name_type)
