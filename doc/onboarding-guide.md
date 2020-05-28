@@ -1,4 +1,4 @@
-# The process to use Azure Cli Codegen (autorest.az) for your azure CLI extension
+# Onboard process for using Azure Cli Codegen (autorest.az)
 
 ## Step 1. Init the process
 
