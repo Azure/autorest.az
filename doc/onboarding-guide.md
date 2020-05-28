@@ -1,4 +1,4 @@
-# Onboard process for using Azure Cli Codegen (autorest.az)
+# Onboarding process for using Azure Cli Codegen (autorest.az)
 
 ## Step 1. Init the process
 
