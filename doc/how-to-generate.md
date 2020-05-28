@@ -19,7 +19,7 @@ We have pre-prepared docker image for you to use autorest.az easily. (Please mak
     * login to Azure Container Registry and start the docker
     ``` bash
     > az acr login --name amecodegen
-    > docker run -v {swagger_folder}:/home/swg -v {azure_cli_ext_folder}:/home/azext -v -it amecodegen.azurecr.io/az:2020.05.24 /bin/bash
+    > docker run -v {swagger_folder}:/home/swg -v {azure_cli_ext_folder}:/home/azext -it amecodegen.azurecr.io/az:2020.05.24 /bin/bash
     ```
 
 2. Generate the code:
