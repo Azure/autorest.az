@@ -89,7 +89,11 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
         let originalParameterNameStack: string[] = [];
         let prefixIndent = "    ";
 
+        let skip = false;
         do {
+            if (skip) {
+                skip = false;
+            }
             if (model.MethodParameter_IsFlattened) {
                 if (isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema'])) {
                     continue;
@@ -100,7 +104,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                     output_body.push(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
                 }
             }
-            else if (originalParameterStack.length > 0)
+            else if (originalParameterStack.length > 0) {
                 if (model.MethodParameter['originalParameter'] == originalParameterStack[originalParameterStack.length - 1]) {
                     let access = "";
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
@@ -117,12 +121,26 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                         }
                     }
                     output_body.push(access);
+                    if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                        let baseParam = model.MethodParameter;
+                        let hasNext = false;
+                        if(model.SelectNextMethodParameter(true)) {
+                            hasNext = true;
+                            while (hasNext && model.MethodParameter['polyBaseParam'] == baseParam) {
+                                hasNext = model.SelectNextMethodParameter(true);
+                            }
+                        }       
+                        if (hasNext && model.MethodParameter['polyBaseParam'] != baseParam) {
+                            skip = true;
+                        }
+                    }
                 }
                 else {
                     originalParameterStack.pop();
                     originalParameterNameStack.pop();
                 }
-        } while (model.SelectNextMethodParameter(true));
+            }
+        } while (skip || model.SelectNextMethodParameter(true));
     }
     return output_body;
 }

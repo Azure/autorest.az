@@ -308,6 +308,10 @@ def datafactory_integration_runtime_managed_create(client,
     properties['type'] = 'Managed'
     properties['description'] = description
     properties['repo_configuration'] = repo_configuration
+    properties['fake_identity'] = fake_identity
+    properties['zones'] = zones
+    properties['compute_properties'] = type_properties_compute_properties
+    properties['ssis_properties'] = type_properties_ssis_properties
     return client.create_or_update(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    integration_runtime_name=integration_runtime_name,
