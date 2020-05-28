@@ -10,7 +10,7 @@ More detail can also be found in this [10-minutes video](https://msit.microsofts
 
 ![sample image](images/codegen-in-swagger-pr.png)
 
-## Through docker
+## Through Docker
 
 We have pre-prepared docker image for you to use autorest.az easily. (Please make sure [Docker](https://www.docker.com/products) has been installed. :))
 
@@ -30,7 +30,7 @@ We have pre-prepared docker image for you to use autorest.az easily. (Please mak
     ```
 
 3. Run the generated command
-    * Generate commands are ready to use after add the extension:
+    * Generated commands are ready to use after adding the extension:
     ``` bash
     > azdev extension add {service_name}
     # your command is ready to use now
