@@ -89,7 +89,11 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
         let originalParameterNameStack: string[] = [];
         let prefixIndent = "    ";
 
+        let skip = false;
         do {
+            if (skip) {
+                skip = false;
+            }
             if (model.MethodParameter_IsFlattened) {
                 if (isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema'])) {
                     continue;
@@ -100,7 +104,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                     output_body.push(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
                 }
             }
-            else if (originalParameterStack.length > 0)
+            else if (originalParameterStack.length > 0) {
                 if (model.MethodParameter['originalParameter'] == originalParameterStack[originalParameterStack.length - 1]) {
                     let access = "";
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
@@ -117,12 +121,26 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                         }
                     }
                     output_body.push(access);
+                    if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                        let baseParam = model.MethodParameter;
+                        let hasNext = false;
+                        if(model.SelectNextMethodParameter(true)) {
+                            hasNext = true;
+                            while (hasNext && model.MethodParameter['polyBaseParam'] == baseParam) {
+                                hasNext = model.SelectNextMethodParameter(true);
+                            }
+                        }       
+                        if (hasNext && model.MethodParameter['polyBaseParam'] != baseParam) {
+                            skip = true;
+                        }
+                    }
                 }
                 else {
                     originalParameterStack.pop();
                     originalParameterNameStack.pop();
                 }
-        } while (model.SelectNextMethodParameter(true));
+            }
+        } while (skip || model.SelectNextMethodParameter(true));
     }
     return output_body;
 }
@@ -431,7 +449,9 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     }
     
     let cnt = 0;
-    for (let param of originalParameters) {
+    while (cnt < originalParameters.length) {
+        let param = originalParameters[cnt];
+        cnt++;
         if (param.flattened) {
             continue;
         }
@@ -459,6 +479,9 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
             cnt++;
             while (cnt < originalParameters.length && originalParameters[cnt]['polyBaseParam'] == baseParam) {
                 cnt++;
+            }
+            if (cnt > 0 && cnt < originalParameters.length && originalParameters[cnt]['polyBaseParam'] != baseParam) {
+                cnt--;
             }
         }
     }
@@ -489,6 +512,7 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
     }
     
 
+    let skip = false;
     if (model.SelectFirstMethodParameter(true)) {
         do {
             let param = model.MethodParameter;
@@ -521,12 +545,26 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
                 methodCall += "," + "\n" + indent + parameterPair;
             }
 
+            if (skip) {
+                skip = false;
+            }
             if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                 let baseParam = model.MethodParameter;
-                while (model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam);
+                let hasNext = false;
+                if(model.SelectNextMethodParameter(true)) {
+                    hasNext = true;
+                    while (hasNext && model.MethodParameter['polyBaseParam'] == baseParam) {
+                        hasNext = model.SelectNextMethodParameter(true);
+                    }
+                }
+                
+                if (hasNext && model.MethodParameter['polyBaseParam'] != baseParam) {
+                    skip = true;
+                }
+                
             }
         }
-        while (model.SelectNextMethodParameter(true));
+        while (skip || model.SelectNextMethodParameter(true));
     }
 
     methodCall += ")";

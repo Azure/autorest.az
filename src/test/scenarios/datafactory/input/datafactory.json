@@ -3099,6 +3099,18 @@
             "description": "Managed integration runtime properties.",
             "x-ms-client-flatten": true,
             "$ref": "#/definitions/ManagedIntegrationRuntimeTypeProperties"
+          },
+          "repoConfiguration": {
+            "$ref": "#/definitions/FactoryRepoConfiguration",
+            "description": "Git repo information of the factory."
+          },
+          "fakeIdentity": {
+            "$ref": "#/definitions/FakeFactoryIdentity",
+            "description": "This is only for az test."
+          },
+          "zones": {
+            "$ref": "#/definitions/Zone",
+            "description": "This is only for az test."
           }
         },
         "required": [

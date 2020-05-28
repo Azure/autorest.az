@@ -56,6 +56,7 @@ def datafactory_create(client,
                                    tags=tags,
                                    identity=None,
                                    repo_configuration=repo_configuration,
+                                   fake_identity=fake_identity,
                                    zones=zones)
 
 
@@ -284,8 +285,21 @@ def datafactory_integration_runtime_managed_create(client,
                                                    integration_runtime_name,
                                                    if_match=None,
                                                    description=None,
+                                                   factory_vsts_configuration=None,
+                                                   factory_git_hub_configuration=None,
+                                                   fake_identity=None,
+                                                   zones=None,
                                                    type_properties_compute_properties=None,
                                                    type_properties_ssis_properties=None):
+    all_repo_configuration = []
+    if factory_vsts_configuration is not None:
+        all_repo_configuration.append(factory_vsts_configuration)
+    if factory_git_hub_configuration is not None:
+        all_repo_configuration.append(factory_git_hub_configuration)
+    if len(all_repo_configuration) > 1:
+        raise CLIError('at most one of  factory_vsts_configuration, factory_git_hub_configuration is needed for repo_co'
+                       'nfiguration!')
+    repo_configuration = all_repo_configuration[0] if len(all_repo_configuration) == 1 else None
     if isinstance(type_properties_compute_properties, str):
         type_properties_compute_properties = json.loads(type_properties_compute_properties)
     if isinstance(type_properties_ssis_properties, str):
@@ -293,6 +307,9 @@ def datafactory_integration_runtime_managed_create(client,
     properties = {}
     properties['type'] = 'Managed'
     properties['description'] = description
+    properties['repo_configuration'] = repo_configuration
+    properties['fake_identity'] = fake_identity
+    properties['zones'] = zones
     properties['compute_properties'] = type_properties_compute_properties
     properties['ssis_properties'] = type_properties_ssis_properties
     return client.create_or_update(resource_group_name=resource_group_name,
