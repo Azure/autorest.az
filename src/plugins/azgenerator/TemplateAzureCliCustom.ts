@@ -431,7 +431,9 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     }
     
     let cnt = 0;
-    for (let param of originalParameters) {
+    while (cnt < originalParameters.length) {
+        let param = originalParameters[cnt];
+        cnt++;
         if (param.flattened) {
             continue;
         }
@@ -459,6 +461,9 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
             cnt++;
             while (cnt < originalParameters.length && originalParameters[cnt]['polyBaseParam'] == baseParam) {
                 cnt++;
+            }
+            if (cnt > 0 && cnt < originalParameters.length && originalParameters[cnt]['polyBaseParam'] != baseParam) {
+                cnt--;
             }
         }
     }
@@ -489,6 +494,7 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
     }
     
 
+    let skip = false;
     if (model.SelectFirstMethodParameter(true)) {
         do {
             let param = model.MethodParameter;
@@ -521,12 +527,26 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
                 methodCall += "," + "\n" + indent + parameterPair;
             }
 
+            if (skip) {
+                skip = false;
+            }
             if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                 let baseParam = model.MethodParameter;
-                while (model.SelectNextMethodParameter() && model.MethodParameter['polyBaseParam'] == baseParam);
+                let hasNext = false;
+                if(model.SelectNextMethodParameter(true)) {
+                    hasNext = true;
+                    while (hasNext && model.MethodParameter['polyBaseParam'] == baseParam) {
+                        hasNext = model.SelectNextMethodParameter(true);
+                    }
+                }
+                
+                if (hasNext && model.MethodParameter['polyBaseParam'] != baseParam) {
+                    skip = true;
+                }
+                
             }
         }
-        while (model.SelectNextMethodParameter(true));
+        while (skip || model.SelectNextMethodParameter(true));
     }
 
     methodCall += ")";

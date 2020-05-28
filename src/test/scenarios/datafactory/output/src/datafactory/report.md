@@ -134,6 +134,10 @@ managed create a datafactory integration-runtime.
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|
 |**--if-match**|string|ETag of the integration runtime entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
 |**--description**|string|Integration runtime description.|managed_description|
+|**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|
+|**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|
+|**--fake-identity**|object|This is only for az test.|managed_fake_identity|
+|**--zones**|array|This is only for az test.|managed_zones|
 |**--type-properties-compute-properties**|object|The compute resource for managed integration runtime.|managed_compute_properties|
 |**--type-properties-ssis-properties**|object|SSIS properties for managed integration runtime.|managed_ssis_properties|
 ### datafactory integration-runtime regenerate-auth-key

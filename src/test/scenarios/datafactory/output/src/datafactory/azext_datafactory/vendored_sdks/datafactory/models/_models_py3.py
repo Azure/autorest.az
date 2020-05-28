@@ -2294,6 +2294,12 @@ class ManagedIntegrationRuntime(IntegrationRuntime):
      Possible values include: "Initial", "Stopped", "Started", "Starting", "Stopping",
      "NeedRegistration", "Online", "Limited", "Offline", "AccessDenied".
     :vartype state: str or ~dfaz_management_client.models.IntegrationRuntimeState
+    :param repo_configuration: Git repo information of the factory.
+    :type repo_configuration: ~dfaz_management_client.models.FactoryRepoConfiguration
+    :param fake_identity: This is only for az test.
+    :type fake_identity: ~dfaz_management_client.models.FakeFactoryIdentity
+    :param zones: This is only for az test.
+    :type zones: list[str]
     :param compute_properties: The compute resource for managed integration runtime.
     :type compute_properties: ~dfaz_management_client.models.IntegrationRuntimeComputeProperties
     :param ssis_properties: SSIS properties for managed integration runtime.
@@ -2310,6 +2316,9 @@ class ManagedIntegrationRuntime(IntegrationRuntime):
         'type': {'key': 'type', 'type': 'str'},
         'description': {'key': 'description', 'type': 'str'},
         'state': {'key': 'state', 'type': 'str'},
+        'repo_configuration': {'key': 'repoConfiguration', 'type': 'FactoryRepoConfiguration'},
+        'fake_identity': {'key': 'fakeIdentity', 'type': 'FakeFactoryIdentity'},
+        'zones': {'key': 'zones', 'type': '[str]'},
         'compute_properties': {'key': 'typeProperties.computeProperties', 'type': 'IntegrationRuntimeComputeProperties'},
         'ssis_properties': {'key': 'typeProperties.ssisProperties', 'type': 'IntegrationRuntimeSsisProperties'},
     }
@@ -2319,6 +2328,9 @@ class ManagedIntegrationRuntime(IntegrationRuntime):
         *,
         additional_properties: Optional[Dict[str, object]] = None,
         description: Optional[str] = None,
+        repo_configuration: Optional["FactoryRepoConfiguration"] = None,
+        fake_identity: Optional["FakeFactoryIdentity"] = None,
+        zones: Optional[List[str]] = None,
         compute_properties: Optional["IntegrationRuntimeComputeProperties"] = None,
         ssis_properties: Optional["IntegrationRuntimeSsisProperties"] = None,
         **kwargs
@@ -2326,6 +2338,9 @@ class ManagedIntegrationRuntime(IntegrationRuntime):
         super(ManagedIntegrationRuntime, self).__init__(additional_properties=additional_properties, description=description, **kwargs)
         self.type: str = 'Managed'
         self.state = None
+        self.repo_configuration = repo_configuration
+        self.fake_identity = fake_identity
+        self.zones = zones
         self.compute_properties = compute_properties
         self.ssis_properties = ssis_properties
 
