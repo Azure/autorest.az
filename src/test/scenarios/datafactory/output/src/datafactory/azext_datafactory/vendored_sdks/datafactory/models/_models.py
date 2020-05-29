@@ -1074,6 +1074,25 @@ class FakeFactoryIdentity1(msrest.serialization.Model):
         self.zones_inside1 = kwargs.get('zones_inside1', None)
 
 
+class FakeTriggerIdentity(msrest.serialization.Model):
+    """FakeTriggerIdentity.
+
+    :param fake_identity: Properties of the factory.
+    :type fake_identity: ~dfaz_management_client.models.FakeFactoryIdentity1
+    """
+
+    _attribute_map = {
+        'fake_identity': {'key': 'fakeIdentity', 'type': 'FakeFactoryIdentity1'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(FakeTriggerIdentity, self).__init__(**kwargs)
+        self.fake_identity = kwargs.get('fake_identity', None)
+
+
 class GitHubAccessTokenRequest(msrest.serialization.Model):
     """Get GitHub access token request definition.
 

@@ -281,6 +281,14 @@ helps['datafactory trigger stop'] = """
 helps['datafactory trigger subscribe-to-event'] = """
     type: command
     short-summary: Subscribe event trigger to events.
+    parameters:
+      - name: --fake-identity
+        short-summary: Properties of the factory.
+        long-summary: |
+            Usage: --fake-identity name1=XX zones-inside1=XX
+
+            name1: Required. ..
+            zones-inside1: sample of simple array
     examples:
       - name: Triggers_SubscribeToEvents
         text: |-

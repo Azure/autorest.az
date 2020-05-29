@@ -20,7 +20,7 @@ from .. import models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Callable, Dict, Generic, Iterable, List, Optional, TypeVar, Union
+    from typing import Any, Callable, Dict, Generic, Iterable, Optional, TypeVar, Union
 
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
@@ -401,8 +401,7 @@ class TriggerOperations(object):
         resource_group_name,  # type: str
         factory_name,  # type: str
         trigger_name,  # type: str
-        name1,  # type: str
-        zones_inside1=None,  # type: Optional[List[str]]
+        fake_identity=None,  # type: Optional["models.FakeFactoryIdentity1"]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.TriggerSubscriptionOperationStatus"
@@ -410,7 +409,7 @@ class TriggerOperations(object):
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _fake_identity = models.FakeFactoryIdentity1(name1=name1, zones_inside1=zones_inside1)
+        _fake_identity = models.FakeTriggerIdentity(fake_identity=fake_identity)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -435,7 +434,7 @@ class TriggerOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_fake_identity, 'FakeFactoryIdentity1')
+        body_content = self._serialize.body(_fake_identity, 'FakeTriggerIdentity')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -461,8 +460,7 @@ class TriggerOperations(object):
         resource_group_name,  # type: str
         factory_name,  # type: str
         trigger_name,  # type: str
-        name1,  # type: str
-        zones_inside1=None,  # type: Optional[List[str]]
+        fake_identity=None,  # type: Optional["models.FakeFactoryIdentity1"]
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
@@ -474,10 +472,8 @@ class TriggerOperations(object):
         :type factory_name: str
         :param trigger_name: The trigger name.
         :type trigger_name: str
-        :param name1: ..
-        :type name1: str
-        :param zones_inside1: sample of simple array.
-        :type zones_inside1: list[str]
+        :param fake_identity: Properties of the factory.
+        :type fake_identity: ~dfaz_management_client.models.FakeFactoryIdentity1
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
@@ -497,8 +493,7 @@ class TriggerOperations(object):
             resource_group_name=resource_group_name,
             factory_name=factory_name,
             trigger_name=trigger_name,
-            name1=name1,
-            zones_inside1=zones_inside1,
+            fake_identity=fake_identity,
             cls=lambda x,y,z: x,
             **kwargs
         )

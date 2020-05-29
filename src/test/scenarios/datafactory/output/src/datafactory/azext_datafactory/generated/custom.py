@@ -234,16 +234,14 @@ def datafactory_trigger_subscribe_to_event(client,
                                            resource_group_name,
                                            factory_name,
                                            trigger_name,
-                                           name1,
-                                           zones_inside1=None,
+                                           fake_identity=None,
                                            no_wait=False):
     return sdk_no_wait(no_wait,
                        client.begin_subscribe_to_event,
                        resource_group_name=resource_group_name,
                        factory_name=factory_name,
                        trigger_name=trigger_name,
-                       name1=name1,
-                       zones_inside1=zones_inside1)
+                       fake_identity=fake_identity)
 
 
 def datafactory_trigger_unsubscribe_from_event(client,

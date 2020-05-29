@@ -329,8 +329,7 @@ subscribe-to-event a datafactory trigger.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|
 |**--factory-name**|string|The factory name.|factory_name|
 |**--trigger-name**|string|The trigger name.|trigger_name|
-|**--name1**|string|..|name1|
-|**--zones-inside1**|array|sample of simple array|zones_inside1|
+|**--fake-identity**|object|Properties of the factory.|fake_identity|
 ### datafactory trigger unsubscribe-from-event
 
 unsubscribe-from-event a datafactory trigger.

@@ -21,8 +21,9 @@ from azure.cli.core.commands.validators import get_default_location_from_resourc
 from azext_datafactory.action import (
     AddFactoryVstsConfiguration,
     AddFactoryGitHubConfiguration,
-    AddFakeIdentity,
-    AddTestAction
+    AddFactoriesFakeIdentity,
+    AddTestAction,
+    AddTriggersFakeIdentity
 )
 
 
@@ -49,7 +50,7 @@ def load_arguments(self, _):
                    'epo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
                    'itHub repo information.', arg_group='RepoConfiguration')
-        c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
+        c.argument('fake_identity', action=AddFactoriesFakeIdentity, nargs='+', help='This is only for az test.')
         c.argument('zones', nargs='+', help='This is only for az test.')
 
     with self.argument_context('datafactory update') as c:
@@ -155,8 +156,7 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.', id_part='name')
         c.argument('trigger_name', options_list=['--name', '-n'], help='The trigger name.', id_part='child_name_1')
-        c.argument('name1', help='..')
-        c.argument('zones_inside1', nargs='+', help='sample of simple array')
+        c.argument('fake_identity', action=AddTriggersFakeIdentity, nargs='+', help='Properties of the factory.')
 
     with self.argument_context('datafactory trigger unsubscribe-from-event') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -205,7 +205,7 @@ def load_arguments(self, _):
                    'epo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
                    'itHub repo information.', arg_group='RepoConfiguration')
-        c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
+        c.argument('fake_identity', action=AddFactoriesFakeIdentity, nargs='+', help='This is only for az test.')
         c.argument('zones', nargs='+', help='This is only for az test.')
         c.argument('type_properties_compute_properties', arg_type=CLIArgumentType(options_list=['--type-properties-comp'
                    'ute-properties'], help='The compute resource for managed integration runtime. Expected value: json-'

@@ -29,6 +29,7 @@ try:
     from ._models_py3 import FactoryVstsConfiguration
     from ._models_py3 import FakeFactoryIdentity
     from ._models_py3 import FakeFactoryIdentity1
+    from ._models_py3 import FakeTriggerIdentity
     from ._models_py3 import GitHubAccessTokenRequest
     from ._models_py3 import GitHubAccessTokenResponse
     from ._models_py3 import IntegrationRuntime
@@ -125,6 +126,7 @@ except (SyntaxError, ImportError):
     from ._models import FactoryVstsConfiguration  # type: ignore
     from ._models import FakeFactoryIdentity  # type: ignore
     from ._models import FakeFactoryIdentity1  # type: ignore
+    from ._models import FakeTriggerIdentity  # type: ignore
     from ._models import GitHubAccessTokenRequest  # type: ignore
     from ._models import GitHubAccessTokenResponse  # type: ignore
     from ._models import IntegrationRuntime  # type: ignore
@@ -246,6 +248,7 @@ __all__ = [
     'FactoryVstsConfiguration',
     'FakeFactoryIdentity',
     'FakeFactoryIdentity1',
+    'FakeTriggerIdentity',
     'GitHubAccessTokenRequest',
     'GitHubAccessTokenResponse',
     'IntegrationRuntime',
