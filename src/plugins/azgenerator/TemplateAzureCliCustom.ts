@@ -10,7 +10,7 @@ import { isNullOrUndefined } from "util";
 import { ToMultiLine, ToCamelCase, Capitalize, ToPythonString } from '../../utils/helper';
 
 
-let skip = false;
+let skipInBuild = false;
 export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     header.disableTooManyLines = true;
@@ -81,9 +81,6 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
 
 function ConstructSingleLineForMethodBody(model: CodeModelAz, needGeneric: boolean = false, param: Parameter, originalParameterStack: Parameter[], originalParameterNameStack: string[], prefixIndent: string, valueToMatch: string) {
     let output_body = [];
-    if (skip) {
-        skip = false;
-    }
     if (model.Parameter_IsFlattened(param)) {
         if (isNullOrUndefined(param['extensions']?.['cli-poly-as-resource-base-schema'])) {
             return output_body;
@@ -120,7 +117,7 @@ function ConstructSingleLineForMethodBody(model: CodeModelAz, needGeneric: boole
                     }
                 }       
                 if (hasNext && model.MethodParameter['polyBaseParam'] != baseParam) {
-                    skip = true;
+                    skipInBuild = true;
                 }
             }
         } else if (needGeneric) {
@@ -133,6 +130,19 @@ function ConstructSingleLineForMethodBody(model: CodeModelAz, needGeneric: boole
                 access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, ToPythonString(model.Parameter_DefaultValue(param), model.Parameter_Type(param)));
             }
             output_body.push(access);
+            if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                let baseParam = model.MethodParameter;
+                let hasNext = false;
+                if(model.SelectNextMethodParameter(true)) {
+                    hasNext = true;
+                    while (hasNext && model.MethodParameter['polyBaseParam'] == baseParam) {
+                        hasNext = model.SelectNextMethodParameter(true);
+                    }
+                }       
+                if (hasNext && model.MethodParameter['polyBaseParam'] != baseParam) {
+                    skipInBuild = true;
+                }
+            }
         } else {
             originalParameterStack.pop();
             originalParameterNameStack.pop();
@@ -153,9 +163,11 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
         let originalParameterNameStack: string[] = [];
         let prefixIndent = "    ";
 
-        let skip = false;
+        skipInBuild = false;
         do {
-
+            if (skipInBuild) {
+                skipInBuild = false;
+            }
             if (needGeneric && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
                 originalParameterStack.push(model.MethodParameter);
                 originalParameterNameStack.push(model.MethodParameter_Name);
@@ -176,7 +188,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 continue;
             } 
             output_body = output_body.concat(ConstructSingleLineForMethodBody(model, needGeneric, model.MethodParameter, originalParameterStack, originalParameterNameStack, prefixIndent, valueToMatch));
-        } while (skip || model.SelectNextMethodParameter(true));
+        } while (skipInBuild || model.SelectNextMethodParameter(true));
     }
     return output_body;
 }
@@ -396,7 +408,7 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
     if (model.SelectFirstMethod()) {
         // create body transformation for methods that support it
         let methodName: string = model.Command_MethodName;
-
+        
         // body transformation
         let allPolyBaseParam: Map<string, boolean> = new Map<string, boolean>();
         do {
