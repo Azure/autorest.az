@@ -53,6 +53,9 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                                                     if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
                                                         continue;
                                                     }
+                                                    if (needGeneric && model.SubMethodParameter['isDiscriminator']) {
+                                                        continue;
+                                                    }
                                                     output = output.concat(GetActionOutput(model, model.SubMethodParameter));
                                                 } while (model.SelectNextMethodParameter(true));
                                             }

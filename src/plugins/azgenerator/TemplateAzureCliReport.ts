@@ -166,7 +166,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
 
 function getSingleLineOfParameter(context: ParamBuilder) {
     let {model, allRequiredParam, allNonRequiredParam, requiredmo, nonrequiredmo } = context.getReadOnlyParamMap();
-    let {param, originalOperation} = context.getNonReadOnlyParamMap();
+    let {needGeneric, param, originalOperation} = context.getNonReadOnlyParamMap();
     if (model.Parameter_IsFlattened(param) || model.Parameter_Type(param) == SchemaType.Constant) {
         return;
     }
@@ -174,6 +174,9 @@ function getSingleLineOfParameter(context: ParamBuilder) {
         return;
     }
     if (!isNullOrUndefined(originalOperation) && param["targetProperty"]?.["isDiscriminator"]) {
+        return;
+    }
+    if (needGeneric && param['isDiscriminator']) {
         return;
     }
     let optionName = model.Parameter_MapsTo(param);

@@ -116,13 +116,11 @@ def load_arguments(self, _):
         c.argument('trigger_name', options_list=['--name', '-n'], help='The trigger name.', id_part='child_name_1')
         c.argument('if_match', help='ETag of the trigger entity.  Should only be specified for update, for which it sho'
                    'uld match existing entity or can be * for unconditional update.')
-        c.argument('type_', options_list=['--type'], help='Trigger type.')
         c.argument('description', help='Trigger description.')
         c.argument('annotations', arg_type=CLIArgumentType(options_list=['--annotations'], help='List of tags that can '
                    'be used for describing the trigger. Expected value: json-string/@json-file.'))
         c.argument('test_action', action=AddTestAction, nargs='+', help='testAction in createorupdate only will be show'
                    'n in update')
-        c.ignore('type')
 
     with self.argument_context('datafactory trigger delete') as c:
         c.argument('resource_group_name', resource_group_name_type)

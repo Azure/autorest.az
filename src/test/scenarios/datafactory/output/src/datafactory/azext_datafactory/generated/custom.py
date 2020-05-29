@@ -164,13 +164,11 @@ def datafactory_trigger_update(instance,
                                factory_name,
                                trigger_name,
                                if_match=None,
-                               type_=None,
                                description=None,
                                annotations=None,
                                test_action=None):
     if isinstance(annotations, str):
         annotations = json.loads(annotations)
-    instance.type = type_
     instance.description = description
     instance.annotations = annotations
     instance.test_action = test_action

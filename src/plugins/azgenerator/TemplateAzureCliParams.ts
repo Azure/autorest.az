@@ -173,6 +173,9 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                                     if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
                                         continue;
                                     }
+                                    if (needGeneric && model.SubMethodParameter['isDiscriminator']) {
+                                        continue;
+                                    }
                                     hasParam = true;
                                     output_args = output_args.concat(getSingleArgument(model, originalOperation, model.SubMethodParameter, allParam, allPythonParam, needUpdate));
                                 } while (model.SelectNextMethodParameter());

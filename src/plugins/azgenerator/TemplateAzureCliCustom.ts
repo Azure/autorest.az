@@ -180,6 +180,9 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                             if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
                                 continue;
                             }
+                            if (needGeneric && model.SubMethodParameter['isDiscriminator']) {
+                                continue;
+                            }
                             output_body = output_body.concat(ConstructSingleLineForMethodBody(model, needGeneric, model.SubMethodParameter, originalParameterStack, originalParameterNameStack, prefixIndent, valueToMatch));
                         } while (model.SelectNextMethodParameter(true));
                     }
@@ -303,6 +306,9 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperatio
                                     if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
                                         continue;
                                     }
+                                    if (needGeneric && model.SubMethodParameter['isDiscriminator']) {
+                                        continue;
+                                    }
                                     let name = model.Parameter_MapsTo(model.SubMethodParameter);
                                     if (!allParam.has(name)) {
                                         allParam.set(name, true);
@@ -422,6 +428,9 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                                         continue;
                                     }
                                     if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                                        continue;
+                                    }
+                                    if (needGeneric && model.SubMethodParameter['isDiscriminator']) {
                                         continue;
                                     }
                                     output_body = output_body.concat(buildValue(model, model.SubMethodParameter, allPolyBaseParam, required));
