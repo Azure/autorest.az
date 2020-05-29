@@ -12,6 +12,7 @@ import { isNullOrUndefined } from "util";
 
 
 let allActions: Map<string, boolean> = new Map<string, boolean>();
+let baseParam = null;
 export function GenerateAzureCliActions(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
 
@@ -38,7 +39,7 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                     let needUpdate = model.Command_CanSplit;
                     if (model.SelectFirstMethod()) {
                         do {
-                            let baseParam = null;
+                            baseParam = null;
                             if (model.SelectFirstMethodParameter()) {
                                 do {
 
@@ -52,14 +53,14 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                                                     if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
                                                         continue;
                                                     }
-                                                    output = output.concat(GetActionOutput(model, model.SubMethodParameter, baseParam));
+                                                    output = output.concat(GetActionOutput(model, model.SubMethodParameter));
                                                 } while (model.SelectNextMethodParameter(true));
                                             }
                                             model.ExitSubMethodParameters();
                                         }
                                         continue;
                                     }
-                                    output = output.concat(GetActionOutput(model, model.MethodParameter, baseParam));
+                                    output = output.concat(GetActionOutput(model, model.MethodParameter));
                                 } while (model.SelectNextMethodParameter());
                             }
                         } while (model.SelectNextMethod());
@@ -74,7 +75,7 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
     return output;
 }
 
-function GetActionOutput(model: CodeModelAz, param: Parameter, baseParam: Parameter) {
+function GetActionOutput(model: CodeModelAz, param: Parameter) {
     let output = [];
     if (baseParam && param["polyBaseParam"] == baseParam) {
         let keyToMatch =
