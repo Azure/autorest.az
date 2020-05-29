@@ -348,7 +348,11 @@ create a datafactory trigger.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|
 |**--factory-name**|string|The factory name.|factory_name|
 |**--trigger-name**|string|The trigger name.|trigger_name|
-|**--properties**|object|Properties of the trigger.|properties|
+|**--type**|object|Properties of the trigger.|properties|
+|**--description**|object|Properties of the trigger.|properties|
+|**--runtime-state**|object|Properties of the trigger.|properties|
+|**--annotations**|object|Properties of the trigger.|properties|
+|**--test-action**|object|Properties of the trigger.|properties|
 |**--if-match**|string|ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
 ### datafactory update
 
