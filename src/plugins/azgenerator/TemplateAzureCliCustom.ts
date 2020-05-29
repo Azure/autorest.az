@@ -591,6 +591,9 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
     let skip = false;
     if (model.SelectFirstMethodParameter(true)) {
         do {
+            if (skip) {
+                skip = false;
+            }
             let param = model.MethodParameter;
             if (model.MethodParameter_IsFlattened) {
                 continue;
@@ -621,9 +624,7 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
                 methodCall += "," + "\n" + indent + parameterPair;
             }
 
-            if (skip) {
-                skip = false;
-            }
+            
             if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                 let baseParam = model.MethodParameter;
                 let hasNext = false;

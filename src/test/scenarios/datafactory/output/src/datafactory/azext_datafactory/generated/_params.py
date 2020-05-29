@@ -46,9 +46,9 @@ def load_arguments(self, _):
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information.')
+                   'epo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information.')
+                   'itHub repo information.', arg_group='RepoConfiguration')
         c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
         c.argument('zones', nargs='+', help='This is only for az test.')
 
@@ -65,9 +65,9 @@ def load_arguments(self, _):
         c.argument('location_id', help='The location identifier.', id_part='name')
         c.argument('factory_resource_id', help='The factory resource id.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information.')
+                   'epo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information.')
+                   'itHub repo information.', arg_group='RepoConfiguration')
 
     with self.argument_context('datafactory get-data-plane-access') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -202,9 +202,9 @@ def load_arguments(self, _):
                    'hich it should match existing entity or can be * for unconditional update.')
         c.argument('description', help='Integration runtime description.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS r'
-                   'epo information.')
+                   'epo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s G'
-                   'itHub repo information.')
+                   'itHub repo information.', arg_group='RepoConfiguration')
         c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
         c.argument('zones', nargs='+', help='This is only for az test.')
         c.argument('type_properties_compute_properties', arg_type=CLIArgumentType(options_list=['--type-properties-comp'

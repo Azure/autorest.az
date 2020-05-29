@@ -19,6 +19,7 @@ let hasLocation = false;
 let hasLocationValidator = false;
 let hasTags = false;
 let actions: string[] = [];
+let baseParam = null;
 
 export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     var output_args: string[] = [];
@@ -153,7 +154,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                     }
                 }
             }
-            let baseParam = null;
+            baseParam = null;
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
@@ -173,7 +174,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                                         continue;
                                     }
                                     hasParam = true;
-                                    output_args = output_args.concat(getSingleArgument(model, originalOperation, model.SubMethodParameter, allParam, allPythonParam, baseParam, needUpdate));
+                                    output_args = output_args.concat(getSingleArgument(model, originalOperation, model.SubMethodParameter, allParam, allPythonParam, needUpdate));
                                 } while (model.SelectNextMethodParameter());
                             }
                             model.ExitSubMethodParameters();
@@ -181,7 +182,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         continue;
                     }
                     hasParam = true;
-                    output_args = output_args.concat(getSingleArgument(model, originalOperation, model.MethodParameter, allParam, allPythonParam, baseParam, needUpdate));
+                    output_args = output_args.concat(getSingleArgument(model, originalOperation, model.MethodParameter, allParam, allPythonParam, needUpdate));
                 } while(model.SelectNextMethodParameter());
             }
         } while (model.SelectNextMethod());
@@ -205,7 +206,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
 }
 
 
-function getSingleArgument(model: CodeModelAz, originalOperation: any, param: Parameter, allParam: Map<string, boolean>, allPythonParam: Map<string, boolean>, baseParam: any, needUpdate: boolean) {
+function getSingleArgument(model: CodeModelAz, originalOperation: any, param: Parameter, allParam: Map<string, boolean>, allPythonParam: Map<string, boolean>, needUpdate: boolean) {
     let output_args = [];
     if (isNullOrUndefined(originalOperation)) {
         allPythonParam.set(model.Parameter_NamePython(param), true);
