@@ -31,8 +31,6 @@ class AddSubscriptions(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'id':
-                d['id'] = v[0]
         return d
 
 
@@ -53,8 +51,6 @@ class AddVirtualNetworks(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'id':
-                d['id'] = v[0]
         return d
 
 
@@ -75,8 +71,6 @@ class AddSubnets(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'id':
-                d['id'] = v[0]
         return d
 
 
@@ -97,8 +91,6 @@ class AddHub(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'id':
-                d['id'] = v[0]
         return d
 
 
@@ -119,8 +111,6 @@ class AddSpokes(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'id':
-                d['id'] = v[0]
         return d
 
 
@@ -141,6 +131,4 @@ class AddMesh(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'id':
-                d['id'] = v[0]
         return d

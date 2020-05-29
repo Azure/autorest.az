@@ -160,31 +160,6 @@ Network" --resource-group "myResourceGroup"
 helps['managed-network mn group create'] = """
     type: command
     short-summary: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
-    parameters:
-      - name: --subscriptions
-        short-summary: The collection of subscriptions covered by the Managed Network
-        long-summary: |
-            Usage: --subscriptions id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --subscriptions argument.
-      - name: --virtual-networks
-        short-summary: The collection of virtual nets covered by the Managed Network
-        long-summary: |
-            Usage: --virtual-networks id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --virtual-networks argument.
-      - name: --subnets
-        short-summary: The collection of  subnets covered by the Managed Network
-        long-summary: |
-            Usage: --subnets id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --subnets argument.
     examples:
       - name: Create/Update Managed Network Group
         text: |-
@@ -198,31 +173,6 @@ p1" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
 helps['managed-network mn group update'] = """
     type: command
     short-summary: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
-    parameters:
-      - name: --subscriptions
-        short-summary: The collection of subscriptions covered by the Managed Network
-        long-summary: |
-            Usage: --subscriptions id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --subscriptions argument.
-      - name: --virtual-networks
-        short-summary: The collection of virtual nets covered by the Managed Network
-        long-summary: |
-            Usage: --virtual-networks id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --virtual-networks argument.
-      - name: --subnets
-        short-summary: The collection of  subnets covered by the Managed Network
-        long-summary: |
-            Usage: --subnets id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --subnets argument.
     examples:
       - name: Create/Update Managed Network Group
         text: |-
@@ -293,29 +243,6 @@ helps['managed-network managed-network-peering-policy hub-and-spoke-topology'] =
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology create'] = """
     type: command
     short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
-    parameters:
-      - name: --hub
-        short-summary: Gets or sets the hub virtual network ID
-        long-summary: |
-            Usage: --hub id=XX
-
-            id: Resource Id
-      - name: --spokes
-        short-summary: Gets or sets the spokes group IDs
-        long-summary: |
-            Usage: --spokes id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --spokes argument.
-      - name: --mesh
-        short-summary: Gets or sets the mesh group IDs
-        long-summary: |
-            Usage: --mesh id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --mesh argument.
     examples:
       - name: Create/Update Managed Network Peering Policy
         text: |-
@@ -329,29 +256,6 @@ ceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/mana
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology update'] = """
     type: command
     short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
-    parameters:
-      - name: --hub
-        short-summary: Gets or sets the hub virtual network ID
-        long-summary: |
-            Usage: --hub id=XX
-
-            id: Resource Id
-      - name: --spokes
-        short-summary: Gets or sets the spokes group IDs
-        long-summary: |
-            Usage: --spokes id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --spokes argument.
-      - name: --mesh
-        short-summary: Gets or sets the mesh group IDs
-        long-summary: |
-            Usage: --mesh id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --mesh argument.
     examples:
       - name: Create/Update Managed Network Peering Policy
         text: |-
@@ -370,29 +274,6 @@ helps['managed-network managed-network-peering-policy mesh-topology'] = """
 helps['managed-network managed-network-peering-policy mesh-topology create'] = """
     type: command
     short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
-    parameters:
-      - name: --hub
-        short-summary: Gets or sets the hub virtual network ID
-        long-summary: |
-            Usage: --hub id=XX
-
-            id: Resource Id
-      - name: --spokes
-        short-summary: Gets or sets the spokes group IDs
-        long-summary: |
-            Usage: --spokes id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --spokes argument.
-      - name: --mesh
-        short-summary: Gets or sets the mesh group IDs
-        long-summary: |
-            Usage: --mesh id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --mesh argument.
     examples:
       - name: Create/Update Managed Network Peering Policy
         text: |-
@@ -406,29 +287,6 @@ rce-group "myResourceGroup"
 helps['managed-network managed-network-peering-policy mesh-topology update'] = """
     type: command
     short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
-    parameters:
-      - name: --hub
-        short-summary: Gets or sets the hub virtual network ID
-        long-summary: |
-            Usage: --hub id=XX
-
-            id: Resource Id
-      - name: --spokes
-        short-summary: Gets or sets the spokes group IDs
-        long-summary: |
-            Usage: --spokes id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --spokes argument.
-      - name: --mesh
-        short-summary: Gets or sets the mesh group IDs
-        long-summary: |
-            Usage: --mesh id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --mesh argument.
     examples:
       - name: Create/Update Managed Network Peering Policy
         text: |-

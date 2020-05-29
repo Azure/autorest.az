@@ -926,35 +926,48 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
         if (requiredSimple && !this.Parameter_IsListOfSimple(param))
             return null;
-
-        let submethodparameters = [];
+   
+        let submethodparameters: Map<string, Parameter> = new Map<string, Parameter>();
         if (this.Parameter_Type(param) == SchemaType.Array || this.Parameter_Type(param) == SchemaType.Dictionary) {
             if ((param['schema'])['elementType'].type == SchemaType.Object) {
                 if(!isNullOrUndefined(param['schema']?.['elementType']?.properties)) {
-                    submethodparameters = param['schema']?.['elementType']?.properties;
+                    
+                    for(let pa of param['schema']?.['elementType']?.properties) {
+                        submethodparameters.set(this.Parameter_MapsTo(pa), pa);
+                    }
                 }
                 for (let parent of values(param['schema']?.['elementType']?.['parents']?.all)) {
                     if (isNullOrUndefined(parent['properties'])) {
                         continue;
                     }
-                    submethodparameters = submethodparameters.concat(parent['properties'])
+                    for(let param of parent['properties']) {
+                        submethodparameters.set(this.Parameter_MapsTo(param), param);
+                    }
                 }
             }
         } else if (this.Parameter_Type(param) == SchemaType.Object) {
             if (!isNullOrUndefined(param['schema']['properties'])) {
-                submethodparameters = param['schema']['properties'];
+                for(let pa of param['schema']['properties']) {
+                    submethodparameters.set(this.Parameter_MapsTo(pa), pa);
+                }
             }
             for (let parent of values(param['schema']?.['parents']?.all)) {
                 if (isNullOrUndefined(parent['properties'])) {
                     continue;
                 }
-                submethodparameters = submethodparameters.concat(parent['properties'])
+                for(let param of parent['properties']) {
+                    submethodparameters.set(this.Parameter_MapsTo(param), param);
+                }
             }
         }
-        if(submethodparameters.length == 0) {
+        if(submethodparameters.keys.length == 0) {
             return null;
         }
-        return submethodparameters;
+        let result = [];
+        for(let k in submethodparameters.keys()) {
+            result = result.concat(submethodparameters[k]);
+        }
+        return result;
     }
 
     public ExitSubMethodParameters(): boolean {

@@ -60,12 +60,12 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
                     } else {
                         genericParameter = model.Command_GenericSetterParameter(model.Command);
                     }
-
+                    
+                    let needUpdate = model.Command_CanSplit;
                     let needGeneric = false;
-                    if (!isNullOrUndefined(genericParameter)) {
+                    if (needUpdate && !isNullOrUndefined(genericParameter)) {
                         needGeneric = true;
                     }
-                    let needUpdate = model.Command_CanSplit;
                     output = output.concat(GetCommandBody(model, required, false, originalOperation, false, genericParameter));
                     if (needUpdate) {
                         output = output.concat(GetCommandBody(model, required, needUpdate, originalOperation, needGeneric, genericParameter));
