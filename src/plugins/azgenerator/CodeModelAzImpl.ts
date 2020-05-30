@@ -960,12 +960,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             }
         }
-        if(submethodparameters.keys.length == 0) {
+        if(submethodparameters.size == 0) {
             return null;
         }
         let result = [];
-        for(let k in submethodparameters.keys()) {
-            result = result.concat(submethodparameters[k]);
+        for(let k of submethodparameters.keys()) {
+            result = result.concat(submethodparameters.get(k));
         }
         return result;
     }
@@ -1019,6 +1019,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         } else {
             return this.MethodParameter.schema?.type == SchemaType.Array;
         }
+    }
+
+    public Parameter_IsArray(param: Parameter): boolean {
+        return param?.schema?.type == SchemaType.Array;
     }
 
     public get MethodParameter_NamePython(): string {
@@ -1334,7 +1338,10 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_IsHidden(parameter: Parameter): boolean {
-        if (!parameter.language['az'].hasOwnProperty('hidden')) {
+        if (isNullOrUndefined(parameter)) {
+            return false;
+        }
+        if (!parameter?.language['az'].hasOwnProperty('hidden')) {
             // Handle complex
             let shouldHidden = undefined;
             if (this.EnterSubMethodParameters(parameter))

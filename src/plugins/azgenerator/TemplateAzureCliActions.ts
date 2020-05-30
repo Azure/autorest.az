@@ -141,7 +141,7 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
     output.push("            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))");
     output.push("        d = {}");
 
-    if (model.EnterSubMethodParameters()) {
+    if (model.EnterSubMethodParameters(param)) {
         if (model.SelectFirstMethodParameter(true)) {
             do {
                 if (model.Parameter_DefaultValue(model.SubMethodParameter) !== undefined) {
@@ -157,7 +157,7 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
     output.push("            v = properties[k]");
     let foundProperties = false;
     let preParamType = paramType;
-    if (model.EnterSubMethodParameters()) {
+    if (model.EnterSubMethodParameters(param)) {
         if (model.SelectFirstMethodParameter()) {
             foundProperties = true;
             let ifkv = "if";
@@ -172,7 +172,7 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
                     continue;
                 }
                 output.push("            " + ifkv + " kl == '" + model.Parameter_NameAz(model.SubMethodParameter) + "':");
-                if (model.MethodParameter_IsArray) {
+                if (model.Parameter_IsArray(model.SubMethodParameter)) {
                     output.push("                d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = v");
                 }
                 else {

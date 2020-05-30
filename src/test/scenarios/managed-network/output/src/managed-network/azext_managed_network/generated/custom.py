@@ -236,6 +236,9 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update
                                                                                  spokes=None,
                                                                                  mesh=None,
                                                                                  no_wait=False):
+    instance.hub = hub
+    instance.spokes = spokes
+    instance.mesh = mesh
     instance.type = 'HubAndSpokeTopology'
     instance.hub = hub
     instance.spokes = spokes
@@ -275,6 +278,9 @@ def managed_network_managed_network_peering_policy_mesh_topology_update(instance
                                                                         spokes=None,
                                                                         mesh=None,
                                                                         no_wait=False):
+    instance.hub = hub
+    instance.spokes = spokes
+    instance.mesh = mesh
     instance.type = 'MeshTopology'
     instance.hub = hub
     instance.spokes = spokes

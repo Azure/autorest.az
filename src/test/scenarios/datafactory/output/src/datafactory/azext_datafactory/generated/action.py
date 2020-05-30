@@ -123,6 +123,10 @@ class AddTestAction(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+            if kl == 'action-val1':
+                d['action_val1'] = v[0]
+            elif kl == 'action-val2':
+                d['action_val2'] = v
         return d
 
 

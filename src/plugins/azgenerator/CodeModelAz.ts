@@ -114,7 +114,7 @@ export interface CodeModelAz
 
     MethodParameter_Name: string;
     MethodParameter_NameAz: string;
-    MethodParameter_IsArray: boolean
+    MethodParameter_IsArray: boolean;
     MethodParameter_NamePython: string
     MethodParameter_MapsTo: string;
     MethodParameter_Description: string;
@@ -156,6 +156,7 @@ export interface CodeModelAz
     Parameter_IsSimpleArray(Parameter): boolean;
     Parameter_EnumValues(Parameter): string[];
     Parameter_IdPart(Parameter): string;
+    Parameter_IsArray(Parameter): boolean
     Schema_Description(Schema): string;
 
     GetModuleOperationName(): string;
