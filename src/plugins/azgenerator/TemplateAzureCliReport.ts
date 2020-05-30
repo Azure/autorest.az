@@ -167,7 +167,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
 function getSingleLineOfParameter(context: ParamBuilder) {
     let {model, allRequiredParam, allNonRequiredParam, requiredmo, nonrequiredmo } = context.getReadOnlyParamMap();
     let {needGeneric, param, originalOperation} = context.getNonReadOnlyParamMap();
-    if (model.Parameter_IsFlattened(param) || model.Parameter_Type(param) == SchemaType.Constant) {
+    if (model.Parameter_IsFlattened(param) || model.Parameter_Type(param) == SchemaType.Constant || param['readOnly']) {
         return;
     }
     if (model.Parameter_IsPolyOfSimple(param)) {
@@ -184,17 +184,17 @@ function getSingleLineOfParameter(context: ParamBuilder) {
         optionName = optionName.substr(0, optionName.length - 1);
     }
     optionName = optionName.replace(/_/g, "-");
-    if (model.MethodParameter_IsRequired) {
+    if (model.Parameter_IsRequired(param)) {
         if (allRequiredParam.has(optionName)) {
             return;
         }
         allRequiredParam.set(optionName, true);
-        requiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_Name + "|");
+        requiredmo.push("|**--" + optionName + "**|" + model.Parameter_Type(param) + "|" + model.Parameter_Description(param) + "|" + model.Parameter_Name(param) + "|");
     } else {
         if (allNonRequiredParam.has(optionName)) {
             return;
         }
         allNonRequiredParam.set(optionName, true);
-        nonrequiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_Name + "|");
+        nonrequiredmo.push("|**--" + optionName + "**|" + model.Parameter_Type(param) + "|" + model.Parameter_Description(param) + "|" + model.Parameter_Name(param) + "|");
     }
 }

@@ -32,11 +32,9 @@ hub-and-spoke-topology create a managed-network managed-network-peering-policy.
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|
 |**--policy-name**|string|The name of the Managed Network Peering Policy.|policy_name|
 |**--location**|string|The geo-location where the resource lives|location|
-|**--hub**|object|Gets or sets the properties of a Managed Network Policy|properties|
-|**--spokes**|object|Gets or sets the properties of a Managed Network Policy|properties|
-|**--mesh**|object|Gets or sets the properties of a Managed Network Policy|properties|
-|**--provisioning-state**|object|Gets or sets the properties of a Managed Network Policy|properties|
-|**--etag**|object|Gets or sets the properties of a Managed Network Policy|properties|
+|**--hub**|object|Gets or sets the hub virtual network ID|hub|
+|**--spokes**|array|Gets or sets the spokes group IDs|spokes|
+|**--mesh**|array|Gets or sets the mesh group IDs|mesh|
 ### managed-network managed-network-peering-policy list
 
 list a managed-network managed-network-peering-policy.
@@ -70,11 +68,9 @@ mesh-topology create a managed-network managed-network-peering-policy.
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|
 |**--policy-name**|string|The name of the Managed Network Peering Policy.|policy_name|
 |**--location**|string|The geo-location where the resource lives|location|
-|**--hub**|object|Gets or sets the properties of a Managed Network Policy|properties|
-|**--spokes**|object|Gets or sets the properties of a Managed Network Policy|properties|
-|**--mesh**|object|Gets or sets the properties of a Managed Network Policy|properties|
-|**--provisioning-state**|object|Gets or sets the properties of a Managed Network Policy|properties|
-|**--etag**|object|Gets or sets the properties of a Managed Network Policy|properties|
+|**--hub**|object|Gets or sets the hub virtual network ID|hub|
+|**--spokes**|array|Gets or sets the spokes group IDs|spokes|
+|**--mesh**|array|Gets or sets the mesh group IDs|mesh|
 ### managed-network managed-network-peering-policy show
 
 show a managed-network managed-network-peering-policy.

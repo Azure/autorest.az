@@ -156,7 +156,8 @@ export interface CodeModelAz
     Parameter_IsSimpleArray(Parameter): boolean;
     Parameter_EnumValues(Parameter): string[];
     Parameter_IdPart(Parameter): string;
-    Parameter_IsArray(Parameter): boolean
+    Parameter_IsArray(Parameter): boolean;
+    Parameter_IsRequired(Parameter): boolean;
     Schema_Description(Schema): string;
 
     GetModuleOperationName(): string;

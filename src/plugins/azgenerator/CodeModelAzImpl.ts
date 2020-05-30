@@ -1421,6 +1421,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return param.language['az'].name;
     }
 
+    public Parameter_IsRequired(param: Parameter): boolean {
+        return param.required;
+    }
+
     public Parameter_NamePython(param: Parameter = this.MethodParameter): string {
         return param.language['python'].name;
     }
