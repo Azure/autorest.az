@@ -168,7 +168,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
             if (skipInBuild) {
                 skipInBuild = false;
             }
-            if (needGeneric && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
+            if (!model.MethodParameter_IsFlattened && needGeneric && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
                 originalParameterStack.push(model.MethodParameter);
                 originalParameterNameStack.push(model.MethodParameter_Name);
                 if (model.EnterSubMethodParameters(genericParameter, false)) {
