@@ -148,14 +148,12 @@ def datafactory_trigger_create(client,
                                resource_group_name,
                                factory_name,
                                trigger_name,
-                               properties,
-                               if_match=None):
+                               properties):
     if isinstance(properties, str):
         properties = json.loads(properties)
     return client.create_or_update(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    trigger_name=trigger_name,
-                                   if_match=if_match,
                                    properties=properties)
 
 

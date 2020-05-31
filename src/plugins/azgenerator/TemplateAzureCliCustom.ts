@@ -68,7 +68,9 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
                     }
                     output = output.concat(GetCommandBody(model, required, false, originalOperation, false, genericParameter));
                     if (needUpdate) {
+                        model.setNeedUpdate(needUpdate);
                         output = output.concat(GetCommandBody(model, required, needUpdate, originalOperation, needGeneric, genericParameter));
+                        model.setNeedUpdate(false);
                     }
                 }
                 while (model.SelectNextCommand());
@@ -230,9 +232,6 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperatio
 
     let output: string[] = [];
     let updatedMethodName: string = model.Command_FunctionName;
-    if (needUpdate) {
-        updatedMethodName = updatedMethodName.replace(/_create/g, '_update');
-    }
     let call = "def " + updatedMethodName + "(";
     let indent = " ".repeat(call.length);
     if (needGeneric) {

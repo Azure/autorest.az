@@ -51,7 +51,9 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                     }
                     output = output.concat(getCommandBody(model));
                     if (model.Command_CanSplit) {
+                        model.setNeedUpdate(true);
                         output = output.concat(getCommandBody(model, true));
+                        model.setNeedUpdate(false);
                     }
                 }
                 while (model.SelectNextCommand());
@@ -101,7 +103,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                 // generic update doesn't apply here
                 ToMultiLine("        g.custom_command('" + methodName.replace(/create/g, 'update') + "', '" + functionName.replace(/_create/g, '_update') + "'" + endStr, output);
             } else {
-                let generic_update = "        g.generic_update_command('" + model.Command_MethodName.replace(/create/g, 'update');
+                let generic_update = "        g.generic_update_command('" + model.Command_MethodName;
                 if (argument && argument != "" && argument != "parameters") {
                     generic_update += "', setter_arg_name = '" + argument;
                 }

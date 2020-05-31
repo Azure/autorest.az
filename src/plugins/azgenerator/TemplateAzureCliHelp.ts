@@ -57,8 +57,10 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
                     output = output.concat(commandOutput);
                     //output.push("after output.length: " + output.length);
                     if (model.Command_CanSplit) {
+                        model.setNeedUpdate(true);
                         let tmpoutput: string[] = generateCommandHelp(model, true);
                         output = output.concat(tmpoutput);
+                        model.setNeedUpdate(false);
                     }
                 }
                 while (model.SelectNextCommand());
@@ -138,16 +140,14 @@ function addParameterHelp(output: string[], model: CodeModelAz) {
                 parameterAlias.push('name');
                 parameterAlias.push('n');
             }
-            if (!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
-                if (!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
-                    let alias = model.MethodParameter?.language?.['cli']?.['alias'];
+            if (!isNullOrUndefined(model.getCliCommonProperty(model.MethodParameter, 'alias'))) {
+                let alias = model.getCliCommonProperty(model.MethodParameter, 'alias');
 
-                    if (typeof alias === "string") {
-                        parameterAlias.push(alias);
-                    }
-                    if (isArray(alias)) {
-                        parameterAlias = parameterAlias.concat(alias);
-                    }
+                if (typeof alias === "string") {
+                    parameterAlias.push(alias);
+                }
+                if (isArray(alias)) {
+                    parameterAlias = parameterAlias.concat(alias);
                 }
             }
             if (parameterAlias.length == 0) parameterAlias.push(parameterName);
@@ -245,7 +245,7 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
     //    continue;
     let output: string[] = [];
     output.push("");
-    let commandHead = needUpdate? model.Command_Name.replace(/ create/gi, " update"): model.Command_Name;
+    let commandHead = model.Command_Name;
     output.push("helps['" + commandHead + "'] = \"\"\"");
     output.push("    type: command");
 

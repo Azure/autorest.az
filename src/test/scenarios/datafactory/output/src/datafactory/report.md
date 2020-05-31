@@ -255,7 +255,6 @@ create a datafactory trigger.
 |**--factory-name**|string|The factory name.|factory_name|
 |**--trigger-name**|string|The trigger name.|trigger_name|
 |**--properties**|object|Properties of the trigger.|properties|
-|**--if-match**|string|ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
 ### datafactory trigger delete
 
 delete a datafactory trigger.
@@ -341,7 +340,7 @@ unsubscribe-from-event a datafactory trigger.
 |**--trigger-name**|string|The trigger name.|trigger_name|
 ### datafactory trigger update
 
-create a datafactory trigger.
+update a datafactory trigger.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|

@@ -1,6 +1,7 @@
 ﻿import { AnyARecord } from "dns";
 import { Operation, Parameter, OperationGroup } from "@azure-tools/codemodel";
 import { Property } from '@azure-tools/codemodel';
+import { isNull, isNullOrUndefined } from "util";
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -53,6 +54,19 @@ export class CommandExample {
     public MethodParams: Map<string, MethodParam>;
 }
 
+export class CLICommonParamBuilder {
+    public constructor(public commandMethodName: string, public scope: string) {
+
+    }
+
+    public isScopeRight() {
+        if (!isNullOrUndefined(this.scope) && this.commandMethodName != this.scope) {
+            return false;
+        }
+        return true;
+    }
+}
+
 export interface CodeModelAz
 {
     init(): any;
@@ -78,6 +92,8 @@ export interface CodeModelAz
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
+    getCliCommonProperty(prop: any, cliPropName: string);
+    setNeedUpdate(needUpdate);
 
     Command: Operation;
     Command_Name: string;

@@ -8,6 +8,7 @@ import { EscapeString, ToCamelCase, Capitalize, ToMultiLine } from "../../utils/
 import { SchemaType, Parameter } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "./Header";
 import { isNullOrUndefined, isArray } from "util";
+import { REPL_MODE_SLOPPY } from "repl";
 
 
 let hasActions: boolean = false;
@@ -49,6 +50,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
                     }
                     let needUpdate = model.Command_CanSplit;
                     let command_output = getCommandBody(model, false, false, null);
+                    model.setNeedUpdate(needUpdate);
                     if (model.Command_MethodName == "show") {
                         show_output = command_output
                     } 
@@ -56,7 +58,9 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
                     output_args = output_args.concat(command_output);
                    
                     if (needUpdate) {
+                        model.setNeedUpdate(needUpdate);
                         output_args = output_args.concat(getCommandBody(model, needUpdate, needGeneric, genericParam));
+                        model.setNeedUpdate(false);
                     }
                 }
                 while (model.SelectNextCommand());
@@ -114,11 +118,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
     //    continue;
     let output_args: string[] = [];
     output_args.push("");
-    if (needUpdate) {
-        output_args.push("    with self.argument_context('" + model.Command_Name.replace(/ create/g, " update") + "') as c:");
-    } else {
-        output_args.push("    with self.argument_context('" + model.Command_Name + "') as c:");
-    }
+    output_args.push("    with self.argument_context('" + model.Command_Name + "') as c:");
 
     let hasParam = false;
     let allParam: Map<string, boolean> = new Map<string, boolean>();
@@ -204,7 +204,6 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
         output_args.push("        pass");
     }
 
-
     return output_args;
 }
 
@@ -233,15 +232,15 @@ function getSingleArgument(model: CodeModelAz, originalOperation: any, param: Pa
         argument = "        c.argument('" + parameterName + "'";
         argument += ", options_list=['--" + parameterName.substr(0, parameterName.length - 1) + "']";
         param.language['az']['alias'] = Array(parameterName.substr(0, parameterName.length - 1));
-    } else if (parameterName.endsWith('name') && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase() || !isNullOrUndefined(param?.language?.['cli']?.['alias'])) {
+    } else if (parameterName.endsWith('name') && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase() || !isNullOrUndefined(model.getCliCommonProperty(param, 'alias'))) {
         argument = "        c.argument('" + parameterName + "'";
         let aliases: string[] = [];
         if(!model.Method['hasName']) {
             aliases.push('name');
             aliases.push('n');
         }
-        if(!isNullOrUndefined(param?.language?.['cli']?.['alias'])) {
-            let alias = param?.language?.['cli']?.['alias'];
+        if(!isNullOrUndefined(model.getCliCommonProperty(param, 'alias'))) {
+            let alias = model.getCliCommonProperty(param, 'alias')
             
             if(typeof alias === "string") {
                 aliases.push(alias);  

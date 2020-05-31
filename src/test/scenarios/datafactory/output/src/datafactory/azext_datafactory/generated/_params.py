@@ -105,8 +105,6 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', help='The factory name.')
         c.argument('trigger_name', options_list=['--name', '-n'], help='The trigger name.')
-        c.argument('if_match', help='ETag of the trigger entity.  Should only be specified for update, for which it sho'
-                   'uld match existing entity or can be * for unconditional update.')
         c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of the trigge'
                    'r. Expected value: json-string/@json-file.'))
 

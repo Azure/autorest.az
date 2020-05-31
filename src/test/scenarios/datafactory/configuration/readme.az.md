@@ -34,4 +34,11 @@ cli:
             op: CreateOrUpdate
             param: properties
         poly-resource: true
+      - where:
+            group: Triggers
+            op: CreateOrUpdate
+            param: if-match
+        set:
+            scope: create
+        hidden: true
 ```

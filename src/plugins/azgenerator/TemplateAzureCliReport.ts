@@ -50,8 +50,10 @@ export function GenerateAzureCliReport(model: CodeModelAz): string[] {
                     mo = getCommandBody(model);
                     cmds[model.Command_Name] = mo;
                     if (model.Command_CanSplit) {
+                        model.setNeedUpdate(true);
                         mo = getCommandBody(model, true);
-                        cmds[model.Command_Name.replace(/ create/g, " update")] = mo;
+                        cmds[model.Command_Name] = mo;
+                        model.setNeedUpdate(false);
                     }
                 } while (model.SelectNextCommand());
             }
@@ -70,17 +72,10 @@ export function GenerateAzureCliReport(model: CodeModelAz): string[] {
 
 function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     let mo: string[] = [];
-    if (needUpdate) {
-        mo.push("### " + model.Command_Name.replace(/ create/g, " update"));
-    } else {
-        mo.push("### " + model.Command_Name);
-    }
+        
+    mo.push("### " + model.Command_Name);
     mo.push("");
-    if (needUpdate) {
-        mo.push(model.Command_MethodName.replace(/_create/g, "_update") + " a " + model.CommandGroup_Name + ".");
-    } else {
-        mo.push(model.Command_MethodName + " a " + model.CommandGroup_Name + ".");
-    }
+    mo.push(model.Command_MethodName+ " a " + model.CommandGroup_Name + ".");
 
     mo.push("");
 
@@ -142,9 +137,6 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     mo.push("```");
 
                     let next: string = model.Command_Name + " " + model.Command_MethodName + " ";
-                    if (needUpdate) {
-                        next = model.Command_Name.replace(/ create/g, " update") + " " + model.Command_MethodName.replace(/_create/g, "_update") + " ";
-                    }
                     for (let k in model.Example_Params) {
                         let v: string = model.Example_Params[k];
                         if (/\s/.test(v)) {
