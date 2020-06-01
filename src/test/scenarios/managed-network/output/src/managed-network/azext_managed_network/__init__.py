@@ -16,10 +16,10 @@ class ManagedNetworkManagementClientCommandsLoader(AzCommandsLoader):
 
     def __init__(self, cli_ctx=None):
         from azure.cli.core.commands import CliCommandType
-        from azext_managed_network.generated._client_factory import cf_managed_network
+        from azext_managed_network.generated._client_factory import cf_managed_network_cl
         managed_network_custom = CliCommandType(
             operations_tmpl='azext_managed_network.custom#{}',
-            client_factory=cf_managed_network)
+            client_factory=cf_managed_network_cl)
         parent = super(ManagedNetworkManagementClientCommandsLoader, self)
         parent.__init__(cli_ctx=cli_ctx, custom_command_type=managed_network_custom)
 

@@ -19,10 +19,10 @@ export function GenerateAzureCliInit(model: CodeModelAz) : string[] {
     output.push("");
     output.push("    def __init__(self, cli_ctx=None):");
     output.push("        from azure.cli.core.commands import CliCommandType");
-    output.push("        from azext_" + model.Extension_NameUnderscored + ".generated._client_factory import cf_" + model.Extension_NameUnderscored + "");
+    output.push("        from azext_" + model.Extension_NameUnderscored + ".generated._client_factory import cf_" + model.Extension_NameUnderscored + "_cl");
     output.push("        " + model.Extension_NameUnderscored + "_custom = CliCommandType(");
     output.push("            operations_tmpl='azext_" + model.Extension_NameUnderscored + ".custom#{}',");
-    output.push("            client_factory=cf_" + model.Extension_NameUnderscored + ")");
+    output.push("            client_factory=cf_" + model.Extension_NameUnderscored + "_cl)");
     output.push(`        parent = super(${model.Extension_NameClass}CommandsLoader, self)`);
     ToMultiLine(`        parent.__init__(cli_ctx=cli_ctx, custom_command_type=${model.Extension_NameUnderscored}_custom)`, output);
     output.push("");
