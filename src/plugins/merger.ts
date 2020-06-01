@@ -1,4 +1,4 @@
-import { CodeModel, codeModelSchema, Language } from "@azure-tools/codemodel";
+import { CodeModel, codeModelSchema, Language, Parameter } from "@azure-tools/codemodel";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
@@ -22,6 +22,29 @@ export class Merger {
             let operations = operationGroup.operations;
             operationGroup.operations.forEach(operation => {
                 if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-operations'])) {
+                    operation.extensions['cli-operations'].forEach(subOperation => {
+                        subOperation.parameters.forEach(subParam => {
+                            let idx = operation.parameters.indexOf(subParam);
+                            if (idx > -1) {
+                                if(isNullOrUndefined(operation.parameters[idx]['subParams'])) {
+                                    operation.parameters[idx]['subParams'] = {};
+                                } else {
+                                    operation.parameters[idx]['subParams'][subOperation.language['az']['name']] = subParam.language['az']['name'];
+                                    subParam['nameBaseParam'] = operation.parameters[idx];
+                                }
+                            } else {
+                                let idx = operation?.requests?.[0]?.parameters?.indexOf(subParam);
+                                if(idx > -1) {
+                                    if(isNullOrUndefined(operation?.requests?.[0]?.parameters[idx]['subParams'])) {
+                                        operation.requests[0].parameters[idx]['subParams'] = {};
+                                    } else {
+                                        operation.requests[0].parameters[idx]['subParams'][subOperation.language['az']['name']] = subParam.language['az']['name'];
+                                        subParam['nameBaseParam'] = operation.requests[0].parameters[idx];
+                                    }
+                                }
+                            }
+                        })
+                    })
                     operations = operations.concat(operation.extensions['cli-operations']);
                 }
             });
