@@ -21,10 +21,25 @@ export class Merger {
         this.codeModel.operationGroups.forEach(operationGroup => {
             let operations = operationGroup.operations;
             operationGroup.operations.forEach(operation => {
+                let nameIndexMap: Map<string, number> = new Map<string, number>();
+                let index = 0;
+                operation.parameters.forEach(param => {
+                    nameIndexMap.set(param.language['cli']['name'], index);
+                    index++;
+                });
+                let nameIndexMapRequest: Map<string, number> = new Map<string, number>();
+                let indexRequest = 0;
+                if(!isNullOrUndefined(operation.requests?.[0]?.parameters)) {
+                    operation.requests[0].parameters.forEach(rparam => {
+                        nameIndexMapRequest.set(rparam.language['cli']['name'], indexRequest);
+                        indexRequest++;
+                    })
+                    
+                }
                 if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-operations'])) {
                     operation.extensions['cli-operations'].forEach(subOperation => {
                         subOperation.parameters.forEach(subParam => {
-                            let idx = operation.parameters.indexOf(subParam);
+                            let idx = nameIndexMap.get(subParam.language['cli']['name']);
                             if (idx > -1) {
                                 if(isNullOrUndefined(operation.parameters[idx]['subParams'])) {
                                     operation.parameters[idx]['subParams'] = {};
