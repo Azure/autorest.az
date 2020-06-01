@@ -29,7 +29,7 @@ export class Merger {
                                 if(isNullOrUndefined(operation.parameters[idx]['subParams'])) {
                                     operation.parameters[idx]['subParams'] = {};
                                 } else {
-                                    operation.parameters[idx]['subParams'][subOperation.language['az']['name']] = subParam.language['az']['name'];
+                                    operation.parameters[idx]['subParams'][subOperation.language['cli']['name']] = subParam.language['cli']['name'];
                                     subParam['nameBaseParam'] = operation.parameters[idx];
                                 }
                             } else {

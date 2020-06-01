@@ -938,6 +938,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_SetAzNameMapsTo(newName: string, param: Parameter = this.MethodParameter): void {
+        if(!isNullOrUndefined(param['nameBaseParam'])) {
+            param['nameBaseParam']['subParams'][this.Method.language['cli']['name']] = newName;
+        }
         param.language['az']['mapsto'] = newName;
     }
 
