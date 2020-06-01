@@ -3,6 +3,7 @@ import { Session, startSession, Host, Channel } from '@azure-tools/autorest-exte
 import { serialize, deserialize } from '@azure-tools/codegen';
 import { GenerateAll } from "./Generator";
 import { CodeModelCliImpl } from "./CodeModelAzImpl";
+import { EOL } from "os";
 
 
 export async function processRequest(host: Host) {
@@ -20,7 +21,7 @@ export async function processRequest(host: Host) {
             } while (model.SelectNextExtension());
         }
         for (let f in files) {
-            host.WriteFile(f, files[f].join('\r\n'));
+            host.WriteFile(f, files[f].join(EOL));
         }
     } catch (E) {
         if (debug) {
