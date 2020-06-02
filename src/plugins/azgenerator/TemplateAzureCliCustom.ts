@@ -464,7 +464,7 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
         if (model.Parameter_IsHidden(param)) {
             continue;
         }
-        let optionName = model.Parameter_MapsTo(param);
+        let optionName = model.Parameter_SubMapsTo(model.Method_NameCli, param);
         let parameterName = model.Parameter_NamePython(param);
 
         if (methodCall.endsWith("(")) {

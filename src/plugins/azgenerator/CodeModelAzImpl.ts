@@ -768,6 +768,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Method.language['az'].name;
     }
 
+    public get Method_NameCli(): string {
+        return this.Method.language['cli'].name;
+    } 
+
     public get Method_BodyParameterName(): string {
         return null;
     }
@@ -981,6 +985,13 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public Parameter_MapsTo(param: Parameter = this.MethodParameter): string {
         return param.language['az'].mapsto;
+    }
+
+    public Parameter_SubMapsTo(subMethodName: string, param: Parameter = this.MethodParameter) {
+        if(!isNullOrUndefined(param?.['subParams']?.[subMethodName])) {
+            return param['subParams'][subMethodName];
+        }
+        return this.Parameter_MapsTo(param);
     }
 
     public Schema_MapsTo(schema: Schema): string {
