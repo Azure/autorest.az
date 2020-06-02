@@ -100,6 +100,7 @@ export interface CodeModelAz
     Method_IsLast: boolean;
     Method_Name: string;
     Method_NameAz: string;
+    Method_NameCli: string 
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
     Method_GetOriginalOperation: any;
@@ -147,6 +148,7 @@ export interface CodeModelAz
     Parameter_IsHidden(Parameter): boolean;
     Parameter_IsFlattened(Parameter): boolean;
     Parameter_MapsTo(Parameter): string;
+    Parameter_SubMapsTo(subMethodName, Parameter): string;
     Schema_MapsTo(Schema);
     Parameter_Name(): string;
     Parameter_NameAz(Parameter): string;
