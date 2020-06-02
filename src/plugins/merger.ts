@@ -13,12 +13,11 @@ export class Merger {
     }
 
     async process() {
-        await this.mergeOperation();
+        this.mergeOperation();
         return this.codeModel;
     }
 
     mergeOperation() {
-        this.codeModel;
         this.codeModel.operationGroups.forEach(operationGroup => {
             let operations = operationGroup.operations;
             operationGroup.operations.forEach(operation => {
