@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz";
-import { SchemaType, Operation, Parameter } from "@azure-tools/codemodel";
-import { HeaderGenerator } from "./Header";
+import { Operation, Parameter, SchemaType } from "@azure-tools/codemodel";
 import { isNullOrUndefined } from "util";
-import { ToMultiLine, ToCamelCase, Capitalize, ToPythonString } from '../../utils/helper';
+import { Capitalize, ToCamelCase, ToMultiLine, ToPythonString } from '../../utils/helper';
+import { CodeModelAz } from "./CodeModelAz";
+import { HeaderGenerator } from "./Header";
 
 export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -114,10 +114,10 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                     }
                     else {
                         if (!model.MethodParameter_IsHidden) {
-                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type));
+                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
                         }
-                        else if (!isNullOrUndefined(model.MethodParameters_DefaultValue)) {
-                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type));
+                        else if (!isNullOrUndefined(model.MethodParameter_DefaultValue)) {
+                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
                         }
                     }
                     output_body.push(access);
@@ -339,10 +339,10 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                         output_body.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
                         output_body.push("        " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
                     }
-                    else if (model.MethodParameters_DefaultValue !== undefined) {
+                    else if (model.MethodParameter_DefaultValue !== undefined && model.MethodParameter_Type != SchemaType.Constant) {
                         // model is simple type with default value
                         output_body.push("    if " + model.MethodParameter_MapsTo + " == None:");
-                        output_body.push("        " + model.MethodParameter_MapsTo + " = " + ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type));
+                        output_body.push("        " + model.MethodParameter_MapsTo + " = " + ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
                     }
                 }
                 while (model.SelectNextMethodParameter());
@@ -406,7 +406,7 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                 if (needGeneric) {
                     output_method_call = output_method_call.concat("    return instance");
                 } else {
-                    output_method_call = output_method_call.concat(GetMethodCall(model, prefix));
+                    output_method_call = output_method_call.concat(GetMethodCall(model, required, prefix));
                 }
             }
         }
@@ -493,7 +493,7 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     return methodCall.split("\n");
 }
 
-function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
+function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let methodName = model.Method_Name;
@@ -526,8 +526,14 @@ function GetMethodCall(model: CodeModelAz, prefix: any): string[] {
             let parameterPair = '';
 
             if (model.MethodParameter_IsHidden) {
-                if (model.MethodParameters_DefaultValue) {
-                    parameterPair = model.MethodParameter_NamePython + "=" + ToPythonString(model.MethodParameters_DefaultValue, model.MethodParameter_Type);
+                if (model.MethodParameter_DefaultValue) {
+                    if (model.Schema_Type(model.MethodParameter.schema) == SchemaType.Object) {
+                        parameterPair = model.MethodParameter_NamePython + "=json.loads(" + ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type) + ")";
+                        required['json'] = true;
+                    }
+                    else {
+                        parameterPair = model.MethodParameter_NamePython + "=" + ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type);
+                    }
                 }
                 else {
                     parameterPair = model.MethodParameter_NamePython + "=None";

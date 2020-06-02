@@ -1287,9 +1287,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (!parameter.language['az'].hasOwnProperty('hidden')) {
             // Handle complex
             let shouldHidden = undefined;
+            let defaultValue = undefined;
             if (this.EnterSubMethodParameters(parameter))
             {
                 shouldHidden = true;
+                defaultValue = "{";
                 if (this.SelectFirstMethodParameter()) {
                     do {
                         if (this.Parameter_Type(this.SubMethodParameter) != SchemaType.Constant
@@ -1297,7 +1299,16 @@ export class CodeModelCliImpl implements CodeModelAz {
                             shouldHidden = false;
                             break;
                         }
+                        else if (this.Parameter_Type(this.SubMethodParameter) == SchemaType.Constant) {
+                            defaultValue = defaultValue + "\"" + this.Parameter_NameAz(this.SubMethodParameter) + "\": \"" + this.Parameter_DefaultValue(this.SubMethodParameter) + "\"";
+                        }
                     } while (this.SelectNextMethodParameter())
+                }
+                if (shouldHidden == true) {
+                    defaultValue = defaultValue + "}";
+                }
+                else {
+                    defaultValue = undefined;
                 }
                 this.ExitSubMethodParameters();
             }
@@ -1319,13 +1330,16 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             } else {
                 parameter.language['az'].hidden = parameter['hidden'] ?? shouldHidden ?? false;
+                if (!parameter.language['az'].hasOwnProperty('default-value') && defaultValue != undefined) {
+                    parameter.language['az']['default-value'] = defaultValue;
+                }
             }
         }
 
         return parameter.language['az'].hidden;
     }
 
-    public get MethodParameters_DefaultValue(): string | undefined {
+    public get MethodParameter_DefaultValue(): string | undefined {
         return this.Parameter_DefaultValue(this.MethodParameter);
     }
 
@@ -1333,7 +1347,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (!parameter.language['az'].hasOwnProperty('default-value')) {
             if (parameter?.language?.['cli']?.hasOwnProperty('default-value')) {
                 parameter.language['az']['default-value'] = parameter.language['cli']['default-value'];
-            } else {
+            }
+            else if (parameter.schema.type == SchemaType.Constant) {
+                parameter.language['az']['default-value'] = parameter.schema?.['value']?.value;
+            }
+            else {
                 parameter.language['az']['default-value'] = parameter.schema.defaultValue;
             }
         }

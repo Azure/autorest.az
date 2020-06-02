@@ -1,6 +1,4 @@
-﻿import { AnyARecord } from "dns";
-import { Operation, Parameter, OperationGroup } from "@azure-tools/codemodel";
-import { Property } from '@azure-tools/codemodel';
+﻿import { Operation, OperationGroup, Parameter, Property } from "@azure-tools/codemodel";
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -28,7 +26,7 @@ export class ExampleParam {
     keys: string[];
     defaultName: string;
     methodParam: MethodParam;
-    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, keys:string[], defaultName: string, methodParam: MethodParam) {
+    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, keys: string[], defaultName: string, methodParam: MethodParam) {
         this.name = name;
         this.value = value;
         this.isJson = isJson;
@@ -53,8 +51,7 @@ export class CommandExample {
     public MethodParams: Map<string, MethodParam>;
 }
 
-export interface CodeModelAz
-{
+export interface CodeModelAz {
     init(): any;
     SelectFirstExtension(): boolean;
     SelectNextExtension(): boolean;
@@ -91,7 +88,7 @@ export interface CodeModelAz
     Command_CanSplit: boolean;
     Command_IsLongRun: boolean;
     Command_SubGroupName: string;
-    
+
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
 
@@ -136,7 +133,7 @@ export interface CodeModelAz
     MethodParameter_RequiredByMethod: boolean;
     MethodParameter_EnumValues: string[];
     MethodParameters_AddPolySubClass(oriParam, para): boolean;
-    MethodParameters_DefaultValue: any | undefined;
+    MethodParameter_DefaultValue: any | undefined;
     Parameter_Type(Parameter): string;
     Schema_Type(Schema): string;
     Parameter_IsList(Parameter): boolean;
