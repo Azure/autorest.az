@@ -54,7 +54,7 @@ def datafactory_create(client,
                                    if_match=if_match,
                                    location=location,
                                    tags=tags,
-                                   identity=None,
+                                   identity=json.loads("{\"type\": \"SystemAssigned\"}"),
                                    repo_configuration=repo_configuration,
                                    fake_identity=fake_identity,
                                    zones=zones)
@@ -67,7 +67,7 @@ def datafactory_update(client,
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          tags=tags,
-                         identity=None)
+                         identity=json.loads("{\"type\": \"SystemAssigned\"}"))
 
 
 def datafactory_delete(client,
