@@ -13,7 +13,7 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
     model.SelectFirstCommandGroup();
     output.push("");
     output.push("");
-    output.push("def cf_" + model.Extension_NameUnderscored + "(cli_ctx, *_):");
+    output.push("def cf_" + model.Extension_NameUnderscored + "_cl(cli_ctx, *_):");
     output.push("    from azure.cli.core.commands.client_factory import get_mgmt_service_client");
     output.push("    from ..vendored_sdks." + model.PythonOperationsName + " import " + model.PythonMgmtClient);
 
@@ -38,7 +38,7 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
                 output.push("");
 
                 output.push("def cf_" + model.GetModuleOperationName() + "(cli_ctx, *_):");
-                output.push("    return cf_" + model.Extension_NameUnderscored + "(cli_ctx)." + model.GetModuleOperationNamePython());
+                output.push("    return cf_" + model.Extension_NameUnderscored + "_cl(cli_ctx)." + model.GetModuleOperationNamePython());
             }
         } while (model.SelectNextCommandGroup());
     }

@@ -16,10 +16,10 @@ class AttestationManagementClientCommandsLoader(AzCommandsLoader):
 
     def __init__(self, cli_ctx=None):
         from azure.cli.core.commands import CliCommandType
-        from azext_attestation.generated._client_factory import cf_attestation
+        from azext_attestation.generated._client_factory import cf_attestation_cl
         attestation_custom = CliCommandType(
             operations_tmpl='azext_attestation.custom#{}',
-            client_factory=cf_attestation)
+            client_factory=cf_attestation_cl)
         parent = super(AttestationManagementClientCommandsLoader, self)
         parent.__init__(cli_ctx=cli_ctx, custom_command_type=attestation_custom)
 
