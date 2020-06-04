@@ -768,6 +768,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Method.language['az'].name;
     }
 
+    public get Method_NameCli(): string {
+        return this.Method.language['cli'].name;
+    } 
+
     public get Method_BodyParameterName(): string {
         return null;
     }
@@ -938,6 +942,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_SetAzNameMapsTo(newName: string, param: Parameter = this.MethodParameter): void {
+        if(!isNullOrUndefined(param['nameBaseParam'])) {
+            param['nameBaseParam']['subParams'][this.Method.language['cli']['name']] = newName;
+        }
         param.language['az']['mapsto'] = newName;
     }
 
@@ -978,6 +985,13 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public Parameter_MapsTo(param: Parameter = this.MethodParameter): string {
         return param.language['az'].mapsto;
+    }
+
+    public Parameter_SubMapsTo(subMethodName: string, param: Parameter = this.MethodParameter) {
+        if(!isNullOrUndefined(param?.['subParams']?.[subMethodName])) {
+            return param['subParams'][subMethodName];
+        }
+        return this.Parameter_MapsTo(param);
     }
 
     public Schema_MapsTo(schema: Schema): string {
@@ -1273,9 +1287,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (!parameter.language['az'].hasOwnProperty('hidden')) {
             // Handle complex
             let shouldHidden = undefined;
+            let defaultValue = undefined;
             if (this.EnterSubMethodParameters(parameter))
             {
                 shouldHidden = true;
+                defaultValue = "{";
                 if (this.SelectFirstMethodParameter()) {
                     do {
                         if (this.Parameter_Type(this.SubMethodParameter) != SchemaType.Constant
@@ -1283,7 +1299,16 @@ export class CodeModelCliImpl implements CodeModelAz {
                             shouldHidden = false;
                             break;
                         }
+                        else if (this.Parameter_Type(this.SubMethodParameter) == SchemaType.Constant) {
+                            defaultValue = defaultValue + "\"" + this.Parameter_NameAz(this.SubMethodParameter) + "\": \"" + this.Parameter_DefaultValue(this.SubMethodParameter) + "\"";
+                        }
                     } while (this.SelectNextMethodParameter())
+                }
+                if (shouldHidden == true) {
+                    defaultValue = defaultValue + "}";
+                }
+                else {
+                    defaultValue = undefined;
                 }
                 this.ExitSubMethodParameters();
             }
@@ -1305,13 +1330,16 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             } else {
                 parameter.language['az'].hidden = parameter['hidden'] ?? shouldHidden ?? false;
+                if (!parameter.language['az'].hasOwnProperty('default-value') && defaultValue != undefined) {
+                    parameter.language['az']['default-value'] = defaultValue;
+                }
             }
         }
 
         return parameter.language['az'].hidden;
     }
 
-    public get MethodParameters_DefaultValue(): string | undefined {
+    public get MethodParameter_DefaultValue(): string | undefined {
         return this.Parameter_DefaultValue(this.MethodParameter);
     }
 
@@ -1319,7 +1347,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (!parameter.language['az'].hasOwnProperty('default-value')) {
             if (parameter?.language?.['cli']?.hasOwnProperty('default-value')) {
                 parameter.language['az']['default-value'] = parameter.language['cli']['default-value'];
-            } else {
+            }
+            else if (parameter.schema.type == SchemaType.Constant) {
+                parameter.language['az']['default-value'] = parameter.schema?.['value']?.value;
+            }
+            else {
                 parameter.language['az']['default-value'] = parameter.schema.defaultValue;
             }
         }

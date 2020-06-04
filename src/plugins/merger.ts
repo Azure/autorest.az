@@ -1,4 +1,4 @@
-import { CodeModel, codeModelSchema, Language } from "@azure-tools/codemodel";
+import { CodeModel, codeModelSchema, Language, Parameter } from "@azure-tools/codemodel";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
@@ -13,7 +13,7 @@ export class Merger {
     }
 
     async process() {
-        await this.mergeOperation();
+        this.mergeOperation();
         return this.codeModel;
     }
 
@@ -22,6 +22,46 @@ export class Merger {
             let operations = operationGroup.operations;
             operationGroup.operations.forEach(operation => {
                 if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-operations'])) {
+                    let nameIndexMap: Map<string, number> = new Map<string, number>();
+                    let index = 0;
+                    operation.parameters.forEach(param => {
+                        nameIndexMap.set(param.language['cli']['name'], index);
+                        index++;
+                    });
+                    let nameIndexMapRequest: Map<string, number> = new Map<string, number>();
+                    let indexRequest = 0;
+                    if(!isNullOrUndefined(operation.requests?.[0]?.parameters)) {
+                        operation.requests[0].parameters.forEach(rparam => {
+                            nameIndexMapRequest.set(rparam.language['cli']['name'], indexRequest);
+                            indexRequest++;
+                        })
+                        
+                    }
+                    operation.extensions['cli-operations'].forEach(subOperation => {
+                        subOperation.parameters.forEach(subParam => {
+                            let idx = nameIndexMap.get(subParam.language['cli']['name']);
+                            if (idx > -1) {
+                                if(isNullOrUndefined(operation.parameters[idx]['subParams'])) {
+                                    operation.parameters[idx]['subParams'] = {};
+                                }
+                                operation.parameters[idx]['subParams'][subOperation.language['cli']['name']] = subParam.language['cli']['name'];
+                                subParam['nameBaseParam'] = operation.parameters[idx];
+                            }
+                        });
+                        if (!isNullOrUndefined(subOperation?.requests?.[0]?.parameters)) {
+                            subOperation.requests[0].parameters.forEach(subParam => {
+                                let idx = nameIndexMapRequest.get(subParam.language['cli']['name']);
+                                if(idx > -1) {
+                                    if(isNullOrUndefined(operation?.requests?.[0]?.parameters[idx]['subParams'])) {
+                                        operation.requests[0].parameters[idx]['subParams'] = {};
+                                    }
+                                    operation.requests[0].parameters[idx]['subParams'][subOperation.language['cli']['name']] = subParam.language['cli']['name'];
+                                    subParam['nameBaseParam'] = operation.requests[0].parameters[idx];
+                                }
+                            });
+                        }
+                        
+                    })
                     operations = operations.concat(operation.extensions['cli-operations']);
                 }
             });
