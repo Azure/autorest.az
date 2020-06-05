@@ -9,7 +9,6 @@
 # --------------------------------------------------------------------------
 # pylint: disable=too-many-lines
 
-import json
 from azure.cli.core.util import sdk_no_wait
 
 
@@ -31,8 +30,6 @@ def managed_network_mn_create(client,
                               location,
                               tags=None,
                               properties=None):
-    if isinstance(properties, str):
-        properties = json.loads(properties)
     return client.create_or_update(resource_group_name=resource_group_name,
                                    managed_network_name=managed_network_name,
                                    location=location,
@@ -134,8 +131,6 @@ def managed_network_mn_group_create(client,
                                     virtual_networks=None,
                                     subnets=None,
                                     no_wait=False):
-    if isinstance(management_groups, str):
-        management_groups = json.loads(management_groups)
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
                        resource_group_name=resource_group_name,
@@ -158,8 +153,6 @@ def managed_network_mn_group_update(client,
                                     virtual_networks=None,
                                     subnets=None,
                                     no_wait=False):
-    if isinstance(management_groups, str):
-        management_groups = json.loads(management_groups)
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
                        resource_group_name=resource_group_name,

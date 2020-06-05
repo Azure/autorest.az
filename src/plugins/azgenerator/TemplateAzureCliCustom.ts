@@ -20,9 +20,6 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let required: any = {};
     let body: string[] = GenerateBody(model, required);
 
-    if (required['json']) {
-        header.addImport("json");
-    }
 
     if (required['clierror']) {
         header.addFromImport("knack.util", ["CLIError"]);
@@ -335,9 +332,6 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                             }
                             continue;
                         }
-                        required['json'] = true;
-                        output_body.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
-                        output_body.push("        " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
                     }
                     else if (model.MethodParameter_DefaultValue !== undefined && model.MethodParameter_Type != SchemaType.Constant) {
                         // model is simple type with default value

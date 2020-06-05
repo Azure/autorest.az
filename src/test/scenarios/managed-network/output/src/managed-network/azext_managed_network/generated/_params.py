@@ -10,7 +10,7 @@
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-statements
 
-from knack.arguments import CLIArgumentType
+from azure.cli.core.commands.validators import validate_file_or_dict
 from azure.cli.core.commands.parameters import (
     tags_type,
     resource_group_name_type,
@@ -42,8 +42,8 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
-        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='The MNC properties Expec'
-                   'ted value: json-string/@json-file.'))
+        c.argument('properties', arg_type=validate_file_or_dict, help='The MNC properties Expected value: json-string/@'
+                   'json-file.')
 
     with self.argument_context('managed-network mn update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -77,8 +77,7 @@ def load_arguments(self, _):
                    'ype}/{resource-name}\' for a resource.')
         c.argument('scope_assignment_name', options_list=['--name', '-n'], help='The name of the scope assignment to cr'
                    'eate.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
-                   validator=get_default_location_from_resource_group)
+        c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('assigned_managed_network', help='The managed network ID with scope will be assigned to.')
 
     with self.argument_context('managed-network mn scope-assignment update') as c:
@@ -89,8 +88,7 @@ def load_arguments(self, _):
                    'ype}/{resource-name}\' for a resource.')
         c.argument('scope_assignment_name', options_list=['--name', '-n'], help='The name of the scope assignment to cr'
                    'eate.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
-                   validator=get_default_location_from_resource_group)
+        c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('assigned_managed_network', help='The managed network ID with scope will be assigned to.')
 
     with self.argument_context('managed-network mn scope-assignment delete') as c:
@@ -117,8 +115,8 @@ def load_arguments(self, _):
         c.argument('group_name', help='The name of the Managed Network Group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
-        c.argument('management_groups', arg_type=CLIArgumentType(options_list=['--management-groups'], help='The collec'
-                   'tion of management groups covered by the Managed Network Expected value: json-string/@json-file.'))
+        c.argument('management_groups', arg_type=validate_file_or_dict, help='The collection of management groups cover'
+                   'ed by the Managed Network Expected value: json-string/@json-file.')
         c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered b'
                    'y the Managed Network')
         c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets cover'
@@ -132,8 +130,8 @@ def load_arguments(self, _):
         c.argument('group_name', help='The name of the Managed Network Group.', id_part='child_name_1')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
-        c.argument('management_groups', arg_type=CLIArgumentType(options_list=['--management-groups'], help='The collec'
-                   'tion of management groups covered by the Managed Network Expected value: json-string/@json-file.'))
+        c.argument('management_groups', arg_type=validate_file_or_dict, help='The collection of management groups cover'
+                   'ed by the Managed Network Expected value: json-string/@json-file.')
         c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered b'
                    'y the Managed Network')
         c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets cover'

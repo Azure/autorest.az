@@ -10,7 +10,7 @@
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-statements
 
-from knack.arguments import CLIArgumentType
+from azure.cli.core.commands.validators import validate_file_or_dict
 from azure.cli.core.commands.parameters import (
     tags_type,
     get_enum_type,
@@ -105,8 +105,8 @@ def load_arguments(self, _):
         c.argument('trigger_name', options_list=['--name', '-n'], help='The trigger name.')
         c.argument('if_match', help='ETag of the trigger entity.  Should only be specified for update, for which it sho'
                    'uld match existing entity or can be * for unconditional update.')
-        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of the trigge'
-                   'r. Expected value: json-string/@json-file.'))
+        c.argument('properties', arg_type=validate_file_or_dict, help='Properties of the trigger. Expected value: json-'
+                   'string/@json-file.')
 
     with self.argument_context('datafactory trigger update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -114,8 +114,8 @@ def load_arguments(self, _):
         c.argument('trigger_name', options_list=['--name', '-n'], help='The trigger name.', id_part='child_name_1')
         c.argument('if_match', help='ETag of the trigger entity.  Should only be specified for update, for which it sho'
                    'uld match existing entity or can be * for unconditional update.')
-        c.argument('properties', arg_type=CLIArgumentType(options_list=['--properties'], help='Properties of the trigge'
-                   'r. Expected value: json-string/@json-file.'))
+        c.argument('properties', arg_type=validate_file_or_dict, help='Properties of the trigger. Expected value: json-'
+                   'string/@json-file.')
 
     with self.argument_context('datafactory trigger delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -199,12 +199,10 @@ def load_arguments(self, _):
                    'itHub repo information.', arg_group='RepoConfiguration')
         c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
         c.argument('zones', nargs='+', help='This is only for az test.')
-        c.argument('type_properties_compute_properties', arg_type=CLIArgumentType(options_list=['--type-properties-comp'
-                   'ute-properties'], help='The compute resource for managed integration runtime. Expected value: json-'
-                   'string/@json-file.'))
-        c.argument('type_properties_ssis_properties', arg_type=CLIArgumentType(options_list=['--type-properties-ssis-pr'
-                   'operties'], help='SSIS properties for managed integration runtime. Expected value: json-string/@jso'
-                   'n-file.'))
+        c.argument('type_properties_compute_properties', arg_type=validate_file_or_dict, help='The compute resource for'
+                   ' managed integration runtime. Expected value: json-string/@json-file.')
+        c.argument('type_properties_ssis_properties', arg_type=validate_file_or_dict, help='SSIS properties for managed'
+                   ' integration runtime. Expected value: json-string/@json-file.')
 
     with self.argument_context('datafactory integration-runtime self-hosted create') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -213,9 +211,8 @@ def load_arguments(self, _):
         c.argument('if_match', help='ETag of the integration runtime entity. Should only be specified for update, for w'
                    'hich it should match existing entity or can be * for unconditional update.')
         c.argument('description', help='Integration runtime description.')
-        c.argument('type_properties_linked_info', arg_type=CLIArgumentType(options_list=['--type-properties-linked-info'
-                   ''], help='The base definition of a linked integration runtime. Expected value: json-string/@json-fi'
-                   'le.'))
+        c.argument('type_properties_linked_info', arg_type=validate_file_or_dict, help='The base definition of a linked'
+                   ' integration runtime. Expected value: json-string/@json-file.')
 
     with self.argument_context('datafactory integration-runtime update') as c:
         c.argument('resource_group_name', resource_group_name_type)
