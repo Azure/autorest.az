@@ -70,10 +70,6 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     header.disableTooManyLines = true;
     header.disableTooManyStatements = true;
 
-    if (hasJson) {
-        header.addFromImport("azure.cli.core.commands.validators", ["validate_file_or_dict"]);
-    }
-
     let parameterImports: string[] = [];
     if (hasTags) parameterImports.push("tags_type");
     if (hasBoolean) parameterImports.push("get_three_state_flag");
@@ -82,8 +78,15 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     if (hasLocation) parameterImports.push("get_location_type");
 
     header.addFromImport("azure.cli.core.commands.parameters", parameterImports);
+    let validatorImports: string[] = [];
     if (hasLocationValidator) {
-        header.addFromImport('azure.cli.core.commands.validators', ['get_default_location_from_resource_group']);
+        validatorImports.push("get_default_location_from_resource_group");
+    }
+    if (hasJson) {
+        validatorImports.push("validate_file_or_dict");
+    }
+    if (validatorImports.length > 0) {
+        header.addFromImport('azure.cli.core.commands.validators', validatorImports);
     }
 
     if (hasActions) {
@@ -268,7 +271,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                             continue;
                         }
                         hasJson = true;
-                        argument += ", arg_type=validate_file_or_dict";
+                        argument += ", type=validate_file_or_dict";
                     } else if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
                         let actionName: string = model.Schema_ActionName(model.MethodParameter.schema);
                         argument += ", action=" + actionName;

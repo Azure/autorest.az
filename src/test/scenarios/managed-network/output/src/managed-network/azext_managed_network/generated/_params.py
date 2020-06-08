@@ -10,13 +10,15 @@
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-statements
 
-from azure.cli.core.commands.validators import validate_file_or_dict
 from azure.cli.core.commands.parameters import (
     tags_type,
     resource_group_name_type,
     get_location_type
 )
-from azure.cli.core.commands.validators import get_default_location_from_resource_group
+from azure.cli.core.commands.validators import (
+    get_default_location_from_resource_group,
+    validate_file_or_dict
+)
 from azext_managed_network.action import (
     AddSubscriptions,
     AddVirtualNetworks,
@@ -42,8 +44,8 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
-        c.argument('properties', arg_type=validate_file_or_dict, help='The MNC properties Expected value: json-string/@'
-                   'json-file.')
+        c.argument('properties', type=validate_file_or_dict, help='The MNC properties Expected value: json-string/@json'
+                   '-file.')
 
     with self.argument_context('managed-network mn update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -115,8 +117,8 @@ def load_arguments(self, _):
         c.argument('group_name', help='The name of the Managed Network Group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
-        c.argument('management_groups', arg_type=validate_file_or_dict, help='The collection of management groups cover'
-                   'ed by the Managed Network Expected value: json-string/@json-file.')
+        c.argument('management_groups', type=validate_file_or_dict, help='The collection of management groups covered b'
+                   'y the Managed Network Expected value: json-string/@json-file.')
         c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered b'
                    'y the Managed Network')
         c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets cover'
@@ -130,8 +132,8 @@ def load_arguments(self, _):
         c.argument('group_name', help='The name of the Managed Network Group.', id_part='child_name_1')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
-        c.argument('management_groups', arg_type=validate_file_or_dict, help='The collection of management groups cover'
-                   'ed by the Managed Network Expected value: json-string/@json-file.')
+        c.argument('management_groups', type=validate_file_or_dict, help='The collection of management groups covered b'
+                   'y the Managed Network Expected value: json-string/@json-file.')
         c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered b'
                    'y the Managed Network')
         c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets cover'
