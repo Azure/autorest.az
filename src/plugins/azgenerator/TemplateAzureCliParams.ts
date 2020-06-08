@@ -70,10 +70,6 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     header.disableTooManyLines = true;
     header.disableTooManyStatements = true;
 
-    if (hasJson) {
-        header.addFromImport("knack.arguments", ["CLIArgumentType"]);
-    }
-
     let parameterImports: string[] = [];
     if (hasTags) parameterImports.push("tags_type");
     if (hasBoolean) parameterImports.push("get_three_state_flag");
@@ -82,8 +78,15 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     if (hasLocation) parameterImports.push("get_location_type");
 
     header.addFromImport("azure.cli.core.commands.parameters", parameterImports);
+    let validatorImports: string[] = [];
     if (hasLocationValidator) {
-        header.addFromImport('azure.cli.core.commands.validators', ['get_default_location_from_resource_group']);
+        validatorImports.push("get_default_location_from_resource_group");
+    }
+    if (hasJson) {
+        validatorImports.push("validate_file_or_dict");
+    }
+    if (validatorImports.length > 0) {
+        header.addFromImport('azure.cli.core.commands.validators', validatorImports);
     }
 
     if (hasActions) {
@@ -153,6 +156,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                 }
             }
             let baseParam = null;
+            let hasResourceGroupInOperation = false;
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
@@ -241,11 +245,11 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         argument += "])";
                     }
 
-                    let hasJsonLastTime = false;
                     let needSkip = false;
                     if (parameterName == "resource_group_name") {
                         argument += ", resource_group_name_type";
                         hasResourceGroup = true;
+                        hasResourceGroupInOperation = true;
                         needSkip = true;
                     } else if (parameterName == "tags") {
                         argument += ", tags_type";
@@ -253,7 +257,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                         needSkip = true;
                     } else if (parameterName == "location") {
                         argument += ", arg_type=get_location_type(self.cli_ctx)";
-                        if (hasResourceGroup) {
+                        if (hasResourceGroupInOperation) {
                             argument += ", validator=get_default_location_from_resource_group";
                             hasLocationValidator = true;
                         }
@@ -267,8 +271,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                             continue;
                         }
                         hasJson = true;
-                        hasJsonLastTime = true;
-                        argument += ", arg_type=CLIArgumentType(options_list=['--" + parameterName.replace(/_/g, '-') + "']";
+                        argument += ", type=validate_file_or_dict";
                     } else if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple) {
                         let actionName: string = model.Schema_ActionName(model.MethodParameter.schema);
                         argument += ", action=" + actionName;
@@ -312,11 +315,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                             }
                         }
                         argument += "'";
-                    
-                        if (hasJsonLastTime) {
-                            argument += ")";
-                            hasJsonLastTime = false;
-                        }
+                   
                         if (!isNullOrUndefined(baseParam) && model.MethodParameter['polyBaseParam'] == baseParam) {
                             argument += ", arg_group='" + Capitalize(ToCamelCase(model.Parameter_MapsTo(baseParam))) + "'";
                         }

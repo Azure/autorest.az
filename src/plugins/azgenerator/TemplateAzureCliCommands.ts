@@ -14,8 +14,8 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
 
     // this can't be currently reproduced
-    // header.disableTooManyStatements = true;
-    // header.disableTooManyLocals = true;
+    header.disableTooManyStatements = true;
+    header.disableTooManyLocals = true;
     header.addFromImport("azure.cli.core.commands", ["CliCommandType"]);
 
     let output: string[] = []

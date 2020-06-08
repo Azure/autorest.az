@@ -32,6 +32,10 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
         header.addFromImport("azure.cli.core.util", ["sdk_no_wait"]);
     }
 
+    if(required['disableUnusedArgument']) {
+        header.disableUnusedArgument = true;
+    }
+
     let output = [];
     output = output.concat(body);
     output.push("");
@@ -67,6 +71,9 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
                     output = output.concat(GetCommandBody(model, required, false, originalOperation, false, genericParameter));
                     if (needUpdate) {
                         output = output.concat(GetCommandBody(model, required, needUpdate, originalOperation, needGeneric, genericParameter));
+                    }
+                    if (needGeneric) {
+                        required['disableUnusedArgument'] = true;
                     }
                 }
                 while (model.SelectNextCommand());
@@ -335,9 +342,6 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                             }
                             continue;
                         }
-                        required['json'] = true;
-                        output_body.push("    if isinstance(" + model.MethodParameter_MapsTo + ", str):");
-                        output_body.push("        " + model.MethodParameter_MapsTo + " = json.loads(" + model.MethodParameter_MapsTo + ")");
                     }
                     else if (model.MethodParameter_DefaultValue !== undefined && model.MethodParameter_Type != SchemaType.Constant) {
                         // model is simple type with default value

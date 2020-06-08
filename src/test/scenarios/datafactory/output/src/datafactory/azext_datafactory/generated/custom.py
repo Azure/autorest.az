@@ -8,6 +8,7 @@
 # regenerated.
 # --------------------------------------------------------------------------
 # pylint: disable=too-many-lines
+# pylint: disable=unused-argument
 
 import json
 from knack.util import CLIError
@@ -150,8 +151,6 @@ def datafactory_trigger_create(client,
                                trigger_name,
                                properties,
                                if_match=None):
-    if isinstance(properties, str):
-        properties = json.loads(properties)
     return client.create_or_update(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    trigger_name=trigger_name,
@@ -300,10 +299,6 @@ def datafactory_integration_runtime_managed_create(client,
         raise CLIError('at most one of  factory_vsts_configuration, factory_git_hub_configuration is needed for repo_co'
                        'nfiguration!')
     repo_configuration = all_repo_configuration[0] if len(all_repo_configuration) == 1 else None
-    if isinstance(type_properties_compute_properties, str):
-        type_properties_compute_properties = json.loads(type_properties_compute_properties)
-    if isinstance(type_properties_ssis_properties, str):
-        type_properties_ssis_properties = json.loads(type_properties_ssis_properties)
     properties = {}
     properties['type'] = 'Managed'
     properties['description'] = description
@@ -326,8 +321,6 @@ def datafactory_integration_runtime_self_hosted_create(client,
                                                        if_match=None,
                                                        description=None,
                                                        type_properties_linked_info=None):
-    if isinstance(type_properties_linked_info, str):
-        type_properties_linked_info = json.loads(type_properties_linked_info)
     properties = {}
     properties['type'] = 'SelfHosted'
     properties['description'] = description
