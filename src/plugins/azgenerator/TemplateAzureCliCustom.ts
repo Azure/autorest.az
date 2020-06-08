@@ -20,6 +20,9 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let required: any = {};
     let body: string[] = GenerateBody(model, required);
 
+    if (required['json']) {
+        header.addImport("json");
+    }
 
     if (required['clierror']) {
         header.addFromImport("knack.util", ["CLIError"]);
@@ -27,6 +30,10 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
 
     if(required['nowait']) {
         header.addFromImport("azure.cli.core.util", ["sdk_no_wait"]);
+    }
+
+    if(required['disableUnusedArgument']) {
+        header.disableUnusedArgument = true;
     }
 
     let output = [];
@@ -64,6 +71,9 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
                     output = output.concat(GetCommandBody(model, required, false, originalOperation, false, genericParameter));
                     if (needUpdate) {
                         output = output.concat(GetCommandBody(model, required, needUpdate, originalOperation, needGeneric, genericParameter));
+                    }
+                    if (needGeneric) {
+                        required['disableUnusedArgument'] = true;
                     }
                 }
                 while (model.SelectNextCommand());

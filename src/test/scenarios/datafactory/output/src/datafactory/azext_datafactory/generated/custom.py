@@ -8,7 +8,9 @@
 # regenerated.
 # --------------------------------------------------------------------------
 # pylint: disable=too-many-lines
+# pylint: disable=unused-argument
 
+import json
 from knack.util import CLIError
 from azure.cli.core.util import sdk_no_wait
 
