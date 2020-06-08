@@ -60,7 +60,7 @@ stages:
 
 - stage: PrivateRelease
   dependsOn: Test
-  condition: or(succeeded(), ne(variables['USER_SKIP_TEST'], 'true'))
+  condition: and (or(succeeded(), ne(variables['USER_SKIP_TEST'], 'true')), ne(variables['USER_SKIP_PRIVATE_RELEASE'], 'true'))
   jobs:
     - job: Github
       pool:
@@ -117,7 +117,7 @@ stages:
   dependsOn: Test
   condition: or(succeeded(), ne(variables['USER_SKIP_TEST'], 'true'))
   jobs:
-    - deployment: npmjs
+    - deployment: approve
       environment: az-npm-release
       pool:
         vmImage: 'ubuntu-latest'
@@ -125,35 +125,75 @@ stages:
         runOnce:
           deploy:
             steps:
-              - task: NodeTool@0
-                inputs:
-                  versionSpec: '10.17.0'
-                displayName: 'Install Node.js'
-              - task: DownloadBuildArtifacts@0
-                inputs:
-                  buildType: 'current'
-                  downloadType: 'single'
-                  artifactName: '$(VAR_ARIFACT_NAME)'
-                  downloadPath: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
-              - script: |
-                  echo "[$(date -u)] LOG: ENSURE LATEST NPM IS INSTALLED"
-                  npm install -g npm 
+            - script: echo "Just Approve"
+              displayName: VirtualApprove
+    - job: npmjs
+      dependsOn: approve
+      condition: and(succeeded(), ne(variables['USER_SKIP_PUBLIC_RELEASE'], 'true'))
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.17.0'
+        displayName: 'Install Node.js'
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          buildType: 'current'
+          downloadType: 'single'
+          artifactName: '$(VAR_ARIFACT_NAME)'
+          downloadPath: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
+      - script: |
+          echo "[$(date -u)] LOG: ENSURE LATEST NPM IS INSTALLED"
+          npm install -g npm 
 
-                  echo "[$(date -u)] LOG: PUBLISH THE PACKAGES"
-                  echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc 
-                  for file in $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)/$(VAR_ARIFACT_NAME)/*.tgz
-                  do
-                    echo "[$(date -u)] LOG: FILE: $file"
-                    common/temp/pnpm-local/node_modules/.bin/pnpm publish $file --tag latest --access public || echo no-worries 
-                  done
-                  rm ./.npmrc
-                displayName: Publish
-                #failOnStderr: true
+          echo "[$(date -u)] LOG: MAKE SURE THE VERSIONS ARE ALL SYNCHRONIZED AND PULL IN DEPENDENCIES"
+          npx @microsoft/rush sync-versions
+          npx @microsoft/rush update 
 
+          echo "[$(date -u)] LOG: PUBLISH THE PACKAGES"
+          echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" >> ./.npmrc 
+          for file in $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)/$(VAR_ARIFACT_NAME)/*.tgz
+          do
+            echo "[$(date -u)] LOG: FILE: $file"
+            common/temp/pnpm-local/node_modules/.bin/pnpm publish $file --tag latest --access public || echo no-worries 
+          done
+          rm ./.npmrc
+        displayName: Publish
+    - job: github
+      dependsOn: approve
+      condition: and(succeeded(), ne(variables['USER_SKIP_PUBLIC_RELEASE'], 'true'))
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.17.0'
+        displayName: 'Install Node.js'
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          buildType: 'current'
+          downloadType: 'single'
+          artifactName: '$(VAR_ARIFACT_NAME)'
+          downloadPath: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
+      - script: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
+          echo "##vso[task.setvariable variable=release;isOutput=true]$CURRENT_VERSION"
+        name: GetVersions
+      - task: GitHubRelease@1
+        inputs:
+          gitHubConnection: 'amecodegenbot'
+          repositoryName: '$(Build.Repository.Name)'
+          action: 'create'
+          target: '$(Build.SourceVersion)'
+          tagSource: 'userSpecifiedTag'
+          tag: '$(GetVersions.release)'
+          title: 'autorest.az $(GetVersions.release)'
+          assets: |
+            $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)/$(VAR_ARIFACT_NAME)/*.tgz
+          releaseNotesFilePath: './doc/RELEASE_NOTE.md'
+          addChangeLog: false
 
 - stage: Version
   dependsOn: PublicRelease
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['USER_SKIP_VERSION_BUMP'], 'true'))
   pool:
     vmImage: 'ubuntu-latest'
   jobs:
@@ -163,30 +203,6 @@ stages:
       inputs:
         versionSpec: '10.17.0'
       displayName: 'Install Node.js'
-    - task: DownloadBuildArtifacts@0
-      inputs:
-        buildType: 'current'
-        downloadType: 'single'
-        artifactName: '$(VAR_ARIFACT_NAME)'
-        downloadPath: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
-    - script: |
-        CURRENT_VERSION=$(node -p "require('./package.json').version")
-        echo "[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
-        echo "##vso[task.setvariable variable=release;isOutput=true]$CURRENT_VERSION"
-      name: GetVersions
-    - task: GitHubRelease@1
-      inputs:
-        gitHubConnection: 'amecodegenbot'
-        repositoryName: '$(Build.Repository.Name)'
-        action: 'create'
-        target: '$(Build.SourceVersion)'
-        tagSource: 'userSpecifiedTag'
-        tag: '$(GetVersions.release)'
-        title: 'autorest.az $(GetVersions.release)'
-        assets: |
-          $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)/$(VAR_ARIFACT_NAME)/*.tgz
-        releaseNotesFilePath: './doc/RELEASE_NOTE.md'
-        addChangeLog: false
     - script: |
         REPO_URL_REPLACE="$(USER_GITHUB_TOKEN)@github"
         REPO_URL_PAT=${VAR_REPO_URL/'github'/$REPO_URL_REPLACE}
@@ -211,5 +227,5 @@ stages:
 
         echo "[$(date -u)] LOG: COMMIT and PUSH"
         git commit -a -m "$(USER_COMMIT_MESSAGE) $USER_NEW_VERSION"
-        git push originpat
+        git push originpat $VAR_REPO_BRANCHNAME -f
       displayName: 'Version Bump'
