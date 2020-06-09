@@ -150,6 +150,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
     let ret = [""];
     let indent = 0;
     let spaceNum = 0;
+    let strStart = -1;
     while (spaceNum < sentence.length && sentence[spaceNum] == ' ') spaceNum++;
 
     if (strMode) {
@@ -169,10 +170,12 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
             if (sentence[i] == '\'' && !isEscaped(sentence, i)) {
                 inStr = true;
                 strTag = '\'';
+                strStart = i;
             }
             else if (sentence[i] == '\"' && !isEscaped(sentence, i)) {
                 inStr = true;
                 strTag = '\"';
+                strStart = i;
             }
 
             if (indent == 0 && sentence[i] == '(') {
@@ -182,7 +185,22 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
         if (ret[ret.length - 1].length >= maxLength) {
             if (inStr) {
                 let lastNormal = ret[ret.length - 1].length - 1;
+                let originLastNormal = lastNormal;
                 while (lastNormal >= 0 && isEscaped(ret[ret.length - 1], lastNormal + 1)) lastNormal--;
+                let UnEscapedLastNormal = lastNormal;
+                    for (let n = 0; n<Math.min(30, maxLength-1); n++) {
+                        if (i-n==strStart)  break;
+                        if (ret[ret.length - 1][lastNormal] != ' ') {
+                            lastNormal --;
+                        }
+                        else {
+                            break;
+                        }
+                    }
+                    if (ret[ret.length - 1][lastNormal] != ' ' && i-(originLastNormal-lastNormal)!=strStart) {
+                        lastNormal = UnEscapedLastNormal;
+                    }
+
                 if (strMode) {
                     if (lastNormal != ret[ret.length - 1].length - 1) {
                         let newLine = ret[ret.length - 1].substr(lastNormal + 1);
@@ -202,10 +220,10 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                     if (lastNormal != ret[ret.length - 1].length - 1) {
                         let newLine = ' '.repeat(indent > 0 ? indent : spaceNum) + strTag + ret[ret.length - 1].substr(lastNormal + 1);
                         ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastNormal + 1) + strTag;
-                        let currentLength = ret[ret.length - 1].length;
-                        if (currentLength >= 2 && ret[ret.length - 1][currentLength - 2] == strTag && (currentLength == 2 || ret[ret.length - 1][currentLength - 3] != "\\")) {   // remove empty string in the end of line
-                            ret[ret.length - 1] = ret[ret.length - 1].substr(0, currentLength - 2);
-                        }
+                        // let currentLength = ret[ret.length - 1].length;
+                        // if (currentLength >= 2 && ret[ret.length - 1][currentLength - 2] == strTag && (currentLength == 2 || ret[ret.length - 1][currentLength - 3] != "\\")) {   // remove empty string in the end of line
+                        //     ret[ret.length - 1] = ret[ret.length - 1].substr(0, currentLength - 2);
+                        // }
                         ret.push(newLine)
                         lastComma = -1;
                     }

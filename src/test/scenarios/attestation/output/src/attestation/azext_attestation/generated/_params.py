@@ -28,10 +28,10 @@ def load_arguments(self, _):
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
         c.argument('attestation_policy', help='Name of attestation policy.')
-        c.argument('policy_signing_certificates_keys', action=AddPolicySigningCertificatesKeys, nargs='+', help='The va'
-                   'lue of the "keys" parameter is an array of JWK values.  By default, the order of the JWK values wit'
-                   'hin the array does not imply an order of preference among them, although applications of JWK Sets c'
-                   'an choose to assign a meaning to the order for their purposes, if desired.')
+        c.argument('policy_signing_certificates_keys', action=AddPolicySigningCertificatesKeys, nargs='+', help='The '
+                   'value of the "keys" parameter is an array of JWK values.  By default, the order of the JWK values '
+                   'within the array does not imply an order of preference among them, although applications of JWK '
+                   'Sets can choose to assign a meaning to the order for their purposes, if desired.')
 
     with self.argument_context('attestation list-operation') as c:
         pass

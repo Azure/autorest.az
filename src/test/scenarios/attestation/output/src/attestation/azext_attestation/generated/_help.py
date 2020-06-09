@@ -64,8 +64,8 @@ a base64-encoded (Section 4 of [RFC4648] -- not base64url-encoded) DER [ITU.X690
     examples:
       - name: AttestationProviders_Create
         text: |-
-               az attestation create-provider --provider-name "myattestationprovider" --resource-group "MyResourceGroup\
-"
+               az attestation create-provider --provider-name "myattestationprovider" --resource-group \
+"MyResourceGroup"
 """
 
 helps['attestation list-operation'] = """
@@ -102,8 +102,8 @@ helps['attestation attestation-provider show'] = """
     examples:
       - name: AttestationProviders_Get
         text: |-
-               az attestation attestation-provider show --provider-name "myattestationprovider" --resource-group "MyRes\
-ourceGroup"
+               az attestation attestation-provider show --provider-name "myattestationprovider" --resource-group \
+"MyResourceGroup"
 """
 
 helps['attestation attestation-provider update'] = """
@@ -112,8 +112,8 @@ helps['attestation attestation-provider update'] = """
     examples:
       - name: AttestationProviders_Update
         text: |-
-               az attestation attestation-provider update --provider-name "myattestationprovider" --resource-group "MyR\
-esourceGroup" --tags Property1="Value1" Property2="Value2" Property3="Value3"
+               az attestation attestation-provider update --provider-name "myattestationprovider" --resource-group \
+"MyResourceGroup" --tags Property1="Value1" Property2="Value2" Property3="Value3"
 """
 
 helps['attestation attestation-provider delete'] = """
@@ -122,6 +122,6 @@ helps['attestation attestation-provider delete'] = """
     examples:
       - name: AttestationProviders_Delete
         text: |-
-               az attestation attestation-provider delete --provider-name "myattestationprovider" --resource-group "sam\
-ple-resource-group"
+               az attestation attestation-provider delete --provider-name "myattestationprovider" --resource-group \
+"sample-resource-group"
 """

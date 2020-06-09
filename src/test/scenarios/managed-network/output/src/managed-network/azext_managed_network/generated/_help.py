@@ -66,8 +66,8 @@ group and Managed Network name
 
 helps['managed-network mn get-modify'] = """
     type: command
-    short-summary: The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group a\
-nd Managed Network name
+    short-summary: The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group \
+and Managed Network name
     examples:
       - name: Get Managed Network
         text: |-
@@ -94,8 +94,8 @@ helps['managed-network mn scope-assignment show'] = """
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network mn scope-assignment show --scope "subscriptions/subscriptionC" --name "subscriptionCA\
-ssignment"
+               az managed-network mn scope-assignment show --scope "subscriptions/subscriptionC" --name \
+"subscriptionCAssignment"
 """
 
 helps['managed-network mn scope-assignment create'] = """
@@ -105,8 +105,8 @@ helps['managed-network mn scope-assignment create'] = """
       - name: Create/Update Managed Network
         text: |-
                az managed-network mn scope-assignment create --assigned-managed-network "/subscriptions/subscriptionA/r\
-esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope "subscriptio\
-ns/subscriptionC" --name "subscriptionCAssignment"
+esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope \
+"subscriptions/subscriptionC" --name "subscriptionCAssignment"
 """
 
 helps['managed-network mn scope-assignment update'] = """
@@ -116,8 +116,8 @@ helps['managed-network mn scope-assignment update'] = """
       - name: Create/Update Managed Network
         text: |-
                az managed-network mn scope-assignment update --assigned-managed-network "/subscriptions/subscriptionA/r\
-esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope "subscriptio\
-ns/subscriptionC" --name "subscriptionCAssignment"
+esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope \
+"subscriptions/subscriptionC" --name "subscriptionCAssignment"
 """
 
 helps['managed-network mn scope-assignment delete'] = """
@@ -126,8 +126,8 @@ helps['managed-network mn scope-assignment delete'] = """
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network mn scope-assignment delete --scope "subscriptions/subscriptionC" --name "subscription\
-CAssignment"
+               az managed-network mn scope-assignment delete --scope "subscriptions/subscriptionC" --name \
+"subscriptionCAssignment"
 """
 
 helps['managed-network mn group'] = """
@@ -137,24 +137,24 @@ helps['managed-network mn group'] = """
 
 helps['managed-network mn group list'] = """
     type: command
-    short-summary: The ListByManagedNetwork ManagedNetworkGroup operation retrieves all the Managed Network Groups in a\
- specified Managed Networks in a paginated format.
+    short-summary: The ListByManagedNetwork ManagedNetworkGroup operation retrieves all the Managed Network Groups in \
+a specified Managed Networks in a paginated format.
     examples:
       - name: Get Managed Network Group
         text: |-
-               az managed-network mn group list --managed-network-name "myManagedNetwork" --resource-group "myResourceG\
-roup"
+               az managed-network mn group list --managed-network-name "myManagedNetwork" --resource-group \
+"myResourceGroup"
 """
 
 helps['managed-network mn group show'] = """
     type: command
-    short-summary: The Get ManagedNetworkGroups operation gets a Managed Network Group specified by the resource group,\
- Managed Network name, and group name
+    short-summary: The Get ManagedNetworkGroups operation gets a Managed Network Group specified by the resource \
+group, Managed Network name, and group name
     examples:
       - name: Get Managed Network Group
         text: |-
-               az managed-network mn group show --group-name "myManagedNetworkGroup1" --managed-network-name "myManaged\
-Network" --resource-group "myResourceGroup"
+               az managed-network mn group show --group-name "myManagedNetworkGroup1" --managed-network-name \
+"myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network mn group create'] = """
@@ -189,10 +189,10 @@ helps['managed-network mn group create'] = """
       - name: Create/Update Managed Network Group
         text: |-
                az managed-network mn group create --management-groups "[]" --subnets id="/subscriptionB/resourceGroups/\
-myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --virtual-networks id="/subscription\
-B/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" --virtual-networks id="/subscriptio\
-nB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" --group-name "myManagedNetworkGrou\
-p1" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
+myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --virtual-networks \
+id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" \
+--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB"\
+ --group-name "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network mn group update'] = """
@@ -227,10 +227,10 @@ helps['managed-network mn group update'] = """
       - name: Create/Update Managed Network Group
         text: |-
                az managed-network mn group update --management-groups "[]" --subnets id="/subscriptionB/resourceGroups/\
-myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --virtual-networks id="/subscription\
-B/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" --virtual-networks id="/subscriptio\
-nB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" --group-name "myManagedNetworkGrou\
-p1" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
+myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --virtual-networks \
+id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" \
+--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB"\
+ --group-name "myManagedNetworkGroup1" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network mn group delete'] = """
@@ -240,8 +240,8 @@ group, Managed Network name, and group name
     examples:
       - name: Delete Managed Network Group
         text: |-
-               az managed-network mn group delete --group-name "myManagedNetworkGroup1" --managed-network-name "myManag\
-edNetwork" --resource-group "myResourceGroup"
+               az managed-network mn group delete --group-name "myManagedNetworkGroup1" --managed-network-name \
+"myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network mn group wait'] = """
@@ -250,12 +250,12 @@ helps['managed-network mn group wait'] = """
     examples:
       - name: Pause executing next line of CLI script until the managed-network mn group is successfully created.
         text: |-
-               az managed-network mn group wait --group-name "myManagedNetworkGroup1" --managed-network-name "myManaged\
-Network" --resource-group "myResourceGroup" --created
+               az managed-network mn group wait --group-name "myManagedNetworkGroup1" --managed-network-name \
+"myManagedNetwork" --resource-group "myResourceGroup" --created
       - name: Pause executing next line of CLI script until the managed-network mn group is successfully deleted.
         text: |-
-               az managed-network mn group wait --group-name "myManagedNetworkGroup1" --managed-network-name "myManaged\
-Network" --resource-group "myResourceGroup" --deleted
+               az managed-network mn group wait --group-name "myManagedNetworkGroup1" --managed-network-name \
+"myManagedNetwork" --resource-group "myResourceGroup" --deleted
 """
 
 helps['managed-network managed-network-peering-policy'] = """
@@ -265,24 +265,24 @@ helps['managed-network managed-network-peering-policy'] = """
 
 helps['managed-network managed-network-peering-policy list'] = """
     type: command
-    short-summary: The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering Policie\
-s in a specified Managed Network, in a paginated format.
+    short-summary: The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering \
+Policies in a specified Managed Network, in a paginated format.
     examples:
       - name: Get Managed Network Group
         text: |-
-               az managed-network managed-network-peering-policy list --managed-network-name "myManagedNetwork" --resou\
-rce-group "myResourceGroup"
+               az managed-network managed-network-peering-policy list --managed-network-name "myManagedNetwork" \
+--resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy show'] = """
     type: command
-    short-summary: The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource, spec\
-ified by the  resource group, Managed Network name, and peering policy name
+    short-summary: The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource, \
+specified by the  resource group, Managed Network name, and peering policy name
     examples:
       - name: Get Managed Network Peering Policy
         text: |-
-               az managed-network managed-network-peering-policy show --managed-network-name "myManagedNetwork" --polic\
-y-name "myHubAndSpoke" --resource-group "myResourceGroup"
+               az managed-network managed-network-peering-policy show --managed-network-name "myManagedNetwork" \
+--policy-name "myHubAndSpoke" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology'] = """
@@ -292,7 +292,8 @@ helps['managed-network managed-network-peering-policy hub-and-spoke-topology'] =
 
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology create'] = """
     type: command
-    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
+    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
+Policy
     parameters:
       - name: --hub
         short-summary: Gets or sets the hub virtual network ID
@@ -319,16 +320,17 @@ helps['managed-network managed-network-peering-policy hub-and-spoke-topology cre
     examples:
       - name: Create/Update Managed Network Peering Policy
         text: |-
-               az managed-network managed-network-peering-policy hub-and-spoke-topology create --managed-network-name "\
-myManagedNetwork" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/p\
-roviders/Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResour\
-ceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\
-" --resource-group "myResourceGroup"
+               az managed-network managed-network-peering-policy hub-and-spoke-topology create --managed-network-name \
+"myManagedNetwork" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/\
+providers/Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResou\
+rceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup\
+1" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology update'] = """
     type: command
-    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
+    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
+Policy
     parameters:
       - name: --hub
         short-summary: Gets or sets the hub virtual network ID
@@ -355,11 +357,11 @@ helps['managed-network managed-network-peering-policy hub-and-spoke-topology upd
     examples:
       - name: Create/Update Managed Network Peering Policy
         text: |-
-               az managed-network managed-network-peering-policy hub-and-spoke-topology update --managed-network-name "\
-myManagedNetwork" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/p\
-roviders/Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResour\
-ceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\
-" --resource-group "myResourceGroup"
+               az managed-network managed-network-peering-policy hub-and-spoke-topology update --managed-network-name \
+"myManagedNetwork" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/\
+providers/Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResou\
+rceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup\
+1" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy mesh-topology'] = """
@@ -369,7 +371,8 @@ helps['managed-network managed-network-peering-policy mesh-topology'] = """
 
 helps['managed-network managed-network-peering-policy mesh-topology create'] = """
     type: command
-    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
+    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
+Policy
     parameters:
       - name: --hub
         short-summary: Gets or sets the hub virtual network ID
@@ -396,16 +399,17 @@ helps['managed-network managed-network-peering-policy mesh-topology create'] = "
     examples:
       - name: Create/Update Managed Network Peering Policy
         text: |-
-               az managed-network managed-network-peering-policy mesh-topology create --managed-network-name "myManaged\
-Network" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/\
-Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/p\
-roviders/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1" --resou\
-rce-group "myResourceGroup"
+               az managed-network managed-network-peering-policy mesh-topology create --managed-network-name \
+"myManagedNetwork" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/\
+providers/Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResou\
+rceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup\
+1" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy mesh-topology update'] = """
     type: command
-    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
+    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
+Policy
     parameters:
       - name: --hub
         short-summary: Gets or sets the hub virtual network ID
@@ -432,37 +436,37 @@ helps['managed-network managed-network-peering-policy mesh-topology update'] = "
     examples:
       - name: Create/Update Managed Network Peering Policy
         text: |-
-               az managed-network managed-network-peering-policy mesh-topology update --managed-network-name "myManaged\
-Network" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/\
-Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/p\
-roviders/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1" --resou\
-rce-group "myResourceGroup"
+               az managed-network managed-network-peering-policy mesh-topology update --managed-network-name \
+"myManagedNetwork" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/\
+providers/Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResou\
+rceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup\
+1" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy delete'] = """
     type: command
-    short-summary: The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy, specifi\
-ed by the  resource group, Managed Network name, and peering policy name
+    short-summary: The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy, \
+specified by the  resource group, Managed Network name, and peering policy name
     examples:
       - name: Get Managed Network Peering Policy
         text: |-
-               az managed-network managed-network-peering-policy delete --managed-network-name "myManagedNetwork" --pol\
-icy-name "myHubAndSpoke" --resource-group "myResourceGroup"
+               az managed-network managed-network-peering-policy delete --managed-network-name "myManagedNetwork" \
+--policy-name "myHubAndSpoke" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy wait'] = """
     type: command
-    short-summary: Place the CLI in a waiting state until a condition of the managed-network managed-network-peering-po\
-licy is met.
+    short-summary: Place the CLI in a waiting state until a condition of the managed-network \
+managed-network-peering-policy is met.
     examples:
-      - name: Pause executing next line of CLI script until the managed-network managed-network-peering-policy is succe\
-ssfully created.
+      - name: Pause executing next line of CLI script until the managed-network managed-network-peering-policy is \
+successfully created.
         text: |-
-               az managed-network managed-network-peering-policy wait --managed-network-name "myManagedNetwork" --polic\
-y-name "myHubAndSpoke" --resource-group "myResourceGroup" --created
-      - name: Pause executing next line of CLI script until the managed-network managed-network-peering-policy is succe\
-ssfully deleted.
+               az managed-network managed-network-peering-policy wait --managed-network-name "myManagedNetwork" \
+--policy-name "myHubAndSpoke" --resource-group "myResourceGroup" --created
+      - name: Pause executing next line of CLI script until the managed-network managed-network-peering-policy is \
+successfully deleted.
         text: |-
-               az managed-network managed-network-peering-policy wait --managed-network-name "myManagedNetwork" --polic\
-y-name "myHubAndSpoke" --resource-group "myResourceGroup" --deleted
+               az managed-network managed-network-peering-policy wait --managed-network-name "myManagedNetwork" \
+--policy-name "myHubAndSpoke" --resource-group "myResourceGroup" --deleted
 """
