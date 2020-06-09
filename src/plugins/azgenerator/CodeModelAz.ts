@@ -81,11 +81,10 @@ export interface CodeModelAz {
     Command_MethodName: string;
     Command_FunctionName: string;
     Command_GetOriginalOperation: any;
+    Command_NeedGeneric: boolean;
     Command_GenericSetterParameter(Operation): Parameter;
 
     Command_Help: string;
-
-    Command_CanSplit: boolean;
     Command_IsLongRun: boolean;
     Command_SubGroupName: string;
 
@@ -101,8 +100,9 @@ export interface CodeModelAz {
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
     Method_GetOriginalOperation: any;
-    Method_CanSplit: boolean;
     Method_GenericSetterParameter(Operation): Parameter;
+    Method_NeedGeneric: boolean;
+    Operation_IsHidden(op?: Operation): boolean;
 
 
     SelectFirstMethodParameter(containHidden?: boolean): boolean;

@@ -8,7 +8,6 @@
 # regenerated.
 # --------------------------------------------------------------------------
 # pylint: disable=too-many-lines
-# pylint: disable=unused-argument
 
 from azure.cli.core.util import sdk_no_wait
 
@@ -221,22 +220,6 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_create
                        properties=properties)
 
 
-def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update(instance,
-                                                                                 resource_group_name,
-                                                                                 managed_network_name,
-                                                                                 policy_name,
-                                                                                 location,
-                                                                                 hub=None,
-                                                                                 spokes=None,
-                                                                                 mesh=None,
-                                                                                 no_wait=False):
-    instance.type = 'HubAndSpokeTopology'
-    instance.hub = hub
-    instance.spokes = spokes
-    instance.mesh = mesh
-    return instance
-
-
 def managed_network_managed_network_peering_policy_mesh_topology_create(client,
                                                                         resource_group_name,
                                                                         managed_network_name,
@@ -260,7 +243,30 @@ def managed_network_managed_network_peering_policy_mesh_topology_create(client,
                        properties=properties)
 
 
-def managed_network_managed_network_peering_policy_mesh_topology_update(instance,
+def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update(client,
+                                                                                 resource_group_name,
+                                                                                 managed_network_name,
+                                                                                 policy_name,
+                                                                                 location,
+                                                                                 hub=None,
+                                                                                 spokes=None,
+                                                                                 mesh=None,
+                                                                                 no_wait=False):
+    properties = {}
+    properties['type'] = 'HubAndSpokeTopology'
+    properties['hub'] = hub
+    properties['spokes'] = spokes
+    properties['mesh'] = mesh
+    return sdk_no_wait(no_wait,
+                       client.begin_create_or_update,
+                       resource_group_name=resource_group_name,
+                       managed_network_name=managed_network_name,
+                       managed_network_peering_policy_name=policy_name,
+                       location=location,
+                       properties=properties)
+
+
+def managed_network_managed_network_peering_policy_mesh_topology_update(client,
                                                                         resource_group_name,
                                                                         managed_network_name,
                                                                         policy_name,
@@ -269,11 +275,18 @@ def managed_network_managed_network_peering_policy_mesh_topology_update(instance
                                                                         spokes=None,
                                                                         mesh=None,
                                                                         no_wait=False):
-    instance.type = 'MeshTopology'
-    instance.hub = hub
-    instance.spokes = spokes
-    instance.mesh = mesh
-    return instance
+    properties = {}
+    properties['type'] = 'MeshTopology'
+    properties['hub'] = hub
+    properties['spokes'] = spokes
+    properties['mesh'] = mesh
+    return sdk_no_wait(no_wait,
+                       client.begin_create_or_update,
+                       resource_group_name=resource_group_name,
+                       managed_network_name=managed_network_name,
+                       managed_network_peering_policy_name=policy_name,
+                       location=location,
+                       properties=properties)
 
 
 def managed_network_managed_network_peering_policy_delete(client,

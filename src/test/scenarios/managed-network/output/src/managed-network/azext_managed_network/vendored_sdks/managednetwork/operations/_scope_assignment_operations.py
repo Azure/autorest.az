@@ -301,3 +301,163 @@ class ScopeAssignmentOperations(object):
             get_next, extract_data
         )
     list.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments'}  # type: ignore
+
+    def create(
+        self,
+        scope,  # type: str
+        scope_assignment_name,  # type: str
+        location=None,  # type: Optional[str]
+        assigned_managed_network=None,  # type: Optional[str]
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> "models.ScopeAssignment"
+        """Creates a scope assignment.
+
+        :param scope: The base resource of the scope assignment to create. The scope can be any REST
+         resource instance. For example, use 'subscriptions/{subscription-id}' for a subscription,
+         'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for a resource group,
+         and 'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-
+         provider}/{resource-type}/{resource-name}' for a resource.
+        :type scope: str
+        :param scope_assignment_name: The name of the scope assignment to create.
+        :type scope_assignment_name: str
+        :param location: The geo-location where the resource lives.
+        :type location: str
+        :param assigned_managed_network: The managed network ID with scope will be assigned to.
+        :type assigned_managed_network: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: ScopeAssignment, or the result of cls(response)
+        :rtype: ~managed_network_management_client.models.ScopeAssignment
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ScopeAssignment"]
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.ScopeAssignment(location=location, assigned_managed_network=assigned_managed_network)
+        api_version = "2019-06-01-preview"
+        content_type = kwargs.pop("content_type", "application/json")
+
+        # Construct URL
+        url = self.create.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'scope': self._serialize.url("scope", scope, 'str'),
+            'scopeAssignmentName': self._serialize.url("scope_assignment_name", scope_assignment_name, 'str'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
+        header_parameters['Accept'] = 'application/json'
+
+        # Construct and send request
+        body_content_kwargs = {}  # type: Dict[str, Any]
+        body_content = self._serialize.body(_parameters, 'ScopeAssignment')
+        body_content_kwargs['content'] = body_content
+        request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
+
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200, 201]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize(models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize('ScopeAssignment', pipeline_response)
+
+        if response.status_code == 201:
+            deserialized = self._deserialize('ScopeAssignment', pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+    create.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}'}  # type: ignore
+
+    def update(
+        self,
+        scope,  # type: str
+        scope_assignment_name,  # type: str
+        location=None,  # type: Optional[str]
+        assigned_managed_network=None,  # type: Optional[str]
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> "models.ScopeAssignment"
+        """Creates a scope assignment.
+
+        :param scope: The base resource of the scope assignment to create. The scope can be any REST
+         resource instance. For example, use 'subscriptions/{subscription-id}' for a subscription,
+         'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for a resource group,
+         and 'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-
+         provider}/{resource-type}/{resource-name}' for a resource.
+        :type scope: str
+        :param scope_assignment_name: The name of the scope assignment to create.
+        :type scope_assignment_name: str
+        :param location: The geo-location where the resource lives.
+        :type location: str
+        :param assigned_managed_network: The managed network ID with scope will be assigned to.
+        :type assigned_managed_network: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: ScopeAssignment, or the result of cls(response)
+        :rtype: ~managed_network_management_client.models.ScopeAssignment
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ScopeAssignment"]
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.ScopeAssignment(location=location, assigned_managed_network=assigned_managed_network)
+        api_version = "2019-06-01-preview"
+        content_type = kwargs.pop("content_type", "application/json")
+
+        # Construct URL
+        url = self.update.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'scope': self._serialize.url("scope", scope, 'str'),
+            'scopeAssignmentName': self._serialize.url("scope_assignment_name", scope_assignment_name, 'str'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
+        header_parameters['Accept'] = 'application/json'
+
+        # Construct and send request
+        body_content_kwargs = {}  # type: Dict[str, Any]
+        body_content = self._serialize.body(_parameters, 'ScopeAssignment')
+        body_content_kwargs['content'] = body_content
+        request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
+
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200, 201]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize(models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize('ScopeAssignment', pipeline_response)
+
+        if response.status_code == 201:
+            deserialized = self._deserialize('ScopeAssignment', pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+    update.metadata = {'url': '/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}'}  # type: ignore

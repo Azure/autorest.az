@@ -1,14 +1,16 @@
 # configuration for az common
-
+ 
 ``` yaml $(az)
 extension-mode: experimental
-
+ 
 cli:
     naming:
         default:
             singularize:
               - operationGroup
               - operation
+    split-operation:
+        cli-split-operation-enabled: true
     cli-directive:
         - where:
             operation: CheckNameAvailability
@@ -17,13 +19,18 @@ cli:
             operationGroup: Operations
             operation: List
           hidden: true
+        - where:
+            op: CreateOrUpdate
+          split-operation-names:
+            - Create
+            - Update
     flatten:
         cli-flatten-set-enabled: true
         cli-flatten-payload: true
         cli-flatten-schema: false
         cli-flatten-all-overwrite-swagger: false
 ```
-
+ 
 ``` yaml $(python)
 add-credential: true
 no-namespace-folders: true

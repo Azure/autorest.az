@@ -24,7 +24,7 @@ hub-and-spoke-topology create a managed-network managed-network-peering-policy.
 |**--mesh**|array|Gets or sets the mesh group IDs|hub_and_spoke_topology_mesh|
 ### managed-network managed-network-peering-policy hub-and-spoke-topology update
 
-hub-and-spoke-topology create a managed-network managed-network-peering-policy.
+hub-and-spoke-topology update a managed-network managed-network-peering-policy.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -60,7 +60,7 @@ mesh-topology create a managed-network managed-network-peering-policy.
 |**--mesh**|array|Gets or sets the mesh group IDs|mesh_topology_mesh|
 ### managed-network managed-network-peering-policy mesh-topology update
 
-mesh-topology create a managed-network managed-network-peering-policy.
+mesh-topology update a managed-network managed-network-peering-policy.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -151,7 +151,7 @@ show a managed-network mn group.
 |**--group-name**|string|The name of the Managed Network Group.|group_name|
 ### managed-network mn group update
 
-create a managed-network mn group.
+update a managed-network mn group.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|
@@ -207,7 +207,7 @@ show a managed-network mn scope-assignment.
 |**--scope-assignment-name**|string|The name of the scope assignment to get.|scope_assignment_name|
 ### managed-network mn scope-assignment update
 
-create a managed-network mn scope-assignment.
+update a managed-network mn scope-assignment.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|

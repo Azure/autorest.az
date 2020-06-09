@@ -37,25 +37,13 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
                     if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
                         needWait = true;
                     }
-                    let command_output = getCommandBody(model);
+                    let needGeneric = model.Command_NeedGeneric;
+                    let command_output = getCommandBody(model, needGeneric);
                     if (model.Command_MethodName == "show") {
                         show_output = command_output
-                    } 
-                    
+                    }               
                     output_args = output_args.concat(command_output);
-                    let originalOperation = model.Command_GetOriginalOperation;
-                    let genericParam = model.Command_GenericSetterParameter(model.Command);
-                    if(!isNullOrUndefined(originalOperation)) {
-                        genericParam = model.Command_GenericSetterParameter(originalOperation);
-                    }
-                    let needGeneric = false;
-                    if (!isNullOrUndefined(genericParam)) {
-                        needGeneric = true;
-                    }
-                    let needUpdate = model.Command_CanSplit;
-                    if (needUpdate) {
-                        output_args = output_args.concat(getCommandBody(model, needUpdate, needGeneric));
-                    }
+     
                 }
                 while (model.SelectNextCommand());
                 if (needWait && show_output.length > 1) {
@@ -107,7 +95,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     return header.getLines().concat(output);
 }
 
-function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGeneric: boolean = false) {
+function getCommandBody(model: CodeModelAz, needGeneric: boolean = false) {
     //let method: string = methods[mi];
 
     //let ctx = model.SelectCommand(method);
@@ -115,11 +103,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
     //    continue;
     let output_args: string[] = [];
     output_args.push("");
-    if (needUpdate) {
-        output_args.push("    with self.argument_context('" + model.Command_Name.replace(/ create/g, " update") + "') as c:");
-    } else {
-        output_args.push("    with self.argument_context('" + model.Command_Name + "') as c:");
-    }
+    output_args.push("    with self.argument_context('" + model.Command_Name + "') as c:");
 
     let hasParam = false;
     let allParam: Map<string, boolean> = new Map<string, boolean>();
@@ -320,7 +304,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                             argument += ", arg_group='" + Capitalize(ToCamelCase(model.Parameter_MapsTo(baseParam))) + "'";
                         }
                     }
-                    if(!model.Method_NameAz.startsWith('list') && !model.Method_NameAz.split(' ').last.startsWith('create') || needUpdate) {
+                    if(!model.Method_NameAz.startsWith('list') && !model.Method_NameAz.split(' ').last.startsWith('create')) {
                         if(!isNullOrUndefined(model.MethodParameter_IdPart)) {
                             argument += ", id_part='" + model.MethodParameter_IdPart + "'";
                         }

@@ -252,6 +252,10 @@ helps['managed-network mn group wait'] = """
         text: |-
                az managed-network mn group wait --group-name "myManagedNetworkGroup1" --managed-network-name "myManaged\
 Network" --resource-group "myResourceGroup" --created
+      - name: Pause executing next line of CLI script until the managed-network mn group is successfully updated.
+        text: |-
+               az managed-network mn group wait --group-name "myManagedNetworkGroup1" --managed-network-name "myManaged\
+Network" --resource-group "myResourceGroup" --updated
       - name: Pause executing next line of CLI script until the managed-network mn group is successfully deleted.
         text: |-
                az managed-network mn group wait --group-name "myManagedNetworkGroup1" --managed-network-name "myManaged\
@@ -326,42 +330,6 @@ ceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/mana
 " --resource-group "myResourceGroup"
 """
 
-helps['managed-network managed-network-peering-policy hub-and-spoke-topology update'] = """
-    type: command
-    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
-    parameters:
-      - name: --hub
-        short-summary: Gets or sets the hub virtual network ID
-        long-summary: |
-            Usage: --hub id=XX
-
-            id: Resource Id
-      - name: --spokes
-        short-summary: Gets or sets the spokes group IDs
-        long-summary: |
-            Usage: --spokes id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --spokes argument.
-      - name: --mesh
-        short-summary: Gets or sets the mesh group IDs
-        long-summary: |
-            Usage: --mesh id=XX
-
-            id: Resource Id
-
-            Multiple actions can be specified by using more than one --mesh argument.
-    examples:
-      - name: Create/Update Managed Network Peering Policy
-        text: |-
-               az managed-network managed-network-peering-policy hub-and-spoke-topology update --managed-network-name "\
-myManagedNetwork" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/p\
-roviders/Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResour\
-ceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\
-" --resource-group "myResourceGroup"
-"""
-
 helps['managed-network managed-network-peering-policy mesh-topology'] = """
     type: group
     short-summary: managed-network managed-network-peering-policy sub group mesh-topology
@@ -401,6 +369,42 @@ Network" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/re
 Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/p\
 roviders/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1" --resou\
 rce-group "myResourceGroup"
+"""
+
+helps['managed-network managed-network-peering-policy hub-and-spoke-topology update'] = """
+    type: command
+    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
+    parameters:
+      - name: --hub
+        short-summary: Gets or sets the hub virtual network ID
+        long-summary: |
+            Usage: --hub id=XX
+
+            id: Resource Id
+      - name: --spokes
+        short-summary: Gets or sets the spokes group IDs
+        long-summary: |
+            Usage: --spokes id=XX
+
+            id: Resource Id
+
+            Multiple actions can be specified by using more than one --spokes argument.
+      - name: --mesh
+        short-summary: Gets or sets the mesh group IDs
+        long-summary: |
+            Usage: --mesh id=XX
+
+            id: Resource Id
+
+            Multiple actions can be specified by using more than one --mesh argument.
+    examples:
+      - name: Create/Update Managed Network Peering Policy
+        text: |-
+               az managed-network managed-network-peering-policy hub-and-spoke-topology update --managed-network-name "\
+myManagedNetwork" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/p\
+roviders/Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResour\
+ceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1\
+" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy mesh-topology update'] = """

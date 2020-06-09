@@ -53,13 +53,7 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
                         }
                     }
                     let commandOutput: string [] = generateCommandHelp(model);
-                    //output.push("before output.length: " + output.length);
                     output = output.concat(commandOutput);
-                    //output.push("after output.length: " + output.length);
-                    if (model.Command_CanSplit) {
-                        let tmpoutput: string[] = generateCommandHelp(model, true);
-                        output = output.concat(tmpoutput);
-                    }
                 }
                 while (model.SelectNextCommand());
                 if (hasWait) {
@@ -236,7 +230,7 @@ function GetActionOptions( model: CodeModelAz, param: Parameter, keyToMatch: str
     return options;
 }
 
-function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
+function generateCommandHelp(model: CodeModelAz) {
     // create, delete, list, show, update
     //let method: string = methods[mi];
     //let ctx = model.SelectCommand(method);
@@ -245,7 +239,7 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
     //    continue;
     let output: string[] = [];
     output.push("");
-    let commandHead = needUpdate? model.Command_Name.replace(/ create/gi, " update"): model.Command_Name;
+    let commandHead = model.Command_Name;
     output.push("helps['" + commandHead + "'] = \"\"\"");
     output.push("    type: command");
 

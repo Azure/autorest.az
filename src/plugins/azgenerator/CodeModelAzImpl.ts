@@ -577,14 +577,14 @@ export class CodeModelCliImpl implements CodeModelAz {
             let operation = this.Command;
             this.preMethodIndex = this.currentOperationIndex;
             let needNext = false;
-            if (operation.language['cli'].hidden || operation.language['cli'].removed) {
+            if (this.Operation_IsHidden(operation)) {
                 needNext = true;
             }
             while (this.currentOperationIndex + 1 < this.CommandGroup.operations.length) {
                 let tmpOperation = this.CommandGroup.operations[this.currentOperationIndex + 1];
                 if (tmpOperation.language['az'].command == operation.language['az'].command) {
                     this.currentOperationIndex++;
-                    if (tmpOperation.language['cli'].hidden != true && tmpOperation.language['cli'].removed != true) {
+                    if (!this.Operation_IsHidden(tmpOperation)) {
                         needNext = false;
                     }
                 } else {
@@ -609,14 +609,14 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.preMethodIndex = this.currentOperationIndex;
             let operation = this.Command;
             let needNext = false;
-            if (operation.language['cli'].hidden || operation.language['cli'].removed) {
+            if (this.Operation_IsHidden(operation)) {
                 needNext = true;
             }
             while (this.currentOperationIndex < this.CommandGroup.operations.length - 1) {
                 let tmpOperation = this.CommandGroup.operations[this.currentOperationIndex + 1];
                 if (operation.language['az'].command == tmpOperation.language['az'].command) {
                     this.currentOperationIndex++;
-                    if (tmpOperation.language['cli'].hidden != true && tmpOperation.language['cli'].removed != true) {
+                    if (!this.Operation_IsHidden(tmpOperation)) {
                         needNext = false;
                     }
                 } else {
@@ -633,6 +633,13 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.currentOperationIndex = -1;
             return false;
         }
+    }
+
+    public Operation_IsHidden(op: Operation = this.Method): boolean {
+        if (op.language['cli'].hidden || op.language['cli'].removed || op.language['cli']['cli-operation-splitted']) {
+            return true;
+        }
+        return false;
     }
 
     public get Command() {
@@ -652,6 +659,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Command_GenericSetterParameter(op: Operation = this.Command): Parameter {
+        if (isNullOrUndefined(op)) {
+            return null;
+        }
         return op['genericSetterParam'];
     }
 
@@ -659,19 +669,24 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Command.language['az'].description.replace(/\n/g, " ");
     }
 
-    public get Command_CanSplit(): boolean {
-        if(this.CommandGroup.language['az']['hasUpdate']) {
-            return false;
+    public get Command_GetOriginalOperation(): any {
+        let polyOriginal = this.Command.extensions?.['cli-poly-as-resource-original-operation'];
+        if(!isNullOrUndefined(polyOriginal) && !isNullOrUndefined(polyOriginal.extensions['cli-split-operation-original-operation'])) {
+            let splitOriginal = polyOriginal.extensions['cli-split-operation-original-operation'];
+            return splitOriginal;
         }
-        this.SelectFirstMethod();
-        if(this.Method_IsLast && this.Method_IsFirst) {
-            return this.Command['canSplitOperation'] ? true : false;
-        } 
-        return false;   
+        let splittedOriginal = this.Command.extensions['cli-split-operation-original-operation'];
+        if(!isNullOrUndefined(splittedOriginal)) {
+            return splittedOriginal;
+        }
+        return polyOriginal;
     }
 
-    public get Command_GetOriginalOperation(): any {
-        return this.Command.extensions?.['cli-poly-as-resource-original-operation'];
+    public get Command_NeedGeneric(): boolean {
+        if(this.Command.language['az']['isSplitUpdate'] && !isNullOrUndefined(this.Command_GenericSetterParameter(this.Command_GetOriginalOperation))) {
+            return true;
+        }
+        return false;
     }
 
     public get Command_IsLongRun(): boolean {
@@ -700,7 +715,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (this.currentOperationIndex >= this.preMethodIndex) {
             this.currentMethodIndex = this.preMethodIndex;
             let method = this.Method;
-            if (method.language['cli'].removed || method.language['cli'].hidden) {
+            if (this.Operation_IsHidden(method)) {
                 if (!this.SelectNextMethod()) {
                     return false;
                 }
@@ -717,7 +732,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (this.currentMethodIndex < this.currentOperationIndex) {
             this.currentMethodIndex++;
             let method = this.Method;
-            if (method.language['cli'].removed || method.language['cli'].hidden) {
+            if (this.Operation_IsHidden(method)) {
                 if (!this.SelectNextMethod()) {
                     return false;
                 }
@@ -752,7 +767,16 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (this.currentMethodIndex == this.currentOperationIndex) {
             return true;
         } else {
-            return false;
+            let curIndex = this.currentMethodIndex + 1;
+            let hasNext = false;
+            while(curIndex <= this.currentOperationIndex) {
+                if(!this.Operation_IsHidden(this.CommandGroup.operations[curIndex])) {
+                    hasNext = true;
+                    break;
+                }
+                curIndex++;
+            }
+            return hasNext? false: true;
         }
     }
 
@@ -785,15 +809,18 @@ export class CodeModelCliImpl implements CodeModelAz {
         return ret.toLowerCase();
     }
 
-    public get Method_CanSplit(): boolean {
-        if(this.CommandGroup.language['az']['hasUpdate']) {
-            return false;
+    public Method_GenericSetterParameter(op: Operation = this.Method): Parameter {
+        if (isNullOrUndefined(op)) {
+            return null;
         }
-        return this.Method['canSplitOperation'] ? true : false;
+        return op['genericSetterParam'];
     }
 
-    public Method_GenericSetterParameter(op: Operation = this.Method): Parameter {
-        return op['genericSetterParam'];
+    public get Method_NeedGeneric(): boolean {
+        if(this.Method.language['az']['isSplitUpdate'] && !isNullOrUndefined(this.Method_GenericSetterParameter(this.Method_GetOriginalOperation))) {
+            return true;
+        }
+        return false;
     }
 
     public Get_Method_Name(language = "az"): string {
@@ -801,7 +828,16 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Method_GetOriginalOperation(): any {
-        return this.Method.extensions?.['cli-poly-as-resource-original-operation'];
+        let polyOriginal = this.Method.extensions?.['cli-poly-as-resource-original-operation'];
+        if(!isNullOrUndefined(polyOriginal) && !isNullOrUndefined(polyOriginal.extensions?.['cli-split-operation-original-operation'])) {
+            let splitOriginal = polyOriginal.extensions?.['cli-split-operation-original-operation'];
+            return splitOriginal;
+        }
+        let splittedOriginal = this.Method.extensions?.['cli-split-operation-original-operation'];
+        if(!isNullOrUndefined(splittedOriginal)) {
+            return splittedOriginal;
+        }
+        return polyOriginal;
     }
     //=================================================================================================================
     // Methods Parameters.
@@ -1209,7 +1245,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             return false;
         }
 
-        if (this.isComplexSchema(this.MethodParameter_Type)) {
+        if (this.isComplexSchema(this.Parameter_Type(param))) {
             return true;
         }
         return false;
@@ -1313,6 +1349,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                 this.ExitSubMethodParameters();
             }
 
+            if (parameter.language['az']['name'] == 'identity') {
+                parameter;
+            }
             // Handle simple parameter
             if (parameter?.language?.['cli']?.removed || parameter?.language?.['cli']?.hidden) {
                 if (this.Parameter_DefaultValue(parameter) == undefined && parameter.required == true) {

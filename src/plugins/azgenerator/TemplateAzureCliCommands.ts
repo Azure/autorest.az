@@ -50,9 +50,6 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                         needWait = true;
                     }
                     output = output.concat(getCommandBody(model));
-                    if (model.Command_CanSplit) {
-                        output = output.concat(getCommandBody(model, true));
-                    }
                 }
                 while (model.SelectNextCommand());
                 if (needWait) {
@@ -74,7 +71,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
     return header.getLines().concat(output);
 }
 
-function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
+function getCommandBody(model: CodeModelAz) {
     let output: string[] = [];
     let functionName = model.Command_FunctionName;
     let methodName = model.Command_MethodName;
@@ -83,32 +80,22 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
         endStr = ", supports_no_wait=True" + endStr;
     }
     if (methodName != "show") {
-        if (needUpdate) {
+        if (model.Command_NeedGeneric) {
             let argument = "";
             let geneParam = null;
             if (model.SelectFirstMethod()) {
-                let originalOperation = model.Method_GetOriginalOperation;
-                if (!isNullOrUndefined(originalOperation)) {
-                    geneParam = model.Method_GenericSetterParameter(originalOperation);
-                } else {
-                    geneParam = model.Method_GenericSetterParameter(model.Method);
-                }
+                geneParam = model.Method_GenericSetterParameter(model.Method_GetOriginalOperation);
                 if (!isNullOrUndefined(geneParam)) {
                     argument = model.Parameter_NamePython(geneParam);
                 }
-            }
-            if(isNullOrUndefined(geneParam)) {
-                // generic update doesn't apply here
-                ToMultiLine("        g.custom_command('" + methodName.replace(/create/g, 'update') + "', '" + functionName.replace(/_create/g, '_update') + "'" + endStr, output);
-            } else {
-                let generic_update = "        g.generic_update_command('" + model.Command_MethodName.replace(/create/g, 'update');
+                let generic_update = "        g.generic_update_command('" + model.Command_MethodName;
                 if (argument && argument != "" && argument != "parameters") {
                     generic_update += "', setter_arg_name='" + argument;
                 }
                 if (model.Command_IsLongRun) {
                     generic_update += "', setter_name='begin_create_or_update";
                 }
-                generic_update += "', custom_func_name='" + functionName.replace(/_create/g, '_update') + "'" + endStr;
+                generic_update += "', custom_func_name='" + functionName + "'" + endStr;
                 ToMultiLine(generic_update, output);
             }
         } else {

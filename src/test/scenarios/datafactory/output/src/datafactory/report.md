@@ -340,7 +340,7 @@ unsubscribe-from-event a datafactory trigger.
 |**--trigger-name**|string|The trigger name.|trigger_name|
 ### datafactory trigger update
 
-create a datafactory trigger.
+update a datafactory trigger.
 
 |Option|Type|Description|Path (SDK)|Path (swagger)|
 |------|----|-----------|----------|--------------|

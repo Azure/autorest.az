@@ -549,3 +549,83 @@ class ManagedNetworkOperations(object):
             get_next, extract_data
         )
     list_by_subscription.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetwork/managedNetworks'}  # type: ignore
+
+    def create(
+        self,
+        resource_group_name,  # type: str
+        managed_network_name,  # type: str
+        location=None,  # type: Optional[str]
+        tags=None,  # type: Optional[Dict[str, str]]
+        properties=None,  # type: Optional["models.ManagedNetworkProperties"]
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> "models.ManagedNetwork"
+        """The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name.
+
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param managed_network_name: The name of the Managed Network.
+        :type managed_network_name: str
+        :param location: The geo-location where the resource lives.
+        :type location: str
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
+        :param properties: The MNC properties.
+        :type properties: ~managed_network_management_client.models.ManagedNetworkProperties
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: ManagedNetwork, or the result of cls(response)
+        :rtype: ~managed_network_management_client.models.ManagedNetwork
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetwork"]
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
+
+        _managed_network = models.ManagedNetwork(location=location, tags=tags, properties=properties)
+        api_version = "2019-06-01-preview"
+        content_type = kwargs.pop("content_type", "application/json")
+
+        # Construct URL
+        url = self.create.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'managedNetworkName': self._serialize.url("managed_network_name", managed_network_name, 'str'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
+        header_parameters['Accept'] = 'application/json'
+
+        # Construct and send request
+        body_content_kwargs = {}  # type: Dict[str, Any]
+        body_content = self._serialize.body(_managed_network, 'ManagedNetwork')
+        body_content_kwargs['content'] = body_content
+        request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
+
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200, 201]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize(models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize('ManagedNetwork', pipeline_response)
+
+        if response.status_code == 201:
+            deserialized = self._deserialize('ManagedNetwork', pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+    create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}  # type: ignore
