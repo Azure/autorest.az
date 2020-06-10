@@ -525,6 +525,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return eps.singularize(this.CommandGroup.language['cli'].cliKey);
     }
 
+    public get CommandGroup_CliKey(): string {
+        return this.CommandGroup.language['cli']?.cliKey;
+    }
+
     //-----------------------------------------------------------------------------------------------------------------
     // Commands
     //
@@ -771,6 +775,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     public get Method_NameCli(): string {
         return this.Method.language['cli'].name;
     } 
+    public get Method_CliKey(): string {
+        return this.Method.language['cli']?.cliKey;
+    }
 
     public get Method_BodyParameterName(): string {
         return null;
@@ -961,6 +968,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_NameAz(): string {
         return this.Parameter_NameAz(this.MethodParameter);
+    }
+
+    public get MethodParameter_CliKey(): string {
+        return this.Parameter_CliKey(this.MethodParameter);
     }
 
     public get MethodParameter_IdPart(): string {
@@ -1360,11 +1371,11 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_Description(param: Parameter = this.MethodParameter): string {
-        return param.language['az'].description.replace(/\\n/g, ' ');
+        return param.language['az'].description.replace(/\r?\n|\r/g, ' ');
     }
 
     public Schema_Description(schema: Schema): string {
-        return schema.language['az'].description.replace(/\\n/g, ' ');
+        return schema.language['az'].description.replace(/\r?\n|\r/g, ' ');
     }
 
     public Parameter_InGlobal(parameter: Parameter): boolean {
@@ -1380,6 +1391,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public Parameter_NameAz(param: Parameter = this.MethodParameter): string {
         return param.language['az'].name;
+    }
+
+    public Parameter_CliKey(param: Parameter = this.MethodParameter): string {
+        return param.language['cli']?.cliKey;
     }
 
     public Parameter_NamePython(param: Parameter = this.MethodParameter): string {

@@ -72,6 +72,7 @@ export interface CodeModelAz {
     CommandGroup_Help: string;
     CommandGroup_DefaultName: string;
     CommandGroup_HasShowCommand: boolean;
+    CommandGroup_CliKey: string;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
@@ -98,6 +99,7 @@ export interface CodeModelAz {
     Method_Name: string;
     Method_NameAz: string;
     Method_NameCli: string 
+    Method_CliKey: string;
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
     Method_GetOriginalOperation: any;
@@ -112,6 +114,7 @@ export interface CodeModelAz {
 
     MethodParameter_Name: string;
     MethodParameter_NameAz: string;
+    MethodParameter_CliKey: string;
     MethodParameter_IsArray: boolean
     MethodParameter_NamePython: string
     MethodParameter_MapsTo: string;
@@ -149,6 +152,7 @@ export interface CodeModelAz {
     Schema_MapsTo(Schema);
     Parameter_Name(): string;
     Parameter_NameAz(Parameter): string;
+    Parameter_CliKey(Parameter): string;
     Parameter_NamePython(Parameter): string;
     Parameter_Description(Parameter): string;
     Parameter_DefaultValue(Parameter): any | undefined;

@@ -12,7 +12,7 @@ import { isNullOrUndefined, isArray } from "util";
 const maxShortSummary = 119
 let showExampleStr = "";
 let allSupportWaited = ['create', 'update', 'delete'];
-export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
+export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     header.disableTooManyLines = true;
     header.addFromImport("knack.help_files", ["helps"])
@@ -26,7 +26,7 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
             if (!model.SelectFirstCommand())
                 continue;
                 
-            output = output.concat(generateCommandGroupHelp(model));    
+            output = output.concat(generateCommandGroupHelp(model, "", debug));    
             //let methods: string[] = model.CommandGroup_Commands;
 
             let allSubGroup: Map<string, boolean> = new Map<string, boolean>();
@@ -38,7 +38,7 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
                     let subCommandGroupName = model.Command_SubGroupName;
                     if(subCommandGroupName != "" && !allSubGroup.has(subCommandGroupName)) {
                         allSubGroup.set(subCommandGroupName, true);
-                        output = output.concat(generateCommandGroupHelp(model, subCommandGroupName));
+                        output = output.concat(generateCommandGroupHelp(model, subCommandGroupName, debug));
                     }
                     if(model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
                         hasWait = true;
@@ -52,12 +52,12 @@ export function GenerateAzureCliHelp(model: CodeModelAz): string[] {
                             allLongRunCommand.push(waitParam + "d");
                         }
                     }
-                    let commandOutput: string [] = generateCommandHelp(model);
+                    let commandOutput: string [] = generateCommandHelp(model, false, debug);
                     //output.push("before output.length: " + output.length);
                     output = output.concat(commandOutput);
                     //output.push("after output.length: " + output.length);
                     if (model.Command_CanSplit) {
-                        let tmpoutput: string[] = generateCommandHelp(model, true);
+                        let tmpoutput: string[] = generateCommandHelp(model, true, debug);
                         output = output.concat(tmpoutput);
                     }
                 }
@@ -97,7 +97,7 @@ function generateWaitCommandHelp(commandGroup, allLongRunCommand) {
     return output;
 }
 
-function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = "") {
+function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = "", debug: boolean) {
     let output = [];
     output.push("");
     if(subCommandGroupName != "") {
@@ -110,12 +110,19 @@ function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = "") 
     if(subCommandGroupName != "") {
         shortSummary = shortSummary + " sub group " + subCommandGroupName.split(" ").pop();
     }
+    if (debug) {
+        if (!shortSummary.trimRight().endsWith(".")) {
+            shortSummary += ".";
+        }
+        shortSummary += " Command group swagger name=" + model.CommandGroup_CliKey;
+    }
     ToMultiLine(shortSummary, output, 119, true);
+
     output.push("\"\"\"");
     return output;
 }
 
-function addParameterHelp(output: string[], model: CodeModelAz) {
+function addParameterHelp(output: string[], model: CodeModelAz, debug: boolean) {
     let parameter_output = ["    parameters:"];
 
     let originalOperation = model.Method_GetOriginalOperation;
@@ -162,9 +169,24 @@ function addParameterHelp(output: string[], model: CodeModelAz) {
                 }
                 let action_output: string[] = [];
                 ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, action_output, 119, true);
-                if (model.MethodParameter_Description && model.MethodParameter_Description.trim().length > 0) {
-                    ToMultiLine(`        short-summary: ${model.MethodParameter_Description.trim()}`.replace(/\r?\n|\r/g, ''), action_output, 119, true);
+
+                if (debug) {
+                    let shortSummary = "";
+                    if (model.MethodParameter_Description && model.MethodParameter_Description.trim().length > 0) {
+                        shortSummary += model.MethodParameter_Description.trim();
+                    }
+                    if (!shortSummary.endsWith(".")) {
+                        shortSummary += ".";
+                    }
+                    shortSummary += " Swagger name=" + model.MethodParameter_CliKey;
+                    ToMultiLine(`        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''), action_output, 119, true);
+                } else {
+                    if (model.MethodParameter_Description && model.MethodParameter_Description.trim().length > 0) {
+                        const shortSummary = model.MethodParameter_Description.trim();
+                        ToMultiLine(`        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''), action_output, 119, true);
+                    }
                 }
+                
                 let options: Parameter[] = [];
                 if (!isNullOrUndefined(model.Schema_ActionName(model.MethodParameter.schema))) {
                     if (baseParam && model.MethodParameter['polyBaseParam'] == baseParam) {
@@ -236,7 +258,7 @@ function GetActionOptions( model: CodeModelAz, param: Parameter, keyToMatch: str
     return options;
 }
 
-function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
+function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false, debug: boolean = false) {
     // create, delete, list, show, update
     //let method: string = methods[mi];
     //let ctx = model.SelectCommand(method);
@@ -253,8 +275,16 @@ function generateCommandHelp(model: CodeModelAz, needUpdate: boolean = false) {
     // there may be a few list methods, so let's just take description from the first one.
     // as we can't use all of them
     let shortSummary = "    short-summary: " + model.Command_Help;
+    if (debug) {
+        if (!shortSummary.trimRight().endsWith(".")) {
+            shortSummary += ".";
+        }
+        shortSummary += " Command group swagger name=" + model.CommandGroup_CliKey + ", Command swagger name=" + model.Method_CliKey;
+    }
     ToMultiLine(shortSummary, output, 119, true);
-    output = addParameterHelp(output, model);
+
+
+    output = addParameterHelp(output, model, debug);
 
     let examplesStarted: boolean = false;
 
