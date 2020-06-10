@@ -77,11 +77,7 @@ create-provider a attestation.
 |**--location**|string|The supported Azure location where the attestation service instance should be created.|Create|location|location|
 |**--tags**|dictionary|The tags that will be assigned to the attestation service instance.|Create|tags|tags|
 |**--attestation-policy**|string|Name of attestation policy.|Create|attestation_policy|attestationPolicy|
-|**--policy-signing-certificates-keys**|array|The value of the "keys" parameter is an array of JWK values.  By
-default, the order of the JWK values within the array does not imply
-an order of preference among them, although applications of JWK Sets
-can choose to assign a meaning to the order for their purposes, if
-desired.|Create|keys|keys|
+|**--policy-signing-certificates-keys**|array|The value of the "keys" parameter is an array of JWK values.  By default, the order of the JWK values within the array does not imply an order of preference among them, although applications of JWK Sets can choose to assign a meaning to the order for their purposes, if desired.|Create|keys|keys|
 
 ### attestation list-operation
 
