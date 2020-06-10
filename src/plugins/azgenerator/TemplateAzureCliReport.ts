@@ -67,8 +67,28 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     
     mo.push("");
 
-    mo.push("|Option|Type|Description|Path (SDK)|Path (swagger)|");
-    mo.push("|------|----|-----------|----------|--------------|");
+    // Command group
+    mo.push("#### Command group");
+    mo.push("|Name (az)|Swagger name|");
+    mo.push("|---------|------------|");
+    mo.push("|" + model.CommandGroup_Name + "|" + model.CommandGroup_CliKey + "|");
+    mo.push("");
+
+    // Methods
+    mo.push("#### Methods");
+    mo.push("|Name (az)|Swagger name|");
+    mo.push("|---------|------------|");
+    if(model.SelectFirstMethod()) {
+        do {
+            mo.push("|" + model.Method_NameAz + "|" + model.Method_CliKey + "|");
+        } while (model.SelectNextMethod())
+    }
+    mo.push("");
+
+    // Parameters
+    mo.push("#### Parameters");
+    mo.push("|Option|Type|Description|Path (SDK)|Swagger name|");
+    mo.push("|------|----|-----------|----------|------------|");
 
     let allRequiredParam: Map<string, boolean> = new Map<string, boolean>();
     let allNonRequiredParam: Map<string, boolean> = new Map<string, boolean>();
@@ -104,25 +124,27 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                         continue;
                     }
                     allRequiredParam.set(optionName, true);
-                    requiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_Name + "|");
+                    requiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" 
+                        + model.MethodParameter_Name + "|" + model.MethodParameter_CliKey + "|");
                 } else {
                     if(allNonRequiredParam.has(optionName)) {
                         continue;
                     }
                     allNonRequiredParam.set(optionName, true);
-                    nonrequiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" + model.MethodParameter_Name + "|");
+                    nonrequiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" 
+                        + model.MethodParameter_Name + "|" + model.MethodParameter_CliKey + "|");
                 }
             }
             while (model.SelectNextMethodParameter());
         } while(model.SelectNextMethod())
     }
- 
+    
     if(requiredmo.length <= 0 && nonrequiredmo.length < 0) {
         return mo;
     }
     mo = mo.concat(requiredmo);
     mo = mo.concat(nonrequiredmo);
-
+    
     if (model.SelectFirstMethod()) {
         do {
             if (model.SelectFirstExample())
@@ -155,7 +177,7 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
             }
         } while (model.SelectNextMethod());
     }
-
+    mo.push("");
 
     return mo;     
 }

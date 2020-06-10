@@ -22,42 +22,42 @@ helps['attestation create-provider'] = """
     short-summary: Creates or updates the Attestation Provider.
     parameters:
       - name: --policy-signing-certificates-keys
-        short-summary: The value of the "keys" parameter is an array of JWK values.  Bydefault, the order of the JWK va\
-lues within the array does not implyan order of preference among them, although applications of JWK Setscan choose to a\
-ssign a meaning to the order for their purposes, ifdesired.
+        short-summary: The value of the "keys" parameter is an array of JWK values.  By default, the order of the JWK v\
+alues within the array does not imply an order of preference among them, although applications of JWK Sets can choose t\
+o assign a meaning to the order for their purposes, if desired.
         long-summary: |
             Usage: --policy-signing-certificates-keys alg=XX crv=XX d=XX dp=XX dq=XX e=XX k=XX kid=XX kty=XX n=XX p=XX \
 q=XX qi=XX use=XX x=XX x5-c=XX y=XX
 
-            alg: Required. The "alg" (algorithm) parameter identifies the algorithm intended foruse with the key.  The \
-values used should either be registered in theIANA "JSON Web Signature and Encryption Algorithms" registryestablished b\
-y [JWA] or be a value that contains a Collision-Resistant Name.
+            alg: Required. The "alg" (algorithm) parameter identifies the algorithm intended for use with the key.  The\
+ values used should either be registered in the IANA "JSON Web Signature and Encryption Algorithms" registry establishe\
+d by [JWA] or be a value that contains a Collision- Resistant Name.
             crv: The "crv" (curve) parameter identifies the curve type
             d: RSA private exponent or ECC private key
             dp: RSA Private Key Parameter
             dq: RSA Private Key Parameter
             e: RSA public exponent, in Base64
             k: Symmetric key
-            kid: Required. The "kid" (key ID) parameter is used to match a specific key.  Thisis used, for instance, to\
- choose among a set of keys within a JWK Setduring key rollover.  The structure of the "kid" value isunspecified.  When\
- "kid" values are used within a JWK Set, differentkeys within the JWK Set SHOULD use distinct "kid" values.  (Oneexampl\
-e in which different keys might use the same "kid" value is ifthey have different "kty" (key type) values but are consi\
-dered to beequivalent alternatives by the application using them.)  The "kid"value is a case-sensitive string.
-            kty: Required. The "kty" (key type) parameter identifies the cryptographic algorithmfamily used with the ke\
-y, such as "RSA" or "EC". "kty" values shouldeither be registered in the IANA "JSON Web Key Types" registryestablished \
-by [JWA] or be a value that contains a Collision-Resistant Name.  The "kty" value is a case-sensitive string.
+            kid: Required. The "kid" (key ID) parameter is used to match a specific key.  This is used, for instance, t\
+o choose among a set of keys within a JWK Set during key rollover.  The structure of the "kid" value is unspecified.  W\
+hen "kid" values are used within a JWK Set, different keys within the JWK Set SHOULD use distinct "kid" values.  (One e\
+xample in which different keys might use the same "kid" value is if they have different "kty" (key type) values but are\
+ considered to be equivalent alternatives by the application using them.)  The "kid" value is a case-sensitive string.
+            kty: Required. The "kty" (key type) parameter identifies the cryptographic algorithm family used with the k\
+ey, such as "RSA" or "EC". "kty" values should either be registered in the IANA "JSON Web Key Types" registry establish\
+ed by [JWA] or be a value that contains a Collision- Resistant Name.  The "kty" value is a case-sensitive string.
             n: RSA modulus, in Base64
             p: RSA secret prime
             q: RSA secret prime, with p < q
             qi: RSA Private Key Parameter
-            use: Required. Use ("public key use") identifies the intended use ofthe public key. The "use" parameter is \
-employed to indicate whethera public key is used for encrypting data or verifying the signatureon data. Values are comm\
-only "sig" (signature) or "enc" (encryption).
+            use: Required. Use ("public key use") identifies the intended use of the public key. The "use" parameter is\
+ employed to indicate whether a public key is used for encrypting data or verifying the signature on data. Values are c\
+ommonly "sig" (signature) or "enc" (encryption).
             x: X coordinate for the Elliptic Curve point
-            x5-c: The "x5c" (X.509 certificate chain) parameter contains a chain of oneor more PKIX certificates [RFC52\
-80].  The certificate chain isrepresented as a JSON array of certificate value strings.  Eachstring in the array is a b\
-ase64-encoded (Section 4 of [RFC4648] --not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.The PKIX cert\
-ificate containing the key value MUST be the firstcertificate.
+            x5-c: The "x5c" (X.509 certificate chain) parameter contains a chain of one or more PKIX certificates [RFC5\
+280].  The certificate chain is represented as a JSON array of certificate value strings.  Each string in the array is \
+a base64-encoded (Section 4 of [RFC4648] -- not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value. The PKIX\
+ certificate containing the key value MUST be the first certificate.
             y: Y coordinate for the Elliptic Curve point
 
             Multiple actions can be specified by using more than one --policy-signing-certificates-keys argument.

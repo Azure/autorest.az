@@ -25,7 +25,7 @@ import { GenerateNamespaceInit } from "./TemplateAzureCliNamespaceInit"
 import { GenerateAzureCliTestInit } from "./TemplateAzureCliTestInit"
 
 export async function GenerateAll(model: CodeModelAz,
-    generateReport: any) {
+    generateReport: any, debug: boolean) {
     let files: any = {};
 
     await model.init();
@@ -37,13 +37,13 @@ export async function GenerateAll(model: CodeModelAz,
             let pathTop = "";
             let path = "azext_" + model.Extension_NameUnderscored + "/";
             
-            files[path + "generated/_params.py"] = GenerateAzureCliParams(model);
+            files[path + "generated/_params.py"] = GenerateAzureCliParams(model, debug);
             files[path + "generated/commands.py"] = GenerateAzureCliCommands(model);
             files[path + "generated/custom.py"] = GenerateAzureCliCustom(model);
             files[path + "generated/_client_factory.py"] = GenerateAzureCliClientFactory(model);
             files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);
             files[path + "generated/action.py"] = GenerateAzureCliActions(model);
-            files[path + "generated/_help.py"] = GenerateAzureCliHelp(model);
+            files[path + "generated/_help.py"] = GenerateAzureCliHelp(model, debug);
             files[path + "generated/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "tests/__init__.py"] = GenerateAzureCliTestInit(model);
             files[path + "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(model);   

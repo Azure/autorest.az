@@ -20,7 +20,7 @@ let hasLocationValidator = false;
 let hasTags = false;
 let actions: string[] = [];
 
-export function GenerateAzureCliParams(model: CodeModelAz): string[] {
+export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): string[] {
     var output_args: string[] = [];
 
     output_args.push("");
@@ -37,7 +37,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
                     if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
                         needWait = true;
                     }
-                    let command_output = getCommandBody(model);
+                    let command_output = getCommandBody(model, false, false, debug);
                     if (model.Command_MethodName == "show") {
                         show_output = command_output
                     } 
@@ -54,7 +54,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
                     }
                     let needUpdate = model.Command_CanSplit;
                     if (needUpdate) {
-                        output_args = output_args.concat(getCommandBody(model, needUpdate, needGeneric));
+                        output_args = output_args.concat(getCommandBody(model, needUpdate, needGeneric, debug));
                     }
                 }
                 while (model.SelectNextCommand());
@@ -107,7 +107,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     return header.getLines().concat(output);
 }
 
-function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGeneric: boolean = false) {
+function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGeneric: boolean = false, debug: boolean = false) {
     //let method: string = methods[mi];
 
     //let ctx = model.SelectCommand(method);
@@ -313,6 +313,12 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false, needGen
                             else {
                                 argument += " Expected value: json-string/@json-file.";
                             }
+                        }
+                        if (debug) {
+                            if (!argument.endsWith(".")) {
+                                argument += ".";
+                            }
+                            argument += " Swagger name=" + model.MethodParameter_CliKey;
                         }
                         argument += "'";
                    
