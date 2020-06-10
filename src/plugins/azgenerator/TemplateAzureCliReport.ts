@@ -74,10 +74,21 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
     mo.push("|" + model.CommandGroup_Name + "|" + model.CommandGroup_CliKey + "|");
     mo.push("");
 
+    // Methods
+    mo.push("#### Methods");
+    mo.push("|Name (az)|Swagger name|");
+    mo.push("|---------|------------|");
+    if(model.SelectFirstMethod()) {
+        do {
+            mo.push("|" + model.Method_NameAz + "|" + model.Method_CliKey + "|");
+        } while (model.SelectNextMethod())
+    }
+    mo.push("");
+
     // Parameters
     mo.push("#### Parameters");
-    mo.push("|Option|Type|Description|Command swagger name|Path (SDK)|Swagger name|");
-    mo.push("|------|----|-----------|--------------------|----------|------------|");
+    mo.push("|Option|Type|Description|Path (SDK)|Swagger name|");
+    mo.push("|------|----|-----------|----------|------------|");
 
     let allRequiredParam: Map<string, boolean> = new Map<string, boolean>();
     let allNonRequiredParam: Map<string, boolean> = new Map<string, boolean>();
@@ -114,14 +125,14 @@ function getCommandBody(model: CodeModelAz, needUpdate: boolean = false) {
                     }
                     allRequiredParam.set(optionName, true);
                     requiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" 
-                        + model.Method_CliKey + "|" + model.MethodParameter_Name + "|" + model.MethodParameter_CliKey + "|");
+                        + model.MethodParameter_Name + "|" + model.MethodParameter_CliKey + "|");
                 } else {
                     if(allNonRequiredParam.has(optionName)) {
                         continue;
                     }
                     allNonRequiredParam.set(optionName, true);
                     nonrequiredmo.push("|**--" + optionName + "**|" + model.MethodParameter_Type + "|" + model.MethodParameter_Description + "|" 
-                        + model.Method_CliKey + "|" + model.MethodParameter_Name + "|" + model.MethodParameter_CliKey + "|");
+                        + model.MethodParameter_Name + "|" + model.MethodParameter_CliKey + "|");
                 }
             }
             while (model.SelectNextMethodParameter());
