@@ -174,7 +174,7 @@ export class AzNamer {
                         if(commandName.indexOf(" ") > -1) {
                             operation.language['az']['subCommandGroup'] = operationGroupName + " " + commandName.split(' ')[0];
                         }
-                        if(operation.language['cli']['name'].toLowerCase() == "update" && !isNullOrUndefined(operation.extensions?.['cli-split-operation-original-operation'])) {
+                        if(operation.language['az']['command'].endsWith(" update") && !isNullOrUndefined(operation.extensions?.['cli-split-operation-original-operation'])) {
                             operation.language['az']['isSplitUpdate'] = true;
                         }
                     } else {
@@ -211,7 +211,7 @@ export class AzNamer {
                     operation.extensions['cli-split-operation-original-operation'].requests.forEach(request => {
                         request.parameters.forEach(parameter => {
                             if(!isNullOrUndefined(parameter.language['az'])) {
-                                if(operation.language['az'].name == 'update' && parameter['flattened'] != true) {
+                                if(operation.language['az'].command.endsWith(' update') && parameter['flattened'] != true) {
                                     let paramType = parameter.schema.type;
                                     if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
                                         param = parameter;
