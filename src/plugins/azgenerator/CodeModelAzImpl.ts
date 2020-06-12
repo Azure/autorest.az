@@ -278,6 +278,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         let param = this.MethodParameter;
                                         let originParam = this.MethodParameter;
                                         let flattenedNames = param?.['targetProperty']?.['flattenedNames'];
+                                        if (isNullOrUndefined(flattenedNames) && !isNullOrUndefined(param.language['cli']['flattenedNames'])) {
+                                            flattenedNames = param.language['cli']['flattenedNames'];
+                                        }
                                         let mapName: Array<string> = [];
                                         let paramFlattenedName = this.Parameter_MapsTo(param);
                                         let names = this.Method_NameAz.split(' ');

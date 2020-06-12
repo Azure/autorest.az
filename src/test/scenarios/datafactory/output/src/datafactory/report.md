@@ -347,8 +347,9 @@ update a datafactory trigger.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|
 |**--factory-name**|string|The factory name.|factory_name|
 |**--trigger-name**|string|The trigger name.|trigger_name|
-|**--properties**|object|Properties of the trigger.|properties|
 |**--if-match**|string|ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
+|**--description**|string|Trigger description.|properties_description|
+|**--annotations**|array|List of tags that can be used for describing the trigger.|properties_annotations|
 ### datafactory update
 
 update a datafactory.

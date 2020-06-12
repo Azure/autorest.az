@@ -96,7 +96,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 skip = false;
             }
             if (model.MethodParameter_IsFlattened) {
-                if (isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema'])) {
+                if (isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']) && isNullOrUndefined(model.MethodParameter['extensions']?.['cli-flattened-param'])) {
                     continue;
                 }
                 originalParameterStack.push(model.MethodParameter);
@@ -110,8 +110,13 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                     let access = "";
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
 
-                    if (!isNullOrUndefined(valueToMatch) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
-                        access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, "'" + valueToMatch + "'");
+                    if (model.MethodParameter['targetProperty']?.['isDiscriminator'] == true) {
+                        if (!isNullOrUndefined(valueToMatch)) {
+                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, "'" + valueToMatch + "'");
+                        } else {
+                            continue;
+                        }
+                        
                     }
                     else {
                         if (!model.MethodParameter_IsHidden) {

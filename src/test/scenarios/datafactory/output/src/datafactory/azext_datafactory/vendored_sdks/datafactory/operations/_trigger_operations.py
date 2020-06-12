@@ -20,7 +20,7 @@ from .. import models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Callable, Dict, Generic, Iterable, Optional, TypeVar, Union
+    from typing import Any, Callable, Dict, Generic, Iterable, List, Optional, TypeVar, Union
 
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
@@ -942,8 +942,10 @@ class TriggerOperations(object):
         resource_group_name,  # type: str
         factory_name,  # type: str
         trigger_name,  # type: str
-        properties,  # type: "models.Trigger"
+        properties_type,  # type: str
         if_match=None,  # type: Optional[str]
+        properties_description=None,  # type: Optional[str]
+        properties_annotations=None,  # type: Optional[List[object]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.TriggerResource"
@@ -955,11 +957,15 @@ class TriggerOperations(object):
         :type factory_name: str
         :param trigger_name: The trigger name.
         :type trigger_name: str
-        :param properties: Properties of the trigger.
-        :type properties: ~dfaz_management_client.models.Trigger
+        :param properties_type: Trigger type.
+        :type properties_type: str
         :param if_match: ETag of the trigger entity.  Should only be specified for update, for which it
          should match existing entity or can be * for unconditional update.
         :type if_match: str
+        :param properties_description: Trigger description.
+        :type properties_description: str
+        :param properties_annotations: List of tags that can be used for describing the trigger.
+        :type properties_annotations: list[object]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: TriggerResource, or the result of cls(response)
         :rtype: ~dfaz_management_client.models.TriggerResource
@@ -969,7 +975,7 @@ class TriggerOperations(object):
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _trigger = models.TriggerResource(properties=properties)
+        _trigger = models.TriggerResource(properties=properties, type=properties_type, description=properties_description, annotations=properties_annotations)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 

@@ -213,19 +213,11 @@ helps['datafactory trigger update'] = """
       - name: Triggers_Create
         text: |-
                az datafactory trigger update --factory-name "exampleFactoryName" --resource-group "exampleResourceGroup\
-" --properties "{\\"type\\":\\"ScheduleTrigger\\",\\"pipelines\\":[{\\"parameters\\":{\\"OutputBlobNameList\\":[\\"exam\
-pleoutput.csv\\"]},\\"pipelineReference\\":{\\"type\\":\\"PipelineReference\\",\\"referenceName\\":\\"examplePipeline\\\
-"}}],\\"typeProperties\\":{\\"recurrence\\":{\\"endTime\\":\\"2018-06-16T00:55:13.8441801Z\\",\\"frequency\\":\\"Minute\
-\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39:13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}" --name "exampleTri\
-gger"
+" --name "exampleTrigger"
       - name: Triggers_Update
         text: |-
                az datafactory trigger update --factory-name "exampleFactoryName" --resource-group "exampleResourceGroup\
-" --properties "{\\"type\\":\\"ScheduleTrigger\\",\\"description\\":\\"Example description\\",\\"pipelines\\":[{\\"para\
-meters\\":{\\"OutputBlobNameList\\":[\\"exampleoutput.csv\\"]},\\"pipelineReference\\":{\\"type\\":\\"PipelineReference\
-\\",\\"referenceName\\":\\"examplePipeline\\"}}],\\"typeProperties\\":{\\"recurrence\\":{\\"endTime\\":\\"2018-06-16T00\
-:55:14.905167Z\\",\\"frequency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39:14.905167Z\\",\\"ti\
-meZone\\":\\"UTC\\"}}}" --name "exampleTrigger"
+" --description "Example description" --name "exampleTrigger"
 """
 
 helps['datafactory trigger delete'] = """
