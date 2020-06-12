@@ -52,7 +52,7 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
                             allLongRunCommand.push(waitParam + "d");
                         }
                     }
-                    let commandOutput: string [] = generateCommandHelp(model);
+                    let commandOutput: string [] = generateCommandHelp(model, debug);
                     output = output.concat(commandOutput);
                 }
                 while (model.SelectNextCommand());
@@ -252,7 +252,7 @@ function GetActionOptions( model: CodeModelAz, param: Parameter, keyToMatch: str
     return options;
 }
 
-function generateCommandHelp(model: CodeModelAz) {
+function generateCommandHelp(model: CodeModelAz, debug: boolean = false) {
     // create, delete, list, show, update
     //let method: string = methods[mi];
     //let ctx = model.SelectCommand(method);

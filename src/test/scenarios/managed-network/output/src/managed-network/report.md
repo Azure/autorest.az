@@ -33,7 +33,7 @@ hub-and-spoke-topology create a managed-network managed-network-peering-policy.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|hub-and-spoke-topology create|CreateOrUpdate#HubAndSpokeTopology|
+|hub-and-spoke-topology create|CreateOrUpdate#Create#HubAndSpokeTopology|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -58,7 +58,7 @@ hub-and-spoke-topology update a managed-network managed-network-peering-policy.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|hub-and-spoke-topology create|CreateOrUpdate#HubAndSpokeTopology|
+|hub-and-spoke-topology update|CreateOrUpdate#Update#HubAndSpokeTopology|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -105,7 +105,7 @@ mesh-topology create a managed-network managed-network-peering-policy.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|mesh-topology create|CreateOrUpdate#MeshTopology|
+|mesh-topology create|CreateOrUpdate#Create#MeshTopology|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -130,7 +130,7 @@ mesh-topology update a managed-network managed-network-peering-policy.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|mesh-topology create|CreateOrUpdate#MeshTopology|
+|mesh-topology update|CreateOrUpdate#Update#MeshTopology|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -176,7 +176,7 @@ create a managed-network mn.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|create|CreateOrUpdate|
+|create|CreateOrUpdate#Create|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -239,7 +239,7 @@ create a managed-network mn group.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|create|CreateOrUpdate|
+|create|CreateOrUpdate#Create|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -329,7 +329,7 @@ update a managed-network mn group.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|create|CreateOrUpdate|
+|update|CreateOrUpdate#Update|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -377,7 +377,7 @@ create a managed-network mn scope-assignment.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|create|CreateOrUpdate|
+|create|CreateOrUpdate#Create|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -458,7 +458,7 @@ update a managed-network mn scope-assignment.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|create|CreateOrUpdate|
+|update|CreateOrUpdate#Update|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|

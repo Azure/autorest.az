@@ -294,7 +294,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                                 }
 
                             }
-                            else {de
+                            else {
                                 argument += " Expected value: json-string/@json-file.";
                             }
                         }

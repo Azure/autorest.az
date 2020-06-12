@@ -34,7 +34,7 @@ create a datafactory.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|create|CreateOrUpdate|
+|create|CreateOrUpdate#Create|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -279,7 +279,7 @@ managed create a datafactory integration-runtime.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|managed create|CreateOrUpdate#Managed|
+|managed create|CreateOrUpdate#Create#Managed|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -352,7 +352,7 @@ self-hosted create a datafactory integration-runtime.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|self-hosted create|CreateOrUpdate#SelfHosted|
+|self-hosted create|CreateOrUpdate#Create#SelfHosted|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -546,7 +546,7 @@ create a datafactory trigger.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|create|CreateOrUpdate|
+|create|CreateOrUpdate#Create|
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -759,17 +759,17 @@ update a datafactory trigger.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|create|CreateOrUpdate|
+|update|CreateOrUpdate#Update|
 
 #### Parameters
-|Option|Type|Description|Path (SDK)|Path (swagger)|
-|------|----|-----------|----------|--------------|
-|**--resource-group-name**|string|The resource group name.|resource_group_name|
-|**--factory-name**|string|The factory name.|factory_name|
-|**--trigger-name**|string|The trigger name.|trigger_name|
-|**--if-match**|string|ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|
-|**--description**|string|Trigger description.|properties_description|
-|**--annotations**|array|List of tags that can be used for describing the trigger.|properties_annotations|
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
+|**--factory-name**|string|The factory name.|factory_name|factoryName|
+|**--trigger-name**|string|The trigger name.|trigger_name|triggerName|
+|**--if-match**|string|ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|If-Match|
+|**--description**|string|Trigger description.|properties_description|description|
+|**--annotations**|array|List of tags that can be used for describing the trigger.|properties_annotations|annotations|
 
 ### datafactory update
 
