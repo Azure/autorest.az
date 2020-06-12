@@ -12,7 +12,7 @@ export async function processRequest(host: Host) {
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema); 
         let model = new CodeModelCliImpl(session);
-        let files: any = await GenerateAll(model, true);
+        let files: any = await GenerateAll(model, true, debug);
         if (model.SelectFirstExtension()) {
             do {
                 let path = "azext_" + model.Extension_Name.replace("-", "_") + "/";

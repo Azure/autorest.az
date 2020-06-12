@@ -20,7 +20,7 @@ let hasLocationValidator = false;
 let hasTags = false;
 let actions: string[] = [];
 
-export function GenerateAzureCliParams(model: CodeModelAz): string[] {
+export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): string[] {
     var output_args: string[] = [];
 
     output_args.push("");
@@ -38,7 +38,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
                         needWait = true;
                     }
                     let needGeneric = model.Command_NeedGeneric;
-                    let command_output = getCommandBody(model, needGeneric);
+                    let command_output = getCommandBody(model, needGeneric, debug);
                     if (model.Command_MethodName == "show") {
                         show_output = command_output
                     }               
@@ -95,7 +95,7 @@ export function GenerateAzureCliParams(model: CodeModelAz): string[] {
     return header.getLines().concat(output);
 }
 
-function getCommandBody(model: CodeModelAz, needGeneric: boolean = false) {
+function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug: boolean = false) {
     //let method: string = methods[mi];
 
     //let ctx = model.SelectCommand(method);
@@ -294,9 +294,15 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false) {
                                 }
 
                             }
-                            else {
+                            else {de
                                 argument += " Expected value: json-string/@json-file.";
                             }
+                        }
+                        if (debug) {
+                            if (!argument.endsWith(".")) {
+                                argument += ".";
+                            }
+                            argument += " Swagger name=" + model.MethodParameter_CliKey;
                         }
                         argument += "'";
                    
