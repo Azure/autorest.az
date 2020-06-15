@@ -7,12 +7,16 @@ import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
 import { ToMultiLine } from "../../utils/helper"
 
-export function GenerateAzureCliInit(model: CodeModelAz) : string[] {
+export function GenerateAzureCliInit(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     header.addFromImport("azure.cli.core", ["AzCommandsLoader"]);
     var output: string[] = header.getLines();
 
     output.push("from azext_" + model.Extension_NameUnderscored + ".generated._help import helps  # pylint: disable=unused-import");
+    output.push("try:");
+    output.push("    from azext_" + model.Extension_NameUnderscored + ".manual._help import helps");
+    output.push("except ImportError:");
+    output.push("    pass");
     output.push("");
     output.push("");
     output.push("class " + model.Extension_NameClass + "CommandsLoader(AzCommandsLoader):");
@@ -48,6 +52,6 @@ export function GenerateAzureCliInit(model: CodeModelAz) : string[] {
     output.push("");
     output.push("COMMAND_LOADER_CLS = " + model.Extension_NameClass + "CommandsLoader");
     output.push("");
- 
+
     return output;
 }
