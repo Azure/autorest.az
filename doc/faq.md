@@ -47,6 +47,21 @@ If you choose to build the wheel file in the python original way and install the
 * Instead of using --output-folder in the command line to specify which folder you want the extension to be generated. we use --azure-cli-extension-folder=path-to-local-azure-cli-extensions-repo now. 
 * the clear-output-folder would clear everything under path-to-local-azure-cli-extensions-repo/src/extension-name except the manual folder which is path-to-local-azure-cli-extensions-repo/src/extension-name/azext_extension_name/manual now.
 
+## How to find swagger name used by directive
+
+Swagger name is used by directive to locate operation group/operation/parameter. You can find thhese swagger names from
+
+#### 1) report.md
+
+There is a `report.md` in generated extension. You can find swagger names in it.
+![sample image](images/report-swagger-name.PNG)
+
+#### 2) Command help
+
+You can include `--debug` in your command when generate extension. Then the swagger name will be included in help information.
+![sample image](images/command-swagger-name.PNG)
+
+
 
 ## How to add/remove subgroup 
 * we can add or remove subgroup by using directive
@@ -322,7 +337,7 @@ az command --argument1 @jsonFilePath
 ```
 You can also use flatten to flatten the sub-classes to make them only contains simple properties so that the option 1) above can be used as described above
 
-#### 3) A thirt option can be configured explicitly called 'poly-resource' if your polymorphism class is more like a sub-resource
+#### 3) A third option can be configured explicitly called 'poly-resource' if your polymorphism class is more like a sub-resource
 Example: if the command is to create a dataset, and there are different type of dataset like 'sql', 'mysql', 'storage', 
 then you can use following configuration to mark the dataset as poly-resource which will turn the polymorphism class into a sub-resource when generating the command
 ``` yaml

@@ -10,6 +10,10 @@
 
 from azure.cli.core import AzCommandsLoader
 from azext_datafactory.generated._help import helps  # pylint: disable=unused-import
+try:
+    from azext_datafactory.manual._help import helps
+except ImportError:
+    pass
 
 
 class DFAZManagementClientCommandsLoader(AzCommandsLoader):

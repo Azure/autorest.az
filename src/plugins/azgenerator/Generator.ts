@@ -8,7 +8,7 @@ import { GenerateAzureCliCustom } from "./TemplateAzureCliCustom"
 import { GenerateAzureCliHelp } from "./TemplateAzureCliHelp"
 import { GenerateAzureCliParams} from "./TemplateAzureCliParams"
 import { GenerateAzureCliClientFactory } from "./TemplateAzureCliClientFactory"
-import { GenerateAzureCliTestScenario } from "./TemplateAzureCliTestScenario"
+import { GenerateAzureCliTestScenario, NeedPreparer } from "./TemplateAzureCliTestScenario"
 import { GenerateAzureCliTestPrepare } from "./TemplateAzureCliTestPrepare"
 import { GenerateAzureCliReport } from "./TemplateAzureCliReport"
 import { GenerateAzureCliInit } from "./TemplateAzureCliInit"
@@ -46,8 +46,8 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "generated/_help.py"] = GenerateAzureCliHelp(model, debug);
             files[path + "generated/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "tests/__init__.py"] = GenerateAzureCliTestInit(model);
-            files[path + "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(model);   
-            files[path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(model);
+            files[path + "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(model);
+            if (NeedPreparer()) files[path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(model);
             files[path + "tests/latest/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
             files[path + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(model);  

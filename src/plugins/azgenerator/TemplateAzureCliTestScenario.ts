@@ -9,6 +9,12 @@ import { ToSnakeCase, ToMultiLine, deepCopy } from '../../utils/helper';
 import { HeaderGenerator } from "./Header";
 import { HttpWithBodyRequest } from "@azure-tools/codemodel";
 
+let usePreparers = false;
+
+export function NeedPreparer(): boolean {
+    return usePreparers;
+}
+
 export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     var head: string[] = [];
     let steps: string[] = [];
@@ -168,6 +174,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
                 imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
             } else {
                 imports.push(`from .preparers import ${entity.info.name}`);
+                usePreparers = true;
             }
             decorated.push(entity.info.name);
         }
