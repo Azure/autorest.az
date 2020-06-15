@@ -218,6 +218,7 @@ def step__integrationruntimes_post_integrationruntimes_removelinks(test, rg):
     test.cmd('az datafactory integration-runtime remove-link '
              '--factory-name "{exampleFactoryName}" '
              '--name "{exampleIntegrationRuntime}" '
+             '--linked-factory-name "exampleFactoryName-linked" '
              '--resource-group "{rg}"',
              checks=[])
 

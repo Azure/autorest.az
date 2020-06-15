@@ -10,11 +10,13 @@ export class MethodParam {
     public isList: boolean;
     public isSimpleList: boolean;
     public submethodparameters: Property[];
-    public constructor(value, isList, isSimpleList, submethodparameters) {
+    public inBody: boolean;
+    public constructor(value, isList, isSimpleList, submethodparameters, inBody) {
         this.value = value;
         this.isList = isList;
         this.isSimpleList = isSimpleList;
         this.submethodparameters = submethodparameters;
+        this.inBody = inBody;
     }
 }
 
