@@ -31,12 +31,17 @@ cli:
             - n
       - where:
             group: IntegrationRuntimes
-            op: CreateOrUpdate*
+            op: CreateOrUpdate
+            param: properties
+        poly-resource: true
+      - where:
+            group: IntegrationRuntimes
+            op: CreateOrUpdate#*
             param: properties
         poly-resource: true
       - where:
             group: Triggers
             op: CreateOrUpdate#Update
-        flatten-params:
-            - properties
+            param: properties
+        cli-flatten: true
 ```

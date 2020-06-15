@@ -96,7 +96,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 skip = false;
             }
             if (model.MethodParameter_IsFlattened) {
-                if (isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']) && isNullOrUndefined(model.MethodParameter['extensions']?.['cli-flattened-param'])) {
+                if (isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']) && isNullOrUndefined(model.MethodParameter['extensions']?.['cli-flattened'])) {
                     continue;
                 }
                 originalParameterStack.push(model.MethodParameter);

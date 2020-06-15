@@ -11,11 +11,6 @@ cli:
               - operation
     split-operation:
         cli-split-operation-enabled: true
-        update-flatten: true
-    flatten-param:
-        # if true, parameter mentioned in 'fatten-params' will be flattened. The flatten will do one level. 
-        # The flatten parameter should be object and in payload 
-        cli-flatten-param-enabled: true
     cli-directive:
         - where:
             operation: CheckNameAvailability
