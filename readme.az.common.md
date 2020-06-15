@@ -11,6 +11,7 @@ cli:
               - operation
     split-operation:
         cli-split-operation-enabled: true
+        cli-split-operation-extend-poly-resource: true
     cli-directive:
         - where:
             operation: CheckNameAvailability
