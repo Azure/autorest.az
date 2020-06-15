@@ -49,6 +49,11 @@ modelerfour:
 pipeline:
     python/m2r:
         input: clicommon/identity
+    az/hider:
+        input: python/namer
+        #output-artifact: source-file-az-hider
+    python/codegen:
+        input: az/hider
     az/merger:
         input: python/namer
         #output-artifact: source-file-merger
@@ -63,6 +68,7 @@ pipeline:
         output-artifact: source-file-extension
     az/emitter:
         input:
+            #- az/hider
             #- az/clicommon
             #- az/merger
             #- az/aznamer
@@ -73,6 +79,7 @@ pipeline:
 scope-az:
     is-object: false
     output-artifact:
+        #- source-file-az-hider
         #- source-file-pynamer
         #- source-file-aznamer
         #- source-file-modifiers
