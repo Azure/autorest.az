@@ -220,10 +220,6 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                     if (lastNormal != ret[ret.length - 1].length - 1) {
                         let newLine = ' '.repeat(indent > 0 ? indent : spaceNum) + strTag + ret[ret.length - 1].substr(lastNormal + 1);
                         ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastNormal + 1) + strTag;
-                        // let currentLength = ret[ret.length - 1].length;
-                        // if (currentLength >= 2 && ret[ret.length - 1][currentLength - 2] == strTag && (currentLength == 2 || ret[ret.length - 1][currentLength - 3] != "\\")) {   // remove empty string in the end of line
-                        //     ret[ret.length - 1] = ret[ret.length - 1].substr(0, currentLength - 2);
-                        // }
                         ret.push(newLine)
                         lastComma = -1;
                     }
