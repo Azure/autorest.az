@@ -63,8 +63,8 @@ def step__factories_post_factories_configurefactoryrepo(test, rg):
     test.cmd('az datafactory configure-factory-repo '
              '--factory-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.DataFacto'
              'ry/factories/{exampleFactoryName}" '
-             '--factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-n'
-             'ame="project" repository-name="repo" root-folder="/" tenant-id="" '
+             '--factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" '
+             'project-name="project" repository-name="repo" root-folder="/" tenant-id="" '
              '--location-id "East US"',
              checks=[])
 
@@ -295,11 +295,12 @@ def step__triggers_put_triggers_update(test, rg):
     test.cmd('az datafactory trigger create '
              '--factory-name "{exampleFactoryName}" '
              '--resource-group "{rg}" '
-             '--properties "{{\\"type\\":\\"ScheduleTrigger\\",\\"description\\":\\"Example description\\",\\"pipelines'
-             '\\":[{{\\"parameters\\":{{\\"OutputBlobNameList\\":[\\"exampleoutput.csv\\"]}},\\"pipelineReference\\":{{'
-             '\\"type\\":\\"PipelineReference\\",\\"referenceName\\":\\"examplePipeline\\"}}}}],\\"typeProperties\\":{{'
-             '\\"recurrence\\":{{\\"endTime\\":\\"2018-06-16T00:55:14.905167Z\\",\\"frequency\\":\\"Minute\\",\\"interv'
-             'al\\":4,\\"startTime\\":\\"2018-06-16T00:39:14.905167Z\\",\\"timeZone\\":\\"UTC\\"}}}}}}" '
+             '--properties "{{\\"type\\":\\"ScheduleTrigger\\",\\"description\\":\\"Example '
+             'description\\",\\"pipelines\\":[{{\\"parameters\\":{{\\"OutputBlobNameList\\":[\\"exampleoutput.csv\\"]}}'
+             ',\\"pipelineReference\\":{{\\"type\\":\\"PipelineReference\\",\\"referenceName\\":\\"examplePipeline\\"}}'
+             '}}],\\"typeProperties\\":{{\\"recurrence\\":{{\\"endTime\\":\\"2018-06-16T00:55:14.905167Z\\",\\"frequenc'
+             'y\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39:14.905167Z\\",\\"timeZone\\":\\"UT'
+             'C\\"}}}}}}" '
              '--name "{exampleTrigger}"',
              checks=[])
 
