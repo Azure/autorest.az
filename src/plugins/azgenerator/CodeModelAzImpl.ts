@@ -1542,8 +1542,8 @@ export class CodeModelCliImpl implements CodeModelAz {
      * Gets method parameters dict
      * @returns method parameters dict : key is parameter name, value is the parameter schema
      */
-    public GetMethodParametersDict(): Map<string, MethodParam> {
-        let method_param_dict: Map<string, MethodParam> = new Map<string, MethodParam>();
+    public GetMethodParametersList(): MethodParam[] {
+        let method_param_list: MethodParam[] = [];
 
         if (this.SelectFirstMethodParameter()) {
             do {
@@ -1553,20 +1553,21 @@ export class CodeModelCliImpl implements CodeModelAz {
                         submethodparameters = this.submethodparameters;
                         this.ExitSubMethodParameters();
                     }
-                    method_param_dict.set(this.MethodParameter.language['cli'].cliKey, new MethodParam(this.MethodParameter, this.Parameter_IsList(this.MethodParameter), this.MethodParameter_IsListOfSimple, submethodparameters));
+                    //method_param_dict.set(this.MethodParameter.language['cli'].cliKey, new MethodParam(this.MethodParameter, this.Parameter_IsList(this.MethodParameter), this.MethodParameter_IsListOfSimple, submethodparameters));
+                    method_param_list.push(new MethodParam(this.MethodParameter, this.Parameter_IsList(this.MethodParameter), this.MethodParameter_IsListOfSimple, submethodparameters));
                 }
             } while (this.SelectNextMethodParameter());
         }
-        return method_param_dict;
+        return method_param_list;
     }
 
-    public GetExampleParameters(example_obj): [ExampleParam[], Map<string, MethodParam>] {
+    public GetExampleParameters(example_obj): [ExampleParam[], MethodParam[]] {
         let parameters: ExampleParam[] = [];
-        let method_param_dict: Map<string, MethodParam> = this.GetMethodParametersDict();
+        let method_param_list: MethodParam[] = this.GetMethodParametersList();
         Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
-            this.FlattenExampleParameter(method_param_dict, parameters, param_name, param_value, []);
+            this.FlattenExampleParameter(method_param_list, parameters, param_name, param_value, []);
         })
-        return [parameters, method_param_dict];
+        return [parameters, method_param_list];
     }
 
     private isDiscriminator(param: any): boolean {
@@ -1700,29 +1701,30 @@ export class CodeModelCliImpl implements CodeModelAz {
         return deepCopy(exampleValue);
     }
 
-    private matchMethodParam(method_param: Map<string, MethodParam>, paramName: string): any {
-        for (let mpKey of method_param.keys()) {
-            if (mpKey && paramName && mpKey.toLowerCase() == paramName.toLowerCase()) {
-                return method_param.get(mpKey);
+    private matchMethodParam(method_param_list: MethodParam[], paramName: string): any[] {
+        let ret = [];
+        for (let method_param of method_param_list) {
+            let method_param_key = method_param.value.language['cli'].cliKey;
+            if (method_param_key.toLowerCase() == paramName.toLowerCase()) {
+                ret.push(method_param);
             }
         }
-        return undefined;
+        return ret;
     }
 
-    public FlattenExampleParameter(method_param: Map<string, MethodParam>, example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
-        let methodParam = this.matchMethodParam(method_param, name);
-        if (typeof methodParam !== 'undefined') {
+    public FlattenExampleParameter(method_param_list: MethodParam[], example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
+        for (let methodParam of this.matchMethodParam(method_param_list, name)) {
             let polySubParam: MethodParam = null;
             let netValue = typeof value === 'object' && value !== null ? deepCopy(value) : value;
             if (methodParam.value['isPolyOfSimple']) {
                 let keyToMatch = methodParam.value.schema.discriminator?.property?.language?.default?.name;
                 if (keyToMatch) {
-                    for (let mpKey of method_param.keys()) {
-                        let polySubParamObj = method_param.get(mpKey).value;
+                    for (let method_param of method_param_list) {
+                        let polySubParamObj = method_param.value;
                         if (polySubParamObj['polyBaseParam'] == methodParam.value) {
                             let valueToMatch = polySubParamObj.schema.extensions['x-ms-discriminator-value'];
                             if (netValue[keyToMatch] == valueToMatch) {
-                                polySubParam = method_param.get(mpKey);
+                                polySubParam = method_param;
                                 delete netValue[keyToMatch];
                                 break;
                             }
@@ -1780,7 +1782,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         if (typeof value === 'object' && value !== null) {
             for (let sub_name in value) {
-                this.FlattenExampleParameter(method_param, example_param, sub_name, value[sub_name], ancestors.concat(name));
+                this.FlattenExampleParameter(method_param_list, example_param, sub_name, value[sub_name], ancestors.concat(name));
             }
         }
     }

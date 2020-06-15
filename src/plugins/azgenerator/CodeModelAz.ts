@@ -48,7 +48,7 @@ export class CommandExample {
     public HttpMethod: string;    // Get, Post, Put ...
     public MethodResponses: any[];
     public Method_IsLongRun: boolean;
-    public MethodParams: Map<string, MethodParam>;
+    public MethodParams: MethodParam[];
 }
 
 export interface CodeModelAz {
