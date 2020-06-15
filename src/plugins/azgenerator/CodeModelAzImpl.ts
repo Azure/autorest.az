@@ -1553,21 +1553,20 @@ export class CodeModelCliImpl implements CodeModelAz {
                         submethodparameters = this.submethodparameters;
                         this.ExitSubMethodParameters();
                     }
-                    //method_param_dict.set(this.MethodParameter.language['cli'].cliKey, new MethodParam(this.MethodParameter, this.Parameter_IsList(this.MethodParameter), this.MethodParameter_IsListOfSimple, submethodparameters));
-                    method_param_list.push(new MethodParam(this.MethodParameter, this.Parameter_IsList(this.MethodParameter), this.MethodParameter_IsListOfSimple, submethodparameters));
+                    method_param_list.push(new MethodParam(this.MethodParameter, this.Parameter_IsList(this.MethodParameter), this.MethodParameter_IsListOfSimple, submethodparameters, this.currentParameterIndex>=this.Method.parameters.length));
                 }
             } while (this.SelectNextMethodParameter());
         }
         return method_param_list;
     }
 
-    public GetExampleParameters(example_obj): [ExampleParam[], MethodParam[]] {
+    public GetExampleParameters(example_obj): ExampleParam[] {
         let parameters: ExampleParam[] = [];
         let method_param_list: MethodParam[] = this.GetMethodParametersList();
         Object.entries(example_obj.parameters).forEach(([param_name, param_value]) => {
             this.FlattenExampleParameter(method_param_list, parameters, param_name, param_value, []);
         })
-        return [parameters, method_param_list];
+        return parameters;
     }
 
     private isDiscriminator(param: any): boolean {
@@ -1701,11 +1700,14 @@ export class CodeModelCliImpl implements CodeModelAz {
         return deepCopy(exampleValue);
     }
 
-    private matchMethodParam(method_param_list: MethodParam[], paramName: string): any[] {
-        let ret = [];
+    private matchMethodParam(method_param_list: MethodParam[], paramName: string): MethodParam[] {
+        let ret: MethodParam[] = [];
+        if (!paramName) return ret;
         for (let method_param of method_param_list) {
-            let method_param_key = method_param.value.language['cli'].cliKey;
-            if (method_param_key.toLowerCase() == paramName.toLowerCase()) {
+            let serializedName = method_param.value.targetProperty?.serializedName;
+            if (!serializedName) serializedName = method_param.value.language['cli'].cliKey;
+            // let method_param_key = method_param.value.language['cli'].cliKey;
+            if (serializedName.toLowerCase() == paramName.toLowerCase()) {
                 ret.push(method_param);
             }
         }
@@ -1767,6 +1769,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                     if (methodParam.value['targetProperty']['flattenedNames'][i].toLowerCase() != parent.toLowerCase()) {
                         match = false;
                     };
+                }
+                if (methodParam.inBody && ancestors_.length != 1 || !methodParam.inBody && ancestors_.length >0) {
+                    match = false;
                 }
                 if (match) {
                     // example_param.set(name, value);
@@ -1858,9 +1863,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.Path = this.Method_Path;
                 example.HttpMethod = this.Method_HttpMethod;
                 example.ResourceClassName = this.CommandGroup_Key;
-                const [params, methodParams] = this.GetExampleParameters(example_obj);
+                const params = this.GetExampleParameters(example_obj);
                 example.Parameters = this.ConvertToCliParameters(params);
-                example.MethodParams = methodParams;
                 example.MethodResponses = this.Method.responses || [];
                 example.Method_IsLongRun = this.Method.extensions?.['x-ms-long-running-operation'] ? true : false;
                 if (this.filterExampleByPoly(example_obj, example)) {

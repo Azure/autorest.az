@@ -489,7 +489,7 @@ runtime.
       - name: IntegrationRuntimes_RemoveLinks
         text: |-
                az datafactory integration-runtime remove-link --factory-name "exampleFactoryName" --name \
-"exampleIntegrationRuntime" --resource-group "exampleResourceGroup"
+"exampleIntegrationRuntime" --linked-factory-name "exampleFactoryName-linked" --resource-group "exampleResourceGroup"
 """
 
 helps['datafactory integration-runtime start'] = """
