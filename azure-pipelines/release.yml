@@ -33,17 +33,17 @@ stages:
           versionSpec: '10.17.0'
         displayName: 'Install Node.js'
       - script: |
-          echo "[$(date -u)] LOG: ENSURE LATEST NPM IS INSTALLED"
+          echo -e "\e[32m[$(date -u)] LOG: Ensure latest npm is installed"
           npm install -g npm
 
-          echo "[$(date -u)] LOG: MAKE SURE THE VERSIONS ARE ALL SYNCHRONIZED AND PULL IN DEPENDENCIES"
+          echo -e "\e[32m[$(date -u)] LOG: Make sure the vesions are all synchronized and pull in dependencies"
           npx @microsoft/rush sync-versions
           npx @microsoft/rush update 
 
-          echo "[$(date -u)] LOG: COMPILE THE CODE"
+          echo -e "\e[32m[$(date -u)] LOG: Compile the code"
           npx @microsoft/rush rebuild 
 
-          echo "[$(date -u)] LOG: BUILD PACKAGE"
+          echo -e "\e[32m[$(date -u)] LOG: Build the package"
           npx @microsoft/rush publish --publish --pack --release-folder $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY) --include-all --tag latest
         displayName: 'Build and Pack'
       - task: PublishBuildArtifacts@1
@@ -57,6 +57,66 @@ stages:
   condition: succeeded()
   jobs:
     - job: E2E
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          buildType: 'current'
+          downloadType: 'single'
+          artifactName: '$(VAR_ARIFACT_NAME)'
+          downloadPath: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.17.0'
+        displayName: 'Install Node.js'
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.6'
+        inputs:
+          versionSpec: 3.7
+      - script: |
+          echo -e "\e[32m[$(date -u)] LOG: Clone azure-rest-api-specs"
+          git clone --single-branch -b master https://github.com/Azure/azure-rest-api-specs.git ../azure-rest-api-specs
+          echo -e "\e[32m[$(date -u)] LOG: Clone azure-cli"
+          git clone --single-branch -b azure-core-preview https://github.com/Azure/azure-cli.git ../azure-cli
+          echo -e "\e[32m[$(date -u)] LOG: Clone azure-cli-extensions"
+          git clone --single-branch -b master https://github.com/Azure/azure-cli-extensions.git ../azure-cli-extensions
+        displayName: 'Clone Branch'
+      - script: |
+          echo -e "\e[32m[$(date -u)] LOG: Install and upgrade Pip"
+          pip install -U pip
+          echo -e "\e[32m[$(date -u)] LOG: Install virtual environment"
+          pip install --user virtualenv
+          echo -e "\e[32m[$(date -u)] LOG: Create virtual environment"
+          python -m virtualenv /opt/venv
+          echo -e "\e[32m[$(date -u)] LOG: Active venv"
+          . /opt/venv/bin/activate
+          echo -e "\e[32m[$(date -u)] LOG: Install pytest"
+          pip install pytest
+          echo -e "\e[32m[$(date -u)] LOG: Install azdev"
+          pip install azdev
+          echo -e "\e[32m[$(date -u)] LOG: Install autorest"
+          npm install -g autorest
+          echo -e "\e[32m[$(date -u)] LOG: Go to azure-cli folder"
+          cd ../azure-cli
+          echo -e "\e[32m[$(date -u)] LOG: Azdev setup"
+          azdev setup -r ../azure-cli-extensions
+        displayName: 'Prepare env'
+      - script: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo -e "\e[32m[$(date -u)] LOG: CURRENT AZ VERSION: $CURRENT_VERSION"
+          echo -e "\e[32m[$(date -u)] LOG: Active venv"
+          . /opt/venv/bin/activate
+          echo -e "\e[32m[$(date -u)] LOG: Go to azure-cli folder"
+          cd ../azure-cli
+          echo -e "\e[32m[$(date -u)] LOG: Start test script"
+          pytest -s ../s/.scripts/e2e/testcases.py --all --az $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)/$(VAR_ARIFACT_NAME)/autorest-az-$CURRENT_VERSION.tgz --swagger ../azure-rest-api-specs --cliext ../azure-cli-extensions --junitxml=../s/.scripts/e2e/test-results.xml
+        displayName: 'Pytest'
+      - task: PublishTestResults@2
+        condition: always()
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '../s/.scripts/e2e/test-results.xml'
 
 - stage: PrivateRelease
   dependsOn: Test
@@ -72,12 +132,12 @@ stages:
         displayName: 'Install Node.js'
       - script: |
           LAST_TAG_COMMIT_HASH=$(git rev-list --tags --max-count=1)
-          echo "[$(date -u)] LOG: LAST_TAG_COMMIT_HASH: $LAST_TAG_COMMIT_HASH"
+          echo -e "\e[32m[$(date -u)] LOG: LAST_TAG_COMMIT_HASH: $LAST_TAG_COMMIT_HASH"
 
           LAST_TAG=$(git describe --tags $LAST_TAG_COMMIT_HASH)
-          echo "[$(date -u)] LOG: LAST_TAG: $LAST_TAG"
-          echo "[$(date -u)] LOG: VAR_BUILD_VERSION: $VAR_BUILD_VERSION"
-          echo "[$(date -u)] LOG: VAR_BUILD_RESION: $VAR_BUILD_RESION"
+          echo -e "\e[32m[$(date -u)] LOG: LAST_TAG: $LAST_TAG"
+          echo -e "\e[32m[$(date -u)] LOG: VAR_BUILD_VERSION: $VAR_BUILD_VERSION"
+          echo -e "\e[32m[$(date -u)] LOG: VAR_BUILD_RESION: $VAR_BUILD_RESION"
           if [ "$LAST_TAG_COMMIT_HASH" = "$VAR_BUILD_VERSION" ]; then echo "Cancel pipeline as no new commit"; exit 1; fi
         name: Validation
       - task: DownloadBuildArtifacts@0
@@ -88,11 +148,11 @@ stages:
           downloadPath: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
       - script: |
           CURRENT_VERSION=$(node -p "require('./package.json').version")
-          echo "[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
+          echo -e "\e[32m[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
           RELEASE_VERSION="$CURRENT_VERSION-b.$VAR_BUILD_NUMBER"
-          echo "[$(date -u)] LOG: RELEASE VERSION: $RELEASE_VERSION"
+          echo -e "\e[32m[$(date -u)] LOG: RELEASE VERSION: $RELEASE_VERSION"
           RELEAST_NOTE="Adding \"--use=$(Build.Repository.Uri)/releases/download/$RELEASE_VERSION/autorest-az-$CURRENT_VERSION.tgz\" argument when triggering  \"autorest\" or \"gen\" command to generate code"
-          echo "[$(date -u)] LOG: RELEASE NOTE: $RELEAST_NOTE"
+          echo -e "\e[32m[$(date -u)] LOG: RELEASE NOTE: $RELEAST_NOTE"
           echo "##vso[task.setvariable variable=release;isOutput=true]$RELEASE_VERSION"
           echo "##vso[task.setvariable variable=note;isOutput=true]$RELEAST_NOTE"
         name: GetVersions
@@ -115,7 +175,7 @@ stages:
 
 - stage: PublicRelease
   dependsOn: Test
-  condition: or(succeeded(), ne(variables['USER_SKIP_TEST'], 'true'))
+  condition: or(succeeded(), eq(variables['USER_SKIP_TEST'], 'true'))
   jobs:
     - deployment: approve
       environment: az-npm-release
@@ -142,18 +202,18 @@ stages:
           artifactName: '$(VAR_ARIFACT_NAME)'
           downloadPath: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
       - script: |
-          echo "[$(date -u)] LOG: ENSURE LATEST NPM IS INSTALLED"
+          echo -e "\e[32m[$(date -u)] LOG: Ensure latest npm is installed"
           npm install -g npm 
 
-          echo "[$(date -u)] LOG: MAKE SURE THE VERSIONS ARE ALL SYNCHRONIZED AND PULL IN DEPENDENCIES"
+          echo -e "\e[32m[$(date -u)] LOG: Make sure the vesions are all synchronized and pull in dependencies"
           npx @microsoft/rush sync-versions
           npx @microsoft/rush update 
 
-          echo "[$(date -u)] LOG: PUBLISH THE PACKAGES"
+          echo -e "\e[32m[$(date -u)] LOG: publish the package"
           echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" >> ./.npmrc 
           for file in $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)/$(VAR_ARIFACT_NAME)/*.tgz
           do
-            echo "[$(date -u)] LOG: FILE: $file"
+            echo -e "\e[32m[$(date -u)] LOG: File: $file"
             common/temp/pnpm-local/node_modules/.bin/pnpm publish $file --tag latest --access public || echo no-worries 
           done
           rm ./.npmrc
@@ -174,7 +234,7 @@ stages:
           downloadPath: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
       - script: |
           CURRENT_VERSION=$(node -p "require('./package.json').version")
-          echo "[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
+          echo -e "\e[32m[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
           echo "##vso[task.setvariable variable=release;isOutput=true]$CURRENT_VERSION"
         name: GetVersions
       - task: GitHubRelease@1
@@ -207,25 +267,25 @@ stages:
         REPO_URL_REPLACE="$(USER_GITHUB_TOKEN)@github"
         REPO_URL_PAT=${VAR_REPO_URL/'github'/$REPO_URL_REPLACE}
 
-        echo "[$(date -u)] LOG: CONFIG NAME, EMAIL AND REMOTE"
+        echo -e "\e[32m[$(date -u)] LOG: Config name, email and remote"
         git config --global user.name '$(USER_NAME)'
         git config --global user.email '$(USER_EMAIL)'
         git remote add originpat $REPO_URL_PAT
         git remote -v
       displayName: 'Config'
     - script: |
-        echo "[$(date -u)] LOG: CHECKOUT TO $VAR_REPO_BRANCHNAME"
+        echo -e "\e[32m[$(date -u)] LOG: Checkout branch $VAR_REPO_BRANCHNAME"
         git checkout $VAR_REPO_BRANCHNAME -f
         git pull
 
         CURRENT_VERSION=$(node -p "require('./package.json').version")
-        echo "[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
+        echo -e "\e[32m[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
 
         USER_NEW_VERSION=$(npm version --git-tag-version=false patch)
 
-        echo "[$(date -u)] LOG: NEW VERSION: $USER_NEW_VERSION"
+        echo -e "\e[32m[$(date -u)] LOG: NEW VERSION: $USER_NEW_VERSION"
 
-        echo "[$(date -u)] LOG: COMMIT and PUSH"
+        echo -e "\e[32m[$(date -u)] LOG: Commit and push"
         git commit -a -m "$(USER_COMMIT_MESSAGE) $USER_NEW_VERSION"
         git push originpat $VAR_REPO_BRANCHNAME -f
       displayName: 'Version Bump'
