@@ -41,6 +41,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     private _configuredScenario: boolean;
     private _clientSubscriptionBound: boolean;
     private _clientBaseUrlBound: boolean;
+    private _clientAuthenticationPolicy: string;
 
     async init() {
         this.options = await this.session.getValue('az');
@@ -58,6 +59,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.substack = new Array<[Parameter[], number]>();
         this._clientBaseUrlBound = this.options['client-base-url-bound'];
         this._clientSubscriptionBound = this.options['client-subscription-bound'];
+        this._clientAuthenticationPolicy = this.options['client-authentication-policy'];
         //this.sortOperationByAzCommand();
     }
 
@@ -450,6 +452,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get Extension_ClientBaseUrlBound(): boolean {
         return this._clientBaseUrlBound;
+    }
+
+    public get Extension_ClientAuthenticationPolicy(): string {
+        return this._clientAuthenticationPolicy;
     }
 
     //=================================================================================================================

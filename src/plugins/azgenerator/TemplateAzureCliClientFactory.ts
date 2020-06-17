@@ -7,7 +7,7 @@ import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
 import { isNullOrUndefined } from "util";
 
-export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
+export function GenerateAzureCliClientFactory(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     var output: string[] = header.getLines();
     model.SelectFirstCommandGroup();
@@ -17,23 +17,31 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
     output.push("    from azure.cli.core.commands.client_factory import get_mgmt_service_client");
     output.push("    from ..vendored_sdks." + model.PythonOperationsName + " import " + model.PythonMgmtClient);
 
-    if (!isNullOrUndefined(model.Extension_ClientSubscriptionBound) || !isNullOrUndefined(model.Extension_ClientBaseUrlBound))
-    {
-        output.push("    return get_mgmt_service_client(cli_ctx, " + model.PythonMgmtClient + ",");
-        output.push("                                   subscription_bound=" + (model.Extension_ClientSubscriptionBound ? "True" : "False") + ",");
-        output.push("                                   base_url_bound=" + (model.Extension_ClientBaseUrlBound ? "True" : "False") + ")");
-    }
-    else
-    {
-        output.push("    return get_mgmt_service_client(cli_ctx, " + model.PythonMgmtClient + ")");
+    if (!isNullOrUndefined(model.Extension_ClientAuthenticationPolicy)) {
+        output.push("    from azure.core.pipeline.policies import " + model.Extension_ClientAuthenticationPolicy);
     }
 
-    if (model.SelectFirstCommandGroup())
-    {
-        do
-        {
-            if (model.GetModuleOperationName() != "")
-            {
+    // Start handle arguments
+    output.push("    return get_mgmt_service_client(cli_ctx,");
+    output.push("                                   " + model.PythonMgmtClient);
+    if (!isNullOrUndefined(model.Extension_ClientSubscriptionBound)) {
+        output.push(output.pop() + ",");
+        output.push("                                   subscription_bound=" + (model.Extension_ClientSubscriptionBound ? "True" : "False"));
+    }
+    if (!isNullOrUndefined(model.Extension_ClientBaseUrlBound)) {
+        output.push(output.pop() + ",");
+        output.push("                                   base_url_bound=" + (model.Extension_ClientBaseUrlBound ? "True" : "False"));
+    }
+    if (!isNullOrUndefined(model.Extension_ClientAuthenticationPolicy)) {
+        output.push(output.pop() + ",");
+        output.push("                                   authentication_policy=" + model.Extension_ClientAuthenticationPolicy + "()");
+    }
+    output.push(output.pop()+ ")");
+    // End
+
+    if (model.SelectFirstCommandGroup()) {
+        do {
+            if (model.GetModuleOperationName() != "") {
                 output.push("");
                 output.push("");
 
@@ -42,7 +50,7 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz) : string[] {
             }
         } while (model.SelectNextCommandGroup());
     }
-    
+
     output.push("");
 
     return output;

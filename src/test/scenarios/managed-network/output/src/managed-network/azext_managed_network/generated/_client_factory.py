@@ -12,7 +12,8 @@
 def cf_managed_network_cl(cli_ctx, *_):
     from azure.cli.core.commands.client_factory import get_mgmt_service_client
     from ..vendored_sdks.managednetwork import ManagedNetworkManagementClient
-    return get_mgmt_service_client(cli_ctx, ManagedNetworkManagementClient)
+    return get_mgmt_service_client(cli_ctx,
+                                   ManagedNetworkManagementClient)
 
 
 def cf_mn(cli_ctx, *_):
