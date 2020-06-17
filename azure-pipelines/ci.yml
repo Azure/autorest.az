@@ -3,69 +3,65 @@ trigger:
 
 variables:
   NodeVersion: '10.x'
+  VAR_BUILD_ARTIFACT_STAGING_DIRECTORY: $(Build.ArtifactStagingDirectory)
+  VAR_ARIFACT_NAME: "drop"
 
 jobs:
-#  - job: Linter
-#    pool:
-#      vmImage: 'vs2017-win2016'
-#    steps:
-#      - task: TSLint@1
-#        inputs:
-#          RuleLibrary: 'tslint'
-#          Ruleset: 'tsrecommended'
-#          FileSelectionType: 'fileGlob'
-#          Files: '**\*.ts'
-#          OutputFormat: 'json'
-#          ToolVersion: 'latest'
-#          TypeScriptVersion: 'latest'
+  - job: TSLint
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+      - task: aa8c4bad-1e3b-4258-97c3-20366415afec@1
+        inputs:
+          RuleLibrary: 'tslint'
+          Ruleset: 'tsrecommended'
+          FileSelectionType: 'fileGlob'
+          Files: '**\*.ts'
+          OutputFormat: 'json'
+          ToolVersion: 'latest'
+          TypeScriptVersion: 'latest'
 
-  - job: 'Build'
-
+  - job: Build
     pool:
       vmImage: 'Ubuntu 16.04'
       pythonVersion: '3.6'
-
     steps:
       - task: NodeTool@0
         inputs:
           versionSpec: '$(NodeVersion)'
         displayName: 'Install Node.js $(NodeVersion)'
-
       - task: Npm@1
         displayName: 'npm install'
         inputs:
           verbose: false
-
       - task: UsePythonVersion@0
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: 3.6
-
       - script: 'npx @microsoft/rush sync-versions && npx @microsoft/rush update && npx @microsoft/rush rebuild'
         displayName: 'npm build'
-
       - script: 'npm test'
         displayName: 'npm test'
-
-      - script: 'npx @microsoft/rush publish --publish --pack --include-all --tag latest'
+      - script: 'npx @microsoft/rush publish --publish --pack --release-folder $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY) --include-all --tag latest'
         displayName: 'npm pack'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
+          ArtifactName: '$(VAR_ARIFACT_NAME)'
+          publishLocation: 'Container'
 
-  - job: 'Analyze'
-
+  - job: Analyze
     pool:
       vmImage: 'Ubuntu 16.04'
-
     steps:
       - task: NodeTool@0
         inputs:
           versionSpec: '$(NodeVersion)'
         displayName: 'Install Node.js $(NodeVersion)'
-
       - task: Npm@1
         displayName: 'npm install'
         inputs:
           command: install
-
       - task: Npm@1
         displayName: 'npm audit'
         condition: and(succeeded(), eq(variables['RunNpmAudit'], 'true'))
@@ -73,29 +69,27 @@ jobs:
           command: custom
           customCommand: 'audit'
 
-#  - job: Windows
-#    displayName: credentialScan
-#    pool:
-#      vmImage: "windows-2019"
-
-#    steps:
-#      - task:  CredScan@3
-#        inputs:
-#          toolMajorVersion: 'V1'
-#      - task: PostAnalysis@1
-#        inputs:
-#          AllTools: false
-#          APIScan: false
-#          BinSkim: false
-#          CodesignValidation: false
-#          CredScan: true
-#          FortifySCA: false
-#          FxCop: false
-#          ModernCop: false
-#          PoliCheck: false
-#          RoslynAnalyzers: false
-#          SDLNativeRules: false
-#          Semmle: false
-#          TSLint: false
-#          ToolLogsNotFoundAction: 'Standard'
-
+  - job: Windows
+    displayName: CredScan
+    pool:
+      vmImage: "windows-2019"
+    steps:
+      - task:  ea576cd4-c61f-48f8-97e7-a3cb07b90a6f@3
+        inputs:
+          toolMajorVersion: 'V1'
+      - task: f5679091-e6da-4974-a8dc-0eec03a8ea63@1
+        inputs:
+          AllTools: false
+          APIScan: false
+          BinSkim: false
+          CodesignValidation: false
+          CredScan: true
+          FortifySCA: false
+          FxCop: false
+          ModernCop: false
+          PoliCheck: false
+          RoslynAnalyzers: false
+          SDLNativeRules: false
+          Semmle: false
+          TSLint: false
+          ToolLogsNotFoundAction: 'Standard'
