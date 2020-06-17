@@ -162,7 +162,11 @@ def datafactory_trigger_update(instance,
                                resource_group_name,
                                factory_name,
                                trigger_name,
-                               if_match=None):
+                               if_match=None,
+                               description=None,
+                               annotations=None):
+    instance.description = description
+    instance.annotations = annotations
     return instance
 
 

@@ -21,7 +21,7 @@ export class Merger {
         this.codeModel.operationGroups.forEach(operationGroup => {
             let operations = operationGroup.operations;
             operationGroup.operations.forEach(operation => {
-                if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-operations'])) {
+                if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-operations']) && !operation.language['cli']['cli-operation-splitted']) {
                     let nameIndexMap: Map<string, number> = new Map<string, number>();
                     let index = 0;
                     operation.parameters.forEach(param => {

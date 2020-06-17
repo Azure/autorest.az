@@ -1,4 +1,4 @@
-import { CodeModel, codeModelSchema, Language } from "@azure-tools/codemodel";
+import { CodeModel, codeModelSchema, Language, SchemaType } from "@azure-tools/codemodel";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
@@ -158,14 +158,7 @@ export class AzNamer {
             }
 
             let operations = operationGroup.operations;
-            var hasUpdate = false;
-            var operationIndex = -1;
             operations.forEach(operation => {
-                operation.parameters.forEach(parameter => {
-                    if(!isNullOrUndefined(parameter.language['cli'])) {
-                        this.getAzName(parameter);
-                    }
-                });
                 operation.requests.forEach(request => {
                     let operationName = "";
                     if(!isNullOrUndefined(operation.language['cli'])) {
@@ -181,29 +174,58 @@ export class AzNamer {
                         if(commandName.indexOf(" ") > -1) {
                             operation.language['az']['subCommandGroup'] = operationGroupName + " " + commandName.split(' ')[0];
                         }
-                        if(operation.language['cli']['name'].toLowerCase() == "createorupdate" || operation.language['cli']['name'].toLowerCase().startsWith("createorupdate#")) {
-                            operation['canSplitOperation'] = true;
+                        if(operation.language['az']['command'].endsWith(" update") && !isNullOrUndefined(operation.extensions?.['cli-split-operation-original-operation'])) {
+                            operation.language['az']['isSplitUpdate'] = true;
                         }
                     } else {
                         this.session.message({Channel:Channel.Warning, Text: "OperationGroup " + operationGroup.language.default.name + " operation " + operation.language.default.name + " doesn't have cli"});
                     }
+                    operation.parameters.forEach(parameter => {
+                        if(!isNullOrUndefined(parameter.language['cli'])) {
+                            this.getAzName(parameter);
+                        }
+                    });
                     if(request.parameters) {
                         request.parameters.forEach(parameter => {
                             if(parameter.language['cli'] != undefined) {
                                 this.getAzName(parameter);
                             }
-                        });                        
+                        });                   
                     }
                 });
-                
-                
-                if(operation.language['cli']['name'].toLowerCase() == "update") {
-                    hasUpdate = true;
+                 //if generic update exists, set the setter_arg_name in the original operation
+                if(operation.language['az']['isSplitUpdate']) {
+                    let listCnt = 0;
+                    let param = null;
+                    operation.extensions['cli-split-operation-original-operation'].parameters.forEach(parameter => {
+                        if(!isNullOrUndefined(parameter.language['az'])) {
+                            if(operation.language['az'].name.endsWith("create") && parameter['flattened'] != true) {
+                                let paramType = parameter.schema.type;
+                                if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
+                                    param = parameter;
+                                    listCnt++;
+                                }
+                            }
+                        }
+                    });
+                    operation.extensions['cli-split-operation-original-operation'].requests.forEach(request => {
+                        request.parameters.forEach(parameter => {
+                            if(!isNullOrUndefined(parameter.language['az'])) {
+                                if(operation.language['az'].command.endsWith(' update') && parameter['flattened'] != true) {
+                                    let paramType = parameter.schema.type;
+                                    if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
+                                        param = parameter;
+                                        listCnt++;
+                                    }
+                                }
+                            }
+                        }); 
+                    })
+                    if(listCnt == 1) {
+                        operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = param;
+                    }
                 }
             });
-            if(hasUpdate) {
-                operationGroup.language['az']['hasUpdate'] = hasUpdate;
-            }
         });
     }
 }

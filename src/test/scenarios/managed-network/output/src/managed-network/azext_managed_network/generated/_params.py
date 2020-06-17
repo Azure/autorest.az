@@ -174,6 +174,16 @@ def load_arguments(self, _):
         c.argument('spokes', action=AddSpokes, nargs='+', help='Gets or sets the spokes group IDs')
         c.argument('mesh', action=AddMesh, nargs='+', help='Gets or sets the mesh group IDs')
 
+    with self.argument_context('managed-network managed-network-peering-policy mesh-topology create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('managed_network_name', help='The name of the Managed Network.')
+        c.argument('policy_name', help='The name of the Managed Network Peering Policy.')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+                   validator=get_default_location_from_resource_group)
+        c.argument('hub', action=AddHub, nargs='+', help='Gets or sets the hub virtual network ID')
+        c.argument('spokes', action=AddSpokes, nargs='+', help='Gets or sets the spokes group IDs')
+        c.argument('mesh', action=AddMesh, nargs='+', help='Gets or sets the mesh group IDs')
+
     with self.argument_context('managed-network managed-network-peering-policy hub-and-spoke-topology update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', help='The name of the Managed Network.', id_part='name')
@@ -184,16 +194,6 @@ def load_arguments(self, _):
         c.argument('spokes', action=AddSpokes, nargs='+', help='Gets or sets the spokes group IDs')
         c.argument('mesh', action=AddMesh, nargs='+', help='Gets or sets the mesh group IDs')
         c.ignore('managed_network_peering_policy_name', 'properties')
-
-    with self.argument_context('managed-network managed-network-peering-policy mesh-topology create') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', help='The name of the Managed Network.')
-        c.argument('policy_name', help='The name of the Managed Network Peering Policy.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
-                   validator=get_default_location_from_resource_group)
-        c.argument('hub', action=AddHub, nargs='+', help='Gets or sets the hub virtual network ID')
-        c.argument('spokes', action=AddSpokes, nargs='+', help='Gets or sets the spokes group IDs')
-        c.argument('mesh', action=AddMesh, nargs='+', help='Gets or sets the mesh group IDs')
 
     with self.argument_context('managed-network managed-network-peering-policy mesh-topology update') as c:
         c.argument('resource_group_name', resource_group_name_type)

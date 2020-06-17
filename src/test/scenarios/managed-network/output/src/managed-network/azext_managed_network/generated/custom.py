@@ -221,22 +221,6 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_create
                        properties=properties)
 
 
-def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update(instance,
-                                                                                 resource_group_name,
-                                                                                 managed_network_name,
-                                                                                 policy_name,
-                                                                                 location,
-                                                                                 hub=None,
-                                                                                 spokes=None,
-                                                                                 mesh=None,
-                                                                                 no_wait=False):
-    instance.type = 'HubAndSpokeTopology'
-    instance.hub = hub
-    instance.spokes = spokes
-    instance.mesh = mesh
-    return instance
-
-
 def managed_network_managed_network_peering_policy_mesh_topology_create(client,
                                                                         resource_group_name,
                                                                         managed_network_name,
@@ -258,6 +242,22 @@ def managed_network_managed_network_peering_policy_mesh_topology_create(client,
                        managed_network_peering_policy_name=policy_name,
                        location=location,
                        properties=properties)
+
+
+def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update(instance,
+                                                                                 resource_group_name,
+                                                                                 managed_network_name,
+                                                                                 policy_name,
+                                                                                 location,
+                                                                                 hub=None,
+                                                                                 spokes=None,
+                                                                                 mesh=None,
+                                                                                 no_wait=False):
+    instance.type = 'HubAndSpokeTopology'
+    instance.hub = hub
+    instance.spokes = spokes
+    instance.mesh = mesh
+    return instance
 
 
 def managed_network_managed_network_peering_policy_mesh_topology_update(instance,
