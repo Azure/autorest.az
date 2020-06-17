@@ -64,6 +64,7 @@ export interface CodeModelAz {
     Extension_TestScenario: any;
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
+    Extension_ClientAuthenticationPolicy: string;
     Extension_Mode: string;
 
     SelectFirstCommandGroup(): boolean;
