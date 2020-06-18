@@ -32,9 +32,11 @@
   "author": "Microsoft Corporation",
   "license": "MIT",
   "devDependencies": {
+    "@microsoft.azure/autorest.testserver": "^2.10.45",
     "@types/chai": "^4.2.7",
     "@types/mocha": "^5.2.5",
     "@types/node": "10.17.0",
+    "bufferutil": "^4.0.1",
     "chai": "^4.2.0",
     "eslint": "~5.4.0",
     "mocha": "^5.2.0",
@@ -42,15 +44,16 @@
     "node-yaml": "^3.2.0",
     "nyc": "^15.0.0",
     "source-map-support": "^0.5.13",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "utf-8-validate": "^5.0.2"
   },
   "dependencies": {
-    "autorest": "^3.0.6187",
     "@azure-tools/async-io": "^3.0.209",
     "@azure-tools/autorest-extension-base": "~3.1.235",
     "@azure-tools/codegen": "^2.5.276",
     "@azure-tools/codemodel": "4.13.325",
     "@azure-tools/linq": "^3.1.232",
+    "autorest": "^3.0.6187",
     "await-exec": "^0.1.2",
     "dir-compare": "^2.2.0",
     "js-yaml": "^3.13.1",
