@@ -201,8 +201,8 @@ def load_arguments(self, _):
                    'repo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s '
                    'GitHub repo information.', arg_group='RepoConfiguration')
-        c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
-        c.argument('zones', nargs='+', help='This is only for az test.')
+        c.argument('fake_identity', action=AddFakeIdentity, nargs='*', help='This is only for az test.')
+        c.argument('zones', nargs='*', help='This is only for az test.')
         c.argument('type_properties_compute_properties', type=validate_file_or_dict, help='The compute resource for '
                    'managed integration runtime. Expected value: json-string/@json-file.')
         c.argument('type_properties_ssis_properties', type=validate_file_or_dict, help='SSIS properties for managed '

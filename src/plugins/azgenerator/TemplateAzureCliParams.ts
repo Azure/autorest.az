@@ -248,7 +248,12 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         hasLocation = true;
                         needSkip = true;
                     } else if (model.MethodParameter_IsSimpleArray) {
-                        argument += ", nargs='+'";
+                        if (model.MethodParameter['required'] === false) {
+                            argument += ", nargs='*'";
+                        } else {
+                            argument += ", nargs='+'";
+                        }
+                        
                     } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if(model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             baseParam = model.MethodParameter;
@@ -264,7 +269,11 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         if (actions.indexOf(actionName) < 0) {
                             actions.push(actionName);
                         }
-                        argument += ", nargs='+'";
+                        if (model.MethodParameter['required'] === false) {
+                            argument += ", nargs='*'";
+                        } else {
+                            argument += ", nargs='+'";
+                        }
                     }
 
                     if (!needSkip) {
