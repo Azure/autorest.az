@@ -386,11 +386,6 @@ collaboration-branch=XX root-folder=XX last-commit-id=XX
 
             name: Required. ..
             zones-inside: sample of simple array
-    examples:
-      - name: IntegrationRuntimes_Create
-        text: |-
-               az datafactory integration-runtime managed create --factory-name "exampleFactoryName" --description "A \
-selfhosted integration runtime" --name "exampleIntegrationRuntime" --resource-group "exampleResourceGroup"
 """
 
 helps['datafactory integration-runtime self-hosted'] = """

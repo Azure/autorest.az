@@ -108,7 +108,7 @@ def step__factories_patch_factories_update(test, rg):
 # EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
 @try_manual
 def step__integrationruntimes_put_integrationruntimes_create(test, rg):
-    test.cmd('az datafactory integration-runtime managed create '
+    test.cmd('az datafactory integration-runtime self-hosted create '
              '--factory-name "{exampleFactoryName}" '
              '--description "A selfhosted integration runtime" '
              '--name "{exampleIntegrationRuntime}" '
@@ -119,7 +119,7 @@ def step__integrationruntimes_put_integrationruntimes_create(test, rg):
 # EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
 @try_manual
 def step__integrationruntimes_put_integrationruntimes_create(test, rg):
-    test.cmd('az datafactory integration-runtime managed create '
+    test.cmd('az datafactory integration-runtime self-hosted create '
              '--factory-name "{exampleFactoryName}" '
              '--description "A selfhosted integration runtime" '
              '--name "{exampleIntegrationRuntime}" '

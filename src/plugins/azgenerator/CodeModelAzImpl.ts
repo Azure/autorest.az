@@ -1822,8 +1822,8 @@ export class CodeModelCliImpl implements CodeModelAz {
             let cliKey = model.Method.language['cli'].cliKey;
             if (cliKey) {
                 let names = cliKey.split('#');
-                if (names.length > 1) {
-                    return names[1];
+                if (names && names.length > 1) {
+                    return names[names.length-1];
                 }
             }
             return '';
@@ -1833,7 +1833,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         function matchPolyClass(example: CommandExample, keyToMatch: string, valueToMatch: string) {
             for (let param of example.Parameters) {
-                if (('--' + keyToMatch).toLowerCase() == param.name.toLowerCase() && typeof param.value == 'string') {
+                if ((('--' + keyToMatch).toLowerCase() == param.name.toLowerCase() || ('--' + keyToMatch + '-').toLowerCase() == param.name.toLowerCase()) && typeof param.value == 'string') {
                     return valueToMatch.toLowerCase() == param.value.toLowerCase();
                 }
             }
