@@ -119,11 +119,11 @@ def load_arguments(self, _):
                    validator=get_default_location_from_resource_group)
         c.argument('management_groups', type=validate_file_or_dict, help='The collection of management groups covered '
                    'by the Managed Network Expected value: json-string/@json-file.')
-        c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered '
+        c.argument('subscriptions', action=AddSubscriptions, nargs='*', help='The collection of subscriptions covered '
                    'by the Managed Network')
-        c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets '
+        c.argument('virtual_networks', action=AddVirtualNetworks, nargs='*', help='The collection of virtual nets '
                    'covered by the Managed Network')
-        c.argument('subnets', action=AddSubnets, nargs='+', help='The collection of  subnets covered by the Managed '
+        c.argument('subnets', action=AddSubnets, nargs='*', help='The collection of  subnets covered by the Managed '
                    'Network')
 
     with self.argument_context('managed-network mn group update') as c:
@@ -134,11 +134,11 @@ def load_arguments(self, _):
                    validator=get_default_location_from_resource_group)
         c.argument('management_groups', type=validate_file_or_dict, help='The collection of management groups covered '
                    'by the Managed Network Expected value: json-string/@json-file.')
-        c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered '
+        c.argument('subscriptions', action=AddSubscriptions, nargs='*', help='The collection of subscriptions covered '
                    'by the Managed Network')
-        c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets '
+        c.argument('virtual_networks', action=AddVirtualNetworks, nargs='*', help='The collection of virtual nets '
                    'covered by the Managed Network')
-        c.argument('subnets', action=AddSubnets, nargs='+', help='The collection of  subnets covered by the Managed '
+        c.argument('subnets', action=AddSubnets, nargs='*', help='The collection of  subnets covered by the Managed '
                    'Network')
 
     with self.argument_context('managed-network mn group delete') as c:
