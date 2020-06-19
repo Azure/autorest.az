@@ -26,21 +26,31 @@ These are the global settings for the Managed Network API.
 
 ``` yaml
 openapi-type: arm
-tag: testserver-2-7-8
+tag: testserver-local
 override-info:
   title: AutoRest Test Service
   description: Test Infrastructure for AutoRest.
 ```
 
-### Tag: testserver-2-7-8
+### Tag: testserver-2-10-45
 
-These settings apply only when `--tag=testserver-2-7-8` is specified on the command line.
+These settings apply only when `--tag=testserver-2-10-45` is specified on the command line.
 
-``` yaml $(tag) == 'testserver-2-7-8'
+``` yaml $(tag) == 'testserver-2-10-45'
 input-file:
 - ../../../../../node_modules/@microsoft.azure/autorest.testserver/swagger/body-array.json
 - ../../../../../node_modules/@microsoft.azure/autorest.testserver/swagger/body-boolean.json
 ```
+
+### Tag: testserver-local
+
+These settings apply only when `--tag=testserver-local` is specified on the command line.
+
+``` yaml $(tag) == 'testserver-local'
+input-file:
+- ../input/body-boolean.json
+```
+
 # Code Generation
 
 
