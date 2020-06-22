@@ -9,7 +9,7 @@ import { serialize, deserialize, EnglishPluralizationService, pascalCase } from 
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeString, parseResourceId } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency } from './ScenarioTool'
+import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency, PrintTestScenario } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
 import { isNullOrUndefined, isArray } from "util";
 
@@ -2048,6 +2048,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (!this._configuredScenario) {
             this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool, this._testScenario);
             this.SortExamplesByDependency();
+            PrintTestScenario(this._testScenario);
         }
 
         let commandParams = {};

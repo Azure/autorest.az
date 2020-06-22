@@ -15,7 +15,6 @@ cli:
     - name: /Factories/post/Factories_GetGitHubAccessToken
     - name: /Factories/patch/Factories_Update
     - name: /IntegrationRuntimes/put/IntegrationRuntimes_Create
-    - name: /IntegrationRuntimes/put/IntegrationRuntimes_Create
     - name: /IntegrationRuntimes/get/IntegrationRuntimes_Get
     - name: /IntegrationRuntimes/get/IntegrationRuntimes_ListByFactory
     - name: /IntegrationRuntimes/post/IntegrationRuntimes_CreateLinkedIntegrationRuntime
@@ -31,6 +30,8 @@ cli:
     - name: /IntegrationRuntimes/post/IntegrationRuntimes_Upgrade
     - name: /IntegrationRuntimes/patch/IntegrationRuntimes_Update
     - name: /Triggers/put/Triggers_Create
+    - name: /Triggers/put/Triggers_Create
+    - name: /Triggers/put/Triggers_Update
     - name: /Triggers/put/Triggers_Update
     - name: /Triggers/get/Triggers_Get
     - name: /Triggers/get/Triggers_ListByFactory

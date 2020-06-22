@@ -116,17 +116,6 @@ def step__integrationruntimes_put_integrationruntimes_create(test, rg):
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
-@try_manual
-def step__integrationruntimes_put_integrationruntimes_create(test, rg):
-    test.cmd('az datafactory integration-runtime self-hosted create '
-             '--factory-name "{exampleFactoryName}" '
-             '--description "A selfhosted integration runtime" '
-             '--name "{exampleIntegrationRuntime}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
 # EXAMPLE: /IntegrationRuntimes/get/IntegrationRuntimes_Get
 @try_manual
 def step__integrationruntimes_get_integrationruntimes_get(test, rg):
@@ -290,6 +279,37 @@ def step__triggers_put_triggers_create(test, rg):
              checks=[])
 
 
+# EXAMPLE: /Triggers/put/Triggers_Create
+@try_manual
+def step__triggers_put_triggers_create(test, rg):
+    test.cmd('az datafactory trigger create '
+             '--factory-name "{exampleFactoryName}" '
+             '--resource-group "{rg}" '
+             '--properties "{{\\"type\\":\\"ScheduleTrigger\\",\\"pipelines\\":[{{\\"parameters\\":{{\\"OutputBlobNameL'
+             'ist\\":[\\"exampleoutput.csv\\"]}},\\"pipelineReference\\":{{\\"type\\":\\"PipelineReference\\",\\"refere'
+             'nceName\\":\\"examplePipeline\\"}}}}],\\"typeProperties\\":{{\\"recurrence\\":{{\\"endTime\\":\\"2018-06-'
+             '16T00:55:13.8441801Z\\",\\"frequency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39'
+             ':13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}}}}" '
+             '--name "{exampleTrigger}"',
+             checks=[])
+
+
+# EXAMPLE: /Triggers/put/Triggers_Update
+@try_manual
+def step__triggers_put_triggers_update(test, rg):
+    test.cmd('az datafactory trigger create '
+             '--factory-name "{exampleFactoryName}" '
+             '--resource-group "{rg}" '
+             '--properties "{{\\"type\\":\\"ScheduleTrigger\\",\\"description\\":\\"Example '
+             'description\\",\\"pipelines\\":[{{\\"parameters\\":{{\\"OutputBlobNameList\\":[\\"exampleoutput.csv\\"]}}'
+             ',\\"pipelineReference\\":{{\\"type\\":\\"PipelineReference\\",\\"referenceName\\":\\"examplePipeline\\"}}'
+             '}}],\\"typeProperties\\":{{\\"recurrence\\":{{\\"endTime\\":\\"2018-06-16T00:55:14.905167Z\\",\\"frequenc'
+             'y\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39:14.905167Z\\",\\"timeZone\\":\\"UT'
+             'C\\"}}}}}}" '
+             '--name "{exampleTrigger}"',
+             checks=[])
+
+
 # EXAMPLE: /Triggers/put/Triggers_Update
 @try_manual
 def step__triggers_put_triggers_update(test, rg):
@@ -431,7 +451,6 @@ def call_scenario(test, rg):
     step__factories_post_factories_getgithubaccesstoken(test, rg)
     step__factories_patch_factories_update(test, rg)
     step__integrationruntimes_put_integrationruntimes_create(test, rg)
-    step__integrationruntimes_put_integrationruntimes_create(test, rg)
     step__integrationruntimes_get_integrationruntimes_get(test, rg)
     step__integrationruntimes_get_integrationruntimes_listbyfactory(test, rg)
     step__integrationruntimes_post_integrationruntimes_createlinkedintegrationruntime(test, rg)
@@ -447,6 +466,8 @@ def call_scenario(test, rg):
     step__integrationruntimes_post_integrationruntimes_upgrade(test, rg)
     step__integrationruntimes_patch_integrationruntimes_update(test, rg)
     step__triggers_put_triggers_create(test, rg)
+    step__triggers_put_triggers_create(test, rg)
+    step__triggers_put_triggers_update(test, rg)
     step__triggers_put_triggers_update(test, rg)
     step__triggers_get_triggers_get(test, rg)
     step__triggers_get_triggers_listbyfactory(test, rg)
