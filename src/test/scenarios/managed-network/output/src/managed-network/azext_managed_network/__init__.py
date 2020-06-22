@@ -11,7 +11,7 @@
 from azure.cli.core import AzCommandsLoader
 from azext_managed_network.generated._help import helps  # pylint: disable=unused-import
 try:
-    from azext_managed_network.manual._help import helps
+    from azext_managed_network.manual._help import helps  # pylint: disable=reimported
 except ImportError:
     pass
 
