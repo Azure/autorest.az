@@ -855,6 +855,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
         return polyOriginal;
     }
+
+    public get Method_GetSplitOriginalOperation(): any {
+        return this.Method.extensions?.['cli-split-operation-original-operation'];
+    }
     //=================================================================================================================
     // Methods Parameters.
     //
@@ -1873,6 +1877,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.Parameters = this.ConvertToCliParameters(params);
                 example.MethodResponses = this.Method.responses || [];
                 example.Method_IsLongRun = this.Method.extensions?.['x-ms-long-running-operation'] ? true : false;
+                if (this.Method_GetSplitOriginalOperation && Object.keys(this.Examples).length>1) {
+                    //filter example by name for generic createorupdate
+                    if(this.Command_MethodName.toLowerCase()=="update" && !id.toLowerCase().endsWith("_update"))
+                        return;
+                    if(this.Command_MethodName.toLowerCase()!="update" && id.toLowerCase().endsWith("_update"))
+                        return;
+                }
                 if (this.filterExampleByPoly(example_obj, example)) {
                     for (let i=0;i<example.Parameters.length; i++) {
                         if (this.isDiscriminator(example.Parameters[i].methodParam.value) )

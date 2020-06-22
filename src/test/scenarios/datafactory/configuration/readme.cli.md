@@ -30,8 +30,6 @@ cli:
     - name: /IntegrationRuntimes/post/IntegrationRuntimes_Upgrade
     - name: /IntegrationRuntimes/patch/IntegrationRuntimes_Update
     - name: /Triggers/put/Triggers_Create
-    - name: /Triggers/put/Triggers_Create
-    - name: /Triggers/put/Triggers_Update
     - name: /Triggers/put/Triggers_Update
     - name: /Triggers/get/Triggers_Get
     - name: /Triggers/get/Triggers_ListByFactory

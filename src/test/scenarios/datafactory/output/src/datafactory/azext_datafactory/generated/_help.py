@@ -196,24 +196,12 @@ bNameList\\":[\\"exampleoutput.csv\\"]},\\"pipelineReference\\":{\\"type\\":\\"P
 :\\"examplePipeline\\"}}],\\"typeProperties\\":{\\"recurrence\\":{\\"endTime\\":\\"2018-06-16T00:55:13.8441801Z\\",\\"f\
 requency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39:13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}\
 }" --name "exampleTrigger"
-      - name: Triggers_Update
-        text: |-
-               az datafactory trigger create --factory-name "exampleFactoryName" --resource-group \
-"exampleResourceGroup" --properties "{\\"type\\":\\"ScheduleTrigger\\",\\"description\\":\\"Example \
-description\\",\\"pipelines\\":[{\\"parameters\\":{\\"OutputBlobNameList\\":[\\"exampleoutput.csv\\"]},\\"pipelineRefer\
-ence\\":{\\"type\\":\\"PipelineReference\\",\\"referenceName\\":\\"examplePipeline\\"}}],\\"typeProperties\\":{\\"recur\
-rence\\":{\\"endTime\\":\\"2018-06-16T00:55:14.905167Z\\",\\"frequency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\"\
-:\\"2018-06-16T00:39:14.905167Z\\",\\"timeZone\\":\\"UTC\\"}}}" --name "exampleTrigger"
 """
 
 helps['datafactory trigger update'] = """
     type: command
     short-summary: Creates or updates a trigger.
     examples:
-      - name: Triggers_Create
-        text: |-
-               az datafactory trigger update --factory-name "exampleFactoryName" --resource-group \
-"exampleResourceGroup" --name "exampleTrigger"
       - name: Triggers_Update
         text: |-
                az datafactory trigger update --factory-name "exampleFactoryName" --resource-group \
