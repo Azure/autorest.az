@@ -2,6 +2,8 @@
  
 ``` yaml $(az)
 extension-mode: experimental
+# customize library used in extension. azure.cli.core by default
+# cli-core-lib: azure.cli.core
  
 cli:
     naming:

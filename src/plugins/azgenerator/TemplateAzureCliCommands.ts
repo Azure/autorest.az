@@ -10,13 +10,13 @@ import { isNullOrUndefined } from "util";
 import { SchemaType } from "@azure-tools/codemodel";
 
 let showCommandFunctionName = undefined;
-export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
+export function GenerateAzureCliCommands(model: CodeModelAz, cliCoreLib: string): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
 
     // this can't be currently reproduced
     header.disableTooManyStatements = true;
     header.disableTooManyLocals = true;
-    header.addFromImport("azure.cli.core.commands", ["CliCommandType"]);
+    header.addFromImport(cliCoreLib + ".commands", ["CliCommandType"]);
 
     let output: string[] = []
     output.push("");

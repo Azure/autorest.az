@@ -9,9 +9,10 @@ export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
     //host.Message({Channel:Channel.Warning, Text:"in azgenerator processRequest"});
     try {
+        const cliCoreLib = await host.GetValue('cli-core-lib') || 'azure.cli.core';
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         let model = new CodeModelCliImpl(session);
-        let files: any = await GenerateAll(model, true, debug);
+        let files: any = await GenerateAll(model, true, debug, cliCoreLib);
         if (model.SelectFirstExtension()) {
             do {
                 let path = "azext_" + model.Extension_Name.replace("-", "_") + "/";

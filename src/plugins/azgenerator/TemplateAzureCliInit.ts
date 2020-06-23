@@ -7,9 +7,9 @@ import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
 import { ToMultiLine } from "../../utils/helper"
 
-export function GenerateAzureCliInit(model: CodeModelAz): string[] {
+export function GenerateAzureCliInit(model: CodeModelAz, cliCoreLib: string): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
-    header.addFromImport("azure.cli.core", ["AzCommandsLoader"]);
+    header.addFromImport(cliCoreLib, ["AzCommandsLoader"]);
     var output: string[] = header.getLines();
 
     output.push("from azext_" + model.Extension_NameUnderscored + ".generated._help import helps  # pylint: disable=unused-import");
@@ -22,7 +22,7 @@ export function GenerateAzureCliInit(model: CodeModelAz): string[] {
     output.push("class " + model.Extension_NameClass + "CommandsLoader(AzCommandsLoader):");
     output.push("");
     output.push("    def __init__(self, cli_ctx=None):");
-    output.push("        from azure.cli.core.commands import CliCommandType");
+    output.push("        from " + cliCoreLib + ".commands import CliCommandType");
     output.push("        from azext_" + model.Extension_NameUnderscored + ".generated._client_factory import cf_" + model.Extension_NameUnderscored + "_cl");
     output.push("        " + model.Extension_NameUnderscored + "_custom = CliCommandType(");
     output.push("            operations_tmpl='azext_" + model.Extension_NameUnderscored + ".custom#{}',");
