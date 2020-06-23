@@ -20,7 +20,7 @@ let hasLocationValidator = false;
 let hasTags = false;
 let actions: string[] = [];
 
-export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): string[] {
+export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean, cliCoreLib: string): string[] {
     var output_args: string[] = [];
 
     output_args.push("");
@@ -65,7 +65,7 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     if (hasResourceGroup) parameterImports.push("resource_group_name_type");
     if (hasLocation) parameterImports.push("get_location_type");
 
-    header.addFromImport("azure.cli.core.commands.parameters", parameterImports);
+    header.addFromImport(cliCoreLib + ".commands.parameters", parameterImports);
     let validatorImports: string[] = [];
     if (hasLocationValidator) {
         validatorImports.push("get_default_location_from_resource_group");
@@ -74,7 +74,7 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
         validatorImports.push("validate_file_or_dict");
     }
     if (validatorImports.length > 0) {
-        header.addFromImport('azure.cli.core.commands.validators', validatorImports);
+        header.addFromImport(cliCoreLib + '.commands.validators', validatorImports);
     }
 
     if (hasActions) {
