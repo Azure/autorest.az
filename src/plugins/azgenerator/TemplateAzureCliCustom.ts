@@ -159,7 +159,7 @@ function ConstructValuation(isGeneric: boolean, prefix: string, classNames: stri
             if(value.startsWith("'") && value.endsWith("'")) {
                 left = prefix + "instance.";
             } else {
-                str.push(prefix + "if " + paramName + " is not None:");
+                str.push(prefix + "if " + value + " is not None:");
                 left = prefix + "    instance.";
             }
             for (var i = 1; i < classNames.length; ++i) {
