@@ -102,12 +102,12 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 originalParameterStack.push(model.MethodParameter);
                 originalParameterNameStack.push(model.MethodParameter_Name);
                 if (!needGeneric) {
-                    output_body.push(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
+                    output_body = output_body.concat(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
                 }
             }
             else if (originalParameterStack.length > 0) {
                 if (model.MethodParameter['originalParameter'] == originalParameterStack[originalParameterStack.length - 1]) {
-                    let access = "";
+                    let access = [];
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
 
                     if (model.MethodParameter['targetProperty']?.['isDiscriminator'] == true) {
@@ -126,7 +126,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                             access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
                         }
                     }
-                    output_body.push(access);
+                    output_body = output_body.concat(access);
                     if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                         let baseParam = model.MethodParameter;
                         let hasNext = false;
@@ -151,12 +151,17 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     return output_body;
 }
 
-function ConstructValuation(isGeneric: boolean, prefix: string, classNames: string[], paramName: string, value: string, defaultValue: string = null): string {
-    let str = "";
+function ConstructValuation(isGeneric: boolean, prefix: string, classNames: string[], paramName: string, value: string, defaultValue: string = null): string[] {
+    let str = [];
     if (isNullOrUndefined(defaultValue)) {
         let left = "";
         if (isGeneric) {
-            left = prefix + "instance.";
+            if(value.startsWith("'") && value.endsWith("'")) {
+                left = prefix + "instance.";
+            } else {
+                str.push(prefix + "if " + paramName + " is not None:");
+                left = prefix + "    instance.";
+            }
             for (var i = 1; i < classNames.length; ++i) {
                 left = left + classNames[i] + ".";
             }
@@ -172,10 +177,10 @@ function ConstructValuation(isGeneric: boolean, prefix: string, classNames: stri
                 left = left + "['" + paramName + "']";
             }
         }
-        str = left + " = " + value;
+        str.push(left + " = " + value);
     }
     else {
-        str = ConstructValuation(isGeneric, prefix, classNames, paramName, defaultValue) + " if " + value + " == None else " + value;
+        str = str.concat(ConstructValuation(isGeneric, prefix, classNames, paramName, defaultValue) + " if " + value + " == None else " + value);
     }
     return str;
 
