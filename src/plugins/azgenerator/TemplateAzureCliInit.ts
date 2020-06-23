@@ -14,7 +14,7 @@ export function GenerateAzureCliInit(model: CodeModelAz): string[] {
 
     output.push("from azext_" + model.Extension_NameUnderscored + ".generated._help import helps  # pylint: disable=unused-import");
     output.push("try:");
-    output.push("    from azext_" + model.Extension_NameUnderscored + ".manual._help import helps");
+    output.push("    from azext_" + model.Extension_NameUnderscored + ".manual._help import helps  # pylint: disable=reimported");
     output.push("except ImportError:");
     output.push("    pass");
     output.push("");
