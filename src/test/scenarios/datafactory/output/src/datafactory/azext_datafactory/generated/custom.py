@@ -165,8 +165,10 @@ def datafactory_trigger_update(instance,
                                if_match=None,
                                description=None,
                                annotations=None):
-    instance.description = description
-    instance.annotations = annotations
+    if description is not None:
+        instance.description = description
+    if annotations is not None:
+        instance.annotations = annotations
     return instance
 
 
