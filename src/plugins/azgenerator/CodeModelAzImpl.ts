@@ -9,7 +9,7 @@ import { serialize, deserialize, EnglishPluralizationService, pascalCase } from 
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeString, parseResourceId } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency } from './ScenarioTool'
+import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency, PrintTestScenario } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
 import { isNullOrUndefined, isArray } from "util";
 
@@ -854,6 +854,10 @@ export class CodeModelCliImpl implements CodeModelAz {
             return splittedOriginal;
         }
         return polyOriginal;
+    }
+
+    public get Method_GetSplitOriginalOperation(): any {
+        return this.Method.extensions?.['cli-split-operation-original-operation'];
     }
     //=================================================================================================================
     // Methods Parameters.
@@ -1822,8 +1826,8 @@ export class CodeModelCliImpl implements CodeModelAz {
             let cliKey = model.Method.language['cli'].cliKey;
             if (cliKey) {
                 let names = cliKey.split('#');
-                if (names.length > 1) {
-                    return names[1];
+                if (names && names.length > 1) {
+                    return names[names.length-1];
                 }
             }
             return '';
@@ -1833,7 +1837,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         function matchPolyClass(example: CommandExample, keyToMatch: string, valueToMatch: string) {
             for (let param of example.Parameters) {
-                if (('--' + keyToMatch).toLowerCase() == param.name.toLowerCase() && typeof param.value == 'string') {
+                if ((('--' + keyToMatch).toLowerCase() == param.name.toLowerCase() || ('--' + keyToMatch + '-').toLowerCase() == param.name.toLowerCase()) && typeof param.value == 'string') {
                     return valueToMatch.toLowerCase() == param.value.toLowerCase();
                 }
             }
@@ -1873,6 +1877,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.Parameters = this.ConvertToCliParameters(params);
                 example.MethodResponses = this.Method.responses || [];
                 example.Method_IsLongRun = this.Method.extensions?.['x-ms-long-running-operation'] ? true : false;
+                if (this.Method_GetSplitOriginalOperation && Object.keys(this.Examples).length>1) {
+                    //filter example by name for generic createorupdate
+                    if(this.Command_MethodName.toLowerCase()=="update" && !id.toLowerCase().endsWith("_update"))
+                        return;
+                    if(this.Command_MethodName.toLowerCase()!="update" && id.toLowerCase().endsWith("_update"))
+                        return;
+                }
                 if (this.filterExampleByPoly(example_obj, example)) {
                     for (let i=0;i<example.Parameters.length; i++) {
                         if (this.isDiscriminator(example.Parameters[i].methodParam.value) )
@@ -2048,6 +2059,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (!this._configuredScenario) {
             this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool, this._testScenario);
             this.SortExamplesByDependency();
+            PrintTestScenario(this._testScenario);
         }
 
         let commandParams = {};

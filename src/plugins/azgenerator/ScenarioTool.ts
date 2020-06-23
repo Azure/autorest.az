@@ -15,11 +15,6 @@ function MethodToOrder(httpMethod: string): number {
 
 export function GenerateDefaultTestScenario(
     examples: CommandExample[]): any[] {
-    console.warn("");
-    console.warn("NO TEST SCENARIO PROVIDED - DEFAULT WILL BE USED");
-    console.warn("ADD FOLLOWING SECTION TO readme.cli.md FILE TO MODIFY IT");
-    console.warn("--------------------------------------------------------");
-    console.warn("  test-scenario:");
 
     let testScenario = [];
 
@@ -52,10 +47,8 @@ export function GenerateDefaultTestScenario(
 
     for (var i = 0; i < sorted.length; i++) {
         var example: CommandExample = sorted[i];
-        console.warn("    - name: " + example.Id);
         testScenario.push({ name: example.Id })
     }
-    console.warn("--------------------------------------------------------");
     return testScenario;
 }
 
@@ -81,6 +74,21 @@ export function GenerateDefaultTestScenarioByDependency(
         return 0;
     });
 }
+
+export function PrintTestScenario(testScenario: any[]) {
+    console.warn("");
+    console.warn("NO TEST SCENARIO PROVIDED - DEFAULT WILL BE USED");
+    console.warn("ADD FOLLOWING SECTION TO readme.cli.md FILE TO MODIFY IT");
+    console.warn("--------------------------------------------------------");
+    console.warn("  test-scenario:");
+
+    for (var i = 0; i < testScenario.length; i++) {
+        var step: any = testScenario[i];
+        console.warn("    - name: " + step.name);
+    }
+    console.warn("--------------------------------------------------------");
+}
+
 
 
 const SUBSCRIPTIONS = "subscriptions";

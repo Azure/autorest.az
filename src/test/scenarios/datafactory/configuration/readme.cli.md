@@ -15,7 +15,6 @@ cli:
     - name: /Factories/post/Factories_GetGitHubAccessToken
     - name: /Factories/patch/Factories_Update
     - name: /IntegrationRuntimes/put/IntegrationRuntimes_Create
-    - name: /IntegrationRuntimes/put/IntegrationRuntimes_Create
     - name: /IntegrationRuntimes/get/IntegrationRuntimes_Get
     - name: /IntegrationRuntimes/get/IntegrationRuntimes_ListByFactory
     - name: /IntegrationRuntimes/post/IntegrationRuntimes_CreateLinkedIntegrationRuntime

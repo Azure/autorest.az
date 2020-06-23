@@ -363,14 +363,6 @@ Policy
             id: Resource Id
 
             Multiple actions can be specified by using more than one --mesh argument.
-    examples:
-      - name: Create/Update Managed Network Peering Policy
-        text: |-
-               az managed-network managed-network-peering-policy mesh-topology create --managed-network-name \
-"myManagedNetwork" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/\
-providers/Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResou\
-rceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup\
-1" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology update'] = """
@@ -437,14 +429,6 @@ Policy
             id: Resource Id
 
             Multiple actions can be specified by using more than one --mesh argument.
-    examples:
-      - name: Create/Update Managed Network Peering Policy
-        text: |-
-               az managed-network managed-network-peering-policy mesh-topology update --managed-network-name \
-"myManagedNetwork" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/\
-providers/Microsoft.Network/virtualNetworks/myHubVnet" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResou\
-rceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup\
-1" --resource-group "myResourceGroup"
 """
 
 helps['managed-network managed-network-peering-policy delete'] = """
