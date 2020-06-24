@@ -43,6 +43,10 @@ export class CodeModelCliImpl implements CodeModelAz {
     private _clientBaseUrlBound: boolean;
     private _clientAuthenticationPolicy: string;
 
+    private _cliCoreLib: string;
+
+    private static readonly DEFAULT_CLI_CORE_LIB = 'azure.cli.core';
+
     async init() {
         this.options = await this.session.getValue('az');
         this.extensionName = this.options['extensions'];
@@ -2213,5 +2217,16 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
         });
         return ret;
+    }
+
+    public set CliCoreLib(lib: string) {
+        this._cliCoreLib = lib;
+    }
+
+    public get CliCoreLib(): string {
+        if (isNullOrUndefined(this._cliCoreLib)) {
+            return CodeModelCliImpl.DEFAULT_CLI_CORE_LIB;
+        }
+        return this._cliCoreLib;
     }
 }

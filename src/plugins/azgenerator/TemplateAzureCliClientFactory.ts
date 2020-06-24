@@ -7,14 +7,14 @@ import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
 import { isNullOrUndefined } from "util";
 
-export function GenerateAzureCliClientFactory(model: CodeModelAz, cliCoreLib: string): string[] {
+export function GenerateAzureCliClientFactory(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     var output: string[] = header.getLines();
     model.SelectFirstCommandGroup();
     output.push("");
     output.push("");
     output.push("def cf_" + model.Extension_NameUnderscored + "_cl(cli_ctx, *_):");
-    output.push("    from " + cliCoreLib + ".commands.client_factory import get_mgmt_service_client");
+    output.push("    from " + model.CliCoreLib + ".commands.client_factory import get_mgmt_service_client");
     output.push("    from ..vendored_sdks." + model.PythonOperationsName + " import " + model.PythonMgmtClient);
 
     if (!isNullOrUndefined(model.Extension_ClientAuthenticationPolicy)) {
