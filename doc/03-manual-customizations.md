@@ -70,4 +70,11 @@ Place all the functions you want to override, or new custom functions in this fi
 
 ## Overriding Actions
 
-Finally it's possible to override actions or add any new actions in **actions.py** file in **manual** folder.
+It's possible to override actions or add any new actions in **actions.py** file in **manual** folder.
+
+## Overriding Version
+
+If you want to override version. you just need to put **version.py** in the manual folder. and have this line in it.  
+```
+VERSION = "your-actual-version"
+```
