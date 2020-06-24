@@ -182,4 +182,7 @@ export interface CodeModelAz {
     GatherInternalResource();
     FindExampleWaitById(id: string): string[][];
     RandomizeNames: boolean;
+    
+    // readme config
+    CliCoreLib: string;
 }

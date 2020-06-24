@@ -3,16 +3,21 @@ import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from "os";
 import { CodeModelCliImpl } from "./CodeModelAzImpl";
 import { GenerateAll } from "./Generator";
+import { isNullOrUndefined } from 'util';
 
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
     //host.Message({Channel:Channel.Warning, Text:"in azgenerator processRequest"});
     try {
-        const cliCoreLib = await host.GetValue('cli-core-lib') || 'azure.cli.core';
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         let model = new CodeModelCliImpl(session);
-        let files: any = await GenerateAll(model, true, debug, cliCoreLib);
+        const cliCoreLib: string = await host.GetValue('cli-core-lib');
+        if (!isNullOrUndefined(cliCoreLib) && cliCoreLib.length > 0) {
+            model.CliCoreLib = cliCoreLib;
+        }
+
+        let files: any = await GenerateAll(model, true, debug);
         if (model.SelectFirstExtension()) {
             do {
                 let path = "azext_" + model.Extension_Name.replace("-", "_") + "/";

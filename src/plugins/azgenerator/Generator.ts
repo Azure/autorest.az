@@ -25,7 +25,7 @@ import { GenerateNamespaceInit } from "./TemplateAzureCliNamespaceInit"
 import { GenerateAzureCliTestInit } from "./TemplateAzureCliTestInit"
 
 export async function GenerateAll(model: CodeModelAz,
-    generateReport: any, debug: boolean, cliCoreLib: string) {
+    generateReport: any, debug: boolean) {
     let files: any = {};
 
     await model.init();
@@ -37,10 +37,10 @@ export async function GenerateAll(model: CodeModelAz,
             let pathTop = "";
             let path = "azext_" + model.Extension_NameUnderscored + "/";
             
-            files[path + "generated/_params.py"] = GenerateAzureCliParams(model, debug, cliCoreLib);
-            files[path + "generated/commands.py"] = GenerateAzureCliCommands(model, cliCoreLib);
-            files[path + "generated/custom.py"] = GenerateAzureCliCustom(model, cliCoreLib);
-            files[path + "generated/_client_factory.py"] = GenerateAzureCliClientFactory(model, cliCoreLib);
+            files[path + "generated/_params.py"] = GenerateAzureCliParams(model, debug);
+            files[path + "generated/commands.py"] = GenerateAzureCliCommands(model);
+            files[path + "generated/custom.py"] = GenerateAzureCliCustom(model);
+            files[path + "generated/_client_factory.py"] = GenerateAzureCliClientFactory(model);
             files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);
             files[path + "generated/action.py"] = GenerateAzureCliActions(model);
             files[path + "generated/_help.py"] = GenerateAzureCliHelp(model, debug);
@@ -54,7 +54,7 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "manual/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "action.py"] = GenerateTopLevelImport(model, "action");  
             files[path + "custom.py"] = GenerateTopLevelImport(model, "custom");  
-            files[path + "__init__.py"] = GenerateAzureCliInit(model, cliCoreLib);
+            files[path + "__init__.py"] = GenerateAzureCliInit(model);
             files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(model);
             files[pathTop + "README.md"] = GenerateAzureCliReadme(model);
             files[pathTop + "setup.cfg"] = GenerateAzureCliSetupCfg(model);

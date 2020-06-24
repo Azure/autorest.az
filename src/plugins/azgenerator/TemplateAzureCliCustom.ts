@@ -9,7 +9,7 @@ import { Capitalize, ToCamelCase, ToMultiLine, ToPythonString } from '../../util
 import { CodeModelAz } from "./CodeModelAz";
 import { HeaderGenerator } from "./Header";
 
-export function GenerateAzureCliCustom(model: CodeModelAz, cliCoreLib: string): string[] {
+export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
     header.disableTooManyLines = true;
 
@@ -29,7 +29,7 @@ export function GenerateAzureCliCustom(model: CodeModelAz, cliCoreLib: string): 
     }
 
     if(required['nowait']) {
-        header.addFromImport(cliCoreLib + ".util", ["sdk_no_wait"]);
+        header.addFromImport(model.CliCoreLib + ".util", ["sdk_no_wait"]);
     }
 
     if(required['disableUnusedArgument']) {
