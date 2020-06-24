@@ -266,7 +266,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     private setParamAzUniqueNames() {
         this.paramActionNameReference = new Map<Schema, string>();
         let nameActionReference: Map<string, ActionParam> = new Map<string, ActionParam>();
-        let pythonReserveWord = ['all', 'id', 'format', 'type'];
+        let pythonReserveWord = ['all', 'id', 'format', 'type', 'filter'];
         if (this.SelectFirstCommandGroup()) {
             do {
                 if (this.SelectFirstCommand()) {

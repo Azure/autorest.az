@@ -22,7 +22,7 @@ export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
     output.push("# HISTORY.rst entry.");
     output.push("VERSION = '0.1.0'");
     output.push("try:");
-    output.push("    from .manual.version import VERSION");
+    output.push("    from azext_" + model.Extension_NameUnderscored + ".manual.version import VERSION");
     output.push("except ImportError:");
     output.push("    pass");
     output.push("")
