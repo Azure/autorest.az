@@ -29,7 +29,7 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     }
 
     if(required['nowait']) {
-        header.addFromImport("azure.cli.core.util", ["sdk_no_wait"]);
+        header.addFromImport(model.CliCoreLib + ".util", ["sdk_no_wait"]);
     }
 
     if(required['disableUnusedArgument']) {

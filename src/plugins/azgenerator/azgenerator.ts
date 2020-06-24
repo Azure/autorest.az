@@ -3,6 +3,7 @@ import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from "os";
 import { CodeModelCliImpl } from "./CodeModelAzImpl";
 import { GenerateAll } from "./Generator";
+import { isNullOrUndefined } from 'util';
 
 
 export async function processRequest(host: Host) {
@@ -11,6 +12,11 @@ export async function processRequest(host: Host) {
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         let model = new CodeModelCliImpl(session);
+        const cliCoreLib: string = await host.GetValue('cli-core-lib');
+        if (!isNullOrUndefined(cliCoreLib) && cliCoreLib.length > 0) {
+            model.CliCoreLib = cliCoreLib;
+        }
+
         let files: any = await GenerateAll(model, true, debug);
         if (model.SelectFirstExtension()) {
             do {
