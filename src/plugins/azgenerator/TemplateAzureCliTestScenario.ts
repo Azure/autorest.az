@@ -118,6 +118,9 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                     }
                 }
             }
+            if (disabled) {
+                steps.push("    pass");
+            }
             steps.push("");
             steps.push("");
             funcScenario.push(...ToMultiLine(`    ${functionName}(test${parameterLine()})`));
