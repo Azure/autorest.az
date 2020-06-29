@@ -34,11 +34,19 @@ cli:
         cli-flatten-all-overwrite-swagger: false
 ```
  
-``` yaml $(python)
+``` yaml $(python) && !$(cli-core)
 add-credential: true
 no-namespace-folders: true
 license-header: MICROSOFT_MIT_NO_VERSION
 #clear-output-folder: true
 scope-codegen/emitter:
     output-folder: "$(python-sdk-output-folder)"
+```
+
+``` yaml $(python) && $(cli-core)
+add-credential: true
+no-namespace-folders: true
+license-header: MICROSOFT_MIT_NO_VERSION
+#clear-output-folder: true
+scope-codegen/emitter: false
 ```
