@@ -293,20 +293,7 @@ function generateCommandHelp(model: CodeModelAz, debug: boolean = false) {
 
         //output.push ("# " + example_id);
         let parameters: string[] = [];
-
-        parameters.push("az");
-        parameters = parameters.concat(commandHead.split(" "));
-        //parameters.push(method);
-
-        for (let param of example.Parameters) {
-            let slp = param.value; 
-            if (!param.isKeyValues) {
-                slp = ToJsonString(slp); 
-            }
-            //parameters += " " + k + " " + slp;
-            parameters.push(param.name);
-            parameters.push(slp);
-        }
+        parameters = model.GetExampleItems(example, false, undefined);
         output.push("      - name: " + example.Title);
         output.push("        text: |-");
         let line = "               " + parameters.join(' ');

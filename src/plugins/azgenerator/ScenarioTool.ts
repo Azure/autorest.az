@@ -1,7 +1,7 @@
 
 import * as path from "path"
 import { CommandExample, ExampleParam } from "./CodeModelAz";
-import { deepCopy, isDict } from "../../utils/helper"
+import { deepCopy, isDict, ToCamelCase } from "../../utils/helper"
 import { Example } from "@azure-tools/codemodel";
 
 
@@ -214,17 +214,18 @@ class ResourceObject {
         return getResourceKey(this.class_name, this.object_name);
     }
 
-    public get placeholder(): string {
-        return '{' + this.key + '}';
+    public placeholder(isTest: boolean): string {
+        if (isTest)    return '{' + this.key + '}';
+        return getResourceKey(this.class_name, this.object_name, true);
     }
 }
 
 let keyCache = {}  //class_name+objectname->key
 let keySeq = {}    // class_name ->seq
-export function getResourceKey(class_name: string, object_name: string): string {
+export function getResourceKey(class_name: string, object_name: string, formalName=false): string {
     let longKey = (resourceClassKeys[class_name] || class_name) + '_' + object_name;
     if (longKey in keyCache) {
-        return keyCache[longKey];
+        return formalName? ToCamelCase(`my-${class_name}`): keyCache[longKey];
     }
     if (class_name in keySeq) {
         let key = (resourceClassKeys[class_name] || class_name) + '_' + keySeq[class_name];
@@ -240,9 +241,8 @@ export function getResourceKey(class_name: string, object_name: string): string 
             // generally, internal resource object_name is shorter than class_name
             keyCache[longKey] = object_name;
         }
-
     }
-    return keyCache[longKey];
+    return formalName? ToCamelCase(`my-${class_name}${keySeq[class_name]}`): keyCache[longKey];
 }
 
 export class ResourcePool {
@@ -425,28 +425,29 @@ export class ResourcePool {
         return false;
 
     }
-    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders: string[], resources: string[], exampleParam: ExampleParam) {
+    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders: string[], resources: string[], exampleParam: ExampleParam, isTest=true) {
         if (placeholders == undefined) placeholders = new Array();
         if (isJson) {
             let body = typeof endpoint == 'string' ? JSON.parse(endpoint) : endpoint;
             if (typeof body == 'object') {
                 if (body instanceof Array) {
                     body = body.map((value) => {
-                        return this.addEndpointResource(value, typeof value == 'object', isKeyValues, placeholders, resources, exampleParam);
+                        return this.addEndpointResource(value, typeof value == 'object', isKeyValues, placeholders, resources, exampleParam, isTest);
                     });
                 }
                 else if (isDict(body)) {
                     for (let k in body) {
-                        body[k] = this.addEndpointResource(body[k], typeof body[k] == 'object', isKeyValues, placeholders, resources, exampleParam);
+                        body[k] = this.addEndpointResource(body[k], typeof body[k] == 'object', isKeyValues, placeholders, resources, exampleParam, isTest);
                     }
                 }
             }
             else {
-                body = this.addEndpointResource(body, false, isKeyValues, placeholders, resources, exampleParam);
+                body = this.addEndpointResource(body, false, isKeyValues, placeholders, resources, exampleParam, isTest);
             }
 
             if (typeof endpoint == 'string') {
-                return this.formatable(JSON.stringify(body).split(/[\r\n]+/).join(""), placeholders);
+                let ret = JSON.stringify(body).split(/[\r\n]+/).join("");
+                return isTest ? this.formatable(ret, placeholders): ret;
             }
             else {
                 return body;
@@ -470,12 +471,22 @@ export class ResourcePool {
                 let kv = attr.split("=");
                 if (ret.length > 0) ret += " ";
                 if (kv[1].length >= 2 && kv[1][0] == '"' && kv[1][kv[1].length - 1] == '"') {
-                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, false, placeholders, resources, exampleParam);
-                    ret += `${kv[0]}="${this.formatable(v, placeholders)}"`;
+                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, false, placeholders, resources, exampleParam, isTest);
+                    if (isTest) {
+                        ret += `${kv[0]}="${this.formatable(v, placeholders)}"`;
+                    }
+                    else {
+                        ret += `${kv[0]}="${v}"`;
+                    }
                 }
                 else {
-                    let v = this.addEndpointResource(kv[1], isJson, false, placeholders, resources, exampleParam);
-                    ret += `${kv[0]}=${this.formatable(v, placeholders)}`;
+                    let v = this.addEndpointResource(kv[1], isJson, false, placeholders, resources, exampleParam, isTest);
+                    if (isTest) {
+                        ret += `${kv[0]}=${this.formatable(v, placeholders)}`;
+                    }
+                    else {
+                        ret += `${kv[0]}=${v}`;
+                    }
                 }
             }
             return ret;
@@ -485,7 +496,9 @@ export class ResourcePool {
         if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
             return endpoint;
         }
-        nodes[2] = `{${ResourcePool.KEY_SUBSCRIPTIONID}}`;
+        if (isTest) {
+            nodes[2] = `{${ResourcePool.KEY_SUBSCRIPTIONID}}`;
+        }
         if (placeholders.indexOf(nodes[2]) < 0) {
             placeholders.push(nodes[2]);
         }
@@ -501,9 +514,9 @@ export class ResourcePool {
                 }
                 else {
                     resource_object = this.addTreeResource(resource, nodes[i + 1], resource_object);
-                    nodes[i + 1] = resource_object.placeholder;
-                    if (placeholders.indexOf(resource_object.placeholder) < 0) {
-                        placeholders.push(resource_object.placeholder);
+                    nodes[i + 1] = resource_object.placeholder(isTest);
+                    if (placeholders.indexOf(resource_object.placeholder(isTest)) < 0) {
+                        placeholders.push(resource_object.placeholder(isTest));
                     }
                     if (resources.indexOf(resource) < 0) {
                         resources.push(resource);
@@ -515,7 +528,7 @@ export class ResourcePool {
         return nodes.join('/');
     }
 
-    public addParamResource(param_name: string, param_value: string, isJson: boolean, isKeyValues: boolean): string {
+    public addParamResource(param_name: string, param_value: string, isJson: boolean, isKeyValues: boolean, isTest=true): string {
         if (typeof param_value !== 'string' || isJson || isKeyValues) return param_value;
 
         if (param_name.startsWith('--')) {
@@ -531,7 +544,7 @@ export class ResourcePool {
         }
         let resource_object = this.addMapResource(resource, param_value);
         if (resource_object) {
-            return resource_object.placeholder;
+            return resource_object.placeholder(isTest);
         }
         else {
             return param_value;
