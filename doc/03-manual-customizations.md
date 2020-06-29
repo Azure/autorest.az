@@ -1,80 +1,40 @@
 # Manual Customizations
 
-## Overriding / Adding Commands in a Command Group
+## How to override a command's implementation:
 
-In order to override command group, you need to add **commands.py** file in **manual** folder.
+* Figure out the implementation method to override in **...\generated\command.py** and **...\generated\custom.py** as below:
+![sample image](images/manual-override-impl1.PNG)
+![sample image](images/manual-override-impl1.1.png)
+* Add **custom.py** file in **manual** folder if it's not exist and provide your implementation as below:
+![sample image](images/manual-override-impl2.png)
 
-Content of the file should look as follows:
+## How to add more argument into a command
 
-    # --------------------------------------------------------------------------------------------
-    # Copyright (c) Microsoft Corporation. All rights reserved.
-    # Licensed under the MIT License. See License.txt in the project root for license information.
-    # --------------------------------------------------------------------------------------------
+* Add **_params.py** file in **manual** folder if it's not exist and add your new argument as below:
+![sample image](images/manual-override-add-argument1.png)
+* Figure out the implementation method to override in **...\generated\command.py** and **...\generated\custom.py** as below:
+![sample image](images/manual-override-impl1.PNG)
+![sample image](images/manual-override-impl1.1.png)
+* Add **custom.py** file in **manual** folder if it's not exist and provide your implementation as below:
+![sample image](images/manual-override-impl3.png)
 
-    from azure.cli.core.commands import CliCommandType
+## How to add a new command
 
-
-    def load_command_table(self, _):
-
-        from ..generated._client_factory import cf_subscription
-        account_subscription = CliCommandType(
-            operations_tmpl='azext_account.vendored_sdks.subscription.operations._subscription_operations#SubscriptionOperations.{}',
-            client_factory=cf_subscription)
-
-        with self.command_group('account subscription', account_subscription, client_factory=cf_subscription) as g:
-            g.custom_command('mycommand', 'account_subscription_mycommand')
-
-Following modifications can be done:
-- creating entire new command group
-- adding new commands to generated command group
-- overwriting generated commands
-
-Note: creating new commands will require creating custom implementation (**custom.py** file)
-
-## Overriding / Manually Adding New Parameters
-
-In order to override or add any parameters, you need to add **_params.py** file in **manual** folder.
-
-File should look as follows:
-
-    # --------------------------------------------------------------------------------------------
-    # Copyright (c) Microsoft Corporation. All rights reserved.
-    # Licensed under the MIT License. See License.txt in the project root for license information.
-    # --------------------------------------------------------------------------------------------
-
-    def load_arguments(self, _):
-
-        with self.argument_context('account subscription create-subscription') as c:
-            c.argument('billing_account_name', help='Custom parameter description')
-
-Using this method following modifications can be done:
-- adding new parameters to existing commands
-- changing any properties of existing parameters
-
-Note that in case of new parameters, custom function associated with the command will have to be updated accordingly.
-
-## Overriding / Adding Custom Functions
-
-In order to override or add any parameters, you need to add **custom.py** file in **manual** folder.
-
-    # --------------------------------------------------------------------------------------------
-    # Copyright (c) Microsoft Corporation. All rights reserved.
-    # Licensed under the MIT License. See License.txt in the project root for license information.
-    # --------------------------------------------------------------------------------------------
-
-    def account_subscription_my_command(cmd, client,subscription_id,
-                                        body_subscription_name=None):
-        ... your implementation...
-
-Place all the functions you want to override, or new custom functions in this file.
+* Add **command.py** file in **manual** folder if it's not exist and provide your new command as below. You can take **...\generated\command.py** as a reference.
+![sample image](images/manual-override-add-command1.png)
+* Add **_params.py** file in **manual** folder if it's not exist and provide the arguments for your new command. You can take **...\generated\_params.py** as a reference.
+![sample image](images/manual-override-add-command2.png)
+* add **custom.py** file in **manual** folder if it's not exist and provide the implementation for your new command
+![sample image](images/manual-override-add-command3.png)
 
 ## Overriding Actions
 
-It's possible to override actions or add any new actions in **actions.py** file in **manual** folder.
+It's also possible to override actions or add any new actions by adding **actions.py** file in **manual** folder.
 
 ## Overriding Version
 
-If you want to override version. you just need to put **version.py** in the manual folder. and have this line in it.  
+If you want to override version. you just need to put **version.py** in the **manual** folder. and have this line in it.  
 ```
 VERSION = "your-actual-version"
 ```
+![sample image](images/manual-override-version.png)
