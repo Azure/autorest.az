@@ -103,7 +103,7 @@ function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = "", 
         output.push("helps['" + model.CommandGroup_Name + "'] = \"\"\"");
     }
     output.push("    type: group");
-    let shortSummary = "    short-summary: " + model.CommandGroup_Help;
+    let shortSummary = "    short-summary: " + model.CommandGroup_Help.trim();
     if(subCommandGroupName != "") {
         shortSummary = shortSummary + " sub group " + subCommandGroupName.split(" ").pop();
     }
@@ -271,7 +271,7 @@ function generateCommandHelp(model: CodeModelAz, debug: boolean = false) {
     // there will be just one method for create, update, delete, show, etc.
     // there may be a few list methods, so let's just take description from the first one.
     // as we can't use all of them
-    let shortSummary = "    short-summary: " + model.Command_Help;
+    let shortSummary = "    short-summary: " + model.Command_Help.trim();
     if (debug) {
         if (!shortSummary.trimRight().endsWith(".")) {
             shortSummary += ".";
