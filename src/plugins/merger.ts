@@ -21,6 +21,45 @@ export class Merger {
         this.codeModel.operationGroups.forEach(operationGroup => {
             let operations = operationGroup.operations;
             operationGroup.operations.forEach(operation => {
+                if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-split-operation-original-operation'])) {
+                    let nameIndexMap: Map<string, number> = new Map<string, number>();
+                    let index = 0;
+                    operation.extensions['cli-split-operation-original-operation'].parameters.forEach(param => {
+                        nameIndexMap.set(param.language['cli']['name'], index);
+                        index++;
+                    });
+                    let nameIndexMapRequest: Map<string, number> = new Map<string, number>();
+                    let indexRequest = 0;
+                    if(!isNullOrUndefined(operation.extensions['cli-split-operation-original-operation'].requests?.[0]?.parameters)) {
+                        operation.extensions['cli-split-operation-original-operation'].requests[0].parameters.forEach(rparam => {
+                            nameIndexMapRequest.set(rparam.language['cli']['name'], indexRequest);
+                            indexRequest++;
+                        })
+                        
+                    }
+                    operation.parameters.forEach(subParam => {
+                        let idx = nameIndexMap.get(subParam.language['cli']['name']);
+                        if (idx > -1) {
+                            if(isNullOrUndefined(operation.extensions['cli-split-operation-original-operation'].parameters[idx]['subParams'])) {
+                                operation.extensions['cli-split-operation-original-operation'].parameters[idx]['subParams'] = {};
+                            }
+                            operation.extensions['cli-split-operation-original-operation'].parameters[idx]['subParams'][operation.language['cli']['name']] = subParam.language['cli']['name'];
+                            subParam['nameBaseParam'] = operation.extensions['cli-split-operation-original-operation'].parameters[idx];
+                        }
+                    });
+                    if (!isNullOrUndefined(operation?.requests?.[0]?.parameters)) {
+                        operation.requests[0].parameters.forEach(subParam => {
+                            let idx = nameIndexMapRequest.get(subParam.language['cli']['name']);
+                            if(idx > -1) {
+                                if(isNullOrUndefined(operation.extensions['cli-split-operation-original-operation']?.requests?.[0]?.parameters[idx]['subParams'])) {
+                                    operation.extensions['cli-split-operation-original-operation'].requests[0].parameters[idx]['subParams'] = {};
+                                }
+                                operation.extensions['cli-split-operation-original-operation'].requests[0].parameters[idx]['subParams'][operation.language['cli']['name']] = subParam.language['cli']['name'];
+                                subParam['nameBaseParam'] = operation.extensions['cli-split-operation-original-operation'].requests[0].parameters[idx];
+                            }
+                        });
+                    }
+                }
                 if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-operations']) && !operation.language['cli']['cli-operation-splitted']) {
                     let nameIndexMap: Map<string, number> = new Map<string, number>();
                     let index = 0;
@@ -61,7 +100,7 @@ export class Merger {
                             });
                         }
                         
-                    })
+                    });
                     operations = operations.concat(operation.extensions['cli-operations']);
                 }
             });
