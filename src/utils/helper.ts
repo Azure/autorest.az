@@ -159,6 +159,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
     }
     if (maxLength < 3) maxLength = 3;
     for (let i = 0; i < sentence.length; i++) {
+        if (sentence[i]==' ' && !inStr && ret.length>1 && ret[ret.length-1].length == (indent > 0 ? indent : spaceNum)) continue;
         ret[ret.length - 1] += sentence[i];
         if (inStr) {
             if (sentence[i] == strTag && !isEscaped(sentence, i)) {
@@ -188,18 +189,18 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                 let originLastNormal = lastNormal;
                 while (lastNormal >= 0 && isEscaped(ret[ret.length - 1], lastNormal + 1)) lastNormal--;
                 let UnEscapedLastNormal = lastNormal;
-                    for (let n = 0; n<Math.min(30, maxLength-1); n++) {
-                        if (i-n==strStart)  break;
-                        if (ret[ret.length - 1][lastNormal] != ' ') {
-                            lastNormal --;
-                        }
-                        else {
-                            break;
-                        }
+                for (let n = 0; n < Math.min(30, maxLength - 1); n++) {
+                    if (i - n == strStart) break;
+                    if (ret[ret.length - 1][lastNormal] != ' ') {
+                        lastNormal--;
                     }
-                    if (ret[ret.length - 1][lastNormal] != ' ' && i-(originLastNormal-lastNormal)!=strStart) {
-                        lastNormal = UnEscapedLastNormal;
+                    else {
+                        break;
                     }
+                }
+                if (ret[ret.length - 1][lastNormal] != ' ' && i - (originLastNormal - lastNormal) != strStart) {
+                    lastNormal = UnEscapedLastNormal;
+                }
 
                 if (strMode) {
                     if (lastNormal != ret[ret.length - 1].length - 1) {
@@ -241,6 +242,13 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                     ret.push(newLine);
                     lastComma = -1;
                 }
+            }
+
+            let firstCharIdx = 0;
+            let newLine = ret[ret.length-1];
+            while (firstCharIdx<ret[0].length && ret[0][firstCharIdx] == ' ' && firstCharIdx<newLine.length && newLine[firstCharIdx] == ' ')    firstCharIdx++;
+            if (firstCharIdx<newLine.length && firstCharIdx<ret[0].length && ret[0][firstCharIdx]=='#') {
+                ret[ret.length-1] = `${newLine.substr(0, firstCharIdx)}# ${newLine.substr(firstCharIdx)}`;
             }
         }
     }

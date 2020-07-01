@@ -126,9 +126,13 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     }
     
-    
     public get RandomizeNames(): boolean {
         if (this.options?.['randomize-names']) return true;
+        return false;
+    }
+
+    public get FormalizeNames(): boolean {
+        if (this.options?.['formalize-names']) return true;
         return false;
     }
 
@@ -1910,10 +1914,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         let hasRG = false;
         for (let param of example.Parameters) {
             let param_value = param.value;
-            if (isTest) {
-                let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues, [], [], param);
+            if (isTest || this.FormalizeNames) {
+                let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues, [], [], param, isTest);
                 if (replaced_value == param_value) {
-                    replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues);
+                    replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues, isTest);
                 }
                 param_value = replaced_value;
             }

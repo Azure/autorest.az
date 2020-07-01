@@ -118,6 +118,9 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                     }
                 }
             }
+            if (disabled) {
+                steps.push("    pass");
+            }
             steps.push("");
             steps.push("");
             funcScenario.push(...ToMultiLine(`    ${functionName}(test${parameterLine()})`));
@@ -193,7 +196,7 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
             if (hasCreateExample && model.RandomizeNames)
             {
                 let snakeName = ToSnakeCase(class_name);
-                ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='${snakeName}'[:${Math.floor(snakeName.length/2)}], length=${snakeName.length}),`, initiates);
+                ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='${object_name}'[:${Math.floor(object_name.length/2)}], length=${object_name.length}),`, initiates);
             }
             else
                 initiates.push(`            '${kargs_key}': '${object_name}',`);   // keep the original name in example if there is no create example in the test-scenario

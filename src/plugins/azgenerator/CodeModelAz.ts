@@ -181,8 +181,10 @@ export interface CodeModelAz {
     GetPreparerEntities(): any[];
     GatherInternalResource();
     FindExampleWaitById(id: string): string[][];
+    GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
     RandomizeNames: boolean;
     
     // readme config
     CliCoreLib: string;
+    
 }
