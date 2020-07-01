@@ -24,7 +24,7 @@ current subscription in a paginated format.
     examples:
       - name: Get Managed Network
         text: |-
-               az managed-network mn list --resource-group "myResourceGroup2"
+               az managed-network mn list --resource-group "myResourceGroup"
 """
 
 helps['managed-network mn create'] = """
@@ -38,11 +38,11 @@ group and Managed Network name
 oviders/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000\\"},{\\"id\\":\\"/providers/Microsof\
 t.Management/managementGroups/20000000-0002-0000-0000-000000000000\\"}],\\"subscriptions\\":[{\\"id\\":\\"subscriptionA\
 \\"},{\\"id\\":\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/my\
-ResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork2\\"},{\\"id\\":\\"/subscriptions/subscriptio\
-nC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork3\\"}],\\"subnets\\":[{\\\
-"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVir\
-tualNetwork4/subnets/default\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Mic\
-rosoft.Network/virtualNetworks/myVirtualNetwork/subnets/default\\"}]}" --name "myManagedNetwork" --resource-group \
+ResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork\\"},{\\"id\\":\\"/subscriptions/subscription\
+C/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork2\\"}],\\"subnets\\":[{\\"\
+id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirt\
+ualNetwork3/subnets/default\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Micr\
+osoft.Network/virtualNetworks/myVirtualNetwork/subnets/default\\"}]}" --name "myManagedNetwork" --resource-group \
 "myResourceGroup"
 """
 
@@ -327,7 +327,7 @@ Policy
         text: |-
                az managed-network managed-network-peering-policy hub-and-spoke-topology create --managed-network-name \
 "myManagedNetwork" --policy-name "myHubAndSpoke" --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/\
-providers/Microsoft.Network/virtualNetworks/myVirtualNetwork5" --spokes id="/subscriptions/subscriptionB/resourceGroups\
+providers/Microsoft.Network/virtualNetworks/myVirtualNetwork4" --spokes id="/subscriptions/subscriptionB/resourceGroups\
 /myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetw\
 orkGroup1" --resource-group "myResourceGroup"
 """

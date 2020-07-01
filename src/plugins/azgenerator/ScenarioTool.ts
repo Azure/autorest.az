@@ -227,7 +227,8 @@ export function getResourceKey(class_name: string, object_name: string, formalNa
     if (longKey in keyCache) {
         return formalName? ToCamelCase(`my-${class_name}`): keyCache[longKey];
     }
-    if (class_name in keySeq) {
+    //if (class_name in keySeq) {
+    if (keySeq.hasOwnProperty(class_name)) {
         let key = (resourceClassKeys[class_name] || class_name) + '_' + keySeq[class_name];
         keySeq[class_name] += 1;
         keyCache[longKey] = key;
@@ -242,7 +243,15 @@ export function getResourceKey(class_name: string, object_name: string, formalNa
             keyCache[longKey] = object_name;
         }
     }
-    return formalName? ToCamelCase(`my-${class_name}${keySeq[class_name]}`): keyCache[longKey];
+    if (formalName) {
+        if (keySeq[class_name]>2)
+            return ToCamelCase(`my-${class_name}${keySeq[class_name]-1}`);
+        else
+            return ToCamelCase(`my-${class_name}`);
+    }
+    else {
+        return keyCache[longKey];
+    }
 }
 
 export class ResourcePool {

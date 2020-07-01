@@ -23,7 +23,7 @@ helps['datafactory list'] = """
     examples:
       - name: Factories_ListByResourceGroup
         text: |-
-               az datafactory list --resource-group "myResourceGroup2"
+               az datafactory list --resource-group "myResourceGroup"
 """
 
 helps['datafactory show'] = """
