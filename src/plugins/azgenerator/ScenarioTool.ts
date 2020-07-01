@@ -3,6 +3,7 @@ import * as path from "path"
 import { CommandExample, ExampleParam } from "./CodeModelAz";
 import { deepCopy, isDict, ToCamelCase } from "../../utils/helper"
 import { Example } from "@azure-tools/codemodel";
+import { EnglishPluralizationService } from "@azure-tools/codegen";
 
 
 function MethodToOrder(httpMethod: string): number {
@@ -217,7 +218,16 @@ class ResourceObject {
     public placeholder(isTest: boolean): string {
         if (isTest)    return '{' + this.key + '}';
         return getResourceKey(this.class_name, this.object_name, true);
+        
     }
+}
+
+function singlizeLast(word:string) {
+    let eps = new EnglishPluralizationService();
+    let ws = word.split('-');
+    let l = ws.length;
+    ws[l-1] = eps.singularize(ws[l-1]);
+    return ws.join('-');
 }
 
 let keyCache = {}  //class_name+objectname->key
@@ -225,7 +235,7 @@ let keySeq = {}    // class_name ->seq
 export function getResourceKey(class_name: string, object_name: string, formalName=false): string {
     let longKey = (resourceClassKeys[class_name] || class_name) + '_' + object_name;
     if (longKey in keyCache) {
-        return formalName? ToCamelCase(`my-${class_name}`): keyCache[longKey];
+        return formalName? ToCamelCase(`my-${singlizeLast(class_name)}`): keyCache[longKey];
     }
     //if (class_name in keySeq) {
     if (keySeq.hasOwnProperty(class_name)) {
@@ -245,9 +255,9 @@ export function getResourceKey(class_name: string, object_name: string, formalNa
     }
     if (formalName) {
         if (keySeq[class_name]>2)
-            return ToCamelCase(`my-${class_name}${keySeq[class_name]-1}`);
+            return ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name]-1}`);
         else
-            return ToCamelCase(`my-${class_name}`);
+            return ToCamelCase(`my-${singlizeLast(class_name)}`);
     }
     else {
         return keyCache[longKey];
