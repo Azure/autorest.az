@@ -53,12 +53,12 @@ def step_managementnetworkgroupsput(test, rg):
              'etworks/VnetA" '
              '--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualN'
              'etworks/VnetB" '
-             '--group-name "{myManagedNetworkGroup1}" '
+             '--group-name "{myManagedNetworkGroup}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
     test.cmd('az managed-network mn group wait --created '
-             '--group-name "{myManagedNetworkGroup1}" '
+             '--group-name "{myManagedNetworkGroup}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -70,7 +70,7 @@ def step_scopeassignmentsput(test, rg):
              '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Mana'
              'gedNetwork/managedNetworks/{myManagedNetwork}" '
              '--scope "subscriptions/subscriptionC" '
-             '--name "{subscriptionCAssignment}"',
+             '--name "{myScopeAssignment}"',
              checks=[])
 
 
@@ -79,11 +79,11 @@ def step_scopeassignmentsput(test, rg):
 def step_managednetworkpeeringpoliciesput(test, rg):
     test.cmd('az managed-network managed-network-peering-policy hub-and-spoke-topology create '
              '--managed-network-name "{myManagedNetwork}" '
-             '--policy-name "{myHubAndSpoke}" '
+             '--policy-name "{myManagedNetworkPeeringPolicy}" '
              '--hub id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetwork'
              's/{vn_4}" '
              '--spokes id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/mana'
-             'gedNetworks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup1}" '
+             'gedNetworks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -118,7 +118,7 @@ def step_managednetworkslistbysubscription(test, rg):
 def step_scopeassignmentsget(test, rg):
     test.cmd('az managed-network mn scope-assignment show '
              '--scope "subscriptions/subscriptionC" '
-             '--name "{subscriptionCAssignment}"',
+             '--name "{myScopeAssignment}"',
              checks=[])
 
 
@@ -134,7 +134,7 @@ def step_scopeassignmentslist(test, rg):
 @try_manual
 def step_managementnetworkgroupsget(test, rg):
     test.cmd('az managed-network mn group show '
-             '--group-name "{myManagedNetworkGroup1}" '
+             '--group-name "{myManagedNetworkGroup}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -154,7 +154,7 @@ def step_managednetworksgroupslistbymanagednetwork(test, rg):
 def step_managednetworkpeeringpoliciesget(test, rg):
     test.cmd('az managed-network managed-network-peering-policy show '
              '--managed-network-name "{myManagedNetwork}" '
-             '--policy-name "{myHubAndSpoke}" '
+             '--policy-name "{myManagedNetworkPeeringPolicy}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -173,7 +173,7 @@ def step_managednetworkpeeringpolicieslistbymanagednetwork(test, rg):
 def step_managednetworkpeeringpoliciesdelete(test, rg):
     test.cmd('az managed-network managed-network-peering-policy delete '
              '--managed-network-name "{myManagedNetwork}" '
-             '--policy-name "{myHubAndSpoke}" '
+             '--policy-name "{myManagedNetworkPeeringPolicy}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -183,7 +183,7 @@ def step_managednetworkpeeringpoliciesdelete(test, rg):
 def step_scopeassignmentsdelete(test, rg):
     test.cmd('az managed-network mn scope-assignment delete '
              '--scope "subscriptions/subscriptionC" '
-             '--name "{subscriptionCAssignment}"',
+             '--name "{myScopeAssignment}"',
              checks=[])
 
 
@@ -191,7 +191,7 @@ def step_scopeassignmentsdelete(test, rg):
 @try_manual
 def step_managementnetworkgroupsdelete(test, rg):
     test.cmd('az managed-network mn group delete '
-             '--group-name "{myManagedNetworkGroup1}" '
+             '--group-name "{myManagedNetworkGroup}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -249,10 +249,10 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         })
 
         self.kwargs.update({
-            'myManagedNetwork': self.create_random_name(prefix='managed_networks'[:8], length=16),
-            'subscriptionCAssignment': self.create_random_name(prefix='scope_assignments'[:8], length=17),
-            'myManagedNetworkGroup1': self.create_random_name(prefix='managed_network_groups'[:11], length=22),
-            'myHubAndSpoke': self.create_random_name(prefix='managed_network_peering_policies'[:16], length=32),
+            'myManagedNetwork': self.create_random_name(prefix='myManagedNetwork'[:8], length=16),
+            'myScopeAssignment': self.create_random_name(prefix='subscriptionCAssignment'[:11], length=23),
+            'myManagedNetworkGroup': self.create_random_name(prefix='myManagedNetworkGroup1'[:11], length=22),
+            'myManagedNetworkPeeringPolicy': self.create_random_name(prefix='myHubAndSpoke'[:6], length=13),
         })
 
         call_scenario(self, rg)
