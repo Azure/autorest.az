@@ -306,7 +306,7 @@ helps['datafactory integration-runtime show'] = """
     examples:
       - name: IntegrationRuntimes_Get
         text: |-
-               az datafactory integration-runtime show --factory-name "myFactory" --name "myIntegrationruntime" \
+               az datafactory integration-runtime show --factory-name "myFactory" --name "myIntegrationRuntime" \
 --resource-group "myResourceGroup"
 """
 
@@ -324,7 +324,7 @@ helps['datafactory integration-runtime linked-integration-runtime create'] = """
                az datafactory integration-runtime linked-integration-runtime create --name \
 "bfa92911-9fb6-4fbe-8f23-beae87bc1c83" --data-factory-location "West US" --data-factory-name \
 "e9955d6d-56ea-4be3-841c-52a12c1a9981" --subscription-id "061774c7-4b5a-4159-a55b-365581830283" --factory-name \
-"myFactory" --integration-runtime-name "myIntegrationruntime" --resource-group "myResourceGroup" --subscription-id \
+"myFactory" --integration-runtime-name "myIntegrationRuntime" --resource-group "myResourceGroup" --subscription-id \
 "12345678-1234-1234-1234-12345678abc"
 """
 
@@ -385,7 +385,7 @@ helps['datafactory integration-runtime self-hosted create'] = """
       - name: IntegrationRuntimes_Create
         text: |-
                az datafactory integration-runtime self-hosted create --factory-name "myFactory" --description "A \
-selfhosted integration runtime" --name "myIntegrationruntime" --resource-group "myResourceGroup"
+selfhosted integration runtime" --name "myIntegrationRuntime" --resource-group "myResourceGroup"
 """
 
 helps['datafactory integration-runtime update'] = """
@@ -394,7 +394,7 @@ helps['datafactory integration-runtime update'] = """
     examples:
       - name: IntegrationRuntimes_Update
         text: |-
-               az datafactory integration-runtime update --factory-name "myFactory" --name "myIntegrationruntime" \
+               az datafactory integration-runtime update --factory-name "myFactory" --name "myIntegrationRuntime" \
 --resource-group "myResourceGroup" --auto-update "Off" --update-delay-offset "\\"PT3H\\""
 """
 
@@ -404,7 +404,7 @@ helps['datafactory integration-runtime delete'] = """
     examples:
       - name: IntegrationRuntimes_Delete
         text: |-
-               az datafactory integration-runtime delete --factory-name "myFactory" --name "myIntegrationruntime" \
+               az datafactory integration-runtime delete --factory-name "myFactory" --name "myIntegrationRuntime" \
 --resource-group "myResourceGroup"
 """
 
@@ -416,7 +416,7 @@ source credentials.
       - name: IntegrationRuntimes_GetConnectionInfo
         text: |-
                az datafactory integration-runtime get-connection-info --factory-name "myFactory" --name \
-"myIntegrationruntime" --resource-group "myResourceGroup"
+"myIntegrationRuntime" --resource-group "myResourceGroup"
 """
 
 helps['datafactory integration-runtime get-monitoring-data'] = """
@@ -427,7 +427,7 @@ under this integration runtime.
       - name: IntegrationRuntimes_GetMonitoringData
         text: |-
                az datafactory integration-runtime get-monitoring-data --factory-name "myFactory" --name \
-"myIntegrationruntime" --resource-group "myResourceGroup"
+"myIntegrationRuntime" --resource-group "myResourceGroup"
 """
 
 helps['datafactory integration-runtime get-status'] = """
@@ -436,7 +436,7 @@ helps['datafactory integration-runtime get-status'] = """
     examples:
       - name: IntegrationRuntimes_GetStatus
         text: |-
-               az datafactory integration-runtime get-status --factory-name "myFactory" --name "myIntegrationruntime" \
+               az datafactory integration-runtime get-status --factory-name "myFactory" --name "myIntegrationRuntime" \
 --resource-group "myResourceGroup"
 """
 
@@ -447,7 +447,7 @@ helps['datafactory integration-runtime list-auth-key'] = """
       - name: IntegrationRuntimes_ListAuthKeys
         text: |-
                az datafactory integration-runtime list-auth-key --factory-name "myFactory" --name \
-"myIntegrationruntime" --resource-group "myResourceGroup"
+"myIntegrationRuntime" --resource-group "myResourceGroup"
 """
 
 helps['datafactory integration-runtime regenerate-auth-key'] = """
@@ -457,7 +457,7 @@ helps['datafactory integration-runtime regenerate-auth-key'] = """
       - name: IntegrationRuntimes_RegenerateAuthKey
         text: |-
                az datafactory integration-runtime regenerate-auth-key --factory-name "myFactory" --name \
-"myIntegrationruntime" --key-name "authKey2" --resource-group "myResourceGroup"
+"myIntegrationRuntime" --key-name "authKey2" --resource-group "myResourceGroup"
 """
 
 helps['datafactory integration-runtime remove-link'] = """
@@ -467,7 +467,7 @@ runtime.
     examples:
       - name: IntegrationRuntimes_RemoveLinks
         text: |-
-               az datafactory integration-runtime remove-link --factory-name "myFactory" --name "myIntegrationruntime" \
+               az datafactory integration-runtime remove-link --factory-name "myFactory" --name "myIntegrationRuntime" \
 --linked-factory-name "exampleFactoryName-linked" --resource-group "myResourceGroup"
 """
 
@@ -477,7 +477,7 @@ helps['datafactory integration-runtime start'] = """
     examples:
       - name: IntegrationRuntimes_Start
         text: |-
-               az datafactory integration-runtime start --factory-name "myFactory" --name "myIntegrationruntime" \
+               az datafactory integration-runtime start --factory-name "myFactory" --name "myIntegrationRuntime2" \
 --resource-group "myResourceGroup"
 """
 
@@ -487,7 +487,7 @@ helps['datafactory integration-runtime stop'] = """
     examples:
       - name: IntegrationRuntimes_Stop
         text: |-
-               az datafactory integration-runtime stop --factory-name "myFactory" --name "myIntegrationruntime" \
+               az datafactory integration-runtime stop --factory-name "myFactory" --name "myIntegrationRuntime2" \
 --resource-group "myResourceGroup"
 """
 
@@ -501,7 +501,7 @@ node than using this API directly.
       - name: IntegrationRuntimes_SyncCredentials
         text: |-
                az datafactory integration-runtime sync-credentials --factory-name "myFactory" --name \
-"myIntegrationruntime" --resource-group "myResourceGroup"
+"myIntegrationRuntime" --resource-group "myResourceGroup"
 """
 
 helps['datafactory integration-runtime upgrade'] = """
@@ -510,7 +510,7 @@ helps['datafactory integration-runtime upgrade'] = """
     examples:
       - name: IntegrationRuntimes_Upgrade
         text: |-
-               az datafactory integration-runtime upgrade --factory-name "myFactory" --name "myIntegrationruntime" \
+               az datafactory integration-runtime upgrade --factory-name "myFactory" --name "myIntegrationRuntime" \
 --resource-group "myResourceGroup"
 """
 
@@ -521,6 +521,6 @@ helps['datafactory integration-runtime wait'] = """
       - name: Pause executing next line of CLI script until the datafactory integration-runtime is successfully \
 created.
         text: |-
-               az datafactory integration-runtime wait --factory-name "myFactory" --name "myIntegrationruntime" \
+               az datafactory integration-runtime wait --factory-name "myFactory" --name "myIntegrationRuntime" \
 --resource-group "myResourceGroup" --created
 """

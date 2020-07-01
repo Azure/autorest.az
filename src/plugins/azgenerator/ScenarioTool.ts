@@ -1,7 +1,7 @@
 
 import * as path from "path"
 import { CommandExample, ExampleParam } from "./CodeModelAz";
-import { deepCopy, isDict, ToCamelCase } from "../../utils/helper"
+import { deepCopy, isDict, ToCamelCase, changeCamelToDash } from "../../utils/helper"
 import { Example } from "@azure-tools/codemodel";
 import { EnglishPluralizationService } from "@azure-tools/codegen";
 
@@ -224,44 +224,49 @@ class ResourceObject {
 
 function singlizeLast(word:string) {
     let eps = new EnglishPluralizationService();
-    let ws = word.split('-');
+    let ws = changeCamelToDash(word).split('-');
     let l = ws.length;
     ws[l-1] = eps.singularize(ws[l-1]);
     return ws.join('-');
 }
 
 let keyCache = {}  //class_name+objectname->key
+let formalCache = {}
 let keySeq = {}    // class_name ->seq
 export function getResourceKey(class_name: string, object_name: string, formalName=false): string {
     let longKey = (resourceClassKeys[class_name] || class_name) + '_' + object_name;
-    if (longKey in keyCache) {
-        return formalName? ToCamelCase(`my-${singlizeLast(class_name)}`): keyCache[longKey];
+    if (formalName && longKey in formalCache) {
+        return formalCache[longKey];
     }
-    //if (class_name in keySeq) {
+    if (!formalName && longKey in keyCache) {
+        return keyCache[longKey];
+    }
+
     if (keySeq.hasOwnProperty(class_name)) {
         let key = (resourceClassKeys[class_name] || class_name) + '_' + keySeq[class_name];
         keySeq[class_name] += 1;
-        keyCache[longKey] = key;
+        formalCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name]-1}`);
+        if (preparerInfos[class_name]?.name) {  // is external resource
+            keyCache[longKey] = key;
+        }
+        else {
+            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name]-1}`);
+        }
     }
     else {
         keySeq[class_name] = 2;
+        formalCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}`);
         if (preparerInfos[class_name]?.name) {  // is external resource
             keyCache[longKey] = resourceClassKeys[class_name] || class_name;
         }
         else {                              // is internal resource
             // generally, internal resource object_name is shorter than class_name
-            keyCache[longKey] = object_name;
+            // keyCache[longKey] = object_name;
+            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}`);
         }
     }
-    if (formalName) {
-        if (keySeq[class_name]>2)
-            return ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name]-1}`);
-        else
-            return ToCamelCase(`my-${singlizeLast(class_name)}`);
-    }
-    else {
-        return keyCache[longKey];
-    }
+
+    return formalName? formalCache[longKey]: keyCache[longKey];
 }
 
 export class ResourcePool {
