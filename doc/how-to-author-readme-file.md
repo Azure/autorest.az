@@ -2,7 +2,7 @@
 
 It's straight forward to prepare the initial readme files for CLI CodeGen which would contains the configuration to customize CodeGen behavior if needed:
 
-## Step1. Prepare readme.az.md
+## Step 1. Prepare readme.az.md
 
 Create readme.az.md in the same folder of readme.md and copy following content with the {svcName} replaced with proper name
 
@@ -21,7 +21,7 @@ Create readme.az.md in the same folder of readme.md and copy following content w
     # refer to the faq.md for more details
     ```
 
-## Step2. Prepare readme.cli.md
+## Step 2. Prepare readme.cli.md
 
 Create readme.cli.md in the same folder of readme.md with following content. No modification needed.
 
@@ -30,7 +30,7 @@ Create readme.cli.md in the same folder of readme.md with following content. No 
     # refer to the faq.md for more details
     ```
 
-## Step3. Prepare readme.python.md
+## Step 3. Prepare readme.python.md
 
 If your service has released Python SDK, it's likely you already have the file. If not, you can create readme.python.md in the same folder of readme.md and copy following content with {svcName} replaced properly:
 
@@ -56,12 +56,16 @@ If your service has released Python SDK, it's likely you already have the file. 
         output-folder: $(python-sdks-folder)/{svcName}/azure-mgmt-{svcName}
     ```
 
-## Step4. Update readme.md
+## Step 4. Update readme.md
 
 Add following highlighted line in readme.md to enable CLI CodeGen in swagger PR:
 
 ![sample image](images/author-readme1.png)
 
-The readme files should be ready now and you can refer to [here](how-to-generate.md) to generate your CLI code now. 
+If you have PR to **azure-rest-api-specs** repo, you should be able to see the CLI CodeGen triggered automatically for your swagger PR:
+![sample image](images/codegen-in-swagger-pr.png)
+
+## Ready to generate code
+All readme files should be ready and you can refer to [here](how-to-generate.md) to generate your CLI code now. 
 
 Feel free to reach to us at amecodegen@microsoft.com if you hit any issues or questions.
