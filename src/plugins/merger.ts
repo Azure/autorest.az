@@ -1,8 +1,6 @@
 import { CodeModel, codeModelSchema, Language, Parameter } from "@azure-tools/codemodel";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { serialize, deserialize } from "@azure-tools/codegen";
-import { values, items, length, Dictionary } from "@azure-tools/linq";
-import { changeCamelToDash } from '../utils/helper';
 import { isNullOrUndefined } from "util";
 
 export class Merger {
@@ -70,18 +68,34 @@ export class Merger {
     }
 }
 
+
+export class CodeModelMerger {
+
+
+    constructor(public cliCodeModel: CodeModel, public pythonCodeModel: CodeModel) {
+    }
+
+    async process() {
+        return this.mergeCodeModel();
+    }
+
+    mergeCodeModel(): CodeModel {
+        let azCodeModel = this.cliCodeModel;
+        return azCodeModel;
+    }
+}
+
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
-    const extensionMode = await host.GetValue('extension-mode');
-    //host.Message({Channel:Channel.Warning, Text:"in aznamer processRequest"});
-
     //console.error(extensionName);
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        const plugin = await new Merger(session);
-        plugin.codeModel.info['extensionMode'] = extensionMode;
-        const result = await plugin.process();
-        host.WriteFile('azmerger-temp-output.yaml', serialize(result));
+        let cliCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-cli-v4.yaml"), 'code-model-cli-v4.yaml', codeModelSchema);
+        let pythonCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-v4-no-tags.yaml"), 'code-model-v4-no-tags.yaml', codeModelSchema);
+        const plugin = new CodeModelMerger(cliCodeModel, pythonCodeModel);
+        const azCodeModel = await plugin.process();
+        session.model = azCodeModel;
+        host.WriteFile('azmerger-temp-output.yaml', serialize(azCodeModel));
     } catch (E) {
         if (debug) {
             console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
