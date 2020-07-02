@@ -4,7 +4,7 @@ It's straight forward to prepare the initial readme files for CLI CodeGen which 
 
 ## Step 1. Prepare readme.az.md
 
-Create readme.az.md in the same folder of readme.md and copy following content with the {svcName} replaced with proper name
+Create readme.az.md in the same folder of readme.md and copy following content with the **{svcName}** replaced with proper name
 
     ## AZ
 
@@ -32,7 +32,7 @@ Create readme.cli.md in the same folder of readme.md with following content. No 
 
 ## Step 3. Prepare readme.python.md
 
-If your service has released Python SDK, it's likely you already have the file. If not, you can create readme.python.md in the same folder of readme.md and copy following content with {svcName} replaced properly:
+If your service has released Python SDK, it's likely you already have the file. If not, you can create readme.python.md in the same folder of readme.md and copy following content with **{svcName}** replaced properly:
 
     ## Python
 
