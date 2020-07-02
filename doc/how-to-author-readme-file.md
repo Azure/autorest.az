@@ -66,6 +66,6 @@ If you have PR to **azure-rest-api-specs** repo, you should be able to see the C
 ![sample image](images/codegen-in-swagger-pr.png)
 
 ## Ready to generate code
-All readme files should be ready and you can refer to [here](how-to-generate.md) to generate your CLI code now. 
+All readme files should be ready now. You can refer to [here](how-to-generate.md) to generate your CLI code now if you want. 
 
 Feel free to reach to us at amecodegen@microsoft.com if you hit any issues or questions.
