@@ -59,6 +59,7 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     }
     if (!hasCommandParamContent) {
         output_args.push("    pass");
+        header.disableUnusedArgument = true;
     } else {
         header.disableTooManyLines = true;
         header.disableTooManyStatements = true;
