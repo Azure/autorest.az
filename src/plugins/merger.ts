@@ -80,20 +80,23 @@ export class CodeModelMerger {
         return this.mergeCodeModel();
     }
 
-    findNodeInCliCodeModel(cliNodePath: any) {
-        let nodePaths = cliNodePath.split('/');
+    findNodeInCliCodeModel(cliM4Path: any) {
+        let nodePaths = cliM4Path.split('/');
         let curNode: any = this.cliCodeModel;
         for(let np of nodePaths) {
-            if (np.startsWith['[@'] && np.endsWith(']')) {
-                np = np.replace(/\[@|\]/, '');
+            if (np == "") {
+                continue;
+            }
+            if (np.startsWith('[@') && np.endsWith(']')) {
+                np = np.replace(/\[\@|\]/g, '');
                 for(let node of values(curNode)) {
-                    if(node?.['language']?.['cli']['cliKey'] == np) {
+                    if(node?.['language']?.['cli']['cliM4Path'] == np) {
                         curNode = node;
                         break;
                     }
                 }
-            } else if(np.startsWith['['] && np.endsWith(']')) {
-                np = np.replace(/\[|\]/, '');
+            } else if(np.startsWith('[') && np.endsWith(']')) {
+                np = Number(np.replace(/\[|\]/, ''));
                 curNode = curNode[np];
             } else {
                 curNode = curNode[np];
@@ -103,12 +106,21 @@ export class CodeModelMerger {
     }
 
     mergeCodeModel(): CodeModel {
-        let azCodeModel = this.cliCodeModel;   
+        this.processGlobalParam();
+        this.processSchemas();
+        let azCodeModel = this.cliCodeModel; 
         return azCodeModel;
     }
 
     setPythonName(param) {
-        let cliNode = this.findNodeInCliCodeModel(param?.['language']?.['cli']?.['cliNodePath']);
+        let cliM4Path = param?.['language']?.['cli']?.['cliM4Path'];
+        if (isNullOrUndefined(cliM4Path)) {
+            return;
+        }
+        let cliNode = this.findNodeInCliCodeModel(cliM4Path);
+        if (cliM4Path.toLowerCase().indexOf("identit") > 0) {
+            param;
+        }
         cliNode.language['python'] = param.language['python'];
     }
 
