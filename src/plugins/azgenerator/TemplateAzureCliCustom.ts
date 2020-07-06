@@ -95,10 +95,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
             if (skip) {
                 skip = false;
             }
-            if (model.MethodParameter_IsFlattened) {
-                if (isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']) && isNullOrUndefined(model.MethodParameter['extensions']?.['cli-flattened'])) {
-                    continue;
-                }
+            if (model.MethodParameter_IsFlattened && model.MethodParameter_IsCliFlattened) {
                 originalParameterStack.push(model.MethodParameter);
                 originalParameterNameStack.push(model.MethodParameter_Name);
                 if (!needGeneric) {
@@ -355,9 +352,9 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
 
             }
 
-            if (!isNullOrUndefined(originalOperation)) {
-                output_body = output_body.concat(ConstructMethodBodyParameter(model, needGeneric));
-            }
+            //if (!isNullOrUndefined(originalOperation)) {
+            output_body = output_body.concat(ConstructMethodBodyParameter(model, needGeneric));
+            //}
         } while (model.SelectNextMethod());
 
 
@@ -458,7 +455,7 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     while (cnt < originalParameters.length) {
         let param = originalParameters[cnt];
         cnt++;
-        if (param.flattened) {
+        if (param.flattened  && !model.Parameter_IsCliFlattened(param)) {
             continue;
         }
         if (param.schema.type == SchemaType.Constant) {
@@ -469,6 +466,9 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
         }
         let optionName = model.Parameter_SubMapsTo(model.Method_NameCli, param);
         let parameterName = model.Parameter_NamePython(param);
+        if (isNullOrUndefined(parameterName)) {
+            continue;
+        }
         let parameterPair = '';
         if (model.Parameter_IsHidden(param)) {
             if (model.Parameter_DefaultValue(param)) {
@@ -537,13 +537,16 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
     if (model.SelectFirstMethodParameter(true)) {
         do {
             let param = model.MethodParameter;
-            if (model.MethodParameter_IsFlattened) {
+            if (model.MethodParameter_IsFlattened  && !model.MethodParameter_IsCliFlattened) {
                 continue;
             }
             if (model.MethodParameter_Type == SchemaType.Constant) {
                 continue;
             }
 
+            if(isNullOrUndefined(model.MethodParameter_NamePython)) {
+                continue;
+            }
             let parameterPair = '';
 
             if (model.MethodParameter_IsHidden) {

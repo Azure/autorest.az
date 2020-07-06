@@ -25,6 +25,17 @@ pipeline-model: v3
 
 scope-clicommon:
     output-folder: $(debug-output-folder)
+
+scope-az:
+    is-object: false
+    output-artifact:
+        #- source-file-az-hider
+        #- source-file-pynamer
+        #- source-file-aznamer
+        #- source-file-modifiers
+        #- source-file-merger
+        - source-file-extension
+    output-folder: $(az-output-folder)
 ```
 
 ``` yaml !$(cli-core)
@@ -80,17 +91,6 @@ pipeline:
             #- az/modifiers
             - az/azgenerator
         scope: scope-az
-
-scope-az:
-    is-object: false
-    output-artifact:
-        #- source-file-az-hider
-        #- source-file-pynamer
-        #- source-file-aznamer
-        #- source-file-modifiers
-        #- source-file-merger
-        - source-file-extension
-    output-folder: $(az-output-folder)
 ```
 
 ``` yaml $(cli-core)
@@ -125,34 +125,23 @@ pipeline:
         input:
             - az/renamer
             - python/namer
-        output-artifact: source-file-merger
-    #az/aznamer:
-    #    input: az/merger
+    #    output-artifact: source-file-merger
+    az/aznamer:
+        input: az/merger
     #    output-artifact: source-file-aznamer
-    #az/modifiers:
-    #    input: az/aznamer
+    az/modifiers:
+        input: az/aznamer
         #output-artifact: source-file-modifiers
-    #az/azgenerator:
-    #    input: az/modifiers
-    #    output-artifact: source-file-extension
+    az/azgenerator:
+        input: az/modifiers
+        output-artifact: source-file-extension
     az/emitter:
         input:
             #- az/hider
             #- az/clicommon
-            - az/merger
+            #- az/merger
             #- az/aznamer
             #- az/modifiers
-            #- az/azgenerator
+            - az/azgenerator
         scope: scope-az
-
-scope-az:
-    is-object: false
-    output-artifact:
-        #- source-file-az-hider
-        #- source-file-pynamer
-        #- source-file-aznamer
-        #- source-file-modifiers
-        - source-file-merger
-        #- source-file-extension
-    output-folder: $(az-output-folder)
 ```

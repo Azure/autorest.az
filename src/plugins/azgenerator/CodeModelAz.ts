@@ -136,6 +136,7 @@ export interface CodeModelAz {
     MethodParameter_IsHidden: boolean;
     MethodParameter_IsRequired: boolean;
     MethodParameter_IsFlattened: boolean;
+    MethodParameter_IsCliFlattened: boolean;
     MethodParameter_RequiredByMethod: boolean;
     MethodParameter_EnumValues: string[];
     MethodParameters_AddPolySubClass(oriParam, para): boolean;
@@ -150,6 +151,7 @@ export interface CodeModelAz {
     Parameter_InGlobal(Parameter): boolean;
     Parameter_IsHidden(Parameter): boolean;
     Parameter_IsFlattened(Parameter): boolean;
+    Parameter_IsCliFlattened(Parameter): boolean;
     Parameter_MapsTo(Parameter): string;
     Parameter_SubMapsTo(subMethodName, Parameter): string;
     Schema_MapsTo(Schema);

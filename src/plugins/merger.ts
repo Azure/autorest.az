@@ -81,7 +81,7 @@ export class CodeModelMerger {
     }
 
     findNodeInCliCodeModel(cliM4Path: any) {
-        let nodePaths = cliM4Path.split('/');
+        let nodePaths = cliM4Path.split('$$');
         let curNode: any = this.cliCodeModel;
         for(let np of nodePaths) {
             if (np == "") {
@@ -90,13 +90,13 @@ export class CodeModelMerger {
             if (np.startsWith('[@') && np.endsWith(']')) {
                 np = np.replace(/\[\@|\]/g, '');
                 for(let node of values(curNode)) {
-                    if(node?.['language']?.['cli']['cliM4Path'] == np) {
+                    if(node?.['language']?.['cli']['cliKey'] == np) {
                         curNode = node;
                         break;
                     }
                 }
             } else if(np.startsWith('[') && np.endsWith(']')) {
-                np = Number(np.replace(/\[|\]/, ''));
+                np = Number(np.replace(/\[|\]/g, ''));
                 curNode = curNode[np];
             } else {
                 curNode = curNode[np];
@@ -106,6 +106,7 @@ export class CodeModelMerger {
     }
 
     mergeCodeModel(): CodeModel {
+        this.processOperationGroup();
         this.processGlobalParam();
         this.processSchemas();
         let azCodeModel = this.cliCodeModel; 
@@ -118,10 +119,10 @@ export class CodeModelMerger {
             return;
         }
         let cliNode = this.findNodeInCliCodeModel(cliM4Path);
-        if (cliM4Path.toLowerCase().indexOf("identit") > 0) {
-            param;
+        if (!isNullOrUndefined(cliNode) && !isNullOrUndefined(cliNode.language) && isNullOrUndefined(cliNode.language['python'])) {
+            cliNode.language['python'] = param.language['python'];
         }
-        cliNode.language['python'] = param.language['python'];
+        
     }
 
     processGlobalParam() {
@@ -176,20 +177,54 @@ export class CodeModelMerger {
             this.setPythonName(str);
         }
     }
+
+    processOperationGroup() {
+        this.pythonCodeModel.operationGroups.forEach(operationGroup => {
+            if(!isNullOrUndefined(operationGroup.language['cli'])) {
+                this.setPythonName(operationGroup);
+            }
+
+            let operations = operationGroup.operations;
+            operations.forEach(operation => {
+                if(!isNullOrUndefined(operation.language['cli'])) {
+                    this.setPythonName(operation);
+                }
+                operation.parameters.forEach(parameter => {
+                    if(!isNullOrUndefined(parameter.language['cli'])) {
+                        this.setPythonName(parameter);
+                    }
+                });
+                operation.requests.forEach(request => {
+                    if(!isNullOrUndefined(request?.parameters)) {
+                        request.parameters.forEach(parameter => {
+                            if (!isNullOrUndefined(parameter.language['cli'])) {
+                                this.setPythonName(parameter);
+                            }
+                        });                   
+                    }
+                });
+            });
+        });
+    }
 }
 
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
-    //console.error(extensionName);
+    const cliCore = await host.GetValue('cli-core') || false;
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        let cliCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-cli-v4.yaml"), 'code-model-cli-v4.yaml', codeModelSchema);
-        let pythonCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-v4-no-tags.yaml"), 'code-model-v4-no-tags.yaml', codeModelSchema);
-        const plugin = new CodeModelMerger(cliCodeModel, pythonCodeModel);
-        const azCodeModel = await plugin.process();
-        session.model = azCodeModel;
-        host.WriteFile('azmerger-cli-temp-output.yaml', serialize(azCodeModel));
+        if (cliCore) {
+            let cliCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-cli-v4.yaml"), 'code-model-cli-v4.yaml', codeModelSchema);
+            let pythonCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-v4-no-tags.yaml"), 'code-model-v4-no-tags.yaml', codeModelSchema);
+            const codeModelMerger = new CodeModelMerger(cliCodeModel, pythonCodeModel);
+            const azCodeModel = await codeModelMerger.process();
+            //host.WriteFile('azmerger-cli-temp-output-pre.yaml', serialize(azCodeModel));
+            session.model = azCodeModel;
+        } 
+        const plugin = new Merger(session);
+        const result = await plugin.process();
+        host.WriteFile('azmerger-cli-temp-output-after.yaml', serialize(result));
     } catch (E) {
         if (debug) {
             console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);

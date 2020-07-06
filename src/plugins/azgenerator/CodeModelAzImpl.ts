@@ -1101,6 +1101,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return param['flattened'] ? true : false;
     }
 
+    public Parameter_IsCliFlattened(param: Parameter = this.MethodParameter): boolean {
+        return param?.language?.['cli']?.['cli-flattened'] ? true : false;
+    }
+
     public Parameter_IsListOfSimple(param: Parameter = this.MethodParameter): boolean {
         // objects that is not base class of polymorphic and satisfy one of the four conditions
         // 1. objects with simple properties 
@@ -1454,7 +1458,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_NamePython(param: Parameter = this.MethodParameter): string {
-        return param.language['python'].name;
+        return param.language?.['python']?.name;
     }
 
     public get MethodParameter_IsRequired(): boolean {
@@ -1463,6 +1467,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_IsFlattened(): boolean {
         return this.Parameter_IsFlattened(this.MethodParameter);
+    }
+
+    public get MethodParameter_IsCliFlattened(): boolean {
+        return this.Parameter_IsCliFlattened(this.MethodParameter);
     }
 
     public get MethodParameter_RequiredByMethod(): boolean {

@@ -122,7 +122,10 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if (param?.schema?.type == SchemaType.Constant || param['readOnly']) {
                         continue;
                     }
-                    allPythonParam.set(param.language.python.name, true);
+                    if(!isNullOrUndefined(param?.language?.python?.name)) {
+                        allPythonParam.set(param.language.python.name, true);
+                    }
+                    
                 }
                 if(!isNullOrUndefined(originalOperation.requests[0].parameters)) {
                     for(let param of originalOperation.requests[0].parameters) {
@@ -135,7 +138,9 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         if (param?.schema?.type == SchemaType.Constant || param['readOnly']) {
                             continue;
                         }
-                        allPythonParam.set(param.language.python.name, true);
+                        if(!isNullOrUndefined(param?.language?.python?.name)) {
+                            allPythonParam.set(param.language.python.name, true);
+                        }
                     }
                 }
             }
@@ -150,7 +155,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         continue;
                     }
                     hasParam = true;
-                    if (isNullOrUndefined(originalOperation)) {
+                    if (isNullOrUndefined(originalOperation) && !isNullOrUndefined(model.MethodParameter_NamePython)) {
                         allPythonParam.set(model.MethodParameter_NamePython, true);
                     }
                     let parameterName = model.MethodParameter_MapsTo;
