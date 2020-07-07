@@ -2032,6 +2032,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                             depend_parameters.push(param.name);
                         }
                     }
+                    this.resource_pool.addParamResource(param.defaultName, param.value, param.isJson, param.isKeyValues);
                 }
             }
 

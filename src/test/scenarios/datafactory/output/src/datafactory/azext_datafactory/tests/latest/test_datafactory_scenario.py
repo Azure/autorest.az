@@ -324,7 +324,7 @@ def step__triggers_post_triggers_geteventsubscriptionstatus(test, rg):
 def step__triggers_post_triggers_querybyfactory(test, rg):
     test.cmd('az datafactory trigger query-by-factory '
              '--factory-name "{myFactory}" '
-             '--parent-trigger-name "exampleTrigger" '
+             '--parent-trigger-name "{myTrigger}" '
              '--resource-group "{rg}"',
              checks=[])
 

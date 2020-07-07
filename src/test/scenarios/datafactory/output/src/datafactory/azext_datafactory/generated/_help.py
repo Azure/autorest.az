@@ -232,8 +232,8 @@ helps['datafactory trigger query-by-factory'] = """
     examples:
       - name: Triggers_QueryByFactory
         text: |-
-               az datafactory trigger query-by-factory --factory-name "myFactory" --parent-trigger-name \
-"exampleTrigger" --resource-group "myResourceGroup"
+               az datafactory trigger query-by-factory --factory-name "myFactory" --parent-trigger-name "myTrigger" \
+--resource-group "myResourceGroup"
 """
 
 helps['datafactory trigger start'] = """
