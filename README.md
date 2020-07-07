@@ -120,7 +120,7 @@ modelerfour:
 
 pipeline:
     python/m2r:
-        input: modelerfour/clicommon/cli-namer
+        input: clicommon/m4/cli-namer
     az/renamer:
         input: clicommon/identity
     az/merger:
