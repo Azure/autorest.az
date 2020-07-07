@@ -57,8 +57,9 @@ export interface CodeModelAz {
     init(): any;
     SelectFirstExtension(): boolean;
     SelectNextExtension(): boolean;
-    isCliCore: boolean;
 
+    isCliCore: boolean;
+    AzureCliFolder: string;
     Extension_Name: string;
     Extension_NameUnderscored: string;
     Extension_NameClass: string;

@@ -44,7 +44,6 @@ export class CodeModelCliImpl implements CodeModelAz {
     private _clientAuthenticationPolicy: string;
 
     private _cliCoreLib: string;
-
     private static readonly DEFAULT_CLI_CORE_LIB = 'azure.cli.core';
 
     async init() {
@@ -433,8 +432,8 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
-    public get isCliCore() {
-        return this.codeModel.language['az']?.['isCliCore'];
+    public get azureCliFolder() {
+        return this.codeModel.language['az']?.['azureCliFolder'];
     }
 
     public get Extension_Name() {
@@ -2241,4 +2240,21 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
         return this._cliCoreLib;
     }
+
+    public set AzureCliFolder(folder: string) {
+        this.AzureCliFolder = folder;
+    }
+
+    public get AzureCliFolder(): string {
+        return this.AzureCliFolder;
+    }
+
+    public get isCliCore() {
+        return !isNullOrUndefined(this.isCliCore) && this.isCliCore? true: false;
+    }
+
+    public set isCliCore(isCore: boolean) {
+        this.isCliCore = isCore;
+    }
+
 }

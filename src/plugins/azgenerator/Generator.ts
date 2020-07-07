@@ -23,6 +23,7 @@ import { GenerateAzureCliActions } from "./TemplateAzureCliActions"
 import { GenerateTopLevelImport } from "./TemplateAzureCliTopLevelImport"
 import { GenerateNamespaceInit } from "./TemplateAzureCliNamespaceInit"
 import { GenerateAzureCliTestInit } from "./TemplateAzureCliTestInit"
+import { GenerateDocSourceJsonMap } from "./TemplateAzureCliDocSourceJsonMap"
 
 export async function GenerateAll(model: CodeModelAz,
     generateReport: any, debug: boolean) {
@@ -36,6 +37,9 @@ export async function GenerateAll(model: CodeModelAz,
         {
             let pathTop = "";
             let path = "azext_" + model.Extension_NameUnderscored + "/";
+            if (model.isCliCore) {
+                path = "";
+            }
             
             files[path + "generated/_params.py"] = GenerateAzureCliParams(model, debug);
             files[path + "generated/commands.py"] = GenerateAzureCliCommands(model);
@@ -63,6 +67,11 @@ export async function GenerateAll(model: CodeModelAz,
             if (generateReport)
             {
                 files[pathTop + "report.md"] = GenerateAzureCliReport(model);
+            }
+            
+            if (model.isCliCore) {
+                let docSourceJsonMapPath = model.AzureCliFolder + "/doc/sphinx/azhelpgen/doc_source_map.json";
+                files[docSourceJsonMapPath] = GenerateDocSourceJsonMap(model, docSourceJsonMapPath);
             }
         }
         while (model.SelectNextExtension())

@@ -17,6 +17,10 @@ export async function processRequest(host: Host) {
             model.CliCoreLib = cliCoreLib;
         }
 
+        const azureCliFolder = await host.GetValue("azure-cli-folder");
+        if (!isNullOrUndefined(azureCliFolder)) {
+            model.AzureCliFolder = azureCliFolder;
+        }
         let files: any = await GenerateAll(model, true, debug);
         if (model.SelectFirstExtension()) {
             do {
