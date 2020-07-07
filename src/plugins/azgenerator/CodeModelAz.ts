@@ -57,6 +57,7 @@ export interface CodeModelAz {
     init(): any;
     SelectFirstExtension(): boolean;
     SelectNextExtension(): boolean;
+    isCliCore: boolean;
 
     Extension_Name: string;
     Extension_NameUnderscored: string;

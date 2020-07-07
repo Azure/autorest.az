@@ -33,7 +33,7 @@ scope-az:
         #- source-file-pynamer
         #- source-file-aznamer
         #- source-file-modifiers
-        #- source-file-merger
+        - source-file-merger
         - source-file-extension
     output-folder: $(az-output-folder)
 ```
@@ -119,13 +119,15 @@ modelerfour:
 #recursive-payload-flattening: true
 
 pipeline:
+    python/m2r:
+        input: modelerfour/clicommon/cli-namer
     az/renamer:
         input: clicommon/identity
     az/merger:
         input:
             - az/renamer
             - python/namer
-    #    output-artifact: source-file-merger
+        output-artifact: source-file-merger
     az/aznamer:
         input: az/merger
     #    output-artifact: source-file-aznamer
@@ -139,7 +141,7 @@ pipeline:
         input:
             #- az/hider
             #- az/clicommon
-            #- az/merger
+            - az/merger
             #- az/aznamer
             #- az/modifiers
             - az/azgenerator

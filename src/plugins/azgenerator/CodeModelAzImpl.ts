@@ -433,6 +433,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
+    public get isCliCore() {
+        return this.codeModel.language['az']?.['isCliCore'];
+    }
+
     public get Extension_Name() {
         return this.extensionName;
     }

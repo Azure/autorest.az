@@ -3,6 +3,7 @@ import { Session, startSession, Host, Channel } from "@azure-tools/autorest-exte
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { isNullOrUndefined } from "util";
+import { az } from "..";
 
 export class Merger {
     codeModel: CodeModel;
@@ -219,7 +220,9 @@ export async function processRequest(host: Host) {
             let pythonCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-v4-no-tags.yaml"), 'code-model-v4-no-tags.yaml', codeModelSchema);
             const codeModelMerger = new CodeModelMerger(cliCodeModel, pythonCodeModel);
             const azCodeModel = await codeModelMerger.process();
-            //host.WriteFile('azmerger-cli-temp-output-pre.yaml', serialize(azCodeModel));
+            azCodeModel.language['az'] = {}
+            azCodeModel.language['az']['isCliCore'] = true;
+            host.WriteFile('azmerger-cli-temp-output-pre.yaml', serialize(pythonCodeModel));
             session.model = azCodeModel;
         } 
         const plugin = new Merger(session);
