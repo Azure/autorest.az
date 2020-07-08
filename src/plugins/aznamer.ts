@@ -4,6 +4,7 @@ import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { changeCamelToDash } from '../utils/helper';
 import { isNullOrUndefined } from "util";
+import { PassThrough } from "stream";
 
 export class AzNamer {
     codeModel: CodeModel;
@@ -136,14 +137,18 @@ export class AzNamer {
         let azCoreFolder = "";
         let isCliCore = false;
         try {
-            isCliCore = await this.session.getValue('cli-core');
+            try {
+                isCliCore = await this.session.getValue('cli-core');
+            } catch (err) {
+                this.session.message({Channel: Channel.Fatal, Text:"Generating CLI extension!"});
+            }
             if (isNullOrUndefined(isCliCore) || isCliCore == false) {
                 azExtensionFolder = await this.session.getValue('azure-cli-extension-folder');
             } else {
                 azCoreFolder = await this.session.getValue('azure-cli-folder');
             }
         } catch(e) {
-            if (isNullOrUndefined(isCliCore) || isCliCore == false) {
+            if ((isNullOrUndefined(isCliCore) || isCliCore == false) && isNullOrUndefined(azExtensionFolder)) {
                 this.session.message({Channel: Channel.Fatal, Text:"--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"}); 
             } else {
                 this.session.message({Channel: Channel.Fatal, Text:"--azure-cli-folder is not provided in the command line and you are using --cli-core to generate cli-core modules ! \nplease use --azure-cli-folder=your-local-azure-cli-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"});  
