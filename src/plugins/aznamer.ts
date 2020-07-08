@@ -140,7 +140,7 @@ export class AzNamer {
             try {
                 isCliCore = await this.session.getValue('cli-core');
             } catch (err) {
-                this.session.message({Channel: Channel.Fatal, Text:"Generating CLI extension!"});
+                this.session.message({Channel: Channel.Warning, Text:"Generating CLI extension!"});
             }
             if (isNullOrUndefined(isCliCore) || isCliCore == false) {
                 azExtensionFolder = await this.session.getValue('azure-cli-extension-folder');
