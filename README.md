@@ -13,7 +13,7 @@ debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
   "@autorest/python": "5.0.0-preview.7"
-  "@autorest/clicommon": "0.4.10"
+  "@autorest/clicommon": "/home/qiaozha/code/autorest.clicommon"
   #"@autorest/python": "latest"
 
 require:
@@ -29,16 +29,14 @@ scope-clicommon:
 scope-az:
     is-object: false
     output-artifact:
-        - source-file-az-hider
+        #- source-file-az-hider
         #- source-file-pynamer
         #- source-file-aznamer
-        #- source-file-modifiers
+        - source-file-modifiers
         #- source-file-merger
         - source-file-extension
     output-folder: $(az-output-folder)
-```
 
-``` yaml !$(cli-core)
 cli:
     reason: 'make sure cli flag exists to load config in cli.md'
     naming:
@@ -57,8 +55,9 @@ modelerfour:
     group-parameters: true
     flatten-models: true
     flatten-payloads: true
+```
 
-
+``` yaml !$(cli-core)
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true
 
@@ -67,7 +66,7 @@ pipeline:
         input: clicommon/identity
     az/hider:
         input: python/namer
-        output-artifact: source-file-az-hider
+        #output-artifact: source-file-az-hider
     python/codegen:
         input: az/hider
     az/merger:
@@ -84,7 +83,7 @@ pipeline:
         output-artifact: source-file-extension
     az/emitter:
         input:
-            - az/hider
+            #- az/hider
             #- az/clicommon
             #- az/merger
             #- az/aznamer
@@ -94,26 +93,6 @@ pipeline:
 ```
 
 ``` yaml $(cli-core)
-
-cli:
-    reason: 'make sure cli flag exists to load config in cli.md'
-    naming:
-        default:
-            parameter: 'snake'
-            property: 'snake'
-            operation: 'snake'
-            operationGroup:  'pascal'
-            choice:  'pascal'
-            choiceValue:  'snake'
-            constant:  'snake'
-            type:  'pascal'
-
-modelerfour:
-    lenient-model-deduplication: true
-    group-parameters: true
-    flatten-models: true
-    flatten-payloads: true
-
 
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true
@@ -127,13 +106,13 @@ pipeline:
         input:
             - az/renamer
             - python/namer
-        output-artifact: source-file-merger
+        #output-artifact: source-file-merger
     az/aznamer:
         input: az/merger
-    #    output-artifact: source-file-aznamer
+        #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
-        #output-artifact: source-file-modifiers
+        output-artifact: source-file-modifiers
     az/azgenerator:
         input: az/modifiers
         output-artifact: source-file-extension
@@ -141,9 +120,9 @@ pipeline:
         input:
             #- az/hider
             #- az/clicommon
-            - az/merger
+            #- az/merger
             #- az/aznamer
-            #- az/modifiers
+            - az/modifiers
             - az/azgenerator
         scope: scope-az
 ```

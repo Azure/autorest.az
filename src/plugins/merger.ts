@@ -222,7 +222,6 @@ export async function processRequest(host: Host) {
             const azCodeModel = await codeModelMerger.process();
             azCodeModel.language['az'] = {}
             azCodeModel.language['az']['isCliCore'] = true;
-            host.WriteFile('azmerger-cli-temp-output-pre.yaml', serialize(pythonCodeModel));
             session.model = azCodeModel;
         } 
         const plugin = new Merger(session);

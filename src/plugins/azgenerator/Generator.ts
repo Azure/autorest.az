@@ -69,10 +69,10 @@ export async function GenerateAll(model: CodeModelAz,
                 files[pathTop + "report.md"] = GenerateAzureCliReport(model);
             }
             
-            if (model.IsCliCore) {
+            /*if (model.IsCliCore) {
                 let docSourceJsonMapPath = model.AzureCliFolder + "/doc/sphinx/azhelpgen/doc_source_map.json";
                 files[docSourceJsonMapPath] = GenerateDocSourceJsonMap(model, docSourceJsonMapPath);
-            }
+            }*/
         }
         while (model.SelectNextExtension())
     }

@@ -11,16 +11,19 @@ export async function processRequest(host: Host) {
     //host.Message({Channel:Channel.Warning, Text:"in azgenerator processRequest"});
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
+        const azureCliFolder = await host.GetValue("azure-cli-folder");
+        if (!isNullOrUndefined(azureCliFolder)) {
+            if (isNullOrUndefined(session.model.language['az'])) {
+                session.model.language['az'] = {}
+            }
+            session.model.language['az']['azureCliFolder'] = azureCliFolder;
+        }
         let model = new CodeModelCliImpl(session);
         const cliCoreLib: string = await host.GetValue('cli-core-lib');
         if (!isNullOrUndefined(cliCoreLib) && cliCoreLib.length > 0) {
             model.CliCoreLib = cliCoreLib;
         }
-
-        const azureCliFolder = await host.GetValue("azure-cli-folder");
-        if (!isNullOrUndefined(azureCliFolder)) {
-            model.AzureCliFolder = azureCliFolder;
-        }
+        
         let files: any = await GenerateAll(model, true, debug);
         if (model.SelectFirstExtension()) {
             do {
