@@ -213,7 +213,10 @@ export class CodeModelMerger {
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
     const cliCore = await host.GetValue('cli-core') || false;
+    let extensionMode = "experimental";
+    
     try {
+        extensionMode = await host.GetValue('extension-mode');
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         if (cliCore) {
             let cliCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-cli-v4.yaml"), 'code-model-cli-v4.yaml', codeModelSchema);
@@ -224,6 +227,7 @@ export async function processRequest(host: Host) {
             azCodeModel.language['az']['isCliCore'] = true;
             session.model = azCodeModel;
         } 
+        session.model.info['extensionMode'] = extensionMode;
         const plugin = new Merger(session);
         const result = await plugin.process();
         host.WriteFile('azmerger-cli-temp-output-after.yaml', serialize(result));
