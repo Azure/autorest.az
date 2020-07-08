@@ -95,7 +95,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
             if (skip) {
                 skip = false;
             }
-            if (model.MethodParameter_IsFlattened && model.MethodParameter_IsCliFlattened) {
+            if (model.MethodParameter_IsFlattened && model.MethodParameter_IsCliFlattened && model.IsCliCore) {
                 originalParameterStack.push(model.MethodParameter);
                 originalParameterNameStack.push(model.MethodParameter_Name);
                 if (!needGeneric) {
@@ -455,7 +455,7 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     while (cnt < originalParameters.length) {
         let param = originalParameters[cnt];
         cnt++;
-        if (param.flattened  && !model.Parameter_IsCliFlattened(param)) {
+        if (param.flattened  && !(model.Parameter_IsCliFlattened(param) && model.IsCliCore)) {
             continue;
         }
         if (param.schema.type == SchemaType.Constant) {
@@ -536,8 +536,11 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
     let skip = false;
     if (model.SelectFirstMethodParameter(true)) {
         do {
+            if (skip) {
+                skip = false;
+            }
             let param = model.MethodParameter;
-            if (model.MethodParameter_IsFlattened  && !model.MethodParameter_IsCliFlattened) {
+            if (model.MethodParameter_IsFlattened && !(model.MethodParameter_IsCliFlattened && model.IsCliCore)) {
                 continue;
             }
             if (model.MethodParameter_Type == SchemaType.Constant) {
@@ -574,10 +577,7 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
             else {
                 methodCall += "," + "\n" + indent + parameterPair;
             }
-
-            if (skip) {
-                skip = false;
-            }
+            
             if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                 let baseParam = model.MethodParameter;
                 let hasNext = false;
