@@ -13,7 +13,7 @@ debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
   "@autorest/python": "5.0.0-preview.7"
-  "@autorest/clicommon": "/home/qiaozha/code/autorest.clicommon/"
+  "@autorest/clicommon": "0.4.10"
   #"@autorest/python": "latest"
 
 require:
@@ -29,11 +29,11 @@ scope-clicommon:
 scope-az:
     is-object: false
     output-artifact:
-        #- source-file-az-hider
+        - source-file-az-hider
         #- source-file-pynamer
         #- source-file-aznamer
         #- source-file-modifiers
-        - source-file-merger
+        #- source-file-merger
         - source-file-extension
     output-folder: $(az-output-folder)
 ```
@@ -67,7 +67,7 @@ pipeline:
         input: clicommon/identity
     az/hider:
         input: python/namer
-        #output-artifact: source-file-az-hider
+        output-artifact: source-file-az-hider
     python/codegen:
         input: az/hider
     az/merger:
@@ -84,7 +84,7 @@ pipeline:
         output-artifact: source-file-extension
     az/emitter:
         input:
-            #- az/hider
+            - az/hider
             #- az/clicommon
             #- az/merger
             #- az/aznamer

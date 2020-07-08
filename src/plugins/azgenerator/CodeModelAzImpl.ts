@@ -37,6 +37,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     substack: Array<[Parameter[], number]>;
     currentSubOptionIndex: number;
     paramActionNameReference: Map<Schema, string>;
+    private _isCliCore: boolean;
+    private _azureCliFolder: string;
     private _testScenario: any[];
     private _configuredScenario: boolean;
     private _clientSubscriptionBound: boolean;
@@ -2242,19 +2244,19 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public set AzureCliFolder(folder: string) {
-        this.AzureCliFolder = folder;
+        this._azureCliFolder = folder;
     }
 
     public get AzureCliFolder(): string {
-        return this.AzureCliFolder;
+        return this._azureCliFolder;
     }
 
-    public get isCliCore() {
-        return !isNullOrUndefined(this.isCliCore) && this.isCliCore? true: false;
+    public get IsCliCore() {
+        return !isNullOrUndefined(this._isCliCore) && this._isCliCore? true: false;
     }
 
-    public set isCliCore(isCore: boolean) {
-        this.isCliCore = isCore;
+    public set IsCliCore(isCore: boolean) {
+        this._isCliCore = isCore;
     }
 
 }
