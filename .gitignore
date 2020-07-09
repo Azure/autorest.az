@@ -3,6 +3,7 @@ dist/
 .vscode/
 .vs/
 __pycache__/
+src/test/scenarios/testserver/input/
 package-lock.json
 tmpoutput
 .history
@@ -10,4 +11,3 @@ test-results.xml
 *.njsproj
 *.user
 *.orig
-src/test/scenarios/testserver/input/
