@@ -1571,7 +1571,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         submethodparameters = this.submethodparameters;
                         this.ExitSubMethodParameters();
                     }
-                    method_param_list.push(new MethodParam(this.MethodParameter, this.Parameter_IsList(this.MethodParameter), this.MethodParameter_IsListOfSimple, submethodparameters, this.currentParameterIndex>=this.Method.parameters.length));
+                    method_param_list.push(new MethodParam(this.MethodParameter, this.Parameter_IsList(this.MethodParameter), this.MethodParameter_IsListOfSimple || this.MethodParameter_IsSimpleArray, submethodparameters, this.currentParameterIndex>=this.Method.parameters.length));
                 }
             } while (this.SelectNextMethodParameter());
         }
@@ -1593,7 +1593,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any, polySubParam: MethodParam): boolean {
         let isList: boolean = methodParam.isList;
-        let isSimpleList: boolean = methodParam.isSimpleList;
+        let isSimpleListOrArray: boolean = methodParam.isSimpleListOrArray;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
         let name: string = this.Parameter_MapsTo(methodParam.value);
         if (!isNullOrUndefined(methodParam.value.language?.['az']?.['alias']) && isArray(methodParam.value.language['az']['alias']) && methodParam.value.language['az']['alias'].length > 0) {
@@ -1601,7 +1601,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
         if (polySubParam) {
             isList = polySubParam.isList;
-            isSimpleList = polySubParam.isSimpleList;
+            isSimpleListOrArray = polySubParam.isSimpleListOrArray;
             defaultName = polySubParam.value.language['cli'].cliKey;
             name = this.Parameter_MapsTo(polySubParam.value);
             if (!isNullOrUndefined(polySubParam.value.language?.['az']?.['alias']) && isArray(polySubParam.value.language['az']['alias']) && polySubParam.value.language['az']['alias'].length > 0) {
@@ -1609,12 +1609,14 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
         }
 
+        let handled = false;
         if (isList) {
-            if (isSimpleList) {
+            if (isSimpleListOrArray) {
                 if (value instanceof Array) {       // spread list
                     for (let e of value) {
                         this.AddExampleParameter(methodParam, example_param, e, polySubParam);
                     }
+                    handled = true;
                 }
                 else if (typeof value == 'object') {    // KEY=VALUE form
                     let ret = "";
@@ -1658,9 +1660,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                     if (ret.length > 0) {
                         example_param.push(new ExampleParam(name, ret, false, true, keys, defaultName, methodParam));
                     }
+                    handled = true;
                 }
             }
-            else if (isList && !isSimpleList) {
+            if (!handled) {
                 if (typeof value == 'string') {
                     example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam));
                 }
@@ -2032,6 +2035,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                             depend_parameters.push(param.name);
                         }
                     }
+                    this.resource_pool.addParamResource(param.defaultName, param.value, param.isJson, param.isKeyValues);
                 }
             }
 

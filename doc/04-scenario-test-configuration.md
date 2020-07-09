@@ -184,14 +184,141 @@ Below is the tree view after adding the manual test file:
 |   |   +-- test_attestation_scenario.py    
 +-- ...
 ~~~ 
-The content of the manual test_attestation_scenario.py can be:
-~~~
-def step_attestationproviders_create(test, rg, rg_2, rg_3):
-    print("Doing manual attestation create test code")
+### Examples:
+#### Only want to override the generated test step
+let's say in your generated test you have step_pipelines_create like this  
+```
+# EXAMPLE: Pipelines_Create
+@try_manual
+def step_pipelines_create(test, rg):
+    test.cmd('az datafactory pipeline create '
+             '--factory-name "{myFactoryName}" '
+             '--pipeline "{{\\"activities\\":[{{\\"name\\":\\"ExampleForeachActivity\\",\\"type\\":\\"ForEach\\",\\"typ'
+             'eProperties\\":{{\\"activities\\":[{{\\"name\\":\\"ExampleCopyActivity\\",\\"type\\":\\"Copy\\",\\"inputs'
+             '\\":[{{\\"type\\":\\"DatasetReference\\",\\"parameters\\":{{\\"MyFileName\\":\\"examplecontainer.csv\\",'
+             '\\"MyFolderPath\\":\\"examplecontainer\\"}},\\"referenceName\\":\\"myDataset\\"}}],\\"outputs\\":[{{\\"ty'
+             'pe\\":\\"DatasetReference\\",\\"parameters\\":{{\\"MyFileName\\":{{\\"type\\":\\"Expression\\",\\"value\\'
+             '":\\"@item()\\"}},\\"MyFolderPath\\":\\"examplecontainer\\"}},\\"referenceName\\":\\"myDataset\\"}}],\\"t'
+             'ypeProperties\\":{{\\"dataIntegrationUnits\\":32,\\"sink\\":{{\\"type\\":\\"BlobSink\\"}},\\"source\\":{{'
+             '\\"type\\":\\"BlobSource\\"}}}}}}],\\"isSequential\\":true,\\"items\\":{{\\"type\\":\\"Expression\\",\\"v'
+             'alue\\":\\"@pipeline().parameters.OutputBlobNameList\\"}}}}}}],\\"parameters\\":{{\\"JobId\\":{{\\"type\\'
+             '":\\"String\\"}},\\"OutputBlobNameList\\":{{\\"type\\":\\"Array\\"}}}},\\"variables\\":{{\\"TestVariableA'
+             'rray\\":{{\\"type\\":\\"Array\\"}}}},\\"runDimensions\\":{{\\"JobId\\":{{\\"type\\":\\"Expression\\",\\"v'
+             'alue\\":\\"@pipeline().parameters.JobId\\"}}}}}}" '
+             '--name "{myPipeline}" '
+             '--resource-group "{rg}"',
+             checks=[
+                 test.check('name', "{myPipeline}")
+             ])
+```
+And you want to override this step with a different implementation or a different pipeline definition etc. 
+Then in your `manual/tests/latest/test_datafactory_scenario.py` file, you can have the same function definition like this. 
+```
+def step_pipelines_create(test, rg):
+    test.cmd('az datafactory pipeline create '
+             '--factory-name "{myFactoryName}" '
+             '--pipeline "{{\\"activities\\":[{{\\"name\\":\\"Wait1\\",'
+             '\\"type\\":\\"Wait\\",\\"dependsOn\\":[],\\"userProperties'
+             '\\":[],\\"typeProperties\\":{{\\"waitTimeInSeconds\\":5'
+             '}}}}],\\"annotations\\":[]}}" '
+             '--name "{myPipeline}" '
+             '--resource-group "{rg}" ',
+             checks=[
+                 test.check('name', "{myPipeline}"),
+                 test.check('activities[0].type', "Wait")
+             ])
+```
+In this case, when the `call_scenario` function calls `g.step_pipelines_create` in generated `tests/latest/test_datafactory_scenario.py`. it will actually call the function defined in your manual folder.
 
-def mytest(test, rg, rg_2, rg_3):
-    print("Doing fully customizing test.")
-~~~
+#### add your own test step
+Suppose that you need to add more test steps because lacking of specific test examples are not covered etc.
+you can add a new test function `step_triggers_tumble_create` like this 
+``` 
+def step_triggers_tumble_create(test, rg):
+    test.cmd('az datafactory trigger create '
+             '--resource-group "{rg}" '
+             '--properties "{{\\"description\\":\\"trumblingwindowtrigger'
+             '\\",\\"annotations\\":[],\\"pipeline\\":{{\\"pipelineReference'
+             '\\":{{\\"referenceName\\":\\"{myPipeline}\\",\\"type\\":'
+             '\\"PipelineReference\\"}}}},\\"type\\":\\"TumblingWindowTrigger'
+             '\\",\\"typeProperties\\":{{\\"frequency\\":\\"Minute\\",'
+             '\\"interval\\":5,\\"startTime\\":\\"{myStartTime}\\",'
+             '\\"endTime\\":\\"{myEndTime}\\",\\"delay\\":\\"00:00:00\\",'
+             '\\"maxConcurrency\\":50,\\"retryPolicy\\":{{\\"intervalInSeconds'
+             '\\":30}},\\"dependsOn\\":[]}}}}" '
+             '--factory-name "{myFactoryName}" '
+             '--name "{myTrigger}"',
+             checks=[
+                 test.check('name', "{myTrigger}"),
+                 test.check('properties.type', "TumblingWindowTrigger"),
+                 test.check('properties.pipeline.pipelineReference.referenceName',
+                            "{myPipeline}")
+             ])
+```
+In this case, you will also need to override the `call_scenario` definition so that your self-defined test steps can be called.
+like this.
+```
+def call_scenario(test, rg):
+    from ....tests.latest import test_datafactory_scenario as g
+    g.setup(test, rg)
+    g.step_factories_createorupdate(test, rg)
+    step_triggers_tumble_create(test, rg) # your self-defined test step.
+    g.step_factories_delete(test, rg)
+    g.cleanup(test, rg)
+```
+Please note that there's no pointer before calling you self-defined steps.
+
+#### add your own call scenarios.
+let's say, the swagger examples provided only consider one type of resource, but this resource has another type which is fairly important, and to create this resource you probably need to create a lot of dependent resources. In this case, you probably need to define your own call scenario.
+You will need to prepare your own test steps. Then you will have to define your own call_scenario functions
+```
+def call_triggerrun_scenario(test, rg):
+    from ....tests.latest import test_datafactory_scenario as g
+    import time
+    g.setup(test, rg)
+    g.step_factories_createorupdate(test, rg)
+    step_pipelines_wait_create(test, rg)
+    createrun_res = g.step_pipelines_createrun(test, rg)
+    time.sleep(5)
+    test.kwargs.update({'myRunId': createrun_res.get('runId')})
+    g.step_pipelineruns_get(test, rg)
+    g.step_activityruns_querybypipelinerun(test, rg)
+    createrun_res = g.step_pipelines_createrun(test, rg)
+    test.kwargs.update({'myRunId': createrun_res.get('runId')})
+    g.step_pipelineruns_cancel(test, rg)
+    step_triggers_tumble_create(test, rg)
+    g.step_triggers_start(test, rg)
+    g.step_triggers_get(test, rg)
+    maxRound = 2
+    while True:
+        triggerrun_res = g.step_triggerruns_querybyfactory(test, rg)
+        if len(triggerrun_res['value']) > 0 and triggerrun_res['value'][0]['status'] == 'Succeeded':
+            test.kwargs.update({'myRunId': triggerrun_res['value'][0]['triggerRunId']})
+            break
+        else:
+            if maxRound > 0:
+                maxRound -= 1
+                print("waiting round: " + str(5 - maxRound))
+                time.sleep(300)
+            else:
+                break
+    if maxRound > 0:
+        g.step_triggerruns_rerun(test, rg)
+    g.step_triggerruns_querybyfactory(test, rg)
+    g.step_triggers_stop(test, rg)
+    g.step_triggers_delete(test, rg)
+    g.step_pipelines_delete(test, rg)
+    g.step_factories_delete(test, rg)
+```
+In this example, it shows how to get one command's result as another command's input `test.kwargs.update({'myRunId': createrun_res.get('runId')})`  
+And it also shows an example of how you should write your scenario if you need to wait some certain time-consuming resource ready until you can test next step.  
+Still you need to override the `call_scenario` function in the generated test. If you still want the original `call_scenario` to be called, you can put them in another function let's say `call_main_scenario`, and call it in your override `call_scenario`
+```
+def call_scenario(test, rg):
+    call_main_scenario(test, rg)
+    call_triggerrun_scenario(test, rg)
+
+```
 ### Customize TestClass or Customize Resource Preparers
 If you need to customize the test class(such as use a new resource preparer), you can also override the test class in file manual/tests/latest/test_xxxx_scenario.py. Below is an example to write an preparer and use it manually.
 ~~~

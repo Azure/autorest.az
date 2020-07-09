@@ -76,7 +76,8 @@ collaboration-branch=XX root-folder=XX last-commit-id=XX
     examples:
       - name: Factories_CreateOrUpdate
         text: |-
-               az datafactory create --location "East US" --name "myFactory" --resource-group "myResourceGroup"
+               az datafactory create --location "East US" --zones "earth" --zones "moon" --name "myFactory" \
+--resource-group "myResourceGroup"
 """
 
 helps['datafactory update'] = """
@@ -232,8 +233,8 @@ helps['datafactory trigger query-by-factory'] = """
     examples:
       - name: Triggers_QueryByFactory
         text: |-
-               az datafactory trigger query-by-factory --factory-name "myFactory" --parent-trigger-name \
-"exampleTrigger" --resource-group "myResourceGroup"
+               az datafactory trigger query-by-factory --factory-name "myFactory" --parent-trigger-name "myTrigger" \
+--resource-group "myResourceGroup"
 """
 
 helps['datafactory trigger start'] = """
