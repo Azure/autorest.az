@@ -49,6 +49,12 @@ These settings apply only when `--tag=testserver-local` is specified on the comm
 ``` yaml $(tag) == 'testserver-local'
 input-file:
 - ../input/body-boolean.json
+- ../input/body-byte.json
+- ../input/custom-baseUrl.json
+- ../input/custom-baseUrl-paging.json
+- ../input/head.json
+- ../input/non-string-enum.json
+- ../input/url-multi-collectionFormat.json
 ```
 
 # Code Generation
