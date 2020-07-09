@@ -2,9 +2,9 @@
  
 ``` yaml $(az)
 extension-mode: experimental
+
 # customize library used in extension. azure.cli.core by default
 # cli-core-lib: azure.cli.core
- 
 cli:
     naming:
         default:
@@ -43,7 +43,7 @@ scope-codegen/emitter:
     output-folder: "$(python-sdk-output-folder)"
 ```
 
-``` yaml $(python) && ($(cli-core) || !$(need-sdk))
+``` yaml $(python) && $(cli-core) && !$(need-sdk)
 add-credential: true
 no-namespace-folders: true
 license-header: MICROSOFT_MIT_NO_VERSION

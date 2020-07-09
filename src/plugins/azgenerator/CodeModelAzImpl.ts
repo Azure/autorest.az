@@ -2249,4 +2249,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.codeModel.language['az']?.['isCliCore']? true: false;
     }
 
+    public get SDK_NeedSDK() {
+        return this.codeModel.language['az']?.['sdkNeeded']? true: false;
+    }
+
+    public get SDK_IsTrack1() {
+        return this.codeModel.language['az']?.['sdkTrack1']? true: false;
+    }
 }

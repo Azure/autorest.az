@@ -54,7 +54,9 @@ export async function GenerateAll(model: CodeModelAz,
             if (NeedPreparer()) files[path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(model);
             files[path + "tests/latest/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
-            files[path + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(model);  
+            if(!model.IsCliCore || model.SDK_NeedSDK) {
+                files[path + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(model);  
+            }
             files[path + "manual/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "action.py"] = GenerateTopLevelImport(model, "action");  
             files[path + "custom.py"] = GenerateTopLevelImport(model, "custom");  

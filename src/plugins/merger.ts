@@ -4,6 +4,7 @@ import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { isNullOrUndefined } from "util";
 import { az } from "..";
+import { exception } from "console";
 
 export class Merger {
     codeModel: CodeModel;
@@ -212,21 +213,50 @@ export class CodeModelMerger {
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
-    const cliCore = await host.GetValue('cli-core') || false;
+    const cliCore = await host.GetValue('cli-core') || false;          
+    let azExtensionFolder = "";
+    let azCoreFolder = "";
+    let isSdkNeeded = true;
+    let isTrack1 = false;
+
     let extensionMode = "experimental";
     
     try {
         extensionMode = await host.GetValue('extension-mode');
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         if (cliCore) {
+            isSdkNeeded = await host.GetValue('need-sdk');
+            if(isNullOrUndefined(isSdkNeeded)) {
+                isSdkNeeded = false;
+            }
+            isTrack1 = await host.GetValue('track1');
+            if(!isNullOrUndefined(isTrack1)) {
+                isTrack1 = true;
+            }
             let cliCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-cli-v4.yaml"), 'code-model-cli-v4.yaml', codeModelSchema);
             let pythonCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-v4-no-tags.yaml"), 'code-model-v4-no-tags.yaml', codeModelSchema);
             const codeModelMerger = new CodeModelMerger(cliCodeModel, pythonCodeModel);
             const azCodeModel = await codeModelMerger.process();
             azCodeModel.language['az'] = {}
             azCodeModel.language['az']['isCliCore'] = true;
+            azCodeModel.language['az']['sdkNeeded'] = isSdkNeeded;
+            azCodeModel.language['az']['sdkTrack1'] = isTrack1;
             session.model = azCodeModel;
-        } 
+        } else {
+            host.Message({Channel: Channel.Information, Text:"Generating CLI extension!"});
+        }
+        if (isNullOrUndefined(cliCore) || cliCore == false) {
+            azExtensionFolder = await host.GetValue('azure-cli-extension-folder');
+        } else {
+            azCoreFolder = await host.GetValue('azure-cli-folder');
+        }
+        if ((isNullOrUndefined(cliCore) || cliCore == false) && isNullOrUndefined(azExtensionFolder)) {
+            host.Message({Channel: Channel.Fatal, Text:"--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"}); 
+            throw new Error("Wrong configuration, please check!");
+        } else if(cliCore && isNullOrUndefined(azCoreFolder)){
+            host.Message({Channel: Channel.Fatal, Text:"--azure-cli-folder is not provided in the command line and you are using --cli-core to generate cli-core modules ! \nplease use --azure-cli-folder=your-local-azure-cli-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"});  
+            throw new Error("Wrong configuration, please check!");
+        }
         session.model.info['extensionMode'] = extensionMode;
         const plugin = new Merger(session);
         const result = await plugin.process();
