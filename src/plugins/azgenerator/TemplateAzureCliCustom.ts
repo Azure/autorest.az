@@ -95,7 +95,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
             if (skip) {
                 skip = false;
             }
-            if (model.MethodParameter_IsFlattened && model.MethodParameter_IsCliFlattened && (model.IsCliCore || !isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']))) {
+            if ((model.MethodParameter_IsCliFlattened && (model.IsCliCore || !isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']))) || (model.MethodParameter_IsFlattened && model.MethodParameter['extensions']?.['cli-flattened'])) {
                 originalParameterStack.push(model.MethodParameter);
                 originalParameterNameStack.push(model.MethodParameter_Name);
                 if (!needGeneric) {
