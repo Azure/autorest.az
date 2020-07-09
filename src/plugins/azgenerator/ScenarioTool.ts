@@ -395,6 +395,13 @@ export class ResourcePool {
         if (class_name in root && object_name in root[class_name].objects) {
             return root[class_name].objects[object_name];
         }
+        if (!class_name) {
+            for (let c in root) {
+                if (object_name in root[c].objects) {
+                    return root[c].objects[object_name];
+                }
+            }
+        }
         for (let c in root) {
             for (let o in root[c].objects) {
                 let ret = this.findTreeResource(class_name, object_name, root[c].objects[o].sub_resources);
@@ -518,7 +525,7 @@ export class ResourcePool {
 
         let nodes = endpoint.split('/');
         if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
-            return endpoint;
+            return this.getPlaceholder(endpoint, isTest);
         }
         if (isTest) {
             nodes[2] = `{${ResourcePool.KEY_SUBSCRIPTIONID}}`;
@@ -547,6 +554,9 @@ export class ResourcePool {
                     }
                 }
             }
+            else {
+                nodes[i + 1] = this.getPlaceholder(nodes[i+1], isTest);
+            }
             i += 2;
         }
         return nodes.join('/');
@@ -560,7 +570,7 @@ export class ResourcePool {
         }
         let resource = this.isResource(param_name);
         if (!resource) {
-            return param_value;
+            return this.getPlaceholder(param_value, isTest);
         }
         if (resource == SUBNET) {
             // since the subnet can't be created with rand name, just use the dfault one.
@@ -571,8 +581,22 @@ export class ResourcePool {
             return resource_object.placeholder(isTest);
         }
         else {
-            return param_value;
+            return this.getPlaceholder(param_value, isTest);
         }
+    }
+
+    public getPlaceholder(object_name: string, isTest: boolean): string {
+        // find in MapResource
+        for (let class_name in this.map) {
+            if (object_name in this.map[class_name].objects) {
+                return this.map[class_name].objects[object_name].placeholder(isTest)
+            }
+        }
+
+        // find in TreeResource
+        let resource_object = this.findTreeResource(null, object_name, this.root);
+        if (resource_object)    return resource_object.placeholder(isTest);
+        return object_name;
     }
 
     public addResourcesInfo(resources: object) {

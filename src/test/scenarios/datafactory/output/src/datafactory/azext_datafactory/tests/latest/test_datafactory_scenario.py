@@ -27,6 +27,8 @@ def setup(test, rg):
 def step__factories_put_factories_createorupdate(test, rg):
     test.cmd('az datafactory create '
              '--location "East US" '
+             '--zones "earth" '
+             '--zones "moon" '
              '--name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -324,7 +326,7 @@ def step__triggers_post_triggers_geteventsubscriptionstatus(test, rg):
 def step__triggers_post_triggers_querybyfactory(test, rg):
     test.cmd('az datafactory trigger query-by-factory '
              '--factory-name "{myFactory}" '
-             '--parent-trigger-name "exampleTrigger" '
+             '--parent-trigger-name "{myTrigger}" '
              '--resource-group "{rg}"',
              checks=[])
 

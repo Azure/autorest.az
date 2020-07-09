@@ -8,13 +8,13 @@
 export class MethodParam {
     public value: any;
     public isList: boolean;
-    public isSimpleList: boolean;
+    public isSimpleListOrArray: boolean;
     public submethodparameters: Property[];
     public inBody: boolean;
-    public constructor(value, isList, isSimpleList, submethodparameters, inBody) {
+    public constructor(value, isList, isSimpleListOrArray, submethodparameters, inBody) {
         this.value = value;
         this.isList = isList;
-        this.isSimpleList = isSimpleList;
+        this.isSimpleListOrArray = isSimpleListOrArray;
         this.submethodparameters = submethodparameters;
         this.inBody = inBody;
     }
