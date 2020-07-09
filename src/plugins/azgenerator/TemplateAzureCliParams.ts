@@ -26,7 +26,8 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     output_args.push("");
     output_args.push("");
     output_args.push("def load_arguments(self, _):");
-
+    let hasCommandParamContent = false;
+    let header: HeaderGenerator = new HeaderGenerator();
     if (model.SelectFirstCommandGroup()) {
         do {
             //let methods: string[] = model.CommandGroup_Commands;
@@ -41,7 +42,10 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
                     let command_output = getCommandBody(model, needGeneric, debug);
                     if (model.Command_MethodName == "show") {
                         show_output = command_output
-                    }               
+                    }
+                    if (command_output.length > 0) {
+                        hasCommandParamContent = true;
+                    }         
                     output_args = output_args.concat(command_output);
      
                 }
@@ -53,10 +57,14 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
             }
         } while (model.SelectNextCommandGroup());
     }
+    if (!hasCommandParamContent) {
+        output_args.push("    pass");
+        header.disableUnusedArgument = true;
+    } else {
+        header.disableTooManyLines = true;
+        header.disableTooManyStatements = true;
+    }
 
-    let header: HeaderGenerator = new HeaderGenerator();
-    header.disableTooManyLines = true;
-    header.disableTooManyStatements = true;
 
     let parameterImports: string[] = [];
     if (hasTags) parameterImports.push("tags_type");
@@ -64,8 +72,10 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     if (hasEnum) parameterImports.push("get_enum_type");
     if (hasResourceGroup) parameterImports.push("resource_group_name_type");
     if (hasLocation) parameterImports.push("get_location_type");
-
-    header.addFromImport(model.CliCoreLib + ".commands.parameters", parameterImports);
+    if (parameterImports.length > 0) {
+        header.addFromImport(model.CliCoreLib + ".commands.parameters", parameterImports);
+    }
+    
     let validatorImports: string[] = [];
     if (hasLocationValidator) {
         validatorImports.push("get_default_location_from_resource_group");
@@ -87,6 +97,7 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     output = output.concat(output_args);
 
     output.push("");
+    
 
     output.forEach(element => {
         if (element.length > 120) header.disableLineTooLong = true;
@@ -343,7 +354,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
     }
 
     if (!hasParam) {
-        output_args.push("        pass");
+        return [];
     }
 
 

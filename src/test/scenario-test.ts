@@ -49,7 +49,7 @@ require('source-map-support').install();
         let msg = "";
         let finalResult = true;
         for (const each of folders) {
-            if (each != 'testserver') {
+            if (each != "testserver") {
                 console.log(`Processing: ${each}`);
                 try {
                     await this.runAz(dir + each, each).then(res => {
