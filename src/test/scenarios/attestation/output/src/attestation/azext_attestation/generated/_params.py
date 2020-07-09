@@ -33,9 +33,6 @@ def load_arguments(self, _):
                    'within the array does not imply an order of preference among them, although applications of JWK '
                    'Sets can choose to assign a meaning to the order for their purposes, if desired.')
 
-    with self.argument_context('attestation list-operation') as c:
-        pass
-
     with self.argument_context('attestation attestation-provider provider list') as c:
         c.argument('resource_group_name', resource_group_name_type)
 

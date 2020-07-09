@@ -27,7 +27,9 @@ def setup(test, rg):
 def step__factories_put_factories_createorupdate(test, rg):
     test.cmd('az datafactory create '
              '--location "East US" '
-             '--name "{exampleFactoryName}" '
+             '--zones "earth" '
+             '--zones "moon" '
+             '--name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -36,7 +38,7 @@ def step__factories_put_factories_createorupdate(test, rg):
 @try_manual
 def step__factories_get_factories_get(test, rg):
     test.cmd('az datafactory show '
-             '--name "{exampleFactoryName}" '
+             '--name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -62,7 +64,7 @@ def step__factories_get_factories_listbyresourcegroup(test, rg):
 def step__factories_post_factories_configurefactoryrepo(test, rg):
     test.cmd('az datafactory configure-factory-repo '
              '--factory-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.DataFacto'
-             'ry/factories/{exampleFactoryName}" '
+             'ry/factories/{myFactory}" '
              '--factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" '
              'project-name="project" repository-name="repo" root-folder="/" tenant-id="" '
              '--location-id "East US"',
@@ -73,7 +75,7 @@ def step__factories_post_factories_configurefactoryrepo(test, rg):
 @try_manual
 def step__factories_post_factories_getdataplaneaccess(test, rg):
     test.cmd('az datafactory get-data-plane-access '
-             '--name "{exampleFactoryName}" '
+             '--name "{myFactory}" '
              '--access-resource-path "" '
              '--expire-time "2018-11-10T09:46:20.2659347Z" '
              '--permissions "r" '
@@ -87,7 +89,7 @@ def step__factories_post_factories_getdataplaneaccess(test, rg):
 @try_manual
 def step__factories_post_factories_getgithubaccesstoken(test, rg):
     test.cmd('az datafactory get-git-hub-access-token '
-             '--name "{exampleFactoryName}" '
+             '--name "{myFactory}" '
              '--git-hub-access-code "some" '
              '--git-hub-access-token-base-url "some" '
              '--git-hub-client-id "some" '
@@ -99,7 +101,7 @@ def step__factories_post_factories_getgithubaccesstoken(test, rg):
 @try_manual
 def step__factories_patch_factories_update(test, rg):
     test.cmd('az datafactory update '
-             '--name "{exampleFactoryName}" '
+             '--name "{myFactory}" '
              '--tags exampleTag="exampleValue" '
              '--resource-group "{rg}"',
              checks=[])
@@ -109,9 +111,9 @@ def step__factories_patch_factories_update(test, rg):
 @try_manual
 def step__integrationruntimes_put_integrationruntimes_create(test, rg):
     test.cmd('az datafactory integration-runtime self-hosted create '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--description "A selfhosted integration runtime" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -120,8 +122,8 @@ def step__integrationruntimes_put_integrationruntimes_create(test, rg):
 @try_manual
 def step__integrationruntimes_get_integrationruntimes_get(test, rg):
     test.cmd('az datafactory integration-runtime show '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -130,7 +132,7 @@ def step__integrationruntimes_get_integrationruntimes_get(test, rg):
 @try_manual
 def step__integrationruntimes_get_integrationruntimes_listbyfactory(test, rg):
     test.cmd('az datafactory integration-runtime list '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -143,8 +145,8 @@ def step__integrationruntimes_post_integrationruntimes_createlinkedintegrationru
              '--data-factory-location "West US" '
              '--data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" '
              '--subscription-id "061774c7-4b5a-4159-a55b-365581830283" '
-             '--factory-name "{exampleFactoryName}" '
-             '--integration-runtime-name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--integration-runtime-name "{myIntegrationRuntime}" '
              '--resource-group "{rg}" '
              '--subscription-id "12345678-1234-1234-1234-12345678abc"',
              checks=[])
@@ -154,8 +156,8 @@ def step__integrationruntimes_post_integrationruntimes_createlinkedintegrationru
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_getconnectioninfo(test, rg):
     test.cmd('az datafactory integration-runtime get-connection-info '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -164,8 +166,8 @@ def step__integrationruntimes_post_integrationruntimes_getconnectioninfo(test, r
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_getmonitoringdata(test, rg):
     test.cmd('az datafactory integration-runtime get-monitoring-data '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -174,8 +176,8 @@ def step__integrationruntimes_post_integrationruntimes_getmonitoringdata(test, r
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_getstatus(test, rg):
     test.cmd('az datafactory integration-runtime get-status '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -184,8 +186,8 @@ def step__integrationruntimes_post_integrationruntimes_getstatus(test, rg):
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_listauthkeys(test, rg):
     test.cmd('az datafactory integration-runtime list-auth-key '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -194,8 +196,8 @@ def step__integrationruntimes_post_integrationruntimes_listauthkeys(test, rg):
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_regenerateauthkey(test, rg):
     test.cmd('az datafactory integration-runtime regenerate-auth-key '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
              '--key-name "authKey2" '
              '--resource-group "{rg}"',
              checks=[])
@@ -205,8 +207,8 @@ def step__integrationruntimes_post_integrationruntimes_regenerateauthkey(test, r
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_removelinks(test, rg):
     test.cmd('az datafactory integration-runtime remove-link '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
              '--linked-factory-name "exampleFactoryName-linked" '
              '--resource-group "{rg}"',
              checks=[])
@@ -216,8 +218,8 @@ def step__integrationruntimes_post_integrationruntimes_removelinks(test, rg):
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_start(test, rg):
     test.cmd('az datafactory integration-runtime start '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{IntegrationRuntimes_2}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime2}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -226,8 +228,8 @@ def step__integrationruntimes_post_integrationruntimes_start(test, rg):
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_stop(test, rg):
     test.cmd('az datafactory integration-runtime stop '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{IntegrationRuntimes_2}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime2}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -236,8 +238,8 @@ def step__integrationruntimes_post_integrationruntimes_stop(test, rg):
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_synccredentials(test, rg):
     test.cmd('az datafactory integration-runtime sync-credentials '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -246,8 +248,8 @@ def step__integrationruntimes_post_integrationruntimes_synccredentials(test, rg)
 @try_manual
 def step__integrationruntimes_post_integrationruntimes_upgrade(test, rg):
     test.cmd('az datafactory integration-runtime upgrade '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -256,8 +258,8 @@ def step__integrationruntimes_post_integrationruntimes_upgrade(test, rg):
 @try_manual
 def step__integrationruntimes_patch_integrationruntimes_update(test, rg):
     test.cmd('az datafactory integration-runtime update '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}" '
              '--auto-update "Off" '
              '--update-delay-offset "\\"PT3H\\""',
@@ -268,14 +270,14 @@ def step__integrationruntimes_patch_integrationruntimes_update(test, rg):
 @try_manual
 def step__triggers_put_triggers_create(test, rg):
     test.cmd('az datafactory trigger create '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
              '--properties "{{\\"type\\":\\"ScheduleTrigger\\",\\"pipelines\\":[{{\\"parameters\\":{{\\"OutputBlobNameL'
              'ist\\":[\\"exampleoutput.csv\\"]}},\\"pipelineReference\\":{{\\"type\\":\\"PipelineReference\\",\\"refere'
              'nceName\\":\\"examplePipeline\\"}}}}],\\"typeProperties\\":{{\\"recurrence\\":{{\\"endTime\\":\\"2018-06-'
              '16T00:55:13.8441801Z\\",\\"frequency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39'
              ':13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}}}}" '
-             '--name "{exampleTrigger}"',
+             '--name "{myTrigger}"',
              checks=[])
 
 
@@ -283,10 +285,10 @@ def step__triggers_put_triggers_create(test, rg):
 @try_manual
 def step__triggers_put_triggers_update(test, rg):
     test.cmd('az datafactory trigger update '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
              '--description "Example description" '
-             '--name "{exampleTrigger}"',
+             '--name "{myTrigger}"',
              checks=[])
 
 
@@ -294,9 +296,9 @@ def step__triggers_put_triggers_update(test, rg):
 @try_manual
 def step__triggers_get_triggers_get(test, rg):
     test.cmd('az datafactory trigger show '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
-             '--name "{exampleTrigger}"',
+             '--name "{myTrigger}"',
              checks=[])
 
 
@@ -304,7 +306,7 @@ def step__triggers_get_triggers_get(test, rg):
 @try_manual
 def step__triggers_get_triggers_listbyfactory(test, rg):
     test.cmd('az datafactory trigger list '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -313,9 +315,9 @@ def step__triggers_get_triggers_listbyfactory(test, rg):
 @try_manual
 def step__triggers_post_triggers_geteventsubscriptionstatus(test, rg):
     test.cmd('az datafactory trigger get-event-subscription-status '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
-             '--name "{exampleTrigger}"',
+             '--name "{myTrigger}"',
              checks=[])
 
 
@@ -323,8 +325,8 @@ def step__triggers_post_triggers_geteventsubscriptionstatus(test, rg):
 @try_manual
 def step__triggers_post_triggers_querybyfactory(test, rg):
     test.cmd('az datafactory trigger query-by-factory '
-             '--factory-name "{exampleFactoryName}" '
-             '--parent-trigger-name "exampleTrigger" '
+             '--factory-name "{myFactory}" '
+             '--parent-trigger-name "{myTrigger}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -333,9 +335,9 @@ def step__triggers_post_triggers_querybyfactory(test, rg):
 @try_manual
 def step__triggers_post_triggers_start(test, rg):
     test.cmd('az datafactory trigger start '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
-             '--name "{exampleTrigger}"',
+             '--name "{myTrigger}"',
              checks=[])
 
 
@@ -343,9 +345,9 @@ def step__triggers_post_triggers_start(test, rg):
 @try_manual
 def step__triggers_post_triggers_stop(test, rg):
     test.cmd('az datafactory trigger stop '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
-             '--name "{exampleTrigger}"',
+             '--name "{myTrigger}"',
              checks=[])
 
 
@@ -353,9 +355,9 @@ def step__triggers_post_triggers_stop(test, rg):
 @try_manual
 def step__triggers_post_triggers_subscribetoevents(test, rg):
     test.cmd('az datafactory trigger subscribe-to-event '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
-             '--name "{exampleTrigger}"',
+             '--name "{myTrigger}"',
              checks=[])
 
 
@@ -363,9 +365,9 @@ def step__triggers_post_triggers_subscribetoevents(test, rg):
 @try_manual
 def step__triggers_post_triggers_unsubscribefromevents(test, rg):
     test.cmd('az datafactory trigger unsubscribe-from-event '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
-             '--name "{exampleTrigger}"',
+             '--name "{myTrigger}"',
              checks=[])
 
 
@@ -373,8 +375,8 @@ def step__triggers_post_triggers_unsubscribefromevents(test, rg):
 @try_manual
 def step__integrationruntimes_delete_integrationruntimes_delete(test, rg):
     test.cmd('az datafactory integration-runtime delete '
-             '--factory-name "{exampleFactoryName}" '
-             '--name "{exampleIntegrationRuntime}" '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -383,9 +385,9 @@ def step__integrationruntimes_delete_integrationruntimes_delete(test, rg):
 @try_manual
 def step__triggers_delete_triggers_delete(test, rg):
     test.cmd('az datafactory trigger delete '
-             '--factory-name "{exampleFactoryName}" '
+             '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
-             '--name "{exampleTrigger}"',
+             '--name "{myTrigger}"',
              checks=[])
 
 
@@ -393,7 +395,7 @@ def step__triggers_delete_triggers_delete(test, rg):
 @try_manual
 def step__factories_delete_factories_delete(test, rg):
     test.cmd('az datafactory delete '
-             '--name "{exampleFactoryName}" '
+             '--name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -456,10 +458,10 @@ class DFAZManagementClientScenarioTest(ScenarioTest):
         })
 
         self.kwargs.update({
-            'exampleFactoryName': 'exampleFactoryName',
-            'exampleTrigger': 'exampleTrigger',
-            'exampleIntegrationRuntime': 'exampleIntegrationRuntime',
-            'IntegrationRuntimes_2': 'exampleManagedIntegrationRuntime',
+            'myFactory': 'exampleFactoryName',
+            'myTrigger': 'exampleTrigger',
+            'myIntegrationRuntime': 'exampleIntegrationRuntime',
+            'myIntegrationRuntime2': 'exampleManagedIntegrationRuntime',
         })
 
         call_scenario(self, rg)

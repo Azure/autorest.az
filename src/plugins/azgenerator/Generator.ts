@@ -47,11 +47,11 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "generated/_client_factory.py"] = GenerateAzureCliClientFactory(model);
             files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);
             files[path + "generated/action.py"] = GenerateAzureCliActions(model);
-            files[path + "generated/_help.py"] = GenerateAzureCliHelp(model, debug);
             files[path + "generated/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "tests/__init__.py"] = GenerateAzureCliTestInit(model);
             files[path + "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(model);
             if (NeedPreparer()) files[path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(model);
+            files[path + "generated/_help.py"] = GenerateAzureCliHelp(model, debug);
             files[path + "tests/latest/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
             if(!model.IsCliCore || model.SDK_NeedSDK) {

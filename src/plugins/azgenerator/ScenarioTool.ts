@@ -1,8 +1,9 @@
 
 import * as path from "path"
 import { CommandExample, ExampleParam } from "./CodeModelAz";
-import { deepCopy, isDict } from "../../utils/helper"
+import { deepCopy, isDict, ToCamelCase, changeCamelToDash } from "../../utils/helper"
 import { Example } from "@azure-tools/codemodel";
+import { EnglishPluralizationService } from "@azure-tools/codegen";
 
 
 function MethodToOrder(httpMethod: string): number {
@@ -214,35 +215,58 @@ class ResourceObject {
         return getResourceKey(this.class_name, this.object_name);
     }
 
-    public get placeholder(): string {
-        return '{' + this.key + '}';
+    public placeholder(isTest: boolean): string {
+        if (isTest)    return '{' + this.key + '}';
+        return getResourceKey(this.class_name, this.object_name, true);
+        
     }
 }
 
+function singlizeLast(word:string) {
+    let eps = new EnglishPluralizationService();
+    let ws = changeCamelToDash(word).split('-');
+    let l = ws.length;
+    ws[l-1] = eps.singularize(ws[l-1]);
+    return ws.join('-');
+}
+
 let keyCache = {}  //class_name+objectname->key
+let formalCache = {}
 let keySeq = {}    // class_name ->seq
-export function getResourceKey(class_name: string, object_name: string): string {
+export function getResourceKey(class_name: string, object_name: string, formalName=false): string {
     let longKey = (resourceClassKeys[class_name] || class_name) + '_' + object_name;
-    if (longKey in keyCache) {
+    if (formalName && longKey in formalCache) {
+        return formalCache[longKey];
+    }
+    if (!formalName && longKey in keyCache) {
         return keyCache[longKey];
     }
-    if (class_name in keySeq) {
+
+    if (keySeq.hasOwnProperty(class_name)) {
         let key = (resourceClassKeys[class_name] || class_name) + '_' + keySeq[class_name];
         keySeq[class_name] += 1;
-        keyCache[longKey] = key;
+        formalCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name]-1}`);
+        if (preparerInfos[class_name]?.name) {  // is external resource
+            keyCache[longKey] = key;
+        }
+        else {
+            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name]-1}`);
+        }
     }
     else {
         keySeq[class_name] = 2;
+        formalCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}`);
         if (preparerInfos[class_name]?.name) {  // is external resource
             keyCache[longKey] = resourceClassKeys[class_name] || class_name;
         }
         else {                              // is internal resource
             // generally, internal resource object_name is shorter than class_name
-            keyCache[longKey] = object_name;
+            // keyCache[longKey] = object_name;
+            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}`);
         }
-
     }
-    return keyCache[longKey];
+
+    return formalName? formalCache[longKey]: keyCache[longKey];
 }
 
 export class ResourcePool {
@@ -371,6 +395,13 @@ export class ResourcePool {
         if (class_name in root && object_name in root[class_name].objects) {
             return root[class_name].objects[object_name];
         }
+        if (!class_name) {
+            for (let c in root) {
+                if (object_name in root[c].objects) {
+                    return root[c].objects[object_name];
+                }
+            }
+        }
         for (let c in root) {
             for (let o in root[c].objects) {
                 let ret = this.findTreeResource(class_name, object_name, root[c].objects[o].sub_resources);
@@ -425,28 +456,29 @@ export class ResourcePool {
         return false;
 
     }
-    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders: string[], resources: string[], exampleParam: ExampleParam) {
+    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders: string[], resources: string[], exampleParam: ExampleParam, isTest=true) {
         if (placeholders == undefined) placeholders = new Array();
         if (isJson) {
             let body = typeof endpoint == 'string' ? JSON.parse(endpoint) : endpoint;
             if (typeof body == 'object') {
                 if (body instanceof Array) {
                     body = body.map((value) => {
-                        return this.addEndpointResource(value, typeof value == 'object', isKeyValues, placeholders, resources, exampleParam);
+                        return this.addEndpointResource(value, typeof value == 'object', isKeyValues, placeholders, resources, exampleParam, isTest);
                     });
                 }
                 else if (isDict(body)) {
                     for (let k in body) {
-                        body[k] = this.addEndpointResource(body[k], typeof body[k] == 'object', isKeyValues, placeholders, resources, exampleParam);
+                        body[k] = this.addEndpointResource(body[k], typeof body[k] == 'object', isKeyValues, placeholders, resources, exampleParam, isTest);
                     }
                 }
             }
             else {
-                body = this.addEndpointResource(body, false, isKeyValues, placeholders, resources, exampleParam);
+                body = this.addEndpointResource(body, false, isKeyValues, placeholders, resources, exampleParam, isTest);
             }
 
             if (typeof endpoint == 'string') {
-                return this.formatable(JSON.stringify(body).split(/[\r\n]+/).join(""), placeholders);
+                let ret = JSON.stringify(body).split(/[\r\n]+/).join("");
+                return isTest ? this.formatable(ret, placeholders): ret;
             }
             else {
                 return body;
@@ -470,12 +502,22 @@ export class ResourcePool {
                 let kv = attr.split("=");
                 if (ret.length > 0) ret += " ";
                 if (kv[1].length >= 2 && kv[1][0] == '"' && kv[1][kv[1].length - 1] == '"') {
-                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, false, placeholders, resources, exampleParam);
-                    ret += `${kv[0]}="${this.formatable(v, placeholders)}"`;
+                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, false, placeholders, resources, exampleParam, isTest);
+                    if (isTest) {
+                        ret += `${kv[0]}="${this.formatable(v, placeholders)}"`;
+                    }
+                    else {
+                        ret += `${kv[0]}="${v}"`;
+                    }
                 }
                 else {
-                    let v = this.addEndpointResource(kv[1], isJson, false, placeholders, resources, exampleParam);
-                    ret += `${kv[0]}=${this.formatable(v, placeholders)}`;
+                    let v = this.addEndpointResource(kv[1], isJson, false, placeholders, resources, exampleParam, isTest);
+                    if (isTest) {
+                        ret += `${kv[0]}=${this.formatable(v, placeholders)}`;
+                    }
+                    else {
+                        ret += `${kv[0]}=${v}`;
+                    }
                 }
             }
             return ret;
@@ -483,9 +525,11 @@ export class ResourcePool {
 
         let nodes = endpoint.split('/');
         if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
-            return endpoint;
+            return this.getPlaceholder(endpoint, isTest);
         }
-        nodes[2] = `{${ResourcePool.KEY_SUBSCRIPTIONID}}`;
+        if (isTest) {
+            nodes[2] = `{${ResourcePool.KEY_SUBSCRIPTIONID}}`;
+        }
         if (placeholders.indexOf(nodes[2]) < 0) {
             placeholders.push(nodes[2]);
         }
@@ -501,21 +545,24 @@ export class ResourcePool {
                 }
                 else {
                     resource_object = this.addTreeResource(resource, nodes[i + 1], resource_object);
-                    nodes[i + 1] = resource_object.placeholder;
-                    if (placeholders.indexOf(resource_object.placeholder) < 0) {
-                        placeholders.push(resource_object.placeholder);
+                    nodes[i + 1] = resource_object.placeholder(isTest);
+                    if (placeholders.indexOf(resource_object.placeholder(isTest)) < 0) {
+                        placeholders.push(resource_object.placeholder(isTest));
                     }
                     if (resources.indexOf(resource) < 0) {
                         resources.push(resource);
                     }
                 }
             }
+            else {
+                nodes[i + 1] = this.getPlaceholder(nodes[i+1], isTest);
+            }
             i += 2;
         }
         return nodes.join('/');
     }
 
-    public addParamResource(param_name: string, param_value: string, isJson: boolean, isKeyValues: boolean): string {
+    public addParamResource(param_name: string, param_value: string, isJson: boolean, isKeyValues: boolean, isTest=true): string {
         if (typeof param_value !== 'string' || isJson || isKeyValues) return param_value;
 
         if (param_name.startsWith('--')) {
@@ -523,7 +570,7 @@ export class ResourcePool {
         }
         let resource = this.isResource(param_name);
         if (!resource) {
-            return param_value;
+            return this.getPlaceholder(param_value, isTest);
         }
         if (resource == SUBNET) {
             // since the subnet can't be created with rand name, just use the dfault one.
@@ -531,11 +578,25 @@ export class ResourcePool {
         }
         let resource_object = this.addMapResource(resource, param_value);
         if (resource_object) {
-            return resource_object.placeholder;
+            return resource_object.placeholder(isTest);
         }
         else {
-            return param_value;
+            return this.getPlaceholder(param_value, isTest);
         }
+    }
+
+    public getPlaceholder(object_name: string, isTest: boolean): string {
+        // find in MapResource
+        for (let class_name in this.map) {
+            if (object_name in this.map[class_name].objects) {
+                return this.map[class_name].objects[object_name].placeholder(isTest)
+            }
+        }
+
+        // find in TreeResource
+        let resource_object = this.findTreeResource(null, object_name, this.root);
+        if (resource_object)    return resource_object.placeholder(isTest);
+        return object_name;
     }
 
     public addResourcesInfo(resources: object) {
