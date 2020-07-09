@@ -1,13 +1,13 @@
 # Azure CLI Module Creation Report
 
-### testserver bool get-false
+### boolean bool get-false
 
-get-false a testserver bool.
+get-false a boolean bool.
 
 #### Command group
 |Name (az)|Swagger name|
 |---------|------------|
-|testserver bool|bool|
+|boolean bool|bool|
 
 #### Methods
 |Name (az)|Swagger name|
@@ -18,14 +18,14 @@ get-false a testserver bool.
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 
-### testserver bool get-invalid
+### boolean bool get-invalid
 
-get-invalid a testserver bool.
+get-invalid a boolean bool.
 
 #### Command group
 |Name (az)|Swagger name|
 |---------|------------|
-|testserver bool|bool|
+|boolean bool|bool|
 
 #### Methods
 |Name (az)|Swagger name|
@@ -36,14 +36,14 @@ get-invalid a testserver bool.
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 
-### testserver bool get-null
+### boolean bool get-null
 
-get-null a testserver bool.
+get-null a boolean bool.
 
 #### Command group
 |Name (az)|Swagger name|
 |---------|------------|
-|testserver bool|bool|
+|boolean bool|bool|
 
 #### Methods
 |Name (az)|Swagger name|
@@ -54,14 +54,14 @@ get-null a testserver bool.
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 
-### testserver bool get-true
+### boolean bool get-true
 
-get-true a testserver bool.
+get-true a boolean bool.
 
 #### Command group
 |Name (az)|Swagger name|
 |---------|------------|
-|testserver bool|bool|
+|boolean bool|bool|
 
 #### Methods
 |Name (az)|Swagger name|
@@ -72,14 +72,14 @@ get-true a testserver bool.
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 
-### testserver bool put-false
+### boolean bool put-false
 
-put-false a testserver bool.
+put-false a boolean bool.
 
 #### Command group
 |Name (az)|Swagger name|
 |---------|------------|
-|testserver bool|bool|
+|boolean bool|bool|
 
 #### Methods
 |Name (az)|Swagger name|
@@ -90,14 +90,14 @@ put-false a testserver bool.
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 
-### testserver bool put-true
+### boolean bool put-true
 
-put-true a testserver bool.
+put-true a boolean bool.
 
 #### Command group
 |Name (az)|Swagger name|
 |---------|------------|
-|testserver bool|bool|
+|boolean bool|bool|
 
 #### Methods
 |Name (az)|Swagger name|

@@ -35,7 +35,7 @@ def call_scenario(test):
 @try_manual
 class AutoRestTestServiceScenarioTest(ScenarioTest):
 
-    def test_testserver(self):
+    def test_boolean(self):
 
         call_scenario(self)
         raise_if()

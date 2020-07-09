@@ -12,7 +12,7 @@ from setuptools import setup, find_packages
 # HISTORY.rst entry.
 VERSION = '0.1.0'
 try:
-    from azext_testserver.manual.version import VERSION
+    from azext_boolean.manual.version import VERSION
 except ImportError:
     pass
 
@@ -42,16 +42,16 @@ with open('HISTORY.rst', 'r', encoding='utf-8') as f:
     HISTORY = f.read()
 
 setup(
-    name='testserver',
+    name='boolean',
     version=VERSION,
     description='Microsoft Azure Command-Line Tools AutoRestTestService Extension',
     author='Microsoft Corporation',
     author_email='azpycli@microsoft.com',
-    url='https://github.com/Azure/azure-cli-extensions/tree/master/src/testserver',
+    url='https://github.com/Azure/azure-cli-extensions/tree/master/src/boolean',
     long_description=README + '\n\n' + HISTORY,
     license='MIT',
     classifiers=CLASSIFIERS,
     packages=find_packages(),
     install_requires=DEPENDENCIES,
-    package_data={'azext_testserver': ['azext_metadata.json']},
+    package_data={'azext_boolean': ['azext_metadata.json']},
 )

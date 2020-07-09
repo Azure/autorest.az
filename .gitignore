@@ -10,3 +10,4 @@ test-results.xml
 *.njsproj
 *.user
 *.orig
+src/test/scenarios/testserver/input/

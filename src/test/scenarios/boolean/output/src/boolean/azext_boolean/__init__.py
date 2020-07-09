@@ -9,9 +9,9 @@
 # --------------------------------------------------------------------------
 
 from azure.cli.core import AzCommandsLoader
-from azext_testserver.generated._help import helps  # pylint: disable=unused-import
+from azext_boolean.generated._help import helps  # pylint: disable=unused-import
 try:
-    from azext_testserver.manual._help import helps  # pylint: disable=reimported
+    from azext_boolean.manual._help import helps  # pylint: disable=reimported
 except ImportError:
     pass
 
@@ -20,28 +20,28 @@ class AutoRestTestServiceCommandsLoader(AzCommandsLoader):
 
     def __init__(self, cli_ctx=None):
         from azure.cli.core.commands import CliCommandType
-        from azext_testserver.generated._client_factory import cf_testserver_cl
-        testserver_custom = CliCommandType(
-            operations_tmpl='azext_testserver.custom#{}',
-            client_factory=cf_testserver_cl)
+        from azext_boolean.generated._client_factory import cf_boolean_cl
+        boolean_custom = CliCommandType(
+            operations_tmpl='azext_boolean.custom#{}',
+            client_factory=cf_boolean_cl)
         parent = super(AutoRestTestServiceCommandsLoader, self)
-        parent.__init__(cli_ctx=cli_ctx, custom_command_type=testserver_custom)
+        parent.__init__(cli_ctx=cli_ctx, custom_command_type=boolean_custom)
 
     def load_command_table(self, args):
-        from azext_testserver.generated.commands import load_command_table
+        from azext_boolean.generated.commands import load_command_table
         load_command_table(self, args)
         try:
-            from azext_testserver.manual.commands import load_command_table as load_command_table_manual
+            from azext_boolean.manual.commands import load_command_table as load_command_table_manual
             load_command_table_manual(self, args)
         except ImportError:
             pass
         return self.command_table
 
     def load_arguments(self, command):
-        from azext_testserver.generated._params import load_arguments
+        from azext_boolean.generated._params import load_arguments
         load_arguments(self, command)
         try:
-            from azext_testserver.manual._params import load_arguments as load_arguments_manual
+            from azext_boolean.manual._params import load_arguments as load_arguments_manual
             load_arguments_manual(self, command)
         except ImportError:
             pass

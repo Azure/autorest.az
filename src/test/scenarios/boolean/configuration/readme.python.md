@@ -9,18 +9,18 @@ python:
   azure-arm: true
   license-header: MICROSOFT_MIT_NO_VERSION
   payload-flattening-threshold: 2
-  namespace: azure.mgmt.testserver
-  package-name: azure-mgmt-testserver
+  namespace: azure.mgmt.boolean
+  package-name: azure-mgmt-boolean
   package-version: 0.1.0
   clear-output-folder: true
 ```
 ``` yaml $(python) && $(python-mode) == 'update'
 python:
   no-namespace-folders: true
-  output-folder: $(python-sdks-folder)/testserver/azure-mgmt-testserver/azure/mgmt/testserver
+  output-folder: $(python-sdks-folder)/boolean/azure-mgmt-boolean/azure/mgmt/boolean
 ```
 ``` yaml $(python) && $(python-mode) == 'create'
 python:
   basic-setup-py: true
-  output-folder: $(python-sdks-folder)/testserver/azure-mgmt-testserver
+  output-folder: $(python-sdks-folder)/boolean/azure-mgmt-boolean
 ```

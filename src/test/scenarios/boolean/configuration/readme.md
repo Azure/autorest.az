@@ -32,16 +32,6 @@ override-info:
   description: Test Infrastructure for AutoRest.
 ```
 
-### Tag: testserver-2-10-45
-
-These settings apply only when `--tag=testserver-2-10-45` is specified on the command line.
-
-``` yaml $(tag) == 'testserver-2-10-45'
-input-file:
-- ../../../../../node_modules/@microsoft.azure/autorest.testserver/swagger/body-array.json
-- ../../../../../node_modules/@microsoft.azure/autorest.testserver/swagger/body-boolean.json
-```
-
 ### Tag: testserver-local
 
 These settings apply only when `--tag=testserver-local` is specified on the command line.
