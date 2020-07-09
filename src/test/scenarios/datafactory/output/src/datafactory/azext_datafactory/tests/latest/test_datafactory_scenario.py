@@ -27,6 +27,8 @@ def setup(test, rg):
 def step__factories_put_factories_createorupdate(test, rg):
     test.cmd('az datafactory create '
              '--location "East US" '
+             '--zones "earth" '
+             '--zones "moon" '
              '--name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=[])
