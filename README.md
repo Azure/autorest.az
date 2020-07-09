@@ -13,8 +13,8 @@ debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
   "@autorest/python": "5.0.0-preview.7"
-  #"@autorest/clicommon": "/home/qiaozha/code/autorest.clicommon"
-  "@autorest/clicommon": "0.4.10"
+  "@autorest/clicommon": "/home/qiaozha/code/autorest.clicommon"
+  #"@autorest/clicommon": "0.4.10"
   #"@autorest/python": "latest"
 
 require:
@@ -98,9 +98,21 @@ pipeline:
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true
 
+cli:
+    naming:
+        m4:
+            parameter: 'snake'
+            property: 'snake'
+            operation: 'snake'
+            operationGroup:  'snake'
+            choice:  'pascal'
+            choiceValue:  'pascal'
+            constant:  'snake'
+            type:  'snake'
+
 pipeline:
     python/m2r:
-        input: clicommon/m4/cli-namer
+        input: clicommon/cli-m4namer
     az/renamer:
         input: clicommon/identity
     az/merger:
