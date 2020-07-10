@@ -1,10 +1,11 @@
-import { CodeModel, codeModelSchema, Language, Parameter } from "@azure-tools/codemodel";
+import { CodeModel, codeModelSchema, Language, Parameter, SchemaType } from "@azure-tools/codemodel";
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { isNullOrUndefined } from "util";
 import { az } from "..";
 import { exception } from "console";
+import { findNodeInCodeModel } from "../utils/helper";
 
 export class Merger {
     codeModel: CodeModel;
@@ -121,31 +122,6 @@ export class CodeModelMerger {
         return this.mergeCodeModel();
     }
 
-    findNodeInCliCodeModel(cliM4Path: any) {
-        let nodePaths = cliM4Path.split('$$');
-        let curNode: any = this.cliCodeModel;
-        for(let np of nodePaths) {
-            if (np == "") {
-                continue;
-            }
-            if (np.startsWith('[@') && np.endsWith(']')) {
-                np = np.replace(/\[\@|\]/g, '');
-                for(let node of values(curNode)) {
-                    if(node?.['language']?.['cli']['cliKey'] == np) {
-                        curNode = node;
-                        break;
-                    }
-                }
-            } else if(np.startsWith('[') && np.endsWith(']')) {
-                np = Number(np.replace(/\[|\]/g, ''));
-                curNode = curNode[np];
-            } else {
-                curNode = curNode[np];
-            }
-        }
-        return curNode;
-    }
-
     mergeCodeModel(): CodeModel {
         this.processOperationGroup();
         this.processGlobalParam();
@@ -159,11 +135,25 @@ export class CodeModelMerger {
         if (isNullOrUndefined(cliM4Path)) {
             return;
         }
-        let cliNode = this.findNodeInCliCodeModel(cliM4Path);
+        let cliNode = findNodeInCodeModel(cliM4Path, this.cliCodeModel);
         if (!isNullOrUndefined(cliNode) && !isNullOrUndefined(cliNode.language) && isNullOrUndefined(cliNode.language['python'])) {
             cliNode.language['python'] = param.language['python'];
-        }
-        
+        } else if(isNullOrUndefined(cliNode)) {
+            let flattenedNodes = findNodeInCodeModel(cliM4Path, this.cliCodeModel, true);
+            if(!isNullOrUndefined(flattenedNodes) && flattenedNodes.length > 0) {
+                for(let fnode of flattenedNodes) {
+                    if(!isNullOrUndefined(fnode) && !isNullOrUndefined(fnode.language)) {
+                        if(isNullOrUndefined(fnode.language['python'])) {
+                            fnode.language['python'] = {}
+                            if(isNullOrUndefined(fnode.language['python']['flattened'])) {
+                                fnode.language['python']['flattened'] = [];
+                            }
+                            fnode.language['python']['flattened'].push(param.language['python']);
+                        }
+                    }
+                }
+            }
+        } 
     }
 
     processGlobalParam() {

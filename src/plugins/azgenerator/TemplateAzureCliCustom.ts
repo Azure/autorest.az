@@ -106,6 +106,9 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 if (model.MethodParameter['originalParameter'] == originalParameterStack[originalParameterStack.length - 1]) {
                     let access = [];
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
+                    if (isNullOrUndefined(paramName)) {
+                        
+                    }
 
                     if (model.MethodParameter['targetProperty']?.['isDiscriminator'] == true) {
                         if (!isNullOrUndefined(valueToMatch)) {
@@ -117,8 +120,11 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                     }
                     else {
                         if (!model.MethodParameter_IsHidden) {
+                            /*if (isNullOrUndefined(model.MethodParameter_NamePython) && !isNullOrUndefined(model.getM4Path(model.MethodParameter)) && model.getM4Path(model.MethodParameter).startsWith("schemas")) {
+
+                            }*/
                             access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
-                        }
+                        } 
                         else if (!isNullOrUndefined(model.MethodParameter_DefaultValue)) {
                             access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
                         }

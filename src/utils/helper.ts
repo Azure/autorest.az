@@ -4,6 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 import * as fs from 'fs';
 import { isNullOrUndefined } from 'util';
+import { CodeModel } from '@azure-tools/codemodel';
+import { values, items, length, Dictionary } from "@azure-tools/linq";
 
 export function changeCamelToDash(str: string) {
     str = str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
@@ -286,4 +288,47 @@ export function parseResourceId(mpath: string): Map<string, string> {
         ret.set("last_child_num", "" + count);
     }
     return ret;
+}
+
+export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flattenMode: boolean = false) {
+    let nodePaths = cliM4Path.split('$$');
+    let curNode: any = codeModel;
+    let lastValidNode: any = null;
+    for(let np of nodePaths) {
+        if (np == "") {
+            continue;
+        }
+        if (np.startsWith('[@') && np.endsWith(']')) {
+            np = np.replace(/\[\@|\]/g, '');
+            for(let node of values(curNode)) {
+                if(node?.['language']?.['cli']?.['cliKey'] == np) {
+                    lastValidNode = curNode;
+                    curNode = node;
+                    break;
+                }
+            }
+        } else if(np.startsWith('[') && np.endsWith(']')) {
+            np = Number(np.replace(/\[|\]/g, ''));
+            lastValidNode = curNode;
+            curNode = curNode[np];
+        } else {
+            lastValidNode = curNode;
+            curNode = curNode[np];
+        }
+    }
+    if(!flattenMode || !isNullOrUndefined(curNode)) {
+        return curNode;
+    }
+    let flattenedNodes = [];
+    if(flattenMode && isNullOrUndefined(curNode) && !isNullOrUndefined(lastValidNode)) {
+        for(let node of values(lastValidNode)) {
+            for(let cliTracePath of values(node?.['language']?.['cli']?.['cliFlattenTrace'])) {
+                if(cliTracePath == cliM4Path) {
+                    flattenedNodes.push(node);
+                    break;
+                }
+            }
+        }
+    }
+    return flattenedNodes;
 }

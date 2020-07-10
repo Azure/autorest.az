@@ -2264,4 +2264,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     public get SDK_IsTrack1() {
         return this.codeModel.language['az']?.['sdkTrack1']? true: false;
     }
+
+    public getM4Path(node: any): string {
+        return node?.language?.['cli']?.['cliM4Path'];
+    }
 }
