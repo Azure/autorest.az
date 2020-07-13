@@ -143,13 +143,16 @@ export class CodeModelMerger {
             if(!isNullOrUndefined(flattenedNodes) && flattenedNodes.length > 0) {
                 for(let fnode of flattenedNodes) {
                     if(!isNullOrUndefined(fnode) && !isNullOrUndefined(fnode.language)) {
+                        for(let prop of values(param.schema.properties)) {
+                            if(!isNullOrUndefined(fnode.language?.['cli']?.['cliKey']) && fnode.language?.['cli']?.['cliKey'] == prop['language']?.['cli']?.['cliKey']) {
+                                fnode.language['python'] = prop['language']['python'];
+                                break;
+                            }
+                        }
                         if(isNullOrUndefined(fnode.language['python'])) {
                             fnode.language['python'] = {}
-                            if(isNullOrUndefined(fnode.language['python']['flattened'])) {
-                                fnode.language['python']['flattened'] = [];
-                            }
-                            fnode.language['python']['flattened'].push(param.language['python']);
                         }
+                        fnode.language['python']['flattenedFrom'] = param;
                     }
                 }
             }

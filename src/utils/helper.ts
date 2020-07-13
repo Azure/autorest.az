@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as fs from 'fs';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined, isNull } from 'util';
 import { CodeModel } from '@azure-tools/codemodel';
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 
@@ -298,21 +298,27 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
         if (np == "") {
             continue;
         }
+        if (isNullOrUndefined(curNode)) {
+            break;
+        }
+        lastValidNode = curNode;
         if (np.startsWith('[@') && np.endsWith(']')) {
             np = np.replace(/\[\@|\]/g, '');
+            let found = false;
             for(let node of values(curNode)) {
                 if(node?.['language']?.['cli']?.['cliKey'] == np) {
-                    lastValidNode = curNode;
                     curNode = node;
+                    found = true;
                     break;
                 }
             }
+            if(!found) {
+                curNode = null;
+            }
         } else if(np.startsWith('[') && np.endsWith(']')) {
             np = Number(np.replace(/\[|\]/g, ''));
-            lastValidNode = curNode;
             curNode = curNode[np];
         } else {
-            lastValidNode = curNode;
             curNode = curNode[np];
         }
     }
@@ -323,6 +329,9 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
     if(flattenMode && isNullOrUndefined(curNode) && !isNullOrUndefined(lastValidNode)) {
         for(let node of values(lastValidNode)) {
             for(let cliTracePath of values(node?.['language']?.['cli']?.['cliFlattenTrace'])) {
+                if(cliTracePath == "schemas$$objects$$[@LanguageExtensionsList]$$properties$$[@value]") {
+                    cliM4Path;
+                }
                 if(cliTracePath == cliM4Path) {
                     flattenedNodes.push(node);
                     break;

@@ -103,11 +103,26 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 }
             }
             else if (originalParameterStack.length > 0) {
-                if (model.MethodParameter['originalParameter'] == originalParameterStack[originalParameterStack.length - 1]) {
+                let flattenedFrom = model.Schema_FlattenedFrom(model.MethodParameter['targetProperty']);
+                if (model.MethodParameter['originalParameter'] == originalParameterStack[originalParameterStack.length - 1] || !isNullOrUndefined(flattenedFrom)) {
                     let access = [];
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
-                    if (isNullOrUndefined(paramName)) {
-                        
+                    if (!isNullOrUndefined(flattenedFrom) && flattenedFrom != originalParameterStack[originalParameterStack.length - 1].schema) {
+                        // If last originalParameter in the stack doesn't have language.az. it means this original Parameter was added because of the flattenedParam in python  
+                        if (flattenedFrom != originalParameterStack[originalParameterStack.length - 1].schema && isNullOrUndefined(originalParameterStack[originalParameterStack.length - 1].language['az'])) {
+                            originalParameterNameStack.pop();
+                            originalParameterStack.pop();
+                        }
+                        originalParameterStack.push(
+                            new Parameter(flattenedFrom.language['python']['name'], 
+                                flattenedFrom.language['python']['description'],
+                                flattenedFrom
+                            )
+                        );
+                        originalParameterNameStack.push(flattenedFrom.language['python']['name']);
+                        if(!needGeneric) {
+                            output_body = output_body.concat(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
+                        }
                     }
 
                     if (model.MethodParameter['targetProperty']?.['isDiscriminator'] == true) {
@@ -120,9 +135,6 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                     }
                     else {
                         if (!model.MethodParameter_IsHidden) {
-                            /*if (isNullOrUndefined(model.MethodParameter_NamePython) && !isNullOrUndefined(model.getM4Path(model.MethodParameter)) && model.getM4Path(model.MethodParameter).startsWith("schemas")) {
-
-                            }*/
                             access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
                         } 
                         else if (!isNullOrUndefined(model.MethodParameter_DefaultValue)) {
@@ -183,7 +195,7 @@ function ConstructValuation(isGeneric: boolean, prefix: string, classNames: stri
         str.push(left + " = " + value);
     }
     else {
-        str = str.concat(ConstructValuation(isGeneric, prefix, classNames, paramName, defaultValue) + " if " + value + " == None else " + value);
+        str = str.concat(ConstructValuation(isGeneric, prefix, classNames, paramName, defaultValue) + " if " + value + " is None else " + value);
     }
     return str;
 
@@ -350,7 +362,7 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                     }
                     else if (model.MethodParameter_DefaultValue !== undefined && model.MethodParameter_Type != SchemaType.Constant) {
                         // model is simple type with default value
-                        output_body.push("    if " + model.MethodParameter_MapsTo + " == None:");
+                        output_body.push("    if " + model.MethodParameter_MapsTo + " is None:");
                         output_body.push("        " + model.MethodParameter_MapsTo + " = " + ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
                     }
                 }

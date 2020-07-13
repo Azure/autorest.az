@@ -1,4 +1,4 @@
-﻿import { Operation, OperationGroup, Parameter, Property } from "@azure-tools/codemodel";
+﻿import { Operation, OperationGroup, Parameter, Property, Schema } from "@azure-tools/codemodel";
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -167,6 +167,7 @@ export interface CodeModelAz {
     Parameter_Description(Parameter): string;
     Parameter_DefaultValue(Parameter): any | undefined;
     Schema_Description(Schema): string;
+    Schema_FlattenedFrom(Schema): Schema;
 
     GetModuleOperationName(): string;
     GetModuleOperationNamePython(): string;

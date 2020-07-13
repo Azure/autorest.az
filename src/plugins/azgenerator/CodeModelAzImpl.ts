@@ -1445,6 +1445,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return schema.language['az'].description.replace(/\r?\n|\r/g, ' ');
     }
 
+    public Schema_FlattenedFrom(schema: Schema): Schema {
+        return schema.language['python']['flattenedFrom'];
+    }
+
     public Parameter_InGlobal(parameter: Parameter): boolean {
         if(this.codeModel.globalParameters.indexOf(parameter) > -1) {
             return true;
