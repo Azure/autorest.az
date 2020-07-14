@@ -2269,7 +2269,8 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.codeModel.language['az']?.['sdkTrack1']? true: false;
     }
 
-    public getM4Path(node: any): string {
-        return node?.language?.['cli']?.['cliM4Path'];
+    public get SDK_NoFlatten() {
+        return this.codeModel.language['az']?.['sdkNoFlatten']? true: false;
     }
+
 }

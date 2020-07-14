@@ -61,7 +61,7 @@ export interface CodeModelAz {
     IsCliCore: boolean;
     SDK_NeedSDK: boolean;
     SDK_IsTrack1: boolean;
-    getM4Path(node: any): string;
+    SDK_NoFlatten: boolean;
     AzureCliFolder: string;
     Extension_Name: string;
     Extension_NameUnderscored: string;

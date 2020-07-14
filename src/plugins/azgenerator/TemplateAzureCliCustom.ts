@@ -95,7 +95,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
             if (skip) {
                 skip = false;
             }
-            if ((model.MethodParameter_IsCliFlattened && (model.IsCliCore || !isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']))) || (model.MethodParameter_IsFlattened && model.MethodParameter['extensions']?.['cli-flattened'])) {
+            if ((model.MethodParameter_IsCliFlattened && (model.SDK_NoFlatten || !isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']))) || (model.MethodParameter_IsFlattened && model.MethodParameter['extensions']?.['cli-flattened'])) {
                 originalParameterStack.push(model.MethodParameter);
                 originalParameterNameStack.push(model.MethodParameter_Name);
                 if (!needGeneric) {
@@ -473,7 +473,7 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     while (cnt < originalParameters.length) {
         let param = originalParameters[cnt];
         cnt++;
-        if ((param.flattened && !model.Parameter_IsCliFlattened(param)) || (model.Parameter_IsCliFlattened(param) && !model.IsCliCore)) {
+        if ((param.flattened && !model.Parameter_IsCliFlattened(param)) || (model.Parameter_IsCliFlattened(param) && !model.SDK_NoFlatten)) {
             continue;
         }
         if (param.schema.type == SchemaType.Constant) {
@@ -558,7 +558,7 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
                 skip = false;
             }
             let param = model.MethodParameter;
-            if ((model.MethodParameter_IsFlattened && !model.MethodParameter_IsCliFlattened ) || (model.MethodParameter_IsCliFlattened && !model.IsCliCore)) {
+            if ((model.MethodParameter_IsFlattened && !model.MethodParameter_IsCliFlattened ) || (model.MethodParameter_IsCliFlattened && !model.SDK_NoFlatten)) {
                 continue;
             }
             if (model.MethodParameter_Type == SchemaType.Constant) {

@@ -123,6 +123,8 @@ export class CodeModelMerger {
     }
 
     mergeCodeModel(): CodeModel {
+        this.cliCodeModel.info['python_title'] = this.pythonCodeModel.info['python_title'];
+        this.cliCodeModel.info['pascal_case_title'] = this.pythonCodeModel.info['pascal_case_title'];
         this.processOperationGroup();
         this.processGlobalParam();
         this.processSchemas();
@@ -243,50 +245,52 @@ export class CodeModelMerger {
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
     const cliCore = await host.GetValue('cli-core') || false;
-    const sdkNoFlatten = await host.GetValue('sdk-no-flatten') || false;
+    let sdkNoFlatten = cliCore? true: false;
+    sdkNoFlatten = await host.GetValue('sdk-no-flatten') || sdkNoFlatten;
+    if (cliCore && !sdkNoFlatten) {
+        host.Message({Channel: Channel.Fatal, Text:"You have specified the --cli-core and --sdk-no-flatten=false at the same time. which is not a valid configuration"}); 
+        throw new Error("Wrong configuration detected, please check!");
+    }
     let azExtensionFolder = "";
     let azCoreFolder = "";
-    let isSdkNeeded = true;
-    let isTrack1 = false;
+    if (isNullOrUndefined(cliCore) || cliCore == false) {
+        azExtensionFolder = await host.GetValue('azure-cli-extension-folder');
+    } else {
+        azCoreFolder = await host.GetValue('azure-cli-folder');
+    }
+    if ((isNullOrUndefined(cliCore) || cliCore == false) && isNullOrUndefined(azExtensionFolder)) {
+        host.Message({Channel: Channel.Fatal, Text:"--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"}); 
+        throw new Error("Wrong configuration, please check!");
+    } else if(cliCore && isNullOrUndefined(azCoreFolder)){
+        host.Message({Channel: Channel.Fatal, Text:"--azure-cli-folder is not provided in the command line and you are using --cli-core to generate cli-core modules ! \nplease use --azure-cli-folder=your-local-azure-cli-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"});  
+        throw new Error("Wrong configuration, please check!");
+    }
+    let isSdkNeeded = cliCore? false: true;
+    isSdkNeeded = await host.GetValue('need-sdk') || isSdkNeeded;
+    let isTrack1 = cliCore? true: false;
+    isTrack1 = await host.GetValue('track1') || isTrack1;
 
     let extensionMode = "experimental";
+    extensionMode = await host.GetValue('extension-mode') || extensionMode;
     
     try {
-        extensionMode = await host.GetValue('extension-mode');
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         if (cliCore || sdkNoFlatten) {
-            isSdkNeeded = await host.GetValue('need-sdk');
-            if(isNullOrUndefined(isSdkNeeded)) {
-                isSdkNeeded = false;
-            }
-            isTrack1 = await host.GetValue('track1');
-            if(!isNullOrUndefined(isTrack1)) {
-                isTrack1 = true;
-            }
             let cliCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-cli-v4.yaml"), 'code-model-cli-v4.yaml', codeModelSchema);
             let pythonCodeModel = deserialize<CodeModel>(await host.ReadFile("code-model-v4-no-tags.yaml"), 'code-model-v4-no-tags.yaml', codeModelSchema);
             const codeModelMerger = new CodeModelMerger(cliCodeModel, pythonCodeModel);
             const azCodeModel = await codeModelMerger.process();
-            azCodeModel.language['az'] = {}
-            azCodeModel.language['az']['isCliCore'] = true;
-            azCodeModel.language['az']['sdkNeeded'] = isSdkNeeded;
-            azCodeModel.language['az']['sdkTrack1'] = isTrack1;
             session.model = azCodeModel;
         } else {
             host.Message({Channel: Channel.Information, Text:"Generating CLI extension!"});
         }
-        if (isNullOrUndefined(cliCore) || cliCore == false) {
-            azExtensionFolder = await host.GetValue('azure-cli-extension-folder');
-        } else {
-            azCoreFolder = await host.GetValue('azure-cli-folder');
+        if(isNullOrUndefined(session.model.language['az'])) {
+            session.model.language['az'] = {}
         }
-        if ((isNullOrUndefined(cliCore) || cliCore == false) && isNullOrUndefined(azExtensionFolder)) {
-            host.Message({Channel: Channel.Fatal, Text:"--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"}); 
-            throw new Error("Wrong configuration, please check!");
-        } else if(cliCore && isNullOrUndefined(azCoreFolder)){
-            host.Message({Channel: Channel.Fatal, Text:"--azure-cli-folder is not provided in the command line and you are using --cli-core to generate cli-core modules ! \nplease use --azure-cli-folder=your-local-azure-cli-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"});  
-            throw new Error("Wrong configuration, please check!");
-        }
+        session.model.language['az']['isCliCore'] = cliCore;
+        session.model.language['az']['sdkNeeded'] = isSdkNeeded;
+        session.model.language['az']['sdkTrack1'] = isTrack1;
+        session.model.language['az']['sdkNoFlatten'] = sdkNoFlatten;
         session.model.info['extensionMode'] = extensionMode;
         const plugin = new Merger(session);
         const result = await plugin.process();
