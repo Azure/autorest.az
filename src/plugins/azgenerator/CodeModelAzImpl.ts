@@ -1446,7 +1446,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Schema_FlattenedFrom(schema: Schema): Schema {
-        return schema.language['python']['flattenedFrom'];
+        return schema.language['cli']?.['pythonFlattenedFrom'];
     }
 
     public Parameter_InGlobal(parameter: Parameter): boolean {

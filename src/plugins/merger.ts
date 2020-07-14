@@ -146,13 +146,10 @@ export class CodeModelMerger {
                         for(let prop of values(param.schema.properties)) {
                             if(!isNullOrUndefined(fnode.language?.['cli']?.['cliKey']) && fnode.language?.['cli']?.['cliKey'] == prop['language']?.['cli']?.['cliKey']) {
                                 fnode.language['python'] = prop['language']['python'];
+                                fnode.language['cli']['pythonFlattenedFrom'] = param;
                                 break;
                             }
                         }
-                        if(isNullOrUndefined(fnode.language['python'])) {
-                            fnode.language['python'] = {}
-                        }
-                        fnode.language['python']['flattenedFrom'] = param;
                     }
                 }
             }

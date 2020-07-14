@@ -329,9 +329,6 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
     if(flattenMode && isNullOrUndefined(curNode) && !isNullOrUndefined(lastValidNode)) {
         for(let node of values(lastValidNode)) {
             for(let cliTracePath of values(node?.['language']?.['cli']?.['cliFlattenTrace'])) {
-                if(cliTracePath == "schemas$$objects$$[@LanguageExtensionsList]$$properties$$[@value]") {
-                    cliM4Path;
-                }
                 if(cliTracePath == cliM4Path) {
                     flattenedNodes.push(node);
                     break;
