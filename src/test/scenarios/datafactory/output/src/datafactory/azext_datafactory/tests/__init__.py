@@ -18,7 +18,9 @@ from azure.cli.testsdk.exceptions import CliTestError, CliExecutionError, JMESPa
 
 __path__ = __import__('pkgutil').extend_path(__path__, __name__)
 exceptions = []
-
+test_map = dict()
+SUCCESSED = "successed"
+FAILED = "failed"
 
 def try_manual(func):
     def import_manual_function(origin_func):
@@ -48,8 +50,10 @@ def try_manual(func):
         func_to_call = get_func_to_call()
         print("running {}()...".format(func.__name__))
         try:
+            test_map[func.__name__] = SUCCESSED
             return func_to_call(*args, **kwargs)
         except (AssertionError, AzureError, CliTestError, CliExecutionError, JMESPathCheckAssertionError) as e:
+            test_map[func.__name__] = FAILED
             print("--------------------------------------")
             print("step exception: ", e)
             print("--------------------------------------", file=sys.stderr)
@@ -61,6 +65,23 @@ def try_manual(func):
         return get_func_to_call()
     return wrapper
 
+def calc_coverage(filename):
+    filename = filename.split(".")[0]
+    coverage_name = filename + "_coverage.md"
+    with open(coverage_name, "w") as f:
+        f.write("|Scenario|Status|\n")
+        failed = 0
+        total = len(test_map)
+        covered = 0
+        for k, v in test_map.items():
+            if not k.startswith("step_"):
+                total -= 1
+                continue
+            if v == SUCCESSED:
+                covered += 1
+            f.write("|{}|{}|\n".format(k, v))
+        f.write("Coverage: {}/{}\n".format(covered, total))
+    print("Create coverage\n", file=sys.stderr)
 
 def raise_if():
     if exceptions:
