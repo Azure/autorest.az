@@ -242,7 +242,8 @@ export class CodeModelMerger {
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
-    const cliCore = await host.GetValue('cli-core') || false;          
+    const cliCore = await host.GetValue('cli-core') || false;
+    const sdkNoFlatten = await host.GetValue('sdk-no-flatten') || false;
     let azExtensionFolder = "";
     let azCoreFolder = "";
     let isSdkNeeded = true;
@@ -253,7 +254,7 @@ export async function processRequest(host: Host) {
     try {
         extensionMode = await host.GetValue('extension-mode');
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        if (cliCore) {
+        if (cliCore || sdkNoFlatten) {
             isSdkNeeded = await host.GetValue('need-sdk');
             if(isNullOrUndefined(isSdkNeeded)) {
                 isSdkNeeded = false;
