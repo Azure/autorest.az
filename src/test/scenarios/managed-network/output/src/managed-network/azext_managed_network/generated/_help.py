@@ -31,19 +31,84 @@ helps['managed-network mn create'] = """
     type: command
     short-summary: The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource \
 group and Managed Network name
+    parameters:
+      - name: --scope-management-groups
+        short-summary: The collection of management groups covered by the Managed Network
+        long-summary: |
+            Usage: --scope-management-groups id=XX
+
+            id: Resource Id
+
+            Multiple actions can be specified by using more than one --scope-management-groups argument.
+      - name: --scope-subscriptions
+        short-summary: The collection of subscriptions covered by the Managed Network
+        long-summary: |
+            Usage: --scope-subscriptions id=XX
+
+            id: Resource Id
+
+            Multiple actions can be specified by using more than one --scope-subscriptions argument.
+      - name: --scope-virtual-networks
+        short-summary: The collection of virtual nets covered by the Managed Network
+        long-summary: |
+            Usage: --scope-virtual-networks id=XX
+
+            id: Resource Id
+
+            Multiple actions can be specified by using more than one --scope-virtual-networks argument.
+      - name: --scope-subnets
+        short-summary: The collection of  subnets covered by the Managed Network
+        long-summary: |
+            Usage: --scope-subnets id=XX
+
+            id: Resource Id
+
+            Multiple actions can be specified by using more than one --scope-subnets argument.
+      - name: --scope-management-groups
+        short-summary: The collection of management groups covered by the Managed Network
+        long-summary: |
+            Usage: --scope-management-groups id=XX
+
+            id: Resource Id
+
+            Multiple actions can be specified by using more than one --scope-management-groups argument.
+      - name: --scope-subscriptions
+        short-summary: The collection of subscriptions covered by the Managed Network
+        long-summary: |
+            Usage: --scope-subscriptions id=XX
+
+            id: Resource Id
+
+            Multiple actions can be specified by using more than one --scope-subscriptions argument.
+      - name: --scope-virtual-networks
+        short-summary: The collection of virtual nets covered by the Managed Network
+        long-summary: |
+            Usage: --scope-virtual-networks id=XX
+
+            id: Resource Id
+
+            Multiple actions can be specified by using more than one --scope-virtual-networks argument.
+      - name: --scope-subnets
+        short-summary: The collection of  subnets covered by the Managed Network
+        long-summary: |
+            Usage: --scope-subnets id=XX
+
+            id: Resource Id
+
+            Multiple actions can be specified by using more than one --scope-subnets argument.
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network mn create --location "eastus" --properties "{\\"managementGroups\\":[{\\"id\\":\\"/pr\
-oviders/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000\\"},{\\"id\\":\\"/providers/Microsof\
-t.Management/managementGroups/20000000-0002-0000-0000-000000000000\\"}],\\"subscriptions\\":[{\\"id\\":\\"subscriptionA\
-\\"},{\\"id\\":\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/my\
-ResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork\\"},{\\"id\\":\\"/subscriptions/subscription\
-C/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork2\\"}],\\"subnets\\":[{\\"\
-id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirt\
-ualNetwork3/subnets/default\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Micr\
-osoft.Network/virtualNetworks/myVirtualNetwork3/subnets/default\\"}]}" --name "myManagedNetwork" --resource-group \
-"myResourceGroup"
+               az managed-network mn create --location "eastus" --scope-management-groups \
+id="/providers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000" --scope-management-groups \
+id="/providers/Microsoft.Management/managementGroups/20000000-0002-0000-0000-000000000000" --scope-subnets \
+id="/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNe\
+twork/subnets/default" --scope-subnets id="/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Micros\
+oft.Network/virtualNetworks/myVirtualNetwork/subnets/default" --scope-subscriptions id="subscriptionA" \
+--scope-subscriptions id="subscriptionB" --scope-virtual-networks id="/subscriptions/subscriptionC/resourceGroups/myRes\
+ourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork2" --scope-virtual-networks \
+id="/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNe\
+twork3" --name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network mn update'] = """

@@ -134,7 +134,7 @@ class ScopeAssignmentOperations(object):
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _parameters = models.ScopeAssignment(location=location, assigned_managed_network=assigned_managed_network)
+        parameters = models.ScopeAssignment(location=location, assigned_managed_network=assigned_managed_network)
         api_version = "2019-06-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -157,7 +157,7 @@ class ScopeAssignmentOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_parameters, 'ScopeAssignment')
+        body_content = self._serialize.body(parameters, 'ScopeAssignment')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 

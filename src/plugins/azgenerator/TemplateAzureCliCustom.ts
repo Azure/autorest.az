@@ -85,6 +85,9 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     if (opNames.length > 1) {
         valueToMatch = Capitalize(ToCamelCase(opNames[0]));
     }
+    if (model.Command_Name == "datafactory trigger update") {
+        model.Method;
+    }
     if (model.SelectFirstMethodParameter(true)) {
         let originalParameterStack: Parameter[] = [];
         let originalParameterNameStack: string[] = [];
@@ -95,7 +98,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
             if (skip) {
                 skip = false;
             }
-            if ((model.MethodParameter_IsCliFlattened && (model.SDK_NoFlatten || !isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']))) || (model.MethodParameter_IsFlattened && model.MethodParameter['extensions']?.['cli-flattened'])) {
+            if ((model.MethodParameter_IsCliFlattened && (!isNullOrUndefined(model.MethodParameter.language['cli']['cliFlattenTrace']) || model.SDK_NoFlatten || !isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']))) || (model.MethodParameter_IsFlattened && model.MethodParameter['extensions']?.['cli-flattened'])) {
                 originalParameterStack.push(model.MethodParameter);
                 originalParameterNameStack.push(model.MethodParameter_Name);
                 if (!needGeneric) {
@@ -104,12 +107,12 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
             }
             else if (originalParameterStack.length > 0) {
                 let flattenedFrom = model.Schema_FlattenedFrom(model.MethodParameter['targetProperty']);
-                if (model.MethodParameter['originalParameter'] == originalParameterStack[originalParameterStack.length - 1] || !isNullOrUndefined(flattenedFrom)) {
+                if (model.MethodParameter['originalParameter'] == originalParameterStack.last || (!isNullOrUndefined(originalParameterStack.last['nameBaseParam']) && model.MethodParameter['originalParameter'] == originalParameterStack.last['nameBaseParam']) || !isNullOrUndefined(flattenedFrom)) {
                     let access = [];
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
-                    if (!isNullOrUndefined(flattenedFrom) && flattenedFrom != originalParameterStack[originalParameterStack.length - 1].schema) {
+                    if (!isNullOrUndefined(flattenedFrom) && flattenedFrom != originalParameterStack.last.schema) {
                         // If last originalParameter in the stack doesn't have language.az. it means this original Parameter was added because of the flattenedParam in python  
-                        if (flattenedFrom != originalParameterStack[originalParameterStack.length - 1].schema && isNullOrUndefined(originalParameterStack[originalParameterStack.length - 1].language['az'])) {
+                        if (flattenedFrom != originalParameterStack.last.schema && isNullOrUndefined(originalParameterStack.last.language['az'])) {
                             originalParameterNameStack.pop();
                             originalParameterStack.pop();
                         }

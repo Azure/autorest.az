@@ -143,7 +143,7 @@ class TriggerOperations:
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _filter_parameters = models.TriggerFilterParameters(continuation_token=continuation_token, parent_trigger_name=parent_trigger_name)
+        filter_parameters = models.TriggerFilterParameters(continuation_token=continuation_token, parent_trigger_name=parent_trigger_name)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -167,7 +167,7 @@ class TriggerOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_filter_parameters, 'TriggerFilterParameters')
+        body_content = self._serialize.body(filter_parameters, 'TriggerFilterParameters')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -217,7 +217,7 @@ class TriggerOperations:
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _trigger = models.TriggerResource(properties=properties)
+        trigger = models.TriggerResource(properties=properties)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -244,7 +244,7 @@ class TriggerOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_trigger, 'TriggerResource')
+        body_content = self._serialize.body(trigger, 'TriggerResource')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 

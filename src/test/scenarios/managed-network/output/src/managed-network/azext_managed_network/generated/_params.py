@@ -20,6 +20,10 @@ from azure.cli.core.commands.validators import (
     validate_file_or_dict
 )
 from azext_managed_network.action import (
+    AddScopeManagementGroups,
+    AddScopeSubscriptions,
+    AddScopeVirtualNetworks,
+    AddScopeSubnets,
     AddSubscriptions,
     AddVirtualNetworks,
     AddSubnets,
@@ -44,8 +48,14 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
-        c.argument('properties', type=validate_file_or_dict, help='The MNC properties Expected value: '
-                   'json-string/@json-file.')
+        c.argument('scope_management_groups', action=AddScopeManagementGroups, nargs='*', help='The collection of '
+                   'management groups covered by the Managed Network')
+        c.argument('scope_subscriptions', action=AddScopeSubscriptions, nargs='*', help='The collection of '
+                   'subscriptions covered by the Managed Network')
+        c.argument('scope_virtual_networks', action=AddScopeVirtualNetworks, nargs='*', help='The collection of '
+                   'virtual nets covered by the Managed Network')
+        c.argument('scope_subnets', action=AddScopeSubnets, nargs='*', help='The collection of  subnets covered by the '
+                   'Managed Network')
 
     with self.argument_context('managed-network mn update') as c:
         c.argument('resource_group_name', resource_group_name_type)
