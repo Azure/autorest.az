@@ -52,11 +52,15 @@ def load_arguments(self, _):
                    'GitHub repo information.', arg_group='RepoConfiguration')
         c.argument('fake_identity', action=AddFakeIdentity, nargs='*', help='This is only for az test.')
         c.argument('zones', nargs='*', help='This is only for az test.')
+        c.argument('identity_type', arg_type=get_enum_type(['SystemAssigned']), help='The identity type. Currently the '
+                   'only supported type is \'SystemAssigned\'.')
 
     with self.argument_context('datafactory update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', options_list=['--name', '-n'], help='The factory name.', id_part='name')
         c.argument('tags', tags_type)
+        c.argument('identity_type', arg_type=get_enum_type(['SystemAssigned']), help='The identity type. Currently the '
+                   'only supported type is \'SystemAssigned\'.')
 
     with self.argument_context('datafactory delete') as c:
         c.argument('resource_group_name', resource_group_name_type)

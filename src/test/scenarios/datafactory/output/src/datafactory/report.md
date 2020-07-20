@@ -48,6 +48,7 @@ create a datafactory.
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
 |**--fake-identity**|object|This is only for az test.|fake_identity|fakeIdentity|
 |**--zones**|array|This is only for az test.|zones|zones|
+|**--identity-type**|choice|The identity type. Currently the only supported type is 'SystemAssigned'.|type|type|
 
 ### datafactory delete
 
@@ -791,3 +792,4 @@ update a datafactory.
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--tags**|dictionary|The resource tags.|tags|tags|
+|**--identity-type**|choice|The identity type. Currently the only supported type is 'SystemAssigned'.|type|type|

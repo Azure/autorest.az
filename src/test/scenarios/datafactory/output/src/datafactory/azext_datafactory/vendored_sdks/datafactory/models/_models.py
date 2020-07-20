@@ -83,7 +83,7 @@ class Trigger(msrest.serialization.Model):
     ):
         super(Trigger, self).__init__(**kwargs)
         self.additional_properties = kwargs.get('additional_properties', None)
-        self.type = 'Trigger'
+        self.type = 'Trigger'  # type: str
         self.description = kwargs.get('description', None)
         self.runtime_state = None
         self.annotations = kwargs.get('annotations', None)
@@ -138,7 +138,7 @@ class MultiplePipelineTrigger(Trigger):
         **kwargs
     ):
         super(MultiplePipelineTrigger, self).__init__(**kwargs)
-        self.type = 'MultiplePipelineTrigger'
+        self.type = 'MultiplePipelineTrigger'  # type: str
         self.pipelines = kwargs.get('pipelines', None)
 
 
@@ -206,7 +206,7 @@ class BlobEventsTrigger(MultiplePipelineTrigger):
         **kwargs
     ):
         super(BlobEventsTrigger, self).__init__(**kwargs)
-        self.type = 'BlobEventsTrigger'
+        self.type = 'BlobEventsTrigger'  # type: str
         self.blob_path_begins_with = kwargs.get('blob_path_begins_with', None)
         self.blob_path_ends_with = kwargs.get('blob_path_ends_with', None)
         self.ignore_empty_blobs = kwargs.get('ignore_empty_blobs', None)
@@ -269,7 +269,7 @@ class BlobTrigger(MultiplePipelineTrigger):
         **kwargs
     ):
         super(BlobTrigger, self).__init__(**kwargs)
-        self.type = 'BlobTrigger'
+        self.type = 'BlobTrigger'  # type: str
         self.folder_path = kwargs['folder_path']
         self.max_concurrency = kwargs['max_concurrency']
         self.linked_service = kwargs['linked_service']
@@ -328,7 +328,7 @@ class ChainingTrigger(Trigger):
         **kwargs
     ):
         super(ChainingTrigger, self).__init__(**kwargs)
-        self.type = 'ChainingTrigger'
+        self.type = 'ChainingTrigger'  # type: str
         self.pipeline = kwargs['pipeline']
         self.depends_on = kwargs['depends_on']
         self.run_dimension = kwargs['run_dimension']
@@ -401,7 +401,7 @@ class CustomSetupBase(msrest.serialization.Model):
         **kwargs
     ):
         super(CustomSetupBase, self).__init__(**kwargs)
-        self.type = None
+        self.type = None  # type: Optional[str]
 
 
 class CmdkeySetup(CustomSetupBase):
@@ -438,7 +438,7 @@ class CmdkeySetup(CustomSetupBase):
         **kwargs
     ):
         super(CmdkeySetup, self).__init__(**kwargs)
-        self.type = 'CmdkeySetup'
+        self.type = 'CmdkeySetup'  # type: str
         self.target_name = kwargs['target_name']
         self.user_name = kwargs['user_name']
         self.password = kwargs['password']
@@ -473,7 +473,7 @@ class ComponentSetup(CustomSetupBase):
         **kwargs
     ):
         super(ComponentSetup, self).__init__(**kwargs)
-        self.type = 'ComponentSetup'
+        self.type = 'ComponentSetup'  # type: str
         self.component_name = kwargs['component_name']
         self.license_key = kwargs.get('license_key', None)
 
@@ -541,7 +541,7 @@ class DependencyReference(msrest.serialization.Model):
         **kwargs
     ):
         super(DependencyReference, self).__init__(**kwargs)
-        self.type = None
+        self.type = None  # type: Optional[str]
 
 
 class EntityReference(msrest.serialization.Model):
@@ -598,7 +598,7 @@ class EnvironmentVariableSetup(CustomSetupBase):
         **kwargs
     ):
         super(EnvironmentVariableSetup, self).__init__(**kwargs)
-        self.type = 'EnvironmentVariableSetup'
+        self.type = 'EnvironmentVariableSetup'  # type: str
         self.variable_name = kwargs['variable_name']
         self.variable_value = kwargs['variable_value']
 
@@ -671,8 +671,6 @@ class Factory(Resource):
     :param additional_properties: Unmatched properties from the message are deserialized to this
      collection.
     :type additional_properties: dict[str, object]
-    :param identity: Managed service identity of the factory.
-    :type identity: ~dfaz_management_client.models.FactoryIdentity
     :ivar provisioning_state: Factory provisioning state, example Succeeded.
     :vartype provisioning_state: str
     :ivar create_time: Time the factory was created in ISO8601 format.
@@ -685,6 +683,13 @@ class Factory(Resource):
     :type fake_identity: ~dfaz_management_client.models.FakeFactoryIdentity
     :param zones: This is only for az test.
     :type zones: list[str]
+    :param type_identity_type: The identity type. Currently the only supported type is
+     'SystemAssigned'. Possible values include: "SystemAssigned".
+    :type type_identity_type: str or ~dfaz_management_client.models.FactoryIdentityType
+    :ivar principal_id: The principal id of the identity.
+    :vartype principal_id: str
+    :ivar tenant_id: The client tenant id of the identity.
+    :vartype tenant_id: str
     """
 
     _validation = {
@@ -695,6 +700,8 @@ class Factory(Resource):
         'provisioning_state': {'readonly': True},
         'create_time': {'readonly': True},
         'version': {'readonly': True},
+        'principal_id': {'readonly': True},
+        'tenant_id': {'readonly': True},
     }
 
     _attribute_map = {
@@ -705,13 +712,15 @@ class Factory(Resource):
         'tags': {'key': 'tags', 'type': '{str}'},
         'e_tag': {'key': 'eTag', 'type': 'str'},
         'additional_properties': {'key': '', 'type': '{object}'},
-        'identity': {'key': 'identity', 'type': 'FactoryIdentity'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'create_time': {'key': 'properties.createTime', 'type': 'iso-8601'},
         'version': {'key': 'properties.version', 'type': 'str'},
         'repo_configuration': {'key': 'properties.repoConfiguration', 'type': 'FactoryRepoConfiguration'},
         'fake_identity': {'key': 'properties.fakeIdentity', 'type': 'FakeFactoryIdentity'},
         'zones': {'key': 'properties.zones', 'type': '[str]'},
+        'type_identity_type': {'key': 'identity.type', 'type': 'str'},
+        'principal_id': {'key': 'identity.principalId', 'type': 'str'},
+        'tenant_id': {'key': 'identity.tenantId', 'type': 'str'},
     }
 
     def __init__(
@@ -720,13 +729,15 @@ class Factory(Resource):
     ):
         super(Factory, self).__init__(**kwargs)
         self.additional_properties = kwargs.get('additional_properties', None)
-        self.identity = kwargs.get('identity', None)
         self.provisioning_state = None
         self.create_time = None
         self.version = None
         self.repo_configuration = kwargs.get('repo_configuration', None)
         self.fake_identity = kwargs.get('fake_identity', None)
         self.zones = kwargs.get('zones', None)
+        self.type_identity_type = kwargs.get('type_identity_type', None)
+        self.principal_id = None
+        self.tenant_id = None
 
 
 class FactoryRepoConfiguration(msrest.serialization.Model):
@@ -777,7 +788,7 @@ class FactoryRepoConfiguration(msrest.serialization.Model):
         **kwargs
     ):
         super(FactoryRepoConfiguration, self).__init__(**kwargs)
-        self.type = None
+        self.type = None  # type: Optional[str]
         self.account_name = kwargs['account_name']
         self.repository_name = kwargs['repository_name']
         self.collaboration_branch = kwargs['collaboration_branch']
@@ -829,47 +840,8 @@ class FactoryGitHubConfiguration(FactoryRepoConfiguration):
         **kwargs
     ):
         super(FactoryGitHubConfiguration, self).__init__(**kwargs)
-        self.type = 'FactoryGitHubConfiguration'
+        self.type = 'FactoryGitHubConfiguration'  # type: str
         self.host_name = kwargs.get('host_name', None)
-
-
-class FactoryIdentity(msrest.serialization.Model):
-    """Identity properties of the factory resource.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar type: Required. The identity type. Currently the only supported type is 'SystemAssigned'.
-     Default value: "SystemAssigned".
-    :vartype type: str
-    :ivar principal_id: The principal id of the identity.
-    :vartype principal_id: str
-    :ivar tenant_id: The client tenant id of the identity.
-    :vartype tenant_id: str
-    """
-
-    _validation = {
-        'type': {'required': True, 'constant': True},
-        'principal_id': {'readonly': True},
-        'tenant_id': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'type': {'key': 'type', 'type': 'str'},
-        'principal_id': {'key': 'principalId', 'type': 'str'},
-        'tenant_id': {'key': 'tenantId', 'type': 'str'},
-    }
-
-    type = "SystemAssigned"
-
-    def __init__(
-        self,
-        **kwargs
-    ):
-        super(FactoryIdentity, self).__init__(**kwargs)
-        self.principal_id = None
-        self.tenant_id = None
 
 
 class FactoryListResponse(msrest.serialization.Model):
@@ -927,15 +899,29 @@ class FactoryRepoUpdate(msrest.serialization.Model):
 class FactoryUpdateParameters(msrest.serialization.Model):
     """Parameters for updating a factory resource.
 
+    Variables are only populated by the server, and will be ignored when sending a request.
+
     :param tags: A set of tags. The resource tags.
     :type tags: dict[str, str]
-    :param identity: Managed service identity of the factory.
-    :type identity: ~dfaz_management_client.models.FactoryIdentity
+    :param type: The identity type. Currently the only supported type is 'SystemAssigned'. Possible
+     values include: "SystemAssigned".
+    :type type: str or ~dfaz_management_client.models.FactoryIdentityType
+    :ivar principal_id: The principal id of the identity.
+    :vartype principal_id: str
+    :ivar tenant_id: The client tenant id of the identity.
+    :vartype tenant_id: str
     """
+
+    _validation = {
+        'principal_id': {'readonly': True},
+        'tenant_id': {'readonly': True},
+    }
 
     _attribute_map = {
         'tags': {'key': 'tags', 'type': '{str}'},
-        'identity': {'key': 'identity', 'type': 'FactoryIdentity'},
+        'type': {'key': 'identity.type', 'type': 'str'},
+        'principal_id': {'key': 'identity.principalId', 'type': 'str'},
+        'tenant_id': {'key': 'identity.tenantId', 'type': 'str'},
     }
 
     def __init__(
@@ -944,7 +930,9 @@ class FactoryUpdateParameters(msrest.serialization.Model):
     ):
         super(FactoryUpdateParameters, self).__init__(**kwargs)
         self.tags = kwargs.get('tags', None)
-        self.identity = kwargs.get('identity', None)
+        self.type = kwargs.get('type', None)
+        self.principal_id = None
+        self.tenant_id = None
 
 
 class FactoryVstsConfiguration(FactoryRepoConfiguration):
@@ -995,7 +983,7 @@ class FactoryVstsConfiguration(FactoryRepoConfiguration):
         **kwargs
     ):
         super(FactoryVstsConfiguration, self).__init__(**kwargs)
-        self.type = 'FactoryVSTSConfiguration'
+        self.type = 'FactoryVSTSConfiguration'  # type: str
         self.project_name = kwargs['project_name']
         self.tenant_id = kwargs.get('tenant_id', None)
 
@@ -1120,7 +1108,7 @@ class IntegrationRuntime(msrest.serialization.Model):
     ):
         super(IntegrationRuntime, self).__init__(**kwargs)
         self.additional_properties = kwargs.get('additional_properties', None)
-        self.type = 'IntegrationRuntime'
+        self.type = 'IntegrationRuntime'  # type: str
         self.description = kwargs.get('description', None)
 
 
@@ -1777,7 +1765,7 @@ class IntegrationRuntimeStatus(msrest.serialization.Model):
     ):
         super(IntegrationRuntimeStatus, self).__init__(**kwargs)
         self.additional_properties = kwargs.get('additional_properties', None)
-        self.type = 'IntegrationRuntimeStatus'
+        self.type = 'IntegrationRuntimeStatus'  # type: str
         self.data_factory_name = None
         self.state = None
 
@@ -1953,7 +1941,7 @@ class LinkedIntegrationRuntimeType(msrest.serialization.Model):
         **kwargs
     ):
         super(LinkedIntegrationRuntimeType, self).__init__(**kwargs)
-        self.authorization_type = None
+        self.authorization_type = None  # type: Optional[str]
 
 
 class LinkedIntegrationRuntimeKeyAuthorization(LinkedIntegrationRuntimeType):
@@ -1983,7 +1971,7 @@ class LinkedIntegrationRuntimeKeyAuthorization(LinkedIntegrationRuntimeType):
         **kwargs
     ):
         super(LinkedIntegrationRuntimeKeyAuthorization, self).__init__(**kwargs)
-        self.authorization_type = 'Key'
+        self.authorization_type = 'Key'  # type: str
         self.key = kwargs['key']
 
 
@@ -2014,7 +2002,7 @@ class LinkedIntegrationRuntimeRbacAuthorization(LinkedIntegrationRuntimeType):
         **kwargs
     ):
         super(LinkedIntegrationRuntimeRbacAuthorization, self).__init__(**kwargs)
-        self.authorization_type = 'RBAC'
+        self.authorization_type = 'RBAC'  # type: str
         self.resource_id = kwargs['resource_id']
 
 
@@ -2133,7 +2121,7 @@ class ManagedIntegrationRuntime(IntegrationRuntime):
         **kwargs
     ):
         super(ManagedIntegrationRuntime, self).__init__(**kwargs)
-        self.type = 'Managed'
+        self.type = 'Managed'  # type: str
         self.state = None
         self.repo_configuration = kwargs.get('repo_configuration', None)
         self.fake_identity = kwargs.get('fake_identity', None)
@@ -2338,7 +2326,7 @@ class ManagedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
         **kwargs
     ):
         super(ManagedIntegrationRuntimeStatus, self).__init__(**kwargs)
-        self.type = 'Managed'
+        self.type = 'Managed'  # type: str
         self.create_time = None
         self.nodes = None
         self.other_errors = None
@@ -2539,7 +2527,7 @@ class RerunTumblingWindowTrigger(Trigger):
         **kwargs
     ):
         super(RerunTumblingWindowTrigger, self).__init__(**kwargs)
-        self.type = 'RerunTumblingWindowTrigger'
+        self.type = 'RerunTumblingWindowTrigger'  # type: str
         self.parent_trigger = kwargs['parent_trigger']
         self.requested_start_time = kwargs['requested_start_time']
         self.requested_end_time = kwargs['requested_end_time']
@@ -2620,7 +2608,7 @@ class ScheduleTrigger(MultiplePipelineTrigger):
         **kwargs
     ):
         super(ScheduleTrigger, self).__init__(**kwargs)
-        self.type = 'ScheduleTrigger'
+        self.type = 'ScheduleTrigger'  # type: str
         self.recurrence = kwargs['recurrence']
 
 
@@ -2698,7 +2686,7 @@ class SecretBase(msrest.serialization.Model):
         **kwargs
     ):
         super(SecretBase, self).__init__(**kwargs)
-        self.type = None
+        self.type = None  # type: Optional[str]
 
 
 class SecureString(SecretBase):
@@ -2727,7 +2715,7 @@ class SecureString(SecretBase):
         **kwargs
     ):
         super(SecureString, self).__init__(**kwargs)
-        self.type = 'SecureString'
+        self.type = 'SecureString'  # type: str
         self.value = kwargs['value']
 
 
@@ -2763,7 +2751,7 @@ class SelfDependencyTumblingWindowTriggerReference(DependencyReference):
         **kwargs
     ):
         super(SelfDependencyTumblingWindowTriggerReference, self).__init__(**kwargs)
-        self.type = 'SelfDependencyTumblingWindowTriggerReference'
+        self.type = 'SelfDependencyTumblingWindowTriggerReference'  # type: str
         self.offset = kwargs['offset']
         self.size = kwargs.get('size', None)
 
@@ -2801,7 +2789,7 @@ class SelfHostedIntegrationRuntime(IntegrationRuntime):
         **kwargs
     ):
         super(SelfHostedIntegrationRuntime, self).__init__(**kwargs)
-        self.type = 'SelfHosted'
+        self.type = 'SelfHosted'  # type: str
         self.linked_info = kwargs.get('linked_info', None)
 
 
@@ -3036,7 +3024,7 @@ class SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
         **kwargs
     ):
         super(SelfHostedIntegrationRuntimeStatus, self).__init__(**kwargs)
-        self.type = 'SelfHosted'
+        self.type = 'SelfHosted'  # type: str
         self.create_time = None
         self.task_queue_id = None
         self.internal_channel_encryption = None
@@ -3094,7 +3082,7 @@ class SsisObjectMetadata(msrest.serialization.Model):
         **kwargs
     ):
         super(SsisObjectMetadata, self).__init__(**kwargs)
-        self.type = None
+        self.type = None  # type: Optional[str]
         self.id = kwargs.get('id', None)
         self.name = kwargs.get('name', None)
         self.description = kwargs.get('description', None)
@@ -3138,7 +3126,7 @@ class SsisEnvironment(SsisObjectMetadata):
         **kwargs
     ):
         super(SsisEnvironment, self).__init__(**kwargs)
-        self.type = 'Environment'
+        self.type = 'Environment'  # type: str
         self.folder_id = kwargs.get('folder_id', None)
         self.variables = kwargs.get('variables', None)
 
@@ -3206,7 +3194,7 @@ class SsisFolder(SsisObjectMetadata):
         **kwargs
     ):
         super(SsisFolder, self).__init__(**kwargs)
-        self.type = 'Folder'
+        self.type = 'Folder'  # type: str
 
 
 class SsisObjectMetadataListResponse(msrest.serialization.Model):
@@ -3276,7 +3264,7 @@ class SsisPackage(SsisObjectMetadata):
         **kwargs
     ):
         super(SsisPackage, self).__init__(**kwargs)
-        self.type = 'Package'
+        self.type = 'Package'  # type: str
         self.folder_id = kwargs.get('folder_id', None)
         self.project_version = kwargs.get('project_version', None)
         self.project_id = kwargs.get('project_id', None)
@@ -3390,7 +3378,7 @@ class SsisProject(SsisObjectMetadata):
         **kwargs
     ):
         super(SsisProject, self).__init__(**kwargs)
-        self.type = 'Project'
+        self.type = 'Project'  # type: str
         self.folder_id = kwargs.get('folder_id', None)
         self.version = kwargs.get('version', None)
         self.environment_refs = kwargs.get('environment_refs', None)
@@ -3473,7 +3461,7 @@ class TriggerDependencyReference(DependencyReference):
         **kwargs
     ):
         super(TriggerDependencyReference, self).__init__(**kwargs)
-        self.type = 'TriggerDependencyReference'
+        self.type = 'TriggerDependencyReference'  # type: str
         self.reference_trigger = kwargs['reference_trigger']
 
 
@@ -3771,7 +3759,7 @@ class TumblingWindowTrigger(Trigger):
         **kwargs
     ):
         super(TumblingWindowTrigger, self).__init__(**kwargs)
-        self.type = 'TumblingWindowTrigger'
+        self.type = 'TumblingWindowTrigger'  # type: str
         self.pipeline = kwargs['pipeline']
         self.frequency = kwargs['frequency']
         self.interval = kwargs['interval']
@@ -3819,7 +3807,7 @@ class TumblingWindowTriggerDependencyReference(TriggerDependencyReference):
         **kwargs
     ):
         super(TumblingWindowTriggerDependencyReference, self).__init__(**kwargs)
-        self.type = 'TumblingWindowTriggerDependencyReference'
+        self.type = 'TumblingWindowTriggerDependencyReference'  # type: str
         self.offset = kwargs.get('offset', None)
         self.size = kwargs.get('size', None)
 

@@ -10,7 +10,6 @@
 # pylint: disable=too-many-lines
 # pylint: disable=unused-argument
 
-import json
 from knack.util import CLIError
 from azure.cli.core.util import sdk_no_wait
 
@@ -40,7 +39,8 @@ def datafactory_create(client,
                        factory_vsts_configuration=None,
                        factory_git_hub_configuration=None,
                        fake_identity=None,
-                       zones=None):
+                       zones=None,
+                       identity_type=None):
     all_repo_configuration = []
     if factory_vsts_configuration is not None:
         all_repo_configuration.append(factory_vsts_configuration)
@@ -55,20 +55,21 @@ def datafactory_create(client,
                                    if_match=if_match,
                                    location=location,
                                    tags=tags,
-                                   identity=json.loads("{\"type\": \"SystemAssigned\"}"),
                                    repo_configuration=repo_configuration,
                                    fake_identity=fake_identity,
-                                   zones=zones)
+                                   zones=zones,
+                                   type=identity_type)
 
 
 def datafactory_update(client,
                        resource_group_name,
                        factory_name,
-                       tags=None):
+                       tags=None,
+                       identity_type=None):
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          tags=tags,
-                         identity=json.loads("{\"type\": \"SystemAssigned\"}"))
+                         type=identity_type)
 
 
 def datafactory_delete(client,
@@ -197,7 +198,7 @@ def datafactory_trigger_query_by_factory(client,
                                          parent_trigger_name=None):
     return client.query_by_factory(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
-                                   continuation_token=continuation_token,
+                                   continuation_token_parameter=continuation_token,
                                    parent_trigger_name=parent_trigger_name)
 
 
