@@ -50,6 +50,11 @@ These settings apply only when `--tag=testserver-local` is specified on the comm
 input-file:
 - ../input/body-boolean.json
 - ../input/body-byte.json
+- ../input/body-date.json
+- ../input/body-datetime.json
+- ../input/body-datetime-rfc1123.json
+- ../input/body-duration.json
+- ../input/body-integer.json
 - ../input/custom-baseUrl.json
 - ../input/custom-baseUrl-paging.json
 - ../input/head.json
