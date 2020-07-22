@@ -484,13 +484,7 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
                 parameterPair = model.Parameter_NamePython(param) + "=None";
             }
         } else {
-            if(model.Parameter_Type(param) == SchemaType.Integer) {
-                parameterPair = parameterName + "=int(" + optionName + ")";
-            } else if(model.Parameter_Type(param) == SchemaType.Number) {
-                parameterPair = parameterName + "=float(" + optionName + ")";
-            } else {
-                parameterPair = parameterName + "=" + optionName;
-            }
+            parameterPair = parameterName + "=" + optionName;
         }
         
 
@@ -567,13 +561,7 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
                 }
             }
             else {
-                if(model.MethodParameter_Type == SchemaType.Integer) {
-                    parameterPair = model.MethodParameter_NamePython + "=int(" + model.MethodParameter_MapsTo + ")";
-                } else if(model.MethodParameter_Type == SchemaType.Number) {
-                    parameterPair = model.MethodParameter_NamePython + "=float(" + model.MethodParameter_MapsTo + ")";
-                } else {
-                    parameterPair = model.MethodParameter_NamePython + "=" + model.MethodParameter_MapsTo;
-                }
+                parameterPair = model.MethodParameter_NamePython + "=" + model.MethodParameter_MapsTo;
             }
 
             if (methodCall.endsWith("(")) {
