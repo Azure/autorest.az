@@ -288,6 +288,14 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     }
 
                     if (!needSkip) {
+                        if (model.MethodParameter_Type == SchemaType.Integer) {
+                            argument += ", type=int"
+                        } else if(model.MethodParameter_Type == SchemaType.Number) {
+                            argument += ", type=float"
+                        } else if(model.MethodParameter_Type == SchemaType.String) {
+                            argument += ", type=str"
+                        }
+                        
                         argument += ", help='" + EscapeString(model.MethodParameter_Description).trimRight();
                         if (model.MethodParameter_IsList && !model.MethodParameter_IsSimpleArray) {
                             let netDescription = model.MethodParameter_Description.trim();

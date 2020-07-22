@@ -19,9 +19,9 @@ def managed_network_mn_list(client,
                             skiptoken=None):
     if resource_group_name:
         return client.list_by_resource_group(resource_group_name=resource_group_name,
-                                             top=int(top),
+                                             top=top,
                                              skiptoken=skiptoken)
-    return client.list_by_subscription(top=int(top),
+    return client.list_by_subscription(top=top,
                                        skiptoken=skiptoken)
 
 
@@ -109,7 +109,7 @@ def managed_network_mn_group_list(client,
                                   skiptoken=None):
     return client.list_by_managed_network(resource_group_name=resource_group_name,
                                           managed_network_name=managed_network_name,
-                                          top=int(top),
+                                          top=top,
                                           skiptoken=skiptoken)
 
 
@@ -185,7 +185,7 @@ def managed_network_managed_network_peering_policy_list(client,
                                                         skiptoken=None):
     return client.list_by_managed_network(resource_group_name=resource_group_name,
                                           managed_network_name=managed_network_name,
-                                          top=int(top),
+                                          top=top,
                                           skiptoken=skiptoken)
 
 
