@@ -1366,6 +1366,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             // Handle complex
             let shouldHidden = undefined;
             let defaultValue = undefined;
+            let hasDefault = false;
             if (this.EnterSubMethodParameters(parameter))
             {
                 shouldHidden = true;
@@ -1379,10 +1380,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                         }
                         else if (this.Parameter_Type(this.SubMethodParameter) == SchemaType.Constant) {
                             defaultValue = defaultValue + "\"" + this.Parameter_NameAz(this.SubMethodParameter) + "\": \"" + this.Parameter_DefaultValue(this.SubMethodParameter) + "\"";
+                            hasDefault = true;
                         }
                     } while (this.SelectNextMethodParameter())
                 }
-                if (shouldHidden == true) {
+                if (shouldHidden == true && hasDefault) {
                     defaultValue = defaultValue + "}";
                 }
                 else {
