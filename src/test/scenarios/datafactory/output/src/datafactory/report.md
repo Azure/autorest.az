@@ -15,10 +15,11 @@ az datafactory update
 az datafactory linked-services create
 az datafactory linked-services update
 az datafactory linked-services start
+az datafactory linked-services stop
 
 ## parameters in `az datafactory linked-services create`
 --name
---location
+--locations
 
 
 ### datafactory configure-factory-repo
