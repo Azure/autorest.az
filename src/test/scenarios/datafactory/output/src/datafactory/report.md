@@ -1,42 +1,45 @@
 # Azure CLI Module Creation Report
 
-## extension
+## extensions
 datafactory
 
-## command groups
-az datafactory factory
-az datafactory linked-services
-
-## commands in `az datafactory factory`
-az datafactory factory create
-az datafactory factory update
-
-## commands in `az datafactory linked-services`
-az datafactory linked-services create
-az datafactory linked-services update
-az datafactory linked-services start
-az datafactory linked-services stop
-
-## parameters in `az datafactory linked-services create`
---name
---locations
-
-
-### datafactory configure-factory-repo
-
-configure-factory-repo a datafactory.
-
-#### Command group
+## groups
+### Command groups in `az datafactory` extension
 |Name (az)|Swagger name|
 |---------|------------|
 |datafactory|Factories|
+|datafactory integration-runtime|IntegrationRuntimes|
+|datafactory trigger|Triggers|
 
-#### Methods
-|Name (az)|Swagger name|
+## commands
+### Commands in `az datafactory` group
+|CLI Command|Swagger name|Parameters|
+|---------|------------|--------|
+|az datafactory configure-factory-repo|ConfigureFactoryRepo|[Parameters](#Parameters001001)|
+|az datafactory create|CreateOrUpdate#Create|[Parameters](#Parameters001002)|
+|az datafactory delete|Delete|
+|az datafactory get-data-plane-access|GetDataPlaneAccess|
+|az datafactory get-git-hub-access-token|GetGitHubAccessToken|
+|az datafactory list|ListByResourceGroup|
+|az datafactory list|List|
+|az datafactory update|Update|
+
+### Commands in `az datafactory integration-runtime` group
+|CLI Command|Swagger name|
 |---------|------------|
-|configure-factory-repo|ConfigureFactoryRepo|
+|az datafactory integration-runtime delete|Delete|
+|az datafactory integration-runtime get-connection-info|GetConnectionInfo|
+|az datafactory integration-runtime get-status|GetStatus|
+|az datafactory integration-runtime linked-integration-runtime create|CreateLinkedIntegrationRuntime|
+|az datafactory integration-runtime list|ListByFactory|
+|az datafactory integration-runtime managed create|CreateOrUpdate#Create#Managed|
+|az datafactory integration-runtime regenerate-auth-key|RegenerateAuthKey|
+|az datafactory integration-runtime remove-link|RemoveLinks|
 
-#### Parameters
+
+## parameters
+### group `az datafactory`
+#### <a name="Parameters001001">Parameters in `az datafactory configure-factory-repo` command</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--location-id**|string|The location identifier.|location_id|locationId|
@@ -44,21 +47,7 @@ configure-factory-repo a datafactory.
 |**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|FactoryVSTSConfiguration|
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
 
-### datafactory create
-
-create a datafactory.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory|Factories|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
-
-#### Parameters
+#### <a name="Parameters001001"> Parameters in `az datafactory create` Command</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -71,41 +60,13 @@ create a datafactory.
 |**--fake-identity**|object|This is only for az test.|fake_identity|fakeIdentity|
 |**--zones**|array|This is only for az test.|zones|zones|
 
-### datafactory delete
-
-delete a datafactory.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory|Factories|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
+#### Parameters in `az datafactory delete` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 
-### datafactory get-data-plane-access
-
-get-data-plane-access a datafactory.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory|Factories|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-data-plane-access|GetDataPlaneAccess|
-
-#### Parameters
+#### Parameters in `az datafactory get-data-plane-access` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -116,21 +77,7 @@ get-data-plane-access a datafactory.
 |**--start-time**|string|Start time for the token. If not specified the current time will be used.|start_time|startTime|
 |**--expire-time**|string|Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours.|expire_time|expireTime|
 
-### datafactory get-git-hub-access-token
-
-get-git-hub-access-token a datafactory.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory|Factories|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-git-hub-access-token|GetGitHubAccessToken|
-
-#### Parameters
+#### Parameters in `az datafactory get-git-hub-access-token` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -139,105 +86,37 @@ get-git-hub-access-token a datafactory.
 |**--git-hub-access-token-base-url**|string|GitHub access token base URL.|git_hub_access_token_base_url|gitHubAccessTokenBaseUrl|
 |**--git-hub-client-id**|string|GitHub application client ID.|git_hub_client_id|gitHubClientId|
 
-### datafactory integration-runtime delete
 
-delete a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
+### group `az datafactory integration-runtime`
+#### Parameters in `az datafactory integration-runtime delete` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 
-### datafactory integration-runtime get-connection-info
-
-get-connection-info a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-connection-info|GetConnectionInfo|
-
-#### Parameters
+#### Parameters in `az datafactory integration-runtime get-connection-info` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 
-### datafactory integration-runtime get-monitoring-data
-
-get-monitoring-data a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-monitoring-data|GetMonitoringData|
-
-#### Parameters
+#### Parameters in `az datafactory integration-runtime get-monitoring-data` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 
-### datafactory integration-runtime get-status
-
-get-status a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-status|GetStatus|
-
-#### Parameters
+#### Parameters in `az datafactory integration-runtime get-status` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 
-### datafactory integration-runtime linked-integration-runtime create
-
-linked-integration-runtime create a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|linked-integration-runtime create|CreateLinkedIntegrationRuntime|
-
-#### Parameters
+#### Parameters in `az datafactory integration-runtime linked-integration-runtime create` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -248,62 +127,20 @@ linked-integration-runtime create a datafactory integration-runtime.
 |**--data-factory-name**|string|The name of the data factory that the linked integration runtime belongs to.|data_factory_name|dataFactoryName|
 |**--data-factory-location**|string|The location of the data factory that the linked integration runtime belongs to.|data_factory_location|dataFactoryLocation|
 
-### datafactory integration-runtime list
-
-list a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByFactory|
-
-#### Parameters
+#### Parameters in `az datafactory integration-runtime list` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 
-### datafactory integration-runtime list-auth-key
-
-list-auth-key a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list-auth-key|ListAuthKeys|
-
-#### Parameters
+#### Parameters in `az datafactory integration-runtime list-auth-key` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 
-### datafactory integration-runtime managed create
-
-managed create a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|managed create|CreateOrUpdate#Create#Managed|
-
-#### Parameters
+#### Parameters in `az datafactory integration-runtime managed create` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -318,21 +155,7 @@ managed create a datafactory integration-runtime.
 |**--type-properties-compute-properties**|object|The compute resource for managed integration runtime.|managed_compute_properties|computeProperties|
 |**--type-properties-ssis-properties**|object|SSIS properties for managed integration runtime.|managed_ssis_properties|ssisProperties|
 
-### datafactory integration-runtime regenerate-auth-key
-
-regenerate-auth-key a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|regenerate-auth-key|RegenerateAuthKey|
-
-#### Parameters
+#### Parameters in `az datafactory integration-runtime regenerate-auth-key` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -340,21 +163,7 @@ regenerate-auth-key a datafactory integration-runtime.
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 |**--key-name**|choice|The name of the authentication key to regenerate.|key_name|keyName|
 
-### datafactory integration-runtime remove-link
-
-remove-link a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|remove-link|RemoveLinks|
-
-#### Parameters
+#### Parameters in `az datafactory integration-runtime remove-link` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -362,21 +171,7 @@ remove-link a datafactory integration-runtime.
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 |**--linked-factory-name**|string|The data factory name for linked integration runtime.|linked_factory_name|linkedFactoryName|
 
-### datafactory integration-runtime self-hosted create
-
-self-hosted create a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|self-hosted create|CreateOrUpdate#Create#SelfHosted|
-
-#### Parameters
+#### Parameters in `az datafactory integration-runtime self-hosted create`
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -386,21 +181,7 @@ self-hosted create a datafactory integration-runtime.
 |**--description**|string|Integration runtime description.|self_hosted_description|description|
 |**--type-properties-linked-info**|object|The base definition of a linked integration runtime.|self_hosted_linked_info|linkedInfo|
 
-### datafactory integration-runtime show
-
-show a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
+#### Parameters in `datafactory integration-runtime show` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -408,21 +189,7 @@ show a datafactory integration-runtime.
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 |**--if-none-match**|string|ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.|if_none_match|If-None-Match|
 
-### datafactory integration-runtime start
-
-start a datafactory integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|start|Start|
-
-#### Parameters
+#### Parameters in `az datafactory integration-runtime start` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -527,8 +294,7 @@ list a datafactory.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|list|ListByResourceGroup|
-|list|List|
+
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -563,7 +329,7 @@ create a datafactory trigger.
 #### Command group
 |Name (az)|Swagger name|
 |---------|------------|
-|datafactory trigger|Triggers|
+
 
 #### Methods
 |Name (az)|Swagger name|
@@ -805,7 +571,7 @@ update a datafactory.
 #### Methods
 |Name (az)|Swagger name|
 |---------|------------|
-|update|Update|
+
 
 #### Parameters
 |Option|Type|Description|Path (SDK)|Swagger name|
