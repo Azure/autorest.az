@@ -4,12 +4,12 @@
 datafactory
 
 ## command groups
-az datafactory
+az datafactory factory
 az datafactory linked-services
 
-## commands in `az datafactory`
-az datafactory create
-az datafactory update
+## commands in `az datafactory factory`
+az datafactory factory create
+az datafactory factory update
 
 ## commands in `az datafactory linked-services`
 az datafactory linked-services create
