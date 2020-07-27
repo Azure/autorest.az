@@ -15,8 +15,8 @@ datafactory
 ### Commands in `az datafactory` group
 |CLI Command|Swagger name|Parameters|
 |---------|------------|--------|
-|az datafactory configure-factory-repo|ConfigureFactoryRepo|[Parameters](#Parameters001001)|
-|az datafactory create|CreateOrUpdate#Create|[Parameters](#Parameters001002)|
+|az datafactory configure-factory-repo|ConfigureFactoryRepo|[Parameters in ConfigureFactoryRepo](#Parameters001001)|
+|az datafactory create|CreateOrUpdate#Create|[Parameters in Create](#Parameters001002)|
 |az datafactory delete|Delete|
 |az datafactory get-data-plane-access|GetDataPlaneAccess|
 |az datafactory get-git-hub-access-token|GetGitHubAccessToken|
