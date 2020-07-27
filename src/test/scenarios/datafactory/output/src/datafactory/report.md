@@ -1,5 +1,26 @@
 # Azure CLI Module Creation Report
 
+## extension
+datafactory
+
+## command groups
+az datafactory
+az datafactory linked-service
+
+## commands in `az datafactory`
+az datafactory create
+az datafactory update
+
+## commands in `az datafactory linked-service`
+az datafactory linked-service create
+az datafactory linked-service update
+az datafactory linked-service start
+
+## parameters in `az datafactory linked-service create`
+--name
+--location
+
+
 ### datafactory configure-factory-repo
 
 configure-factory-repo a datafactory.
