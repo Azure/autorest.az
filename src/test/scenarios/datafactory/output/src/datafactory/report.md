@@ -5,26 +5,26 @@ datafactory
 
 ## groups
 ### Command groups in `az datafactory` extension
-|Name (az)|Swagger name|
-|---------|------------|
-|datafactory|Factories|
-|datafactory integration-runtime|IntegrationRuntimes|
-|datafactory trigger|Triggers|
+|Name (az)|Swagger name|Commands|
+|---------|------------|--------|
+|datafactory|Factories|[commands](#CommandsInFactories)|
+|datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
+|datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
 
 ## commands
-### Commands in `az datafactory` group
+### <a name="CommandsInFactories">Commands in `az datafactory` group</a>
 |CLI Command|Swagger name|Parameters|
 |---------|------------|--------|
-|az datafactory configure-factory-repo|ConfigureFactoryRepo|[Parameters in ConfigureFactoryRepo](#Parameters001001)|
-|az datafactory create|CreateOrUpdate#Create|[Parameters in Create](#Parameters001002)|
-|az datafactory delete|Delete|
-|az datafactory get-data-plane-access|GetDataPlaneAccess|
-|az datafactory get-git-hub-access-token|GetGitHubAccessToken|
-|az datafactory list|ListByResourceGroup|
-|az datafactory list|List|
-|az datafactory update|Update|
+|az datafactory configure-factory-repo|ConfigureFactoryRepo|[Parameters](#Parameters001001)|
+|az datafactory create|CreateOrUpdate#Create|[Parameters](#Parameters001002)|
+|az datafactory delete|Delete|[Parameters](#Parameters001003)|
+|az datafactory get-data-plane-access|GetDataPlaneAccess|[Parameters](#Parameters001004)|
+|az datafactory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#Parameters001005)|
+|az datafactory list|ListByResourceGroup|[Parameters](#Parameters001006)|
+|az datafactory list|List|[Parameters](#Parameters001006)|
+|az datafactory update|Update|[Parameters](#Parameters001007)|
 
-### Commands in `az datafactory integration-runtime` group
+### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory integration-runtime` group</a>
 |CLI Command|Swagger name|
 |---------|------------|
 |az datafactory integration-runtime delete|Delete|
@@ -47,7 +47,7 @@ datafactory
 |**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|FactoryVSTSConfiguration|
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
 
-#### <a name="Parameters001002"> Parameters in `az datafactory create` Command</a> 
+#### <a name="Parameters001002">Parameters in `az datafactory create` Command</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -60,13 +60,13 @@ datafactory
 |**--fake-identity**|object|This is only for az test.|fake_identity|fakeIdentity|
 |**--zones**|array|This is only for az test.|zones|zones|
 
-#### Parameters in `az datafactory delete` command
+#### <a name="Parameters001003">Parameters in `az datafactory delete` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 
-#### Parameters in `az datafactory get-data-plane-access` command
+#### <a name="Parameters001004">Parameters in `az datafactory get-data-plane-access` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -77,7 +77,7 @@ datafactory
 |**--start-time**|string|Start time for the token. If not specified the current time will be used.|start_time|startTime|
 |**--expire-time**|string|Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours.|expire_time|expireTime|
 
-#### Parameters in `az datafactory get-git-hub-access-token` command
+#### <a name="Parameters001005">Parameters in `az datafactory get-git-hub-access-token` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
