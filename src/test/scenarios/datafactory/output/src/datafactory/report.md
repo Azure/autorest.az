@@ -5,18 +5,18 @@ datafactory
 
 ## command groups
 az datafactory
-az datafactory linked-service
+az datafactory linked-services
 
 ## commands in `az datafactory`
 az datafactory create
 az datafactory update
 
-## commands in `az datafactory linked-service`
-az datafactory linked-service create
-az datafactory linked-service update
-az datafactory linked-service start
+## commands in `az datafactory linked-services`
+az datafactory linked-services create
+az datafactory linked-services update
+az datafactory linked-services start
 
-## parameters in `az datafactory linked-service create`
+## parameters in `az datafactory linked-services create`
 --name
 --location
 
