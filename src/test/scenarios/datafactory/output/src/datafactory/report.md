@@ -9,22 +9,22 @@
 ### <a name="CommandGroups">Command groups in `az datafactory` extension</a>
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
-|az datafactory factory|Factories|[commands](#CommandsInFactories)|
+|az datafactory|Factories|[commands](#CommandsInFactories)|
 |az datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
 |az datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
 
 ## COMMANDS
-### <a name="CommandsInFactories">Commands in `az datafactory factory` group</a>
+### <a name="CommandsInFactories">Commands in `az datafactory` group</a>
 |CLI Command|Operation Swagger name|Parameters|
 |---------|------------|--------|
-|az datafactory factory configure-factory-repo|ConfigureFactoryRepo|[Parameters](#ParametersFactoriesConfigureFactoryRepo)|
-|az datafactory factory create|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdateCreate)|
-|az datafactory factory delete|Delete|[Parameters](#ParametersFactoriesDelete)|
-|az datafactory factory get-data-plane-access|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|
-|az datafactory factory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|
-|az datafactory factory list|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|
-|az datafactory factory list|List|[Parameters](#ParametersFactoriesList)|
-|az datafactory factory update|Update|[Parameters](#ParametersFactoriesUpdate)|
+|az datafactory configure-factory-repo|ConfigureFactoryRepo|[Parameters](#ParametersFactoriesConfigureFactoryRepo)|
+|az datafactory create|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdateCreate)|
+|az datafactory delete|Delete|[Parameters](#ParametersFactoriesDelete)|
+|az datafactory get-data-plane-access|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|
+|az datafactory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|
+|az datafactory list|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|
+|az datafactory list|List|[Parameters](#ParametersFactoriesList)|
+|az datafactory update|Update|[Parameters](#ParametersFactoriesUpdate)|
 
 ### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory integration-runtime` group</a>
 |CLI Command|Operation Swagger name|Parameters|
@@ -40,7 +40,7 @@
 
 ## PARAMETERS
 ### group `az datafactory`
-#### <a name="ParametersFactoriesConfigureFactoryRepo">Parameters in `az datafactory factory configure-factory-repo` command</a> 
+#### <a name="ParametersFactoriesConfigureFactoryRepo">Parameters in `az datafactory configure-factory-repo` command</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--location-id**|string|The location identifier.|location_id|locationId|
@@ -48,7 +48,7 @@
 |**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|FactoryVSTSConfiguration|
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
 
-#### <a name="ParametersFactoriesCreateOrUpdateCreate">Parameters in `az datafactory factory create` Command</a> 
+#### <a name="ParametersFactoriesCreateOrUpdateCreate">Parameters in `az datafactory create` Command</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -61,13 +61,13 @@
 |**--fake-identity**|object|This is only for az test.|fake_identity|fakeIdentity|
 |**--zones**|array|This is only for az test.|zones|zones|
 
-#### <a name="ParametersFactoriesDelete">Parameters in `az datafactory factory delete` command</a>
+#### <a name="ParametersFactoriesDelete">Parameters in `az datafactory delete` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 
-#### <a name="ParametersFactoriesGetDataPlaneAccess">Parameters in `az datafactory factory get-data-plane-access` command</a>
+#### <a name="ParametersFactoriesGetDataPlaneAccess">Parameters in `az datafactory get-data-plane-access` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -78,7 +78,7 @@
 |**--start-time**|string|Start time for the token. If not specified the current time will be used.|start_time|startTime|
 |**--expire-time**|string|Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours.|expire_time|expireTime|
 
-#### <a name="ParametersFactoriesGetGitHubAccessToken">Parameters in `az datafactory factory get-git-hub-access-token` command</a>
+#### <a name="ParametersFactoriesGetGitHubAccessToken">Parameters in `az datafactory get-git-hub-access-token` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -88,7 +88,7 @@
 |**--git-hub-client-id**|string|GitHub application client ID.|git_hub_client_id|gitHubClientId|
 
 ### group `az datafactory integration-runtime`
-#### <a name="ParametersIntegrationRuntimesDelete">Parameters in `az datafactory factory integration-runtime delete` command</a>
+#### <a name="ParametersIntegrationRuntimesDelete">Parameters in `az datafactory integration-runtime delete` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
