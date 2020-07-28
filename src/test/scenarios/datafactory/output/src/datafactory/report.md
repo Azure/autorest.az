@@ -24,7 +24,6 @@
 |az datafactory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|
 |az datafactory list|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|
 |az datafactory list|List|[Parameters](#ParametersFactoriesList)|
-|az datafactory start|Start|[Parameters](#ParametersFactoriesStart)|
 |az datafactory update|Update|[Parameters](#ParametersFactoriesUpdate)|
 
 ### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory integration-runtime` group</a>
@@ -87,12 +86,6 @@
 |**--git-hub-access-code**|string|GitHub access code.|git_hub_access_code|gitHubAccessCode|
 |**--git-hub-access-token-base-url**|string|GitHub access token base URL.|git_hub_access_token_base_url|gitHubAccessTokenBaseUrl|
 |**--git-hub-client-id**|string|GitHub application client ID.|git_hub_client_id|gitHubClientId|
-
-#### <a name="ParametersFactoriesStart">Parameters in `az datafactory start` command</a>
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
-|**--factory-name**|string|The factory name.|factory_name|factoryName|
 
 ### group `az datafactory integration-runtime`
 #### <a name="ParametersIntegrationRuntimesDelete">Parameters in `az datafactory integration-runtime delete` command</a>
