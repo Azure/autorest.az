@@ -47,7 +47,6 @@
 |**--factory-resource-id**|string|The factory resource id.|factory_resource_id|factoryResourceId|
 |**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|FactoryVSTSConfiguration|
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
-|**--test-param**|object|This is only for test|test_param|TestParam|
 
 #### <a name="ParametersFactoriesCreateOrUpdateCreate">Parameters in `az datafactory create` Command</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
