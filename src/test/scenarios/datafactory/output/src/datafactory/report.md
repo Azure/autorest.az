@@ -1,11 +1,11 @@
 # Azure CLI Module Creation Report
 
-## extensions
+## EXTENSION
 |CLI Extension|Command Groups|
 |---------|------------|
 |az datafactory|[groups](#CommandGroups)
 
-## groups
+## GROUPS
 ### <a name="CommandGroups">Command groups in `az datafactory` extension</a>
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
@@ -13,7 +13,7 @@
 |az datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
 |az datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
 
-## commands
+## COMMANDS
 ### <a name="CommandsInFactories">Commands in `az datafactory` group</a>
 |CLI Command|Operation Swagger name|Parameters|
 |---------|------------|--------|
@@ -39,7 +39,7 @@
 |az datafactory integration-runtime remove-link|RemoveLinks|[Parameters](#ParametersIntegrationRuntimesRemoveLinks)|
 
 
-## parameters
+## PARAMETERS
 ### group `az datafactory`
 #### <a name="ParametersFactoriesConfigureFactoryRepo">Parameters in `az datafactory configure-factory-repo` command</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
