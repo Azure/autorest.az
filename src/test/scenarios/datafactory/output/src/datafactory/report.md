@@ -17,9 +17,9 @@
 ### <a name="CommandsInFactories">Commands in `az datafactory` group</a>
 |CLI Command|Operation Swagger name|Parameters|
 |---------|------------|--------|
-|az datafactory configure-factory-repo|ConfigureFactoryRepo|[Parameters](#ParametersFactoriesConfigureFactoryRepo)|
 |az datafactory create|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdateCreate)|
 |az datafactory delete|Delete|[Parameters](#ParametersFactoriesDelete)|
+|az datafactory factory-repo-configure|FactoryRepoConfigure|[Parameters](#ParametersFactoriesFactoryRepoConfigure)|
 |az datafactory get-data-plane-access|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|
 |az datafactory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|
 |az datafactory list|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|
@@ -40,13 +40,6 @@
 
 ## PARAMETERS
 ### group `az datafactory`
-#### <a name="ParametersFactoriesConfigureFactoryRepo">Parameters in `az datafactory configure-factory-repo` command</a> 
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--location-id**|string|The location identifier.|location_id|locationId|
-|**--factory-resource-id**|string|The factory resource id.|factory_resource_id|factoryResourceId|
-|**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|FactoryVSTSConfiguration|
-|**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
 
 #### <a name="ParametersFactoriesCreateOrUpdateCreate">Parameters in `az datafactory create` Command</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -66,6 +59,14 @@
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
+
+#### <a name="ParametersFactoriesConfigureFactoryRepo">Parameters in `az datafactory factory-repo-configure` command</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--location-id**|string|The location identifier.|location_id|locationId|
+|**--factory-resource-id**|string|The factory resource id.|factory_resource_id|factoryResourceId|
+|**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|FactoryVSTSConfiguration|
+|**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
 
 #### <a name="ParametersFactoriesGetDataPlaneAccess">Parameters in `az datafactory get-data-plane-access` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
