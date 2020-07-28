@@ -17,31 +17,31 @@
 ### <a name="CommandsInFactories">Commands in `az datafactory` group</a>
 |CLI Command|Operation Swagger name|Parameters|
 |---------|------------|--------|
-|az datafactory configure-factory-repo|ConfigureFactoryRepo|[Parameters](#Parameters001001)|
-|az datafactory create|CreateOrUpdate#Create|[Parameters](#Parameters001002)|
-|az datafactory delete|Delete|[Parameters](#Parameters001003)|
-|az datafactory get-data-plane-access|GetDataPlaneAccess|[Parameters](#Parameters001004)|
-|az datafactory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#Parameters001005)|
-|az datafactory list|ListByResourceGroup|[Parameters](#Parameters001006)|
-|az datafactory list|List|[Parameters](#Parameters001006)|
-|az datafactory update|Update|[Parameters](#Parameters001007)|
+|az datafactory configure-factory-repo|ConfigureFactoryRepo|[Parameters](#ParametersFactoriesConfigureFactoryRepo)|
+|az datafactory create|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdateCreate)|
+|az datafactory delete|Delete|[Parameters](#ParametersFactoriesDelete)|
+|az datafactory get-data-plane-access|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|
+|az datafactory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|
+|az datafactory list|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|
+|az datafactory list|List|[Parameters](#ParametersFactoriesList)|
+|az datafactory update|Update|[Parameters](#ParametersFactoriesUpdate)|
 
 ### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory integration-runtime` group</a>
-|CLI Command|Operation Swagger name|
-|---------|------------|
-|az datafactory integration-runtime delete|Delete|
-|az datafactory integration-runtime get-connection-info|GetConnectionInfo|
-|az datafactory integration-runtime get-status|GetStatus|
-|az datafactory integration-runtime linked-integration-runtime create|CreateLinkedIntegrationRuntime|
-|az datafactory integration-runtime list|ListByFactory|
-|az datafactory integration-runtime managed create|CreateOrUpdate#Create#Managed|
-|az datafactory integration-runtime regenerate-auth-key|RegenerateAuthKey|
-|az datafactory integration-runtime remove-link|RemoveLinks|
+|CLI Command|Operation Swagger name|Parameters|
+|---------|------------|--------|
+|az datafactory integration-runtime delete|Delete|[Parameters](#ParametersIntegrationRuntimesDelete)|
+|az datafactory integration-runtime get-connection-info|GetConnectionInfo|[Parameters](#ParametersIntegrationRuntimesGetConnectionInfo)|
+|az datafactory integration-runtime get-status|GetStatus|[Parameters](#ParametersIntegrationRuntimesGetStatus)|
+|az datafactory integration-runtime linked-integration-runtime create|CreateLinkedIntegrationRuntime|[Parameters](#ParametersIntegrationRuntimesCreateLinkedIntegrationRuntime)|
+|az datafactory integration-runtime list|ListByFactory|[Parameters](#ParametersIntegrationRuntimesListByFactory)|
+|az datafactory integration-runtime managed create|CreateOrUpdate#Create#Managed|[Parameters](#ParametersIntegrationRuntimesCreateOrUpdateCreateManaged)|
+|az datafactory integration-runtime regenerate-auth-key|RegenerateAuthKey|[Parameters](#ParametersIntegerationRuntimesRegenerateAuthKey)|
+|az datafactory integration-runtime remove-link|RemoveLinks|[Parameters](#ParametersIntegrationRuntimesRemoveLinks)|
 
 
 ## parameters
 ### group `az datafactory`
-#### <a name="Parameters001001">Parameters in `az datafactory configure-factory-repo` command</a> 
+#### <a name="ParametersFactoriesConfigureFactoryRepo">Parameters in `az datafactory configure-factory-repo` command</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--location-id**|string|The location identifier.|location_id|locationId|
@@ -49,7 +49,7 @@
 |**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|FactoryVSTSConfiguration|
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
 
-#### <a name="Parameters001002">Parameters in `az datafactory create` Command</a> 
+#### <a name="ParametersFactoriesCreateOrUpdateCreate">Parameters in `az datafactory create` Command</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -62,13 +62,13 @@
 |**--fake-identity**|object|This is only for az test.|fake_identity|fakeIdentity|
 |**--zones**|array|This is only for az test.|zones|zones|
 
-#### <a name="Parameters001003">Parameters in `az datafactory delete` command</a>
+#### <a name="ParametersFactoriesDelete">Parameters in `az datafactory delete` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 
-#### <a name="Parameters001004">Parameters in `az datafactory get-data-plane-access` command</a>
+#### <a name="ParametersFactoriesGetDataPlaneAccess">Parameters in `az datafactory get-data-plane-access` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -79,7 +79,7 @@
 |**--start-time**|string|Start time for the token. If not specified the current time will be used.|start_time|startTime|
 |**--expire-time**|string|Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours.|expire_time|expireTime|
 
-#### <a name="Parameters001005">Parameters in `az datafactory get-git-hub-access-token` command</a>
+#### <a name="ParametersFactoriesGetGitHubAccessToken">Parameters in `az datafactory get-git-hub-access-token` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -90,7 +90,7 @@
 
 
 ### group `az datafactory integration-runtime`
-#### Parameters in `az datafactory integration-runtime delete` command
+#### <a name="ParametersIntegrationRuntimesDelete">Parameters in `az datafactory integration-runtime delete` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
