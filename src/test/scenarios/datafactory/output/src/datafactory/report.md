@@ -5,15 +5,15 @@ datafactory
 
 ## groups
 ### Command groups in `az datafactory` extension
-|Name (az)|Swagger name|Commands|
+|CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
-|datafactory|Factories|[commands](#CommandsInFactories)|
-|datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
-|datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
+|az datafactory|Factories|[commands](#CommandsInFactories)|
+|az datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
+|az datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
 
 ## commands
 ### <a name="CommandsInFactories">Commands in `az datafactory` group</a>
-|CLI Command|Swagger name|Parameters|
+|CLI Command|Operation Swagger name|Parameters|
 |---------|------------|--------|
 |az datafactory configure-factory-repo|ConfigureFactoryRepo|[Parameters](#Parameters001001)|
 |az datafactory create|CreateOrUpdate#Create|[Parameters](#Parameters001002)|
@@ -25,7 +25,7 @@ datafactory
 |az datafactory update|Update|[Parameters](#Parameters001007)|
 
 ### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory integration-runtime` group</a>
-|CLI Command|Swagger name|
+|CLI Command|Operation Swagger name|
 |---------|------------|
 |az datafactory integration-runtime delete|Delete|
 |az datafactory integration-runtime get-connection-info|GetConnectionInfo|
