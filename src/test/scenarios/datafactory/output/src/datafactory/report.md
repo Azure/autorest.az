@@ -11,7 +11,6 @@
 |---------|------------|--------|
 |az datafactory|Factories|[commands](#CommandsInFactories)|
 |az datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
-|az datafactory linked-service|LinkedServices|[commands](#CommandsInLinkedServices)|
 |az datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
 
 ## COMMANDS
@@ -28,7 +27,6 @@
 |az datafactory start|Start|[Parameters](#ParametersFactoriesStart)|
 |az datafactory update|Update|[Parameters](#ParametersFactoriesUpdate)|
 
-
 ### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory integration-runtime` group</a>
 |CLI Command|Operation Swagger name|Parameters|
 |---------|------------|--------|
@@ -40,12 +38,6 @@
 |az datafactory integration-runtime managed create|CreateOrUpdate#Create#Managed|[Parameters](#ParametersIntegrationRuntimesCreateOrUpdateCreateManaged)|
 |az datafactory integration-runtime regenerate-auth-key|RegenerateAuthKey|[Parameters](#ParametersIntegerationRuntimesRegenerateAuthKey)|
 |az datafactory integration-runtime remove-link|RemoveLinks|[Parameters](#ParametersIntegrationRuntimesRemoveLinks)|
-
-
-### <a name="CommandsInLinkedServices">Commands in `az datafactory linked-service` group</a>
-|CLI Command|Operation Swagger name|Parameters|
-|---------|------------|--------|
-|az datafactory linked-service create|CreateOrUpdate#Create|[Parameters](#ParametersLinkedServicesCreateOrUpdateCreate)|
 
 ## PARAMETERS
 ### group `az datafactory`
@@ -211,18 +203,6 @@
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 
-#### <a name="ParametersLinkedServicesCreateOrUpdateCreate">Parameters in `az datafactory linked-service create` Command</a> 
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
-|**--factory-name**|string|The factory name.|factory_name|factoryName|
-|**--if-match**|string|ETag of the factory entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|If-Match|
-|**--location**|string|The resource location.|location|location|
-|**--tags**|dictionary|The resource tags.|tags|tags|
-|**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|FactoryVSTSConfiguration|
-|**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
-|**--fake-identity**|object|This is only for az test.|fake_identity|fakeIdentity|
-|**--zones**|array|This is only for az test.|zones|zones|
 
 ### datafactory integration-runtime stop
 
