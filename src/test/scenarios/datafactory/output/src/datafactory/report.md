@@ -1,10 +1,12 @@
 # Azure CLI Module Creation Report
 
 ## extensions
-datafactory
+|CLI Extension|Command Groups|
+|---------|------------|
+|az datafactory|[groups](#CommandGroups)
 
 ## groups
-### Command groups in `az datafactory` extension
+### <a name="CommandGroups">Command groups in `az datafactory` extension</a>
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
 |az datafactory|Factories|[commands](#CommandsInFactories)|
