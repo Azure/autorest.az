@@ -10,7 +10,7 @@
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
 |az datafactory|Factories|[commands](#CommandsInFactories)|
-|az datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
+|az datafactory ir|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
 |az datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
 
 ## COMMANDS
@@ -26,17 +26,17 @@
 |az datafactory list|List|[Parameters](#ParametersFactoriesList)|
 |az datafactory update|Update|[Parameters](#ParametersFactoriesUpdate)|
 
-### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory integration-runtime` group</a>
+### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory ir` group</a>
 |CLI Command|Operation Swagger name|Parameters|
 |---------|------------|--------|
-|az datafactory integration-runtime delete|Delete|[Parameters](#ParametersIntegrationRuntimesDelete)|
-|az datafactory integration-runtime get-connection-info|GetConnectionInfo|[Parameters](#ParametersIntegrationRuntimesGetConnectionInfo)|
-|az datafactory integration-runtime get-status|GetStatus|[Parameters](#ParametersIntegrationRuntimesGetStatus)|
-|az datafactory integration-runtime linked-integration-runtime create|CreateLinkedIntegrationRuntime|[Parameters](#ParametersIntegrationRuntimesCreateLinkedIntegrationRuntime)|
-|az datafactory integration-runtime list|ListByFactory|[Parameters](#ParametersIntegrationRuntimesListByFactory)|
-|az datafactory integration-runtime managed create|CreateOrUpdate#Create#Managed|[Parameters](#ParametersIntegrationRuntimesCreateOrUpdateCreateManaged)|
-|az datafactory integration-runtime regenerate-auth-key|RegenerateAuthKey|[Parameters](#ParametersIntegerationRuntimesRegenerateAuthKey)|
-|az datafactory integration-runtime remove-link|RemoveLinks|[Parameters](#ParametersIntegrationRuntimesRemoveLinks)|
+|az datafactory ir delete|Delete|[Parameters](#ParametersIntegrationRuntimesDelete)|
+|az datafactory ir get-connection-info|GetConnectionInfo|[Parameters](#ParametersIntegrationRuntimesGetConnectionInfo)|
+|az datafactory ir get-status|GetStatus|[Parameters](#ParametersIntegrationRuntimesGetStatus)|
+|az datafactory ir linked-integration-runtime create|CreateLinkedIntegrationRuntime|[Parameters](#ParametersIntegrationRuntimesCreateLinkedIntegrationRuntime)|
+|az datafactory ir list|ListByFactory|[Parameters](#ParametersIntegrationRuntimesListByFactory)|
+|az datafactory ir managed create|CreateOrUpdate#Create#Managed|[Parameters](#ParametersIntegrationRuntimesCreateOrUpdateCreateManaged)|
+|az datafactory ir regenerate-auth-key|RegenerateAuthKey|[Parameters](#ParametersIntegerationRuntimesRegenerateAuthKey)|
+|az datafactory ir remove-link|RemoveLinks|[Parameters](#ParametersIntegrationRuntimesRemoveLinks)|
 
 ## PARAMETERS
 ### group `az datafactory`
@@ -88,35 +88,35 @@
 |**--git-hub-client-id**|string|GitHub application client ID.|git_hub_client_id|gitHubClientId|
 
 ### group `az datafactory integration-runtime`
-#### <a name="ParametersIntegrationRuntimesDelete">Parameters in `az datafactory integration-runtime delete` command</a>
+#### <a name="ParametersIntegrationRuntimesDelete">Parameters in `az datafactory ir delete` command</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 
-#### Parameters in `az datafactory integration-runtime get-connection-info` command
+#### Parameters in `az datafactory ir get-connection-info` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 
-#### Parameters in `az datafactory integration-runtime get-monitoring-data` command
+#### Parameters in `az datafactory ir get-monitoring-data` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 
-#### Parameters in `az datafactory integration-runtime get-status` command
+#### Parameters in `az datafactory ir get-status` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 
-#### Parameters in `az datafactory integration-runtime linked-integration-runtime create` command
+#### Parameters in `az datafactory ir linked-integration-runtime create` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -127,13 +127,13 @@
 |**--data-factory-name**|string|The name of the data factory that the linked integration runtime belongs to.|data_factory_name|dataFactoryName|
 |**--data-factory-location**|string|The location of the data factory that the linked integration runtime belongs to.|data_factory_location|dataFactoryLocation|
 
-#### Parameters in `az datafactory integration-runtime list` command
+#### Parameters in `az datafactory ir list` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 
-#### Parameters in `az datafactory integration-runtime list-auth-key` command
+#### Parameters in `az datafactory ir list-auth-key` command
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
