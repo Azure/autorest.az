@@ -209,17 +209,19 @@ export class AzNamer {
                         }
                     });
                     operation.extensions['cli-split-operation-original-operation'].requests.forEach(request => {
-                        request.parameters.forEach(parameter => {
-                            if(!isNullOrUndefined(parameter.language['az'])) {
-                                if(operation.language['az'].command.endsWith(' update') && parameter['flattened'] != true) {
-                                    let paramType = parameter.schema.type;
-                                    if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
-                                        param = parameter;
-                                        listCnt++;
+                        if (request.parameters) {
+                            request.parameters.forEach(parameter => {
+                                if(!isNullOrUndefined(parameter.language['az'])) {
+                                    if(operation.language['az'].command.endsWith(' update') && parameter['flattened'] != true) {
+                                        let paramType = parameter.schema.type;
+                                        if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
+                                            param = parameter;
+                                            listCnt++;
+                                        }
                                     }
                                 }
-                            }
-                        }); 
+                            });
+                        };
                     })
                     if(listCnt == 1) {
                         operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = param;
