@@ -55,6 +55,12 @@ input-file:
 - ../input/body-datetime-rfc1123.json
 - ../input/body-duration.json
 - ../input/body-integer.json
+- ../input/body-number.json
+- ../input/body-string.json
+- ../input/body-time.json
+- ../input/extensible-enums-swagger.json
+- ../input/head-exceptions.json
+- ../input/head.json
 - ../input/custom-baseUrl.json
 - ../input/custom-baseUrl-paging.json
 - ../input/head.json
