@@ -335,8 +335,8 @@ class FactoryOperations(object):
         self,
         resource_group_name,  # type: str
         factory_name,  # type: str
+        type,  # type: Union[str, "models.FactoryIdentityType"]
         tags=None,  # type: Optional[Dict[str, str]]
-        type=None,  # type: Optional[Union[str, "models.FactoryIdentityType"]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.Factory"
@@ -346,10 +346,10 @@ class FactoryOperations(object):
         :type resource_group_name: str
         :param factory_name: The factory name.
         :type factory_name: str
-        :param tags: The resource tags.
-        :type tags: dict[str, str]
         :param type: The identity type. Currently the only supported type is 'SystemAssigned'.
         :type type: str or ~dfaz_management_client.models.FactoryIdentityType
+        :param tags: The resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: Factory, or the result of cls(response)
         :rtype: ~dfaz_management_client.models.Factory

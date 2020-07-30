@@ -248,7 +248,6 @@ create a managed-network mn group.
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|managedNetworkName|
 |**--group-name**|string|The name of the Managed Network Group.|group_name|managedNetworkGroupName|
 |**--location**|string|The geo-location where the resource lives|location|location|
-|**--kind**|choice|Responsibility role under which this Managed Network Group will be created|kind|kind|
 |**--management-groups**|array|The collection of management groups covered by the Managed Network|management_groups|managementGroups|
 |**--subscriptions**|array|The collection of subscriptions covered by the Managed Network|subscriptions|subscriptions|
 |**--virtual-networks**|array|The collection of virtual nets covered by the Managed Network|virtual_networks|virtualNetworks|
@@ -339,7 +338,6 @@ update a managed-network mn group.
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|managedNetworkName|
 |**--group-name**|string|The name of the Managed Network Group.|group_name|managedNetworkGroupName|
 |**--location**|string|The geo-location where the resource lives|location|location|
-|**--kind**|choice|Responsibility role under which this Managed Network Group will be created|kind|kind|
 |**--management-groups**|array|The collection of management groups covered by the Managed Network|management_groups|managementGroups|
 |**--subscriptions**|array|The collection of subscriptions covered by the Managed Network|subscriptions|subscriptions|
 |**--virtual-networks**|array|The collection of virtual nets covered by the Managed Network|virtual_networks|virtualNetworks|

@@ -901,10 +901,12 @@ class FactoryUpdateParameters(msrest.serialization.Model):
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
+    All required parameters must be populated in order to send to Azure.
+
     :param tags: A set of tags. The resource tags.
     :type tags: dict[str, str]
-    :param type: The identity type. Currently the only supported type is 'SystemAssigned'. Possible
-     values include: "SystemAssigned".
+    :param type: Required. The identity type. Currently the only supported type is
+     'SystemAssigned'. Possible values include: "SystemAssigned".
     :type type: str or ~dfaz_management_client.models.FactoryIdentityType
     :ivar principal_id: The principal id of the identity.
     :vartype principal_id: str
@@ -913,6 +915,7 @@ class FactoryUpdateParameters(msrest.serialization.Model):
     """
 
     _validation = {
+        'type': {'required': True},
         'principal_id': {'readonly': True},
         'tenant_id': {'readonly': True},
     }
@@ -930,7 +933,7 @@ class FactoryUpdateParameters(msrest.serialization.Model):
     ):
         super(FactoryUpdateParameters, self).__init__(**kwargs)
         self.tags = kwargs.get('tags', None)
-        self.type = kwargs.get('type', None)
+        self.type = kwargs['type']
         self.principal_id = None
         self.tenant_id = None
 

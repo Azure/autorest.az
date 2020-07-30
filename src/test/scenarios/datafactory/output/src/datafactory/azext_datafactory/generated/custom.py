@@ -39,8 +39,7 @@ def datafactory_create(client,
                        factory_vsts_configuration=None,
                        factory_git_hub_configuration=None,
                        fake_identity=None,
-                       zones=None,
-                       identity_type=None):
+                       zones=None):
     all_repo_configuration = []
     if factory_vsts_configuration is not None:
         all_repo_configuration.append(factory_vsts_configuration)
@@ -58,18 +57,17 @@ def datafactory_create(client,
                                    repo_configuration=repo_configuration,
                                    fake_identity=fake_identity,
                                    zones=zones,
-                                   type=identity_type)
+                                   type="SystemAssigned")
 
 
 def datafactory_update(client,
                        resource_group_name,
                        factory_name,
-                       tags=None,
-                       identity_type=None):
+                       tags=None):
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          tags=tags,
-                         type=identity_type)
+                         type="SystemAssigned")
 
 
 def datafactory_delete(client,

@@ -12,7 +12,6 @@
 
 from azure.cli.core.commands.parameters import (
     tags_type,
-    get_enum_type,
     resource_group_name_type,
     get_location_type
 )
@@ -118,8 +117,6 @@ def load_arguments(self, _):
         c.argument('group_name', help='The name of the Managed Network Group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
-        c.argument('kind', arg_type=get_enum_type(['Connectivity']), help='Responsibility role under which this '
-                   'Managed Network Group will be created')
         c.argument('management_groups', type=validate_file_or_dict, help='The collection of management groups covered '
                    'by the Managed Network Expected value: json-string/@json-file.')
         c.argument('subscriptions', action=AddSubscriptions, nargs='*', help='The collection of subscriptions covered '
@@ -135,8 +132,6 @@ def load_arguments(self, _):
         c.argument('group_name', help='The name of the Managed Network Group.', id_part='child_name_1')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
-        c.argument('kind', arg_type=get_enum_type(['Connectivity']), help='Responsibility role under which this '
-                   'Managed Network Group will be created')
         c.argument('management_groups', type=validate_file_or_dict, help='The collection of management groups covered '
                    'by the Managed Network Expected value: json-string/@json-file.')
         c.argument('subscriptions', action=AddSubscriptions, nargs='*', help='The collection of subscriptions covered '
