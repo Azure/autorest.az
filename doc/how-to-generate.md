@@ -4,7 +4,9 @@ There are 3 ways to use autorest.az now, pick one you prefer :)
 
 ## Through PR in [Swagger repo](https://github.com/Azure/azure-rest-api-specs)
 
-Autorest.az has been integrated into the [swagger repo](https://github.com/Azure/azure-rest-api-specs), which means it will be triggered automatically to generate the CLI code and extension for you without any extra effort as long as the readme files are ready in the swagger repo/PR. We can help to prepare the init readme files for you as mentioned in [onboarding-guide](onboarding-guide.md), or you can also find example [here](../src/test/scenarios/attestation/configuration). The following is the step by step:
+Autorest.az has been integrated into the [swagger repo](https://github.com/Azure/azure-rest-api-specs), which means it will be triggered automatically to generate the CLI code and extension for you without any extra effort as long as the readme files are ready in the swagger repo or PR. To preparing the initial readme file, please following [Preparing Readme](how-to-author-readme-file.md). 
+
+The following is code generation step by step:
 
 1. Create the PR in Swagger repo.
 
@@ -80,7 +82,7 @@ We have pre-prepared docker image for you to use autorest.az easily. (Please mak
 1. Make sure your environment is good to run autorest and autorest.python by following [this](https://github.com/Azure/autorest.python/wiki/Generating-with-autorest-for-python-v5.0.0).
 2. sync 'https://github.com/Azure/azure-cli-extensions.git' to {azure_cli_ext_folder} and 'https://github.com/Azure/azure-rest-api-specs.git' to {swagger_folder}
 3. Generate the code:
-    * Make sure the readme files are ready in the swagger repo. We can help to prepare the init readme files for you as mentioned in [onboarding-guide](onboarding-guide.md), or you can also find example [here](../src/test/scenarios/attestation/configuration).
+    * Make sure the readme files are ready in the swagger repo. To preparing the initial readme file, please following [Preparing Readme](how-to-author-readme-file.md).
     * Generate the code:
     ``` bash
     > autorest --az --azure-cli-extension-folder={azure_cli_ext_folder}   {swagger_folder}/specification/{service_name}/resource-manager/readme.md
