@@ -17,14 +17,14 @@
 ### <a name="CommandsInFactories">Commands in `az datafactory` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
-|[az datafactory create](#CommandAzDatafactoryCreate)|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdateCreate)|[Example](#ExamplesFactoriesCreateOrUpdateCreate)|
-|[az datafactory delete](#CommandAzDatafactoryDelete)|Delete|[Parameters](#ParametersFactoriesDelete)|[Example](#ExamplesFactoriesDelete)|
-|[az datafactory factory-repo-configure](#CommandAzDatafactoryFactoryRepoConfigure)|FactoryRepoConfigure|[Parameters](#ParametersFactoriesFactoryRepoConfigure)|[Example](#ExamplesFactoriesFactoryRepoConfigure)|
-|az datafactory get-data-plane-access|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|[Example](#ExamplesFactoriesGetDataPlaneAccess)|
-|az datafactory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|[Example](#ExamplesFactoriesGetGitHubAccessToken)|
-|az datafactory list|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|[Example](#ExamplesFactoriesListByResourceGroup)|
-|az datafactory list|List|[Parameters](#ParametersFactoriesList)|[Example](#ExamplesFactoriesList)|
-|az datafactory update|Update|[Parameters](#ParametersFactoriesUpdate)|[Example](#ExamplesFactoriesUpdate)|
+|[az datafactory create](#FactoriesCreateOrUpdateCreate)|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdateCreate)|[Example](#ExamplesFactoriesCreateOrUpdateCreate)|
+|[az datafactory delete](#FactoriesDelete)|Delete|[Parameters](#ParametersFactoriesDelete)|[Example](#ExamplesFactoriesDelete)|
+|[az datafactory factory-repo-configure](#FactoriesFactoryRepoConfigure)|FactoryRepoConfigure|[Parameters](#ParametersFactoriesFactoryRepoConfigure)|[Example](#ExamplesFactoriesFactoryRepoConfigure)|
+|[az datafactory get-data-plane-access](#FactoriesGetDataPlaneAccess)|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|Not Found|
+|[az datafactory get-git-hub-access-token](#FactoriesGetGitHubAccessToken)|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|Not Found|
+|[az datafactory list](#FactoriesListByResourceGroup)|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|Not Found|
+|[az datafactory list](#FactoriesList)|List|[Parameters](#ParametersFactoriesList)|Not Found|
+|[az datafactory update](#FactoriesUpdate)|Update|[Parameters](#ParametersFactoriesUpdate)|Not Found|
 
 ### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory ir` group</a>
 |CLI Command|Operation Swagger name|Parameters|
@@ -41,7 +41,7 @@
 ## COMMAND DETAILS
 
 ### group `az datafactory`
-#### <a name="CommandAzDatafactoryCreate">Command `az datafactory create`</a> 
+#### <a name="FactoriesCreateOrUpdateCreate">Command `az datafactory create`</a> 
 
 ##### <a name="ExamplesFactoriesCreateOrUpdateCreate">Example</a> 
 ```
@@ -62,7 +62,7 @@ az datafactory create --location "East US" --zones "earth" --zones "moon" --name
 |**--fake-identity**|object|This is only for az test.|fake_identity|fakeIdentity|
 |**--zones**|array|This is only for az test.|zones|zones|
 
-#### <a name="CommandAzDatafactoryDelete">Command `az datafactory delete`</a> 
+#### <a name="FactoriesDelete">Command `az datafactory delete`</a> 
 
 ##### <a name="ExamplesFactoriesDelete">Example</a> 
 ```
@@ -75,7 +75,7 @@ az datafactory delete --name "myFactory" --resource-group "myResourceGroup"
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 
-#### <a name="CommandAzDatafactoryFactoryRepoConfigure">Command `az datafactory factory-repo-configure`</a> 
+#### <a name="FactoriesFactoryRepoConfigure">Command `az datafactory factory-repo-configure`</a> 
 
 ##### <a name="ExamplesFactoriesConfigureFactoryRepo">Example</a> 
 ```
@@ -92,7 +92,9 @@ repository-name="repo" root-folder="/" tenant-id="" --location-id "East US"
 |**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|FactoryVSTSConfiguration|
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
 
-#### <a name="ParametersFactoriesGetDataPlaneAccess">Parameters in `az datafactory get-data-plane-access` command</a>
+#### <a name="FactoriesGetDataPlaneAccess">Command `az datafactory get-data-plane-access`</a>
+
+##### <a name="ParametersFactoriesGetDataPlaneAccess">Parameters</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -103,7 +105,9 @@ repository-name="repo" root-folder="/" tenant-id="" --location-id "East US"
 |**--start-time**|string|Start time for the token. If not specified the current time will be used.|start_time|startTime|
 |**--expire-time**|string|Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours.|expire_time|expireTime|
 
-#### <a name="ParametersFactoriesGetGitHubAccessToken">Parameters in `az datafactory get-git-hub-access-token` command</a>
+#### <a name="FactoriesGetGitHubAccessToken">Command `az datafactory get-git-hub-access-token`</a>
+
+##### <a name="ParametersFactoriesGetGitHubAccessToken">Parameters</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
