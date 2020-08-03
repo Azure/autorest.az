@@ -171,10 +171,6 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if (allPythonParam.has(parameterName)) {
                         allPythonParam.delete(parameterName);
                     }
-                    if (allParam.has(parameterName)) {
-                        continue;
-                    }
-                    allParam.set(parameterName, true);
                     let argument = "        c.argument('" + parameterName + "'";
 
                     // this is to handle names like "format", "type", etc
@@ -223,7 +219,10 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         
                     }
 
-
+                    if (allParam.has(parameterName)) {
+                        continue;
+                    }
+                    allParam.set(parameterName, true);
 
                     if (model.MethodParameter_Type == SchemaType.Boolean) {
                         hasBoolean = true;
