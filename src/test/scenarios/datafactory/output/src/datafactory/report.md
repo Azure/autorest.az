@@ -15,16 +15,16 @@
 
 ## COMMANDS
 ### <a name="CommandsInFactories">Commands in `az datafactory` group</a>
-|CLI Command|Operation Swagger name|Parameters|
-|---------|------------|--------|
-|az datafactory create|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdateCreate)|
-|az datafactory delete|Delete|[Parameters](#ParametersFactoriesDelete)|
-|az datafactory factory-repo-configure|FactoryRepoConfigure|[Parameters](#ParametersFactoriesFactoryRepoConfigure)|
-|az datafactory get-data-plane-access|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|
-|az datafactory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|
-|az datafactory list|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|
-|az datafactory list|List|[Parameters](#ParametersFactoriesList)|
-|az datafactory update|Update|[Parameters](#ParametersFactoriesUpdate)|
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az datafactory create](#CommandAzDatafactoryCreate)|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdateCreate)|[Example](ExamplesFactoriesCreateOrUpdateCreate)|
+|[az datafactory delete](#CommandAzDatafactoryDelete)|Delete|[Parameters](#ParametersFactoriesDelete)|[Example](ExamplesFactoriesDelete)|
+|[az datafactory factory-repo-configure](#CommandAzDatafactoryFactoryRepoConfigure)|FactoryRepoConfigure|[Parameters](#ParametersFactoriesFactoryRepoConfigure)|[Example](ExamplesFactoriesFactoryRepoConfigure)|
+|az datafactory get-data-plane-access|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|[Example](ExamplesFactoriesGetDataPlaneAccess)|
+|az datafactory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|[Example](ExamplesFactoriesGetGitHubAccessToken)|
+|az datafactory list|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|[Example](ExamplesFactoriesListByResourceGroup)|
+|az datafactory list|List|[Parameters](#ParametersFactoriesList)|[Example](ExamplesFactoriesList)|
+|az datafactory update|Update|[Parameters](#ParametersFactoriesUpdate)|[Example](ExamplesFactoriesUpdate)|
 
 ### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory ir` group</a>
 |CLI Command|Operation Swagger name|Parameters|
@@ -38,10 +38,18 @@
 |az datafactory ir regenerate-auth-key|RegenerateAuthKey|[Parameters](#ParametersIntegerationRuntimesRegenerateAuthKey)|
 |az datafactory ir remove-link|RemoveLinks|[Parameters](#ParametersIntegrationRuntimesRemoveLinks)|
 
-## PARAMETERS
-### group `az datafactory`
+## COMMAND DETAILS
 
-#### <a name="ParametersFactoriesCreateOrUpdateCreate">Parameters in `az datafactory create` Command</a> 
+### group `az datafactory`
+#### <a name="CommandAzDatafactoryCreate">Command `az datafactory create`</a> 
+
+##### <a name="ExampleFactoriesCreateOrUpdateCreate">Examples</a> 
+```
+az datafactory create --location "East US" --zones "earth" --zones "moon" --name "myFactory" \
+--resource-group "myResourceGroup" 
+```
+
+##### <a name="ParametersFactoriesCreateOrUpdateCreate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
@@ -54,13 +62,28 @@
 |**--fake-identity**|object|This is only for az test.|fake_identity|fakeIdentity|
 |**--zones**|array|This is only for az test.|zones|zones|
 
-#### <a name="ParametersFactoriesDelete">Parameters in `az datafactory delete` command</a>
+#### <a name="CommandAzDatafactoryDelete">Command `az datafactory delete`</a> 
+
+##### <a name="ExampleFactoriesDelete">Examples</a> 
+```
+az datafactory delete --name "myFactory" --resource-group "myResourceGroup"
+```
+
+##### <a name="ParametersFactoriesDelete">Parameters</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 
-#### <a name="ParametersFactoriesConfigureFactoryRepo">Parameters in `az datafactory factory-repo-configure` command</a> 
+#### <a name="CommandAzDatafactoryFactoryRepoConfigure">Command `az datafactory factory-repo-configure`</a> 
+##### <a name="ExampleFactoriesConfigureFactoryRepo">Examples</a> 
+```
+az datafactory configure-factory-repo --factory-resource-id "/subscriptions/12345678-1234-1234-1234-1234\
+5678abc/resourceGroups/myResourceGroup/providers/Microsoft.DataFactory/factories/myFactory" \
+--factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-name="project" \
+repository-name="repo" root-folder="/" tenant-id="" --location-id "East US"
+```
+##### <a name="ParametersFactoriesConfigureFactoryRepo">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--location-id**|string|The location identifier.|location_id|locationId|
