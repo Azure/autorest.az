@@ -5,6 +5,7 @@ import { deepCopy, isDict, ToCamelCase, changeCamelToDash } from "../../utils/he
 import { Example } from "@azure-tools/codemodel";
 import { EnglishPluralizationService } from "@azure-tools/codegen";
 
+export let azOptions = {}
 
 function MethodToOrder(httpMethod: string): number {
     if (httpMethod == 'put') return 0;
@@ -596,6 +597,13 @@ export class ResourcePool {
         // find in TreeResource
         let resource_object = this.findTreeResource(null, object_name, this.root);
         if (resource_object)    return resource_object.placeholder(isTest);
+
+        let regex = /^\d\d\d\d\-\d\d\-\d\dT\d\d:\d\d:\d\d.\d+Z$/g
+        if (azOptions?.['replace-datetime'] && regex.test(object_name)) {
+            let date = new Date();
+            date.setDate(date.getDate() + 10);
+            return date.toISOString();
+        }
         return object_name;
     }
 
