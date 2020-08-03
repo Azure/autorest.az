@@ -43,7 +43,7 @@
 ### group `az datafactory`
 #### <a name="CommandAzDatafactoryCreate">Command `az datafactory create`</a> 
 
-##### <a name="ExamplesFactoriesCreateOrUpdateCreate">Examples</a> 
+##### <a name="ExamplesFactoriesCreateOrUpdateCreate">Example</a> 
 ```
 az datafactory create --location "East US" --zones "earth" --zones "moon" --name "myFactory" \
 --resource-group "myResourceGroup" 
@@ -64,7 +64,7 @@ az datafactory create --location "East US" --zones "earth" --zones "moon" --name
 
 #### <a name="CommandAzDatafactoryDelete">Command `az datafactory delete`</a> 
 
-##### <a name="ExamplesFactoriesDelete">Examples</a> 
+##### <a name="ExamplesFactoriesDelete">Example</a> 
 ```
 az datafactory delete --name "myFactory" --resource-group "myResourceGroup"
 ```
@@ -76,7 +76,8 @@ az datafactory delete --name "myFactory" --resource-group "myResourceGroup"
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 
 #### <a name="CommandAzDatafactoryFactoryRepoConfigure">Command `az datafactory factory-repo-configure`</a> 
-##### <a name="ExamplesFactoriesConfigureFactoryRepo">Examples</a> 
+
+##### <a name="ExamplesFactoriesConfigureFactoryRepo">Example</a> 
 ```
 az datafactory configure-factory-repo --factory-resource-id "/subscriptions/12345678-1234-1234-1234-1234\
 5678abc/resourceGroups/myResourceGroup/providers/Microsoft.DataFactory/factories/myFactory" \
