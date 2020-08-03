@@ -138,13 +138,9 @@ function addParameterHelp(output: string[], model: CodeModelAz, debug: boolean) 
             }
 
             let parameterAlias: string[] = [];
-            if (parameterName.endsWith('name') && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase()) {
-                parameterAlias.push('name');
-                parameterAlias.push('n');
-            }
-            if (!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
-                if (!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
-                    let alias = model.MethodParameter?.language?.['cli']?.['alias'];
+            if (!isNullOrUndefined(model.MethodParameter?.language?.['az']?.['alias'])) {
+                if (!isNullOrUndefined(model.MethodParameter?.language?.['az']?.['alias'])) {
+                    let alias = model.MethodParameter?.language?.['az']?.['alias'];
 
                     if (typeof alias === "string") {
                         parameterAlias.push(alias);
