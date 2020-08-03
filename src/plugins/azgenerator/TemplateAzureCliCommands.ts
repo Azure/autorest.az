@@ -75,10 +75,14 @@ function getCommandBody(model: CodeModelAz) {
     let output: string[] = [];
     let functionName = model.Command_FunctionName;
     let methodName = model.Command_MethodName;
-    let endStr = ")";
+    let endStr = "";
     if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
-        endStr = ", supports_no_wait=True" + endStr;
+        endStr += ", supports_no_wait=True";
     }
+    if (methodName == "delete") {
+        endStr += ", confirmation=True";
+    }
+    endStr += ")";
     if (methodName != "show") {
         if (model.Command_NeedGeneric) {
             let argument = "";

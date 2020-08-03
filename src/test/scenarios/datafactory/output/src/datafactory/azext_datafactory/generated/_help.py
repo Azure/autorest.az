@@ -19,7 +19,7 @@ helps['datafactory'] = """
 
 helps['datafactory list'] = """
     type: command
-    short-summary: Lists factories under the specified subscription.
+    short-summary: "Lists factories under the specified subscription."
     examples:
       - name: Factories_ListByResourceGroup
         text: |-
@@ -28,7 +28,7 @@ helps['datafactory list'] = """
 
 helps['datafactory show'] = """
     type: command
-    short-summary: Gets a factory.
+    short-summary: "Gets a factory."
     examples:
       - name: Factories_Get
         text: |-
@@ -37,10 +37,10 @@ helps['datafactory show'] = """
 
 helps['datafactory create'] = """
     type: command
-    short-summary: Creates or updates a factory.
+    short-summary: "Creates or updates a factory."
     parameters:
       - name: --factory-vsts-configuration
-        short-summary: Factory's VSTS repo information.
+        short-summary: "Factory's VSTS repo information."
         long-summary: |
             Usage: --factory-vsts-configuration project-name=XX tenant-id=XX type=XX account-name=XX \
 repository-name=XX collaboration-branch=XX root-folder=XX last-commit-id=XX
@@ -54,7 +54,7 @@ repository-name=XX collaboration-branch=XX root-folder=XX last-commit-id=XX
             root-folder: Required. Root folder.
             last-commit-id: Last commit id.
       - name: --factory-git-hub-configuration
-        short-summary: Factory's GitHub repo information.
+        short-summary: "Factory's GitHub repo information."
         long-summary: |
             Usage: --factory-git-hub-configuration host-name=XX type=XX account-name=XX repository-name=XX \
 collaboration-branch=XX root-folder=XX last-commit-id=XX
@@ -67,7 +67,7 @@ collaboration-branch=XX root-folder=XX last-commit-id=XX
             root-folder: Required. Root folder.
             last-commit-id: Last commit id.
       - name: --fake-identity
-        short-summary: This is only for az test.
+        short-summary: "This is only for az test."
         long-summary: |
             Usage: --fake-identity name=XX zones-inside=XX
 
@@ -82,7 +82,7 @@ collaboration-branch=XX root-folder=XX last-commit-id=XX
 
 helps['datafactory update'] = """
     type: command
-    short-summary: Updates a factory.
+    short-summary: "Updates a factory."
     examples:
       - name: Factories_Update
         text: |-
@@ -92,7 +92,7 @@ helps['datafactory update'] = """
 
 helps['datafactory delete'] = """
     type: command
-    short-summary: Deletes a factory.
+    short-summary: "Deletes a factory."
     examples:
       - name: Factories_Delete
         text: |-
@@ -101,10 +101,10 @@ helps['datafactory delete'] = """
 
 helps['datafactory configure-factory-repo'] = """
     type: command
-    short-summary: Updates a factory's repo information.
+    short-summary: "Updates a factory's repo information."
     parameters:
       - name: --factory-vsts-configuration
-        short-summary: Factory's VSTS repo information.
+        short-summary: "Factory's VSTS repo information."
         long-summary: |
             Usage: --factory-vsts-configuration project-name=XX tenant-id=XX type=XX account-name=XX \
 repository-name=XX collaboration-branch=XX root-folder=XX last-commit-id=XX
@@ -118,7 +118,7 @@ repository-name=XX collaboration-branch=XX root-folder=XX last-commit-id=XX
             root-folder: Required. Root folder.
             last-commit-id: Last commit id.
       - name: --factory-git-hub-configuration
-        short-summary: Factory's GitHub repo information.
+        short-summary: "Factory's GitHub repo information."
         long-summary: |
             Usage: --factory-git-hub-configuration host-name=XX type=XX account-name=XX repository-name=XX \
 collaboration-branch=XX root-folder=XX last-commit-id=XX
@@ -141,7 +141,7 @@ repository-name="repo" root-folder="/" tenant-id="" --location-id "East US"
 
 helps['datafactory get-data-plane-access'] = """
     type: command
-    short-summary: Get Data Plane access.
+    short-summary: "Get Data Plane access."
     examples:
       - name: Factories_GetDataPlaneAccess
         text: |-
@@ -152,7 +152,7 @@ helps['datafactory get-data-plane-access'] = """
 
 helps['datafactory get-git-hub-access-token'] = """
     type: command
-    short-summary: Get GitHub Access Token.
+    short-summary: "Get GitHub Access Token."
     examples:
       - name: Factories_GetGitHubAccessToken
         text: |-
@@ -167,7 +167,7 @@ helps['datafactory trigger'] = """
 
 helps['datafactory trigger list'] = """
     type: command
-    short-summary: Lists triggers.
+    short-summary: "Lists triggers."
     examples:
       - name: Triggers_ListByFactory
         text: |-
@@ -176,7 +176,7 @@ helps['datafactory trigger list'] = """
 
 helps['datafactory trigger show'] = """
     type: command
-    short-summary: Gets a trigger.
+    short-summary: "Gets a trigger."
     examples:
       - name: Triggers_Get
         text: |-
@@ -186,7 +186,7 @@ helps['datafactory trigger show'] = """
 
 helps['datafactory trigger create'] = """
     type: command
-    short-summary: Creates or updates a trigger.
+    short-summary: "Creates or updates a trigger."
     examples:
       - name: Triggers_Create
         text: |-
@@ -199,7 +199,7 @@ eoutput.csv\\"]},\\"pipelineReference\\":{\\"type\\":\\"PipelineReference\\",\\"
 
 helps['datafactory trigger update'] = """
     type: command
-    short-summary: Creates or updates a trigger.
+    short-summary: "Creates or updates a trigger."
     examples:
       - name: Triggers_Update
         text: |-
@@ -209,7 +209,7 @@ helps['datafactory trigger update'] = """
 
 helps['datafactory trigger delete'] = """
     type: command
-    short-summary: Deletes a trigger.
+    short-summary: "Deletes a trigger."
     examples:
       - name: Triggers_Delete
         text: |-
@@ -219,7 +219,7 @@ helps['datafactory trigger delete'] = """
 
 helps['datafactory trigger get-event-subscription-status'] = """
     type: command
-    short-summary: Get a trigger's event subscription status.
+    short-summary: "Get a trigger's event subscription status."
     examples:
       - name: Triggers_GetEventSubscriptionStatus
         text: |-
@@ -229,7 +229,7 @@ helps['datafactory trigger get-event-subscription-status'] = """
 
 helps['datafactory trigger query-by-factory'] = """
     type: command
-    short-summary: Query triggers.
+    short-summary: "Query triggers."
     examples:
       - name: Triggers_QueryByFactory
         text: |-
@@ -239,7 +239,7 @@ helps['datafactory trigger query-by-factory'] = """
 
 helps['datafactory trigger start'] = """
     type: command
-    short-summary: Starts a trigger.
+    short-summary: "Starts a trigger."
     examples:
       - name: Triggers_Start
         text: |-
@@ -249,7 +249,7 @@ helps['datafactory trigger start'] = """
 
 helps['datafactory trigger stop'] = """
     type: command
-    short-summary: Stops a trigger.
+    short-summary: "Stops a trigger."
     examples:
       - name: Triggers_Stop
         text: |-
@@ -259,7 +259,7 @@ helps['datafactory trigger stop'] = """
 
 helps['datafactory trigger subscribe-to-event'] = """
     type: command
-    short-summary: Subscribe event trigger to events.
+    short-summary: "Subscribe event trigger to events."
     examples:
       - name: Triggers_SubscribeToEvents
         text: |-
@@ -269,7 +269,7 @@ helps['datafactory trigger subscribe-to-event'] = """
 
 helps['datafactory trigger unsubscribe-from-event'] = """
     type: command
-    short-summary: Unsubscribe event trigger from events.
+    short-summary: "Unsubscribe event trigger from events."
     examples:
       - name: Triggers_UnsubscribeFromEvents
         text: |-
@@ -294,7 +294,7 @@ helps['datafactory integration-runtime'] = """
 
 helps['datafactory integration-runtime list'] = """
     type: command
-    short-summary: Lists integration runtimes.
+    short-summary: "Lists integration runtimes."
     examples:
       - name: IntegrationRuntimes_ListByFactory
         text: |-
@@ -303,7 +303,7 @@ helps['datafactory integration-runtime list'] = """
 
 helps['datafactory integration-runtime show'] = """
     type: command
-    short-summary: Gets an integration runtime.
+    short-summary: "Gets an integration runtime."
     examples:
       - name: IntegrationRuntimes_Get
         text: |-
@@ -318,7 +318,7 @@ helps['datafactory integration-runtime linked-integration-runtime'] = """
 
 helps['datafactory integration-runtime linked-integration-runtime create'] = """
     type: command
-    short-summary: Create a linked integration runtime entry in a shared integration runtime.
+    short-summary: "Create a linked integration runtime entry in a shared integration runtime."
     examples:
       - name: IntegrationRuntimes_CreateLinkedIntegrationRuntime
         text: |-
@@ -336,10 +336,10 @@ helps['datafactory integration-runtime managed'] = """
 
 helps['datafactory integration-runtime managed create'] = """
     type: command
-    short-summary: Creates or updates an integration runtime.
+    short-summary: "Creates or updates an integration runtime."
     parameters:
       - name: --factory-vsts-configuration
-        short-summary: Factory's VSTS repo information.
+        short-summary: "Factory's VSTS repo information."
         long-summary: |
             Usage: --factory-vsts-configuration project-name=XX tenant-id=XX type=XX account-name=XX \
 repository-name=XX collaboration-branch=XX root-folder=XX last-commit-id=XX
@@ -353,7 +353,7 @@ repository-name=XX collaboration-branch=XX root-folder=XX last-commit-id=XX
             root-folder: Required. Root folder.
             last-commit-id: Last commit id.
       - name: --factory-git-hub-configuration
-        short-summary: Factory's GitHub repo information.
+        short-summary: "Factory's GitHub repo information."
         long-summary: |
             Usage: --factory-git-hub-configuration host-name=XX type=XX account-name=XX repository-name=XX \
 collaboration-branch=XX root-folder=XX last-commit-id=XX
@@ -366,7 +366,7 @@ collaboration-branch=XX root-folder=XX last-commit-id=XX
             root-folder: Required. Root folder.
             last-commit-id: Last commit id.
       - name: --fake-identity
-        short-summary: This is only for az test.
+        short-summary: "This is only for az test."
         long-summary: |
             Usage: --fake-identity name=XX zones-inside=XX
 
@@ -381,7 +381,7 @@ helps['datafactory integration-runtime self-hosted'] = """
 
 helps['datafactory integration-runtime self-hosted create'] = """
     type: command
-    short-summary: Creates or updates an integration runtime.
+    short-summary: "Creates or updates an integration runtime."
     examples:
       - name: IntegrationRuntimes_Create
         text: |-
@@ -391,7 +391,7 @@ selfhosted integration runtime" --name "myIntegrationRuntime" --resource-group "
 
 helps['datafactory integration-runtime update'] = """
     type: command
-    short-summary: Updates an integration runtime.
+    short-summary: "Updates an integration runtime."
     examples:
       - name: IntegrationRuntimes_Update
         text: |-
@@ -401,7 +401,7 @@ helps['datafactory integration-runtime update'] = """
 
 helps['datafactory integration-runtime delete'] = """
     type: command
-    short-summary: Deletes an integration runtime.
+    short-summary: "Deletes an integration runtime."
     examples:
       - name: IntegrationRuntimes_Delete
         text: |-
@@ -411,8 +411,8 @@ helps['datafactory integration-runtime delete'] = """
 
 helps['datafactory integration-runtime get-connection-info'] = """
     type: command
-    short-summary: Gets the on-premises integration runtime connection information for encrypting the on-premises data \
-source credentials.
+    short-summary: "Gets the on-premises integration runtime connection information for encrypting the on-premises \
+data source credentials."
     examples:
       - name: IntegrationRuntimes_GetConnectionInfo
         text: |-
@@ -422,8 +422,8 @@ source credentials.
 
 helps['datafactory integration-runtime get-monitoring-data'] = """
     type: command
-    short-summary: Get the integration runtime monitoring data, which includes the monitor data for all the nodes \
-under this integration runtime.
+    short-summary: "Get the integration runtime monitoring data, which includes the monitor data for all the nodes \
+under this integration runtime."
     examples:
       - name: IntegrationRuntimes_GetMonitoringData
         text: |-
@@ -433,7 +433,7 @@ under this integration runtime.
 
 helps['datafactory integration-runtime get-status'] = """
     type: command
-    short-summary: Gets detailed status information for an integration runtime.
+    short-summary: "Gets detailed status information for an integration runtime."
     examples:
       - name: IntegrationRuntimes_GetStatus
         text: |-
@@ -443,7 +443,7 @@ helps['datafactory integration-runtime get-status'] = """
 
 helps['datafactory integration-runtime list-auth-key'] = """
     type: command
-    short-summary: Retrieves the authentication keys for an integration runtime.
+    short-summary: "Retrieves the authentication keys for an integration runtime."
     examples:
       - name: IntegrationRuntimes_ListAuthKeys
         text: |-
@@ -453,7 +453,7 @@ helps['datafactory integration-runtime list-auth-key'] = """
 
 helps['datafactory integration-runtime regenerate-auth-key'] = """
     type: command
-    short-summary: Regenerates the authentication key for an integration runtime.
+    short-summary: "Regenerates the authentication key for an integration runtime."
     examples:
       - name: IntegrationRuntimes_RegenerateAuthKey
         text: |-
@@ -463,8 +463,8 @@ helps['datafactory integration-runtime regenerate-auth-key'] = """
 
 helps['datafactory integration-runtime remove-link'] = """
     type: command
-    short-summary: Remove all linked integration runtimes under specific data factory in a self-hosted integration \
-runtime.
+    short-summary: "Remove all linked integration runtimes under specific data factory in a self-hosted integration \
+runtime."
     examples:
       - name: IntegrationRuntimes_RemoveLinks
         text: |-
@@ -474,7 +474,7 @@ runtime.
 
 helps['datafactory integration-runtime start'] = """
     type: command
-    short-summary: Starts a ManagedReserved type integration runtime.
+    short-summary: "Starts a ManagedReserved type integration runtime."
     examples:
       - name: IntegrationRuntimes_Start
         text: |-
@@ -484,7 +484,7 @@ helps['datafactory integration-runtime start'] = """
 
 helps['datafactory integration-runtime stop'] = """
     type: command
-    short-summary: Stops a ManagedReserved type integration runtime.
+    short-summary: "Stops a ManagedReserved type integration runtime."
     examples:
       - name: IntegrationRuntimes_Stop
         text: |-
@@ -494,10 +494,10 @@ helps['datafactory integration-runtime stop'] = """
 
 helps['datafactory integration-runtime sync-credentials'] = """
     type: command
-    short-summary: Force the integration runtime to synchronize credentials across integration runtime nodes, and this \
-will override the credentials across all worker nodes with those available on the dispatcher node. If you already have \
-the latest credential backup file, you should manually import it (preferred) on any self-hosted integration runtime \
-node than using this API directly.
+    short-summary: "Force the integration runtime to synchronize credentials across integration runtime nodes, and \
+this will override the credentials across all worker nodes with those available on the dispatcher node. If you already \
+have the latest credential backup file, you should manually import it (preferred) on any self-hosted integration \
+runtime node than using this API directly."
     examples:
       - name: IntegrationRuntimes_SyncCredentials
         text: |-
@@ -507,7 +507,7 @@ node than using this API directly.
 
 helps['datafactory integration-runtime upgrade'] = """
     type: command
-    short-summary: Upgrade self-hosted integration runtime to latest version if availability.
+    short-summary: "Upgrade self-hosted integration runtime to latest version if availability."
     examples:
       - name: IntegrationRuntimes_Upgrade
         text: |-
