@@ -47,8 +47,6 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     private static readonly DEFAULT_CLI_CORE_LIB = 'azure.cli.core';
 
-    private static readonly pythonReserveWord = ['all', 'id', 'format', 'type', 'filter'];
-
     async init() {
         this.options = await this.session.getValue('az');
         Object.assign(azOptions, this.options);
@@ -287,6 +285,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     private setParamAzUniqueNames() {
         this.paramActionNameReference = new Map<Schema, string>();
         let nameActionReference: Map<string, ActionParam> = new Map<string, ActionParam>();
+        let pythonReserveWord = ['all', 'id', 'format', 'type', 'filter'];
         if (this.SelectFirstCommandGroup()) {
             do {
                 if (this.SelectFirstCommand()) {
@@ -343,10 +342,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             } else if (tmpName != paramFlattenedName) {
                                                 paramFlattenedName = tmpName;
                                             }
-                                            if (CodeModelCliImpl.pythonReserveWord.indexOf(paramFlattenedName) > -1) {
+                                            if (pythonReserveWord.indexOf(paramFlattenedName) > -1) {
                                                 paramFlattenedName += "_";
                                             } 
-                                            if (CodeModelCliImpl.pythonReserveWord.indexOf(preParamFlattenedName) > -1) {
+                                            if (pythonReserveWord.indexOf(preParamFlattenedName) > -1) {
                                                 preParamFlattenedName += "_";
                                             }
                                             if (paramFlattenedName != preParamFlattenedName) {
@@ -361,7 +360,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         } else {
                                             // nameParamReference doesn't have the parameter
                                             // or nameParamReference has the parameter and they are the same.
-                                            if (CodeModelCliImpl.pythonReserveWord.indexOf(paramFlattenedName) > -1) {
+                                            if (pythonReserveWord.indexOf(paramFlattenedName) > -1) {
                                                 paramFlattenedName += "_";
                                             }
                                             this.Parameter_SetAzNameMapsTo(paramFlattenedName, param);
@@ -1622,13 +1621,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                 name = polySubParam.value.language['az']['alias'][0];
             }
         }
-
-        if (name.endsWith("_")) {
-            const realName = name.substr(0, name.length-1);
-            if (CodeModelCliImpl.pythonReserveWord.indexOf(realName) >=0) {
-                name = realName;
-            }
-        } 
 
         let handled = false;
         if (isList) {
