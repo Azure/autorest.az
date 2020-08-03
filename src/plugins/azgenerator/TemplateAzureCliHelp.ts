@@ -137,7 +137,24 @@ function addParameterHelp(output: string[], model: CodeModelAz, debug: boolean) 
                 continue;
             }
 
-            let parameterAlias: string[] = model.MethodParameter.language['az']?.['alias'] || [parameterName];
+            let parameterAlias: string[] = [];
+            if (parameterName.endsWith('name') && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase()) {
+                parameterAlias.push('name');
+                parameterAlias.push('n');
+            }
+            if (!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
+                if (!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
+                    let alias = model.MethodParameter?.language?.['cli']?.['alias'];
+
+                    if (typeof alias === "string") {
+                        parameterAlias.push(alias);
+                    }
+                    if (isArray(alias)) {
+                        parameterAlias = parameterAlias.concat(alias);
+                    }
+                }
+            }
+            if (parameterAlias.length == 0) parameterAlias.push(parameterName);
             parameterAlias = parameterAlias.map((alias) => {
                 return '--' + alias.replace(/'/g, '').replace(/_/g, '-');
             });
