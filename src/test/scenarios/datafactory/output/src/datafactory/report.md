@@ -17,14 +17,14 @@
 ### <a name="CommandsInFactories">Commands in `az datafactory` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
-|[az datafactory create](#CommandAzDatafactoryCreate)|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdateCreate)|[Example](ExamplesFactoriesCreateOrUpdateCreate)|
-|[az datafactory delete](#CommandAzDatafactoryDelete)|Delete|[Parameters](#ParametersFactoriesDelete)|[Example](ExamplesFactoriesDelete)|
-|[az datafactory factory-repo-configure](#CommandAzDatafactoryFactoryRepoConfigure)|FactoryRepoConfigure|[Parameters](#ParametersFactoriesFactoryRepoConfigure)|[Example](ExamplesFactoriesFactoryRepoConfigure)|
-|az datafactory get-data-plane-access|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|[Example](ExamplesFactoriesGetDataPlaneAccess)|
-|az datafactory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|[Example](ExamplesFactoriesGetGitHubAccessToken)|
-|az datafactory list|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|[Example](ExamplesFactoriesListByResourceGroup)|
-|az datafactory list|List|[Parameters](#ParametersFactoriesList)|[Example](ExamplesFactoriesList)|
-|az datafactory update|Update|[Parameters](#ParametersFactoriesUpdate)|[Example](ExamplesFactoriesUpdate)|
+|[az datafactory create](#CommandAzDatafactoryCreate)|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdateCreate)|[Example](#ExamplesFactoriesCreateOrUpdateCreate)|
+|[az datafactory delete](#CommandAzDatafactoryDelete)|Delete|[Parameters](#ParametersFactoriesDelete)|[Example](#ExamplesFactoriesDelete)|
+|[az datafactory factory-repo-configure](#CommandAzDatafactoryFactoryRepoConfigure)|FactoryRepoConfigure|[Parameters](#ParametersFactoriesFactoryRepoConfigure)|[Example](#ExamplesFactoriesFactoryRepoConfigure)|
+|az datafactory get-data-plane-access|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|[Example](#ExamplesFactoriesGetDataPlaneAccess)|
+|az datafactory get-git-hub-access-token|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|[Example](#ExamplesFactoriesGetGitHubAccessToken)|
+|az datafactory list|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|[Example](#ExamplesFactoriesListByResourceGroup)|
+|az datafactory list|List|[Parameters](#ParametersFactoriesList)|[Example](#ExamplesFactoriesList)|
+|az datafactory update|Update|[Parameters](#ParametersFactoriesUpdate)|[Example](#ExamplesFactoriesUpdate)|
 
 ### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory ir` group</a>
 |CLI Command|Operation Swagger name|Parameters|
