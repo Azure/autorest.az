@@ -20,7 +20,7 @@
 |[az datafactory create](#FactoriesCreateOrUpdateCreate)|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdateCreate)|[Example](#ExamplesFactoriesCreateOrUpdateCreate)|
 |[az datafactory delete](#FactoriesDelete)|Delete|[Parameters](#ParametersFactoriesDelete)|[Example](#ExamplesFactoriesDelete)|
 |[az datafactory factory-repo-configure](#FactoriesFactoryRepoConfigure)|FactoryRepoConfigure|[Parameters](#ParametersFactoriesFactoryRepoConfigure)|[Example](#ExamplesFactoriesFactoryRepoConfigure)|
-|[az datafactory get-data-plane-access](#FactoriesGetDataPlaneAccess)|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|Not Found|
+|[az datafactory get-data-plane-access](#FactoriesGetDataPlaneAccess)|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|[Example](#ExamplesFactoriesGetDataPlaneAccess)|
 |[az datafactory get-git-hub-access-token](#FactoriesGetGitHubAccessToken)|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|Not Found|
 |[az datafactory list](#FactoriesListByResourceGroup)|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|Not Found|
 |[az datafactory list](#FactoriesList)|List|[Parameters](#ParametersFactoriesList)|Not Found|
@@ -93,6 +93,14 @@ repository-name="repo" root-folder="/" tenant-id="" --location-id "East US"
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
 
 #### <a name="FactoriesGetDataPlaneAccess">Command `az datafactory get-data-plane-access`</a>
+
+##### <a name="ExamplesFactoriesGetDataPlaneAccess">Example</a> 
+```
+az datafactory get-data-plane-access --name "myFactory" --access-resource-path "" --expire-time \
+"2018-11-10T09:46:20.2659347Z" --permissions "r" --profile-name "DefaultProfile" --start-time \
+"2018-11-10T02:46:20.2659347Z" --resource-group "myResourceGroup"
+```
+
 
 ##### <a name="ParametersFactoriesGetDataPlaneAccess">Parameters</a>
 |Option|Type|Description|Path (SDK)|Swagger name|
