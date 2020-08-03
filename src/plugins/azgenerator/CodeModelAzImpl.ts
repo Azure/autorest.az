@@ -87,7 +87,6 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._configuredScenario = true;
         }
         else {
-            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
             this._configuredScenario = false;
         }
     }
@@ -2017,6 +2016,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public GatherInternalResource() {
+        if (!this._configuredScenario) {
+            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
+        }
         let internal_resources = {};  // resource_key --> list of resource languages
         this.GetAllMethods(null, () => {
             if (!(this.CommandGroup_Key in internal_resources)) {
