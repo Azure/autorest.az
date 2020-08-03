@@ -2059,7 +2059,10 @@
           "$ref": "#/definitions/FactoryIdentity",
           "description": "Managed service identity of the factory."
         }
-      }
+      },
+      "required": [
+        "identity"
+      ]
     },
     "FactoryIdentity": {
       "description": "Identity properties of the factory resource.",

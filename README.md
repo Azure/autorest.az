@@ -1,6 +1,6 @@
 # configuration
 
-See documentation [here](doc/00-overview.md)
+See documentation [here](doc/00-onboarding-guide.md)
 
 ``` yaml
 
@@ -12,8 +12,8 @@ output-folder: $(az-output-folder)
 debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
-  "@autorest/python": "5.0.0-preview.7"
-  "@autorest/clicommon": "0.4.10"
+  "@autorest/python": "5.1.0-preview.4"
+  "@autorest/clicommon": "0.4.13"
   #"@autorest/python": "latest"
   
 cli:

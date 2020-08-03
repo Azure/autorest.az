@@ -122,7 +122,7 @@ class ManagedNetworkPeeringPolicyProperties(ResourceProperties):
         **kwargs
     ):
         super(ManagedNetworkPeeringPolicyProperties, self).__init__(**kwargs)
-        self.type = 'ManagedNetworkPeeringPolicyProperties'
+        self.type = 'ManagedNetworkPeeringPolicyProperties'  # type: str
         self.hub = kwargs.get('hub', None)
         self.spokes = kwargs.get('spokes', None)
         self.mesh = kwargs.get('mesh', None)
@@ -172,7 +172,7 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         **kwargs
     ):
         super(HubAndSpokePeeringPolicyProperties, self).__init__(**kwargs)
-        self.type = 'HubAndSpokeTopology'
+        self.type = 'HubAndSpokeTopology'  # type: str
 
 
 class Resource(msrest.serialization.Model):
@@ -316,9 +316,9 @@ class ManagedNetworkGroup(Resource):
     :vartype type: str
     :param location: The geo-location where the resource lives.
     :type location: str
-    :ivar kind: Responsibility role under which this Managed Network Group will be created. Default
-     value: "Connectivity".
-    :vartype kind: str
+    :param kind: Responsibility role under which this Managed Network Group will be created.
+     Possible values include: "Connectivity".
+    :type kind: str or ~managed_network_management_client.models.Kind
     :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
      include: "Updating", "Deleting", "Failed", "Succeeded".
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
@@ -338,7 +338,6 @@ class ManagedNetworkGroup(Resource):
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'kind': {'constant': True},
         'provisioning_state': {'readonly': True},
         'etag': {'readonly': True},
     }
@@ -357,13 +356,12 @@ class ManagedNetworkGroup(Resource):
         'subnets': {'key': 'properties.subnets', 'type': '[ResourceId]'},
     }
 
-    kind = "Connectivity"
-
     def __init__(
         self,
         **kwargs
     ):
         super(ManagedNetworkGroup, self).__init__(**kwargs)
+        self.kind = kwargs.get('kind', None)
         self.provisioning_state = None
         self.etag = None
         self.management_groups = kwargs.get('management_groups', None)
@@ -647,7 +645,7 @@ class MeshPeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         **kwargs
     ):
         super(MeshPeeringPolicyProperties, self).__init__(**kwargs)
-        self.type = 'MeshTopology'
+        self.type = 'MeshTopology'  # type: str
 
 
 class Operation(msrest.serialization.Model):

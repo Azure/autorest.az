@@ -10,7 +10,6 @@
 # pylint: disable=too-many-lines
 # pylint: disable=unused-argument
 
-import json
 from knack.util import CLIError
 from azure.cli.core.util import sdk_no_wait
 
@@ -55,10 +54,10 @@ def datafactory_create(client,
                                    if_match=if_match,
                                    location=location,
                                    tags=tags,
-                                   identity=json.loads("{\"type\": \"SystemAssigned\"}"),
                                    repo_configuration=repo_configuration,
                                    fake_identity=fake_identity,
-                                   zones=zones)
+                                   zones=zones,
+                                   type="SystemAssigned")
 
 
 def datafactory_update(client,
@@ -68,7 +67,7 @@ def datafactory_update(client,
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          tags=tags,
-                         identity=json.loads("{\"type\": \"SystemAssigned\"}"))
+                         type="SystemAssigned")
 
 
 def datafactory_delete(client,
@@ -197,7 +196,7 @@ def datafactory_trigger_query_by_factory(client,
                                          parent_trigger_name=None):
     return client.query_by_factory(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
-                                   continuation_token=continuation_token,
+                                   continuation_token_parameter=continuation_token,
                                    parent_trigger_name=parent_trigger_name)
 
 

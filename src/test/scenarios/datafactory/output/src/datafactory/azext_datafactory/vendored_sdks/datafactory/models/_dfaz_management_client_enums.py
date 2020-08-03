@@ -6,190 +6,214 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from enum import Enum
+from enum import Enum, EnumMeta
+from six import with_metaclass
 
-class BlobEventTypes(str, Enum):
+class _CaseInsensitiveEnumMeta(EnumMeta):
+    def __getitem__(self, name):
+        return super().__getitem__(name.upper())
 
-    microsoft_storage_blob_created = "Microsoft.Storage.BlobCreated"
-    microsoft_storage_blob_deleted = "Microsoft.Storage.BlobDeleted"
+    def __getattr__(cls, name):
+        """Return the enum member matching `name`
+        We use __getattr__ instead of descriptors or inserting into the enum
+        class' __dict__ in order to support `name` and `value` being both
+        properties for enum members (which live in the class' __dict__) and
+        enum members themselves.
+        """
+        try:
+            return cls._member_map_[name.upper()]
+        except KeyError:
+            raise AttributeError(name)
 
-class DataFlowComputeType(str, Enum):
+
+class BlobEventTypes(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    MICROSOFT_STORAGE_BLOB_CREATED = "Microsoft.Storage.BlobCreated"
+    MICROSOFT_STORAGE_BLOB_DELETED = "Microsoft.Storage.BlobDeleted"
+
+class DataFlowComputeType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Compute type of the cluster which will execute data flow job.
     """
 
-    general = "General"
-    memory_optimized = "MemoryOptimized"
-    compute_optimized = "ComputeOptimized"
+    GENERAL = "General"
+    MEMORY_OPTIMIZED = "MemoryOptimized"
+    COMPUTE_OPTIMIZED = "ComputeOptimized"
 
-class DayOfWeek(str, Enum):
+class DayOfWeek(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The days of the week.
     """
 
-    sunday = "Sunday"
-    monday = "Monday"
-    tuesday = "Tuesday"
-    wednesday = "Wednesday"
-    thursday = "Thursday"
-    friday = "Friday"
-    saturday = "Saturday"
+    SUNDAY = "Sunday"
+    MONDAY = "Monday"
+    TUESDAY = "Tuesday"
+    WEDNESDAY = "Wednesday"
+    THURSDAY = "Thursday"
+    FRIDAY = "Friday"
+    SATURDAY = "Saturday"
 
-class DaysOfWeek(str, Enum):
+class DaysOfWeek(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
 
-    sunday = "Sunday"
-    monday = "Monday"
-    tuesday = "Tuesday"
-    wednesday = "Wednesday"
-    thursday = "Thursday"
-    friday = "Friday"
-    saturday = "Saturday"
+    SUNDAY = "Sunday"
+    MONDAY = "Monday"
+    TUESDAY = "Tuesday"
+    WEDNESDAY = "Wednesday"
+    THURSDAY = "Thursday"
+    FRIDAY = "Friday"
+    SATURDAY = "Saturday"
 
-class EventSubscriptionStatus(str, Enum):
+class EventSubscriptionStatus(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Event Subscription Status.
     """
 
-    enabled = "Enabled"
-    provisioning = "Provisioning"
-    deprovisioning = "Deprovisioning"
-    disabled = "Disabled"
-    unknown = "Unknown"
+    ENABLED = "Enabled"
+    PROVISIONING = "Provisioning"
+    DEPROVISIONING = "Deprovisioning"
+    DISABLED = "Disabled"
+    UNKNOWN = "Unknown"
 
-class IntegrationRuntimeAuthKeyName(str, Enum):
+class FactoryIdentityType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """The identity type. Currently the only supported type is 'SystemAssigned'.
+    """
+
+    SYSTEM_ASSIGNED = "SystemAssigned"
+
+class IntegrationRuntimeAuthKeyName(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The name of the authentication key to regenerate.
     """
 
-    auth_key1 = "authKey1"
-    auth_key2 = "authKey2"
+    AUTH_KEY1 = "authKey1"
+    AUTH_KEY2 = "authKey2"
 
-class IntegrationRuntimeAutoUpdate(str, Enum):
+class IntegrationRuntimeAutoUpdate(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The state of integration runtime auto update.
     """
 
-    on = "On"
-    off = "Off"
+    ON = "On"
+    OFF = "Off"
 
-class IntegrationRuntimeEdition(str, Enum):
+class IntegrationRuntimeEdition(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The edition for the SSIS Integration Runtime
     """
 
-    standard = "Standard"
-    enterprise = "Enterprise"
+    STANDARD = "Standard"
+    ENTERPRISE = "Enterprise"
 
-class IntegrationRuntimeEntityReferenceType(str, Enum):
+class IntegrationRuntimeEntityReferenceType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The type of this referenced entity.
     """
 
-    integration_runtime_reference = "IntegrationRuntimeReference"
-    linked_service_reference = "LinkedServiceReference"
+    INTEGRATION_RUNTIME_REFERENCE = "IntegrationRuntimeReference"
+    LINKED_SERVICE_REFERENCE = "LinkedServiceReference"
 
-class IntegrationRuntimeInternalChannelEncryptionMode(str, Enum):
+class IntegrationRuntimeInternalChannelEncryptionMode(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """It is used to set the encryption mode for node-node communication channel (when more than 2
     self-hosted integration runtime nodes exist).
     """
 
-    not_set = "NotSet"
-    ssl_encrypted = "SslEncrypted"
-    not_encrypted = "NotEncrypted"
+    NOT_SET = "NotSet"
+    SSL_ENCRYPTED = "SslEncrypted"
+    NOT_ENCRYPTED = "NotEncrypted"
 
-class IntegrationRuntimeLicenseType(str, Enum):
+class IntegrationRuntimeLicenseType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """License type for bringing your own license scenario.
     """
 
-    base_price = "BasePrice"
-    license_included = "LicenseIncluded"
+    BASE_PRICE = "BasePrice"
+    LICENSE_INCLUDED = "LicenseIncluded"
 
-class IntegrationRuntimeSsisCatalogPricingTier(str, Enum):
+class IntegrationRuntimeSsisCatalogPricingTier(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The pricing tier for the catalog database. The valid values could be found in
     https://azure.microsoft.com/en-us/pricing/details/sql-database/
     """
 
-    basic = "Basic"
-    standard = "Standard"
-    premium = "Premium"
-    premium_rs = "PremiumRS"
+    BASIC = "Basic"
+    STANDARD = "Standard"
+    PREMIUM = "Premium"
+    PREMIUM_RS = "PremiumRS"
 
-class IntegrationRuntimeState(str, Enum):
+class IntegrationRuntimeState(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The state of integration runtime.
     """
 
-    initial = "Initial"
-    stopped = "Stopped"
-    started = "Started"
-    starting = "Starting"
-    stopping = "Stopping"
-    need_registration = "NeedRegistration"
-    online = "Online"
-    limited = "Limited"
-    offline = "Offline"
-    access_denied = "AccessDenied"
+    INITIAL = "Initial"
+    STOPPED = "Stopped"
+    STARTED = "Started"
+    STARTING = "Starting"
+    STOPPING = "Stopping"
+    NEED_REGISTRATION = "NeedRegistration"
+    ONLINE = "Online"
+    LIMITED = "Limited"
+    OFFLINE = "Offline"
+    ACCESS_DENIED = "AccessDenied"
 
-class IntegrationRuntimeType(str, Enum):
+class IntegrationRuntimeType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The type of integration runtime.
     """
 
-    managed = "Managed"
-    self_hosted = "SelfHosted"
+    MANAGED = "Managed"
+    SELF_HOSTED = "SelfHosted"
 
-class IntegrationRuntimeUpdateResult(str, Enum):
+class IntegrationRuntimeUpdateResult(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The result of the last integration runtime node update.
     """
 
-    none = "None"
-    succeed = "Succeed"
-    fail = "Fail"
+    NONE = "None"
+    SUCCEED = "Succeed"
+    FAIL = "Fail"
 
-class ManagedIntegrationRuntimeNodeStatus(str, Enum):
+class ManagedIntegrationRuntimeNodeStatus(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The managed integration runtime node status.
     """
 
-    starting = "Starting"
-    available = "Available"
-    recycling = "Recycling"
-    unavailable = "Unavailable"
+    STARTING = "Starting"
+    AVAILABLE = "Available"
+    RECYCLING = "Recycling"
+    UNAVAILABLE = "Unavailable"
 
-class RecurrenceFrequency(str, Enum):
+class RecurrenceFrequency(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Enumerates possible frequency option for the schedule trigger.
     """
 
-    not_specified = "NotSpecified"
-    minute = "Minute"
-    hour = "Hour"
-    day = "Day"
-    week = "Week"
-    month = "Month"
-    year = "Year"
+    NOT_SPECIFIED = "NotSpecified"
+    MINUTE = "Minute"
+    HOUR = "Hour"
+    DAY = "Day"
+    WEEK = "Week"
+    MONTH = "Month"
+    YEAR = "Year"
 
-class SelfHostedIntegrationRuntimeNodeStatus(str, Enum):
+class SelfHostedIntegrationRuntimeNodeStatus(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Status of the integration runtime node.
     """
 
-    need_registration = "NeedRegistration"
-    online = "Online"
-    limited = "Limited"
-    offline = "Offline"
-    upgrading = "Upgrading"
-    initializing = "Initializing"
-    initialize_failed = "InitializeFailed"
+    NEED_REGISTRATION = "NeedRegistration"
+    ONLINE = "Online"
+    LIMITED = "Limited"
+    OFFLINE = "Offline"
+    UPGRADING = "Upgrading"
+    INITIALIZING = "Initializing"
+    INITIALIZE_FAILED = "InitializeFailed"
 
-class SsisObjectMetadataType(str, Enum):
+class SsisObjectMetadataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The type of SSIS object metadata.
     """
 
-    folder = "Folder"
-    project = "Project"
-    package = "Package"
-    environment = "Environment"
+    FOLDER = "Folder"
+    PROJECT = "Project"
+    PACKAGE = "Package"
+    ENVIRONMENT = "Environment"
 
-class TriggerRuntimeState(str, Enum):
+class TriggerRuntimeState(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Enumerates possible state of Triggers.
     """
 
-    started = "Started"
-    stopped = "Stopped"
-    disabled = "Disabled"
+    STARTED = "Started"
+    STOPPED = "Stopped"
+    DISABLED = "Disabled"
 
-class TumblingWindowFrequency(str, Enum):
+class TumblingWindowFrequency(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Enumerates possible frequency option for the tumbling window trigger.
     """
 
-    minute = "Minute"
-    hour = "Hour"
+    MINUTE = "Minute"
+    HOUR = "Hour"
