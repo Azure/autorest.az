@@ -23,11 +23,11 @@ def load_arguments(self, _):
 
     with self.argument_context('attestation create-provider') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('provider_name', help='Name of the attestation service')
+        c.argument('provider_name', type=str, help='Name of the attestation service')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
-        c.argument('attestation_policy', help='Name of attestation policy.')
+        c.argument('attestation_policy', type=str, help='Name of attestation policy.')
         c.argument('policy_signing_certificates_keys', action=AddPolicySigningCertificatesKeys, nargs='*', help='The '
                    'value of the "keys" parameter is an array of JWK values.  By default, the order of the JWK values '
                    'within the array does not imply an order of preference among them, although applications of JWK '
@@ -38,13 +38,13 @@ def load_arguments(self, _):
 
     with self.argument_context('attestation attestation-provider show') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('provider_name', help='Name of the attestation service instance', id_part='name')
+        c.argument('provider_name', type=str, help='Name of the attestation service instance', id_part='name')
 
     with self.argument_context('attestation attestation-provider update') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('provider_name', help='Name of the attestation service', id_part='name')
+        c.argument('provider_name', type=str, help='Name of the attestation service', id_part='name')
         c.argument('tags', tags_type)
 
     with self.argument_context('attestation attestation-provider delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('provider_name', help='Name of the attestation service', id_part='name')
+        c.argument('provider_name', type=str, help='Name of the attestation service', id_part='name')

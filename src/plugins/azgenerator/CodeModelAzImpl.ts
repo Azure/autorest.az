@@ -106,6 +106,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                     return order;
                 }
+                function requiredParamLength(parameters) {
+                    let ret = 0;
+                    for(var i = 0; i < parameters.length; ++i){
+                        if (parameters[i].required) ret++;
+                    }
+                    return ret;
+                }
                 let oa = getOrder(a.language['az']['name']);
                 let ob = getOrder(b.language['az']['name']);
                 if(oa < ob) {
@@ -118,6 +125,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                     if(la != lb) {
                         return la.localeCompare(lb);
                     }
+                    let requiredLenA = requiredParamLength(a.parameters);
+                    let requiredLenB = requiredParamLength(b.parameters);
+                    if (requiredLenA!=requiredLenB) return requiredLenA > requiredLenB? -1: 1;
                     return a.parameters.length > b.parameters.length? -1: 1;
                 }
             });
@@ -1356,6 +1366,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             // Handle complex
             let shouldHidden = undefined;
             let defaultValue = undefined;
+            let hasDefault = false;
             if (this.EnterSubMethodParameters(parameter))
             {
                 shouldHidden = true;
@@ -1369,10 +1380,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                         }
                         else if (this.Parameter_Type(this.SubMethodParameter) == SchemaType.Constant) {
                             defaultValue = defaultValue + "\"" + this.Parameter_NameAz(this.SubMethodParameter) + "\": \"" + this.Parameter_DefaultValue(this.SubMethodParameter) + "\"";
+                            hasDefault = true;
                         }
                     } while (this.SelectNextMethodParameter())
                 }
-                if (shouldHidden == true) {
+                if (shouldHidden == true && hasDefault) {
                     defaultValue = defaultValue + "}";
                 }
                 else {
