@@ -1842,8 +1842,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                 // else {
                 //     param_name = "name";
                 // }
-            } else if (param_name.endsWith('_')) {
-                param_name = param_name.substr(0, param_name.length - 1);
             }
             param_name = param_name.split("_").join("-");
             ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.keys, param.defaultName, param.methodParam));
