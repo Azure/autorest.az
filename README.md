@@ -1,6 +1,6 @@
 # configuration
 
-See documentation [here](doc/00-overview.md)
+See documentation [here](doc/00-onboarding-guide.md)
 
 ``` yaml
 
