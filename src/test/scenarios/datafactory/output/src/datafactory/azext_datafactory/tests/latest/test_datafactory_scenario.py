@@ -374,7 +374,7 @@ def step__triggers_post_triggers_unsubscribefromevents(test, rg):
 # EXAMPLE: /IntegrationRuntimes/delete/IntegrationRuntimes_Delete
 @try_manual
 def step__integrationruntimes_delete_integrationruntimes_delete(test, rg):
-    test.cmd('az datafactory integration-runtime delete '
+    test.cmd('az datafactory integration-runtime delete -y '
              '--factory-name "{myFactory}" '
              '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
@@ -384,7 +384,7 @@ def step__integrationruntimes_delete_integrationruntimes_delete(test, rg):
 # EXAMPLE: /Triggers/delete/Triggers_Delete
 @try_manual
 def step__triggers_delete_triggers_delete(test, rg):
-    test.cmd('az datafactory trigger delete '
+    test.cmd('az datafactory trigger delete -y '
              '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
              '--name "{myTrigger}"',
@@ -394,7 +394,7 @@ def step__triggers_delete_triggers_delete(test, rg):
 # EXAMPLE: /Factories/delete/Factories_Delete
 @try_manual
 def step__factories_delete_factories_delete(test, rg):
-    test.cmd('az datafactory delete '
+    test.cmd('az datafactory delete -y '
              '--name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=[])
