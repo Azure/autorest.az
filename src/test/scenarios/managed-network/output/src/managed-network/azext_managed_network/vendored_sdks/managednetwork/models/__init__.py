@@ -58,6 +58,7 @@ except (SyntaxError, ImportError):
     from ._models import TrackedResource  # type: ignore
 
 from ._managed_network_management_client_enums import (
+    Kind,
     ProvisioningState,
     Type,
 )
@@ -87,6 +88,7 @@ __all__ = [
     'ScopeAssignmentListResult',
     'ScopeAssignmentProperties',
     'TrackedResource',
+    'Kind',
     'ProvisioningState',
     'Type',
 ]

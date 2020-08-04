@@ -26,7 +26,7 @@ export class AzNamer {
         }
         if(operationName.startsWith("create") && httpProtocol == "put") {
             return subOperationGroupName == ""? "create": subOperationGroupName + " " + "create";
-        } else if(operationName.startsWith("update") && (httpProtocol == "put" || httpProtocol == "patch")) {
+        } else if(operationName == "update" && (httpProtocol == "put" || httpProtocol == "patch")) {
             return subOperationGroupName == ""? "update": subOperationGroupName + " " + "update";
         } else if(operationName == "get" && httpProtocol == "get") {
             return subOperationGroupName == ""? "show": subOperationGroupName + " " + "show";

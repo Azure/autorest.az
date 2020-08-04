@@ -10,7 +10,7 @@ from ._managed_network_management_client import ManagedNetworkManagementClient
 __all__ = ['ManagedNetworkManagementClient']
 
 try:
-    from ._patch import patch_sdk
+    from ._patch import patch_sdk  # type: ignore
     patch_sdk()
 except ImportError:
     pass

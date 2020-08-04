@@ -9,9 +9,9 @@ if you select Azure cli Code-gen as the approach, you will be re-direct back to 
 > ** we are improving the process here with Azure CLI team soon 
 
 ## Step 2. Quick Validation
-If it is your first time to use Azure Cli code-gen, please discuss with the contact person. He/She will: 
-1. Do a quick validation on your swagger and prepare initial readme files for you
-2. follow up with you for any questions and support needed during the service onboarding
+If it is your first time to use Azure Cli code-gen, please prepare initial readme files for your RP [Preparing Readme](how-to-author-readme-file.md). Then, discuss with the contact person. He/She will: 
+1. Do a quick validation on your swagger.
+2. Follow up with you for any questions and support needed during the service onboarding.
 
 ## Step 3. Generate code and give it a try
 1. There are 3 ways to generate code now, you can pick the one you prefer. Details can be found at [Generating Guide](how-to-generate.md)

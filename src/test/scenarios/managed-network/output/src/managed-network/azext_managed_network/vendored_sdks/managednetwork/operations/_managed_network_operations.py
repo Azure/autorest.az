@@ -54,7 +54,8 @@ class ManagedNetworkOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ManagedNetwork"
-        """The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name.
+        """The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource
+        group and Managed Network name.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -87,7 +88,6 @@ class ManagedNetworkOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
-        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -115,7 +115,8 @@ class ManagedNetworkOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ManagedNetwork"
-        """The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name.
+        """The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by
+        resource group and Managed Network name.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -158,7 +159,6 @@ class ManagedNetworkOperations(object):
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
-        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
         body_content = self._serialize.body(_managed_network, 'ManagedNetwork')
         body_content_kwargs['content'] = body_content
@@ -172,7 +172,6 @@ class ManagedNetworkOperations(object):
             error = self._deserialize(models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = None
         if response.status_code == 200:
             deserialized = self._deserialize('ManagedNetwork', pipeline_response)
 
@@ -213,7 +212,6 @@ class ManagedNetworkOperations(object):
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
 
-        # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -234,14 +232,16 @@ class ManagedNetworkOperations(object):
         managed_network_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller
-        """The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource group and Managed Network name.
+        # type: (...) -> LROPoller[None]
+        """The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the
+        resource group and Managed Network name.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param managed_network_name: The name of the Managed Network.
         :type managed_network_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
@@ -256,12 +256,14 @@ class ManagedNetworkOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        raw_result = self._delete_initial(
-            resource_group_name=resource_group_name,
-            managed_network_name=managed_network_name,
-            cls=lambda x,y,z: x,
-            **kwargs
-        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._delete_initial(
+                resource_group_name=resource_group_name,
+                managed_network_name=managed_network_name,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
 
         kwargs.pop('error_map', None)
         kwargs.pop('content_type', None)
@@ -273,7 +275,15 @@ class ManagedNetworkOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}  # type: ignore
 
     def _update_initial(
@@ -310,7 +320,6 @@ class ManagedNetworkOperations(object):
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
-        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
         body_content = self._serialize.body(_parameters, 'ManagedNetworkUpdate')
         body_content_kwargs['content'] = body_content
@@ -324,7 +333,6 @@ class ManagedNetworkOperations(object):
             error = self._deserialize(models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = None
         if response.status_code == 200:
             deserialized = self._deserialize('ManagedNetwork', pipeline_response)
 
@@ -344,7 +352,7 @@ class ManagedNetworkOperations(object):
         tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller
+        # type: (...) -> LROPoller["models.ManagedNetwork"]
         """Updates the specified Managed Network resource tags.
 
         :param resource_group_name: The name of the resource group.
@@ -354,6 +362,7 @@ class ManagedNetworkOperations(object):
         :param tags: Resource tags.
         :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
@@ -368,13 +377,15 @@ class ManagedNetworkOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        raw_result = self._update_initial(
-            resource_group_name=resource_group_name,
-            managed_network_name=managed_network_name,
-            tags=tags,
-            cls=lambda x,y,z: x,
-            **kwargs
-        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._update_initial(
+                resource_group_name=resource_group_name,
+                managed_network_name=managed_network_name,
+                tags=tags,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
 
         kwargs.pop('error_map', None)
         kwargs.pop('content_type', None)
@@ -389,7 +400,15 @@ class ManagedNetworkOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}'}  # type: ignore
 
     def list_by_resource_group(
@@ -400,15 +419,16 @@ class ManagedNetworkOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["models.ManagedNetworkListResult"]
-        """The ListByResourceGroup ManagedNetwork operation retrieves all the Managed Network resources in a resource group in a paginated format.
+        """The ListByResourceGroup ManagedNetwork operation retrieves all the Managed Network resources in
+        a resource group in a paginated format.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param top: May be used to limit the number of results in a page for list queries.
         :type top: int
         :param skiptoken: Skiptoken is only used if a previous operation returned a partial result. If
-     a previous response contains a nextLink element, the value of the nextLink element will include
-     a skiptoken parameter that specifies a starting point to use for subsequent calls.
+         a previous response contains a nextLink element, the value of the nextLink element will include
+         a skiptoken parameter that specifies a starting point to use for subsequent calls.
         :type skiptoken: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either ManagedNetworkListResult or the result of cls(response)
@@ -421,6 +441,10 @@ class ManagedNetworkOperations(object):
         api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
             if not next_link:
                 # Construct URL
                 url = self.list_by_resource_group.metadata['url']  # type: ignore
@@ -437,15 +461,11 @@ class ManagedNetworkOperations(object):
                 if skiptoken is not None:
                     query_parameters['$skiptoken'] = self._serialize.query("skiptoken", skiptoken, 'str')
 
+                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
-
-            # Construct and send request
-            request = self._client.get(url, query_parameters, header_parameters)
+                request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         def extract_data(pipeline_response):
@@ -480,13 +500,14 @@ class ManagedNetworkOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["models.ManagedNetworkListResult"]
-        """The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
+        """The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in
+        the current subscription in a paginated format.
 
         :param top: May be used to limit the number of results in a page for list queries.
         :type top: int
         :param skiptoken: Skiptoken is only used if a previous operation returned a partial result. If
-     a previous response contains a nextLink element, the value of the nextLink element will include
-     a skiptoken parameter that specifies a starting point to use for subsequent calls.
+         a previous response contains a nextLink element, the value of the nextLink element will include
+         a skiptoken parameter that specifies a starting point to use for subsequent calls.
         :type skiptoken: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either ManagedNetworkListResult or the result of cls(response)
@@ -499,6 +520,10 @@ class ManagedNetworkOperations(object):
         api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
             if not next_link:
                 # Construct URL
                 url = self.list_by_subscription.metadata['url']  # type: ignore
@@ -514,15 +539,11 @@ class ManagedNetworkOperations(object):
                 if skiptoken is not None:
                     query_parameters['$skiptoken'] = self._serialize.query("skiptoken", skiptoken, 'str')
 
+                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
-
-            # Construct and send request
-            request = self._client.get(url, query_parameters, header_parameters)
+                request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         def extract_data(pipeline_response):
