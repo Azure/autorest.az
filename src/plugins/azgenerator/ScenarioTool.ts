@@ -206,11 +206,13 @@ class ResourceObject {
     class_name: string;
     // key: string;
     sub_resources: Map<string, ResourceClass>; //class_name --> resource_class
+    example_params: ExampleParam[];
 
     public constructor(object_name: string, class_name: string) {
         this.object_name = object_name;
         this.class_name = class_name;
         this.sub_resources = new Map<string, ResourceClass>();
+        this.example_params = [];
     }
 
     public get key(): string {
@@ -220,7 +222,29 @@ class ResourceObject {
     public placeholder(isTest: boolean): string {
         if (isTest)    return '{' + this.key + '}';
         return getResourceKey(this.class_name, this.object_name, true);
-        
+    }
+
+    public addOrUpdateParam(example_param: ExampleParam) {
+        // remove all children
+        for (let i=0; i<this.example_params.length; i++) {
+            let param = this.example_params[i];
+            if (param.ancestors == example_param.ancestors.concat([example_param.name])) {
+                this.example_params.splice(i);
+                i--;
+            }
+        }
+
+        // replace if already there
+        for (let i=0; i<this.example_params.length; i++) {
+            let param = this.example_params[i];
+            if (JSON.stringify(param.ancestors) == JSON.stringify(example_param.ancestors) && param.name == example_param.name) {
+                this.example_params[i] = example_param;
+                return;
+            }
+        }
+
+        // append to the tail
+        this.example_params.push(example_param);
     }
 }
 
@@ -393,6 +417,21 @@ export class ResourcePool {
         return resources[class_name].objects[object_name];
     }
 
+    public findResource(class_name: string, object_name: string): ResourceObject|undefined {
+        if (isNullOrUndefined(class_name) || isNullOrUndefined(object_name))    return null;
+
+        let resource_object = this.findTreeResource(class_name, object_name, this.root);
+        if (resource_object) {
+            return resource_object;
+        }
+
+        if (class_name in this.map && object_name in this.map[class_name].objects) {
+            return this.map[class_name].objects[object_name];
+        }
+
+        return undefined;
+    }
+
     public findTreeResource(class_name: string, object_name: string, root: Map<string, ResourceClass>): ResourceObject {
         if (class_name in root && object_name in root[class_name].objects) {
             return root[class_name].objects[object_name];
@@ -431,7 +470,8 @@ export class ResourcePool {
         return this.map[class_name].objects[object_name];
     }
 
-    public isResource(language): string | null {
+    public isResource(language: string): string | null {
+        if (language.startsWith("--"))  language = language.substr(2);
         for (let resource in resourceLanguages) {
             for (let resource_language of resourceLanguages[resource]) {
                 if (resource_language.toLowerCase() == language.toLowerCase()) return resource;

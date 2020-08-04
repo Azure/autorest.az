@@ -1608,7 +1608,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return (this.Command_GetOriginalOperation && param?.targetProperty?.['isDiscriminator'] )? true: false;
     }
 
-    private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any, polySubParam: MethodParam): boolean {
+    private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any, polySubParam: MethodParam, ancestors: string[]): boolean {
         let isList: boolean = methodParam.isList;
         let isSimpleListOrArray: boolean = methodParam.isSimpleListOrArray;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
@@ -1631,7 +1631,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             if (isSimpleListOrArray) {
                 if (value instanceof Array) {       // spread list
                     for (let e of value) {
-                        this.AddExampleParameter(methodParam, example_param, e, polySubParam);
+                        this.AddExampleParameter(methodParam, example_param, e, polySubParam, ancestors);
                     }
                     handled = true;
                 }
@@ -1675,23 +1675,23 @@ export class CodeModelCliImpl implements CodeModelAz {
                         keys.push(cliName)
                     }
                     if (ret.length > 0) {
-                        example_param.push(new ExampleParam(name, ret, false, true, keys, defaultName, methodParam));
+                        example_param.push(new ExampleParam(name, ret, false, true, keys, defaultName, methodParam, ancestors));
                     }
                     handled = true;
                 }
             }
             if (!handled) {
                 if (typeof value == 'string') {
-                    example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam));
+                    example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam, ancestors));
                 }
                 else {
                     // JSON form
-                    example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, [], defaultName, methodParam));
+                    example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, [], defaultName, methodParam, ancestors));
                 }
             }
         }
         else if (typeof value != 'object') {
-            example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam));
+            example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam, ancestors));
         }
         else {
             // ignore object values if not isList.
@@ -1790,7 +1790,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam);
+                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors);
                     return;
                 }
             }
@@ -1813,13 +1813,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam);
+                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors);
                     return;
                 }
             }
             else if (ancestors.length == 0) {
                 // example_param.set(name, value);
-                if (this.AddExampleParameter(methodParam, example_param, netValue, polySubParam)) return;
+                if (this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors)) return;
             }
         }
 
@@ -1844,7 +1844,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 // }
             }
             param_name = param_name.split("_").join("-");
-            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.keys, param.defaultName, param.methodParam));
+            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.keys, param.defaultName, param.methodParam, param.ancestors));
         };
         return ret;
     }
@@ -1932,6 +1932,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         parameters.push("az " + this.Command_Name);
 
         let hasRG = false;
+        let resourceObjectName = undefined;
         for (let param of example.Parameters) {
             let param_value = param.value;
             if (isTest || this.FormalizeNames) {
@@ -1950,10 +1951,21 @@ export class CodeModelCliImpl implements CodeModelAz {
             if (["--resource-group", "-g"].indexOf(param.name) >=0) {
                 hasRG = true;
             }
+
+            if (example.ResourceClassName && this.resource_pool.isResource(param.defaultName) == example.ResourceClassName) {
+                resourceObjectName = param.value;
+            }
         }
 
         if (isTest && !hasRG && commandParams && commandParams[this.Command_Name] && commandParams[this.Command_Name].has("resourceGroupName")) {
             parameters.push('-g ""');
+        }
+
+        let resourceObject = this.resource_pool.findResource(example.ResourceClassName, resourceObjectName);
+        if (['put', 'post', 'patch'].indexOf(example.HttpMethod.toLowerCase())>=0 && resourceObject) {
+            for (let param of example.Parameters) {
+                resourceObject.addOrUpdateParam(param);   
+            }
         }
 
         return parameters;
@@ -2056,7 +2068,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             }
 
-            //recognize depends by parameter name'
             let createdObjectNames = [];
             let isCreateMehod = this.Method_HttpMethod == 'put';
             if (this.SelectFirstMethodParameter()) {

@@ -28,7 +28,8 @@ export class ExampleParam {
     keys: string[];
     defaultName: string;
     methodParam: MethodParam;
-    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, keys: string[], defaultName: string, methodParam: MethodParam) {
+    ancestors: string[];
+    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, keys: string[], defaultName: string, methodParam: MethodParam, ancestors: string[]) {
         this.name = name;
         this.value = value;
         this.isJson = isJson;
@@ -36,6 +37,7 @@ export class ExampleParam {
         this.keys = keys;
         this.defaultName = defaultName;
         this.methodParam = methodParam;
+        this.ancestors = ancestors;
     }
 }
 export class CommandExample {
