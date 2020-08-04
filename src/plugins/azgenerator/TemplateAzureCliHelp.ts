@@ -138,13 +138,9 @@ function addParameterHelp(output: string[], model: CodeModelAz, debug: boolean) 
             }
 
             let parameterAlias: string[] = [];
-            if (parameterName.endsWith('name') && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase()) {
-                parameterAlias.push('name');
-                parameterAlias.push('n');
-            }
-            if (!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
-                if (!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
-                    let alias = model.MethodParameter?.language?.['cli']?.['alias'];
+            if (!isNullOrUndefined(model.MethodParameter?.language?.['az']?.['alias'])) {
+                if (!isNullOrUndefined(model.MethodParameter?.language?.['az']?.['alias'])) {
+                    let alias = model.MethodParameter?.language?.['az']?.['alias'];
 
                     if (typeof alias === "string") {
                         parameterAlias.push(alias);
@@ -168,19 +164,19 @@ function addParameterHelp(output: string[], model: CodeModelAz, debug: boolean) 
                 ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, action_output, 119, true);
 
                 if (debug) {
-                    let shortSummary = "";
+                    let shortSummary = '"';
                     if (model.MethodParameter_Description && model.MethodParameter_Description.trim().length > 0) {
-                        shortSummary += model.MethodParameter_Description.trim();
+                        shortSummary += model.MethodParameter_Description.trim().replace(/"/g, '\\\\"');
                     }
                     if (!shortSummary.endsWith(".")) {
                         shortSummary += ".";
                     }
-                    shortSummary += " Swagger name=" + model.MethodParameter_CliKey;
+                    shortSummary += " Swagger name=" + model.MethodParameter_CliKey + '"';
                     ToMultiLine(`        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''), action_output, 119, true);
                 } else {
                     if (model.MethodParameter_Description && model.MethodParameter_Description.trim().length > 0) {
-                        const shortSummary = model.MethodParameter_Description.trim();
-                        ToMultiLine(`        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''), action_output, 119, true);
+                        const shortSummary = model.MethodParameter_Description.trim().replace(/"/g, '\\\\"');
+                        ToMultiLine(`        short-summary: "${shortSummary}"`.replace(/\r?\n|\r/g, ''), action_output, 119, true);
                     }
                 }
                 
@@ -271,13 +267,14 @@ function generateCommandHelp(model: CodeModelAz, debug: boolean = false) {
     // there will be just one method for create, update, delete, show, etc.
     // there may be a few list methods, so let's just take description from the first one.
     // as we can't use all of them
-    let shortSummary = "    short-summary: " + model.Command_Help.trim();
+    let shortSummary = '    short-summary: "' + model.Command_Help.trim();
     if (debug) {
         if (!shortSummary.trimRight().endsWith(".")) {
             shortSummary += ".";
         }
         shortSummary += " Command group swagger name=" + model.CommandGroup_CliKey + ", Command swagger name=" + model.Method_CliKey;
     }
+    shortSummary += '"';
     ToMultiLine(shortSummary, output, 119, true);
 
 
