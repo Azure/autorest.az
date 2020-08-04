@@ -9,7 +9,7 @@ import { serialize, deserialize, EnglishPluralizationService, pascalCase } from 
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeString, parseResourceId } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency, PrintTestScenario } from './ScenarioTool'
+import { azOptions, GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency, PrintTestScenario } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
 import { isNullOrUndefined, isArray } from "util";
 
@@ -49,6 +49,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     async init() {
         this.options = await this.session.getValue('az');
+        Object.assign(azOptions, this.options);
         this.extensionName = this.options['extensions'];
         this.currentOperationGroupIndex = -1;
         this.currentSubOperationGroupIndex = -1;
