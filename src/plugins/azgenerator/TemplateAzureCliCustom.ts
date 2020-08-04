@@ -180,7 +180,7 @@ function ConstructValuation(isGeneric: boolean, prefix: string, classNames: stri
         str.push(left + " = " + value);
     }
     else {
-        str = str.concat(ConstructValuation(isGeneric, prefix, classNames, paramName, defaultValue) + " if " + value + " == None else " + value);
+        str = str.concat(ConstructValuation(isGeneric, prefix, classNames, paramName, defaultValue) + " if " + value + " is None else " + value);
     }
     return str;
 
@@ -347,7 +347,7 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
                     }
                     else if (model.MethodParameter_DefaultValue !== undefined && model.MethodParameter_Type != SchemaType.Constant) {
                         // model is simple type with default value
-                        output_body.push("    if " + model.MethodParameter_MapsTo + " == None:");
+                        output_body.push("    if " + model.MethodParameter_MapsTo + " is None:");
                         output_body.push("        " + model.MethodParameter_MapsTo + " = " + ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type));
                     }
                 }

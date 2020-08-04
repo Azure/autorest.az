@@ -19,12 +19,12 @@ helps['attestation'] = """
 
 helps['attestation create-provider'] = """
     type: command
-    short-summary: Creates or updates the Attestation Provider.
+    short-summary: "Creates or updates the Attestation Provider."
     parameters:
       - name: --policy-signing-certificates-keys
-        short-summary: The value of the "keys" parameter is an array of JWK values.  By default, the order of the JWK \
-values within the array does not imply an order of preference among them, although applications of JWK Sets can choose \
-to assign a meaning to the order for their purposes, if desired.
+        short-summary: "The value of the \\"keys\\" parameter is an array of JWK values.  By default, the order of the \
+JWK values within the array does not imply an order of preference among them, although applications of JWK Sets can \
+choose to assign a meaning to the order for their purposes, if desired."
         long-summary: |
             Usage: --policy-signing-certificates-keys alg=XX crv=XX d=XX dp=XX dq=XX e=XX k=XX kid=XX kty=XX n=XX p=XX \
 q=XX qi=XX use=XX x=XX x5-c=XX y=XX
@@ -72,7 +72,7 @@ value. The PKIX certificate containing the key value MUST be the first certifica
 
 helps['attestation list-operation'] = """
     type: command
-    short-summary: Lists all of the available Azure attestation operations.
+    short-summary: "Lists all of the available Azure attestation operations."
     examples:
       - name: Operations_List
         text: |-
@@ -91,7 +91,7 @@ helps['attestation attestation-provider provider'] = """
 
 helps['attestation attestation-provider provider list'] = """
     type: command
-    short-summary: Returns a list of attestation providers in a subscription.
+    short-summary: "Returns a list of attestation providers in a subscription."
     examples:
       - name: AttestationProviders_ListByResourceGroup
         text: |-
@@ -100,7 +100,7 @@ helps['attestation attestation-provider provider list'] = """
 
 helps['attestation attestation-provider show'] = """
     type: command
-    short-summary: Get the status of Attestation Provider.
+    short-summary: "Get the status of Attestation Provider."
     examples:
       - name: AttestationProviders_Get
         text: |-
@@ -110,7 +110,7 @@ helps['attestation attestation-provider show'] = """
 
 helps['attestation attestation-provider update'] = """
     type: command
-    short-summary: Updates the Attestation Provider.
+    short-summary: "Updates the Attestation Provider."
     examples:
       - name: AttestationProviders_Update
         text: |-
@@ -120,7 +120,7 @@ helps['attestation attestation-provider update'] = """
 
 helps['attestation attestation-provider delete'] = """
     type: command
-    short-summary: Delete Attestation Service.
+    short-summary: "Delete Attestation Service."
     examples:
       - name: AttestationProviders_Delete
         text: |-
