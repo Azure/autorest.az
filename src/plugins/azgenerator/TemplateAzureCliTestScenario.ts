@@ -199,8 +199,10 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
         for (let [class_name, kargs_key, hasCreateExample, object_name] of internalObjects) {
             if (hasCreateExample && model.RandomizeNames)
             {
-                let snakeName = ToSnakeCase(class_name);
-                ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='${object_name}'[:${Math.floor(object_name.length/2)}], length=${object_name.length}),`, initiates);
+                const RANDOMIZE_MIN_LEN = 4;
+                let prefixLen = Math.floor(object_name.length/2);
+                if(object_name.length-prefixLen<RANDOMIZE_MIN_LEN)  prefixLen = Math.max(object_name.length-RANDOMIZE_MIN_LEN, 0);
+                ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='${object_name}'[:${prefixLen}], length=${Math.max(object_name.length, RANDOMIZE_MIN_LEN)}),`, initiates);
             }
             else
                 initiates.push(`            '${kargs_key}': '${object_name}',`);   // keep the original name in example if there is no create example in the test-scenario
