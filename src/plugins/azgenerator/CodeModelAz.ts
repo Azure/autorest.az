@@ -53,6 +53,7 @@ export class CommandExample {
     public MethodResponses: any[];
     public Method_IsLongRun: boolean;
     public MethodParams: MethodParam[];
+    public ExampleObj: any;
 }
 
 export interface CodeModelAz {
@@ -175,7 +176,7 @@ export interface CodeModelAz {
     GenerateTestInit(): void;
     SelectFirstExample(): boolean;
     SelectNextExample(): boolean;
-    FindExampleById(id: string, commandParams: any): string[][];
+    FindExampleById(id: string, commandParams: any, examples: any[]): string[][];
     Example_Body: string[];
     Example_Title: string;
     Example_Params: any;
@@ -185,6 +186,7 @@ export interface CodeModelAz {
     GatherInternalResource();
     FindExampleWaitById(id: string): string[][];
     GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
+    GetExampleChecks(example: CommandExample): string[];
     RandomizeNames: boolean;
     
     // readme config

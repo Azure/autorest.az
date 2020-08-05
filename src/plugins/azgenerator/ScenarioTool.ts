@@ -1,7 +1,7 @@
 
 import * as path from "path"
 import { CommandExample, ExampleParam } from "./CodeModelAz";
-import { deepCopy, isDict, ToCamelCase, changeCamelToDash } from "../../utils/helper"
+import { deepCopy, isDict, ToCamelCase, ToPythonString, changeCamelToDash } from "../../utils/helper"
 import { Example } from "@azure-tools/codemodel";
 import { EnglishPluralizationService } from "@azure-tools/codegen";
 import { isNullOrUndefined } from "util";
@@ -245,6 +245,28 @@ class ResourceObject {
 
         // append to the tail
         this.example_params.push(example_param);
+    }
+
+    public getCheckers(example: CommandExample): string[] {
+        let ret: string[] = [];
+        if (['create', 'delete', 'show', 'list', 'update'].indexOf(example.Method)<0)   return ret;
+        let expectedStatus = "200";
+        if (example.Method == 'create') expectedStatus = "201";
+        let example_resp_body = example.ExampleObj.responses?.[expectedStatus]?.body;
+        for (let param of this.example_params) {
+            let p = example_resp_body;
+            let q = 1;
+            while (q<param.ancestors.length && isDict(p) && param.ancestors[q] in p) {
+                p = p[param.ancestors[q]];
+                q += 1;
+            }
+            if (q<param.ancestors.length)   continue;   // ancestors don't match
+            if (!(isDict(p) && param.defaultName in p)) continue;   //param.defaultName not found
+            if (p[param.defaultName]!= param.value) continue;   // param value don't match
+
+            ret.push(`self.check("${param.ancestors.slice(1).concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)})`);
+        }
+        return ret;
     }
 }
 

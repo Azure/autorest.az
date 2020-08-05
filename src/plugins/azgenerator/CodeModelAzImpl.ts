@@ -1905,6 +1905,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.Parameters = this.ConvertToCliParameters(params);
                 example.MethodResponses = this.Method.responses || [];
                 example.Method_IsLongRun = this.Method.extensions?.['x-ms-long-running-operation'] ? true : false;
+                example.ExampleObj = example_obj;
                 if (this.Method_GetSplitOriginalOperation) {
                     //filter example by name for generic createorupdate
                     if(this.Command_MethodName.toLowerCase()=="update" && !id.toLowerCase().endsWith("_update"))
@@ -1925,6 +1926,21 @@ export class CodeModelCliImpl implements CodeModelAz {
             });
         }
         return examples;
+    }
+
+    public GetExampleChecks(example: CommandExample): string[] {
+        let resourceObjectName = undefined;
+        for (let param of example.Parameters) {
+            if (example.ResourceClassName && this.resource_pool.isResource(param.defaultName) == example.ResourceClassName) {
+                resourceObjectName = param.value;
+            }
+        }
+
+        let resourceObject = this.resource_pool.findResource(example.ResourceClassName, resourceObjectName);
+        if (resourceObject) {
+            return resourceObject.getCheckers(example);
+        }
+        return [];
     }
 
     public GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[] {
@@ -2015,9 +2031,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public FindExampleById(id: string, commandParams?: any): string[][] {
+    public FindExampleById(id: string, commandParams: any, examples: CommandExample[]): string[][] {
         let ret: string[][] = [];
         this.GetAllExamples(id, (example) => {
+            examples.push(example);
             ret.push(this.GetExampleItems(example, true, commandParams));
         });
         return ret;
@@ -2068,6 +2085,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             }
 
+            //recognize depends by parameter name'
             let createdObjectNames = [];
             let isCreateMehod = this.Method_HttpMethod == 'put';
             if (this.SelectFirstMethodParameter()) {

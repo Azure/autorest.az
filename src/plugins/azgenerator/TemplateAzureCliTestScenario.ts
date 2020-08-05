@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz"
+import { CodeModelAz, CommandExample } from "./CodeModelAz"
 import { PreparerEntity, getResourceKey } from "./ScenarioTool"
 import { ToSnakeCase, ToMultiLine, deepCopy } from '../../utils/helper';
 import { HeaderGenerator } from "./Header";
@@ -52,7 +52,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     for (var ci = 0; ci < config.length; ci++) {
         let exampleId: string = config[ci].name;
         if (exampleId) {
-            model.FindExampleById(exampleId, commandParams);
+            model.FindExampleById(exampleId, commandParams, []);
         }
     }
 
@@ -90,7 +90,9 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
             steps.push(...ToMultiLine(`def ${functionName}(test${parameterLine()}):`));
             // find example by name
             let found = false;
-            for (let exampleCmd of model.FindExampleById(exampleId, commandParams)) {
+            let examples: CommandExample[] = [];
+            let exampleIdx = 0;
+            for (let exampleCmd of model.FindExampleById(exampleId, commandParams, examples)) {
                 if (exampleCmd && exampleCmd.length > 0) {
                     found = true;
                     if(exampleCmd[0].indexOf(' delete') > -1) {
@@ -101,7 +103,11 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                         let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
                         ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
                     }
-                    steps.push("    " + disabled + "         checks=[])");
+                    steps.push("    " + disabled + "         checks=[");
+                    for (let check of model.GetExampleChecks(examples[exampleIdx++])) {
+                        steps.push("    " + disabled + "             " + check);
+                    }
+                    steps.push("    " + disabled + "         ])");
                 }
             }
             if (!found) {
