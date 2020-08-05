@@ -10,7 +10,7 @@ from ._auto_rest_test_service import AutoRestTestService
 __all__ = ['AutoRestTestService']
 
 try:
-    from ._patch import patch_sdk
+    from ._patch import patch_sdk  # type: ignore
     patch_sdk()
 except ImportError:
     pass

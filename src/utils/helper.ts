@@ -301,24 +301,39 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
         if (isNullOrUndefined(curNode)) {
             break;
         }
-        lastValidNode = curNode;
-        if (np.startsWith('[@') && np.endsWith(']')) {
-            np = np.replace(/\[\@|\]/g, '');
-            let found = false;
-            for(let node of values(curNode)) {
-                if(node?.['language']?.['cli']?.['cliKey'] == np) {
-                    curNode = node;
-                    found = true;
-                    break;
+        if (np.indexOf('[') > -1 && np.indexOf(']') > -1) {
+            let beginIdx = np.indexOf('[')
+            let endIdx = np.indexOf(']');
+            let curStep = np.substring(0, beginIdx);
+            curNode = curNode[curStep];
+            if (!isNullOrUndefined(curNode)) {
+                lastValidNode = curNode
+            } else {
+                break;
+            }
+            let nextStep = "";
+            if (np[beginIdx + 1] == "'" && np[endIdx - 1] == "'") {
+                nextStep = np.substring(beginIdx + 2, endIdx - 1);
+                let found = false;
+                for(let node of values(curNode)) {
+                    if(node?.['language']?.['cli']?.['cliKey'] == nextStep) {
+                        curNode = node;
+                        found = true;
+                        break;
+                    }
                 }
+                if(!found) {
+                    curNode = null;
+                }
+            } else {
+                nextStep = np.substring(beginIdx + 1, endIdx);
+                curNode = curNode[Number(nextStep)];
+            }  
+            if (!isNullOrUndefined(curNode)) {
+                lastValidNode = curNode;
             }
-            if(!found) {
-                curNode = null;
-            }
-        } else if(np.startsWith('[') && np.endsWith(']')) {
-            np = Number(np.replace(/\[|\]/g, ''));
-            curNode = curNode[np];
         } else {
+            lastValidNode = curNode;
             curNode = curNode[np];
         }
     }

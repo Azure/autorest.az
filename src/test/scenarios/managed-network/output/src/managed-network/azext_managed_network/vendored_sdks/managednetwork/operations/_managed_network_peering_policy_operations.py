@@ -55,7 +55,8 @@ class ManagedNetworkPeeringPolicyOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ManagedNetworkPeeringPolicy"
-        """The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource, specified by the  resource group, Managed Network name, and peering policy name.
+        """The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource,
+        specified by the  resource group, Managed Network name, and peering policy name.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -91,7 +92,6 @@ class ManagedNetworkPeeringPolicyOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
-        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -146,7 +146,6 @@ class ManagedNetworkPeeringPolicyOperations(object):
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
-        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
         body_content = self._serialize.body(managed_network_policy, 'ManagedNetworkPeeringPolicy')
         body_content_kwargs['content'] = body_content
@@ -160,7 +159,6 @@ class ManagedNetworkPeeringPolicyOperations(object):
             error = self._deserialize(models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = None
         if response.status_code == 200:
             deserialized = self._deserialize('ManagedNetworkPeeringPolicy', pipeline_response)
 
@@ -182,8 +180,9 @@ class ManagedNetworkPeeringPolicyOperations(object):
         properties=None,  # type: Optional["models.ManagedNetworkPeeringPolicyProperties"]
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller
-        """The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy.
+        # type: (...) -> LROPoller["models.ManagedNetworkPeeringPolicy"]
+        """The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering
+        Policy.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -196,6 +195,7 @@ class ManagedNetworkPeeringPolicyOperations(object):
         :param properties: Gets or sets the properties of a Managed Network Policy.
         :type properties: ~managed_network_management_client.models.ManagedNetworkPeeringPolicyProperties
         :keyword callable cls: A custom type or function that will be passed the direct response
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
@@ -210,15 +210,17 @@ class ManagedNetworkPeeringPolicyOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        raw_result = self._create_or_update_initial(
-            resource_group_name=resource_group_name,
-            managed_network_name=managed_network_name,
-            managed_network_peering_policy_name=managed_network_peering_policy_name,
-            location=location,
-            properties=properties,
-            cls=lambda x,y,z: x,
-            **kwargs
-        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._create_or_update_initial(
+                resource_group_name=resource_group_name,
+                managed_network_name=managed_network_name,
+                managed_network_peering_policy_name=managed_network_peering_policy_name,
+                location=location,
+                properties=properties,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
 
         kwargs.pop('error_map', None)
         kwargs.pop('content_type', None)
@@ -233,7 +235,15 @@ class ManagedNetworkPeeringPolicyOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}'}  # type: ignore
 
     def _delete_initial(
@@ -266,7 +276,6 @@ class ManagedNetworkPeeringPolicyOperations(object):
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
 
-        # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -288,8 +297,9 @@ class ManagedNetworkPeeringPolicyOperations(object):
         managed_network_peering_policy_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller
-        """The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy, specified by the  resource group, Managed Network name, and peering policy name.
+        # type: (...) -> LROPoller[None]
+        """The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy,
+        specified by the  resource group, Managed Network name, and peering policy name.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -298,6 +308,7 @@ class ManagedNetworkPeeringPolicyOperations(object):
         :param managed_network_peering_policy_name: The name of the Managed Network Peering Policy.
         :type managed_network_peering_policy_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
@@ -312,13 +323,15 @@ class ManagedNetworkPeeringPolicyOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        raw_result = self._delete_initial(
-            resource_group_name=resource_group_name,
-            managed_network_name=managed_network_name,
-            managed_network_peering_policy_name=managed_network_peering_policy_name,
-            cls=lambda x,y,z: x,
-            **kwargs
-        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._delete_initial(
+                resource_group_name=resource_group_name,
+                managed_network_name=managed_network_name,
+                managed_network_peering_policy_name=managed_network_peering_policy_name,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
 
         kwargs.pop('error_map', None)
         kwargs.pop('content_type', None)
@@ -330,7 +343,15 @@ class ManagedNetworkPeeringPolicyOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}'}  # type: ignore
 
     def list_by_managed_network(
@@ -342,7 +363,8 @@ class ManagedNetworkPeeringPolicyOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["models.ManagedNetworkPeeringPolicyListResult"]
-        """The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering Policies in a specified Managed Network, in a paginated format.
+        """The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering
+        Policies in a specified Managed Network, in a paginated format.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -351,8 +373,8 @@ class ManagedNetworkPeeringPolicyOperations(object):
         :param top: May be used to limit the number of results in a page for list queries.
         :type top: int
         :param skiptoken: Skiptoken is only used if a previous operation returned a partial result. If
-     a previous response contains a nextLink element, the value of the nextLink element will include
-     a skiptoken parameter that specifies a starting point to use for subsequent calls.
+         a previous response contains a nextLink element, the value of the nextLink element will include
+         a skiptoken parameter that specifies a starting point to use for subsequent calls.
         :type skiptoken: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either ManagedNetworkPeeringPolicyListResult or the result of cls(response)
@@ -365,6 +387,10 @@ class ManagedNetworkPeeringPolicyOperations(object):
         api_version = "2019-06-01-preview"
 
         def prepare_request(next_link=None):
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
             if not next_link:
                 # Construct URL
                 url = self.list_by_managed_network.metadata['url']  # type: ignore
@@ -382,15 +408,11 @@ class ManagedNetworkPeeringPolicyOperations(object):
                 if skiptoken is not None:
                     query_parameters['$skiptoken'] = self._serialize.query("skiptoken", skiptoken, 'str')
 
+                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
-
-            # Construct and send request
-            request = self._client.get(url, query_parameters, header_parameters)
+                request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         def extract_data(pipeline_response):

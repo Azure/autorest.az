@@ -22,6 +22,9 @@ export class Hider {
             let operations = operationGroup.operations.filter(function cliSplitOperation(operation, index, array) {
                 if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-split-operation-original-operation'])) {
                     let originalOperation = operation.extensions['cli-split-operation-original-operation'];
+                    if(isNullOrUndefined(originalOperation.extensions)) {
+                        return false;
+                    }
                     if(isNullOrUndefined(originalOperation.extensions['cli-splitted-operations'])) {
                         originalOperation.extensions['cli-splitted-operations'] = [];
                     }

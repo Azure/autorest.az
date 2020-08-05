@@ -176,10 +176,6 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if (allPythonParam.has(parameterName)) {
                         allPythonParam.delete(parameterName);
                     }
-                    if (allParam.has(parameterName)) {
-                        continue;
-                    }
-                    allParam.set(parameterName, true);
                     let argument = "        c.argument('" + parameterName + "'";
 
                     // this is to handle names like "format", "type", etc
@@ -228,7 +224,10 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         
                     }
 
-
+                    if (allParam.has(parameterName)) {
+                        continue;
+                    }
+                    allParam.set(parameterName, true);
 
                     if (model.MethodParameter_Type == SchemaType.Boolean) {
                         hasBoolean = true;
@@ -293,6 +292,14 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     }
 
                     if (!needSkip) {
+                        if (model.MethodParameter_Type == SchemaType.Integer) {
+                            argument += ", type=int"
+                        } else if(model.MethodParameter_Type == SchemaType.Number) {
+                            argument += ", type=float"
+                        } else if(model.MethodParameter_Type == SchemaType.String) {
+                            argument += ", type=str"
+                        }
+                        
                         argument += ", help='" + EscapeString(model.MethodParameter_Description).trimRight();
                         if (model.MethodParameter_IsList && !model.MethodParameter_IsSimpleArray) {
                             let netDescription = model.MethodParameter_Description.trim();

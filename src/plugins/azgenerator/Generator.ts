@@ -49,6 +49,7 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "generated/action.py"] = GenerateAzureCliActions(model);
             files[path + "generated/__init__.py"] = GenerateNamespaceInit(model);  
             files[path + "tests/__init__.py"] = GenerateAzureCliTestInit(model);
+            model.GenerateTestInit();
             files[path + "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(model);
             if (NeedPreparer()) files[path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(model);
             files[path + "generated/_help.py"] = GenerateAzureCliHelp(model, debug);

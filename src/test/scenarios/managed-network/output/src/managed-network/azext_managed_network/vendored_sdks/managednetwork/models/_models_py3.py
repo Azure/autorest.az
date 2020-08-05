@@ -6,10 +6,12 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from azure.core.exceptions import HttpResponseError
 import msrest.serialization
+
+from ._managed_network_management_client_enums import *
 
 
 class ErrorResponse(msrest.serialization.Model):
@@ -128,7 +130,7 @@ class ManagedNetworkPeeringPolicyProperties(ResourceProperties):
         **kwargs
     ):
         super(ManagedNetworkPeeringPolicyProperties, self).__init__(**kwargs)
-        self.type: str = 'ManagedNetworkPeeringPolicyProperties'
+        self.type = 'ManagedNetworkPeeringPolicyProperties'  # type: str
         self.hub = hub
         self.spokes = spokes
         self.mesh = mesh
@@ -182,7 +184,7 @@ class HubAndSpokePeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         **kwargs
     ):
         super(HubAndSpokePeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, mesh=mesh, **kwargs)
-        self.type: str = 'HubAndSpokeTopology'
+        self.type = 'HubAndSpokeTopology'  # type: str
 
 
 class Resource(msrest.serialization.Model):
@@ -372,9 +374,9 @@ class ManagedNetworkGroup(Resource):
     :vartype type: str
     :param location: The geo-location where the resource lives.
     :type location: str
-    :ivar kind: Responsibility role under which this Managed Network Group will be created. Default
-     value: "Connectivity".
-    :vartype kind: str
+    :param kind: Responsibility role under which this Managed Network Group will be created.
+     Possible values include: "Connectivity".
+    :type kind: str or ~managed_network_management_client.models.Kind
     :ivar provisioning_state: Provisioning state of the ManagedNetwork resource. Possible values
      include: "Updating", "Deleting", "Failed", "Succeeded".
     :vartype provisioning_state: str or ~managed_network_management_client.models.ProvisioningState
@@ -394,7 +396,6 @@ class ManagedNetworkGroup(Resource):
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'kind': {'constant': True},
         'provisioning_state': {'readonly': True},
         'etag': {'readonly': True},
     }
@@ -413,12 +414,11 @@ class ManagedNetworkGroup(Resource):
         'subnets': {'key': 'properties.subnets', 'type': '[ResourceId]'},
     }
 
-    kind = "Connectivity"
-
     def __init__(
         self,
         *,
         location: Optional[str] = None,
+        kind: Optional[Union[str, "Kind"]] = None,
         management_groups: Optional[List["ResourceId"]] = None,
         subscriptions: Optional[List["ResourceId"]] = None,
         virtual_networks: Optional[List["ResourceId"]] = None,
@@ -426,6 +426,7 @@ class ManagedNetworkGroup(Resource):
         **kwargs
     ):
         super(ManagedNetworkGroup, self).__init__(location=location, **kwargs)
+        self.kind = kind
         self.provisioning_state = None
         self.etag = None
         self.management_groups = management_groups
@@ -737,7 +738,7 @@ class MeshPeeringPolicyProperties(ManagedNetworkPeeringPolicyProperties):
         **kwargs
     ):
         super(MeshPeeringPolicyProperties, self).__init__(hub=hub, spokes=spokes, mesh=mesh, **kwargs)
-        self.type: str = 'MeshTopology'
+        self.type = 'MeshTopology'  # type: str
 
 
 class Operation(msrest.serialization.Model):

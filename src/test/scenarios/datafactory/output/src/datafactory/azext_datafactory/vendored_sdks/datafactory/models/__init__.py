@@ -21,7 +21,6 @@ try:
     from ._models_py3 import EnvironmentVariableSetup
     from ._models_py3 import Factory
     from ._models_py3 import FactoryGitHubConfiguration
-    from ._models_py3 import FactoryIdentity
     from ._models_py3 import FactoryListResponse
     from ._models_py3 import FactoryRepoConfiguration
     from ._models_py3 import FactoryRepoUpdate
@@ -115,7 +114,6 @@ except (SyntaxError, ImportError):
     from ._models import EnvironmentVariableSetup  # type: ignore
     from ._models import Factory  # type: ignore
     from ._models import FactoryGitHubConfiguration  # type: ignore
-    from ._models import FactoryIdentity  # type: ignore
     from ._models import FactoryListResponse  # type: ignore
     from ._models import FactoryRepoConfiguration  # type: ignore
     from ._models import FactoryRepoUpdate  # type: ignore
@@ -201,6 +199,7 @@ from ._dfaz_management_client_enums import (
     DayOfWeek,
     DaysOfWeek,
     EventSubscriptionStatus,
+    FactoryIdentityType,
     IntegrationRuntimeAuthKeyName,
     IntegrationRuntimeAutoUpdate,
     IntegrationRuntimeEdition,
@@ -234,7 +233,6 @@ __all__ = [
     'EnvironmentVariableSetup',
     'Factory',
     'FactoryGitHubConfiguration',
-    'FactoryIdentity',
     'FactoryListResponse',
     'FactoryRepoConfiguration',
     'FactoryRepoUpdate',
@@ -318,6 +316,7 @@ __all__ = [
     'DayOfWeek',
     'DaysOfWeek',
     'EventSubscriptionStatus',
+    'FactoryIdentityType',
     'IntegrationRuntimeAuthKeyName',
     'IntegrationRuntimeAutoUpdate',
     'IntegrationRuntimeEdition',

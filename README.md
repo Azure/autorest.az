@@ -1,6 +1,6 @@
 # configuration
 
-See documentation [here](doc/00-overview.md)
+See documentation [here](doc/00-onboarding-guide.md)
 
 ``` yaml
 
@@ -12,9 +12,8 @@ output-folder: $(az-output-folder)
 debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
-  "@autorest/python": "5.0.0-preview.7"
-  "@autorest/clicommon": "/home/qiaozha/code/autorest.clicommon"
-  #"@autorest/clicommon": "0.4.10"
+  "@autorest/python": "5.1.0-preview.4"
+  "@autorest/clicommon": "/Users/zhangqiaoqiao/work/code/autorest.clicommon"
   #"@autorest/python": "latest"
 
 require:
@@ -58,7 +57,7 @@ modelerfour:
     flatten-payloads: true
 ```
 
-``` yaml !$(cli-core) && !$(sdk-no-flatten)
+``` yaml $(target-mode) != 'core' && !$(sdk-no-flatten)
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true
 
@@ -93,7 +92,7 @@ pipeline:
         scope: scope-az
 ```
 
-``` yaml $(cli-core) || $(sdk-no-flatten)
+``` yaml $(target-mode) == 'core' || $(sdk-no-flatten)
 
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true

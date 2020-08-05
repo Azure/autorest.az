@@ -176,7 +176,7 @@ def step_managednetworkpeeringpolicieslistbymanagednetwork(test, rg):
 # EXAMPLE: ManagedNetworkPeeringPoliciesDelete
 @try_manual
 def step_managednetworkpeeringpoliciesdelete(test, rg):
-    test.cmd('az managed-network managed-network-peering-policy delete '
+    test.cmd('az managed-network managed-network-peering-policy delete -y '
              '--managed-network-name "{myManagedNetwork}" '
              '--policy-name "{myManagedNetworkPeeringPolicy}" '
              '--resource-group "{rg}"',
@@ -186,7 +186,7 @@ def step_managednetworkpeeringpoliciesdelete(test, rg):
 # EXAMPLE: ScopeAssignmentsDelete
 @try_manual
 def step_scopeassignmentsdelete(test, rg):
-    test.cmd('az managed-network mn scope-assignment delete '
+    test.cmd('az managed-network mn scope-assignment delete -y '
              '--scope "subscriptions/subscriptionC" '
              '--name "{myScopeAssignment}"',
              checks=[])
@@ -195,7 +195,7 @@ def step_scopeassignmentsdelete(test, rg):
 # EXAMPLE: ManagementNetworkGroupsDelete
 @try_manual
 def step_managementnetworkgroupsdelete(test, rg):
-    test.cmd('az managed-network mn group delete '
+    test.cmd('az managed-network mn group delete -y '
              '--group-name "{myManagedNetworkGroup}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
@@ -205,7 +205,7 @@ def step_managementnetworkgroupsdelete(test, rg):
 # EXAMPLE: ManagedNetworksDelete
 @try_manual
 def step_managednetworksdelete(test, rg):
-    test.cmd('az managed-network mn delete '
+    test.cmd('az managed-network mn delete -y '
              '--name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])

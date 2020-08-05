@@ -9,7 +9,7 @@ import { serialize, deserialize, EnglishPluralizationService, pascalCase } from 
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeString, parseResourceId } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency, PrintTestScenario } from './ScenarioTool'
+import { azOptions, GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency, PrintTestScenario } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
 import { isNullOrUndefined, isArray } from "util";
 
@@ -48,6 +48,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     async init() {
         this.options = await this.session.getValue('az');
+        Object.assign(azOptions, this.options);
         this.extensionName = this.options['extensions'];
         this.currentOperationGroupIndex = -1;
         this.currentSubOperationGroupIndex = -1;
@@ -73,21 +74,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.setParamAzUniqueNames();
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
-        if (this.codeModel['test-scenario']) {
-            if ('examples' in this.codeModel['test-scenario']) {
-                //new style of example configuration
-                this._testScenario = this.codeModel['test-scenario']['examples'];
-            }
-            else {
-                //old style of example configuration
-                this._testScenario = this.codeModel['test-scenario']
-            }
-            this._configuredScenario = true;
-        }
-        else {
-            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
-            this._configuredScenario = false;
-        }
     }
 
 
@@ -105,6 +91,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                     return order;
                 }
+                function requiredParamLength(parameters) {
+                    let ret = 0;
+                    for(var i = 0; i < parameters.length; ++i){
+                        if (parameters[i].required) ret++;
+                    }
+                    return ret;
+                }
                 let oa = getOrder(a.language['az']['name']);
                 let ob = getOrder(b.language['az']['name']);
                 if(oa < ob) {
@@ -117,6 +110,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                     if(la != lb) {
                         return la.localeCompare(lb);
                     }
+                    let requiredLenA = requiredParamLength(a.parameters);
+                    let requiredLenB = requiredParamLength(b.parameters);
+                    if (requiredLenA!=requiredLenB) return requiredLenA > requiredLenB? -1: 1;
                     return a.parameters.length > b.parameters.length? -1: 1;
                 }
             });
@@ -427,6 +423,25 @@ export class CodeModelCliImpl implements CodeModelAz {
     //
     //=================================================================================================================
 
+
+    public GenerateTestInit() {
+        if (this.codeModel['test-scenario']) {
+            if ('examples' in this.codeModel['test-scenario']) {
+                //new style of example configuration
+                this._testScenario = this.codeModel['test-scenario']['examples'];
+            }
+            else {
+                //old style of example configuration
+                this._testScenario = this.codeModel['test-scenario']
+            }
+            this._configuredScenario = true;
+        }
+        else {
+            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
+            this._configuredScenario = false;
+        }
+    }
+
     public SelectFirstExtension(): boolean {
         // support only one initially
         return true;
@@ -690,7 +705,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Command_Help(): string {
-        return this.Command.language['az'].description.replace(/\n/g, " ");
+        return this.Command.language['az'].description.replace(/\n/g, " ").replace(/"/g, '\\\\"');
     }
 
     public get Command_GetOriginalOperation(): any {
@@ -1363,6 +1378,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             // Handle complex
             let shouldHidden = undefined;
             let defaultValue = undefined;
+            let hasDefault = false;
             if (this.EnterSubMethodParameters(parameter))
             {
                 shouldHidden = true;
@@ -1376,10 +1392,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                         }
                         else if (this.Parameter_Type(this.SubMethodParameter) == SchemaType.Constant) {
                             defaultValue = defaultValue + "\"" + this.Parameter_NameAz(this.SubMethodParameter) + "\": \"" + this.Parameter_DefaultValue(this.SubMethodParameter) + "\"";
+                            hasDefault = true;
                         }
                     } while (this.SelectNextMethodParameter())
                 }
-                if (shouldHidden == true) {
+                if (shouldHidden == true && hasDefault) {
                     defaultValue = defaultValue + "}";
                 }
                 else {

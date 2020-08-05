@@ -244,11 +244,12 @@ export class CodeModelMerger {
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
-    const cliCore = await host.GetValue('cli-core') || false;
+    let targetMode = await host.GetValue('target-mode') || "extension";
+    const cliCore = targetMode == 'core' ? true: false;
     let sdkNoFlatten = cliCore? true: false;
     sdkNoFlatten = await host.GetValue('sdk-no-flatten') || sdkNoFlatten;
     if (cliCore && !sdkNoFlatten) {
-        host.Message({Channel: Channel.Fatal, Text:"You have specified the --cli-core and --sdk-no-flatten=false at the same time. which is not a valid configuration"}); 
+        host.Message({Channel: Channel.Fatal, Text:"You have specified the --target-mode=core and --sdk-no-flatten=false at the same time. which is not a valid configuration"}); 
         throw new Error("Wrong configuration detected, please check!");
     }
     let azExtensionFolder = "";
@@ -262,11 +263,11 @@ export async function processRequest(host: Host) {
         host.Message({Channel: Channel.Fatal, Text:"--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"}); 
         throw new Error("Wrong configuration, please check!");
     } else if(cliCore && isNullOrUndefined(azCoreFolder)){
-        host.Message({Channel: Channel.Fatal, Text:"--azure-cli-folder is not provided in the command line and you are using --cli-core to generate cli-core modules ! \nplease use --azure-cli-folder=your-local-azure-cli-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"});  
+        host.Message({Channel: Channel.Fatal, Text:"--azure-cli-folder is not provided in the command line and you are using --target-mode=core to generate azure-cli repo command modules ! \nplease use --azure-cli-folder=your-local-azure-cli-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"});  
         throw new Error("Wrong configuration, please check!");
     }
     let isSdkNeeded = cliCore? false: true;
-    isSdkNeeded = await host.GetValue('need-sdk') || isSdkNeeded;
+    isSdkNeeded = await host.GetValue('generate-sdk') || isSdkNeeded;
     let isTrack1 = cliCore? true: false;
     isTrack1 = await host.GetValue('track1') || isTrack1;
 

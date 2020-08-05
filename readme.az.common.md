@@ -34,7 +34,7 @@ cli:
         cli-flatten-all-overwrite-swagger: false
 ```
  
-``` yaml $(python) && (!$(cli-core) || $(need-sdk))
+``` yaml $(python) && ($(target-mode) != 'core' || $(generate-sdk))
 add-credential: true
 no-namespace-folders: true
 license-header: MICROSOFT_MIT_NO_VERSION
@@ -43,7 +43,7 @@ scope-codegen/emitter:
     output-folder: "$(python-sdk-output-folder)"
 ```
 
-``` yaml $(python) && $(cli-core) && !$(need-sdk)
+``` yaml $(python) && $(target-mode) == 'core' && !$(generate-sdk)
 add-credential: true
 no-namespace-folders: true
 license-header: MICROSOFT_MIT_NO_VERSION
