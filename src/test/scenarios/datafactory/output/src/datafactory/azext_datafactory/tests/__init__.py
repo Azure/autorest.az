@@ -9,6 +9,7 @@
 # regenerated.
 # --------------------------------------------------------------------------
 import inspect
+import logging
 import os
 import sys
 import traceback
@@ -18,6 +19,8 @@ from azure.core.exceptions import AzureError
 from azure.cli.testsdk.exceptions import CliTestError, CliExecutionError, JMESPathCheckAssertionError
 
 
+logger = logging.getLogger('azure.cli.testsdk')
+logger.addHandler(logging.StreamHandler())
 __path__ = __import__('pkgutil').extend_path(__path__, __name__)
 exceptions = []
 test_map = dict()
@@ -43,14 +46,14 @@ def try_manual(func):
         func_to_call = func
         try:
             func_to_call = import_manual_function(func)
-            print("Found manual override for {}(...)".format(func.__name__))
+            logger.info("Found manual override for {}(...)".format(func.__name__))
         except (ImportError, AttributeError):
             pass
         return func_to_call
 
     def wrapper(*args, **kwargs):
         func_to_call = get_func_to_call()
-        print("running {}()...".format(func.__name__))
+        logger.info("running {}()...".format(func.__name__))
         try:
             test_map[func.__name__] = dict()
             test_map[func.__name__]["result"] = SUCCESSED
@@ -64,11 +67,11 @@ def try_manual(func):
             test_map[func.__name__]["result"] = FAILED
             test_map[func.__name__]["error_message"] = str(e).replace("\r\n", " ").replace("\n", " ")[:500]
             test_map[func.__name__]["error_stack"] = traceback.format_exc().replace("\r\n", " ").replace("\n", " ")[:500]
-            print("--------------------------------------")
-            print("step exception: ", e)
-            print("--------------------------------------", file=sys.stderr)
-            print("step exception in {}: {}".format(func.__name__, e), file=sys.stderr)
-            traceback.print_exc()
+            logger.info("--------------------------------------")
+            logger.info("step exception: {}".format(e))
+            logger.error("--------------------------------------")
+            logger.error("step exception in {}: {}".format(func.__name__, e))
+            logger.info(traceback.format_exc())
             exceptions.append((func.__name__, sys.exc_info()))
         else:
             test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()
