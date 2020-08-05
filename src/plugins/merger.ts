@@ -268,8 +268,8 @@ export async function processRequest(host: Host) {
     }
     let isSdkNeeded = cliCore? false: true;
     isSdkNeeded = await host.GetValue('generate-sdk') || isSdkNeeded;
-    let isTrack1 = cliCore? true: false;
-    isTrack1 = await host.GetValue('track1') || isTrack1;
+    let compatibleLevel = await host.GetValue('compatible-level') || cliCore? 'track1': "";
+    let isTrack1 = compatibleLevel == 'track1'? true: false;
 
     let extensionMode = "experimental";
     extensionMode = await host.GetValue('extension-mode') || extensionMode;

@@ -15,7 +15,12 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz): string[] {
     output.push("");
     output.push("def cf_" + model.Extension_NameUnderscored + "_cl(cli_ctx, *_):");
     output.push("    from " + model.CliCoreLib + ".commands.client_factory import get_mgmt_service_client");
-    output.push("    from ..vendored_sdks." + model.PythonOperationsName + " import " + model.PythonMgmtClient);
+    if (model.SDK_NeedSDK) {
+        output.push("    from ..vendored_sdks." + model.PythonOperationsName + " import " + model.PythonMgmtClient);
+    } else {
+        output.push("    from " + model.GetPythonNamespace() + " import " + model.PythonMgmtClient);
+    }
+    
 
     if (!isNullOrUndefined(model.Extension_ClientAuthenticationPolicy)) {
         output.push("    from azure.core.pipeline.policies import " + model.Extension_ClientAuthenticationPolicy);

@@ -31,9 +31,19 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 output.push("");
 
                 let cf_name: string = "cf_" + ((model.GetModuleOperationName() != "") ? model.GetModuleOperationName() : model.Extension_NameUnderscored);
-                output.push("    from azext_" + model.Extension_NameUnderscored + ".generated._client_factory import " + cf_name);
+                if (model.SDK_NeedSDK) {
+                    output.push("    from azext_" + model.Extension_NameUnderscored + ".generated._client_factory import " + cf_name);
+                } else {
+                    output.push("    from ..generated._client_factory import " + cf_name);
+                }
+                
                 output.push("    " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + " = CliCommandType(");
-                ToMultiLine("        operations_tmpl='azext_" + model.Extension_NameUnderscored + ".vendored_sdks." + model.PythonOperationsName + ".operations._" + model.GetModuleOperationNamePython() + "_operations#" + model.GetModuleOperationNamePythonUpper() + "Operations" + ".{}',", output);
+                if (model.SDK_NeedSDK) {
+                    ToMultiLine("        operations_tmpl='azext_" + model.Extension_NameUnderscored + ".vendored_sdks." + model.PythonOperationsName + ".operations._" + model.GetModuleOperationNamePython() + "_operations#" + model.GetModuleOperationNamePythonUpper() + "Operations" + ".{}',", output);
+                } else {
+                    ToMultiLine("        operations_tmpl='"  + model.GetPythonNamespace() + ".operations#" + model.GetModuleOperationNamePythonUpper() + "Operations" + ".{}',", output);
+                }
+                
 
                 output.push("        client_factory=" + cf_name + ")");
                 let groupinfos = model.CommandGroup_Name.split(' ');

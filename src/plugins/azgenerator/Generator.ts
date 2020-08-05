@@ -53,8 +53,15 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(model);
             if (NeedPreparer()) files[path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(model);
             files[path + "generated/_help.py"] = GenerateAzureCliHelp(model, debug);
-            files[path + "tests/latest/__init__.py"] = GenerateNamespaceInit(model);  
-            files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
+            files[path + "tests/latest/__init__.py"] = GenerateNamespaceInit(model);
+            if (!model.IsCliCore) {
+                files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
+                files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(model);
+                files[pathTop + "README.md"] = GenerateAzureCliReadme(model);
+                files[pathTop + "setup.cfg"] = GenerateAzureCliSetupCfg(model);
+                files[pathTop + "setup.py"] = GenerateAzureCliSetupPy(model);  
+            } 
+            
             if(!model.IsCliCore || model.SDK_NeedSDK) {
                 files[path + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(model);  
             }
@@ -62,10 +69,7 @@ export async function GenerateAll(model: CodeModelAz,
             files[path + "action.py"] = GenerateTopLevelImport(model, "action");  
             files[path + "custom.py"] = GenerateTopLevelImport(model, "custom");  
             files[path + "__init__.py"] = GenerateAzureCliInit(model);
-            files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(model);
-            files[pathTop + "README.md"] = GenerateAzureCliReadme(model);
-            files[pathTop + "setup.cfg"] = GenerateAzureCliSetupCfg(model);
-            files[pathTop + "setup.py"] = GenerateAzureCliSetupPy(model);  
+
 
             if (generateReport)
             {

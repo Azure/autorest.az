@@ -88,7 +88,12 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     }
 
     if (hasActions) {
-        header.addFromImport("azext_" + model.Extension_NameUnderscored + ".action", actions);
+        if (model.IsCliCore) {
+            header.addFromImport("..action", actions);
+        } else {
+            header.addFromImport("azext_" + model.Extension_NameUnderscored + ".action", actions);
+        }
+        
     }
 
     var output: string[] = [];
