@@ -1905,7 +1905,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.Parameters = this.ConvertToCliParameters(params);
                 example.MethodResponses = this.Method.responses || [];
                 example.Method_IsLongRun = this.Method.extensions?.['x-ms-long-running-operation'] ? true : false;
-                if (this.Method_GetSplitOriginalOperation && Object.keys(this.Examples).length>1) {
+                if (this.Method_GetSplitOriginalOperation) {
                     //filter example by name for generic createorupdate
                     if(this.Command_MethodName.toLowerCase()=="update" && !id.toLowerCase().endsWith("_update"))
                         return;
