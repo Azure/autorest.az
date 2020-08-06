@@ -265,11 +265,13 @@ class ResourceObject {
             if (p[param.defaultName]!= param.value) continue;   // param value don't match
 
             //ret.push(`self.check("${param.ancestors.slice(1).concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)})`);
+            let outputKey =  param.ancestors.slice(1);
+            if (outputKey.length>0 && outputKey[0]=="properties")   outputKey = outputKey.slice(1);
             if (typeof param.value === 'string' && !isNullOrUndefined(param.replacedValue.match(/\{.+\}/g))) {
-                ret.push(`test.check("${param.ancestors.slice(1).concat([param.defaultName]).join(".")}", ${ToPythonString(param.replacedValue, param.methodParam.value.schema?.type)}.format(**test.kwargs)),`);
+                ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.replacedValue, param.methodParam.value.schema?.type)}.format(**test.kwargs)),`);
             }
             else {
-                ret.push(`test.check("${param.ancestors.slice(1).concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}),`);
+                ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}),`);
             }
         }
         return ret;
