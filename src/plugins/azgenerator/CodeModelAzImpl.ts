@@ -1957,6 +1957,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues, isTest);
                 }
                 param_value = replaced_value;
+                param.replacedValue = replaced_value;
             }
             let slp = param_value;
             if (!param.isKeyValues) {

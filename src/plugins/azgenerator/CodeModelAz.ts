@@ -29,6 +29,7 @@ export class ExampleParam {
     defaultName: string;
     methodParam: MethodParam;
     ancestors: string[];
+    replacedValue: any;
     public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, keys: string[], defaultName: string, methodParam: MethodParam, ancestors: string[]) {
         this.name = name;
         this.value = value;

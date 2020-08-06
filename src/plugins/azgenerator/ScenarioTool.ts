@@ -264,7 +264,13 @@ class ResourceObject {
             if (!(isDict(p) && param.defaultName in p)) continue;   //param.defaultName not found
             if (p[param.defaultName]!= param.value) continue;   // param value don't match
 
-            ret.push(`self.check("${param.ancestors.slice(1).concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)})`);
+            //ret.push(`self.check("${param.ancestors.slice(1).concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)})`);
+            if (typeof param.value === 'string' && !isNullOrUndefined(param.replacedValue.match(/\{.+\}/g))) {
+                ret.push(`test.check("${param.ancestors.slice(1).concat([param.defaultName]).join(".")}", ${ToPythonString(param.replacedValue, param.methodParam.value.schema?.type)}.format(**test.kwargs)),`);
+            }
+            else {
+                ret.push(`test.check("${param.ancestors.slice(1).concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}),`);
+            }
         }
         return ret;
     }

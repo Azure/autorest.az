@@ -103,11 +103,17 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                         let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
                         ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
                     }
-                    steps.push("    " + disabled + "         checks=[");
-                    for (let check of model.GetExampleChecks(examples[exampleIdx++])) {
-                        steps.push("    " + disabled + "             " + check);
+                    let checks =  model.GetExampleChecks(examples[exampleIdx++]);
+                    if (checks.length>0) {
+                        steps.push("    " + disabled + "         checks=[");
+                        for (let check of checks) {
+                            steps.push("    " + disabled + "             " + check);
+                        }
+                        steps.push("    " + disabled + "         ])");
                     }
-                    steps.push("    " + disabled + "         ])");
+                    else {
+                        steps.push("    " + disabled + "         checks=[])");
+                    }
                 }
             }
             if (!found) {
