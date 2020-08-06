@@ -151,6 +151,8 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
     let indent = 0;
     let spaceNum = 0;
     let strStart = -1;
+    let inStrTags = Array(maxLength).fill(strMode);
+    let indents = [];
     while (spaceNum < sentence.length && sentence[spaceNum] == ' ') spaceNum++;
 
     if (strMode) {
@@ -179,10 +181,15 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                 strStart = i;
             }
 
-            if (indent == 0 && sentence[i] == '(') {
+            if (sentence[i] == '(' || sentence[i] == '[') {
+                indents.push(indent);
                 indent = ret[ret.length - 1].length;
             }
+            if (sentence[i] == ')' || sentence[i] == ']') {
+                indent = indents.pop();
+            }
         }
+        inStrTags[ret[ret.length - 1].length-1] = inStr;
         if (ret[ret.length - 1].length >= maxLength) {
             if (inStr) {
                 let lastNormal = ret[ret.length - 1].length - 1;
@@ -206,7 +213,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                     if (lastNormal != ret[ret.length - 1].length - 1) {
                         let newLine = ret[ret.length - 1].substr(lastNormal + 1);
                         ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastNormal + 1) + "\\";
-                        ret.push(newLine)
+                        ret.push(newLine);
                         lastComma = -1;
                     }
                     else {
@@ -221,13 +228,17 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                     if (lastNormal != ret[ret.length - 1].length - 1) {
                         let newLine = ' '.repeat(indent > 0 ? indent : spaceNum) + strTag + ret[ret.length - 1].substr(lastNormal + 1);
                         ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastNormal + 1) + strTag;
-                        ret.push(newLine)
+                        let currentLength = ret[ret.length - 1].length;
+                        if (currentLength >= 3 && ret[ret.length - 1][currentLength - 2] == ' ' && ret[ret.length - 1][currentLength - 2] == strTag && (currentLength == 2 || ret[ret.length - 1][currentLength - 3] != "\\")) {   // remove empty string in the end of line
+                            ret[ret.length - 1] = ret[ret.length - 1].substr(0, currentLength - 2);
+                        }
+                        ret.push(newLine);
                         lastComma = -1;
                     }
                     else {
                         ret[ret.length - 1] += strTag;
                         let currentLength = ret[ret.length - 1].length;
-                        if (currentLength >= 2 && ret[ret.length - 1][currentLength - 2] == strTag && (currentLength == 2 || ret[ret.length - 1][currentLength - 3] != "\\")) {   // remove empty string in the end of line
+                        if (currentLength >= 3 && ret[ret.length - 1][currentLength - 2] == ' ' && ret[ret.length - 1][currentLength - 2] == strTag && (currentLength == 2 || ret[ret.length - 1][currentLength - 3] != "\\")) {   // remove empty string in the end of line
                             ret[ret.length - 1] = ret[ret.length - 1].substr(0, currentLength - 2);
                         }
                         ret.push(' '.repeat(indent > 0 ? indent : spaceNum) + strTag);
@@ -237,6 +248,24 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
             }
             else {
                 if (lastComma >= 0) {
+                    //find indent by parathesis before the lastComma
+                    let close_para = 0;
+                    for (let i=lastComma; i>indent; i--) {
+                        if (inStrTags[i]) continue;
+                        let currentChar = ret[ret.length - 1][i];
+                        if ( currentChar==')' || currentChar==']')  close_para++;
+                        if (currentChar=='(' || currentChar=='[' ) {
+                            if (close_para==0) {
+                                indents.push(indent);
+                                indent = i + 1;
+                                break;
+                            }
+                            else {
+                                close_para--;
+                            }
+                        }
+                    }
+
                     let newLine = ' '.repeat(indent > 0 ? indent : spaceNum) + ret[ret.length - 1].substr(lastComma + 1).trimLeft();
                     ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastComma + 1);
                     ret.push(newLine);

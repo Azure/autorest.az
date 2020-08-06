@@ -3228,7 +3228,8 @@ class SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
     :ivar service_urls: The URLs for the services used in integration runtime backend service.
     :vartype service_urls: list[str]
     :ivar auto_update: Whether Self-hosted integration runtime auto update has been turned on.
-     Possible values include: "On", "Off".
+     Possible values include: "On", "Off", "fakeValue1", "fakeValue2", "fakeValue3", "fakeValue4",
+     "fakeValue5", "fakeValue6".
     :vartype auto_update: str or ~dfaz_management_client.models.IntegrationRuntimeAutoUpdate
     :ivar version_status: Status of the integration runtime version.
     :vartype version_status: str
@@ -4183,7 +4184,7 @@ class UpdateIntegrationRuntimeRequest(msrest.serialization.Model):
 
     :param auto_update: Enables or disables the auto-update feature of the self-hosted integration
      runtime. See https://go.microsoft.com/fwlink/?linkid=854189. Possible values include: "On",
-     "Off".
+     "Off", "fakeValue1", "fakeValue2", "fakeValue3", "fakeValue4", "fakeValue5", "fakeValue6".
     :type auto_update: str or ~dfaz_management_client.models.IntegrationRuntimeAutoUpdate
     :param update_delay_offset: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The
      integration runtime auto update will happen on that time.
