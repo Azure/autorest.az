@@ -140,30 +140,32 @@ def runTask(args):
 # Collection
 def repoColletor(debug=False, enable_batch=False, run_codegen=False, is_live=False):
     az_cli_ext_prefix = AZ_CLI_EXT_PREFIX + "/src"
+    use_az = "--use=" + AZ_PREFIX
+    use_az_cli_folder = "--azure-cli-extension-folder=" + AZ_CLI_EXT_PREFIX
+
     repos = list()
+
+    # run codegen (the rp names in specification are different from cli_extension )
+    if run_codegen:
+        for rp in os.listdir(AWAGGER_PREFIX + '/specification/'):
+            if rp == 'testserver':
+                swagger_arg_str = AZ_PREFIX + '/src/test/scenarios/testserver/configuration/readme.md'
+            else:
+                swagger_arg_str = AWAGGER_PREFIX + '/specification/'+ rp + '/resource-manager/readme.md'
+
+            cmd_codegen = ['autorest', '--version=3.0.6271', '--az', use_az, use_az_cli_folder, swagger_arg_str]
+            print(" ".join(cmd_codegen))
+            try:
+                runTask(cmd_codegen)
+            except:
+                continue
+
     for rp in os.listdir(az_cli_ext_prefix):
         if os.path.isdir(os.path.join(az_cli_ext_prefix, rp)):
             repos.append(rp)
 
             # run codegen (only available for kusto now.)
-            if run_codegen and rp == "kusto":
-                use_az = "--use=" + AZ_PREFIX
-                use_az_cli_folder = "--azure-cli-extension-folder=" + AZ_CLI_EXT_PREFIX
-                if rp == 'testserver':
-                    swagger_arg_str = AZ_PREFIX + '/src/test/scenarios/testserver/configuration/readme.md'
-                elif rp == "kusto":
-                    swagger_arg_str = AWAGGER_PREFIX + '/specification/'+ "azure-" + rp + '/resource-manager/readme.md'
-                else:
-                    swagger_arg_str = AWAGGER_PREFIX + '/specification/'+ rp + '/resource-manager/readme.md'
-            
-                # start codegen
-                cmd_codegen = ['autorest', '--version=3.0.6271', '--az', use_az, use_az_cli_folder, swagger_arg_str]
-                print(" ".join(cmd_codegen))
-                try:
-                    runTask(cmd_codegen)
-                except:
-                    continue
-
+            if run_codegen:
                 # add extension
                 cmd_add_ext = ['azdev', 'extension', 'add', rp]
                 print(" ".join(cmd_add_ext))
@@ -173,9 +175,9 @@ def repoColletor(debug=False, enable_batch=False, run_codegen=False, is_live=Fal
                     continue
 
                 # az test
-                cmd_az_test = ['azdev', 'test', rp]
+                cmd_az_test = ['azdev', 'test', rp, "--discover"]
                 if is_live:
-                    cmd_az_test += ['--discover', '--live']
+                    cmd_az_test += ['--live']
                 print(" ".join(cmd_az_test))
                 try:
                     runTask(cmd_az_test)
@@ -205,8 +207,9 @@ def repoColletor(debug=False, enable_batch=False, run_codegen=False, is_live=Fal
         print("Completed.")
 
 def main():
-
-    repoColletor(debug=False, run_codegen=True)
+    # When debug is True, it won't upload test data to database.
+    debug = os.environ.get("CALC_COVERAGE_DEBUG", True)
+    repoColletor(debug=debug, run_codegen=False)
 
 
 if __name__ == "__main__":
