@@ -47,6 +47,24 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     return header.getLines().concat(output);
 }
 
+class CustomParam {
+    public constructor(public originalOperation: Operation, public needGeneric: boolean, public genericParameter: Parameter) {}
+}
+
+function getCustomParam(model: CodeModelAz, required: any) {
+    
+    let originalOperation = model.Method_GetOriginalOperation;
+    let genericParameter = null;
+    if (!isNullOrUndefined(originalOperation)) {
+        genericParameter = model.Method_GenericSetterParameter(originalOperation);
+    }
+    let needGeneric = model.Method_NeedGeneric;
+    if (needGeneric) {
+        required['disableUnusedArgument'] = true;
+    }
+    let customPara = new CustomParam(originalOperation, needGeneric, genericParameter);
+    return customPara;
+}
 
 function GenerateBody(model: CodeModelAz, required: any): string[] {
     var output: string[] = [];
@@ -56,19 +74,8 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
             if (model.SelectFirstCommand()) {
                 do {
                     if(model.SelectFirstMethod()) {
-                        let originalOperation = model.Method_GetOriginalOperation;
-                        let genericParameter = null;
-                        if (!isNullOrUndefined(originalOperation)) {
-                            genericParameter = model.Method_GenericSetterParameter(originalOperation);
-                        }
-    
-                        let needGeneric = model.Method_NeedGeneric;
-                        output = output.concat(GetCommandBody(model, required, originalOperation, needGeneric, genericParameter));
-                        if (needGeneric) {
-                            required['disableUnusedArgument'] = true;
-                        }
+                        output = output.concat(GetCommandBody(model, required));
                     }
-                    
                 }
                 while (model.SelectNextCommand());
             }
@@ -186,24 +193,30 @@ function ConstructValuation(isGeneric: boolean, prefix: string, classNames: stri
 
 }
 
-function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperation: Operation, needGeneric: boolean = false, genericParameter: Parameter = null) {
+function GetSingleCommandDef(model: CodeModelAz, required: any) {
 
     let output: string[] = [];
     let updatedMethodName: string = model.Command_FunctionName;
 
     let call = "def " + updatedMethodName + "(";
     let indent = " ".repeat(call.length);
-    if (needGeneric) {
-        call += "instance";
-    } else {
-        call += "client";
-    }
-    output.push(call);
+    
 
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     let hasLongRun = false;
+    let firstLine = false;
     if (model.SelectFirstMethod()) {
         do {
+            let { originalOperation, needGeneric, genericParameter } = getCustomParam(model, required);
+            if (needGeneric) {
+                call += "instance";
+            } else {
+                call += "client";
+            }
+            if (!firstLine) {
+                output.push(call);
+                firstLine = true;
+            }
             if(model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
                 required['nowait'] = true,
                 hasLongRun = true;
@@ -244,7 +257,7 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperatio
 
     if (model.SelectFirstMethod()) {
         do {
-
+            let { originalOperation, needGeneric, genericParameter } = getCustomParam(model, required);
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if (model.MethodParameter_IsFlattened) {
@@ -289,14 +302,9 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, originalOperatio
     return output;
 }
 
-function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: Operation = null, needGeneric: boolean = false, genericParameter: Parameter = null) {
+function GetSingleCommandBody(model: CodeModelAz, required: any) {
     let originalParameters = null;
-    if (!isNullOrUndefined(originalOperation)) {
-        originalParameters = originalOperation.parameters;
-        if (!isNullOrUndefined(originalOperation.requests[0].parameters)) {
-            originalParameters = originalParameters.concat(originalOperation.requests[0].parameters);
-        }
-    }
+
     
     let output: string[] = [];
     let output_body: string[] = []
@@ -308,6 +316,13 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
         // body transformation
         let allPolyBaseParam: Map<string, boolean> = new Map<string, boolean>();
         do {
+            let { originalOperation, needGeneric, genericParameter } = getCustomParam(model, required);
+            if (!isNullOrUndefined(originalOperation)) {
+                originalParameters = originalOperation.parameters;
+                if (!isNullOrUndefined(originalOperation.requests[0].parameters)) {
+                    originalParameters = originalParameters.concat(originalOperation.requests[0].parameters);
+                }
+            }
             if (model.SelectFirstMethodParameter()) {
                 do {
                     if(needGeneric && !isNullOrUndefined(genericParameter) && model.MethodParameter_MapsTo == model.Parameter_MapsTo(genericParameter)) {
@@ -365,6 +380,7 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
         let needIfStatement = !model.Method_IsLast;
 
         do {
+            let { originalOperation, needGeneric } = getCustomParam(model, required);
             let prefix = "    ";
             if (needIfStatement) {
                 let ifStatement = prefix;
@@ -424,14 +440,14 @@ function GetSingleCommandBody(model: CodeModelAz, required, originalOperation: O
     return output;
 }
 
-function GetCommandBody(model: CodeModelAz, required: any, originalOperation: Operation = null, needGeneric: boolean = false, genericParameter: Parameter = null) {
+function GetCommandBody(model: CodeModelAz, required: any) {
     // create, delete, list, show, update
     let output: string[] = [];
     output.push("");
     output.push("");
 
-    output = output.concat(GetSingleCommandDef(model, required, originalOperation, needGeneric, genericParameter));
-    output = output.concat(GetSingleCommandBody(model, required, originalOperation, needGeneric, genericParameter))
+    output = output.concat(GetSingleCommandDef(model, required));
+    output = output.concat(GetSingleCommandBody(model, required))
     return output;
 }
 
