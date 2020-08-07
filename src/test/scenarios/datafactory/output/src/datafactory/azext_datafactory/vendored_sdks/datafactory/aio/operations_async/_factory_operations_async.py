@@ -279,7 +279,7 @@ class FactoryOperations:
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        factory = models.Factory(location=location, tags=tags, repo_configuration=repo_configuration, fake_identity=fake_identity, zones=zones, type=type)
+        factory = models.Factory(location=location, tags=tags, repo_configuration=repo_configuration, fake_identity=fake_identity, zones=zones, type_identity_type=type)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 

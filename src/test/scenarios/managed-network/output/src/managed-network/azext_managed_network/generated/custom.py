@@ -30,24 +30,12 @@ def managed_network_mn_create(client,
                               managed_network_name,
                               location,
                               tags=None,
-                              scope_management_groups=None,
-                              scope_subscriptions=None,
-                              scope_virtual_networks=None,
-                              scope_subnets=None):
+                              properties=None):
     return client.create_or_update(resource_group_name=resource_group_name,
                                    managed_network_name=managed_network_name,
                                    location=location,
                                    tags=tags,
-                                   management_groups=management_groups,
-                                   subscriptions=subscriptions,
-                                   virtual_networks=virtual_networks,
-                                   subnets=subnets,
-                                   location=location,
-                                   tags=tags,
-                                   management_groups=scope_management_groups,
-                                   subscriptions=scope_subscriptions,
-                                   virtual_networks=scope_virtual_networks,
-                                   subnets=scope_subnets)
+                                   properties=properties)
 
 
 def managed_network_mn_update(client,

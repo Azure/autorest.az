@@ -185,10 +185,7 @@ create a managed-network mn.
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|managedNetworkName|
 |**--location**|string|The geo-location where the resource lives|location|location|
 |**--tags**|dictionary|Resource tags|tags|tags|
-|**--scope-management-groups**|array|The collection of management groups covered by the Managed Network|management_groups|managementGroups|
-|**--scope-subscriptions**|array|The collection of subscriptions covered by the Managed Network|subscriptions|subscriptions|
-|**--scope-virtual-networks**|array|The collection of virtual nets covered by the Managed Network|virtual_networks|virtualNetworks|
-|**--scope-subnets**|array|The collection of  subnets covered by the Managed Network|subnets|subnets|
+|**--properties**|object|The MNC properties|properties|properties|
 
 ### managed-network mn delete
 

@@ -20,7 +20,7 @@ from .. import models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Callable, Dict, Generic, Iterable, List, Optional, TypeVar, Union
+    from typing import Any, Callable, Dict, Generic, Iterable, Optional, TypeVar, Union
 
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
@@ -111,16 +111,7 @@ class ManagedNetworkOperations(object):
         managed_network_name,  # type: str
         location=None,  # type: Optional[str]
         tags=None,  # type: Optional[Dict[str, str]]
-        management_groups=None,  # type: Optional[List["models.ResourceId"]]
-        subscriptions=None,  # type: Optional[List["models.ResourceId"]]
-        virtual_networks=None,  # type: Optional[List["models.ResourceId"]]
-        subnets=None,  # type: Optional[List["models.ResourceId"]]
-        location=None,  # type: Optional[str]
-        tags=None,  # type: Optional[Dict[str, str]]
-        management_groups=None,  # type: Optional[List["models.ResourceId"]]
-        subscriptions=None,  # type: Optional[List["models.ResourceId"]]
-        virtual_networks=None,  # type: Optional[List["models.ResourceId"]]
-        subnets=None,  # type: Optional[List["models.ResourceId"]]
+        properties=None,  # type: Optional["models.ManagedNetworkProperties"]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ManagedNetwork"
@@ -135,26 +126,8 @@ class ManagedNetworkOperations(object):
         :type location: str
         :param tags: Resource tags.
         :type tags: dict[str, str]
-        :param management_groups: The collection of management groups covered by the Managed Network.
-        :type management_groups: list[~managed_network_management_client.models.ResourceId]
-        :param subscriptions: The collection of subscriptions covered by the Managed Network.
-        :type subscriptions: list[~managed_network_management_client.models.ResourceId]
-        :param virtual_networks: The collection of virtual nets covered by the Managed Network.
-        :type virtual_networks: list[~managed_network_management_client.models.ResourceId]
-        :param subnets: The collection of  subnets covered by the Managed Network.
-        :type subnets: list[~managed_network_management_client.models.ResourceId]
-        :param location: The geo-location where the resource lives.
-        :type location: str
-        :param tags: Resource tags.
-        :type tags: dict[str, str]
-        :param management_groups: The collection of management groups covered by the Managed Network.
-        :type management_groups: list[~managed_network_management_client.models.ResourceId]
-        :param subscriptions: The collection of subscriptions covered by the Managed Network.
-        :type subscriptions: list[~managed_network_management_client.models.ResourceId]
-        :param virtual_networks: The collection of virtual nets covered by the Managed Network.
-        :type virtual_networks: list[~managed_network_management_client.models.ResourceId]
-        :param subnets: The collection of  subnets covered by the Managed Network.
-        :type subnets: list[~managed_network_management_client.models.ResourceId]
+        :param properties: The MNC properties.
+        :type properties: ~managed_network_management_client.models.ManagedNetworkProperties
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ManagedNetwork, or the result of cls(response)
         :rtype: ~managed_network_management_client.models.ManagedNetwork
@@ -164,7 +137,7 @@ class ManagedNetworkOperations(object):
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _managed_network = models.ManagedNetwork(location=location, tags=tags, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets, location=location, tags=tags, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
+        _managed_network = models.ManagedNetwork(location=location, tags=tags, properties=properties)
         api_version = "2019-06-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
 

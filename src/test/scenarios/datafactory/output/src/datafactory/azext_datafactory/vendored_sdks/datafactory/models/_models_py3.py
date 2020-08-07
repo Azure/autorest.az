@@ -729,6 +729,8 @@ class Factory(Resource):
     :vartype id: str
     :ivar name: The resource name.
     :vartype name: str
+    :ivar type: The resource type.
+    :vartype type: str
     :param location: The resource location.
     :type location: str
     :param tags: A set of tags. The resource tags.
@@ -750,9 +752,9 @@ class Factory(Resource):
     :type fake_identity: ~dfaz_management_client.models.FakeFactoryIdentity
     :param zones: This is only for az test.
     :type zones: list[str]
-    :param type: The identity type. Currently the only supported type is 'SystemAssigned'. Possible
-     values include: "SystemAssigned".
-    :type type: str or ~dfaz_management_client.models.FactoryIdentityType
+    :param type_identity_type: The identity type. Currently the only supported type is
+     'SystemAssigned'. Possible values include: "SystemAssigned".
+    :type type_identity_type: str or ~dfaz_management_client.models.FactoryIdentityType
     :ivar principal_id: The principal id of the identity.
     :vartype principal_id: str
     :ivar tenant_id: The client tenant id of the identity.
@@ -762,6 +764,7 @@ class Factory(Resource):
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
+        'type': {'readonly': True},
         'e_tag': {'readonly': True},
         'provisioning_state': {'readonly': True},
         'create_time': {'readonly': True},
@@ -773,6 +776,7 @@ class Factory(Resource):
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
         'e_tag': {'key': 'eTag', 'type': 'str'},
@@ -783,7 +787,7 @@ class Factory(Resource):
         'repo_configuration': {'key': 'properties.repoConfiguration', 'type': 'FactoryRepoConfiguration'},
         'fake_identity': {'key': 'properties.fakeIdentity', 'type': 'FakeFactoryIdentity'},
         'zones': {'key': 'properties.zones', 'type': '[str]'},
-        'type': {'key': 'identity.type', 'type': 'str'},
+        'type_identity_type': {'key': 'identity.type', 'type': 'str'},
         'principal_id': {'key': 'identity.principalId', 'type': 'str'},
         'tenant_id': {'key': 'identity.tenantId', 'type': 'str'},
     }
@@ -797,7 +801,7 @@ class Factory(Resource):
         repo_configuration: Optional["FactoryRepoConfiguration"] = None,
         fake_identity: Optional["FakeFactoryIdentity"] = None,
         zones: Optional[List[str]] = None,
-        type: Optional[Union[str, "FactoryIdentityType"]] = None,
+        type_identity_type: Optional[Union[str, "FactoryIdentityType"]] = None,
         **kwargs
     ):
         super(Factory, self).__init__(location=location, tags=tags, **kwargs)
@@ -808,7 +812,7 @@ class Factory(Resource):
         self.repo_configuration = repo_configuration
         self.fake_identity = fake_identity
         self.zones = zones
-        self.type = type
+        self.type_identity_type = type_identity_type
         self.principal_id = None
         self.tenant_id = None
 
