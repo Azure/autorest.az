@@ -78,7 +78,7 @@ stages:
           echo -e "\e[32m[$(date -u)] LOG: Clone azure-rest-api-specs"
           git clone --single-branch -b master https://github.com/amecodegenbot/azure-rest-api-specs.git ../azure-rest-api-specs
           echo -e "\e[32m[$(date -u)] LOG: Clone azure-cli"
-          git clone --single-branch -b azure-core-preview https://github.com/Azure/azure-cli.git ../azure-cli
+          git clone --single-branch -b dev https://github.com/Azure/azure-cli.git ../azure-cli
           echo -e "\e[32m[$(date -u)] LOG: Clone azure-cli-extensions"
           git clone --single-branch -b master https://github.com/Azure/azure-cli-extensions.git ../azure-cli-extensions
           echo -e "\e[32m[$(date -u)] LOG: Clone autorest.testserver"
