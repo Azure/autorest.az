@@ -59,15 +59,15 @@ def try_manual(func):
             test_map[func.__name__]["error_normalized"] = ""
             test_map[func.__name__]["start_dt"] = dt.datetime.utcnow()
             ret = func_to_call(*args, **kwargs)
-        except (AssertionError, AzureError, CliTestError, CliExecutionError, JMESPathCheckAssertionError) as e:
+        except (AssertionError, AzureError, CliTestError, CliExecutionError, SystemExit, JMESPathCheckAssertionError) as e:
             test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()
             test_map[func.__name__]["result"] = FAILED
             test_map[func.__name__]["error_message"] = str(e).replace("\r\n", " ").replace("\n", " ")[:500]
+            test_map[func.__name__]["error_stack"] = traceback.format_exc().replace("\r\n", " ").replace("\n", " ")[:500]
             print("--------------------------------------")
             print("step exception: ", e)
             print("--------------------------------------", file=sys.stderr)
             print("step exception in {}: {}".format(func.__name__, e), file=sys.stderr)
-            traceback.print_exc()
             exceptions.append((func.__name__, sys.exc_info()))
         else:
             test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()

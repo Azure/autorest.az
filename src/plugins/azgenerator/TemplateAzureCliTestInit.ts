@@ -69,8 +69,7 @@ export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     output.push('            test_map[func.__name__]["error_normalized"] = ""');
     output.push('            test_map[func.__name__]["start_dt"] = dt.datetime.utcnow()');
     output.push('            ret = func_to_call(*args, **kwargs)');
-    // output.push('        except (AssertionError, AzureError, CliTestError, CliExecutionError, SystemExit, JMESPathCheckAssertionError) as e:');
-    output.push('        except BaseException as e:  # catch all exceptions');
+    output.push('        except (AssertionError, AzureError, CliTestError, CliExecutionError, SystemExit, JMESPathCheckAssertionError) as e:');
     output.push('            test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()');
     output.push('            test_map[func.__name__]["result"] = FAILED');
     output.push('            test_map[func.__name__]["error_message"] = str(e).replace("\\r\\n", " ").replace("\\n", " ")[:500]');
@@ -79,7 +78,7 @@ export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     output.push('            print("step exception: ", e)');
     output.push('            print("--------------------------------------", file=sys.stderr)');
     output.push('            print("step exception in {}: {}".format(func.__name__, e), file=sys.stderr)');
-    // output.push('            traceback.print_exc()');
+    output.push('            traceback.print_exc()');
     output.push('            exceptions.append((func.__name__, sys.exc_info()))');
     output.push('        else:');
     output.push('            test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()');
