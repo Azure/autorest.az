@@ -247,7 +247,7 @@ class ResourceObject {
         this.example_params.push(example_param);
     }
 
-    public getCheckers(example: CommandExample): string[] {
+    public getCheckers(resource_pool: ResourcePool, example: CommandExample): string[] {
         let ret: string[] = [];
         if (['create', 'delete', 'show', 'list', 'update'].indexOf(example.Method)<0)   return ret;
         let expectedStatus = "200";
@@ -262,17 +262,31 @@ class ResourceObject {
             }
             if (q<param.ancestors.length)   continue;   // ancestors don't match
             if (!(isDict(p) && param.defaultName in p)) continue;   //param.defaultName not found
-            if (p[param.defaultName]!= param.value) continue;   // param value don't match
+            if (typeof p[param.defaultName] != typeof param.rawValue || JSON.stringify(p[param.defaultName]) != JSON.stringify(param.rawValue)) continue;   // param value don't match
 
-            //ret.push(`self.check("${param.ancestors.slice(1).concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)})`);
             let outputKey =  param.ancestors.slice(1);
             if (outputKey.length>0 && outputKey[0]=="properties")   outputKey = outputKey.slice(1);
-            if (typeof param.value === 'string' && !isNullOrUndefined(param.replacedValue.match(/\{.+\}/g))) {
-                ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.replacedValue, param.methodParam.value.schema?.type)}.format(**test.kwargs)),`);
+            if (typeof param.rawValue == 'object') {
+                let replacedJson = resource_pool.addEndpointResource(param.rawValue, true, false, [], [], param, true);
+                if (replacedJson!=param.rawValue ) {
+                    ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", json.loads('${JSON.stringify(replacedJson)}'.format(**test.kwargs)), case_sensitive=False),`);
+                }
+                else {
+                    replacedJson = JSON.stringify(replacedJson).split("{{").join("{").split("}}").join("}");
+                    ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", json.loads('${replacedJson}'), case_sensitive=False),`);
+                }
             }
             else {
-                ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}),`);
+                if (typeof param.replacedValue == 'string' && !isNullOrUndefined(param.replacedValue.match(/\{[^:]+\}/g))) {
+                    ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.replacedValue, param.methodParam.value.schema?.type)}.format(**test.kwargs), case_sensitive=False),`);
+                }
+                else {
+                    ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}, case_sensitive=False),`);
+                }
             }
+        }
+        if (example.Method == 'list') {
+            ret = ret;
         }
         return ret;
     }
@@ -461,6 +475,46 @@ export class ResourcePool {
 
         return undefined;
     }
+
+    public findAllResource(class_name: string, exampleParams: ExampleParam[]=null): ResourceObject[] {
+        let ret: ResourceObject[] = [];
+        if (isNullOrUndefined(class_name) )    return ret;
+
+        this.findAllTreeResource(class_name, this.root, ret);
+
+        if (class_name in this.map) {
+            for (let key in this.map[class_name].objects) {
+                ret.push(this.map[class_name].objects[key]);
+            }
+        }
+        return ret.filter((resourceObject) => {
+            for (let critParam of exampleParams) {
+                let found = false;
+                for (let resourceParam of resourceObject.example_params) {
+                    if (critParam.name == resourceParam.name && critParam.rawValue==resourceParam.rawValue) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) return false;
+            };
+            return true;
+        });
+    }
+
+    public findAllTreeResource(class_name: string, root: Map<string, ResourceClass>, ret :ResourceObject[]) {
+        if (class_name in root) {
+            for (let key in root[class_name].objects) {
+                ret.push(root[class_name].objects[key]);
+            }
+        }
+        for (let c in root) {
+            for (let o in root[c].objects) {
+                this.findAllTreeResource(class_name, root[c].objects[o].sub_resources, ret);
+            }
+        }
+    }
+
 
     public findTreeResource(class_name: string, object_name: string, root: Map<string, ResourceClass>): ResourceObject {
         if (class_name in root && object_name in root[class_name].objects) {
@@ -726,6 +780,16 @@ export class ResourcePool {
     public isDependResource(child: string, parent: string) {
         let depends = resourceClassDepends[child];
         return depends && depends.indexOf(parent) >= 0;
+    }
+
+    public getListCheckers(example: CommandExample): string[] {
+        let ret = [];
+        if (example.Method!="list") return ret;
+        let len = this.findAllResource(example.ResourceClassName, example.Parameters).length;
+        if (len>0) {
+            ret.push(`test.check('length(@)', ${len}),`);
+        }
+        return ret;
     }
 }
 

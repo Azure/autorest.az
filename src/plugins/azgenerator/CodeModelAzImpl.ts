@@ -1675,23 +1675,23 @@ export class CodeModelCliImpl implements CodeModelAz {
                         keys.push(cliName)
                     }
                     if (ret.length > 0) {
-                        example_param.push(new ExampleParam(name, ret, false, true, keys, defaultName, methodParam, ancestors));
+                        example_param.push(new ExampleParam(name, ret, false, true, keys, defaultName, methodParam, ancestors, value));
                     }
                     handled = true;
                 }
             }
             if (!handled) {
                 if (typeof value == 'string') {
-                    example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam, ancestors));
+                    example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam, ancestors, value));
                 }
                 else {
                     // JSON form
-                    example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, [], defaultName, methodParam, ancestors));
+                    example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, [], defaultName, methodParam, ancestors, value));
                 }
             }
         }
         else if (typeof value != 'object') {
-            example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam, ancestors));
+            example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam, ancestors, value));
         }
         else {
             // ignore object values if not isList.
@@ -1844,7 +1844,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 // }
             }
             param_name = param_name.split("_").join("-");
-            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.keys, param.defaultName, param.methodParam, param.ancestors));
+            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.keys, param.defaultName, param.methodParam, param.ancestors, param.rawValue));
         };
         return ret;
     }
@@ -1929,6 +1929,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public GetExampleChecks(example: CommandExample): string[] {
+        let ret: string[] = [];
         let resourceObjectName = undefined;
         for (let param of example.Parameters) {
             if (example.ResourceClassName && this.resource_pool.isResource(param.defaultName) == example.ResourceClassName) {
@@ -1938,9 +1939,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         let resourceObject = this.resource_pool.findResource(example.ResourceClassName, resourceObjectName);
         if (resourceObject) {
-            return resourceObject.getCheckers(example);
+            ret.push(...resourceObject.getCheckers(this.resource_pool, example));
         }
-        return [];
+        ret.push(...this.resource_pool.getListCheckers(example));
+        return ret;
     }
 
     public GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[] {

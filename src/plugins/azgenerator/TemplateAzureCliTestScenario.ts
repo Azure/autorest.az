@@ -32,6 +32,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
 
     head.push("");
     head.push("import os");
+    head.push("import json");
     head.push("from azure.cli.testsdk import ScenarioTest");
     head.push("from .. import try_manual, raise_if, calc_coverage");
     //head.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
