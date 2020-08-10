@@ -71,7 +71,7 @@ def step_attestationproviders_listbyresourcegroup(test, rg, rg_2, rg_3):
 # EXAMPLE: AttestationProviders_Delete
 @try_manual
 def step_attestationproviders_delete(test, rg, rg_2, rg_3):
-    test.cmd('az attestation attestation-provider delete '
+    test.cmd('az attestation attestation-provider delete -y '
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg_3}"',
              checks=[])

@@ -170,6 +170,7 @@ export interface CodeModelAz {
     PythonMgmtClient: string;
     PythonOperationsName: string;
 
+    GenerateTestInit(): void;
     SelectFirstExample(): boolean;
     SelectNextExample(): boolean;
     FindExampleById(id: string, commandParams: any): string[][];

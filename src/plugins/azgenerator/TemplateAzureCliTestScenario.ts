@@ -93,6 +93,9 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
             for (let exampleCmd of model.FindExampleById(exampleId, commandParams)) {
                 if (exampleCmd && exampleCmd.length > 0) {
                     found = true;
+                    if(exampleCmd[0].indexOf(' delete') > -1) {
+                        exampleCmd[0] += " -y";
+                    } 
                     for (let idx = 0; idx < exampleCmd.length; idx++) {
                         let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
                         let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";

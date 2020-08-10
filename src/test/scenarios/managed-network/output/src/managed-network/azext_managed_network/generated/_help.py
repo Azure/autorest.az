@@ -19,8 +19,8 @@ helps['managed-network mn'] = """
 
 helps['managed-network mn list'] = """
     type: command
-    short-summary: The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the \
-current subscription in a paginated format.
+    short-summary: "The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in \
+the current subscription in a paginated format."
     examples:
       - name: Get Managed Network
         text: |-
@@ -29,8 +29,8 @@ current subscription in a paginated format.
 
 helps['managed-network mn create'] = """
     type: command
-    short-summary: The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource \
-group and Managed Network name
+    short-summary: "The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by \
+resource group and Managed Network name"
     examples:
       - name: Create/Update Managed Network
         text: |-
@@ -48,7 +48,7 @@ osoft.Network/virtualNetworks/myVirtualNetwork3/subnets/default\\"}]}" --name "m
 
 helps['managed-network mn update'] = """
     type: command
-    short-summary: Updates the specified Managed Network resource tags.
+    short-summary: "Updates the specified Managed Network resource tags."
     examples:
       - name: Create/Update Managed Network
         text: |-
@@ -57,8 +57,8 @@ helps['managed-network mn update'] = """
 
 helps['managed-network mn delete'] = """
     type: command
-    short-summary: The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource \
-group and Managed Network name
+    short-summary: "The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  \
+resource group and Managed Network name"
     examples:
       - name: Delete Managed Network
         text: |-
@@ -67,8 +67,8 @@ group and Managed Network name
 
 helps['managed-network mn get-modify'] = """
     type: command
-    short-summary: The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group \
-and Managed Network name
+    short-summary: "The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group \
+and Managed Network name"
     examples:
       - name: Get Managed Network
         text: |-
@@ -82,7 +82,7 @@ helps['managed-network mn scope-assignment'] = """
 
 helps['managed-network mn scope-assignment list'] = """
     type: command
-    short-summary: Get the specified scope assignment.
+    short-summary: "Get the specified scope assignment."
     examples:
       - name: Create/Update Managed Network
         text: |-
@@ -91,7 +91,7 @@ helps['managed-network mn scope-assignment list'] = """
 
 helps['managed-network mn scope-assignment show'] = """
     type: command
-    short-summary: Get the specified scope assignment.
+    short-summary: "Get the specified scope assignment."
     examples:
       - name: Create/Update Managed Network
         text: |-
@@ -101,7 +101,7 @@ helps['managed-network mn scope-assignment show'] = """
 
 helps['managed-network mn scope-assignment create'] = """
     type: command
-    short-summary: Creates a scope assignment.
+    short-summary: "Creates a scope assignment."
     examples:
       - name: Create/Update Managed Network
         text: |-
@@ -112,7 +112,7 @@ esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks
 
 helps['managed-network mn scope-assignment update'] = """
     type: command
-    short-summary: Creates a scope assignment.
+    short-summary: "Creates a scope assignment."
     examples:
       - name: Create/Update Managed Network
         text: |-
@@ -123,7 +123,7 @@ esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks
 
 helps['managed-network mn scope-assignment delete'] = """
     type: command
-    short-summary: Deletes a scope assignment.
+    short-summary: "Deletes a scope assignment."
     examples:
       - name: Create/Update Managed Network
         text: |-
@@ -138,8 +138,8 @@ helps['managed-network mn group'] = """
 
 helps['managed-network mn group list'] = """
     type: command
-    short-summary: The ListByManagedNetwork ManagedNetworkGroup operation retrieves all the Managed Network Groups in \
-a specified Managed Networks in a paginated format.
+    short-summary: "The ListByManagedNetwork ManagedNetworkGroup operation retrieves all the Managed Network Groups in \
+a specified Managed Networks in a paginated format."
     examples:
       - name: Get Managed Network Group
         text: |-
@@ -149,8 +149,8 @@ a specified Managed Networks in a paginated format.
 
 helps['managed-network mn group show'] = """
     type: command
-    short-summary: The Get ManagedNetworkGroups operation gets a Managed Network Group specified by the resource \
-group, Managed Network name, and group name
+    short-summary: "The Get ManagedNetworkGroups operation gets a Managed Network Group specified by the resource \
+group, Managed Network name, and group name"
     examples:
       - name: Get Managed Network Group
         text: |-
@@ -160,10 +160,10 @@ group, Managed Network name, and group name
 
 helps['managed-network mn group create'] = """
     type: command
-    short-summary: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
+    short-summary: "The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource"
     parameters:
       - name: --subscriptions
-        short-summary: The collection of subscriptions covered by the Managed Network
+        short-summary: "The collection of subscriptions covered by the Managed Network"
         long-summary: |
             Usage: --subscriptions id=XX
 
@@ -171,7 +171,7 @@ helps['managed-network mn group create'] = """
 
             Multiple actions can be specified by using more than one --subscriptions argument.
       - name: --virtual-networks
-        short-summary: The collection of virtual nets covered by the Managed Network
+        short-summary: "The collection of virtual nets covered by the Managed Network"
         long-summary: |
             Usage: --virtual-networks id=XX
 
@@ -179,7 +179,7 @@ helps['managed-network mn group create'] = """
 
             Multiple actions can be specified by using more than one --virtual-networks argument.
       - name: --subnets
-        short-summary: The collection of  subnets covered by the Managed Network
+        short-summary: "The collection of  subnets covered by the Managed Network"
         long-summary: |
             Usage: --subnets id=XX
 
@@ -198,10 +198,10 @@ id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/vi
 
 helps['managed-network mn group update'] = """
     type: command
-    short-summary: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
+    short-summary: "The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource"
     parameters:
       - name: --subscriptions
-        short-summary: The collection of subscriptions covered by the Managed Network
+        short-summary: "The collection of subscriptions covered by the Managed Network"
         long-summary: |
             Usage: --subscriptions id=XX
 
@@ -209,7 +209,7 @@ helps['managed-network mn group update'] = """
 
             Multiple actions can be specified by using more than one --subscriptions argument.
       - name: --virtual-networks
-        short-summary: The collection of virtual nets covered by the Managed Network
+        short-summary: "The collection of virtual nets covered by the Managed Network"
         long-summary: |
             Usage: --virtual-networks id=XX
 
@@ -217,7 +217,7 @@ helps['managed-network mn group update'] = """
 
             Multiple actions can be specified by using more than one --virtual-networks argument.
       - name: --subnets
-        short-summary: The collection of  subnets covered by the Managed Network
+        short-summary: "The collection of  subnets covered by the Managed Network"
         long-summary: |
             Usage: --subnets id=XX
 
@@ -236,8 +236,8 @@ id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/vi
 
 helps['managed-network mn group delete'] = """
     type: command
-    short-summary: The Delete ManagedNetworkGroups operation deletes a Managed Network Group specified by the resource \
-group, Managed Network name, and group name
+    short-summary: "The Delete ManagedNetworkGroups operation deletes a Managed Network Group specified by the \
+resource group, Managed Network name, and group name"
     examples:
       - name: Delete Managed Network Group
         text: |-
@@ -270,8 +270,8 @@ helps['managed-network managed-network-peering-policy'] = """
 
 helps['managed-network managed-network-peering-policy list'] = """
     type: command
-    short-summary: The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering \
-Policies in a specified Managed Network, in a paginated format.
+    short-summary: "The ListByManagedNetwork PeeringPolicies operation retrieves all the Managed Network Peering \
+Policies in a specified Managed Network, in a paginated format."
     examples:
       - name: Get Managed Network Group
         text: |-
@@ -281,8 +281,8 @@ Policies in a specified Managed Network, in a paginated format.
 
 helps['managed-network managed-network-peering-policy show'] = """
     type: command
-    short-summary: The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource, \
-specified by the  resource group, Managed Network name, and peering policy name
+    short-summary: "The Get ManagedNetworkPeeringPolicies operation gets a Managed Network Peering Policy resource, \
+specified by the  resource group, Managed Network name, and peering policy name"
     examples:
       - name: Get Managed Network Peering Policy
         text: |-
@@ -297,17 +297,17 @@ helps['managed-network managed-network-peering-policy hub-and-spoke-topology'] =
 
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology create'] = """
     type: command
-    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
-Policy
+    short-summary: "The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
+Policy"
     parameters:
       - name: --hub
-        short-summary: Gets or sets the hub virtual network ID
+        short-summary: "Gets or sets the hub virtual network ID"
         long-summary: |
             Usage: --hub id=XX
 
             id: Resource Id
       - name: --spokes
-        short-summary: Gets or sets the spokes group IDs
+        short-summary: "Gets or sets the spokes group IDs"
         long-summary: |
             Usage: --spokes id=XX
 
@@ -315,7 +315,7 @@ Policy
 
             Multiple actions can be specified by using more than one --spokes argument.
       - name: --mesh
-        short-summary: Gets or sets the mesh group IDs
+        short-summary: "Gets or sets the mesh group IDs"
         long-summary: |
             Usage: --mesh id=XX
 
@@ -339,17 +339,17 @@ helps['managed-network managed-network-peering-policy mesh-topology'] = """
 
 helps['managed-network managed-network-peering-policy mesh-topology create'] = """
     type: command
-    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
-Policy
+    short-summary: "The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
+Policy"
     parameters:
       - name: --hub
-        short-summary: Gets or sets the hub virtual network ID
+        short-summary: "Gets or sets the hub virtual network ID"
         long-summary: |
             Usage: --hub id=XX
 
             id: Resource Id
       - name: --spokes
-        short-summary: Gets or sets the spokes group IDs
+        short-summary: "Gets or sets the spokes group IDs"
         long-summary: |
             Usage: --spokes id=XX
 
@@ -357,7 +357,7 @@ Policy
 
             Multiple actions can be specified by using more than one --spokes argument.
       - name: --mesh
-        short-summary: Gets or sets the mesh group IDs
+        short-summary: "Gets or sets the mesh group IDs"
         long-summary: |
             Usage: --mesh id=XX
 
@@ -368,17 +368,17 @@ Policy
 
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology update'] = """
     type: command
-    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
-Policy
+    short-summary: "The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
+Policy"
     parameters:
       - name: --hub
-        short-summary: Gets or sets the hub virtual network ID
+        short-summary: "Gets or sets the hub virtual network ID"
         long-summary: |
             Usage: --hub id=XX
 
             id: Resource Id
       - name: --spokes
-        short-summary: Gets or sets the spokes group IDs
+        short-summary: "Gets or sets the spokes group IDs"
         long-summary: |
             Usage: --spokes id=XX
 
@@ -386,7 +386,7 @@ Policy
 
             Multiple actions can be specified by using more than one --spokes argument.
       - name: --mesh
-        short-summary: Gets or sets the mesh group IDs
+        short-summary: "Gets or sets the mesh group IDs"
         long-summary: |
             Usage: --mesh id=XX
 
@@ -405,17 +405,17 @@ ps/myManagedNetworkGroup" --resource-group "myResourceGroup"
 
 helps['managed-network managed-network-peering-policy mesh-topology update'] = """
     type: command
-    short-summary: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
-Policy
+    short-summary: "The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
+Policy"
     parameters:
       - name: --hub
-        short-summary: Gets or sets the hub virtual network ID
+        short-summary: "Gets or sets the hub virtual network ID"
         long-summary: |
             Usage: --hub id=XX
 
             id: Resource Id
       - name: --spokes
-        short-summary: Gets or sets the spokes group IDs
+        short-summary: "Gets or sets the spokes group IDs"
         long-summary: |
             Usage: --spokes id=XX
 
@@ -423,7 +423,7 @@ Policy
 
             Multiple actions can be specified by using more than one --spokes argument.
       - name: --mesh
-        short-summary: Gets or sets the mesh group IDs
+        short-summary: "Gets or sets the mesh group IDs"
         long-summary: |
             Usage: --mesh id=XX
 
@@ -434,8 +434,8 @@ Policy
 
 helps['managed-network managed-network-peering-policy delete'] = """
     type: command
-    short-summary: The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy, \
-specified by the  resource group, Managed Network name, and peering policy name
+    short-summary: "The Delete ManagedNetworkPeeringPolicies operation deletes a Managed Network Peering Policy, \
+specified by the  resource group, Managed Network name, and peering policy name"
     examples:
       - name: Get Managed Network Peering Policy
         text: |-
