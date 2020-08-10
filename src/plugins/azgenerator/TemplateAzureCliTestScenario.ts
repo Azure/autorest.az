@@ -33,7 +33,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     head.push("");
     head.push("import os");
     head.push("from azure.cli.testsdk import ScenarioTest");
-    head.push("from .. import try_manual, raise_if");
+    head.push("from .. import try_manual, raise_if, calc_coverage");
     //head.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
     steps.push("");
     steps.push("");
@@ -140,6 +140,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     funcScenario.push("");
     funcScenario.push("");
     body.push(`        call_scenario(self${parameterLine()})`);
+    body.push(`        calc_coverage(__file__)`);
     body.push(`        raise_if()`);
     body.push("");
 

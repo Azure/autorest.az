@@ -12,13 +12,17 @@ import inspect
 import os
 import sys
 import traceback
+import datetime as dt
+
 from azure.core.exceptions import AzureError
 from azure.cli.testsdk.exceptions import CliTestError, CliExecutionError, JMESPathCheckAssertionError
 
 
 __path__ = __import__('pkgutil').extend_path(__path__, __name__)
 exceptions = []
-
+test_map = dict()
+SUCCESSED = "successed"
+FAILED = "failed"
 
 def try_manual(func):
     def import_manual_function(origin_func):
@@ -48,19 +52,49 @@ def try_manual(func):
         func_to_call = get_func_to_call()
         print("running {}()...".format(func.__name__))
         try:
-            return func_to_call(*args, **kwargs)
-        except (AssertionError, AzureError, CliTestError, CliExecutionError, JMESPathCheckAssertionError) as e:
+            test_map[func.__name__] = dict()
+            test_map[func.__name__]["result"] = SUCCESSED
+            test_map[func.__name__]["error_message"] = ""
+            test_map[func.__name__]["error_stack"] = ""
+            test_map[func.__name__]["error_normalized"] = ""
+            test_map[func.__name__]["start_dt"] = dt.datetime.utcnow()
+            ret = func_to_call(*args, **kwargs)
+        except (AssertionError, AzureError, CliTestError, CliExecutionError, SystemExit, JMESPathCheckAssertionError) as e:
+            test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()
+            test_map[func.__name__]["result"] = FAILED
+            test_map[func.__name__]["error_message"] = str(e).replace("\r\n", " ").replace("\n", " ")[:500]
+            test_map[func.__name__]["error_stack"] = traceback.format_exc().replace("\r\n", " ").replace("\n", " ")[:500]
             print("--------------------------------------")
             print("step exception: ", e)
             print("--------------------------------------", file=sys.stderr)
             print("step exception in {}: {}".format(func.__name__, e), file=sys.stderr)
             traceback.print_exc()
             exceptions.append((func.__name__, sys.exc_info()))
+        else:
+            test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()
+            return ret
 
     if inspect.isclass(func):
         return get_func_to_call()
     return wrapper
 
+def calc_coverage(filename):
+    filename = filename.split(".")[0]
+    coverage_name = filename + "_coverage.md"
+    with open(coverage_name, "w") as f:
+        f.write("|Scenario|Result|ErrorMessage|ErrorStack|ErrorNormalized|StartDt|EndDt|\n")
+        failed = 0
+        total = len(test_map)
+        covered = 0
+        for k, v in test_map.items():
+            if not k.startswith("step_"):
+                total -= 1
+                continue
+            if v["result"] == SUCCESSED:
+                covered += 1
+            f.write("|{step_name}|{result}|{error_message}|{error_stack}|{error_normalized}|{start_dt}|{end_dt}|\n".format(step_name=k, **v))
+        f.write("Coverage: {}/{}\n".format(covered, total))
+    print("Create coverage\n", file=sys.stderr)
 
 def raise_if():
     if exceptions:
