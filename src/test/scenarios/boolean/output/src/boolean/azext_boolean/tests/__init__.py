@@ -68,6 +68,7 @@ def try_manual(func):
             print("step exception: ", e)
             print("--------------------------------------", file=sys.stderr)
             print("step exception in {}: {}".format(func.__name__, e), file=sys.stderr)
+            traceback.print_exc()
             exceptions.append((func.__name__, sys.exc_info()))
         else:
             test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()
