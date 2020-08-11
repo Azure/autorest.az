@@ -28,39 +28,37 @@ import { GenerateAzureCliValidators } from "./TemplateAzureCliValidators";
 export class AzExtensionFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
-        this.path = "azext_" + this.model.Extension_NameUnderscored + "/";
+        this.azDirectory = "azext_" + this.model.Extension_NameUnderscored + "/";
     }
 
+    public async generateAll(): Promise<void> {
+        this.files[this.azDirectory + "generated/_params.py"] = GenerateAzureCliParams(this.model, this.isDebugMode);
+        this.files[this.azDirectory + "generated/commands.py"] = GenerateAzureCliCommands(this.model);
+        this.files[this.azDirectory + "generated/custom.py"] = GenerateAzureCliCustom(this.model);
+        this.files[this.azDirectory + "generated/_client_factory.py"] = GenerateAzureCliClientFactory(this.model);
+        this.files[this.azDirectory + "generated/_validators.py"] = GenerateAzureCliValidators(this.model);
+        this.files[this.azDirectory + "generated/action.py"] = GenerateAzureCliActions(this.model);
+        this.files[this.azDirectory + "generated/__init__.py"] = GenerateNamespaceInit(this.model);
 
-    public generateAll(): void {
-
-        this.files[this.path + "generated/_params.py"] = GenerateAzureCliParams(this.model, this.isDebugMode);
-        this.files[this.path + "generated/commands.py"] = GenerateAzureCliCommands(this.model);
-        this.files[this.path + "generated/custom.py"] = GenerateAzureCliCustom(this.model);
-        this.files[this.path + "generated/_client_factory.py"] = GenerateAzureCliClientFactory(this.model);
-        this.files[this.path + "generated/_validators.py"] = GenerateAzureCliValidators(this.model);
-        this.files[this.path + "generated/action.py"] = GenerateAzureCliActions(this.model);
-        this.files[this.path + "generated/__init__.py"] = GenerateNamespaceInit(this.model);
-
-        this.files[this.path + "tests/__init__.py"] = GenerateAzureCliTestInit(this.model);
-        this.files[this.path + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model);
+        this.files[this.azDirectory + "tests/__init__.py"] = GenerateAzureCliTestInit(this.model);
+        this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model);
         if (NeedPreparer()) {
-            this.files[this.path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(this.model);
+            this.files[this.azDirectory + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(this.model);
         };
-        this.files[this.path + "tests/latest/__init__.py"] = GenerateNamespaceInit(this.model);
+        this.files[this.azDirectory + "tests/latest/__init__.py"] = GenerateNamespaceInit(this.model);
 
-        this.files[this.path + "generated/_help.py"] = GenerateAzureCliHelp(this.model, this.isDebugMode);
-
-
-        this.files[this.path + "manual/__init__.py"] = GenerateNamespaceInit(this.model);
+        this.files[this.azDirectory + "generated/_help.py"] = GenerateAzureCliHelp(this.model, this.isDebugMode);
 
 
-        this.files[this.path + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(this.model);
+        this.files[this.azDirectory + "manual/__init__.py"] = GenerateNamespaceInit(this.model);
 
-        this.files[this.path + "action.py"] = GenerateTopLevelImport(this.model, "action");
-        this.files[this.path + "custom.py"] = GenerateTopLevelImport(this.model, "custom");
-        this.files[this.path + "__init__.py"] = GenerateAzureCliInit(this.model);
-        this.files[this.path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(this.model);
+
+        this.files[this.azDirectory + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(this.model);
+
+        this.files[this.azDirectory + "action.py"] = GenerateTopLevelImport(this.model, "action");
+        this.files[this.azDirectory + "custom.py"] = GenerateTopLevelImport(this.model, "custom");
+        this.files[this.azDirectory + "__init__.py"] = GenerateAzureCliInit(this.model);
+        this.files[this.azDirectory + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(this.model);
 
         this.files["report.md"] = GenerateAzureCliReport(this.model);
         this.files["HISTORY.rst"] = GenerateAzureCliHistory(this.model);
