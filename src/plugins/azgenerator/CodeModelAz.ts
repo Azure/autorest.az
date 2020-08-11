@@ -63,6 +63,7 @@ export interface CodeModelAz {
     SDK_IsTrack1: boolean;
     SDK_NoFlatten: boolean;
     AzureCliFolder: string;
+    azOutputFolder: string;
     Extension_Name: string;
     Extension_NameUnderscored: string;
     Extension_NameClass: string;
@@ -173,6 +174,7 @@ export interface CodeModelAz {
     GetModuleOperationNamePython(): string;
     GetModuleOperationNamePythonUpper(): string;
     GetPythonNamespace(): string;
+    GetPythonPackageName(): string;
 
     // Python
     PythonMgmtClient: string;

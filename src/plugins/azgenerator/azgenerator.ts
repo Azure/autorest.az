@@ -19,6 +19,9 @@ export async function processRequest(host: Host) {
             }
             session.model.language['az']['azureCliFolder'] = azureCliFolder;
         }
+
+        const azOutputFolder = await host.GetValue('az-output-folder');
+        session.model.language['az']['azOutputFolder'] = azOutputFolder;
         let model = new CodeModelCliImpl(session);
         const cliCoreLib: string = await host.GetValue('cli-core-lib');
         if (!isNullOrUndefined(cliCoreLib) && cliCoreLib.length > 0) {

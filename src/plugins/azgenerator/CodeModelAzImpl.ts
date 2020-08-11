@@ -1528,6 +1528,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.options['namespace'];
     }
 
+    public GetPythonPackageName(): string {
+        return this.options['package-name'];
+    }
+
     public get PythonMgmtClient(): string {
         return this.codeModel.info['pascal_case_title'];
     }
@@ -2272,6 +2276,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get AzureCliFolder(): string {
         return this.codeModel.language['az']?.['azureCliFolder']
+    }
+
+    public get azOutputFolder(): string {
+        return this.codeModel.language['az']?.['azOutputFolder']
     }
 
     public get IsCliCore() {

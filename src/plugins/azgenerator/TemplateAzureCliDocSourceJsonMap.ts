@@ -6,15 +6,15 @@
 import { CodeModelAz } from "./CodeModelAz"
 import { HeaderGenerator } from "./Header";
 import { isNullOrUndefined } from "util";
+import { EOL } from 'os';
 import * as fs from 'fs';
 
 export function GenerateDocSourceJsonMap(model: CodeModelAz, docSourceJsonMapPath) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
-    var output: string[] = header.getLines();
-    let outputFile = fs.readFileSync(docSourceJsonMapPath).toString().split("\n");
+    let outputFile = fs.readFileSync(docSourceJsonMapPath).toString().split(EOL);
     let docSourceJson = require(docSourceJsonMapPath);
     if (isNullOrUndefined(docSourceJson[model.Extension_NameUnderscored])) {
-        let line = '"' + model.Extension_NameUnderscored + '": "' + model.AzureCliFolder + "/" + model.Extension_NameUnderscored + '/_help.py"';
+        let line = '"' + model.Extension_NameUnderscored + '": "' + model.azOutputFolder + '/_help.py"';
         let cnt = outputFile.length;
         let foundLastLine = false;
         while (cnt > 0) {
@@ -23,16 +23,18 @@ export function GenerateDocSourceJsonMap(model: CodeModelAz, docSourceJsonMapPat
                 foundLastLine = true;
                 continue;
             }
-            if (foundLastLine) {
-                if (cnt > 1) {
-                    outputFile[cnt-1] += ",";
+            if (foundLastLine) {         
+                let len = outputFile[cnt].length;
+                if(outputFile[cnt][len - 1] == '\r') {
+                    outputFile[cnt] = outputFile[cnt].replace('\r', ',');
+                } else {
+                    outputFile[cnt] += ",";
                 }
                 let indexSize = outputFile[cnt].indexOf('"');
-                outputFile.splice(indexSize, 1, line);
+                outputFile.splice(cnt+1, 0, " ".repeat(indexSize) + line);
                 break;
             }
         }
-        output = output.concat(outputFile);
     }
-    return output;
+    return outputFile;
 }

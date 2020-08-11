@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import { isNullOrUndefined, isNull } from 'util';
 import { CodeModel } from '@azure-tools/codemodel';
 import { values, items, length, Dictionary } from "@azure-tools/linq";
+import * as request from "request-promise-native";
 
 export function changeCamelToDash(str: string) {
     str = str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
@@ -352,4 +353,17 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
         }
     }
     return flattenedNodes;
+}
+
+export async function getLatestPyPiVersion(packageName: string) {
+    let url = "https://pypi.org/pypi/" + packageName + "/json";
+    let option = {
+        uri: url
+    }
+    let response = await request.get(option);
+    let res = JSON.parse(response);
+    let latest = res['urls'][1];
+    let filename = latest['filename'];
+    let version = filename.replace(packageName + "-", "").replace(".zip", "");
+    return version;
 }

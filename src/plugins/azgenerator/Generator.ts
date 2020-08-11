@@ -24,6 +24,7 @@ import { GenerateTopLevelImport } from "./TemplateAzureCliTopLevelImport"
 import { GenerateNamespaceInit } from "./TemplateAzureCliNamespaceInit"
 import { GenerateAzureCliTestInit } from "./TemplateAzureCliTestInit"
 import { GenerateDocSourceJsonMap } from "./TemplateAzureCliDocSourceJsonMap"
+import { GenerateRequirementTxt } from './TemplateAzureCliRequirement';
 
 export async function GenerateAll(model: CodeModelAz,
     generateReport: any, debug: boolean) {
@@ -76,10 +77,16 @@ export async function GenerateAll(model: CodeModelAz,
                 files[pathTop + "report.md"] = GenerateAzureCliReport(model);
             }
             
-            /*if (model.IsCliCore) {
+            if (model.IsCliCore) {
                 let docSourceJsonMapPath = model.AzureCliFolder + "/doc/sphinx/azhelpgen/doc_source_map.json";
                 files[docSourceJsonMapPath] = GenerateDocSourceJsonMap(model, docSourceJsonMapPath);
-            }*/
+
+                for(let sys of ['Darwin', 'Linux', 'windows']) {
+                    let requireFilePath= model.AzureCliFolder + "/src/azure-cli/requirements.py3." + sys + ".txt";
+                    files[requireFilePath] = await GenerateRequirementTxt(model, requireFilePath);
+                }
+                
+            }
         }
         while (model.SelectNextExtension())
     }
