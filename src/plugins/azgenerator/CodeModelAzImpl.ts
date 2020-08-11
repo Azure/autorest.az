@@ -9,7 +9,7 @@ import { serialize, deserialize, EnglishPluralizationService, pascalCase } from 
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { ToSnakeCase, deepCopy, ToJsonString, Capitalize, ToCamelCase, EscapeString, parseResourceId } from '../../utils/helper';
 import { values } from "@azure-tools/linq";
-import { azOptions, GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency, PrintTestScenario } from './ScenarioTool'
+import { azOptions, GenerateDefaultTestScenario, ResourcePool, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ObjectStatus } from './ScenarioTool'
 import { timingSafeEqual } from "crypto";
 import { isNullOrUndefined, isArray } from "util";
 
@@ -1937,7 +1937,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
         }
 
-        let resourceObject = this.resource_pool.findResource(example.ResourceClassName, resourceObjectName);
+        let resourceObject = this.resource_pool.findResource(example.ResourceClassName, resourceObjectName, ObjectStatus.Created);
         if (resourceObject) {
             ret.push(...resourceObject.getCheckers(this.resource_pool, example));
         }
@@ -1980,10 +1980,22 @@ export class CodeModelCliImpl implements CodeModelAz {
             parameters.push('-g ""');
         }
 
-        let resourceObject = this.resource_pool.findResource(example.ResourceClassName, resourceObjectName);
-        if (['put', 'post', 'patch'].indexOf(example.HttpMethod.toLowerCase())>=0 && resourceObject) {
-            for (let param of example.Parameters) {
-                resourceObject.addOrUpdateParam(param);   
+        if (isTest) {
+            let resourceObject = this.resource_pool.findResource(example.ResourceClassName, resourceObjectName, undefined);
+            if (resourceObject) {
+                let httpMethod = example.HttpMethod.toLowerCase();
+                if (['put', 'post', 'patch'].indexOf(httpMethod)>=0) {
+                    if (httpMethod == 'post') {
+                        resourceObject.example_params = []; 
+                    }
+                    for (let param of example.Parameters) {
+                        resourceObject.addOrUpdateParam(param);
+                    }
+                    resourceObject.testStatus = ObjectStatus.Created;
+                }
+                if (httpMethod == 'delete') {
+                    resourceObject.testStatus = ObjectStatus.Deleted;
+                }
             }
         }
 

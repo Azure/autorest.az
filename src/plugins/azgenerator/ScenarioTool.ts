@@ -201,18 +201,26 @@ class ResourceClass {
     }
 
 }
+
+export enum ObjectStatus {
+    NA,
+    Created,
+    Deleted,
+}
 class ResourceObject {
     object_name: string;
     class_name: string;
     // key: string;
     sub_resources: Map<string, ResourceClass>; //class_name --> resource_class
     example_params: ExampleParam[];
+    testStatus: ObjectStatus;
 
     public constructor(object_name: string, class_name: string) {
         this.object_name = object_name;
         this.class_name = class_name;
         this.sub_resources = new Map<string, ResourceClass>();
         this.example_params = [];
+        this.testStatus = ObjectStatus.NA;
     }
 
     public get key(): string {
@@ -461,22 +469,24 @@ export class ResourcePool {
         return resources[class_name].objects[object_name];
     }
 
-    public findResource(class_name: string, object_name: string): ResourceObject|undefined {
+    public findResource(class_name: string, object_name: string, testStatus: ObjectStatus): ResourceObject|undefined {
         if (isNullOrUndefined(class_name) || isNullOrUndefined(object_name))    return null;
 
-        let resource_object = this.findTreeResource(class_name, object_name, this.root);
+        let resource_object = this.findTreeResource(class_name, object_name, this.root, testStatus);
         if (resource_object) {
             return resource_object;
         }
 
         if (class_name in this.map && object_name in this.map[class_name].objects) {
-            return this.map[class_name].objects[object_name];
+            if (isNullOrUndefined(testStatus) || testStatus==this.map[class_name].objects[object_name].testStatus) {
+                return this.map[class_name].objects[object_name];
+            }
         }
 
         return undefined;
     }
 
-    public findAllResource(class_name: string, exampleParams: ExampleParam[]=null): ResourceObject[] {
+    public findAllResource(class_name: string, exampleParams: ExampleParam[]=null, testStatus: ObjectStatus=null): ResourceObject[] {
         let ret: ResourceObject[] = [];
         if (isNullOrUndefined(class_name) )    return ret;
 
@@ -498,7 +508,7 @@ export class ResourcePool {
                 }
                 if (!found) return false;
             };
-            return true;
+            return isNullOrUndefined(testStatus) || testStatus ==resourceObject.testStatus;
         });
     }
 
@@ -516,20 +526,24 @@ export class ResourcePool {
     }
 
 
-    public findTreeResource(class_name: string, object_name: string, root: Map<string, ResourceClass>): ResourceObject {
+    public findTreeResource(class_name: string, object_name: string, root: Map<string, ResourceClass>, testStatus: ObjectStatus = null): ResourceObject {
         if (class_name in root && object_name in root[class_name].objects) {
-            return root[class_name].objects[object_name];
+            if (isNullOrUndefined(testStatus) || testStatus==root[class_name].objects[object_name].testStatus) {
+                return root[class_name].objects[object_name];
+            }
         }
         if (!class_name) {
             for (let c in root) {
                 if (object_name in root[c].objects) {
-                    return root[c].objects[object_name];
+                    if (isNullOrUndefined(testStatus) || testStatus==root[c].objects[object_name].testStatus) {
+                        return root[c].objects[object_name];
+                    }
                 }
             }
         }
         for (let c in root) {
             for (let o in root[c].objects) {
-                let ret = this.findTreeResource(class_name, object_name, root[c].objects[o].sub_resources);
+                let ret = this.findTreeResource(class_name, object_name, root[c].objects[o].sub_resources, testStatus);
                 if (ret) return ret;
             }
         }
@@ -785,7 +799,7 @@ export class ResourcePool {
     public getListCheckers(example: CommandExample): string[] {
         let ret = [];
         if (example.Method!="list") return ret;
-        let len = this.findAllResource(example.ResourceClassName, example.Parameters).length;
+        let len = this.findAllResource(example.ResourceClassName, example.Parameters, ObjectStatus.Created).length;
         if (len>0) {
             ret.push(`test.check('length(@)', ${len}),`);
         }
