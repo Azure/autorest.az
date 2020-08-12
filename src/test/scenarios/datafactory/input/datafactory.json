@@ -3979,7 +3979,13 @@
         "type": "string",
         "enum": [
           "On",
-          "Off"
+          "Off",
+          "fakeValue1",
+          "fakeValue2",
+          "fakeValue3",
+          "fakeValue4",
+          "fakeValue5",
+          "fakeValue6"
         ],
         "x-ms-enum": {
           "name": "IntegrationRuntimeAutoUpdate",

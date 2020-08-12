@@ -59,8 +59,8 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
 
     if (outputCode.length != 0) {
         header.addImport("argparse");
-        header.addFromImport("knack.util", ["CLIError"]);
         header.addFromImport("collections", ["defaultdict"]);
+        header.addFromImport("knack.util", ["CLIError"]);
         output = header.getLines().concat(outputCode);
     }
     else {

@@ -19,6 +19,7 @@ export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     output.push("# regenerated.");
     output.push("# --------------------------------------------------------------------------");
     output.push("import inspect");
+    output.push("import logging")
     output.push("import os");
     output.push("import sys");
     output.push("import traceback");
@@ -28,11 +29,14 @@ export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     output.push("from azure.cli.testsdk.exceptions import CliTestError, CliExecutionError, JMESPathCheckAssertionError");
     output.push("");
     output.push("");
+    output.push("logger = logging.getLogger('azure.cli.testsdk')");
+    output.push("logger.addHandler(logging.StreamHandler())");
     output.push("__path__ = __import__('pkgutil').extend_path(__path__, __name__)");
     output.push("exceptions = []");
     output.push('test_map = dict()');
     output.push('SUCCESSED = "successed"');
     output.push('FAILED = "failed"');
+    output.push('');
     output.push('');
     output.push('def try_manual(func):');
     output.push('    def import_manual_function(origin_func):');
@@ -53,14 +57,15 @@ export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     output.push('        func_to_call = func');
     output.push('        try:');
     output.push('            func_to_call = import_manual_function(func)');
-    output.push('            print("Found manual override for {}(...)".format(func.__name__))')
+    output.push('            func_to_call = import_manual_function(func)');
+    output.push('            logger.info("Found manual override for %s(...)", func.__name__)')
     output.push('        except (ImportError, AttributeError):');
     output.push('            pass');
     output.push('        return func_to_call');
     output.push('');
     output.push('    def wrapper(*args, **kwargs):');
     output.push('        func_to_call = get_func_to_call()');
-    output.push('        print("running {}()...".format(func.__name__))');
+    output.push('        logger.info("running %s()...", func.__name__)');
     output.push('        try:');
     output.push('            test_map[func.__name__] = dict()');
     output.push('            test_map[func.__name__]["result"] = SUCCESSED');
@@ -69,16 +74,18 @@ export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     output.push('            test_map[func.__name__]["error_normalized"] = ""');
     output.push('            test_map[func.__name__]["start_dt"] = dt.datetime.utcnow()');
     output.push('            ret = func_to_call(*args, **kwargs)');
-    output.push('        except (AssertionError, AzureError, CliTestError, CliExecutionError, SystemExit, JMESPathCheckAssertionError) as e:');
+    output.push('        except (AssertionError, AzureError, CliTestError, CliExecutionError, SystemExit,');
+    output.push('                JMESPathCheckAssertionError) as e:');
     output.push('            test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()');
     output.push('            test_map[func.__name__]["result"] = FAILED');
     output.push('            test_map[func.__name__]["error_message"] = str(e).replace("\\r\\n", " ").replace("\\n", " ")[:500]');
-    output.push('            test_map[func.__name__]["error_stack"] = traceback.format_exc().replace("\\r\\n", " ").replace("\\n", " ")[:500]');
-    output.push('            print("--------------------------------------")');
-    output.push('            print("step exception: ", e)');
-    output.push('            print("--------------------------------------", file=sys.stderr)');
-    output.push('            print("step exception in {}: {}".format(func.__name__, e), file=sys.stderr)');
-    output.push('            traceback.print_exc()');
+    output.push('            test_map[func.__name__]["error_stack"] = traceback.format_exc().replace(');
+    output.push('                "\\r\\n", " ").replace("\\n", " ")[:500]');
+    output.push('            logger.info("--------------------------------------")');
+    output.push('            logger.info("step exception: %s", e)');
+    output.push('            logger.error("--------------------------------------")');
+    output.push('            logger.error("step exception in %s: %s", func.__name__, e)');
+    output.push('            logger.info(traceback.format_exc())');
     output.push('            exceptions.append((func.__name__, sys.exc_info()))');
     output.push('        else:');
     output.push('            test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()');
@@ -88,12 +95,12 @@ export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     output.push('        return get_func_to_call()');
     output.push('    return wrapper');
     output.push('');
+    output.push('');
     output.push('def calc_coverage(filename):');
     output.push('    filename = filename.split(".")[0]');
     output.push('    coverage_name = filename + "_coverage.md"');
     output.push('    with open(coverage_name, "w") as f:');
     output.push('        f.write("|Scenario|Result|ErrorMessage|ErrorStack|ErrorNormalized|StartDt|EndDt|\\n")');
-    output.push('        failed = 0');
     output.push('        total = len(test_map)');
     output.push('        covered = 0');
     output.push('        for k, v in test_map.items():');
@@ -102,9 +109,11 @@ export function GenerateAzureCliTestInit(model: CodeModelAz): string[] {
     output.push('                continue');
     output.push('            if v["result"] == SUCCESSED:');
     output.push('                covered += 1');
-    output.push('            f.write("|{step_name}|{result}|{error_message}|{error_stack}|{error_normalized}|{start_dt}|{end_dt}|\\n".format(step_name=k, **v))');
+    output.push('            f.write("|{step_name}|{result}|{error_message}|{error_stack}|{error_normalized}|{start_dt}|"');
+    output.push('                    "{end_dt}|\\n".format(step_name=k, **v))');
     output.push('        f.write("Coverage: {}/{}\\n".format(covered, total))');
     output.push('    print("Create coverage\\n", file=sys.stderr)');
+    output.push('');
     output.push('');
     output.push('def raise_if():');
     output.push('    if exceptions:');

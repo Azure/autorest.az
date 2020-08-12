@@ -113,12 +113,6 @@ esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks
 helps['managed-network mn scope-assignment update'] = """
     type: command
     short-summary: "Creates a scope assignment."
-    examples:
-      - name: Create/Update Managed Network
-        text: |-
-               az managed-network mn scope-assignment update --assigned-managed-network "/subscriptions/subscriptionA/r\
-esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope \
-"subscriptions/subscriptionC" --name "myScopeAssignment"
 """
 
 helps['managed-network mn scope-assignment delete'] = """
@@ -224,14 +218,6 @@ helps['managed-network mn group update'] = """
             id: Resource Id
 
             Multiple actions can be specified by using more than one --subnets argument.
-    examples:
-      - name: Create/Update Managed Network Group
-        text: |-
-               az managed-network mn group update --management-groups "[]" --subnets id="/subscriptionB/resourceGroups/\
-myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --virtual-networks \
-id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" \
---virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB"\
- --group-name "myManagedNetworkGroup" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network mn group delete'] = """
