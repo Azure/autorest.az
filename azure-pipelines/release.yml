@@ -101,7 +101,7 @@ stages:
           npm install -g autorest
           echo -e "\e[32m[$(date -u)] LOG: Azdev setup"
           cd ../azure-cli
-          azdev setup -r ../azure-cli-extensions
+          azdev setup -c . -r ../azure-cli-extensions
           echo -e "\e[32m[$(date -u)] LOG: test server setup"
           cd ../autorest.testserver
           npm install
