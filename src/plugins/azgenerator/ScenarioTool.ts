@@ -256,6 +256,20 @@ class ResourceObject {
     }
 
     public getCheckers(resource_pool: ResourcePool, example: CommandExample): string[] {
+        function hasComplexArray(obj: any): boolean {
+            if (obj instanceof Array){
+                if (obj.length>1)   return true;
+                for (let s of obj) {
+                    if (hasComplexArray(s))  return true;
+                }
+            }   
+            if (isDict(obj)) {
+                for (let key in obj) {
+                    if (hasComplexArray(obj[key]))  return true;
+                }
+            }
+            return false;
+        }
         let ret: string[] = [];
         if (['create', 'delete', 'show', 'list', 'update'].indexOf(example.Method)<0)   return ret;
         let expectedStatus = "200";
@@ -275,6 +289,7 @@ class ResourceObject {
             let outputKey =  param.ancestors.slice(1);
             if (outputKey.length>0 && outputKey[0]=="properties")   outputKey = outputKey.slice(1);
             if (typeof param.rawValue == 'object') {
+                if (hasComplexArray(param.rawValue))    continue;
                 let replacedJson = resource_pool.addEndpointResource(param.rawValue, true, false, [], [], param, true);
                 if (replacedJson!=param.rawValue ) {
                     ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", json.loads('${JSON.stringify(replacedJson)}'.format(**test.kwargs)), case_sensitive=False),`);
@@ -285,11 +300,16 @@ class ResourceObject {
                 }
             }
             else {
-                if (typeof param.replacedValue == 'string' && !isNullOrUndefined(param.replacedValue.match(/\{[^:]+\}/g))) {
-                    ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.replacedValue, param.methodParam.value.schema?.type)}.format(**test.kwargs), case_sensitive=False),`);
+                if (typeof param.replacedValue == 'string') {
+                    if (!isNullOrUndefined(param.replacedValue.match(/\{[^:]+\}/g))) {
+                        ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.replacedValue, param.methodParam.value.schema?.type)}.format(**test.kwargs), case_sensitive=False),`);
+                    }
+                    else {
+                        ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}, case_sensitive=False),`);
+                    }
                 }
                 else {
-                    ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}, case_sensitive=False),`);
+                    ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}),`);
                 }
             }
         }
