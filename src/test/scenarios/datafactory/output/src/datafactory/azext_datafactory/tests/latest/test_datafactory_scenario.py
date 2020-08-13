@@ -9,6 +9,7 @@
 # --------------------------------------------------------------------------
 
 import os
+import json
 from azure.cli.testsdk import ScenarioTest
 from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
@@ -40,7 +41,10 @@ def step__factories_get_factories_get(test, rg):
     test.cmd('az datafactory show '
              '--name "{myFactory}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check("tags", json.loads('{"exampleTag":"exampleValue"}'), case_sensitive=False),
+                 test.check("location", "East US", case_sensitive=False),
+             ])
 
 
 # EXAMPLE: /Factories/get/Factories_List
@@ -48,7 +52,9 @@ def step__factories_get_factories_get(test, rg):
 def step__factories_get_factories_list(test, rg):
     test.cmd('az datafactory list '
              '-g ""',
-             checks=[])
+             checks=[
+                 test.check('length(@)', 1),
+             ])
 
 
 # EXAMPLE: /Factories/get/Factories_ListByResourceGroup
@@ -56,7 +62,9 @@ def step__factories_get_factories_list(test, rg):
 def step__factories_get_factories_listbyresourcegroup(test, rg):
     test.cmd('az datafactory list '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check('length(@)', 1),
+             ])
 
 
 # EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
@@ -104,7 +112,9 @@ def step__factories_patch_factories_update(test, rg):
              '--name "{myFactory}" '
              '--tags exampleTag="exampleValue" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check("tags", json.loads('{"exampleTag":"exampleValue"}'), case_sensitive=False),
+             ])
 
 
 # EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
@@ -125,7 +135,9 @@ def step__integrationruntimes_get_integrationruntimes_get(test, rg):
              '--factory-name "{myFactory}" '
              '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check("description", "A selfhosted integration runtime", case_sensitive=False),
+             ])
 
 
 # EXAMPLE: /IntegrationRuntimes/get/IntegrationRuntimes_ListByFactory
@@ -134,7 +146,9 @@ def step__integrationruntimes_get_integrationruntimes_listbyfactory(test, rg):
     test.cmd('az datafactory integration-runtime list '
              '--factory-name "{myFactory}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check('length(@)', 2),
+             ])
 
 
 # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_CreateLinkedIntegrationRuntime
@@ -289,7 +303,9 @@ def step__triggers_put_triggers_update(test, rg):
              '--resource-group "{rg}" '
              '--description "Example description" '
              '--name "{myTrigger}"',
-             checks=[])
+             checks=[
+                 test.check("description", "Example description", case_sensitive=False),
+             ])
 
 
 # EXAMPLE: /Triggers/get/Triggers_Get
@@ -308,7 +324,9 @@ def step__triggers_get_triggers_listbyfactory(test, rg):
     test.cmd('az datafactory trigger list '
              '--factory-name "{myFactory}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check('length(@)', 1),
+             ])
 
 
 # EXAMPLE: /Triggers/post/Triggers_GetEventSubscriptionStatus

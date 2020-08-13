@@ -30,9 +30,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
 
     let header: HeaderGenerator = new HeaderGenerator();
 
-    head.push("");
-    head.push("import os");
-    head.push("import json");
+    header.addImport("os");
     head.push("from azure.cli.testsdk import ScenarioTest");
     head.push("from .. import try_manual, raise_if, calc_coverage");
     //head.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
@@ -68,6 +66,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let imports: string[] = [];
     let decorators: string[] = [];
     let parameterNames = InitiateDependencies(model, imports, decorators, initiates);
+    let jsonAdded = false;
 
     function parameterLine() {
         let ret = "";
@@ -108,7 +107,11 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
                     if (checks.length>0) {
                         steps.push("    " + disabled + "         checks=[");
                         for (let check of checks) {
-                            steps.push("    " + disabled + "             " + check);
+                            ToMultiLine("    " + disabled + "             " + check, steps);
+                            if (!jsonAdded && !disabled && check.indexOf("json.loads")>=0) {
+                                header.addImport("json");
+                                jsonAdded = true;
+                            }
                         }
                         steps.push("    " + disabled + "         ])");
                     }
