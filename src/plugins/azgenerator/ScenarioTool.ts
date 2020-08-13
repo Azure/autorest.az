@@ -4,6 +4,7 @@ import { CommandExample, ExampleParam } from "./CodeModelAz";
 import { deepCopy, isDict, ToCamelCase, changeCamelToDash } from "../../utils/helper"
 import { Example } from "@azure-tools/codemodel";
 import { EnglishPluralizationService } from "@azure-tools/codegen";
+import { isNullOrUndefined } from "util";
 
 export let azOptions = {}
 
@@ -526,7 +527,7 @@ export class ResourcePool {
 
         let nodes = endpoint.split('/');
         if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
-            return this.getPlaceholder(endpoint, isTest);
+            return this.getPlaceholder(endpoint, isTest, placeholders);
         }
         if (isTest) {
             nodes[2] = `{${ResourcePool.KEY_SUBSCRIPTIONID}}`;
@@ -586,17 +587,31 @@ export class ResourcePool {
         }
     }
 
-    public getPlaceholder(object_name: string, isTest: boolean): string {
+    public getPlaceholder(object_name: string, isTest: boolean, placeholders: string[]=null): string {
         // find in MapResource
         for (let class_name in this.map) {
             if (object_name in this.map[class_name].objects) {
-                return this.map[class_name].objects[object_name].placeholder(isTest)
+                let ret = this.map[class_name].objects[object_name].placeholder(isTest);
+                if (!isNullOrUndefined(placeholders)) {
+                    if (placeholders.indexOf(ret) < 0) {
+                        placeholders.push(ret);
+                    }
+                }
+                return ret
             }
         }
 
         // find in TreeResource
         let resource_object = this.findTreeResource(null, object_name, this.root);
-        if (resource_object)    return resource_object.placeholder(isTest);
+        if (resource_object) {
+            let ret = resource_object.placeholder(isTest);
+            if (!isNullOrUndefined(placeholders)) {
+                if (placeholders.indexOf(ret) < 0) {
+                    placeholders.push(ret);
+                }
+            }
+            return ret;
+        }
 
         let regex = /^\d\d\d\d\-\d\d\-\d\dT\d\d:\d\d:\d\d.\d+Z$/g
         if (azOptions?.['replace-datetime'] && regex.test(object_name)) {
