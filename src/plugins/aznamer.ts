@@ -198,8 +198,18 @@ export class AzNamer {
                     });
                     if(request.parameters) {
                         request.parameters.forEach(parameter => {
-                            if(parameter.language['cli'] != undefined) {
+                            if(!isNullOrUndefined(parameter.language['cli'])) {
                                 this.getAzName(parameter);
+                                if (!isNullOrUndefined(parameter.language['cli']['alias'])) {
+                                    parameter.language['az']['alias'] = []
+                                    if (typeof(parameter.language['cli']['alias']) == "string") {
+                                        parameter.language['az']['alias'].push(changeCamelToDash(parameter.language['cli']['alias']));
+                                    } else if (isArray(parameter.language['cli']['alias'])) {
+                                        for(let alias of parameter.language['cli']['alias']) {
+                                            parameter.language['az']['alias'].push(changeCamelToDash(alias));
+                                        }
+                                    }
+                                }
                             }
                         });                   
                     }
