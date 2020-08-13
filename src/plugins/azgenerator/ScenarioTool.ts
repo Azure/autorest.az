@@ -272,9 +272,13 @@ class ResourceObject {
         }
         let ret: string[] = [];
         if (['create', 'delete', 'show', 'list', 'update'].indexOf(example.Method)<0)   return ret;
-        let expectedStatus = "200";
-        if (example.Method == 'create') expectedStatus = "201";
-        let example_resp_body = example.ExampleObj.responses?.[expectedStatus]?.body;
+        let example_resp_body = null;
+        for (let statusCode of  [200, 201, 204]) {
+            example_resp_body = example.ExampleObj.responses?.[200]?.body;
+            if (!isNullOrUndefined(example_resp_body))  break;
+        }
+        if (isNullOrUndefined(example_resp_body))   return ret;
+
         for (let param of this.example_params) {
             let p = example_resp_body;
             let q = 1;
@@ -284,7 +288,7 @@ class ResourceObject {
             }
             if (q<param.ancestors.length)   continue;   // ancestors don't match
             if (!(isDict(p) && param.defaultName in p)) continue;   //param.defaultName not found
-            if (typeof p[param.defaultName] != typeof param.rawValue || JSON.stringify(p[param.defaultName]) != JSON.stringify(param.rawValue)) continue;   // param value don't match
+            if (typeof p[param.defaultName] != typeof param.rawValue || JSON.stringify(p[param.defaultName]).toLowerCase() != JSON.stringify(param.rawValue).toLowerCase()) continue;   // param value don't match
 
             let outputKey =  param.ancestors.slice(1);
             if (outputKey.length>0 && outputKey[0]=="properties")   outputKey = outputKey.slice(1);
