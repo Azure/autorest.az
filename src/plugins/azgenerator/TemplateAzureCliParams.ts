@@ -182,7 +182,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     } else if (parameterName.endsWith('name') && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase() || !isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
                         argument = "        c.argument('" + parameterName + "'";
                         let aliases: string[] = [];
-                        if(!model.Method['hasName']) {
+                        if(!model.Method['hasName'] && parameterName.endsWith('name') && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase()) {
                             aliases.push('name');
                             aliases.push('n');
                         }
