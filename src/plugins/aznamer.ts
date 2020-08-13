@@ -3,7 +3,8 @@ import { Session, startSession, Host, Channel } from "@azure-tools/autorest-exte
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { changeCamelToDash } from '../utils/helper';
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, isArray } from "util";
+import { type } from "os";
 
 export class AzNamer {
     codeModel: CodeModel;
@@ -183,6 +184,16 @@ export class AzNamer {
                     operation.parameters.forEach(parameter => {
                         if(!isNullOrUndefined(parameter.language['cli'])) {
                             this.getAzName(parameter);
+                            if (!isNullOrUndefined(parameter.language['cli']['alias'])) {
+                                parameter.language['az']['alias'] = []
+                                if (typeof(parameter.language['cli']['alias']) == "string") {
+                                    parameter.language['az']['alias'].push(changeCamelToDash(parameter.language['cli']['alias']));
+                                } else if (isArray(parameter.language['cli']['alias'])) {
+                                    for(let alias of parameter.language['cli']['alias']) {
+                                        parameter.language['az']['alias'].push(changeCamelToDash(alias));
+                                    }
+                                }
+                            }
                         }
                     });
                     if(request.parameters) {
