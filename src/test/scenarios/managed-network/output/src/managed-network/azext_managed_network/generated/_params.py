@@ -40,7 +40,7 @@ def load_arguments(self, _):
 
     with self.argument_context('managed-network mn create') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', options_list=['--name', '-n', '--managed_network_name'], type=str, help=''
+        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str, help=''
                    'The name of the Managed Network.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
@@ -50,18 +50,18 @@ def load_arguments(self, _):
 
     with self.argument_context('managed-network mn update') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', options_list=['--name', '-n', '--managed_network_name'], type=str, help=''
+        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str, help=''
                    'The name of the Managed Network.', id_part='name')
         c.argument('tags', tags_type)
 
     with self.argument_context('managed-network mn delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', options_list=['--name', '-n', '--managed_network_name'], type=str, help=''
+        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str, help=''
                    'The name of the Managed Network.', id_part='name')
 
     with self.argument_context('managed-network mn get-modify') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', options_list=['--name', '-n', '--managed_network_name'], type=str, help=''
+        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str, help=''
                    'The name of the Managed Network.', id_part='name')
 
     with self.argument_context('managed-network mn scope-assignment list') as c:
@@ -69,7 +69,7 @@ def load_arguments(self, _):
 
     with self.argument_context('managed-network mn scope-assignment show') as c:
         c.argument('scope', type=str, help='The base resource of the scope assignment.')
-        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope_assignment_name'], type=str, help=''
+        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str, help=''
                    'The name of the scope assignment to get.')
 
     with self.argument_context('managed-network mn scope-assignment create') as c:
@@ -78,7 +78,7 @@ def load_arguments(self, _):
                    '\'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}\' for a resource group, and '
                    '\'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider'
                    '}/{resource-type}/{resource-name}\' for a resource.')
-        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope_assignment_name'], type=str, help=''
+        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str, help=''
                    'The name of the scope assignment to create.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('assigned_managed_network', type=str,
@@ -90,7 +90,7 @@ def load_arguments(self, _):
                    '\'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}\' for a resource group, and '
                    '\'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider'
                    '}/{resource-type}/{resource-name}\' for a resource.')
-        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope_assignment_name'], type=str, help=''
+        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str, help=''
                    'The name of the scope assignment to create.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('assigned_managed_network', type=str,
@@ -98,7 +98,7 @@ def load_arguments(self, _):
 
     with self.argument_context('managed-network mn scope-assignment delete') as c:
         c.argument('scope', type=str, help='The scope of the scope assignment to delete.')
-        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope_assignment_name'], type=str, help=''
+        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str, help=''
                    'The name of the scope assignment to delete.')
 
     with self.argument_context('managed-network mn group list') as c:
