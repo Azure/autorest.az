@@ -186,6 +186,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         }
                         model.MethodParameter.language['az']['alias'].push('name');
                         model.MethodParameter.language['az']['alias'].push('n');
+                        model.MethodParameter.language['az']['alias'].push(parameterName);
                     }
                     if (!isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
                         argument = "        c.argument('" + parameterName + "'";
@@ -199,7 +200,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                                 if(alias.length == 1) {
                                     alias = "'-" + alias + "'";
                                 } else if(alias.length > 1) {
-                                    alias = "'--" + alias + "'";
+                                    alias = "'--" + alias.replace(/_/g, '-') + "'";
                                 }
                                 if(alias_str.indexOf(alias) < 0) {
                                     alias_str.push(alias);
