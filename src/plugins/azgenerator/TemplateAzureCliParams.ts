@@ -186,6 +186,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         }
                         model.MethodParameter.language['az']['alias'].push('name');
                         model.MethodParameter.language['az']['alias'].push('n');
+                        model.MethodParameter.language['az']['alias'].push(parameterName);
                     }
                     if (!isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
                         argument = "        c.argument('" + parameterName + "'";
