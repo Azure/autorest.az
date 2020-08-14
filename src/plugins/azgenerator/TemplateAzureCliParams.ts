@@ -175,27 +175,21 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
 
                     // this is to handle names like "format", "type", etc
                     if (parameterName.endsWith("_")) {
-
-                        argument = "        c.argument('" + parameterName + "'";
-                        argument += ", options_list=['--" + parameterName.substr(0, parameterName.length - 1) + "']";
-                        model.MethodParameter.language['az']['alias'] = Array(parameterName.substr(0, parameterName.length - 1));
-                    } else if (parameterName.endsWith('name') && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase() || !isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
-                        argument = "        c.argument('" + parameterName + "'";
-                        let aliases: string[] = [];
-                        if(!model.Method['hasName']) {
-                            aliases.push('name');
-                            aliases.push('n');
+                        if (isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
+                            model.MethodParameter.language['az']['alias'] = [];
                         }
-                        if(!isNullOrUndefined(model.MethodParameter?.language?.['cli']?.['alias'])) {
-                            let alias = model.MethodParameter?.language?.['cli']?.['alias'];
-                            
-                            if(typeof alias === "string") {
-                                aliases.push(alias);  
-                            }
-                            if (isArray(alias)) {
-                                aliases = aliases.concat(alias);
-                            }
+                        model.MethodParameter.language['az']['alias'].push(parameterName.substr(0, parameterName.length - 1));
+                        
+                    } else if (parameterName.endsWith('name') && !model.Method['hasName'] && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase()) {
+                        if (isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
+                            model.MethodParameter.language['az']['alias'] = [];
                         }
+                        model.MethodParameter.language['az']['alias'].push('name');
+                        model.MethodParameter.language['az']['alias'].push('n');
+                    }
+                    if (!isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
+                        argument = "        c.argument('" + parameterName + "'";
+                        let aliases = model.MethodParameter.language['az']['alias'];
                         if(aliases.length > 0) {
                             let alias_str = [];
                             let ori_alias = [];
