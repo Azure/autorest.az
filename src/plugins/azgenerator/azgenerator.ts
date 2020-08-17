@@ -2,14 +2,12 @@ import { Channel, Host, startSession } from '@azure-tools/autorest-extension-bas
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from "os";
 import { isNullOrUndefined } from 'util';
-import { GenerationMode } from '../models';
+import { GenerationMode } from "../models";
+import { AzGeneratorFactory } from "./AzGeneratorFactory";
 import { CodeModelCliImpl } from "./CodeModelAzImpl";
-import { GenerateAll } from "./Generator";
-
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
-    //host.Message({Channel:Channel.Warning, Text:"in azgenerator processRequest"});
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         const azureCliFolder = await host.GetValue("azure-cli-folder");
@@ -54,7 +52,10 @@ export async function processRequest(host: Host) {
         }
         host.Message({ Channel: Channel.Information, Text: "generation-mode in code model is: " + GenerationMode[session.model.language['az']['generation-mode']] });
 
-        let files: any = await GenerateAll(model, true, debug);
+        let generator = await AzGeneratorFactory.createAzGenerator(model, debug);
+        generator.generateAll();
+        let files = generator.files;
+
         if (model.SelectFirstExtension()) {
             do {
                 let path = "azext_" + model.Extension_Name.replace("-", "_") + "/";

@@ -90,6 +90,12 @@ class IntegrationRuntimeAutoUpdate(with_metaclass(_CaseInsensitiveEnumMeta, str,
 
     ON = "On"
     OFF = "Off"
+    FAKE_VALUE1 = "fakeValue1"
+    FAKE_VALUE2 = "fakeValue2"
+    FAKE_VALUE3 = "fakeValue3"
+    FAKE_VALUE4 = "fakeValue4"
+    FAKE_VALUE5 = "fakeValue5"
+    FAKE_VALUE6 = "fakeValue6"
 
 class IntegrationRuntimeEdition(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The edition for the SSIS Integration Runtime

@@ -33,7 +33,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     head.push("");
     head.push("import os");
     head.push("from azure.cli.testsdk import ScenarioTest");
-    head.push("from .. import try_manual, raise_if");
+    head.push("from .. import try_manual, raise_if, calc_coverage");
     //head.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
     steps.push("");
     steps.push("");
@@ -140,6 +140,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     funcScenario.push("");
     funcScenario.push("");
     body.push(`        call_scenario(self${parameterLine()})`);
+    body.push(`        calc_coverage(__file__)`);
     body.push(`        raise_if()`);
     body.push("");
 
@@ -198,8 +199,10 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
         for (let [class_name, kargs_key, hasCreateExample, object_name] of internalObjects) {
             if (hasCreateExample && model.RandomizeNames)
             {
-                let snakeName = ToSnakeCase(class_name);
-                ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='${object_name}'[:${Math.floor(object_name.length/2)}], length=${object_name.length}),`, initiates);
+                const RANDOMIZE_MIN_LEN = 4;
+                let prefixLen = Math.floor(object_name.length/2);
+                if(object_name.length-prefixLen<RANDOMIZE_MIN_LEN)  prefixLen = Math.max(object_name.length-RANDOMIZE_MIN_LEN, 0);
+                ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='${object_name}'[:${prefixLen}], length=${Math.max(object_name.length, RANDOMIZE_MIN_LEN)}),`, initiates);
             }
             else
                 initiates.push(`            '${kargs_key}': '${object_name}',`);   // keep the original name in example if there is no create example in the test-scenario

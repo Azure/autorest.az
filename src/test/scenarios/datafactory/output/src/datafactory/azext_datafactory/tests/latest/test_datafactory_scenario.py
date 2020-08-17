@@ -10,7 +10,7 @@
 
 import os
 from azure.cli.testsdk import ScenarioTest
-from .. import try_manual, raise_if
+from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
 
 
@@ -465,4 +465,5 @@ class DFAZManagementClientScenarioTest(ScenarioTest):
         })
 
         call_scenario(self, rg)
+        calc_coverage(__file__)
         raise_if()

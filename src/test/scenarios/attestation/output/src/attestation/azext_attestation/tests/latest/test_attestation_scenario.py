@@ -10,7 +10,7 @@
 
 import os
 from azure.cli.testsdk import ScenarioTest
-from .. import try_manual, raise_if
+from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
 
 
@@ -105,4 +105,5 @@ class AttestationManagementClientScenarioTest(ScenarioTest):
     def test_attestation(self, rg, rg_2, rg_3):
 
         call_scenario(self, rg, rg_2, rg_3)
+        calc_coverage(__file__)
         raise_if()
