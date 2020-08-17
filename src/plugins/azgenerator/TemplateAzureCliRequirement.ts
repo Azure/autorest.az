@@ -20,7 +20,6 @@ export async function GenerateRequirementTxt(model: CodeModelAz, requirementPath
     let line = model.GetPythonPackageName() + "==" + latestVersion;
     for(let dependency of outputFile) {
         if (dependency.indexOf(model.GetPythonPackageName() + "==") > -1) {
-            outputFile[cnt] = line;
             found = true;
             break;
         }

@@ -25,6 +25,7 @@ import { GenerateTopLevelImport } from "./TemplateAzureCliTopLevelImport"
 import { GenerateAzureCliValidators } from "./TemplateAzureCliValidators"
 import { GenerateDocSourceJsonMap } from "./TemplateAzureCliDocSourceJsonMap"
 import { GenerateRequirementTxt } from './TemplateAzureCliRequirement';
+import { GenerateAzureCliMainSetUp } from "./TemplateAzureCliMainSetUp"
 
 // [Deprecating] Try to depreacate this method. Move logic to AzGeneratorBase and AzExtensionFullGenerator class
 export async function GenerateAll(model: CodeModelAz,
@@ -83,7 +84,8 @@ export async function GenerateAll(model: CodeModelAz,
                     let requireFilePath= model.AzureCliFolder + "/src/azure-cli/requirements.py3." + sys + ".txt";
                     files[requireFilePath] = await GenerateRequirementTxt(model, requireFilePath);
                 }
-                
+                let setUpPath = model.AzureCliFolder + "src/azure-cli/setup.py"
+                files[setUpPath] = await GenerateAzureCliMainSetUp(model, setUpPath);
             }
         }
         while (model.SelectNextExtension())
