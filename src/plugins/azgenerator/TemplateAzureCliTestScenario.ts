@@ -47,13 +47,13 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     // initiates.push("    def test_" + model.Extension_NameUnderscored + "(self, resource_group):");
     initiates.push("");
 
-    // go through the examples to recognize resources
-    for (var ci = 0; ci < config.length; ci++) {
-        let exampleId: string = config[ci].name;
-        if (exampleId) {
-            model.FindExampleById(exampleId, commandParams, []);
-        }
-    }
+    // // go through the examples to recognize resources
+    // for (var ci = 0; ci < config.length; ci++) {
+    //     let exampleId: string = config[ci].name;
+    //     if (exampleId) {
+    //         model.FindExampleById(exampleId, commandParams, []);
+    //     }
+    // }
 
     let subscription_id = model.GetSubscriptionKey();
     if (subscription_id) {

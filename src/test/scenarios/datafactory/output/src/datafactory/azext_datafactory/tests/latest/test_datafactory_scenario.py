@@ -32,7 +32,9 @@ def step__factories_put_factories_createorupdate(test, rg):
              '--zones "moon" '
              '--name "{myFactory}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check("location", "East US", case_sensitive=False),
+             ])
 
 
 # EXAMPLE: /Factories/get/Factories_Get
@@ -42,7 +44,6 @@ def step__factories_get_factories_get(test, rg):
              '--name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=[
-                 test.check("tags", json.loads('{"exampleTag":"exampleValue"}'), case_sensitive=False),
                  test.check("location", "East US", case_sensitive=False),
              ])
 
@@ -136,7 +137,7 @@ def step__integrationruntimes_get_integrationruntimes_get(test, rg):
              '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[
-                 test.check("description", "A selfhosted integration runtime", case_sensitive=False),
+                 test.check("properties.description", "A selfhosted integration runtime", case_sensitive=False),
              ])
 
 
@@ -147,7 +148,7 @@ def step__integrationruntimes_get_integrationruntimes_listbyfactory(test, rg):
              '--factory-name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=[
-                 test.check('length(@)', 2),
+                 test.check('length(@)', 1),
              ])
 
 
@@ -304,7 +305,7 @@ def step__triggers_put_triggers_update(test, rg):
              '--description "Example description" '
              '--name "{myTrigger}"',
              checks=[
-                 test.check("description", "Example description", case_sensitive=False),
+                 test.check("properties.description", "Example description", case_sensitive=False),
              ])
 
 

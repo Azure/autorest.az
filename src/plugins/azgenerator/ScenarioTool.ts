@@ -2,7 +2,6 @@
 import * as path from "path"
 import { CommandExample, ExampleParam } from "./CodeModelAz";
 import { deepCopy, isDict, ToCamelCase, ToPythonString, changeCamelToDash } from "../../utils/helper"
-import { Example } from "@azure-tools/codemodel";
 import { EnglishPluralizationService } from "@azure-tools/codegen";
 import { isNullOrUndefined } from "util";
 
@@ -270,6 +269,53 @@ class ResourceObject {
             }
             return false;
         }
+
+        function addParam(obj: any, param: ExampleParam, checkPath: string, ret: string[]) {
+            if (isDict(obj) && param.defaultName in obj && typeof obj[param.defaultName] == typeof param.rawValue && JSON.stringify(obj[param.defaultName]).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
+                if (checkPath.length>0) checkPath += ".";
+                let checker = formatChecker(checkPath+param.defaultName, param);
+                if (!isNullOrUndefined(checker))    ret.push(checker);
+                return;
+            }
+            if (obj instanceof Array){
+                if (obj.length>1)   return;
+                addParam(obj[0], param, checkPath+"[0]", ret);
+            }   
+            if (isDict(obj)) {
+                if (checkPath.length>0) checkPath += ".";
+                for (let key in obj) {
+                    addParam(obj[key], param, checkPath+key, ret);
+                }
+            }
+        }
+
+        function formatChecker(checkPath: string, param: ExampleParam): string|null {
+            if (typeof param.rawValue == 'object') {
+                if (hasComplexArray(param.rawValue))    return null;
+                let replacedJson = resource_pool.addEndpointResource(param.rawValue, true, false, [], [], param, true);
+                if (replacedJson!=param.rawValue ) {
+                    return `test.check("${checkPath}", json.loads('${JSON.stringify(replacedJson)}'.format(**test.kwargs)), case_sensitive=False),`;
+                }
+                else {
+                    replacedJson = JSON.stringify(replacedJson).split("{{").join("{").split("}}").join("}");
+                    return `test.check("${checkPath}", json.loads('${replacedJson}'), case_sensitive=False),`;
+                }
+            }
+            else {
+                if (typeof param.replacedValue == 'string') {
+                    if (!isNullOrUndefined(param.replacedValue.match(/\{[^:]+\}/g))) {
+                        return `test.check("${checkPath}", ${ToPythonString(param.replacedValue, param.methodParam.value.schema?.type)}.format(**test.kwargs), case_sensitive=False),`;
+                    }
+                    else {
+                        return `test.check("${checkPath}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}, case_sensitive=False),`;
+                    }
+                }
+                else {
+                    return `test.check("${checkPath}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}),`;
+                }
+            }
+        }
+
         let ret: string[] = [];
         if (['create', 'delete', 'show', 'list', 'update'].indexOf(example.Method)<0)   return ret;
         let example_resp_body = null;
@@ -280,46 +326,9 @@ class ResourceObject {
         if (isNullOrUndefined(example_resp_body))   return ret;
 
         for (let param of this.example_params) {
-            let p = example_resp_body;
-            let q = 1;
-            while (q<param.ancestors.length && isDict(p) && param.ancestors[q] in p) {
-                p = p[param.ancestors[q]];
-                q += 1;
-            }
-            if (q<param.ancestors.length)   continue;   // ancestors don't match
-            if (!(isDict(p) && param.defaultName in p)) continue;   //param.defaultName not found
-            if (typeof p[param.defaultName] != typeof param.rawValue || JSON.stringify(p[param.defaultName]).toLowerCase() != JSON.stringify(param.rawValue).toLowerCase()) continue;   // param value don't match
+            addParam(example_resp_body, param, "", ret);
+        }
 
-            let outputKey =  param.ancestors.slice(1);
-            if (outputKey.length>0 && outputKey[0]=="properties")   outputKey = outputKey.slice(1);
-            if (typeof param.rawValue == 'object') {
-                if (hasComplexArray(param.rawValue))    continue;
-                let replacedJson = resource_pool.addEndpointResource(param.rawValue, true, false, [], [], param, true);
-                if (replacedJson!=param.rawValue ) {
-                    ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", json.loads('${JSON.stringify(replacedJson)}'.format(**test.kwargs)), case_sensitive=False),`);
-                }
-                else {
-                    replacedJson = JSON.stringify(replacedJson).split("{{").join("{").split("}}").join("}");
-                    ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", json.loads('${replacedJson}'), case_sensitive=False),`);
-                }
-            }
-            else {
-                if (typeof param.replacedValue == 'string') {
-                    if (!isNullOrUndefined(param.replacedValue.match(/\{[^:]+\}/g))) {
-                        ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.replacedValue, param.methodParam.value.schema?.type)}.format(**test.kwargs), case_sensitive=False),`);
-                    }
-                    else {
-                        ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}, case_sensitive=False),`);
-                    }
-                }
-                else {
-                    ret.push(`test.check("${outputKey.concat([param.defaultName]).join(".")}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}),`);
-                }
-            }
-        }
-        if (example.Method == 'list') {
-            ret = ret;
-        }
         return ret;
     }
 }

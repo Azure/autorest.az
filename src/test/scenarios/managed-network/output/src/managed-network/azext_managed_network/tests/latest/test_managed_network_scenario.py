@@ -7,6 +7,7 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=line-too-long
 
 import os
 import json
@@ -60,7 +61,8 @@ def step_managementnetworkgroupsput(test, rg):
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[
-                 test.check("managementGroups", json.loads('[]'.format(**test.kwargs)), case_sensitive=False),
+                 test.check("properties.managementGroups", json.loads('[]'.format(**test.kwargs)),
+                            case_sensitive=False),
              ])
     test.cmd('az managed-network mn group wait --created '
              '--group-name "{myManagedNetworkGroup}" '
@@ -77,8 +79,8 @@ def step_scopeassignmentsput(test, rg):
              '--scope "subscriptions/subscriptionC" '
              '--name "{myScopeAssignment}"',
              checks=[
-                 test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M"
-                            "icrosoft.ManagedNetwork/managedNetworks/{myManagedNetwork}".format(**test.kwargs),
+                 test.check("properties.assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/"
+                            "providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}".format(**test.kwargs),
                             case_sensitive=False),
              ])
 
@@ -133,8 +135,8 @@ def step_scopeassignmentsget(test, rg):
              '--scope "subscriptions/subscriptionC" '
              '--name "{myScopeAssignment}"',
              checks=[
-                 test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M"
-                            "icrosoft.ManagedNetwork/managedNetworks/{myManagedNetwork}".format(**test.kwargs),
+                 test.check("properties.assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/"
+                            "providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}".format(**test.kwargs),
                             case_sensitive=False),
              ])
 
@@ -157,7 +159,8 @@ def step_managementnetworkgroupsget(test, rg):
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[
-                 test.check("managementGroups", json.loads('[]'.format(**test.kwargs)), case_sensitive=False),
+                 test.check("properties.managementGroups", json.loads('[]'.format(**test.kwargs)),
+                            case_sensitive=False),
              ])
 
 
