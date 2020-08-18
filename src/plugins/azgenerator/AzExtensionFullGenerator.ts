@@ -32,7 +32,7 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
     }
 
 
-    public generateAll(): void {
+    public async generateAll() {
 
         this.files[this.path + "generated/_params.py"] = GenerateAzureCliParams(this.model, this.isDebugMode);
         this.files[this.path + "generated/commands.py"] = GenerateAzureCliCommands(this.model);

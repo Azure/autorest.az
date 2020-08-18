@@ -17,5 +17,5 @@ export abstract class AzGeneratorBase {
         this.isDebugMode = isDebugMode;
     }
 
-    public abstract generateAll(): void;
+    public abstract async generateAll()
 }

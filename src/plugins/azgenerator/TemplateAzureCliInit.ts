@@ -29,7 +29,7 @@ export function GenerateAzureCliInit(model: CodeModelAz): string[] {
     output.push("        from " + importPath + ".generated._client_factory import cf_" + model.Extension_NameUnderscored + "_cl");
     output.push("        " + model.Extension_NameUnderscored + "_custom = CliCommandType(");
     if (model.IsCliCore) {
-        output.push("            operations_tmpl='aazure.cli.command_modules." + model.Extension_NameUnderscored + ".custom#{}',");
+        output.push("            operations_tmpl='azure.cli.command_modules." + model.Extension_NameUnderscored + ".custom#{}',");
     } else {
         output.push("            operations_tmpl='azext_" + model.Extension_NameUnderscored + ".custom#{}',");
     }

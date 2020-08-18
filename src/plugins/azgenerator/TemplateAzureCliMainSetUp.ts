@@ -17,7 +17,7 @@ export async function GenerateAzureCliMainSetUp(model: CodeModelAz, requirementP
     let latestVersion = await getLatestPyPiVersion(packageName);
     let found = false;
     let cnt = 0;
-    let line = packageName + "~=" + latestVersion;
+    let line = "'" + packageName + "~=" + latestVersion + "'";
     let beginLine = -1, endLine = -1;
     for(let line of outputFile) {
         
@@ -45,7 +45,13 @@ export async function GenerateAzureCliMainSetUp(model: CodeModelAz, requirementP
         cnt++;
         
     }
-    if (!found && beginLine > 0 && endLine > 0) {
+    if (!found && beginLine > 0 && endLine > 1) {
+        let len = outputFile[endLine - 1].length;
+        if(outputFile[endLine - 1][len - 1] == '\r') {
+            outputFile[endLine - 1] = outputFile[endLine - 1].replace('\r', ',');
+        } else {
+            outputFile[endLine - 1] += ",";
+        }
         outputFile.splice(endLine, 0, "    " + line)
     }
     return outputFile;

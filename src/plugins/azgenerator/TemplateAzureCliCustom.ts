@@ -475,13 +475,15 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     let indent = "";
     let methodName = originalOperation.language['python'].name;
     if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
-        methodName = "begin_" + methodName;
+        if (!model.SDK_IsTrack1) {
+            methodName = "begin_" + methodName;
+        }
         methodCall += "sdk_no_wait(";
         indent = " ".repeat(methodCall.length);
         methodCall += "no_wait," + "\n" + indent + "client." + methodName;
         
     } else {
-        if(model.Method_IsLongRun) {
+        if(!model.SDK_IsTrack1 && model.Method_IsLongRun) {
             methodName = "begin_" + methodName;
         }
         methodCall += "client." + methodName + "(";
@@ -557,12 +559,14 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
     let methodName = model.Method_Name;
     let indent = "";
     if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
-        methodName = "begin_" + methodName;
+        if (!model.SDK_IsTrack1) {
+            methodName = "begin_" + methodName;
+        }
         methodCall += "sdk_no_wait(";
         indent = " ".repeat(methodCall.length);
         methodCall += "no_wait," + "\n" + indent + "client." + methodName;
     } else {
-        if(model.Method_IsLongRun) {
+        if(!model.SDK_IsTrack1 && model.Method_IsLongRun) {
             methodName = "begin_" + methodName;
         }
         methodCall += "client." + methodName + "(";

@@ -53,7 +53,7 @@ export async function processRequest(host: Host) {
         host.Message({ Channel: Channel.Information, Text: "generation-mode in code model is: " + GenerationMode[session.model.language['az']['generation-mode']] });
 
         let generator = await AzGeneratorFactory.createAzGenerator(model, debug);
-        generator.generateAll();
+        await generator.generateAll();
         let files = generator.files;
 
         if (model.SelectFirstExtension()) {

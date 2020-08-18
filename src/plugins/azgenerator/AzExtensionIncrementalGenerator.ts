@@ -22,7 +22,7 @@ export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
         this.path = "azext_" + this.model.Extension_NameUnderscored + "/";
     }
 
-    public generateAll(): void {
+    public async generateAll() {
         this.files[this.path + "generated/_params.py"] = GenerateAzureCliParams(this.model, this.isDebugMode);
         this.files[this.path + "generated/commands.py"] = GenerateAzureCliCommands(this.model);
         this.files[this.path + "generated/custom.py"] = GenerateAzureCliCustom(this.model);

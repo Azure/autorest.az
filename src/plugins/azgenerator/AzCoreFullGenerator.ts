@@ -30,12 +30,11 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
     }
 
     public getParam() {
-        return {model: this.model, isDebugMode: this.isDebugMode};
+        return {model: this.model, isDebugMode: this.isDebugMode, files: this.files};
     }
 
     public async generateAll() {
-        let files: any = {};
-        let {model, isDebugMode} = this.getParam();
+        let {model, isDebugMode, files} = this.getParam();
         if (model.SelectFirstExtension()) {
             do {
                 let pathTop = "";
