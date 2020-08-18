@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { AzExtensionFullGenerator } from "./AzExtensionFullGenerator";
+import { AzCoreFullGenerator } from "./AzCoreFullGenerator";
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
 
@@ -12,6 +13,9 @@ export class AzGeneratorFactory {
         await model.init();
         model.GenerateTestInit();
 
+        if (model.IsCliCore) {
+            return new AzCoreFullGenerator(model, isDebugMode);
+        }
         return new AzExtensionFullGenerator(model, isDebugMode);
     }
 }
