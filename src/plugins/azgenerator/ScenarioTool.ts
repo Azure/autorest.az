@@ -275,7 +275,7 @@ class ResourceObject {
                 if (checkPath.length > 0) checkPath += ".";
                 if (param.defaultName in obj && typeof obj[param.defaultName] == typeof param.rawValue && JSON.stringify(obj[param.defaultName]).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
                     if (hasComplexArray(param.rawValue)) return;
-                    formatChecker(checkPath + param.defaultName, param.rawValue, ret);
+                    formatChecker(checkPath + resource_pool.replaceResourceString(param.defaultName, [], [], true), param.rawValue, ret);
                     return;
                 }
                 else if ('name' in obj && typeof obj['name'] == typeof param.rawValue && JSON.stringify(obj['name']).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
@@ -292,9 +292,14 @@ class ResourceObject {
             if (isDict(obj)) {
                 if (checkPath.length > 0) checkPath += ".";
                 for (let key in obj) {
-                    addParam(obj[key], param, checkPath + key, ret);
+                    addParam(obj[key], param, checkPath + resource_pool.replaceResourceString(key, [], [], true), ret);
                 }
             }
+        }
+
+        function formatIf(checkPath: string):string {
+            if(isNullOrUndefined(checkPath.match(/\{.+\}/g)))    return "";
+            return ".format(**test.kwargs)";
         }
 
         function formatChecker(checkPath: string, rawValue: any, ret: string[]) {
@@ -302,7 +307,7 @@ class ResourceObject {
                 if (rawValue instanceof Array) {
                     if (rawValue.length > 1) return;
                     if (rawValue.length == 0) {
-                        ret.push(`test.check("${checkPath}", []),`);
+                        ret.push(`test.check("${checkPath}"${formatIf(checkPath)}, []),`);
                     }
                     else {
                         formatChecker(checkPath + "[0]", rawValue[0], ret);
@@ -311,32 +316,25 @@ class ResourceObject {
                 else if (isDict(rawValue)) {
                     if (checkPath.length > 0) checkPath += ".";
                     if (Object.keys(rawValue).length == 0) {
-                        ret.push(`test.check("${checkPath}", {}),`);
+                        ret.push(`test.check("${checkPath}"${formatIf(checkPath)}, {}),`);
                     }
                     for (let key in rawValue) {
-                        formatChecker(checkPath + key, rawValue[key], ret);
+                        formatChecker(checkPath + resource_pool.replaceResourceString(key, [], [], true), rawValue[key], ret);
                     }
                 }
-                // if (replacedValue!=rawValue ) {
-                //     ret.push(`test.check("${checkPath}", json.loads('${JSON.stringify(replacedValue)}'.format(**test.kwargs)), case_sensitive=False),`);
-                // }
-                // else {
-                //     let replacedJson = JSON.stringify(replacedValue).split("{{").join("{").split("}}").join("}");
-                //     ret.push(`test.check("${checkPath}", json.loads('${replacedJson}'), case_sensitive=False),`);
-                // }
             }
             else {
                 if (typeof rawValue == 'string') {
                     let replacedValue = resource_pool.replaceResourceString(rawValue, [], [], true);
                     if (replacedValue != rawValue) {
-                        ret.push(`test.check("${checkPath}", ${ToPythonString(replacedValue, typeof replacedValue)}.format(**test.kwargs), case_sensitive=False),`);
+                        ret.push(`test.check("${checkPath}"${formatIf(checkPath)}, ${ToPythonString(replacedValue, typeof replacedValue)}.format(**test.kwargs), case_sensitive=False),`);
                     }
                     else {
-                        ret.push(`test.check("${checkPath}", ${ToPythonString(replacedValue, typeof replacedValue)}, case_sensitive=False),`);
+                        ret.push(`test.check("${checkPath}"${formatIf(checkPath)}, ${ToPythonString(replacedValue, typeof replacedValue)}, case_sensitive=False),`);
                     }
                 }
                 else {
-                    ret.push(`test.check("${checkPath}", ${ToPythonString(rawValue, typeof rawValue)}),`);
+                    ret.push(`test.check("${checkPath}"${formatIf(checkPath)}, ${ToPythonString(rawValue, typeof rawValue)}),`);
                 }
             }
         }
@@ -417,6 +415,7 @@ export class ResourcePool {
         this.root = new Map<string, ResourceClass>();
         this.map = new Map<string, ResourceClass>();
         this.use_subscription = false;
+        this.replacements = new Map<string, string>();
     }
 
     private prepareResource(class_name: string, object_name: string, depends: string[][], entitys: PreparerEntity[], preparings: string[][]) {
@@ -721,7 +720,6 @@ export class ResourcePool {
             }
             return ret;
         }
-        ////////////////////
         return this.replaceResourceString(endpoint, placeholders, resources, isTest);
     }
     public replaceResourceString(endpoint: string, placeholders: string[], resources: string[], isTest = true): any {
