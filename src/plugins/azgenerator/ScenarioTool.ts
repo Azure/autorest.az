@@ -292,14 +292,14 @@ class ResourceObject {
             if (isDict(obj)) {
                 if (checkPath.length > 0) checkPath += ".";
                 for (let key in obj) {
-                    addParam(obj[key], param, checkPath + resource_pool.replaceResourceString(key, [], [], true), ret);
+                    if (checkPath.length==0 && key.toLowerCase()=='properties') {
+                        addParam(obj[key], param, checkPath, ret);
+                    }
+                    else {
+                        addParam(obj[key], param, checkPath + resource_pool.replaceResourceString(key, [], [], true), ret);
+                    }
                 }
             }
-        }
-
-        function formatIf(checkPath: string):string {
-            if(isNullOrUndefined(checkPath.match(/\{.+\}/g)))    return "";
-            return ".format(**test.kwargs)";
         }
 
         function formatChecker(checkPath: string, rawValue: any, ret: string[]) {
@@ -307,7 +307,7 @@ class ResourceObject {
                 if (rawValue instanceof Array) {
                     if (rawValue.length > 1) return;
                     if (rawValue.length == 0) {
-                        ret.push(`test.check("${checkPath}"${formatIf(checkPath)}, []),`);
+                        ret.push(`test.check("${checkPath}", []),`);
                     }
                     else {
                         formatChecker(checkPath + "[0]", rawValue[0], ret);
@@ -316,7 +316,7 @@ class ResourceObject {
                 else if (isDict(rawValue)) {
                     if (checkPath.length > 0) checkPath += ".";
                     if (Object.keys(rawValue).length == 0) {
-                        ret.push(`test.check("${checkPath}"${formatIf(checkPath)}, {}),`);
+                        ret.push(`test.check("${checkPath}", {}),`);
                     }
                     for (let key in rawValue) {
                         formatChecker(checkPath + resource_pool.replaceResourceString(key, [], [], true), rawValue[key], ret);
@@ -326,15 +326,10 @@ class ResourceObject {
             else {
                 if (typeof rawValue == 'string') {
                     let replacedValue = resource_pool.replaceResourceString(rawValue, [], [], true);
-                    if (replacedValue != rawValue) {
-                        ret.push(`test.check("${checkPath}"${formatIf(checkPath)}, ${ToPythonString(replacedValue, typeof replacedValue)}.format(**test.kwargs), case_sensitive=False),`);
-                    }
-                    else {
-                        ret.push(`test.check("${checkPath}"${formatIf(checkPath)}, ${ToPythonString(replacedValue, typeof replacedValue)}, case_sensitive=False),`);
-                    }
+                    ret.push(`test.check("${checkPath}", ${ToPythonString(replacedValue, typeof replacedValue)}, case_sensitive=False),`);
                 }
                 else {
-                    ret.push(`test.check("${checkPath}"${formatIf(checkPath)}, ${ToPythonString(rawValue, typeof rawValue)}),`);
+                    ret.push(`test.check("${checkPath}", ${ToPythonString(rawValue, typeof rawValue)}),`);
                 }
             }
         }

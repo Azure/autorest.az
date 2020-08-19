@@ -33,7 +33,7 @@ def step__factories_put_factories_createorupdate(test, rg):
              '--resource-group "{rg}"',
              checks=[
                  test.check("location", "East US", case_sensitive=False),
-                 test.check("name", "{myFactory}".format(**test.kwargs), case_sensitive=False),
+                 test.check("name", "{myFactory}", case_sensitive=False),
              ])
 
 
@@ -45,7 +45,7 @@ def step__factories_get_factories_get(test, rg):
              '--resource-group "{rg}"',
              checks=[
                  test.check("location", "East US", case_sensitive=False),
-                 test.check("name", "{myFactory}".format(**test.kwargs), case_sensitive=False),
+                 test.check("name", "{myFactory}", case_sensitive=False),
              ])
 
 
@@ -115,7 +115,7 @@ def step__factories_patch_factories_update(test, rg):
              '--tags exampleTag="exampleValue" '
              '--resource-group "{rg}"',
              checks=[
-                 test.check("name", "{myFactory}".format(**test.kwargs), case_sensitive=False),
+                 test.check("name", "{myFactory}", case_sensitive=False),
                  test.check("tags.exampleTag", "exampleValue", case_sensitive=False),
              ])
 
@@ -139,8 +139,8 @@ def step__integrationruntimes_get_integrationruntimes_get(test, rg):
              '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[
-                 test.check("properties.description", "A selfhosted integration runtime", case_sensitive=False),
-                 test.check("name", "{myIntegrationRuntime}".format(**test.kwargs), case_sensitive=False),
+                 test.check("description", "A selfhosted integration runtime", case_sensitive=False),
+                 test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
              ])
 
 
@@ -282,7 +282,7 @@ def step__integrationruntimes_patch_integrationruntimes_update(test, rg):
              '--auto-update "Off" '
              '--update-delay-offset "\\"PT3H\\""',
              checks=[
-                 test.check("name", "{myIntegrationRuntime}".format(**test.kwargs), case_sensitive=False),
+                 test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
              ])
 
 
@@ -299,7 +299,7 @@ def step__triggers_put_triggers_create(test, rg):
              ':13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}}}}" '
              '--name "{myTrigger}"',
              checks=[
-                 test.check("name", "{myTrigger}".format(**test.kwargs), case_sensitive=False),
+                 test.check("name", "{myTrigger}", case_sensitive=False),
              ])
 
 
@@ -312,8 +312,8 @@ def step__triggers_put_triggers_update(test, rg):
              '--description "Example description" '
              '--name "{myTrigger}"',
              checks=[
-                 test.check("name", "{myTrigger}".format(**test.kwargs), case_sensitive=False),
-                 test.check("properties.description", "Example description", case_sensitive=False),
+                 test.check("name", "{myTrigger}", case_sensitive=False),
+                 test.check("description", "Example description", case_sensitive=False),
              ])
 
 
@@ -325,7 +325,7 @@ def step__triggers_get_triggers_get(test, rg):
              '--resource-group "{rg}" '
              '--name "{myTrigger}"',
              checks=[
-                 test.check("name", "{myTrigger}".format(**test.kwargs), case_sensitive=False),
+                 test.check("name", "{myTrigger}", case_sensitive=False),
              ])
 
 
