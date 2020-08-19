@@ -10,7 +10,6 @@
 # pylint: disable=line-too-long
 
 import os
-import json
 from azure.cli.testsdk import ScenarioTest
 from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
@@ -62,8 +61,7 @@ def step_managementnetworkgroupsput(test, rg):
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[
-                 test.check("properties.managementGroups", json.loads('[]'.format(**test.kwargs)),
-                            case_sensitive=False),
+                 test.check("properties.managementGroups", []),
                  test.check("name", "{myManagedNetworkGroup}".format(**test.kwargs), case_sensitive=False),
              ])
     test.cmd('az managed-network mn group wait --created '
@@ -163,8 +161,7 @@ def step_managementnetworkgroupsget(test, rg):
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[
-                 test.check("properties.managementGroups", json.loads('[]'.format(**test.kwargs)),
-                            case_sensitive=False),
+                 test.check("properties.managementGroups", []),
                  test.check("name", "{myManagedNetworkGroup}".format(**test.kwargs), case_sensitive=False),
              ])
 

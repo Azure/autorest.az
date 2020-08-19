@@ -9,7 +9,6 @@
 # --------------------------------------------------------------------------
 
 import os
-import json
 from azure.cli.testsdk import ScenarioTest
 from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
@@ -117,7 +116,7 @@ def step__factories_patch_factories_update(test, rg):
              '--resource-group "{rg}"',
              checks=[
                  test.check("name", "{myFactory}".format(**test.kwargs), case_sensitive=False),
-                 test.check("tags", json.loads('{"exampleTag":"exampleValue"}'), case_sensitive=False),
+                 test.check("tags.exampleTag", "exampleValue", case_sensitive=False),
              ])
 
 
