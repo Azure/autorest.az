@@ -43,6 +43,7 @@ def step_managednetworksput(test, rg):
              '--resource-group "{rg}"',
              checks=[
                  test.check("location", "eastus", case_sensitive=False),
+                 test.check("name", "{myManagedNetwork}".format(**test.kwargs), case_sensitive=False),
              ])
 
 
@@ -63,6 +64,7 @@ def step_managementnetworkgroupsput(test, rg):
              checks=[
                  test.check("properties.managementGroups", json.loads('[]'.format(**test.kwargs)),
                             case_sensitive=False),
+                 test.check("name", "{myManagedNetworkGroup}".format(**test.kwargs), case_sensitive=False),
              ])
     test.cmd('az managed-network mn group wait --created '
              '--group-name "{myManagedNetworkGroup}" '
@@ -82,6 +84,7 @@ def step_scopeassignmentsput(test, rg):
                  test.check("properties.assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/"
                             "providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}".format(**test.kwargs),
                             case_sensitive=False),
+                 test.check("name", "{myScopeAssignment}".format(**test.kwargs), case_sensitive=False),
              ])
 
 
@@ -138,6 +141,7 @@ def step_scopeassignmentsget(test, rg):
                  test.check("properties.assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/"
                             "providers/Microsoft.ManagedNetwork/managedNetworks/{myManagedNetwork}".format(**test.kwargs),
                             case_sensitive=False),
+                 test.check("name", "{myScopeAssignment}".format(**test.kwargs), case_sensitive=False),
              ])
 
 
@@ -161,6 +165,7 @@ def step_managementnetworkgroupsget(test, rg):
              checks=[
                  test.check("properties.managementGroups", json.loads('[]'.format(**test.kwargs)),
                             case_sensitive=False),
+                 test.check("name", "{myManagedNetworkGroup}".format(**test.kwargs), case_sensitive=False),
              ])
 
 
@@ -182,7 +187,9 @@ def step_managednetworkpeeringpoliciesget(test, rg):
              '--managed-network-name "{myManagedNetwork}" '
              '--policy-name "{myManagedNetworkPeeringPolicy}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check("name", "{myManagedNetworkPeeringPolicy}".format(**test.kwargs), case_sensitive=False),
+             ])
 
 
 # EXAMPLE: ManagedNetworkPeeringPoliciesListByManagedNetwork

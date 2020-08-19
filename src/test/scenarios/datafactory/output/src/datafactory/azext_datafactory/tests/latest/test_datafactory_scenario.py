@@ -34,6 +34,7 @@ def step__factories_put_factories_createorupdate(test, rg):
              '--resource-group "{rg}"',
              checks=[
                  test.check("location", "East US", case_sensitive=False),
+                 test.check("name", "{myFactory}".format(**test.kwargs), case_sensitive=False),
              ])
 
 
@@ -45,6 +46,7 @@ def step__factories_get_factories_get(test, rg):
              '--resource-group "{rg}"',
              checks=[
                  test.check("location", "East US", case_sensitive=False),
+                 test.check("name", "{myFactory}".format(**test.kwargs), case_sensitive=False),
              ])
 
 
@@ -114,6 +116,7 @@ def step__factories_patch_factories_update(test, rg):
              '--tags exampleTag="exampleValue" '
              '--resource-group "{rg}"',
              checks=[
+                 test.check("name", "{myFactory}".format(**test.kwargs), case_sensitive=False),
                  test.check("tags", json.loads('{"exampleTag":"exampleValue"}'), case_sensitive=False),
              ])
 
@@ -138,6 +141,7 @@ def step__integrationruntimes_get_integrationruntimes_get(test, rg):
              '--resource-group "{rg}"',
              checks=[
                  test.check("properties.description", "A selfhosted integration runtime", case_sensitive=False),
+                 test.check("name", "{myIntegrationRuntime}".format(**test.kwargs), case_sensitive=False),
              ])
 
 
@@ -278,7 +282,9 @@ def step__integrationruntimes_patch_integrationruntimes_update(test, rg):
              '--resource-group "{rg}" '
              '--auto-update "Off" '
              '--update-delay-offset "\\"PT3H\\""',
-             checks=[])
+             checks=[
+                 test.check("name", "{myIntegrationRuntime}".format(**test.kwargs), case_sensitive=False),
+             ])
 
 
 # EXAMPLE: /Triggers/put/Triggers_Create
@@ -293,7 +299,9 @@ def step__triggers_put_triggers_create(test, rg):
              '16T00:55:13.8441801Z\\",\\"frequency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39'
              ':13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}}}}" '
              '--name "{myTrigger}"',
-             checks=[])
+             checks=[
+                 test.check("name", "{myTrigger}".format(**test.kwargs), case_sensitive=False),
+             ])
 
 
 # EXAMPLE: /Triggers/put/Triggers_Update
@@ -305,6 +313,7 @@ def step__triggers_put_triggers_update(test, rg):
              '--description "Example description" '
              '--name "{myTrigger}"',
              checks=[
+                 test.check("name", "{myTrigger}".format(**test.kwargs), case_sensitive=False),
                  test.check("properties.description", "Example description", case_sensitive=False),
              ])
 
@@ -316,7 +325,9 @@ def step__triggers_get_triggers_get(test, rg):
              '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
              '--name "{myTrigger}"',
-             checks=[])
+             checks=[
+                 test.check("name", "{myTrigger}".format(**test.kwargs), case_sensitive=False),
+             ])
 
 
 # EXAMPLE: /Triggers/get/Triggers_ListByFactory

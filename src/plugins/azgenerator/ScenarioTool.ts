@@ -271,11 +271,20 @@ class ResourceObject {
         }
 
         function addParam(obj: any, param: ExampleParam, checkPath: string, ret: string[]) {
-            if (isDict(obj) && param.defaultName in obj && typeof obj[param.defaultName] == typeof param.rawValue && JSON.stringify(obj[param.defaultName]).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
-                if (checkPath.length>0) checkPath += ".";
-                let checker = formatChecker(checkPath+param.defaultName, param);
-                if (!isNullOrUndefined(checker))    ret.push(checker);
-                return;
+            if (isDict(obj)) {
+                if (checkPath.length > 0) checkPath += ".";
+                let replacedValue = resource_pool.addEndpointResource(param.rawValue, typeof param.rawValue=='object', false, [], [], param, true);
+                if (param.defaultName in obj && typeof obj[param.defaultName] == typeof param.rawValue && JSON.stringify(obj[param.defaultName]).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
+                    if (hasComplexArray(param.rawValue))    return;
+                    formatChecker(checkPath + param.defaultName,param.rawValue, replacedValue, ret);
+                    return;
+                }
+                else if ('name' in obj && typeof obj['name'] == typeof param.rawValue && JSON.stringify(obj['name']).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
+                    if (hasComplexArray(param.rawValue))    return;
+                    formatChecker(checkPath + 'name', param.rawValue, replacedValue, ret);
+                    return;
+                }
+                
             }
             if (obj instanceof Array){
                 if (obj.length>1)   return;
@@ -289,29 +298,27 @@ class ResourceObject {
             }
         }
 
-        function formatChecker(checkPath: string, param: ExampleParam): string|null {
-            if (typeof param.rawValue == 'object') {
-                if (hasComplexArray(param.rawValue))    return null;
-                let replacedJson = resource_pool.addEndpointResource(param.rawValue, true, false, [], [], param, true);
-                if (replacedJson!=param.rawValue ) {
-                    return `test.check("${checkPath}", json.loads('${JSON.stringify(replacedJson)}'.format(**test.kwargs)), case_sensitive=False),`;
+        function formatChecker(checkPath: string, rawValue: any, replacedValue: any, ret: string[]) {
+            if (typeof rawValue == 'object') {
+                if (replacedValue!=rawValue ) {
+                    ret.push(`test.check("${checkPath}", json.loads('${JSON.stringify(replacedValue)}'.format(**test.kwargs)), case_sensitive=False),`);
                 }
                 else {
-                    replacedJson = JSON.stringify(replacedJson).split("{{").join("{").split("}}").join("}");
-                    return `test.check("${checkPath}", json.loads('${replacedJson}'), case_sensitive=False),`;
+                    let replacedJson = JSON.stringify(replacedValue).split("{{").join("{").split("}}").join("}");
+                    ret.push(`test.check("${checkPath}", json.loads('${replacedJson}'), case_sensitive=False),`);
                 }
             }
             else {
-                if (typeof param.replacedValue == 'string') {
-                    if (!isNullOrUndefined(param.replacedValue.match(/\{[^:]+\}/g))) {
-                        return `test.check("${checkPath}", ${ToPythonString(param.replacedValue, param.methodParam.value.schema?.type)}.format(**test.kwargs), case_sensitive=False),`;
+                if (typeof replacedValue == 'string') {
+                    if (!isNullOrUndefined(replacedValue.match(/\{[^:]+\}/g))) {
+                        ret.push(`test.check("${checkPath}", ${ToPythonString(replacedValue, typeof replacedValue)}.format(**test.kwargs), case_sensitive=False),`);
                     }
                     else {
-                        return `test.check("${checkPath}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}, case_sensitive=False),`;
+                        ret.push(`test.check("${checkPath}", ${ToPythonString(replacedValue, typeof replacedValue)}, case_sensitive=False),`);
                     }
                 }
                 else {
-                    return `test.check("${checkPath}", ${ToPythonString(param.value, param.methodParam.value.schema?.type)}),`;
+                    ret.push(`test.check("${checkPath}", ${ToPythonString(replacedValue, typeof replacedValue)}),`);
                 }
             }
         }
