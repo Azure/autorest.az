@@ -140,6 +140,9 @@ export class CodeModelMerger {
         let cliNode = findNodeInCodeModel(cliM4Path, this.cliCodeModel);
         if (!isNullOrUndefined(cliNode) && !isNullOrUndefined(cliNode.language) && isNullOrUndefined(cliNode.language['python'])) {
             cliNode.language['python'] = param.language['python'];
+            if (param['flattened'] && param.language['cli']?.['cli-m4-flattened']) {
+                cliNode.language['cli']['cli-m4-flattened'] = true;
+            }
         } else if(isNullOrUndefined(cliNode)) {
             let flattenedNodes = findNodeInCodeModel(cliM4Path, this.cliCodeModel, true);
             if(!isNullOrUndefined(flattenedNodes) && flattenedNodes.length > 0) {
