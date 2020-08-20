@@ -129,10 +129,13 @@ export class CodeModelMerger {
         this.processGlobalParam();
         this.processSchemas();
         let azCodeModel = this.cliCodeModel; 
-        return azCodeModel;
+        return this.cliCodeModel;
     }
 
-    setPythonName(param) {
+    dealingPythonFlatten() {
+    }
+
+    setPythonName(param, m4FlattenedFrom: any[] = []) {
         let cliM4Path = param?.['language']?.['cli']?.['cliM4Path'];
         if (isNullOrUndefined(cliM4Path)) {
             return;
@@ -142,6 +145,9 @@ export class CodeModelMerger {
             cliNode.language['python'] = param.language['python'];
             if (param['flattened'] && param.language['cli']?.['cli-m4-flattened']) {
                 cliNode.language['cli']['cli-m4-flattened'] = true;
+                if (!isNullOrUndefined(m4FlattenedFrom)) {
+                    cliNode.language['cli']['m4FlattenedFrom'] = m4FlattenedFrom;
+                }
             }
         } else if(isNullOrUndefined(cliNode)) {
             let flattenedNodes = findNodeInCodeModel(cliM4Path, this.cliCodeModel, true);
@@ -225,17 +231,79 @@ export class CodeModelMerger {
                 if(!isNullOrUndefined(operation.language['cli'])) {
                     this.setPythonName(operation);
                 }
+                let cnt = 0;
                 operation.parameters.forEach(parameter => {
                     if(!isNullOrUndefined(parameter.language['cli'])) {
-                        this.setPythonName(parameter);
+                        let m4FlattenedFrom = [];
+                        if (parameter['flattened'] && parameter.language['cli']?.['cli-m4-flattened']) {
+                            for(let tmpCnt = cnt + 1; tmpCnt < operation.parameters.length; tmpCnt++) {
+                                let tmpParam = operation.parameters[tmpCnt];
+                                if (tmpParam['originalParameter'] == parameter) {
+                                    if(!isNullOrUndefined(tmpParam?.['language']?.['cli']?.['cliFlattenTrace'])) {
+                                        let cliM4Path = parameter.language['cli']?.['cliM4Path'];
+                                        let flattenedNodes = findNodeInCodeModel(cliM4Path, this.cliCodeModel, true);
+                                        let needReserve = true;
+                                        if (!isNullOrUndefined(flattenedNodes) && flattenedNodes.length > 0) {
+                                            for(let fn of flattenedNodes) {
+                                                if(!isNullOrUndefined(fn) && !isNullOrUndefined(fn.language) && fn.language['cli']['cliFlattenTrace'] == tmpParam['language']['cli']['cliFlattenTrace']) {
+                                                    needReserve = false;
+                                                    if (isNullOrUndefined(fn.language['python'])) { 
+                                                        fn.language['python'] = tmpParam.language['python'];
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if (needReserve) {
+                                            m4FlattenedFrom.push(tmpParam);
+                                        }
+                                    }
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                        this.setPythonName(parameter, m4FlattenedFrom);
                     }
+                    cnt++;
                 });
                 operation.requests.forEach(request => {
                     if(!isNullOrUndefined(request?.parameters)) {
+                        cnt = 0;
                         request.parameters.forEach(parameter => {
                             if (!isNullOrUndefined(parameter.language['cli'])) {
-                                this.setPythonName(parameter);
+                                let m4FlattenedFrom = [];
+                                if (parameter['flattened'] && parameter.language['cli']?.['cli-m4-flattened']) {
+                                    for(let tmpCnt = cnt + 1; tmpCnt < request.parameters.length; tmpCnt++) {
+                                        let tmpParam = request.parameters[tmpCnt];
+                                        if (tmpParam['originalParameter'] == parameter) {
+                                            if(!isNullOrUndefined(tmpParam?.['language']?.['cli']?.['cliFlattenTrace'])) {
+                                                let cliM4Path = parameter.language['cli']?.['cliM4Path'];
+                                                let flattenedNodes = findNodeInCodeModel(cliM4Path, this.cliCodeModel, true);
+                                                let needReserve = true;
+                                                if (!isNullOrUndefined(flattenedNodes) && flattenedNodes.length > 0) {
+                                                    for(let fn of flattenedNodes) {
+                                                        if(!isNullOrUndefined(fn) && !isNullOrUndefined(fn.language) && fn.language['cli']['cliFlattenTrace'] == tmpParam['language']['cli']['cliFlattenTrace']) {
+                                                            needReserve = false;
+                                                            if (isNullOrUndefined(fn.language['python'])) { 
+                                                                fn.language['python'] = tmpParam.language['python'];
+                                                            }
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                if (needReserve) {
+                                                    m4FlattenedFrom.push(tmpParam);
+                                                }
+                                            }
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                }
+                                this.setPythonName(parameter, m4FlattenedFrom);
                             }
+                            cnt++;
                         });                   
                     }
                 });
