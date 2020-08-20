@@ -202,7 +202,7 @@ class ResourceClass {
 }
 
 export enum ObjectStatus {
-    NA,
+    None,
     Created,
     Deleted,
 }
@@ -219,7 +219,7 @@ class ResourceObject {
         this.class_name = class_name;
         this.sub_resources = new Map<string, ResourceClass>();
         this.example_params = [];
-        this.testStatus = ObjectStatus.NA;
+        this.testStatus = ObjectStatus.None;
     }
 
     public get key(): string {
