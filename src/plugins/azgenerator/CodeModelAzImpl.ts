@@ -1124,7 +1124,13 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_IsCliFlattened(param: Parameter = this.MethodParameter): boolean {
-        return param?.language?.['cli']?.['cli-flattened'] ? (param.language['cli']['cli-m4-flattened']? false: true) : false;
+        if (param?.language?.['cli']?.['cli-flattened'] && !param.language['cli']['cli-m4-flattened']) {
+            if (param['nameBaseParam']?.language?.['cli']?.['cli-m4-flattened']) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     public Parameter_IsListOfSimple(param: Parameter = this.MethodParameter): boolean {

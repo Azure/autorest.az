@@ -121,10 +121,10 @@ pipeline:
         #output-artifact: source-file-merger
     az/aznamer:
         input: az/merger
-    #    #output-artifact: source-file-aznamer
+        #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
-    #    #output-artifact: source-file-modifiers
+        #output-artifact: source-file-modifiers
     az/azgenerator:
         input: az/modifiers
         output-artifact: source-file-extension

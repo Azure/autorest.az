@@ -92,9 +92,6 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     if (opNames.length > 1) {
         valueToMatch = Capitalize(ToCamelCase(opNames[0]));
     }
-    if (model.Command_Name == "datafactory trigger update") {
-        model.Method;
-    }
     if (model.SelectFirstMethodParameter(true)) {
         let originalParameterStack: Parameter[] = [];
         let originalParameterNameStack: string[] = [];

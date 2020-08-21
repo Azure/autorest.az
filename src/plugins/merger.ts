@@ -129,7 +129,7 @@ export class CodeModelMerger {
         this.processGlobalParam();
         this.processSchemas();
         let azCodeModel = this.cliCodeModel; 
-        return this.cliCodeModel;
+        return azCodeModel;
     }
 
     dealingPythonFlatten() {
