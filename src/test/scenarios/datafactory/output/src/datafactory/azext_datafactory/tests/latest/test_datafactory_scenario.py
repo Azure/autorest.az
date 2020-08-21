@@ -31,10 +31,7 @@ def step__factories_put_factories_createorupdate(test, rg):
              '--zones "moon" '
              '--name "{myFactory}" '
              '--resource-group "{rg}"',
-             checks=[
-                 test.check("location", "East US", case_sensitive=False),
-                 test.check("name", "{myFactory}", case_sensitive=False),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /Factories/get/Factories_Get
@@ -43,10 +40,7 @@ def step__factories_get_factories_get(test, rg):
     test.cmd('az datafactory show '
              '--name "{myFactory}" '
              '--resource-group "{rg}"',
-             checks=[
-                 test.check("location", "East US", case_sensitive=False),
-                 test.check("name", "{myFactory}", case_sensitive=False),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /Factories/get/Factories_List
@@ -54,9 +48,7 @@ def step__factories_get_factories_get(test, rg):
 def step__factories_get_factories_list(test, rg):
     test.cmd('az datafactory list '
              '-g ""',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /Factories/get/Factories_ListByResourceGroup
@@ -64,9 +56,7 @@ def step__factories_get_factories_list(test, rg):
 def step__factories_get_factories_listbyresourcegroup(test, rg):
     test.cmd('az datafactory list '
              '--resource-group "{rg}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
@@ -114,10 +104,7 @@ def step__factories_patch_factories_update(test, rg):
              '--name "{myFactory}" '
              '--tags exampleTag="exampleValue" '
              '--resource-group "{rg}"',
-             checks=[
-                 test.check("name", "{myFactory}", case_sensitive=False),
-                 test.check("tags.exampleTag", "exampleValue", case_sensitive=False),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
@@ -138,10 +125,7 @@ def step__integrationruntimes_get_integrationruntimes_get(test, rg):
              '--factory-name "{myFactory}" '
              '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
-             checks=[
-                 test.check("description", "A selfhosted integration runtime", case_sensitive=False),
-                 test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /IntegrationRuntimes/get/IntegrationRuntimes_ListByFactory
@@ -150,9 +134,7 @@ def step__integrationruntimes_get_integrationruntimes_listbyfactory(test, rg):
     test.cmd('az datafactory integration-runtime list '
              '--factory-name "{myFactory}" '
              '--resource-group "{rg}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_CreateLinkedIntegrationRuntime
@@ -281,9 +263,7 @@ def step__integrationruntimes_patch_integrationruntimes_update(test, rg):
              '--resource-group "{rg}" '
              '--auto-update "Off" '
              '--update-delay-offset "\\"PT3H\\""',
-             checks=[
-                 test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /Triggers/put/Triggers_Create
@@ -298,9 +278,7 @@ def step__triggers_put_triggers_create(test, rg):
              '16T00:55:13.8441801Z\\",\\"frequency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39'
              ':13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}}}}" '
              '--name "{myTrigger}"',
-             checks=[
-                 test.check("name", "{myTrigger}", case_sensitive=False),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /Triggers/put/Triggers_Update
@@ -311,10 +289,7 @@ def step__triggers_put_triggers_update(test, rg):
              '--resource-group "{rg}" '
              '--description "Example description" '
              '--name "{myTrigger}"',
-             checks=[
-                 test.check("name", "{myTrigger}", case_sensitive=False),
-                 test.check("description", "Example description", case_sensitive=False),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /Triggers/get/Triggers_Get
@@ -324,9 +299,7 @@ def step__triggers_get_triggers_get(test, rg):
              '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
              '--name "{myTrigger}"',
-             checks=[
-                 test.check("name", "{myTrigger}", case_sensitive=False),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /Triggers/get/Triggers_ListByFactory
@@ -335,9 +308,7 @@ def step__triggers_get_triggers_listbyfactory(test, rg):
     test.cmd('az datafactory trigger list '
              '--factory-name "{myFactory}" '
              '--resource-group "{rg}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
+             checks=[])
 
 
 # EXAMPLE: /Triggers/post/Triggers_GetEventSubscriptionStatus

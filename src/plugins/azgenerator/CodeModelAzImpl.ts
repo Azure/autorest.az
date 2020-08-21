@@ -132,6 +132,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
+    public get GenChecks(): boolean {
+        if (!this.options?.['gen-checks']) return false;
+        return true;
+    }
+
     private calcOptionRequiredByMethod() {
         if (this.SelectFirstCommandGroup()) {
             do {
@@ -1930,6 +1935,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GetExampleChecks(example: CommandExample): string[] {
         let ret: string[] = [];
+        if (!this.GenChecks)  return ret;
         let resourceObjectName = undefined;
         for (let param of example.Parameters) {
             if (example.ResourceClassName && this.resource_pool.isResource(param.defaultName) == example.ResourceClassName) {
