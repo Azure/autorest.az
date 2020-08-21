@@ -506,21 +506,15 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
             continue;
         }
         let parameterPair = '';
-        if (model.Parameter_IsHidden(param)) {
-            if (model.Parameter_DefaultValue(param)) {
-                if (model.Schema_Type(param.schema) == SchemaType.Object) {
-                    parameterPair = model.Parameter_NamePython(param) + "=json.loads(" + ToPythonString(model.Parameter_DefaultValue(param), model.Parameter_Type(param)) + ")";
-                    required['json'] = true;
-                }
-                else {
-                    parameterPair = model.Parameter_NamePython(param) + "=" + ToPythonString(model.Parameter_DefaultValue(param), model.Parameter_Type(param));
-                }
-            }
-            else {
-                parameterPair = model.Parameter_NamePython(param) + "=None";
-            }
+        let m4FlattenedFrom = param.language['cli']?.['m4FlattenedFrom']
+        if (isNullOrUndefined(m4FlattenedFrom) || m4FlattenedFrom.length <= 0) {
+            parameterPair = GetSimpleCallItem(model, param, required);
         } else {
-            parameterPair = parameterName + "=" + optionName;
+            let items = [];
+            for(let mparam of m4FlattenedFrom) {
+                items.push(GetSimpleCallItem(model, mparam, required, true, param));
+            }
+            parameterPair = items.join(",\n"); 
         }
         
 
@@ -548,6 +542,53 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     methodCall += ")";
 
     return methodCall.split("\n");
+}
+
+function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, m4Flattened: boolean = false, originParam: Parameter = null): string {
+    let parameterPair = "";
+    if (m4Flattened && !isNullOrUndefined(originParam)) {
+        let paramNamePython = model.Parameter_NamePython(originParam);
+        let paramDefaultValue = model.Parameter_DefaultValue(originParam);
+        if (model.Parameter_IsHidden(originParam)) {
+            if (paramDefaultValue) {
+                if (model.Schema_Type(originParam.schema) == SchemaType.Object) {
+                    let defaultValue = JSON.parse(paramDefaultValue);
+                    parameterPair = paramNamePython + "=json.loads(" + defaultValue[model.Parameter_NamePython(param)] + ")";
+                    required['json'] = true;
+                }
+                else {
+                    parameterPair = paramNamePython + "=" + ToPythonString(paramDefaultValue, model.Parameter_Type(param));
+                }
+            }
+            else {
+                parameterPair = paramNamePython + "=None";
+            }
+        }
+        else {
+            parameterPair = paramNamePython + "=" + model.Parameter_MapsTo(originParam) + "['" + paramNamePython + "']";
+        }       
+    } else {
+        let paramNamePython = model.Parameter_NamePython(param);
+        let paramDefaultValue = model.Parameter_DefaultValue(param);
+        if (model.Parameter_IsHidden(param)) {
+            if (paramDefaultValue) {
+                if (model.Schema_Type(param.schema) == SchemaType.Object) {
+                    parameterPair = paramNamePython + "=json.loads(" + ToPythonString(paramDefaultValue, model.Parameter_Type(param)) + ")";
+                    required['json'] = true;
+                }
+                else {
+                    parameterPair = paramNamePython + "=" + ToPythonString(paramDefaultValue, model.Parameter_Type(param));
+                }
+            }
+            else {
+                parameterPair = paramNamePython + "=None";
+            }
+        }
+        else {
+            parameterPair = paramNamePython + "=" + model.Parameter_MapsTo(param);
+        }
+    }
+    return parameterPair;
 }
 
 function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[] {
@@ -590,23 +631,17 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
             }
             let parameterPair = '';
 
-            if (model.MethodParameter_IsHidden) {
-                if (model.MethodParameter_DefaultValue) {
-                    if (model.Schema_Type(model.MethodParameter.schema) == SchemaType.Object) {
-                        parameterPair = model.MethodParameter_NamePython + "=json.loads(" + ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type) + ")";
-                        required['json'] = true;
-                    }
-                    else {
-                        parameterPair = model.MethodParameter_NamePython + "=" + ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type);
-                    }
+            let m4FlattenedFrom = model.MethodParameter.language['cli']?.['m4FlattenedFrom']
+            if (isNullOrUndefined(m4FlattenedFrom) || m4FlattenedFrom.length <= 0) {
+                parameterPair = GetSimpleCallItem(model, model.MethodParameter, required);
+            } else {
+                let items = [];
+                for(let mparam of m4FlattenedFrom) {
+                    items.push(GetSimpleCallItem(model, mparam, required, true, param));
                 }
-                else {
-                    parameterPair = model.MethodParameter_NamePython + "=None";
-                }
+                parameterPair = items.join(",\n" + indent); 
             }
-            else {
-                parameterPair = model.MethodParameter_NamePython + "=" + model.MethodParameter_MapsTo;
-            }
+            
 
             if (methodCall.endsWith("(")) {
                 // XXX - split and pop is a hack

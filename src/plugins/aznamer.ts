@@ -186,6 +186,11 @@ export class AzNamer {
                                     }
                                 }
                             }
+                            if (!isNullOrUndefined(parameter.language['cli']['m4FlattenedFrom'])) {
+                                for(let param of parameter.language['cli']['m4FlattenedFrom']) {
+                                    this.getAzName(param);
+                                }
+                            }
                         }
                     });
                     if(request.parameters) {
@@ -200,6 +205,11 @@ export class AzNamer {
                                         for(let alias of parameter.language['cli']['alias']) {
                                             parameter.language['az']['alias'].push(changeCamelToDash(alias));
                                         }
+                                    }
+                                }
+                                if (!isNullOrUndefined(parameter.language['cli']['m4FlattenedFrom'])) {
+                                    for(let param of parameter.language['cli']['m4FlattenedFrom']) {
+                                        this.getAzName(param);
                                     }
                                 }
                             }

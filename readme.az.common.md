@@ -50,3 +50,10 @@ license-header: MICROSOFT_MIT_NO_VERSION
 #clear-output-folder: true
 scope-codegen/emitter: false
 ```
+
+``` yaml $(az) && ($(target-mode) == 'core' || ($(sdk-no-flatten) && $(compatible-level) == 'track1'))
+cli:
+    flatten:
+        cli-m4flatten-payload-max-prop: 2
+        cli-m4flatten-payload-track1-enabled: true
+```
