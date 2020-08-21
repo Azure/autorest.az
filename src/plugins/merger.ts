@@ -239,23 +239,15 @@ export class CodeModelMerger {
                             for(let tmpCnt = cnt + 1; tmpCnt < operation.parameters.length; tmpCnt++) {
                                 let tmpParam = operation.parameters[tmpCnt];
                                 if (tmpParam['originalParameter'] == parameter) {
-                                    if(!isNullOrUndefined(tmpParam?.['language']?.['cli']?.['cliFlattenTrace'])) {
-                                        let cliM4Path = parameter.language['cli']?.['cliM4Path'];
-                                        let flattenedNodes = findNodeInCodeModel(cliM4Path, this.cliCodeModel, true);
-                                        let needReserve = true;
-                                        if (!isNullOrUndefined(flattenedNodes) && flattenedNodes.length > 0) {
-                                            for(let fn of flattenedNodes) {
-                                                if(!isNullOrUndefined(fn) && !isNullOrUndefined(fn.language) && fn.language['cli']['cliFlattenTrace'] == tmpParam['language']['cli']['cliFlattenTrace']) {
-                                                    needReserve = false;
-                                                    if (isNullOrUndefined(fn.language['python'])) { 
-                                                        fn.language['python'] = tmpParam.language['python'];
-                                                    }
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        if (needReserve) {
+                                    if(!isNullOrUndefined(tmpParam?.['language']?.['cli']?.['cliPath'])) {
+                                        let cliPath = tmpParam.language['cli']?.['cliPath'];
+                                        let cliNode = findNodeInCodeModel(cliPath, this.cliCodeModel);
+                                        if (isNullOrUndefined(cliNode)) {
                                             m4FlattenedFrom.push(tmpParam);
+                                        } else {
+                                            if (isNullOrUndefined(cliNode.language['python'])) { 
+                                                cliNode.language['python'] = tmpParam.language['python'];
+                                            }
                                         }
                                     }
                                 } else {
@@ -277,23 +269,15 @@ export class CodeModelMerger {
                                     for(let tmpCnt = cnt + 1; tmpCnt < request.parameters.length; tmpCnt++) {
                                         let tmpParam = request.parameters[tmpCnt];
                                         if (tmpParam['originalParameter'] == parameter) {
-                                            if(!isNullOrUndefined(tmpParam?.['language']?.['cli']?.['cliFlattenTrace'])) {
-                                                let cliM4Path = parameter.language['cli']?.['cliM4Path'];
-                                                let flattenedNodes = findNodeInCodeModel(cliM4Path, this.cliCodeModel, true);
-                                                let needReserve = true;
-                                                if (!isNullOrUndefined(flattenedNodes) && flattenedNodes.length > 0) {
-                                                    for(let fn of flattenedNodes) {
-                                                        if(!isNullOrUndefined(fn) && !isNullOrUndefined(fn.language) && fn.language['cli']['cliFlattenTrace'] == tmpParam['language']['cli']['cliFlattenTrace']) {
-                                                            needReserve = false;
-                                                            if (isNullOrUndefined(fn.language['python'])) { 
-                                                                fn.language['python'] = tmpParam.language['python'];
-                                                            }
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                                if (needReserve) {
+                                            if(!isNullOrUndefined(tmpParam?.['language']?.['cli']?.['cliPath'])) {
+                                                let cliPath = tmpParam.language['cli']?.['cliPath'];
+                                                let cliNode = findNodeInCodeModel(cliPath, this.cliCodeModel);
+                                                if (isNullOrUndefined(cliNode)) {
                                                     m4FlattenedFrom.push(tmpParam);
+                                                } else {
+                                                    if (isNullOrUndefined(cliNode.language['python'])) { 
+                                                        cliNode.language['python'] = tmpParam.language['python'];
+                                                    }
                                                 }
                                             }
                                         } else {
