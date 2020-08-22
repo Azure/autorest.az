@@ -119,6 +119,17 @@ stages:
           echo -e "\e[32m[$(date -u)] LOG: Start test script"
           pytest -s ../s/.scripts/e2e/testcases.py --all --az ../s --azpack $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)/$(VAR_ARIFACT_NAME)/autorest-az-$CURRENT_VERSION.tgz --swagger ../azure-rest-api-specs --cliext ../azure-cli-extensions --testserver ../autorest.testserver --junitxml=../s/.scripts/e2e/test-results.xml
         displayName: 'Pytest'
+      - script: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo -e "\e[32m[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"
+          RELEASE_VERSION="$CURRENT_VERSION-b.$VAR_BUILD_NUMBER"
+          echo -e "\e[32m[$(date -u)] LOG: Active venv"
+          . /opt/venv/bin/activate
+          pip install sendgrid
+          echo -e "\e[32m[$(date -u)] LOG: Send Email"
+          python ../s/.scripts/e2e/sendemail.py ../s/.scripts/e2e/test-results.xml $RELEASE_VERSION $(USER_SENDGRID_API_KEY)
+        condition: always()
+        displayName: 'Send Email'
       - task: PublishTestResults@2
         condition: always()
         inputs:
