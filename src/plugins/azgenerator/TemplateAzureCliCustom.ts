@@ -548,16 +548,18 @@ function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, 
     let parameterPair = "";
     if (m4Flattened && !isNullOrUndefined(originParam)) {
         let paramNamePython = model.Parameter_NamePython(originParam);
+        let keyName = model.Parameter_NamePython(param);
         let paramDefaultValue = model.Parameter_DefaultValue(originParam);
         if (model.Parameter_IsHidden(originParam)) {
             if (paramDefaultValue) {
-                if (model.Schema_Type(originParam.schema) == SchemaType.Object) {
+                if (model.Schema_Type(param.schema) == SchemaType.Object) {
                     let defaultValue = JSON.parse(paramDefaultValue);
-                    parameterPair = paramNamePython + "=json.loads(" + defaultValue[model.Parameter_NamePython(param)] + ")";
+                    parameterPair = keyName + "=json.loads(" + JSON.stringify(defaultValue[model.Parameter_NamePython(param)]) + ")";
                     required['json'] = true;
                 }
                 else {
-                    parameterPair = paramNamePython + "=" + ToPythonString(paramDefaultValue, model.Parameter_Type(param));
+                    let defaultValue = JSON.parse(paramDefaultValue);
+                    parameterPair = keyName + "=" + ToPythonString(defaultValue[model.Parameter_NamePython(param)], model.Parameter_Type(param));
                 }
             }
             else {
@@ -565,7 +567,7 @@ function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, 
             }
         }
         else {
-            parameterPair = paramNamePython + "=" + model.Parameter_MapsTo(originParam) + "['" + paramNamePython + "']";
+            parameterPair = paramNamePython + "=" + model.Parameter_MapsTo(originParam) + "['" + keyName + "']";
         }       
     } else {
         let paramNamePython = model.Parameter_NamePython(param);
