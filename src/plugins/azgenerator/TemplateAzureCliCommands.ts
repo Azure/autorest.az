@@ -106,7 +106,7 @@ function getCommandBody(model: CodeModelAz) {
                 if (argument && argument != "" && argument != "parameters") {
                     generic_update += "', setter_arg_name='" + argument;
                 }
-                if (model.Command_IsLongRun) {
+                if (model.Command_IsLongRun && !model.SDK_IsTrack1) {
                     generic_update += "', setter_name='begin_create_or_update";
                 }
                 generic_update += "', custom_func_name='" + functionName + "'" + endStr;

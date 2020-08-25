@@ -218,37 +218,18 @@ export class AzNamer {
                 });
                  //if generic update exists, set the setter_arg_name in the original operation
                 if(operation.language['az']['isSplitUpdate']) {
-                    let listCnt = 0;
-                    let param = null;
-                    operation.extensions['cli-split-operation-original-operation'].parameters.forEach(parameter => {
-                        if(!isNullOrUndefined(parameter.language['az'])) {
-                            if(operation.language['az'].name.endsWith("create") && parameter['flattened'] != true) {
-                                let paramType = parameter.schema.type;
-                                if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
-                                    param = parameter;
-                                    listCnt++;
-                                }
-                            }
-                        }
-                    });
                     operation.extensions['cli-split-operation-original-operation'].requests.forEach(request => {
                         if (request.parameters) {
                             request.parameters.forEach(parameter => {
                                 if(!isNullOrUndefined(parameter.language['az'])) {
-                                    if(operation.language['az'].command.endsWith(' update') && parameter['flattened'] != true) {
-                                        let paramType = parameter.schema.type;
-                                        if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
-                                            param = parameter;
-                                            listCnt++;
-                                        }
+                                    if(operation.language['az'].command.endsWith(' update') && parameter['flattened'] == true) {
+                                        operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter;
+                                        return;
                                     }
                                 }
                             });
                         };
                     })
-                    if(listCnt == 1) {
-                        operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = param;
-                    }
                 }
             });
         });

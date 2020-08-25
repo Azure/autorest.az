@@ -144,6 +144,9 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
     }
 
     if (!foundProperties && preParamType == SchemaType.Dictionary) {
+        output.pop();
+        output.pop();
+        output.push("            v = properties[k]");
         output.push("            d[k] = v");
     }
     if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch)) {
