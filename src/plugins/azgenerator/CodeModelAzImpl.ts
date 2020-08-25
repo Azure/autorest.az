@@ -123,12 +123,14 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
     
     public get RandomizeNames(): boolean {
-        if (this.options?.['randomize-names']) return true;
+        let randomizeNames = this.options?.['randomize-names'];
+        if (randomizeNames) return true;
         return false;
     }
 
     public get FormalizeNames(): boolean {
-        if (this.options?.['formalize-names']) return true;
+        let formalizeNames = this.options?.['formalize-names'];
+        if (formalizeNames) return true;
         return false;
     }
 
