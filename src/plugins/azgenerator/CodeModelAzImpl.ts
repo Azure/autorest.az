@@ -133,7 +133,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get GenChecks(): boolean {
-        if (!this.options?.['gen-checks']) return false;
+        let disableChecks = this.options?.['disable-checks'];
+        if (disableChecks) return false;
         return true;
     }
 
