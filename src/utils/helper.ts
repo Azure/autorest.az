@@ -4,17 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 import * as fs from 'fs';
 import { isNullOrUndefined } from 'util';
+import * as path from 'path';
 
 export function changeCamelToDash(str: string) {
     str = str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
-    if(str.startsWith('-')) {
+    if (str.startsWith('-')) {
         str = str.substring(1, str.length);
     }
     return str;
 }
 
-export function ToSnakeCase(v: string)
-{
+export function ToSnakeCase(v: string) {
     return v.replace(/([a-z](?=[A-Z]))/g, '$1 ').split(' ').join('_').toLowerCase();
 }
 
@@ -26,15 +26,13 @@ export function Uncapitalize(v: string) {
     return v.charAt(0).toLowerCase() + v.slice(1);
 }
 
-export function ToCamelCase(v: string)
-{
+export function ToCamelCase(v: string) {
     v = v.toLowerCase().replace(/[^A-Za-z0-9]/g, ' ').split(' ')
-    .reduce((result, word) => result + Capitalize(word.toLowerCase()));
+        .reduce((result, word) => result + Capitalize(word.toLowerCase()));
     return v.charAt(0).toLowerCase() + v.slice(1);
 }
 
-export function EscapeString(original: string): string
-{
+export function EscapeString(original: string): string {
     if (original == undefined) return "undefined";
     original = original.split('\n').join(" ");
     original = original.split('\'').join("\\\'");
@@ -42,7 +40,7 @@ export function EscapeString(original: string): string
 }
 
 export function ReadFile(filename: string): string {
-    return fs.readFileSync(filename,'utf8');
+    return fs.readFileSync(filename, 'utf8');
 }
 
 export function deepCopy(obj: Object): Object {
@@ -106,7 +104,7 @@ function Merge(left: any[], right: any[], comparer: (left, right) => number): an
 }
 
 export function isDict(v) {
-    return typeof v==='object' && v!==null && !(v instanceof Array) && !(v instanceof Date);
+    return typeof v === 'object' && v !== null && !(v instanceof Array) && !(v instanceof Date);
 }
 
 export function ToJsonString(_in: any): string {
@@ -161,7 +159,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
     }
     if (maxLength < 3) maxLength = 3;
     for (let i = 0; i < sentence.length; i++) {
-        if (sentence[i]==' ' && !inStr && ret.length>1 && ret[ret.length-1].length == (indent > 0 ? indent : spaceNum)) continue;
+        if (sentence[i] == ' ' && !inStr && ret.length > 1 && ret[ret.length - 1].length == (indent > 0 ? indent : spaceNum)) continue;
         ret[ret.length - 1] += sentence[i];
         if (inStr) {
             if (sentence[i] == strTag && !isEscaped(sentence, i)) {
@@ -274,10 +272,10 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
             }
 
             let firstCharIdx = 0;
-            let newLine = ret[ret.length-1];
-            while (firstCharIdx<ret[0].length && ret[0][firstCharIdx] == ' ' && firstCharIdx<newLine.length && newLine[firstCharIdx] == ' ')    firstCharIdx++;
-            if (firstCharIdx<newLine.length && firstCharIdx<ret[0].length && ret[0][firstCharIdx]=='#') {
-                ret[ret.length-1] = `${newLine.substr(0, firstCharIdx)}# ${newLine.substr(firstCharIdx)}`;
+            let newLine = ret[ret.length - 1];
+            while (firstCharIdx < ret[0].length && ret[0][firstCharIdx] == ' ' && firstCharIdx < newLine.length && newLine[firstCharIdx] == ' ') firstCharIdx++;
+            if (firstCharIdx < newLine.length && firstCharIdx < ret[0].length && ret[0][firstCharIdx] == '#') {
+                ret[ret.length - 1] = `${newLine.substr(0, firstCharIdx)}# ${newLine.substr(firstCharIdx)}`;
             }
         }
     }
@@ -288,14 +286,13 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
     return ret;
 }
 
-
 export function parseResourceId(mpath: string): Map<string, string> {
     let baseRegex: RegExp = /\/subscriptions\/(?<subscription>[^\/]*)(\/resourceGroups\/(?<resource_group>[^\/]*))?(\/providers\/(?<namespace>[^\/]*)\/(?<type>[^\/]*)\/(?<name>[^\/]*)(?<children>.*))?/g;
     let childRegex: RegExp = /(\/providers\/(?<child_namespace>[^\/]*))?\/(?<child_type>[^\/]*)\/(?<child_name>[^\/]*)/g;
     let mp: RegExpExecArray = baseRegex.exec(mpath);
     let ret: Map<string, string> = new Map<string, string>();
     if (mp) {
-        let groups  = mp.groups;
+        let groups = mp.groups;
         ret.set('subscription', groups['subscription']);
         ret.set('resource_group', groups['resource_group']);
         ret.set('namespace', groups['namespace']);
@@ -308,11 +305,48 @@ export function parseResourceId(mpath: string): Map<string, string> {
         let result = null;
         while (result = childRegex.exec(childStr)) {
             count++;
-            for(let key of ['child_namespace', 'child_type', 'child_name']) {
+            for (let key of ['child_namespace', 'child_type', 'child_name']) {
                 ret.set(key + "_" + count, result["groups"][key]);
-            }  
+            }
         }
         ret.set("last_child_num", "" + count);
     }
     return ret;
 }
+
+export function getIndentString(indent: number): string {
+    let indentStr: string = "";
+    for (let i: number = 0; i < indent; ++i) {
+        indentStr += " ";
+    }
+    return indentStr;
+}
+
+export function copyRecursiveSync(src, dest) {
+    let exists = fs.existsSync(src);
+    let stats = exists && fs.statSync(src);
+    let isDirectory = exists && stats.isDirectory();
+    if (isDirectory) {
+        fs.mkdirSync(dest);
+        fs.readdirSync(src).forEach(function (childItemName) {
+            copyRecursiveSync(path.join(src, childItemName), path.join(dest, childItemName));
+        });
+    } else {
+        fs.copyFileSync(src, dest);
+    }
+};
+
+export function deleteFolderRecursive(target) {
+    if (fs.existsSync(target)) {
+        fs.readdirSync(target).forEach((file, index) => {
+            let curPath = path.join(target, file);
+            if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            }
+            else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(target);
+    }
+};

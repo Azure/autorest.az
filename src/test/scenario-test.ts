@@ -1,14 +1,16 @@
-import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
-import { readFile, writeFile, readdir, mkdir } from "@azure-tools/async-io";
 import { exec } from 'child_process';
-
-
-
+import * as fs from 'fs';
+import { slow, suite, test, timeout } from 'mocha-typescript';
+import * as path from 'path';
+import { copyRecursiveSync, deleteFolderRecursive } from "../utils/helper";
 
 require('source-map-support').install();
 
 @suite class Process {
+    private incrementalTestRPs: string[] = ["mixed-reality"];
+    private noNeedTestRPs: string[] = ["testserver"];
+
     async runAz(directory: string, each: string) {
         let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6271 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md --azure-cli-extension-folder=" + directory + "/tmpoutput/";
         console.log(cmd);
@@ -41,16 +43,23 @@ require('source-map-support').install();
         });
     }
 
-
     @test(slow(600000), timeout(1500000)) async acceptanceSuite() {
         const dir = `${__dirname}/../../src/test/scenarios/`;
-        const folders = await readdir(dir);
+        const folders = fs.readdirSync(dir);
         let result = true;
         let msg = "";
         let finalResult = true;
         for (const each of folders) {
-            if (each != "testserver") {
+            if (this.noNeedTestRPs.indexOf(each) == -1) { // Not run test server now
                 console.log(`Processing: ${each}`);
+
+                // Remove tmpoutput
+                deleteFolderRecursive(path.join(dir, each, "tmpoutput"));
+                fs.mkdirSync(path.join(dir, each, "tmpoutput"));
+
+                if (this.incrementalTestRPs.indexOf(each) > -1) { // Handle for incremental
+                    copyRecursiveSync(path.join(dir, each, "basecli", "src"), path.join(dir, each, "tmpoutput", "src"));
+                }
                 try {
                     await this.runAz(dir + each, each).then(res => {
                         if (res == false) {
