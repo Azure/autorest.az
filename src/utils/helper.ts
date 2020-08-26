@@ -9,7 +9,9 @@ import { values, items, length, Dictionary } from "@azure-tools/linq";
 import * as request from "request-promise-native";
 
 export function changeCamelToDash(str: string) {
-    str = str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
+    str = str.replace(/[A-Z][^A-Z]/g, letter => `-${letter.toLowerCase()}`);
+    str = str.replace(/[^A-Z][A-Z]/g, letter => `${letter[0]}-${letter[1].toLowerCase()}`);
+    str = str.toLowerCase();
     if(str.startsWith('-')) {
         str = str.substring(1, str.length);
     }

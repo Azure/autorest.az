@@ -39,9 +39,9 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 
                 output.push("    " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + " = CliCommandType(");
                 if (model.SDK_NeedSDK) {
-                    ToMultiLine("        operations_tmpl='azext_" + model.Extension_NameUnderscored + ".vendored_sdks." + model.PythonOperationsName + ".operations._" + model.GetModuleOperationNamePython() + "_operations#" + model.GetModuleOperationNamePythonUpper() + "Operations" + ".{}',", output);
+                    ToMultiLine("        operations_tmpl='azext_" + model.Extension_NameUnderscored + ".vendored_sdks." + model.PythonOperationsName + ".operations._" + model.GetModuleOperationNamePython() + "_operations#" + model.GetModuleOperationNamePythonUpper() + ".{}',", output);
                 } else {
-                    ToMultiLine("        operations_tmpl='"  + model.GetPythonNamespace() + ".operations#" + model.GetModuleOperationNamePythonUpper() + "Operations" + ".{}',", output);
+                    ToMultiLine("        operations_tmpl='"  + model.GetPythonNamespace() + ".operations#" + model.GetModuleOperationNamePythonUpper() + ".{}',", output);
                 }
                 
 

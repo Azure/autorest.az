@@ -471,6 +471,9 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let indent = "";
     let methodName = originalOperation.language['python'].name;
+    if (model.Command_Name == 'synapse workspace-managed-identity-sql-control-setting create') {
+        model.Command_Name;
+    }
     if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
         if (!model.SDK_IsTrack1) {
             methodName = "begin_" + methodName;

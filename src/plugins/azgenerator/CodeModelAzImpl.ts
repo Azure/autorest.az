@@ -1527,7 +1527,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public GetModuleOperationNamePythonUpper(): string {
-        return pascalCase(this.CommandGroup.language['python'].name);
+        return this.CommandGroup.language['python']['className'];
     }
 
     public GetPythonNamespace(): string {

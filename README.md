@@ -13,7 +13,7 @@ debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
   "@autorest/python": "5.1.0-preview.4"
-  "@autorest/clicommon": "0.5.0"
+  "@autorest/clicommon": "/home/qiaozha/code/autorest.clicommon"
   #"@autorest/python": "latest"
 
 require:
@@ -32,7 +32,7 @@ scope-az:
         #- source-file-az-hider
         #- source-file-pynamer
         #- source-file-aznamer
-        #- source-file-modifiers
+        - source-file-modifiers
         #- source-file-merger
         - source-file-extension
     output-folder: $(az-output-folder)
@@ -124,7 +124,7 @@ pipeline:
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
-        #output-artifact: source-file-modifiers
+        output-artifact: source-file-modifiers
     az/azgenerator:
         input: az/modifiers
         output-artifact: source-file-extension
@@ -134,7 +134,7 @@ pipeline:
             #- az/clicommon
             #- az/merger
             #- az/aznamer
-            #- az/modifiers
+            - az/modifiers
             - az/azgenerator
         scope: scope-az
 ```

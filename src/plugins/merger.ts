@@ -220,6 +220,12 @@ export class CodeModelMerger {
         }
     }
 
+    getLastValidPath(cliPath: string) {
+        let cliPaths = cliPath.split("$$");
+        cliPaths.pop();
+        return cliPaths.join("$$");
+    }
+
     processOperationGroup() {
         this.pythonCodeModel.operationGroups.forEach(operationGroup => {
             if(!isNullOrUndefined(operationGroup.language['cli'])) {
@@ -268,12 +274,32 @@ export class CodeModelMerger {
                                 if (parameter['flattened'] && parameter.language['cli']?.['cli-m4-flattened']) {
                                     for(let tmpCnt = cnt + 1; tmpCnt < request.parameters.length; tmpCnt++) {
                                         let tmpParam = request.parameters[tmpCnt];
+                                        let deepFlatten = false;
                                         if (tmpParam['originalParameter'] == parameter) {
                                             if(!isNullOrUndefined(tmpParam?.['language']?.['cli']?.['cliPath'])) {
                                                 let cliPath = tmpParam.language['cli']?.['cliPath'];
                                                 let cliNode = findNodeInCodeModel(cliPath, this.cliCodeModel);
                                                 if (isNullOrUndefined(cliNode)) {
-                                                    m4FlattenedFrom.push(tmpParam);
+                                                    let lastValidPath = this.getLastValidPath(cliPath);
+                                                    if (!isNullOrUndefined(lastValidPath)) {
+                                                        let lastValidNode = findNodeInCodeModel(lastValidPath, this.cliCodeModel);
+                                                        if (!isNullOrUndefined(lastValidNode) && lastValidNode.isArray()) {
+                                                            let cliFlattenTrace = tmpParam.language['cli']['cliFlattenTrace'];
+                                                            let cliFlattenTraceStr = cliFlattenTrace.join(";");
+                                                            for(let lnode of lastValidNode) {
+                                                                if(!isNullOrUndefined(lnode.language['cli']?.['cliFlattenTrace'])) {
+                                                                    let cftstr = lnode.language['cli']?.['cliFlattenTrace'].join(";");
+                                                                    if (cftstr.startsWith(cliFlattenTraceStr)) {
+                                                                        deepFlatten = true;
+                                                                        lnode.language['cli']['pythonFlattenedFrom'] = tmpParam;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    if (!deepFlatten) {
+                                                        m4FlattenedFrom.push(tmpParam);
+                                                    }
                                                 } else {
                                                     if (isNullOrUndefined(cliNode.language['python'])) { 
                                                         cliNode.language['python'] = tmpParam.language['python'];
@@ -283,6 +309,9 @@ export class CodeModelMerger {
                                         } else {
                                             break;
                                         }
+                                    }
+                                    if (m4FlattenedFrom.length == 0) {
+                                        parameter.language['cli']['cli-m4-flattened'] = false;
                                     }
                                 }
                                 this.setPythonName(parameter, m4FlattenedFrom);

@@ -218,18 +218,23 @@ export class AzNamer {
                 });
                  //if generic update exists, set the setter_arg_name in the original operation
                 if(operation.language['az']['isSplitUpdate']) {
-                    operation.extensions['cli-split-operation-original-operation'].requests.forEach(request => {
+                    let foundGeneric = false;
+                    // disable generic update for now
+                    foundGeneric = true;
+                    /*for(let n = 0; n < operation.extensions['cli-split-operation-original-operation'].requests.length; n++) {
+                        let request = operation.extensions['cli-split-operation-original-operation'].requests[n];
                         if (request.parameters) {
-                            request.parameters.forEach(parameter => {
-                                if(!isNullOrUndefined(parameter.language['az'])) {
+                            for(let m = 0; m < request.parameters.length; m++) {
+                                let parameter = request.parameters[m];
+                                if(!isNullOrUndefined(parameter.language['az']) && !foundGeneric) {
                                     if(operation.language['az'].command.endsWith(' update') && parameter['flattened'] == true) {
+                                        foundGeneric = true;
                                         operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter;
-                                        return;
                                     }
                                 }
-                            });
-                        };
-                    })
+                            }
+                        }
+                    }*/
                 }
             });
         });
