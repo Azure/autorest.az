@@ -1761,10 +1761,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 if (keyToMatch) {
                     for (let method_param of method_param_list) {
                         let polySubParamObj = method_param.value;
-                        if (polySubParamObj['polyBaseParam'] == methodParam.value) {
-                            if (!polySubParamObj.schema.extensions) {
-                                break;
-                            }
+                        if (polySubParamObj['polyBaseParam'] == methodParam.value && polySubParamObj.schema.extensions) {
                             let valueToMatch = polySubParamObj.schema.extensions['x-ms-discriminator-value'];
                             if (netValue[keyToMatch] == valueToMatch) {
                                 polySubParam = method_param;
