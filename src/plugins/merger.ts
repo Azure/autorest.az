@@ -363,19 +363,21 @@ export class CodeModelMerger {
                                                                         let subParam = findNodeInCodeModel(subParamPath, this.cliCodeModel);
                                                                         let subLastValidPath =  this.getLastValidPath(subParamPath);
                                                                         let subLastValidNode = findNodeInCodeModel(subLastValidPath, this.cliCodeModel);
-                                                                        let idx = subLastValidNode.indexOf(subParam);
-                                                                        if (idx > -1) {
-                                                                            subLastValidNode.splice(idx + 1, 0, tmpParam);
-                                                                            subLastValidNode[idx+1]['originalParameter'] = subParam;
-                                                                            subLastValidNode[idx+1].language['cli']['moved-from-python'] = true;
-                                                                            let subcnt = idx + 2;
-                                                                            while(subcnt < subLastValidNode.length) {
-                                                                                if(subLastValidNode[subcnt]['originalParameter'] == subParam) {
-                                                                                    subLastValidNode[subcnt]['originalParameter'] = tmpParam;
-                                                                                } else {
-                                                                                    break;
+                                                                        if (subLastValidNode) {
+                                                                            let idx = subLastValidNode.indexOf(subParam);
+                                                                            if (idx > -1) {
+                                                                                subLastValidNode.splice(idx + 1, 0, tmpParam);
+                                                                                subLastValidNode[idx + 1]['originalParameter'] = subParam;
+                                                                                subLastValidNode[idx + 1].language['cli']['moved-from-python'] = true;
+                                                                                let subcnt = idx + 2;
+                                                                                while (subcnt < subLastValidNode.length) {
+                                                                                    if (subLastValidNode[subcnt]['originalParameter'] == subParam) {
+                                                                                        subLastValidNode[subcnt]['originalParameter'] = tmpParam;
+                                                                                    } else {
+                                                                                        break;
+                                                                                    }
+                                                                                    subcnt++;
                                                                                 }
-                                                                                subcnt++;
                                                                             }
                                                                         }
                                                                     }
