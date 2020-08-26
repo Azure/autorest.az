@@ -15,6 +15,7 @@ export class TargetFile {
         const SegmentTypes = [
             HeadSegment,
             testStepSegment,
+            TailSegment,
         ]
         
         let matchOne = true;
@@ -54,15 +55,14 @@ export class BaseSegment {
 }
 
 export class HeadSegment extends BaseSegment {
-
     public static addInstance(target: TargetFile): boolean {
         if (target.currentAt==0) {
-            let startDef = target.content.indexOf("\ndef ");
-            let startClass = target.content.indexOf("\nclass ");
-            if (startDef<0) startDef = target.content.length-1;
-            if (startClass<0) startClass = target.content.length-1;
-            const nextAt = Math.min(startDef, startClass) +1;
-            target.children.push(new HeadSegment(0, nextAt));
+            let nextAt =target.content.search(/\n##/);
+            if (nextAt<0) {
+                nextAt = target.content.length-1;
+            }
+            nextAt += 1;
+            target.children.push(new HeadSegment(target.currentAt, nextAt));
             target.currentAt = nextAt;
             return true;
         }
@@ -77,13 +77,13 @@ export class DefSegment extends BaseSegment {
 export class testStepSegment extends DefSegment {
     public static addInstance(target: TargetFile): boolean {
         const remain = target.content.slice(target.currentAt);
-        if (target.currentAt>=0 && remain.startsWith("def step_")) {
-            let nextAt =remain.search(/\n\S/) + target.currentAt;
+        if (target.currentAt>=0 && remain.startsWith("## ")) {
+            let nextAt =remain.search(/\n##/);
             if (nextAt<0) {
                 nextAt = target.content.length-1;
             }
-            nextAt += 1;
-            target.children.push(new testStepSegment(target.currentAt, nextAt, remain.slice(0+4, remain.indexOf("("))));
+            nextAt +=  target.currentAt + 1;
+            target.children.push(new testStepSegment(target.currentAt, nextAt, remain.slice(3, remain.indexOf("\n"))));
             target.currentAt = nextAt;
             return true;
         }
@@ -94,11 +94,11 @@ export class testStepSegment extends DefSegment {
 
 export class TailSegment extends BaseSegment {
     public static addInstance(target: TargetFile): boolean {
-        if (target.currentAt>=0 && target.content.slice(target.currentAt).startsWith("def step_")) {
+        if (target.currentAt>=0) {
             return false;
         }
         const nextAt = target.content.length;
-        target.children.push(new testStepSegment(target.currentAt, nextAt));
+        target.children.push(new TailSegment(target.currentAt, nextAt));
         target.currentAt = nextAt;
         return true;
     }

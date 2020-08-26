@@ -194,6 +194,7 @@ export interface CodeModelAz {
     GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
     GetExampleChecks(example: CommandExample): string[];
     RandomizeNames: boolean;
+    OutputFolder: string;
     
     // readme config
     CliCoreLib: string;

@@ -21,6 +21,7 @@ class ActionParam {
 export class CodeModelCliImpl implements CodeModelAz {
     codeModel: CodeModel;
     options: any;
+    outputFolder: string;
     extensionName: string;
     currentOperationGroupIndex: number;
     currentSubOperationGroupIndex: number;
@@ -51,6 +52,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     async init() {
         this.options = await this.session.getValue('az');
+        this.outputFolder = await this.session.getValue('az-output-folder');
         Object.assign(azOptions, this.options);
         this.extensionName = this.options['extensions'];
         this.currentOperationGroupIndex = -1;
@@ -140,6 +142,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         let disableChecks = this.options?.['disable-checks'];
         if (disableChecks) return false;
         return true;
+    }
+    
+    public get OutputFolder(): string {
+        return this.outputFolder;
     }
 
     private calcOptionRequiredByMethod() {
