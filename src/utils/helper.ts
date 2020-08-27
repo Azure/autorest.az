@@ -264,10 +264,24 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                         }
                     }
 
-                    let newLine = ' '.repeat(indent > 0 ? indent : spaceNum) + ret[ret.length - 1].substr(lastComma + 1).trimLeft();
+                    let prefixSpaces = ret[ret.length - 1].search(/\S|$/);
+                    if (indent>0)   prefixSpaces = indent;
+                    let newLine = ' '.repeat(prefixSpaces) + ret[ret.length - 1].substr(lastComma + 1).trimLeft();
                     ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastComma + 1);
                     ret.push(newLine);
                     lastComma = -1;
+                }
+                else if (i < sentence.length - 1) {
+                    for (let i=ret[ret.length - 1].length-1; i>indent; i--) {
+                        let currentChar = ret[ret.length - 1][i];
+                        if (!currentChar.match(/[a-z0-9_]/i)) {
+                            let newLine = ' '.repeat(ret[ret.length - 1].search(/\S|$/)) + ret[ret.length - 1].substr(i + 1).trimLeft();
+                            ret[ret.length - 1] = ret[ret.length - 1].substr(0, i + 1) + "\\";
+                            ret.push(newLine);
+                            lastComma = -1;
+                            break;
+                        }
+                    }
                 }
             }
 
