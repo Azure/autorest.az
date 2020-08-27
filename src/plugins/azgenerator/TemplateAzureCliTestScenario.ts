@@ -3,11 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz"
+import { CodeModelAz, CommandExample } from "./CodeModelAz"
 import { PreparerEntity, getResourceKey } from "./ScenarioTool"
-import { ToSnakeCase, ToMultiLine, deepCopy } from '../../utils/helper';
+import { ToMultiLine, deepCopy } from '../../utils/helper';
 import { HeaderGenerator } from "./Header";
-import { HttpWithBodyRequest } from "@azure-tools/codemodel";
 
 let usePreparers = false;
 
@@ -30,11 +29,9 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
 
     let header: HeaderGenerator = new HeaderGenerator();
 
-    head.push("");
-    head.push("import os");
+    header.addImport("os");
     head.push("from azure.cli.testsdk import ScenarioTest");
     head.push("from .. import try_manual, raise_if, calc_coverage");
-    //head.push("from .preparers import (VirtualNetworkPreparer, VnetSubnetPreparer)");
     steps.push("");
     steps.push("");
     steps.push("TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))");
@@ -44,17 +41,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     class_info.push("@try_manual");
     class_info.push("class " + model.Extension_NameClass + "ScenarioTest(ScenarioTest):");
     class_info.push("");
-    //initiates.push("    @ResourceGroupPreparer(name_prefix='cli_test_" + model.Extension_NameUnderscored + "')");
-    // initiates.push("    def test_" + model.Extension_NameUnderscored + "(self, resource_group):");
     initiates.push("");
-
-    // go through the examples to recognize resources
-    for (var ci = 0; ci < config.length; ci++) {
-        let exampleId: string = config[ci].name;
-        if (exampleId) {
-            model.FindExampleById(exampleId, commandParams);
-        }
-    }
 
     let subscription_id = model.GetSubscriptionKey();
     if (subscription_id) {
@@ -67,6 +54,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let imports: string[] = [];
     let decorators: string[] = [];
     let parameterNames = InitiateDependencies(model, imports, decorators, initiates);
+    let jsonAdded = false;
 
     function parameterLine() {
         let ret = "";
@@ -90,18 +78,34 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
             steps.push(...ToMultiLine(`def ${functionName}(test${parameterLine()}):`));
             // find example by name
             let found = false;
-            for (let exampleCmd of model.FindExampleById(exampleId, commandParams)) {
+            let examples: CommandExample[] = [];
+            let exampleIdx = 0;
+            for (let exampleCmd of model.FindExampleById(exampleId, commandParams, examples)) {
                 if (exampleCmd && exampleCmd.length > 0) {
                     found = true;
-                    if(exampleCmd[0].indexOf(' delete') > -1) {
+                    if (exampleCmd[0].indexOf(' delete') > -1) {
                         exampleCmd[0] += " -y";
-                    } 
+                    }
                     for (let idx = 0; idx < exampleCmd.length; idx++) {
                         let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
                         let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
                         ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
                     }
-                    steps.push("    " + disabled + "         checks=[])");
+                    let checks = model.GetExampleChecks(examples[exampleIdx++]);
+                    if (checks.length > 0) {
+                        steps.push("    " + disabled + "         checks=[");
+                        for (let check of checks) {
+                            ToMultiLine("    " + disabled + "             " + check, steps);
+                            if (!jsonAdded && !disabled && check.indexOf("json.loads") >= 0) {
+                                header.addImport("json");
+                                jsonAdded = true;
+                            }
+                        }
+                        steps.push("    " + disabled + "         ])");
+                    }
+                    else {
+                        steps.push("    " + disabled + "         checks=[])");
+                    }
                 }
             }
             if (!found) {
@@ -197,11 +201,10 @@ function InitiateDependencies(model: CodeModelAz, imports: string[], decorators:
     if (internalObjects.length > 0) {
         initiates.push("        self.kwargs.update({");
         for (let [class_name, kargs_key, hasCreateExample, object_name] of internalObjects) {
-            if (hasCreateExample && model.RandomizeNames)
-            {
+            if (hasCreateExample && model.RandomizeNames) {
                 const RANDOMIZE_MIN_LEN = 4;
-                let prefixLen = Math.floor(object_name.length/2);
-                if(object_name.length-prefixLen<RANDOMIZE_MIN_LEN)  prefixLen = Math.max(object_name.length-RANDOMIZE_MIN_LEN, 0);
+                let prefixLen = Math.floor(object_name.length / 2);
+                if (object_name.length - prefixLen < RANDOMIZE_MIN_LEN) prefixLen = Math.max(object_name.length - RANDOMIZE_MIN_LEN, 0);
                 ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='${object_name}'[:${prefixLen}], length=${Math.max(object_name.length, RANDOMIZE_MIN_LEN)}),`, initiates);
             }
             else

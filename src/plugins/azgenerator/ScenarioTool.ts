@@ -1,8 +1,7 @@
 
 import * as path from "path"
 import { CommandExample, ExampleParam } from "./CodeModelAz";
-import { deepCopy, isDict, ToCamelCase, changeCamelToDash } from "../../utils/helper"
-import { Example } from "@azure-tools/codemodel";
+import { deepCopy, isDict, ToCamelCase, ToPythonString, changeCamelToDash } from "../../utils/helper"
 import { EnglishPluralizationService } from "@azure-tools/codegen";
 import { isNullOrUndefined } from "util";
 
@@ -201,16 +200,26 @@ class ResourceClass {
     }
 
 }
+
+export enum ObjectStatus {
+    None,
+    Created,
+    Deleted,
+}
 class ResourceObject {
     object_name: string;
     class_name: string;
     // key: string;
     sub_resources: Map<string, ResourceClass>; //class_name --> resource_class
+    example_params: ExampleParam[];
+    testStatus: ObjectStatus;
 
     public constructor(object_name: string, class_name: string) {
         this.object_name = object_name;
         this.class_name = class_name;
         this.sub_resources = new Map<string, ResourceClass>();
+        this.example_params = [];
+        this.testStatus = ObjectStatus.None;
     }
 
     public get key(): string {
@@ -218,24 +227,142 @@ class ResourceObject {
     }
 
     public placeholder(isTest: boolean): string {
-        if (isTest)    return '{' + this.key + '}';
+        if (isTest) return '{' + this.key + '}';
         return getResourceKey(this.class_name, this.object_name, true);
-        
+    }
+
+    public addOrUpdateParam(example_param: ExampleParam) {
+        // remove all children
+        for (let i = 0; i < this.example_params.length; i++) {
+            let param = this.example_params[i];
+            if (param.ancestors == example_param.ancestors.concat([example_param.name])) {
+                this.example_params.splice(i);
+                i--;
+            }
+        }
+
+        // replace if already there
+        for (let i = 0; i < this.example_params.length; i++) {
+            let param = this.example_params[i];
+            if (JSON.stringify(param.ancestors) == JSON.stringify(example_param.ancestors) && param.name == example_param.name) {
+                this.example_params[i] = example_param;
+                return;
+            }
+        }
+
+        // append to the tail
+        this.example_params.push(example_param);
+    }
+
+    public getCheckers(resource_pool: ResourcePool, example: CommandExample): string[] {
+        function hasComplexArray(obj: any): boolean {
+            if (obj instanceof Array) {
+                if (obj.length > 1) return true;
+                for (let s of obj) {
+                    if (hasComplexArray(s)) return true;
+                }
+            }
+            if (isDict(obj)) {
+                for (let key in obj) {
+                    if (hasComplexArray(obj[key])) return true;
+                }
+            }
+            return false;
+        }
+
+        function addParam(obj: any, param: ExampleParam, checkPath: string, ret: string[]) {
+            if (isDict(obj)) {
+                if (checkPath.length > 0) checkPath += ".";
+                if (param.defaultName in obj && typeof obj[param.defaultName] == typeof param.rawValue && JSON.stringify(obj[param.defaultName]).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
+                    if (hasComplexArray(param.rawValue)) return;
+                    formatChecker(checkPath + resource_pool.replaceResourceString(param.defaultName, [], [], true), param.rawValue, ret);
+                    return;
+                }
+                else if ('name' in obj && typeof obj['name'] == typeof param.rawValue && JSON.stringify(obj['name']).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
+                    if (hasComplexArray(param.rawValue)) return;
+                    formatChecker(checkPath + 'name', param.rawValue, ret);
+                    return;
+                }
+
+            }
+            if (obj instanceof Array) {
+                if (obj.length > 1) return;
+                addParam(obj[0], param, checkPath + "[0]", ret);
+            }
+            if (isDict(obj)) {
+                if (checkPath.length > 0) checkPath += ".";
+                for (let key in obj) {
+                    if (checkPath.length==0 && key.toLowerCase()=='properties') {
+                        addParam(obj[key], param, checkPath, ret);
+                    }
+                    else {
+                        addParam(obj[key], param, checkPath + resource_pool.replaceResourceString(key, [], [], true), ret);
+                    }
+                }
+            }
+        }
+
+        function formatChecker(checkPath: string, rawValue: any, ret: string[]) {
+            if (typeof rawValue == 'object') {
+                if (rawValue instanceof Array) {
+                    if (rawValue.length > 1) return;
+                    if (rawValue.length == 0) {
+                        ret.push(`test.check("${checkPath}", []),`);
+                    }
+                    else {
+                        formatChecker(checkPath + "[0]", rawValue[0], ret);
+                    }
+                }
+                else if (isDict(rawValue)) {
+                    if (checkPath.length > 0) checkPath += ".";
+                    if (Object.keys(rawValue).length == 0) {
+                        ret.push(`test.check("${checkPath}", {}),`);
+                    }
+                    for (let key in rawValue) {
+                        formatChecker(checkPath + resource_pool.replaceResourceString(key, [], [], true), rawValue[key], ret);
+                    }
+                }
+            }
+            else {
+                if (typeof rawValue == 'string') {
+                    let replacedValue = resource_pool.replaceResourceString(rawValue, [], [], true);
+                    ret.push(`test.check("${checkPath}", ${ToPythonString(replacedValue, typeof replacedValue)}, case_sensitive=False),`);
+                }
+                else {
+                    ret.push(`test.check("${checkPath}", ${ToPythonString(rawValue, typeof rawValue)}),`);
+                }
+            }
+        }
+
+        let ret: string[] = [];
+        if (['create', 'delete', 'show', 'list', 'update'].indexOf(example.Method) < 0) return ret;
+        let example_resp_body = null;
+        for (let statusCode of [200, 201, 204]) {
+            example_resp_body = example.ExampleObj.responses?.[200]?.body;
+            if (!isNullOrUndefined(example_resp_body)) break;
+        }
+        if (isNullOrUndefined(example_resp_body)) return ret;
+
+        for (let param of this.example_params) {
+            addParam(example_resp_body, param, "", ret);
+        }
+
+        return ret;
     }
 }
 
-function singlizeLast(word:string) {
+function singlizeLast(word: string) {
     let eps = new EnglishPluralizationService();
     let ws = changeCamelToDash(word).split('-');
     let l = ws.length;
-    ws[l-1] = eps.singularize(ws[l-1]);
+    ws[l - 1] = eps.singularize(ws[l - 1]);
     return ws.join('-');
 }
 
 let keyCache = {}  //class_name+objectname->key
 let formalCache = {}
 let keySeq = {}    // class_name ->seq
-export function getResourceKey(class_name: string, object_name: string, formalName=false): string {
+export function getResourceKey(class_name: string, object_name: string, formalName = false): string {
     let longKey = (resourceClassKeys[class_name] || class_name) + '_' + object_name;
     if (formalName && longKey in formalCache) {
         return formalCache[longKey];
@@ -247,12 +374,12 @@ export function getResourceKey(class_name: string, object_name: string, formalNa
     if (keySeq.hasOwnProperty(class_name)) {
         let key = (resourceClassKeys[class_name] || class_name) + '_' + keySeq[class_name];
         keySeq[class_name] += 1;
-        formalCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name]-1}`);
+        formalCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name] - 1}`);
         if (preparerInfos[class_name]?.name) {  // is external resource
             keyCache[longKey] = key;
         }
         else {
-            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name]-1}`);
+            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name] - 1}`);
         }
     }
     else {
@@ -268,7 +395,7 @@ export function getResourceKey(class_name: string, object_name: string, formalNa
         }
     }
 
-    return formalName? formalCache[longKey]: keyCache[longKey];
+    return formalName ? formalCache[longKey] : keyCache[longKey];
 }
 
 export class ResourcePool {
@@ -277,11 +404,13 @@ export class ResourcePool {
     map: Map<string, ResourceClass>;
     use_subscription: boolean;
     static KEY_SUBSCRIPTIONID = "subscription_id";
+    replacements: Map<string, string>;
 
     public constructor() {
         this.root = new Map<string, ResourceClass>();
         this.map = new Map<string, ResourceClass>();
         this.use_subscription = false;
+        this.replacements = new Map<string, string>();
     }
 
     private prepareResource(class_name: string, object_name: string, depends: string[][], entitys: PreparerEntity[], preparings: string[][]) {
@@ -393,20 +522,81 @@ export class ResourcePool {
         return resources[class_name].objects[object_name];
     }
 
-    public findTreeResource(class_name: string, object_name: string, root: Map<string, ResourceClass>): ResourceObject {
+    public findResource(class_name: string, object_name: string, testStatus: ObjectStatus): ResourceObject | undefined {
+        if (isNullOrUndefined(class_name) || isNullOrUndefined(object_name)) return null;
+
+        let resource_object = this.findTreeResource(class_name, object_name, this.root, testStatus);
+        if (resource_object) {
+            return resource_object;
+        }
+
+        if (class_name in this.map && object_name in this.map[class_name].objects) {
+            if (isNullOrUndefined(testStatus) || testStatus == this.map[class_name].objects[object_name].testStatus) {
+                return this.map[class_name].objects[object_name];
+            }
+        }
+
+        return undefined;
+    }
+
+    public findAllResource(class_name: string, exampleParams: ExampleParam[] = null, testStatus: ObjectStatus = null): ResourceObject[] {
+        let ret: ResourceObject[] = [];
+        if (isNullOrUndefined(class_name)) return ret;
+
+        this.findAllTreeResource(class_name, this.root, ret);
+
+        if (class_name in this.map) {
+            for (let key in this.map[class_name].objects) {
+                ret.push(this.map[class_name].objects[key]);
+            }
+        }
+        return ret.filter((resourceObject) => {
+            for (let critParam of exampleParams) {
+                let found = false;
+                for (let resourceParam of resourceObject.example_params) {
+                    if (critParam.name == resourceParam.name && critParam.rawValue == resourceParam.rawValue) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) return false;
+            };
+            return isNullOrUndefined(testStatus) || testStatus == resourceObject.testStatus;
+        });
+    }
+
+    public findAllTreeResource(class_name: string, root: Map<string, ResourceClass>, ret: ResourceObject[]) {
+        if (class_name in root) {
+            for (let key in root[class_name].objects) {
+                ret.push(root[class_name].objects[key]);
+            }
+        }
+        for (let c in root) {
+            for (let o in root[c].objects) {
+                this.findAllTreeResource(class_name, root[c].objects[o].sub_resources, ret);
+            }
+        }
+    }
+
+
+    public findTreeResource(class_name: string, object_name: string, root: Map<string, ResourceClass>, testStatus: ObjectStatus = null): ResourceObject {
         if (class_name in root && object_name in root[class_name].objects) {
-            return root[class_name].objects[object_name];
+            if (isNullOrUndefined(testStatus) || testStatus == root[class_name].objects[object_name].testStatus) {
+                return root[class_name].objects[object_name];
+            }
         }
         if (!class_name) {
             for (let c in root) {
                 if (object_name in root[c].objects) {
-                    return root[c].objects[object_name];
+                    if (isNullOrUndefined(testStatus) || testStatus == root[c].objects[object_name].testStatus) {
+                        return root[c].objects[object_name];
+                    }
                 }
             }
         }
         for (let c in root) {
             for (let o in root[c].objects) {
-                let ret = this.findTreeResource(class_name, object_name, root[c].objects[o].sub_resources);
+                let ret = this.findTreeResource(class_name, object_name, root[c].objects[o].sub_resources, testStatus);
                 if (ret) return ret;
             }
         }
@@ -431,7 +621,8 @@ export class ResourcePool {
         return this.map[class_name].objects[object_name];
     }
 
-    public isResource(language): string | null {
+    public isResource(language: string): string | null {
+        if (language.startsWith("--")) language = language.substr(2);
         for (let resource in resourceLanguages) {
             for (let resource_language of resourceLanguages[resource]) {
                 if (resource_language.toLowerCase() == language.toLowerCase()) return resource;
@@ -458,7 +649,7 @@ export class ResourcePool {
         return false;
 
     }
-    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders: string[], resources: string[], exampleParam: ExampleParam, isTest=true) {
+    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders: string[], resources: string[], exampleParam: ExampleParam, isTest = true): any {
         if (placeholders == undefined) placeholders = new Array();
         if (isJson) {
             let body = typeof endpoint == 'string' ? JSON.parse(endpoint) : endpoint;
@@ -480,7 +671,7 @@ export class ResourcePool {
 
             if (typeof endpoint == 'string') {
                 let ret = JSON.stringify(body).split(/[\r\n]+/).join("");
-                return isTest ? this.formatable(ret, placeholders): ret;
+                return isTest ? this.formatable(ret, placeholders) : ret;
             }
             else {
                 return body;
@@ -524,7 +715,9 @@ export class ResourcePool {
             }
             return ret;
         }
-
+        return this.replaceResourceString(endpoint, placeholders, resources, isTest);
+    }
+    public replaceResourceString(endpoint: string, placeholders: string[], resources: string[], isTest = true): any {
         let nodes = endpoint.split('/');
         if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
             return this.getPlaceholder(endpoint, isTest, placeholders);
@@ -557,14 +750,14 @@ export class ResourcePool {
                 }
             }
             else {
-                nodes[i + 1] = this.getPlaceholder(nodes[i+1], isTest);
+                nodes[i + 1] = this.getPlaceholder(nodes[i + 1], isTest);
             }
             i += 2;
         }
         return nodes.join('/');
     }
 
-    public addParamResource(param_name: string, param_value: string, isJson: boolean, isKeyValues: boolean, isTest=true): string {
+    public addParamResource(param_name: string, param_value: string, isJson: boolean, isKeyValues: boolean, isTest = true): string {
         if (typeof param_value !== 'string' || isJson || isKeyValues) return param_value;
 
         if (param_name.startsWith('--')) {
@@ -587,7 +780,8 @@ export class ResourcePool {
         }
     }
 
-    public getPlaceholder(object_name: string, isTest: boolean, placeholders: string[]=null): string {
+
+    public getPlaceholder(object_name: string, isTest: boolean, placeholders: string[] = null): string {
         // find in MapResource
         for (let class_name in this.map) {
             if (object_name in this.map[class_name].objects) {
@@ -615,9 +809,12 @@ export class ResourcePool {
 
         let regex = /^\d\d\d\d\-\d\d\-\d\dT\d\d:\d\d:\d\d.\d+Z$/g
         if (azOptions?.['replace-datetime'] && regex.test(object_name)) {
-            let date = new Date();
-            date.setDate(date.getDate() + 10);
-            return date.toISOString();
+            if (!this.replacements.has(object_name)) {
+                let date = new Date();
+                date.setDate(date.getDate() + 10);
+                this.replacements.set(object_name, date.toISOString());
+            }
+            return this.replacements.get(object_name)
         }
         return object_name;
     }
@@ -656,6 +853,16 @@ export class ResourcePool {
     public isDependResource(child: string, parent: string) {
         let depends = resourceClassDepends[child];
         return depends && depends.indexOf(parent) >= 0;
+    }
+
+    public getListCheckers(example: CommandExample): string[] {
+        let ret = [];
+        if (example.Method != "list") return ret;
+        let len = this.findAllResource(example.ResourceClassName, example.Parameters, ObjectStatus.Created).length;
+        if (len > 0) {
+            ret.push(`test.check('length(@)', ${len}),`);
+        }
+        return ret;
     }
 }
 
