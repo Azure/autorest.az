@@ -26,7 +26,6 @@ import { GenerateAzureCliMainSetUp } from "./TemplateAzureCliMainSetUp"
 export class AzCoreFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
-        this.path = "azext_" + this.model.Extension_NameUnderscored + "/";
     }
 
     public getParam() {

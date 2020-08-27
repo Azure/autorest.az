@@ -65,7 +65,6 @@ input-file:
 - ../input/custom-baseUrl-paging.json
 - ../input/head.json
 - ../input/non-string-enum.json
-- ../input/url-multi-collectionFormat.json
 ```
 
 # Code Generation

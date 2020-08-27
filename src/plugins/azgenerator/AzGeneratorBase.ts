@@ -8,14 +8,14 @@ import { CodeModelAz } from "./CodeModelAz";
 export abstract class AzGeneratorBase {
     model: CodeModelAz;
     files: any = {};
-    path: string;
+    azDirectory: string;
     isDebugMode: boolean;
 
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         this.model = model;
-        this.path = "";
+        this.azDirectory = "";
         this.isDebugMode = isDebugMode;
     }
 
-    public abstract async generateAll()
+    public abstract async generateAll(): Promise<void>;
 }

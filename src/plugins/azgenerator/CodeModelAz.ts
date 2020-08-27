@@ -1,4 +1,5 @@
 ﻿import { Operation, OperationGroup, Parameter, Property, Schema } from "@azure-tools/codemodel";
+import { GenerationMode } from "../models";
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -28,7 +29,10 @@ export class ExampleParam {
     keys: string[];
     defaultName: string;
     methodParam: MethodParam;
-    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, keys: string[], defaultName: string, methodParam: MethodParam) {
+    ancestors: string[];
+    replacedValue: any;
+    rawValue: any;
+    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, keys: string[], defaultName: string, methodParam: MethodParam, ancestors: string[], rawValue: any) {
         this.name = name;
         this.value = value;
         this.isJson = isJson;
@@ -36,6 +40,8 @@ export class ExampleParam {
         this.keys = keys;
         this.defaultName = defaultName;
         this.methodParam = methodParam;
+        this.ancestors = ancestors;
+        this.rawValue = rawValue;
     }
 }
 export class CommandExample {
@@ -51,12 +57,15 @@ export class CommandExample {
     public MethodResponses: any[];
     public Method_IsLongRun: boolean;
     public MethodParams: MethodParam[];
+    public ExampleObj: any;
 }
 
 export interface CodeModelAz {
     init(): any;
     SelectFirstExtension(): boolean;
     SelectNextExtension(): boolean;
+    CliGenerationMode: GenerationMode;
+    CliOutputFolder: string;
 
     IsCliCore: boolean;
     SDK_NeedSDK: boolean;
@@ -71,7 +80,7 @@ export interface CodeModelAz {
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
-    Extension_Mode: string;
+    Extension_Mode: string;   
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;
@@ -183,7 +192,7 @@ export interface CodeModelAz {
     GenerateTestInit(): void;
     SelectFirstExample(): boolean;
     SelectNextExample(): boolean;
-    FindExampleById(id: string, commandParams: any): string[][];
+    FindExampleById(id: string, commandParams: any, examples: any[]): string[][];
     Example_Body: string[];
     Example_Title: string;
     Example_Params: any;
@@ -193,6 +202,7 @@ export interface CodeModelAz {
     GatherInternalResource();
     FindExampleWaitById(id: string): string[][];
     GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
+    GetExampleChecks(example: CommandExample): string[];
     RandomizeNames: boolean;
     
     // readme config

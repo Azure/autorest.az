@@ -39,7 +39,10 @@ def step_managednetworksput(test, rg):
              'icrosoft.Network/virtualNetworks/{vn_3}/subnets/default\\"}}]}}" '
              '--name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check("location", "eastus", case_sensitive=False),
+                 test.check("name", "{myManagedNetwork}", case_sensitive=False),
+             ])
 
 
 # EXAMPLE: ManagementNetworkGroupsPut
@@ -56,7 +59,10 @@ def step_managementnetworkgroupsput(test, rg):
              '--group-name "{myManagedNetworkGroup}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check("managementGroups", []),
+                 test.check("name", "{myManagedNetworkGroup}", case_sensitive=False),
+             ])
     test.cmd('az managed-network mn group wait --created '
              '--group-name "{myManagedNetworkGroup}" '
              '--resource-group "{rg}"',
@@ -71,7 +77,11 @@ def step_scopeassignmentsput(test, rg):
              'gedNetwork/managedNetworks/{myManagedNetwork}" '
              '--scope "subscriptions/subscriptionC" '
              '--name "{myScopeAssignment}"',
-             checks=[])
+             checks=[
+                 test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M"
+                            "icrosoft.ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
+                 test.check("name", "{myScopeAssignment}", case_sensitive=False),
+             ])
 
 
 # EXAMPLE: ManagedNetworkPeeringPoliciesPut
@@ -102,7 +112,9 @@ def step_managednetworksget(test, rg):
 def step_managednetworkslistbyresourcegroup(test, rg):
     test.cmd('az managed-network mn list '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check('length(@)', 1),
+             ])
 
 
 # EXAMPLE: ManagedNetworksListBySubscription
@@ -110,7 +122,9 @@ def step_managednetworkslistbyresourcegroup(test, rg):
 def step_managednetworkslistbysubscription(test, rg):
     test.cmd('az managed-network mn list '
              '-g ""',
-             checks=[])
+             checks=[
+                 test.check('length(@)', 1),
+             ])
 
 
 # EXAMPLE: ScopeAssignmentsGet
@@ -119,7 +133,11 @@ def step_scopeassignmentsget(test, rg):
     test.cmd('az managed-network mn scope-assignment show '
              '--scope "subscriptions/subscriptionC" '
              '--name "{myScopeAssignment}"',
-             checks=[])
+             checks=[
+                 test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M"
+                            "icrosoft.ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
+                 test.check("name", "{myScopeAssignment}", case_sensitive=False),
+             ])
 
 
 # EXAMPLE: ScopeAssignmentsList
@@ -127,7 +145,9 @@ def step_scopeassignmentsget(test, rg):
 def step_scopeassignmentslist(test, rg):
     test.cmd('az managed-network mn scope-assignment list '
              '--scope "subscriptions/subscriptionC"',
-             checks=[])
+             checks=[
+                 test.check('length(@)', 1),
+             ])
 
 
 # EXAMPLE: ManagementNetworkGroupsGet
@@ -137,7 +157,10 @@ def step_managementnetworkgroupsget(test, rg):
              '--group-name "{myManagedNetworkGroup}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check("managementGroups", []),
+                 test.check("name", "{myManagedNetworkGroup}", case_sensitive=False),
+             ])
 
 
 # EXAMPLE: ManagedNetworksGroupsListByManagedNetwork
@@ -146,7 +169,9 @@ def step_managednetworksgroupslistbymanagednetwork(test, rg):
     test.cmd('az managed-network mn group list '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check('length(@)', 1),
+             ])
 
 
 # EXAMPLE: ManagedNetworkPeeringPoliciesGet
@@ -156,7 +181,9 @@ def step_managednetworkpeeringpoliciesget(test, rg):
              '--managed-network-name "{myManagedNetwork}" '
              '--policy-name "{myManagedNetworkPeeringPolicy}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check("name", "{myManagedNetworkPeeringPolicy}", case_sensitive=False),
+             ])
 
 
 # EXAMPLE: ManagedNetworkPeeringPoliciesListByManagedNetwork
@@ -165,7 +192,9 @@ def step_managednetworkpeeringpolicieslistbymanagednetwork(test, rg):
     test.cmd('az managed-network managed-network-peering-policy list '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=[
+                 test.check('length(@)', 1),
+             ])
 
 
 # EXAMPLE: ManagedNetworkPeeringPoliciesDelete

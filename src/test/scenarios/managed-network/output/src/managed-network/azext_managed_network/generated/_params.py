@@ -198,7 +198,6 @@ def load_arguments(self, _):
         c.argument('hub', action=AddHub, nargs='*', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='*', help='Gets or sets the spokes group IDs')
         c.argument('mesh', action=AddMesh, nargs='*', help='Gets or sets the mesh group IDs')
-        c.ignore('managed_network_peering_policy_name', 'properties')
 
     with self.argument_context('managed-network managed-network-peering-policy mesh-topology update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -210,7 +209,6 @@ def load_arguments(self, _):
         c.argument('hub', action=AddHub, nargs='*', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='*', help='Gets or sets the spokes group IDs')
         c.argument('mesh', action=AddMesh, nargs='*', help='Gets or sets the mesh group IDs')
-        c.ignore('managed_network_peering_policy_name', 'properties')
 
     with self.argument_context('managed-network managed-network-peering-policy delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
