@@ -15,7 +15,7 @@ export function GenerateAzureCliAzextMetadata(model: CodeModelAz) : string[] {
         output.push('    "azext.isPreview": true,');
     }
     
-    output.push('    "azext.minCliCoreVersion": "2.3.1"');
+    output.push('    "azext.minCliCoreVersion": "2.11.0"');
     output.push('}');
 
     return output;

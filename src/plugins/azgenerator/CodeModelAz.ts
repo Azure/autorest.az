@@ -1,4 +1,5 @@
 ﻿import { Operation, OperationGroup, Parameter, Property } from "@azure-tools/codemodel";
+import { GenerationMode } from "../models";
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -63,6 +64,8 @@ export interface CodeModelAz {
     init(): any;
     SelectFirstExtension(): boolean;
     SelectNextExtension(): boolean;
+    CliGenerationMode: GenerationMode;
+    CliOutputFolder: string;
 
     Extension_Name: string;
     Extension_NameUnderscored: string;
@@ -71,7 +74,7 @@ export interface CodeModelAz {
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
-    Extension_Mode: string;
+    Extension_Mode: string;   
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;
