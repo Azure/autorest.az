@@ -2,7 +2,7 @@ import { CodeModel, codeModelSchema, Language, Parameter, SchemaType } from "@az
 import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, isArray } from "util";
 import { az } from "..";
 import { exception } from "console";
 import { findNodeInCodeModel } from "../utils/helper";
@@ -222,8 +222,18 @@ export class CodeModelMerger {
 
     getLastValidPath(cliPath: string) {
         let cliPaths = cliPath.split("$$");
+        let last = cliPaths.last;
+        if (last.indexOf('[') > -1) {
+            last = last.substring(0, last.indexOf('['));
+        } else {
+            last = "";
+        }
         cliPaths.pop();
-        return cliPaths.join("$$");
+        let path = cliPaths.join("$$");
+        if (last == "") {
+            return path;
+        }
+        return path + "$$" + last;
     }
 
     processOperationGroup() {
@@ -283,15 +293,51 @@ export class CodeModelMerger {
                                                     let lastValidPath = this.getLastValidPath(cliPath);
                                                     if (!isNullOrUndefined(lastValidPath)) {
                                                         let lastValidNode = findNodeInCodeModel(lastValidPath, this.cliCodeModel);
-                                                        if (!isNullOrUndefined(lastValidNode) && lastValidNode.isArray()) {
+                                                        if (!isNullOrUndefined(lastValidNode) && isArray(lastValidNode)) {
                                                             let cliFlattenTrace = tmpParam.language['cli']['cliFlattenTrace'];
                                                             let cliFlattenTraceStr = cliFlattenTrace.join(";");
+                                                            let cnt = -1;
                                                             for(let lnode of lastValidNode) {
+                                                                if (!deepFlatten) {
+                                                                    cnt++;
+                                                                }
                                                                 if(!isNullOrUndefined(lnode.language['cli']?.['cliFlattenTrace'])) {
                                                                     let cftstr = lnode.language['cli']?.['cliFlattenTrace'].join(";");
                                                                     if (cftstr.startsWith(cliFlattenTraceStr)) {
                                                                         deepFlatten = true;
-                                                                        lnode.language['cli']['pythonFlattenedFrom'] = tmpParam;
+                                                                        lnode['originalParameter'] = tmpParam;
+                                                                        //lnode.language['cli']['pythonFlattenedFrom'] = tmpParam;
+                                                                    }
+                                                                }
+                                                            }
+                                                            if(deepFlatten) {
+                                                                tmpParam['flattened'] = true;
+                                                                tmpParam.language['cli']['cli-flatten'] = true;
+                                                                tmpParam.language['cli']['cli-flattened'] = true;
+                                                                tmpParam['originalParameter'] = findNodeInCodeModel(parameter.language['cli']['cliM4Path'], this.cliCodeModel);
+                                                                lastValidNode.splice(cnt, 0, tmpParam);
+                                                                let cliOperation = findNodeInCodeModel(operation.language['cli']['cliM4Path'], this.cliCodeModel);
+                                                                if(cliOperation.language['cli']['cli-operation-splitted'] && isArray(cliOperation.language['cli']['split-operation-names'])) {
+                                                                    for(let tmpName of cliOperation.language['cli']['split-operation-names']) {
+                                                                        let subParamPath = parameter.language['cli']['cliM4Path'].replace(cliOperation.language['cli']['cliKey'], cliOperation.language['cli']['cliKey'] + "#" + tmpName);
+                                                                        let subParam = findNodeInCodeModel(subParamPath, this.cliCodeModel);
+                                                                        let subLastValidPath =  this.getLastValidPath(subParamPath);
+                                                                        let subLastValidNode = findNodeInCodeModel(subLastValidPath, this.cliCodeModel);
+                                                                        let idx = subLastValidNode.indexOf(subParam);
+                                                                        if (idx > -1) {
+                                                                            subLastValidNode.splice(idx + 1, 0, tmpParam);
+                                                                            subLastValidNode[idx+1]['originalParameter'] = subParam;
+                                                                            subLastValidNode[idx+1].language['cli']['moved-from-python'] = true;
+                                                                            let subcnt = idx + 2;
+                                                                            while(subcnt < subLastValidNode.length) {
+                                                                                if(subLastValidNode[subcnt]['originalParameter'] == subParam) {
+                                                                                    subLastValidNode[subcnt]['originalParameter'] = tmpParam;
+                                                                                } else {
+                                                                                    break;
+                                                                                }
+                                                                                subcnt++;
+                                                                            }
+                                                                        }
                                                                     }
                                                                 }
                                                             }
@@ -311,7 +357,7 @@ export class CodeModelMerger {
                                         }
                                     }
                                     if (m4FlattenedFrom.length == 0) {
-                                        parameter.language['cli']['cli-m4-flattened'] = false;
+                                        parameter.language['cli']['cli-m4-flattened-skip'] = true;
                                     }
                                 }
                                 this.setPythonName(parameter, m4FlattenedFrom);

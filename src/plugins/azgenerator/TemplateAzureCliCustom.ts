@@ -92,6 +92,9 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     if (opNames.length > 1) {
         valueToMatch = Capitalize(ToCamelCase(opNames[0]));
     }
+    if (model.Command_Name == "synapse workspace-managed-identity-sql-control-setting create") {
+        model.Command;
+    } 
     if (model.SelectFirstMethodParameter(true)) {
         let originalParameterStack: Parameter[] = [];
         let originalParameterNameStack: string[] = [];
@@ -120,16 +123,19 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                             originalParameterNameStack.pop();
                             originalParameterStack.pop();
                         }
-                        originalParameterStack.push(
-                            new Parameter(flattenedFrom.language['python']['name'], 
-                                flattenedFrom.language['python']['description'],
-                                flattenedFrom
-                            )
-                        );
-                        originalParameterNameStack.push(flattenedFrom.language['python']['name']);
-                        if(!needGeneric) {
-                            output_body = output_body.concat(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
+                        if (!originalParameterStack.last.language['cli']['moved-from-python']) {
+                            originalParameterStack.push(
+                                new Parameter(flattenedFrom.language['python']['name'], 
+                                    flattenedFrom.language['python']['description'],
+                                    flattenedFrom
+                                )
+                            );
+                            originalParameterNameStack.push(flattenedFrom.language['python']['name']);
+                            if(!needGeneric) {
+                                output_body = output_body.concat(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
+                            }
                         }
+                        
                     }
 
                     if (model.MethodParameter['targetProperty']?.['isDiscriminator'] == true) {
