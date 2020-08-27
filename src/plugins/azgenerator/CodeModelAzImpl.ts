@@ -11,7 +11,7 @@ import { isArray, isNullOrUndefined } from "util";
 import { Capitalize, deepCopy, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase } from '../../utils/helper';
 import { GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
-import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool } from './ScenarioTool';
+import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './ScenarioTool';
 
 
 class ActionParam {
@@ -125,13 +125,21 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get RandomizeNames(): boolean {
-        if (this.options?.['randomize-names']) return true;
+        let randomizeNames = this.options?.['randomize-names'];
+        if (randomizeNames) return true;
         return false;
     }
 
     public get FormalizeNames(): boolean {
-        if (this.options?.['formalize-names']) return true;
+        let formalizeNames = this.options?.['formalize-names'];
+        if (formalizeNames) return true;
         return false;
+    }
+
+    public get GenChecks(): boolean {
+        let disableChecks = this.options?.['disable-checks'];
+        if (disableChecks) return false;
+        return true;
     }
 
     private calcOptionRequiredByMethod() {
@@ -1625,7 +1633,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return (this.Command_GetOriginalOperation && param?.targetProperty?.['isDiscriminator']) ? true : false;
     }
 
-    private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any, polySubParam: MethodParam): boolean {
+    private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any, polySubParam: MethodParam, ancestors: string[]): boolean {
         let isList: boolean = methodParam.isList;
         let isSimpleListOrArray: boolean = methodParam.isSimpleListOrArray;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
@@ -1648,7 +1656,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             if (isSimpleListOrArray) {
                 if (value instanceof Array) {       // spread list
                     for (let e of value) {
-                        this.AddExampleParameter(methodParam, example_param, e, polySubParam);
+                        this.AddExampleParameter(methodParam, example_param, e, polySubParam, ancestors);
                     }
                     handled = true;
                 }
@@ -1692,23 +1700,23 @@ export class CodeModelCliImpl implements CodeModelAz {
                         keys.push(cliName)
                     }
                     if (ret.length > 0) {
-                        example_param.push(new ExampleParam(name, ret, false, true, keys, defaultName, methodParam));
+                        example_param.push(new ExampleParam(name, ret, false, true, keys, defaultName, methodParam, ancestors, value));
                     }
                     handled = true;
                 }
             }
             if (!handled) {
                 if (typeof value == 'string') {
-                    example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam));
+                    example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam, ancestors, value));
                 }
                 else {
                     // JSON form
-                    example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, [], defaultName, methodParam));
+                    example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, [], defaultName, methodParam, ancestors, value));
                 }
             }
         }
         else if (typeof value != 'object') {
-            example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam));
+            example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam, ancestors, value));
         }
         else {
             // ignore object values if not isList.
@@ -1807,7 +1815,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam);
+                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors);
                     return;
                 }
             }
@@ -1830,13 +1838,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam);
+                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors);
                     return;
                 }
             }
             else if (ancestors.length == 0) {
                 // example_param.set(name, value);
-                if (this.AddExampleParameter(methodParam, example_param, netValue, polySubParam)) return;
+                if (this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors)) return;
             }
         }
 
@@ -1861,7 +1869,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 // }
             }
             param_name = param_name.split("_").join("-");
-            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.keys, param.defaultName, param.methodParam));
+            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.keys, param.defaultName, param.methodParam, param.ancestors, param.rawValue));
         };
         return ret;
     }
@@ -1922,6 +1930,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.Parameters = this.ConvertToCliParameters(params);
                 example.MethodResponses = this.Method.responses || [];
                 example.Method_IsLongRun = this.Method.extensions?.['x-ms-long-running-operation'] ? true : false;
+                example.ExampleObj = example_obj;
                 if (this.Method_GetSplitOriginalOperation) {
                     //filter example by name for generic createorupdate
                     if (this.Command_MethodName.toLowerCase() == "update" && !id.toLowerCase().endsWith("_update"))
@@ -1943,11 +1952,30 @@ export class CodeModelCliImpl implements CodeModelAz {
         return examples;
     }
 
+    public GetExampleChecks(example: CommandExample): string[] {
+        let ret: string[] = [];
+        if (!this.GenChecks)  return ret;
+        let resourceObjectName = undefined;
+        for (let param of example.Parameters) {
+            if (example.ResourceClassName && this.resource_pool.isResource(param.defaultName) == example.ResourceClassName) {
+                resourceObjectName = param.value;
+            }
+        }
+
+        let resourceObject = this.resource_pool.findResource(example.ResourceClassName, resourceObjectName, ObjectStatus.Created);
+        if (resourceObject) {
+            ret.push(...resourceObject.getCheckers(this.resource_pool, example));
+        }
+        ret.push(...this.resource_pool.getListCheckers(example));
+        return ret;
+    }
+
     public GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[] {
         let parameters: string[] = [];
         parameters.push("az " + this.Command_Name);
 
         let hasRG = false;
+        let resourceObjectName = undefined;
         for (let param of example.Parameters) {
             let param_value = param.value;
             if (isTest || this.FormalizeNames) {
@@ -1956,6 +1984,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues, isTest);
                 }
                 param_value = replaced_value;
+                param.replacedValue = replaced_value;
             }
             let slp = param_value;
             if (!param.isKeyValues) {
@@ -1966,10 +1995,33 @@ export class CodeModelCliImpl implements CodeModelAz {
             if (["--resource-group", "-g"].indexOf(param.name) >= 0) {
                 hasRG = true;
             }
+
+            if (example.ResourceClassName && this.resource_pool.isResource(param.defaultName) == example.ResourceClassName) {
+                resourceObjectName = param.value;
+            }
         }
 
         if (isTest && !hasRG && commandParams && commandParams[this.Command_Name] && commandParams[this.Command_Name].has("resourceGroupName")) {
             parameters.push('-g ""');
+        }
+
+        if (isTest) {
+            let resourceObject = this.resource_pool.findResource(example.ResourceClassName, resourceObjectName, undefined);
+            if (resourceObject) {
+                let httpMethod = example.HttpMethod.toLowerCase();
+                if (['put', 'post', 'patch'].indexOf(httpMethod)>=0) {
+                    if (httpMethod == 'post') {
+                        resourceObject.example_params = []; 
+                    }
+                    for (let param of example.Parameters) {
+                        resourceObject.addOrUpdateParam(param);
+                    }
+                    resourceObject.testStatus = ObjectStatus.Created;
+                }
+                if (httpMethod == 'delete') {
+                    resourceObject.testStatus = ObjectStatus.Deleted;
+                }
+            }
         }
 
         return parameters;
@@ -2019,9 +2071,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public FindExampleById(id: string, commandParams?: any): string[][] {
+    public FindExampleById(id: string, commandParams: any, examples: CommandExample[]): string[][] {
         let ret: string[][] = [];
         this.GetAllExamples(id, (example) => {
+            examples.push(example);
             ret.push(this.GetExampleItems(example, true, commandParams));
         });
         return ret;
