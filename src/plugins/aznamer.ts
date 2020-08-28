@@ -167,7 +167,7 @@ export class AzNamer {
                         if(commandName.indexOf(" ") > -1) {
                             operation.language['az']['subCommandGroup'] = operationGroupName + " " + commandName.split(' ')[0];
                         }
-                        if(operation.language['az']['command'].endsWith(" update") && !isNullOrUndefined(operation.extensions?.['cli-split-operation-original-operation'])) {
+                        if(operation.language['cli']['cliKey'] == "CreateOrUpdate#Update" && !isNullOrUndefined(operation.extensions?.['cli-split-operation-original-operation'])) {
                             operation.language['az']['isSplitUpdate'] = true;
                         }
                     } else {
@@ -220,21 +220,36 @@ export class AzNamer {
                 if(operation.language['az']['isSplitUpdate']) {
                     let foundGeneric = false;
                     // disable generic update for now
-                    foundGeneric = true;
-                    /*for(let n = 0; n < operation.extensions['cli-split-operation-original-operation'].requests.length; n++) {
-                        let request = operation.extensions['cli-split-operation-original-operation'].requests[n];
+                    // foundGeneric = true;
+                    for (let n = 0; n < operation.requests.length; n++) {
+                        let request = operation.requests[n];
                         if (request.parameters) {
-                            for(let m = 0; m < request.parameters.length; m++) {
+                            for (let m = 0; m < request.parameters.length; m++) {
                                 let parameter = request.parameters[m];
-                                if(!isNullOrUndefined(parameter.language['az']) && !foundGeneric) {
-                                    if(operation.language['az'].command.endsWith(' update') && parameter['flattened'] == true) {
+                                if (!isNullOrUndefined(parameter.language['az']) && !foundGeneric) {
+                                    if (operation.language['az'].command.endsWith(' update') && parameter['flattened'] == true) {
                                         foundGeneric = true;
-                                        operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter;
+                                        m++;
+                                        let needBuild = false;
+                                        let flattenedParam = parameter;
+                                        while (m < request.parameters.length) {
+                                            let tmpParam = request.parameters[m];
+                                            if (tmpParam['originalParameter'] == flattenedParam && isNullOrUndefined(tmpParam['nameBaseParam'])) {
+                                                needBuild = true;
+                                            }
+                                            if (tmpParam['flattened']) {
+                                                flattenedParam = tmpParam;
+                                            }
+                                            m++;
+                                        }
+                                        if (needBuild) {
+                                            operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter;
+                                        }
                                     }
                                 }
                             }
                         }
-                    }*/
+                    }
                 }
             });
         });

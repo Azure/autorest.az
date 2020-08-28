@@ -8,6 +8,7 @@
 # regenerated.
 # --------------------------------------------------------------------------
 # pylint: disable=too-many-lines
+# pylint: disable=unused-argument
 
 from knack.util import CLIError
 from azure.cli.core.util import sdk_no_wait
@@ -156,21 +157,18 @@ def datafactory_trigger_create(client,
                                    properties=properties)
 
 
-def datafactory_trigger_update(client,
+def datafactory_trigger_update(instance,
                                resource_group_name,
                                factory_name,
                                trigger_name,
                                if_match=None,
                                description=None,
                                annotations=None):
-    properties = {}
-    properties['description'] = description
-    properties['annotations'] = annotations
-    return client.create_or_update(resource_group_name=resource_group_name,
-                                   factory_name=factory_name,
-                                   trigger_name=trigger_name,
-                                   if_match=if_match,
-                                   properties=properties)
+    if description is not None:
+        instance.description = description
+    if annotations is not None:
+        instance.annotations = annotations
+    return instance
 
 
 def datafactory_trigger_delete(client,

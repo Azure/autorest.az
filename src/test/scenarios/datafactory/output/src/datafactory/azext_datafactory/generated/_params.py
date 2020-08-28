@@ -129,6 +129,7 @@ def load_arguments(self, _):
         c.argument('description', type=str, help='Trigger description.')
         c.argument('annotations', type=validate_file_or_dict, help='List of tags that can be used for describing the '
                    'trigger. Expected value: json-string/@json-file.')
+        c.ignore('properties')
 
     with self.argument_context('datafactory trigger delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
