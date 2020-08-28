@@ -167,7 +167,7 @@ export class AzNamer {
                         if(commandName.indexOf(" ") > -1) {
                             operation.language['az']['subCommandGroup'] = operationGroupName + " " + commandName.split(' ')[0];
                         }
-                        if(operation.language['cli']['cliKey'] == "CreateOrUpdate#Update" && !isNullOrUndefined(operation.extensions?.['cli-split-operation-original-operation'])) {
+                        if(operation.language['az'].command.endsWith(' update') && !isNullOrUndefined(operation.extensions?.['cli-split-operation-original-operation'])) {
                             operation.language['az']['isSplitUpdate'] = true;
                         }
                     } else {
