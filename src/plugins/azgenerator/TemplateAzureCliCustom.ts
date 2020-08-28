@@ -473,6 +473,9 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let indent = "";
+    if (model.Command_Name == "datafactory factory create") {
+        model.Command;
+    }
     let methodName = originalOperation.language['python'].name;
     if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
         if (!model.SDK_IsTrack1) {
@@ -527,19 +530,8 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
         } else {
             methodCall += "," + "\n" + indent + parameterPair;
         }
-
-        if (model.Parameter_IsPolyOfSimple(param)) {
-            let baseParam = param;
-            cnt++;
-            while (cnt < originalParameters.length && originalParameters[cnt]['polyBaseParam'] == baseParam) {
-                cnt++;
-            }
-            if (cnt > 0 && cnt < originalParameters.length && originalParameters[cnt]['polyBaseParam'] != baseParam) {
-                cnt--;
-            }
-        }
     }
-
+    
 
 
     methodCall += ")";
@@ -599,6 +591,9 @@ function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, 
 function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
+    if (model.Command_Name == "datafactory factory create") {
+        model.Command;
+    }
     let methodName = model.Method_Name;
     let indent = "";
     if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
