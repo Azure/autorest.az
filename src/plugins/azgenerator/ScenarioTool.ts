@@ -278,7 +278,7 @@ class ResourceObject {
                     formatChecker(checkPath + resource_pool.replaceResourceString(param.defaultName, [], [], true), param.rawValue, ret);
                     return;
                 }
-                else if ('name' in obj && typeof obj['name'] == typeof param.rawValue && JSON.stringify(obj['name']).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
+                else if ('name' in obj && checkPath.length==0 && param.defaultName.toLowerCase().endsWith("name") && typeof obj['name'] == typeof param.rawValue && JSON.stringify(obj['name']).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
                     if (hasComplexArray(param.rawValue)) return;
                     formatChecker(checkPath + 'name', param.rawValue, ret);
                     return;
