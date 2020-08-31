@@ -340,6 +340,29 @@ export class CodeModelMerger {
                                                                         }
                                                                     }
                                                                 }
+                                                                if(!isNullOrUndefined(cliOperation.language['cli']['cli-operations'])) {
+                                                                    for(let mop of cliOperation.language['cli']['cli-operations']) {
+                                                                        let subParamPath = parameter.language['cli']['cliM4Path'].replace(cliOperation.language['cli']['cliKey'], mop.language['cli']['cliKey']);
+                                                                        let subParam = findNodeInCodeModel(subParamPath, this.cliCodeModel);
+                                                                        let subLastValidPath =  this.getLastValidPath(subParamPath);
+                                                                        let subLastValidNode = findNodeInCodeModel(subLastValidPath, this.cliCodeModel);
+                                                                        let idx = subLastValidNode.indexOf(subParam);
+                                                                        if (idx > -1) {
+                                                                            subLastValidNode.splice(idx + 1, 0, tmpParam);
+                                                                            subLastValidNode[idx+1]['originalParameter'] = subParam;
+                                                                            subLastValidNode[idx+1].language['cli']['moved-from-python'] = true;
+                                                                            let subcnt = idx + 2;
+                                                                            while(subcnt < subLastValidNode.length) {
+                                                                                if(subLastValidNode[subcnt]['originalParameter'] == subParam) {
+                                                                                    subLastValidNode[subcnt]['originalParameter'] = tmpParam;
+                                                                                } else {
+                                                                                    break;
+                                                                                }
+                                                                                subcnt++;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     }

@@ -92,6 +92,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     if (opNames.length > 1) {
         valueToMatch = Capitalize(ToCamelCase(opNames[0]));
     }
+    let addGenericSchema = false;
     if (model.SelectFirstMethodParameter(true)) {
         let originalParameterStack: Parameter[] = [];
         let originalParameterNameStack: string[] = [];
@@ -103,6 +104,15 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 skip = false;
             }
             if ((model.MethodParameter_IsCliFlattened && (!isNullOrUndefined(model.MethodParameter.language['cli']['cliFlattenTrace']) || model.SDK_NoFlatten || !isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']))) || (model.MethodParameter_IsFlattened && model.MethodParameter['extensions']?.['cli-flattened'])) {
+                if (!addGenericSchema && needGeneric && !isNullOrUndefined(model.CommandGroup.language['az']['genericTargetSchema'])) {
+                    originalParameterStack.push(
+                        new Parameter(model.CommandGroup.language['az']['genericTargetSchema'].language['python']['name'], 
+                        model.CommandGroup.language['az']['genericTargetSchema'].language['python']['description'],
+                        model.CommandGroup.language['az']['genericTargetSchema']
+                    ));
+                    originalParameterNameStack.push(model.CommandGroup.language['az']['genericTargetSchema'].language['python']['name']);
+                    addGenericSchema = true;
+                }
                 originalParameterStack.push(model.MethodParameter);
                 originalParameterNameStack.push(model.MethodParameter_Name);
                 if (!needGeneric) {
@@ -438,13 +448,13 @@ function GetSingleCommandBody(model: CodeModelAz, required: any) {
             // XXX - this is still a hack
             if (!isNullOrUndefined(originalOperation)) {
                 if (needGeneric) {
-                    output_method_call = output_method_call.concat("    return instance");
+                    output_method_call = output_method_call.concat(GetGenericCall(model, required));
                 } else {
                     output_method_call = output_method_call.concat(GetPolyMethodCall(model, prefix, originalOperation, originalParameters, required));
                 }
             } else {
                 if (needGeneric) {
-                    output_method_call = output_method_call.concat("    return instance");
+                    output_method_call = output_method_call.concat(GetGenericCall(model, required));
                 } else {
                     output_method_call = output_method_call.concat(GetMethodCall(model, required, prefix));
                 }
@@ -458,6 +468,7 @@ function GetSingleCommandBody(model: CodeModelAz, required: any) {
     return output;
 }
 
+
 function GetCommandBody(model: CodeModelAz, required: any) {
     // create, delete, list, show, update
     let output: string[] = [];
@@ -469,13 +480,23 @@ function GetCommandBody(model: CodeModelAz, required: any) {
     return output;
 }
 
+function GetGenericCall(model: CodeModelAz, required) {
+    let output: string[] = [];
+    let genericTargetSchema = model.CommandGroup.language['az']['genericTargetSchema'];
+    let { genericParameter } = getCustomParam(model, required);
+    if(genericTargetSchema != genericParameter.schema) {
+        output.push("    return instance." + model.Parameter_NamePython(genericParameter))
+    } else {
+        output.push("    return instance");
+    }
+    return output;
+    
+}
+
 function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: Operation, originalParameters: Parameter[], required: any): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let indent = "";
-    if (model.Command_Name == "datafactory factory create") {
-        model.Command;
-    }
     let methodName = originalOperation.language['python'].name;
     if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
         if (!model.SDK_IsTrack1) {
@@ -591,9 +612,6 @@ function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, 
 function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[] {
     let methodCall: string = prefix + "return ";
     //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
-    if (model.Command_Name == "datafactory factory create") {
-        model.Command;
-    }
     let methodName = model.Method_Name;
     let indent = "";
     if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
