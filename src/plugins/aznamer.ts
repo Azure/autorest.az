@@ -245,10 +245,9 @@ export class AzNamer {
                                         if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
                                             param = parameter;
                                             listCnt++;
-                                        };
-                                    };
-                                }
-                                
+                                        }
+                                    }
+                                } 
                             });
                         }
                     });
