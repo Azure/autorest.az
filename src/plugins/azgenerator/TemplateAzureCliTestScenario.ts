@@ -9,6 +9,8 @@ import { ToMultiLine, deepCopy } from '../../utils/helper';
 import { HeaderGenerator } from "./Header";
 
 let usePreparers = false;
+let nameMap = {};
+let nameSeq = {};
 
 export function NeedPreparer(): boolean {
     return usePreparers;
@@ -229,6 +231,26 @@ function ToFunctionName(step: any): string {
     ret = (ret as string).toLowerCase();
     for (let i = 0; i < ret.length; i++) {
         funcname += ret[i].match(letterNumber) ? ret[i] : '_';
+    }
+    if (funcname.length>50) {
+        if (!nameMap.hasOwnProperty(funcname)) {
+            let arr = funcname.split("_");
+            let shortName = arr.join("_");
+            if (arr.length>4) {
+                shortName = arr.slice(0, 4).join("_");
+            }
+            if (shortName.length>50)    shortName= shortName.substr(0, 50);
+
+            if(nameSeq.hasOwnProperty(shortName)) {
+                nameSeq[shortName] += 1;
+                nameMap[funcname] = shortName + nameSeq[shortName];
+            }
+            else {
+                nameSeq[shortName] = 1;
+                nameMap[funcname] = shortName;
+            }
+        }
+        funcname = nameMap[funcname];
     }
     return funcname;
 }
