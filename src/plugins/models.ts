@@ -30,6 +30,7 @@ export class PathConstants {
 
 export class ArgumentConstants {
     public static readonly generationMode: string = "generation-mode";
+    public static readonly clearOutputFolder: string = "clear-output-folder";
 }
 
 export class CodeGenConstants {
