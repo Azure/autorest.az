@@ -68,6 +68,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
 
     funcScenario.push("@try_manual");
     funcScenario.push(...ToMultiLine(`def call_scenario(test${parameterLine()}):`));
+    model.GetResourcePool().clearExampleParams();
 
     // go through the examples to generate steps
     for (var ci = 0; ci < config.length; ci++) {

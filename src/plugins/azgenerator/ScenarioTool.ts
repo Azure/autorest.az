@@ -233,9 +233,16 @@ class ResourceObject {
 
     public addOrUpdateParam(example_param: ExampleParam) {
         // remove all children
+        let coveredPath = [example_param.ancestors.concat([example_param.name])];
         for (let i = 0; i < this.example_params.length; i++) {
             let param = this.example_params[i];
-            if (param.ancestors == example_param.ancestors.concat([example_param.name])) {
+            if (param.name == example_param.name) {
+                coveredPath.push(param.ancestors.concat([param.name]));
+            }
+        }
+        for (let i = 0; i < this.example_params.length; i++) {
+            let param = this.example_params[i];
+            if (coveredPath.indexOf(param.ancestors)>=0 ) {
                 this.example_params.splice(i);
                 i--;
             }
@@ -244,7 +251,7 @@ class ResourceObject {
         // replace if already there
         for (let i = 0; i < this.example_params.length; i++) {
             let param = this.example_params[i];
-            if (JSON.stringify(param.ancestors) == JSON.stringify(example_param.ancestors) && param.name == example_param.name) {
+            if (param.name == example_param.name) {
                 this.example_params[i] = example_param;
                 return;
             }
@@ -541,15 +548,22 @@ export class ResourcePool {
 
     public findAllResource(class_name: string, exampleParams: ExampleParam[] = null, testStatus: ObjectStatus = null): ResourceObject[] {
         let ret: ResourceObject[] = [];
-        if (isNullOrUndefined(class_name)) return ret;
 
         this.findAllTreeResource(class_name, this.root, ret);
 
-        if (class_name in this.map) {
+        if (isNullOrUndefined(class_name)) {
+            for (let c in this.map) {
+                for (let o in this.map[c].objects) {
+                    ret.push(this.map[c].objects[o]);
+                }
+            }
+        }
+        else if (class_name in this.map) {
             for (let key in this.map[class_name].objects) {
                 ret.push(this.map[class_name].objects[key]);
             }
         }
+
         return ret.filter((resourceObject) => {
             for (let critParam of exampleParams) {
                 let found = false;
@@ -571,7 +585,13 @@ export class ResourcePool {
                 ret.push(root[class_name].objects[key]);
             }
         }
+
         for (let c in root) {
+            if (isNullOrUndefined(class_name)) {
+                for (let o in root[c].objects) {
+                    ret.push(root[c].objects[o]);
+                }
+            }
             for (let o in root[c].objects) {
                 this.findAllTreeResource(class_name, root[c].objects[o].sub_resources, ret);
             }
@@ -863,6 +883,12 @@ export class ResourcePool {
             ret.push(`test.check('length(@)', ${len}),`);
         }
         return ret;
+    }
+
+    public clearExampleParams() {
+        for (let resource of this.findAllResource(null, [], null)) {
+            resource.example_params = [];
+        }  
     }
 }
 
