@@ -51,8 +51,8 @@ export class CliSetupPy extends TemplateBase {
                     }
                     if (firstNoneCommentLineIdx != -1) {
                         for (let i: number = firstNoneCommentLineIdx + 1; i < baseSplit.length; ++i) {
-                            if (!(baseSplit[i].endsWith("'Programming Language :: Python :: 2',")
-                                || baseSplit[i].endsWith("'Programming Language :: Python :: 2.7',"))) {
+                            if (!(baseSplit[i].indexOf("'Programming Language :: Python :: 2',") > -1
+                                || baseSplit[i].indexOf("'Programming Language :: Python :: 2.7',") > -1)) {
                                 output.push(baseSplit[i]);
                             }
                         }
