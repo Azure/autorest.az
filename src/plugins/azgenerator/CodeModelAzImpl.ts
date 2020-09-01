@@ -749,7 +749,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Command_NeedGeneric(): boolean {
-        if (this.Command.language['az']['isSplitUpdate'] && !isNullOrUndefined(this.Command_GenericSetterParameter(this.Command_GetOriginalOperation))) {
+        if (this.Command.language['az']['isSplitUpdate'] && this.CommandGroup_HasShowCommand && !isNullOrUndefined(this.Command_GenericSetterParameter(this.Command_GetOriginalOperation))) {
             return true;
         }
         return false;
@@ -886,7 +886,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Method_NeedGeneric(): boolean {
-        if (this.Method.language['az']['isSplitUpdate'] && !isNullOrUndefined(this.Method_GenericSetterParameter(this.Method_GetOriginalOperation))) {
+        if (this.Method.language['az']['isSplitUpdate'] && this.CommandGroup_HasShowCommand && !isNullOrUndefined(this.Method_GenericSetterParameter(this.Method_GetOriginalOperation))) {
             return true;
         }
         return false;
@@ -1535,7 +1535,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public GetModuleOperationNamePythonUpper(): string {
-        return pascalCase(this.CommandGroup.language['python'].name);
+        return this.CommandGroup.language['python']['className'];
     }
 
     public GetPythonNamespace(): string {
