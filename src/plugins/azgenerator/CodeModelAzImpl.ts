@@ -142,6 +142,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return true;
     }
 
+    public GetResourcePool(): ResourcePool {
+        return this.resource_pool;
+    }
+
     private calcOptionRequiredByMethod() {
         if (this.SelectFirstCommandGroup()) {
             do {
