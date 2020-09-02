@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz"
-import { EscapeString, ToCamelCase, Capitalize, ToMultiLine } from "../../utils/helper";
+import { CodeModelAz } from "../../CodeModelAz"
+import { EscapeString, ToCamelCase, Capitalize, ToMultiLine } from "../../../../utils/helper";
 import { SchemaType, Parameter } from "@azure-tools/codemodel";
-import { HeaderGenerator } from "./Header";
+import { HeaderGenerator } from "../../Header";
 import { isNullOrUndefined, isArray } from "util";
 
 

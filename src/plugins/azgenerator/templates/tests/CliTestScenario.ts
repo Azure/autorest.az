@@ -3,12 +3,14 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz, CommandExample } from "./CodeModelAz"
+import { CodeModelAz, CommandExample } from "../../CodeModelAz"
 import { PreparerEntity, getResourceKey } from "./ScenarioTool"
-import { ToMultiLine, deepCopy } from '../../utils/helper';
-import { HeaderGenerator } from "./Header";
+import { ToMultiLine, deepCopy } from '../../../../utils/helper';
+import { HeaderGenerator } from "../../Header";
 
 let usePreparers = false;
+let nameMap = {};
+let nameSeq = {};
 
 export function NeedPreparer(): boolean {
     return usePreparers;
@@ -66,6 +68,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
 
     funcScenario.push("@try_manual");
     funcScenario.push(...ToMultiLine(`def call_scenario(test${parameterLine()}):`));
+    model.GetResourcePool().clearExampleParams();
 
     // go through the examples to generate steps
     for (var ci = 0; ci < config.length; ci++) {
@@ -229,6 +232,26 @@ function ToFunctionName(step: any): string {
     ret = (ret as string).toLowerCase();
     for (let i = 0; i < ret.length; i++) {
         funcname += ret[i].match(letterNumber) ? ret[i] : '_';
+    }
+    if (funcname.length>50) {
+        if (!nameMap.hasOwnProperty(funcname)) {
+            let arr = funcname.split("_");
+            let shortName = arr.join("_");
+            if (arr.length>4) {
+                shortName = arr.slice(0, 4).join("_");
+            }
+            if (shortName.length>50)    shortName= shortName.substr(0, 50);
+
+            if(nameSeq.hasOwnProperty(shortName)) {
+                nameSeq[shortName] += 1;
+                nameMap[funcname] = shortName + nameSeq[shortName];
+            }
+            else {
+                nameSeq[shortName] = 1;
+                nameMap[funcname] = shortName;
+            }
+        }
+        funcname = nameMap[funcname];
     }
     return funcname;
 }

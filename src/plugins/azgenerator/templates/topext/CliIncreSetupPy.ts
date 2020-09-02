@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 import { EOL } from 'os';
 import { isNullOrUndefined } from "util";
-import { CodeGenConstants, GenerationMode, PathConstants } from "../../models";
-import { CodeModelAz } from "../CodeModelAz";
-import { HeaderGenerator } from "../Header";
-import { GenerateAzureCliSetupPy } from "../TemplateAzureCliSetupPy";
-import { TemplateBase } from "./TemplateBase";
+import { CodeGenConstants, GenerationMode, PathConstants } from "../../../models";
+import { CodeModelAz } from "../../CodeModelAz";
+import { HeaderGenerator } from "../../Header";
+import { GenerateAzureCliSetupPy } from "./CliFullSetupPy";
+import { TemplateBase } from "../TemplateBase";
 import compareVersions = require('compare-versions');
 
 export class CliSetupPy extends TemplateBase {

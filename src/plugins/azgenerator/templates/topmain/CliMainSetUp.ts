@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz"
-import { HeaderGenerator } from "./Header";
+import { CodeModelAz } from "../../CodeModelAz"
+import { HeaderGenerator } from "../../Header";
 import { isNullOrUndefined } from "util";
 import { EOL } from 'os';
 import * as fs from 'fs';
-import { getLatestPyPiVersion } from '../../utils/helper'
+import { getLatestPyPiVersion } from '../../../../utils/helper'
 
 export async function GenerateAzureCliMainSetUp(model: CodeModelAz, requirementPath) {
     let header: HeaderGenerator = new HeaderGenerator();

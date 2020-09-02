@@ -5,10 +5,10 @@
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from "util";
-import { AzextMetadata, PathConstants, CodeGenConstants } from "../../models";
-import { CodeModelAz } from "../CodeModelAz";
-import { GenerateAzureCliAzextMetadata } from "../TemplateAzureCliAzextMetadata";
-import { TemplateBase } from "./TemplateBase";
+import { AzextMetadata, PathConstants, CodeGenConstants } from "../../../models";
+import { CodeModelAz } from "../../CodeModelAz";
+import { GenerateAzureCliAzextMetadata } from "./CliFullMetadata";
+import { TemplateBase } from "../TemplateBase";
 
 export class CliTopMetadata extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {

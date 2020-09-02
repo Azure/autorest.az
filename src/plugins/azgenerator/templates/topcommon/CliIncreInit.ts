@@ -5,12 +5,12 @@
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from "util";
-import { getIndentString } from "../../../utils/helper";
-import { GenerationMode, PathConstants } from "../../models";
-import { CodeModelAz } from "../CodeModelAz";
-import { HeaderGenerator } from "../Header";
-import { GenerateAzureCliInit } from "../TemplateAzureCliInit";
-import { TemplateBase } from "./TemplateBase";
+import { getIndentString } from "../../../../utils/helper";
+import { GenerationMode, PathConstants } from "../../../models";
+import { CodeModelAz } from "../../CodeModelAz";
+import { HeaderGenerator } from "../../Header";
+import { GenerateAzureCliInit } from "./CliFullInit";
+import { TemplateBase } from "../TemplateBase";
 
 export class CliTopInit extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {

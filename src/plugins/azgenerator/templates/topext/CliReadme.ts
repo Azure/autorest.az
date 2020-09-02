@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz"
+import { CodeModelAz } from "../../CodeModelAz"
 
 export function GenerateAzureCliReadme(model: CodeModelAz) : string[] {
     var output: string[] = [];

@@ -3,11 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz"
-import { HeaderGenerator } from "./Header";
-import { ToMultiLine } from "../../utils/helper"
+import { CodeModelAz } from "../../CodeModelAz"
+import { HeaderGenerator } from "../../Header";
+import { ToMultiLine } from "../../../../utils/helper"
 import { isNullOrUndefined } from "util";
-import { SchemaType } from "@azure-tools/codemodel";
 
 let showCommandFunctionName = undefined;
 export function GenerateAzureCliCommands(model: CodeModelAz): string[] {

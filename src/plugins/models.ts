@@ -9,6 +9,22 @@ export enum GenerationMode {
     Incremental
 }
 
+export enum ExtensionMode {
+    Preview,
+    Experimental,
+    Stable
+}
+
+export enum TargetMode {
+    Core,
+    Extension
+}
+
+export enum CompatibleLevel {
+    Track1,
+    Track2
+}
+
 export class PathConstants {
     public static readonly generatedFolder: string = "generated";
     public static readonly testFolder: string = "tests";
@@ -30,6 +46,14 @@ export class PathConstants {
 
 export class ArgumentConstants {
     public static readonly generationMode: string = "generation-mode";
+    public static readonly clearOutputFolder: string = "clear-output-folder";
+    public static readonly generateSDK: string = "generate-sdk";
+    public static readonly targetMode: string = "target-mode";
+    public static readonly compatibleLevel: string = "compatible-level";
+    public static readonly sdkNoFlatten = "sdk-no-flatten";
+    public static readonly extensionMode = "extension-mode";
+    public static readonly azureCliFolder = "azure-cli-folder";
+    public static readonly azureCliExtFolder = "azure-cli-extension-folder";
 }
 
 export class CodeGenConstants {

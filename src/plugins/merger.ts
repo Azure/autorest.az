@@ -3,9 +3,8 @@ import { Session, startSession, Host, Channel } from "@azure-tools/autorest-exte
 import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { isNullOrUndefined, isArray } from "util";
-import { az } from "..";
-import { exception } from "console";
 import { findNodeInCodeModel } from "../utils/helper";
+import { ArgumentConstants, ExtensionMode, TargetMode, CompatibleLevel } from "./models"
 
 export class Merger {
     codeModel: CodeModel;
@@ -306,7 +305,6 @@ export class CodeModelMerger {
                                                                     if (cftstr.startsWith(cliFlattenTraceStr)) {
                                                                         deepFlatten = true;
                                                                         lnode['originalParameter'] = tmpParam;
-                                                                        //lnode.language['cli']['pythonFlattenedFrom'] = tmpParam;
                                                                     }
                                                                 }
                                                             }
@@ -397,10 +395,10 @@ export class CodeModelMerger {
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
-    let targetMode = await host.GetValue('target-mode') || "extension";
-    const cliCore = targetMode == 'core' ? true: false;
+    let targetMode = await host.GetValue(ArgumentConstants.targetMode) || TargetMode.Extension;
+    const cliCore = targetMode == TargetMode.Core ? true: false;
     let sdkNoFlatten = cliCore? true: false;
-    sdkNoFlatten = await host.GetValue('sdk-no-flatten') || sdkNoFlatten;
+    sdkNoFlatten = await host.GetValue(ArgumentConstants.sdkNoFlatten) || sdkNoFlatten;
     if (cliCore && !sdkNoFlatten) {
         host.Message({Channel: Channel.Fatal, Text:"You have specified the --target-mode=core and --sdk-no-flatten=false at the same time. which is not a valid configuration"}); 
         throw new Error("Wrong configuration detected, please check!");
@@ -408,9 +406,9 @@ export async function processRequest(host: Host) {
     let azExtensionFolder = "";
     let azCoreFolder = "";
     if (isNullOrUndefined(cliCore) || cliCore == false) {
-        azExtensionFolder = await host.GetValue('azure-cli-extension-folder');
+        azExtensionFolder = await host.GetValue(ArgumentConstants.azureCliExtFolder);
     } else {
-        azCoreFolder = await host.GetValue('azure-cli-folder');
+        azCoreFolder = await host.GetValue(ArgumentConstants.azureCliFolder);
     }
     if ((isNullOrUndefined(cliCore) || cliCore == false) && isNullOrUndefined(azExtensionFolder)) {
         host.Message({Channel: Channel.Fatal, Text:"--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"}); 
@@ -420,12 +418,12 @@ export async function processRequest(host: Host) {
         throw new Error("Wrong configuration, please check!");
     }
     let isSdkNeeded = cliCore? false: true;
-    isSdkNeeded = await host.GetValue('generate-sdk') || isSdkNeeded;
-    let compatibleLevel = await host.GetValue('compatible-level') || cliCore? 'track1': "";
-    let isTrack1 = compatibleLevel == 'track1'? true: false;
+    isSdkNeeded = await host.GetValue(ArgumentConstants.generateSDK) || isSdkNeeded;
+    let compatibleLevel = await host.GetValue(ArgumentConstants.compatibleLevel) || cliCore? CompatibleLevel.Track1: CompatibleLevel.Track2;
+    let isTrack1 = compatibleLevel == CompatibleLevel.Track1 ? true: false;
 
-    let extensionMode = "experimental";
-    extensionMode = await host.GetValue('extension-mode') || extensionMode;
+    let extensionMode = ExtensionMode.Experimental;
+    extensionMode = await host.GetValue(ArgumentConstants.extensionMode) || extensionMode;
     
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);

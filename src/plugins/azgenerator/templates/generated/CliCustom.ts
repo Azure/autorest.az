@@ -5,9 +5,9 @@
 
 import { Operation, Parameter, SchemaType } from "@azure-tools/codemodel";
 import { isNullOrUndefined } from "util";
-import { Capitalize, ToCamelCase, ToMultiLine, ToPythonString } from '../../utils/helper';
-import { CodeModelAz } from "./CodeModelAz";
-import { HeaderGenerator } from "./Header";
+import { Capitalize, ToCamelCase, ToMultiLine, ToPythonString } from '../../../../utils/helper';
+import { CodeModelAz } from "../../CodeModelAz";
+import { HeaderGenerator } from "../../Header";
 
 export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -398,9 +398,7 @@ function GetSingleCommandBody(model: CodeModelAz, required: any) {
 
             }
 
-            //if (!isNullOrUndefined(originalOperation)) {
             output_body = output_body.concat(ConstructMethodBodyParameter(model, needGeneric));
-            //}
         } while (model.SelectNextMethod());
 
 

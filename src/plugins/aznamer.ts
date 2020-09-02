@@ -247,7 +247,7 @@ export class AzNamer {
                                             listCnt++;
                                         }
                                     }
-                                } 
+                                }
                             });
                         }
                     });

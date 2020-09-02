@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz"
-import { HeaderGenerator } from "./Header";
+import { CodeModelAz } from "../../CodeModelAz"
+import { HeaderGenerator } from "../../Header";
 
 export function GenerateAzureCliValidators(model: CodeModelAz) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();

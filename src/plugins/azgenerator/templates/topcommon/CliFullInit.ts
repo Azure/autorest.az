@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "./CodeModelAz"
-import { HeaderGenerator } from "./Header";
-import { ToMultiLine } from "../../utils/helper"
+import { CodeModelAz } from "../../CodeModelAz"
+import { HeaderGenerator } from "../../Header";
+import { ToMultiLine } from "../../../../utils/helper"
 
 export function GenerateAzureCliInit(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();

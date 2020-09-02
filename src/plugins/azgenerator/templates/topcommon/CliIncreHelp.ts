@@ -5,21 +5,21 @@
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from "util";
-import { getIndentString } from "../../../utils/helper";
-import { GenerationMode, PathConstants } from "../../models";
-import { CodeModelAz } from "../CodeModelAz";
-import { HeaderGenerator } from "../Header";
-import { GenerateTopLevelImport } from "../TemplateAzureCliTopLevelImport";
-import { TemplateBase } from "./TemplateBase";
+import { getIndentString } from "../../../../utils/helper";
+import { GenerationMode, PathConstants } from "../../../models";
+import { CodeModelAz } from "../../CodeModelAz";
+import { HeaderGenerator } from "../../Header";
+import { TemplateBase } from "../TemplateBase";
 
-export class CliTopCustom extends TemplateBase {
+export class CliTopHelp extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
-        this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.customFile);
+        this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.helpFile);
     }
 
     public fullGeneration(): string[] {
-        return GenerateTopLevelImport(this.model, "custom");
+        // Nothing need to do
+        return null;
     }
 
     public incrementalGeneration(base: string): string[] {
@@ -44,10 +44,10 @@ export class CliTopCustom extends TemplateBase {
 
                 // Add loading code block
                 output.push("");
-                output = output.concat(this.loadGeneratedCustom(0));
+                output = output.concat(this.loadGeneratedHelp(0));
 
-                const baseSplit: string[] = base.split(EOL);
                 // Pass start comment
+                const baseSplit: string[] = base.split(EOL);
                 let firstNoneCommentLineIdx: number = -1;
                 for (let i: number = 0; i < baseSplit.length; ++i) {
                     if (!baseSplit[i].startsWith("#")) {
@@ -55,7 +55,6 @@ export class CliTopCustom extends TemplateBase {
                         break;
                     }
                 }
-
                 if (firstNoneCommentLineIdx != -1) {
                     output = output.concat(baseSplit.slice(firstNoneCommentLineIdx));
                 }
@@ -64,13 +63,13 @@ export class CliTopCustom extends TemplateBase {
         }
     }
 
-    private loadGeneratedCustom(indent: number): string[] {
+    private loadGeneratedHelp(indent: number): string[] {
         let output: string[] = [];
         let indentStr: string = getIndentString(indent);
 
         output.push(indentStr + "try:");
-        output.push(indentStr + "    from .generated.custom import *  # noqa: F403");
-        output.push(indentStr + "    from .manual.custom import *  # noqa: F403");
+        output.push(indentStr + "    from .generated._help import helps  # pylint: disable=reimported");
+        output.push(indentStr + "    from .manual._help import helps  # pylint: disable=reimported");
         output.push(indentStr + "except ImportError:");
         output.push(indentStr + "    pass");
         return output;

@@ -1,5 +1,5 @@
-import { CodeModelAz } from "./CodeModelAz"
-import { HeaderGenerator } from "./Header";
+import { CodeModelAz } from "../../CodeModelAz"
+import { HeaderGenerator } from "../../Header";
 
 export function GenerateAzureCliTestPrepare(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();

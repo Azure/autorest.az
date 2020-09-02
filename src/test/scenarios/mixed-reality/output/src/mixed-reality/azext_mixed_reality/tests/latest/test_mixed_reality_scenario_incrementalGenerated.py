@@ -55,14 +55,14 @@ def step_get_spatial_anchor_account_key(test, rg):
 
 # EXAMPLE: List spatial anchor accounts by resource group
 @try_manual
-def step_list_spatial_anchor_accounts_by_resource_group(test, rg):
+def step_list_spatial_anchor(test, rg):
     # EXAMPLE NOT FOUND!
     pass
 
 
 # EXAMPLE: List remote rendering accounts by resource group
 @try_manual
-def step_list_remote_rendering_accounts_by_resource_group(test, rg):
+def step_list_remote_rendering(test, rg):
     test.cmd('az remote-rendering-account list '
              '--resource-group "{rg}"',
              checks=[])
@@ -86,7 +86,7 @@ def step_get_remote_rendering_account(test, rg):
 
 # EXAMPLE: List remote rendering accounts by subscription
 @try_manual
-def step_list_remote_rendering_accounts_by_subscription(test, rg):
+def step_list_remote_rendering2(test, rg):
     test.cmd('az remote-rendering-account list '
              '-g ""',
              checks=[])
@@ -183,11 +183,11 @@ def call_scenario(test, rg):
     step_create_remote_rendering_account(test, rg)
     step_get_remote_rendering_account_key(test, rg)
     step_get_spatial_anchor_account_key(test, rg)
-    step_list_spatial_anchor_accounts_by_resource_group(test, rg)
-    step_list_remote_rendering_accounts_by_resource_group(test, rg)
+    step_list_spatial_anchor(test, rg)
+    step_list_remote_rendering(test, rg)
     step_get_spatial_anchors_account(test, rg)
     step_get_remote_rendering_account(test, rg)
-    step_list_remote_rendering_accounts_by_subscription(test, rg)
+    step_list_remote_rendering2(test, rg)
     step_list_spatial_anchors_accounts_by_subscription(test, rg)
     step_list_available_operations(test, rg)
     step_regenerate_remote_rendering_account_keys(test, rg)

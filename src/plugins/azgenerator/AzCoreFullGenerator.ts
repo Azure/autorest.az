@@ -1,34 +1,30 @@
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
-import { GenerateAzureCliActions } from "./TemplateAzureCliActions"
-import { GenerateAzureCliAzextMetadata } from "./TemplateAzureCliAzextMetadata"
-import { GenerateAzureCliClientFactory } from "./TemplateAzureCliClientFactory"
-import { GenerateAzureCliCommands } from "./TemplateAzureCliCommands"
-import { GenerateAzureCliCustom } from "./TemplateAzureCliCustom"
-import { GenerateAzureCliHelp } from "./TemplateAzureCliHelp"
-import { GenerateAzureCliHistory } from "./TemplateAzureCliHistory"
-import { GenerateAzureCliInit } from "./TemplateAzureCliInit"
-import { GenerateNamespaceInit } from "./TemplateAzureCliNamespaceInit"
-import { GenerateAzureCliParams } from "./TemplateAzureCliParams"
-import { GenerateAzureCliReadme } from "./TemplateAzureCliReadme"
-import { GenerateAzureCliReport } from "./TemplateAzureCliReport"
-import { GenerateAzureCliSetupCfg } from "./TemplateAzureCliSetupCfg"
-import { GenerateAzureCliSetupPy } from "./TemplateAzureCliSetupPy"
-import { GenerateAzureCliTestInit } from "./TemplateAzureCliTestInit"
-import { GenerateAzureCliTestPrepare } from "./TemplateAzureCliTestPrepare"
-import { GenerateAzureCliTestScenario, NeedPreparer } from "./TemplateAzureCliTestScenario"
-import { GenerateTopLevelImport } from "./TemplateAzureCliTopLevelImport"
-import { GenerateAzureCliValidators } from "./TemplateAzureCliValidators"
-import { GenerateDocSourceJsonMap } from "./TemplateAzureCliDocSourceJsonMap"
-import { GenerateRequirementTxt } from './TemplateAzureCliRequirement';
-import { GenerateAzureCliMainSetUp } from "./TemplateAzureCliMainSetUp"
+import { GenerateAzureCliActions } from "./templates/generated/CliActions"
+import { GenerateAzureCliClientFactory } from "./templates/generated/CliClientFactory"
+import { GenerateAzureCliCommands } from "./templates/generated/CliCommands"
+import { GenerateAzureCliCustom } from "./templates/generated/CliCustom"
+import { GenerateAzureCliHelp } from "./templates/generated/CliHelp"
+import { GenerateAzureCliInit } from "./templates/topcommon/CliFullInit"
+import { GenerateNamespaceInit } from "./templates/CliNamespaceInit"
+import { GenerateAzureCliParams } from "./templates/generated/CliParams"
+import { GenerateAzureCliReport } from "./templates/topcommon/CliReport"
+import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit"
+import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare"
+import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario"
+import { GenerateTopLevelImport } from "./templates/topcommon/CliTopLevelImport"
+import { GenerateAzureCliValidators } from "./templates/generated/CliValidators"
+import { GenerateDocSourceJsonMap } from "./templates/topmain/CliDocSourceJsonMap"
+import { GenerateRequirementTxt } from './templates/topmain/CliRequirement';
+import { GenerateAzureCliMainSetUp } from "./templates/topmain/CliMainSetUp"
+import * as path from 'path';
 
 export class AzCoreFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
     }
 
-    public getParam() {
+    private getParam() {
         return {model: this.model, isDebugMode: this.isDebugMode, files: this.files};
     }
 
@@ -36,11 +32,8 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
         let {model, isDebugMode, files} = this.getParam();
         if (model.SelectFirstExtension()) {
             do {
-                let pathTop = "";
-                let path = "";
-
-                files[path + "generated/_params.py"] = GenerateAzureCliParams(model, isDebugMode);
-                files[path + "generated/commands.py"] = GenerateAzureCliCommands(model);
+                files[path.join("generated/_params.py")] = GenerateAzureCliParams(model, isDebugMode);
+                files[path.join("generated/commands.py")] = GenerateAzureCliCommands(model);
                 files[path + "generated/custom.py"] = GenerateAzureCliCustom(model);
                 files[path + "generated/_client_factory.py"] = GenerateAzureCliClientFactory(model);
                 files[path + "generated/_validators.py"] = GenerateAzureCliValidators(model);
@@ -52,15 +45,8 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 if (NeedPreparer()) files[path + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(model);
                 files[path + "generated/_help.py"] = GenerateAzureCliHelp(model, isDebugMode);
                 files[path + "tests/latest/__init__.py"] = GenerateNamespaceInit(model);
-                if (!model.IsCliCore) {
-                    files[path + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(model);
-                    files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(model);
-                    files[pathTop + "README.md"] = GenerateAzureCliReadme(model);
-                    files[pathTop + "setup.cfg"] = GenerateAzureCliSetupCfg(model);
-                    files[pathTop + "setup.py"] = GenerateAzureCliSetupPy(model);  
-                } 
                 
-                if(!model.IsCliCore || model.SDK_NeedSDK) {
+                if(model.SDK_NeedSDK) {
                     files[path + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(model);  
                 }
                 files[path + "manual/__init__.py"] = GenerateNamespaceInit(model);  
@@ -68,20 +54,15 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 files[path + "custom.py"] = GenerateTopLevelImport(model, "custom");  
                 files[path + "__init__.py"] = GenerateAzureCliInit(model);
     
-                files[pathTop + "report.md"] = GenerateAzureCliReport(model);
-        
-                
-                if (model.IsCliCore) {
-                    let docSourceJsonMapPath = model.AzureCliFolder + "/doc/sphinx/azhelpgen/doc_source_map.json";
-                    files[docSourceJsonMapPath] = GenerateDocSourceJsonMap(model, docSourceJsonMapPath);
-    
-                    for(let sys of ['Darwin', 'Linux', 'windows']) {
-                        let requireFilePath= model.AzureCliFolder + "/src/azure-cli/requirements.py3." + sys + ".txt";
-                        files[requireFilePath] = await GenerateRequirementTxt(model, requireFilePath);
-                    }
-                    let setUpPath = model.AzureCliFolder + "src/azure-cli/setup.py"
-                    files[setUpPath] = await GenerateAzureCliMainSetUp(model, setUpPath);
+                files[path + "report.md"] = GenerateAzureCliReport(model);
+                let docSourceJsonMapPath = model.AzureCliFolder + "/doc/sphinx/azhelpgen/doc_source_map.json";
+                files[docSourceJsonMapPath] = GenerateDocSourceJsonMap(model, docSourceJsonMapPath);
+                for(let sys of ['Darwin', 'Linux', 'windows']) {
+                    let requireFilePath= model.AzureCliFolder + "/src/azure-cli/requirements.py3." + sys + ".txt";
+                    files[requireFilePath] = await GenerateRequirementTxt(model, requireFilePath);
                 }
+                let setUpPath = model.AzureCliFolder + "src/azure-cli/setup.py"
+                files[setUpPath] = await GenerateAzureCliMainSetUp(model, setUpPath);
             }
             while (model.SelectNextExtension())
         }

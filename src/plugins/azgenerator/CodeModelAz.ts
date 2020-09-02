@@ -1,10 +1,11 @@
-﻿import { Operation, OperationGroup, Parameter, Property, Schema } from "@azure-tools/codemodel";
-import { GenerationMode } from "../models";
-
-/*---------------------------------------------------------------------------------------------
+﻿/*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+
+import { Operation, OperationGroup, Parameter, Property, Schema } from "@azure-tools/codemodel";
+import { GenerationMode } from "../models";
+import { ResourcePool } from './templates/tests/ScenarioTool';
 
 export class MethodParam {
     public value: any;
@@ -184,6 +185,7 @@ export interface CodeModelAz {
     GetModuleOperationNamePythonUpper(): string;
     GetPythonNamespace(): string;
     GetPythonPackageName(): string;
+    GetResourcePool(): ResourcePool;
 
     // Python
     PythonMgmtClient: string;

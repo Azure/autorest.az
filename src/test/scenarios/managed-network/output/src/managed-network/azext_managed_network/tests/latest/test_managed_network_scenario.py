@@ -188,7 +188,7 @@ def step_managednetworkpeeringpoliciesget(test, rg):
 
 # EXAMPLE: ManagedNetworkPeeringPoliciesListByManagedNetwork
 @try_manual
-def step_managednetworkpeeringpolicieslistbymanagednetwork(test, rg):
+def step_managednetworkpeeringpolicieslistbymanagednet(test, rg):
     test.cmd('az managed-network managed-network-peering-policy list '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
@@ -255,7 +255,7 @@ def call_scenario(test, rg):
     step_managementnetworkgroupsget(test, rg)
     step_managednetworksgroupslistbymanagednetwork(test, rg)
     step_managednetworkpeeringpoliciesget(test, rg)
-    step_managednetworkpeeringpolicieslistbymanagednetwork(test, rg)
+    step_managednetworkpeeringpolicieslistbymanagednet(test, rg)
     step_managednetworkpeeringpoliciesdelete(test, rg)
     step_scopeassignmentsdelete(test, rg)
     step_managementnetworkgroupsdelete(test, rg)

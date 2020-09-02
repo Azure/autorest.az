@@ -5,9 +5,9 @@
 
 import { Parameter, SchemaType } from "@azure-tools/codemodel";
 import { isNullOrUndefined } from "util";
-import { ToPythonString } from "../../utils/helper";
-import { CodeModelAz } from "./CodeModelAz";
-import { HeaderGenerator } from "./Header";
+import { ToPythonString } from "../../../../utils/helper";
+import { CodeModelAz } from "../../CodeModelAz";
+import { HeaderGenerator } from "../../Header";
 
 
 let allActions: Map<string, boolean> = new Map<string, boolean>();

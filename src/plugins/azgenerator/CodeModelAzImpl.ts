@@ -11,7 +11,7 @@ import { isArray, isNullOrUndefined } from "util";
 import { Capitalize, deepCopy, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase } from '../../utils/helper';
 import { GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
-import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './ScenarioTool';
+import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './templates/tests/ScenarioTool';
 
 
 class ActionParam {
@@ -139,6 +139,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         let disableChecks = this.options?.['disable-checks'];
         if (disableChecks) return false;
         return true;
+    }
+
+    public GetResourcePool(): ResourcePool {
+        return this.resource_pool;
     }
 
     private calcOptionRequiredByMethod() {
