@@ -465,10 +465,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
-    public get azureCliFolder() {
-        return this.codeModel.language['az']?.['azureCliFolder'];
-    }
-
     public get Extension_Name() {
         return this.extensionName;
     }
