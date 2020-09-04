@@ -52,5 +52,5 @@ export class CliRequirement extends TemplateBase {
 
     public async incrementalGeneration(base: string): Promise<string[]> {
         return null;
-    }   
+    }
 }

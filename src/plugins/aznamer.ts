@@ -223,36 +223,37 @@ export class AzNamer {
                 });
                  //if generic update exists, set the setter_arg_name in the original operation
                 if(operation.language['az']['isSplitUpdate']) {
-                    let listCnt = 0;
-                    let param = null;
-                    operation.extensions['cli-split-operation-original-operation'].parameters.forEach(parameter => {
-                        if(!isNullOrUndefined(parameter.language['az'])) {
-                            if(operation.language['az'].name.endsWith("create") && parameter['flattened'] != true) {
-                                let paramType = parameter.schema.type;
-                                if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
-                                    param = parameter;
-                                    listCnt++;
-                                }
-                            }
-                        }
-                    });
-                    operation.extensions['cli-split-operation-original-operation'].requests.forEach(request => {
-                        if(!isNullOrUndefined(request.parameters)) {
-                            request.parameters.forEach(parameter => {
-                                if(!isNullOrUndefined(parameter.language['az'])) {
-                                    if(operation.language['az'].command.endsWith(' update') && parameter['flattened'] != true) {
-                                        let paramType = parameter.schema.type;
-                                        if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
-                                            param = parameter;
-                                            listCnt++;
+                    let foundGeneric = false;
+                    // disable generic update for now
+                    // foundGeneric = true;
+                    for (let n = 0; n < operation.requests.length; n++) {
+                        let request = operation.requests[n];
+                        if (request.parameters) {
+                            for (let m = 0; m < request.parameters.length; m++) {
+                                let parameter = request.parameters[m];
+                                if (!isNullOrUndefined(parameter.language['az']) && !foundGeneric) {
+                                    if (operation.language['az'].command.endsWith(' update') && parameter['flattened'] == true) {
+                                        foundGeneric = true;
+                                        m++;
+                                        let needBuild = false;
+                                        let flattenedParam = parameter;
+                                        while (m < request.parameters.length) {
+                                            let tmpParam = request.parameters[m];
+                                            if (tmpParam['originalParameter'] == flattenedParam && isNullOrUndefined(tmpParam['nameBaseParam'])) {
+                                                needBuild = true;
+                                            }
+                                            if (tmpParam['flattened']) {
+                                                flattenedParam = tmpParam;
+                                            }
+                                            m++;
+                                        }
+                                        if (needBuild) {
+                                            operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter;
                                         }
                                     }
                                 }
-                            });
+                            }
                         }
-                    });
-                    if(listCnt == 1) {
-                        operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = param;
                     }
                 }
             });

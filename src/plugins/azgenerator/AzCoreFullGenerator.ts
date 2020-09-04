@@ -18,7 +18,7 @@ import { CliDocSourceJsonMap } from "./templates/topmain/CliDocSourceJsonMap"
 import { CliRequirement } from './templates/topmain/CliRequirement';
 import { CliMainSetUp } from "./templates/topmain/CliMainSetUp";
 import * as path from 'path';
-import { SystemType } from '../models';
+import { SystemType, PathConstants } from '../models';
 
 export class AzCoreFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -58,7 +58,7 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
     
                 files[path.join(model.azOutputFolder, "report.md")] = GenerateAzureCliReport(model);
                 let docSourceMapGenerator = new CliDocSourceJsonMap(model, isDebugMode);
-                let docSourceJsonMapPath = path.join(model.AzureCliFolder, "/doc/sphinx/azhelpgen/doc_source_map.json");
+                let docSourceJsonMapPath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
                 files[docSourceJsonMapPath] = await docSourceMapGenerator.fullGeneration();
                 let requirementGenerator = new CliRequirement(model, isDebugMode);
                 for(let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
@@ -66,7 +66,7 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                     files[requireFilePath] = await requirementGenerator.fullGeneration();
                 }
                 let setupGenerator = new CliMainSetUp(model, isDebugMode);
-                let setUpPath = path.join(model.AzureCliFolder, "src/azure-cli/setup.py")
+                let setUpPath = path.join(model.AzureCliFolder, PathConstants.mainSetUpPyFile);
                 files[setUpPath] = await setupGenerator.fullGeneration();
             }
             while (model.SelectNextExtension())

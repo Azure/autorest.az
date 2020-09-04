@@ -10,25 +10,25 @@ export enum GenerationMode {
 }
 
 export enum ExtensionMode {
-    Preview,
-    Experimental,
-    Stable
+    Preview = "preview",
+    Experimental = "experimental",
+    Stable = "stable"
 }
 
 export enum TargetMode {
-    Core,
-    Extension
+    Core = 'core',
+    Extension = 'extension'
 }
 
 export enum CompatibleLevel {
-    Track1,
-    Track2
+    Track1 = "track1",
+    Track2 = "track2"
 }
 
 export enum SystemType {
-    Darwin, 
-    Linux, 
-    windows
+    Darwin = "Darwin", 
+    Linux = "Linux", 
+    windows = "windows"
 }
 
 export class PathConstants {
@@ -49,6 +49,7 @@ export class PathConstants {
     public static readonly metadataFile: string = "azext_metadata.json";
     public static readonly setupPyFile: string = "setup.py";
     public static readonly docSourceJsonFile: string = "/doc/sphinx/azhelpgen/doc_source_map.json";
+    public static readonly mainSetUpPyFile: string = "src/azure-cli/setup.py";
 }
 
 export class ArgumentConstants {

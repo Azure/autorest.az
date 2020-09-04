@@ -228,7 +228,9 @@ function GetSingleCommandDef(model: CodeModelAz, required: any) {
 
     let call = "def " + updatedMethodName + "(";
     let indent = " ".repeat(call.length);
-    
+    if (model.Command_Name == "synapse sql-pool-blob-auditing-policy update") {
+        model.Command;
+    }
 
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     let hasLongRun = false;
