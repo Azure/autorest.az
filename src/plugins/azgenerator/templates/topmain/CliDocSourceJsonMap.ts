@@ -8,6 +8,9 @@ import { HeaderGenerator } from "../../Header";
 import { isNullOrUndefined } from "util";
 import { EOL } from 'os';
 import * as fs from 'fs';
+import * as path from 'path';
+import { TemplateBase } from "../TemplateBase";
+import { PathConstants } from '../../../models';
 
 export function GenerateDocSourceJsonMap(model: CodeModelAz, docSourceJsonMapPath) : string[] {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -37,4 +40,19 @@ export function GenerateDocSourceJsonMap(model: CodeModelAz, docSourceJsonMapPat
         }
     }
     return outputFile;
+}
+
+export class CliDocSourceJsonMap extends TemplateBase {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
+        super(model, isDebugMode);
+        this.relativePath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
+    }
+
+    public async fullGeneration(): Promise<string[]> {
+        return GenerateDocSourceJsonMap(this.model, this.relativePath);
+    }
+
+    public async incrementalGeneration(base: string): Promise<string[]> {
+        return null;
+    }   
 }

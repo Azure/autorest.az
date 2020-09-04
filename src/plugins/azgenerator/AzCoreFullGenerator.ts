@@ -14,14 +14,16 @@ import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare"
 import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario"
 import { GenerateTopLevelImport } from "./templates/topcommon/CliTopLevelImport"
 import { GenerateAzureCliValidators } from "./templates/generated/CliValidators"
-import { GenerateDocSourceJsonMap } from "./templates/topmain/CliDocSourceJsonMap"
-import { GenerateRequirementTxt } from './templates/topmain/CliRequirement';
-import { GenerateAzureCliMainSetUp } from "./templates/topmain/CliMainSetUp"
+import { CliDocSourceJsonMap } from "./templates/topmain/CliDocSourceJsonMap"
+import { CliRequirement } from './templates/topmain/CliRequirement';
+import { CliMainSetUp } from "./templates/topmain/CliMainSetUp";
 import * as path from 'path';
+import { SystemType } from '../models';
 
 export class AzCoreFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
+        this.azDirectory = model.AzureCliFolder;
     }
 
     private getParam() {
@@ -55,17 +57,19 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 files[path + "__init__.py"] = GenerateAzureCliInit(model);
     
                 files[path + "report.md"] = GenerateAzureCliReport(model);
+                let docSourceMapGenerator = new CliDocSourceJsonMap(model, isDebugMode);
                 let docSourceJsonMapPath = model.AzureCliFolder + "/doc/sphinx/azhelpgen/doc_source_map.json";
-                files[docSourceJsonMapPath] = GenerateDocSourceJsonMap(model, docSourceJsonMapPath);
-                for(let sys of ['Darwin', 'Linux', 'windows']) {
+                files[docSourceJsonMapPath] = await docSourceMapGenerator.fullGeneration();
+                let requirementGenerator = new CliRequirement(model, isDebugMode);
+                for(let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
                     let requireFilePath= model.AzureCliFolder + "/src/azure-cli/requirements.py3." + sys + ".txt";
-                    files[requireFilePath] = await GenerateRequirementTxt(model, requireFilePath);
+                    files[requireFilePath] = await requirementGenerator.fullGeneration();
                 }
+                let setupGenerator = new CliMainSetUp(model, isDebugMode);
                 let setUpPath = model.AzureCliFolder + "src/azure-cli/setup.py"
-                files[setUpPath] = await GenerateAzureCliMainSetUp(model, setUpPath);
+                files[setUpPath] = await setupGenerator.fullGeneration();
             }
             while (model.SelectNextExtension())
         }
-        return files;
     }
 }

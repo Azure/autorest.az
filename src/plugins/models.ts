@@ -25,6 +25,12 @@ export enum CompatibleLevel {
     Track2
 }
 
+export enum SystemType {
+    Darwin, 
+    Linux, 
+    windows
+}
+
 export class PathConstants {
     public static readonly generatedFolder: string = "generated";
     public static readonly testFolder: string = "tests";
@@ -42,6 +48,7 @@ export class PathConstants {
     public static readonly preparersFile: string = "preparers.py";
     public static readonly metadataFile: string = "azext_metadata.json";
     public static readonly setupPyFile: string = "setup.py";
+    public static readonly docSourceJsonFile: string = "/doc/sphinx/azhelpgen/doc_source_map.json";
 }
 
 export class ArgumentConstants {

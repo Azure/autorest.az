@@ -9,6 +9,9 @@ import { isNullOrUndefined } from "util";
 import { EOL } from 'os';
 import * as fs from 'fs';
 import { getLatestPyPiVersion } from '../../../../utils/helper'
+import * as path from 'path';
+import { TemplateBase } from "../TemplateBase";
+import { PathConstants } from '../../../models';
 
 export async function GenerateRequirementTxt(model: CodeModelAz, requirementPath) {
     let header: HeaderGenerator = new HeaderGenerator();
@@ -33,4 +36,21 @@ export async function GenerateRequirementTxt(model: CodeModelAz, requirementPath
         }
     }
     return outputFile;
+}
+
+
+
+export class CliRequirement extends TemplateBase {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
+        super(model, isDebugMode);
+        this.relativePath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
+    }
+
+    public async fullGeneration(): Promise<string[]> {
+        return GenerateRequirementTxt(this.model, this.relativePath);
+    }
+
+    public async incrementalGeneration(base: string): Promise<string[]> {
+        return null;
+    }   
 }

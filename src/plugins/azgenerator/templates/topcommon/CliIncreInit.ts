@@ -18,11 +18,11 @@ export class CliTopInit extends TemplateBase {
         this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.initFile);
     }
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         return GenerateAzureCliInit(this.model);
     }
 
-    public incrementalGeneration(base: string): string[] {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         if (isNullOrUndefined(base) || base.length == 0) {
             // No base version
             return this.fullGeneration();

@@ -54,26 +54,26 @@ export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
         // Add Import and run method from generated folder (Init)
         const cliTopInitGenerator = new CliTopInit(this.model, this.isDebugMode);
         const cliTopInitBase = fs.readFileSync(path.join(this.model.CliOutputFolder, cliTopInitGenerator.relativePath)).toString();
-        this.files[cliTopInitGenerator.relativePath] = cliTopInitGenerator.incrementalGeneration(cliTopInitBase);
+        this.files[cliTopInitGenerator.relativePath] = await cliTopInitGenerator.incrementalGeneration(cliTopInitBase);
 
         // Add Import from generated folder (Custom)
         const cliTopCustomGenerator = new CliTopCustom(this.model, this.isDebugMode);
         const cliTopCustomBase = fs.readFileSync(path.join(this.model.CliOutputFolder, cliTopCustomGenerator.relativePath)).toString();
-        this.files[cliTopCustomGenerator.relativePath] = cliTopCustomGenerator.incrementalGeneration(cliTopCustomBase);
+        this.files[cliTopCustomGenerator.relativePath] = await cliTopCustomGenerator.incrementalGeneration(cliTopCustomBase);
 
         // Add Import from generated folder (Help)
         const cliTopHelpGenerator = new CliTopHelp(this.model, this.isDebugMode);
         const cliTopHelpBase = fs.readFileSync(path.join(this.model.CliOutputFolder, cliTopHelpGenerator.relativePath)).toString();
-        this.files[cliTopHelpGenerator.relativePath] = cliTopHelpGenerator.incrementalGeneration(cliTopHelpBase);
+        this.files[cliTopHelpGenerator.relativePath] = await cliTopHelpGenerator.incrementalGeneration(cliTopHelpBase);
 
         // Upgrade version of azext_metadata
         const cliTopMetadataGenerator = new CliTopMetadata(this.model, this.isDebugMode);
         const cliTopMetadataBase = fs.readFileSync(path.join(this.model.CliOutputFolder, cliTopMetadataGenerator.relativePath)).toString();
-        this.files[cliTopMetadataGenerator.relativePath] = cliTopMetadataGenerator.incrementalGeneration(cliTopMetadataBase);
+        this.files[cliTopMetadataGenerator.relativePath] = await cliTopMetadataGenerator.incrementalGeneration(cliTopMetadataBase);
 
         const cliSetupPyGenerator = new CliSetupPy(this.model, this.isDebugMode);
         const cliSetupPyBase = fs.readFileSync(path.join(this.model.CliOutputFolder, cliSetupPyGenerator.relativePath)).toString();
-        this.files[cliSetupPyGenerator.relativePath] = cliSetupPyGenerator.incrementalGeneration(cliSetupPyBase);
+        this.files[cliSetupPyGenerator.relativePath] = await cliSetupPyGenerator.incrementalGeneration(cliSetupPyBase);
 
     }
 }

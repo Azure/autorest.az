@@ -16,11 +16,11 @@ export class CliTopMetadata extends TemplateBase {
         this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.metadataFile);
     }
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         return GenerateAzureCliAzextMetadata(this.model);
     }
 
-    public incrementalGeneration(base: string): string[] {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         if (isNullOrUndefined(base) || base.length == 0) {
             return this.fullGeneration();
         }

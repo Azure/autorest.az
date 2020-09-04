@@ -17,11 +17,11 @@ export class CliSetupPy extends TemplateBase {
         this.relativePath = PathConstants.setupPyFile;
     }
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         return GenerateAzureCliSetupPy(this.model);
     }
 
-    public incrementalGeneration(base: string): string[] {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         if (isNullOrUndefined(base) || base.length == 0) {
             return this.fullGeneration();
         }
