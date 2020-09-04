@@ -541,7 +541,6 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
             }
             parameterPair = items.join(",\n"); 
         }
-        
 
         if (methodCall.endsWith("(")) {
             // XXX - split and pop is a hack
@@ -550,8 +549,6 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
             methodCall += "," + "\n" + indent + parameterPair;
         }
     }
-    
-
 
     methodCall += ")";
 
