@@ -4,15 +4,22 @@ import * as fs from 'fs';
 import { slow, suite, test, timeout } from 'mocha-typescript';
 import * as path from 'path';
 import { copyRecursiveSync, deleteFolderRecursive } from "../utils/helper";
+import { Dictionary } from '@azure-tools/linq';
+import { ArgumentConstants, TargetMode, CompatibleLevel } from '../plugins/models';
 
 require('source-map-support').install();
 
 @suite class Process {
     private incrementalTestRPs: string[] = ["mixed-reality"];
+    private mainTestRPs: string[] = ["kusto", "synapse"];
     private noNeedTestRPs: string[] = ["testserver"];
 
-    async runAz(directory: string, each: string) {
-        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6271 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md --azure-cli-extension-folder=" + directory + "/tmpoutput/";
+    async runAz(directory: string, extraOption: any[]) {
+        let cmdOption = [];
+        for(let k of extraOption) {
+            cmdOption.push("--" + k + "=" + extraOption[k]);
+        }
+        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6271 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md " + cmdOption.join(" ");
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => {
             exec(cmd, function (error) {
@@ -43,6 +50,42 @@ require('source-map-support').install();
         });
     }
 
+    getExtDefaultOptions(outputDir) {
+        let extraOption: any[] = [{}];
+        let key = ArgumentConstants.azureCliExtFolder
+        extraOption.push({key: outputDir});
+        return extraOption;
+    }
+
+    getCoreDefaultOptions(outputDir) {
+        let extraOption: any[] = [{}];
+        let key = ArgumentConstants.targetMode;
+        extraOption.push({key: TargetMode.Core});
+        key = ArgumentConstants.azureCliFolder;
+        extraOption.push({key: outputDir});
+        return extraOption;
+    }
+
+    getExtNoFlattenOptions(outputDir: string) {
+        let extraOption: any[] = [{}];
+        let key = ArgumentConstants.azureCliExtFolder
+        extraOption.push({key: outputDir});
+        key = ArgumentConstants.sdkNoFlatten;
+        extraOption.push({key: true});
+        return extraOption;
+    }
+
+    getExtNoFlattenTrack1Options(outputDir: string) {
+        let extraOption: any[] = [{}];
+        let key = ArgumentConstants.azureCliExtFolder
+        extraOption.push({key: outputDir});
+        key = ArgumentConstants.sdkNoFlatten;
+        extraOption.push({key: true});
+        key = ArgumentConstants.compatibleLevel;
+        extraOption.push({key: CompatibleLevel.Track1});
+        return extraOption;   
+    }
+
     @test(slow(600000), timeout(1500000)) async acceptanceSuite() {
         const dir = `${__dirname}/../../src/test/scenarios/`;
         const folders = fs.readdirSync(dir);
@@ -61,7 +104,14 @@ require('source-map-support').install();
                     copyRecursiveSync(path.join(dir, each, "basecli", "src"), path.join(dir, each, "tmpoutput", "src"));
                 }
                 try {
-                    await this.runAz(dir + each, each).then(res => {
+                    let extraOption: any[] = [];
+                    let outputDir = "";
+                    if (this.mainTestRPs.indexOf(each) > -1) {
+
+                    } else {
+                        outputDir = dir + each + "/tmpoutput/sdknoflatten";
+                    }
+                    await this.runAz(dir + each, extraOption).then(res => {
                         if (res == false) {
                             msg = "Run autorest not successfully!";
                         }

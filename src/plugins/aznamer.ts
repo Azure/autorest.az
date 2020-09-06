@@ -221,36 +221,36 @@ export class AzNamer {
                         });                   
                     }
                 });
+
+            });
+            operations.forEach(operation => {
                  //if generic update exists, set the setter_arg_name in the original operation
-                if(operation.language['az']['isSplitUpdate']) {
+                if (operation.language['az']['isSplitUpdate'] && !isNullOrUndefined(operationGroup.language['az']['genericTargetSchema'])) {
                     let foundGeneric = false;
                     // disable generic update for now
                     // foundGeneric = true;
                     for (let n = 0; n < operation.requests.length; n++) {
                         let request = operation.requests[n];
+                        let genericSetter = null;
                         if (request.parameters) {
                             for (let m = 0; m < request.parameters.length; m++) {
                                 let parameter = request.parameters[m];
-                                if (!isNullOrUndefined(parameter.language['az']) && !foundGeneric) {
-                                    if (operation.language['az'].command.endsWith(' update') && parameter['flattened'] == true) {
-                                        foundGeneric = true;
+                                if (parameter.schema == operationGroup.language['az']['genericTargetSchema']) {
+                                    foundGeneric = true;
+                                    if (isNullOrUndefined(parameter['flattened'])) {
+                                        operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter;
+                                    } else {
                                         m++;
-                                        let needBuild = false;
-                                        let flattenedParam = parameter;
                                         while (m < request.parameters.length) {
-                                            let tmpParam = request.parameters[m];
-                                            if (tmpParam['originalParameter'] == flattenedParam && isNullOrUndefined(tmpParam['nameBaseParam'])) {
-                                                needBuild = true;
-                                            }
-                                            if (tmpParam['flattened']) {
-                                                flattenedParam = tmpParam;
+                                            let param = request.parameters[m];
+                                            if (!isNullOrUndefined(param['flattened']) && !isNullOrUndefined(param['nameBaseParam']) && isNullOrUndefined(param['nameBaseParam']['flattened'])) {
+                                                operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = param['nameBaseParam'];
+                                                break;
                                             }
                                             m++;
                                         }
-                                        if (needBuild) {
-                                            operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter;
-                                        }
                                     }
+                                    break;
                                 }
                             }
                         }

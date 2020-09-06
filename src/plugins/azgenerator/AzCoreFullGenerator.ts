@@ -62,8 +62,8 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 files[docSourceJsonMapPath] = await docSourceMapGenerator.fullGeneration();
                 let requirementGenerator = new CliRequirement(model, isDebugMode);
                 for(let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
-                    let requireFilePath= path.join(model.AzureCliFolder, "/src/azure-cli/requirements.py3." + sys + ".txt");
-                    files[requireFilePath] = await requirementGenerator.fullGeneration();
+                    requirementGenerator.relativePath = path.join(model.AzureCliFolder, "/src/azure-cli/requirements.py3." + sys + ".txt");
+                    files[requirementGenerator.relativePath] = await requirementGenerator.fullGeneration();
                 }
                 let setupGenerator = new CliMainSetUp(model, isDebugMode);
                 let setUpPath = path.join(model.AzureCliFolder, PathConstants.mainSetUpPyFile);

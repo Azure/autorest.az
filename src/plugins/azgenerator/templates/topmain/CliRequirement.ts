@@ -43,7 +43,6 @@ export async function GenerateRequirementTxt(model: CodeModelAz, requirementPath
 export class CliRequirement extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
-        this.relativePath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
     }
 
     public async fullGeneration(): Promise<string[]> {
