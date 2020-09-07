@@ -177,10 +177,24 @@ export class BaseSegment {
     }
 }
 
+function nextStepAt(content: string): number {
+    const nextEnv = content.search(/\n# Env/);
+    const nextExample = content.search(/\n# EXAMPLE/);
+    const nextCase = content.search(/\n# Testcase/);
+
+    let candidates = [nextEnv, nextExample, nextCase];
+    candidates.sort();
+    for (let ret of candidates) {
+        if (ret>=0) {
+            return ret;
+        }
+    }
+    return -1;
+}
 export class HeadSegment extends BaseSegment {
     public static addInstance(target: TargetFile): boolean {
         if (target.currentAt==0) {
-            let nextAt =target.content.search(/\n##/);
+            let nextAt =nextStepAt(target.content);
             if (nextAt<0) {
                 nextAt = target.content.length-1;
             }
@@ -200,8 +214,8 @@ export class DefSegment extends BaseSegment {
 export class testStepSegment extends DefSegment {
     public static addInstance(target: TargetFile): boolean {
         const remain = target.content.slice(target.currentAt);
-        if (target.currentAt>=0 && remain.startsWith("## ")) {
-            let nextAt =remain.search(/\n##/);
+        if (target.currentAt>=0) {
+            let nextAt =nextStepAt(remain);
             if (nextAt<0) {
                 nextAt = remain.length-1;
             }

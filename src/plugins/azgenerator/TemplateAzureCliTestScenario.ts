@@ -66,7 +66,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
         return ret;
     }
 
-    funcScenario.push("## Testcase");
+    funcScenario.push("# Testcase");
     funcScenario.push("@try_manual");
     funcScenario.push(...ToMultiLine(`def call_scenario(test${parameterLine()}):`));
 
@@ -76,7 +76,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
         let functionName: string = ToFunctionName(config[ci]);
         if (exampleId) {
             let disabled: string = config[ci].disabled ? "# " : "";
-            steps.push("## EXAMPLE: " + exampleId);
+            steps.push("# EXAMPLE: " + exampleId);
             steps.push("@try_manual");
             steps.push(...ToMultiLine(`def ${functionName}(test${parameterLine()}):`));
             // find example by name
@@ -136,7 +136,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
             funcScenario.push(...ToMultiLine(`    ${functionName}(test${parameterLine()})`));
         }
         else if (functionName) {
-            steps.push(`## Env ${functionName}`);
+            steps.push(`# Env ${functionName}`);
             steps.push("@try_manual");
             steps.push(...ToMultiLine(`def ${functionName}(test${parameterLine()}):`));
             steps.push("    pass");
