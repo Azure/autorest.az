@@ -78,5 +78,11 @@ Values can be:
 
 NOTE: For json it may be needed to suppress Python SDK flattening. This will require additional directive applied before Python SDK is generated.
 
+# Customize library
+
+*azure.cli.core* is used as default library. Use following configuration in readme.az.md to replace it with your own cli core library:
+
+    cli-core-lib: <your own cli core library>
+
 
 
