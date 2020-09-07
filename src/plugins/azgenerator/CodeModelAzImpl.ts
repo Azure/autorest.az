@@ -1517,6 +1517,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_NamePython(param: Parameter = this.MethodParameter): string {
+        if (this.SDK_IsTrack1 && !isNullOrUndefined(param.language['cli']?.['track1_name'])) {
+            return param.language['cli']?.['track1_name'];
+        }
         return param.language?.['python']?.name;
     }
 
@@ -1548,10 +1551,16 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public GetModuleOperationNamePython(): string {
+        if (this.SDK_IsTrack1 && !isNullOrUndefined(this.CommandGroup.language['cli']?.['track1_name'])) {
+            return this.CommandGroup.language['cli']?.['track1_name'];
+        }
         return this.CommandGroup.language['python'].name;
     }
 
     public GetModuleOperationNamePythonUpper(): string {
+        if (this.SDK_IsTrack1 && !isNullOrUndefined(this.CommandGroup.language['cli']?.['track1_class_name'])) {
+            return this.CommandGroup.language['cli']?.['track1_class_name'];
+        }
         return this.CommandGroup.language['python']['className'];
     }
 

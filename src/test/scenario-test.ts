@@ -9,14 +9,23 @@ import { ArgumentConstants, TargetMode, CompatibleLevel } from '../plugins/model
 
 require('source-map-support').install();
 
+
+enum GenerateTestMode {
+    Default = "",
+    CoreDefault = "coredefault",
+    ExtNoFlatten = "extnoflatten",
+    ExtNoSdk = "extnosdk",
+    ExtNoSdkNoFlattenTrack1 = "extnosdknoflattentrack1"
+}
+
 @suite class Process {
     private incrementalTestRPs: string[] = ["mixed-reality"];
     private mainTestRPs: string[] = ["kusto", "synapse"];
     private noNeedTestRPs: string[] = ["testserver"];
 
-    async runAz(directory: string, extraOption: any[]) {
+    async runAz(directory: string, extraOption: {}) {
         let cmdOption = [];
-        for(let k of extraOption) {
+        for(let k in extraOption) {
             cmdOption.push("--" + k + "=" + extraOption[k]);
         }
         let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6271 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md " + cmdOption.join(" ");
@@ -50,40 +59,70 @@ require('source-map-support').install();
         });
     }
 
-    getExtDefaultOptions(outputDir) {
-        let extraOption: any[] = [{}];
-        let key = ArgumentConstants.azureCliExtFolder
-        extraOption.push({key: outputDir});
+    getOptions(testMode: string, outputDir: string) {
+        let extraOption: {} = {};
+        if (testMode == GenerateTestMode.Default) {
+            let key = ArgumentConstants.azureCliExtFolder
+            extraOption[key] = outputDir;
+            return extraOption;
+        } else if (testMode == GenerateTestMode.CoreDefault) {
+            let key = ArgumentConstants.targetMode;
+            extraOption[key] = TargetMode.Core;
+            key = ArgumentConstants.azureCliFolder;
+            extraOption[key] = outputDir;
+            return extraOption;
+        } else if (testMode == GenerateTestMode.ExtNoFlatten) {
+            let key = ArgumentConstants.azureCliExtFolder
+            extraOption[key] = outputDir;
+            key = ArgumentConstants.sdkNoFlatten;
+            extraOption[key] = true;
+            return extraOption;
+        } else if (testMode == GenerateTestMode.ExtNoSdk) {
+            let key = ArgumentConstants.azureCliExtFolder
+            extraOption[key] = outputDir;
+            key = ArgumentConstants.sdkNoFlatten;
+            extraOption[key] = true;
+            key = ArgumentConstants.generateSDK;
+            extraOption[key] = false;
+            return extraOption;
+        } else if (testMode == GenerateTestMode.ExtNoSdkNoFlattenTrack1) {
+            let key = ArgumentConstants.azureCliExtFolder
+            extraOption[key] = outputDir;
+            key = ArgumentConstants.sdkNoFlatten;
+            extraOption[key] = true;
+            key = ArgumentConstants.generateSDK;
+            extraOption[key] = false;
+            key = ArgumentConstants.compatibleLevel;
+            extraOption[key] = CompatibleLevel.Track1;
+            return extraOption;   
+        }
         return extraOption;
     }
 
-    getCoreDefaultOptions(outputDir) {
-        let extraOption: any[] = [{}];
-        let key = ArgumentConstants.targetMode;
-        extraOption.push({key: TargetMode.Core});
-        key = ArgumentConstants.azureCliFolder;
-        extraOption.push({key: outputDir});
-        return extraOption;
-    }
-
-    getExtNoFlattenOptions(outputDir: string) {
-        let extraOption: any[] = [{}];
-        let key = ArgumentConstants.azureCliExtFolder
-        extraOption.push({key: outputDir});
-        key = ArgumentConstants.sdkNoFlatten;
-        extraOption.push({key: true});
-        return extraOption;
-    }
-
-    getExtNoFlattenTrack1Options(outputDir: string) {
-        let extraOption: any[] = [{}];
-        let key = ArgumentConstants.azureCliExtFolder
-        extraOption.push({key: outputDir});
-        key = ArgumentConstants.sdkNoFlatten;
-        extraOption.push({key: true});
-        key = ArgumentConstants.compatibleLevel;
-        extraOption.push({key: CompatibleLevel.Track1});
-        return extraOption;   
+    async runSingleTest(dir: string, each: string, extraOption: {}, testMode: string) {
+        let result = true;
+        let msg = "";
+        await this.runAz(dir + each, extraOption).then(res => {
+            if (res == false) {
+                msg = "Run autorest not successfully!";
+            }
+            result = res;
+        }).catch(err => {
+            msg = "Run autorest failed!";
+            result = err;
+        });
+        if (result) {
+            await this.compare(dir + each + "/output/" + testMode, dir + each + "/tmpoutput/" + testMode).then(res1 => {
+                if (res1 == false) {
+                    msg = "The generated files have changed!";
+                }
+                result = res1;
+            }).catch(e => {
+                msg = "The diff has some error";
+                result = e;
+            });
+        }
+        return result;
     }
 
     @test(slow(600000), timeout(1500000)) async acceptanceSuite() {
@@ -104,32 +143,18 @@ require('source-map-support').install();
                     copyRecursiveSync(path.join(dir, each, "basecli", "src"), path.join(dir, each, "tmpoutput", "src"));
                 }
                 try {
-                    let extraOption: any[] = [];
+                    let extraOption: {} = {};
                     let outputDir = "";
                     if (this.mainTestRPs.indexOf(each) > -1) {
-
-                    } else {
-                        outputDir = dir + each + "/tmpoutput/sdknoflatten";
-                    }
-                    await this.runAz(dir + each, extraOption).then(res => {
-                        if (res == false) {
-                            msg = "Run autorest not successfully!";
+                        for(let testMode in [GenerateTestMode.CoreDefault, GenerateTestMode.ExtNoFlatten, GenerateTestMode.ExtNoSdk, GenerateTestMode.ExtNoSdkNoFlattenTrack1]) {
+                            outputDir = dir + each + "/tmpoutput/" + testMode;
+                            extraOption = this.getOptions(testMode, outputDir);
+                            result = await this.runSingleTest(dir, each, extraOption, testMode); 
                         }
-                        result = res;
-                    }).catch(err => {
-                        msg = "Run autorest failed!";
-                        result = err;
-                    });
-                    if (result) {
-                        await this.compare(dir + each + "/output/src/" + each, dir + each + "/tmpoutput/src/" + each).then(res1 => {
-                            if (res1 == false) {
-                                msg = "The generated files have changed!";
-                            }
-                            result = res1;
-                        }).catch(e => {
-                            msg = "The diff has some error";
-                            result = e;
-                        });
+                    } else {
+                        outputDir = dir + each + "/tmpoutput/";
+                        extraOption = this.getOptions(GenerateTestMode.Default, outputDir);
+                        result = await this.runSingleTest(dir, each, extraOption, GenerateTestMode.Default);
                     }
                 } catch (error) {
                     console.log(msg);
