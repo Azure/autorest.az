@@ -1,4 +1,5 @@
 import {readFileSync, existsSync} from 'fs';
+import { isNullOrUndefined } from 'util';
 
 export class TargetFile {
     content: string;
@@ -31,31 +32,24 @@ export class TargetFile {
     }
 
     public getContent(): string[] {
-        return this.content.split("\n");
+        return this.root.genResult().split("\n");
     }
 
     public merge(originA: TargetFile, customizedA: TargetFile) {
-        for (let i=0; i<originA.children.length;i++) {
-            let originSeg = originA.children[i];
-            originSeg.status = SegmentStatus.Deleted;
-            for (let j=0; j<customizedA.children.length; j++) {
-                let customizedSeg = customizedA.children[j];
-                if (originSeg.name == customizedSeg.name) {
-                    if (originSeg.Content == customizedSeg.Content) {
-                        originSeg.status = SegmentStatus.Origin;
-                    }
-                    else {
-                        originSeg.status = SegmentStatus.Origin;
-                    }
-                    break
-                }
-            }
+        if (isNullOrUndefined(originA)) return;
+        if (!isNullOrUndefined(customizedA)) {
+            originA.root.matchCustomize(customizedA.root);
+        }
+        this.root.matchVA(originA.root);
+        if (!isNullOrUndefined(customizedA)) {
+            this.root.addCustomize(customizedA.root);
         }
     }
 }
 
 export enum SegmentStatus {
     Origin,
+    Added,
     Modified,
     Deleted,
 }
@@ -68,6 +62,7 @@ export class BaseSegment {
     status: SegmentStatus;
     target: TargetFile;
     customized: BaseSegment;
+    originA: BaseSegment;
 
     public constructor(target: TargetFile,startAt: number, endAt: number, name: string="") {
         this.startAt = startAt;
@@ -77,13 +72,109 @@ export class BaseSegment {
         this.status = SegmentStatus.Origin;
         this.target = target;
         this.customized = undefined;
+        this.originA = undefined;
     }
 
     public get Content() {
         return this.target.content.slice(this.startAt, this.endAt);
     }
 
-    public status
+    public matchCustomize(customized: BaseSegment) {
+        if (this.Content == customized.Content) {
+            this.status = SegmentStatus.Origin;
+        }
+        else {
+            this.status = SegmentStatus.Modified;
+            this.customized = customized;
+        }
+
+        for (let i=0; i<this.children.length;i++) {
+            let originSeg = this.children[i];
+            originSeg.status = SegmentStatus.Deleted;
+            for (let j=0; j<customized.children.length; j++) {
+                let customizedSeg = customized.children[j];
+                if (originSeg.name == customizedSeg.name) {
+                    originSeg.matchCustomize(customizedSeg);
+                    break
+                }
+            }
+        }
+
+        for (let i=0; i<customized.children.length;i++) {
+            let customizedSeg = customized.children[i];
+            let found = false;
+            for (let j=0; j<this.children.length; j++) {
+                let originSeg = this.children[j];
+                if (originSeg.name == customizedSeg.name) {
+                    found = true;
+                    break
+                }
+            }
+            if (!found) {
+                customizedSeg.status = SegmentStatus.Added;
+            }
+        }
+    }
+
+    public matchVA(originA: BaseSegment) {
+        this.originA = originA;
+        for (let i=0; i<this.children.length;i++) {
+            let vBSeg = this.children[i];
+            for (let j=0; j<originA.children.length; j++) {
+                let vASeg = originA.children[j];
+                if (vBSeg.name == vASeg.name) {
+                    vBSeg.matchVA(vASeg);
+                    break;
+                }
+            }
+        }
+    }
+
+    public findChild(childSeg: BaseSegment): number {
+        for (let i=0; i<this.children.length;i++) {
+            if (this.children[i].name == childSeg.name) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public addCustomize(customizedA: BaseSegment) {
+        //merge new added in customziedA into this
+        let previousIndex: number = -1;
+        for (let i=0; i<customizedA.children.length;i++) {
+            let seg = customizedA.children[i];
+            let t = this.findChild(seg);
+            if (t>=0) {
+                previousIndex = t;
+                this.children[t].addCustomize(seg);
+            }
+            else if(seg.status == SegmentStatus.Added) {
+                this.children.splice(previousIndex+1, 0, seg);
+            }
+        }
+    } 
+
+    public genResult(): string {
+        let ret = "";
+        if (this.children.length==0) {
+            if (isNullOrUndefined(this.originA) || this.status==SegmentStatus.Added || this.originA.status== SegmentStatus.Origin) {
+                ret += this.Content;
+            }
+            else if (this.originA.status==SegmentStatus.Deleted) {
+                // skip this segment
+            }
+            else if (this.originA.status == SegmentStatus.Modified) {
+                ret +=this.originA.customized.Content;
+            }
+        }
+        else {
+            for (let i=0; i<this.children.length;i++) {
+                ret += this.children[i].genResult();
+            }
+        }
+        return ret;
+    }
 }
 
 export class HeadSegment extends BaseSegment {
@@ -94,7 +185,7 @@ export class HeadSegment extends BaseSegment {
                 nextAt = target.content.length-1;
             }
             nextAt += 1;
-            target.children.push(new HeadSegment(target, target.currentAt, nextAt));
+            target.root.children.push(new HeadSegment(target, target.currentAt, nextAt));
             target.currentAt = nextAt;
             return true;
         }
@@ -112,17 +203,19 @@ export class testStepSegment extends DefSegment {
         if (target.currentAt>=0 && remain.startsWith("## ")) {
             let nextAt =remain.search(/\n##/);
             if (nextAt<0) {
-                nextAt = target.content.length-1;
+                nextAt = remain.length-1;
             }
             nextAt +=  target.currentAt + 1;
-            target.children.push(new testStepSegment(target, target.currentAt, nextAt, remain.slice(3, remain.indexOf("\n"))));
+            const newStep = new testStepSegment(target, target.currentAt, nextAt, remain.slice(3, remain.indexOf("\n")))
+            target.root.children.push(newStep);
+            newStep.createChildren();
             target.currentAt = nextAt;
             return true;
         }
         return false;
     }
 
-    public createChildren(target: TargetFile) {
+    public createChildren() {
         let seperators = [
             ["endwith", ":\n", "declare"],
             ["startwith", "    test.cmd(", "pre"],
@@ -136,17 +229,18 @@ export class testStepSegment extends DefSegment {
             t = seperator[0];
             tag = seperator[1];
             name = seperator[2];
-            let idx = target.content.indexOf(tag, bias);
+            let idx = this.target.content.indexOf(tag, bias);
+            if (idx>=this.endAt || idx<0)    break;
             if (t=="endwith") {
-                this.children.push(new BaseSegment(target, bias, idx+tag.length, name));
+                this.children.push(new BaseSegment(this.target, bias, idx+tag.length, name));
                 bias = idx + tag.length;
             }
             else if (t=="startwith") {
-                this.children.push(new BaseSegment(target, bias, idx, name));
+                this.children.push(new BaseSegment(this.target, bias, idx, name));
                 bias = idx;
             }
         }
-        this.children.push(new BaseSegment(target, bias, this.endAt, "post"));
+        this.children.push(new BaseSegment(this.target, bias, this.endAt, "post"));
     }
 }
 
@@ -157,7 +251,7 @@ export class TailSegment extends BaseSegment {
             return false;
         }
         const nextAt = target.content.length;
-        target.children.push(new TailSegment(target, target.currentAt, nextAt));
+        target.root.children.push(new TailSegment(target, target.currentAt, nextAt));
         target.currentAt = nextAt;
         return true;
     }
@@ -167,7 +261,7 @@ export function createTarget(file: string[]| string): TargetFile {
     let fileContent: string[];
     if (typeof file == 'string') {
         if (!existsSync(file))  return null;
-        fileContent = readFileSync(file,'utf8').split("\n");
+        fileContent = readFileSync(file,'utf8').split("\r\n").join("\n").split("\n");
     }
     else {
         fileContent = file;
