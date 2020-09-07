@@ -39,7 +39,7 @@ def test_rp_e2e(rp, az, swagger, cliext, azpack):
     logInfo ("Cliext: " + cliext_arg_str);
 
     logStep ("Start code generation: %s" % rp);
-    runTask(['autorest', '--version=3.0.6271', '--az', az_arg_str, cliext_arg_str, swagger_arg_str]);
+    runTask(['autorest', '--version=3.0.6271', '--az', az_arg_str, cliext_arg_str, swagger_arg_str, '--clear-output-folder']);
 
     logStep ("Azdev extension add %s" % rp);
     runTask(['azdev', 'extension', 'add', rp]);
