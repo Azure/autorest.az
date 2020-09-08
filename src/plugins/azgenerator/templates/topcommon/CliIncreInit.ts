@@ -5,7 +5,7 @@
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from "util";
-import { getIndentString } from "../../../../utils/helper";
+import { getIndentString, skipCommentLines } from "../../../../utils/helper";
 import { GenerationMode, PathConstants } from "../../../models";
 import { CodeModelAz } from "../../CodeModelAz";
 import { HeaderGenerator } from "../../Header";
@@ -15,7 +15,12 @@ import { TemplateBase } from "../TemplateBase";
 export class CliTopInit extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
-        this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.initFile);
+        if (this.model.IsCliCore) {
+            this.relativePath = path.join(PathConstants.initFile);
+        }
+        else {
+            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.initFile);
+        }
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -44,16 +49,10 @@ export class CliTopInit extends TemplateBase {
 
                 // Pass start comment
                 const baseSplit: string[] = base.split(EOL);
-                let firstNoneCommentLineIdx: number = -1;
-                for (let i: number = 0; i < baseSplit.length; ++i) {
-                    if (!baseSplit[i].startsWith("#")) {
-                        firstNoneCommentLineIdx = i;
-                        break;
-                    }
-                }
+                const skipLineIdx = skipCommentLines(baseSplit);
 
-                if (firstNoneCommentLineIdx != -1) {
-                    output = output.concat(baseSplit.slice(firstNoneCommentLineIdx));
+                if (skipLineIdx != -1) {
+                    output = output.concat(baseSplit.slice(skipLineIdx));
                 }
 
                 let loadtableIndex: number = -1;

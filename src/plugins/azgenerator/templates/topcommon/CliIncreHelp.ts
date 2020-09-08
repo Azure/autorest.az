@@ -5,7 +5,7 @@
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from "util";
-import { getIndentString } from "../../../../utils/helper";
+import { getIndentString, skipCommentLines, keepHeaderLines } from "../../../../utils/helper";
 import { GenerationMode, PathConstants } from "../../../models";
 import { CodeModelAz } from "../../CodeModelAz";
 import { HeaderGenerator } from "../../Header";
@@ -14,7 +14,12 @@ import { TemplateBase } from "../TemplateBase";
 export class CliTopHelp extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
-        this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.helpFile);
+        if (this.model.IsCliCore) {
+            this.relativePath = path.join(PathConstants.helpFile);
+        }
+        else {
+            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.helpFile);
+        }
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -42,21 +47,21 @@ export class CliTopHelp extends TemplateBase {
                 headerGenerator.generationMode = GenerationMode.Incremental;
                 let output: string[] = headerGenerator.getLines();
 
-                // Add loading code block
-                output.push("");
-                output = output.concat(this.loadGeneratedHelp(0));
-
                 // Pass start comment
                 const baseSplit: string[] = base.split(EOL);
-                let firstNoneCommentLineIdx: number = -1;
-                for (let i: number = 0; i < baseSplit.length; ++i) {
-                    if (!baseSplit[i].startsWith("#")) {
-                        firstNoneCommentLineIdx = i;
-                        break;
-                    }
+                const skipLineIdx = skipCommentLines(baseSplit);
+                const keepLineIdx = keepHeaderLines(baseSplit);
+
+                if (skipLineIdx < keepLineIdx) {
+                    output = output.concat(baseSplit.slice(skipLineIdx, keepLineIdx));
                 }
-                if (firstNoneCommentLineIdx != -1) {
-                    output = output.concat(baseSplit.slice(firstNoneCommentLineIdx));
+
+                // Add loading code block                
+                output = output.concat(this.loadGeneratedHelp(0));
+
+                const appendLineStartIdx = skipLineIdx < keepLineIdx ? keepLineIdx : skipLineIdx;
+                if (appendLineStartIdx != -1) {
+                    output = output.concat(baseSplit.slice(appendLineStartIdx));
                 }
                 return output;
             }

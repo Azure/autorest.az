@@ -13,7 +13,7 @@ debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
   "@autorest/python": "5.1.0-preview.4"
-  "@autorest/clicommon": "/home/qiaozha/code/autorest.clicommon"
+  "@autorest/clicommon": "0.5.2"
   #"@autorest/python": "latest"
 
 require:
