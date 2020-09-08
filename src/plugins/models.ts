@@ -25,6 +25,11 @@ export enum CompatibleLevel {
     Track2 = "track2"
 }
 
+export enum GenerateSdk {
+    Yes = "yes",
+    No = "no"
+}
+
 export enum SystemType {
     Darwin = "Darwin", 
     Linux = "Linux", 

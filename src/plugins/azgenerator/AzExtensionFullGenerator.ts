@@ -52,8 +52,9 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
 
         this.files[this.azDirectory + "manual/__init__.py"] = GenerateNamespaceInit(this.model);
 
-
-        this.files[this.azDirectory + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(this.model);
+        if (this.model.SDK_NeedSDK) {
+            this.files[this.azDirectory + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(this.model);
+        }
 
         this.files[this.azDirectory + "action.py"] = GenerateTopLevelImport(this.model, "action");
         this.files[this.azDirectory + "custom.py"] = GenerateTopLevelImport(this.model, "custom");
@@ -64,6 +65,6 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         this.files["HISTORY.rst"] = GenerateAzureCliHistory(this.model);
         this.files["README.md"] = GenerateAzureCliReadme(this.model);
         this.files["setup.cfg"] = GenerateAzureCliSetupCfg(this.model);
-        this.files["setup.py"] = GenerateAzureCliSetupPy(this.model);
+        this.files["setup.py"] = await GenerateAzureCliSetupPy(this.model);
     }
 }

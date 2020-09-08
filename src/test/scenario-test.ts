@@ -5,7 +5,7 @@ import { slow, suite, test, timeout } from 'mocha-typescript';
 import * as path from 'path';
 import { copyRecursiveSync, deleteFolderRecursive } from "../utils/helper";
 import { Dictionary } from '@azure-tools/linq';
-import { ArgumentConstants, TargetMode, CompatibleLevel } from '../plugins/models';
+import { ArgumentConstants, TargetMode, CompatibleLevel, GenerateSdk } from '../plugins/models';
 
 require('source-map-support').install();
 
@@ -83,7 +83,7 @@ enum GenerateTestMode {
             key = ArgumentConstants.sdkNoFlatten;
             extraOption[key] = true;
             key = ArgumentConstants.generateSDK;
-            extraOption[key] = false;
+            extraOption[key] = GenerateSdk.No;
             return extraOption;
         } else if (testMode == GenerateTestMode.ExtNoSdkNoFlattenTrack1) {
             let key = ArgumentConstants.azureCliExtFolder
@@ -91,7 +91,7 @@ enum GenerateTestMode {
             key = ArgumentConstants.sdkNoFlatten;
             extraOption[key] = true;
             key = ArgumentConstants.generateSDK;
-            extraOption[key] = false;
+            extraOption[key] = GenerateSdk.No;
             key = ArgumentConstants.compatibleLevel;
             extraOption[key] = CompatibleLevel.Track1;
             return extraOption;   
@@ -146,7 +146,10 @@ enum GenerateTestMode {
                     let extraOption: {} = {};
                     let outputDir = "";
                     if (this.mainTestRPs.indexOf(each) > -1) {
-                        for(let testMode in [GenerateTestMode.CoreDefault, GenerateTestMode.ExtNoFlatten, GenerateTestMode.ExtNoSdk, GenerateTestMode.ExtNoSdkNoFlattenTrack1]) {
+                        for(let testMode of [GenerateTestMode.CoreDefault, GenerateTestMode.ExtNoFlatten, GenerateTestMode.ExtNoSdk, GenerateTestMode.ExtNoSdkNoFlattenTrack1]) {
+                            if (testMode == GenerateTestMode.CoreDefault) {
+                                copyRecursiveSync(path.join(dir, each, "basecli"), path.join(dir, each, "tmpoutput", testMode));
+                            }
                             outputDir = dir + each + "/tmpoutput/" + testMode;
                             extraOption = this.getOptions(testMode, outputDir);
                             result = await this.runSingleTest(dir, each, extraOption, testMode); 

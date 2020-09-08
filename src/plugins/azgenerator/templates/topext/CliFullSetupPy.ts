@@ -3,9 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelAz } from "../../CodeModelAz"
+import { CodeModelAz } from "../../CodeModelAz";
+import { getLatestPyPiVersion } from '../../../../utils/helper';
 
-export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
+export async function GenerateAzureCliSetupPy(model: CodeModelAz) : Promise<string[]> {
     var output: string[] = [];
 
     output.push("#!/usr/bin/env python");
@@ -40,7 +41,18 @@ export function GenerateAzureCliSetupPy(model: CodeModelAz) : string[] {
     output.push("    'License :: OSI Approved :: MIT License',");
     output.push("]");
     output.push("");
-    output.push("DEPENDENCIES = []");
+    if (!model.SDK_NeedSDK) {
+        output.push("DEPENDENCIES = [");
+        let packageName = model.GetPythonPackageName();
+        let latestVersion = await getLatestPyPiVersion(packageName);
+        let line = "'" + packageName + "~=" + latestVersion + "'";
+        output.push("    " + line)
+        output.push("]");
+    } else {
+        output.push("DEPENDENCIES = []");
+    }
+    output.push("");
+    
     output.push("try:");
     output.push("    from .manual.dependency import DEPENDENCIES");
     output.push("except ImportError:");

@@ -60,7 +60,7 @@ export async function GenerateAll(model: CodeModelAz,
                 files[pathTop + "HISTORY.rst"] = GenerateAzureCliHistory(model);
                 files[pathTop + "README.md"] = GenerateAzureCliReadme(model);
                 files[pathTop + "setup.cfg"] = GenerateAzureCliSetupCfg(model);
-                files[pathTop + "setup.py"] = GenerateAzureCliSetupPy(model);  
+                files[pathTop + "setup.py"] = await GenerateAzureCliSetupPy(model);  
             } 
             
             if(!model.IsCliCore || model.SDK_NeedSDK) {

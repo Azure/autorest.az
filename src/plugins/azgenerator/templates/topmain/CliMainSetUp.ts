@@ -63,7 +63,7 @@ export async function GenerateAzureCliMainSetUp(model: CodeModelAz, requirementP
 export class CliMainSetUp extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
-        this.relativePath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
+        this.relativePath = path.join(model.AzureCliFolder, PathConstants.mainSetUpPyFile);
     }
 
     public async fullGeneration(): Promise<string[]> {

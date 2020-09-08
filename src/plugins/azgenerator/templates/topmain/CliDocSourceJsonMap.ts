@@ -17,7 +17,7 @@ export function GenerateDocSourceJsonMap(model: CodeModelAz, docSourceJsonMapPat
     let outputFile = fs.readFileSync(docSourceJsonMapPath).toString().split(EOL);
     let docSourceJson = require(docSourceJsonMapPath);
     if (isNullOrUndefined(docSourceJson[model.Extension_NameUnderscored])) {
-        let line = '"' + model.Extension_NameUnderscored + '": "' + model.azOutputFolder + '/_help.py"';
+        let line = '"' + model.Extension_Name + '": "src/azure-cli/azure/cli/command_modules/' + model.Extension_Name + '/_help.py"';
         let cnt = outputFile.length;
         let foundLastLine = false;
         while (cnt > 0) {

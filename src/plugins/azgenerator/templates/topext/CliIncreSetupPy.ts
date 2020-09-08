@@ -18,7 +18,7 @@ export class CliSetupPy extends TemplateBase {
     }
 
     public async fullGeneration(): Promise<string[]> {
-        return GenerateAzureCliSetupPy(this.model);
+        return await GenerateAzureCliSetupPy(this.model);
     }
 
     public async incrementalGeneration(base: string): Promise<string[]> {

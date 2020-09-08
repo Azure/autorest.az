@@ -4,7 +4,7 @@ import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { isNullOrUndefined, isArray } from "util";
 import { findNodeInCodeModel } from "../utils/helper";
-import { ArgumentConstants, ExtensionMode, TargetMode, CompatibleLevel } from "./models"
+import { ArgumentConstants, ExtensionMode, TargetMode, CompatibleLevel, GenerateSdk } from "./models"
 
 export class Merger {
     codeModel: CodeModel;
@@ -418,7 +418,8 @@ export async function processRequest(host: Host) {
         throw new Error("Wrong configuration, please check!");
     }
     let isSdkNeeded = cliCore? false: true;
-    isSdkNeeded = await host.GetValue(ArgumentConstants.generateSDK) || isSdkNeeded;
+    let generateSdk = await host.GetValue(ArgumentConstants.generateSDK);
+    isSdkNeeded = isNullOrUndefined(generateSdk)? isSdkNeeded: generateSdk == GenerateSdk.Yes? true: false;
     let compatibleLevel = await host.GetValue(ArgumentConstants.compatibleLevel) || cliCore? CompatibleLevel.Track1: CompatibleLevel.Track2;
     let isTrack1 = compatibleLevel == CompatibleLevel.Track1 ? true: false;
 
