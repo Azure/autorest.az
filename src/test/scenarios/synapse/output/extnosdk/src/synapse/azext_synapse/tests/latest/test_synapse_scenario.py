@@ -24,10 +24,10 @@ def setup(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11
     pass
 
 
-# EXAMPLE: /Workspaces/put/Create or update a workspace
+# EXAMPLE: Create or update a workspace
 @try_manual
-def step__workspaces_put_create_or_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_create_or_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                      rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse workspace create '
              '--resource-group "{rg_2}" '
              '--identity-type "SystemAssigned" '
@@ -58,10 +58,10 @@ def step__workspaces_put_create_or_update_a_workspace(test, rg_5, rg, rg_2, rg_3
              checks=[])
 
 
-# EXAMPLE: /BigDataPools/put/Create or update a Big Data pool
+# EXAMPLE: Create or update a Big Data pool
 @try_manual
-def step__bigdatapools_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17):
+def step_create_or_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse big-data-pool create '
              '--location "West US 2" '
              '--auto-pause delay-in-minutes=15 enabled=true '
@@ -99,10 +99,10 @@ def step__bigdatapools_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, r
              checks=[])
 
 
-# EXAMPLE: /BigDataPools/get/List Big Data pools in a workspace
+# EXAMPLE: List Big Data pools in a workspace
 @try_manual
-def step__bigdatapools_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17):
+def step_list_big_data_pools_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse big-data-pool list '
              '--resource-group "{rg}" '
              '--workspace-name "{myWorkspace}"',
@@ -111,10 +111,10 @@ def step__bigdatapools_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, r
              ])
 
 
-# EXAMPLE: /BigDataPools/patch/Update a Big Data pool
+# EXAMPLE: Update a Big Data pool
 @try_manual
-def step__bigdatapools_patch_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse big-data-pool update '
              '--name "{myBigDataPool}" '
              '--tags key="value" '
@@ -138,10 +138,10 @@ def step__bigdatapools_patch_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, 
              ])
 
 
-# EXAMPLE: /IntegrationRuntimes/put/Create integration runtime
+# EXAMPLE: Create integration runtime
 @try_manual
-def step__integrationruntimes_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17):
+def step_create_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime create '
              '--properties "{{\\"type\\":\\"SelfHosted\\",\\"description\\":\\"A selfhosted integration runtime\\"}}" '
              '--name "{myIntegrationRuntime}" '
@@ -154,10 +154,10 @@ def step__integrationruntimes_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, 
              ])
 
 
-# EXAMPLE: /IntegrationRuntimes/get/Get integration runtime
+# EXAMPLE: Get integration runtime
 @try_manual
-def step__integrationruntimes_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17):
+def step_get_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime show '
              '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg_17}" '
@@ -169,9 +169,9 @@ def step__integrationruntimes_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, 
              ])
 
 
-# EXAMPLE: /IntegrationRuntimes/get/List integration runtimes
+# EXAMPLE: List integration runtimes
 @try_manual
-def step__integrationruntimes_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+def step_list_integration_runtimes(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                    rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime list '
              '--resource-group "{rg_17}" '
@@ -181,9 +181,9 @@ def step__integrationruntimes_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7,
              ])
 
 
-# EXAMPLE: /IntegrationRuntimes/post/Start integration runtime
+# EXAMPLE: Start integration runtime
 @try_manual
-def step__integrationruntimes_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+def step_start_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                    rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime start '
              '--name "{myIntegrationRuntime2}" '
@@ -192,10 +192,10 @@ def step__integrationruntimes_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7,
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimes/post/Stop integration runtime
+# EXAMPLE: Stop integration runtime
 @try_manual
-def step__integrationruntimes_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_stop_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                  rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime stop '
              '--name "{myIntegrationRuntime2}" '
              '--resource-group "{rg_17}" '
@@ -203,10 +203,10 @@ def step__integrationruntimes_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimes/post/Upgrade integration runtime
+# EXAMPLE: Upgrade integration runtime
 @try_manual
-def step__integrationruntimes_post3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_upgrade_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime upgrade '
              '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg_17}" '
@@ -214,9 +214,9 @@ def step__integrationruntimes_post3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimes/patch/Update integration runtime
+# EXAMPLE: Update integration runtime
 @try_manual
-def step__integrationruntimes_patch(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+def step_update_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                     rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime update '
              '--name "{myIntegrationRuntime}" '
@@ -229,10 +229,10 @@ def step__integrationruntimes_patch(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
              ])
 
 
-# EXAMPLE: /IntegrationRuntimeAuthKeys/post/List auth keys
+# EXAMPLE: List auth keys
 @try_manual
-def step__integrationruntimeauthkeys_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_list_auth_keys(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                        rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime-auth-key list '
              '--integration-runtime-name "{myIntegrationRuntime}" '
              '--resource-group "{rg_17}" '
@@ -240,10 +240,10 @@ def step__integrationruntimeauthkeys_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimeAuthKeys/post/Regenerate auth key
+# EXAMPLE: Regenerate auth key
 @try_manual
-def step__integrationruntimeauthkeys_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_regenerate_auth_key(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime-auth-key regenerate '
              '--integration-runtime-name "{myIntegrationRuntime}" '
              '--key-name "authKey2" '
@@ -252,10 +252,10 @@ def step__integrationruntimeauthkeys_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimeConnectionInfos/post/Get connection info
+# EXAMPLE: Get connection info
 @try_manual
-def step__integrationruntimeconnectioninfos_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_connection_info(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime-connection-info get '
              '--integration-runtime-name "{myIntegrationRuntime}" '
              '--resource-group "{rg_17}" '
@@ -263,10 +263,10 @@ def step__integrationruntimeconnectioninfos_post(test, rg_5, rg, rg_2, rg_3, rg_
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimeCredentials/post/Sync credentials
+# EXAMPLE: Sync credentials
 @try_manual
-def step__integrationruntimecredentials_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_sync_credentials(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime-credentials sync '
              '--integration-runtime-name "{myIntegrationRuntime}" '
              '--resource-group "{rg_17}" '
@@ -274,10 +274,10 @@ def step__integrationruntimecredentials_post(test, rg_5, rg, rg_2, rg_3, rg_4, r
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimeMonitoringData/post/Get monitoring data
+# EXAMPLE: Get monitoring data
 @try_manual
-def step__integrationruntimemonitoringdata_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_monitoring_data(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime-monitoring-data get '
              '--integration-runtime-name "{myIntegrationRuntime}" '
              '--resource-group "{rg_17}" '
@@ -285,10 +285,10 @@ def step__integrationruntimemonitoringdata_post(test, rg_5, rg, rg_2, rg_3, rg_4
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimeNodeIpAddress/post/Get integration runtime node IP address
+# EXAMPLE: Get integration runtime node IP address
 @try_manual
-def step__integrationruntimenodeipaddress_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_integration_runtime_node_ip_address(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime-node-ip-address get '
              '--integration-runtime-name "{myIntegrationRuntime}" '
              '--node-name "Node_1" '
@@ -297,9 +297,9 @@ def step__integrationruntimenodeipaddress_post(test, rg_5, rg, rg_2, rg_3, rg_4,
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimeNodes/get/Get integration runtime node
+# EXAMPLE: Get integration runtime node
 @try_manual
-def step__integrationruntimenodes_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+def step_get_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                       rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime-node show '
              '--integration-runtime-name "{myIntegrationRuntime}" '
@@ -309,10 +309,10 @@ def step__integrationruntimenodes_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimeNodes/patch/Update integration runtime node
+# EXAMPLE: Update integration runtime node
 @try_manual
-def step__integrationruntimenodes_patch(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_update_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime-node update '
              '--integration-runtime-name "{myIntegrationRuntime}" '
              '--node-name "Node_1" '
@@ -322,10 +322,10 @@ def step__integrationruntimenodes_patch(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, 
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimeObjectMetadata/post/Get integration runtime object metadata
+# EXAMPLE: Get integration runtime object metadata
 @try_manual
-def step__integrationruntimeobjectmetadata_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_integration_runtime_object_metadata(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime-object-metadata get '
              '--metadata-path "ssisFolders" '
              '--integration-runtime-name "{myIntegrationRuntime3}" '
@@ -334,10 +334,10 @@ def step__integrationruntimeobjectmetadata_post(test, rg_5, rg, rg_2, rg_3, rg_4
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimeObjectMetadata/post/Refresh object metadata
+# EXAMPLE: Refresh object metadata
 @try_manual
-def step__integrationruntimeobjectmetadata_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_refresh_object_metadata(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime-object-metadata refresh '
              '--integration-runtime-name "{myIntegrationRuntime3}" '
              '--resource-group "{rg_17}" '
@@ -345,10 +345,10 @@ def step__integrationruntimeobjectmetadata_post2(test, rg_5, rg, rg_2, rg_3, rg_
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimeStatus/post/Get status
+# EXAMPLE: Get status
 @try_manual
-def step__integrationruntimestatus_post_get_status(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_status(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
+                    rg_16, rg_17):
     test.cmd('az synapse integration-runtime-status get '
              '--integration-runtime-name "{myIntegrationRuntime}" '
              '--resource-group "{rg_17}" '
@@ -356,23 +356,10 @@ def step__integrationruntimestatus_post_get_status(test, rg_5, rg, rg_2, rg_3, r
              checks=[])
 
 
-# EXAMPLE: /IpFirewallRules/put/Create an IP firewall rule
+# EXAMPLE: Create an IP firewall rule
 @try_manual
-def step__ipfirewallrules_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse ip-firewall-rule create '
-             '--end-ip-address "10.0.0.254" '
-             '--start-ip-address "10.0.0.0" '
-             '--resource-group "{rg}" '
-             '--rule-name "ExampleIpFirewallRule" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: /IpFirewallRules/get/Create an IP firewall rule
-@try_manual
-def step__ipfirewallrules_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17):
+def step_create_an_ip_firewall_rule(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse ip-firewall-rule show '
              '--resource-group "{rg}" '
              '--rule-name "ExampleIpFirewallRule" '
@@ -380,20 +367,31 @@ def step__ipfirewallrules_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8
              checks=[])
 
 
-# EXAMPLE: /IpFirewallRules/get/List IP firewall rules in a workspace
+# EXAMPLE: Create an IP firewall rule
 @try_manual
-def step__ipfirewallrules_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17):
+def step_create_an_ip_firewall_rule(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17):
+    test.cmd('az synapse ip-firewall-rule show '
+             '--resource-group "{rg}" '
+             '--rule-name "ExampleIpFirewallRule" '
+             '--workspace-name "{myWorkspace}"',
+             checks=[])
+
+
+# EXAMPLE: List IP firewall rules in a workspace
+@try_manual
+def step_list_ip_firewall_rules_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse ip-firewall-rule list '
              '--resource-group "{rg}" '
              '--workspace-name "{myWorkspace}"',
              checks=[])
 
 
-# EXAMPLE: /IpFirewallRules/post/Replace all IP firewall rules in a workspace
+# EXAMPLE: Replace all IP firewall rules in a workspace
 @try_manual
-def step__ipfirewallrules_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17):
+def step_replace_all_ip_firewall_rules_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse ip-firewall-rule replace-all '
              '--resource-group "{rg}" '
              '--workspace-name "{myWorkspace}" '
@@ -403,10 +401,10 @@ def step__ipfirewallrules_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_
              checks=[])
 
 
-# EXAMPLE: /Operations/get/Get azure async operation header result
+# EXAMPLE: Get azure async operation header result
 @try_manual
-def step__operations_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17):
+def step_get_azure_async_operation_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse operation get-azure-async-header-result '
              '--operation-id "01234567-89ab-4def-0123-456789abcdef" '
              '--resource-group "{rg_2}" '
@@ -414,10 +412,10 @@ def step__operations_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_
              checks=[])
 
 
-# EXAMPLE: /Operations/get/Get location header result
+# EXAMPLE: Get location header result
 @try_manual
-def step__operations_get_get_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse operation get-location-header-result '
              '--operation-id "01234567-89ab-4def-0123-456789abcdef" '
              '--resource-group "{rg_2}" '
@@ -425,10 +423,10 @@ def step__operations_get_get_location_header_result(test, rg_5, rg, rg_2, rg_3, 
              checks=[])
 
 
-# EXAMPLE: /PrivateEndpointConnections/put/Approve private endpoint connection
+# EXAMPLE: Approve private endpoint connection
 @try_manual
-def step__privateendpointconnections_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_approve_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-endpoint-connection create '
              '--name "{myPrivateEndpointConnection}" '
              '--resource-group "{rg}" '
@@ -440,9 +438,9 @@ def step__privateendpointconnections_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6,
              checks=[])
 
 
-# EXAMPLE: /PrivateEndpointConnections/get/Get private endpoint connection
+# EXAMPLE: Get private endpoint connection
 @try_manual
-def step__privateendpointconnections_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+def step_get_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                          rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-endpoint-connection show '
              '--name "{myPrivateEndpointConnection}" '
@@ -451,10 +449,10 @@ def step__privateendpointconnections_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6,
              checks=[])
 
 
-# EXAMPLE: /PrivateEndpointConnections/get/List private endpoint connections in workspace
+# EXAMPLE: List private endpoint connections in workspace
 @try_manual
-def step__privateendpointconnections_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_list_private_endpoint(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                               rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-endpoint-connection list '
              '--resource-group "{rg}" '
              '--workspace-name "{myWorkspace}"',
@@ -463,10 +461,10 @@ def step__privateendpointconnections_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6
              ])
 
 
-# EXAMPLE: /PrivateLinkHubs/put/Create or update a privateLinkHub
+# EXAMPLE: Create or update a privateLinkHub
 @try_manual
-def step__privatelinkhubs_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17):
+def step_create_or_update_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-link-hub create '
              '--location "East US" '
              '--tags key="value" '
@@ -479,10 +477,10 @@ def step__privatelinkhubs_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8
              ])
 
 
-# EXAMPLE: /PrivateLinkHubs/get/Get a privateLinkHub
+# EXAMPLE: Get a privateLinkHub
 @try_manual
-def step__privatelinkhubs_get_get_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-link-hub show '
              '--name "{myPrivateLinkHub}" '
              '--resource-group "{rg_2}"',
@@ -493,10 +491,10 @@ def step__privatelinkhubs_get_get_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, r
              ])
 
 
-# EXAMPLE: /PrivateLinkHubs/get/List privateLinkHubs in resource group
+# EXAMPLE: List privateLinkHubs in resource group
 @try_manual
-def step__privatelinkhubs_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17):
+def step_list_privatelinkhubs_in_resource_group(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-link-hub list '
              '--resource-group "{rg_2}"',
              checks=[
@@ -504,10 +502,10 @@ def step__privatelinkhubs_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8
              ])
 
 
-# EXAMPLE: /PrivateLinkHubs/get/List privateLinkHubs in subscription
+# EXAMPLE: List privateLinkHubs in subscription
 @try_manual
-def step__privatelinkhubs_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17):
+def step_list_privatelinkhubs_in_subscription(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-link-hub list '
              '-g ""',
              checks=[
@@ -515,10 +513,10 @@ def step__privatelinkhubs_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_
              ])
 
 
-# EXAMPLE: /PrivateLinkHubs/patch/Update a privateLinkHub
+# EXAMPLE: Update a privateLinkHub
 @try_manual
-def step__privatelinkhubs_patch(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17):
+def step_update_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-link-hub update '
              '--name "{myPrivateLinkHub}" '
              '--tags key="value" '
@@ -530,10 +528,10 @@ def step__privatelinkhubs_patch(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg
              ])
 
 
-# EXAMPLE: /BigDataPools/get/Get a Big Data pool
+# EXAMPLE: Get a Big Data pool
 @try_manual
-def step__bigdatapools_get_get_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse big-data-pool show '
              '--name "{myBigDataPool}" '
              '--resource-group "{rg}" '
@@ -555,10 +553,10 @@ def step__bigdatapools_get_get_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4,
              ])
 
 
-# EXAMPLE: /Workspaces/get/Get a workspace
+# EXAMPLE: Get a workspace
 @try_manual
-def step__workspaces_get_get_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                         rg_15, rg_16, rg_17):
     test.cmd('az synapse workspace show '
              '--resource-group "{rg_2}" '
              '--name "{myWorkspace2}"',
@@ -574,10 +572,10 @@ def step__workspaces_get_get_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6,
              ])
 
 
-# EXAMPLE: /Workspaces/get/List workspaces in resource group
+# EXAMPLE: List workspaces in resource group
 @try_manual
-def step__workspaces_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17):
+def step_list_workspaces_in_resource_group(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse workspace list '
              '--resource-group "{rg_2}"',
              checks=[
@@ -585,10 +583,10 @@ def step__workspaces_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_
              ])
 
 
-# EXAMPLE: /Workspaces/get/List workspaces in subscription
+# EXAMPLE: List workspaces in subscription
 @try_manual
-def step__workspaces_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17):
+def step_list_workspaces_in_subscription(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse workspace list '
              '-g ""',
              checks=[
@@ -596,10 +594,10 @@ def step__workspaces_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg
              ])
 
 
-# EXAMPLE: /Workspaces/patch/Update a workspace
+# EXAMPLE: Update a workspace
 @try_manual
-def step__workspaces_patch_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse workspace update '
              '--resource-group "{rg_2}" '
              '--name "{myWorkspace2}" '
@@ -618,30 +616,30 @@ def step__workspaces_patch_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, 
              ])
 
 
-# EXAMPLE: /PrivateLinkResources/get/Get private link resources for workspace
+# EXAMPLE: Get private link resources for workspace
 @try_manual
-def step__privatelinkresources_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_private_link_resources_for_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-link-resource list '
              '--resource-group "{rg}" '
              '--workspace-name "{myWorkspace}"',
              checks=[])
 
 
-# EXAMPLE: /PrivateLinkResources/get/Get private link resources for workspace
+# EXAMPLE: Get private link resources for workspace
 @try_manual
-def step__privatelinkresources_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_private_link_resources_for_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-link-resource list '
              '--resource-group "{rg}" '
              '--workspace-name "{myWorkspace}"',
              checks=[])
 
 
-# EXAMPLE: /SqlPools/put/Create a SQL Analytics pool
+# EXAMPLE: Create a SQL Analytics pool
 @try_manual
-def step__sqlpools_put_create_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_create_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool create '
              '--resource-group "{rg}" '
              '--location "West US 2" '
@@ -674,10 +672,10 @@ def step__sqlpools_put_create_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, r
              checks=[])
 
 
-# EXAMPLE: /SqlPools/get/Get a SQL Analytics pool
+# EXAMPLE: Get a SQL Analytics pool
 @try_manual
-def step__sqlpools_get_get_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                  rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool show '
              '--resource-group "{rg_4}" '
              '--name "{mySqlPool}" '
@@ -685,30 +683,30 @@ def step__sqlpools_get_get_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4
              checks=[])
 
 
-# EXAMPLE: /SqlPools/get/List SQL Analytics pools in a workspace
+# EXAMPLE: List SQL Analytics pools in a workspace
 @try_manual
-def step__sqlpools_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                       rg_15, rg_16, rg_17):
+def step_list_sql_analytics_pools_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool list '
              '--resource-group "{rg_3}" '
              '--workspace-name "{myWorkspace3}"',
              checks=[])
 
 
-# EXAMPLE: /SqlPools/get/List SQL Analytics pools in a workspace with filter
+# EXAMPLE: List SQL Analytics pools in a workspace with filter
 @try_manual
-def step__sqlpools_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17):
+def step_list_sql_analytics(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool list '
              '--resource-group "{rg_3}" '
              '--workspace-name "{myWorkspace3}"',
              checks=[])
 
 
-# EXAMPLE: /SqlPools/post/Pause a SQL Analytics pool
+# EXAMPLE: Pause a SQL Analytics pool
 @try_manual
-def step__sqlpools_post_pause_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_pause_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool pause '
              '--resource-group "{rg_5}" '
              '--name "{mySqlPool3}" '
@@ -716,10 +714,10 @@ def step__sqlpools_post_pause_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, r
              checks=[])
 
 
-# EXAMPLE: /SqlPools/post/Rename a SQL Analytics pool
+# EXAMPLE: Rename a SQL Analytics pool
 @try_manual
-def step__sqlpools_post_rename_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_rename_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool rename '
              '--id "/subscriptions/{subscription_id}/resourceGroups/{rg_5}/providers/Microsoft.Synapse/workspaces/{myWo'
              'rkspace5}/sqlPools/{mySqlPool4}" '
@@ -729,10 +727,10 @@ def step__sqlpools_post_rename_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, 
              checks=[])
 
 
-# EXAMPLE: /SqlPools/post/Resume a SQL Analytics pool
+# EXAMPLE: Resume a SQL Analytics pool
 @try_manual
-def step__sqlpools_post_resume_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_resume_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool resume '
              '--resource-group "{rg_4}" '
              '--name "{mySqlPool}" '
@@ -740,10 +738,10 @@ def step__sqlpools_post_resume_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, 
              checks=[])
 
 
-# EXAMPLE: /SqlPools/patch/Update a SQL Analytics pool
+# EXAMPLE: Update a SQL Analytics pool
 @try_manual
-def step__sqlpools_patch_update_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_update_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool update '
              '--resource-group "{rg}" '
              '--location "West US 2" '
@@ -772,10 +770,10 @@ def step__sqlpools_patch_update_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3,
              ])
 
 
-# EXAMPLE: /SqlPoolBlobAuditingPolicies/put/Create or update a database's blob auditing policy with all parameters
+# EXAMPLE: Create or update a database's blob auditing policy with all parameters
 @try_manual
-def step__sqlpoolblobauditingpolicies_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_create_or_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-blob-auditing-policy create '
              '--audit-actions-and-groups "DATABASE_LOGOUT_GROUP" '
              '--audit-actions-and-groups "DATABASE_ROLE_MEMBER_CHANGE_GROUP" '
@@ -794,10 +792,10 @@ def step__sqlpoolblobauditingpolicies_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6
              checks=[])
 
 
-# EXAMPLE: /SqlPoolBlobAuditingPolicies/put/Create or update a database's blob auditing policy with minimal parameters
+# EXAMPLE: Create or update a database's blob auditing policy with minimal parameters
 @try_manual
-def step__sqlpoolblobauditingpolicies_put2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_create_or_update2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-blob-auditing-policy create '
              '--state "Enabled" '
              '--storage-account-access-key "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD234230943284932847645'
@@ -809,10 +807,10 @@ def step__sqlpoolblobauditingpolicies_put2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_
              checks=[])
 
 
-# EXAMPLE: /SqlPoolBlobAuditingPolicies/get/Get blob auditing policy of a SQL Analytics pool
+# EXAMPLE: Get blob auditing policy of a SQL Analytics pool
 @try_manual
-def step__sqlpoolblobauditingpolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_blob_auditing(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-blob-auditing-policy show '
              '--resource-group "{rg_7}" '
              '--sql-pool-name "{mySqlPool5}" '
@@ -820,10 +818,10 @@ def step__sqlpoolblobauditingpolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6
              checks=[])
 
 
-# EXAMPLE: /SqlPoolConnectionPolicies/get/Get a connection policy of a SQL Analytics pool
+# EXAMPLE: Get a connection policy of a SQL Analytics pool
 @try_manual
-def step__sqlpoolconnectionpolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_a_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-connection-policy show '
              '--resource-group "{rg_7}" '
              '--sql-pool-name "{mySqlPool5}" '
@@ -831,10 +829,10 @@ def step__sqlpoolconnectionpolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, 
              checks=[])
 
 
-# EXAMPLE: /SqlPoolDataWarehouseUserActivities/get/Get a SQL Analytics pool user activity
+# EXAMPLE: Get a SQL Analytics pool user activity
 @try_manual
-def step__sqlpooldatawarehouseuseractivities_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_a_sql_analytics_pool_user_activity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-data-warehouse-user-activity show '
              '--resource-group "{rg_5}" '
              '--sql-pool-name "{mySqlPool5}" '
@@ -842,10 +840,10 @@ def step__sqlpooldatawarehouseuseractivities_get(test, rg_5, rg, rg_2, rg_3, rg_
              checks=[])
 
 
-# EXAMPLE: /SqlPoolGeoBackupPolicies/get/Get Sql pool geo backup policy
+# EXAMPLE: Get Sql pool geo backup policy
 @try_manual
-def step__sqlpoolgeobackuppolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                       rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_sql_pool_geo_backup_policy(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                        rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-geo-backup-policy show '
              '--resource-group "{rg_6}" '
              '--sql-pool-name "{mySqlPool6}" '
@@ -853,10 +851,10 @@ def step__sqlpoolgeobackuppolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, r
              checks=[])
 
 
-# EXAMPLE: /SqlPoolMetadataSyncConfigs/put/Set metadata sync config for a SQL Analytics pool
+# EXAMPLE: Set metadata sync config for a SQL Analytics pool
 @try_manual
-def step__sqlpoolmetadatasyncconfigs_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_set_metadata_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-metadata-sync-config create '
              '--enabled true '
              '--resource-group "{rg}" '
@@ -865,10 +863,10 @@ def step__sqlpoolmetadatasyncconfigs_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6,
              checks=[])
 
 
-# EXAMPLE: /SqlPoolMetadataSyncConfigs/get/Get metadata sync config for a SQL Analytics pool
+# EXAMPLE: Get metadata sync config for a SQL Analytics pool
 @try_manual
-def step__sqlpoolmetadatasyncconfigs_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_metadata_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-metadata-sync-config show '
              '--resource-group "{rg}" '
              '--sql-pool-name "{mySqlPool2}" '
@@ -876,10 +874,10 @@ def step__sqlpoolmetadatasyncconfigs_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6,
              checks=[])
 
 
-# EXAMPLE: /SqlPoolOperationResults/get/Get the result of an operation on a SQL Analytics pool
+# EXAMPLE: Get the result of an operation on a SQL Analytics pool
 @try_manual
-def step__sqlpooloperationresults_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                      rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_the_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                        rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-operation-result get-location-header-result '
              '--operation-id "fedcba98-7654-4210-fedc-ba9876543210" '
              '--resource-group "{rg}" '
@@ -888,10 +886,10 @@ def step__sqlpooloperationresults_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg
              checks=[])
 
 
-# EXAMPLE: /SqlPoolOperations/get/List the Sql Analytics pool management operations
+# EXAMPLE: List the Sql Analytics pool management operations
 @try_manual
-def step__sqlpooloperations_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17):
+def step_list_the_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                      rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-operation list '
              '--resource-group "{rg_9}" '
              '--sql-pool-name "{mySqlPool5}" '
@@ -899,10 +897,10 @@ def step__sqlpooloperations_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg
              checks=[])
 
 
-# EXAMPLE: /SqlPoolReplicationLinks/get/Lists a Sql Analytic pool's replication links
+# EXAMPLE: Lists a Sql Analytic pool's replication links
 @try_manual
-def step__sqlpoolreplicationlinks_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                      rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_lists_a_sql_analytic_pool_s_replication_links(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-replication-link list '
              '--resource-group "{rg_6}" '
              '--sql-pool-name "{mySqlPool5}" '
@@ -910,10 +908,10 @@ def step__sqlpoolreplicationlinks_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg
              checks=[])
 
 
-# EXAMPLE: /SqlPoolRestorePoints/get/Get a list of restore points of a SQL Analytics pool
+# EXAMPLE: Get a list of restore points of a SQL Analytics pool
 @try_manual
-def step__sqlpoolrestorepoints_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_a_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
+                    rg_16, rg_17):
     test.cmd('az synapse sql-pool-restore-point list '
              '--resource-group "{rg_5}" '
              '--sql-pool-name "{mySqlPool7}" '
@@ -921,10 +919,10 @@ def step__sqlpoolrestorepoints_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7,
              checks=[])
 
 
-# EXAMPLE: /SqlPoolRestorePoints/post/Creates Sql pool restore point.
+# EXAMPLE: Creates Sql pool restore point.
 @try_manual
-def step__sqlpoolrestorepoints_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_creates_sql_pool_restore_point_(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-restore-point create '
              '--restore-point-label "mylabel" '
              '--resource-group "{rg_5}" '
@@ -933,10 +931,10 @@ def step__sqlpoolrestorepoints_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
              checks=[])
 
 
-# EXAMPLE: /SqlPoolSchemas/get/List the schema in a SQL Analytics pool
+# EXAMPLE: List the schema in a SQL Analytics pool
 @try_manual
-def step__sqlpoolschemas_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17):
+def step_list_the_schema_in_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-schema list '
              '--resource-group "{rg_11}" '
              '--sql-pool-name "{mySqlPool9}" '
@@ -944,10 +942,10 @@ def step__sqlpoolschemas_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8,
              checks=[])
 
 
-# EXAMPLE: /SqlPoolSecurityAlertPolicies/put/Update a Sql pool's threat detection policy with all parameters
+# EXAMPLE: Update a Sql pool's threat detection policy with all parameters
 @try_manual
-def step__sqlpoolsecurityalertpolicies_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_update_a_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                      rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-security-alert-policy create '
              '--disabled-alerts "Sql_Injection" '
              '--disabled-alerts "Usage_Anomaly" '
@@ -965,10 +963,10 @@ def step__sqlpoolsecurityalertpolicies_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_
              checks=[])
 
 
-# EXAMPLE: /SqlPoolSecurityAlertPolicies/put/Update a Sql pool's threat detection policy with minimal parameters
+# EXAMPLE: Update a Sql pool's threat detection policy with minimal parameters
 @try_manual
-def step__sqlpoolsecurityalertpolicies_put2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_update_a_sql2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                       rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-security-alert-policy create '
              '--state "Enabled" '
              '--resource-group "{rg_16}" '
@@ -977,10 +975,10 @@ def step__sqlpoolsecurityalertpolicies_put2(test, rg_5, rg, rg_2, rg_3, rg_4, rg
              checks=[])
 
 
-# EXAMPLE: /SqlPoolSecurityAlertPolicies/get/Get a security alert of a SQL Analytics pool
+# EXAMPLE: Get a security alert of a SQL Analytics pool
 @try_manual
-def step__sqlpoolsecurityalertpolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_a_security_alert_of_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-security-alert-policy show '
              '--resource-group "{rg_15}" '
              '--sql-pool-name "{mySqlPool5}" '
@@ -988,10 +986,10 @@ def step__sqlpoolsecurityalertpolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_
              checks=[])
 
 
-# EXAMPLE: /SqlPoolSensitivityLabels/put/Updates the sensitivity label of a given column with all parameters
+# EXAMPLE: Updates the sensitivity label of a given column with all parameters
 @try_manual
-def step__sqlpoolsensitivitylabels_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                       rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_updates_the_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-sensitivity-label create '
              '--column-name "myColumn" '
              '--information-type "PhoneNumber" '
@@ -1006,10 +1004,10 @@ def step__sqlpoolsensitivitylabels_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, r
              checks=[])
 
 
-# EXAMPLE: /SqlPoolSensitivityLabels/get/Gets the current sensitivity labels of a given SQL Analytics pool
+# EXAMPLE: Gets the current sensitivity labels of a given SQL Analytics pool
 @try_manual
-def step__sqlpoolsensitivitylabels_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                       rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_gets_the_current(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-sensitivity-label list-current '
              '--resource-group "{rg_11}" '
              '--sql-pool-name "{mySqlPool9}" '
@@ -1017,10 +1015,10 @@ def step__sqlpoolsensitivitylabels_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, r
              checks=[])
 
 
-# EXAMPLE: /SqlPoolSensitivityLabels/get/Gets the recommended sensitivity labels of a given SQL Analytics pool
+# EXAMPLE: Gets the recommended sensitivity labels of a given SQL Analytics pool
 @try_manual
-def step__sqlpoolsensitivitylabels_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_gets_the_recommended(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-sensitivity-label list-recommended '
              '--resource-group "{rg_11}" '
              '--sql-pool-name "{mySqlPool9}" '
@@ -1028,10 +1026,10 @@ def step__sqlpoolsensitivitylabels_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, 
              checks=[])
 
 
-# EXAMPLE: /SqlPoolSensitivityLabels/post/Disables sensitivity recommendations on a given column
+# EXAMPLE: Disables sensitivity recommendations on a given column
 @try_manual
-def step__sqlpoolsensitivitylabels_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_disables_sensitivity_recommendations(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-sensitivity-label disable-recommendation '
              '--column-name "myColumn" '
              '--resource-group "{rg_11}" '
@@ -1042,10 +1040,10 @@ def step__sqlpoolsensitivitylabels_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, 
              checks=[])
 
 
-# EXAMPLE: /SqlPoolSensitivityLabels/post/Enables sensitivity recommendations on a given column
+# EXAMPLE: Enables sensitivity recommendations on a given column
 @try_manual
-def step__sqlpoolsensitivitylabels_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_enables_sensitivity_recommendations(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-sensitivity-label enable-recommendation '
              '--column-name "myColumn" '
              '--resource-group "{rg_11}" '
@@ -1056,10 +1054,10 @@ def step__sqlpoolsensitivitylabels_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6,
              checks=[])
 
 
-# EXAMPLE: /SqlPoolTableColumns/get/List the columns in a table of a given schema in a SQL Analytics pool
+# EXAMPLE: List the columns in a table of a given schema in a SQL Analytics pool
 @try_manual
-def step__sqlpooltablecolumns_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17):
+def step_list_the_columns(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-table-column list '
              '--resource-group "{rg_11}" '
              '--schema-name "dbo" '
@@ -1069,10 +1067,10 @@ def step__sqlpooltablecolumns_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, 
              checks=[])
 
 
-# EXAMPLE: /SqlPoolTables/get/List the tables of a given schema in a SQL Analytics pool
+# EXAMPLE: List the tables of a given schema in a SQL Analytics pool
 @try_manual
-def step__sqlpooltables_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17):
+def step_list_the_tables(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                         rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-table list '
              '--resource-group "{rg_11}" '
              '--schema-name "dbo" '
@@ -1081,10 +1079,10 @@ def step__sqlpooltables_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, 
              checks=[])
 
 
-# EXAMPLE: /SqlPoolTransparentDataEncryptions/put/Create or update a Sql pool's transparent data encryption configuration
+# EXAMPLE: Create or update a Sql pool's transparent data encryption configuration
 @try_manual
-def step__sqlpooltransparentdataencryptions_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_create_or_update3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-transparent-data-encryption create '
              '--status "Enabled" '
              '--resource-group "{rg_4}" '
@@ -1093,10 +1091,10 @@ def step__sqlpooltransparentdataencryptions_put(test, rg_5, rg, rg_2, rg_3, rg_4
              checks=[])
 
 
-# EXAMPLE: /SqlPoolTransparentDataEncryptions/get/Get transparent data encryption configuration of a SQL Analytics pool
+# EXAMPLE: Get transparent data encryption configuration of a SQL Analytics pool
 @try_manual
-def step__sqlpooltransparentdataencryptions_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_transparent_data(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-transparent-data-encryption show '
              '--resource-group "{rg_4}" '
              '--sql-pool-name "{mySqlPool}" '
@@ -1104,10 +1102,10 @@ def step__sqlpooltransparentdataencryptions_get(test, rg_5, rg, rg_2, rg_3, rg_4
              checks=[])
 
 
-# EXAMPLE: /SqlPoolUsages/get/List the usages of a SQL Analytics pool
+# EXAMPLE: List the usages of a SQL Analytics pool
 @try_manual
-def step__sqlpoolusages_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17):
+def step_list_the_usages_of_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-usage list '
              '--resource-group "{rg_10}" '
              '--sql-pool-name "{mySqlPool8}" '
@@ -1115,10 +1113,10 @@ def step__sqlpoolusages_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, 
              checks=[])
 
 
-# EXAMPLE: /SqlPoolVulnerabilityAssessmentRuleBaselines/put/Creates or updates a database's vulnerability assessment rule baseline.
+# EXAMPLE: Creates or updates a database's vulnerability assessment rule baseline.
 @try_manual
-def step__sqlpoolvulnerabilityassessmentrulebaselines_(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_creates_or_updates(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-vulnerability-assessment-rule-baseline create '
              '--baseline-name "default" '
              '--baseline-results result="userA" result="SELECT" '
@@ -1131,10 +1129,10 @@ def step__sqlpoolvulnerabilityassessmentrulebaselines_(test, rg_5, rg, rg_2, rg_
              checks=[])
 
 
-# EXAMPLE: /SqlPoolVulnerabilityAssessmentScans/get/Get a vulnerability scan record of a SQL Analytics pool
+# EXAMPLE: Get a vulnerability scan record of a SQL Analytics pool
 @try_manual
-def step__sqlpoolvulnerabilityassessmentscans_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_a_vulnerability(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-vulnerability-assessment-scan list '
              '--resource-group "{rg_13}" '
              '--sql-pool-name "{mySqlPool5}" '
@@ -1142,10 +1140,10 @@ def step__sqlpoolvulnerabilityassessmentscans_get(test, rg_5, rg, rg_2, rg_3, rg
              checks=[])
 
 
-# EXAMPLE: /SqlPoolVulnerabilityAssessmentScans/post/Executes a Sql pool's vulnerability assessment scan.
+# EXAMPLE: Executes a Sql pool's vulnerability assessment scan.
 @try_manual
-def step__sqlpoolvulnerabilityassessmentscans_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_executes_a_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                        rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-vulnerability-assessment-scan initiate-scan '
              '--resource-group "{rg_13}" '
              '--scan-id "scan01" '
@@ -1154,10 +1152,10 @@ def step__sqlpoolvulnerabilityassessmentscans_post(test, rg_5, rg, rg_2, rg_3, r
              checks=[])
 
 
-# EXAMPLE: /SqlPoolVulnerabilityAssessmentScans/post/Export a database's vulnerability assessment scan results.
+# EXAMPLE: Export a database's vulnerability assessment scan results.
 @try_manual
-def step__sqlpoolvulnerabilityassessmentscans_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_export_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-vulnerability-assessment-scan export '
              '--resource-group "{rg_14}" '
              '--scan-id "scan001" '
@@ -1166,10 +1164,10 @@ def step__sqlpoolvulnerabilityassessmentscans_post2(test, rg_5, rg, rg_2, rg_3, 
              checks=[])
 
 
-# EXAMPLE: /SqlPoolVulnerabilityAssessments/put/Create a database's vulnerability assessment with all parameters
+# EXAMPLE: Create a database's vulnerability assessment with all parameters
 @try_manual
-def step__sqlpoolvulnerabilityassessments_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_create_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-vulnerability-assessment create '
              '--recurring-scans email-subscription-admins=true emails="email1@mail.com" emails="email2@mail.com" '
              'is-enabled=true '
@@ -1182,10 +1180,10 @@ def step__sqlpoolvulnerabilityassessments_put(test, rg_5, rg, rg_2, rg_3, rg_4, 
              checks=[])
 
 
-# EXAMPLE: /SqlPoolVulnerabilityAssessments/put/Create a database's vulnerability assessment with minimal parameters, when storageAccountAccessKey is specified
+# EXAMPLE: Create a database's vulnerability assessment with minimal parameters, when storageAccountAccessKey is specified
 @try_manual
-def step__sqlpoolvulnerabilityassessments_put2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_create_a_database2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-vulnerability-assessment create '
              '--storage-account-access-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" '
              '--storage-container-path "https://myStorage.blob.core.windows.net/vulnerability-assessment/" '
@@ -1195,10 +1193,10 @@ def step__sqlpoolvulnerabilityassessments_put2(test, rg_5, rg, rg_2, rg_3, rg_4,
              checks=[])
 
 
-# EXAMPLE: /SqlPoolVulnerabilityAssessments/put/Create a database's vulnerability assessment with minimal parameters, when storageContainerSasKey is specified
+# EXAMPLE: Create a database's vulnerability assessment with minimal parameters, when storageContainerSasKey is specified
 @try_manual
-def step__sqlpoolvulnerabilityassessments_put3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_create_a_database3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-vulnerability-assessment create '
              '--storage-container-path "https://myStorage.blob.core.windows.net/vulnerability-assessment/" '
              '--storage-container-sas-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" '
@@ -1208,10 +1206,10 @@ def step__sqlpoolvulnerabilityassessments_put3(test, rg_5, rg, rg_2, rg_3, rg_4,
              checks=[])
 
 
-# EXAMPLE: /SqlPoolVulnerabilityAssessments/get/Get a Sql pool's vulnerability assessment
+# EXAMPLE: Get a Sql pool's vulnerability assessment
 @try_manual
-def step__sqlpoolvulnerabilityassessments_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_a_sql_pool_s_vulnerability_assessment(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-vulnerability-assessment show '
              '--resource-group "{rg_12}" '
              '--sql-pool-name "{mySqlPool5}" '
@@ -1219,10 +1217,10 @@ def step__sqlpoolvulnerabilityassessments_get(test, rg_5, rg, rg_2, rg_3, rg_4, 
              checks=[])
 
 
-# EXAMPLE: /SqlPoolVulnerabilityAssessments/get/Get a vulnerability assessment of a SQL Analytics pool
+# EXAMPLE: Get a vulnerability assessment of a SQL Analytics pool
 @try_manual
-def step__sqlpoolvulnerabilityassessments_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_a_vulnerability2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-vulnerability-assessment list '
              '--resource-group "{rg_12}" '
              '--sql-pool-name "{mySqlPool5}" '
@@ -1230,10 +1228,10 @@ def step__sqlpoolvulnerabilityassessments_get2(test, rg_5, rg, rg_2, rg_3, rg_4,
              checks=[])
 
 
-# EXAMPLE: /SqlPoolSensitivityLabels/delete/Deletes the sensitivity label of a given column
+# EXAMPLE: Deletes the sensitivity label of a given column
 @try_manual
-def step__sqlpoolsensitivitylabels_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_deletes_the_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-sensitivity-label delete -y '
              '--column-name "myColumn" '
              '--resource-group "{rg_11}" '
@@ -1244,10 +1242,10 @@ def step__sqlpoolsensitivitylabels_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6
              checks=[])
 
 
-# EXAMPLE: /WorkspaceAadAdmins/put/Create or update workspace active directory admin
+# EXAMPLE: Create or update workspace active directory admin
 @try_manual
-def step__workspaceaadadmins_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17):
+def step_create_or_update4(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17):
     test.cmd('az synapse workspace-aad-admin create '
              '--administrator-type "ActiveDirectory" '
              '--login "bob@contoso.com" '
@@ -1258,40 +1256,40 @@ def step__workspaceaadadmins_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
              checks=[])
 
 
-# EXAMPLE: /WorkspaceAadAdmins/get/Get workspace active directory admin
+# EXAMPLE: Get workspace active directory admin
 @try_manual
-def step__workspaceaadadmins_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17):
+def step_get_workspace_active_directory_admin(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse workspace-aad-admin show '
              '--resource-group "{rg_2}" '
              '--workspace-name "{myWorkspace2}"',
              checks=[])
 
 
-# EXAMPLE: /WorkspaceManagedIdentitySqlControlSettings/put/Create or update managed identity sql control settings
+# EXAMPLE: Create or update managed identity sql control settings
 @try_manual
-def step__workspacemanagedidentitysqlcontrolsettings_p(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_create_or_update5(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17):
     test.cmd('az synapse workspace-managed-identity-sql-control-setting create '
              '--resource-group "{rg_2}" '
              '--workspace-name "{myWorkspace2}"',
              checks=[])
 
 
-# EXAMPLE: /WorkspaceManagedIdentitySqlControlSettings/get/Get managed identity sql control settings
+# EXAMPLE: Get managed identity sql control settings
 @try_manual
-def step__workspacemanagedidentitysqlcontrolsettings_g(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_get_managed_identity_sql_control_settings(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse workspace-managed-identity-sql-control-setting show '
              '--resource-group "{rg_2}" '
              '--workspace-name "{myWorkspace2}"',
              checks=[])
 
 
-# EXAMPLE: /BigDataPools/delete/Delete a Big Data pool
+# EXAMPLE: Delete a Big Data pool
 @try_manual
-def step__bigdatapools_delete_delete_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_delete_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse big-data-pool delete -y '
              '--name "{myBigDataPool}" '
              '--resource-group "{rg}" '
@@ -1299,9 +1297,9 @@ def step__bigdatapools_delete_delete_a_big_data_pool(test, rg_5, rg, rg_2, rg_3,
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimeNodes/delete/Delete integration runtime node
+# EXAMPLE: Delete integration runtime node
 @try_manual
-def step__integrationruntimenodes_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+def step_delete_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                          rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime-node delete -y '
              '--integration-runtime-name "{myIntegrationRuntime}" '
@@ -1311,10 +1309,10 @@ def step__integrationruntimenodes_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6,
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimes/delete/Delete integration runtime
+# EXAMPLE: Delete integration runtime
 @try_manual
-def step__integrationruntimes_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_delete_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse integration-runtime delete -y '
              '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg_17}" '
@@ -1322,10 +1320,10 @@ def step__integrationruntimes_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_
              checks=[])
 
 
-# EXAMPLE: /IpFirewallRules/delete/Delete an IP firewall rule from a workspace
+# EXAMPLE: Delete an IP firewall rule from a workspace
 @try_manual
-def step__ipfirewallrules_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17):
+def step_delete_an_ip_firewall_rule_from_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse ip-firewall-rule delete -y '
              '--resource-group "{rg}" '
              '--rule-name "ExampleIpFirewallRule" '
@@ -1333,9 +1331,9 @@ def step__ipfirewallrules_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
              checks=[])
 
 
-# EXAMPLE: /PrivateEndpointConnections/delete/Delete private endpoint connection
+# EXAMPLE: Delete private endpoint connection
 @try_manual
-def step__privateendpointconnections_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+def step_delete_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-endpoint-connection delete -y '
              '--name "{myPrivateEndpointConnection}" '
@@ -1344,10 +1342,10 @@ def step__privateendpointconnections_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg
              checks=[])
 
 
-# EXAMPLE: /SqlPoolVulnerabilityAssessmentRuleBaselines/delete/Removes a database's vulnerability assessment rule baseline.
+# EXAMPLE: Removes a database's vulnerability assessment rule baseline.
 @try_manual
-def step__sqlpoolvulnerabilityassessmentrulebaselines_2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9,
-                                                        rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_removes_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-vulnerability-assessment-rule-baseline delete -y '
              '--baseline-name "default" '
              '--resource-group "{rg_12}" '
@@ -1357,9 +1355,9 @@ def step__sqlpoolvulnerabilityassessmentrulebaselines_2(test, rg_5, rg, rg_2, rg
              checks=[])
 
 
-# EXAMPLE: /PrivateLinkHubs/delete/Delete a privateLinkHub
+# EXAMPLE: Delete a privateLinkHub
 @try_manual
-def step__privatelinkhubs_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+def step_delete_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
                                  rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse private-link-hub delete -y '
              '--name "{myPrivateLinkHub}" '
@@ -1367,10 +1365,10 @@ def step__privatelinkhubs_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
              checks=[])
 
 
-# EXAMPLE: /SqlPoolVulnerabilityAssessments/delete/Remove a database's vulnerability assessment
+# EXAMPLE: Remove a database's vulnerability assessment
 @try_manual
-def step__sqlpoolvulnerabilityassessments_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_remove_a_database_s_vulnerability_assessment(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool-vulnerability-assessment delete -y '
              '--resource-group "{rg_12}" '
              '--sql-pool-name "{mySqlPool5}" '
@@ -1378,10 +1376,10 @@ def step__sqlpoolvulnerabilityassessments_delete(test, rg_5, rg, rg_2, rg_3, rg_
              checks=[])
 
 
-# EXAMPLE: /SqlPools/delete/Delete a SQL Analytics pool
+# EXAMPLE: Delete a SQL Analytics pool
 @try_manual
-def step__sqlpools_delete_delete_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_delete_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse sql-pool delete -y '
              '--resource-group "{rg}" '
              '--name "{mySqlPool2}" '
@@ -1389,20 +1387,20 @@ def step__sqlpools_delete_delete_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3
              checks=[])
 
 
-# EXAMPLE: /WorkspaceAadAdmins/delete/Delete workspace active directory admin
+# EXAMPLE: Delete workspace active directory admin
 @try_manual
-def step__workspaceaadadmins_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_delete_workspace_active_directory_admin(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse workspace-aad-admin delete -y '
              '--resource-group "{rg_2}" '
              '--workspace-name "{myWorkspace2}"',
              checks=[])
 
 
-# EXAMPLE: /Workspaces/delete/Delete a workspace
+# EXAMPLE: Delete a workspace
 @try_manual
-def step__workspaces_delete_delete_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
+def step_delete_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17):
     test.cmd('az synapse workspace delete -y '
              '--resource-group "{rg_2}" '
              '--name "{myWorkspace2}"',
@@ -1420,212 +1418,212 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
                   rg_16, rg_17):
     setup(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16,
           rg_17)
-    step__workspaces_put_create_or_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__bigdatapools_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17)
-    step__bigdatapools_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17)
-    step__bigdatapools_patch_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimes_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimes_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimes_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimes_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimes_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimes_post3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimes_patch(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimeauthkeys_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimeauthkeys_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimeconnectioninfos_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimecredentials_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimemonitoringdata_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimenodeipaddress_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimenodes_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+    step_create_or_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                       rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimenodes_patch(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimeobjectmetadata_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimeobjectmetadata_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimestatus_post_get_status(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__ipfirewallrules_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17)
-    step__ipfirewallrules_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17)
-    step__ipfirewallrules_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17)
-    step__ipfirewallrules_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17)
-    step__operations_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17)
-    step__operations_get_get_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__privateendpointconnections_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__privateendpointconnections_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__privateendpointconnections_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+    step_create_or_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__privatelinkhubs_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17)
-    step__privatelinkhubs_get_get_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__privatelinkhubs_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17)
-    step__privatelinkhubs_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17)
-    step__privatelinkhubs_patch(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17)
-    step__bigdatapools_get_get_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__workspaces_get_get_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__workspaces_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17)
-    step__workspaces_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17)
-    step__workspaces_patch_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__privatelinkresources_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__privatelinkresources_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpools_put_create_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpools_get_get_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpools_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                       rg_15, rg_16, rg_17)
-    step__sqlpools_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17)
-    step__sqlpools_post_pause_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpools_post_rename_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpools_post_resume_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpools_patch_update_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolblobauditingpolicies_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolblobauditingpolicies_put2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolblobauditingpolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolconnectionpolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpooldatawarehouseuseractivities_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolgeobackuppolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                       rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolmetadatasyncconfigs_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolmetadatasyncconfigs_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpooloperationresults_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                      rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpooloperations_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolreplicationlinks_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                      rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolrestorepoints_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolrestorepoints_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolschemas_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolsecurityalertpolicies_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolsecurityalertpolicies_put2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+    step_list_big_data_pools_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolsecurityalertpolicies_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolsensitivitylabels_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                       rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolsensitivitylabels_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                       rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolsensitivitylabels_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolsensitivitylabels_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolsensitivitylabels_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpooltablecolumns_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+    step_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                rg_14, rg_15, rg_16, rg_17)
+    step_create_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17)
+    step_list_integration_runtimes(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                   rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_start_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                   rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_stop_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
                                   rg_14, rg_15, rg_16, rg_17)
-    step__sqlpooltables_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17)
-    step__sqlpooltransparentdataencryptions_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpooltransparentdataencryptions_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolusages_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolvulnerabilityassessmentrulebaselines_(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolvulnerabilityassessmentscans_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolvulnerabilityassessmentscans_post(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolvulnerabilityassessmentscans_post2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolvulnerabilityassessments_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolvulnerabilityassessments_put2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolvulnerabilityassessments_put3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolvulnerabilityassessments_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolvulnerabilityassessments_get2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolsensitivitylabels_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__workspaceaadadmins_put(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17)
-    step__workspaceaadadmins_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17)
-    step__workspacemanagedidentitysqlcontrolsettings_p(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__workspacemanagedidentitysqlcontrolsettings_g(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__bigdatapools_delete_delete_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimenodes_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__integrationruntimes_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+    step_upgrade_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                      rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__ipfirewallrules_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17)
-    step__privateendpointconnections_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolvulnerabilityassessmentrulebaselines_2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9,
-                                                        rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__privatelinkhubs_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17)
-    step__sqlpoolvulnerabilityassessments_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__sqlpools_delete_delete_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__workspaceaadadmins_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+    step_update_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                     rg_13, rg_14, rg_15, rg_16, rg_17)
-    step__workspaces_delete_delete_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+    step_list_auth_keys(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                        rg_15, rg_16, rg_17)
+    step_regenerate_auth_key(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17)
+    step_get_connection_info(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17)
+    step_sync_credentials(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17)
+    step_get_monitoring_data(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17)
+    step_get_integration_runtime_node_ip_address(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                      rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_update_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_integration_runtime_object_metadata(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_refresh_object_metadata(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17)
+    step_get_status(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
+                    rg_16, rg_17)
+    step_create_an_ip_firewall_rule(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_create_an_ip_firewall_rule(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_list_ip_firewall_rules_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_replace_all_ip_firewall_rules_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_azure_async_operation_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_approve_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_list_private_endpoint(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                               rg_14, rg_15, rg_16, rg_17)
+    step_create_or_update_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17)
+    step_list_privatelinkhubs_in_resource_group(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_list_privatelinkhubs_in_subscription(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_update_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17)
+    step_get_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17)
+    step_get_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                         rg_15, rg_16, rg_17)
+    step_list_workspaces_in_resource_group(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_list_workspaces_in_subscription(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17)
+    step_get_private_link_resources_for_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_private_link_resources_for_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_create_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                  rg_14, rg_15, rg_16, rg_17)
+    step_list_sql_analytics_pools_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_list_sql_analytics(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17)
+    step_pause_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_rename_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_resume_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_update_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_create_or_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17)
+    step_create_or_update2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17)
+    step_get_blob_auditing(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17)
+    step_get_a_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17)
+    step_get_a_sql_analytics_pool_user_activity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_sql_pool_geo_backup_policy(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                        rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_set_metadata_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17)
+    step_get_metadata_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17)
+    step_get_the_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                        rg_15, rg_16, rg_17)
+    step_list_the_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                      rg_15, rg_16, rg_17)
+    step_lists_a_sql_analytic_pool_s_replication_links(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_a_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
+                    rg_16, rg_17)
+    step_creates_sql_pool_restore_point_(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_list_the_schema_in_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_update_a_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                      rg_15, rg_16, rg_17)
+    step_update_a_sql2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                       rg_15, rg_16, rg_17)
+    step_get_a_security_alert_of_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_updates_the_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17)
+    step_gets_the_current(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17)
+    step_gets_the_recommended(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17)
+    step_disables_sensitivity_recommendations(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_enables_sensitivity_recommendations(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_list_the_columns(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17)
+    step_list_the_tables(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                         rg_15, rg_16, rg_17)
+    step_create_or_update3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17)
+    step_get_transparent_data(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17)
+    step_list_the_usages_of_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_creates_or_updates(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17)
+    step_get_a_vulnerability(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17)
+    step_executes_a_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                        rg_15, rg_16, rg_17)
+    step_export_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17)
+    step_create_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17)
+    step_create_a_database2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17)
+    step_create_a_database3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17)
+    step_get_a_sql_pool_s_vulnerability_assessment(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_get_a_vulnerability2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17)
+    step_deletes_the_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17)
+    step_create_or_update4(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17)
+    step_get_workspace_active_directory_admin(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_create_or_update5(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                           rg_15, rg_16, rg_17)
+    step_get_managed_identity_sql_control_settings(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_delete_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                rg_14, rg_15, rg_16, rg_17)
+    step_delete_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_delete_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_delete_an_ip_firewall_rule_from_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_delete_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_removes_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17)
+    step_delete_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17)
+    step_remove_a_database_s_vulnerability_assessment(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_delete_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_delete_workspace_active_directory_admin(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+    step_delete_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17)
     cleanup(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16,
             rg_17)
 
