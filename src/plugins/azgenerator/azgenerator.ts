@@ -32,6 +32,7 @@ export async function processRequest(host: Host) {
                 let path = "azext_" + model.Extension_Name.replace("-", "_") + "/";
                 session.protectFiles(path + "manual");
                 session.protectFiles(path + "tests/latest/recordings")
+                session.protectFiles("README.md");
             } while (model.SelectNextExtension());
         }
 
