@@ -5,6 +5,7 @@
 
 import { GenerationMode } from "../models";
 import { AzExtensionFullGenerator } from "./AzExtensionFullGenerator";
+import { AzCoreFullGenerator } from "./AzCoreFullGenerator";
 import { AzExtensionIncrementalGenerator } from "./AzExtensionIncrementalGenerator";
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelCliImpl } from "./CodeModelAzImpl";
@@ -15,6 +16,9 @@ export class AzGeneratorFactory {
         model.GenerateTestInit();
 
         if (model.CliGenerationMode == GenerationMode.Full) {
+            if (model.IsCliCore) {
+                return new AzCoreFullGenerator(model, isDebugMode);
+            }
             return new AzExtensionFullGenerator(model, isDebugMode);
         }
         else {

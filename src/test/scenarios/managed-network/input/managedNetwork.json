@@ -86,6 +86,7 @@
             "name": "managedNetwork",
             "in": "body",
             "required": true,
+            "x-ms-client-flatten": true,
             "schema": {
               "$ref": "#/definitions/ManagedNetwork"
             },

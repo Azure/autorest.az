@@ -145,7 +145,7 @@ class IntegrationRuntimeOperations:
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _integration_runtime = models.IntegrationRuntimeResource(properties=properties)
+        integration_runtime = models.IntegrationRuntimeResource(properties=properties)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -171,7 +171,7 @@ class IntegrationRuntimeOperations:
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_integration_runtime, 'IntegrationRuntimeResource')
+        body_content = self._serialize.body(integration_runtime, 'IntegrationRuntimeResource')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -290,7 +290,7 @@ class IntegrationRuntimeOperations:
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _update_integration_runtime_request = models.UpdateIntegrationRuntimeRequest(auto_update=auto_update, update_delay_offset=update_delay_offset)
+        update_integration_runtime_request = models.UpdateIntegrationRuntimeRequest(auto_update=auto_update, update_delay_offset=update_delay_offset)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -314,7 +314,7 @@ class IntegrationRuntimeOperations:
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_update_integration_runtime_request, 'UpdateIntegrationRuntimeRequest')
+        body_content = self._serialize.body(update_integration_runtime_request, 'UpdateIntegrationRuntimeRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -534,7 +534,7 @@ class IntegrationRuntimeOperations:
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _regenerate_key_parameters = models.IntegrationRuntimeRegenerateKeyParameters(key_name=key_name)
+        regenerate_key_parameters = models.IntegrationRuntimeRegenerateKeyParameters(key_name=key_name)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -558,7 +558,7 @@ class IntegrationRuntimeOperations:
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_regenerate_key_parameters, 'IntegrationRuntimeRegenerateKeyParameters')
+        body_content = self._serialize.body(regenerate_key_parameters, 'IntegrationRuntimeRegenerateKeyParameters')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -1054,7 +1054,7 @@ class IntegrationRuntimeOperations:
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _linked_integration_runtime_request = models.LinkedIntegrationRuntimeRequest(linked_factory_name=linked_factory_name)
+        linked_integration_runtime_request = models.LinkedIntegrationRuntimeRequest(linked_factory_name=linked_factory_name)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -1077,7 +1077,7 @@ class IntegrationRuntimeOperations:
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_linked_integration_runtime_request, 'LinkedIntegrationRuntimeRequest')
+        body_content = self._serialize.body(linked_integration_runtime_request, 'LinkedIntegrationRuntimeRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -1132,7 +1132,7 @@ class IntegrationRuntimeOperations:
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _create_linked_integration_runtime_request = models.CreateLinkedIntegrationRuntimeRequest(name=name, subscription_id=subscription_id, data_factory_name=data_factory_name, data_factory_location=data_factory_location)
+        create_linked_integration_runtime_request = models.CreateLinkedIntegrationRuntimeRequest(name=name, subscription_id=subscription_id, data_factory_name=data_factory_name, data_factory_location=data_factory_location)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -1156,7 +1156,7 @@ class IntegrationRuntimeOperations:
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_create_linked_integration_runtime_request, 'CreateLinkedIntegrationRuntimeRequest')
+        body_content = self._serialize.body(create_linked_integration_runtime_request, 'CreateLinkedIntegrationRuntimeRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 

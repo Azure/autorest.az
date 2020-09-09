@@ -768,8 +768,8 @@ update a datafactory trigger.
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--trigger-name**|string|The trigger name.|trigger_name|triggerName|
 |**--if-match**|string|ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|If-Match|
-|**--description**|string|Trigger description.|properties_description|description|
-|**--annotations**|array|List of tags that can be used for describing the trigger.|properties_annotations|annotations|
+|**--description**|string|Trigger description.|description|description|
+|**--annotations**|array|List of tags that can be used for describing the trigger.|annotations|annotations|
 
 ### datafactory update
 

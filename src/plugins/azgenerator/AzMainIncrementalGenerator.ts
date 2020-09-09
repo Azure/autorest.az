@@ -7,21 +7,21 @@ import * as path from 'path';
 import { PathConstants } from "../models";
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
-import { GenerateAzureCliActions } from "./TemplateAzureCliActions";
-import { GenerateAzureCliClientFactory } from "./TemplateAzureCliClientFactory";
-import { GenerateAzureCliCommands } from "./TemplateAzureCliCommands";
-import { GenerateAzureCliCustom } from "./TemplateAzureCliCustom";
-import { GenerateAzureCliHelp } from "./TemplateAzureCliHelp";
-import { GenerateNamespaceInit } from "./TemplateAzureCliNamespaceInit";
-import { GenerateAzureCliParams } from "./TemplateAzureCliParams";
-import { GenerateAzureCliTestPrepare } from "./TemplateAzureCliTestPrepare";
-import { GenerateAzureCliTestScenario, NeedPreparer } from "./TemplateAzureCliTestScenario";
-import { GenerateAzureCliValidators } from "./TemplateAzureCliValidators";
-import { CliTopCustom } from "./templates/CliTopCustom";
-import { CliTopHelp } from "./templates/CliTopHelp";
-import { CliTopInit } from "./templates/CliTopInit";
-import { CliTopMetadata } from "./templates/CliTopMetadata";
-import { CliSetupPy } from "./templates/CliSetupPy";
+import { GenerateAzureCliActions } from "./templates/generated/CliActions";
+import { GenerateAzureCliClientFactory } from "./templates/generated/CliClientFactory";
+import { GenerateAzureCliCommands } from "./templates/generated/CliCommands";
+import { GenerateAzureCliCustom } from "./templates/generated/CliCustom";
+import { GenerateAzureCliHelp } from "./templates/generated/CliHelp";
+import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
+import { GenerateAzureCliParams } from "./templates/generated/CliParams";
+import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
+import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
+import { CliTopCustom } from "./templates/topcommon/CliIncreCustom";
+import { CliTopHelp } from "./templates/topcommon/CliIncreHelp";
+import { CliTopInit } from "./templates/topcommon/CliIncreInit";
+import { CliTopMetadata } from "./templates/topext/CliIncreMetadata";
+import { CliSetupPy } from "./templates/topext/CliIncreSetupPy";
 
 export class AzMainIncrementalGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
