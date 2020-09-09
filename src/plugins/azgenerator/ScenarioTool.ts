@@ -73,7 +73,7 @@ export function GenerateDefaultTestScenarioByDependency(
         if (!e1 || !e2) return 0;
         if (depend_on(e1, e2)) return 1;
         if (depend_on(e2, e1)) return -1;
-        return 0;
+        return e1.Id.localeCompare(e2.Id);
     });
 }
 
