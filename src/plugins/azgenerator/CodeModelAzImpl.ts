@@ -2224,7 +2224,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         // stable sort
         let compare = (examples_a: CommandExample, examples_b: CommandExample): number => {
-            if (!examples_a || !examples_b) return 0;
+            if (!examples_a || !examples_b) return -1;
 
             if (examples_a.ResourceClassName == examples_b.ResourceClassName) {
                 if (isCreate(examples_b) && !isCreate(examples_a)) {
@@ -2240,7 +2240,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return 1;
                 }
                 else {
-                    return 0;
+                    return examples_a.Id.localeCompare(examples_b.Id);
                 }
             }
             else if (depend_on(examples_a, examples_b)) {
@@ -2251,7 +2251,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return -1;
                 }
                 else {
-                    return 0;
+                    return 1;
                 }
             }
             else if (depend_on(examples_b, examples_a)) {
@@ -2262,7 +2262,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return 1;
                 }
                 else {
-                    return 0;
+                    return -1;
                 }
             }
             return 0;

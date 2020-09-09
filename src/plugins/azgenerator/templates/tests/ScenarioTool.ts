@@ -70,7 +70,7 @@ export function GenerateDefaultTestScenarioByDependency(
     return originalScenario.sort((s1, s2) => {
         let e1 = getExample(s1.name);
         let e2 = getExample(s2.name);
-        if (!e1 || !e2) return 0;
+        if (!e1 || !e2) return -1;
         if (depend_on(e1, e2)) return 1;
         if (depend_on(e2, e1)) return -1;
         return e1.Id.localeCompare(e2.Id);
