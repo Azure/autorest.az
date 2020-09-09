@@ -8,7 +8,7 @@ import { EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { CodeModel, Operation, OperationGroup, Parameter, ParameterLocation, Property, Request, Schema, SchemaType } from '@azure-tools/codemodel';
 import { values } from "@azure-tools/linq";
 import { isArray, isNullOrUndefined } from "util";
-import { Capitalize, deepCopy, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase } from '../../utils/helper';
+import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase } from '../../utils/helper';
 import { GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
 import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './templates/tests/ScenarioTool';
@@ -2222,8 +2222,21 @@ export class CodeModelCliImpl implements CodeModelAz {
             return example.HttpMethod == 'delete';
         }
 
-        // stable sort
-        let compare = (examples_a: CommandExample, examples_b: CommandExample): number => {
+
+        let scenarioExamples: Map<string, CommandExample> = new Map<string, CommandExample>();
+        let commandExamples = this.GetAllExamples();
+        for (let i = 0; i < this._testScenario.length; i++) {
+            for (let commandExample of commandExamples) {
+                if (this.matchExample(commandExample, this._testScenario[i]['name'])) {
+                    scenarioExamples.set(this._testScenario[i]['name'], commandExample);
+                    break;
+                }
+            }
+        }
+
+        let compare = (item_a: any , item_b: any): number => {
+            let examples_a = scenarioExamples.get(item_a['name']);
+            let examples_b = scenarioExamples.get(item_b['name']);
             if (!examples_a || !examples_b) return -1;
 
             if (examples_a.ResourceClassName == examples_b.ResourceClassName) {
@@ -2268,37 +2281,24 @@ export class CodeModelCliImpl implements CodeModelAz {
             return examples_a.Id.localeCompare(examples_b.Id);
         };
 
-
-        let scenarioExamples: Map<string, CommandExample> = new Map<string, CommandExample>();
-        let commandExamples = this.GetAllExamples();
-        for (let i = 0; i < this._testScenario.length; i++) {
-            for (let commandExample of commandExamples) {
-                if (this.matchExample(commandExample, this._testScenario[i]['name'])) {
-                    scenarioExamples.set(this._testScenario[i]['name'], commandExample);
-                    break;
-                }
-            }
-
-        }
-
-        let i = 0;
-        let swapped = new Set<string>();    //for loop detecting
-        while (i < this._testScenario.length) {
-            for (let j = i + 1; j < this._testScenario.length; j++) {
-                let swapId = `${i}<->${j}`;
-                if (swapped.has(swapId)) continue; // has loop, ignore the compare.
-                if (compare(scenarioExamples.get(this._testScenario[i]['name']), scenarioExamples.get(this._testScenario[j]['name'])) > 0) {
-                    let tmp = this._testScenario[i];
-                    this._testScenario[i] = this._testScenario[j];
-                    this._testScenario[j] = tmp;
-                    swapped.add(swapId);
-                    i--;
-                    break;
-                }
-            }
-            i++;
-        }
-        //this._testScenario = MergeSort(this._testScenario,compare);
+        // let i = 0;
+        // let swapped = new Set<string>();    //for loop detecting
+        // while (i < this._testScenario.length) {
+        //     for (let j = i + 1; j < this._testScenario.length; j++) {
+        //         let swapId = `${i}<->${j}`;
+        //         if (swapped.has(swapId)) continue; // has loop, ignore the compare.
+        //         if (compare(scenarioExamples.get(this._testScenario[i]['name']), scenarioExamples.get(this._testScenario[j]['name'])) > 0) {
+        //             let tmp = this._testScenario[i];
+        //             this._testScenario[i] = this._testScenario[j];
+        //             this._testScenario[j] = tmp;
+        //             swapped.add(swapId);
+        //             i--;
+        //             break;
+        //         }
+        //     }
+        //     i++;
+        // }
+        this._testScenario = MergeSort(this._testScenario,compare);
     }
 
     public GetAllMethods(command_group?: string, callback?: () => void): any[] {

@@ -4,6 +4,7 @@ import { CommandExample, ExampleParam } from "../../CodeModelAz";
 import { deepCopy, isDict, ToCamelCase, ToPythonString, changeCamelToDash } from "../../../../utils/helper"
 import { EnglishPluralizationService } from "@azure-tools/codegen";
 import { isNullOrUndefined } from "util";
+import { stringify } from "querystring";
 
 export let azOptions = {}
 
@@ -67,14 +68,20 @@ export function GenerateDefaultTestScenarioByDependency(
         return null;
     }
 
-    return originalScenario.sort((s1, s2) => {
+    originalScenario = originalScenario.sort((s1, s2) =>{
+        return s1.name.localeCompare(s2.name);
+    })
+
+    originalScenario = originalScenario.sort((s1, s2) => {
         let e1 = getExample(s1.name);
         let e2 = getExample(s2.name);
-        if (!e1 || !e2) return -1;
+        if (!e1 || !e2) return 0;
         if (depend_on(e1, e2)) return 1;
         if (depend_on(e2, e1)) return -1;
         return e1.Id.localeCompare(e2.Id);
     });
+
+    return originalScenario;
 }
 
 export function PrintTestScenario(testScenario: any[]) {

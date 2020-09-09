@@ -51,11 +51,38 @@ def step__clusters_put_kustoclusterscreateorupdate(test, rg):
              checks=[])
 
 
+# EXAMPLE: /Clusters/get/KustoClustersGet
+@try_manual
+def step__clusters_get_kustoclustersget(test, rg):
+    test.cmd('az kusto cluster show '
+             '--name "{myCluster}" '
+             '--resource-group "{rg}"',
+             checks=[
+                 test.check("name", "{myCluster}", case_sensitive=False),
+                 test.check("identity.type", "SystemAssigned", case_sensitive=False),
+                 test.check("location", "westus", case_sensitive=False),
+                 test.check("enableStreamingIngest", True),
+                 test.check("sku.name", "Standard_L8s", case_sensitive=False),
+                 test.check("sku.capacity", 2),
+                 test.check("sku.tier", "Standard", case_sensitive=False),
+             ])
+
+
 # EXAMPLE: /Clusters/get/KustoClustersList
 @try_manual
 def step__clusters_get_kustoclusterslist(test, rg):
     test.cmd('az kusto cluster list '
              '-g ""',
+             checks=[
+                 test.check('length(@)', 1),
+             ])
+
+
+# EXAMPLE: /Clusters/get/KustoClustersListByResourceGroup
+@try_manual
+def step__clusters_get(test, rg):
+    test.cmd('az kusto cluster list '
+             '--resource-group "{rg}"',
              checks=[
                  test.check('length(@)', 1),
              ])
@@ -67,6 +94,14 @@ def step__clusters_get_kustoclusterslistresourceskus(test, rg):
     test.cmd('az kusto cluster list-sku '
              '--name "{myCluster}" '
              '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /Clusters/get/KustoClustersListSkus
+@try_manual
+def step__clusters_get_kustoclusterslistskus(test, rg):
+    test.cmd('az kusto cluster list-sku '
+             '-g ""',
              checks=[])
 
 
@@ -97,14 +132,6 @@ def step__clusters_patch_kustoclustersupdate(test, rg):
              ])
 
 
-# EXAMPLE: /Clusters/get/KustoClustersListSkus
-@try_manual
-def step__clusters_get_kustoclusterslistskus(test, rg):
-    test.cmd('az kusto cluster list-sku '
-             '-g ""',
-             checks=[])
-
-
 # EXAMPLE: /Clusters/post/KustoClusterAddLanguageExtensions
 @try_manual
 def step__clusters_post(test, rg):
@@ -128,19 +155,19 @@ def step__clusters_post2(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Clusters/post/KustoClusterListFollowerDatabases
+# EXAMPLE: /Clusters/post/KustoClusterDiagnoseVirtualNetwork
 @try_manual
 def step__clusters_post3(test, rg):
-    test.cmd('az kusto cluster list-follower-database '
+    test.cmd('az kusto cluster diagnose-virtual-network '
              '--name "{myCluster}" '
              '--resource-group "{rg}"',
              checks=[])
 
 
-# EXAMPLE: /Clusters/post/KustoClusterDiagnoseVirtualNetwork
+# EXAMPLE: /Clusters/post/KustoClusterListFollowerDatabases
 @try_manual
 def step__clusters_post4(test, rg):
-    test.cmd('az kusto cluster diagnose-virtual-network '
+    test.cmd('az kusto cluster list-follower-database '
              '--name "{myCluster}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -166,15 +193,6 @@ def step__clusters_post6(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Clusters/post/KustoClustersStop
-@try_manual
-def step__clusters_post_kustoclustersstop(test, rg):
-    test.cmd('az kusto cluster stop '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
 # EXAMPLE: /Clusters/post/KustoClustersStart
 @try_manual
 def step__clusters_post_kustoclustersstart(test, rg):
@@ -184,11 +202,11 @@ def step__clusters_post_kustoclustersstart(test, rg):
              checks=[])
 
 
-# EXAMPLE: /AttachedDatabaseConfigurations/get/KustoAttachedDatabaseConfigurationsListByCluster
+# EXAMPLE: /Clusters/post/KustoClustersStop
 @try_manual
-def step__attacheddatabaseconfigurations_get(test, rg):
-    test.cmd('az kusto attached-database-configuration list '
-             '--cluster-name "{myCluster}" '
+def step__clusters_post_kustoclustersstop(test, rg):
+    test.cmd('az kusto cluster stop '
+             '--name "{myCluster}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -217,19 +235,9 @@ def step__attacheddatabaseconfigurations_put(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Clusters/get/KustoClustersListByResourceGroup
-@try_manual
-def step__clusters_get(test, rg):
-    test.cmd('az kusto cluster list '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
 # EXAMPLE: /AttachedDatabaseConfigurations/get/AttachedDatabaseConfigurationsGet
 @try_manual
-def step__attacheddatabaseconfigurations_get2(test, rg):
+def step__attacheddatabaseconfigurations_get(test, rg):
     test.cmd('az kusto attached-database-configuration show '
              '--name "{myAttachedDatabaseConfiguration2}" '
              '--cluster-name "{myCluster}" '
@@ -240,14 +248,14 @@ def step__attacheddatabaseconfigurations_get2(test, rg):
              ])
 
 
-# EXAMPLE: /Clusters/get/KustoClustersGet
+# EXAMPLE: /AttachedDatabaseConfigurations/get/KustoAttachedDatabaseConfigurationsListByCluster
 @try_manual
-def step__clusters_get_kustoclustersget(test, rg):
-    test.cmd('az kusto cluster show '
-             '--name "{myCluster}" '
+def step__attacheddatabaseconfigurations_get2(test, rg):
+    test.cmd('az kusto attached-database-configuration list '
+             '--cluster-name "{myCluster}" '
              '--resource-group "{rg}"',
              checks=[
-                 test.check("name", "{myCluster}", case_sensitive=False),
+                 test.check('length(@)', 1),
              ])
 
 
@@ -539,23 +547,23 @@ def cleanup(test, rg):
 def call_scenario(test, rg):
     setup(test, rg)
     step__clusters_put_kustoclusterscreateorupdate(test, rg)
+    step__clusters_get_kustoclustersget(test, rg)
     step__clusters_get_kustoclusterslist(test, rg)
+    step__clusters_get(test, rg)
     step__clusters_get_kustoclusterslistresourceskus(test, rg)
-    step__clusters_patch_kustoclustersupdate(test, rg)
     step__clusters_get_kustoclusterslistskus(test, rg)
+    step__clusters_patch_kustoclustersupdate(test, rg)
     step__clusters_post(test, rg)
     step__clusters_post2(test, rg)
     step__clusters_post3(test, rg)
     step__clusters_post4(test, rg)
     step__clusters_post5(test, rg)
     step__clusters_post6(test, rg)
-    step__clusters_post_kustoclustersstop(test, rg)
     step__clusters_post_kustoclustersstart(test, rg)
-    step__attacheddatabaseconfigurations_get(test, rg)
+    step__clusters_post_kustoclustersstop(test, rg)
     step__attacheddatabaseconfigurations_put(test, rg)
-    step__clusters_get(test, rg)
+    step__attacheddatabaseconfigurations_get(test, rg)
     step__attacheddatabaseconfigurations_get2(test, rg)
-    step__clusters_get_kustoclustersget(test, rg)
     step__attacheddatabaseconfigurations_delete(test, rg)
     step__clusterprincipalassignments_put(test, rg)
     step__clusterprincipalassignments_get(test, rg)
