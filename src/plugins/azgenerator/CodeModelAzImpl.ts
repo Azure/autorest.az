@@ -11,7 +11,7 @@ import { isArray, isNullOrUndefined } from "util";
 import { Capitalize, deepCopy, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase } from '../../utils/helper';
 import { GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
-import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './ScenarioTool';
+import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './templates/tests/ScenarioTool';
 
 
 class ActionParam {
@@ -46,7 +46,6 @@ export class CodeModelCliImpl implements CodeModelAz {
     private _outputPath: string;
 
     private _cliCoreLib: string;
-
     private static readonly DEFAULT_CLI_CORE_LIB = 'azure.cli.core';
 
     async init() {
@@ -1150,6 +1149,16 @@ export class CodeModelCliImpl implements CodeModelAz {
         return param['flattened'] ? true : false;
     }
 
+    public Parameter_IsCliFlattened(param: Parameter = this.MethodParameter): boolean {
+        if (param?.language?.['cli']?.['cli-flattened'] && !param.language['cli']['cli-m4-flattened']) {
+            if (param['nameBaseParam']?.language?.['cli']?.['cli-m4-flattened']) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
     public Parameter_IsListOfSimple(param: Parameter = this.MethodParameter): boolean {
         // objects that is not base class of polymorphic and satisfy one of the four conditions
         // 1. objects with simple properties 
@@ -1484,6 +1493,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return schema.language['az'].description.replace(/\r?\n|\r/g, ' ');
     }
 
+    public Schema_FlattenedFrom(schema: Schema): Schema {
+        return schema.language['cli']?.['pythonFlattenedFrom'];
+    }
+
     public Parameter_InGlobal(parameter: Parameter): boolean {
         if (this.codeModel.globalParameters.indexOf(parameter) > -1) {
             return true;
@@ -1504,7 +1517,10 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_NamePython(param: Parameter = this.MethodParameter): string {
-        return param.language['python'].name;
+        if (this.SDK_IsTrack1 && !isNullOrUndefined(param.language['cli']?.['track1_name'])) {
+            return param.language['cli']?.['track1_name'];
+        }
+        return param.language?.['python']?.name;
     }
 
     public get MethodParameter_IsRequired(): boolean {
@@ -1513,6 +1529,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_IsFlattened(): boolean {
         return this.Parameter_IsFlattened(this.MethodParameter);
+    }
+
+    public get MethodParameter_IsCliFlattened(): boolean {
+        return this.Parameter_IsCliFlattened(this.MethodParameter);
     }
 
     public get MethodParameter_RequiredByMethod(): boolean {
@@ -1531,15 +1551,25 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public GetModuleOperationNamePython(): string {
+        if (this.SDK_IsTrack1 && !isNullOrUndefined(this.CommandGroup.language['cli']?.['track1_name'])) {
+            return this.CommandGroup.language['cli']?.['track1_name'];
+        }
         return this.CommandGroup.language['python'].name;
     }
 
     public GetModuleOperationNamePythonUpper(): string {
+        if (this.SDK_IsTrack1 && !isNullOrUndefined(this.CommandGroup.language['cli']?.['track1_class_name'])) {
+            return this.CommandGroup.language['cli']?.['track1_class_name'];
+        }
         return this.CommandGroup.language['python']['className'];
     }
 
     public GetPythonNamespace(): string {
         return this.options['namespace'];
+    }
+
+    public GetPythonPackageName(): string {
+        return this.options['package-name'];
     }
 
     public get PythonMgmtClient(): string {
@@ -2327,4 +2357,29 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
         return this._cliCoreLib;
     }
+
+    public get AzureCliFolder(): string {
+        return this.codeModel.language['az']?.['azureCliFolder']
+    }
+
+    public get azOutputFolder(): string {
+        return this.codeModel.language['az']?.['azOutputFolder']
+    }
+
+    public get IsCliCore() {
+        return this.codeModel.language['az']?.['isCliCore']? true: false;
+    }
+
+    public get SDK_NeedSDK() {
+        return this.codeModel.language['az']?.['sdkNeeded']? true: false;
+    }
+
+    public get SDK_IsTrack1() {
+        return this.codeModel.language['az']?.['sdkTrack1']? true: false;
+    }
+
+    public get SDK_NoFlatten() {
+        return this.codeModel.language['az']?.['sdkNoFlatten']? true: false;
+    }
+
 }

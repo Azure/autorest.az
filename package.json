@@ -58,7 +58,9 @@
     "compare-versions": "^3.6.0",
     "dir-compare": "^2.2.0",
     "js-yaml": "^3.13.1",
-    "node-yaml": "^3.2.0"
+    "node-yaml": "^3.2.0",
+    "request-promise-native": "1.0.8",
+    "request": "^2.87.0"
   },
   "files": [
     "dist"

@@ -12,6 +12,16 @@ export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
+        const azureCliFolder = await host.GetValue(ArgumentConstants.azureCliFolder);
+        if (!isNullOrUndefined(azureCliFolder)) {
+            if (isNullOrUndefined(session.model.language['az'])) {
+                session.model.language['az'] = {}
+            }
+            session.model.language['az']['azureCliFolder'] = azureCliFolder;
+        }
+
+        const azOutputFolder = await host.GetValue('az-output-folder');
+        session.model.language['az']['azOutputFolder'] = azOutputFolder;
         let model = new CodeModelCliImpl(session);
         const cliCoreLib: string = await host.GetValue('cli-core-lib');
         if (!isNullOrUndefined(cliCoreLib) && cliCoreLib.length > 0) {
@@ -21,7 +31,7 @@ export async function processRequest(host: Host) {
         // Read existing file generation-mode
         let options = await session.getValue('az');
         model.CliGenerationMode = await autoDetectGenerationMode(host, options['extensions']);
-        model.CliOutputFolder = await host.GetValue("output-folder");
+        model.CliOutputFolder = azOutputFolder;
 
         let generator = await AzGeneratorFactory.createAzGenerator(model, debug);
         await generator.generateAll();

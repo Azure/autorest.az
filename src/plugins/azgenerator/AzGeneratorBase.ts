@@ -7,7 +7,7 @@ import { CodeModelAz } from "./CodeModelAz";
 
 export abstract class AzGeneratorBase {
     model: CodeModelAz;
-    files: any = {};
+    files: {} = {};
     azDirectory: string;
     isDebugMode: boolean;
 

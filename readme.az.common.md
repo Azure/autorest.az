@@ -2,9 +2,9 @@
  
 ``` yaml $(az)
 extension-mode: experimental
+
 # customize library used in extension. azure.cli.core by default
 # cli-core-lib: azure.cli.core
- 
 cli:
     naming:
         default:
@@ -34,11 +34,27 @@ cli:
         cli-flatten-all-overwrite-swagger: false
 ```
  
-``` yaml $(python)
+``` yaml $(python) && ($(generate-sdk) == 'yes' || ($(target-mode) != 'core' && !$(generate-sdk)))
 add-credential: true
 no-namespace-folders: true
 license-header: MICROSOFT_MIT_NO_VERSION
 #clear-output-folder: true
 scope-codegen/emitter:
     output-folder: "$(python-sdk-output-folder)"
+```
+
+
+``` yaml $(python) && ($(generate-sdk) == 'no' || ($(target-mode) == 'core' && !$(generate-sdk)))
+add-credential: true
+no-namespace-folders: true
+license-header: MICROSOFT_MIT_NO_VERSION
+#clear-output-folder: true
+scope-codegen/emitter: false
+```
+
+``` yaml $(az) && (($(target-mode) == 'core' && $(compatible-level) != "track2") || ($(sdk-no-flatten) && $(compatible-level) == 'track1'))
+cli:
+    flatten:
+        cli-m4flatten-payload-max-prop: 2
+        cli-m4flatten-payload-track1-enabled: true
 ```

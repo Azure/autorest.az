@@ -3584,6 +3584,7 @@ operationGroups:
         name: ManagedNetwork
         description: ''
         command: managed-network managed-network
+        genericTargetSchema: *ref_34
         hasShowCommand: true
       cli:
         name: ManagedNetwork
@@ -4129,6 +4130,7 @@ operationGroups:
         name: ScopeAssignment
         description: ''
         command: managed-network scope-assignment
+        genericTargetSchema: *ref_24
         hasShowCommand: true
       cli:
         name: ScopeAssignment
@@ -4927,6 +4929,7 @@ operationGroups:
         name: ManagedNetworkGroup
         description: ''
         command: managed-network managed-network-group
+        genericTargetSchema: *ref_18
         hasShowCommand: true
       cli:
         name: ManagedNetworkGroup
@@ -5647,6 +5650,7 @@ operationGroups:
         name: ManagedNetworkPeeringPolicy
         description: ''
         command: managed-network managed-network-peering-policy
+        genericTargetSchema: *ref_23
         hasShowCommand: true
       cli:
         name: ManagedNetworkPeeringPolicy

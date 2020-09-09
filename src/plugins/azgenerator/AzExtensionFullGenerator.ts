@@ -4,25 +4,25 @@
  *--------------------------------------------------------------------------------------------*/
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
-import { GenerateAzureCliActions } from "./TemplateAzureCliActions";
-import { GenerateAzureCliAzextMetadata } from "./TemplateAzureCliAzextMetadata";
-import { GenerateAzureCliClientFactory } from "./TemplateAzureCliClientFactory";
-import { GenerateAzureCliCommands } from "./TemplateAzureCliCommands";
-import { GenerateAzureCliCustom } from "./TemplateAzureCliCustom";
-import { GenerateAzureCliHelp } from "./TemplateAzureCliHelp";
-import { GenerateAzureCliHistory } from "./TemplateAzureCliHistory";
-import { GenerateAzureCliInit } from "./TemplateAzureCliInit";
-import { GenerateNamespaceInit } from "./TemplateAzureCliNamespaceInit";
-import { GenerateAzureCliParams } from "./TemplateAzureCliParams";
-import { GenerateAzureCliReadme } from "./TemplateAzureCliReadme";
-import { GenerateAzureCliReport } from "./TemplateAzureCliReport";
-import { GenerateAzureCliSetupCfg } from "./TemplateAzureCliSetupCfg";
-import { GenerateAzureCliSetupPy } from "./TemplateAzureCliSetupPy";
-import { GenerateAzureCliTestInit } from "./TemplateAzureCliTestInit";
-import { GenerateAzureCliTestPrepare } from "./TemplateAzureCliTestPrepare";
-import { GenerateAzureCliTestScenario, NeedPreparer } from "./TemplateAzureCliTestScenario";
-import { GenerateTopLevelImport } from "./TemplateAzureCliTopLevelImport";
-import { GenerateAzureCliValidators } from "./TemplateAzureCliValidators";
+import { GenerateAzureCliActions } from "./templates/generated/CliActions";
+import { GenerateAzureCliAzextMetadata } from "./templates/topext/CliFullMetadata";
+import { GenerateAzureCliClientFactory } from "./templates/generated/CliClientFactory";
+import { GenerateAzureCliCommands } from "./templates/generated/CliCommands";
+import { GenerateAzureCliCustom } from "./templates/generated/CliCustom";
+import { GenerateAzureCliHelp } from "./templates/generated/CliHelp";
+import { GenerateAzureCliHistory } from "./templates/topext/CliHistory";
+import { GenerateAzureCliInit } from "./templates/topcommon/CliFullInit";
+import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
+import { GenerateAzureCliParams } from "./templates/generated/CliParams";
+import { GenerateAzureCliReadme } from "./templates/topext/CliReadme";
+import { GenerateAzureCliReport } from "./templates/topcommon/CliReport";
+import { GenerateAzureCliSetupCfg } from "./templates/topext/CliFullSetupCfg";
+import { GenerateAzureCliSetupPy } from "./templates/topext/CliFullSetupPy";
+import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit";
+import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
+import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { GenerateTopLevelImport } from "./templates/topcommon/CliTopLevelImport";
+import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
 
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
@@ -52,8 +52,9 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
 
         this.files[this.azDirectory + "manual/__init__.py"] = GenerateNamespaceInit(this.model);
 
-
-        this.files[this.azDirectory + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(this.model);
+        if (this.model.SDK_NeedSDK) {
+            this.files[this.azDirectory + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(this.model);
+        }
 
         this.files[this.azDirectory + "action.py"] = GenerateTopLevelImport(this.model, "action");
         this.files[this.azDirectory + "custom.py"] = GenerateTopLevelImport(this.model, "custom");
@@ -64,6 +65,6 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         this.files["HISTORY.rst"] = GenerateAzureCliHistory(this.model);
         this.files["README.md"] = GenerateAzureCliReadme(this.model);
         this.files["setup.cfg"] = GenerateAzureCliSetupCfg(this.model);
-        this.files["setup.py"] = GenerateAzureCliSetupPy(this.model);
+        this.files["setup.py"] = await GenerateAzureCliSetupPy(this.model);
     }
 }
