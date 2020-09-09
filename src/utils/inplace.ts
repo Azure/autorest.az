@@ -183,7 +183,7 @@ function nextStepAt(content: string): number {
     const nextCase = content.search(/\n# Testcase/);
 
     let candidates = [nextEnv, nextExample, nextCase];
-    candidates.sort();
+    candidates.sort((a, b) => a - b);
     for (let ret of candidates) {
         if (ret>=0) {
             return ret;
@@ -220,7 +220,7 @@ export class testStepSegment extends DefSegment {
                 nextAt = remain.length-1;
             }
             nextAt +=  target.currentAt + 1;
-            const newStep = new testStepSegment(target, target.currentAt, nextAt, remain.slice(3, remain.indexOf("\n")))
+            const newStep = new testStepSegment(target, target.currentAt, nextAt, remain.slice(2, remain.indexOf("\n")))
             target.root.children.push(newStep);
             newStep.createChildren();
             target.currentAt = nextAt;
