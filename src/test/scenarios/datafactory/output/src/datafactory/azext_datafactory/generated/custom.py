@@ -165,10 +165,10 @@ def datafactory_trigger_update(instance,
                                description=None,
                                annotations=None):
     if description is not None:
-        instance.description = description
+        instance.properties.description = description
     if annotations is not None:
-        instance.annotations = annotations
-    return instance
+        instance.properties.annotations = annotations
+    return instance.properties
 
 
 def datafactory_trigger_delete(client,

@@ -40,14 +40,10 @@ export class Hider {
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
-    const extensionMode = await host.GetValue('extension-mode');
-    //host.Message({Channel:Channel.Warning, Text:"in aznamer processRequest"});
 
-    //console.error(extensionName);
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         const plugin = new Hider(session);
-        plugin.codeModel.info['extensionMode'] = extensionMode;
         const result = await plugin.process();
         host.WriteFile('code-model-v4-no-tags.yaml', serialize(result));
     } catch (E) {

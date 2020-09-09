@@ -313,7 +313,7 @@ class SpatialAnchorAccountOperations(object):
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _spatial_anchors_account = models.SpatialAnchorsAccount(tags=tags, location=location)
+        spatial_anchors_account = models.SpatialAnchorsAccount(tags=tags, location=location)
         api_version = "2020-05-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -336,7 +336,7 @@ class SpatialAnchorAccountOperations(object):
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_spatial_anchors_account, 'SpatialAnchorsAccount')
+        body_content = self._serialize.body(spatial_anchors_account, 'SpatialAnchorsAccount')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -383,7 +383,7 @@ class SpatialAnchorAccountOperations(object):
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _spatial_anchors_account = models.SpatialAnchorsAccount(tags=tags, location=location)
+        spatial_anchors_account = models.SpatialAnchorsAccount(tags=tags, location=location)
         api_version = "2020-05-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -406,7 +406,7 @@ class SpatialAnchorAccountOperations(object):
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_spatial_anchors_account, 'SpatialAnchorsAccount')
+        body_content = self._serialize.body(spatial_anchors_account, 'SpatialAnchorsAccount')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -510,7 +510,7 @@ class SpatialAnchorAccountOperations(object):
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _regenerate = models.AccountKeyRegenerateRequest(serial=serial)
+        regenerate = models.AccountKeyRegenerateRequest(serial=serial)
         api_version = "2020-05-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -533,7 +533,7 @@ class SpatialAnchorAccountOperations(object):
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_regenerate, 'AccountKeyRegenerateRequest')
+        body_content = self._serialize.body(regenerate, 'AccountKeyRegenerateRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 

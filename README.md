@@ -13,9 +13,30 @@ debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
   "@autorest/python": "5.1.0-preview.4"
-  "@autorest/clicommon": "0.4.13"
+  "@autorest/clicommon": "0.5.2"
   #"@autorest/python": "latest"
-  
+
+require:
+  - ./readme.python.md
+  - ./readme.cli.md
+  - $(this-folder)/readme.az.common.md
+
+pipeline-model: v3
+
+scope-clicommon:
+    output-folder: $(debug-output-folder)
+
+scope-az:
+    is-object: false
+    output-artifact:
+        #- source-file-az-hider
+        #- source-file-pynamer
+        #- source-file-aznamer
+        #- source-file-modifiers
+        #- source-file-merger
+        - source-file-extension
+    output-folder: $(az-output-folder)
+
 cli:
     reason: 'make sure cli flag exists to load config in cli.md'
     naming:
@@ -29,20 +50,14 @@ cli:
             constant:  'snake'
             type:  'pascal'
 
-require:
-  - ./readme.python.md
-  - ./readme.cli.md
-  - $(this-folder)/readme.az.common.md
-
-pipeline-model: v3
-
 modelerfour:
     lenient-model-deduplication: true
     group-parameters: true
     flatten-models: true
     flatten-payloads: true
+```
 
-
+``` yaml $(target-mode) != 'core' && !$(sdk-no-flatten)
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true
 
@@ -75,18 +90,51 @@ pipeline:
             #- az/modifiers
             - az/azgenerator
         scope: scope-az
+```
 
-scope-az:
-    is-object: false
-    output-artifact:
-        #- source-file-az-hider
-        #- source-file-pynamer
-        #- source-file-aznamer
-        #- source-file-modifiers
-        #- source-file-merger
-        - source-file-extension
-    output-folder: $(az-output-folder)
+``` yaml $(target-mode) == 'core' || $(sdk-no-flatten)
 
-scope-clicommon:
-    output-folder: $(debug-output-folder)
+#payload-flattening-threshold: 4
+#recursive-payload-flattening: true
+
+cli:
+    naming:
+        m4:
+            parameter: 'snake'
+            property: 'snake'
+            operation: 'snake'
+            operationGroup:  'snake'
+            choice:  'pascal'
+            choiceValue:  'pascal'
+            constant:  'snake'
+            type:  'snake'
+
+pipeline:
+    python/m2r:
+        input: clicommon/cli-m4namer
+    az/renamer:
+        input: clicommon/identity
+    az/merger:
+        input:
+            - az/renamer
+            - python/namer
+        #output-artifact: source-file-merger
+    az/aznamer:
+        input: az/merger
+        #output-artifact: source-file-aznamer
+    az/modifiers:
+        input: az/aznamer
+        #output-artifact: source-file-modifiers
+    az/azgenerator:
+        input: az/modifiers
+        output-artifact: source-file-extension
+    az/emitter:
+        input:
+            #- az/hider
+            #- az/clicommon
+            #- az/merger
+            #- az/aznamer
+            #- az/modifiers
+            - az/azgenerator
+        scope: scope-az
 ```

@@ -255,14 +255,14 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update
                                                                                  spokes=None,
                                                                                  mesh=None,
                                                                                  no_wait=False):
-    instance.type = 'HubAndSpokeTopology'
+    instance.properties.type = 'HubAndSpokeTopology'
     if hub is not None:
-        instance.hub = hub
+        instance.properties.hub = hub
     if spokes is not None:
-        instance.spokes = spokes
+        instance.properties.spokes = spokes
     if mesh is not None:
-        instance.mesh = mesh
-    return instance
+        instance.properties.mesh = mesh
+    return instance.properties
 
 
 def managed_network_managed_network_peering_policy_mesh_topology_update(instance,
@@ -274,14 +274,14 @@ def managed_network_managed_network_peering_policy_mesh_topology_update(instance
                                                                         spokes=None,
                                                                         mesh=None,
                                                                         no_wait=False):
-    instance.type = 'MeshTopology'
+    instance.properties.type = 'MeshTopology'
     if hub is not None:
-        instance.hub = hub
+        instance.properties.hub = hub
     if spokes is not None:
-        instance.spokes = spokes
+        instance.properties.spokes = spokes
     if mesh is not None:
-        instance.mesh = mesh
-    return instance
+        instance.properties.mesh = mesh
+    return instance.properties
 
 
 def managed_network_managed_network_peering_policy_delete(client,
