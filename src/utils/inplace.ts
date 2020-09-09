@@ -158,7 +158,7 @@ export class BaseSegment {
     public genResult(): string {
         let ret = "";
         if (this.children.length==0) {
-            if (isNullOrUndefined(this.originA) || this.status==SegmentStatus.Added || this.originA.status== SegmentStatus.Origin) {
+            if (isNullOrUndefined(this.originA) || this.status==SegmentStatus.Added || this.originA.status== SegmentStatus.Origin || this.originA.Content!=this.Content) {
                 ret += this.Content;
             }
             else if (this.originA.status==SegmentStatus.Deleted) {
