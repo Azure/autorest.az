@@ -224,7 +224,7 @@ export class AzNamer {
 
             });
             operations.forEach(operation => {
-                 //if generic update exists, set the setter_arg_name in the original operation
+                //if generic update exists, set the setter_arg_name in the original operation
                 if (operation.language['az']['isSplitUpdate'] && !isNullOrUndefined(operationGroup.language['az']['genericTargetSchema'])) {
                     let foundGeneric = false;
                     // disable generic update for now
@@ -237,18 +237,17 @@ export class AzNamer {
                                 let parameter = request.parameters[m];
                                 if (parameter.schema == operationGroup.language['az']['genericTargetSchema']) {
                                     foundGeneric = true;
-                                    if (isNullOrUndefined(parameter['flattened'])) {
+                                    if (isNullOrUndefined(parameter['flattened']) || !isNullOrUndefined(parameter.language['cli']?.['cli-flattened']) && !isNullOrUndefined(parameter['nameBaseParam']) && isNullOrUndefined(parameter['nameBaseParam']['flattened'])) {
                                         operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter;
-                                    } else {
-                                        m++;
-                                        while (m < request.parameters.length) {
-                                            let param = request.parameters[m];
-                                            if (!isNullOrUndefined(param['flattened']) && !isNullOrUndefined(param['nameBaseParam']) && isNullOrUndefined(param['nameBaseParam']['flattened'])) {
-                                                operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = param['nameBaseParam'];
-                                                break;
-                                            }
-                                            m++;
+                                    } 
+                                    m++;
+                                    while (m < request.parameters.length) {
+                                        let param = request.parameters[m];
+                                        if (!isNullOrUndefined(param['flattened']) && !isNullOrUndefined(param['nameBaseParam']) && isNullOrUndefined(param['nameBaseParam']['flattened'])) {
+                                            operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = param['nameBaseParam'];
+                                            break;
                                         }
+                                        m++;
                                     }
                                     break;
                                 }

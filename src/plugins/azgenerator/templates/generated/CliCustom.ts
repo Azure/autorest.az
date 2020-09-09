@@ -88,6 +88,9 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
 function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean = false) {
     let output_body: string[] = [];
     let opNames = model.Method_NameAz.split(' ');
+    if (model.Command_Name == "datafactory pipeline update") {
+        model.Command;
+    }
     let valueToMatch = null;
     if (opNames.length > 1) {
         valueToMatch = Capitalize(ToCamelCase(opNames[0]));
@@ -103,8 +106,8 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
             if (skip) {
                 skip = false;
             }
-            if ((model.MethodParameter_IsCliFlattened && (!isNullOrUndefined(model.MethodParameter.language['cli']['cliFlattenTrace']) || model.SDK_NoFlatten || !isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']))) || (model.MethodParameter_IsFlattened && model.MethodParameter['extensions']?.['cli-flattened'])) {
-                if (!addGenericSchema && needGeneric && !isNullOrUndefined(model.CommandGroup.language['az']['genericTargetSchema'])) {
+            if ((model.MethodParameter_IsCliFlattened && (!isNullOrUndefined(model.MethodParameter.language['cli']['cliFlattenTrace']) || model.SDK_NoFlatten || !isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']))) || model.Method.extensions?.['cli-split-operation-original-operation']?.['genericSetterParam'] == model.MethodParameter || (model.MethodParameter_IsFlattened && model.MethodParameter['extensions']?.['cli-flattened'])) {
+                if (!addGenericSchema && needGeneric && !isNullOrUndefined(model.CommandGroup.language['az']['genericTargetSchema']) && model.Method.extensions?.['cli-split-operation-original-operation']?.['genericSetterParam'] != model.MethodParameter) {
                     originalParameterStack.push(
                         new Parameter(model.CommandGroup.language['az']['genericTargetSchema'].language['python']['name'], 
                         model.CommandGroup.language['az']['genericTargetSchema'].language['python']['description'],
