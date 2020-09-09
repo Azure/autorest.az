@@ -2209,9 +2209,18 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public SortExamplesByDependency() {
+        let depends = new Set<string>(); // for detect loop depends
         let depend_on = (example_a: CommandExample, example_b: CommandExample): boolean => {
             // TODO: check dependency by object
-            return this.resource_pool.isDependResource(example_a.ResourceClassName, example_b.ResourceClassName);
+            let ret = this.resource_pool.isDependResource(example_a.ResourceClassName, example_b.ResourceClassName);
+            if (ret) {
+                let reverseDepends = `${example_b.ResourceClassName}->${example_a.ResourceClassName}`;
+                if (depends.has(reverseDepends)) {
+                    return false;
+                }
+                depends.add(`${example_a.ResourceClassName}->${example_b.ResourceClassName}`);
+            }
+            return ret;
         }
 
         let isCreate = (example: CommandExample): boolean => {
@@ -2237,7 +2246,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         let compare = (item_a: any , item_b: any): number => {
             let examples_a = scenarioExamples.get(item_a['name']);
             let examples_b = scenarioExamples.get(item_b['name']);
-            if (!examples_a || !examples_b) return -1;
+            if (!examples_a || !examples_b) return 1;
 
             if (examples_a.ResourceClassName == examples_b.ResourceClassName) {
                 if (isCreate(examples_b) && !isCreate(examples_a)) {
