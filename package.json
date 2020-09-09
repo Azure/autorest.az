@@ -57,7 +57,6 @@
     "await-exec": "^0.1.2",
     "compare-versions": "^3.6.0",
     "dir-compare": "^2.2.0",
-    "fs": "0.0.1-security",
     "js-yaml": "^3.13.1",
     "node-yaml": "^3.2.0",
     "request-promise-native": "1.0.8",
