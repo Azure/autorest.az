@@ -2265,7 +2265,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return -1;
                 }
             }
-            return 0;
+            return examples_a.Id.localeCompare(examples_b.Id);
         };
 
 

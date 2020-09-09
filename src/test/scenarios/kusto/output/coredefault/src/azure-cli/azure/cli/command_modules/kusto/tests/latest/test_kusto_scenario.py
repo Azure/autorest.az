@@ -251,6 +251,16 @@ def step__clusters_get_kustoclustersget(test, rg):
              ])
 
 
+# EXAMPLE: /AttachedDatabaseConfigurations/delete/AttachedDatabaseConfigurationsDelete
+@try_manual
+def step__attacheddatabaseconfigurations_delete(test, rg):
+    test.cmd('az kusto attached-database-configuration delete -y '
+             '--name "{myAttachedDatabaseConfiguration2}" '
+             '--cluster-name "{myCluster}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
 # EXAMPLE: /ClusterPrincipalAssignments/put/KustoClusterPrincipalAssignmentsCreateOrUpdate
 @try_manual
 def step__clusterprincipalassignments_put(test, rg):
@@ -261,16 +271,6 @@ def step__clusterprincipalassignments_put(test, rg):
              '--role "AllDatabasesAdmin" '
              '--tenant-id "12345678-1234-1234-1234-123456789123" '
              '--principal-assignment-name "kustoprincipal1" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /AttachedDatabaseConfigurations/delete/AttachedDatabaseConfigurationsDelete
-@try_manual
-def step__attacheddatabaseconfigurations_delete(test, rg):
-    test.cmd('az kusto attached-database-configuration delete -y '
-             '--name "{myAttachedDatabaseConfiguration2}" '
-             '--cluster-name "{myCluster}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -549,8 +549,8 @@ def call_scenario(test, rg):
     step__clusters_get(test, rg)
     step__attacheddatabaseconfigurations_get2(test, rg)
     step__clusters_get_kustoclustersget(test, rg)
-    step__clusterprincipalassignments_put(test, rg)
     step__attacheddatabaseconfigurations_delete(test, rg)
+    step__clusterprincipalassignments_put(test, rg)
     step__clusterprincipalassignments_get(test, rg)
     step__clusterprincipalassignments_get2(test, rg)
     step__clusterprincipalassignments_delete(test, rg)
