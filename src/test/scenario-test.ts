@@ -4,15 +4,31 @@ import * as fs from 'fs';
 import { slow, suite, test, timeout } from 'mocha-typescript';
 import * as path from 'path';
 import { copyRecursiveSync, deleteFolderRecursive } from "../utils/helper";
+import { Dictionary } from '@azure-tools/linq';
+import { ArgumentConstants, TargetMode, CompatibleLevel, GenerateSdk } from '../plugins/models';
 
 require('source-map-support').install();
 
+
+enum GenerateTestMode {
+    Default = "",
+    CoreDefault = "coredefault",
+    ExtNoFlatten = "extnoflatten",
+    ExtNoSdk = "extnosdk",
+    ExtNoSdkNoFlattenTrack1 = "extnosdknoflattentrack1"
+}
+
 @suite class Process {
     private incrementalTestRPs: string[] = ["mixed-reality"];
+    private mainTestRPs: string[] = ["kusto", "synapse"];
     private noNeedTestRPs: string[] = ["testserver"];
 
-    async runAz(directory: string, each: string) {
-        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6271 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md --azure-cli-extension-folder=" + directory + "/tmpoutput/";
+    async runAz(directory: string, extraOption: {}) {
+        let cmdOption = [];
+        for(let k in extraOption) {
+            cmdOption.push("--" + k + "=" + extraOption[k]);
+        }
+        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6271 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md " + cmdOption.join(" ");
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => {
             exec(cmd, function (error) {
@@ -43,6 +59,72 @@ require('source-map-support').install();
         });
     }
 
+    getOptions(testMode: string, outputDir: string) {
+        let extraOption: {} = {};
+        if (testMode == GenerateTestMode.Default) {
+            let key = ArgumentConstants.azureCliExtFolder
+            extraOption[key] = outputDir;
+            return extraOption;
+        } else if (testMode == GenerateTestMode.CoreDefault) {
+            let key = ArgumentConstants.targetMode;
+            extraOption[key] = TargetMode.Core;
+            key = ArgumentConstants.azureCliFolder;
+            extraOption[key] = outputDir;
+            return extraOption;
+        } else if (testMode == GenerateTestMode.ExtNoFlatten) {
+            let key = ArgumentConstants.azureCliExtFolder
+            extraOption[key] = outputDir;
+            key = ArgumentConstants.sdkNoFlatten;
+            extraOption[key] = true;
+            return extraOption;
+        } else if (testMode == GenerateTestMode.ExtNoSdk) {
+            let key = ArgumentConstants.azureCliExtFolder
+            extraOption[key] = outputDir;
+            key = ArgumentConstants.sdkNoFlatten;
+            extraOption[key] = true;
+            key = ArgumentConstants.generateSDK;
+            extraOption[key] = GenerateSdk.No;
+            return extraOption;
+        } else if (testMode == GenerateTestMode.ExtNoSdkNoFlattenTrack1) {
+            let key = ArgumentConstants.azureCliExtFolder
+            extraOption[key] = outputDir;
+            key = ArgumentConstants.sdkNoFlatten;
+            extraOption[key] = true;
+            key = ArgumentConstants.generateSDK;
+            extraOption[key] = GenerateSdk.No;
+            key = ArgumentConstants.compatibleLevel;
+            extraOption[key] = CompatibleLevel.Track1;
+            return extraOption;   
+        }
+        return extraOption;
+    }
+
+    async runSingleTest(dir: string, each: string, extraOption: {}, testMode: string) {
+        let result = true;
+        let msg = "";
+        await this.runAz(dir + each, extraOption).then(res => {
+            if (res == false) {
+                msg = "Run autorest not successfully!";
+            }
+            result = res;
+        }).catch(err => {
+            msg = "Run autorest failed!";
+            result = err;
+        });
+        if (result) {
+            await this.compare(dir + each + "/output/" + testMode, dir + each + "/tmpoutput/" + testMode).then(res1 => {
+                if (res1 == false) {
+                    msg = "The generated files have changed!";
+                }
+                result = res1;
+            }).catch(e => {
+                msg = "The diff has some error";
+                result = e;
+            });
+        }
+        return result;
+    }
+
     @test(slow(600000), timeout(1500000)) async acceptanceSuite() {
         const dir = `${__dirname}/../../src/test/scenarios/`;
         const folders = fs.readdirSync(dir);
@@ -61,25 +143,21 @@ require('source-map-support').install();
                     copyRecursiveSync(path.join(dir, each, "basecli", "src"), path.join(dir, each, "tmpoutput", "src"));
                 }
                 try {
-                    await this.runAz(dir + each, each).then(res => {
-                        if (res == false) {
-                            msg = "Run autorest not successfully!";
-                        }
-                        result = res;
-                    }).catch(err => {
-                        msg = "Run autorest failed!";
-                        result = err;
-                    });
-                    if (result) {
-                        await this.compare(dir + each + "/output/src/" + each, dir + each + "/tmpoutput/src/" + each).then(res1 => {
-                            if (res1 == false) {
-                                msg = "The generated files have changed!";
+                    let extraOption: {} = {};
+                    let outputDir = "";
+                    if (this.mainTestRPs.indexOf(each) > -1) {
+                        for(let testMode of [GenerateTestMode.CoreDefault, GenerateTestMode.ExtNoFlatten, GenerateTestMode.ExtNoSdk, GenerateTestMode.ExtNoSdkNoFlattenTrack1]) {
+                            if (testMode == GenerateTestMode.CoreDefault) {
+                                copyRecursiveSync(path.join(dir, each, "basecli"), path.join(dir, each, "tmpoutput", testMode));
                             }
-                            result = res1;
-                        }).catch(e => {
-                            msg = "The diff has some error";
-                            result = e;
-                        });
+                            outputDir = dir + each + "/tmpoutput/" + testMode;
+                            extraOption = this.getOptions(testMode, outputDir);
+                            result = await this.runSingleTest(dir, each, extraOption, testMode); 
+                        }
+                    } else {
+                        outputDir = dir + each + "/tmpoutput/";
+                        extraOption = this.getOptions(GenerateTestMode.Default, outputDir);
+                        result = await this.runSingleTest(dir, each, extraOption, GenerateTestMode.Default);
                     }
                 } catch (error) {
                     console.log(msg);

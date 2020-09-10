@@ -1,10 +1,11 @@
-﻿import { Operation, OperationGroup, Parameter, Property } from "@azure-tools/codemodel";
-import { GenerationMode } from "../models";
-
-/*---------------------------------------------------------------------------------------------
+﻿/*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+
+import { Operation, OperationGroup, Parameter, Property, Schema } from "@azure-tools/codemodel";
+import { GenerationMode } from "../models";
+import { ResourcePool } from './templates/tests/ScenarioTool';
 
 export class MethodParam {
     public value: any;
@@ -67,6 +68,12 @@ export interface CodeModelAz {
     CliGenerationMode: GenerationMode;
     CliOutputFolder: string;
 
+    IsCliCore: boolean;
+    SDK_NeedSDK: boolean;
+    SDK_IsTrack1: boolean;
+    SDK_NoFlatten: boolean;
+    AzureCliFolder: string;
+    azOutputFolder: string;
     Extension_Name: string;
     Extension_NameUnderscored: string;
     Extension_NameClass: string;
@@ -145,6 +152,7 @@ export interface CodeModelAz {
     MethodParameter_IsHidden: boolean;
     MethodParameter_IsRequired: boolean;
     MethodParameter_IsFlattened: boolean;
+    MethodParameter_IsCliFlattened: boolean;
     MethodParameter_RequiredByMethod: boolean;
     MethodParameter_EnumValues: string[];
     MethodParameters_AddPolySubClass(oriParam, para): boolean;
@@ -159,6 +167,7 @@ export interface CodeModelAz {
     Parameter_InGlobal(Parameter): boolean;
     Parameter_IsHidden(Parameter): boolean;
     Parameter_IsFlattened(Parameter): boolean;
+    Parameter_IsCliFlattened(Parameter): boolean;
     Parameter_MapsTo(Parameter): string;
     Parameter_SubMapsTo(subMethodName, Parameter): string;
     Schema_MapsTo(Schema);
@@ -169,11 +178,14 @@ export interface CodeModelAz {
     Parameter_Description(Parameter): string;
     Parameter_DefaultValue(Parameter): any | undefined;
     Schema_Description(Schema): string;
+    Schema_FlattenedFrom(Schema): Schema;
 
     GetModuleOperationName(): string;
     GetModuleOperationNamePython(): string;
     GetModuleOperationNamePythonUpper(): string;
     GetPythonNamespace(): string;
+    GetPythonPackageName(): string;
+    GetResourcePool(): ResourcePool;
 
     // Python
     PythonMgmtClient: string;

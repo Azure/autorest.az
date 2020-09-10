@@ -320,7 +320,7 @@ class RemoteRenderingAccountOperations(object):
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _remote_rendering_account = models.RemoteRenderingAccount(tags=tags, location=location, identity=identity)
+        remote_rendering_account = models.RemoteRenderingAccount(tags=tags, location=location, identity=identity)
         api_version = "2020-04-06-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -343,7 +343,7 @@ class RemoteRenderingAccountOperations(object):
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_remote_rendering_account, 'RemoteRenderingAccount')
+        body_content = self._serialize.body(remote_rendering_account, 'RemoteRenderingAccount')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -394,7 +394,7 @@ class RemoteRenderingAccountOperations(object):
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _remote_rendering_account = models.RemoteRenderingAccount(tags=tags, location=location, identity=identity)
+        remote_rendering_account = models.RemoteRenderingAccount(tags=tags, location=location, identity=identity)
         api_version = "2020-04-06-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -417,7 +417,7 @@ class RemoteRenderingAccountOperations(object):
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_remote_rendering_account, 'RemoteRenderingAccount')
+        body_content = self._serialize.body(remote_rendering_account, 'RemoteRenderingAccount')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -523,7 +523,7 @@ class RemoteRenderingAccountOperations(object):
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _regenerate = models.AccountKeyRegenerateRequest(serial=serial)
+        regenerate = models.AccountKeyRegenerateRequest(serial=serial)
         api_version = "2020-04-06-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -546,7 +546,7 @@ class RemoteRenderingAccountOperations(object):
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_regenerate, 'AccountKeyRegenerateRequest')
+        body_content = self._serialize.body(regenerate, 'AccountKeyRegenerateRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 

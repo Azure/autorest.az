@@ -133,7 +133,7 @@ class AttestationProviderOperations:
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _creation_params = models.AttestationServiceCreationParams(location=location, tags=tags, attestation_policy=attestation_policy, keys=keys)
+        creation_params = models.AttestationServiceCreationParams(location=location, tags=tags, attestation_policy=attestation_policy, keys=keys)
         api_version = "2018-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -156,7 +156,7 @@ class AttestationProviderOperations:
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_creation_params, 'AttestationServiceCreationParams')
+        body_content = self._serialize.body(creation_params, 'AttestationServiceCreationParams')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -203,7 +203,7 @@ class AttestationProviderOperations:
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _update_params = models.AttestationServicePatchParams(tags=tags)
+        update_params = models.AttestationServicePatchParams(tags=tags)
         api_version = "2018-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -226,7 +226,7 @@ class AttestationProviderOperations:
         header_parameters['Accept'] = 'application/json'
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_update_params, 'AttestationServicePatchParams')
+        body_content = self._serialize.body(update_params, 'AttestationServicePatchParams')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 

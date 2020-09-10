@@ -12,6 +12,16 @@ export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
+        const azureCliFolder = await host.GetValue(ArgumentConstants.azureCliFolder);
+        if (!isNullOrUndefined(azureCliFolder)) {
+            if (isNullOrUndefined(session.model.language['az'])) {
+                session.model.language['az'] = {}
+            }
+            session.model.language['az']['azureCliFolder'] = azureCliFolder;
+        }
+
+        const azOutputFolder = await host.GetValue('az-output-folder');
+        session.model.language['az']['azOutputFolder'] = azOutputFolder;
         let model = new CodeModelCliImpl(session);
         const cliCoreLib: string = await host.GetValue('cli-core-lib');
         if (!isNullOrUndefined(cliCoreLib) && cliCoreLib.length > 0) {
@@ -21,7 +31,7 @@ export async function processRequest(host: Host) {
         // Read existing file generation-mode
         let options = await session.getValue('az');
         model.CliGenerationMode = await autoDetectGenerationMode(host, options['extensions']);
-        model.CliOutputFolder = await host.GetValue("output-folder");
+        model.CliOutputFolder = azOutputFolder;
 
         let generator = await AzGeneratorFactory.createAzGenerator(model, debug);
         await generator.generateAll();
@@ -32,6 +42,7 @@ export async function processRequest(host: Host) {
                 let path = "azext_" + model.Extension_Name.replace("-", "_") + "/";
                 session.protectFiles(path + "manual");
                 session.protectFiles(path + "tests/latest/recordings")
+                session.protectFiles("README.md");
             } while (model.SelectNextExtension());
         }
 
@@ -60,31 +71,40 @@ async function autoDetectGenerationMode(host: Host, name: String): Promise<Gener
     if (isNullOrUndefined(name)) {
         throw new Error("name should not be null");
     }
-    let azName = "azext_" + name.replace("-", "_");
-    let relativePath = path.join(azName, PathConstants.initFile);
-    let rootInit = await host.ReadFile(relativePath);
-    let existingMode = HeaderGenerator.GetCliGenerationMode(rootInit);
     let result: GenerationMode;
-    host.Message({ Channel: Channel.Information, Text: "Existing Cli code generation-mode is: " + GenerationMode[existingMode] });
+    const needClearOutputFolder = await host.GetValue(ArgumentConstants.clearOutputFolder);
 
-    // Read the argument of generation-mode, detect if needed
-    let generationMode = await host.GetValue(ArgumentConstants.generationMode) || "auto";
-    host.Message({ Channel: Channel.Information, Text: "Input generation-mode is: " + generationMode });
-
-    if (String(generationMode).toLowerCase() == "full") {
+    if (needClearOutputFolder) {
         result = GenerationMode.Full;
-    }
-    else if (String(generationMode).toLowerCase() == "incremental") {
-        result = GenerationMode.Incremental;
+        host.Message({ Channel: Channel.Information, Text: "As clear output folder is set, generation-mode in code model is: " + GenerationMode[result] });
     }
     else {
-        if (existingMode == GenerationMode.Full) {
+        let azName = "azext_" + name.replace("-", "_");
+        let relativePath = path.join(azName, PathConstants.initFile);
+        let rootInit = await host.ReadFile(relativePath);
+        let existingMode = HeaderGenerator.GetCliGenerationMode(rootInit);
+
+        host.Message({ Channel: Channel.Information, Text: "Existing Cli code generation-mode is: " + GenerationMode[existingMode] });
+
+        // Read the argument of generation-mode, detect if needed
+        let generationMode = await host.GetValue(ArgumentConstants.generationMode) || "auto";
+        host.Message({ Channel: Channel.Information, Text: "Input generation-mode is: " + generationMode });
+
+        if (String(generationMode).toLowerCase() == GenerationMode[GenerationMode.Full].toLowerCase()) {
             result = GenerationMode.Full;
         }
-        else {
+        else if (String(generationMode).toLowerCase() == GenerationMode[GenerationMode.Incremental].toLowerCase()) {
             result = GenerationMode.Incremental;
         }
+        else {
+            if (existingMode == GenerationMode.Full) {
+                result = GenerationMode.Full;
+            }
+            else {
+                result = GenerationMode.Incremental;
+            }
+        }
+        host.Message({ Channel: Channel.Information, Text: "generation-mode in code model is: " + GenerationMode[result] });
     }
-    host.Message({ Channel: Channel.Information, Text: "generation-mode in code model is: " + GenerationMode[result] });
     return result;
 }

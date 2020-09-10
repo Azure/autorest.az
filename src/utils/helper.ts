@@ -3,12 +3,17 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as fs from 'fs';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined, isNull } from 'util';
+import { CodeModel } from '@azure-tools/codemodel';
+import { values, items, length, Dictionary } from "@azure-tools/linq";
+import * as request from "request-promise-native";
 import * as path from 'path';
 
 export function changeCamelToDash(str: string) {
-    str = str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
-    if (str.startsWith('-')) {
+    str = str.replace(/[A-Z][^A-Z]/g, letter => `-${letter.toLowerCase()}`);
+    str = str.replace(/[^A-Z][A-Z]/g, letter => `${letter[0]}-${letter[1].toLowerCase()}`);
+    str = str.toLowerCase();
+    if(str.startsWith('-')) {
         str = str.substring(1, str.length);
     }
     return str;
@@ -326,6 +331,83 @@ export function parseResourceId(mpath: string): Map<string, string> {
         ret.set("last_child_num", "" + count);
     }
     return ret;
+}
+
+export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flattenMode: boolean = false) {
+    let nodePaths = cliM4Path.split('$$');
+    let curNode: any = codeModel;
+    let lastValidNode: any = null;
+    for(let np of nodePaths) {
+        if (np == "") {
+            continue;
+        }
+        if (isNullOrUndefined(curNode)) {
+            break;
+        }
+        if (np.indexOf('[') > -1 && np.indexOf(']') > -1) {
+            let beginIdx = np.indexOf('[')
+            let endIdx = np.indexOf(']');
+            let curStep = np.substring(0, beginIdx);
+            curNode = curNode[curStep];
+            if (!isNullOrUndefined(curNode)) {
+                lastValidNode = curNode
+            } else {
+                break;
+            }
+            let nextStep = "";
+            if (np[beginIdx + 1] == "'" && np[endIdx - 1] == "'") {
+                nextStep = np.substring(beginIdx + 2, endIdx - 1);
+                let found = false;
+                for(let node of values(curNode)) {
+                    if(node?.['language']?.['cli']?.['cliKey'] == nextStep) {
+                        curNode = node;
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) {
+                    curNode = null;
+                }
+            } else {
+                nextStep = np.substring(beginIdx + 1, endIdx);
+                curNode = curNode[Number(nextStep)];
+            }  
+            if (!isNullOrUndefined(curNode)) {
+                lastValidNode = curNode;
+            }
+        } else {
+            lastValidNode = curNode;
+            curNode = curNode[np];
+        }
+    }
+    if(!flattenMode || !isNullOrUndefined(curNode)) {
+        return curNode;
+    }
+    let flattenedNodes = [];
+    if(flattenMode && isNullOrUndefined(curNode) && !isNullOrUndefined(lastValidNode)) {
+        for(let node of values(lastValidNode)) {
+            for(let cliTracePath of values(node?.['language']?.['cli']?.['cliFlattenTrace'])) {
+                if(cliTracePath == cliM4Path) {
+                    flattenedNodes.push(node);
+                    break;
+                }
+            }
+        }
+    }
+    return flattenedNodes;
+}
+
+export async function getLatestPyPiVersion(packageName: string) {
+    let url = "https://pypi.org/pypi/" + packageName + "/json";
+    let option = {
+        uri: url
+    }
+    let response = await request.get(option);
+    let res = JSON.parse(response);
+    let latest = res['urls'][1];
+    let filename = latest['filename'];
+    let version = filename.replace(packageName + "-", "").replace(".zip", "");
+    return version;
 }
 
 export function getIndentString(indent: number): string {

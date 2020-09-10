@@ -15,8 +15,8 @@ export abstract class TemplateBase {
         this.relativePath = "";
     }
 
-    public abstract fullGeneration(): string[];
+    public abstract async fullGeneration(): Promise<string[]>;
 
-    public abstract incrementalGeneration(base: string): string[];
+    public abstract async incrementalGeneration(base: string): Promise<string[]>;
 
 }

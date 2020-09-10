@@ -4,6 +4,7 @@ import { serialize, deserialize } from "@azure-tools/codegen";
 import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { changeCamelToDash } from '../utils/helper';
 import { isNullOrUndefined, isArray } from "util";
+import { PassThrough } from "stream";
 import { type } from "os";
 
 export class AzNamer {
@@ -70,7 +71,7 @@ export class AzNamer {
             return;
         }
         obj.language['az'] = new Language();
-        obj.language['az']['name'] = obj.language['cli']? obj.language['cli']['name']: obj.language['python']['name'];
+        obj.language['az']['name'] = obj.language['cli']?.['name']? obj.language['cli']['name']: obj.language['python']['name'];
         obj.language['az']['name'] = changeCamelToDash(obj.language['az']['name']);
         obj.language['az']['mapsto'] = obj.language['az']['name'].replace(/-/g, '_');
         obj.language['az']['description'] = obj.language['cli']? obj.language['cli']['description']: obj.language['python']['description'];
@@ -133,15 +134,6 @@ export class AzNamer {
     }
 
     async processOperationGroup() {
-        let azExtensionFolder = "";
-        try {
-            azExtensionFolder = await this.session.getValue('azure-cli-extension-folder');
-        } catch(e) {
-            this.session.message({Channel: Channel.Fatal, Text:"--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example"}); 
-            throw e;
-        }
-        
-        
         let azSettings = await this.session.getValue('az');
         let extensionName = azSettings['extensions'];
         //console.error(extensionName);
@@ -160,6 +152,11 @@ export class AzNamer {
 
             let operations = operationGroup.operations;
             operations.forEach(operation => {
+                let genericTargetSchema = null;
+                if (operation.language['cli']['cliKey'] == "Get") {
+                    genericTargetSchema = operation.responses[0]['schema'];
+                    operationGroup.language['az']['genericTargetSchema'] = genericTargetSchema
+                }
                 operation.requests.forEach(request => {
                     let operationName = "";
                     if(!isNullOrUndefined(operation.language['cli'])) {
@@ -175,7 +172,7 @@ export class AzNamer {
                         if(commandName.indexOf(" ") > -1) {
                             operation.language['az']['subCommandGroup'] = operationGroupName + " " + commandName.split(' ')[0];
                         }
-                        if(operation.language['az']['command'].endsWith(" update") && !isNullOrUndefined(operation.extensions?.['cli-split-operation-original-operation'])) {
+                        if(operation.language['az'].command.endsWith(' update') && !isNullOrUndefined(operation.extensions?.['cli-split-operation-original-operation'])) {
                             operation.language['az']['isSplitUpdate'] = true;
                         }
                     } else {
@@ -194,6 +191,11 @@ export class AzNamer {
                                     }
                                 }
                             }
+                            if (!isNullOrUndefined(parameter.language['cli']['m4FlattenedFrom'])) {
+                                for(let param of parameter.language['cli']['m4FlattenedFrom']) {
+                                    this.getAzName(param);
+                                }
+                            }
                         }
                     });
                     if(request.parameters) {
@@ -210,42 +212,47 @@ export class AzNamer {
                                         }
                                     }
                                 }
+                                if (!isNullOrUndefined(parameter.language['cli']['m4FlattenedFrom'])) {
+                                    for(let param of parameter.language['cli']['m4FlattenedFrom']) {
+                                        this.getAzName(param);
+                                    }
+                                }
                             }
                         });                   
                     }
                 });
-                 //if generic update exists, set the setter_arg_name in the original operation
-                if(operation.language['az']['isSplitUpdate']) {
-                    let listCnt = 0;
-                    let param = null;
-                    operation.extensions['cli-split-operation-original-operation'].parameters.forEach(parameter => {
-                        if(!isNullOrUndefined(parameter.language['az'])) {
-                            if(operation.language['az'].name.endsWith("create") && parameter['flattened'] != true) {
-                                let paramType = parameter.schema.type;
-                                if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
-                                    param = parameter;
-                                    listCnt++;
+
+            });
+            operations.forEach(operation => {
+                //if generic update exists, set the setter_arg_name in the original operation
+                if (operation.language['az']['isSplitUpdate'] && !isNullOrUndefined(operationGroup.language['az']['genericTargetSchema'])) {
+                    let foundGeneric = false;
+                    // disable generic update for now
+                    // foundGeneric = true;
+                    for (let n = 0; n < operation.requests.length; n++) {
+                        let request = operation.requests[n];
+                        let genericSetter = null;
+                        if (request.parameters) {
+                            for (let m = 0; m < request.parameters.length; m++) {
+                                let parameter = request.parameters[m];
+                                if (parameter.schema == operationGroup.language['az']['genericTargetSchema']) {
+                                    foundGeneric = true;
+                                    if (isNullOrUndefined(parameter['flattened']) || !isNullOrUndefined(parameter.language['cli']?.['cli-flattened']) && !isNullOrUndefined(parameter['nameBaseParam']) && isNullOrUndefined(parameter['nameBaseParam']['flattened'])) {
+                                        operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter;
+                                    } 
+                                    m++;
+                                    while (m < request.parameters.length) {
+                                        let param = request.parameters[m];
+                                        if (!isNullOrUndefined(param['flattened']) && !isNullOrUndefined(param['nameBaseParam']) && isNullOrUndefined(param['nameBaseParam']['flattened'])) {
+                                            operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = param['nameBaseParam'];
+                                            break;
+                                        }
+                                        m++;
+                                    }
+                                    break;
                                 }
                             }
                         }
-                    });
-                    operation.extensions['cli-split-operation-original-operation'].requests.forEach(request => {
-                        if (request.parameters) {
-                            request.parameters.forEach(parameter => {
-                                if(!isNullOrUndefined(parameter.language['az'])) {
-                                    if(operation.language['az'].command.endsWith(' update') && parameter['flattened'] != true) {
-                                        let paramType = parameter.schema.type;
-                                        if(paramType == SchemaType.Any || paramType == SchemaType.Array || paramType == SchemaType.Object || paramType == SchemaType.Dictionary) {
-                                            param = parameter;
-                                            listCnt++;
-                                        }
-                                    }
-                                }
-                            });
-                        };
-                    })
-                    if(listCnt == 1) {
-                        operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = param;
                     }
                 }
             });
