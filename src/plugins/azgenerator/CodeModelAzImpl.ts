@@ -8,7 +8,7 @@ import { EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { CodeModel, Operation, OperationGroup, Parameter, ParameterLocation, Property, Request, Schema, SchemaType } from '@azure-tools/codemodel';
 import { values } from "@azure-tools/linq";
 import { isArray, isNullOrUndefined } from "util";
-import { Capitalize, deepCopy, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase } from '../../utils/helper';
+import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase } from '../../utils/helper';
 import { GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
 import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './templates/tests/ScenarioTool';
@@ -2240,7 +2240,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return 1;
                 }
                 else {
-                    return 0;
+                    return examples_a.Id.localeCompare(examples_b.Id);
                 }
             }
             else if (depend_on(examples_a, examples_b)) {
@@ -2251,7 +2251,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return -1;
                 }
                 else {
-                    return 0;
+                    return 1;
                 }
             }
             else if (depend_on(examples_b, examples_a)) {
@@ -2262,10 +2262,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return 1;
                 }
                 else {
-                    return 0;
+                    return -1;
                 }
             }
-            return 0;
+            return examples_a.Id.localeCompare(examples_b.Id);
         };
 
 
