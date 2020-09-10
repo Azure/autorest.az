@@ -2298,7 +2298,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             i++;
         }
-        //this._testScenario = MergeSort(this._testScenario,compare);    
+        //this._testScenario = MergeSort(this._testScenario,compare);
     }
 
     public GetAllMethods(command_group?: string, callback?: () => void): any[] {
