@@ -22,59 +22,6 @@ def setup(test, rg):
     pass
 
 
-# EXAMPLE: /AttachedDatabaseConfigurations/delete/AttachedDatabaseConfigurationsDelete
-@try_manual
-def step__attacheddatabaseconfigurations_delete(test, rg):
-    test.cmd('az kusto attached-database-configuration delete -y '
-             '--name "{myAttachedDatabaseConfiguration2}" '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /AttachedDatabaseConfigurations/get/AttachedDatabaseConfigurationsGet
-@try_manual
-def step__attacheddatabaseconfigurations_get(test, rg):
-    test.cmd('az kusto attached-database-configuration show '
-             '--name "{myAttachedDatabaseConfiguration2}" '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /AttachedDatabaseConfigurations/get/KustoAttachedDatabaseConfigurationsListByCluster
-@try_manual
-def step__attacheddatabaseconfigurations_get2(test, rg):
-    test.cmd('az kusto attached-database-configuration list '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /AttachedDatabaseConfigurations/put/AttachedDatabaseConfigurationsCreateOrUpdate
-@try_manual
-def step__attacheddatabaseconfigurations_put(test, rg):
-    test.cmd('az kusto attached-database-configuration create '
-             '--name "{myAttachedDatabaseConfiguration2}" '
-             '--cluster-name "{myCluster}" '
-             '--location "westus" '
-             '--cluster-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Kusto/Clu'
-             'sters/{myCluster3}" '
-             '--database-name "kustodatabase" '
-             '--default-principals-modification-kind "Union" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check("location", "westus", case_sensitive=False),
-                 test.check("clusterResourceId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Micros"
-                            "oft.Kusto/Clusters/{myCluster3}", case_sensitive=False),
-                 test.check("defaultPrincipalsModificationKind", "Union", case_sensitive=False),
-             ])
-    test.cmd('az kusto attached-database-configuration wait --created '
-             '--name "{myAttachedDatabaseConfiguration2}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
 # EXAMPLE: /Clusters/delete/KustoClustersDelete
 @try_manual
 def step__clusters_delete_kustoclustersdelete(test, rg):
@@ -254,6 +201,59 @@ def step__clusters_put_kustoclusterscreateorupdate(test, rg):
              ])
     test.cmd('az kusto cluster wait --created '
              '--name "{myCluster}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /AttachedDatabaseConfigurations/delete/AttachedDatabaseConfigurationsDelete
+@try_manual
+def step__attacheddatabaseconfigurations_delete(test, rg):
+    test.cmd('az kusto attached-database-configuration delete -y '
+             '--name "{myAttachedDatabaseConfiguration2}" '
+             '--cluster-name "{myCluster}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /AttachedDatabaseConfigurations/get/AttachedDatabaseConfigurationsGet
+@try_manual
+def step__attacheddatabaseconfigurations_get(test, rg):
+    test.cmd('az kusto attached-database-configuration show '
+             '--name "{myAttachedDatabaseConfiguration2}" '
+             '--cluster-name "{myCluster}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /AttachedDatabaseConfigurations/get/KustoAttachedDatabaseConfigurationsListByCluster
+@try_manual
+def step__attacheddatabaseconfigurations_get2(test, rg):
+    test.cmd('az kusto attached-database-configuration list '
+             '--cluster-name "{myCluster}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /AttachedDatabaseConfigurations/put/AttachedDatabaseConfigurationsCreateOrUpdate
+@try_manual
+def step__attacheddatabaseconfigurations_put(test, rg):
+    test.cmd('az kusto attached-database-configuration create '
+             '--name "{myAttachedDatabaseConfiguration2}" '
+             '--cluster-name "{myCluster}" '
+             '--location "westus" '
+             '--cluster-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Kusto/Clu'
+             'sters/{myCluster3}" '
+             '--database-name "kustodatabase" '
+             '--default-principals-modification-kind "Union" '
+             '--resource-group "{rg}"',
+             checks=[
+                 test.check("location", "westus", case_sensitive=False),
+                 test.check("clusterResourceId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Micros"
+                            "oft.Kusto/Clusters/{myCluster3}", case_sensitive=False),
+                 test.check("defaultPrincipalsModificationKind", "Union", case_sensitive=False),
+             ])
+    test.cmd('az kusto attached-database-configuration wait --created '
+             '--name "{myAttachedDatabaseConfiguration2}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -519,10 +519,6 @@ def cleanup(test, rg):
 @try_manual
 def call_scenario(test, rg):
     setup(test, rg)
-    step__attacheddatabaseconfigurations_delete(test, rg)
-    step__attacheddatabaseconfigurations_get(test, rg)
-    step__attacheddatabaseconfigurations_get2(test, rg)
-    step__attacheddatabaseconfigurations_put(test, rg)
     step__clusters_delete_kustoclustersdelete(test, rg)
     step__clusters_get_kustoclustersget(test, rg)
     step__clusters_get_kustoclusterslist(test, rg)
@@ -539,6 +535,10 @@ def call_scenario(test, rg):
     step__clusters_post_kustoclustersstart(test, rg)
     step__clusters_post_kustoclustersstop(test, rg)
     step__clusters_put_kustoclusterscreateorupdate(test, rg)
+    step__attacheddatabaseconfigurations_delete(test, rg)
+    step__attacheddatabaseconfigurations_get(test, rg)
+    step__attacheddatabaseconfigurations_get2(test, rg)
+    step__attacheddatabaseconfigurations_put(test, rg)
     step__clusterprincipalassignments_delete(test, rg)
     step__clusterprincipalassignments_get(test, rg)
     step__clusterprincipalassignments_get2(test, rg)
