@@ -59,6 +59,16 @@ def step__factories_get_factories_listbyresourcegroup(test, rg):
              checks=[])
 
 
+# EXAMPLE: /Factories/patch/Factories_Update
+@try_manual
+def step__factories_patch_factories_update(test, rg):
+    test.cmd('az datafactory update '
+             '--name "{myFactory}" '
+             '--tags exampleTag="exampleValue" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
 # EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
 @try_manual
 def step__factories_post(test, rg):
@@ -97,16 +107,6 @@ def step__factories_post2(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Factories/patch/Factories_Update
-@try_manual
-def step__factories_patch_factories_update(test, rg):
-    test.cmd('az datafactory update '
-             '--name "{myFactory}" '
-             '--tags exampleTag="exampleValue" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
 # EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
 @try_manual
 def step__integrationruntimes_put(test, rg):
@@ -134,6 +134,18 @@ def step__integrationruntimes_get2(test, rg):
     test.cmd('az datafactory integration-runtime list '
              '--factory-name "{myFactory}" '
              '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /IntegrationRuntimes/patch/IntegrationRuntimes_Update
+@try_manual
+def step__integrationruntimes_patch(test, rg):
+    test.cmd('az datafactory integration-runtime update '
+             '--factory-name "{myFactory}" '
+             '--name "{myIntegrationRuntime}" '
+             '--resource-group "{rg}" '
+             '--auto-update "Off" '
+             '--update-delay-offset "\\"PT3H\\""',
              checks=[])
 
 
@@ -254,15 +266,13 @@ def step__integrationruntimes_post11(test, rg):
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimes/patch/IntegrationRuntimes_Update
+# EXAMPLE: /IntegrationRuntimes/delete/IntegrationRuntimes_Delete
 @try_manual
-def step__integrationruntimes_patch(test, rg):
-    test.cmd('az datafactory integration-runtime update '
+def step__integrationruntimes_delete(test, rg):
+    test.cmd('az datafactory integration-runtime delete -y '
              '--factory-name "{myFactory}" '
              '--name "{myIntegrationRuntime}" '
-             '--resource-group "{rg}" '
-             '--auto-update "Off" '
-             '--update-delay-offset "\\"PT3H\\""',
+             '--resource-group "{rg}"',
              checks=[])
 
 
@@ -371,16 +381,6 @@ def step__triggers_post_triggers_unsubscribefromevents(test, rg):
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimes/delete/IntegrationRuntimes_Delete
-@try_manual
-def step__integrationruntimes_delete(test, rg):
-    test.cmd('az datafactory integration-runtime delete -y '
-             '--factory-name "{myFactory}" '
-             '--name "{myIntegrationRuntime}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
 # EXAMPLE: /Triggers/delete/Triggers_Delete
 @try_manual
 def step__triggers_delete_triggers_delete(test, rg):
@@ -412,13 +412,14 @@ def call_scenario(test, rg):
     step__factories_get_factories_get(test, rg)
     step__factories_get_factories_list(test, rg)
     step__factories_get_factories_listbyresourcegroup(test, rg)
+    step__factories_patch_factories_update(test, rg)
     step__factories_post(test, rg)
     step__factories_post_factories_getdataplaneaccess(test, rg)
     step__factories_post2(test, rg)
-    step__factories_patch_factories_update(test, rg)
     step__integrationruntimes_put(test, rg)
     step__integrationruntimes_get(test, rg)
     step__integrationruntimes_get2(test, rg)
+    step__integrationruntimes_patch(test, rg)
     step__integrationruntimes_post(test, rg)
     step__integrationruntimes_post2(test, rg)
     step__integrationruntimes_post3(test, rg)
@@ -430,7 +431,7 @@ def call_scenario(test, rg):
     step__integrationruntimes_post9(test, rg)
     step__integrationruntimes_post10(test, rg)
     step__integrationruntimes_post11(test, rg)
-    step__integrationruntimes_patch(test, rg)
+    step__integrationruntimes_delete(test, rg)
     step__triggers_put_triggers_create(test, rg)
     step__triggers_put_triggers_update(test, rg)
     step__triggers_get_triggers_get(test, rg)
@@ -441,7 +442,6 @@ def call_scenario(test, rg):
     step__triggers_post_triggers_stop(test, rg)
     step__triggers_post_triggers_subscribetoevents(test, rg)
     step__triggers_post_triggers_unsubscribefromevents(test, rg)
-    step__integrationruntimes_delete(test, rg)
     step__triggers_delete_triggers_delete(test, rg)
     step__factories_delete_factories_delete(test, rg)
     cleanup(test, rg)
