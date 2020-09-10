@@ -22,13 +22,10 @@ def setup(test, rg):
     pass
 
 
-# EXAMPLE: /Factories/put/Factories_CreateOrUpdate
+# EXAMPLE: /Factories/delete/Factories_Delete
 @try_manual
-def step__factories_put_factories_createorupdate(test, rg):
-    test.cmd('az datafactory create '
-             '--location "East US" '
-             '--zones "earth" '
-             '--zones "moon" '
+def step__factories_delete_factories_delete(test, rg):
+    test.cmd('az datafactory delete -y '
              '--name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -107,12 +104,23 @@ def step__factories_post2(test, rg):
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
+# EXAMPLE: /Factories/put/Factories_CreateOrUpdate
 @try_manual
-def step__integrationruntimes_put(test, rg):
-    test.cmd('az datafactory integration-runtime self-hosted create '
+def step__factories_put_factories_createorupdate(test, rg):
+    test.cmd('az datafactory create '
+             '--location "East US" '
+             '--zones "earth" '
+             '--zones "moon" '
+             '--name "{myFactory}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# EXAMPLE: /IntegrationRuntimes/delete/IntegrationRuntimes_Delete
+@try_manual
+def step__integrationruntimes_delete(test, rg):
+    test.cmd('az datafactory integration-runtime delete -y '
              '--factory-name "{myFactory}" '
-             '--description "A selfhosted integration runtime" '
              '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
@@ -266,38 +274,23 @@ def step__integrationruntimes_post11(test, rg):
              checks=[])
 
 
-# EXAMPLE: /IntegrationRuntimes/delete/IntegrationRuntimes_Delete
+# EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
 @try_manual
-def step__integrationruntimes_delete(test, rg):
-    test.cmd('az datafactory integration-runtime delete -y '
+def step__integrationruntimes_put(test, rg):
+    test.cmd('az datafactory integration-runtime self-hosted create '
              '--factory-name "{myFactory}" '
+             '--description "A selfhosted integration runtime" '
              '--name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=[])
 
 
-# EXAMPLE: /Triggers/put/Triggers_Create
+# EXAMPLE: /Triggers/delete/Triggers_Delete
 @try_manual
-def step__triggers_put_triggers_create(test, rg):
-    test.cmd('az datafactory trigger create '
+def step__triggers_delete_triggers_delete(test, rg):
+    test.cmd('az datafactory trigger delete -y '
              '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
-             '--properties "{{\\"type\\":\\"ScheduleTrigger\\",\\"pipelines\\":[{{\\"parameters\\":{{\\"OutputBlobNameL'
-             'ist\\":[\\"exampleoutput.csv\\"]}},\\"pipelineReference\\":{{\\"type\\":\\"PipelineReference\\",\\"refere'
-             'nceName\\":\\"examplePipeline\\"}}}}],\\"typeProperties\\":{{\\"recurrence\\":{{\\"endTime\\":\\"2018-06-'
-             '16T00:55:13.8441801Z\\",\\"frequency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39'
-             ':13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}}}}" '
-             '--name "{myTrigger}"',
-             checks=[])
-
-
-# EXAMPLE: /Triggers/put/Triggers_Update
-@try_manual
-def step__triggers_put_triggers_update(test, rg):
-    test.cmd('az datafactory trigger update '
-             '--factory-name "{myFactory}" '
-             '--resource-group "{rg}" '
-             '--description "Example description" '
              '--name "{myTrigger}"',
              checks=[])
 
@@ -381,22 +374,29 @@ def step__triggers_post_triggers_unsubscribefromevents(test, rg):
              checks=[])
 
 
-# EXAMPLE: /Triggers/delete/Triggers_Delete
+# EXAMPLE: /Triggers/put/Triggers_Create
 @try_manual
-def step__triggers_delete_triggers_delete(test, rg):
-    test.cmd('az datafactory trigger delete -y '
+def step__triggers_put_triggers_create(test, rg):
+    test.cmd('az datafactory trigger create '
              '--factory-name "{myFactory}" '
              '--resource-group "{rg}" '
+             '--properties "{{\\"type\\":\\"ScheduleTrigger\\",\\"pipelines\\":[{{\\"parameters\\":{{\\"OutputBlobNameL'
+             'ist\\":[\\"exampleoutput.csv\\"]}},\\"pipelineReference\\":{{\\"type\\":\\"PipelineReference\\",\\"refere'
+             'nceName\\":\\"examplePipeline\\"}}}}],\\"typeProperties\\":{{\\"recurrence\\":{{\\"endTime\\":\\"2018-06-'
+             '16T00:55:13.8441801Z\\",\\"frequency\\":\\"Minute\\",\\"interval\\":4,\\"startTime\\":\\"2018-06-16T00:39'
+             ':13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}}}}" '
              '--name "{myTrigger}"',
              checks=[])
 
 
-# EXAMPLE: /Factories/delete/Factories_Delete
+# EXAMPLE: /Triggers/put/Triggers_Update
 @try_manual
-def step__factories_delete_factories_delete(test, rg):
-    test.cmd('az datafactory delete -y '
-             '--name "{myFactory}" '
-             '--resource-group "{rg}"',
+def step__triggers_put_triggers_update(test, rg):
+    test.cmd('az datafactory trigger update '
+             '--factory-name "{myFactory}" '
+             '--resource-group "{rg}" '
+             '--description "Example description" '
+             '--name "{myTrigger}"',
              checks=[])
 
 
@@ -408,7 +408,7 @@ def cleanup(test, rg):
 @try_manual
 def call_scenario(test, rg):
     setup(test, rg)
-    step__factories_put_factories_createorupdate(test, rg)
+    step__factories_delete_factories_delete(test, rg)
     step__factories_get_factories_get(test, rg)
     step__factories_get_factories_list(test, rg)
     step__factories_get_factories_listbyresourcegroup(test, rg)
@@ -416,7 +416,8 @@ def call_scenario(test, rg):
     step__factories_post(test, rg)
     step__factories_post_factories_getdataplaneaccess(test, rg)
     step__factories_post2(test, rg)
-    step__integrationruntimes_put(test, rg)
+    step__factories_put_factories_createorupdate(test, rg)
+    step__integrationruntimes_delete(test, rg)
     step__integrationruntimes_get(test, rg)
     step__integrationruntimes_get2(test, rg)
     step__integrationruntimes_patch(test, rg)
@@ -431,9 +432,8 @@ def call_scenario(test, rg):
     step__integrationruntimes_post9(test, rg)
     step__integrationruntimes_post10(test, rg)
     step__integrationruntimes_post11(test, rg)
-    step__integrationruntimes_delete(test, rg)
-    step__triggers_put_triggers_create(test, rg)
-    step__triggers_put_triggers_update(test, rg)
+    step__integrationruntimes_put(test, rg)
+    step__triggers_delete_triggers_delete(test, rg)
     step__triggers_get_triggers_get(test, rg)
     step__triggers_get_triggers_listbyfactory(test, rg)
     step__triggers_post(test, rg)
@@ -442,8 +442,8 @@ def call_scenario(test, rg):
     step__triggers_post_triggers_stop(test, rg)
     step__triggers_post_triggers_subscribetoevents(test, rg)
     step__triggers_post_triggers_unsubscribefromevents(test, rg)
-    step__triggers_delete_triggers_delete(test, rg)
-    step__factories_delete_factories_delete(test, rg)
+    step__triggers_put_triggers_create(test, rg)
+    step__triggers_put_triggers_update(test, rg)
     cleanup(test, rg)
 
 
