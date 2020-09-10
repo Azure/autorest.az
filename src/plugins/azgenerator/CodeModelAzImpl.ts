@@ -2190,7 +2190,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         if (!this._configuredScenario) {
             this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool, this._testScenario);
-            //this.SortExamplesByDependency();
+            this.SortExamplesByDependency();
             PrintTestScenario(this._testScenario);
         }
 
@@ -2289,24 +2289,6 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             return examples_a.Id.localeCompare(examples_b.Id);
         };
-
-        // let i = 0;
-        // let swapped = new Set<string>();    //for loop detecting
-        // while (i < this._testScenario.length) {
-        //     for (let j = i + 1; j < this._testScenario.length; j++) {
-        //         let swapId = `${i}<->${j}`;
-        //         if (swapped.has(swapId)) continue; // has loop, ignore the compare.
-        //         if (compare(scenarioExamples.get(this._testScenario[i]['name']), scenarioExamples.get(this._testScenario[j]['name'])) > 0) {
-        //             let tmp = this._testScenario[i];
-        //             this._testScenario[i] = this._testScenario[j];
-        //             this._testScenario[j] = tmp;
-        //             swapped.add(swapId);
-        //             i--;
-        //             break;
-        //         }
-        //     }
-        //     i++;
-        // }
         this._testScenario = MergeSort(this._testScenario,compare);
     }
 
