@@ -2209,18 +2209,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public SortExamplesByDependency() {
-        let depends = new Set<string>(); // for detect loop depends
         let depend_on = (example_a: CommandExample, example_b: CommandExample): boolean => {
             // TODO: check dependency by object
-            let ret = this.resource_pool.isDependResource(example_a.ResourceClassName, example_b.ResourceClassName);
-            if (ret) {
-                let reverseDepends = `${example_b.ResourceClassName}->${example_a.ResourceClassName}`;
-                if (depends.has(reverseDepends)) {
-                    return false;
-                }
-                depends.add(`${example_a.ResourceClassName}->${example_b.ResourceClassName}`);
-            }
-            return ret;
+            return this.resource_pool.isDependResource(example_a.ResourceClassName, example_b.ResourceClassName);
         }
 
         let isCreate = (example: CommandExample): boolean => {
@@ -2231,22 +2222,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             return example.HttpMethod == 'delete';
         }
 
-
-        let scenarioExamples: Map<string, CommandExample> = new Map<string, CommandExample>();
-        let commandExamples = this.GetAllExamples();
-        for (let i = 0; i < this._testScenario.length; i++) {
-            for (let commandExample of commandExamples) {
-                if (this.matchExample(commandExample, this._testScenario[i]['name'])) {
-                    scenarioExamples.set(this._testScenario[i]['name'], commandExample);
-                    break;
-                }
-            }
-        }
-
-        let compare = (item_a: any , item_b: any): number => {
-            let examples_a = scenarioExamples.get(item_a['name']);
-            let examples_b = scenarioExamples.get(item_b['name']);
-            if (!examples_a || !examples_b) return 1;
+        // stable sort
+        let compare = (examples_a: CommandExample, examples_b: CommandExample): number => {
+            if (!examples_a || !examples_b) return 0;
 
             if (examples_a.ResourceClassName == examples_b.ResourceClassName) {
                 if (isCreate(examples_b) && !isCreate(examples_a)) {
@@ -2289,7 +2267,38 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             return examples_a.Id.localeCompare(examples_b.Id);
         };
-        this._testScenario = MergeSort(this._testScenario,compare);
+
+
+        let scenarioExamples: Map<string, CommandExample> = new Map<string, CommandExample>();
+        let commandExamples = this.GetAllExamples();
+        for (let i = 0; i < this._testScenario.length; i++) {
+            for (let commandExample of commandExamples) {
+                if (this.matchExample(commandExample, this._testScenario[i]['name'])) {
+                    scenarioExamples.set(this._testScenario[i]['name'], commandExample);
+                    break;
+                }
+            }
+
+        }
+
+        let i = 0;
+        let swapped = new Set<string>();    //for loop detecting
+        while (i < this._testScenario.length) {
+            for (let j = i + 1; j < this._testScenario.length; j++) {
+                let swapId = `${i}<->${j}`;
+                if (swapped.has(swapId)) continue; // has loop, ignore the compare.
+                if (compare(scenarioExamples.get(this._testScenario[i]['name']), scenarioExamples.get(this._testScenario[j]['name'])) > 0) {
+                    let tmp = this._testScenario[i];
+                    this._testScenario[i] = this._testScenario[j];
+                    this._testScenario[j] = tmp;
+                    swapped.add(swapId);
+                    i--;
+                    break;
+                }
+            }
+            i++;
+        }
+        //this._testScenario = MergeSort(this._testScenario,compare);    
     }
 
     public GetAllMethods(command_group?: string, callback?: () => void): any[] {
