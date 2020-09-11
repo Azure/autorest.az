@@ -6,6 +6,9 @@ With these options we can
 3. Generate a extension using public release sdk with track1 adaption.
 4. Generate a cli main repo modules.
 
+
+Please Note that the following features still in private release, please find the latest private package [here](https://github.com/azure/autorest.az/releases) 
+
 ## What kind of options do we have
 
 ### --target-mode option
