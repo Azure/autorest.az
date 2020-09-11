@@ -56,8 +56,8 @@ As autorest.az support auto detect full/incremental generation mode. The rules a
  ```
 
 ## Full codegen to cli
-You can use `--target-mode=core` change the `--azure-cli-extension-folder` to `--azure-cli-folder` to generate cli modules. see [here](how-to-generate-with-different-options.md#L51) for more details.  
-You also use other interesting options when generating the cli. see [here](how-to-generate-with-different-options.md#L9) for more details.  
+You can use `--target-mode=core` change the `--azure-cli-extension-folder` to `--azure-cli-folder` to generate cli modules. see [here](how-to-generate-with-different-options.md#generate-cli-main-repo-modules-with-default-option) for more details.  
+You also use other interesting options when generating the cli. see [here](how-to-generate-with-different-options.md#what-kind-of-options-do-we-have) for more details.  
 
 ## Incremental codegen to cli
 Coming soon
