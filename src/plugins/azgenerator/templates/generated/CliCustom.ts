@@ -231,9 +231,6 @@ function GetSingleCommandDef(model: CodeModelAz, required: any) {
 
     let call = "def " + updatedMethodName + "(";
     let indent = " ".repeat(call.length);
-    if (model.Command_Name == "synapse sql-pool-blob-auditing-policy update") {
-        model.Command;
-    }
 
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     let hasLongRun = false;
@@ -538,7 +535,7 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
         let parameterPair = '';
         let m4FlattenedFrom = param.language['cli']?.['m4FlattenedFrom']
         if (isNullOrUndefined(m4FlattenedFrom) || m4FlattenedFrom.length <= 0) {
-            parameterPair = GetSimpleCallItem(model, param, required);
+            parameterPair = GetSimpleCallItem(model, param, required, false, null, optionName);
         } else {
             let items = [];
             for(let mparam of m4FlattenedFrom) {
@@ -560,7 +557,7 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     return methodCall.split("\n");
 }
 
-function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, m4Flattened: boolean = false, originParam: Parameter = null): string {
+function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, m4Flattened: boolean = false, originParam: Parameter = null, optionName: string = null): string {
     let parameterPair = "";
     if (m4Flattened && !isNullOrUndefined(originParam)) {
         let paramNamePython = model.Parameter_NamePython(originParam);
@@ -603,7 +600,11 @@ function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, 
             }
         }
         else {
-            parameterPair = paramNamePython + "=" + model.Parameter_MapsTo(param);
+            if (!isNullOrUndefined(optionName)) {
+                parameterPair = paramNamePython + "=" + optionName;
+            } else {
+                parameterPair = paramNamePython + "=" + model.Parameter_MapsTo(param);
+            }
         }
     }
     return parameterPair;
