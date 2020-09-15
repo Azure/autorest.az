@@ -155,6 +155,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
     let spaceNum = 0;
     let strStart = -1;
     let inStrTags = Array(maxLength).fill(strMode);
+    let isStrTags = Array(maxLength).fill(false);
     let indents = [];
     while (spaceNum < sentence.length && sentence[spaceNum] == ' ') spaceNum++;
 
@@ -166,10 +167,13 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
     for (let i = 0; i < sentence.length; i++) {
         if (sentence[i] == ' ' && !inStr && ret.length > 1 && ret[ret.length - 1].length == (indent > 0 ? indent : spaceNum)) continue;
         ret[ret.length - 1] += sentence[i];
+        isStrTags[ret[ret.length - 1].length-1] = false;
         if (inStr) {
             if (sentence[i] == strTag && !isEscaped(sentence, i)) {
                 inStr = false;
+                isStrTags[ret[ret.length - 1].length-1] = true;
             }
+            inStrTags[ret[ret.length - 1].length-1] = true;
         }
         else {
             if (sentence[i] == ',') lastComma = ret[ret.length - 1].length - 1;
@@ -177,11 +181,13 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                 inStr = true;
                 strTag = '\'';
                 strStart = i;
+                isStrTags[ret[ret.length - 1].length-1] = true;
             }
             else if (sentence[i] == '\"' && !isEscaped(sentence, i)) {
                 inStr = true;
                 strTag = '\"';
                 strStart = i;
+                isStrTags[ret[ret.length - 1].length-1] = true;
             }
 
             if (sentence[i] == '(' || sentence[i] == '[') {
@@ -191,8 +197,9 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
             if (sentence[i] == ')' || sentence[i] == ']') {
                 indent = indents.pop();
             }
+            inStrTags[ret[ret.length - 1].length-1] = inStr;
         }
-        inStrTags[ret[ret.length - 1].length-1] = inStr;
+        
         if (ret[ret.length - 1].length >= maxLength) {
             if (inStr) {
                 let lastNormal = ret[ret.length - 1].length - 1;
@@ -231,21 +238,23 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                     if (lastNormal != ret[ret.length - 1].length - 1) {
                         let newLine = ' '.repeat(indent > 0 ? indent : spaceNum) + strTag + ret[ret.length - 1].substr(lastNormal + 1);
                         ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastNormal + 1) + strTag;
-                        let currentLength = ret[ret.length - 1].length;
-                        if (currentLength >= 3 && ret[ret.length - 1][currentLength - 2] == ' ' && ret[ret.length - 1][currentLength - 2] == strTag && (currentLength == 2 || ret[ret.length - 1][currentLength - 3] != "\\")) {   // remove empty string in the end of line
-                            ret[ret.length - 1] = ret[ret.length - 1].substr(0, currentLength - 2);
-                        }
                         ret.push(newLine);
                         lastComma = -1;
                     }
                     else {
                         ret[ret.length - 1] += strTag;
-                        let currentLength = ret[ret.length - 1].length;
-                        if (currentLength >= 3 && ret[ret.length - 1][currentLength - 2] == ' ' && ret[ret.length - 1][currentLength - 2] == strTag && (currentLength == 2 || ret[ret.length - 1][currentLength - 3] != "\\")) {   // remove empty string in the end of line
-                            ret[ret.length - 1] = ret[ret.length - 1].substr(0, currentLength - 2);
-                        }
                         ret.push(' '.repeat(indent > 0 ? indent : spaceNum) + strTag);
                         lastComma = -1;
+                    }
+
+                    if (ret[ret.length-2].length>=2) {
+                        let lenLast = ret[ret.length - 2].length;
+                        // if (lenLast >= 4 && ret[ret.length - 2][lenLast - 2] == ' ' && ret[ret.length - 2][lenLast - 3] == strTag && (ret[ret.length - 2][lenLast - 4] != "\\")) {   // remove empty string in the end of line
+                        //     ret[ret.length - 1] = ret[ret.length - 1].substr(0, lenLast - 2);
+                        // }
+                        if (isStrTags[lenLast-2] && ret[ret.length-2].slice(0, -2).match(/^ *$/i)) {
+                            ret.splice(ret.length-2, 1);
+                        }
                     }
                 }
             }
@@ -277,11 +286,14 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                     lastComma = -1;
                 }
                 else if (i < sentence.length - 2) {
-                    for (let i=ret[ret.length - 1].length-1; i>indent; i--) {
-                        let currentChar = ret[ret.length - 1][i];
-                        if (!currentChar.match(/[a-z0-9_]/i)) {
-                            let newLine = ' '.repeat(ret[ret.length - 1].search(/\S|$/)) + ret[ret.length - 1].substr(i + 1).trimLeft();
-                            ret[ret.length - 1] = ret[ret.length - 1].substr(0, i + 1) + "\\";
+                    for (let j=ret[ret.length - 1].length-1; j>indent; j--) {
+                        let currentChar = ret[ret.length - 1][j];
+                        if (!currentChar.match(/[a-z0-9_]/i) && sentence[i+1] != ",") {
+                            let newLine = ' '.repeat(ret[ret.length - 1].search(/\S|$/)) + ret[ret.length - 1].substr(j + 1).trimLeft();
+                            ret[ret.length - 1] = ret[ret.length - 1].substr(0, j + 1);
+                            if (indents.length==0) {
+                                ret[ret.length - 1] += "\\";    // fix E502
+                            }
                             ret.push(newLine);
                             lastComma = -1;
                             break;
