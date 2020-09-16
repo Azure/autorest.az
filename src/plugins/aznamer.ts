@@ -191,6 +191,18 @@ export class AzNamer {
                                     }
                                 }
                             }
+                            if (!isNullOrUndefined(parameter.schema.language['cli']?.['alias'])) {
+                                if (isNullOrUndefined(parameter.language['az']['alias'])) {
+                                    parameter.language['az']['alias'] = []
+                                }
+                                if (typeof(parameter.schema.language['cli']['alias']) == "string") {
+                                    parameter.language['az']['alias'].push(changeCamelToDash(parameter.schema.language['cli']['alias']));
+                                } else if (isArray(parameter.schema.language['cli']['alias'])) {
+                                    for(let alias of parameter.schema.language['cli']['alias']) {
+                                        parameter.language['az']['alias'].push(changeCamelToDash(alias));
+                                    }
+                                }
+                            }
                             if (!isNullOrUndefined(parameter.language['cli']['m4FlattenedFrom'])) {
                                 for(let param of parameter.language['cli']['m4FlattenedFrom']) {
                                     this.getAzName(param);
@@ -208,6 +220,18 @@ export class AzNamer {
                                         parameter.language['az']['alias'].push(changeCamelToDash(parameter.language['cli']['alias']));
                                     } else if (isArray(parameter.language['cli']['alias'])) {
                                         for(let alias of parameter.language['cli']['alias']) {
+                                            parameter.language['az']['alias'].push(changeCamelToDash(alias));
+                                        }
+                                    }
+                                }
+                                if (!isNullOrUndefined(parameter.schema.language['cli']?.['alias'])) {
+                                    if (isNullOrUndefined(parameter.language['az']['alias'])) {
+                                        parameter.language['az']['alias'] = []
+                                    }
+                                    if (typeof(parameter.schema.language['cli']['alias']) == "string") {
+                                        parameter.language['az']['alias'].push(changeCamelToDash(parameter.schema.language['cli']['alias']));
+                                    } else if (isArray(parameter.schema.language['cli']['alias'])) {
+                                        for(let alias of parameter.schema.language['cli']['alias']) {
                                             parameter.language['az']['alias'].push(changeCamelToDash(alias));
                                         }
                                     }
