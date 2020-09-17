@@ -23,8 +23,7 @@ import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
 import { GenerateTopLevelImport } from "./templates/topcommon/CliTopLevelImport";
 import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
-import { createTarget } from "../../utils/inplace"
-import {join} from "path"
+import { inplaceGen } from "../../utils/inplace"
 
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
@@ -43,16 +42,8 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         this.files[this.azDirectory + "generated/__init__.py"] = GenerateNamespaceInit(this.model);
 
         this.files[this.azDirectory + "tests/__init__.py"] = GenerateAzureCliTestInit(this.model);
-        this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model);
-        
-        let testFile = this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py";
-        let testGenFile = testFile+".gen";
-        let originA = createTarget(join(this.model.OutputFolder, testGenFile));
-        let customizedA = createTarget(join(this.model.OutputFolder, testFile));
-        this.files[testGenFile] = GenerateAzureCliTestScenario(this.model);
-        let target = createTarget(this.files[testGenFile]);
-        target.merge(originA, customizedA);
-        this.files[testFile] = target.getContent();
+        let testFile = "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py";
+        this.files[this.azDirectory + testFile] = inplaceGen(this.model.OutputFolder, this.azDirectory, testFile, GenerateAzureCliTestScenario(this.model));
 
         if (NeedPreparer()) {
             this.files[this.azDirectory + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(this.model);

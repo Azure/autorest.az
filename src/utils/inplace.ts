@@ -1,5 +1,7 @@
-import {readFileSync, existsSync} from 'fs';
+import {readFileSync, existsSync, writeFileSync} from 'fs';
 import { isNullOrUndefined } from 'util';
+import {join} from "path"
+import JSZip = require('jszip-sync');
 
 export class TargetFile {
     content: string;
@@ -272,6 +274,7 @@ export class TailSegment extends BaseSegment {
 }
 
 export function createTarget(file: string[]| string): TargetFile {
+    if (isNullOrUndefined(file))    return null;
     let fileContent: string[];
     if (typeof file == 'string') {
         if (!existsSync(file))  return null;
@@ -283,4 +286,54 @@ export function createTarget(file: string[]| string): TargetFile {
     let target = new TargetFile(fileContent);
     target.createSegments();
     return target;
+}
+
+export function zipFile(zipFile: string, genFile: string, content: string[]) {
+    let strContent = content.join("\n");
+    let zip = new JSZip();
+    zip.sync(()=>{
+        if (existsSync(zipFile)) {
+            zip.loadAsync(readFileSync(zipFile,'binary')).then(zip => {
+                zip.file(genFile, strContent);
+            });
+        }
+        else {
+            zip.file(genFile, strContent);
+        }
+        zip.generateAsync({type: "nodebuffer"})
+        .then(function(content) {
+            writeFileSync(zipFile, content);
+        });
+    });
+}
+
+export function loadFromZip(zipFile: string, genFile: string): string[] {
+    if (existsSync(zipFile)) {
+        let zip = new JSZip();
+        let content = undefined;
+        zip.sync(()=>{
+            zip.loadAsync(readFileSync(zipFile,'binary')).then(zip => {
+                const inFile = zip.file(genFile);
+                if (!isNullOrUndefined(inFile)) {
+                    inFile.async("string").then(data =>{
+                        content = data.split("\n");
+                    })
+                }
+            });
+        });
+        if (!isNullOrUndefined(content)) {
+            return content;
+        }
+    }
+    return undefined;
+}
+
+export function inplaceGen(outputFolder: string, azDirectory: string, filename: string, genContent: string[]): string[] {
+    let zipGenFile = join(outputFolder, azDirectory, "gen.zip");
+    let originA = createTarget(loadFromZip(zipGenFile, filename));
+    let customizedA = createTarget(join(outputFolder,azDirectory, filename));
+    zipFile(zipGenFile, filename, genContent);
+    let target = createTarget(genContent);
+    target.merge(originA, customizedA);
+    return target.getContent();
 }
