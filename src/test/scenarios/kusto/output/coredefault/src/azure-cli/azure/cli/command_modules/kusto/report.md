@@ -1,20 +1,115 @@
 # Azure CLI Module Creation Report
 
-### kusto attached-database-configuration create
-
-create a kusto attached-database-configuration.
-
-#### Command group
-|Name (az)|Swagger name|
+## EXTENSION
+|CLI Extension|Command Groups|
 |---------|------------|
-|kusto attached-database-configuration|AttachedDatabaseConfigurations|
+|az kusto|[groups](#CommandGroups)
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
+## GROUPS
+### <a name="CommandGroups">Command groups in 'az kusto' extension </a>
+|CLI Command Group|Group Swagger name|Commands|
+|---------|------------|--------|
+|az kusto cluster|Clusters|[commands](#CommandsInClusters)|
+|az kusto cluster-principal-assignment|ClusterPrincipalAssignments|[commands](#CommandsInClusterPrincipalAssignments)|
+|az kusto database|Databases|[commands](#CommandsInDatabases)|
+|az kusto database-principal-assignment|DatabasePrincipalAssignments|[commands](#CommandsInDatabasePrincipalAssignments)|
+|az kusto attached-database-configuration|AttachedDatabaseConfigurations|[commands](#CommandsInAttachedDatabaseConfigurations)|
+|az kusto data-connection|DataConnections|[commands](#CommandsInDataConnections)|
 
-#### Parameters
+## COMMANDS
+### <a name="CommandsInAttachedDatabaseConfigurations">Commands in 'az kusto attached-database-configuration' group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az kusto attached-database-configuration list](#AttachedDatabaseConfigurationsListByCluster)|ListByCluster|[Parameters](#ParametersAttachedDatabaseConfigurationsListByCluster)|Not Found|
+|[az kusto attached-database-configuration show](#AttachedDatabaseConfigurationsGet)|Get|[Parameters](#ParametersAttachedDatabaseConfigurationsGet)|Not Found|
+|[az kusto attached-database-configuration create](#AttachedDatabaseConfigurationsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersAttachedDatabaseConfigurationsCreateOrUpdate#Create)|Not Found|
+|[az kusto attached-database-configuration update](#AttachedDatabaseConfigurationsCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersAttachedDatabaseConfigurationsCreateOrUpdate#Update)|Not Found|
+|[az kusto attached-database-configuration delete](#AttachedDatabaseConfigurationsDelete)|Delete|[Parameters](#ParametersAttachedDatabaseConfigurationsDelete)|Not Found|
+
+### <a name="CommandsInClusters">Commands in 'az kusto cluster' group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az kusto cluster list](#ClustersListByResourceGroup)|ListByResourceGroup|[Parameters](#ParametersClustersListByResourceGroup)|Not Found|
+|[az kusto cluster list](#ClustersList)|List|[Parameters](#ParametersClustersList)|Not Found|
+|[az kusto cluster show](#ClustersGet)|Get|[Parameters](#ParametersClustersGet)|Not Found|
+|[az kusto cluster create](#ClustersCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersClustersCreateOrUpdate#Create)|Not Found|
+|[az kusto cluster update](#ClustersUpdate)|Update|[Parameters](#ParametersClustersUpdate)|Not Found|
+|[az kusto cluster delete](#ClustersDelete)|Delete|[Parameters](#ParametersClustersDelete)|Not Found|
+|[az kusto cluster add-language-extension](#ClustersAddLanguageExtensions)|AddLanguageExtensions|[Parameters](#ParametersClustersAddLanguageExtensions)|Not Found|
+|[az kusto cluster detach-follower-database](#ClustersDetachFollowerDatabases)|DetachFollowerDatabases|[Parameters](#ParametersClustersDetachFollowerDatabases)|Not Found|
+|[az kusto cluster diagnose-virtual-network](#ClustersDiagnoseVirtualNetwork)|DiagnoseVirtualNetwork|[Parameters](#ParametersClustersDiagnoseVirtualNetwork)|Not Found|
+|[az kusto cluster list-follower-database](#ClustersListFollowerDatabases)|ListFollowerDatabases|[Parameters](#ParametersClustersListFollowerDatabases)|Not Found|
+|[az kusto cluster list-language-extension](#ClustersListLanguageExtensions)|ListLanguageExtensions|[Parameters](#ParametersClustersListLanguageExtensions)|Not Found|
+|[az kusto cluster list-sku](#ClustersListSkusByResource)|ListSkusByResource|[Parameters](#ParametersClustersListSkusByResource)|Not Found|
+|[az kusto cluster list-sku](#ClustersListSkus)|ListSkus|[Parameters](#ParametersClustersListSkus)|Not Found|
+|[az kusto cluster remove-language-extension](#ClustersRemoveLanguageExtensions)|RemoveLanguageExtensions|[Parameters](#ParametersClustersRemoveLanguageExtensions)|Not Found|
+|[az kusto cluster start](#ClustersStart)|Start|[Parameters](#ParametersClustersStart)|Not Found|
+|[az kusto cluster stop](#ClustersStop)|Stop|[Parameters](#ParametersClustersStop)|Not Found|
+
+### <a name="CommandsInClusterPrincipalAssignments">Commands in 'az kusto cluster-principal-assignment' group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az kusto cluster-principal-assignment list](#ClusterPrincipalAssignmentsList)|List|[Parameters](#ParametersClusterPrincipalAssignmentsList)|Not Found|
+|[az kusto cluster-principal-assignment show](#ClusterPrincipalAssignmentsGet)|Get|[Parameters](#ParametersClusterPrincipalAssignmentsGet)|Not Found|
+|[az kusto cluster-principal-assignment create](#ClusterPrincipalAssignmentsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersClusterPrincipalAssignmentsCreateOrUpdate#Create)|Not Found|
+|[az kusto cluster-principal-assignment update](#ClusterPrincipalAssignmentsCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersClusterPrincipalAssignmentsCreateOrUpdate#Update)|Not Found|
+|[az kusto cluster-principal-assignment delete](#ClusterPrincipalAssignmentsDelete)|Delete|[Parameters](#ParametersClusterPrincipalAssignmentsDelete)|Not Found|
+
+### <a name="CommandsInDataConnections">Commands in 'az kusto data-connection' group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az kusto data-connection list](#DataConnectionsListByDatabase)|ListByDatabase|[Parameters](#ParametersDataConnectionsListByDatabase)|Not Found|
+|[az kusto data-connection show](#DataConnectionsGet)|Get|[Parameters](#ParametersDataConnectionsGet)|Not Found|
+|[az kusto data-connection create](#DataConnectionsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersDataConnectionsCreateOrUpdate#Create)|Not Found|
+|[az kusto data-connection update](#DataConnectionsUpdate)|Update|[Parameters](#ParametersDataConnectionsUpdate)|Not Found|
+|[az kusto data-connection delete](#DataConnectionsDelete)|Delete|[Parameters](#ParametersDataConnectionsDelete)|Not Found|
+|[az kusto data-connection data-connection-validation](#DataConnectionsdataConnectionValidation)|dataConnectionValidation|[Parameters](#ParametersDataConnectionsdataConnectionValidation)|Not Found|
+
+### <a name="CommandsInDatabases">Commands in 'az kusto database' group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az kusto database list](#DatabasesListByCluster)|ListByCluster|[Parameters](#ParametersDatabasesListByCluster)|Not Found|
+|[az kusto database show](#DatabasesGet)|Get|[Parameters](#ParametersDatabasesGet)|Not Found|
+|[az kusto database create](#DatabasesCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersDatabasesCreateOrUpdate#Create)|Not Found|
+|[az kusto database update](#DatabasesUpdate)|Update|[Parameters](#ParametersDatabasesUpdate)|Not Found|
+|[az kusto database delete](#DatabasesDelete)|Delete|[Parameters](#ParametersDatabasesDelete)|Not Found|
+|[az kusto database add-principal](#DatabasesAddPrincipals)|AddPrincipals|[Parameters](#ParametersDatabasesAddPrincipals)|Not Found|
+|[az kusto database list-principal](#DatabasesListPrincipals)|ListPrincipals|[Parameters](#ParametersDatabasesListPrincipals)|Not Found|
+|[az kusto database remove-principal](#DatabasesRemovePrincipals)|RemovePrincipals|[Parameters](#ParametersDatabasesRemovePrincipals)|Not Found|
+
+### <a name="CommandsInDatabasePrincipalAssignments">Commands in 'az kusto database-principal-assignment' group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az kusto database-principal-assignment list](#DatabasePrincipalAssignmentsList)|List|[Parameters](#ParametersDatabasePrincipalAssignmentsList)|Not Found|
+|[az kusto database-principal-assignment show](#DatabasePrincipalAssignmentsGet)|Get|[Parameters](#ParametersDatabasePrincipalAssignmentsGet)|Not Found|
+|[az kusto database-principal-assignment create](#DatabasePrincipalAssignmentsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersDatabasePrincipalAssignmentsCreateOrUpdate#Create)|Not Found|
+|[az kusto database-principal-assignment update](#DatabasePrincipalAssignmentsCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersDatabasePrincipalAssignmentsCreateOrUpdate#Update)|Not Found|
+|[az kusto database-principal-assignment delete](#DatabasePrincipalAssignmentsDelete)|Delete|[Parameters](#ParametersDatabasePrincipalAssignmentsDelete)|Not Found|
+
+
+## COMMAND DETAILS
+
+### group 'az kusto attached-database-configuration'
+#### <a name="AttachedDatabaseConfigurationsListByCluster">Command 'az kusto attached-database-configuration list'</a>
+
+##### <a name="ParametersAttachedDatabaseConfigurationsListByCluster">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+
+#### <a name="AttachedDatabaseConfigurationsGet">Command 'az kusto attached-database-configuration show'</a>
+
+##### <a name="ParametersAttachedDatabaseConfigurationsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--attached-database-configuration-name**|string|The name of the attached database configuration.|attached_database_configuration_name|attachedDatabaseConfigurationName|
+
+#### <a name="AttachedDatabaseConfigurationsCreateOrUpdate#Create">Command 'az kusto attached-database-configuration create'</a>
+
+##### <a name="ParametersAttachedDatabaseConfigurationsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -25,83 +120,9 @@ create a kusto attached-database-configuration.
 |**--cluster-resource-id**|string|The resource id of the cluster where the databases you would like to attach reside.|cluster_resource_id|clusterResourceId|
 |**--default-principals-modification-kind**|choice|The default principals modification kind|default_principals_modification_kind|defaultPrincipalsModificationKind|
 
-### kusto attached-database-configuration delete
+#### <a name="AttachedDatabaseConfigurationsCreateOrUpdate#Update">Command 'az kusto attached-database-configuration update'</a>
 
-delete a kusto attached-database-configuration.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto attached-database-configuration|AttachedDatabaseConfigurations|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--attached-database-configuration-name**|string|The name of the attached database configuration.|attached_database_configuration_name|attachedDatabaseConfigurationName|
-
-### kusto attached-database-configuration list
-
-list a kusto attached-database-configuration.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto attached-database-configuration|AttachedDatabaseConfigurations|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByCluster|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-
-### kusto attached-database-configuration show
-
-show a kusto attached-database-configuration.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto attached-database-configuration|AttachedDatabaseConfigurations|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--attached-database-configuration-name**|string|The name of the attached database configuration.|attached_database_configuration_name|attachedDatabaseConfigurationName|
-
-### kusto attached-database-configuration update
-
-update a kusto attached-database-configuration.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto attached-database-configuration|AttachedDatabaseConfigurations|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
+##### <a name="ParametersAttachedDatabaseConfigurationsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -112,42 +133,36 @@ update a kusto attached-database-configuration.
 |**--cluster-resource-id**|string|The resource id of the cluster where the databases you would like to attach reside.|cluster_resource_id|clusterResourceId|
 |**--default-principals-modification-kind**|choice|The default principals modification kind|default_principals_modification_kind|defaultPrincipalsModificationKind|
 
-### kusto cluster add-language-extension
+#### <a name="AttachedDatabaseConfigurationsDelete">Command 'az kusto attached-database-configuration delete'</a>
 
-add-language-extension a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|add-language-extension|AddLanguageExtensions|
-
-#### Parameters
+##### <a name="ParametersAttachedDatabaseConfigurationsDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
 |**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--value**|array|The list of language extensions.|value|value|
+|**--attached-database-configuration-name**|string|The name of the attached database configuration.|attached_database_configuration_name|attachedDatabaseConfigurationName|
 
-### kusto cluster create
+### group 'az kusto cluster'
+#### <a name="ClustersListByResourceGroup">Command 'az kusto cluster list'</a>
 
-create a kusto cluster.
+##### <a name="ParametersClustersListByResourceGroup">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+#### <a name="ClustersList">Command 'az kusto cluster list'</a>
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
+#### <a name="ClustersGet">Command 'az kusto cluster show'</a>
 
-#### Parameters
+##### <a name="ParametersClustersGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+
+#### <a name="ClustersCreateOrUpdate#Create">Command 'az kusto cluster create'</a>
+
+##### <a name="ParametersClustersCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -167,245 +182,9 @@ create a kusto cluster.
 |**--identity-type**|sealed-choice|The identity type.|type|type|
 |**--identity-user-assigned-identities**|dictionary|The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.|user_assigned_identities|userAssignedIdentities|
 
-### kusto cluster delete
+#### <a name="ClustersUpdate">Command 'az kusto cluster update'</a>
 
-delete a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-
-### kusto cluster detach-follower-database
-
-detach-follower-database a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|detach-follower-database|DetachFollowerDatabases|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--cluster-resource-id**|string|Resource id of the cluster that follows a database owned by this cluster.|cluster_resource_id|clusterResourceId|
-|**--attached-database-configuration-name**|string|Resource name of the attached database configuration in the follower cluster.|attached_database_configuration_name|attachedDatabaseConfigurationName|
-
-### kusto cluster diagnose-virtual-network
-
-diagnose-virtual-network a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|diagnose-virtual-network|DiagnoseVirtualNetwork|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-
-### kusto cluster list
-
-list a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByResourceGroup|
-|list|List|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-
-### kusto cluster list-follower-database
-
-list-follower-database a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list-follower-database|ListFollowerDatabases|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-
-### kusto cluster list-language-extension
-
-list-language-extension a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list-language-extension|ListLanguageExtensions|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-
-### kusto cluster list-sku
-
-list-sku a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list-sku|ListSkusByResource|
-|list-sku|ListSkus|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-
-### kusto cluster remove-language-extension
-
-remove-language-extension a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|remove-language-extension|RemoveLanguageExtensions|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--value**|array|The list of language extensions.|value|value|
-
-### kusto cluster show
-
-show a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-
-### kusto cluster start
-
-start a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|start|Start|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-
-### kusto cluster stop
-
-stop a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|stop|Stop|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-
-### kusto cluster update
-
-update a kusto cluster.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster|Clusters|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|Update|
-
-#### Parameters
+##### <a name="ParametersClustersUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -424,21 +203,113 @@ update a kusto cluster.
 |**--identity-type**|sealed-choice|The identity type.|type|type|
 |**--identity-user-assigned-identities**|dictionary|The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.|user_assigned_identities|userAssignedIdentities|
 
-### kusto cluster-principal-assignment create
+#### <a name="ClustersDelete">Command 'az kusto cluster delete'</a>
 
-create a kusto cluster-principal-assignment.
+##### <a name="ParametersClustersDelete">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster-principal-assignment|ClusterPrincipalAssignments|
+#### <a name="ClustersAddLanguageExtensions">Command 'az kusto cluster add-language-extension'</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
+##### <a name="ParametersClustersAddLanguageExtensions">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--value**|array|The list of language extensions.|value|value|
 
-#### Parameters
+#### <a name="ClustersDetachFollowerDatabases">Command 'az kusto cluster detach-follower-database'</a>
+
+##### <a name="ParametersClustersDetachFollowerDatabases">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--cluster-resource-id**|string|Resource id of the cluster that follows a database owned by this cluster.|cluster_resource_id|clusterResourceId|
+|**--attached-database-configuration-name**|string|Resource name of the attached database configuration in the follower cluster.|attached_database_configuration_name|attachedDatabaseConfigurationName|
+
+#### <a name="ClustersDiagnoseVirtualNetwork">Command 'az kusto cluster diagnose-virtual-network'</a>
+
+##### <a name="ParametersClustersDiagnoseVirtualNetwork">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+
+#### <a name="ClustersListFollowerDatabases">Command 'az kusto cluster list-follower-database'</a>
+
+##### <a name="ParametersClustersListFollowerDatabases">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+
+#### <a name="ClustersListLanguageExtensions">Command 'az kusto cluster list-language-extension'</a>
+
+##### <a name="ParametersClustersListLanguageExtensions">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+
+#### <a name="ClustersListSkusByResource">Command 'az kusto cluster list-sku'</a>
+
+##### <a name="ParametersClustersListSkusByResource">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+#### <a name="ClustersListSkus">Command 'az kusto cluster list-sku'</a>
+
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+
+#### <a name="ClustersRemoveLanguageExtensions">Command 'az kusto cluster remove-language-extension'</a>
+
+##### <a name="ParametersClustersRemoveLanguageExtensions">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--value**|array|The list of language extensions.|value|value|
+
+#### <a name="ClustersStart">Command 'az kusto cluster start'</a>
+
+##### <a name="ParametersClustersStart">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+
+#### <a name="ClustersStop">Command 'az kusto cluster stop'</a>
+
+##### <a name="ParametersClustersStop">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+
+### group 'az kusto cluster-principal-assignment'
+#### <a name="ClusterPrincipalAssignmentsList">Command 'az kusto cluster-principal-assignment list'</a>
+
+##### <a name="ParametersClusterPrincipalAssignmentsList">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+
+#### <a name="ClusterPrincipalAssignmentsGet">Command 'az kusto cluster-principal-assignment show'</a>
+
+##### <a name="ParametersClusterPrincipalAssignmentsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--principal-assignment-name**|string|The name of the Kusto principalAssignment.|principal_assignment_name|principalAssignmentName|
+
+#### <a name="ClusterPrincipalAssignmentsCreateOrUpdate#Create">Command 'az kusto cluster-principal-assignment create'</a>
+
+##### <a name="ParametersClusterPrincipalAssignmentsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -449,83 +320,9 @@ create a kusto cluster-principal-assignment.
 |**--tenant-id**|string|The tenant id of the principal|tenant_id|tenantId|
 |**--principal-type**|choice|Principal type.|principal_type|principalType|
 
-### kusto cluster-principal-assignment delete
+#### <a name="ClusterPrincipalAssignmentsCreateOrUpdate#Update">Command 'az kusto cluster-principal-assignment update'</a>
 
-delete a kusto cluster-principal-assignment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster-principal-assignment|ClusterPrincipalAssignments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--principal-assignment-name**|string|The name of the Kusto principalAssignment.|principal_assignment_name|principalAssignmentName|
-
-### kusto cluster-principal-assignment list
-
-list a kusto cluster-principal-assignment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster-principal-assignment|ClusterPrincipalAssignments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-
-### kusto cluster-principal-assignment show
-
-show a kusto cluster-principal-assignment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster-principal-assignment|ClusterPrincipalAssignments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--principal-assignment-name**|string|The name of the Kusto principalAssignment.|principal_assignment_name|principalAssignmentName|
-
-### kusto cluster-principal-assignment update
-
-update a kusto cluster-principal-assignment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto cluster-principal-assignment|ClusterPrincipalAssignments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
+##### <a name="ParametersClusterPrincipalAssignmentsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -536,21 +333,38 @@ update a kusto cluster-principal-assignment.
 |**--tenant-id**|string|The tenant id of the principal|tenant_id|tenantId|
 |**--principal-type**|choice|Principal type.|principal_type|principalType|
 
-### kusto data-connection create
+#### <a name="ClusterPrincipalAssignmentsDelete">Command 'az kusto cluster-principal-assignment delete'</a>
 
-create a kusto data-connection.
+##### <a name="ParametersClusterPrincipalAssignmentsDelete">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--principal-assignment-name**|string|The name of the Kusto principalAssignment.|principal_assignment_name|principalAssignmentName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto data-connection|DataConnections|
+### group 'az kusto data-connection'
+#### <a name="DataConnectionsListByDatabase">Command 'az kusto data-connection list'</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
+##### <a name="ParametersDataConnectionsListByDatabase">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
 
-#### Parameters
+#### <a name="DataConnectionsGet">Command 'az kusto data-connection show'</a>
+
+##### <a name="ParametersDataConnectionsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
+|**--data-connection-name**|string|The name of the data connection.|data_connection_name|dataConnectionName|
+
+#### <a name="DataConnectionsCreateOrUpdate#Create">Command 'az kusto data-connection create'</a>
+
+##### <a name="ParametersDataConnectionsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -561,21 +375,9 @@ create a kusto data-connection.
 |**--iot-hub-data-connection**|object|Class representing an iot hub data connection.|iot_hub_data_connection|IotHubDataConnection|
 |**--event-grid-data-connection**|object|Class representing an Event Grid data connection.|event_grid_data_connection|EventGridDataConnection|
 
-### kusto data-connection data-connection-validation
+#### <a name="DataConnectionsUpdate">Command 'az kusto data-connection update'</a>
 
-data-connection-validation a kusto data-connection.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto data-connection|DataConnections|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|data-connection-validation|dataConnectionValidation|
-
-#### Parameters
+##### <a name="ParametersDataConnectionsUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -586,21 +388,9 @@ data-connection-validation a kusto data-connection.
 |**--iot-hub-data-connection**|object|Class representing an iot hub data connection.|iot_hub_data_connection|IotHubDataConnection|
 |**--event-grid-data-connection**|object|Class representing an Event Grid data connection.|event_grid_data_connection|EventGridDataConnection|
 
-### kusto data-connection delete
+#### <a name="DataConnectionsDelete">Command 'az kusto data-connection delete'</a>
 
-delete a kusto data-connection.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto data-connection|DataConnections|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
+##### <a name="ParametersDataConnectionsDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -608,64 +398,9 @@ delete a kusto data-connection.
 |**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
 |**--data-connection-name**|string|The name of the data connection.|data_connection_name|dataConnectionName|
 
-### kusto data-connection list
+#### <a name="DataConnectionsdataConnectionValidation">Command 'az kusto data-connection data-connection-validation'</a>
 
-list a kusto data-connection.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto data-connection|DataConnections|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByDatabase|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
-
-### kusto data-connection show
-
-show a kusto data-connection.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto data-connection|DataConnections|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
-|**--data-connection-name**|string|The name of the data connection.|data_connection_name|dataConnectionName|
-
-### kusto data-connection update
-
-update a kusto data-connection.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto data-connection|DataConnections|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|Update|
-
-#### Parameters
+##### <a name="ParametersDataConnectionsdataConnectionValidation">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -676,43 +411,27 @@ update a kusto data-connection.
 |**--iot-hub-data-connection**|object|Class representing an iot hub data connection.|iot_hub_data_connection|IotHubDataConnection|
 |**--event-grid-data-connection**|object|Class representing an Event Grid data connection.|event_grid_data_connection|EventGridDataConnection|
 
-### kusto database add-principal
+### group 'az kusto database'
+#### <a name="DatabasesListByCluster">Command 'az kusto database list'</a>
 
-add-principal a kusto database.
+##### <a name="ParametersDatabasesListByCluster">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database|Databases|
+#### <a name="DatabasesGet">Command 'az kusto database show'</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|add-principal|AddPrincipals|
-
-#### Parameters
+##### <a name="ParametersDatabasesGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
 |**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
 |**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
-|**--value**|array|The list of Kusto database principals.|value|value|
 
-### kusto database create
+#### <a name="DatabasesCreateOrUpdate#Create">Command 'az kusto database create'</a>
 
-create a kusto database.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database|Databases|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
-
-#### Parameters
+##### <a name="ParametersDatabasesCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -721,126 +440,9 @@ create a kusto database.
 |**--read-write-database**|object|Class representing a read write database.|read_write_database|ReadWriteDatabase|
 |**--read-only-following-database**|object|Class representing a read only following database.|read_only_following_database|ReadOnlyFollowingDatabase|
 
-### kusto database delete
+#### <a name="DatabasesUpdate">Command 'az kusto database update'</a>
 
-delete a kusto database.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database|Databases|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
-
-### kusto database list
-
-list a kusto database.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database|Databases|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByCluster|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-
-### kusto database list-principal
-
-list-principal a kusto database.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database|Databases|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list-principal|ListPrincipals|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
-
-### kusto database remove-principal
-
-remove-principal a kusto database.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database|Databases|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|remove-principal|RemovePrincipals|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
-|**--value**|array|The list of Kusto database principals.|value|value|
-
-### kusto database show
-
-show a kusto database.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database|Databases|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
-
-### kusto database update
-
-update a kusto database.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database|Databases|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|Update|
-
-#### Parameters
+##### <a name="ParametersDatabasesUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -849,21 +451,67 @@ update a kusto database.
 |**--read-write-database**|object|Class representing a read write database.|read_write_database|ReadWriteDatabase|
 |**--read-only-following-database**|object|Class representing a read only following database.|read_only_following_database|ReadOnlyFollowingDatabase|
 
-### kusto database-principal-assignment create
+#### <a name="DatabasesDelete">Command 'az kusto database delete'</a>
 
-create a kusto database-principal-assignment.
+##### <a name="ParametersDatabasesDelete">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database-principal-assignment|DatabasePrincipalAssignments|
+#### <a name="DatabasesAddPrincipals">Command 'az kusto database add-principal'</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
+##### <a name="ParametersDatabasesAddPrincipals">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
+|**--value**|array|The list of Kusto database principals.|value|value|
 
-#### Parameters
+#### <a name="DatabasesListPrincipals">Command 'az kusto database list-principal'</a>
+
+##### <a name="ParametersDatabasesListPrincipals">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
+
+#### <a name="DatabasesRemovePrincipals">Command 'az kusto database remove-principal'</a>
+
+##### <a name="ParametersDatabasesRemovePrincipals">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
+|**--value**|array|The list of Kusto database principals.|value|value|
+
+### group 'az kusto database-principal-assignment'
+#### <a name="DatabasePrincipalAssignmentsList">Command 'az kusto database-principal-assignment list'</a>
+
+##### <a name="ParametersDatabasePrincipalAssignmentsList">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
+
+#### <a name="DatabasePrincipalAssignmentsGet">Command 'az kusto database-principal-assignment show'</a>
+
+##### <a name="ParametersDatabasePrincipalAssignmentsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
+|**--principal-assignment-name**|string|The name of the Kusto principalAssignment.|principal_assignment_name|principalAssignmentName|
+
+#### <a name="DatabasePrincipalAssignmentsCreateOrUpdate#Create">Command 'az kusto database-principal-assignment create'</a>
+
+##### <a name="ParametersDatabasePrincipalAssignmentsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -875,86 +523,9 @@ create a kusto database-principal-assignment.
 |**--tenant-id**|string|The tenant id of the principal|tenant_id|tenantId|
 |**--principal-type**|choice|Principal type.|principal_type|principalType|
 
-### kusto database-principal-assignment delete
+#### <a name="DatabasePrincipalAssignmentsCreateOrUpdate#Update">Command 'az kusto database-principal-assignment update'</a>
 
-delete a kusto database-principal-assignment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database-principal-assignment|DatabasePrincipalAssignments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
-|**--principal-assignment-name**|string|The name of the Kusto principalAssignment.|principal_assignment_name|principalAssignmentName|
-
-### kusto database-principal-assignment list
-
-list a kusto database-principal-assignment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database-principal-assignment|DatabasePrincipalAssignments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
-
-### kusto database-principal-assignment show
-
-show a kusto database-principal-assignment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database-principal-assignment|DatabasePrincipalAssignments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
-|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
-|**--principal-assignment-name**|string|The name of the Kusto principalAssignment.|principal_assignment_name|principalAssignmentName|
-
-### kusto database-principal-assignment update
-
-update a kusto database-principal-assignment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|kusto database-principal-assignment|DatabasePrincipalAssignments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
+##### <a name="ParametersDatabasePrincipalAssignmentsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
@@ -965,3 +536,13 @@ update a kusto database-principal-assignment.
 |**--role**|choice|Database principal role.|role|role|
 |**--tenant-id**|string|The tenant id of the principal|tenant_id|tenantId|
 |**--principal-type**|choice|Principal type.|principal_type|principalType|
+
+#### <a name="DatabasePrincipalAssignmentsDelete">Command 'az kusto database-principal-assignment delete'</a>
+
+##### <a name="ParametersDatabasePrincipalAssignmentsDelete">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
+|**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--database-name**|string|The name of the database in the Kusto cluster.|database_name|databaseName|
+|**--principal-assignment-name**|string|The name of the Kusto principalAssignment.|principal_assignment_name|principalAssignmentName|

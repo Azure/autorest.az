@@ -1,109 +1,51 @@
 # Azure CLI Module Creation Report
 
-### boolean bool get-false
-
-get-false a boolean bool.
-
-#### Command group
-|Name (az)|Swagger name|
+## EXTENSION
+|CLI Extension|Command Groups|
 |---------|------------|
-|boolean bool|bool|
+|az boolean|[groups](#CommandGroups)
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-false|getFalse|
+## GROUPS
+### <a name="CommandGroups">Command groups in 'az boolean' extension </a>
+|CLI Command Group|Group Swagger name|Commands|
+|---------|------------|--------|
+|az boolean bool|bool|[commands](#CommandsInbool)|
 
-#### Parameters
+## COMMANDS
+### <a name="CommandsInbool">Commands in 'az boolean bool' group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az boolean bool get-false](#boolgetFalse)|getFalse|[Parameters](#ParametersboolgetFalse)|Not Found|
+|[az boolean bool get-invalid](#boolgetInvalid)|getInvalid|[Parameters](#ParametersboolgetInvalid)|Not Found|
+|[az boolean bool get-null](#boolgetNull)|getNull|[Parameters](#ParametersboolgetNull)|Not Found|
+|[az boolean bool get-true](#boolgetTrue)|getTrue|[Parameters](#ParametersboolgetTrue)|Not Found|
+|[az boolean bool put-false](#boolputFalse)|putFalse|[Parameters](#ParametersboolputFalse)|Not Found|
+|[az boolean bool put-true](#boolputTrue)|putTrue|[Parameters](#ParametersboolputTrue)|Not Found|
+
+
+## COMMAND DETAILS
+
+### group 'az boolean bool'
+#### <a name="boolgetFalse">Command 'az boolean bool get-false'</a>
+
+
+#### <a name="boolgetInvalid">Command 'az boolean bool get-invalid'</a>
+
+
+#### <a name="boolgetNull">Command 'az boolean bool get-null'</a>
+
+
+#### <a name="boolgetTrue">Command 'az boolean bool get-true'</a>
+
+
+#### <a name="boolputFalse">Command 'az boolean bool put-false'</a>
+
+##### <a name="ParametersboolputFalse">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 
-### boolean bool get-invalid
+#### <a name="boolputTrue">Command 'az boolean bool put-true'</a>
 
-get-invalid a boolean bool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|boolean bool|bool|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-invalid|getInvalid|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-
-### boolean bool get-null
-
-get-null a boolean bool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|boolean bool|bool|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-null|getNull|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-
-### boolean bool get-true
-
-get-true a boolean bool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|boolean bool|bool|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-true|getTrue|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-
-### boolean bool put-false
-
-put-false a boolean bool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|boolean bool|bool|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|put-false|putFalse|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-
-### boolean bool put-true
-
-put-true a boolean bool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|boolean bool|bool|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|put-true|putTrue|
-
-#### Parameters
+##### <a name="ParametersboolputTrue">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
