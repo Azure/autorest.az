@@ -541,7 +541,7 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
             for(let mparam of m4FlattenedFrom) {
                 items.push(GetSimpleCallItem(model, mparam, required, true, param));
             }
-            parameterPair = items.join(",\n"); 
+            parameterPair = items.join(",\n" + indent); 
         }
 
         if (methodCall.endsWith("(")) {
@@ -580,7 +580,7 @@ function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, 
             }
         }
         else {
-            parameterPair = paramNamePython + "=" + model.Parameter_MapsTo(originParam) + "['" + keyName + "']";
+            parameterPair = keyName + "=" + model.Parameter_MapsTo(originParam) + "['" + keyName + "']";
         }       
     } else {
         let paramNamePython = model.Parameter_NamePython(param);
@@ -658,7 +658,7 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
                 for(let mparam of m4FlattenedFrom) {
                     items.push(GetSimpleCallItem(model, mparam, required, true, param));
                 }
-                parameterPair = items.join(",\n" + indent); 
+                parameterPair = items.join("," + "\n" + indent); 
             }
             
 

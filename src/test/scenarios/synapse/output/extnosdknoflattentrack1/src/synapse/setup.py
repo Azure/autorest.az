@@ -35,7 +35,7 @@ DEPENDENCIES = [
 ]
 
 try:
-    from .manual.dependency import DEPENDENCIES
+    from azext_synapse.manual.dependency import DEPENDENCIES
 except ImportError:
     pass
 

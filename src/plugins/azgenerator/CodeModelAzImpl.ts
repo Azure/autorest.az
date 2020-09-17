@@ -8,7 +8,7 @@ import { EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { CodeModel, Operation, OperationGroup, Parameter, ParameterLocation, Property, Request, Schema, SchemaType } from '@azure-tools/codemodel';
 import { values } from "@azure-tools/linq";
 import { isArray, isNullOrUndefined } from "util";
-import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase } from '../../utils/helper';
+import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash } from '../../utils/helper';
 import { GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
 import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './templates/tests/ScenarioTool';
@@ -262,6 +262,18 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             for (let child of this.MethodParameter.schema['children'].all) {
                                                 let childParam = new Parameter(child.language.default.name, child.language.default.description, child, child.language);
                                                 childParam.language = child.language
+                                                if (!isNullOrUndefined(child.language['cli']?.['alias'])) {
+                                                    if (isNullOrUndefined(childParam.language['az']['alias'])) {
+                                                        childParam.language['az']['alias'] = [];
+                                                    }
+                                                    if (typeof(child.language['cli']['alias']) == "string") {
+                                                        childParam.language['az']['alias'].push(changeCamelToDash(child.language['cli']['alias']));
+                                                    } else if (isArray(child.language['cli']['alias'])) {
+                                                        for(let alias of child.language['cli']['alias']) {
+                                                            childParam.language['az']['alias'].push(changeCamelToDash(alias));
+                                                        }
+                                                    }
+                                                }
                                                 childParam['polyBaseParam'] = polyBaseParam;
                                                 allChildParam.push(childParam);
                                             }
