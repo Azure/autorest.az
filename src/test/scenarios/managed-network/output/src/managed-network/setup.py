@@ -33,7 +33,7 @@ CLASSIFIERS = [
 DEPENDENCIES = []
 
 try:
-    from .manual.dependency import DEPENDENCIES
+    from azext_managed_network.manual.dependency import DEPENDENCIES
 except ImportError:
     pass
 
