@@ -15,7 +15,7 @@ export function GenerateAzureCliReport(model: CodeModelAz): string[] {
     output.push("## EXTENSION");
     output.push("|CLI Extension|Command Groups|");
     output.push("|---------|------------|");
-    output.push("|az" + model.Extension_Name + "|[groups](#CommandGroups)");
+    output.push("|az " + model.Extension_Name + "|[groups](#CommandGroups)");
     output.push("");
     output.push("## GROUPS");
     output.push("### <a name=\"CommandGroups\">Command groups in \'az " + model.Extension_Name + "\' extension </a>");
@@ -25,7 +25,7 @@ export function GenerateAzureCliReport(model: CodeModelAz): string[] {
     let cmds = {};
     if (model.SelectFirstCommandGroup()) {
         do {
-            output.push("|az " + model.CommandGroup_Name + "|" + model.CommandGroup_CliKey + "|" + "[command](#CommandIn" + model.CommandGroup_CliKey + ")|");
+            output.push("|az " + model.CommandGroup_Name + "|" + model.CommandGroup_CliKey + "|" + "[commands](#CommandsIn" + model.CommandGroup_CliKey + ")|");
         } while (model.SelectNextCommandGroup());
     }
 
@@ -89,9 +89,9 @@ function getCommandBody(model: CodeModelAz) {
             if (model.SelectFirstMethod()) {
                 do {
                     if (model.SelectFirstExample())
-                        mo.push("|[az " + model.CommandGroup_Name + " " + model.Method_NameAz + "]|(#" + model.CommandGroup_CliKey + model.Method_CliKey + ")|" + model.Method_CliKey + "|" + "[Parameters](#Parameters" + model.CommandGroup_CliKey + model.Method_CliKey + ")" + "|" + "[Example](#Examples" + model.CommandGroup_CliKey + model.Method_CliKey + ")|");
+                        mo.push("|[az " + model.CommandGroup_Name + " " + model.Method_NameAz + "](#" + model.CommandGroup_CliKey + model.Method_CliKey + ")|" + model.Method_CliKey + "|" + "[Parameters](#Parameters" + model.CommandGroup_CliKey + model.Method_CliKey + ")" + "|" + "[Example](#Examples" + model.CommandGroup_CliKey + model.Method_CliKey + ")|");
                     else
-                        mo.push("|[az " + model.CommandGroup_Name + " " + model.Method_NameAz + "]|(#" + model.CommandGroup_CliKey + model.Method_CliKey + ")|" + model.Method_CliKey + "|" + "[Parameters](#Parameters" + model.CommandGroup_CliKey + model.Method_CliKey + ")" + "|Not Found|");
+                        mo.push("|[az " + model.CommandGroup_Name + " " + model.Method_NameAz + "](#" + model.CommandGroup_CliKey + model.Method_CliKey + ")|" + model.Method_CliKey + "|" + "[Parameters](#Parameters" + model.CommandGroup_CliKey + model.Method_CliKey + ")" + "|Not Found|");
                 } while (model.SelectNextMethod());
             }
         } while (model.SelectNextCommand());
