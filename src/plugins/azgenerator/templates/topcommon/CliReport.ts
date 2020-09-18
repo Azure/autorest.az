@@ -5,6 +5,7 @@
 
 import { CodeModelAz } from "../../CodeModelAz"
 import { ParameterLocation, SchemaType } from "@azure-tools/codemodel";
+import { EscapeString,  ToCamelCase, Capitalize,  ToMultiLine, ToJsonString } from "../../../../utils/helper"
 import { isNullOrUndefined } from "util";
 
 export function GenerateAzureCliReport(model: CodeModelAz): string[] {
@@ -88,7 +89,7 @@ function getCommandBody(model: CodeModelAz) {
         do {
             if (model.SelectFirstMethod()) {
                 do {
-                    if (model.SelectFirstExample())
+                    if (model.GetExamples().length > 0)
                         mo.push("|[az " + model.CommandGroup_Name + " " + model.Method_NameAz + "](#" + model.CommandGroup_CliKey + model.Method_CliKey + ")|" + model.Method_CliKey + "|" + "[Parameters](#Parameters" + model.CommandGroup_CliKey + model.Method_CliKey + ")" + "|" + "[Example](#Examples" + model.CommandGroup_CliKey + model.Method_CliKey + ")|");
                     else
                         mo.push("|[az " + model.CommandGroup_Name + " " + model.Method_NameAz + "](#" + model.CommandGroup_CliKey + model.Method_CliKey + ")|" + model.Method_CliKey + "|" + "[Parameters](#Parameters" + model.CommandGroup_CliKey + model.Method_CliKey + ")" + "|Not Found|");
@@ -111,30 +112,17 @@ function getCommandDetails(model: CodeModelAz) {
             let nonrequiredmo: Array<string> = [];
             if (model.SelectFirstMethod()) {
                 do {
+                    let examplesStarted: boolean = false;
                     mo.push("#### <a name=\"" + model.CommandGroup_CliKey + model.Method_CliKey + "\">Command \'az " + model.CommandGroup_Name + " " + model.Method_NameAz + "\'</a>");
                     mo.push("");
-                    if (model.SelectFirstExample()) {
+                    for(let example of model.GetExamples()){
                         mo.push("##### <a name=\"" + "Examples" + model.CommandGroup_CliKey + model.Method_CliKey + "\">Example</a>");
-                        do {
-                            mo.push("");
-                            mo.push("**Example: " + model.Example_Title + "**");
-                            mo.push("");
-                            mo.push("```");
-
-                            let next: string = model.Command_Name + " " + model.Command_MethodName + " ";
-                            for (let k in model.Example_Params) {
-                                let v: string = model.Example_Params[k];
-                                if (/\s/.test(v)) {
-                                    v = "\"" + v.replace("\"", "\\\"") + "\"";
-                                }
-
-                                next += k + " " + v;
-                                mo.push(next);
-                                next = "        ";
-                            }
-                            mo.push("```");
-                        } while (model.SelectNextExample());
-                        mo.push("");
+                        mo.push("\'\'\'");
+                        let parameters: string[] = [];
+                        parameters = model.GetExampleItems(example, false, undefined);
+                        let line = parameters.join(' ');
+                        ToMultiLine(line, mo, 119, true);
+                        mo.push("\'\'\'");
                     }
                     if (!model.SelectFirstMethodParameter()) {
                         continue;
@@ -174,14 +162,24 @@ function getCommandDetails(model: CodeModelAz) {
                                 + model.MethodParameter_Name + "|" + model.MethodParameter_CliKey + "|");
                         }
                     } while (model.SelectNextMethodParameter());
+                    let flag : boolean = false;
+                    if(requiredmo.length > 0 || nonrequiredmo.length > 0){
+                        flag = true;
+                    }
+                    if(requiredmo.length > 0){
+                        mo = mo.concat(requiredmo);
+                        requiredmo = [];
+                    }
+                    if(nonrequiredmo.length > 0){
+                        mo = mo.concat(nonrequiredmo);
+                        nonrequiredmo = []
+                    }
+                    if(flag) mo.push("");
                 } while (model.SelectNextMethod());
             }
             if (requiredmo.length <= 0 && nonrequiredmo.length < 0) {
                 return mo;
             }
-            mo = mo.concat(requiredmo);
-            mo = mo.concat(nonrequiredmo);
-            mo.push("");
         } while (model.SelectNextCommand());
     }
     return mo;

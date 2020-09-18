@@ -28,22 +28,17 @@
 ### group 'az boolean bool'
 #### <a name="boolgetFalse">Command 'az boolean bool get-false'</a>
 
-
 #### <a name="boolgetInvalid">Command 'az boolean bool get-invalid'</a>
-
 
 #### <a name="boolgetNull">Command 'az boolean bool get-null'</a>
 
-
 #### <a name="boolgetTrue">Command 'az boolean bool get-true'</a>
-
 
 #### <a name="boolputFalse">Command 'az boolean bool put-false'</a>
 
 ##### <a name="ParametersboolputFalse">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
-
 #### <a name="boolputTrue">Command 'az boolean bool put-true'</a>
 
 ##### <a name="ParametersboolputTrue">Parameters</a> 

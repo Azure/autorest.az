@@ -17,51 +17,51 @@
 ### <a name="CommandsInFactories">Commands in 'az datafactory' group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
-|[az datafactory list](#FactoriesListByResourceGroup)|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|Not Found|
-|[az datafactory list](#FactoriesList)|List|[Parameters](#ParametersFactoriesList)|Not Found|
-|[az datafactory show](#FactoriesGet)|Get|[Parameters](#ParametersFactoriesGet)|Not Found|
-|[az datafactory create](#FactoriesCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdate#Create)|Not Found|
-|[az datafactory update](#FactoriesUpdate)|Update|[Parameters](#ParametersFactoriesUpdate)|Not Found|
-|[az datafactory delete](#FactoriesDelete)|Delete|[Parameters](#ParametersFactoriesDelete)|Not Found|
-|[az datafactory configure-factory-repo](#FactoriesConfigureFactoryRepo)|ConfigureFactoryRepo|[Parameters](#ParametersFactoriesConfigureFactoryRepo)|Not Found|
-|[az datafactory get-data-plane-access](#FactoriesGetDataPlaneAccess)|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|Not Found|
-|[az datafactory get-git-hub-access-token](#FactoriesGetGitHubAccessToken)|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|Not Found|
+|[az datafactory list](#FactoriesListByResourceGroup)|ListByResourceGroup|[Parameters](#ParametersFactoriesListByResourceGroup)|[Example](#ExamplesFactoriesListByResourceGroup)|
+|[az datafactory list](#FactoriesList)|List|[Parameters](#ParametersFactoriesList)|[Example](#ExamplesFactoriesList)|
+|[az datafactory show](#FactoriesGet)|Get|[Parameters](#ParametersFactoriesGet)|[Example](#ExamplesFactoriesGet)|
+|[az datafactory create](#FactoriesCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersFactoriesCreateOrUpdate#Create)|[Example](#ExamplesFactoriesCreateOrUpdate#Create)|
+|[az datafactory update](#FactoriesUpdate)|Update|[Parameters](#ParametersFactoriesUpdate)|[Example](#ExamplesFactoriesUpdate)|
+|[az datafactory delete](#FactoriesDelete)|Delete|[Parameters](#ParametersFactoriesDelete)|[Example](#ExamplesFactoriesDelete)|
+|[az datafactory configure-factory-repo](#FactoriesConfigureFactoryRepo)|ConfigureFactoryRepo|[Parameters](#ParametersFactoriesConfigureFactoryRepo)|[Example](#ExamplesFactoriesConfigureFactoryRepo)|
+|[az datafactory get-data-plane-access](#FactoriesGetDataPlaneAccess)|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|[Example](#ExamplesFactoriesGetDataPlaneAccess)|
+|[az datafactory get-git-hub-access-token](#FactoriesGetGitHubAccessToken)|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|[Example](#ExamplesFactoriesGetGitHubAccessToken)|
 
 ### <a name="CommandsInIntegrationRuntimes">Commands in 'az datafactory integration-runtime' group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
-|[az datafactory integration-runtime list](#IntegrationRuntimesListByFactory)|ListByFactory|[Parameters](#ParametersIntegrationRuntimesListByFactory)|Not Found|
-|[az datafactory integration-runtime show](#IntegrationRuntimesGet)|Get|[Parameters](#ParametersIntegrationRuntimesGet)|Not Found|
-|[az datafactory integration-runtime linked-integration-runtime create](#IntegrationRuntimesCreateLinkedIntegrationRuntime)|CreateLinkedIntegrationRuntime|[Parameters](#ParametersIntegrationRuntimesCreateLinkedIntegrationRuntime)|Not Found|
+|[az datafactory integration-runtime list](#IntegrationRuntimesListByFactory)|ListByFactory|[Parameters](#ParametersIntegrationRuntimesListByFactory)|[Example](#ExamplesIntegrationRuntimesListByFactory)|
+|[az datafactory integration-runtime show](#IntegrationRuntimesGet)|Get|[Parameters](#ParametersIntegrationRuntimesGet)|[Example](#ExamplesIntegrationRuntimesGet)|
+|[az datafactory integration-runtime linked-integration-runtime create](#IntegrationRuntimesCreateLinkedIntegrationRuntime)|CreateLinkedIntegrationRuntime|[Parameters](#ParametersIntegrationRuntimesCreateLinkedIntegrationRuntime)|[Example](#ExamplesIntegrationRuntimesCreateLinkedIntegrationRuntime)|
 |[az datafactory integration-runtime managed create](#IntegrationRuntimesCreateOrUpdate#Create#Managed)|CreateOrUpdate#Create#Managed|[Parameters](#ParametersIntegrationRuntimesCreateOrUpdate#Create#Managed)|Not Found|
-|[az datafactory integration-runtime self-hosted create](#IntegrationRuntimesCreateOrUpdate#Create#SelfHosted)|CreateOrUpdate#Create#SelfHosted|[Parameters](#ParametersIntegrationRuntimesCreateOrUpdate#Create#SelfHosted)|Not Found|
-|[az datafactory integration-runtime update](#IntegrationRuntimesUpdate)|Update|[Parameters](#ParametersIntegrationRuntimesUpdate)|Not Found|
-|[az datafactory integration-runtime delete](#IntegrationRuntimesDelete)|Delete|[Parameters](#ParametersIntegrationRuntimesDelete)|Not Found|
-|[az datafactory integration-runtime get-connection-info](#IntegrationRuntimesGetConnectionInfo)|GetConnectionInfo|[Parameters](#ParametersIntegrationRuntimesGetConnectionInfo)|Not Found|
-|[az datafactory integration-runtime get-monitoring-data](#IntegrationRuntimesGetMonitoringData)|GetMonitoringData|[Parameters](#ParametersIntegrationRuntimesGetMonitoringData)|Not Found|
-|[az datafactory integration-runtime get-status](#IntegrationRuntimesGetStatus)|GetStatus|[Parameters](#ParametersIntegrationRuntimesGetStatus)|Not Found|
-|[az datafactory integration-runtime list-auth-key](#IntegrationRuntimesListAuthKeys)|ListAuthKeys|[Parameters](#ParametersIntegrationRuntimesListAuthKeys)|Not Found|
-|[az datafactory integration-runtime regenerate-auth-key](#IntegrationRuntimesRegenerateAuthKey)|RegenerateAuthKey|[Parameters](#ParametersIntegrationRuntimesRegenerateAuthKey)|Not Found|
-|[az datafactory integration-runtime remove-link](#IntegrationRuntimesRemoveLinks)|RemoveLinks|[Parameters](#ParametersIntegrationRuntimesRemoveLinks)|Not Found|
-|[az datafactory integration-runtime start](#IntegrationRuntimesStart)|Start|[Parameters](#ParametersIntegrationRuntimesStart)|Not Found|
-|[az datafactory integration-runtime stop](#IntegrationRuntimesStop)|Stop|[Parameters](#ParametersIntegrationRuntimesStop)|Not Found|
-|[az datafactory integration-runtime sync-credentials](#IntegrationRuntimesSyncCredentials)|SyncCredentials|[Parameters](#ParametersIntegrationRuntimesSyncCredentials)|Not Found|
-|[az datafactory integration-runtime upgrade](#IntegrationRuntimesUpgrade)|Upgrade|[Parameters](#ParametersIntegrationRuntimesUpgrade)|Not Found|
+|[az datafactory integration-runtime self-hosted create](#IntegrationRuntimesCreateOrUpdate#Create#SelfHosted)|CreateOrUpdate#Create#SelfHosted|[Parameters](#ParametersIntegrationRuntimesCreateOrUpdate#Create#SelfHosted)|[Example](#ExamplesIntegrationRuntimesCreateOrUpdate#Create#SelfHosted)|
+|[az datafactory integration-runtime update](#IntegrationRuntimesUpdate)|Update|[Parameters](#ParametersIntegrationRuntimesUpdate)|[Example](#ExamplesIntegrationRuntimesUpdate)|
+|[az datafactory integration-runtime delete](#IntegrationRuntimesDelete)|Delete|[Parameters](#ParametersIntegrationRuntimesDelete)|[Example](#ExamplesIntegrationRuntimesDelete)|
+|[az datafactory integration-runtime get-connection-info](#IntegrationRuntimesGetConnectionInfo)|GetConnectionInfo|[Parameters](#ParametersIntegrationRuntimesGetConnectionInfo)|[Example](#ExamplesIntegrationRuntimesGetConnectionInfo)|
+|[az datafactory integration-runtime get-monitoring-data](#IntegrationRuntimesGetMonitoringData)|GetMonitoringData|[Parameters](#ParametersIntegrationRuntimesGetMonitoringData)|[Example](#ExamplesIntegrationRuntimesGetMonitoringData)|
+|[az datafactory integration-runtime get-status](#IntegrationRuntimesGetStatus)|GetStatus|[Parameters](#ParametersIntegrationRuntimesGetStatus)|[Example](#ExamplesIntegrationRuntimesGetStatus)|
+|[az datafactory integration-runtime list-auth-key](#IntegrationRuntimesListAuthKeys)|ListAuthKeys|[Parameters](#ParametersIntegrationRuntimesListAuthKeys)|[Example](#ExamplesIntegrationRuntimesListAuthKeys)|
+|[az datafactory integration-runtime regenerate-auth-key](#IntegrationRuntimesRegenerateAuthKey)|RegenerateAuthKey|[Parameters](#ParametersIntegrationRuntimesRegenerateAuthKey)|[Example](#ExamplesIntegrationRuntimesRegenerateAuthKey)|
+|[az datafactory integration-runtime remove-link](#IntegrationRuntimesRemoveLinks)|RemoveLinks|[Parameters](#ParametersIntegrationRuntimesRemoveLinks)|[Example](#ExamplesIntegrationRuntimesRemoveLinks)|
+|[az datafactory integration-runtime start](#IntegrationRuntimesStart)|Start|[Parameters](#ParametersIntegrationRuntimesStart)|[Example](#ExamplesIntegrationRuntimesStart)|
+|[az datafactory integration-runtime stop](#IntegrationRuntimesStop)|Stop|[Parameters](#ParametersIntegrationRuntimesStop)|[Example](#ExamplesIntegrationRuntimesStop)|
+|[az datafactory integration-runtime sync-credentials](#IntegrationRuntimesSyncCredentials)|SyncCredentials|[Parameters](#ParametersIntegrationRuntimesSyncCredentials)|[Example](#ExamplesIntegrationRuntimesSyncCredentials)|
+|[az datafactory integration-runtime upgrade](#IntegrationRuntimesUpgrade)|Upgrade|[Parameters](#ParametersIntegrationRuntimesUpgrade)|[Example](#ExamplesIntegrationRuntimesUpgrade)|
 
 ### <a name="CommandsInTriggers">Commands in 'az datafactory trigger' group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
-|[az datafactory trigger list](#TriggersListByFactory)|ListByFactory|[Parameters](#ParametersTriggersListByFactory)|Not Found|
-|[az datafactory trigger show](#TriggersGet)|Get|[Parameters](#ParametersTriggersGet)|Not Found|
-|[az datafactory trigger create](#TriggersCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersTriggersCreateOrUpdate#Create)|Not Found|
-|[az datafactory trigger update](#TriggersCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersTriggersCreateOrUpdate#Update)|Not Found|
-|[az datafactory trigger delete](#TriggersDelete)|Delete|[Parameters](#ParametersTriggersDelete)|Not Found|
-|[az datafactory trigger get-event-subscription-status](#TriggersGetEventSubscriptionStatus)|GetEventSubscriptionStatus|[Parameters](#ParametersTriggersGetEventSubscriptionStatus)|Not Found|
-|[az datafactory trigger query-by-factory](#TriggersQueryByFactory)|QueryByFactory|[Parameters](#ParametersTriggersQueryByFactory)|Not Found|
-|[az datafactory trigger start](#TriggersStart)|Start|[Parameters](#ParametersTriggersStart)|Not Found|
-|[az datafactory trigger stop](#TriggersStop)|Stop|[Parameters](#ParametersTriggersStop)|Not Found|
-|[az datafactory trigger subscribe-to-event](#TriggersSubscribeToEvents)|SubscribeToEvents|[Parameters](#ParametersTriggersSubscribeToEvents)|Not Found|
-|[az datafactory trigger unsubscribe-from-event](#TriggersUnsubscribeFromEvents)|UnsubscribeFromEvents|[Parameters](#ParametersTriggersUnsubscribeFromEvents)|Not Found|
+|[az datafactory trigger list](#TriggersListByFactory)|ListByFactory|[Parameters](#ParametersTriggersListByFactory)|[Example](#ExamplesTriggersListByFactory)|
+|[az datafactory trigger show](#TriggersGet)|Get|[Parameters](#ParametersTriggersGet)|[Example](#ExamplesTriggersGet)|
+|[az datafactory trigger create](#TriggersCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersTriggersCreateOrUpdate#Create)|[Example](#ExamplesTriggersCreateOrUpdate#Create)|
+|[az datafactory trigger update](#TriggersCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersTriggersCreateOrUpdate#Update)|[Example](#ExamplesTriggersCreateOrUpdate#Update)|
+|[az datafactory trigger delete](#TriggersDelete)|Delete|[Parameters](#ParametersTriggersDelete)|[Example](#ExamplesTriggersDelete)|
+|[az datafactory trigger get-event-subscription-status](#TriggersGetEventSubscriptionStatus)|GetEventSubscriptionStatus|[Parameters](#ParametersTriggersGetEventSubscriptionStatus)|[Example](#ExamplesTriggersGetEventSubscriptionStatus)|
+|[az datafactory trigger query-by-factory](#TriggersQueryByFactory)|QueryByFactory|[Parameters](#ParametersTriggersQueryByFactory)|[Example](#ExamplesTriggersQueryByFactory)|
+|[az datafactory trigger start](#TriggersStart)|Start|[Parameters](#ParametersTriggersStart)|[Example](#ExamplesTriggersStart)|
+|[az datafactory trigger stop](#TriggersStop)|Stop|[Parameters](#ParametersTriggersStop)|[Example](#ExamplesTriggersStop)|
+|[az datafactory trigger subscribe-to-event](#TriggersSubscribeToEvents)|SubscribeToEvents|[Parameters](#ParametersTriggersSubscribeToEvents)|[Example](#ExamplesTriggersSubscribeToEvents)|
+|[az datafactory trigger unsubscribe-from-event](#TriggersUnsubscribeFromEvents)|UnsubscribeFromEvents|[Parameters](#ParametersTriggersUnsubscribeFromEvents)|[Example](#ExamplesTriggersUnsubscribeFromEvents)|
 
 
 ## COMMAND DETAILS
@@ -69,15 +69,27 @@
 ### group 'az datafactory'
 #### <a name="FactoriesListByResourceGroup">Command 'az datafactory list'</a>
 
+##### <a name="ExamplesFactoriesListByResourceGroup">Example</a>
+'''
+az datafactory list --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersFactoriesListByResourceGroup">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
-#### <a name="FactoriesList">Command 'az datafactory list'</a>
-
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 
+#### <a name="FactoriesList">Command 'az datafactory list'</a>
+
+##### <a name="ExamplesFactoriesList">Example</a>
+'''
+az datafactory list
+'''
 #### <a name="FactoriesGet">Command 'az datafactory show'</a>
 
+##### <a name="ExamplesFactoriesGet">Example</a>
+'''
+az datafactory show --name "myFactory" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersFactoriesGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -87,6 +99,11 @@
 
 #### <a name="FactoriesCreateOrUpdate#Create">Command 'az datafactory create'</a>
 
+##### <a name="ExamplesFactoriesCreateOrUpdate#Create">Example</a>
+'''
+az datafactory create --location "East US" --zones "earth" --zones "moon" --name "myFactory" --resource-group \
+"myResourceGroup"
+'''
 ##### <a name="ParametersFactoriesCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -102,6 +119,10 @@
 
 #### <a name="FactoriesUpdate">Command 'az datafactory update'</a>
 
+##### <a name="ExamplesFactoriesUpdate">Example</a>
+'''
+az datafactory update --name "myFactory" --tags exampleTag="exampleValue" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersFactoriesUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -111,6 +132,10 @@
 
 #### <a name="FactoriesDelete">Command 'az datafactory delete'</a>
 
+##### <a name="ExamplesFactoriesDelete">Example</a>
+'''
+az datafactory delete --name "myFactory" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersFactoriesDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -119,6 +144,13 @@
 
 #### <a name="FactoriesConfigureFactoryRepo">Command 'az datafactory configure-factory-repo'</a>
 
+##### <a name="ExamplesFactoriesConfigureFactoryRepo">Example</a>
+'''
+az datafactory configure-factory-repo --factory-resource-id "/subscriptions/12345678-1234-1234-1234-12345678abc/resourc\
+eGroups/myResourceGroup/providers/Microsoft.DataFactory/factories/myFactory" --factory-vsts-configuration \
+account-name="ADF" collaboration-branch="master" last-commit-id="" project-name="project" repository-name="repo" \
+root-folder="/" tenant-id="" --location-id "East US"
+'''
 ##### <a name="ParametersFactoriesConfigureFactoryRepo">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -129,6 +161,12 @@
 
 #### <a name="FactoriesGetDataPlaneAccess">Command 'az datafactory get-data-plane-access'</a>
 
+##### <a name="ExamplesFactoriesGetDataPlaneAccess">Example</a>
+'''
+az datafactory get-data-plane-access --name "myFactory" --access-resource-path "" --expire-time \
+"2018-11-10T09:46:20.2659347Z" --permissions "r" --profile-name "DefaultProfile" --start-time \
+"2018-11-10T02:46:20.2659347Z" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersFactoriesGetDataPlaneAccess">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -142,6 +180,11 @@
 
 #### <a name="FactoriesGetGitHubAccessToken">Command 'az datafactory get-git-hub-access-token'</a>
 
+##### <a name="ExamplesFactoriesGetGitHubAccessToken">Example</a>
+'''
+az datafactory get-git-hub-access-token --name "myFactory" --git-hub-access-code "some" --git-hub-access-token-base-url\
+ "some" --git-hub-client-id "some" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersFactoriesGetGitHubAccessToken">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -154,6 +197,10 @@
 ### group 'az datafactory integration-runtime'
 #### <a name="IntegrationRuntimesListByFactory">Command 'az datafactory integration-runtime list'</a>
 
+##### <a name="ExamplesIntegrationRuntimesListByFactory">Example</a>
+'''
+az datafactory integration-runtime list --factory-name "myFactory" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesListByFactory">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -162,6 +209,11 @@
 
 #### <a name="IntegrationRuntimesGet">Command 'az datafactory integration-runtime show'</a>
 
+##### <a name="ExamplesIntegrationRuntimesGet">Example</a>
+'''
+az datafactory integration-runtime show --factory-name "myFactory" --name "myIntegrationRuntime" --resource-group \
+"myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -172,6 +224,13 @@
 
 #### <a name="IntegrationRuntimesCreateLinkedIntegrationRuntime">Command 'az datafactory integration-runtime linked-integration-runtime create'</a>
 
+##### <a name="ExamplesIntegrationRuntimesCreateLinkedIntegrationRuntime">Example</a>
+'''
+az datafactory integration-runtime linked-integration-runtime create --name "bfa92911-9fb6-4fbe-8f23-beae87bc1c83" \
+--data-factory-location "West US" --data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" --subscription-id \
+"061774c7-4b5a-4159-a55b-365581830283" --factory-name "myFactory" --integration-runtime-name "myIntegrationRuntime" \
+--resource-group "myResourceGroup" --subscription-id "12345678-1234-1234-1234-12345678abc"
+'''
 ##### <a name="ParametersIntegrationRuntimesCreateLinkedIntegrationRuntime">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -202,6 +261,11 @@
 
 #### <a name="IntegrationRuntimesCreateOrUpdate#Create#SelfHosted">Command 'az datafactory integration-runtime self-hosted create'</a>
 
+##### <a name="ExamplesIntegrationRuntimesCreateOrUpdate#Create#SelfHosted">Example</a>
+'''
+az datafactory integration-runtime self-hosted create --factory-name "myFactory" --description "A selfhosted \
+integration runtime" --name "myIntegrationRuntime" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesCreateOrUpdate#Create#SelfHosted">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -214,6 +278,11 @@
 
 #### <a name="IntegrationRuntimesUpdate">Command 'az datafactory integration-runtime update'</a>
 
+##### <a name="ExamplesIntegrationRuntimesUpdate">Example</a>
+'''
+az datafactory integration-runtime update --factory-name "myFactory" --name "myIntegrationRuntime" --resource-group \
+"myResourceGroup" --auto-update "Off" --update-delay-offset "\\"PT3H\\""
+'''
 ##### <a name="ParametersIntegrationRuntimesUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -225,6 +294,11 @@
 
 #### <a name="IntegrationRuntimesDelete">Command 'az datafactory integration-runtime delete'</a>
 
+##### <a name="ExamplesIntegrationRuntimesDelete">Example</a>
+'''
+az datafactory integration-runtime delete --factory-name "myFactory" --name "myIntegrationRuntime" --resource-group \
+"myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -234,6 +308,11 @@
 
 #### <a name="IntegrationRuntimesGetConnectionInfo">Command 'az datafactory integration-runtime get-connection-info'</a>
 
+##### <a name="ExamplesIntegrationRuntimesGetConnectionInfo">Example</a>
+'''
+az datafactory integration-runtime get-connection-info --factory-name "myFactory" --name "myIntegrationRuntime" \
+--resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesGetConnectionInfo">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -243,6 +322,11 @@
 
 #### <a name="IntegrationRuntimesGetMonitoringData">Command 'az datafactory integration-runtime get-monitoring-data'</a>
 
+##### <a name="ExamplesIntegrationRuntimesGetMonitoringData">Example</a>
+'''
+az datafactory integration-runtime get-monitoring-data --factory-name "myFactory" --name "myIntegrationRuntime" \
+--resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesGetMonitoringData">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -252,6 +336,11 @@
 
 #### <a name="IntegrationRuntimesGetStatus">Command 'az datafactory integration-runtime get-status'</a>
 
+##### <a name="ExamplesIntegrationRuntimesGetStatus">Example</a>
+'''
+az datafactory integration-runtime get-status --factory-name "myFactory" --name "myIntegrationRuntime" \
+--resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesGetStatus">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -261,6 +350,11 @@
 
 #### <a name="IntegrationRuntimesListAuthKeys">Command 'az datafactory integration-runtime list-auth-key'</a>
 
+##### <a name="ExamplesIntegrationRuntimesListAuthKeys">Example</a>
+'''
+az datafactory integration-runtime list-auth-key --factory-name "myFactory" --name "myIntegrationRuntime" \
+--resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesListAuthKeys">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -270,6 +364,11 @@
 
 #### <a name="IntegrationRuntimesRegenerateAuthKey">Command 'az datafactory integration-runtime regenerate-auth-key'</a>
 
+##### <a name="ExamplesIntegrationRuntimesRegenerateAuthKey">Example</a>
+'''
+az datafactory integration-runtime regenerate-auth-key --factory-name "myFactory" --name "myIntegrationRuntime" \
+--key-name "authKey2" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesRegenerateAuthKey">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -280,6 +379,11 @@
 
 #### <a name="IntegrationRuntimesRemoveLinks">Command 'az datafactory integration-runtime remove-link'</a>
 
+##### <a name="ExamplesIntegrationRuntimesRemoveLinks">Example</a>
+'''
+az datafactory integration-runtime remove-link --factory-name "myFactory" --name "myIntegrationRuntime" \
+--linked-factory-name "exampleFactoryName-linked" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesRemoveLinks">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -290,6 +394,11 @@
 
 #### <a name="IntegrationRuntimesStart">Command 'az datafactory integration-runtime start'</a>
 
+##### <a name="ExamplesIntegrationRuntimesStart">Example</a>
+'''
+az datafactory integration-runtime start --factory-name "myFactory" --name "myIntegrationRuntime2" --resource-group \
+"myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesStart">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -299,6 +408,11 @@
 
 #### <a name="IntegrationRuntimesStop">Command 'az datafactory integration-runtime stop'</a>
 
+##### <a name="ExamplesIntegrationRuntimesStop">Example</a>
+'''
+az datafactory integration-runtime stop --factory-name "myFactory" --name "myIntegrationRuntime2" --resource-group \
+"myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesStop">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -308,6 +422,11 @@
 
 #### <a name="IntegrationRuntimesSyncCredentials">Command 'az datafactory integration-runtime sync-credentials'</a>
 
+##### <a name="ExamplesIntegrationRuntimesSyncCredentials">Example</a>
+'''
+az datafactory integration-runtime sync-credentials --factory-name "myFactory" --name "myIntegrationRuntime" \
+--resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesSyncCredentials">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -317,6 +436,11 @@
 
 #### <a name="IntegrationRuntimesUpgrade">Command 'az datafactory integration-runtime upgrade'</a>
 
+##### <a name="ExamplesIntegrationRuntimesUpgrade">Example</a>
+'''
+az datafactory integration-runtime upgrade --factory-name "myFactory" --name "myIntegrationRuntime" --resource-group \
+"myResourceGroup"
+'''
 ##### <a name="ParametersIntegrationRuntimesUpgrade">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -327,6 +451,10 @@
 ### group 'az datafactory trigger'
 #### <a name="TriggersListByFactory">Command 'az datafactory trigger list'</a>
 
+##### <a name="ExamplesTriggersListByFactory">Example</a>
+'''
+az datafactory trigger list --factory-name "myFactory" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersTriggersListByFactory">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -335,6 +463,10 @@
 
 #### <a name="TriggersGet">Command 'az datafactory trigger show'</a>
 
+##### <a name="ExamplesTriggersGet">Example</a>
+'''
+az datafactory trigger show --factory-name "myFactory" --resource-group "myResourceGroup" --name "myTrigger"
+'''
 ##### <a name="ParametersTriggersGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -345,6 +477,14 @@
 
 #### <a name="TriggersCreateOrUpdate#Create">Command 'az datafactory trigger create'</a>
 
+##### <a name="ExamplesTriggersCreateOrUpdate#Create">Example</a>
+'''
+az datafactory trigger create --factory-name "myFactory" --resource-group "myResourceGroup" --properties \
+"{\\"type\\":\\"ScheduleTrigger\\",\\"pipelines\\":[{\\"parameters\\":{\\"OutputBlobNameList\\":[\\"exampleoutput.csv\\\
+"]},\\"pipelineReference\\":{\\"type\\":\\"PipelineReference\\",\\"referenceName\\":\\"examplePipeline\\"}}],\\"typePro\
+perties\\":{\\"recurrence\\":{\\"endTime\\":\\"2018-06-16T00:55:13.8441801Z\\",\\"frequency\\":\\"Minute\\",\\"interval\
+\\":4,\\"startTime\\":\\"2018-06-16T00:39:13.8441801Z\\",\\"timeZone\\":\\"UTC\\"}}}" --name "myTrigger"
+'''
 ##### <a name="ParametersTriggersCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -356,6 +496,11 @@
 
 #### <a name="TriggersCreateOrUpdate#Update">Command 'az datafactory trigger update'</a>
 
+##### <a name="ExamplesTriggersCreateOrUpdate#Update">Example</a>
+'''
+az datafactory trigger update --factory-name "myFactory" --resource-group "myResourceGroup" --description "Example \
+description" --name "myTrigger"
+'''
 ##### <a name="ParametersTriggersCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -368,6 +513,10 @@
 
 #### <a name="TriggersDelete">Command 'az datafactory trigger delete'</a>
 
+##### <a name="ExamplesTriggersDelete">Example</a>
+'''
+az datafactory trigger delete --factory-name "myFactory" --resource-group "myResourceGroup" --name "myTrigger"
+'''
 ##### <a name="ParametersTriggersDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -377,6 +526,11 @@
 
 #### <a name="TriggersGetEventSubscriptionStatus">Command 'az datafactory trigger get-event-subscription-status'</a>
 
+##### <a name="ExamplesTriggersGetEventSubscriptionStatus">Example</a>
+'''
+az datafactory trigger get-event-subscription-status --factory-name "myFactory" --resource-group "myResourceGroup" \
+--name "myTrigger"
+'''
 ##### <a name="ParametersTriggersGetEventSubscriptionStatus">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -386,6 +540,11 @@
 
 #### <a name="TriggersQueryByFactory">Command 'az datafactory trigger query-by-factory'</a>
 
+##### <a name="ExamplesTriggersQueryByFactory">Example</a>
+'''
+az datafactory trigger query-by-factory --factory-name "myFactory" --parent-trigger-name "myTrigger" --resource-group \
+"myResourceGroup"
+'''
 ##### <a name="ParametersTriggersQueryByFactory">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -396,6 +555,10 @@
 
 #### <a name="TriggersStart">Command 'az datafactory trigger start'</a>
 
+##### <a name="ExamplesTriggersStart">Example</a>
+'''
+az datafactory trigger start --factory-name "myFactory" --resource-group "myResourceGroup" --name "myTrigger"
+'''
 ##### <a name="ParametersTriggersStart">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -405,6 +568,10 @@
 
 #### <a name="TriggersStop">Command 'az datafactory trigger stop'</a>
 
+##### <a name="ExamplesTriggersStop">Example</a>
+'''
+az datafactory trigger stop --factory-name "myFactory" --resource-group "myResourceGroup" --name "myTrigger"
+'''
 ##### <a name="ParametersTriggersStop">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -414,6 +581,11 @@
 
 #### <a name="TriggersSubscribeToEvents">Command 'az datafactory trigger subscribe-to-event'</a>
 
+##### <a name="ExamplesTriggersSubscribeToEvents">Example</a>
+'''
+az datafactory trigger subscribe-to-event --factory-name "myFactory" --resource-group "myResourceGroup" --name \
+"myTrigger"
+'''
 ##### <a name="ParametersTriggersSubscribeToEvents">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -423,6 +595,11 @@
 
 #### <a name="TriggersUnsubscribeFromEvents">Command 'az datafactory trigger unsubscribe-from-event'</a>
 
+##### <a name="ExamplesTriggersUnsubscribeFromEvents">Example</a>
+'''
+az datafactory trigger unsubscribe-from-event --factory-name "myFactory" --resource-group "myResourceGroup" --name \
+"myTrigger"
+'''
 ##### <a name="ParametersTriggersUnsubscribeFromEvents">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|

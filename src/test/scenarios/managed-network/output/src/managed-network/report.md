@@ -18,41 +18,41 @@
 ### <a name="CommandsInManagedNetworkPeeringPolicies">Commands in 'az managed-network managed-network-peering-policy' group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
-|[az managed-network managed-network-peering-policy list](#ManagedNetworkPeeringPoliciesListByManagedNetwork)|ListByManagedNetwork|[Parameters](#ParametersManagedNetworkPeeringPoliciesListByManagedNetwork)|Not Found|
-|[az managed-network managed-network-peering-policy show](#ManagedNetworkPeeringPoliciesGet)|Get|[Parameters](#ParametersManagedNetworkPeeringPoliciesGet)|Not Found|
-|[az managed-network managed-network-peering-policy hub-and-spoke-topology create](#ManagedNetworkPeeringPoliciesCreateOrUpdate#Create#HubAndSpokeTopology)|CreateOrUpdate#Create#HubAndSpokeTopology|[Parameters](#ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Create#HubAndSpokeTopology)|Not Found|
+|[az managed-network managed-network-peering-policy list](#ManagedNetworkPeeringPoliciesListByManagedNetwork)|ListByManagedNetwork|[Parameters](#ParametersManagedNetworkPeeringPoliciesListByManagedNetwork)|[Example](#ExamplesManagedNetworkPeeringPoliciesListByManagedNetwork)|
+|[az managed-network managed-network-peering-policy show](#ManagedNetworkPeeringPoliciesGet)|Get|[Parameters](#ParametersManagedNetworkPeeringPoliciesGet)|[Example](#ExamplesManagedNetworkPeeringPoliciesGet)|
+|[az managed-network managed-network-peering-policy hub-and-spoke-topology create](#ManagedNetworkPeeringPoliciesCreateOrUpdate#Create#HubAndSpokeTopology)|CreateOrUpdate#Create#HubAndSpokeTopology|[Parameters](#ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Create#HubAndSpokeTopology)|[Example](#ExamplesManagedNetworkPeeringPoliciesCreateOrUpdate#Create#HubAndSpokeTopology)|
 |[az managed-network managed-network-peering-policy mesh-topology create](#ManagedNetworkPeeringPoliciesCreateOrUpdate#Create#MeshTopology)|CreateOrUpdate#Create#MeshTopology|[Parameters](#ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Create#MeshTopology)|Not Found|
-|[az managed-network managed-network-peering-policy hub-and-spoke-topology update](#ManagedNetworkPeeringPoliciesCreateOrUpdate#Update#HubAndSpokeTopology)|CreateOrUpdate#Update#HubAndSpokeTopology|[Parameters](#ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Update#HubAndSpokeTopology)|Not Found|
+|[az managed-network managed-network-peering-policy hub-and-spoke-topology update](#ManagedNetworkPeeringPoliciesCreateOrUpdate#Update#HubAndSpokeTopology)|CreateOrUpdate#Update#HubAndSpokeTopology|[Parameters](#ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Update#HubAndSpokeTopology)|[Example](#ExamplesManagedNetworkPeeringPoliciesCreateOrUpdate#Update#HubAndSpokeTopology)|
 |[az managed-network managed-network-peering-policy mesh-topology update](#ManagedNetworkPeeringPoliciesCreateOrUpdate#Update#MeshTopology)|CreateOrUpdate#Update#MeshTopology|[Parameters](#ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Update#MeshTopology)|Not Found|
-|[az managed-network managed-network-peering-policy delete](#ManagedNetworkPeeringPoliciesDelete)|Delete|[Parameters](#ParametersManagedNetworkPeeringPoliciesDelete)|Not Found|
+|[az managed-network managed-network-peering-policy delete](#ManagedNetworkPeeringPoliciesDelete)|Delete|[Parameters](#ParametersManagedNetworkPeeringPoliciesDelete)|[Example](#ExamplesManagedNetworkPeeringPoliciesDelete)|
 
 ### <a name="CommandsInManagedNetworks">Commands in 'az managed-network mn' group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
-|[az managed-network mn list](#ManagedNetworksListByResourceGroup)|ListByResourceGroup|[Parameters](#ParametersManagedNetworksListByResourceGroup)|Not Found|
-|[az managed-network mn list](#ManagedNetworksListBySubscription)|ListBySubscription|[Parameters](#ParametersManagedNetworksListBySubscription)|Not Found|
-|[az managed-network mn create](#ManagedNetworksCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersManagedNetworksCreateOrUpdate#Create)|Not Found|
-|[az managed-network mn update](#ManagedNetworksUpdate)|Update|[Parameters](#ParametersManagedNetworksUpdate)|Not Found|
-|[az managed-network mn delete](#ManagedNetworksDelete)|Delete|[Parameters](#ParametersManagedNetworksDelete)|Not Found|
-|[az managed-network mn get-modify](#ManagedNetworksGetModify)|GetModify|[Parameters](#ParametersManagedNetworksGetModify)|Not Found|
+|[az managed-network mn list](#ManagedNetworksListByResourceGroup)|ListByResourceGroup|[Parameters](#ParametersManagedNetworksListByResourceGroup)|[Example](#ExamplesManagedNetworksListByResourceGroup)|
+|[az managed-network mn list](#ManagedNetworksListBySubscription)|ListBySubscription|[Parameters](#ParametersManagedNetworksListBySubscription)|[Example](#ExamplesManagedNetworksListBySubscription)|
+|[az managed-network mn create](#ManagedNetworksCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersManagedNetworksCreateOrUpdate#Create)|[Example](#ExamplesManagedNetworksCreateOrUpdate#Create)|
+|[az managed-network mn update](#ManagedNetworksUpdate)|Update|[Parameters](#ParametersManagedNetworksUpdate)|[Example](#ExamplesManagedNetworksUpdate)|
+|[az managed-network mn delete](#ManagedNetworksDelete)|Delete|[Parameters](#ParametersManagedNetworksDelete)|[Example](#ExamplesManagedNetworksDelete)|
+|[az managed-network mn get-modify](#ManagedNetworksGetModify)|GetModify|[Parameters](#ParametersManagedNetworksGetModify)|[Example](#ExamplesManagedNetworksGetModify)|
 
 ### <a name="CommandsInManagedNetworkGroups">Commands in 'az managed-network mn group' group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
-|[az managed-network mn group list](#ManagedNetworkGroupsListByManagedNetwork)|ListByManagedNetwork|[Parameters](#ParametersManagedNetworkGroupsListByManagedNetwork)|Not Found|
-|[az managed-network mn group show](#ManagedNetworkGroupsGet)|Get|[Parameters](#ParametersManagedNetworkGroupsGet)|Not Found|
-|[az managed-network mn group create](#ManagedNetworkGroupsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersManagedNetworkGroupsCreateOrUpdate#Create)|Not Found|
+|[az managed-network mn group list](#ManagedNetworkGroupsListByManagedNetwork)|ListByManagedNetwork|[Parameters](#ParametersManagedNetworkGroupsListByManagedNetwork)|[Example](#ExamplesManagedNetworkGroupsListByManagedNetwork)|
+|[az managed-network mn group show](#ManagedNetworkGroupsGet)|Get|[Parameters](#ParametersManagedNetworkGroupsGet)|[Example](#ExamplesManagedNetworkGroupsGet)|
+|[az managed-network mn group create](#ManagedNetworkGroupsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersManagedNetworkGroupsCreateOrUpdate#Create)|[Example](#ExamplesManagedNetworkGroupsCreateOrUpdate#Create)|
 |[az managed-network mn group update](#ManagedNetworkGroupsCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersManagedNetworkGroupsCreateOrUpdate#Update)|Not Found|
-|[az managed-network mn group delete](#ManagedNetworkGroupsDelete)|Delete|[Parameters](#ParametersManagedNetworkGroupsDelete)|Not Found|
+|[az managed-network mn group delete](#ManagedNetworkGroupsDelete)|Delete|[Parameters](#ParametersManagedNetworkGroupsDelete)|[Example](#ExamplesManagedNetworkGroupsDelete)|
 
 ### <a name="CommandsInScopeAssignments">Commands in 'az managed-network mn scope-assignment' group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
-|[az managed-network mn scope-assignment list](#ScopeAssignmentsList)|List|[Parameters](#ParametersScopeAssignmentsList)|Not Found|
-|[az managed-network mn scope-assignment show](#ScopeAssignmentsGet)|Get|[Parameters](#ParametersScopeAssignmentsGet)|Not Found|
-|[az managed-network mn scope-assignment create](#ScopeAssignmentsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersScopeAssignmentsCreateOrUpdate#Create)|Not Found|
+|[az managed-network mn scope-assignment list](#ScopeAssignmentsList)|List|[Parameters](#ParametersScopeAssignmentsList)|[Example](#ExamplesScopeAssignmentsList)|
+|[az managed-network mn scope-assignment show](#ScopeAssignmentsGet)|Get|[Parameters](#ParametersScopeAssignmentsGet)|[Example](#ExamplesScopeAssignmentsGet)|
+|[az managed-network mn scope-assignment create](#ScopeAssignmentsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersScopeAssignmentsCreateOrUpdate#Create)|[Example](#ExamplesScopeAssignmentsCreateOrUpdate#Create)|
 |[az managed-network mn scope-assignment update](#ScopeAssignmentsCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersScopeAssignmentsCreateOrUpdate#Update)|Not Found|
-|[az managed-network mn scope-assignment delete](#ScopeAssignmentsDelete)|Delete|[Parameters](#ParametersScopeAssignmentsDelete)|Not Found|
+|[az managed-network mn scope-assignment delete](#ScopeAssignmentsDelete)|Delete|[Parameters](#ParametersScopeAssignmentsDelete)|[Example](#ExamplesScopeAssignmentsDelete)|
 
 
 ## COMMAND DETAILS
@@ -60,6 +60,11 @@
 ### group 'az managed-network managed-network-peering-policy'
 #### <a name="ManagedNetworkPeeringPoliciesListByManagedNetwork">Command 'az managed-network managed-network-peering-policy list'</a>
 
+##### <a name="ExamplesManagedNetworkPeeringPoliciesListByManagedNetwork">Example</a>
+'''
+az managed-network managed-network-peering-policy list --managed-network-name "myManagedNetwork" --resource-group \
+"myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworkPeeringPoliciesListByManagedNetwork">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -70,6 +75,11 @@
 
 #### <a name="ManagedNetworkPeeringPoliciesGet">Command 'az managed-network managed-network-peering-policy show'</a>
 
+##### <a name="ExamplesManagedNetworkPeeringPoliciesGet">Example</a>
+'''
+az managed-network managed-network-peering-policy show --managed-network-name "myManagedNetwork" --policy-name \
+"myManagedNetworkPeeringPolicy" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworkPeeringPoliciesGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -79,6 +89,14 @@
 
 #### <a name="ManagedNetworkPeeringPoliciesCreateOrUpdate#Create#HubAndSpokeTopology">Command 'az managed-network managed-network-peering-policy hub-and-spoke-topology create'</a>
 
+##### <a name="ExamplesManagedNetworkPeeringPoliciesCreateOrUpdate#Create#HubAndSpokeTopology">Example</a>
+'''
+az managed-network managed-network-peering-policy hub-and-spoke-topology create --managed-network-name \
+"myManagedNetwork" --policy-name "myManagedNetworkPeeringPolicy" --hub id="/subscriptions/subscriptionB/resourceGroups/\
+myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork4" --spokes id="/subscriptions/subscription\
+B/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGrou\
+ps/myManagedNetworkGroup" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Create#HubAndSpokeTopology">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -105,6 +123,14 @@
 
 #### <a name="ManagedNetworkPeeringPoliciesCreateOrUpdate#Update#HubAndSpokeTopology">Command 'az managed-network managed-network-peering-policy hub-and-spoke-topology update'</a>
 
+##### <a name="ExamplesManagedNetworkPeeringPoliciesCreateOrUpdate#Update#HubAndSpokeTopology">Example</a>
+'''
+az managed-network managed-network-peering-policy hub-and-spoke-topology update --managed-network-name \
+"myManagedNetwork" --policy-name "myManagedNetworkPeeringPolicy" --hub id="/subscriptions/subscriptionB/resourceGroups/\
+myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork4" --spokes id="/subscriptions/subscription\
+B/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGrou\
+ps/myManagedNetworkGroup" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Update#HubAndSpokeTopology">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -131,6 +157,11 @@
 
 #### <a name="ManagedNetworkPeeringPoliciesDelete">Command 'az managed-network managed-network-peering-policy delete'</a>
 
+##### <a name="ExamplesManagedNetworkPeeringPoliciesDelete">Example</a>
+'''
+az managed-network managed-network-peering-policy delete --managed-network-name "myManagedNetwork" --policy-name \
+"myManagedNetworkPeeringPolicy" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworkPeeringPoliciesDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -141,20 +172,40 @@
 ### group 'az managed-network mn'
 #### <a name="ManagedNetworksListByResourceGroup">Command 'az managed-network mn list'</a>
 
+##### <a name="ExamplesManagedNetworksListByResourceGroup">Example</a>
+'''
+az managed-network mn list --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworksListByResourceGroup">Parameters</a> 
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-#### <a name="ManagedNetworksListBySubscription">Command 'az managed-network mn list'</a>
-
-##### <a name="ParametersManagedNetworksListBySubscription">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group.|resource_group_name|resourceGroupName|
 |**--top**|integer|May be used to limit the number of results in a page for list queries.|top|$top|
 |**--skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|skiptoken|$skiptoken|
 
+#### <a name="ManagedNetworksListBySubscription">Command 'az managed-network mn list'</a>
+
+##### <a name="ExamplesManagedNetworksListBySubscription">Example</a>
+'''
+az managed-network mn list
+'''
+##### <a name="ParametersManagedNetworksListBySubscription">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
 #### <a name="ManagedNetworksCreateOrUpdate#Create">Command 'az managed-network mn create'</a>
 
+##### <a name="ExamplesManagedNetworksCreateOrUpdate#Create">Example</a>
+'''
+az managed-network mn create --location "eastus" --properties "{\\"managementGroups\\":[{\\"id\\":\\"/providers/Microso\
+ft.Management/managementGroups/20000000-0001-0000-0000-000000000000\\"},{\\"id\\":\\"/providers/Microsoft.Management/ma\
+nagementGroups/20000000-0002-0000-0000-000000000000\\"}],\\"subscriptions\\":[{\\"id\\":\\"subscriptionA\\"},{\\"id\\":\
+\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/p\
+roviders/Microsoft.Network/virtualNetworks/myVirtualNetwork\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroup\
+s/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork2\\"}],\\"subnets\\":[{\\"id\\":\\"/subsc\
+riptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork3/sub\
+nets/default\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/v\
+irtualNetworks/myVirtualNetwork3/subnets/default\\"}]}" --name "myManagedNetwork" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworksCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -166,6 +217,10 @@
 
 #### <a name="ManagedNetworksUpdate">Command 'az managed-network mn update'</a>
 
+##### <a name="ExamplesManagedNetworksUpdate">Example</a>
+'''
+az managed-network mn update --name "myManagedNetwork" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworksUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -175,6 +230,10 @@
 
 #### <a name="ManagedNetworksDelete">Command 'az managed-network mn delete'</a>
 
+##### <a name="ExamplesManagedNetworksDelete">Example</a>
+'''
+az managed-network mn delete --name "myManagedNetwork" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworksDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -183,6 +242,10 @@
 
 #### <a name="ManagedNetworksGetModify">Command 'az managed-network mn get-modify'</a>
 
+##### <a name="ExamplesManagedNetworksGetModify">Example</a>
+'''
+az managed-network mn get-modify --name "myManagedNetwork" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworksGetModify">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -192,6 +255,10 @@
 ### group 'az managed-network mn group'
 #### <a name="ManagedNetworkGroupsListByManagedNetwork">Command 'az managed-network mn group list'</a>
 
+##### <a name="ExamplesManagedNetworkGroupsListByManagedNetwork">Example</a>
+'''
+az managed-network mn group list --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworkGroupsListByManagedNetwork">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -202,6 +269,11 @@
 
 #### <a name="ManagedNetworkGroupsGet">Command 'az managed-network mn group show'</a>
 
+##### <a name="ExamplesManagedNetworkGroupsGet">Example</a>
+'''
+az managed-network mn group show --group-name "myManagedNetworkGroup" --managed-network-name "myManagedNetwork" \
+--resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworkGroupsGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -211,6 +283,14 @@
 
 #### <a name="ManagedNetworkGroupsCreateOrUpdate#Create">Command 'az managed-network mn group create'</a>
 
+##### <a name="ExamplesManagedNetworkGroupsCreateOrUpdate#Create">Example</a>
+'''
+az managed-network mn group create --management-groups "[]" --subnets id="/subscriptionB/resourceGroups/myResourceGroup\
+/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --virtual-networks id="/subscriptionB/resourceGroup\
+s/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" --virtual-networks id="/subscriptionB/resourceGrou\
+ps/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" --group-name "myManagedNetworkGroup" \
+--managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworkGroupsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -239,6 +319,11 @@
 
 #### <a name="ManagedNetworkGroupsDelete">Command 'az managed-network mn group delete'</a>
 
+##### <a name="ExamplesManagedNetworkGroupsDelete">Example</a>
+'''
+az managed-network mn group delete --group-name "myManagedNetworkGroup" --managed-network-name "myManagedNetwork" \
+--resource-group "myResourceGroup"
+'''
 ##### <a name="ParametersManagedNetworkGroupsDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -249,6 +334,10 @@
 ### group 'az managed-network mn scope-assignment'
 #### <a name="ScopeAssignmentsList">Command 'az managed-network mn scope-assignment list'</a>
 
+##### <a name="ExamplesScopeAssignmentsList">Example</a>
+'''
+az managed-network mn scope-assignment list --scope "subscriptions/subscriptionC"
+'''
 ##### <a name="ParametersScopeAssignmentsList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -256,6 +345,10 @@
 
 #### <a name="ScopeAssignmentsGet">Command 'az managed-network mn scope-assignment show'</a>
 
+##### <a name="ExamplesScopeAssignmentsGet">Example</a>
+'''
+az managed-network mn scope-assignment show --scope "subscriptions/subscriptionC" --name "myScopeAssignment"
+'''
 ##### <a name="ParametersScopeAssignmentsGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -264,6 +357,12 @@
 
 #### <a name="ScopeAssignmentsCreateOrUpdate#Create">Command 'az managed-network mn scope-assignment create'</a>
 
+##### <a name="ExamplesScopeAssignmentsCreateOrUpdate#Create">Example</a>
+'''
+az managed-network mn scope-assignment create --assigned-managed-network "/subscriptions/subscriptionA/resourceGroups/m\
+yResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope \
+"subscriptions/subscriptionC" --name "myScopeAssignment"
+'''
 ##### <a name="ParametersScopeAssignmentsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -284,6 +383,10 @@
 
 #### <a name="ScopeAssignmentsDelete">Command 'az managed-network mn scope-assignment delete'</a>
 
+##### <a name="ExamplesScopeAssignmentsDelete">Example</a>
+'''
+az managed-network mn scope-assignment delete --scope "subscriptions/subscriptionC" --name "myScopeAssignment"
+'''
 ##### <a name="ParametersScopeAssignmentsDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
