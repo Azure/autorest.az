@@ -1,24 +1,25 @@
+import * as path from 'path';
+import { PathConstants, SystemType } from '../models';
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
-import { GenerateAzureCliActions } from "./templates/generated/CliActions"
-import { GenerateAzureCliClientFactory } from "./templates/generated/CliClientFactory"
-import { GenerateAzureCliCommands } from "./templates/generated/CliCommands"
-import { GenerateAzureCliCustom } from "./templates/generated/CliCustom"
-import { GenerateAzureCliHelp } from "./templates/generated/CliHelp"
-import { GenerateAzureCliInit } from "./templates/topcommon/CliFullInit"
-import { GenerateNamespaceInit } from "./templates/CliNamespaceInit"
-import { GenerateAzureCliParams } from "./templates/generated/CliParams"
-import { GenerateAzureCliReport } from "./templates/topcommon/CliReport"
-import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit"
-import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare"
-import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario"
-import { GenerateTopLevelImport } from "./templates/topcommon/CliTopLevelImport"
-import { GenerateAzureCliValidators } from "./templates/generated/CliValidators"
-import { CliDocSourceJsonMap } from "./templates/topmain/CliDocSourceJsonMap"
-import { CliRequirement } from './templates/topmain/CliRequirement';
-import { CliMainSetUp } from "./templates/topmain/CliMainSetUp";
-import * as path from 'path';
-import { SystemType, PathConstants } from '../models';
+import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
+import { GenerateAzureCliReport } from "./templates/CliReport";
+import { CliTopAction } from "./templates/CliTopAction";
+import { CliTopCustom } from "./templates/CliTopCustom";
+import { CliTopInit } from "./templates/CliTopInit";
+import { CliMainDocSourceJsonMap } from "./templates/extraMain/CliMainDocSourceJsonMap";
+import { CliMainRequirement } from './templates/extraMain/CliMainRequirement';
+import { CliMainSetupPy } from "./templates/extraMain/CliMainSetupPy";
+import { GenerateAzureCliActions } from "./templates/generated/CliActions";
+import { GenerateAzureCliClientFactory } from "./templates/generated/CliClientFactory";
+import { GenerateAzureCliCommands } from "./templates/generated/CliCommands";
+import { GenerateAzureCliCustom } from "./templates/generated/CliCustom";
+import { GenerateAzureCliHelp } from "./templates/generated/CliHelp";
+import { GenerateAzureCliParams } from "./templates/generated/CliParams";
+import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
+import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit";
+import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
+import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
 
 export class AzCoreFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -51,22 +52,22 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 if(model.SDK_NeedSDK) {
                     files[path.join(model.azOutputFolder, "vendored_sdks/__init__.py")] = GenerateNamespaceInit(model);  
                 }
-                files[path.join(model.azOutputFolder, "manual/__init__.py")] = GenerateNamespaceInit(model);  
-                files[path.join(model.azOutputFolder, "action.py")] = GenerateTopLevelImport(model, "action");  
-                files[path.join(model.azOutputFolder, "custom.py")] = GenerateTopLevelImport(model, "custom");  
-                files[path.join(model.azOutputFolder, "__init__.py")] = GenerateAzureCliInit(model);
+                files[path.join(model.azOutputFolder, "manual/__init__.py")] = GenerateNamespaceInit(model);
+                files[path.join(model.azOutputFolder, "action.py")] = await new CliTopAction(model, isDebugMode).fullGeneration();
+                files[path.join(model.azOutputFolder, "custom.py")] = await new CliTopCustom(model, isDebugMode).fullGeneration();
+                files[path.join(model.azOutputFolder, "__init__.py")] = await new CliTopInit(model, isDebugMode).fullGeneration();
     
                 files[path.join(model.azOutputFolder, "report.md")] = GenerateAzureCliReport(model);
-                let docSourceMapGenerator = new CliDocSourceJsonMap(model, isDebugMode);
+                let docSourceMapGenerator = new CliMainDocSourceJsonMap(model, isDebugMode);
                 let docSourceJsonMapPath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
                 files[docSourceJsonMapPath] = await docSourceMapGenerator.fullGeneration();
-                let requirementGenerator = new CliRequirement(model, isDebugMode);
+                let requirementGenerator = new CliMainRequirement(model, isDebugMode);
                 for(let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
                     requirementGenerator.relativePath = path.join(model.AzureCliFolder, "/src/azure-cli/requirements.py3." + sys + ".txt");
                     files[requirementGenerator.relativePath] = await requirementGenerator.fullGeneration();
                 }
-                let setupGenerator = new CliMainSetUp(model, isDebugMode);
-                let setUpPath = path.join(model.AzureCliFolder, PathConstants.mainSetUpPyFile);
+                let setupGenerator = new CliMainSetupPy(model, isDebugMode);
+                let setUpPath = path.join(model.AzureCliFolder, PathConstants.mainSetupPyFile);
                 files[setUpPath] = await setupGenerator.fullGeneration();
             }
             while (model.SelectNextExtension())
