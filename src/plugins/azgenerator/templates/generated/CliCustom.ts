@@ -88,7 +88,7 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
 function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean = false) {
     let output_body: string[] = [];
     let opNames = model.Method_NameAz.split(' ');
-    if (model.Command_Name == "datafactory pipeline update") {
+    if (model.Command_Name == "ml datastore create") {
         model.Command;
     }
     let valueToMatch = null;
@@ -127,17 +127,17 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 if (model.MethodParameter['originalParameter'] == originalParameterStack.last || (!isNullOrUndefined(originalParameterStack.last['nameBaseParam']) && model.MethodParameter['originalParameter'] == originalParameterStack.last['nameBaseParam']) || !isNullOrUndefined(flattenedFrom)) {
                     let access = [];
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
-                    if (!isNullOrUndefined(flattenedFrom) && flattenedFrom != originalParameterStack.last.schema) {
+                    if (!isNullOrUndefined(flattenedFrom) && flattenedFrom['schema'] != originalParameterStack.last.schema) {
                         // If last originalParameter in the stack doesn't have language.az. it means this original Parameter was added because of the flattenedParam in python  
-                        if (flattenedFrom != originalParameterStack.last.schema && isNullOrUndefined(originalParameterStack.last.language['az'])) {
+                        if (isNullOrUndefined(originalParameterStack.last.language?.['az']) && !isNullOrUndefined(originalParameterStack.last.schema?.['properties']) && originalParameterStack.last.schema?.['properties'].indexOf(flattenedFrom) < 0) {
                             originalParameterNameStack.pop();
                             originalParameterStack.pop();
                         }
-                        if (!originalParameterStack.last.language['cli']['moved-from-python']) {
+                        if (originalParameterStack.last?.language?.['cli']?.['moved-from-python'] != true) {
                             originalParameterStack.push(
                                 new Parameter(flattenedFrom.language['python']['name'], 
                                     flattenedFrom.language['python']['description'],
-                                    flattenedFrom
+                                    flattenedFrom['schema']
                                 )
                             );
                             originalParameterNameStack.push(flattenedFrom.language['python']['name']);
@@ -145,7 +145,6 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                                 output_body = output_body.concat(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
                             }
                         }
-                        
                     }
 
                     if (model.MethodParameter['targetProperty']?.['isDiscriminator'] == true) {

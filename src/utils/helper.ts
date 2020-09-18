@@ -333,7 +333,7 @@ export function parseResourceId(mpath: string): Map<string, string> {
     return ret;
 }
 
-export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flattenMode: boolean = false) {
+export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flattenMode: boolean = false, nodeTobeFound: any = null) {
     let nodePaths = cliM4Path.split('$$');
     let curNode: any = codeModel;
     let lastValidNode: any = null;
@@ -372,7 +372,13 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
                 nextStep = np.substring(beginIdx + 1, endIdx);
                 curNode = curNode[Number(nextStep)];
             }  
-            if (!isNullOrUndefined(curNode)) {
+            if (!isNullOrUndefined(curNode) && curNode.language?.['cli']?.['cliPath'] == cliM4Path) {
+                if (curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'] == curNode.language['cli']['cliFlattenTrace'])) {
+                    lastValidNode = curNode;
+                } else {
+                    curNode = null;
+                }
+            } else if(!isNullOrUndefined(curNode)) {
                 lastValidNode = curNode;
             }
         } else {
@@ -380,6 +386,12 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
             curNode = curNode[np];
         }
     }
+    if (!isNullOrUndefined(curNode) && curNode.language?.['cli']?.['cliPath'] == cliM4Path) {
+        if (!(curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'] == curNode.language['cli']['cliFlattenTrace']))) {
+            curNode = null;
+        }
+    }
+
     if(!flattenMode || !isNullOrUndefined(curNode)) {
         return curNode;
     }
