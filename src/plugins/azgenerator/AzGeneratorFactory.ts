@@ -4,8 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { GenerationMode } from "../models";
-import { AzExtensionFullGenerator } from "./AzExtensionFullGenerator";
 import { AzCoreFullGenerator } from "./AzCoreFullGenerator";
+import { AzCoreIncrementalGenerator } from "./AzCoreIncrementalGenerator";
+import { AzExtensionFullGenerator } from "./AzExtensionFullGenerator";
 import { AzExtensionIncrementalGenerator } from "./AzExtensionIncrementalGenerator";
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelCliImpl } from "./CodeModelAzImpl";
@@ -19,10 +20,17 @@ export class AzGeneratorFactory {
             if (model.IsCliCore) {
                 return new AzCoreFullGenerator(model, isDebugMode);
             }
-            return new AzExtensionFullGenerator(model, isDebugMode);
+            else {
+                return new AzExtensionFullGenerator(model, isDebugMode);
+            }
         }
         else {
-            return new AzExtensionIncrementalGenerator(model, isDebugMode);
+            if (model.IsCliCore) {
+                return new AzCoreIncrementalGenerator(model, isDebugMode);
+            }
+            else {
+                return new AzExtensionIncrementalGenerator(model, isDebugMode);
+            }
         }
     }
 }

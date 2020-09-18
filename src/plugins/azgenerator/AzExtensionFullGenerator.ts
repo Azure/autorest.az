@@ -4,25 +4,26 @@
  *--------------------------------------------------------------------------------------------*/
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
+import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
+import { GenerateAzureCliReport } from "./templates/CliReport";
+import { CliTopAction } from "./templates/CliTopAction";
+import { CliTopCustom } from "./templates/CliTopCustom";
+import { CliTopInit } from "./templates/CliTopInit";
+import { GenerateAzureCliHistory } from "./templates/extraExt/CliExtHistory";
+import { CliTopMetadata } from "./templates/extraExt/CliExtMetadata";
+import { GenerateAzureCliReadme } from "./templates/extraExt/CliExtReadme";
+import { GenerateAzureCliSetupCfg } from "./templates/extraExt/CliExtSetupCfg";
+import { CliExtSetupPy } from "./templates/extraExt/CliExtSetupPy";
 import { GenerateAzureCliActions } from "./templates/generated/CliActions";
-import { GenerateAzureCliAzextMetadata } from "./templates/topext/CliFullMetadata";
 import { GenerateAzureCliClientFactory } from "./templates/generated/CliClientFactory";
 import { GenerateAzureCliCommands } from "./templates/generated/CliCommands";
 import { GenerateAzureCliCustom } from "./templates/generated/CliCustom";
 import { GenerateAzureCliHelp } from "./templates/generated/CliHelp";
-import { GenerateAzureCliHistory } from "./templates/topext/CliHistory";
-import { GenerateAzureCliInit } from "./templates/topcommon/CliFullInit";
-import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
 import { GenerateAzureCliParams } from "./templates/generated/CliParams";
-import { GenerateAzureCliReadme } from "./templates/topext/CliReadme";
-import { GenerateAzureCliReport } from "./templates/topcommon/CliReport";
-import { GenerateAzureCliSetupCfg } from "./templates/topext/CliFullSetupCfg";
-import { GenerateAzureCliSetupPy } from "./templates/topext/CliFullSetupPy";
+import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
 import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit";
 import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
-import { GenerateTopLevelImport } from "./templates/topcommon/CliTopLevelImport";
-import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
 
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
@@ -56,15 +57,15 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
             this.files[this.azDirectory + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(this.model);
         }
 
-        this.files[this.azDirectory + "action.py"] = GenerateTopLevelImport(this.model, "action");
-        this.files[this.azDirectory + "custom.py"] = GenerateTopLevelImport(this.model, "custom");
-        this.files[this.azDirectory + "__init__.py"] = GenerateAzureCliInit(this.model);
-        this.files[this.azDirectory + "azext_metadata.json"] = GenerateAzureCliAzextMetadata(this.model);
+        this.files[this.azDirectory + "action.py"] = await new CliTopAction(this.model, this.isDebugMode).fullGeneration();
+        this.files[this.azDirectory + "custom.py"] = await new CliTopCustom(this.model, this.isDebugMode).fullGeneration();
+        this.files[this.azDirectory + "__init__.py"] = await new CliTopInit(this.model, this.isDebugMode).fullGeneration();
+        this.files[this.azDirectory + "azext_metadata.json"] = await new CliTopMetadata(this.model, this.isDebugMode).fullGeneration();
 
         this.files["report.md"] = GenerateAzureCliReport(this.model);
         this.files["HISTORY.rst"] = GenerateAzureCliHistory(this.model);
         this.files["README.md"] = GenerateAzureCliReadme(this.model);
         this.files["setup.cfg"] = GenerateAzureCliSetupCfg(this.model);
-        this.files["setup.py"] = await GenerateAzureCliSetupPy(this.model);
+        this.files["setup.py"] = await new CliExtSetupPy(this.model, this.isDebugMode).fullGeneration();
     }
 }
