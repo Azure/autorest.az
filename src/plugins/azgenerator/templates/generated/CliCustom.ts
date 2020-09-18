@@ -88,7 +88,7 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
 function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean = false) {
     let output_body: string[] = [];
     let opNames = model.Method_NameAz.split(' ');
-    if (model.Command_Name == "ml datastore create") {
+    if (model.Command_Name == "ml compute databricks create") {
         model.Command;
     }
     let valueToMatch = null;
@@ -107,6 +107,14 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 skip = false;
             }
             if ((model.MethodParameter_IsCliFlattened && (!isNullOrUndefined(model.MethodParameter.language['cli']['cliFlattenTrace']) || model.SDK_NoFlatten || !isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']))) || model.Method.extensions?.['cli-split-operation-original-operation']?.['genericSetterParam'] == model.MethodParameter || (model.MethodParameter_IsFlattened && model.MethodParameter['extensions']?.['cli-flattened'])) {
+                while (!isNullOrUndefined(model.MethodParameter.language?.['cli']?.['cliFlattenTrace']) && model.MethodParameter.language?.['cli']?.['cliFlattenTrace']?.length < originalParameterStack.length) {
+                    originalParameterStack.pop();
+                    originalParameterNameStack.pop();
+                }
+                if (!isNullOrUndefined(model.MethodParameter.language?.['cli']?.['cliFlattenTrace']) && model.MethodParameter.language?.['cli']?.['cliFlattenTrace']?.length == originalParameterStack.length && (isNullOrUndefined(model.Method.extensions?.['cli-poly-as-resource-original-operation']) || isNullOrUndefined((model.Method.extensions?.['cli-split-operation-original-operation'])))) {
+                    originalParameterStack.pop();
+                    originalParameterNameStack.pop();
+                } 
                 if (!addGenericSchema && needGeneric && !isNullOrUndefined(model.CommandGroup.language['az']['genericTargetSchema']) && model.Method.extensions?.['cli-split-operation-original-operation']?.['genericSetterParam'] != model.MethodParameter) {
                     originalParameterStack.push(
                         new Parameter(model.CommandGroup.language['az']['genericTargetSchema'].language['python']['name'], 
@@ -127,17 +135,21 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 if (model.MethodParameter['originalParameter'] == originalParameterStack.last || (!isNullOrUndefined(originalParameterStack.last['nameBaseParam']) && model.MethodParameter['originalParameter'] == originalParameterStack.last['nameBaseParam']) || !isNullOrUndefined(flattenedFrom)) {
                     let access = [];
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
-                    if (!isNullOrUndefined(flattenedFrom) && flattenedFrom['schema'] != originalParameterStack.last.schema) {
+                    if (!isNullOrUndefined(flattenedFrom) && flattenedFrom != originalParameterStack.last.schema) {
                         // If last originalParameter in the stack doesn't have language.az. it means this original Parameter was added because of the flattenedParam in python  
-                        if (isNullOrUndefined(originalParameterStack.last.language?.['az']) && !isNullOrUndefined(originalParameterStack.last.schema?.['properties']) && originalParameterStack.last.schema?.['properties'].indexOf(flattenedFrom) < 0) {
-                            originalParameterNameStack.pop();
+                        while (!isNullOrUndefined(model.MethodParameter.language?.['cli']?.['cliFlattenTrace']) && model.MethodParameter.language?.['cli']?.['cliFlattenTrace']?.length < originalParameterStack.length) {
                             originalParameterStack.pop();
+                            originalParameterNameStack.pop();
                         }
+                        if (!isNullOrUndefined(model.MethodParameter.language?.['cli']?.['cliFlattenTrace']) && model.MethodParameter.language?.['cli']?.['cliFlattenTrace']?.length == originalParameterStack.length && (isNullOrUndefined(model.Method.extensions?.['cli-poly-as-resource-original-operation']) || isNullOrUndefined((model.Method.extensions?.['cli-split-operation-original-operation'])))) {
+                            originalParameterStack.pop();
+                            originalParameterNameStack.pop();
+                        } 
                         if (originalParameterStack.last?.language?.['cli']?.['moved-from-python'] != true) {
                             originalParameterStack.push(
                                 new Parameter(flattenedFrom.language['python']['name'], 
                                     flattenedFrom.language['python']['description'],
-                                    flattenedFrom['schema']
+                                    flattenedFrom
                                 )
                             );
                             originalParameterNameStack.push(flattenedFrom.language['python']['name']);
