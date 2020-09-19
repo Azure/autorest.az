@@ -88,9 +88,6 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
 function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean = false) {
     let output_body: string[] = [];
     let opNames = model.Method_NameAz.split(' ');
-    if (model.Command_Name == "ml compute databricks create") {
-        model.Command;
-    }
     let valueToMatch = null;
     if (opNames.length > 1) {
         valueToMatch = Capitalize(ToCamelCase(opNames[0]));

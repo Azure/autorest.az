@@ -373,7 +373,7 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
                 curNode = curNode[Number(nextStep)];
             }  
             if (!isNullOrUndefined(curNode) && curNode.language?.['cli']?.['cliPath'] == cliM4Path) {
-                if (curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'] == curNode.language['cli']['cliFlattenTrace'])) {
+                if (curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'].join(";") == curNode.language['cli']['cliFlattenTrace'].join(";"))) {
                     lastValidNode = curNode;
                 } else {
                     curNode = null;
@@ -387,7 +387,7 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
         }
     }
     if (!isNullOrUndefined(curNode) && curNode.language?.['cli']?.['cliPath'] == cliM4Path) {
-        if (!(curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'] == curNode.language['cli']['cliFlattenTrace']))) {
+        if (!(curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'].join(";") == curNode.language['cli']['cliFlattenTrace'].join(";")))) {
             curNode = null;
         }
     }

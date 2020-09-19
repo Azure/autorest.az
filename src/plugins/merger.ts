@@ -303,7 +303,7 @@ export class CodeModelMerger {
                                         if (tmpParam['originalParameter'] == parameter) {
                                             if(!isNullOrUndefined(tmpParam?.['language']?.['cli']?.['cliPath'])) {
                                                 let cliPath = tmpParam.language['cli']?.['cliPath'];
-                                                let cliNode = findNodeInCodeModel(cliPath, this.cliCodeModel);
+                                                let cliNode = findNodeInCodeModel(cliPath, this.cliCodeModel, false, tmpParam);
                                                 if (isNullOrUndefined(cliNode)) {
                                                     let lastValidPath = this.getLastValidPath(cliPath);
                                                     if (!isNullOrUndefined(lastValidPath)) {
@@ -328,9 +328,9 @@ export class CodeModelMerger {
                                                                 tmpParam['flattened'] = true;
                                                                 tmpParam.language['cli']['cli-flatten'] = true;
                                                                 tmpParam.language['cli']['cli-flattened'] = true;
-                                                                tmpParam['originalParameter'] = findNodeInCodeModel(parameter.language['cli']['cliM4Path'], this.cliCodeModel);
+                                                                tmpParam['originalParameter'] = findNodeInCodeModel(parameter.language['cli']['cliM4Path'], this.cliCodeModel, false, parameter);
                                                                 lastValidNode.splice(cnt, 0, tmpParam);
-                                                                let cliOperation = findNodeInCodeModel(operation.language['cli']['cliM4Path'], this.cliCodeModel);
+                                                                let cliOperation = findNodeInCodeModel(operation.language['cli']['cliM4Path'], this.cliCodeModel, false, operation);
                                                                 if(cliOperation.language['cli']['cli-operation-splitted'] && isArray(cliOperation.language['cli']['split-operation-names'])) {
                                                                     for(let tmpName of cliOperation.language['cli']['split-operation-names']) {
                                                                         let subParamPath = parameter.language['cli']['cliM4Path'].replace(cliOperation.language['cli']['cliKey'], cliOperation.language['cli']['cliKey'] + "#" + tmpName);
