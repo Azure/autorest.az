@@ -13,7 +13,7 @@ export function changeCamelToDash(str: string) {
     str = str.replace(/[A-Z][^A-Z]/g, letter => `-${letter.toLowerCase()}`);
     str = str.replace(/[^A-Z][A-Z]/g, letter => `${letter[0]}-${letter[1].toLowerCase()}`);
     str = str.toLowerCase();
-    if(str.startsWith('-')) {
+    if (str.startsWith('-')) {
         str = str.substring(1, str.length);
     }
     return str;
@@ -192,7 +192,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                 indent = indents.pop();
             }
         }
-        inStrTags[ret[ret.length - 1].length-1] = inStr;
+        inStrTags[ret[ret.length - 1].length - 1] = inStr;
         if (ret[ret.length - 1].length >= maxLength) {
             if (inStr) {
                 let lastNormal = ret[ret.length - 1].length - 1;
@@ -253,12 +253,12 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                 if (lastComma >= 0) {
                     //find indent by parathesis before the lastComma
                     let close_para = 0;
-                    for (let i=lastComma; i>indent; i--) {
+                    for (let i = lastComma; i > indent; i--) {
                         if (inStrTags[i]) continue;
                         let currentChar = ret[ret.length - 1][i];
-                        if ( currentChar==')' || currentChar==']')  close_para++;
-                        if (currentChar=='(' || currentChar=='[' ) {
-                            if (close_para==0) {
+                        if (currentChar == ')' || currentChar == ']') close_para++;
+                        if (currentChar == '(' || currentChar == '[') {
+                            if (close_para == 0) {
                                 indents.push(indent);
                                 indent = i + 1;
                                 break;
@@ -270,14 +270,14 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                     }
 
                     let prefixSpaces = ret[ret.length - 1].search(/\S|$/);
-                    if (indent>0)   prefixSpaces = indent;
+                    if (indent > 0) prefixSpaces = indent;
                     let newLine = ' '.repeat(prefixSpaces) + ret[ret.length - 1].substr(lastComma + 1).trimLeft();
                     ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastComma + 1);
                     ret.push(newLine);
                     lastComma = -1;
                 }
                 else if (i < sentence.length - 2) {
-                    for (let i=ret[ret.length - 1].length-1; i>indent; i--) {
+                    for (let i = ret[ret.length - 1].length - 1; i > indent; i--) {
                         let currentChar = ret[ret.length - 1][i];
                         if (!currentChar.match(/[a-z0-9_]/i)) {
                             let newLine = ' '.repeat(ret[ret.length - 1].search(/\S|$/)) + ret[ret.length - 1].substr(i + 1).trimLeft();
@@ -337,7 +337,7 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
     let nodePaths = cliM4Path.split('$$');
     let curNode: any = codeModel;
     let lastValidNode: any = null;
-    for(let np of nodePaths) {
+    for (let np of nodePaths) {
         if (np == "") {
             continue;
         }
@@ -358,14 +358,14 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
             if (np[beginIdx + 1] == "'" && np[endIdx - 1] == "'") {
                 nextStep = np.substring(beginIdx + 2, endIdx - 1);
                 let found = false;
-                for(let node of values(curNode)) {
-                    if(node?.['language']?.['cli']?.['cliKey'] == nextStep) {
+                for (let node of values(curNode)) {
+                    if (node?.['language']?.['cli']?.['cliKey'] == nextStep) {
                         curNode = node;
                         found = true;
                         break;
                     }
                 }
-                if(!found) {
+                if (!found) {
                     curNode = null;
                 }
             } else {
@@ -392,14 +392,14 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
         }
     }
 
-    if(!flattenMode || !isNullOrUndefined(curNode)) {
+    if (!flattenMode || !isNullOrUndefined(curNode)) {
         return curNode;
     }
     let flattenedNodes = [];
-    if(flattenMode && isNullOrUndefined(curNode) && !isNullOrUndefined(lastValidNode)) {
-        for(let node of values(lastValidNode)) {
-            for(let cliTracePath of values(node?.['language']?.['cli']?.['cliFlattenTrace'])) {
-                if(cliTracePath == cliM4Path) {
+    if (flattenMode && isNullOrUndefined(curNode) && !isNullOrUndefined(lastValidNode)) {
+        for (let node of values(lastValidNode)) {
+            for (let cliTracePath of values(node?.['language']?.['cli']?.['cliFlattenTrace'])) {
+                if (cliTracePath == cliM4Path) {
                     flattenedNodes.push(node);
                     break;
                 }
@@ -458,3 +458,23 @@ export function deleteFolderRecursive(target) {
         fs.rmdirSync(target);
     }
 };
+
+export function skipCommentLines(base: string[]): number {
+    let firstNoneCommentLineIdx: number = 0;
+    for (let i: number = 0; i < base.length; ++i) {
+        if (!base[i].startsWith("#") && firstNoneCommentLineIdx == 0) {
+            firstNoneCommentLineIdx = i;
+        }
+    }
+    return firstNoneCommentLineIdx;
+}
+
+export function keepHeaderLines(base: string[]): number {
+    let futureImportLineIdx: number = 0;
+    for (let i: number = 0; i < base.length; ++i) {
+        if (base[i].indexOf("__future__") != -1) {
+            futureImportLineIdx = i + 1;
+        }
+    }
+    return futureImportLineIdx;
+}
