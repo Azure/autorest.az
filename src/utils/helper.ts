@@ -333,7 +333,7 @@ export function parseResourceId(mpath: string): Map<string, string> {
     return ret;
 }
 
-export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flattenMode: boolean = false, nodeTobeFound: any = null) {
+export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flattenMode: boolean = false, nodeTobeFound: any = null, noMatch: boolean = false) {
     let nodePaths = cliM4Path.split('$$');
     let curNode: any = codeModel;
     let lastValidNode: any = null;
@@ -373,7 +373,7 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
                 curNode = curNode[Number(nextStep)];
             }  
             if (!isNullOrUndefined(curNode) && curNode.language?.['cli']?.['cliPath'] == cliM4Path) {
-                if (curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'].join(";") == curNode.language['cli']['cliFlattenTrace'].join(";"))) {
+                if (noMatch || curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'].join(";") == curNode.language['cli']['cliFlattenTrace'].join(";"))) {
                     lastValidNode = curNode;
                 } else {
                     curNode = null;
@@ -387,7 +387,7 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
         }
     }
     if (!isNullOrUndefined(curNode) && curNode.language?.['cli']?.['cliPath'] == cliM4Path) {
-        if (!(curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'].join(";") == curNode.language['cli']['cliFlattenTrace'].join(";")))) {
+        if (!noMatch && (!(curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'].join(";") == curNode.language['cli']['cliFlattenTrace'].join(";"))))) {
             curNode = null;
         }
     }

@@ -295,6 +295,9 @@ export class CodeModelMerger {
                         cnt = 0;
                         request.parameters.forEach(parameter => {
                             if (!isNullOrUndefined(parameter.language['cli'])) {
+                                if (parameter.language['cli']['cliM4Path'] == "operationGroups['WorkspaceManagedIdentitySqlControlSettings']$$operations['CreateOrUpdate']$$requests[0]$$parameters['managedIdentitySqlControlSettings']") {
+                                    parameter;
+                                }
                                 let m4FlattenedFrom = [];
                                 if (parameter['flattened'] && parameter.language['cli']?.['cli-m4-flattened']) {
                                     for(let tmpCnt = cnt + 1; tmpCnt < request.parameters.length; tmpCnt++) {
@@ -311,10 +314,10 @@ export class CodeModelMerger {
                                                         if (!isNullOrUndefined(lastValidNode) && isArray(lastValidNode)) {
                                                             let cliFlattenTrace = tmpParam.language['cli']['cliFlattenTrace'];
                                                             let cliFlattenTraceStr = cliFlattenTrace.join(";");
-                                                            let cnt = -1;
+                                                            let cnt1 = -1;
                                                             for(let lnode of lastValidNode) {
                                                                 if (!deepFlatten) {
-                                                                    cnt++;
+                                                                    cnt1++;
                                                                 }
                                                                 if(!isNullOrUndefined(lnode.language['cli']?.['cliFlattenTrace'])) {
                                                                     let cftstr = lnode.language['cli']?.['cliFlattenTrace'].join(";");
@@ -329,14 +332,14 @@ export class CodeModelMerger {
                                                                 tmpParam.language['cli']['cli-flatten'] = true;
                                                                 tmpParam.language['cli']['cli-flattened'] = true;
                                                                 tmpParam['originalParameter'] = findNodeInCodeModel(parameter.language['cli']['cliM4Path'], this.cliCodeModel, false, parameter);
-                                                                lastValidNode.splice(cnt, 0, tmpParam);
+                                                                lastValidNode.splice(cnt1, 0, tmpParam);
                                                                 let cliOperation = findNodeInCodeModel(operation.language['cli']['cliM4Path'], this.cliCodeModel, false, operation);
                                                                 if(cliOperation.language['cli']['cli-operation-splitted'] && isArray(cliOperation.language['cli']['split-operation-names'])) {
                                                                     for(let tmpName of cliOperation.language['cli']['split-operation-names']) {
                                                                         let subParamPath = parameter.language['cli']['cliM4Path'].replace(cliOperation.language['cli']['cliKey'], cliOperation.language['cli']['cliKey'] + "#" + tmpName);
-                                                                        let subParam = findNodeInCodeModel(subParamPath, this.cliCodeModel);
+                                                                        let subParam = findNodeInCodeModel(subParamPath, this.cliCodeModel, false, null, true);
                                                                         let subLastValidPath =  this.getLastValidPath(subParamPath);
-                                                                        let subLastValidNode = findNodeInCodeModel(subLastValidPath, this.cliCodeModel);
+                                                                        let subLastValidNode = findNodeInCodeModel(subLastValidPath, this.cliCodeModel, false, null, true);
                                                                         let idx = subLastValidNode.indexOf(subParam);
                                                                         if (idx > -1) {
                                                                             subLastValidNode.splice(idx + 1, 0, tmpParam);
