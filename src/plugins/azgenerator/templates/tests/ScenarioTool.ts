@@ -607,14 +607,14 @@ export class ResourcePool {
 
 
     public findTreeResource(class_name: string, object_name: string, root: Map<string, ResourceClass>, testStatus: ObjectStatus = null): ResourceObject {
-        if (class_name in root && object_name in root[class_name].objects) {
+        if (class_name in root && root[class_name].objects.hasOwnProperty(object_name)) {
             if (isNullOrUndefined(testStatus) || testStatus == root[class_name].objects[object_name].testStatus) {
                 return root[class_name].objects[object_name];
             }
         }
         if (!class_name) {
             for (let c in root) {
-                if (object_name in root[c].objects) {
+                if (root[c].objects.hasOwnProperty(object_name)) {
                     if (isNullOrUndefined(testStatus) || testStatus == root[c].objects[object_name].testStatus) {
                         return root[c].objects[object_name];
                     }
@@ -811,7 +811,7 @@ export class ResourcePool {
     public getPlaceholder(object_name: string, isTest: boolean, placeholders: string[] = null): string {
         // find in MapResource
         for (let class_name in this.map) {
-            if (object_name in this.map[class_name].objects) {
+            if ( !isNullOrUndefined(this.map[class_name].objects) && this.map[class_name].objects.hasOwnProperty(object_name)) {
                 let ret = this.map[class_name].objects[object_name].placeholder(isTest);
                 if (!isNullOrUndefined(placeholders)) {
                     if (placeholders.indexOf(ret) < 0) {
