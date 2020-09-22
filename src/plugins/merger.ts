@@ -5,6 +5,7 @@ import { values, items, length, Dictionary } from "@azure-tools/linq";
 import { isNullOrUndefined, isArray } from "util";
 import { findNodeInCodeModel } from "../utils/helper";
 import { ArgumentConstants, ExtensionMode, TargetMode, CompatibleLevel, GenerateSdk } from "./models"
+import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from "constants";
 
 export class Merger {
     codeModel: CodeModel;
@@ -131,25 +132,27 @@ export class CodeModelMerger {
         return azCodeModel;
     }
 
-    dealingPythonFlatten() {
-    }
-
     setPythonName(param, m4FlattenedFrom: any[] = []) {
         let cliM4Path = param?.['language']?.['cli']?.['cliM4Path'];
         if (isNullOrUndefined(cliM4Path)) {
             return;
         }
-        let cliNode = findNodeInCodeModel(cliM4Path, this.cliCodeModel);
+        let cliNode = findNodeInCodeModel(cliM4Path, this.cliCodeModel, false, param);
+        let foundNode = false;
         if (!isNullOrUndefined(cliNode) && !isNullOrUndefined(cliNode.language) && isNullOrUndefined(cliNode.language['python'])) {
-            cliNode.language['python'] = param.language['python'];
-            if (param['flattened'] && param.language['cli']?.['cli-m4-flattened']) {
-                cliNode.language['cli']['cli-m4-flattened'] = true;
-                if (!isNullOrUndefined(m4FlattenedFrom)) {
-                    cliNode.language['cli']['m4FlattenedFrom'] = m4FlattenedFrom;
+            if (!isNullOrUndefined(cliNode.language['cli']['cliM4Path']) && cliNode.language['cli']['cliM4Path'] == cliM4Path || cliNode.language['cli']['cliFlattenTrace'] == param.language['cli']['cliFlattenTrace']) {
+                foundNode = true;
+                cliNode.language['python'] = param.language['python'];
+                if (param['flattened'] && param.language['cli']?.['cli-m4-flattened']) {
+                    cliNode.language['cli']['cli-m4-flattened'] = true;
+                    if (!isNullOrUndefined(m4FlattenedFrom)) {
+                        cliNode.language['cli']['m4FlattenedFrom'] = m4FlattenedFrom;
+                    }
                 }
             }
-        } else if(isNullOrUndefined(cliNode)) {
-            let flattenedNodes = findNodeInCodeModel(cliM4Path, this.cliCodeModel, true);
+        } 
+        if(!foundNode) {
+            let flattenedNodes = findNodeInCodeModel(cliM4Path, this.cliCodeModel, true, param);
             if(!isNullOrUndefined(flattenedNodes) && flattenedNodes.length > 0) {
                 for(let fnode of flattenedNodes) {
                     if(!isNullOrUndefined(fnode) && !isNullOrUndefined(fnode.language)) {
@@ -158,6 +161,19 @@ export class CodeModelMerger {
                                 fnode.language['python'] = prop['language']['python'];
                                 fnode.language['cli']['pythonFlattenedFrom'] = param;
                                 break;
+                            } else if (!isNullOrUndefined(fnode.language?.['cli']?.['cliFlattenTrace'])) {
+                                for(let trace of values(fnode.language['cli']['cliFlattenTrace'])) {
+                                    if (!isNullOrUndefined(prop['language']?.['cli']?.['cliPath']) && trace == prop['language']['cli']['cliPath']) {
+                                        for(let p of prop['schema']?.['properties']) {
+                                            if (!isNullOrUndefined(p.language?.['cli']?.['cliKey']) && fnode.language?.['cli']?.['cliKey'] == p.language?.['cli']?.['cliKey']) {
+                                                fnode.language['python'] = p['language']['python'];
+                                                fnode.language['cli']['pythonFlattenedFrom'] = prop;
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
@@ -279,6 +295,9 @@ export class CodeModelMerger {
                         cnt = 0;
                         request.parameters.forEach(parameter => {
                             if (!isNullOrUndefined(parameter.language['cli'])) {
+                                if (parameter.language['cli']['cliM4Path'] == "operationGroups['WorkspaceManagedIdentitySqlControlSettings']$$operations['CreateOrUpdate']$$requests[0]$$parameters['managedIdentitySqlControlSettings']") {
+                                    parameter;
+                                }
                                 let m4FlattenedFrom = [];
                                 if (parameter['flattened'] && parameter.language['cli']?.['cli-m4-flattened']) {
                                     for(let tmpCnt = cnt + 1; tmpCnt < request.parameters.length; tmpCnt++) {
@@ -287,7 +306,7 @@ export class CodeModelMerger {
                                         if (tmpParam['originalParameter'] == parameter) {
                                             if(!isNullOrUndefined(tmpParam?.['language']?.['cli']?.['cliPath'])) {
                                                 let cliPath = tmpParam.language['cli']?.['cliPath'];
-                                                let cliNode = findNodeInCodeModel(cliPath, this.cliCodeModel);
+                                                let cliNode = findNodeInCodeModel(cliPath, this.cliCodeModel, false, tmpParam);
                                                 if (isNullOrUndefined(cliNode)) {
                                                     let lastValidPath = this.getLastValidPath(cliPath);
                                                     if (!isNullOrUndefined(lastValidPath)) {
@@ -295,10 +314,10 @@ export class CodeModelMerger {
                                                         if (!isNullOrUndefined(lastValidNode) && isArray(lastValidNode)) {
                                                             let cliFlattenTrace = tmpParam.language['cli']['cliFlattenTrace'];
                                                             let cliFlattenTraceStr = cliFlattenTrace.join(";");
-                                                            let cnt = -1;
+                                                            let cnt1 = -1;
                                                             for(let lnode of lastValidNode) {
                                                                 if (!deepFlatten) {
-                                                                    cnt++;
+                                                                    cnt1++;
                                                                 }
                                                                 if(!isNullOrUndefined(lnode.language['cli']?.['cliFlattenTrace'])) {
                                                                     let cftstr = lnode.language['cli']?.['cliFlattenTrace'].join(";");
@@ -312,15 +331,15 @@ export class CodeModelMerger {
                                                                 tmpParam['flattened'] = true;
                                                                 tmpParam.language['cli']['cli-flatten'] = true;
                                                                 tmpParam.language['cli']['cli-flattened'] = true;
-                                                                tmpParam['originalParameter'] = findNodeInCodeModel(parameter.language['cli']['cliM4Path'], this.cliCodeModel);
-                                                                lastValidNode.splice(cnt, 0, tmpParam);
-                                                                let cliOperation = findNodeInCodeModel(operation.language['cli']['cliM4Path'], this.cliCodeModel);
+                                                                tmpParam['originalParameter'] = findNodeInCodeModel(parameter.language['cli']['cliM4Path'], this.cliCodeModel, false, parameter);
+                                                                lastValidNode.splice(cnt1, 0, tmpParam);
+                                                                let cliOperation = findNodeInCodeModel(operation.language['cli']['cliM4Path'], this.cliCodeModel, false, operation);
                                                                 if(cliOperation.language['cli']['cli-operation-splitted'] && isArray(cliOperation.language['cli']['split-operation-names'])) {
                                                                     for(let tmpName of cliOperation.language['cli']['split-operation-names']) {
                                                                         let subParamPath = parameter.language['cli']['cliM4Path'].replace(cliOperation.language['cli']['cliKey'], cliOperation.language['cli']['cliKey'] + "#" + tmpName);
-                                                                        let subParam = findNodeInCodeModel(subParamPath, this.cliCodeModel);
+                                                                        let subParam = findNodeInCodeModel(subParamPath, this.cliCodeModel, false, null, true);
                                                                         let subLastValidPath =  this.getLastValidPath(subParamPath);
-                                                                        let subLastValidNode = findNodeInCodeModel(subLastValidPath, this.cliCodeModel);
+                                                                        let subLastValidNode = findNodeInCodeModel(subLastValidPath, this.cliCodeModel, false, null, true);
                                                                         let idx = subLastValidNode.indexOf(subParam);
                                                                         if (idx > -1) {
                                                                             subLastValidNode.splice(idx + 1, 0, tmpParam);
