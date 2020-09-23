@@ -8,7 +8,7 @@ import { EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { CodeModel, Operation, OperationGroup, Parameter, ParameterLocation, Property, Request, Schema, SchemaType } from '@azure-tools/codemodel';
 import { values } from "@azure-tools/linq";
 import { isArray, isNullOrUndefined } from "util";
-import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase } from '../../utils/helper';
+import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash } from '../../utils/helper';
 import { GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
 import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './templates/tests/ScenarioTool';
@@ -268,6 +268,18 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             for (let child of this.MethodParameter.schema['children'].all) {
                                                 let childParam = new Parameter(child.language.default.name, child.language.default.description, child, child.language);
                                                 childParam.language = child.language
+                                                if (!isNullOrUndefined(child.language['cli']?.['alias'])) {
+                                                    if (isNullOrUndefined(childParam.language['az']['alias'])) {
+                                                        childParam.language['az']['alias'] = [];
+                                                    }
+                                                    if (typeof(child.language['cli']['alias']) == "string") {
+                                                        childParam.language['az']['alias'].push(changeCamelToDash(child.language['cli']['alias']));
+                                                    } else if (isArray(child.language['cli']['alias'])) {
+                                                        for(let alias of child.language['cli']['alias']) {
+                                                            childParam.language['az']['alias'].push(changeCamelToDash(alias));
+                                                        }
+                                                    }
+                                                }
                                                 childParam['polyBaseParam'] = polyBaseParam;
                                                 allChildParam.push(childParam);
                                             }
@@ -1794,7 +1806,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             for (let subProperty of paramSchema?.properties) {
                 let k = subProperty?.language['cli'].cliKey;
-                if (exampleValue[k]) {
+                if (exampleValue && exampleValue[k]) {
                     exampleValue[k] = this.FlattenProperty(subProperty, exampleValue[k]);
                 }
             }
@@ -1888,7 +1900,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
         }
 
-        if (typeof value === 'object' && value !== null) {
+        if (value !== null && typeof value === 'object') {
             for (let sub_name in value) {
                 this.FlattenExampleParameter(method_param_list, example_param, sub_name, value[sub_name], ancestors.concat(name));
             }
@@ -1987,6 +1999,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                     examples.push(example);
                 }
+                example.CommandString = this.GetExampleItems(example, false, undefined).join(" ");
+                example.WaitCommandString = this.GetExampleWait(example).join(" ");
             });
         }
         return examples;
@@ -1994,7 +2008,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GetExampleChecks(example: CommandExample): string[] {
         let ret: string[] = [];
-        if (!this.GenChecks)  return ret;
+        if (!this.GenChecks) return ret;
         let resourceObjectName = undefined;
         for (let param of example.Parameters) {
             if (example.ResourceClassName && this.resource_pool.isResource(param.defaultName) == example.ResourceClassName) {
@@ -2049,9 +2063,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             let resourceObject = this.resource_pool.findResource(example.ResourceClassName, resourceObjectName, undefined);
             if (resourceObject) {
                 let httpMethod = example.HttpMethod.toLowerCase();
-                if (['put', 'post', 'patch'].indexOf(httpMethod)>=0) {
+                if (['put', 'post', 'patch'].indexOf(httpMethod) >= 0) {
                     if (httpMethod == 'post') {
-                        resourceObject.example_params = []; 
+                        resourceObject.example_params = [];
                     }
                     for (let param of example.Parameters) {
                         resourceObject.addOrUpdateParam(param);

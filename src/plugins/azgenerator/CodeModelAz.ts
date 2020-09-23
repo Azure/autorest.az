@@ -59,6 +59,8 @@ export class CommandExample {
     public Method_IsLongRun: boolean;
     public MethodParams: MethodParam[];
     public ExampleObj: any;
+    public CommandString: string;
+    public WaitCommandString: string;
 }
 
 export interface CodeModelAz {
