@@ -19,7 +19,7 @@ export function GenerateAzureCliReport(model: CodeModelAz): string[] {
     output.push("|az " + model.Extension_Name + "|[groups](#CommandGroups)");
     output.push("");
     output.push("## GROUPS");
-    output.push("### <a name=\"CommandGroups\">Command groups in \'az " + model.Extension_Name + "\' extension </a>");
+    output.push("### <a name=\"CommandGroups\">Command groups in `az " + model.Extension_Name + "` extension </a>");
     output.push("|CLI Command Group|Group Swagger name|Commands|");
     output.push("|---------|------------|--------|");
 
@@ -82,7 +82,7 @@ export function GenerateAzureCliReport(model: CodeModelAz): string[] {
 
 function getCommandBody(model: CodeModelAz) {
     let mo: string[] = [];
-    mo.push("### <a name=\"CommandsIn" + model.CommandGroup_CliKey + "\">Commands in \'az " + model.CommandGroup_Name + "\' group</a>");
+    mo.push("### <a name=\"CommandsIn" + model.CommandGroup_CliKey + "\">Commands in `az " + model.CommandGroup_Name + "` group</a>");
     mo.push("|CLI Command|Operation Swagger name|Parameters|Examples|");
     mo.push("|---------|------------|--------|-----------|");
     if (model.SelectFirstCommand()) {
@@ -103,7 +103,7 @@ function getCommandBody(model: CodeModelAz) {
 
 function getCommandDetails(model: CodeModelAz) {
     let mo: string[] = [];
-    mo.push("### group \'az " + model.CommandGroup_Name + "\'");
+    mo.push("### group `az " + model.CommandGroup_Name + "`");
     if (model.SelectFirstCommand()) {
         do {
             let allRequiredParam: Map<string, boolean> = new Map<string, boolean>();
@@ -113,23 +113,23 @@ function getCommandDetails(model: CodeModelAz) {
             if (model.SelectFirstMethod()) {
                 do {
                     let examplesStarted: boolean = false;
-                    mo.push("#### <a name=\"" + model.CommandGroup_CliKey + model.Method_CliKey + "\">Command \'az " + model.CommandGroup_Name + " " + model.Method_NameAz + "\'</a>");
+                    mo.push("#### <a name=\"" + model.CommandGroup_CliKey + model.Method_CliKey + "\">Command `az " + model.CommandGroup_Name + " " + model.Method_NameAz + "`</a>");
                     mo.push("");
                     for(let example of model.GetExamples()){
                         mo.push("##### <a name=\"" + "Examples" + model.CommandGroup_CliKey + model.Method_CliKey + "\">Example</a>");
-                        mo.push("\'\'\'");
+                        mo.push("```");
                         let parameters: string[] = [];
                         parameters = model.GetExampleItems(example, false, undefined);
                         let line = parameters.join(' ');
                         ToMultiLine(line, mo, 119, true);
-                        mo.push("\'\'\'");
-                    }
-                    if (!model.SelectFirstMethodParameter()) {
-                        continue;
+                        mo.push("```");
                     }
                     mo.push("##### <a name=\"" + "Parameters" + model.CommandGroup_CliKey + model.Method_CliKey + "\">Parameters</a> ");
                     mo.push("|Option|Type|Description|Path (SDK)|Swagger name|");
                     mo.push("|------|----|-----------|----------|------------|");
+                    if (!model.SelectFirstMethodParameter()) {
+                        continue;
+                    }
                     let originalOperation = model.Method_GetOriginalOperation;
                     do {
                         if (model.MethodParameter_IsFlattened || model.MethodParameter_Type == SchemaType.Constant) {
