@@ -1,6 +1,6 @@
-import {readFileSync, existsSync, writeFileSync} from 'fs';
+import {readFileSync, existsSync, writeFileSync, mkdirSync} from 'fs';
 import { isNullOrUndefined } from 'util';
-import {join} from "path"
+import {join, dirname} from "path"
 import JSZip = require('jszip-sync');
 
 export class TargetFile {
@@ -298,6 +298,7 @@ export function zipFile(zipFile: string, genFile: string, content: string[]) {
             });
         }
         else {
+            mkdirSync(dirname(zipFile), {recursive: true});
             zip.file(genFile, strContent);
         }
         zip.generateAsync({type: "nodebuffer"})
