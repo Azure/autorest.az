@@ -30,7 +30,7 @@ export async function processRequest(host: Host) {
 
         // Read existing file generation-mode
         let options = await session.getValue('az');
-        model.CliGenerationMode = await autoDetectGenerationMode(host, options['extensions']);
+        model.CliGenerationMode = await autoDetectGenerationMode(host, options['extensions'], model.IsCliCore);
         model.CliOutputFolder = azOutputFolder;
 
         let generator = await AzGeneratorFactory.createAzGenerator(model, debug);
@@ -41,7 +41,7 @@ export async function processRequest(host: Host) {
             do {
                 let path = "azext_" + model.Extension_Name.replace("-", "_") + "/";
                 session.protectFiles(path + "manual");
-                session.protectFiles(path + "tests/latest/recordings")
+                session.protectFiles(path + "tests/latest/recordings");
                 session.protectFiles("README.md");
             } while (model.SelectNextExtension());
         }
@@ -66,7 +66,7 @@ export async function processRequest(host: Host) {
     }
 }
 
-async function autoDetectGenerationMode(host: Host, name: String): Promise<GenerationMode> {
+async function autoDetectGenerationMode(host: Host, name: string, isCliCore: boolean): Promise<GenerationMode> {
     // Verify the __init__.py in generated folder
     if (isNullOrUndefined(name)) {
         throw new Error("name should not be null");
@@ -79,7 +79,10 @@ async function autoDetectGenerationMode(host: Host, name: String): Promise<Gener
         host.Message({ Channel: Channel.Information, Text: "As clear output folder is set, generation-mode in code model is: " + GenerationMode[result] });
     }
     else {
-        let azName = "azext_" + name.replace("-", "_");
+        let azName: string = "";
+        if (!isCliCore) {
+            azName = "azext_" + name.replace("-", "_");
+        }
         let relativePath = path.join(azName, PathConstants.initFile);
         let rootInit = await host.ReadFile(relativePath);
         let existingMode = HeaderGenerator.GetCliGenerationMode(rootInit);

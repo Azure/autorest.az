@@ -2,18 +2,18 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import * as fs from 'fs';
-import { isNullOrUndefined, isNull } from 'util';
 import { CodeModel } from '@azure-tools/codemodel';
-import { values, items, length, Dictionary } from "@azure-tools/linq";
-import * as request from "request-promise-native";
+import { values } from "@azure-tools/linq";
+import * as fs from 'fs';
 import * as path from 'path';
+import * as request from "request-promise-native";
+import { isNullOrUndefined } from 'util';
 
 export function changeCamelToDash(str: string) {
     str = str.replace(/[A-Z][^A-Z]/g, letter => `-${letter.toLowerCase()}`);
     str = str.replace(/[^A-Z][A-Z]/g, letter => `${letter[0]}-${letter[1].toLowerCase()}`);
     str = str.toLowerCase();
-    if(str.startsWith('-')) {
+    if (str.startsWith('-')) {
         str = str.substring(1, str.length);
     }
     return str;
@@ -262,12 +262,12 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                 if (lastComma >= 0) {
                     //find indent by parathesis before the lastComma
                     let close_para = 0;
-                    for (let i=lastComma; i>indent; i--) {
+                    for (let i = lastComma; i > indent; i--) {
                         if (inStrTags[i]) continue;
                         let currentChar = ret[ret.length - 1][i];
-                        if ( currentChar==')' || currentChar==']')  close_para++;
-                        if (currentChar=='(' || currentChar=='[' ) {
-                            if (close_para==0) {
+                        if (currentChar == ')' || currentChar == ']') close_para++;
+                        if (currentChar == '(' || currentChar == '[') {
+                            if (close_para == 0) {
                                 indents.push(indent);
                                 indent = i + 1;
                                 break;
@@ -279,7 +279,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                     }
 
                     let prefixSpaces = ret[ret.length - 1].search(/\S|$/);
-                    if (indent>0)   prefixSpaces = indent;
+                    if (indent > 0) prefixSpaces = indent;
                     let newLine = ' '.repeat(prefixSpaces) + ret[ret.length - 1].substr(lastComma + 1).trimLeft();
                     ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastComma + 1);
                     ret.push(newLine);
@@ -317,6 +317,40 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
     return ret;
 }
 
+export function CmdToMultiLines(cmd: string): string[] {
+    let result: string[] = [];
+
+    if (cmd.length < 120) {
+        result.push(cmd);
+    }
+    else {
+        const base = cmd.split(" ");
+        let merged: string[] = [];
+        let temp: string = "";
+        for (let i = 0; i < base.length; ++i) {
+            if (base[i].startsWith("--")) {
+                merged.push(temp);
+                temp = "";
+            }
+            temp += base[i] + " ";
+        }
+        merged.push(temp);
+        temp = "";
+
+        for (let i = 0; i < merged.length; ++i) {
+            if (temp.length + merged[i].length > 119) {
+                temp += "\\";
+                result.push(temp);
+                temp = getIndentString(4);
+            }
+            temp += merged[i];
+        }
+        result.push(temp);
+    }
+
+    return result;
+}
+
 export function parseResourceId(mpath: string): Map<string, string> {
     let baseRegex: RegExp = /\/subscriptions\/(?<subscription>[^\/]*)(\/resourceGroups\/(?<resource_group>[^\/]*))?(\/providers\/(?<namespace>[^\/]*)\/(?<type>[^\/]*)\/(?<name>[^\/]*)(?<children>.*))?/g;
     let childRegex: RegExp = /(\/providers\/(?<child_namespace>[^\/]*))?\/(?<child_type>[^\/]*)\/(?<child_name>[^\/]*)/g;
@@ -345,11 +379,11 @@ export function parseResourceId(mpath: string): Map<string, string> {
     return ret;
 }
 
-export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flattenMode: boolean = false) {
+export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flattenMode: boolean = false, nodeTobeFound: any = null, noMatch: boolean = false) {
     let nodePaths = cliM4Path.split('$$');
     let curNode: any = codeModel;
     let lastValidNode: any = null;
-    for(let np of nodePaths) {
+    for (let np of nodePaths) {
         if (np == "") {
             continue;
         }
@@ -370,21 +404,27 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
             if (np[beginIdx + 1] == "'" && np[endIdx - 1] == "'") {
                 nextStep = np.substring(beginIdx + 2, endIdx - 1);
                 let found = false;
-                for(let node of values(curNode)) {
-                    if(node?.['language']?.['cli']?.['cliKey'] == nextStep) {
+                for (let node of values(curNode)) {
+                    if (node?.['language']?.['cli']?.['cliKey'] == nextStep) {
                         curNode = node;
                         found = true;
                         break;
                     }
                 }
-                if(!found) {
+                if (!found) {
                     curNode = null;
                 }
             } else {
                 nextStep = np.substring(beginIdx + 1, endIdx);
                 curNode = curNode[Number(nextStep)];
             }  
-            if (!isNullOrUndefined(curNode)) {
+            if (!isNullOrUndefined(curNode) && curNode.language?.['cli']?.['cliPath'] == cliM4Path) {
+                if (noMatch || curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && !isNullOrUndefined(nodeTobeFound.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'].join(";") == curNode.language['cli']['cliFlattenTrace'].join(";"))) {
+                    lastValidNode = curNode;
+                } else {
+                    curNode = null;
+                }
+            } else if(!isNullOrUndefined(curNode)) {
                 lastValidNode = curNode;
             }
         } else {
@@ -392,14 +432,20 @@ export function findNodeInCodeModel(cliM4Path: any, codeModel: CodeModel, flatte
             curNode = curNode[np];
         }
     }
-    if(!flattenMode || !isNullOrUndefined(curNode)) {
+    if (!isNullOrUndefined(curNode) && curNode.language?.['cli']?.['cliPath'] == cliM4Path) {
+        if (!noMatch && (!(curNode.language['cli']?.['cliM4Path'] == cliM4Path || (!isNullOrUndefined (nodeTobeFound) && !isNullOrUndefined(curNode.language?.['cli']?.['cliFlattenTrace']) && !isNullOrUndefined(nodeTobeFound.language?.['cli']?.['cliFlattenTrace']) && nodeTobeFound.language['cli']['cliFlattenTrace'].join(";") == curNode.language['cli']['cliFlattenTrace'].join(";"))))) {
+            curNode = null;
+        }
+    }
+
+    if (!flattenMode || !isNullOrUndefined(curNode)) {
         return curNode;
     }
     let flattenedNodes = [];
-    if(flattenMode && isNullOrUndefined(curNode) && !isNullOrUndefined(lastValidNode)) {
-        for(let node of values(lastValidNode)) {
-            for(let cliTracePath of values(node?.['language']?.['cli']?.['cliFlattenTrace'])) {
-                if(cliTracePath == cliM4Path) {
+    if (flattenMode && isNullOrUndefined(curNode) && !isNullOrUndefined(lastValidNode)) {
+        for (let node of values(lastValidNode)) {
+            for (let cliTracePath of values(node?.['language']?.['cli']?.['cliFlattenTrace'])) {
+                if (cliTracePath == cliM4Path) {
                     flattenedNodes.push(node);
                     break;
                 }
@@ -458,3 +504,23 @@ export function deleteFolderRecursive(target) {
         fs.rmdirSync(target);
     }
 };
+
+export function skipCommentLines(base: string[]): number {
+    let firstNoneCommentLineIdx: number = 0;
+    for (let i: number = 0; i < base.length; ++i) {
+        if (!base[i].startsWith("#") && firstNoneCommentLineIdx == 0) {
+            firstNoneCommentLineIdx = i;
+        }
+    }
+    return firstNoneCommentLineIdx;
+}
+
+export function keepHeaderLines(base: string[]): number {
+    let futureImportLineIdx: number = 0;
+    for (let i: number = 0; i < base.length; ++i) {
+        if (base[i].indexOf("__future__") != -1) {
+            futureImportLineIdx = i + 1;
+        }
+    }
+    return futureImportLineIdx;
+}
