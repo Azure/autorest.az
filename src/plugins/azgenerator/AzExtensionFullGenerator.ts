@@ -11,7 +11,7 @@ import { CliTopCustom } from "./templates/CliTopCustom";
 import { CliTopInit } from "./templates/CliTopInit";
 import { GenerateAzureCliHistory } from "./templates/extraExt/CliExtHistory";
 import { CliTopMetadata } from "./templates/extraExt/CliExtMetadata";
-import { GenerateAzureCliReadme } from "./templates/extraExt/CliExtReadme";
+import { CliExtReadme } from "./templates/extraExt/CliExtReadme";
 import { GenerateAzureCliSetupCfg } from "./templates/extraExt/CliExtSetupCfg";
 import { CliExtSetupPy } from "./templates/extraExt/CliExtSetupPy";
 import { GenerateAzureCliActions } from "./templates/generated/CliActions";
@@ -24,7 +24,6 @@ import { GenerateAzureCliValidators } from "./templates/generated/CliValidators"
 import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit";
 import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
-
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -57,15 +56,17 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
             this.files[this.azDirectory + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(this.model);
         }
 
-        this.files[this.azDirectory + "action.py"] = await new CliTopAction(this.model, this.isDebugMode).fullGeneration();
-        this.files[this.azDirectory + "custom.py"] = await new CliTopCustom(this.model, this.isDebugMode).fullGeneration();
-        this.files[this.azDirectory + "__init__.py"] = await new CliTopInit(this.model, this.isDebugMode).fullGeneration();
-        this.files[this.azDirectory + "azext_metadata.json"] = await new CliTopMetadata(this.model, this.isDebugMode).fullGeneration();
+        await this.generateFullSingleAndAddtoOutput(new CliTopAction(this.model, this.isDebugMode));
+        await this.generateFullSingleAndAddtoOutput(new CliTopCustom(this.model, this.isDebugMode));
+        await this.generateFullSingleAndAddtoOutput(new CliTopInit(this.model, this.isDebugMode));
+        await this.generateFullSingleAndAddtoOutput(new CliTopMetadata(this.model, this.isDebugMode));        
 
         this.files["report.md"] = GenerateAzureCliReport(this.model);
         this.files["HISTORY.rst"] = GenerateAzureCliHistory(this.model);
-        this.files["README.md"] = GenerateAzureCliReadme(this.model);
+
+        await this.generateFullSingleAndAddtoOutput(new CliExtReadme(this.model, this.isDebugMode), false);
         this.files["setup.cfg"] = GenerateAzureCliSetupCfg(this.model);
-        this.files["setup.py"] = await new CliExtSetupPy(this.model, this.isDebugMode).fullGeneration();
+        await this.generateFullSingleAndAddtoOutput(new CliExtSetupPy(this.model, this.isDebugMode));
+        
     }
 }

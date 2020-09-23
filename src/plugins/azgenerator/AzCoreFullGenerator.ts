@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { PathConstants, SystemType } from '../models';
+import { SystemType } from '../models';
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
 import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
@@ -28,11 +28,11 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
     }
 
     private getParam() {
-        return {model: this.model, isDebugMode: this.isDebugMode, files: this.files};
+        return { model: this.model, isDebugMode: this.isDebugMode, files: this.files };
     }
 
     public async generateAll() {
-        let {model, isDebugMode, files} = this.getParam();
+        let { model, isDebugMode, files } = this.getParam();
         if (model.SelectFirstExtension()) {
             do {
                 files[path.join(model.azOutputFolder, "generated/_params.py")] = GenerateAzureCliParams(model, isDebugMode);
@@ -43,32 +43,27 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 files[path.join(model.azOutputFolder, "generated/action.py")] = GenerateAzureCliActions(model);
                 files[path.join(model.azOutputFolder, "generated/__init__.py")] = GenerateNamespaceInit(model);
                 files[path.join(model.azOutputFolder, "tests/__init__.py")] = GenerateAzureCliTestInit(model);
-                model.GenerateTestInit();
                 files[path.join(model.azOutputFolder, "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py")] = GenerateAzureCliTestScenario(model);
-                if (NeedPreparer()) files[path.join(model.azOutputFolder, "tests/latest/preparers.py")] = GenerateAzureCliTestPrepare(model);
+                if (NeedPreparer()) {
+                    files[path.join(model.azOutputFolder, "tests/latest/preparers.py")] = GenerateAzureCliTestPrepare(model);
+                }
                 files[path.join(model.azOutputFolder, "generated/_help.py")] = GenerateAzureCliHelp(model, isDebugMode);
                 files[path.join(model.azOutputFolder, "tests/latest/__init__.py")] = GenerateNamespaceInit(model);
-                
-                if(model.SDK_NeedSDK) {
-                    files[path.join(model.azOutputFolder, "vendored_sdks/__init__.py")] = GenerateNamespaceInit(model);  
+                if (model.SDK_NeedSDK) {
+                    files[path.join(model.azOutputFolder, "vendored_sdks/__init__.py")] = GenerateNamespaceInit(model);
                 }
                 files[path.join(model.azOutputFolder, "manual/__init__.py")] = GenerateNamespaceInit(model);
-                files[path.join(model.azOutputFolder, "action.py")] = await new CliTopAction(model, isDebugMode).fullGeneration();
-                files[path.join(model.azOutputFolder, "custom.py")] = await new CliTopCustom(model, isDebugMode).fullGeneration();
-                files[path.join(model.azOutputFolder, "__init__.py")] = await new CliTopInit(model, isDebugMode).fullGeneration();
-    
+                await this.generateFullSingleAndAddtoOutput(new CliTopAction(model, isDebugMode));
+                await this.generateFullSingleAndAddtoOutput(new CliTopCustom(model, isDebugMode));
+                await this.generateFullSingleAndAddtoOutput(new CliTopInit(model, isDebugMode));
                 files[path.join(model.azOutputFolder, "report.md")] = GenerateAzureCliReport(model);
-                let docSourceMapGenerator = new CliMainDocSourceJsonMap(model, isDebugMode);
-                let docSourceJsonMapPath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
-                files[docSourceJsonMapPath] = await docSourceMapGenerator.fullGeneration();
+                await this.generateFullSingleAndAddtoOutput(new CliMainDocSourceJsonMap(model, isDebugMode));
                 let requirementGenerator = new CliMainRequirement(model, isDebugMode);
-                for(let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
+                for (let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
                     requirementGenerator.relativePath = path.join(model.AzureCliFolder, "/src/azure-cli/requirements.py3." + sys + ".txt");
                     files[requirementGenerator.relativePath] = await requirementGenerator.fullGeneration();
                 }
-                let setupGenerator = new CliMainSetupPy(model, isDebugMode);
-                let setUpPath = path.join(model.AzureCliFolder, PathConstants.mainSetupPyFile);
-                files[setUpPath] = await setupGenerator.fullGeneration();
+                await this.generateFullSingleAndAddtoOutput(new CliMainSetupPy(model, isDebugMode));
             }
             while (model.SelectNextExtension())
         }

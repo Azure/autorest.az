@@ -1,5 +1,11 @@
-Microsoft Azure CLI 'boolean' Extension
-==========================================
+# Azure CLI boolean Extension #
+This is the extension for boolean
 
-This package is for the 'boolean' extension.
-i.e. 'az boolean'
+### How to use ###
+Install this extension using the below CLI command
+```
+az extension add --name boolean
+```
+
+### Included Features ###
+#### boolean bool ####

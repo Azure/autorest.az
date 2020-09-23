@@ -2,12 +2,12 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import * as fs from 'fs';
-import { isNullOrUndefined, isNull } from 'util';
 import { CodeModel } from '@azure-tools/codemodel';
-import { values, items, length, Dictionary } from "@azure-tools/linq";
-import * as request from "request-promise-native";
+import { values } from "@azure-tools/linq";
+import * as fs from 'fs';
 import * as path from 'path';
+import * as request from "request-promise-native";
+import { isNullOrUndefined } from 'util';
 
 export function changeCamelToDash(str: string) {
     str = str.replace(/[A-Z][^A-Z]/g, letter => `-${letter.toLowerCase()}`);
@@ -303,6 +303,40 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
         for (let line of ret) output.push(line);
     }
     return ret;
+}
+
+export function CmdToMultiLines(cmd: string): string[] {
+    let result: string[] = [];
+
+    if (cmd.length < 120) {
+        result.push(cmd);
+    }
+    else {
+        const base = cmd.split(" ");
+        let merged: string[] = [];
+        let temp: string = "";
+        for (let i = 0; i < base.length; ++i) {
+            if (base[i].startsWith("--")) {
+                merged.push(temp);
+                temp = "";
+            }
+            temp += base[i] + " ";
+        }
+        merged.push(temp);
+        temp = "";
+
+        for (let i = 0; i < merged.length; ++i) {
+            if (temp.length + merged[i].length > 119) {
+                temp += "\\";
+                result.push(temp);
+                temp = getIndentString(4);
+            }
+            temp += merged[i];
+        }
+        result.push(temp);
+    }
+
+    return result;
 }
 
 export function parseResourceId(mpath: string): Map<string, string> {
