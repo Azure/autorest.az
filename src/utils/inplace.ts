@@ -328,10 +328,10 @@ export function loadFromZip(zipFile: string, genFile: string): string[] {
     return undefined;
 }
 
-export function inplaceGen(outputFolder: string, azDirectory: string, filename: string, genContent: string[]): string[] {
-    let zipGenFile = join(outputFolder, azDirectory, "gen.zip");
+export function inplaceGen(outputFolder: string, filename: string, genContent: string[]): string[] {
+    let zipGenFile = join(outputFolder, "gen.zip");
     let originA = createTarget(loadFromZip(zipGenFile, filename));
-    let customizedA = createTarget(join(outputFolder,azDirectory, filename));
+    let customizedA = createTarget(join(outputFolder, filename));
     zipFile(zipGenFile, filename, genContent);
     let target = createTarget(genContent);
     target.merge(originA, customizedA);

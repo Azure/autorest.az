@@ -20,6 +20,7 @@ import { GenerateAzureCliValidators } from "./templates/generated/CliValidators"
 import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit";
 import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { inplaceGen } from "../../utils/inplace";
 
 export class AzCoreFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -43,7 +44,9 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 files[path.join(model.azOutputFolder, "generated/action.py")] = GenerateAzureCliActions(model);
                 files[path.join(model.azOutputFolder, "generated/__init__.py")] = GenerateNamespaceInit(model);
                 files[path.join(model.azOutputFolder, "tests/__init__.py")] = GenerateAzureCliTestInit(model);
-                files[path.join(model.azOutputFolder, "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py")] = GenerateAzureCliTestScenario(model);
+                let testFile = "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py";
+                files[path.join(model.azOutputFolder, testFile)] = inplaceGen(path.join(model.CliOutputFolder, model.azOutputFolder), testFile, GenerateAzureCliTestScenario(model));
+
                 if (NeedPreparer()) {
                     files[path.join(model.azOutputFolder, "tests/latest/preparers.py")] = GenerateAzureCliTestPrepare(model);
                 }

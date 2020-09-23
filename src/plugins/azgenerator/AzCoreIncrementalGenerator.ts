@@ -23,6 +23,7 @@ import { GenerateAzureCliParams } from "./templates/generated/CliParams";
 import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
 import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { inplaceGen } from "../../utils/inplace";
 
 export class AzCoreIncrementalGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -40,7 +41,9 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         this.files[path.join(PathConstants.generatedFolder, PathConstants.actionFile)] = GenerateAzureCliActions(this.model);
         this.files[path.join(PathConstants.generatedFolder, PathConstants.initFile)] = GenerateNamespaceInit(this.model);
 
-        this.files[path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored))] = GenerateAzureCliTestScenario(this.model);
+        let testFile = PathConstants.testFolder + "/" + PathConstants.latestFolder + "/" + PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored);
+        this.files[testFile] = inplaceGen(this.model.CliOutputFolder, testFile, GenerateAzureCliTestScenario(this.model));
+
         if (NeedPreparer()) {
             this.files[path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incPreparersFile)] = GenerateAzureCliTestPrepare(this.model);
         }

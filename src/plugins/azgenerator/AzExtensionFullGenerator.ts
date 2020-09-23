@@ -24,8 +24,8 @@ import { GenerateAzureCliValidators } from "./templates/generated/CliValidators"
 import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit";
 import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
-import { inplaceGen } from "../../utils/inplace"
-
+import { inplaceGen } from "../../utils/inplace";
+import * as path from 'path';
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -44,7 +44,7 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
 
         this.files[this.azDirectory + "tests/__init__.py"] = GenerateAzureCliTestInit(this.model);
         let testFile = "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py";
-        this.files[this.azDirectory + testFile] = inplaceGen(this.model.OutputFolder, this.azDirectory, testFile, GenerateAzureCliTestScenario(this.model));
+        this.files[this.azDirectory + testFile] = inplaceGen(path.join(this.model.CliOutputFolder, this.azDirectory), testFile, GenerateAzureCliTestScenario(this.model));
 
         if (NeedPreparer()) {
             this.files[this.azDirectory + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(this.model);
