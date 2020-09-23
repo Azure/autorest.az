@@ -45,7 +45,7 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 files[path.join(model.azOutputFolder, "generated/__init__.py")] = GenerateNamespaceInit(model);
                 files[path.join(model.azOutputFolder, "tests/__init__.py")] = GenerateAzureCliTestInit(model);
                 let testFile = "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py";
-                files[path.join(model.azOutputFolder, testFile)] = inplaceGen(path.join(model.CliOutputFolder, model.azOutputFolder), testFile, GenerateAzureCliTestScenario(model));
+                files[path.join(model.azOutputFolder, testFile)] = inplaceGen(model.azOutputFolder, testFile, GenerateAzureCliTestScenario(model));
 
                 if (NeedPreparer()) {
                     files[path.join(model.azOutputFolder, "tests/latest/preparers.py")] = GenerateAzureCliTestPrepare(model);
