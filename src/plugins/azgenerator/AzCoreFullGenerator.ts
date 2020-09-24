@@ -3,7 +3,7 @@ import { PathConstants, SystemType } from '../models';
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
 import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
-import { GenerateAzureCliReport } from "./templates/CliReport";
+import { CliReport } from "./templates/CliReport";
 import { CliTopAction } from "./templates/CliTopAction";
 import { CliTopCustom } from "./templates/CliTopCustom";
 import { CliTopInit } from "./templates/CliTopInit";
@@ -56,8 +56,7 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 files[path.join(model.azOutputFolder, "action.py")] = await new CliTopAction(model, isDebugMode).fullGeneration();
                 files[path.join(model.azOutputFolder, "custom.py")] = await new CliTopCustom(model, isDebugMode).fullGeneration();
                 files[path.join(model.azOutputFolder, "__init__.py")] = await new CliTopInit(model, isDebugMode).fullGeneration();
-    
-                files[path.join(model.azOutputFolder, "report.md")] = GenerateAzureCliReport(model);
+                files[path.join(model.azOutputFolder, "report.md")] = await new CliReport(model, isDebugMode).fullGeneration();
                 let docSourceMapGenerator = new CliMainDocSourceJsonMap(model, isDebugMode);
                 let docSourceJsonMapPath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
                 files[docSourceJsonMapPath] = await docSourceMapGenerator.fullGeneration();

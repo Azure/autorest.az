@@ -51,6 +51,7 @@ export class PathConstants {
     public static readonly actionFileOldVersion: string = "_actions.py";
     public static readonly initFile: string = "__init__.py";
     public static readonly helpFile: string = "_help.py";
+    public static readonly repotrFile: string = "report.md";
     public static readonly fullPreparersFile: string = "preparers.py";
     public static readonly incPreparersFile: string = "preparers_incrementalGenerated.py";
     public static readonly metadataFile: string = "azext_metadata.json";
