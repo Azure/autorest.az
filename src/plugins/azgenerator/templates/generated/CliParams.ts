@@ -347,7 +347,10 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                             argument += ", id_part='" + model.MethodParameter_IdPart + "'";
                         }
                     }
-                        
+                      
+                    if (!isNullOrUndefined(model.MethodParameter_DefaultConfigKey)) {
+                        argument += ", configured_default='" + model.MethodParameter_DefaultConfigKey + "'";
+                    }
                     argument += ")";
                     
                     ToMultiLine(argument, output_args);
