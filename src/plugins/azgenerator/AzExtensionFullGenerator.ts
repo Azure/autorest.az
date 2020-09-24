@@ -56,20 +56,11 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
             this.files[this.azDirectory + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(this.model);
         }
 
-<<<<<<< HEAD
         this.files[this.azDirectory + "action.py"] = await new CliTopAction(this.model, this.isDebugMode).fullGeneration();
         this.files[this.azDirectory + "custom.py"] = await new CliTopCustom(this.model, this.isDebugMode).fullGeneration();
         this.files[this.azDirectory + "__init__.py"] = await new CliTopInit(this.model, this.isDebugMode).fullGeneration();
         this.files[this.azDirectory + "azext_metadata.json"] = await new CliTopMetadata(this.model, this.isDebugMode).fullGeneration();
         this.files["report.md"] = await new CliReport(this.model, this.isDebugMode).fullGeneration();
-=======
-        await this.generateFullSingleAndAddtoOutput(new CliTopAction(this.model, this.isDebugMode));
-        await this.generateFullSingleAndAddtoOutput(new CliTopCustom(this.model, this.isDebugMode));
-        await this.generateFullSingleAndAddtoOutput(new CliTopInit(this.model, this.isDebugMode));
-        await this.generateFullSingleAndAddtoOutput(new CliTopMetadata(this.model, this.isDebugMode));        
-
-        this.files["report.md"] = GenerateAzureCliReport(this.model);
->>>>>>> master
         this.files["HISTORY.rst"] = GenerateAzureCliHistory(this.model);
 
         await this.generateFullSingleAndAddtoOutput(new CliExtReadme(this.model, this.isDebugMode), false);
