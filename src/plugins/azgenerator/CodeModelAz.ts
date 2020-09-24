@@ -159,6 +159,7 @@ export interface CodeModelAz {
     MethodParameter_EnumValues: string[];
     MethodParameters_AddPolySubClass(oriParam, para): boolean;
     MethodParameter_DefaultValue: any | undefined;
+    MethodParameter_DefaultConfigKey: string | undefined;
     Parameter_Type(Parameter): string;
     Schema_Type(Schema): string;
     Parameter_IsList(Parameter): boolean;
@@ -179,6 +180,7 @@ export interface CodeModelAz {
     Parameter_NamePython(Parameter): string;
     Parameter_Description(Parameter): string;
     Parameter_DefaultValue(Parameter): any | undefined;
+    Parameter_DefaultConfigKey(Parameter): string | undefined;
     Schema_Description(Schema): string;
     Schema_FlattenedFrom(Schema): Schema;
 
