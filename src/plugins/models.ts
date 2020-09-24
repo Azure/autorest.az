@@ -58,6 +58,7 @@ export class PathConstants {
     public static readonly setupPyFile: string = "setup.py";
     public static readonly docSourceJsonFile: string = "/doc/sphinx/azhelpgen/doc_source_map.json";
     public static readonly mainSetupPyFile: string = "src/azure-cli/setup.py";
+    public static readonly readmeFile: string = "README.md";
 
     public static fullTestSceanrioFile(rpName: string): string {
         return "test_" + rpName + "_scenario.py";

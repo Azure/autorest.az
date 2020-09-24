@@ -56,28 +56,13 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         }
 
         // Add Import and run method from generated folder (Init)
-        const cliTopInitGenerator = new CliTopInit(this.model, this.isDebugMode);
-        let cliTopInitBase: string = "";
-        if (fs.existsSync(path.join(this.model.CliOutputFolder, cliTopInitGenerator.relativePath))) {
-            cliTopInitBase = fs.readFileSync(path.join(this.model.CliOutputFolder, cliTopInitGenerator.relativePath)).toString();
-        }
-        this.files[cliTopInitGenerator.relativePath] = await cliTopInitGenerator.incrementalGeneration(cliTopInitBase);
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTopInit(this.model, this.isDebugMode));
 
         // Add Import from generated folder (Custom)
-        const cliTopCustomGenerator = new CliTopCustom(this.model, this.isDebugMode);
-        let cliTopCustomBase: string = "";
-        if (fs.existsSync(path.join(this.model.CliOutputFolder, cliTopCustomGenerator.relativePath))) {
-            cliTopCustomBase = fs.readFileSync(path.join(this.model.CliOutputFolder, cliTopCustomGenerator.relativePath)).toString();
-        }
-        this.files[cliTopCustomGenerator.relativePath] = await cliTopCustomGenerator.incrementalGeneration(cliTopCustomBase);
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTopCustom(this.model, this.isDebugMode));
 
         // Add Import from generated folder (Help)
-        const cliTopHelpGenerator = new CliTopHelp(this.model, this.isDebugMode);
-        let cliTopHelpBase: string = "";
-        if (fs.existsSync(path.join(this.model.CliOutputFolder, cliTopHelpGenerator.relativePath))) {
-            cliTopHelpBase = fs.readFileSync(path.join(this.model.CliOutputFolder, cliTopHelpGenerator.relativePath)).toString();
-        }
-        this.files[cliTopHelpGenerator.relativePath] = await cliTopHelpGenerator.incrementalGeneration(cliTopHelpBase);
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTopHelp(this.model, this.isDebugMode));
 
         // Add Import from generated folder (Report)
         const AzureCliReportGenerator = new CliReport(this.model, this.isDebugMode);
@@ -97,8 +82,7 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         this.files[cliTopActionGenerator.relativePath] = await cliTopActionGenerator.incrementalGeneration(cliTopActionBase);
 
         // update sdk version in requirements and setuppy
-        const cliMainSetup = new CliMainSetupPy(this.model, this.isDebugMode);
-        this.files[cliMainSetup.relativePath] = await cliMainSetup.incrementalGeneration(null);
+        await this.generateIncrementalSingleAndAddtoOutput(new CliMainSetupPy(this.model, this.isDebugMode));
 
         const cliRequirement = new CliMainRequirement(this.model, this.isDebugMode);
         for (let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
