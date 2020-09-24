@@ -53,13 +53,11 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                     files[path.join(model.azOutputFolder, "vendored_sdks/__init__.py")] = GenerateNamespaceInit(model);
                 }
                 files[path.join(model.azOutputFolder, "manual/__init__.py")] = GenerateNamespaceInit(model);
-                files[path.join(model.azOutputFolder, "action.py")] = await new CliTopAction(model, isDebugMode).fullGeneration();
-                files[path.join(model.azOutputFolder, "custom.py")] = await new CliTopCustom(model, isDebugMode).fullGeneration();
-                files[path.join(model.azOutputFolder, "__init__.py")] = await new CliTopInit(model, isDebugMode).fullGeneration();
-                files[path.join(model.azOutputFolder, "report.md")] = await new CliReport(model, isDebugMode).fullGeneration();
-                let docSourceMapGenerator = new CliMainDocSourceJsonMap(model, isDebugMode);
-                let docSourceJsonMapPath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
-                files[docSourceJsonMapPath] = await docSourceMapGenerator.fullGeneration();
+                await this.generateFullSingleAndAddtoOutput(new CliTopAction(model, isDebugMode));	              
+                await this.generateFullSingleAndAddtoOutput(new CliTopCustom(model, isDebugMode));
+                await this.generateFullSingleAndAddtoOutput(new CliTopInit(model, isDebugMode));
+                await this.generateFullSingleAndAddtoOutput(new CliReport(model, isDebugMode));
+                await this.generateFullSingleAndAddtoOutput(new CliMainDocSourceJsonMap(model, isDebugMode));
                 let requirementGenerator = new CliMainRequirement(model, isDebugMode);
                 for (let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
                     requirementGenerator.relativePath = path.join(model.AzureCliFolder, "/src/azure-cli/requirements.py3." + sys + ".txt");

@@ -15,10 +15,10 @@ export class CliReport extends TemplateBase{
     constructor(model: CodeModelAz, isDebugMode: boolean){
         super(model, isDebugMode);
         if (this.model.IsCliCore) {
-            this.relativePath = path.join(PathConstants.repotrFile);
+            this.relativePath = path.join(PathConstants.reportFile);
         }
         else {
-            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.repotrFile);
+            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.reportFile);
         }
     }
 
@@ -59,9 +59,6 @@ export class CliReport extends TemplateBase{
         if (model.SelectFirstCommandGroup()) {
             var mo: string[] = [];
             do {
-    
-                /*mo.push("## " + model.Command_Name);
-                mo.push("");*/
                 if (model.SelectFirstCommand()) {
     
                     mo = this.getCommandBody(model);

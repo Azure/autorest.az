@@ -65,8 +65,7 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         await this.generateIncrementalSingleAndAddtoOutput(new CliTopHelp(this.model, this.isDebugMode));
 
         // Add Import from generated folder (Report)
-        const AzureCliReportGenerator = new CliReport(this.model, this.isDebugMode);
-        this.files[path.join(this.model.azOutputFolder, "report.md")] = await AzureCliReportGenerator.incrementalGeneration("");
+        await this.generateIncrementalSingleAndAddtoOutput(new CliReport(this.model, this.isDebugMode));
 
         // Add Import from generated folder (Action)
         const cliTopActionGenerator = new CliTopAction(this.model, this.isDebugMode);
