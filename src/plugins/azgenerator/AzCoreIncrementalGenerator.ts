@@ -23,6 +23,7 @@ import { GenerateAzureCliParams } from "./templates/generated/CliParams";
 import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
 import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { deepCopy } from '../../utils/helper';
 
 export class AzCoreIncrementalGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -40,7 +41,20 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         this.files[path.join(PathConstants.generatedFolder, PathConstants.actionFile)] = GenerateAzureCliActions(this.model);
         this.files[path.join(PathConstants.generatedFolder, PathConstants.initFile)] = GenerateNamespaceInit(this.model);
 
-        this.files[path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored))] = GenerateAzureCliTestScenario(this.model);
+        //this.files[path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored))] = GenerateAzureCliTestScenario(this.model);
+        let config: any = deepCopy(this.model.Extension_TestScenario);
+                for (var ci = 0; ci < config.length; ci++) {
+                    let exampleId: string = config[ci].name;
+                    if(exampleId){
+                        this.files[path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored))] = GenerateAzureCliTestScenario(this.model,config);
+                        break;
+                    }else{
+                        for(let [key,val] of Object.entries(config[ci])){
+                            this.files[path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incTestScenarioFile(key))] = GenerateAzureCliTestScenario(this.model,val);
+                        }
+                    }
+                }
+
         if (NeedPreparer()) {
             this.files[path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incPreparersFile)] = GenerateAzureCliTestPrepare(this.model);
         }

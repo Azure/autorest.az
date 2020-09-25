@@ -16,7 +16,7 @@ export function NeedPreparer(): boolean {
     return usePreparers;
 }
 
-export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
+export function GenerateAzureCliTestScenario(model: CodeModelAz,config:any): string[] {
     var head: string[] = [];
     let steps: string[] = [];
     let class_info: string[] = [];
@@ -25,7 +25,7 @@ export function GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
     let funcScenario: string[] = [];
 
     let commandParams = model.GatherInternalResource();
-    let config: any = deepCopy(model.Extension_TestScenario);
+    //let config: any = deepCopy(model.Extension_TestScenario);
     config.unshift({ function: "setup" });
     config.push({ function: "cleanup" });
 

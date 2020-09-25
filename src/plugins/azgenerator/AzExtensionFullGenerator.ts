@@ -24,6 +24,7 @@ import { GenerateAzureCliValidators } from "./templates/generated/CliValidators"
 import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit";
 import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { deepCopy } from '../../utils/helper';
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -41,7 +42,20 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         this.files[this.azDirectory + "generated/__init__.py"] = GenerateNamespaceInit(this.model);
 
         this.files[this.azDirectory + "tests/__init__.py"] = GenerateAzureCliTestInit(this.model);
-        this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model);
+        //this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model);
+        let config: any = deepCopy(this.model.Extension_TestScenario);
+                for (var ci = 0; ci < config.length; ci++) {
+                    let exampleId: string = config[ci].name;
+                    if(exampleId){
+                        this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,config);
+                        break;
+                    }else{
+                        for(let [key,val] of Object.entries(config[ci])){
+                            this.files[this.azDirectory + "tests/latest/test_" + key + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,val);
+                        }
+                    }
+                }
+
         if (NeedPreparer()) {
             this.files[this.azDirectory + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(this.model);
         };
