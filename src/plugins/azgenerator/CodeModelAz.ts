@@ -84,6 +84,7 @@ export interface CodeModelAz {
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
     Extension_Mode: string;   
+    Group_Extension_Mode: string;
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;

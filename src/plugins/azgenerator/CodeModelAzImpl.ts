@@ -488,6 +488,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.codeModel.info['extensionMode'];
     }
 
+    public get Group_Extension_Mode(){
+        return this.CommandGroup?.language?.['cli']?.['groupExtensionMode'];
+    }
+
     public get Extension_NameUnderscored() {
         return this.extensionName.replace(/-/g, '_');
     }

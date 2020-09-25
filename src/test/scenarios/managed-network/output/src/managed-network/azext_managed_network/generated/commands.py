@@ -20,7 +20,8 @@ def load_command_table(self, _):
         operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_operations#Mana'
         'gedNetworkOperations.{}',
         client_factory=cf_mn)
-    with self.command_group('managed-network mn', managed_network_mn, client_factory=cf_mn, is_preview=True) as g:
+    with self.command_group('managed-network mn', managed_network_mn, client_factory=cf_mn,
+                            is_experimental=True) as g:
         g.custom_command('list', 'managed_network_mn_list')
         g.custom_command('create', 'managed_network_mn_create')
         g.custom_command('update', 'managed_network_mn_update')
