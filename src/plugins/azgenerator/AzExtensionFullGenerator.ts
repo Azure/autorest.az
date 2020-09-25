@@ -60,7 +60,7 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         await this.generateFullSingleAndAddtoOutput(new CliTopCustom(this.model, this.isDebugMode));
         await this.generateFullSingleAndAddtoOutput(new CliTopInit(this.model, this.isDebugMode));
         await this.generateFullSingleAndAddtoOutput(new CliTopMetadata(this.model, this.isDebugMode));
-        this.files["report.md"] = await new CliReport(this.model, this.isDebugMode).fullGeneration();
+        await this.generateFullSingleAndAddtoOutput(new CliReport(this.model, this.isDebugMode));
         this.files["HISTORY.rst"] = GenerateAzureCliHistory(this.model);
 
         await this.generateFullSingleAndAddtoOutput(new CliExtReadme(this.model, this.isDebugMode), false);

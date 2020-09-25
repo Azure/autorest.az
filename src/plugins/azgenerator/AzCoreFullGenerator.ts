@@ -53,7 +53,7 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                     files[path.join(model.azOutputFolder, "vendored_sdks/__init__.py")] = GenerateNamespaceInit(model);
                 }
                 files[path.join(model.azOutputFolder, "manual/__init__.py")] = GenerateNamespaceInit(model);
-                await this.generateFullSingleAndAddtoOutput(new CliTopAction(model, isDebugMode));	              
+                await this.generateFullSingleAndAddtoOutput(new CliTopAction(model, isDebugMode));
                 await this.generateFullSingleAndAddtoOutput(new CliTopCustom(model, isDebugMode));
                 await this.generateFullSingleAndAddtoOutput(new CliTopInit(model, isDebugMode));
                 await this.generateFullSingleAndAddtoOutput(new CliReport(model, isDebugMode));
