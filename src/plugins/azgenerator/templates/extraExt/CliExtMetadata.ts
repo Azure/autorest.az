@@ -35,7 +35,11 @@ export class CliTopMetadata extends TemplateBase {
         var output: string[] = [];
 
         output.push('{');
-        if (model.Extension_Mode == 'experimental') {
+        if (model.Group_Extension_Mode == 'experimental'){
+            output.push('    "azext.isExperimental": true,');
+        } else if (model.Group_Extension_Mode == 'preview'){
+            output.push('    "azext.isPreview": true,');
+        } else if (model.Extension_Mode == 'experimental') {
             output.push('    "azext.isExperimental": true,');
         } else if (model.Extension_Mode == 'preview') {
             output.push('    "azext.isPreview": true,');

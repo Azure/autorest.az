@@ -47,7 +47,11 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 output.push("        client_factory=" + cf_name + ")");
                 let groupinfos = model.CommandGroup_Name.split(' ');
                 let extraInfo = "";
-                if(groupinfos.length == 2 && model.Extension_Mode == 'experimental') {
+                if(groupinfos.length == 2 && model.Group_Extension_Mode == 'experimental') { 
+                    extraInfo = ", is_experimental=True";
+                } else if(groupinfos.length == 2 && model.Group_Extension_Mode == 'preview') {
+                    extraInfo = ", is_preview=True";
+                } else if(groupinfos.length == 2 && model.Extension_Mode == 'experimental') { 
                     extraInfo = ", is_experimental=True";
                 } else if(groupinfos.length == 2 && model.Extension_Mode == 'preview') {
                     extraInfo = ", is_preview=True";
