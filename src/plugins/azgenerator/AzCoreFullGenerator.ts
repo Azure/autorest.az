@@ -1,9 +1,9 @@
 import * as path from 'path';
-import { SystemType } from '../models';
+import { SystemType, PathConstants } from '../models';
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
 import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
-import { GenerateAzureCliReport } from "./templates/CliReport";
+import { CliReport } from "./templates/CliReport";
 import { CliTopAction } from "./templates/CliTopAction";
 import { CliTopCustom } from "./templates/CliTopCustom";
 import { CliTopInit } from "./templates/CliTopInit";
@@ -56,7 +56,7 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 await this.generateFullSingleAndAddtoOutput(new CliTopAction(model, isDebugMode));
                 await this.generateFullSingleAndAddtoOutput(new CliTopCustom(model, isDebugMode));
                 await this.generateFullSingleAndAddtoOutput(new CliTopInit(model, isDebugMode));
-                files[path.join(model.azOutputFolder, "report.md")] = GenerateAzureCliReport(model);
+                await this.generateFullSingleAndAddtoOutput(new CliReport(model, isDebugMode));
                 await this.generateFullSingleAndAddtoOutput(new CliMainDocSourceJsonMap(model, isDebugMode));
                 let requirementGenerator = new CliMainRequirement(model, isDebugMode);
                 for (let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {

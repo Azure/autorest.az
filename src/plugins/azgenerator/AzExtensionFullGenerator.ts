@@ -5,7 +5,7 @@
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
 import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
-import { GenerateAzureCliReport } from "./templates/CliReport";
+import { CliReport } from "./templates/CliReport";
 import { CliTopAction } from "./templates/CliTopAction";
 import { CliTopCustom } from "./templates/CliTopCustom";
 import { CliTopInit } from "./templates/CliTopInit";
@@ -59,11 +59,9 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         await this.generateFullSingleAndAddtoOutput(new CliTopAction(this.model, this.isDebugMode));
         await this.generateFullSingleAndAddtoOutput(new CliTopCustom(this.model, this.isDebugMode));
         await this.generateFullSingleAndAddtoOutput(new CliTopInit(this.model, this.isDebugMode));
-        await this.generateFullSingleAndAddtoOutput(new CliTopMetadata(this.model, this.isDebugMode));        
-
-        this.files["report.md"] = GenerateAzureCliReport(this.model);
+        await this.generateFullSingleAndAddtoOutput(new CliTopMetadata(this.model, this.isDebugMode));
+        await this.generateFullSingleAndAddtoOutput(new CliReport(this.model, this.isDebugMode));
         this.files["HISTORY.rst"] = GenerateAzureCliHistory(this.model);
-
         await this.generateFullSingleAndAddtoOutput(new CliExtReadme(this.model, this.isDebugMode), false);
         this.files["setup.cfg"] = GenerateAzureCliSetupCfg(this.model);
         await this.generateFullSingleAndAddtoOutput(new CliExtSetupPy(this.model, this.isDebugMode));
