@@ -14,12 +14,7 @@ import { TemplateBase } from "./TemplateBase";
 export class CliReport extends TemplateBase{
     constructor(model: CodeModelAz, isDebugMode: boolean){
         super(model, isDebugMode);
-        if (this.model.IsCliCore) {
-            this.relativePath = path.join(PathConstants.reportFile);
-        }
-        else {
-            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.reportFile);
-        }
+        this.relativePath = path.join(PathConstants.reportFile);
     }
 
     public async fullGeneration(): Promise<string[]> {
