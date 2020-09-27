@@ -21,7 +21,6 @@ class ActionParam {
 export class CodeModelCliImpl implements CodeModelAz {
     codeModel: CodeModel;
     options: any;
-    outputFolder: string;
     extensionName: string;
     currentOperationGroupIndex: number;
     currentSubOperationGroupIndex: number;
