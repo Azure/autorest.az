@@ -327,7 +327,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                 mapName.pop();
                                             }
                                             if (mapName.length > 0) {
-                                                paramFlattenedName = mapName.reverse().join("_");
+                                                let tmpParamName = mapName.reverse().join("_");
+                                                if (paramFlattenedName == mapName.last || names.length > 1 && paramFlattenedName.startsWith(names[0].replace(/-/g, '_'))) {
+                                                    paramFlattenedName = tmpParamName;
+                                                }
                                             }
                                         } else if (names.length > 1) {
                                             let subgroup: string = names[0];
@@ -1482,6 +1485,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Parameter_DefaultValue(this.MethodParameter);
     }
 
+    public get MethodParameter_DefaultConfigKey(): string | undefined {
+        return this.Parameter_DefaultConfigKey(this.MethodParameter);
+    }
+
     public Parameter_DefaultValue(parameter: Parameter): string | undefined {
         if (!parameter.language['az'].hasOwnProperty('default-value')) {
             if (parameter?.language?.['cli']?.hasOwnProperty('default-value')) {
@@ -1496,6 +1503,16 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
 
         return parameter.language['az']['default-value'];
+    }
+
+
+    public Parameter_DefaultConfigKey(parameter: Parameter): string | undefined {
+        if (!parameter.language['az'].hasOwnProperty('default-config-key')) {
+            if (parameter?.language?.['cli']?.hasOwnProperty('default-config-key')) {
+                parameter.language['az']['default-config-key'] = parameter.language['cli']['default-config-key'];
+            }
+        }
+        return parameter.language['az']['default-config-key'];  
     }
 
     public Parameter_Description(param: Parameter = this.MethodParameter): string {

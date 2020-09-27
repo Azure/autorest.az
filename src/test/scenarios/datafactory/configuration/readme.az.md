@@ -41,4 +41,8 @@ cli:
             op: CreateOrUpdate#Update
             param: properties
         cli-flatten: true
+      - where:
+            param: factoryName
+        set:
+            default-config-key: factory
 ```

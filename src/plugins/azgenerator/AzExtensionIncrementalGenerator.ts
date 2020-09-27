@@ -11,6 +11,7 @@ import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
 import { CliTopAction } from './templates/CliTopAction';
 import { CliTopCustom } from "./templates/CliTopCustom";
 import { CliTopHelp } from "./templates/CliTopHelp";
+import { CliReport } from "./templates/CliReport";
 import { CliTopInit } from "./templates/CliTopInit";
 import { CliTopMetadata } from "./templates/extraExt/CliExtMetadata";
 import { CliExtSetupPy } from "./templates/extraExt/CliExtSetupPy";
@@ -65,6 +66,9 @@ export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
 
         // Add Import from generated folder (Help)
         await this.generateIncrementalSingleAndAddtoOutput(new CliTopHelp(this.model, this.isDebugMode));
+
+        // Add Import from generated folder (Report)
+        await this.generateIncrementalSingleAndAddtoOutput(new CliReport(this.model, this.isDebugMode));
 
         // Add Import from generated folder (Action)
         const cliTopActionGenerator = new CliTopAction(this.model, this.isDebugMode);

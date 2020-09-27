@@ -358,3 +358,13 @@ az command dataset mysql create --arguments_for_mysql ...
 az comamnd dataset storage create --arguments_for_storage...
 ```
 
+## How to set parameter to read az config value
+Cli support the command to read default value set by `az configure --defaults key=value`, we can use the following directive let generate command read from the config.
+```
+cli:
+    cli-directive:
+      - where:
+            param: factoryName
+        set:
+            default-config-key: factory
+```
