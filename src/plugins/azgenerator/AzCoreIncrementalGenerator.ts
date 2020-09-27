@@ -22,8 +22,9 @@ import { GenerateAzureCliCustom } from "./templates/generated/CliCustom";
 import { GenerateAzureCliHelp } from "./templates/generated/CliHelp";
 import { GenerateAzureCliParams } from "./templates/generated/CliParams";
 import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
-import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
-import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import {CliTestInit} from "./templates/tests/CliTestInit";
+import { CliTestPrepare } from "./templates/tests/CliTestPrepare";
+import { CliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
 import { inplaceGen } from "../../utils/inplace";
 
 export class AzCoreIncrementalGenerator extends AzGeneratorBase {
@@ -41,13 +42,6 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         this.files[path.join(PathConstants.generatedFolder, PathConstants.validatorsFile)] = GenerateAzureCliValidators(this.model);
         this.files[path.join(PathConstants.generatedFolder, PathConstants.actionFile)] = GenerateAzureCliActions(this.model);
         this.files[path.join(PathConstants.generatedFolder, PathConstants.initFile)] = GenerateNamespaceInit(this.model);
-
-        let testFile = PathConstants.testFolder + "/" + PathConstants.latestFolder + "/" + PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored);
-        this.files[testFile] = inplaceGen(this.model.CliOutputFolder, testFile, GenerateAzureCliTestScenario(this.model));
-
-        if (NeedPreparer()) {
-            this.files[path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incPreparersFile)] = GenerateAzureCliTestPrepare(this.model);
-        }
         this.files[path.join(PathConstants.generatedFolder, PathConstants.helpFile)] = GenerateAzureCliHelp(this.model, this.isDebugMode);
 
         // manual folder
@@ -90,6 +84,12 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         for (let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
             cliRequirement.relativePath = path.join(this.model.AzureCliFolder, "/src/azure-cli/requirements.py3." + sys + ".txt");
             this.files[cliRequirement.relativePath] = await cliRequirement.incrementalGeneration(null);
+        }
+
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored)), true);
+        if (NeedPreparer()) {
+            await this.generateIncrementalSingleAndAddtoOutput(new CliTestPrepare(this.model, this.isDebugMode));
         }
     }
 }

@@ -170,7 +170,7 @@ enum TestMode {
             if (!result) {
                 finalResult = false;
             }
-            assert.strictEqual(result, true, msg);
+            //assert.strictEqual(result, true, msg);
         }
         assert.strictEqual(finalResult, true, msg);
     }
