@@ -42,17 +42,18 @@ export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
 
         //this.files[path.join(this.azDirectory, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored))] = GenerateAzureCliTestScenario(this.model);
         let config: any = deepCopy(this.model.Extension_TestScenario);
-                for (var ci = 0; ci < config.length; ci++) {
-                    let exampleId: string = config[ci].name;
-                    if(exampleId){
-                        this.files[path.join(this.azDirectory, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored))] = GenerateAzureCliTestScenario(this.model,config);
-                        break;
-                    }else{
-                        for(let [key,val] of Object.entries(config[ci])){
-                            this.files[path.join(this.azDirectory, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incTestScenarioFile(key))] = GenerateAzureCliTestScenario(this.model,val);
-                        }
-                    }
-                }
+        for (var ci = 0; ci < config.length; ci++) {
+            for(let [key,val] of Object.entries(config[ci])){
+                var keyName = key;
+                var value = val;
+            }
+            if(keyName == "name" || config.length == 0){
+                this.files[path.join(this.azDirectory, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored))] = GenerateAzureCliTestScenario(this.model,config);
+                break
+            }else{
+                this.files[path.join(this.azDirectory, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incTestScenarioFile(keyName))] = GenerateAzureCliTestScenario(this.model,value);
+            }
+        }
         if (NeedPreparer()) {
             this.files[path.join(this.azDirectory, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incPreparersFile)] = GenerateAzureCliTestPrepare(this.model);
         };

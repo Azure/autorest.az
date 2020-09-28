@@ -44,18 +44,18 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         this.files[this.azDirectory + "tests/__init__.py"] = GenerateAzureCliTestInit(this.model);
         //this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model);
         let config: any = deepCopy(this.model.Extension_TestScenario);
-                for (var ci = 0; ci < config.length; ci++) {
-                    let exampleId: string = config[ci].name;
-                    if(exampleId){
-                        this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,config);
-                        break;
-                    }else{
-                        for(let [key,val] of Object.entries(config[ci])){
-                            this.files[this.azDirectory + "tests/latest/test_" + key + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,val);
-                        }
-                    }
-                }
-
+        for (var ci = 0; ci < config.length; ci++) {
+            for(let [key,val] of Object.entries(config[ci])){
+                var keyName = key;
+                var value = val;
+            }
+            if(keyName == "name" || config.length == 0){
+                this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario1.py"] = GenerateAzureCliTestScenario(this.model,config);
+                break
+            }else{
+                this.files[this.azDirectory + "tests/latest/test_" + keyName + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,value);
+            }
+        }
         if (NeedPreparer()) {
             this.files[this.azDirectory + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(this.model);
         };

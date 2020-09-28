@@ -47,14 +47,15 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 //files[path.join(model.azOutputFolder, "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py")] = GenerateAzureCliTestScenario(model);
                 let config: any = deepCopy(model.Extension_TestScenario);
                 for (var ci = 0; ci < config.length; ci++) {
-                    let exampleId: string = config[ci].name;
-                    if(exampleId){
+                    for(let [key,val] of Object.entries(config[ci])){
+                        var keyName = key;
+                        var value = val;
+                    }
+                    if(keyName == "name" || config.length == 0){
                         files[path.join(model.azOutputFolder, "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py")] = GenerateAzureCliTestScenario(model,config);
-                        break;
+                        break
                     }else{
-                        for(let [key,val] of Object.entries(config[ci])){
-                            files[path.join(model.azOutputFolder, "tests/latest/test_" + key + "_scenario.py")] = GenerateAzureCliTestScenario(model,val);
-                        }
+                        files[path.join(model.azOutputFolder, "tests/latest/test_" + keyName + "_scenario1.py")] = GenerateAzureCliTestScenario(model,value);
                     }
                 }
                 if (NeedPreparer()) {
