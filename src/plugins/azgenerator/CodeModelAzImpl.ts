@@ -466,7 +466,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._configuredScenario = true;
         }
         else {
-            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
+            this._testScenario = undefined;
             this._configuredScenario = false;
         }
     }
@@ -2219,7 +2219,8 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters, createdObjectNames);
         });
 
-        if (!this._configuredScenario) {
+        if (!this._configuredScenario && isNullOrUndefined(this._testScenario)) {
+            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
             this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool, this._testScenario);
             this.SortExamplesByDependency();
             PrintTestScenario(this._testScenario);
