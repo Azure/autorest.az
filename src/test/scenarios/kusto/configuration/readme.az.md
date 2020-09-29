@@ -9,7 +9,7 @@ az:
   package-name: azure-mgmt-kusto
 az-output-folder: $(azure-cli-extension-folder)/src/kusto
 python-sdk-output-folder: "$(az-output-folder)/azext_kusto/vendored_sdks/kusto"
-
+extension-mode: stable
 
 cli:
     cli-directive:
@@ -23,6 +23,21 @@ cli:
             op: 'dataConnectionValidation'
             param: 'properties'
         poly-resource: true
+      - where:
+            group: 'Clusters'
+        set:
+            groupExtensionMode: 'experimental'
+      - where:
+            group: 'Clusters'
+            op: 'AddLanguageExtensions'
+        set:
+            commandExtensionMode: 'preview'
+      - where:
+            group: 'Clusters'
+            op: 'AddLanguageExtensions'
+            param: 'clusterName'
+        set:
+            methodExtensionMode: 'preview'
 
 ```
 
