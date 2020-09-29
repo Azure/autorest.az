@@ -106,11 +106,14 @@ function getCommandBody(model: CodeModelAz) {
         commandExtraInfo = ", is_preview=True";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     } else if (model.Command_ExtensionMode == 'stable') {
 =======
     } else if (model.Command_ExtensionMode == 'stable'){
 >>>>>>> c06965f52d981618a995f469d62196003b11ba45
         commandExtraInfo = "";
+=======
+>>>>>>> cbff95b... Support configuring is_preview/is_experimental in different levels
 =======
 >>>>>>> cbff95b... Support configuring is_preview/is_experimental in different levels
     }
