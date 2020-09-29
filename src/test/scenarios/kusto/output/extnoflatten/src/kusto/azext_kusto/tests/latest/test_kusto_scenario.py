@@ -17,6 +17,7 @@ from azure.cli.testsdk import ResourceGroupPreparer
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
+# Env setup
 @try_manual
 def setup(test, rg):
     pass
@@ -536,11 +537,13 @@ def step__clusters_delete_kustoclustersdelete(test, rg):
              checks=[])
 
 
+# Env cleanup
 @try_manual
 def cleanup(test, rg):
     pass
 
 
+# Testcase
 @try_manual
 def call_scenario(test, rg):
     setup(test, rg)
