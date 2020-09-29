@@ -356,8 +356,11 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         parameterExtraInfo = ", is_experimental=True";
                     } else if (model.MethodParameter_ExtensionMode == 'preview') {
                         parameterExtraInfo = ", is_preview=True";
+<<<<<<< HEAD
                     } else if (model.MethodParameter_ExtensionMode == 'stable'){
                         parameterExtraInfo = "";
+=======
+>>>>>>> cbff95b... Support configuring is_preview/is_experimental in different levels
                     }
                     argument += parameterExtraInfo;
                     argument += ")";
