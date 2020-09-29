@@ -16,16 +16,19 @@ from .. import try_manual, raise_if, calc_coverage
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
+# Env setup
 @try_manual
 def setup(test):
     pass
 
 
+# Env cleanup
 @try_manual
 def cleanup(test):
     pass
 
 
+# Testcase
 @try_manual
 def call_scenario(test):
     setup(test)

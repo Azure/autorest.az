@@ -17,9 +17,9 @@ import { GenerateAzureCliCustom } from "./templates/generated/CliCustom";
 import { GenerateAzureCliHelp } from "./templates/generated/CliHelp";
 import { GenerateAzureCliParams } from "./templates/generated/CliParams";
 import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
-import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit";
-import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
-import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { CliTestInit } from "./templates/tests/CliTestInit";
+import { CliTestPrepare } from "./templates/tests/CliTestPrepare";
+import { CliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
 
 export class AzCoreFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -42,11 +42,6 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 files[path.join(model.azOutputFolder, "generated/_validators.py")] = GenerateAzureCliValidators(model);
                 files[path.join(model.azOutputFolder, "generated/action.py")] = GenerateAzureCliActions(model);
                 files[path.join(model.azOutputFolder, "generated/__init__.py")] = GenerateNamespaceInit(model);
-                files[path.join(model.azOutputFolder, "tests/__init__.py")] = GenerateAzureCliTestInit(model);
-                files[path.join(model.azOutputFolder, "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py")] = GenerateAzureCliTestScenario(model);
-                if (NeedPreparer()) {
-                    files[path.join(model.azOutputFolder, "tests/latest/preparers.py")] = GenerateAzureCliTestPrepare(model);
-                }
                 files[path.join(model.azOutputFolder, "generated/_help.py")] = GenerateAzureCliHelp(model, isDebugMode);
                 files[path.join(model.azOutputFolder, "tests/latest/__init__.py")] = GenerateNamespaceInit(model);
                 if (model.SDK_NeedSDK) {
@@ -64,6 +59,12 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                     files[requirementGenerator.relativePath] = await requirementGenerator.fullGeneration();
                 }
                 await this.generateFullSingleAndAddtoOutput(new CliMainSetupPy(model, isDebugMode));
+
+                await this.generateFullSingleAndAddtoOutput(new CliTestInit(model, isDebugMode));
+                await this.generateFullSingleAndAddtoOutput(new CliTestScenario(model, isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored)), true, true);
+                if (NeedPreparer()) {
+                    await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(model, isDebugMode));
+                }
             }
             while (model.SelectNextExtension())
         }

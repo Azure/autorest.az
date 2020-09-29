@@ -18,6 +18,7 @@ from .preparers import VirtualNetworkPreparer
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
+# Env setup
 @try_manual
 def setup(test, rg):
     pass
@@ -235,11 +236,13 @@ def step_managednetworksdelete(test, rg):
              checks=[])
 
 
+# Env cleanup
 @try_manual
 def cleanup(test, rg):
     pass
 
 
+# Testcase
 @try_manual
 def call_scenario(test, rg):
     setup(test, rg)
