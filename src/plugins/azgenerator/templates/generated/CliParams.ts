@@ -351,13 +351,13 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if (!isNullOrUndefined(model.MethodParameter_DefaultConfigKey)) {
                         argument += ", configured_default='" + model.MethodParameter_DefaultConfigKey + "'";
                     }
-                    let extraInfo = "";
+                    let parameterExtraInfo = "";
                     if (model.MethodParameter_ExtensionMode == 'experimental') {
-                        extraInfo = ", is_experimental=True";
+                        parameterExtraInfo = ", is_experimental=True";
                     } else if (model.MethodParameter_ExtensionMode == 'preview') {
-                        extraInfo = ", is_preview=True";
+                        parameterExtraInfo = ", is_preview=True";
                     }
-                    argument += extraInfo;
+                    argument += parameterExtraInfo;
                     argument += ")";
 
                     ToMultiLine(argument, output_args);

@@ -85,7 +85,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
 }
 
 function getCommandBody(model: CodeModelAz) {
-    let extraInfo = "";
+    let commandExtraInfo = "";
     let output: string[] = [];
     let functionName = model.Command_FunctionName;
     let methodName = model.Command_MethodName;
@@ -97,36 +97,36 @@ function getCommandBody(model: CodeModelAz) {
         endStr += ", confirmation=True";
     }
     if (model.Command_ExtensionMode == 'experimental') {
-        extraInfo = ", is_experimental=True";
-    } else if (model.Command_ExtensionMode == 'preview'){
-        extraInfo = ", is_preview=True";
+        commandExtraInfo = ", is_experimental=True";
+    } else if (model.Command_ExtensionMode == 'preview') {
+        commandExtraInfo = ", is_preview=True";
     }
-        if (methodName != "show") {
-            if (model.Command_NeedGeneric) {
-                let argument = "";
-                let geneParam = null;
-                if (model.SelectFirstMethod()) {
-                    geneParam = model.Method_GenericSetterParameter(model.Method_GetOriginalOperation);
-                    if (!isNullOrUndefined(geneParam)) {
-                        argument = model.Parameter_NamePython(geneParam);
-                    }
-                    let generic_update = "        g.generic_update_command('" + model.Command_MethodName;
-                    if (argument && argument != "" && argument != "parameters") {
-                        generic_update += "', setter_arg_name='" + argument;
-                    }
-                    if (model.Command_IsLongRun && !model.SDK_IsTrack1) {
-                        generic_update += "', setter_name='begin_create_or_update";
-                    }
-                    generic_update += "', custom_func_name='" + functionName + "'" + endStr;
-                    ToMultiLine(generic_update, output);
+    if (methodName != "show") {
+        if (model.Command_NeedGeneric) {
+            let argument = "";
+            let geneParam = null;
+            if (model.SelectFirstMethod()) {
+                geneParam = model.Method_GenericSetterParameter(model.Method_GetOriginalOperation);
+                if (!isNullOrUndefined(geneParam)) {
+                    argument = model.Parameter_NamePython(geneParam);
                 }
-            } else {
-                ToMultiLine("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr + extraInfo + ')', output);
+                let generic_update = "        g.generic_update_command('" + model.Command_MethodName;
+                if (argument && argument != "" && argument != "parameters") {
+                    generic_update += "', setter_arg_name='" + argument;
+                }
+                if (model.Command_IsLongRun && !model.SDK_IsTrack1) {
+                    generic_update += "', setter_name='begin_create_or_update";
+                }
+                generic_update += "', custom_func_name='" + functionName + "'" + endStr + commandExtraInfo + ')';
+                ToMultiLine(generic_update, output);
             }
+        } else {
+            ToMultiLine("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo + ')', output);
         }
-        else {
-            showCommandFunctionName = functionName;
-            ToMultiLine("        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr + extraInfo + ')', output);
-        }
+    }
+    else {
+        showCommandFunctionName = functionName;
+        ToMultiLine("        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo + ')', output);
+    }
     return output;
 }
