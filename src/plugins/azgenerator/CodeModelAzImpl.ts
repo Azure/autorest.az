@@ -488,8 +488,16 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.codeModel.info['extensionMode'];
     }
 
-    public get Group_Extension_Mode(){
+    public get CommandGroup_ExtensionMode(){
         return this.CommandGroup?.language?.['cli']?.['groupExtensionMode'];
+    }
+
+    public get Command_ExtensionMode(){
+        return this.Command?.language?.['cli']?.['commandExtensionMode'];
+    }
+
+    public get MethodParameter_ExtensionMode(){
+        return this.MethodParameter?.language?.['cli']?.['methodExtensionMode'];
     }
 
     public get Extension_NameUnderscored() {
