@@ -51,6 +51,13 @@
           },
           {
             "$ref": "#/parameters/api-version"
+          },
+          {
+            "name": "customHeaders",
+            "in": "query",
+            "description": "Test the ability to rename ignoring attributes.", 
+            "type": "string",
+            "required": false
           }
         ],
         "responses": {
