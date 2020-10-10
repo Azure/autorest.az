@@ -55,7 +55,7 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                         files[path.join(model.azOutputFolder, "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py")] = GenerateAzureCliTestScenario(model,config);
                         break
                     }else{
-                        files[path.join(model.azOutputFolder, "tests/latest/test_" + keyName + "_scenario1.py")] = GenerateAzureCliTestScenario(model,value);
+                        files[path.join(model.azOutputFolder, "tests/latest/test_" + keyName + "_scenario.py")] = GenerateAzureCliTestScenario(model,value);
                     }
                 }
                 if (NeedPreparer()) {

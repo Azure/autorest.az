@@ -50,7 +50,7 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
                 var value = val;
             }
             if(keyName == "name" || config.length == 0){
-                this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario1.py"] = GenerateAzureCliTestScenario(this.model,config);
+                this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,config);
                 break
             }else{
                 this.files[this.azDirectory + "tests/latest/test_" + keyName + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,value);
