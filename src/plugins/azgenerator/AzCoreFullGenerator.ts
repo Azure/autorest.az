@@ -46,18 +46,23 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 files[path.join(model.azOutputFolder, "tests/__init__.py")] = GenerateAzureCliTestInit(model);
                 //files[path.join(model.azOutputFolder, "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py")] = GenerateAzureCliTestScenario(model);
                 let config: any = deepCopy(model.Extension_TestScenario);
-                for (var ci = 0; ci < config.length; ci++) {
-                    for(let [key,val] of Object.entries(config[ci])){
-                        var keyName = key;
-                        var value = val;
+                let boolValue: boolean = model.ConfiguredScenario
+                if(boolValue){
+                    for (var ci = 0; ci < config.length; ci++) {
+                        for(let [key,val] of Object.entries(config[ci])){
+                            var keyName = key;
+                            var value = val;
+                        }
+                        if(keyName == "name" || config.length == 0){
+                            files[path.join(model.azOutputFolder, "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py")] = GenerateAzureCliTestScenario(model,config);
+                            break
+                        }else{
+                            files[path.join(model.azOutputFolder, "tests/latest/test_" + keyName + "_scenario.py")] = GenerateAzureCliTestScenario(model,value);
+                        }
                     }
-                    if(keyName == "name" || config.length == 0){
-                        files[path.join(model.azOutputFolder, "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py")] = GenerateAzureCliTestScenario(model,config);
-                        break
-                    }else{
-                        files[path.join(model.azOutputFolder, "tests/latest/test_" + keyName + "_scenario.py")] = GenerateAzureCliTestScenario(model,value);
-                    }
-                }
+                }else{
+                    files[path.join(model.azOutputFolder, "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py")] = GenerateAzureCliTestScenario(model,config);
+                }         
                 if (NeedPreparer()) {
                     files[path.join(model.azOutputFolder, "tests/latest/preparers.py")] = GenerateAzureCliTestPrepare(model);
                 }

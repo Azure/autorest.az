@@ -80,6 +80,7 @@ export interface CodeModelAz {
     Extension_NameUnderscored: string;
     Extension_NameClass: string;
     Extension_TestScenario: any;
+    ConfiguredScenario:boolean;
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;

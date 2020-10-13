@@ -44,17 +44,22 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         this.files[this.azDirectory + "tests/__init__.py"] = GenerateAzureCliTestInit(this.model);
         //this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model);
         let config: any = deepCopy(this.model.Extension_TestScenario);
-        for (var ci = 0; ci < config.length; ci++) {
-            for(let [key,val] of Object.entries(config[ci])){
-                var keyName = key;
-                var value = val;
+        let boolValue: boolean = this.model.ConfiguredScenario
+        if(boolValue){
+            for (var ci = 0; ci < config.length; ci++) {
+                for(let [key,val] of Object.entries(config[ci])){
+                    var keyName = key;
+                    var value = val;
+                }
+                if(keyName == "name" || config.length == 0){
+                    this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,config);
+                    break
+                }else{
+                    this.files[this.azDirectory + "tests/latest/test_" + keyName + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,value);
+                }
             }
-            if(keyName == "name" || config.length == 0){
-                this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,config);
-                break
-            }else{
-                this.files[this.azDirectory + "tests/latest/test_" + keyName + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,value);
-            }
+        }else{
+            this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model,config);
         }
         if (NeedPreparer()) {
             this.files[this.azDirectory + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(this.model);
