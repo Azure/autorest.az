@@ -47,7 +47,7 @@ def newgroup_show(cmd, arg0, arg1, ...):
 def newgroup_delete(cmd, arg0, arg1, ...):
     ...
 ```
-* As above, you can add or edit **...\manual\_params.py** file to implement arguments for your new commands. 
+* As above, you can add or edit **...\manual\\_params.py** file to implement arguments for your new commands. 
 * Make sure you can run these commands in the terminal of your choice:
 ```bash
 az portal newgroup create
