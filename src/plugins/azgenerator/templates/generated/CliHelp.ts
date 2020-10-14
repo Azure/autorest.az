@@ -19,6 +19,7 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
     var output: string[] = [];
     output.push("");
 
+    model.GatherInternalResource();
     if (model.SelectFirstCommandGroup()) {
         do {
 

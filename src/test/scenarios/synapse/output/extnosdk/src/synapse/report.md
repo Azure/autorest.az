@@ -1,20 +1,354 @@
 # Azure CLI Module Creation Report
 
-### synapse big-data-pool create
-
-create a synapse big-data-pool.
-
-#### Command group
-|Name (az)|Swagger name|
+## EXTENSION
+|CLI Extension|Command Groups|
 |---------|------------|
-|synapse big-data-pool|BigDataPools|
+|az synapse|[groups](#CommandGroups)
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
+## GROUPS
+### <a name="CommandGroups">Command groups in `az synapse` extension </a>
+|CLI Command Group|Group Swagger name|Commands|
+|---------|------------|--------|
+|az synapse big-data-pool|BigDataPools|[commands](#CommandsInBigDataPools)|
+|az synapse operation|Operations|[commands](#CommandsInOperations)|
+|az synapse ip-firewall-rule|IpFirewallRules|[commands](#CommandsInIpFirewallRules)|
+|az synapse sql-pool|SqlPools|[commands](#CommandsInSqlPools)|
+|az synapse sql-pool-metadata-sync-config|SqlPoolMetadataSyncConfigs|[commands](#CommandsInSqlPoolMetadataSyncConfigs)|
+|az synapse sql-pool-operation-result|SqlPoolOperationResults|[commands](#CommandsInSqlPoolOperationResults)|
+|az synapse sql-pool-geo-backup-policy|SqlPoolGeoBackupPolicies|[commands](#CommandsInSqlPoolGeoBackupPolicies)|
+|az synapse sql-pool-data-warehouse-user-activity|SqlPoolDataWarehouseUserActivities|[commands](#CommandsInSqlPoolDataWarehouseUserActivities)|
+|az synapse sql-pool-restore-point|SqlPoolRestorePoints|[commands](#CommandsInSqlPoolRestorePoints)|
+|az synapse sql-pool-replication-link|SqlPoolReplicationLinks|[commands](#CommandsInSqlPoolReplicationLinks)|
+|az synapse sql-pool-transparent-data-encryption|SqlPoolTransparentDataEncryptions|[commands](#CommandsInSqlPoolTransparentDataEncryptions)|
+|az synapse sql-pool-blob-auditing-policy|SqlPoolBlobAuditingPolicies|[commands](#CommandsInSqlPoolBlobAuditingPolicies)|
+|az synapse sql-pool-operation|SqlPoolOperations|[commands](#CommandsInSqlPoolOperations)|
+|az synapse sql-pool-usage|SqlPoolUsages|[commands](#CommandsInSqlPoolUsages)|
+|az synapse sql-pool-sensitivity-label|SqlPoolSensitivityLabels|[commands](#CommandsInSqlPoolSensitivityLabels)|
+|az synapse sql-pool-schema|SqlPoolSchemas|[commands](#CommandsInSqlPoolSchemas)|
+|az synapse sql-pool-table|SqlPoolTables|[commands](#CommandsInSqlPoolTables)|
+|az synapse sql-pool-table-column|SqlPoolTableColumns|[commands](#CommandsInSqlPoolTableColumns)|
+|az synapse sql-pool-connection-policy|SqlPoolConnectionPolicies|[commands](#CommandsInSqlPoolConnectionPolicies)|
+|az synapse sql-pool-vulnerability-assessment|SqlPoolVulnerabilityAssessments|[commands](#CommandsInSqlPoolVulnerabilityAssessments)|
+|az synapse sql-pool-vulnerability-assessment-scan|SqlPoolVulnerabilityAssessmentScans|[commands](#CommandsInSqlPoolVulnerabilityAssessmentScans)|
+|az synapse sql-pool-security-alert-policy|SqlPoolSecurityAlertPolicies|[commands](#CommandsInSqlPoolSecurityAlertPolicies)|
+|az synapse sql-pool-vulnerability-assessment-rule-baseline|SqlPoolVulnerabilityAssessmentRuleBaselines|[commands](#CommandsInSqlPoolVulnerabilityAssessmentRuleBaselines)|
+|az synapse workspace|Workspaces|[commands](#CommandsInWorkspaces)|
+|az synapse workspace-aad-admin|WorkspaceAadAdmins|[commands](#CommandsInWorkspaceAadAdmins)|
+|az synapse workspace-managed-identity-sql-control-setting|WorkspaceManagedIdentitySqlControlSettings|[commands](#CommandsInWorkspaceManagedIdentitySqlControlSettings)|
+|az synapse integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
+|az synapse integration-runtime-node-ip-address|IntegrationRuntimeNodeIpAddress|[commands](#CommandsInIntegrationRuntimeNodeIpAddress)|
+|az synapse integration-runtime-object-metadata|IntegrationRuntimeObjectMetadata|[commands](#CommandsInIntegrationRuntimeObjectMetadata)|
+|az synapse integration-runtime-node|IntegrationRuntimeNodes|[commands](#CommandsInIntegrationRuntimeNodes)|
+|az synapse integration-runtime-credentials|IntegrationRuntimeCredentials|[commands](#CommandsInIntegrationRuntimeCredentials)|
+|az synapse integration-runtime-connection-info|IntegrationRuntimeConnectionInfos|[commands](#CommandsInIntegrationRuntimeConnectionInfos)|
+|az synapse integration-runtime-auth-key|IntegrationRuntimeAuthKeys|[commands](#CommandsInIntegrationRuntimeAuthKeys)|
+|az synapse integration-runtime-monitoring-data|IntegrationRuntimeMonitoringData|[commands](#CommandsInIntegrationRuntimeMonitoringData)|
+|az synapse integration-runtime-status|IntegrationRuntimeStatus|[commands](#CommandsInIntegrationRuntimeStatus)|
+|az synapse private-link-resource|PrivateLinkResources|[commands](#CommandsInPrivateLinkResources)|
+|az synapse private-endpoint-connection|PrivateEndpointConnections|[commands](#CommandsInPrivateEndpointConnections)|
+|az synapse private-link-hub|PrivateLinkHubs|[commands](#CommandsInPrivateLinkHubs)|
 
-#### Parameters
+## COMMANDS
+### <a name="CommandsInBigDataPools">Commands in `az synapse big-data-pool` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse big-data-pool list](#BigDataPoolsListByWorkspace)|ListByWorkspace|[Parameters](#ParametersBigDataPoolsListByWorkspace)|[Example](#ExamplesBigDataPoolsListByWorkspace)|
+|[az synapse big-data-pool show](#BigDataPoolsGet)|Get|[Parameters](#ParametersBigDataPoolsGet)|[Example](#ExamplesBigDataPoolsGet)|
+|[az synapse big-data-pool create](#BigDataPoolsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersBigDataPoolsCreateOrUpdate#Create)|[Example](#ExamplesBigDataPoolsCreateOrUpdate#Create)|
+|[az synapse big-data-pool update](#BigDataPoolsUpdate)|Update|[Parameters](#ParametersBigDataPoolsUpdate)|[Example](#ExamplesBigDataPoolsUpdate)|
+|[az synapse big-data-pool delete](#BigDataPoolsDelete)|Delete|[Parameters](#ParametersBigDataPoolsDelete)|[Example](#ExamplesBigDataPoolsDelete)|
+
+### <a name="CommandsInIntegrationRuntimes">Commands in `az synapse integration-runtime` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse integration-runtime list](#IntegrationRuntimesListByWorkspace)|ListByWorkspace|[Parameters](#ParametersIntegrationRuntimesListByWorkspace)|[Example](#ExamplesIntegrationRuntimesListByWorkspace)|
+|[az synapse integration-runtime show](#IntegrationRuntimesGet)|Get|[Parameters](#ParametersIntegrationRuntimesGet)|[Example](#ExamplesIntegrationRuntimesGet)|
+|[az synapse integration-runtime create](#IntegrationRuntimesCreate)|Create|[Parameters](#ParametersIntegrationRuntimesCreate)|[Example](#ExamplesIntegrationRuntimesCreate)|
+|[az synapse integration-runtime update](#IntegrationRuntimesUpdate)|Update|[Parameters](#ParametersIntegrationRuntimesUpdate)|[Example](#ExamplesIntegrationRuntimesUpdate)|
+|[az synapse integration-runtime delete](#IntegrationRuntimesDelete)|Delete|[Parameters](#ParametersIntegrationRuntimesDelete)|[Example](#ExamplesIntegrationRuntimesDelete)|
+|[az synapse integration-runtime start](#IntegrationRuntimesStart)|Start|[Parameters](#ParametersIntegrationRuntimesStart)|[Example](#ExamplesIntegrationRuntimesStart)|
+|[az synapse integration-runtime stop](#IntegrationRuntimesStop)|Stop|[Parameters](#ParametersIntegrationRuntimesStop)|[Example](#ExamplesIntegrationRuntimesStop)|
+|[az synapse integration-runtime upgrade](#IntegrationRuntimesUpgrade)|Upgrade|[Parameters](#ParametersIntegrationRuntimesUpgrade)|[Example](#ExamplesIntegrationRuntimesUpgrade)|
+
+### <a name="CommandsInIntegrationRuntimeAuthKeys">Commands in `az synapse integration-runtime-auth-key` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse integration-runtime-auth-key list](#IntegrationRuntimeAuthKeysList)|List|[Parameters](#ParametersIntegrationRuntimeAuthKeysList)|[Example](#ExamplesIntegrationRuntimeAuthKeysList)|
+|[az synapse integration-runtime-auth-key regenerate](#IntegrationRuntimeAuthKeysRegenerate)|Regenerate|[Parameters](#ParametersIntegrationRuntimeAuthKeysRegenerate)|[Example](#ExamplesIntegrationRuntimeAuthKeysRegenerate)|
+
+### <a name="CommandsInIntegrationRuntimeConnectionInfos">Commands in `az synapse integration-runtime-connection-info` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse integration-runtime-connection-info get](#IntegrationRuntimeConnectionInfosGet)|Get|[Parameters](#ParametersIntegrationRuntimeConnectionInfosGet)|[Example](#ExamplesIntegrationRuntimeConnectionInfosGet)|
+
+### <a name="CommandsInIntegrationRuntimeCredentials">Commands in `az synapse integration-runtime-credentials` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse integration-runtime-credentials sync](#IntegrationRuntimeCredentialsSync)|Sync|[Parameters](#ParametersIntegrationRuntimeCredentialsSync)|[Example](#ExamplesIntegrationRuntimeCredentialsSync)|
+
+### <a name="CommandsInIntegrationRuntimeMonitoringData">Commands in `az synapse integration-runtime-monitoring-data` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse integration-runtime-monitoring-data get](#IntegrationRuntimeMonitoringDataGet)|Get|[Parameters](#ParametersIntegrationRuntimeMonitoringDataGet)|[Example](#ExamplesIntegrationRuntimeMonitoringDataGet)|
+
+### <a name="CommandsInIntegrationRuntimeNodes">Commands in `az synapse integration-runtime-node` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse integration-runtime-node show](#IntegrationRuntimeNodesGet)|Get|[Parameters](#ParametersIntegrationRuntimeNodesGet)|[Example](#ExamplesIntegrationRuntimeNodesGet)|
+|[az synapse integration-runtime-node update](#IntegrationRuntimeNodesUpdate)|Update|[Parameters](#ParametersIntegrationRuntimeNodesUpdate)|[Example](#ExamplesIntegrationRuntimeNodesUpdate)|
+|[az synapse integration-runtime-node delete](#IntegrationRuntimeNodesDelete)|Delete|[Parameters](#ParametersIntegrationRuntimeNodesDelete)|[Example](#ExamplesIntegrationRuntimeNodesDelete)|
+
+### <a name="CommandsInIntegrationRuntimeNodeIpAddress">Commands in `az synapse integration-runtime-node-ip-address` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse integration-runtime-node-ip-address get](#IntegrationRuntimeNodeIpAddressGet)|Get|[Parameters](#ParametersIntegrationRuntimeNodeIpAddressGet)|[Example](#ExamplesIntegrationRuntimeNodeIpAddressGet)|
+
+### <a name="CommandsInIntegrationRuntimeObjectMetadata">Commands in `az synapse integration-runtime-object-metadata` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse integration-runtime-object-metadata get](#IntegrationRuntimeObjectMetadataGet)|Get|[Parameters](#ParametersIntegrationRuntimeObjectMetadataGet)|[Example](#ExamplesIntegrationRuntimeObjectMetadataGet)|
+|[az synapse integration-runtime-object-metadata refresh](#IntegrationRuntimeObjectMetadataRefresh)|Refresh|[Parameters](#ParametersIntegrationRuntimeObjectMetadataRefresh)|[Example](#ExamplesIntegrationRuntimeObjectMetadataRefresh)|
+
+### <a name="CommandsInIntegrationRuntimeStatus">Commands in `az synapse integration-runtime-status` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse integration-runtime-status get](#IntegrationRuntimeStatusGet)|Get|[Parameters](#ParametersIntegrationRuntimeStatusGet)|[Example](#ExamplesIntegrationRuntimeStatusGet)|
+
+### <a name="CommandsInIpFirewallRules">Commands in `az synapse ip-firewall-rule` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse ip-firewall-rule list](#IpFirewallRulesListByWorkspace)|ListByWorkspace|[Parameters](#ParametersIpFirewallRulesListByWorkspace)|[Example](#ExamplesIpFirewallRulesListByWorkspace)|
+|[az synapse ip-firewall-rule show](#IpFirewallRulesGet)|Get|[Parameters](#ParametersIpFirewallRulesGet)|[Example](#ExamplesIpFirewallRulesGet)|
+|[az synapse ip-firewall-rule create](#IpFirewallRulesCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersIpFirewallRulesCreateOrUpdate#Create)|[Example](#ExamplesIpFirewallRulesCreateOrUpdate#Create)|
+|[az synapse ip-firewall-rule update](#IpFirewallRulesCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersIpFirewallRulesCreateOrUpdate#Update)|Not Found|
+|[az synapse ip-firewall-rule delete](#IpFirewallRulesDelete)|Delete|[Parameters](#ParametersIpFirewallRulesDelete)|[Example](#ExamplesIpFirewallRulesDelete)|
+|[az synapse ip-firewall-rule replace-all](#IpFirewallRulesReplaceAll)|ReplaceAll|[Parameters](#ParametersIpFirewallRulesReplaceAll)|[Example](#ExamplesIpFirewallRulesReplaceAll)|
+
+### <a name="CommandsInOperations">Commands in `az synapse operation` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse operation get-azure-async-header-result](#OperationsGetAzureAsyncHeaderResult)|GetAzureAsyncHeaderResult|[Parameters](#ParametersOperationsGetAzureAsyncHeaderResult)|[Example](#ExamplesOperationsGetAzureAsyncHeaderResult)|
+|[az synapse operation get-location-header-result](#OperationsGetLocationHeaderResult)|GetLocationHeaderResult|[Parameters](#ParametersOperationsGetLocationHeaderResult)|[Example](#ExamplesOperationsGetLocationHeaderResult)|
+
+### <a name="CommandsInPrivateEndpointConnections">Commands in `az synapse private-endpoint-connection` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse private-endpoint-connection list](#PrivateEndpointConnectionsList)|List|[Parameters](#ParametersPrivateEndpointConnectionsList)|[Example](#ExamplesPrivateEndpointConnectionsList)|
+|[az synapse private-endpoint-connection show](#PrivateEndpointConnectionsGet)|Get|[Parameters](#ParametersPrivateEndpointConnectionsGet)|[Example](#ExamplesPrivateEndpointConnectionsGet)|
+|[az synapse private-endpoint-connection create](#PrivateEndpointConnectionsCreate)|Create|[Parameters](#ParametersPrivateEndpointConnectionsCreate)|[Example](#ExamplesPrivateEndpointConnectionsCreate)|
+|[az synapse private-endpoint-connection delete](#PrivateEndpointConnectionsDelete)|Delete|[Parameters](#ParametersPrivateEndpointConnectionsDelete)|[Example](#ExamplesPrivateEndpointConnectionsDelete)|
+
+### <a name="CommandsInPrivateLinkHubs">Commands in `az synapse private-link-hub` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse private-link-hub list](#PrivateLinkHubsListByResourceGroup)|ListByResourceGroup|[Parameters](#ParametersPrivateLinkHubsListByResourceGroup)|[Example](#ExamplesPrivateLinkHubsListByResourceGroup)|
+|[az synapse private-link-hub list](#PrivateLinkHubsList)|List|[Parameters](#ParametersPrivateLinkHubsList)|[Example](#ExamplesPrivateLinkHubsList)|
+|[az synapse private-link-hub show](#PrivateLinkHubsGet)|Get|[Parameters](#ParametersPrivateLinkHubsGet)|[Example](#ExamplesPrivateLinkHubsGet)|
+|[az synapse private-link-hub create](#PrivateLinkHubsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersPrivateLinkHubsCreateOrUpdate#Create)|[Example](#ExamplesPrivateLinkHubsCreateOrUpdate#Create)|
+|[az synapse private-link-hub update](#PrivateLinkHubsUpdate)|Update|[Parameters](#ParametersPrivateLinkHubsUpdate)|[Example](#ExamplesPrivateLinkHubsUpdate)|
+|[az synapse private-link-hub delete](#PrivateLinkHubsDelete)|Delete|[Parameters](#ParametersPrivateLinkHubsDelete)|[Example](#ExamplesPrivateLinkHubsDelete)|
+
+### <a name="CommandsInPrivateLinkResources">Commands in `az synapse private-link-resource` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse private-link-resource list](#PrivateLinkResourcesList)|List|[Parameters](#ParametersPrivateLinkResourcesList)|[Example](#ExamplesPrivateLinkResourcesList)|
+|[az synapse private-link-resource show](#PrivateLinkResourcesGet)|Get|[Parameters](#ParametersPrivateLinkResourcesGet)|[Example](#ExamplesPrivateLinkResourcesGet)|
+
+### <a name="CommandsInSqlPools">Commands in `az synapse sql-pool` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool list](#SqlPoolsListByWorkspace)|ListByWorkspace|[Parameters](#ParametersSqlPoolsListByWorkspace)|[Example](#ExamplesSqlPoolsListByWorkspace)|
+|[az synapse sql-pool show](#SqlPoolsGet)|Get|[Parameters](#ParametersSqlPoolsGet)|[Example](#ExamplesSqlPoolsGet)|
+|[az synapse sql-pool create](#SqlPoolsCreate)|Create|[Parameters](#ParametersSqlPoolsCreate)|[Example](#ExamplesSqlPoolsCreate)|
+|[az synapse sql-pool update](#SqlPoolsUpdate)|Update|[Parameters](#ParametersSqlPoolsUpdate)|[Example](#ExamplesSqlPoolsUpdate)|
+|[az synapse sql-pool delete](#SqlPoolsDelete)|Delete|[Parameters](#ParametersSqlPoolsDelete)|[Example](#ExamplesSqlPoolsDelete)|
+|[az synapse sql-pool pause](#SqlPoolsPause)|Pause|[Parameters](#ParametersSqlPoolsPause)|[Example](#ExamplesSqlPoolsPause)|
+|[az synapse sql-pool rename](#SqlPoolsRename)|Rename|[Parameters](#ParametersSqlPoolsRename)|[Example](#ExamplesSqlPoolsRename)|
+|[az synapse sql-pool resume](#SqlPoolsResume)|Resume|[Parameters](#ParametersSqlPoolsResume)|[Example](#ExamplesSqlPoolsResume)|
+
+### <a name="CommandsInSqlPoolBlobAuditingPolicies">Commands in `az synapse sql-pool-blob-auditing-policy` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-blob-auditing-policy show](#SqlPoolBlobAuditingPoliciesGet)|Get|[Parameters](#ParametersSqlPoolBlobAuditingPoliciesGet)|[Example](#ExamplesSqlPoolBlobAuditingPoliciesGet)|
+|[az synapse sql-pool-blob-auditing-policy create](#SqlPoolBlobAuditingPoliciesCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersSqlPoolBlobAuditingPoliciesCreateOrUpdate#Create)|[Example](#ExamplesSqlPoolBlobAuditingPoliciesCreateOrUpdate#Create)|
+|[az synapse sql-pool-blob-auditing-policy update](#SqlPoolBlobAuditingPoliciesCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersSqlPoolBlobAuditingPoliciesCreateOrUpdate#Update)|Not Found|
+
+### <a name="CommandsInSqlPoolConnectionPolicies">Commands in `az synapse sql-pool-connection-policy` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-connection-policy show](#SqlPoolConnectionPoliciesGet)|Get|[Parameters](#ParametersSqlPoolConnectionPoliciesGet)|[Example](#ExamplesSqlPoolConnectionPoliciesGet)|
+
+### <a name="CommandsInSqlPoolDataWarehouseUserActivities">Commands in `az synapse sql-pool-data-warehouse-user-activity` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-data-warehouse-user-activity show](#SqlPoolDataWarehouseUserActivitiesGet)|Get|[Parameters](#ParametersSqlPoolDataWarehouseUserActivitiesGet)|[Example](#ExamplesSqlPoolDataWarehouseUserActivitiesGet)|
+
+### <a name="CommandsInSqlPoolGeoBackupPolicies">Commands in `az synapse sql-pool-geo-backup-policy` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-geo-backup-policy show](#SqlPoolGeoBackupPoliciesGet)|Get|[Parameters](#ParametersSqlPoolGeoBackupPoliciesGet)|[Example](#ExamplesSqlPoolGeoBackupPoliciesGet)|
+
+### <a name="CommandsInSqlPoolMetadataSyncConfigs">Commands in `az synapse sql-pool-metadata-sync-config` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-metadata-sync-config show](#SqlPoolMetadataSyncConfigsGet)|Get|[Parameters](#ParametersSqlPoolMetadataSyncConfigsGet)|[Example](#ExamplesSqlPoolMetadataSyncConfigsGet)|
+|[az synapse sql-pool-metadata-sync-config create](#SqlPoolMetadataSyncConfigsCreate)|Create|[Parameters](#ParametersSqlPoolMetadataSyncConfigsCreate)|[Example](#ExamplesSqlPoolMetadataSyncConfigsCreate)|
+
+### <a name="CommandsInSqlPoolOperations">Commands in `az synapse sql-pool-operation` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-operation list](#SqlPoolOperationsList)|List|[Parameters](#ParametersSqlPoolOperationsList)|[Example](#ExamplesSqlPoolOperationsList)|
+
+### <a name="CommandsInSqlPoolOperationResults">Commands in `az synapse sql-pool-operation-result` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-operation-result get-location-header-result](#SqlPoolOperationResultsGetLocationHeaderResult)|GetLocationHeaderResult|[Parameters](#ParametersSqlPoolOperationResultsGetLocationHeaderResult)|[Example](#ExamplesSqlPoolOperationResultsGetLocationHeaderResult)|
+
+### <a name="CommandsInSqlPoolReplicationLinks">Commands in `az synapse sql-pool-replication-link` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-replication-link list](#SqlPoolReplicationLinksList)|List|[Parameters](#ParametersSqlPoolReplicationLinksList)|[Example](#ExamplesSqlPoolReplicationLinksList)|
+
+### <a name="CommandsInSqlPoolRestorePoints">Commands in `az synapse sql-pool-restore-point` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-restore-point list](#SqlPoolRestorePointsList)|List|[Parameters](#ParametersSqlPoolRestorePointsList)|[Example](#ExamplesSqlPoolRestorePointsList)|
+|[az synapse sql-pool-restore-point create](#SqlPoolRestorePointsCreate)|Create|[Parameters](#ParametersSqlPoolRestorePointsCreate)|[Example](#ExamplesSqlPoolRestorePointsCreate)|
+
+### <a name="CommandsInSqlPoolSchemas">Commands in `az synapse sql-pool-schema` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-schema list](#SqlPoolSchemasList)|List|[Parameters](#ParametersSqlPoolSchemasList)|[Example](#ExamplesSqlPoolSchemasList)|
+
+### <a name="CommandsInSqlPoolSecurityAlertPolicies">Commands in `az synapse sql-pool-security-alert-policy` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-security-alert-policy show](#SqlPoolSecurityAlertPoliciesGet)|Get|[Parameters](#ParametersSqlPoolSecurityAlertPoliciesGet)|[Example](#ExamplesSqlPoolSecurityAlertPoliciesGet)|
+|[az synapse sql-pool-security-alert-policy create](#SqlPoolSecurityAlertPoliciesCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersSqlPoolSecurityAlertPoliciesCreateOrUpdate#Create)|[Example](#ExamplesSqlPoolSecurityAlertPoliciesCreateOrUpdate#Create)|
+|[az synapse sql-pool-security-alert-policy update](#SqlPoolSecurityAlertPoliciesCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersSqlPoolSecurityAlertPoliciesCreateOrUpdate#Update)|Not Found|
+
+### <a name="CommandsInSqlPoolSensitivityLabels">Commands in `az synapse sql-pool-sensitivity-label` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-sensitivity-label create](#SqlPoolSensitivityLabelsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersSqlPoolSensitivityLabelsCreateOrUpdate#Create)|[Example](#ExamplesSqlPoolSensitivityLabelsCreateOrUpdate#Create)|
+|[az synapse sql-pool-sensitivity-label update](#SqlPoolSensitivityLabelsCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersSqlPoolSensitivityLabelsCreateOrUpdate#Update)|Not Found|
+|[az synapse sql-pool-sensitivity-label delete](#SqlPoolSensitivityLabelsDelete)|Delete|[Parameters](#ParametersSqlPoolSensitivityLabelsDelete)|[Example](#ExamplesSqlPoolSensitivityLabelsDelete)|
+|[az synapse sql-pool-sensitivity-label disable-recommendation](#SqlPoolSensitivityLabelsDisableRecommendation)|DisableRecommendation|[Parameters](#ParametersSqlPoolSensitivityLabelsDisableRecommendation)|[Example](#ExamplesSqlPoolSensitivityLabelsDisableRecommendation)|
+|[az synapse sql-pool-sensitivity-label enable-recommendation](#SqlPoolSensitivityLabelsEnableRecommendation)|EnableRecommendation|[Parameters](#ParametersSqlPoolSensitivityLabelsEnableRecommendation)|[Example](#ExamplesSqlPoolSensitivityLabelsEnableRecommendation)|
+|[az synapse sql-pool-sensitivity-label list-current](#SqlPoolSensitivityLabelsListCurrent)|ListCurrent|[Parameters](#ParametersSqlPoolSensitivityLabelsListCurrent)|[Example](#ExamplesSqlPoolSensitivityLabelsListCurrent)|
+|[az synapse sql-pool-sensitivity-label list-recommended](#SqlPoolSensitivityLabelsListRecommended)|ListRecommended|[Parameters](#ParametersSqlPoolSensitivityLabelsListRecommended)|[Example](#ExamplesSqlPoolSensitivityLabelsListRecommended)|
+
+### <a name="CommandsInSqlPoolTables">Commands in `az synapse sql-pool-table` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-table list](#SqlPoolTablesListBySchema)|ListBySchema|[Parameters](#ParametersSqlPoolTablesListBySchema)|[Example](#ExamplesSqlPoolTablesListBySchema)|
+
+### <a name="CommandsInSqlPoolTableColumns">Commands in `az synapse sql-pool-table-column` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-table-column list](#SqlPoolTableColumnsListByTableName)|ListByTableName|[Parameters](#ParametersSqlPoolTableColumnsListByTableName)|[Example](#ExamplesSqlPoolTableColumnsListByTableName)|
+
+### <a name="CommandsInSqlPoolTransparentDataEncryptions">Commands in `az synapse sql-pool-transparent-data-encryption` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-transparent-data-encryption show](#SqlPoolTransparentDataEncryptionsGet)|Get|[Parameters](#ParametersSqlPoolTransparentDataEncryptionsGet)|[Example](#ExamplesSqlPoolTransparentDataEncryptionsGet)|
+|[az synapse sql-pool-transparent-data-encryption create](#SqlPoolTransparentDataEncryptionsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersSqlPoolTransparentDataEncryptionsCreateOrUpdate#Create)|[Example](#ExamplesSqlPoolTransparentDataEncryptionsCreateOrUpdate#Create)|
+|[az synapse sql-pool-transparent-data-encryption update](#SqlPoolTransparentDataEncryptionsCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersSqlPoolTransparentDataEncryptionsCreateOrUpdate#Update)|Not Found|
+
+### <a name="CommandsInSqlPoolUsages">Commands in `az synapse sql-pool-usage` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-usage list](#SqlPoolUsagesList)|List|[Parameters](#ParametersSqlPoolUsagesList)|[Example](#ExamplesSqlPoolUsagesList)|
+
+### <a name="CommandsInSqlPoolVulnerabilityAssessments">Commands in `az synapse sql-pool-vulnerability-assessment` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-vulnerability-assessment list](#SqlPoolVulnerabilityAssessmentsList)|List|[Parameters](#ParametersSqlPoolVulnerabilityAssessmentsList)|[Example](#ExamplesSqlPoolVulnerabilityAssessmentsList)|
+|[az synapse sql-pool-vulnerability-assessment show](#SqlPoolVulnerabilityAssessmentsGet)|Get|[Parameters](#ParametersSqlPoolVulnerabilityAssessmentsGet)|[Example](#ExamplesSqlPoolVulnerabilityAssessmentsGet)|
+|[az synapse sql-pool-vulnerability-assessment create](#SqlPoolVulnerabilityAssessmentsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersSqlPoolVulnerabilityAssessmentsCreateOrUpdate#Create)|[Example](#ExamplesSqlPoolVulnerabilityAssessmentsCreateOrUpdate#Create)|
+|[az synapse sql-pool-vulnerability-assessment update](#SqlPoolVulnerabilityAssessmentsCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersSqlPoolVulnerabilityAssessmentsCreateOrUpdate#Update)|Not Found|
+|[az synapse sql-pool-vulnerability-assessment delete](#SqlPoolVulnerabilityAssessmentsDelete)|Delete|[Parameters](#ParametersSqlPoolVulnerabilityAssessmentsDelete)|[Example](#ExamplesSqlPoolVulnerabilityAssessmentsDelete)|
+
+### <a name="CommandsInSqlPoolVulnerabilityAssessmentRuleBaselines">Commands in `az synapse sql-pool-vulnerability-assessment-rule-baseline` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-vulnerability-assessment-rule-baseline create](#SqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersSqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Create)|[Example](#ExamplesSqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Create)|
+|[az synapse sql-pool-vulnerability-assessment-rule-baseline update](#SqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersSqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Update)|Not Found|
+|[az synapse sql-pool-vulnerability-assessment-rule-baseline delete](#SqlPoolVulnerabilityAssessmentRuleBaselinesDelete)|Delete|[Parameters](#ParametersSqlPoolVulnerabilityAssessmentRuleBaselinesDelete)|[Example](#ExamplesSqlPoolVulnerabilityAssessmentRuleBaselinesDelete)|
+
+### <a name="CommandsInSqlPoolVulnerabilityAssessmentScans">Commands in `az synapse sql-pool-vulnerability-assessment-scan` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse sql-pool-vulnerability-assessment-scan list](#SqlPoolVulnerabilityAssessmentScansList)|List|[Parameters](#ParametersSqlPoolVulnerabilityAssessmentScansList)|[Example](#ExamplesSqlPoolVulnerabilityAssessmentScansList)|
+|[az synapse sql-pool-vulnerability-assessment-scan export](#SqlPoolVulnerabilityAssessmentScansExport)|Export|[Parameters](#ParametersSqlPoolVulnerabilityAssessmentScansExport)|[Example](#ExamplesSqlPoolVulnerabilityAssessmentScansExport)|
+|[az synapse sql-pool-vulnerability-assessment-scan initiate-scan](#SqlPoolVulnerabilityAssessmentScansInitiateScan)|InitiateScan|[Parameters](#ParametersSqlPoolVulnerabilityAssessmentScansInitiateScan)|[Example](#ExamplesSqlPoolVulnerabilityAssessmentScansInitiateScan)|
+
+### <a name="CommandsInWorkspaces">Commands in `az synapse workspace` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse workspace list](#WorkspacesListByResourceGroup)|ListByResourceGroup|[Parameters](#ParametersWorkspacesListByResourceGroup)|[Example](#ExamplesWorkspacesListByResourceGroup)|
+|[az synapse workspace list](#WorkspacesList)|List|[Parameters](#ParametersWorkspacesList)|[Example](#ExamplesWorkspacesList)|
+|[az synapse workspace show](#WorkspacesGet)|Get|[Parameters](#ParametersWorkspacesGet)|[Example](#ExamplesWorkspacesGet)|
+|[az synapse workspace create](#WorkspacesCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersWorkspacesCreateOrUpdate#Create)|[Example](#ExamplesWorkspacesCreateOrUpdate#Create)|
+|[az synapse workspace update](#WorkspacesUpdate)|Update|[Parameters](#ParametersWorkspacesUpdate)|[Example](#ExamplesWorkspacesUpdate)|
+|[az synapse workspace delete](#WorkspacesDelete)|Delete|[Parameters](#ParametersWorkspacesDelete)|[Example](#ExamplesWorkspacesDelete)|
+
+### <a name="CommandsInWorkspaceAadAdmins">Commands in `az synapse workspace-aad-admin` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse workspace-aad-admin show](#WorkspaceAadAdminsGet)|Get|[Parameters](#ParametersWorkspaceAadAdminsGet)|[Example](#ExamplesWorkspaceAadAdminsGet)|
+|[az synapse workspace-aad-admin create](#WorkspaceAadAdminsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersWorkspaceAadAdminsCreateOrUpdate#Create)|[Example](#ExamplesWorkspaceAadAdminsCreateOrUpdate#Create)|
+|[az synapse workspace-aad-admin update](#WorkspaceAadAdminsCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersWorkspaceAadAdminsCreateOrUpdate#Update)|Not Found|
+|[az synapse workspace-aad-admin delete](#WorkspaceAadAdminsDelete)|Delete|[Parameters](#ParametersWorkspaceAadAdminsDelete)|[Example](#ExamplesWorkspaceAadAdminsDelete)|
+
+### <a name="CommandsInWorkspaceManagedIdentitySqlControlSettings">Commands in `az synapse workspace-managed-identity-sql-control-setting` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az synapse workspace-managed-identity-sql-control-setting show](#WorkspaceManagedIdentitySqlControlSettingsGet)|Get|[Parameters](#ParametersWorkspaceManagedIdentitySqlControlSettingsGet)|[Example](#ExamplesWorkspaceManagedIdentitySqlControlSettingsGet)|
+|[az synapse workspace-managed-identity-sql-control-setting create](#WorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersWorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Create)|[Example](#ExamplesWorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Create)|
+|[az synapse workspace-managed-identity-sql-control-setting update](#WorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersWorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Update)|Not Found|
+
+
+## COMMAND DETAILS
+
+### group `az synapse big-data-pool`
+#### <a name="BigDataPoolsListByWorkspace">Command `az synapse big-data-pool list`</a>
+
+##### <a name="ExamplesBigDataPoolsListByWorkspace">Example</a>
+```
+az synapse big-data-pool list --resource-group "ExampleResourceGroup" --workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersBigDataPoolsListByWorkspace">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+
+#### <a name="BigDataPoolsGet">Command `az synapse big-data-pool show`</a>
+
+##### <a name="ExamplesBigDataPoolsGet">Example</a>
+```
+az synapse big-data-pool show --name "ExamplePool" --resource-group "ExampleResourceGroup" --workspace-name \
+"ExampleWorkspace"
+```
+##### <a name="ParametersBigDataPoolsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--big-data-pool-name**|string|Big Data pool name|big_data_pool_name|bigDataPoolName|
+
+#### <a name="BigDataPoolsCreateOrUpdate#Create">Command `az synapse big-data-pool create`</a>
+
+##### <a name="ExamplesBigDataPoolsCreateOrUpdate#Create">Example</a>
+```
+az synapse big-data-pool create --location "West US 2" --auto-pause delay-in-minutes=15 enabled=true --auto-scale \
+enabled=true max-node-count=50 min-node-count=3 --default-spark-log-folder "/logs" --library-requirements content="" \
+filename="requirements.txt" --node-count 4 --node-size "Medium" --node-size-family "MemoryOptimized" \
+--spark-events-folder "/events" --spark-version "2.4" --tags key="value" --name "ExamplePool" --resource-group \
+"ExampleResourceGroup" --workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersBigDataPoolsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -35,83 +369,14 @@ create a synapse big-data-pool.
 |**--node-size**|choice|The level of compute power that each node in the Big Data pool has.|node_size|nodeSize|
 |**--node-size-family**|choice|The kind of nodes that the Big Data pool provides.|node_size_family|nodeSizeFamily|
 
-### synapse big-data-pool delete
+#### <a name="BigDataPoolsUpdate">Command `az synapse big-data-pool update`</a>
 
-delete a synapse big-data-pool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse big-data-pool|BigDataPools|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--big-data-pool-name**|string|Big Data pool name|big_data_pool_name|bigDataPoolName|
-
-### synapse big-data-pool list
-
-list a synapse big-data-pool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse big-data-pool|BigDataPools|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByWorkspace|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-
-### synapse big-data-pool show
-
-show a synapse big-data-pool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse big-data-pool|BigDataPools|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--big-data-pool-name**|string|Big Data pool name|big_data_pool_name|bigDataPoolName|
-
-### synapse big-data-pool update
-
-update a synapse big-data-pool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse big-data-pool|BigDataPools|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|Update|
-
-#### Parameters
+##### <a name="ExamplesBigDataPoolsUpdate">Example</a>
+```
+az synapse big-data-pool update --name "ExamplePool" --tags key="value" --resource-group "ExampleResourceGroup" \
+--workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersBigDataPoolsUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -119,21 +384,57 @@ update a synapse big-data-pool.
 |**--big-data-pool-name**|string|Big Data pool name|big_data_pool_name|bigDataPoolName|
 |**--tags**|dictionary|Updated tags for the Big Data pool|tags|tags|
 
-### synapse integration-runtime create
+#### <a name="BigDataPoolsDelete">Command `az synapse big-data-pool delete`</a>
 
-create a synapse integration-runtime.
+##### <a name="ExamplesBigDataPoolsDelete">Example</a>
+```
+az synapse big-data-pool delete --name "ExamplePool" --resource-group "ExampleResourceGroup" --workspace-name \
+"ExampleWorkspace"
+```
+##### <a name="ParametersBigDataPoolsDelete">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--big-data-pool-name**|string|Big Data pool name|big_data_pool_name|bigDataPoolName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime|IntegrationRuntimes|
+### group `az synapse integration-runtime`
+#### <a name="IntegrationRuntimesListByWorkspace">Command `az synapse integration-runtime list`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|Create|
+##### <a name="ExamplesIntegrationRuntimesListByWorkspace">Example</a>
+```
+az synapse integration-runtime list --resource-group "exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimesListByWorkspace">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 
-#### Parameters
+#### <a name="IntegrationRuntimesGet">Command `az synapse integration-runtime show`</a>
+
+##### <a name="ExamplesIntegrationRuntimesGet">Example</a>
+```
+az synapse integration-runtime show --name "exampleIntegrationRuntime" --resource-group "exampleResourceGroup" \
+--workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimesGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
+|**--if-none-match**|string|ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.|if_none_match|If-None-Match|
+
+#### <a name="IntegrationRuntimesCreate">Command `az synapse integration-runtime create`</a>
+
+##### <a name="ExamplesIntegrationRuntimesCreate">Example</a>
+```
+az synapse integration-runtime create --properties "{\\"type\\":\\"SelfHosted\\",\\"description\\":\\"A selfhosted \
+integration runtime\\"}" --name "exampleIntegrationRuntime" --resource-group "exampleResourceGroup" --workspace-name \
+"exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimesCreate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -142,126 +443,14 @@ create a synapse integration-runtime.
 |**--properties**|object|Integration runtime properties.|properties|properties|
 |**--if-match**|string|ETag of the integration runtime entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|If-Match|
 
-### synapse integration-runtime delete
+#### <a name="IntegrationRuntimesUpdate">Command `az synapse integration-runtime update`</a>
 
-delete a synapse integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
-
-### synapse integration-runtime list
-
-list a synapse integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByWorkspace|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-
-### synapse integration-runtime show
-
-show a synapse integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
-|**--if-none-match**|string|ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.|if_none_match|If-None-Match|
-
-### synapse integration-runtime start
-
-start a synapse integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|start|Start|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
-
-### synapse integration-runtime stop
-
-stop a synapse integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|stop|Stop|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
-
-### synapse integration-runtime update
-
-update a synapse integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|Update|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimesUpdate">Example</a>
+```
+az synapse integration-runtime update --name "exampleIntegrationRuntime" --resource-group "exampleResourceGroup" \
+--auto-update "Off" --update-delay-offset "\\"PT3H\\"" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimesUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -270,63 +459,85 @@ update a synapse integration-runtime.
 |**--auto-update**|choice|Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.|auto_update|autoUpdate|
 |**--update-delay-offset**|string|The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.|update_delay_offset|updateDelayOffset|
 
-### synapse integration-runtime upgrade
+#### <a name="IntegrationRuntimesDelete">Command `az synapse integration-runtime delete`</a>
 
-upgrade a synapse integration-runtime.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime|IntegrationRuntimes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|upgrade|Upgrade|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimesDelete">Example</a>
+```
+az synapse integration-runtime delete --name "exampleIntegrationRuntime" --resource-group "exampleResourceGroup" \
+--workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimesDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 
-### synapse integration-runtime-auth-key list
+#### <a name="IntegrationRuntimesStart">Command `az synapse integration-runtime start`</a>
 
-list a synapse integration-runtime-auth-key.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-auth-key|IntegrationRuntimeAuthKeys|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimesStart">Example</a>
+```
+az synapse integration-runtime start --name "exampleManagedIntegrationRuntime" --resource-group "exampleResourceGroup" \
+--workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimesStart">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 
-### synapse integration-runtime-auth-key regenerate
+#### <a name="IntegrationRuntimesStop">Command `az synapse integration-runtime stop`</a>
 
-regenerate a synapse integration-runtime-auth-key.
+##### <a name="ExamplesIntegrationRuntimesStop">Example</a>
+```
+az synapse integration-runtime stop --name "exampleManagedIntegrationRuntime" --resource-group "exampleResourceGroup" \
+--workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimesStop">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-auth-key|IntegrationRuntimeAuthKeys|
+#### <a name="IntegrationRuntimesUpgrade">Command `az synapse integration-runtime upgrade`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|regenerate|Regenerate|
+##### <a name="ExamplesIntegrationRuntimesUpgrade">Example</a>
+```
+az synapse integration-runtime upgrade --name "exampleIntegrationRuntime" --resource-group "exampleResourceGroup" \
+--workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimesUpgrade">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 
-#### Parameters
+### group `az synapse integration-runtime-auth-key`
+#### <a name="IntegrationRuntimeAuthKeysList">Command `az synapse integration-runtime-auth-key list`</a>
+
+##### <a name="ExamplesIntegrationRuntimeAuthKeysList">Example</a>
+```
+az synapse integration-runtime-auth-key list --integration-runtime-name "exampleIntegrationRuntime" --resource-group \
+"exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeAuthKeysList">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
+
+#### <a name="IntegrationRuntimeAuthKeysRegenerate">Command `az synapse integration-runtime-auth-key regenerate`</a>
+
+##### <a name="ExamplesIntegrationRuntimeAuthKeysRegenerate">Example</a>
+```
+az synapse integration-runtime-auth-key regenerate --integration-runtime-name "exampleIntegrationRuntime" --key-name \
+"authKey2" --resource-group "exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeAuthKeysRegenerate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -334,84 +545,60 @@ regenerate a synapse integration-runtime-auth-key.
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 |**--key-name**|choice|The name of the authentication key to regenerate.|key_name|keyName|
 
-### synapse integration-runtime-connection-info get
+### group `az synapse integration-runtime-connection-info`
+#### <a name="IntegrationRuntimeConnectionInfosGet">Command `az synapse integration-runtime-connection-info get`</a>
 
-get a synapse integration-runtime-connection-info.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-connection-info|IntegrationRuntimeConnectionInfos|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get|Get|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimeConnectionInfosGet">Example</a>
+```
+az synapse integration-runtime-connection-info get --integration-runtime-name "exampleIntegrationRuntime" \
+--resource-group "exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeConnectionInfosGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 
-### synapse integration-runtime-credentials sync
+### group `az synapse integration-runtime-credentials`
+#### <a name="IntegrationRuntimeCredentialsSync">Command `az synapse integration-runtime-credentials sync`</a>
 
-sync a synapse integration-runtime-credentials.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-credentials|IntegrationRuntimeCredentials|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|sync|Sync|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimeCredentialsSync">Example</a>
+```
+az synapse integration-runtime-credentials sync --integration-runtime-name "exampleIntegrationRuntime" \
+--resource-group "exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeCredentialsSync">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 
-### synapse integration-runtime-monitoring-data get
+### group `az synapse integration-runtime-monitoring-data`
+#### <a name="IntegrationRuntimeMonitoringDataGet">Command `az synapse integration-runtime-monitoring-data get`</a>
 
-get a synapse integration-runtime-monitoring-data.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-monitoring-data|IntegrationRuntimeMonitoringData|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get|Get|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimeMonitoringDataGet">Example</a>
+```
+az synapse integration-runtime-monitoring-data get --integration-runtime-name "exampleIntegrationRuntime" \
+--resource-group "exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeMonitoringDataGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 
-### synapse integration-runtime-node delete
+### group `az synapse integration-runtime-node`
+#### <a name="IntegrationRuntimeNodesGet">Command `az synapse integration-runtime-node show`</a>
 
-delete a synapse integration-runtime-node.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-node|IntegrationRuntimeNodes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimeNodesGet">Example</a>
+```
+az synapse integration-runtime-node show --integration-runtime-name "exampleIntegrationRuntime" --node-name "Node_1" \
+--resource-group "exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeNodesGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -419,43 +606,14 @@ delete a synapse integration-runtime-node.
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 |**--node-name**|string|Integration runtime node name|node_name|nodeName|
 
-### synapse integration-runtime-node show
+#### <a name="IntegrationRuntimeNodesUpdate">Command `az synapse integration-runtime-node update`</a>
 
-show a synapse integration-runtime-node.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-node|IntegrationRuntimeNodes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
-|**--node-name**|string|Integration runtime node name|node_name|nodeName|
-
-### synapse integration-runtime-node update
-
-update a synapse integration-runtime-node.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-node|IntegrationRuntimeNodes|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|Update|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimeNodesUpdate">Example</a>
+```
+az synapse integration-runtime-node update --integration-runtime-name "exampleIntegrationRuntime" --node-name "Node_1" \
+--resource-group "exampleResourceGroup" --concurrent-jobs-limit 2 --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeNodesUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -464,21 +622,14 @@ update a synapse integration-runtime-node.
 |**--node-name**|string|Integration runtime node name|node_name|nodeName|
 |**--concurrent-jobs-limit**|integer|The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs(inclusive) are allowed.|concurrent_jobs_limit|concurrentJobsLimit|
 
-### synapse integration-runtime-node-ip-address get
+#### <a name="IntegrationRuntimeNodesDelete">Command `az synapse integration-runtime-node delete`</a>
 
-get a synapse integration-runtime-node-ip-address.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-node-ip-address|IntegrationRuntimeNodeIpAddress|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get|Get|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimeNodesDelete">Example</a>
+```
+az synapse integration-runtime-node delete --integration-runtime-name "exampleIntegrationRuntime" --node-name "Node_1" \
+--resource-group "exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeNodesDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -486,21 +637,31 @@ get a synapse integration-runtime-node-ip-address.
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 |**--node-name**|string|Integration runtime node name|node_name|nodeName|
 
-### synapse integration-runtime-object-metadata get
+### group `az synapse integration-runtime-node-ip-address`
+#### <a name="IntegrationRuntimeNodeIpAddressGet">Command `az synapse integration-runtime-node-ip-address get`</a>
 
-get a synapse integration-runtime-object-metadata.
+##### <a name="ExamplesIntegrationRuntimeNodeIpAddressGet">Example</a>
+```
+az synapse integration-runtime-node-ip-address get --integration-runtime-name "exampleIntegrationRuntime" --node-name \
+"Node_1" --resource-group "exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeNodeIpAddressGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
+|**--node-name**|string|Integration runtime node name|node_name|nodeName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-object-metadata|IntegrationRuntimeObjectMetadata|
+### group `az synapse integration-runtime-object-metadata`
+#### <a name="IntegrationRuntimeObjectMetadataGet">Command `az synapse integration-runtime-object-metadata get`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get|Get|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimeObjectMetadataGet">Example</a>
+```
+az synapse integration-runtime-object-metadata get --metadata-path "ssisFolders" --integration-runtime-name \
+"testactivityv2" --resource-group "exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeObjectMetadataGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -508,63 +669,70 @@ get a synapse integration-runtime-object-metadata.
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 |**--metadata-path**|string|Metadata path.|metadata_path|metadataPath|
 
-### synapse integration-runtime-object-metadata refresh
+#### <a name="IntegrationRuntimeObjectMetadataRefresh">Command `az synapse integration-runtime-object-metadata refresh`</a>
 
-refresh a synapse integration-runtime-object-metadata.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-object-metadata|IntegrationRuntimeObjectMetadata|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|refresh|Refresh|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimeObjectMetadataRefresh">Example</a>
+```
+az synapse integration-runtime-object-metadata refresh --integration-runtime-name "testactivityv2" --resource-group \
+"exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeObjectMetadataRefresh">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 
-### synapse integration-runtime-status get
+### group `az synapse integration-runtime-status`
+#### <a name="IntegrationRuntimeStatusGet">Command `az synapse integration-runtime-status get`</a>
 
-get a synapse integration-runtime-status.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse integration-runtime-status|IntegrationRuntimeStatus|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get|Get|
-
-#### Parameters
+##### <a name="ExamplesIntegrationRuntimeStatusGet">Example</a>
+```
+az synapse integration-runtime-status get --integration-runtime-name "exampleIntegrationRuntime" --resource-group \
+"exampleResourceGroup" --workspace-name "exampleWorkspace"
+```
+##### <a name="ParametersIntegrationRuntimeStatusGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
 
-### synapse ip-firewall-rule create
+### group `az synapse ip-firewall-rule`
+#### <a name="IpFirewallRulesListByWorkspace">Command `az synapse ip-firewall-rule list`</a>
 
-create a synapse ip-firewall-rule.
+##### <a name="ExamplesIpFirewallRulesListByWorkspace">Example</a>
+```
+az synapse ip-firewall-rule list --resource-group "ExampleResourceGroup" --workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersIpFirewallRulesListByWorkspace">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse ip-firewall-rule|IpFirewallRules|
+#### <a name="IpFirewallRulesGet">Command `az synapse ip-firewall-rule show`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
+##### <a name="ExamplesIpFirewallRulesGet">Example</a>
+```
+az synapse ip-firewall-rule show --resource-group "ExampleResourceGroup" --rule-name "ExampleIpFirewallRule" \
+--workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersIpFirewallRulesGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--rule-name**|string|The IP firewall rule name|rule_name|ruleName|
 
-#### Parameters
+#### <a name="IpFirewallRulesCreateOrUpdate#Create">Command `az synapse ip-firewall-rule create`</a>
+
+##### <a name="ExamplesIpFirewallRulesCreateOrUpdate#Create">Example</a>
+```
+az synapse ip-firewall-rule create --end-ip-address "10.0.0.254" --start-ip-address "10.0.0.0" --resource-group \
+"ExampleResourceGroup" --rule-name "ExampleIpFirewallRule" --workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersIpFirewallRulesCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -573,252 +741,172 @@ create a synapse ip-firewall-rule.
 |**--end-ip-address**|string|The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress|end_ip_address|endIpAddress|
 |**--start-ip-address**|string|The start IP address of the firewall rule. Must be IPv4 format|start_ip_address|startIpAddress|
 
-### synapse ip-firewall-rule delete
+#### <a name="IpFirewallRulesCreateOrUpdate#Update">Command `az synapse ip-firewall-rule update`</a>
 
-delete a synapse ip-firewall-rule.
+##### <a name="ParametersIpFirewallRulesCreateOrUpdate#Update">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--rule-name**|string|The IP firewall rule name|rule_name|ruleName|
+|**--end-ip-address**|string|The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress|end_ip_address|endIpAddress|
+|**--start-ip-address**|string|The start IP address of the firewall rule. Must be IPv4 format|start_ip_address|startIpAddress|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse ip-firewall-rule|IpFirewallRules|
+#### <a name="IpFirewallRulesDelete">Command `az synapse ip-firewall-rule delete`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
+##### <a name="ExamplesIpFirewallRulesDelete">Example</a>
+```
+az synapse ip-firewall-rule delete --resource-group "ExampleResourceGroup" --rule-name "ExampleIpFirewallRule" \
+--workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersIpFirewallRulesDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--rule-name**|string|The IP firewall rule name|rule_name|ruleName|
 
-### synapse ip-firewall-rule list
+#### <a name="IpFirewallRulesReplaceAll">Command `az synapse ip-firewall-rule replace-all`</a>
 
-list a synapse ip-firewall-rule.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse ip-firewall-rule|IpFirewallRules|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByWorkspace|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-
-### synapse ip-firewall-rule replace-all
-
-replace-all a synapse ip-firewall-rule.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse ip-firewall-rule|IpFirewallRules|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|replace-all|ReplaceAll|
-
-#### Parameters
+##### <a name="ExamplesIpFirewallRulesReplaceAll">Example</a>
+```
+az synapse ip-firewall-rule replace-all --resource-group "ExampleResourceGroup" --workspace-name "ExampleWorkspace" \
+--ip-firewall-rules "{\\"AnotherExampleFirewallRule\\":{\\"endIpAddress\\":\\"10.0.1.254\\",\\"startIpAddress\\":\\"10.\
+0.1.0\\"},\\"ExampleFirewallRule\\":{\\"endIpAddress\\":\\"10.0.0.254\\",\\"startIpAddress\\":\\"10.0.0.0\\"}}"
+```
+##### <a name="ParametersIpFirewallRulesReplaceAll">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--ip-firewall-rules**|dictionary|IP firewall rule properties|ip_firewall_rules|ipFirewallRules|
 
-### synapse ip-firewall-rule show
+### group `az synapse operation`
+#### <a name="OperationsGetAzureAsyncHeaderResult">Command `az synapse operation get-azure-async-header-result`</a>
 
-show a synapse ip-firewall-rule.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse ip-firewall-rule|IpFirewallRules|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--rule-name**|string|The IP firewall rule name|rule_name|ruleName|
-
-### synapse ip-firewall-rule update
-
-update a synapse ip-firewall-rule.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse ip-firewall-rule|IpFirewallRules|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--rule-name**|string|The IP firewall rule name|rule_name|ruleName|
-|**--end-ip-address**|string|The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress|end_ip_address|endIpAddress|
-|**--start-ip-address**|string|The start IP address of the firewall rule. Must be IPv4 format|start_ip_address|startIpAddress|
-
-### synapse operation get-azure-async-header-result
-
-get-azure-async-header-result a synapse operation.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse operation|Operations|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-azure-async-header-result|GetAzureAsyncHeaderResult|
-
-#### Parameters
+##### <a name="ExamplesOperationsGetAzureAsyncHeaderResult">Example</a>
+```
+az synapse operation get-azure-async-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" \
+--resource-group "resourceGroup1" --workspace-name "workspace1"
+```
+##### <a name="ParametersOperationsGetAzureAsyncHeaderResult">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--operation-id**|string|Operation ID|operation_id|operationId|
 
-### synapse operation get-location-header-result
+#### <a name="OperationsGetLocationHeaderResult">Command `az synapse operation get-location-header-result`</a>
 
-get-location-header-result a synapse operation.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse operation|Operations|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-location-header-result|GetLocationHeaderResult|
-
-#### Parameters
+##### <a name="ExamplesOperationsGetLocationHeaderResult">Example</a>
+```
+az synapse operation get-location-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" --resource-group \
+"resourceGroup1" --workspace-name "workspace1"
+```
+##### <a name="ParametersOperationsGetLocationHeaderResult">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--operation-id**|string|Operation ID|operation_id|operationId|
 
-### synapse private-endpoint-connection create
+### group `az synapse private-endpoint-connection`
+#### <a name="PrivateEndpointConnectionsList">Command `az synapse private-endpoint-connection list`</a>
 
-create a synapse private-endpoint-connection.
+##### <a name="ExamplesPrivateEndpointConnectionsList">Example</a>
+```
+az synapse private-endpoint-connection list --resource-group "ExampleResourceGroup" --workspace-name \
+"ExampleWorkspace"
+```
+##### <a name="ParametersPrivateEndpointConnectionsList">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse private-endpoint-connection|PrivateEndpointConnections|
+#### <a name="PrivateEndpointConnectionsGet">Command `az synapse private-endpoint-connection show`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|Create|
-
-#### Parameters
+##### <a name="ExamplesPrivateEndpointConnectionsGet">Example</a>
+```
+az synapse private-endpoint-connection show --name "ExamplePrivateEndpointConnection" --resource-group \
+"ExampleResourceGroup" --workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersPrivateEndpointConnectionsGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--private-endpoint-connection-name**|string|The name of the private endpoint connection.|private_endpoint_connection_name|privateEndpointConnectionName|
 
-### synapse private-endpoint-connection delete
+#### <a name="PrivateEndpointConnectionsCreate">Command `az synapse private-endpoint-connection create`</a>
 
-delete a synapse private-endpoint-connection.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse private-endpoint-connection|PrivateEndpointConnections|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
+##### <a name="ExamplesPrivateEndpointConnectionsCreate">Example</a>
+```
+az synapse private-endpoint-connection create --name "ExamplePrivateEndpointConnection" --resource-group \
+"ExampleResourceGroup" --workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersPrivateEndpointConnectionsCreate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--private-endpoint-connection-name**|string|The name of the private endpoint connection.|private_endpoint_connection_name|privateEndpointConnectionName|
 
-### synapse private-endpoint-connection list
+#### <a name="PrivateEndpointConnectionsDelete">Command `az synapse private-endpoint-connection delete`</a>
 
-list a synapse private-endpoint-connection.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse private-endpoint-connection|PrivateEndpointConnections|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-
-### synapse private-endpoint-connection show
-
-show a synapse private-endpoint-connection.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse private-endpoint-connection|PrivateEndpointConnections|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
+##### <a name="ExamplesPrivateEndpointConnectionsDelete">Example</a>
+```
+az synapse private-endpoint-connection delete --name "ExamplePrivateEndpointConnection" --resource-group \
+"ExampleResourceGroup" --workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersPrivateEndpointConnectionsDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--private-endpoint-connection-name**|string|The name of the private endpoint connection.|private_endpoint_connection_name|privateEndpointConnectionName|
 
-### synapse private-link-hub create
+### group `az synapse private-link-hub`
+#### <a name="PrivateLinkHubsListByResourceGroup">Command `az synapse private-link-hub list`</a>
 
-create a synapse private-link-hub.
+##### <a name="ExamplesPrivateLinkHubsListByResourceGroup">Example</a>
+```
+az synapse private-link-hub list --resource-group "resourceGroup1"
+```
+##### <a name="ParametersPrivateLinkHubsListByResourceGroup">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse private-link-hub|PrivateLinkHubs|
+#### <a name="PrivateLinkHubsList">Command `az synapse private-link-hub list`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
+##### <a name="ExamplesPrivateLinkHubsList">Example</a>
+```
+az synapse private-link-hub list
+```
+##### <a name="ParametersPrivateLinkHubsList">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+#### <a name="PrivateLinkHubsGet">Command `az synapse private-link-hub show`</a>
 
-#### Parameters
+##### <a name="ExamplesPrivateLinkHubsGet">Example</a>
+```
+az synapse private-link-hub show --name "privateLinkHub1" --resource-group "resourceGroup1"
+```
+##### <a name="ParametersPrivateLinkHubsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--private-link-hub-name**|string|The name of the privateLinkHub|private_link_hub_name|privateLinkHubName|
+
+#### <a name="PrivateLinkHubsCreateOrUpdate#Create">Command `az synapse private-link-hub create`</a>
+
+##### <a name="ExamplesPrivateLinkHubsCreateOrUpdate#Create">Example</a>
+```
+az synapse private-link-hub create --location "East US" --tags key="value" --name "privateLinkHub1" --resource-group \
+"resourceGroup1"
+```
+##### <a name="ParametersPrivateLinkHubsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -826,143 +914,99 @@ create a synapse private-link-hub.
 |**--location**|string|The geo-location where the resource lives|location|location|
 |**--tags**|dictionary|Resource tags.|tags|tags|
 
-### synapse private-link-hub delete
+#### <a name="PrivateLinkHubsUpdate">Command `az synapse private-link-hub update`</a>
 
-delete a synapse private-link-hub.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse private-link-hub|PrivateLinkHubs|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--private-link-hub-name**|string|The name of the privateLinkHub|private_link_hub_name|privateLinkHubName|
-
-### synapse private-link-hub list
-
-list a synapse private-link-hub.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse private-link-hub|PrivateLinkHubs|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByResourceGroup|
-|list|List|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-
-### synapse private-link-hub show
-
-show a synapse private-link-hub.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse private-link-hub|PrivateLinkHubs|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--private-link-hub-name**|string|The name of the privateLinkHub|private_link_hub_name|privateLinkHubName|
-
-### synapse private-link-hub update
-
-update a synapse private-link-hub.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse private-link-hub|PrivateLinkHubs|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|Update|
-
-#### Parameters
+##### <a name="ExamplesPrivateLinkHubsUpdate">Example</a>
+```
+az synapse private-link-hub update --name "privateLinkHub1" --tags key="value" --resource-group "resourceGroup1"
+```
+##### <a name="ParametersPrivateLinkHubsUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--private-link-hub-name**|string|The name of the privateLinkHub|private_link_hub_name|privateLinkHubName|
 |**--tags**|dictionary|Resource tags|tags|tags|
 
-### synapse private-link-resource list
+#### <a name="PrivateLinkHubsDelete">Command `az synapse private-link-hub delete`</a>
 
-list a synapse private-link-resource.
+##### <a name="ExamplesPrivateLinkHubsDelete">Example</a>
+```
+az synapse private-link-hub delete --name "privateLinkHub1" --resource-group "resourceGroup1"
+```
+##### <a name="ParametersPrivateLinkHubsDelete">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--private-link-hub-name**|string|The name of the privateLinkHub|private_link_hub_name|privateLinkHubName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse private-link-resource|PrivateLinkResources|
+### group `az synapse private-link-resource`
+#### <a name="PrivateLinkResourcesList">Command `az synapse private-link-resource list`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
-
-#### Parameters
+##### <a name="ExamplesPrivateLinkResourcesList">Example</a>
+```
+az synapse private-link-resource list --resource-group "ExampleResourceGroup" --workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersPrivateLinkResourcesList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 
-### synapse private-link-resource show
+#### <a name="PrivateLinkResourcesGet">Command `az synapse private-link-resource show`</a>
 
-show a synapse private-link-resource.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse private-link-resource|PrivateLinkResources|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
+##### <a name="ExamplesPrivateLinkResourcesGet">Example</a>
+```
+az synapse private-link-resource show --name "sql" --resource-group "ExampleResourceGroup" --workspace-name \
+"ExampleWorkspace"
+```
+##### <a name="ParametersPrivateLinkResourcesGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--private-link-resource-name**|string|The name of the private link resource|private_link_resource_name|privateLinkResourceName|
 
-### synapse sql-pool create
+### group `az synapse sql-pool`
+#### <a name="SqlPoolsListByWorkspace">Command `az synapse sql-pool list`</a>
 
-create a synapse sql-pool.
+##### <a name="ExamplesSqlPoolsListByWorkspace">Example</a>
+```
+az synapse sql-pool list --resource-group "sqlcrudtest-6845" --workspace-name "sqlcrudtest-7177"
+```
+##### <a name="ExamplesSqlPoolsListByWorkspace">Example</a>
+```
+az synapse sql-pool list --resource-group "sqlcrudtest-6845" --workspace-name "sqlcrudtest-7177"
+```
+##### <a name="ParametersSqlPoolsListByWorkspace">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool|SqlPools|
+#### <a name="SqlPoolsGet">Command `az synapse sql-pool show`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|Create|
+##### <a name="ExamplesSqlPoolsGet">Example</a>
+```
+az synapse sql-pool show --resource-group "sqlcrudtest-6852" --name "sqlcrudtest-9187" --workspace-name \
+"sqlcrudtest-2080"
+```
+##### <a name="ParametersSqlPoolsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-#### Parameters
+#### <a name="SqlPoolsCreate">Command `az synapse sql-pool create`</a>
+
+##### <a name="ExamplesSqlPoolsCreate">Example</a>
+```
+az synapse sql-pool create --resource-group "ExampleResourceGroup" --location "West US 2" --collation "" --create-mode \
+"" --creation-date "1970-01-01T00:00:00.000Z" --max-size-bytes 0 --recoverable-database-id "" --restore-point-in-time \
+"1970-01-01T00:00:00.000Z" --source-database-id "" --sku name="" tier="" --name "ExampleSqlPool" --workspace-name \
+"ExampleWorkspace"
+```
+##### <a name="ParametersSqlPoolsCreate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -981,83 +1025,70 @@ create a synapse sql-pool.
 |**--create-mode**|string|What is this?|create_mode|createMode|
 |**--creation-date**|date-time|Date the SQL pool was created|creation_date|creationDate|
 
-### synapse sql-pool delete
+#### <a name="SqlPoolsUpdate">Command `az synapse sql-pool update`</a>
 
-delete a synapse sql-pool.
+##### <a name="ExamplesSqlPoolsUpdate">Example</a>
+```
+az synapse sql-pool update --resource-group "ExampleResourceGroup" --location "West US 2" --collation "" --create-mode \
+"" --creation-date "1970-01-01T00:00:00.000Z" --max-size-bytes 0 --recoverable-database-id "" --restore-point-in-time \
+"1970-01-01T00:00:00.000Z" --source-database-id "" --sku name="" tier="" --name "ExampleSqlPool" --workspace-name \
+"ExampleWorkspace"
+```
+##### <a name="ParametersSqlPoolsUpdate">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
+|**--tags**|dictionary|Resource tags.|tags|tags|
+|**--location**|string|The geo-location where the resource lives|location|location|
+|**--sku**|object|SQL pool SKU|sku|sku|
+|**--max-size-bytes**|integer|Maximum size in bytes|max_size_bytes|maxSizeBytes|
+|**--collation**|string|Collation mode|collation|collation|
+|**--source-database-id**|string|Source database to create from|source_database_id|sourceDatabaseId|
+|**--recoverable-database-id**|string|Backup database to restore from|recoverable_database_id|recoverableDatabaseId|
+|**--provisioning-state**|string|Resource state|provisioning_state|provisioningState|
+|**--status**|string|Resource status|status|status|
+|**--restore-point-in-time**|date-time|Snapshot time to restore|restore_point_in_time|restorePointInTime|
+|**--create-mode**|string|What is this?|create_mode|createMode|
+|**--creation-date**|date-time|Date the SQL pool was created|creation_date|creationDate|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool|SqlPools|
+#### <a name="SqlPoolsDelete">Command `az synapse sql-pool delete`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolsDelete">Example</a>
+```
+az synapse sql-pool delete --resource-group "ExampleResourceGroup" --name "ExampleSqlPool" --workspace-name \
+"ExampleWorkspace"
+```
+##### <a name="ParametersSqlPoolsDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-### synapse sql-pool list
+#### <a name="SqlPoolsPause">Command `az synapse sql-pool pause`</a>
 
-list a synapse sql-pool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool|SqlPools|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByWorkspace|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-
-### synapse sql-pool pause
-
-pause a synapse sql-pool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool|SqlPools|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|pause|Pause|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolsPause">Example</a>
+```
+az synapse sql-pool pause --resource-group "Default-SQL-SouthEastAsia" --name "testdwdb" --workspace-name "testsvr"
+```
+##### <a name="ParametersSqlPoolsPause">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-### synapse sql-pool rename
+#### <a name="SqlPoolsRename">Command `az synapse sql-pool rename`</a>
 
-rename a synapse sql-pool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool|SqlPools|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|rename|Rename|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolsRename">Example</a>
+```
+az synapse sql-pool rename --id "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-SouthEa\
+stAsia/providers/Microsoft.Synapse/workspaces/testsvr/sqlPools/newtestdb" --resource-group "Default-SQL-SouthEastAsia" \
+--name "testdb" --workspace-name "testsvr"
+```
+##### <a name="ParametersSqlPoolsRename">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1065,96 +1096,55 @@ rename a synapse sql-pool.
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 |**--id**|string|The target ID for the resource|id|id|
 
-### synapse sql-pool resume
+#### <a name="SqlPoolsResume">Command `az synapse sql-pool resume`</a>
 
-resume a synapse sql-pool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool|SqlPools|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|resume|Resume|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolsResume">Example</a>
+```
+az synapse sql-pool resume --resource-group "sqlcrudtest-6852" --name "sqlcrudtest-9187" --workspace-name \
+"sqlcrudtest-2080"
+```
+##### <a name="ParametersSqlPoolsResume">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-### synapse sql-pool show
+### group `az synapse sql-pool-blob-auditing-policy`
+#### <a name="SqlPoolBlobAuditingPoliciesGet">Command `az synapse sql-pool-blob-auditing-policy show`</a>
 
-show a synapse sql-pool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool|SqlPools|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolBlobAuditingPoliciesGet">Example</a>
+```
+az synapse sql-pool-blob-auditing-policy show --resource-group "blobauditingtest-6852" --sql-pool-name "testdb" \
+--workspace-name "blobauditingtest-2080"
+```
+##### <a name="ParametersSqlPoolBlobAuditingPoliciesGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-### synapse sql-pool update
+#### <a name="SqlPoolBlobAuditingPoliciesCreateOrUpdate#Create">Command `az synapse sql-pool-blob-auditing-policy create`</a>
 
-update a synapse sql-pool.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool|SqlPools|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|Update|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
-|**--tags**|dictionary|Resource tags.|tags|tags|
-|**--location**|string|The geo-location where the resource lives|location|location|
-|**--sku**|object|SQL pool SKU|sku|sku|
-|**--max-size-bytes**|integer|Maximum size in bytes|max_size_bytes|maxSizeBytes|
-|**--collation**|string|Collation mode|collation|collation|
-|**--source-database-id**|string|Source database to create from|source_database_id|sourceDatabaseId|
-|**--recoverable-database-id**|string|Backup database to restore from|recoverable_database_id|recoverableDatabaseId|
-|**--provisioning-state**|string|Resource state|provisioning_state|provisioningState|
-|**--status**|string|Resource status|status|status|
-|**--restore-point-in-time**|date-time|Snapshot time to restore|restore_point_in_time|restorePointInTime|
-|**--create-mode**|string|What is this?|create_mode|createMode|
-|**--creation-date**|date-time|Date the SQL pool was created|creation_date|creationDate|
-
-### synapse sql-pool-blob-auditing-policy create
-
-create a synapse sql-pool-blob-auditing-policy.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-blob-auditing-policy|SqlPoolBlobAuditingPolicies|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolBlobAuditingPoliciesCreateOrUpdate#Create">Example</a>
+```
+az synapse sql-pool-blob-auditing-policy create --audit-actions-and-groups "DATABASE_LOGOUT_GROUP" \
+--audit-actions-and-groups "DATABASE_ROLE_MEMBER_CHANGE_GROUP" --audit-actions-and-groups "UPDATE on \
+database::TestDatabaseName by public" --is-azure-monitor-target-enabled true --is-storage-secondary-key-in-use false \
+--retention-days 6 --state "Enabled" --storage-account-access-key "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdk\
+fD2342309432849328476458/3RSD==" --storage-account-subscription-id "00000000-1234-0000-5678-000000000000" \
+--storage-endpoint "https://mystorage.blob.core.windows.net" --resource-group "blobauditingtest-4799" --sql-pool-name \
+"testdb" --workspace-name "blobauditingtest-6440"
+```
+##### <a name="ExamplesSqlPoolBlobAuditingPoliciesCreateOrUpdate#Create">Example</a>
+```
+az synapse sql-pool-blob-auditing-policy create --state "Enabled" --storage-account-access-key \
+"sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==" --storage-endpoint \
+"https://mystorage.blob.core.windows.net" --resource-group "blobauditingtest-4799" --sql-pool-name "testdb" \
+--workspace-name "blobauditingtest-6440"
+```
+##### <a name="ParametersSqlPoolBlobAuditingPoliciesCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1169,42 +1159,9 @@ create a synapse sql-pool-blob-auditing-policy.
 |**--is-storage-secondary-key-in-use**|boolean|Specifies whether storageAccountAccessKey value is the storage's secondary key.|is_storage_secondary_key_in_use|isStorageSecondaryKeyInUse|
 |**--is-azure-monitor-target-enabled**|boolean|Specifies whether audit events are sent to Azure Monitor.  In order to send the events to Azure Monitor, specify 'state' as 'Enabled' and 'isAzureMonitorTargetEnabled' as true.  When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created. Note that for server level audit you should use the 'master' database as {databaseName}.  Diagnostic Settings URI format: PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview  For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207) or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043) |is_azure_monitor_target_enabled|isAzureMonitorTargetEnabled|
 
-### synapse sql-pool-blob-auditing-policy show
+#### <a name="SqlPoolBlobAuditingPoliciesCreateOrUpdate#Update">Command `az synapse sql-pool-blob-auditing-policy update`</a>
 
-show a synapse sql-pool-blob-auditing-policy.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-blob-auditing-policy|SqlPoolBlobAuditingPolicies|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
-
-### synapse sql-pool-blob-auditing-policy update
-
-update a synapse sql-pool-blob-auditing-policy.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-blob-auditing-policy|SqlPoolBlobAuditingPolicies|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
+##### <a name="ParametersSqlPoolBlobAuditingPoliciesCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1219,84 +1176,74 @@ update a synapse sql-pool-blob-auditing-policy.
 |**--is-storage-secondary-key-in-use**|boolean|Specifies whether storageAccountAccessKey value is the storage's secondary key.|is_storage_secondary_key_in_use|isStorageSecondaryKeyInUse|
 |**--is-azure-monitor-target-enabled**|boolean|Specifies whether audit events are sent to Azure Monitor.  In order to send the events to Azure Monitor, specify 'state' as 'Enabled' and 'isAzureMonitorTargetEnabled' as true.  When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created. Note that for server level audit you should use the 'master' database as {databaseName}.  Diagnostic Settings URI format: PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview  For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207) or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043) |is_azure_monitor_target_enabled|isAzureMonitorTargetEnabled|
 
-### synapse sql-pool-connection-policy show
+### group `az synapse sql-pool-connection-policy`
+#### <a name="SqlPoolConnectionPoliciesGet">Command `az synapse sql-pool-connection-policy show`</a>
 
-show a synapse sql-pool-connection-policy.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-connection-policy|SqlPoolConnectionPolicies|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolConnectionPoliciesGet">Example</a>
+```
+az synapse sql-pool-connection-policy show --resource-group "blobauditingtest-6852" --sql-pool-name "testdb" \
+--workspace-name "blobauditingtest-2080"
+```
+##### <a name="ParametersSqlPoolConnectionPoliciesGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-### synapse sql-pool-data-warehouse-user-activity show
+### group `az synapse sql-pool-data-warehouse-user-activity`
+#### <a name="SqlPoolDataWarehouseUserActivitiesGet">Command `az synapse sql-pool-data-warehouse-user-activity show`</a>
 
-show a synapse sql-pool-data-warehouse-user-activity.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-data-warehouse-user-activity|SqlPoolDataWarehouseUserActivities|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolDataWarehouseUserActivitiesGet">Example</a>
+```
+az synapse sql-pool-data-warehouse-user-activity show --resource-group "Default-SQL-SouthEastAsia" --sql-pool-name \
+"testdb" --workspace-name "testsvr"
+```
+##### <a name="ParametersSqlPoolDataWarehouseUserActivitiesGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-### synapse sql-pool-geo-backup-policy show
+### group `az synapse sql-pool-geo-backup-policy`
+#### <a name="SqlPoolGeoBackupPoliciesGet">Command `az synapse sql-pool-geo-backup-policy show`</a>
 
-show a synapse sql-pool-geo-backup-policy.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-geo-backup-policy|SqlPoolGeoBackupPolicies|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolGeoBackupPoliciesGet">Example</a>
+```
+az synapse sql-pool-geo-backup-policy show --resource-group "sqlcrudtest-4799" --sql-pool-name "testdw" \
+--workspace-name "sqlcrudtest-5961"
+```
+##### <a name="ParametersSqlPoolGeoBackupPoliciesGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-### synapse sql-pool-metadata-sync-config create
+### group `az synapse sql-pool-metadata-sync-config`
+#### <a name="SqlPoolMetadataSyncConfigsGet">Command `az synapse sql-pool-metadata-sync-config show`</a>
 
-create a synapse sql-pool-metadata-sync-config.
+##### <a name="ExamplesSqlPoolMetadataSyncConfigsGet">Example</a>
+```
+az synapse sql-pool-metadata-sync-config show --resource-group "ExampleResourceGroup" --sql-pool-name "ExampleSqlPool" \
+--workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersSqlPoolMetadataSyncConfigsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-metadata-sync-config|SqlPoolMetadataSyncConfigs|
+#### <a name="SqlPoolMetadataSyncConfigsCreate">Command `az synapse sql-pool-metadata-sync-config create`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|Create|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolMetadataSyncConfigsCreate">Example</a>
+```
+az synapse sql-pool-metadata-sync-config create --enabled true --resource-group "ExampleResourceGroup" --sql-pool-name \
+"ExampleSqlPool" --workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersSqlPoolMetadataSyncConfigsCreate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1304,63 +1251,30 @@ create a synapse sql-pool-metadata-sync-config.
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 |**--enabled**|boolean|Indicates whether the metadata sync is enabled or disabled|enabled|enabled|
 
-### synapse sql-pool-metadata-sync-config show
+### group `az synapse sql-pool-operation`
+#### <a name="SqlPoolOperationsList">Command `az synapse sql-pool-operation list`</a>
 
-show a synapse sql-pool-metadata-sync-config.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-metadata-sync-config|SqlPoolMetadataSyncConfigs|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolOperationsList">Example</a>
+```
+az synapse sql-pool-operation list --resource-group "sqlcrudtest-7398" --sql-pool-name "testdb" --workspace-name \
+"sqlcrudtest-4645"
+```
+##### <a name="ParametersSqlPoolOperationsList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-### synapse sql-pool-operation list
+### group `az synapse sql-pool-operation-result`
+#### <a name="SqlPoolOperationResultsGetLocationHeaderResult">Command `az synapse sql-pool-operation-result get-location-header-result`</a>
 
-list a synapse sql-pool-operation.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-operation|SqlPoolOperations|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
-
-### synapse sql-pool-operation-result get-location-header-result
-
-get-location-header-result a synapse sql-pool-operation-result.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-operation-result|SqlPoolOperationResults|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|get-location-header-result|GetLocationHeaderResult|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolOperationResultsGetLocationHeaderResult">Example</a>
+```
+az synapse sql-pool-operation-result get-location-header-result --operation-id "fedcba98-7654-4210-fedc-ba9876543210" \
+--resource-group "ExampleResourceGroup" --sql-pool-name "ExampleSqlPool" --workspace-name "ExampleWorkspace"
+```
+##### <a name="ParametersSqlPoolOperationResultsGetLocationHeaderResult">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1368,42 +1282,44 @@ get-location-header-result a synapse sql-pool-operation-result.
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 |**--operation-id**|string|Operation ID|operation_id|operationId|
 
-### synapse sql-pool-replication-link list
+### group `az synapse sql-pool-replication-link`
+#### <a name="SqlPoolReplicationLinksList">Command `az synapse sql-pool-replication-link list`</a>
 
-list a synapse sql-pool-replication-link.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-replication-link|SqlPoolReplicationLinks|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolReplicationLinksList">Example</a>
+```
+az synapse sql-pool-replication-link list --resource-group "sqlcrudtest-4799" --sql-pool-name "testdb" \
+--workspace-name "sqlcrudtest-6440"
+```
+##### <a name="ParametersSqlPoolReplicationLinksList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-### synapse sql-pool-restore-point create
+### group `az synapse sql-pool-restore-point`
+#### <a name="SqlPoolRestorePointsList">Command `az synapse sql-pool-restore-point list`</a>
 
-create a synapse sql-pool-restore-point.
+##### <a name="ExamplesSqlPoolRestorePointsList">Example</a>
+```
+az synapse sql-pool-restore-point list --resource-group "Default-SQL-SouthEastAsia" --sql-pool-name "testDatabase" \
+--workspace-name "testserver"
+```
+##### <a name="ParametersSqlPoolRestorePointsList">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-restore-point|SqlPoolRestorePoints|
+#### <a name="SqlPoolRestorePointsCreate">Command `az synapse sql-pool-restore-point create`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|Create|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolRestorePointsCreate">Example</a>
+```
+az synapse sql-pool-restore-point create --restore-point-label "mylabel" --resource-group "Default-SQL-SouthEastAsia" \
+--sql-pool-name "testDatabase" --workspace-name "testserver"
+```
+##### <a name="ParametersSqlPoolRestorePointsCreate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1411,42 +1327,14 @@ create a synapse sql-pool-restore-point.
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 |**--restore-point-label**|string|The restore point label to apply|restore_point_label|restorePointLabel|
 
-### synapse sql-pool-restore-point list
+### group `az synapse sql-pool-schema`
+#### <a name="SqlPoolSchemasList">Command `az synapse sql-pool-schema list`</a>
 
-list a synapse sql-pool-restore-point.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-restore-point|SqlPoolRestorePoints|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
-
-### synapse sql-pool-schema list
-
-list a synapse sql-pool-schema.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-schema|SqlPoolSchemas|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolSchemasList">Example</a>
+```
+az synapse sql-pool-schema list --resource-group "myRG" --sql-pool-name "myDatabase" --workspace-name "serverName"
+```
+##### <a name="ParametersSqlPoolSchemasList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1454,21 +1342,37 @@ list a synapse sql-pool-schema.
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 |**--filter**|string|An OData filter expression that filters elements in the collection.|filter|$filter|
 
-### synapse sql-pool-security-alert-policy create
+### group `az synapse sql-pool-security-alert-policy`
+#### <a name="SqlPoolSecurityAlertPoliciesGet">Command `az synapse sql-pool-security-alert-policy show`</a>
 
-create a synapse sql-pool-security-alert-policy.
+##### <a name="ExamplesSqlPoolSecurityAlertPoliciesGet">Example</a>
+```
+az synapse sql-pool-security-alert-policy show --resource-group "securityalert-6852" --sql-pool-name "testdb" \
+--workspace-name "securityalert-2080"
+```
+##### <a name="ParametersSqlPoolSecurityAlertPoliciesGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-security-alert-policy|SqlPoolSecurityAlertPolicies|
+#### <a name="SqlPoolSecurityAlertPoliciesCreateOrUpdate#Create">Command `az synapse sql-pool-security-alert-policy create`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolSecurityAlertPoliciesCreateOrUpdate#Create">Example</a>
+```
+az synapse sql-pool-security-alert-policy create --disabled-alerts "Sql_Injection" --disabled-alerts "Usage_Anomaly" \
+--email-account-admins true --email-addresses "test@microsoft.com" --email-addresses "user@microsoft.com" \
+--retention-days 6 --state "Enabled" --storage-account-access-key "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdk\
+fD2342309432849328476458/3RSD==" --storage-endpoint "https://mystorage.blob.core.windows.net" --resource-group \
+"securityalert-4799" --sql-pool-name "testdb" --workspace-name "securityalert-6440"
+```
+##### <a name="ExamplesSqlPoolSecurityAlertPoliciesCreateOrUpdate#Create">Example</a>
+```
+az synapse sql-pool-security-alert-policy create --state "Enabled" --resource-group "securityalert-4799" \
+--sql-pool-name "testdb" --workspace-name "securityalert-6440"
+```
+##### <a name="ParametersSqlPoolSecurityAlertPoliciesCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1482,42 +1386,9 @@ create a synapse sql-pool-security-alert-policy.
 |**--storage-account-access-key**|string|Specifies the identifier key of the Threat Detection audit storage account.|storage_account_access_key|storageAccountAccessKey|
 |**--retention-days**|integer|Specifies the number of days to keep in the Threat Detection audit logs.|retention_days|retentionDays|
 
-### synapse sql-pool-security-alert-policy show
+#### <a name="SqlPoolSecurityAlertPoliciesCreateOrUpdate#Update">Command `az synapse sql-pool-security-alert-policy update`</a>
 
-show a synapse sql-pool-security-alert-policy.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-security-alert-policy|SqlPoolSecurityAlertPolicies|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
-
-### synapse sql-pool-security-alert-policy update
-
-update a synapse sql-pool-security-alert-policy.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-security-alert-policy|SqlPoolSecurityAlertPolicies|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
+##### <a name="ParametersSqlPoolSecurityAlertPoliciesCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1531,21 +1402,17 @@ update a synapse sql-pool-security-alert-policy.
 |**--storage-account-access-key**|string|Specifies the identifier key of the Threat Detection audit storage account.|storage_account_access_key|storageAccountAccessKey|
 |**--retention-days**|integer|Specifies the number of days to keep in the Threat Detection audit logs.|retention_days|retentionDays|
 
-### synapse sql-pool-sensitivity-label create
+### group `az synapse sql-pool-sensitivity-label`
+#### <a name="SqlPoolSensitivityLabelsCreateOrUpdate#Create">Command `az synapse sql-pool-sensitivity-label create`</a>
 
-create a synapse sql-pool-sensitivity-label.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-sensitivity-label|SqlPoolSensitivityLabels|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolSensitivityLabelsCreateOrUpdate#Create">Example</a>
+```
+az synapse sql-pool-sensitivity-label create --column-name "myColumn" --information-type "PhoneNumber" \
+--information-type-id "d22fa6e9-5ee4-3bde-4c2b-a409604c4646" --label-id "bf91e08c-f4f0-478a-b016-25164b2a65ff" \
+--label-name "PII" --resource-group "myRG" --schema-name "dbo" --sql-pool-name "myDatabase" --table-name "myTable" \
+--workspace-name "myServer"
+```
+##### <a name="ParametersSqlPoolSensitivityLabelsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1559,21 +1426,30 @@ create a synapse sql-pool-sensitivity-label.
 |**--information-type**|string|The information type.|information_type|informationType|
 |**--information-type-id**|string|The information type ID.|information_type_id|informationTypeId|
 
-### synapse sql-pool-sensitivity-label delete
+#### <a name="SqlPoolSensitivityLabelsCreateOrUpdate#Update">Command `az synapse sql-pool-sensitivity-label update`</a>
 
-delete a synapse sql-pool-sensitivity-label.
+##### <a name="ParametersSqlPoolSensitivityLabelsCreateOrUpdate#Update">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
+|**--schema-name**|string|The name of the schema.|schema_name|schemaName|
+|**--table-name**|string|The name of the table.|table_name|tableName|
+|**--column-name**|string|The name of the column.|column_name|columnName|
+|**--label-name**|string|The label name.|label_name|labelName|
+|**--label-id**|string|The label ID.|label_id|labelId|
+|**--information-type**|string|The information type.|information_type|informationType|
+|**--information-type-id**|string|The information type ID.|information_type_id|informationTypeId|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-sensitivity-label|SqlPoolSensitivityLabels|
+#### <a name="SqlPoolSensitivityLabelsDelete">Command `az synapse sql-pool-sensitivity-label delete`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolSensitivityLabelsDelete">Example</a>
+```
+az synapse sql-pool-sensitivity-label delete --column-name "myColumn" --resource-group "myRG" --schema-name "dbo" \
+--sql-pool-name "myDatabase" --table-name "myTable" --workspace-name "myServer"
+```
+##### <a name="ParametersSqlPoolSensitivityLabelsDelete">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1583,21 +1459,14 @@ delete a synapse sql-pool-sensitivity-label.
 |**--table-name**|string|The name of the table.|table_name|tableName|
 |**--column-name**|string|The name of the column.|column_name|columnName|
 
-### synapse sql-pool-sensitivity-label disable-recommendation
+#### <a name="SqlPoolSensitivityLabelsDisableRecommendation">Command `az synapse sql-pool-sensitivity-label disable-recommendation`</a>
 
-disable-recommendation a synapse sql-pool-sensitivity-label.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-sensitivity-label|SqlPoolSensitivityLabels|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|disable-recommendation|DisableRecommendation|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolSensitivityLabelsDisableRecommendation">Example</a>
+```
+az synapse sql-pool-sensitivity-label disable-recommendation --column-name "myColumn" --resource-group "myRG" \
+--schema-name "dbo" --sql-pool-name "myDatabase" --table-name "myTable" --workspace-name "myServer"
+```
+##### <a name="ParametersSqlPoolSensitivityLabelsDisableRecommendation">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1607,21 +1476,14 @@ disable-recommendation a synapse sql-pool-sensitivity-label.
 |**--table-name**|string|The name of the table.|table_name|tableName|
 |**--column-name**|string|The name of the column.|column_name|columnName|
 
-### synapse sql-pool-sensitivity-label enable-recommendation
+#### <a name="SqlPoolSensitivityLabelsEnableRecommendation">Command `az synapse sql-pool-sensitivity-label enable-recommendation`</a>
 
-enable-recommendation a synapse sql-pool-sensitivity-label.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-sensitivity-label|SqlPoolSensitivityLabels|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|enable-recommendation|EnableRecommendation|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolSensitivityLabelsEnableRecommendation">Example</a>
+```
+az synapse sql-pool-sensitivity-label enable-recommendation --column-name "myColumn" --resource-group "myRG" \
+--schema-name "dbo" --sql-pool-name "myDatabase" --table-name "myTable" --workspace-name "myServer"
+```
+##### <a name="ParametersSqlPoolSensitivityLabelsEnableRecommendation">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1631,21 +1493,14 @@ enable-recommendation a synapse sql-pool-sensitivity-label.
 |**--table-name**|string|The name of the table.|table_name|tableName|
 |**--column-name**|string|The name of the column.|column_name|columnName|
 
-### synapse sql-pool-sensitivity-label list-current
+#### <a name="SqlPoolSensitivityLabelsListCurrent">Command `az synapse sql-pool-sensitivity-label list-current`</a>
 
-list-current a synapse sql-pool-sensitivity-label.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-sensitivity-label|SqlPoolSensitivityLabels|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list-current|ListCurrent|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolSensitivityLabelsListCurrent">Example</a>
+```
+az synapse sql-pool-sensitivity-label list-current --resource-group "myRG" --sql-pool-name "myDatabase" \
+--workspace-name "myServer"
+```
+##### <a name="ParametersSqlPoolSensitivityLabelsListCurrent">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1653,21 +1508,14 @@ list-current a synapse sql-pool-sensitivity-label.
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 |**--filter**|string|An OData filter expression that filters elements in the collection.|filter|$filter|
 
-### synapse sql-pool-sensitivity-label list-recommended
+#### <a name="SqlPoolSensitivityLabelsListRecommended">Command `az synapse sql-pool-sensitivity-label list-recommended`</a>
 
-list-recommended a synapse sql-pool-sensitivity-label.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-sensitivity-label|SqlPoolSensitivityLabels|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list-recommended|ListRecommended|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolSensitivityLabelsListRecommended">Example</a>
+```
+az synapse sql-pool-sensitivity-label list-recommended --resource-group "myRG" --sql-pool-name "myDatabase" \
+--workspace-name "myServer"
+```
+##### <a name="ParametersSqlPoolSensitivityLabelsListRecommended">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1677,49 +1525,15 @@ list-recommended a synapse sql-pool-sensitivity-label.
 |**--skip-token**|string|An OData query option to indicate how many elements to skip in the collection.|skip_token|$skipToken|
 |**--filter**|string|An OData filter expression that filters elements in the collection.|filter|$filter|
 
-### synapse sql-pool-sensitivity-label update
+### group `az synapse sql-pool-table`
+#### <a name="SqlPoolTablesListBySchema">Command `az synapse sql-pool-table list`</a>
 
-update a synapse sql-pool-sensitivity-label.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-sensitivity-label|SqlPoolSensitivityLabels|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
-|**--schema-name**|string|The name of the schema.|schema_name|schemaName|
-|**--table-name**|string|The name of the table.|table_name|tableName|
-|**--column-name**|string|The name of the column.|column_name|columnName|
-|**--label-name**|string|The label name.|label_name|labelName|
-|**--label-id**|string|The label ID.|label_id|labelId|
-|**--information-type**|string|The information type.|information_type|informationType|
-|**--information-type-id**|string|The information type ID.|information_type_id|informationTypeId|
-
-### synapse sql-pool-table list
-
-list a synapse sql-pool-table.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-table|SqlPoolTables|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListBySchema|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolTablesListBySchema">Example</a>
+```
+az synapse sql-pool-table list --resource-group "myRG" --schema-name "dbo" --sql-pool-name "myDatabase" \
+--workspace-name "serverName"
+```
+##### <a name="ParametersSqlPoolTablesListBySchema">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1728,21 +1542,15 @@ list a synapse sql-pool-table.
 |**--schema-name**|string|The name of the schema.|schema_name|schemaName|
 |**--filter**|string|An OData filter expression that filters elements in the collection.|filter|$filter|
 
-### synapse sql-pool-table-column list
+### group `az synapse sql-pool-table-column`
+#### <a name="SqlPoolTableColumnsListByTableName">Command `az synapse sql-pool-table-column list`</a>
 
-list a synapse sql-pool-table-column.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-table-column|SqlPoolTableColumns|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByTableName|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolTableColumnsListByTableName">Example</a>
+```
+az synapse sql-pool-table-column list --resource-group "myRG" --schema-name "dbo" --sql-pool-name "myDatabase" \
+--table-name "table1" --workspace-name "serverName"
+```
+##### <a name="ParametersSqlPoolTableColumnsListByTableName">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1752,21 +1560,29 @@ list a synapse sql-pool-table-column.
 |**--table-name**|string|The name of the table.|table_name|tableName|
 |**--filter**|string|An OData filter expression that filters elements in the collection.|filter|$filter|
 
-### synapse sql-pool-transparent-data-encryption create
+### group `az synapse sql-pool-transparent-data-encryption`
+#### <a name="SqlPoolTransparentDataEncryptionsGet">Command `az synapse sql-pool-transparent-data-encryption show`</a>
 
-create a synapse sql-pool-transparent-data-encryption.
+##### <a name="ExamplesSqlPoolTransparentDataEncryptionsGet">Example</a>
+```
+az synapse sql-pool-transparent-data-encryption show --resource-group "sqlcrudtest-6852" --sql-pool-name \
+"sqlcrudtest-9187" --workspace-name "sqlcrudtest-2080"
+```
+##### <a name="ParametersSqlPoolTransparentDataEncryptionsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-transparent-data-encryption|SqlPoolTransparentDataEncryptions|
+#### <a name="SqlPoolTransparentDataEncryptionsCreateOrUpdate#Create">Command `az synapse sql-pool-transparent-data-encryption create`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolTransparentDataEncryptionsCreateOrUpdate#Create">Example</a>
+```
+az synapse sql-pool-transparent-data-encryption create --status "Enabled" --resource-group "sqlcrudtest-6852" \
+--sql-pool-name "sqlcrudtest-9187" --workspace-name "sqlcrudtest-2080"
+```
+##### <a name="ParametersSqlPoolTransparentDataEncryptionsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1774,42 +1590,9 @@ create a synapse sql-pool-transparent-data-encryption.
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 |**--status**|sealed-choice|The status of the database transparent data encryption.|status|status|
 
-### synapse sql-pool-transparent-data-encryption show
+#### <a name="SqlPoolTransparentDataEncryptionsCreateOrUpdate#Update">Command `az synapse sql-pool-transparent-data-encryption update`</a>
 
-show a synapse sql-pool-transparent-data-encryption.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-transparent-data-encryption|SqlPoolTransparentDataEncryptions|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
-
-### synapse sql-pool-transparent-data-encryption update
-
-update a synapse sql-pool-transparent-data-encryption.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-transparent-data-encryption|SqlPoolTransparentDataEncryptions|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
+##### <a name="ParametersSqlPoolTransparentDataEncryptionsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1817,42 +1600,76 @@ update a synapse sql-pool-transparent-data-encryption.
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 |**--status**|sealed-choice|The status of the database transparent data encryption.|status|status|
 
-### synapse sql-pool-usage list
+### group `az synapse sql-pool-usage`
+#### <a name="SqlPoolUsagesList">Command `az synapse sql-pool-usage list`</a>
 
-list a synapse sql-pool-usage.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-usage|SqlPoolUsages|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolUsagesList">Example</a>
+```
+az synapse sql-pool-usage list --resource-group "sqlcrudtest-6730" --sql-pool-name "3481" --workspace-name \
+"sqlcrudtest-9007"
+```
+##### <a name="ParametersSqlPoolUsagesList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-### synapse sql-pool-vulnerability-assessment create
+### group `az synapse sql-pool-vulnerability-assessment`
+#### <a name="SqlPoolVulnerabilityAssessmentsList">Command `az synapse sql-pool-vulnerability-assessment list`</a>
 
-create a synapse sql-pool-vulnerability-assessment.
+##### <a name="ExamplesSqlPoolVulnerabilityAssessmentsList">Example</a>
+```
+az synapse sql-pool-vulnerability-assessment list --resource-group "vulnerabilityaseessmenttest-4799" --sql-pool-name \
+"testdb" --workspace-name "vulnerabilityaseessmenttest-6440"
+```
+##### <a name="ParametersSqlPoolVulnerabilityAssessmentsList">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-vulnerability-assessment|SqlPoolVulnerabilityAssessments|
+#### <a name="SqlPoolVulnerabilityAssessmentsGet">Command `az synapse sql-pool-vulnerability-assessment show`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
+##### <a name="ExamplesSqlPoolVulnerabilityAssessmentsGet">Example</a>
+```
+az synapse sql-pool-vulnerability-assessment show --resource-group "vulnerabilityaseessmenttest-4799" --sql-pool-name \
+"testdb" --workspace-name "vulnerabilityaseessmenttest-6440"
+```
+##### <a name="ParametersSqlPoolVulnerabilityAssessmentsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-#### Parameters
+#### <a name="SqlPoolVulnerabilityAssessmentsCreateOrUpdate#Create">Command `az synapse sql-pool-vulnerability-assessment create`</a>
+
+##### <a name="ExamplesSqlPoolVulnerabilityAssessmentsCreateOrUpdate#Create">Example</a>
+```
+az synapse sql-pool-vulnerability-assessment create --recurring-scans email-subscription-admins=true \
+emails="email1@mail.com" emails="email2@mail.com" is-enabled=true --storage-account-access-key \
+"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" --storage-container-path "https://myStorage.blob.core.window\
+s.net/vulnerability-assessment/" --storage-container-sas-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"\
+ --resource-group "vulnerabilityaseessmenttest-4799" --sql-pool-name "testdb" --workspace-name \
+"vulnerabilityaseessmenttest-6440"
+```
+##### <a name="ExamplesSqlPoolVulnerabilityAssessmentsCreateOrUpdate#Create">Example</a>
+```
+az synapse sql-pool-vulnerability-assessment create --storage-account-access-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\
+XXXXXXXXXXXXXXXXXXX" --storage-container-path "https://myStorage.blob.core.windows.net/vulnerability-assessment/" \
+--resource-group "vulnerabilityaseessmenttest-4799" --sql-pool-name "testdb" --workspace-name \
+"vulnerabilityaseessmenttest-6440"
+```
+##### <a name="ExamplesSqlPoolVulnerabilityAssessmentsCreateOrUpdate#Create">Example</a>
+```
+az synapse sql-pool-vulnerability-assessment create --storage-container-path "https://myStorage.blob.core.windows.net/v\
+ulnerability-assessment/" --storage-container-sas-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" \
+--resource-group "vulnerabilityaseessmenttest-4799" --sql-pool-name "testdb" --workspace-name \
+"vulnerabilityaseessmenttest-6440"
+```
+##### <a name="ParametersSqlPoolVulnerabilityAssessmentsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1863,84 +1680,9 @@ create a synapse sql-pool-vulnerability-assessment.
 |**--storage-account-access-key**|string|Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required.|storage_account_access_key|storageAccountAccessKey|
 |**--recurring-scans**|object|The recurring scans settings|recurring_scans|recurringScans|
 
-### synapse sql-pool-vulnerability-assessment delete
+#### <a name="SqlPoolVulnerabilityAssessmentsCreateOrUpdate#Update">Command `az synapse sql-pool-vulnerability-assessment update`</a>
 
-delete a synapse sql-pool-vulnerability-assessment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-vulnerability-assessment|SqlPoolVulnerabilityAssessments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
-
-### synapse sql-pool-vulnerability-assessment list
-
-list a synapse sql-pool-vulnerability-assessment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-vulnerability-assessment|SqlPoolVulnerabilityAssessments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
-
-### synapse sql-pool-vulnerability-assessment show
-
-show a synapse sql-pool-vulnerability-assessment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-vulnerability-assessment|SqlPoolVulnerabilityAssessments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
-
-### synapse sql-pool-vulnerability-assessment update
-
-update a synapse sql-pool-vulnerability-assessment.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-vulnerability-assessment|SqlPoolVulnerabilityAssessments|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
+##### <a name="ParametersSqlPoolVulnerabilityAssessmentsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1951,21 +1693,31 @@ update a synapse sql-pool-vulnerability-assessment.
 |**--storage-account-access-key**|string|Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required.|storage_account_access_key|storageAccountAccessKey|
 |**--recurring-scans**|object|The recurring scans settings|recurring_scans|recurringScans|
 
-### synapse sql-pool-vulnerability-assessment-rule-baseline create
+#### <a name="SqlPoolVulnerabilityAssessmentsDelete">Command `az synapse sql-pool-vulnerability-assessment delete`</a>
 
-create a synapse sql-pool-vulnerability-assessment-rule-baseline.
+##### <a name="ExamplesSqlPoolVulnerabilityAssessmentsDelete">Example</a>
+```
+az synapse sql-pool-vulnerability-assessment delete --resource-group "vulnerabilityaseessmenttest-4799" \
+--sql-pool-name "testdb" --workspace-name "vulnerabilityaseessmenttest-6440"
+```
+##### <a name="ParametersSqlPoolVulnerabilityAssessmentsDelete">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-vulnerability-assessment-rule-baseline|SqlPoolVulnerabilityAssessmentRuleBaselines|
+### group `az synapse sql-pool-vulnerability-assessment-rule-baseline`
+#### <a name="SqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Create">Command `az synapse sql-pool-vulnerability-assessment-rule-baseline create`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Create">Example</a>
+```
+az synapse sql-pool-vulnerability-assessment-rule-baseline create --baseline-name "default" --baseline-results \
+result="userA" result="SELECT" --baseline-results result="userB" result="SELECT" --baseline-results result="userC" \
+result="SELECT" result="tableId_4" --resource-group "vulnerabilityaseessmenttest-4799" --rule-id "VA1001" \
+--sql-pool-name "testdb" --workspace-name "vulnerabilityaseessmenttest-6440"
+```
+##### <a name="ParametersSqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -1975,44 +1727,9 @@ create a synapse sql-pool-vulnerability-assessment-rule-baseline.
 |**--baseline-name**|sealed-choice|The name of the vulnerability assessment rule baseline (default implies a baseline on a Sql pool level rule and master for workspace level rule).|baseline_name|baselineName|
 |**--baseline-results**|array|The rule baseline result|baseline_results|baselineResults|
 
-### synapse sql-pool-vulnerability-assessment-rule-baseline delete
+#### <a name="SqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Update">Command `az synapse sql-pool-vulnerability-assessment-rule-baseline update`</a>
 
-delete a synapse sql-pool-vulnerability-assessment-rule-baseline.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-vulnerability-assessment-rule-baseline|SqlPoolVulnerabilityAssessmentRuleBaselines|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
-|**--rule-id**|string|The vulnerability assessment rule ID.|rule_id|ruleId|
-|**--baseline-name**|sealed-choice|The name of the vulnerability assessment rule baseline (default implies a baseline on a Sql pool level rule and master for workspace level rule).|baseline_name|baselineName|
-
-### synapse sql-pool-vulnerability-assessment-rule-baseline update
-
-update a synapse sql-pool-vulnerability-assessment-rule-baseline.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-vulnerability-assessment-rule-baseline|SqlPoolVulnerabilityAssessmentRuleBaselines|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
+##### <a name="ParametersSqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -2022,21 +1739,46 @@ update a synapse sql-pool-vulnerability-assessment-rule-baseline.
 |**--baseline-name**|sealed-choice|The name of the vulnerability assessment rule baseline (default implies a baseline on a Sql pool level rule and master for workspace level rule).|baseline_name|baselineName|
 |**--baseline-results**|array|The rule baseline result|baseline_results|baselineResults|
 
-### synapse sql-pool-vulnerability-assessment-scan export
+#### <a name="SqlPoolVulnerabilityAssessmentRuleBaselinesDelete">Command `az synapse sql-pool-vulnerability-assessment-rule-baseline delete`</a>
 
-export a synapse sql-pool-vulnerability-assessment-scan.
+##### <a name="ExamplesSqlPoolVulnerabilityAssessmentRuleBaselinesDelete">Example</a>
+```
+az synapse sql-pool-vulnerability-assessment-rule-baseline delete --baseline-name "default" --resource-group \
+"vulnerabilityaseessmenttest-4799" --rule-id "VA1001" --sql-pool-name "testdb" --workspace-name \
+"vulnerabilityaseessmenttest-6440"
+```
+##### <a name="ParametersSqlPoolVulnerabilityAssessmentRuleBaselinesDelete">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
+|**--rule-id**|string|The vulnerability assessment rule ID.|rule_id|ruleId|
+|**--baseline-name**|sealed-choice|The name of the vulnerability assessment rule baseline (default implies a baseline on a Sql pool level rule and master for workspace level rule).|baseline_name|baselineName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-vulnerability-assessment-scan|SqlPoolVulnerabilityAssessmentScans|
+### group `az synapse sql-pool-vulnerability-assessment-scan`
+#### <a name="SqlPoolVulnerabilityAssessmentScansList">Command `az synapse sql-pool-vulnerability-assessment-scan list`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|export|Export|
+##### <a name="ExamplesSqlPoolVulnerabilityAssessmentScansList">Example</a>
+```
+az synapse sql-pool-vulnerability-assessment-scan list --resource-group "vulnerabilityassessmenttest-4711" \
+--sql-pool-name "testdb" --workspace-name "vulnerabilityassessmenttest-6411"
+```
+##### <a name="ParametersSqlPoolVulnerabilityAssessmentScansList">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
+|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-#### Parameters
+#### <a name="SqlPoolVulnerabilityAssessmentScansExport">Command `az synapse sql-pool-vulnerability-assessment-scan export`</a>
+
+##### <a name="ExamplesSqlPoolVulnerabilityAssessmentScansExport">Example</a>
+```
+az synapse sql-pool-vulnerability-assessment-scan export --resource-group "vulnerabilityassessmenttest-4799" --scan-id \
+"scan001" --sql-pool-name "testdb" --workspace-name "vulnerabilityassessmenttest-6440"
+```
+##### <a name="ParametersSqlPoolVulnerabilityAssessmentScansExport">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -2044,21 +1786,14 @@ export a synapse sql-pool-vulnerability-assessment-scan.
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 |**--scan-id**|string|The vulnerability assessment scan Id of the scan to retrieve.|scan_id|scanId|
 
-### synapse sql-pool-vulnerability-assessment-scan initiate-scan
+#### <a name="SqlPoolVulnerabilityAssessmentScansInitiateScan">Command `az synapse sql-pool-vulnerability-assessment-scan initiate-scan`</a>
 
-initiate-scan a synapse sql-pool-vulnerability-assessment-scan.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-vulnerability-assessment-scan|SqlPoolVulnerabilityAssessmentScans|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|initiate-scan|InitiateScan|
-
-#### Parameters
+##### <a name="ExamplesSqlPoolVulnerabilityAssessmentScansInitiateScan">Example</a>
+```
+az synapse sql-pool-vulnerability-assessment-scan initiate-scan --resource-group "vulnerabilityassessmenttest-4711" \
+--scan-id "scan01" --sql-pool-name "testdb" --workspace-name "vulnerabilityassessmenttest-6411"
+```
+##### <a name="ParametersSqlPoolVulnerabilityAssessmentScansInitiateScan">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -2066,42 +1801,49 @@ initiate-scan a synapse sql-pool-vulnerability-assessment-scan.
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 |**--scan-id**|string|The vulnerability assessment scan Id of the scan to retrieve.|scan_id|scanId|
 
-### synapse sql-pool-vulnerability-assessment-scan list
+### group `az synapse workspace`
+#### <a name="WorkspacesListByResourceGroup">Command `az synapse workspace list`</a>
 
-list a synapse sql-pool-vulnerability-assessment-scan.
+##### <a name="ExamplesWorkspacesListByResourceGroup">Example</a>
+```
+az synapse workspace list --resource-group "resourceGroup1"
+```
+##### <a name="ParametersWorkspacesListByResourceGroup">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse sql-pool-vulnerability-assessment-scan|SqlPoolVulnerabilityAssessmentScans|
+#### <a name="WorkspacesList">Command `az synapse workspace list`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|List|
+##### <a name="ExamplesWorkspacesList">Example</a>
+```
+az synapse workspace list
+```
+##### <a name="ParametersWorkspacesList">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+#### <a name="WorkspacesGet">Command `az synapse workspace show`</a>
 
-#### Parameters
+##### <a name="ExamplesWorkspacesGet">Example</a>
+```
+az synapse workspace show --resource-group "resourceGroup1" --name "workspace1"
+```
+##### <a name="ParametersWorkspacesGet">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
-### synapse workspace create
+#### <a name="WorkspacesCreateOrUpdate#Create">Command `az synapse workspace create`</a>
 
-create a synapse workspace.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace|Workspaces|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
-
-#### Parameters
+##### <a name="ExamplesWorkspacesCreateOrUpdate#Create">Example</a>
+```
+az synapse workspace create --resource-group "resourceGroup1" --identity-type "SystemAssigned" --location "East US" \
+--default-data-lake-storage account-url="https://accountname.dfs.core.windows.net" filesystem="default" \
+--managed-resource-group-name "workspaceManagedResourceGroupUnique" --managed-virtual-network "default" \
+--sql-administrator-login "login" --sql-administrator-login-password "password" --tags key="value" --name "workspace1"
+```
+##### <a name="ParametersWorkspacesCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -2118,81 +1860,14 @@ create a synapse workspace.
 |**--virtual-network-profile-compute-subnet-id**|string|Subnet ID used for computes in workspace|compute_subnet_id|computeSubnetId|
 |**--identity-type**|sealed-choice|The type of managed identity for the workspace|type|type|
 
-### synapse workspace delete
+#### <a name="WorkspacesUpdate">Command `az synapse workspace update`</a>
 
-delete a synapse workspace.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace|Workspaces|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-
-### synapse workspace list
-
-list a synapse workspace.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace|Workspaces|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|list|ListByResourceGroup|
-|list|List|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-
-### synapse workspace show
-
-show a synapse workspace.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace|Workspaces|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-
-### synapse workspace update
-
-update a synapse workspace.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace|Workspaces|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|Update|
-
-#### Parameters
+##### <a name="ExamplesWorkspacesUpdate">Example</a>
+```
+az synapse workspace update --resource-group "resourceGroup1" --name "workspace1" --identity-type "SystemAssigned" \
+--sql-administrator-login-password "password" --tags key="value"
+```
+##### <a name="ParametersWorkspacesUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -2201,21 +1876,40 @@ update a synapse workspace.
 |**--sql-administrator-login-password**|string|SQL administrator login password|sql_administrator_login_password|sqlAdministratorLoginPassword|
 |**--identity-type**|sealed-choice|The type of managed identity for the workspace|type|type|
 
-### synapse workspace-aad-admin create
+#### <a name="WorkspacesDelete">Command `az synapse workspace delete`</a>
 
-create a synapse workspace-aad-admin.
+##### <a name="ExamplesWorkspacesDelete">Example</a>
+```
+az synapse workspace delete --resource-group "resourceGroup1" --name "workspace1"
+```
+##### <a name="ParametersWorkspacesDelete">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace-aad-admin|WorkspaceAadAdmins|
+### group `az synapse workspace-aad-admin`
+#### <a name="WorkspaceAadAdminsGet">Command `az synapse workspace-aad-admin show`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
+##### <a name="ExamplesWorkspaceAadAdminsGet">Example</a>
+```
+az synapse workspace-aad-admin show --resource-group "resourceGroup1" --workspace-name "workspace1"
+```
+##### <a name="ParametersWorkspaceAadAdminsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 
-#### Parameters
+#### <a name="WorkspaceAadAdminsCreateOrUpdate#Create">Command `az synapse workspace-aad-admin create`</a>
+
+##### <a name="ExamplesWorkspaceAadAdminsCreateOrUpdate#Create">Example</a>
+```
+az synapse workspace-aad-admin create --administrator-type "ActiveDirectory" --login "bob@contoso.com" --sid \
+"c6b82b90-a647-49cb-8a62-0d2d3cb7ac7c" --tenant-id "c6b82b90-a647-49cb-8a62-0d2d3cb7ac7c" --resource-group \
+"resourceGroup1" --workspace-name "workspace1"
+```
+##### <a name="ParametersWorkspaceAadAdminsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -2225,61 +1919,9 @@ create a synapse workspace-aad-admin.
 |**--administrator-type**|string|Workspace active directory administrator type|administrator_type|administratorType|
 |**--sid**|string|Object ID of the workspace active directory administrator|sid|sid|
 
-### synapse workspace-aad-admin delete
+#### <a name="WorkspaceAadAdminsCreateOrUpdate#Update">Command `az synapse workspace-aad-admin update`</a>
 
-delete a synapse workspace-aad-admin.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace-aad-admin|WorkspaceAadAdmins|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|delete|Delete|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-
-### synapse workspace-aad-admin show
-
-show a synapse workspace-aad-admin.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace-aad-admin|WorkspaceAadAdmins|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-
-### synapse workspace-aad-admin update
-
-update a synapse workspace-aad-admin.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace-aad-admin|WorkspaceAadAdmins|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
+##### <a name="ParametersWorkspaceAadAdminsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
@@ -2289,62 +1931,49 @@ update a synapse workspace-aad-admin.
 |**--administrator-type**|string|Workspace active directory administrator type|administrator_type|administratorType|
 |**--sid**|string|Object ID of the workspace active directory administrator|sid|sid|
 
-### synapse workspace-managed-identity-sql-control-setting create
+#### <a name="WorkspaceAadAdminsDelete">Command `az synapse workspace-aad-admin delete`</a>
 
-create a synapse workspace-managed-identity-sql-control-setting.
+##### <a name="ExamplesWorkspaceAadAdminsDelete">Example</a>
+```
+az synapse workspace-aad-admin delete --resource-group "resourceGroup1" --workspace-name "workspace1"
+```
+##### <a name="ParametersWorkspaceAadAdminsDelete">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace-managed-identity-sql-control-setting|WorkspaceManagedIdentitySqlControlSettings|
+### group `az synapse workspace-managed-identity-sql-control-setting`
+#### <a name="WorkspaceManagedIdentitySqlControlSettingsGet">Command `az synapse workspace-managed-identity-sql-control-setting show`</a>
 
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|create|CreateOrUpdate#Create|
+##### <a name="ExamplesWorkspaceManagedIdentitySqlControlSettingsGet">Example</a>
+```
+az synapse workspace-managed-identity-sql-control-setting show --resource-group "resourceGroup1" --workspace-name \
+"workspace1"
+```
+##### <a name="ParametersWorkspaceManagedIdentitySqlControlSettingsGet">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 
-#### Parameters
+#### <a name="WorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Create">Command `az synapse workspace-managed-identity-sql-control-setting create`</a>
+
+##### <a name="ExamplesWorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Create">Example</a>
+```
+az synapse workspace-managed-identity-sql-control-setting create --resource-group "resourceGroup1" --workspace-name \
+"workspace1"
+```
+##### <a name="ParametersWorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--grant-sql-control-to-managed-identity-desired-state**|choice|Desired state|desired_state|desiredState|
 
-### synapse workspace-managed-identity-sql-control-setting show
+#### <a name="WorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Update">Command `az synapse workspace-managed-identity-sql-control-setting update`</a>
 
-show a synapse workspace-managed-identity-sql-control-setting.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace-managed-identity-sql-control-setting|WorkspaceManagedIdentitySqlControlSettings|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|show|Get|
-
-#### Parameters
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
-|**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-
-### synapse workspace-managed-identity-sql-control-setting update
-
-update a synapse workspace-managed-identity-sql-control-setting.
-
-#### Command group
-|Name (az)|Swagger name|
-|---------|------------|
-|synapse workspace-managed-identity-sql-control-setting|WorkspaceManagedIdentitySqlControlSettings|
-
-#### Methods
-|Name (az)|Swagger name|
-|---------|------------|
-|update|CreateOrUpdate#Update|
-
-#### Parameters
+##### <a name="ParametersWorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|

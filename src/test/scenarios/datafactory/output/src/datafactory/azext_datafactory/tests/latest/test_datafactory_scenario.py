@@ -17,6 +17,7 @@ from azure.cli.testsdk import ResourceGroupPreparer
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
+# Env setup
 @try_manual
 def setup(test, rg):
     pass
@@ -400,11 +401,25 @@ def step__triggers_delete_triggers_delete(test, rg):
              checks=[])
 
 
+<<<<<<< HEAD
+=======
+# EXAMPLE: /Factories/delete/Factories_Delete
+@try_manual
+def step__factories_delete_factories_delete(test, rg):
+    test.cmd('az datafactory delete -y '
+             '--name "{myFactory}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# Env cleanup
+>>>>>>> 3606c06491830a3b78443d08f1757314c90128af
 @try_manual
 def cleanup(test, rg):
     pass
 
 
+# Testcase
 @try_manual
 def call_scenario(test, rg):
     setup(test, rg)

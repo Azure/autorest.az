@@ -1,9 +1,9 @@
 import * as path from 'path';
-import { SystemType } from '../models';
+import { SystemType, PathConstants } from '../models';
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
 import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
-import { GenerateAzureCliReport } from "./templates/CliReport";
+import { CliReport } from "./templates/CliReport";
 import { CliTopAction } from "./templates/CliTopAction";
 import { CliTopCustom } from "./templates/CliTopCustom";
 import { CliTopInit } from "./templates/CliTopInit";
@@ -17,10 +17,16 @@ import { GenerateAzureCliCustom } from "./templates/generated/CliCustom";
 import { GenerateAzureCliHelp } from "./templates/generated/CliHelp";
 import { GenerateAzureCliParams } from "./templates/generated/CliParams";
 import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
+<<<<<<< HEAD
 import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit";
 import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
 import { deepCopy } from '../../utils/helper';
+=======
+import { CliTestInit } from "./templates/tests/CliTestInit";
+import { CliTestPrepare } from "./templates/tests/CliTestPrepare";
+import { CliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+>>>>>>> 3606c06491830a3b78443d08f1757314c90128af
 
 export class AzCoreFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -43,6 +49,7 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 files[path.join(model.azOutputFolder, "generated/_validators.py")] = GenerateAzureCliValidators(model);
                 files[path.join(model.azOutputFolder, "generated/action.py")] = GenerateAzureCliActions(model);
                 files[path.join(model.azOutputFolder, "generated/__init__.py")] = GenerateNamespaceInit(model);
+<<<<<<< HEAD
                 files[path.join(model.azOutputFolder, "tests/__init__.py")] = GenerateAzureCliTestInit(model);
                 //files[path.join(model.azOutputFolder, "tests/latest/test_" + model.Extension_NameUnderscored + "_scenario.py")] = GenerateAzureCliTestScenario(model);
                 let config: any = deepCopy(model.Extension_TestScenario);
@@ -66,6 +73,8 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 if (NeedPreparer()) {
                     files[path.join(model.azOutputFolder, "tests/latest/preparers.py")] = GenerateAzureCliTestPrepare(model);
                 }
+=======
+>>>>>>> 3606c06491830a3b78443d08f1757314c90128af
                 files[path.join(model.azOutputFolder, "generated/_help.py")] = GenerateAzureCliHelp(model, isDebugMode);
                 files[path.join(model.azOutputFolder, "tests/latest/__init__.py")] = GenerateNamespaceInit(model);
                 if (model.SDK_NeedSDK) {
@@ -75,7 +84,7 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 await this.generateFullSingleAndAddtoOutput(new CliTopAction(model, isDebugMode));
                 await this.generateFullSingleAndAddtoOutput(new CliTopCustom(model, isDebugMode));
                 await this.generateFullSingleAndAddtoOutput(new CliTopInit(model, isDebugMode));
-                files[path.join(model.azOutputFolder, "report.md")] = GenerateAzureCliReport(model);
+                await this.generateFullSingleAndAddtoOutput(new CliReport(model, isDebugMode));
                 await this.generateFullSingleAndAddtoOutput(new CliMainDocSourceJsonMap(model, isDebugMode));
                 let requirementGenerator = new CliMainRequirement(model, isDebugMode);
                 for (let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
@@ -83,6 +92,12 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                     files[requirementGenerator.relativePath] = await requirementGenerator.fullGeneration();
                 }
                 await this.generateFullSingleAndAddtoOutput(new CliMainSetupPy(model, isDebugMode));
+
+                await this.generateFullSingleAndAddtoOutput(new CliTestInit(model, isDebugMode));
+                await this.generateFullSingleAndAddtoOutput(new CliTestScenario(model, isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored)), true, true);
+                if (NeedPreparer()) {
+                    await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(model, isDebugMode));
+                }
             }
             while (model.SelectNextExtension())
         }

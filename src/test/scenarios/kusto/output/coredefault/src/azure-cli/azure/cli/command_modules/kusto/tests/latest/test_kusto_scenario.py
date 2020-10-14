@@ -17,6 +17,7 @@ from azure.cli.testsdk import ResourceGroupPreparer
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
+# Env setup
 @try_manual
 def setup(test, rg):
     pass
@@ -528,11 +529,25 @@ def step__databases_delete_kustodatabasesdelete(test, rg):
              checks=[])
 
 
+<<<<<<< HEAD
+=======
+# EXAMPLE: /Clusters/delete/KustoClustersDelete
+@try_manual
+def step__clusters_delete_kustoclustersdelete(test, rg):
+    test.cmd('az kusto cluster delete -y '
+             '--name "{myCluster}" '
+             '--resource-group "{rg}"',
+             checks=[])
+
+
+# Env cleanup
+>>>>>>> 3606c06491830a3b78443d08f1757314c90128af
 @try_manual
 def cleanup(test, rg):
     pass
 
 
+# Testcase
 @try_manual
 def call_scenario(test, rg):
     setup(test, rg)

@@ -368,3 +368,44 @@ cli:
         set:
             default-config-key: factory
 ```
+
+## How to support configuring is_preview/is_experimental in different levels
+Cli support the command to set configuring is_preview/is_experimental in different levels, we can use the following directive to let generate command read from the config.And the extension mode has three values to choose from preview, experimental and stable.
+#### 1) You can set the global setting in readme.az.md as the default value of the extension mode for command group
+```
+extension-mode: stable
+```
+
+#### 2) You can use the following directive set the extension mode for specified command group whether or not there is a default value 
+```
+cli:
+    cli-directive:
+      - where:
+            group: 'Clusters'
+        set:
+            groupExtensionMode: 'experimental'
+```
+
+#### 3) You can also set the extension mode for command use the following directive
+```
+cli:
+    cli-directive:
+      - where:
+            group: 'Clusters'
+            op: 'AddLanguageExtensions'
+        set:
+            commandExtensionMode: 'preview'
+```
+
+#### 4) Besides, you can set the extension mode for argument use the following directive
+```
+cli:
+    cli-directive:
+      - where:
+            group: 'Clusters'
+            op: 'AddLanguageExtensions'
+            param: 'clusterName'
+        set:
+            methodExtensionMode: 'preview'
+```
+

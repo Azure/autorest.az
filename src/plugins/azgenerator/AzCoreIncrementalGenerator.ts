@@ -8,6 +8,7 @@ import { PathConstants, SystemType } from "../models";
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
 import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
+import { CliReport } from './templates/CliReport';
 import { CliTopAction } from "./templates/CliTopAction";
 import { CliTopCustom } from "./templates/CliTopCustom";
 import { CliTopHelp } from "./templates/CliTopHelp";
@@ -21,9 +22,16 @@ import { GenerateAzureCliCustom } from "./templates/generated/CliCustom";
 import { GenerateAzureCliHelp } from "./templates/generated/CliHelp";
 import { GenerateAzureCliParams } from "./templates/generated/CliParams";
 import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
+<<<<<<< HEAD
 import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
 import { deepCopy } from '../../utils/helper';
+=======
+import {CliTestInit} from "./templates/tests/CliTestInit";
+import { CliTestPrepare } from "./templates/tests/CliTestPrepare";
+import { CliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { inplaceGen } from "../../utils/inplace";
+>>>>>>> 3606c06491830a3b78443d08f1757314c90128af
 
 export class AzCoreIncrementalGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -40,6 +48,7 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         this.files[path.join(PathConstants.generatedFolder, PathConstants.validatorsFile)] = GenerateAzureCliValidators(this.model);
         this.files[path.join(PathConstants.generatedFolder, PathConstants.actionFile)] = GenerateAzureCliActions(this.model);
         this.files[path.join(PathConstants.generatedFolder, PathConstants.initFile)] = GenerateNamespaceInit(this.model);
+<<<<<<< HEAD
 
         //this.files[path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored))] = GenerateAzureCliTestScenario(this.model);
         let config: any = deepCopy(this.model.Extension_TestScenario);
@@ -58,6 +67,8 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         if (NeedPreparer()) {
             this.files[path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.incPreparersFile)] = GenerateAzureCliTestPrepare(this.model);
         }
+=======
+>>>>>>> 3606c06491830a3b78443d08f1757314c90128af
         this.files[path.join(PathConstants.generatedFolder, PathConstants.helpFile)] = GenerateAzureCliHelp(this.model, this.isDebugMode);
 
         // manual folder
@@ -76,6 +87,9 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
 
         // Add Import from generated folder (Help)
         await this.generateIncrementalSingleAndAddtoOutput(new CliTopHelp(this.model, this.isDebugMode));
+
+        // Add Import from generated folder (Report)
+        await this.generateIncrementalSingleAndAddtoOutput(new CliReport(this.model, this.isDebugMode));
 
         // Add Import from generated folder (Action)
         const cliTopActionGenerator = new CliTopAction(this.model, this.isDebugMode);
@@ -97,6 +111,12 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         for (let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
             cliRequirement.relativePath = path.join(this.model.AzureCliFolder, "/src/azure-cli/requirements.py3." + sys + ".txt");
             this.files[cliRequirement.relativePath] = await cliRequirement.incrementalGeneration(null);
+        }
+
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored)), true);
+        if (NeedPreparer()) {
+            await this.generateIncrementalSingleAndAddtoOutput(new CliTestPrepare(this.model, this.isDebugMode));
         }
     }
 }
