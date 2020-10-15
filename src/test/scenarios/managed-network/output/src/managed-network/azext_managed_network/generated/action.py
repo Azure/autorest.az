@@ -33,6 +33,8 @@ class AddSubscriptions(argparse._AppendAction):
             v = properties[k]
             if kl == 'id':
                 d['id'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : id. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -55,6 +57,8 @@ class AddVirtualNetworks(argparse._AppendAction):
             v = properties[k]
             if kl == 'id':
                 d['id'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : id. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -77,6 +81,8 @@ class AddSubnets(argparse._AppendAction):
             v = properties[k]
             if kl == 'id':
                 d['id'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : id. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -99,6 +105,8 @@ class AddHub(argparse.Action):
             v = properties[k]
             if kl == 'id':
                 d['id'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : id. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -121,6 +129,8 @@ class AddSpokes(argparse._AppendAction):
             v = properties[k]
             if kl == 'id':
                 d['id'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : id. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -143,4 +153,6 @@ class AddMesh(argparse._AppendAction):
             v = properties[k]
             if kl == 'id':
                 d['id'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : id. And your key : '.format(option_string) + kl + ' is invalid')
         return d
