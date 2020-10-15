@@ -19,7 +19,7 @@ export function NeedPreparer(): boolean {
 }
 
 export class CliTestScenario extends TemplateBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean, testFilename:string) {
+    constructor(model: CodeModelAz, isDebugMode: boolean, testFilename: string, configValue:any) {
         super(model, isDebugMode);
         if (this.model.IsCliCore) {
             this.relativePath = path.join(PathConstants.testFolder, PathConstants.latestFolder, testFilename);
@@ -27,18 +27,20 @@ export class CliTestScenario extends TemplateBase {
         else {
             this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.testFolder, PathConstants.latestFolder, testFilename);
         }
+        this.configValue = configValue;
     }
 
+    public configValue : any;
+
     public async fullGeneration(): Promise<string[]> {
-        return this.GenerateAzureCliTestScenario(this.model);
+        return this.GenerateAzureCliTestScenario(this.model,this.configValue);
     }
 
     public async incrementalGeneration(base: string): Promise<string[]> {
         return this.fullGeneration();
     }
 
-
-    private GenerateAzureCliTestScenario(model: CodeModelAz): string[] {
+    private GenerateAzureCliTestScenario(model: CodeModelAz, config:any): string[] {
         var head: string[] = [];
         let steps: string[] = [];
         let class_info: string[] = [];
@@ -47,7 +49,7 @@ export class CliTestScenario extends TemplateBase {
         let funcScenario: string[] = [];
 
         let commandParams = model.GatherInternalResource();
-        let config: any = deepCopy(model.Extension_TestScenario);
+        // let config: any = deepCopy(model.Extension_TestScenario);
         config.unshift({ function: "setup" });
         config.push({ function: "cleanup" });
 

@@ -27,6 +27,7 @@ import { CliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario
 import { PathConstants } from '../models';
 import { inplaceGen } from "../../utils/inplace";
 import * as path from 'path';
+import { deepCopy } from '../../utils/helper';
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -64,7 +65,25 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         await this.generateFullSingleAndAddtoOutput(new CliExtSetupPy(this.model, this.isDebugMode));
 
         await this.generateFullSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
-        await this.generateFullSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored)), true, true);
+        // await this.generateFullSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored)), true, true);
+        let config: any = deepCopy(this.model.Extension_TestScenario);
+        let boolValue: boolean = this.model.ConfiguredScenario
+        if(boolValue){
+            for (var ci = 0; ci < config.length; ci++) {
+                for(let [key,val] of Object.entries(config[ci])){
+                    var keyName = key;
+                    var value = val;
+                }   
+                if(keyName == "name" || config.length == 0){
+                    await this.generateFullSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored),config), true, true);
+                    break
+                }else{
+                    await this.generateFullSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.fullTestSceanrioFile(keyName),value), true, true);
+                }
+            }
+        }else{
+            await this.generateFullSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored),config), true, true);
+        } 
         if (NeedPreparer()) {
             await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(this.model, this.isDebugMode));
         }

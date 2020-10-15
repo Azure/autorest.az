@@ -78,6 +78,7 @@ export interface CodeModelAz {
     azOutputFolder: string;
     Extension_Name: string;
     Extension_NameUnderscored: string;
+    ConfiguredScenario:boolean;
     Extension_NameClass: string;
     Extension_TestScenario: any;
     Extension_ClientSubscriptionBound: boolean;
