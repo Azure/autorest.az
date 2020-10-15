@@ -31,6 +31,7 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory list') as c:
         c.argument('resource_group_name', resource_group_name_type)
+        c.argument('gen_custom_headers', type=str, help='Test the ability to rename ignoring attributes.')
 
     with self.argument_context('datafactory show') as c:
         c.argument('resource_group_name', resource_group_name_type)

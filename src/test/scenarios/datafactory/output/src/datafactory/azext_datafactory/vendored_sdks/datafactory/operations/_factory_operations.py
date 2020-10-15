@@ -47,11 +47,14 @@ class FactoryOperations(object):
 
     def list(
         self,
+        custom_headers=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["models.FactoryListResponse"]
         """Lists factories under the specified subscription.
 
+        :param custom_headers: Test the ability to rename ignoring attributes.
+        :type custom_headers: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either FactoryListResponse or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~dfaz_management_client.models.FactoryListResponse]
@@ -77,6 +80,8 @@ class FactoryOperations(object):
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                if custom_headers is not None:
+                    query_parameters['customHeaders'] = self._serialize.query("custom_headers", custom_headers, 'str')
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
