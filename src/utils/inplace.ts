@@ -241,12 +241,16 @@ export class testStepSegment extends DefSegment {
 
         let bias = this.startAt;
         let t, tag, name;
+        let fullMatch = true;
         for (let seperator of seperators) {
             t = seperator[0];
             tag = seperator[1];
             name = seperator[2];
             let idx = this.target.content.indexOf(tag, bias);
-            if (idx>=this.endAt || idx<0)    break;
+            if (idx>=this.endAt || idx<0) {
+                fullMatch = false;
+                break;
+            }
             if (t=="endwith") {
                 this.children.push(new BaseSegment(this.target, bias, idx+tag.length, name));
                 bias = idx + tag.length;
@@ -256,7 +260,12 @@ export class testStepSegment extends DefSegment {
                 bias = idx;
             }
         }
-        this.children.push(new BaseSegment(this.target, bias, this.endAt, "post"));
+        if (fullMatch) {
+            this.children.push(new BaseSegment(this.target, bias, this.endAt, "post"));
+        }
+        else {
+            this.children = [];
+        }
     }
 }
 
