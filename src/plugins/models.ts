@@ -36,6 +36,18 @@ export enum SystemType {
     windows = "windows"
 }
 
+export let EXCLUDED_PARAMS = [
+    'self',
+    'raw',
+    'polling',
+    'custom_headers',
+    'operation_config',
+    'content_version',
+    'kwargs',
+    'client',
+    'no_wait'
+];
+
 export class PathConstants {
     public static readonly generatedFolder: string = "generated";
     public static readonly testFolder: string = "tests";

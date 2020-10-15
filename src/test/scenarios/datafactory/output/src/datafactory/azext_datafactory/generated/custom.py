@@ -15,10 +15,11 @@ from azure.cli.core.util import sdk_no_wait
 
 
 def datafactory_list(client,
-                     resource_group_name=None):
+                     resource_group_name=None,
+                     gen_custom_headers=None):
     if resource_group_name:
         return client.list_by_resource_group(resource_group_name=resource_group_name)
-    return client.list()
+    return client.list(custom_headers=gen_custom_headers)
 
 
 def datafactory_show(client,
