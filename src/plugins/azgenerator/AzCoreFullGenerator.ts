@@ -63,24 +63,19 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
 
                 await this.generateFullSingleAndAddtoOutput(new CliTestInit(model, isDebugMode));
                 let config: any = deepCopy(model.Extension_TestScenario);
-                let boolValue: boolean = model.ConfiguredScenario
-                if(boolValue){
+                if(model.ConfiguredScenario){
                     for (var ci = 0; ci < config.length; ci++) {
-                        for(let [key,val] of Object.entries(config[ci])){
-                            var keyName = key;
-                            var value = val;
-                        }   
-                        if(keyName == "name" || config.length == 0){
+                        let configValue :any = Object.entries(config[ci]);
+                        if(configValue[0][0] == "name" || config.length == 0){
                             await this.generateFullSingleAndAddtoOutput(new CliTestScenario(model, isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored),config), true, true);
                             break
                         }else{
-                            await this.generateFullSingleAndAddtoOutput(new CliTestScenario(model, isDebugMode, PathConstants.fullTestSceanrioFile(keyName),value), true, true);
+                            await this.generateFullSingleAndAddtoOutput(new CliTestScenario(model, isDebugMode, PathConstants.fullTestSceanrioFile(configValue[0][0]),configValue[0][1]), true, true);
                         }
                     }
                 }else{
                     await this.generateFullSingleAndAddtoOutput(new CliTestScenario(model, isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored),config), true, true);
                 } 
-                // await this.generateFullSingleAndAddtoOutput(new CliTestScenario(model, isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored)), true, true);
                 if (NeedPreparer()) {
                     await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(model, isDebugMode));
                 }

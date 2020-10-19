@@ -88,20 +88,15 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         }
 
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
-        // await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored)), true);
         let config: any = deepCopy(this.model.Extension_TestScenario);
-        let boolValue: boolean = this.model.ConfiguredScenario
-        if(boolValue){
-            for (var ci = 0; ci < config.length; ci++) {
-                for(let [key,val] of Object.entries(config[ci])){
-                    var keyName = key;
-                    var value = val;
-                }   
-                if(keyName == "name" || config.length == 0){
+        if(this.model.ConfiguredScenario){
+            for (var ci = 0; ci < config.length; ci++) {  
+                let configValue :any = Object.entries(config[ci]);
+                if(configValue[0][0] == "name" || config.length == 0){
                     await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored),config), true);
                     break
                 }else{
-                    await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored),value), true);
+                    await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(configValue[0][0]),configValue[0][1]), true);
                 }
             }
         }else{
