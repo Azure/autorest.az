@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { CodeModelAz } from "./CodeModelAz";
 import { TemplateBase } from "./templates/TemplateBase";
+import { inplaceGen } from "../../utils/inplace";
 
 export abstract class AzGeneratorBase {
     model: CodeModelAz;
@@ -21,20 +22,32 @@ export abstract class AzGeneratorBase {
 
     public abstract async generateAll(): Promise<void>;
 
-    protected async generateFullSingleAndAddtoOutput(template: TemplateBase, override: boolean = true): Promise<void> {
+    protected async generateFullSingleAndAddtoOutput(template: TemplateBase, override: boolean = true, inplace: boolean = false): Promise<void> {
         if (override == false && fs.existsSync(path.join(this.model.CliOutputFolder, template.relativePath))) {
             return;
         }
         else {
-            this.files[template.relativePath] = await template.fullGeneration();
+            let genContent = await template.fullGeneration();
+            if (inplace) {
+                this.files[template.relativePath] = inplaceGen(this.model.CliOutputFolder, template.relativePath, genContent);
+            }
+            else {
+                this.files[template.relativePath] = genContent;
+            }
         }
     }
 
-    protected async generateIncrementalSingleAndAddtoOutput(template: TemplateBase): Promise<void> {
+    protected async generateIncrementalSingleAndAddtoOutput(template: TemplateBase, inplace: boolean = false): Promise<void> {
         let base: string = "";
         if (fs.existsSync(path.join(this.model.CliOutputFolder, template.relativePath))) {
             base = fs.readFileSync(path.join(this.model.CliOutputFolder, template.relativePath)).toString();
         }
-        this.files[template.relativePath] = await template.incrementalGeneration(base);
+        let genContent = await template.incrementalGeneration(base);
+        if (inplace) {
+            this.files[template.relativePath] = inplaceGen(this.model.CliOutputFolder, template.relativePath, genContent);
+        }
+        else {
+            this.files[template.relativePath] = genContent;
+        }
     }
 }

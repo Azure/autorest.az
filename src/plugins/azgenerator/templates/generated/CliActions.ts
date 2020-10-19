@@ -117,6 +117,7 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
     let foundProperties = false;
     let preParamType = paramType;
     if (model.EnterSubMethodParameters()) {
+        let submethodparameters = [];
         if (model.SelectFirstMethodParameter()) {
             foundProperties = true;
             let ifkv = "if";
@@ -131,6 +132,7 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
                     continue;
                 }
                 output.push("            " + ifkv + " kl == '" + model.Parameter_NameAz(model.SubMethodParameter) + "':");
+                submethodparameters.push(model.Parameter_NameAz(model.SubMethodParameter));
                 if (model.MethodParameter_IsArray) {
                     output.push("                d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = v");
                 }
@@ -139,8 +141,11 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
                 }
                 ifkv = "elif";
             } while (model.SelectNextMethodParameter());
+            output.push("            " + 'else:');
+            output.push("                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : " + submethodparameters.join(", ") + ". And your key : '.format(option_string)" + " + kl + ' is invalid')");
         }
         model.ExitSubMethodParameters();
+        
     }
 
     if (!foundProperties && preParamType == SchemaType.Dictionary) {

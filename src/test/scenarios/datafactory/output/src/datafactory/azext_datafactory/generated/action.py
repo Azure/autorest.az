@@ -45,6 +45,8 @@ class AddFactoryVstsConfiguration(argparse.Action):
                 d['root_folder'] = v[0]
             elif kl == 'last-commit-id':
                 d['last_commit_id'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : project-name, tenant-id, account-name, repository-name, collaboration-branch, root-folder, last-commit-id. And your key : '.format(option_string) + kl + ' is invalid')
         d['type'] = 'FactoryVSTSConfiguration'
         return d
 
@@ -78,6 +80,8 @@ class AddFactoryGitHubConfiguration(argparse.Action):
                 d['root_folder'] = v[0]
             elif kl == 'last-commit-id':
                 d['last_commit_id'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : host-name, account-name, repository-name, collaboration-branch, root-folder, last-commit-id. And your key : '.format(option_string) + kl + ' is invalid')
         d['type'] = 'FactoryGitHubConfiguration'
         return d
 
@@ -103,4 +107,6 @@ class AddFakeIdentity(argparse.Action):
                 d['name'] = v[0]
             elif kl == 'zones-inside':
                 d['zones_inside'] = v
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : name, zones-inside. And your key : '.format(option_string) + kl + ' is invalid')
         return d

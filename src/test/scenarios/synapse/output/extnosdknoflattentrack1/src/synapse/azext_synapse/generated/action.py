@@ -37,6 +37,8 @@ class AddAutoScale(argparse.Action):
                 d['enabled'] = v[0]
             elif kl == 'max-node-count':
                 d['max_node_count'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : min-node-count, enabled, max-node-count. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -61,6 +63,8 @@ class AddAutoPause(argparse.Action):
                 d['delay_in_minutes'] = v[0]
             elif kl == 'enabled':
                 d['enabled'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : delay-in-minutes, enabled. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -85,6 +89,8 @@ class AddLibraryRequirements(argparse.Action):
                 d['content'] = v[0]
             elif kl == 'filename':
                 d['filename'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : content, filename. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -109,6 +115,8 @@ class AddSku(argparse.Action):
                 d['tier'] = v[0]
             elif kl == 'name':
                 d['name'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : tier, name. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -136,6 +144,8 @@ class AddRecurringScans(argparse.Action):
                 d['email_subscription_admins'] = v[0]
             elif kl == 'emails':
                 d['emails'] = v
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : is-enabled, email-subscription-admins, emails. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -158,6 +168,8 @@ class AddBaselineResults(argparse._AppendAction):
             v = properties[k]
             if kl == 'result':
                 d['result'] = v
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : result. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -182,6 +194,8 @@ class AddDefaultDataLakeStorage(argparse.Action):
                 d['account_url'] = v[0]
             elif kl == 'filesystem':
                 d['filesystem'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : account-url, filesystem. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -226,4 +240,6 @@ class AddPrivateEndpointConnections(argparse._AppendAction):
                 d['status'] = v[0]
             elif kl == 'description':
                 d['description'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : status, description. And your key : '.format(option_string) + kl + ' is invalid')
         return d

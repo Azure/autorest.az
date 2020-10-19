@@ -104,7 +104,11 @@ function getCommandBody(model: CodeModelAz) {
         commandExtraInfo = ", is_experimental=True";
     } else if (model.Command_ExtensionMode == 'preview') {
         commandExtraInfo = ", is_preview=True";
+<<<<<<< HEAD
     } else if (model.Command_ExtensionMode == 'stable') {
+=======
+    } else if (model.Command_ExtensionMode == 'stable'){
+>>>>>>> c06965f52d981618a995f469d62196003b11ba45
         commandExtraInfo = "";
     }
     if (methodName != "show") {

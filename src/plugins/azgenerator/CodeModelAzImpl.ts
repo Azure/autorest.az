@@ -9,7 +9,7 @@ import { CodeModel, Operation, OperationGroup, Parameter, ParameterLocation, Pro
 import { values } from "@azure-tools/linq";
 import { isArray, isNullOrUndefined } from "util";
 import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash } from '../../utils/helper';
-import { GenerationMode } from "../models";
+import { EXCLUDED_PARAMS, GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
 import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './templates/tests/ScenarioTool';
 
@@ -266,10 +266,16 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                     if (isNullOrUndefined(childParam.language['az']['alias'])) {
                                                         childParam.language['az']['alias'] = [];
                                                     }
-                                                    if (typeof(child.language['cli']['alias']) == "string") {
+                                                    if (typeof (child.language['cli']['alias']) == "string") {
+                                                        if (EXCLUDED_PARAMS.indexOf(child.language['cli']['alias']) > -1) {
+                                                            child.language['cli']['alias'] = 'gen_' + child.language['cli']['alias'];
+                                                        }
                                                         childParam.language['az']['alias'].push(changeCamelToDash(child.language['cli']['alias']));
                                                     } else if (isArray(child.language['cli']['alias'])) {
-                                                        for(let alias of child.language['cli']['alias']) {
+                                                        for (let alias of child.language['cli']['alias']) {
+                                                            if (EXCLUDED_PARAMS.indexOf(alias) > -1) {
+                                                                alias = 'gen_' + alias;
+                                                            }
                                                             childParam.language['az']['alias'].push(changeCamelToDash(alias));
                                                         }
                                                     }
@@ -466,7 +472,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._configuredScenario = true;
         }
         else {
-            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
+            this._testScenario = undefined;
             this._configuredScenario = false;
         }
     }
@@ -488,6 +494,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.codeModel.info['extensionMode'];
     }
 
+<<<<<<< HEAD
     public get CommandGroup_ExtensionMode(){
         return this.CommandGroup?.language?.['cli']?.['groupExtensionMode'];
     }
@@ -497,6 +504,17 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_ExtensionMode(){
+=======
+    public get CommandGroup_ExtensionMode() {
+        return this.CommandGroup?.language?.['cli']?.['groupExtensionMode'];
+    }
+
+    public get Command_ExtensionMode() {
+        return this.Command?.language?.['cli']?.['commandExtensionMode'];
+    }
+
+    public get MethodParameter_ExtensionMode() {
+>>>>>>> c06965f52d981618a995f469d62196003b11ba45
         return this.MethodParameter?.language?.['cli']?.['methodExtensionMode'];
     }
 
@@ -1123,6 +1141,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_MapsTo(param: Parameter = this.MethodParameter): string {
+        if (EXCLUDED_PARAMS.indexOf(param.language['az'].mapsto) > -1) {
+            param.language['az'].mapsto = 'gen_' + param.language['az'].mapsto;
+        }
         return param.language['az'].mapsto;
     }
 
@@ -1523,7 +1544,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 parameter.language['az']['default-config-key'] = parameter.language['cli']['default-config-key'];
             }
         }
-        return parameter.language['az']['default-config-key'];  
+        return parameter.language['az']['default-config-key'];
     }
 
     public Parameter_Description(param: Parameter = this.MethodParameter): string {
@@ -2231,7 +2252,8 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters, createdObjectNames);
         });
 
-        if (!this._configuredScenario) {
+        if (!this._configuredScenario && isNullOrUndefined(this._testScenario)) {
+            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
             this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool, this._testScenario);
             this.SortExamplesByDependency();
             PrintTestScenario(this._testScenario);
@@ -2410,19 +2432,19 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get IsCliCore() {
-        return this.codeModel.language['az']?.['isCliCore']? true: false;
+        return this.codeModel.language['az']?.['isCliCore'] ? true : false;
     }
 
     public get SDK_NeedSDK() {
-        return this.codeModel.language['az']?.['sdkNeeded']? true: false;
+        return this.codeModel.language['az']?.['sdkNeeded'] ? true : false;
     }
 
     public get SDK_IsTrack1() {
-        return this.codeModel.language['az']?.['sdkTrack1']? true: false;
+        return this.codeModel.language['az']?.['sdkTrack1'] ? true : false;
     }
 
     public get SDK_NoFlatten() {
-        return this.codeModel.language['az']?.['sdkNoFlatten']? true: false;
+        return this.codeModel.language['az']?.['sdkNoFlatten'] ? true : false;
     }
 
 }

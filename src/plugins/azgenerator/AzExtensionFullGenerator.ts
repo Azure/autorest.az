@@ -21,9 +21,12 @@ import { GenerateAzureCliCustom } from "./templates/generated/CliCustom";
 import { GenerateAzureCliHelp } from "./templates/generated/CliHelp";
 import { GenerateAzureCliParams } from "./templates/generated/CliParams";
 import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
-import { GenerateAzureCliTestInit } from "./templates/tests/CliTestInit";
-import { GenerateAzureCliTestPrepare } from "./templates/tests/CliTestPrepare";
-import { GenerateAzureCliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { CliTestInit } from "./templates/tests/CliTestInit";
+import { CliTestPrepare } from "./templates/tests/CliTestPrepare";
+import { CliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { PathConstants } from '../models';
+import { inplaceGen } from "../../utils/inplace";
+import * as path from 'path';
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -39,12 +42,6 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         this.files[this.azDirectory + "generated/_validators.py"] = GenerateAzureCliValidators(this.model);
         this.files[this.azDirectory + "generated/action.py"] = GenerateAzureCliActions(this.model);
         this.files[this.azDirectory + "generated/__init__.py"] = GenerateNamespaceInit(this.model);
-
-        this.files[this.azDirectory + "tests/__init__.py"] = GenerateAzureCliTestInit(this.model);
-        this.files[this.azDirectory + "tests/latest/test_" + this.model.Extension_NameUnderscored + "_scenario.py"] = GenerateAzureCliTestScenario(this.model);
-        if (NeedPreparer()) {
-            this.files[this.azDirectory + "tests/latest/preparers.py"] = GenerateAzureCliTestPrepare(this.model);
-        };
         this.files[this.azDirectory + "tests/latest/__init__.py"] = GenerateNamespaceInit(this.model);
 
         this.files[this.azDirectory + "generated/_help.py"] = GenerateAzureCliHelp(this.model, this.isDebugMode);
@@ -65,6 +62,11 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         await this.generateFullSingleAndAddtoOutput(new CliExtReadme(this.model, this.isDebugMode), false);
         this.files["setup.cfg"] = GenerateAzureCliSetupCfg(this.model);
         await this.generateFullSingleAndAddtoOutput(new CliExtSetupPy(this.model, this.isDebugMode));
-        
+
+        await this.generateFullSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
+        await this.generateFullSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored)), true, true);
+        if (NeedPreparer()) {
+            await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(this.model, this.isDebugMode));
+        }
     }
 }

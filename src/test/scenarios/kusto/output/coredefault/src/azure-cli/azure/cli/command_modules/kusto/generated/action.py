@@ -37,6 +37,8 @@ class AddSku(argparse.Action):
                 d['capacity'] = v[0]
             elif kl == 'tier':
                 d['tier'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : name, capacity, tier. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -59,6 +61,8 @@ class AddTrustedExternalTenants(argparse._AppendAction):
             v = properties[k]
             if kl == 'value':
                 d['value'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : value. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -87,6 +91,8 @@ class AddOptimizedAutoscale(argparse.Action):
                 d['minimum'] = v[0]
             elif kl == 'maximum':
                 d['maximum'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : version, is-enabled, minimum, maximum. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -113,6 +119,8 @@ class AddVirtualNetworkConfiguration(argparse.Action):
                 d['engine_public_ip_id'] = v[0]
             elif kl == 'data-management-public-ip-id':
                 d['data_management_public_ip_id'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : subnet-id, engine-public-ip-id, data-management-public-ip-id. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -139,6 +147,8 @@ class AddKeyVaultProperties(argparse.Action):
                 d['key_version'] = v[0]
             elif kl == 'key-vault-uri':
                 d['key_vault_uri'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : key-name, key-version, key-vault-uri. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -161,6 +171,8 @@ class AddClustersValue(argparse._AppendAction):
             v = properties[k]
             if kl == 'language-extension-name':
                 d['language_extension_name'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : language-extension-name. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -187,6 +199,8 @@ class AddReadWriteDatabase(argparse.Action):
                 d['hot_cache_period'] = v[0]
             elif kl == 'location':
                 d['location'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : soft-delete-period, hot-cache-period, location. And your key : '.format(option_string) + kl + ' is invalid')
         d['kind'] = 'ReadWrite'
         return d
 
@@ -212,6 +226,8 @@ class AddReadOnlyFollowingDatabase(argparse.Action):
                 d['hot_cache_period'] = v[0]
             elif kl == 'location':
                 d['location'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : hot-cache-period, location. And your key : '.format(option_string) + kl + ' is invalid')
         d['kind'] = 'ReadOnlyFollowing'
         return d
 
@@ -245,6 +261,8 @@ class AddDatabasesValue(argparse._AppendAction):
                 d['email'] = v[0]
             elif kl == 'app-id':
                 d['app_id'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : role, name, type, fqn, email, app-id. And your key : '.format(option_string) + kl + ' is invalid')
         return d
 
 
@@ -281,6 +299,8 @@ class AddEventHubDataConnection(argparse.Action):
                 d['compression'] = v[0]
             elif kl == 'location':
                 d['location'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : event-hub-resource-id, consumer-group, table-name, mapping-rule-name, data-format, event-system-properties, compression, location. And your key : '.format(option_string) + kl + ' is invalid')
         d['kind'] = 'EventHub'
         return d
 
@@ -318,6 +338,8 @@ class AddIotHubDataConnection(argparse.Action):
                 d['shared_access_policy_name'] = v[0]
             elif kl == 'location':
                 d['location'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : iot-hub-resource-id, consumer-group, table-name, mapping-rule-name, data-format, event-system-properties, shared-access-policy-name, location. And your key : '.format(option_string) + kl + ' is invalid')
         d['kind'] = 'IotHub'
         return d
 
@@ -357,5 +379,7 @@ class AddEventGridDataConnection(argparse.Action):
                 d['blob_storage_event_type'] = v[0]
             elif kl == 'location':
                 d['location'] = v[0]
+            else:
+                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : storage-account-resource-id, event-hub-resource-id, consumer-group, table-name, mapping-rule-name, data-format, ignore-first-record, blob-storage-event-type, location. And your key : '.format(option_string) + kl + ' is invalid')
         d['kind'] = 'EventGrid'
         return d
