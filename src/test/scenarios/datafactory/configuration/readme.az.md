@@ -11,6 +11,7 @@ az:
   disable-checks: true
 az-output-folder: $(azure-cli-extension-folder)/src/datafactory
 python-sdk-output-folder: "$(az-output-folder)/azext_datafactory/vendored_sdks/datafactory"
+extension-mode: preview
 
 directive:
     - where:
@@ -31,6 +32,21 @@ cli:
         alias:
             - name
             - n
+      - where:
+            group: Datasets
+        set:
+            groupExtensionMode: stable
+      - where:
+            group: Datasets
+            op: CreateOrUpdate#Create
+        set:
+            commandExtensionMode: 'preview'
+      - where:
+            group: Datasets
+            op: CreateOrUpdate#Create
+            param: If-Match
+        set:
+            methodExtensionMode: 'experimental'
       - where:
             group: IntegrationRuntimes
             op: CreateOrUpdate

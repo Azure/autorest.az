@@ -36,7 +36,7 @@ def load_command_table(self, _):
         '}',
         client_factory=cf_trigger)
     with self.command_group('datafactory trigger', datafactory_trigger, client_factory=cf_trigger,
-                            is_experimental=True) as g:
+                            is_preview=True) as g:
         g.custom_command('list', 'datafactory_trigger_list')
         g.custom_show_command('show', 'datafactory_trigger_show')
         g.custom_command('create', 'datafactory_trigger_create')
@@ -58,7 +58,7 @@ def load_command_table(self, _):
         'tionRuntimeOperations.{}',
         client_factory=cf_integration_runtime)
     with self.command_group('datafactory integration-runtime', datafactory_integration_runtime,
-                            client_factory=cf_integration_runtime, is_experimental=True) as g:
+                            client_factory=cf_integration_runtime, is_preview=True) as g:
         g.custom_command('list', 'datafactory_integration_runtime_list')
         g.custom_show_command('show', 'datafactory_integration_runtime_show')
         g.custom_command('linked-integration-runtime create', 'datafactory_integration_runtime_linked_integration_runti'
