@@ -494,7 +494,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.codeModel.info['extensionMode'];
     }
 
-<<<<<<< HEAD
     public get CommandGroup_ExtensionMode(){
         return this.CommandGroup?.language?.['cli']?.['groupExtensionMode'];
     }
@@ -504,17 +503,6 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_ExtensionMode(){
-=======
-    public get CommandGroup_ExtensionMode() {
-        return this.CommandGroup?.language?.['cli']?.['groupExtensionMode'];
-    }
-
-    public get Command_ExtensionMode() {
-        return this.Command?.language?.['cli']?.['commandExtensionMode'];
-    }
-
-    public get MethodParameter_ExtensionMode() {
->>>>>>> master
         return this.MethodParameter?.language?.['cli']?.['methodExtensionMode'];
     }
 
