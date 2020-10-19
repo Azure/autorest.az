@@ -356,6 +356,8 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         parameterExtraInfo = ", is_experimental=True";
                     } else if (model.MethodParameter_ExtensionMode == 'preview') {
                         parameterExtraInfo = ", is_preview=True";
+                    } else if (model.MethodParameter_ExtensionMode == 'stable'){
+                        parameterExtraInfo = "";
                     }
                     argument += parameterExtraInfo;
                     argument += ")";
