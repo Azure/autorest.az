@@ -87,6 +87,8 @@ az datafactory list
 ##### <a name="ParametersFactoriesList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+|**--gen-custom-headers**|string|Test the ability to rename ignoring attributes.|custom_headers|customHeaders|
+
 #### <a name="FactoriesGet">Command `az datafactory show`</a>
 
 ##### <a name="ExamplesFactoriesGet">Example</a>
