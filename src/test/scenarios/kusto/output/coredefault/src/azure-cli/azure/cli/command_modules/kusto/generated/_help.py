@@ -37,7 +37,7 @@ helps['kusto cluster show'] = """
 
 helps['kusto cluster create'] = """
     type: command
-    short-summary: "Create or update a Kusto cluster."
+    short-summary: "Create Cluster"
     parameters:
       - name: --sku
         short-summary: "The SKU of the cluster."
@@ -296,7 +296,7 @@ helps['kusto cluster-principal-assignment show'] = """
 
 helps['kusto cluster-principal-assignment create'] = """
     type: command
-    short-summary: "Create a Kusto cluster principalAssignment."
+    short-summary: "Create ClusterPrincipalAssignment"
     examples:
       - name: KustoClusterPrincipalAssignmentsCreateOrUpdate
         text: |-
@@ -307,7 +307,7 @@ helps['kusto cluster-principal-assignment create'] = """
 
 helps['kusto cluster-principal-assignment update'] = """
     type: command
-    short-summary: "Create a Kusto cluster principalAssignment."
+    short-summary: "Update ClusterPrincipalAssignment"
 """
 
 helps['kusto cluster-principal-assignment delete'] = """
@@ -368,7 +368,7 @@ helps['kusto database show'] = """
 
 helps['kusto database create'] = """
     type: command
-    short-summary: "Creates or updates a database."
+    short-summary: "Create Database"
     parameters:
       - name: --read-write-database
         short-summary: "Class representing a read write database."
@@ -543,7 +543,7 @@ helps['kusto database-principal-assignment show'] = """
 
 helps['kusto database-principal-assignment create'] = """
     type: command
-    short-summary: "Creates a Kusto cluster database principalAssignment."
+    short-summary: "Create DatabasePrincipalAssignment"
     examples:
       - name: KustoDatabasePrincipalAssignmentsCreateOrUpdate
         text: |-
@@ -555,7 +555,7 @@ helps['kusto database-principal-assignment create'] = """
 
 helps['kusto database-principal-assignment update'] = """
     type: command
-    short-summary: "Creates a Kusto cluster database principalAssignment."
+    short-summary: "Update DatabasePrincipalAssignment"
 """
 
 helps['kusto database-principal-assignment delete'] = """
@@ -617,7 +617,7 @@ helps['kusto attached-database-configuration show'] = """
 
 helps['kusto attached-database-configuration create'] = """
     type: command
-    short-summary: "Creates or updates an attached database configuration."
+    short-summary: "Create AttachedDatabaseConfiguration"
     examples:
       - name: AttachedDatabaseConfigurationsCreateOrUpdate
         text: |-
@@ -629,7 +629,7 @@ sourceGroups/kustorptest/providers/Microsoft.Kusto/Clusters/KustoClusterLeader" 
 
 helps['kusto attached-database-configuration update'] = """
     type: command
-    short-summary: "Creates or updates an attached database configuration."
+    short-summary: "Update AttachedDatabaseConfiguration"
 """
 
 helps['kusto attached-database-configuration delete'] = """
@@ -691,7 +691,7 @@ helps['kusto data-connection show'] = """
 
 helps['kusto data-connection create'] = """
     type: command
-    short-summary: "Creates or updates a data connection."
+    short-summary: "Create DataConnection"
     parameters:
       - name: --event-hub-data-connection
         short-summary: "Class representing an event hub data connection."

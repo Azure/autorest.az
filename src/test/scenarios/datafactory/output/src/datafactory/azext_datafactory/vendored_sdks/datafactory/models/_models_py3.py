@@ -45,6 +45,388 @@ class AccessPolicyResponse(msrest.serialization.Model):
         self.data_plane_url = data_plane_url
 
 
+class JobBase(msrest.serialization.Model):
+    """Job base definition.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: ComputeJobBase.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param job_type: Required. Specifies the type of job.Constant filled by server.  Possible
+     values include: "Command", "Sweep", "Labeling", "Pipeline", "Data", "AutoML".
+    :type job_type: str or ~dfaz_management_client.models.JobType
+    :ivar interaction_endpoints: Dictonary of endpoint URIs, keyed by enumerated JobEndpoints, can
+     be added, removed or updated.
+    :vartype interaction_endpoints: ~dfaz_management_client.models.JobBaseInteractionEndpoints
+    :param description: The asset description text.
+    :type description: str
+    :param tags: A set of tags. Tag dictionary. Tags can be added, removed, and updated.
+    :type tags: dict[str, str]
+    """
+
+    _validation = {
+        'job_type': {'required': True},
+        'interaction_endpoints': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'job_type': {'key': 'jobType', 'type': 'str'},
+        'interaction_endpoints': {'key': 'interactionEndpoints', 'type': 'JobBaseInteractionEndpoints'},
+        'description': {'key': 'description', 'type': 'str'},
+        'tags': {'key': 'tags', 'type': '{str}'},
+    }
+
+    _subtype_map = {
+        'job_type': {'ComputeJobBase': 'ComputeJobBase'}
+    }
+
+    def __init__(
+        self,
+        *,
+        description: Optional[str] = None,
+        tags: Optional[Dict[str, str]] = None,
+        **kwargs
+    ):
+        super(JobBase, self).__init__(**kwargs)
+        self.job_type = None  # type: Optional[str]
+        self.interaction_endpoints = None
+        self.description = description
+        self.tags = tags
+
+
+class ComputeJobBase(JobBase):
+    """Compute job base definition.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: CommandJob.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param job_type: Required. Specifies the type of job.Constant filled by server.  Possible
+     values include: "Command", "Sweep", "Labeling", "Pipeline", "Data", "AutoML".
+    :type job_type: str or ~dfaz_management_client.models.JobType
+    :ivar interaction_endpoints: Dictonary of endpoint URIs, keyed by enumerated JobEndpoints, can
+     be added, removed or updated.
+    :vartype interaction_endpoints: ~dfaz_management_client.models.JobBaseInteractionEndpoints
+    :param description: The asset description text.
+    :type description: str
+    :param tags: A set of tags. Tag dictionary. Tags can be added, removed, and updated.
+    :type tags: dict[str, str]
+    :param experiment_name: The name of the experiment the job belongs to. If not set, the job is
+     placed in the "Default" experiment.
+    :type experiment_name: str
+    :param compute_binding: Required. computeBinding of the job.
+    :type compute_binding: str
+    """
+
+    _validation = {
+        'job_type': {'required': True},
+        'interaction_endpoints': {'readonly': True},
+        'compute_binding': {'required': True},
+    }
+
+    _attribute_map = {
+        'job_type': {'key': 'jobType', 'type': 'str'},
+        'interaction_endpoints': {'key': 'interactionEndpoints', 'type': 'JobBaseInteractionEndpoints'},
+        'description': {'key': 'description', 'type': 'str'},
+        'tags': {'key': 'tags', 'type': '{str}'},
+        'experiment_name': {'key': 'experimentName', 'type': 'str'},
+        'compute_binding': {'key': 'computeBinding', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'job_type': {'CommandJob': 'CommandJob'}
+    }
+
+    def __init__(
+        self,
+        *,
+        compute_binding: str,
+        description: Optional[str] = None,
+        tags: Optional[Dict[str, str]] = None,
+        experiment_name: Optional[str] = None,
+        **kwargs
+    ):
+        super(ComputeJobBase, self).__init__(description=description, tags=tags, **kwargs)
+        self.job_type = 'ComputeJobBase'  # type: str
+        self.experiment_name = experiment_name
+        self.compute_binding = compute_binding
+
+
+class CommandJob(ComputeJobBase):
+    """Code Job definition.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: AutomlJob.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param job_type: Required. Specifies the type of job.Constant filled by server.  Possible
+     values include: "Command", "Sweep", "Labeling", "Pipeline", "Data", "AutoML".
+    :type job_type: str or ~dfaz_management_client.models.JobType
+    :ivar interaction_endpoints: Dictonary of endpoint URIs, keyed by enumerated JobEndpoints, can
+     be added, removed or updated.
+    :vartype interaction_endpoints: ~dfaz_management_client.models.JobBaseInteractionEndpoints
+    :param description: The asset description text.
+    :type description: str
+    :param tags: A set of tags. Tag dictionary. Tags can be added, removed, and updated.
+    :type tags: dict[str, str]
+    :param experiment_name: The name of the experiment the job belongs to. If not set, the job is
+     placed in the "Default" experiment.
+    :type experiment_name: str
+    :param compute_binding: Required. computeBinding of the job.
+    :type compute_binding: str
+    :param status: Status of the job. Possible values include: "NotStarted", "Starting",
+     "Provisioning", "Preparing", "Queued", "Running", "Finalizing", "CancelRequested", "Completed",
+     "Failed", "Canceled", "NotResponding", "Paused".
+    :type status: str or ~dfaz_management_client.models.JobStatus
+    :param max_run_duration_seconds: The max run duration in seconds, ater which the job will be
+     cancelled.
+    :type max_run_duration_seconds: long
+    :param code_configuration: Required. Code Configuration of the job.
+    :type code_configuration: str
+    :param environment_id: Environment specification of the job.
+    :type environment_id: str
+    :param data_bindings: Mapping of data bindings used in the job.
+    :type data_bindings: object
+    :param distribution_configuration: Distributon configuration of the job. This should be one of
+     MpiConfiguration, TensorflowConfiguration, or PyTorchConfiguration.
+    :type distribution_configuration: object
+    """
+
+    _validation = {
+        'job_type': {'required': True},
+        'interaction_endpoints': {'readonly': True},
+        'compute_binding': {'required': True},
+        'code_configuration': {'required': True},
+    }
+
+    _attribute_map = {
+        'job_type': {'key': 'jobType', 'type': 'str'},
+        'interaction_endpoints': {'key': 'interactionEndpoints', 'type': 'JobBaseInteractionEndpoints'},
+        'description': {'key': 'description', 'type': 'str'},
+        'tags': {'key': 'tags', 'type': '{str}'},
+        'experiment_name': {'key': 'experimentName', 'type': 'str'},
+        'compute_binding': {'key': 'computeBinding', 'type': 'str'},
+        'status': {'key': 'status', 'type': 'str'},
+        'max_run_duration_seconds': {'key': 'maxRunDurationSeconds', 'type': 'long'},
+        'code_configuration': {'key': 'codeConfiguration', 'type': 'str'},
+        'environment_id': {'key': 'environmentId', 'type': 'str'},
+        'data_bindings': {'key': 'dataBindings', 'type': 'object'},
+        'distribution_configuration': {'key': 'distributionConfiguration', 'type': 'object'},
+    }
+
+    _subtype_map = {
+        'job_type': {'AutoML': 'AutomlJob'}
+    }
+
+    def __init__(
+        self,
+        *,
+        compute_binding: str,
+        code_configuration: str,
+        description: Optional[str] = None,
+        tags: Optional[Dict[str, str]] = None,
+        experiment_name: Optional[str] = None,
+        status: Optional[Union[str, "JobStatus"]] = None,
+        max_run_duration_seconds: Optional[int] = None,
+        environment_id: Optional[str] = None,
+        data_bindings: Optional[object] = None,
+        distribution_configuration: Optional[object] = None,
+        **kwargs
+    ):
+        super(CommandJob, self).__init__(description=description, tags=tags, experiment_name=experiment_name, compute_binding=compute_binding, **kwargs)
+        self.job_type = 'CommandJob'  # type: str
+        self.status = status
+        self.max_run_duration_seconds = max_run_duration_seconds
+        self.code_configuration = code_configuration
+        self.environment_id = environment_id
+        self.data_bindings = data_bindings
+        self.distribution_configuration = distribution_configuration
+
+
+class AutomlJob(CommandJob):
+    """Automl Job definition.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: TestJob.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param job_type: Required. Specifies the type of job.Constant filled by server.  Possible
+     values include: "Command", "Sweep", "Labeling", "Pipeline", "Data", "AutoML".
+    :type job_type: str or ~dfaz_management_client.models.JobType
+    :ivar interaction_endpoints: Dictonary of endpoint URIs, keyed by enumerated JobEndpoints, can
+     be added, removed or updated.
+    :vartype interaction_endpoints: ~dfaz_management_client.models.JobBaseInteractionEndpoints
+    :param description: The asset description text.
+    :type description: str
+    :param tags: A set of tags. Tag dictionary. Tags can be added, removed, and updated.
+    :type tags: dict[str, str]
+    :param experiment_name: The name of the experiment the job belongs to. If not set, the job is
+     placed in the "Default" experiment.
+    :type experiment_name: str
+    :param compute_binding: Required. computeBinding of the job.
+    :type compute_binding: str
+    :param status: Status of the job. Possible values include: "NotStarted", "Starting",
+     "Provisioning", "Preparing", "Queued", "Running", "Finalizing", "CancelRequested", "Completed",
+     "Failed", "Canceled", "NotResponding", "Paused".
+    :type status: str or ~dfaz_management_client.models.JobStatus
+    :param max_run_duration_seconds: The max run duration in seconds, ater which the job will be
+     cancelled.
+    :type max_run_duration_seconds: long
+    :param code_configuration: Required. Code Configuration of the job.
+    :type code_configuration: str
+    :param environment_id: Environment specification of the job.
+    :type environment_id: str
+    :param data_bindings: Mapping of data bindings used in the job.
+    :type data_bindings: object
+    :param distribution_configuration: Distributon configuration of the job. This should be one of
+     MpiConfiguration, TensorflowConfiguration, or PyTorchConfiguration.
+    :type distribution_configuration: object
+    :param run_type: Run type.
+    :type run_type: str
+    :param run_source: Run source would be used by services calling AutoML CreateParentRun,
+     if none is provided it would default to "AutoML"
+     This value would be used for RootAttribution.
+    :type run_source: str
+    :param num_iterations: Number of iterations.
+    :type num_iterations: int
+    :param training_type: Training type. Possible values include: "TrainFull", "TrainAndValidate",
+     "CrossValidate", "MeanCrossValidate".
+    :type training_type: str or ~dfaz_management_client.models.TrainingType
+    :param acquisition_function: Aquisition function. Possible values include: "EI", "PI", "UCB".
+    :type acquisition_function: str or ~dfaz_management_client.models.AcquisitionFunction
+    :param metrics: Optimization metrics.
+    :type metrics: list[str or ~dfaz_management_client.models.OptimizationMetric]
+    :param primary_metric: Primary optimization metric. Possible values include: "AUC_weighted",
+     "Accuracy", "Norm_macro_recall", "Average_precision_score_weighted",
+     "Precision_score_weighted", "Spearman_correlation", "Normalized_root_mean_squared_error",
+     "R2_score", "Normalized_mean_absolute_error", "Normalized_root_mean_squared_log_error",
+     "Mean_average_precision", "Iou".
+    :type primary_metric: str or ~dfaz_management_client.models.OptimizationMetric
+    :param train_split: Train split percentage.
+    :type train_split: float
+    :param acquisition_parameter: Aquisition parameter.
+    :type acquisition_parameter: float
+    :param num_cross_validation: Num cross validation.
+    :type num_cross_validation: int
+    :param target: Target.
+    :type target: str
+    :param aml_settings_json_string: AMLSettings Json string.
+    :type aml_settings_json_string: str
+    :param data_prep_json_string: Serialized DataPrep dataflow object.
+    :type data_prep_json_string: str
+    :param enable_subsampling: Enable subsampling.
+    :type enable_subsampling: bool
+    :param scenario: Which scenario is being used to mapping to a curated environment.
+    :type scenario: str
+    :param parent_run_id: The parent run id for the current parent run dto.
+    :type parent_run_id: str
+    """
+
+    _validation = {
+        'job_type': {'required': True},
+        'interaction_endpoints': {'readonly': True},
+        'compute_binding': {'required': True},
+        'code_configuration': {'required': True},
+    }
+
+    _attribute_map = {
+        'job_type': {'key': 'jobType', 'type': 'str'},
+        'interaction_endpoints': {'key': 'interactionEndpoints', 'type': 'JobBaseInteractionEndpoints'},
+        'description': {'key': 'description', 'type': 'str'},
+        'tags': {'key': 'tags', 'type': '{str}'},
+        'experiment_name': {'key': 'experimentName', 'type': 'str'},
+        'compute_binding': {'key': 'computeBinding', 'type': 'str'},
+        'status': {'key': 'status', 'type': 'str'},
+        'max_run_duration_seconds': {'key': 'maxRunDurationSeconds', 'type': 'long'},
+        'code_configuration': {'key': 'codeConfiguration', 'type': 'str'},
+        'environment_id': {'key': 'environmentId', 'type': 'str'},
+        'data_bindings': {'key': 'dataBindings', 'type': 'object'},
+        'distribution_configuration': {'key': 'distributionConfiguration', 'type': 'object'},
+        'run_type': {'key': 'runType', 'type': 'str'},
+        'run_source': {'key': 'runSource', 'type': 'str'},
+        'num_iterations': {'key': 'numIterations', 'type': 'int'},
+        'training_type': {'key': 'trainingType', 'type': 'str'},
+        'acquisition_function': {'key': 'acquisitionFunction', 'type': 'str'},
+        'metrics': {'key': 'metrics', 'type': '[str]'},
+        'primary_metric': {'key': 'primaryMetric', 'type': 'str'},
+        'train_split': {'key': 'trainSplit', 'type': 'float'},
+        'acquisition_parameter': {'key': 'acquisitionParameter', 'type': 'float'},
+        'num_cross_validation': {'key': 'numCrossValidation', 'type': 'int'},
+        'target': {'key': 'target', 'type': 'str'},
+        'aml_settings_json_string': {'key': 'amlSettingsJsonString', 'type': 'str'},
+        'data_prep_json_string': {'key': 'dataPrepJsonString', 'type': 'str'},
+        'enable_subsampling': {'key': 'enableSubsampling', 'type': 'bool'},
+        'scenario': {'key': 'scenario', 'type': 'str'},
+        'parent_run_id': {'key': 'parentRunId', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'job_type': {'TestJob': 'TestJob'}
+    }
+
+    def __init__(
+        self,
+        *,
+        compute_binding: str,
+        code_configuration: str,
+        description: Optional[str] = None,
+        tags: Optional[Dict[str, str]] = None,
+        experiment_name: Optional[str] = None,
+        status: Optional[Union[str, "JobStatus"]] = None,
+        max_run_duration_seconds: Optional[int] = None,
+        environment_id: Optional[str] = None,
+        data_bindings: Optional[object] = None,
+        distribution_configuration: Optional[object] = None,
+        run_type: Optional[str] = None,
+        run_source: Optional[str] = None,
+        num_iterations: Optional[int] = None,
+        training_type: Optional[Union[str, "TrainingType"]] = None,
+        acquisition_function: Optional[Union[str, "AcquisitionFunction"]] = None,
+        metrics: Optional[List[Union[str, "OptimizationMetric"]]] = None,
+        primary_metric: Optional[Union[str, "OptimizationMetric"]] = None,
+        train_split: Optional[float] = None,
+        acquisition_parameter: Optional[float] = None,
+        num_cross_validation: Optional[int] = None,
+        target: Optional[str] = None,
+        aml_settings_json_string: Optional[str] = None,
+        data_prep_json_string: Optional[str] = None,
+        enable_subsampling: Optional[bool] = None,
+        scenario: Optional[str] = None,
+        parent_run_id: Optional[str] = None,
+        **kwargs
+    ):
+        super(AutomlJob, self).__init__(description=description, tags=tags, experiment_name=experiment_name, compute_binding=compute_binding, status=status, max_run_duration_seconds=max_run_duration_seconds, code_configuration=code_configuration, environment_id=environment_id, data_bindings=data_bindings, distribution_configuration=distribution_configuration, **kwargs)
+        self.job_type = 'AutoML'  # type: str
+        self.run_type = run_type
+        self.run_source = run_source
+        self.num_iterations = num_iterations
+        self.training_type = training_type
+        self.acquisition_function = acquisition_function
+        self.metrics = metrics
+        self.primary_metric = primary_metric
+        self.train_split = train_split
+        self.acquisition_parameter = acquisition_parameter
+        self.num_cross_validation = num_cross_validation
+        self.target = target
+        self.aml_settings_json_string = aml_settings_json_string
+        self.data_prep_json_string = data_prep_json_string
+        self.enable_subsampling = enable_subsampling
+        self.scenario = scenario
+        self.parent_run_id = parent_run_id
+
+
 class Trigger(msrest.serialization.Model):
     """Azure data factory nested object which contains information about creating pipeline run.
 
@@ -740,6 +1122,8 @@ class Factory(Resource):
     :param additional_properties: Unmatched properties from the message are deserialized to this
      collection.
     :type additional_properties: dict[str, object]
+    :param test_inherit: Test Job Base.
+    :type test_inherit: ~dfaz_management_client.models.JobBase
     :ivar provisioning_state: Factory provisioning state, example Succeeded.
     :vartype provisioning_state: str
     :ivar create_time: Time the factory was created in ISO8601 format.
@@ -781,6 +1165,7 @@ class Factory(Resource):
         'tags': {'key': 'tags', 'type': '{str}'},
         'e_tag': {'key': 'eTag', 'type': 'str'},
         'additional_properties': {'key': '', 'type': '{object}'},
+        'test_inherit': {'key': 'testInherit', 'type': 'JobBase'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'create_time': {'key': 'properties.createTime', 'type': 'iso-8601'},
         'version': {'key': 'properties.version', 'type': 'str'},
@@ -798,6 +1183,7 @@ class Factory(Resource):
         location: Optional[str] = None,
         tags: Optional[Dict[str, str]] = None,
         additional_properties: Optional[Dict[str, object]] = None,
+        test_inherit: Optional["JobBase"] = None,
         repo_configuration: Optional["FactoryRepoConfiguration"] = None,
         fake_identity: Optional["FakeFactoryIdentity"] = None,
         zones: Optional[List[str]] = None,
@@ -806,6 +1192,7 @@ class Factory(Resource):
     ):
         super(Factory, self).__init__(location=location, tags=tags, **kwargs)
         self.additional_properties = additional_properties
+        self.test_inherit = test_inherit
         self.provisioning_state = None
         self.create_time = None
         self.version = None
@@ -2051,6 +2438,42 @@ class IntegrationRuntimeVNetProperties(msrest.serialization.Model):
         self.v_net_id = v_net_id
         self.subnet = subnet
         self.public_i_ps = public_i_ps
+
+
+class JobBaseInteractionEndpoints(msrest.serialization.Model):
+    """Dictonary of endpoint URIs, keyed by enumerated JobEndpoints, can be added, removed or updated.
+
+    :param tracking:
+    :type tracking: str
+    :param studio:
+    :type studio: str
+    :param grafana:
+    :type grafana: str
+    :param tensorboard:
+    :type tensorboard: str
+    """
+
+    _attribute_map = {
+        'tracking': {'key': 'Tracking', 'type': 'str'},
+        'studio': {'key': 'Studio', 'type': 'str'},
+        'grafana': {'key': 'Grafana', 'type': 'str'},
+        'tensorboard': {'key': 'Tensorboard', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        tracking: Optional[str] = None,
+        studio: Optional[str] = None,
+        grafana: Optional[str] = None,
+        tensorboard: Optional[str] = None,
+        **kwargs
+    ):
+        super(JobBaseInteractionEndpoints, self).__init__(**kwargs)
+        self.tracking = tracking
+        self.studio = studio
+        self.grafana = grafana
+        self.tensorboard = tensorboard
 
 
 class LinkedIntegrationRuntime(msrest.serialization.Model):
@@ -3758,6 +4181,163 @@ class SsisVariable(msrest.serialization.Model):
         self.sensitive = sensitive
         self.value = value
         self.sensitive_value = sensitive_value
+
+
+class TestJob(AutomlJob):
+    """Automl Job definition.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param job_type: Required. Specifies the type of job.Constant filled by server.  Possible
+     values include: "Command", "Sweep", "Labeling", "Pipeline", "Data", "AutoML".
+    :type job_type: str or ~dfaz_management_client.models.JobType
+    :ivar interaction_endpoints: Dictonary of endpoint URIs, keyed by enumerated JobEndpoints, can
+     be added, removed or updated.
+    :vartype interaction_endpoints: ~dfaz_management_client.models.JobBaseInteractionEndpoints
+    :param description: The asset description text.
+    :type description: str
+    :param tags: A set of tags. Tag dictionary. Tags can be added, removed, and updated.
+    :type tags: dict[str, str]
+    :param experiment_name: The name of the experiment the job belongs to. If not set, the job is
+     placed in the "Default" experiment.
+    :type experiment_name: str
+    :param compute_binding: Required. computeBinding of the job.
+    :type compute_binding: str
+    :param status: Status of the job. Possible values include: "NotStarted", "Starting",
+     "Provisioning", "Preparing", "Queued", "Running", "Finalizing", "CancelRequested", "Completed",
+     "Failed", "Canceled", "NotResponding", "Paused".
+    :type status: str or ~dfaz_management_client.models.JobStatus
+    :param max_run_duration_seconds: The max run duration in seconds, ater which the job will be
+     cancelled.
+    :type max_run_duration_seconds: long
+    :param code_configuration: Required. Code Configuration of the job.
+    :type code_configuration: str
+    :param environment_id: Environment specification of the job.
+    :type environment_id: str
+    :param data_bindings: Mapping of data bindings used in the job.
+    :type data_bindings: object
+    :param distribution_configuration: Distributon configuration of the job. This should be one of
+     MpiConfiguration, TensorflowConfiguration, or PyTorchConfiguration.
+    :type distribution_configuration: object
+    :param run_type: Run type.
+    :type run_type: str
+    :param run_source: Run source would be used by services calling AutoML CreateParentRun,
+     if none is provided it would default to "AutoML"
+     This value would be used for RootAttribution.
+    :type run_source: str
+    :param num_iterations: Number of iterations.
+    :type num_iterations: int
+    :param training_type: Training type. Possible values include: "TrainFull", "TrainAndValidate",
+     "CrossValidate", "MeanCrossValidate".
+    :type training_type: str or ~dfaz_management_client.models.TrainingType
+    :param acquisition_function: Aquisition function. Possible values include: "EI", "PI", "UCB".
+    :type acquisition_function: str or ~dfaz_management_client.models.AcquisitionFunction
+    :param metrics: Optimization metrics.
+    :type metrics: list[str or ~dfaz_management_client.models.OptimizationMetric]
+    :param primary_metric: Primary optimization metric. Possible values include: "AUC_weighted",
+     "Accuracy", "Norm_macro_recall", "Average_precision_score_weighted",
+     "Precision_score_weighted", "Spearman_correlation", "Normalized_root_mean_squared_error",
+     "R2_score", "Normalized_mean_absolute_error", "Normalized_root_mean_squared_log_error",
+     "Mean_average_precision", "Iou".
+    :type primary_metric: str or ~dfaz_management_client.models.OptimizationMetric
+    :param train_split: Train split percentage.
+    :type train_split: float
+    :param acquisition_parameter: Aquisition parameter.
+    :type acquisition_parameter: float
+    :param num_cross_validation: Num cross validation.
+    :type num_cross_validation: int
+    :param target: Target.
+    :type target: str
+    :param aml_settings_json_string: AMLSettings Json string.
+    :type aml_settings_json_string: str
+    :param data_prep_json_string: Serialized DataPrep dataflow object.
+    :type data_prep_json_string: str
+    :param enable_subsampling: Enable subsampling.
+    :type enable_subsampling: bool
+    :param scenario: Which scenario is being used to mapping to a curated environment.
+    :type scenario: str
+    :param parent_run_id: The parent run id for the current parent run dto.
+    :type parent_run_id: str
+    :param test_type: Run type.
+    :type test_type: str
+    """
+
+    _validation = {
+        'job_type': {'required': True},
+        'interaction_endpoints': {'readonly': True},
+        'compute_binding': {'required': True},
+        'code_configuration': {'required': True},
+    }
+
+    _attribute_map = {
+        'job_type': {'key': 'jobType', 'type': 'str'},
+        'interaction_endpoints': {'key': 'interactionEndpoints', 'type': 'JobBaseInteractionEndpoints'},
+        'description': {'key': 'description', 'type': 'str'},
+        'tags': {'key': 'tags', 'type': '{str}'},
+        'experiment_name': {'key': 'experimentName', 'type': 'str'},
+        'compute_binding': {'key': 'computeBinding', 'type': 'str'},
+        'status': {'key': 'status', 'type': 'str'},
+        'max_run_duration_seconds': {'key': 'maxRunDurationSeconds', 'type': 'long'},
+        'code_configuration': {'key': 'codeConfiguration', 'type': 'str'},
+        'environment_id': {'key': 'environmentId', 'type': 'str'},
+        'data_bindings': {'key': 'dataBindings', 'type': 'object'},
+        'distribution_configuration': {'key': 'distributionConfiguration', 'type': 'object'},
+        'run_type': {'key': 'runType', 'type': 'str'},
+        'run_source': {'key': 'runSource', 'type': 'str'},
+        'num_iterations': {'key': 'numIterations', 'type': 'int'},
+        'training_type': {'key': 'trainingType', 'type': 'str'},
+        'acquisition_function': {'key': 'acquisitionFunction', 'type': 'str'},
+        'metrics': {'key': 'metrics', 'type': '[str]'},
+        'primary_metric': {'key': 'primaryMetric', 'type': 'str'},
+        'train_split': {'key': 'trainSplit', 'type': 'float'},
+        'acquisition_parameter': {'key': 'acquisitionParameter', 'type': 'float'},
+        'num_cross_validation': {'key': 'numCrossValidation', 'type': 'int'},
+        'target': {'key': 'target', 'type': 'str'},
+        'aml_settings_json_string': {'key': 'amlSettingsJsonString', 'type': 'str'},
+        'data_prep_json_string': {'key': 'dataPrepJsonString', 'type': 'str'},
+        'enable_subsampling': {'key': 'enableSubsampling', 'type': 'bool'},
+        'scenario': {'key': 'scenario', 'type': 'str'},
+        'parent_run_id': {'key': 'parentRunId', 'type': 'str'},
+        'test_type': {'key': 'testType', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        compute_binding: str,
+        code_configuration: str,
+        description: Optional[str] = None,
+        tags: Optional[Dict[str, str]] = None,
+        experiment_name: Optional[str] = None,
+        status: Optional[Union[str, "JobStatus"]] = None,
+        max_run_duration_seconds: Optional[int] = None,
+        environment_id: Optional[str] = None,
+        data_bindings: Optional[object] = None,
+        distribution_configuration: Optional[object] = None,
+        run_type: Optional[str] = None,
+        run_source: Optional[str] = None,
+        num_iterations: Optional[int] = None,
+        training_type: Optional[Union[str, "TrainingType"]] = None,
+        acquisition_function: Optional[Union[str, "AcquisitionFunction"]] = None,
+        metrics: Optional[List[Union[str, "OptimizationMetric"]]] = None,
+        primary_metric: Optional[Union[str, "OptimizationMetric"]] = None,
+        train_split: Optional[float] = None,
+        acquisition_parameter: Optional[float] = None,
+        num_cross_validation: Optional[int] = None,
+        target: Optional[str] = None,
+        aml_settings_json_string: Optional[str] = None,
+        data_prep_json_string: Optional[str] = None,
+        enable_subsampling: Optional[bool] = None,
+        scenario: Optional[str] = None,
+        parent_run_id: Optional[str] = None,
+        test_type: Optional[str] = None,
+        **kwargs
+    ):
+        super(TestJob, self).__init__(description=description, tags=tags, experiment_name=experiment_name, compute_binding=compute_binding, status=status, max_run_duration_seconds=max_run_duration_seconds, code_configuration=code_configuration, environment_id=environment_id, data_bindings=data_bindings, distribution_configuration=distribution_configuration, run_type=run_type, run_source=run_source, num_iterations=num_iterations, training_type=training_type, acquisition_function=acquisition_function, metrics=metrics, primary_metric=primary_metric, train_split=train_split, acquisition_parameter=acquisition_parameter, num_cross_validation=num_cross_validation, target=target, aml_settings_json_string=aml_settings_json_string, data_prep_json_string=data_prep_json_string, enable_subsampling=enable_subsampling, scenario=scenario, parent_run_id=parent_run_id, **kwargs)
+        self.job_type = 'TestJob'  # type: str
+        self.test_type = test_type
 
 
 class TriggerDependencyReference(DependencyReference):

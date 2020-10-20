@@ -37,7 +37,7 @@ helps['datafactory show'] = """
 
 helps['datafactory create'] = """
     type: command
-    short-summary: "Creates or updates a factory."
+    short-summary: "Create Factory"
     parameters:
       - name: --factory-vsts-configuration
         short-summary: "Factory's VSTS repo information."
@@ -186,7 +186,7 @@ helps['datafactory trigger show'] = """
 
 helps['datafactory trigger create'] = """
     type: command
-    short-summary: "Creates or updates a trigger."
+    short-summary: "Create Trigger"
     examples:
       - name: Triggers_Create
         text: |-
@@ -199,7 +199,7 @@ eoutput.csv\\"]},\\"pipelineReference\\":{\\"type\\":\\"PipelineReference\\",\\"
 
 helps['datafactory trigger update'] = """
     type: command
-    short-summary: "Creates or updates a trigger."
+    short-summary: "Update Trigger"
     examples:
       - name: Triggers_Update
         text: |-
@@ -336,7 +336,7 @@ helps['datafactory integration-runtime managed'] = """
 
 helps['datafactory integration-runtime managed create'] = """
     type: command
-    short-summary: "Creates or updates an integration runtime."
+    short-summary: "Create IntegrationRuntime"
     parameters:
       - name: --factory-vsts-configuration
         short-summary: "Factory's VSTS repo information."
@@ -381,7 +381,7 @@ helps['datafactory integration-runtime self-hosted'] = """
 
 helps['datafactory integration-runtime self-hosted create'] = """
     type: command
-    short-summary: "Creates or updates an integration runtime."
+    short-summary: "Create IntegrationRuntime"
     examples:
       - name: IntegrationRuntimes_Create
         text: |-

@@ -40,7 +40,7 @@ helps['synapse big-data-pool show'] = """
 
 helps['synapse big-data-pool create'] = """
     type: command
-    short-summary: "Create a new Big Data pool."
+    short-summary: "Create BigDataPool"
     parameters:
       - name: --auto-scale
         short-summary: "Auto-scaling properties"
@@ -160,7 +160,7 @@ helps['synapse ip-firewall-rule show'] = """
 
 helps['synapse ip-firewall-rule create'] = """
     type: command
-    short-summary: "Creates or updates a firewall rule"
+    short-summary: "Create IPFirewallRule"
     examples:
       - name: Create an IP firewall rule
         text: |-
@@ -170,7 +170,7 @@ helps['synapse ip-firewall-rule create'] = """
 
 helps['synapse ip-firewall-rule update'] = """
     type: command
-    short-summary: "Creates or updates a firewall rule"
+    short-summary: "Update IPFirewallRule"
 """
 
 helps['synapse ip-firewall-rule delete'] = """
@@ -463,7 +463,7 @@ helps['synapse sql-pool-transparent-data-encryption show'] = """
 
 helps['synapse sql-pool-transparent-data-encryption create'] = """
     type: command
-    short-summary: "Creates or updates a Sql pool's transparent data encryption configuration."
+    short-summary: "Create SqlPoolTransparentDataEncryption"
     examples:
       - name: Create or update a Sql pool's transparent data encryption configuration
         text: |-
@@ -473,7 +473,7 @@ helps['synapse sql-pool-transparent-data-encryption create'] = """
 
 helps['synapse sql-pool-transparent-data-encryption update'] = """
     type: command
-    short-summary: "Creates or updates a Sql pool's transparent data encryption configuration."
+    short-summary: "Update SqlPoolTransparentDataEncryption"
 """
 
 helps['synapse sql-pool-blob-auditing-policy'] = """
@@ -493,7 +493,7 @@ helps['synapse sql-pool-blob-auditing-policy show'] = """
 
 helps['synapse sql-pool-blob-auditing-policy create'] = """
     type: command
-    short-summary: "Creates or updates a SQL pool's blob auditing policy."
+    short-summary: "Create SqlPoolBlobAuditingPolicy"
     examples:
       - name: Create or update a database's blob auditing policy with all parameters
         text: |-
@@ -514,7 +514,7 @@ fD2342309432849328476458/3RSD==" --storage-account-subscription-id "00000000-123
 
 helps['synapse sql-pool-blob-auditing-policy update'] = """
     type: command
-    short-summary: "Creates or updates a SQL pool's blob auditing policy."
+    short-summary: "Update SqlPoolBlobAuditingPolicy"
 """
 
 helps['synapse sql-pool-operation'] = """
@@ -554,7 +554,7 @@ helps['synapse sql-pool-sensitivity-label'] = """
 
 helps['synapse sql-pool-sensitivity-label create'] = """
     type: command
-    short-summary: "Creates or updates the sensitivity label of a given column in a Sql pool"
+    short-summary: "Create SqlPoolSensitivityLabel"
     examples:
       - name: Updates the sensitivity label of a given column with all parameters
         text: |-
@@ -566,7 +566,7 @@ helps['synapse sql-pool-sensitivity-label create'] = """
 
 helps['synapse sql-pool-sensitivity-label update'] = """
     type: command
-    short-summary: "Creates or updates the sensitivity label of a given column in a Sql pool"
+    short-summary: "Update SqlPoolSensitivityLabel"
 """
 
 helps['synapse sql-pool-sensitivity-label delete'] = """
@@ -707,7 +707,7 @@ helps['synapse sql-pool-vulnerability-assessment show'] = """
 
 helps['synapse sql-pool-vulnerability-assessment create'] = """
     type: command
-    short-summary: "Creates or updates the Sql pool vulnerability assessment."
+    short-summary: "Create SqlPoolVulnerabilityAssessment"
     parameters:
       - name: --recurring-scans
         short-summary: "The recurring scans settings"
@@ -743,7 +743,7 @@ s.net/vulnerability-assessment/" --resource-group "vulnerabilityaseessmenttest-4
 
 helps['synapse sql-pool-vulnerability-assessment update'] = """
     type: command
-    short-summary: "Creates or updates the Sql pool vulnerability assessment."
+    short-summary: "Update SqlPoolVulnerabilityAssessment"
     parameters:
       - name: --recurring-scans
         short-summary: "The recurring scans settings"
@@ -820,7 +820,7 @@ helps['synapse sql-pool-security-alert-policy show'] = """
 
 helps['synapse sql-pool-security-alert-policy create'] = """
     type: command
-    short-summary: "Create or update a Sql pool's security alert policy."
+    short-summary: "Create SqlPoolSecurityAlertPolicy"
     examples:
       - name: Update a Sql pool's threat detection policy with all parameters
         text: |-
@@ -837,7 +837,7 @@ RLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==" --storage-endpoint "https:
 
 helps['synapse sql-pool-security-alert-policy update'] = """
     type: command
-    short-summary: "Create or update a Sql pool's security alert policy."
+    short-summary: "Update SqlPoolSecurityAlertPolicy"
 """
 
 helps['synapse sql-pool-vulnerability-assessment-rule-baseline'] = """
@@ -847,7 +847,7 @@ helps['synapse sql-pool-vulnerability-assessment-rule-baseline'] = """
 
 helps['synapse sql-pool-vulnerability-assessment-rule-baseline create'] = """
     type: command
-    short-summary: "Creates or updates a Sql pool's vulnerability assessment rule baseline."
+    short-summary: "Create SqlPoolVulnerabilityAssessmentRuleBaseline"
     parameters:
       - name: --baseline-results
         short-summary: "The rule baseline result"
@@ -868,7 +868,7 @@ result="userC" result="SELECT" result="tableId_4" --resource-group "vulnerabilit
 
 helps['synapse sql-pool-vulnerability-assessment-rule-baseline update'] = """
     type: command
-    short-summary: "Creates or updates a Sql pool's vulnerability assessment rule baseline."
+    short-summary: "Update SqlPoolVulnerabilityAssessmentRuleBaseline"
     parameters:
       - name: --baseline-results
         short-summary: "The rule baseline result"
@@ -916,7 +916,7 @@ helps['synapse workspace show'] = """
 
 helps['synapse workspace create'] = """
     type: command
-    short-summary: "Creates or updates a workspace"
+    short-summary: "Create Workspace"
     parameters:
       - name: --default-data-lake-storage
         short-summary: "Workspace default data lake storage account details"
@@ -994,7 +994,7 @@ helps['synapse workspace-aad-admin show'] = """
 
 helps['synapse workspace-aad-admin create'] = """
     type: command
-    short-summary: "Creates or updates a workspace active directory admin"
+    short-summary: "Create WorkspaceAadAdmin"
     examples:
       - name: Create or update workspace active directory admin
         text: |-
@@ -1005,7 +1005,7 @@ helps['synapse workspace-aad-admin create'] = """
 
 helps['synapse workspace-aad-admin update'] = """
     type: command
-    short-summary: "Creates or updates a workspace active directory admin"
+    short-summary: "Update WorkspaceAadAdmin"
 """
 
 helps['synapse workspace-aad-admin delete'] = """
@@ -1052,7 +1052,7 @@ helps['synapse workspace-managed-identity-sql-control-setting show'] = """
 
 helps['synapse workspace-managed-identity-sql-control-setting create'] = """
     type: command
-    short-summary: "Create or update Managed Identity Sql Control Settings"
+    short-summary: "Create WorkspaceManagedIdentitySqlControlSetting"
     examples:
       - name: Create or update managed identity sql control settings
         text: |-
@@ -1062,7 +1062,7 @@ helps['synapse workspace-managed-identity-sql-control-setting create'] = """
 
 helps['synapse workspace-managed-identity-sql-control-setting update'] = """
     type: command
-    short-summary: "Create or update Managed Identity Sql Control Settings"
+    short-summary: "Update WorkspaceManagedIdentitySqlControlSetting"
 """
 
 helps['synapse integration-runtime'] = """
@@ -1444,7 +1444,7 @@ helps['synapse private-link-hub show'] = """
 
 helps['synapse private-link-hub create'] = """
     type: command
-    short-summary: "Creates or updates a privateLinkHub"
+    short-summary: "Create PrivateLinkHub"
     examples:
       - name: Create or update a privateLinkHub
         text: |-

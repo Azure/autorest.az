@@ -117,6 +117,7 @@ az datafactory create --location "East US" --zones "earth" --zones "moon" --name
 |**--if-match**|string|ETag of the factory entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|If-Match|
 |**--location**|string|The resource location.|location|location|
 |**--tags**|dictionary|The resource tags.|tags|tags|
+|**--test-inherit**|object|Test Job Base|test_inherit|testInherit|
 |**--factory-vsts-configuration**|object|Factory's VSTS repo information.|factory_vsts_configuration|FactoryVSTSConfiguration|
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
 |**--fake-identity**|object|This is only for az test.|fake_identity|fakeIdentity|

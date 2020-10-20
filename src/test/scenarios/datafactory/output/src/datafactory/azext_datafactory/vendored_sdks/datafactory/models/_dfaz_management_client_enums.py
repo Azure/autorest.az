@@ -26,6 +26,14 @@ class _CaseInsensitiveEnumMeta(EnumMeta):
             raise AttributeError(name)
 
 
+class AcquisitionFunction(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """Aquisition function
+    """
+
+    EI = "EI"
+    PI = "PI"
+    UCB = "UCB"
+
 class BlobEventTypes(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
 
     MICROSOFT_STORAGE_BLOB_CREATED = "Microsoft.Storage.BlobCreated"
@@ -167,6 +175,35 @@ class IntegrationRuntimeUpdateResult(with_metaclass(_CaseInsensitiveEnumMeta, st
     SUCCEED = "Succeed"
     FAIL = "Fail"
 
+class JobStatus(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """Status of the job.
+    """
+
+    NOT_STARTED = "NotStarted"
+    STARTING = "Starting"
+    PROVISIONING = "Provisioning"
+    PREPARING = "Preparing"
+    QUEUED = "Queued"
+    RUNNING = "Running"
+    FINALIZING = "Finalizing"
+    CANCEL_REQUESTED = "CancelRequested"
+    COMPLETED = "Completed"
+    FAILED = "Failed"
+    CANCELED = "Canceled"
+    NOT_RESPONDING = "NotResponding"
+    PAUSED = "Paused"
+
+class JobType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """Specifies the type of job.
+    """
+
+    COMMAND = "Command"
+    SWEEP = "Sweep"
+    LABELING = "Labeling"
+    PIPELINE = "Pipeline"
+    DATA = "Data"
+    AUTO_ML = "AutoML"
+
 class ManagedIntegrationRuntimeNodeStatus(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The managed integration runtime node status.
     """
@@ -175,6 +212,21 @@ class ManagedIntegrationRuntimeNodeStatus(with_metaclass(_CaseInsensitiveEnumMet
     AVAILABLE = "Available"
     RECYCLING = "Recycling"
     UNAVAILABLE = "Unavailable"
+
+class OptimizationMetric(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    AUC_WEIGHTED = "AUC_weighted"
+    ACCURACY = "Accuracy"
+    NORM_MACRO_RECALL = "Norm_macro_recall"
+    AVERAGE_PRECISION_SCORE_WEIGHTED = "Average_precision_score_weighted"
+    PRECISION_SCORE_WEIGHTED = "Precision_score_weighted"
+    SPEARMAN_CORRELATION = "Spearman_correlation"
+    NORMALIZED_ROOT_MEAN_SQUARED_ERROR = "Normalized_root_mean_squared_error"
+    R2_SCORE = "R2_score"
+    NORMALIZED_MEAN_ABSOLUTE_ERROR = "Normalized_mean_absolute_error"
+    NORMALIZED_ROOT_MEAN_SQUARED_LOG_ERROR = "Normalized_root_mean_squared_log_error"
+    MEAN_AVERAGE_PRECISION = "Mean_average_precision"
+    IOU = "Iou"
 
 class RecurrenceFrequency(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Enumerates possible frequency option for the schedule trigger.
@@ -208,6 +260,15 @@ class SsisObjectMetadataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)
     PROJECT = "Project"
     PACKAGE = "Package"
     ENVIRONMENT = "Environment"
+
+class TrainingType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """Training type
+    """
+
+    TRAIN_FULL = "TrainFull"
+    TRAIN_AND_VALIDATE = "TrainAndValidate"
+    CROSS_VALIDATE = "CrossValidate"
+    MEAN_CROSS_VALIDATE = "MeanCrossValidate"
 
 class TriggerRuntimeState(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Enumerates possible state of Triggers.

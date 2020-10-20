@@ -29,8 +29,7 @@ the current subscription in a paginated format."
 
 helps['managed-network mn create'] = """
     type: command
-    short-summary: "The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by \
-resource group and Managed Network name"
+    short-summary: "Create ManagedNetwork"
     examples:
       - name: Create/Update Managed Network
         text: |-
@@ -101,7 +100,7 @@ helps['managed-network mn scope-assignment show'] = """
 
 helps['managed-network mn scope-assignment create'] = """
     type: command
-    short-summary: "Creates a scope assignment."
+    short-summary: "Create ScopeAssignment"
     examples:
       - name: Create/Update Managed Network
         text: |-
@@ -112,7 +111,7 @@ esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks
 
 helps['managed-network mn scope-assignment update'] = """
     type: command
-    short-summary: "Creates a scope assignment."
+    short-summary: "Update ScopeAssignment"
 """
 
 helps['managed-network mn scope-assignment delete'] = """
@@ -154,7 +153,7 @@ group, Managed Network name, and group name"
 
 helps['managed-network mn group create'] = """
     type: command
-    short-summary: "The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource"
+    short-summary: "Create ManagedNetworkGroup"
     parameters:
       - name: --subscriptions
         short-summary: "The collection of subscriptions covered by the Managed Network"
@@ -192,7 +191,7 @@ id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/vi
 
 helps['managed-network mn group update'] = """
     type: command
-    short-summary: "The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource"
+    short-summary: "Update ManagedNetworkGroup"
     parameters:
       - name: --subscriptions
         short-summary: "The collection of subscriptions covered by the Managed Network"
@@ -283,8 +282,7 @@ helps['managed-network managed-network-peering-policy hub-and-spoke-topology'] =
 
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology create'] = """
     type: command
-    short-summary: "The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
-Policy"
+    short-summary: "Create ManagedNetworkPeeringPolicy"
     parameters:
       - name: --hub
         short-summary: "Gets or sets the hub virtual network ID"
@@ -325,8 +323,7 @@ helps['managed-network managed-network-peering-policy mesh-topology'] = """
 
 helps['managed-network managed-network-peering-policy mesh-topology create'] = """
     type: command
-    short-summary: "The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
-Policy"
+    short-summary: "Create ManagedNetworkPeeringPolicy"
     parameters:
       - name: --hub
         short-summary: "Gets or sets the hub virtual network ID"
@@ -354,8 +351,7 @@ Policy"
 
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology update'] = """
     type: command
-    short-summary: "The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
-Policy"
+    short-summary: "Update ManagedNetworkPeeringPolicy"
     parameters:
       - name: --hub
         short-summary: "Gets or sets the hub virtual network ID"
@@ -391,8 +387,7 @@ ps/myManagedNetworkGroup" --resource-group "myResourceGroup"
 
 helps['managed-network managed-network-peering-policy mesh-topology update'] = """
     type: command
-    short-summary: "The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering \
-Policy"
+    short-summary: "Update ManagedNetworkPeeringPolicy"
     parameters:
       - name: --hub
         short-summary: "Gets or sets the hub virtual network ID"

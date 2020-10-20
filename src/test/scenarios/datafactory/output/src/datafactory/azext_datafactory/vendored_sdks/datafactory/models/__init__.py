@@ -8,12 +8,15 @@
 
 try:
     from ._models_py3 import AccessPolicyResponse
+    from ._models_py3 import AutomlJob
     from ._models_py3 import BlobEventsTrigger
     from ._models_py3 import BlobTrigger
     from ._models_py3 import ChainingTrigger
     from ._models_py3 import CloudError
     from ._models_py3 import CmdkeySetup
+    from ._models_py3 import CommandJob
     from ._models_py3 import ComponentSetup
+    from ._models_py3 import ComputeJobBase
     from ._models_py3 import CreateLinkedIntegrationRuntimeRequest
     from ._models_py3 import CustomSetupBase
     from ._models_py3 import DependencyReference
@@ -49,6 +52,8 @@ try:
     from ._models_py3 import IntegrationRuntimeStatusListResponse
     from ._models_py3 import IntegrationRuntimeStatusResponse
     from ._models_py3 import IntegrationRuntimeVNetProperties
+    from ._models_py3 import JobBase
+    from ._models_py3 import JobBaseInteractionEndpoints
     from ._models_py3 import LinkedIntegrationRuntime
     from ._models_py3 import LinkedIntegrationRuntimeKeyAuthorization
     from ._models_py3 import LinkedIntegrationRuntimeRbacAuthorization
@@ -86,6 +91,7 @@ try:
     from ._models_py3 import SsisProject
     from ._models_py3 import SsisVariable
     from ._models_py3 import SubResource
+    from ._models_py3 import TestJob
     from ._models_py3 import Trigger
     from ._models_py3 import TriggerDependencyReference
     from ._models_py3 import TriggerFilterParameters
@@ -101,12 +107,15 @@ try:
     from ._models_py3 import UserAccessPolicy
 except (SyntaxError, ImportError):
     from ._models import AccessPolicyResponse  # type: ignore
+    from ._models import AutomlJob  # type: ignore
     from ._models import BlobEventsTrigger  # type: ignore
     from ._models import BlobTrigger  # type: ignore
     from ._models import ChainingTrigger  # type: ignore
     from ._models import CloudError  # type: ignore
     from ._models import CmdkeySetup  # type: ignore
+    from ._models import CommandJob  # type: ignore
     from ._models import ComponentSetup  # type: ignore
+    from ._models import ComputeJobBase  # type: ignore
     from ._models import CreateLinkedIntegrationRuntimeRequest  # type: ignore
     from ._models import CustomSetupBase  # type: ignore
     from ._models import DependencyReference  # type: ignore
@@ -142,6 +151,8 @@ except (SyntaxError, ImportError):
     from ._models import IntegrationRuntimeStatusListResponse  # type: ignore
     from ._models import IntegrationRuntimeStatusResponse  # type: ignore
     from ._models import IntegrationRuntimeVNetProperties  # type: ignore
+    from ._models import JobBase  # type: ignore
+    from ._models import JobBaseInteractionEndpoints  # type: ignore
     from ._models import LinkedIntegrationRuntime  # type: ignore
     from ._models import LinkedIntegrationRuntimeKeyAuthorization  # type: ignore
     from ._models import LinkedIntegrationRuntimeRbacAuthorization  # type: ignore
@@ -179,6 +190,7 @@ except (SyntaxError, ImportError):
     from ._models import SsisProject  # type: ignore
     from ._models import SsisVariable  # type: ignore
     from ._models import SubResource  # type: ignore
+    from ._models import TestJob  # type: ignore
     from ._models import Trigger  # type: ignore
     from ._models import TriggerDependencyReference  # type: ignore
     from ._models import TriggerFilterParameters  # type: ignore
@@ -194,6 +206,7 @@ except (SyntaxError, ImportError):
     from ._models import UserAccessPolicy  # type: ignore
 
 from ._dfaz_management_client_enums import (
+    AcquisitionFunction,
     BlobEventTypes,
     DataFlowComputeType,
     DayOfWeek,
@@ -210,22 +223,29 @@ from ._dfaz_management_client_enums import (
     IntegrationRuntimeState,
     IntegrationRuntimeType,
     IntegrationRuntimeUpdateResult,
+    JobStatus,
+    JobType,
     ManagedIntegrationRuntimeNodeStatus,
+    OptimizationMetric,
     RecurrenceFrequency,
     SelfHostedIntegrationRuntimeNodeStatus,
     SsisObjectMetadataType,
+    TrainingType,
     TriggerRuntimeState,
     TumblingWindowFrequency,
 )
 
 __all__ = [
     'AccessPolicyResponse',
+    'AutomlJob',
     'BlobEventsTrigger',
     'BlobTrigger',
     'ChainingTrigger',
     'CloudError',
     'CmdkeySetup',
+    'CommandJob',
     'ComponentSetup',
+    'ComputeJobBase',
     'CreateLinkedIntegrationRuntimeRequest',
     'CustomSetupBase',
     'DependencyReference',
@@ -261,6 +281,8 @@ __all__ = [
     'IntegrationRuntimeStatusListResponse',
     'IntegrationRuntimeStatusResponse',
     'IntegrationRuntimeVNetProperties',
+    'JobBase',
+    'JobBaseInteractionEndpoints',
     'LinkedIntegrationRuntime',
     'LinkedIntegrationRuntimeKeyAuthorization',
     'LinkedIntegrationRuntimeRbacAuthorization',
@@ -298,6 +320,7 @@ __all__ = [
     'SsisProject',
     'SsisVariable',
     'SubResource',
+    'TestJob',
     'Trigger',
     'TriggerDependencyReference',
     'TriggerFilterParameters',
@@ -311,6 +334,7 @@ __all__ = [
     'TumblingWindowTriggerDependencyReference',
     'UpdateIntegrationRuntimeRequest',
     'UserAccessPolicy',
+    'AcquisitionFunction',
     'BlobEventTypes',
     'DataFlowComputeType',
     'DayOfWeek',
@@ -327,10 +351,14 @@ __all__ = [
     'IntegrationRuntimeState',
     'IntegrationRuntimeType',
     'IntegrationRuntimeUpdateResult',
+    'JobStatus',
+    'JobType',
     'ManagedIntegrationRuntimeNodeStatus',
+    'OptimizationMetric',
     'RecurrenceFrequency',
     'SelfHostedIntegrationRuntimeNodeStatus',
     'SsisObjectMetadataType',
+    'TrainingType',
     'TriggerRuntimeState',
     'TumblingWindowFrequency',
 ]
