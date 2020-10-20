@@ -8,8 +8,8 @@ import { EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { CodeModel, Operation, OperationGroup, Parameter, ParameterLocation, Property, Request, Schema, SchemaType } from '@azure-tools/codemodel';
 import { values } from "@azure-tools/linq";
 import { isArray, isNullOrUndefined } from "util";
-import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase } from '../../utils/helper';
-import { GenerationMode } from "../models";
+import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash } from '../../utils/helper';
+import { EXCLUDED_PARAMS, GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
 import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './templates/tests/ScenarioTool';
 
@@ -262,6 +262,24 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             for (let child of this.MethodParameter.schema['children'].all) {
                                                 let childParam = new Parameter(child.language.default.name, child.language.default.description, child, child.language);
                                                 childParam.language = child.language
+                                                if (!isNullOrUndefined(child.language['cli']?.['alias'])) {
+                                                    if (isNullOrUndefined(childParam.language['az']['alias'])) {
+                                                        childParam.language['az']['alias'] = [];
+                                                    }
+                                                    if (typeof (child.language['cli']['alias']) == "string") {
+                                                        if (EXCLUDED_PARAMS.indexOf(child.language['cli']['alias']) > -1) {
+                                                            child.language['cli']['alias'] = 'gen_' + child.language['cli']['alias'];
+                                                        }
+                                                        childParam.language['az']['alias'].push(changeCamelToDash(child.language['cli']['alias']));
+                                                    } else if (isArray(child.language['cli']['alias'])) {
+                                                        for (let alias of child.language['cli']['alias']) {
+                                                            if (EXCLUDED_PARAMS.indexOf(alias) > -1) {
+                                                                alias = 'gen_' + alias;
+                                                            }
+                                                            childParam.language['az']['alias'].push(changeCamelToDash(alias));
+                                                        }
+                                                    }
+                                                }
                                                 childParam['polyBaseParam'] = polyBaseParam;
                                                 allChildParam.push(childParam);
                                             }
@@ -314,7 +332,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                 mapName.pop();
                                             }
                                             if (mapName.length > 0) {
-                                                paramFlattenedName = mapName.reverse().join("_");
+                                                let tmpParamName = mapName.reverse().join("_");
+                                                if (paramFlattenedName == mapName.last || names.length > 1 && paramFlattenedName.startsWith(names[0].replace(/-/g, '_'))) {
+                                                    paramFlattenedName = tmpParamName;
+                                                }
                                             }
                                         } else if (names.length > 1) {
                                             let subgroup: string = names[0];
@@ -451,7 +472,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._configuredScenario = true;
         }
         else {
-            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
+            this._testScenario = undefined;
             this._configuredScenario = false;
         }
     }
@@ -471,6 +492,18 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get Extension_Mode() {
         return this.codeModel.info['extensionMode'];
+    }
+
+    public get CommandGroup_ExtensionMode() {
+        return this.CommandGroup?.language?.['cli']?.['groupExtensionMode'];
+    }
+
+    public get Command_ExtensionMode() {
+        return this.Command?.language?.['cli']?.['commandExtensionMode'];
+    }
+
+    public get MethodParameter_ExtensionMode() {
+        return this.MethodParameter?.language?.['cli']?.['methodExtensionMode'];
     }
 
     public get Extension_NameUnderscored() {
@@ -1096,6 +1129,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_MapsTo(param: Parameter = this.MethodParameter): string {
+        if (EXCLUDED_PARAMS.indexOf(param.language['az'].mapsto) > -1) {
+            param.language['az'].mapsto = 'gen_' + param.language['az'].mapsto;
+        }
         return param.language['az'].mapsto;
     }
 
@@ -1469,6 +1505,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Parameter_DefaultValue(this.MethodParameter);
     }
 
+    public get MethodParameter_DefaultConfigKey(): string | undefined {
+        return this.Parameter_DefaultConfigKey(this.MethodParameter);
+    }
+
     public Parameter_DefaultValue(parameter: Parameter): string | undefined {
         if (!parameter.language['az'].hasOwnProperty('default-value')) {
             if (parameter?.language?.['cli']?.hasOwnProperty('default-value')) {
@@ -1483,6 +1523,16 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
 
         return parameter.language['az']['default-value'];
+    }
+
+
+    public Parameter_DefaultConfigKey(parameter: Parameter): string | undefined {
+        if (!parameter.language['az'].hasOwnProperty('default-config-key')) {
+            if (parameter?.language?.['cli']?.hasOwnProperty('default-config-key')) {
+                parameter.language['az']['default-config-key'] = parameter.language['cli']['default-config-key'];
+            }
+        }
+        return parameter.language['az']['default-config-key'];
     }
 
     public Parameter_Description(param: Parameter = this.MethodParameter): string {
@@ -1788,7 +1838,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             for (let subProperty of paramSchema?.properties) {
                 let k = subProperty?.language['cli'].cliKey;
-                if (exampleValue[k]) {
+                if (exampleValue && exampleValue[k]) {
                     exampleValue[k] = this.FlattenProperty(subProperty, exampleValue[k]);
                 }
             }
@@ -1882,7 +1932,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
         }
 
-        if (typeof value === 'object' && value !== null) {
+        if (value !== null && typeof value === 'object') {
             for (let sub_name in value) {
                 this.FlattenExampleParameter(method_param_list, example_param, sub_name, value[sub_name], ancestors.concat(name));
             }
@@ -1981,6 +2031,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                     examples.push(example);
                 }
+                example.CommandString = this.GetExampleItems(example, false, undefined).join(" ");
+                example.WaitCommandString = this.GetExampleWait(example).join(" ");
             });
         }
         return examples;
@@ -1988,7 +2040,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GetExampleChecks(example: CommandExample): string[] {
         let ret: string[] = [];
-        if (!this.GenChecks)  return ret;
+        if (!this.GenChecks) return ret;
         let resourceObjectName = undefined;
         for (let param of example.Parameters) {
             if (example.ResourceClassName && this.resource_pool.isResource(param.defaultName) == example.ResourceClassName) {
@@ -2043,9 +2095,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             let resourceObject = this.resource_pool.findResource(example.ResourceClassName, resourceObjectName, undefined);
             if (resourceObject) {
                 let httpMethod = example.HttpMethod.toLowerCase();
-                if (['put', 'post', 'patch'].indexOf(httpMethod)>=0) {
+                if (['put', 'post', 'patch'].indexOf(httpMethod) >= 0) {
                     if (httpMethod == 'post') {
-                        resourceObject.example_params = []; 
+                        resourceObject.example_params = [];
                     }
                     for (let param of example.Parameters) {
                         resourceObject.addOrUpdateParam(param);
@@ -2188,7 +2240,8 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters, createdObjectNames);
         });
 
-        if (!this._configuredScenario) {
+        if (!this._configuredScenario && isNullOrUndefined(this._testScenario)) {
+            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
             this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool, this._testScenario);
             this.SortExamplesByDependency();
             PrintTestScenario(this._testScenario);
@@ -2367,19 +2420,19 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get IsCliCore() {
-        return this.codeModel.language['az']?.['isCliCore']? true: false;
+        return this.codeModel.language['az']?.['isCliCore'] ? true : false;
     }
 
     public get SDK_NeedSDK() {
-        return this.codeModel.language['az']?.['sdkNeeded']? true: false;
+        return this.codeModel.language['az']?.['sdkNeeded'] ? true : false;
     }
 
     public get SDK_IsTrack1() {
-        return this.codeModel.language['az']?.['sdkTrack1']? true: false;
+        return this.codeModel.language['az']?.['sdkTrack1'] ? true : false;
     }
 
     public get SDK_NoFlatten() {
-        return this.codeModel.language['az']?.['sdkNoFlatten']? true: false;
+        return this.codeModel.language['az']?.['sdkNoFlatten'] ? true : false;
     }
 
 }

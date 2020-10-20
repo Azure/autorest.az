@@ -3,29 +3,36 @@ import { exec } from 'child_process';
 import * as fs from 'fs';
 import { slow, suite, test, timeout } from 'mocha-typescript';
 import * as path from 'path';
+import { ArgumentConstants, CompatibleLevel, GenerateSdk, TargetMode } from '../plugins/models';
 import { copyRecursiveSync, deleteFolderRecursive } from "../utils/helper";
-import { Dictionary } from '@azure-tools/linq';
-import { ArgumentConstants, TargetMode, CompatibleLevel, GenerateSdk } from '../plugins/models';
 
 require('source-map-support').install();
 
-
-enum GenerateTestMode {
-    Default = "",
+enum TestMode {
+    ExtDefault = "",
+    ExtIncremental = "ext_Incremental",
     CoreDefault = "coredefault",
-    ExtNoFlatten = "extnoflatten",
-    ExtNoSdk = "extnosdk",
-    ExtNoSdkNoFlattenTrack1 = "extnosdknoflattentrack1"
+    CoreIncremental = "core_Incremental",
+    Ext_NoFlatten = "extnoflatten",
+    Ext_NoSdk = "extnosdk",
+    Ext_NoSdk_NoFlatten_Track1 = "extnosdknoflattentrack1"
 }
 
 @suite class Process {
-    private incrementalTestRPs: string[] = ["mixed-reality"];
-    private mainTestRPs: string[] = ["kusto", "synapse"];
-    private noNeedTestRPs: string[] = ["testserver"];
+    private testDimensions: Map<string, Array<TestMode>> = new Map([
+        ["attestation", [TestMode.ExtDefault]],
+        ["boolean", [TestMode.ExtDefault]],
+        ["datafactory", [TestMode.ExtDefault]],
+        ["managed-network", [TestMode.ExtDefault]],
+        ["mixed-reality", [TestMode.ExtIncremental]],
+        ["kusto", [TestMode.CoreDefault, TestMode.Ext_NoFlatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
+        ["synapse", [TestMode.CoreDefault, TestMode.Ext_NoFlatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
+        ["compute", [TestMode.CoreIncremental]]
+    ]);
 
     async runAz(directory: string, extraOption: {}) {
         let cmdOption = [];
-        for(let k in extraOption) {
+        for (let k in extraOption) {
             cmdOption.push("--" + k + "=" + extraOption[k]);
         }
         let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6271 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md " + cmdOption.join(" ");
@@ -44,7 +51,7 @@ enum GenerateTestMode {
     }
 
     async compare(dir1: string, dir2: string) {
-        let cmd = "diff -r --strip-trailing-cr " + dir1 + " " + dir2;
+        let cmd = "diff -r --exclude=gen.zip --strip-trailing-cr " + dir1 + " " + dir2;
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => {
             exec(cmd, function (error, stdout) {
@@ -61,23 +68,23 @@ enum GenerateTestMode {
 
     getOptions(testMode: string, outputDir: string) {
         let extraOption: {} = {};
-        if (testMode == GenerateTestMode.Default) {
+        if (testMode == TestMode.ExtDefault || testMode == TestMode.ExtIncremental) {
             let key = ArgumentConstants.azureCliExtFolder
             extraOption[key] = outputDir;
             return extraOption;
-        } else if (testMode == GenerateTestMode.CoreDefault) {
+        } else if (testMode == TestMode.CoreDefault || testMode == TestMode.CoreIncremental) {
             let key = ArgumentConstants.targetMode;
             extraOption[key] = TargetMode.Core;
             key = ArgumentConstants.azureCliFolder;
             extraOption[key] = outputDir;
             return extraOption;
-        } else if (testMode == GenerateTestMode.ExtNoFlatten) {
+        } else if (testMode == TestMode.Ext_NoFlatten) {
             let key = ArgumentConstants.azureCliExtFolder
             extraOption[key] = outputDir;
             key = ArgumentConstants.sdkNoFlatten;
             extraOption[key] = true;
             return extraOption;
-        } else if (testMode == GenerateTestMode.ExtNoSdk) {
+        } else if (testMode == TestMode.Ext_NoSdk) {
             let key = ArgumentConstants.azureCliExtFolder
             extraOption[key] = outputDir;
             key = ArgumentConstants.sdkNoFlatten;
@@ -85,7 +92,7 @@ enum GenerateTestMode {
             key = ArgumentConstants.generateSDK;
             extraOption[key] = GenerateSdk.No;
             return extraOption;
-        } else if (testMode == GenerateTestMode.ExtNoSdkNoFlattenTrack1) {
+        } else if (testMode == TestMode.Ext_NoSdk_NoFlatten_Track1) {
             let key = ArgumentConstants.azureCliExtFolder
             extraOption[key] = outputDir;
             key = ArgumentConstants.sdkNoFlatten;
@@ -94,7 +101,7 @@ enum GenerateTestMode {
             extraOption[key] = GenerateSdk.No;
             key = ArgumentConstants.compatibleLevel;
             extraOption[key] = CompatibleLevel.Track1;
-            return extraOption;   
+            return extraOption;
         }
         return extraOption;
     }
@@ -128,47 +135,42 @@ enum GenerateTestMode {
     @test(slow(600000), timeout(1500000)) async acceptanceSuite() {
         const dir = `${__dirname}/../../src/test/scenarios/`;
         const folders = fs.readdirSync(dir);
-        let result = true;
         let msg = "";
         let finalResult = true;
-        for (const each of folders) {
-            if (this.noNeedTestRPs.indexOf(each) == -1) { // Not run test server now
-                console.log(`Processing: ${each}`);
+        for (const rp of folders) {
+            let result = true;
+            console.log("Start Processing: " + rp);
 
-                // Remove tmpoutput
-                deleteFolderRecursive(path.join(dir, each, "tmpoutput"));
-                fs.mkdirSync(path.join(dir, each, "tmpoutput"));
+            // Remove tmpoutput
+            deleteFolderRecursive(path.join(dir, rp, "tmpoutput"));
+            fs.mkdirSync(path.join(dir, rp, "tmpoutput"));
 
-                if (this.incrementalTestRPs.indexOf(each) > -1) { // Handle for incremental
-                    copyRecursiveSync(path.join(dir, each, "basecli", "src"), path.join(dir, each, "tmpoutput", "src"));
-                }
-                try {
-                    let extraOption: {} = {};
-                    let outputDir = "";
-                    if (this.mainTestRPs.indexOf(each) > -1) {
-                        for(let testMode of [GenerateTestMode.CoreDefault, GenerateTestMode.ExtNoFlatten, GenerateTestMode.ExtNoSdk, GenerateTestMode.ExtNoSdkNoFlattenTrack1]) {
-                            if (testMode == GenerateTestMode.CoreDefault) {
-                                copyRecursiveSync(path.join(dir, each, "basecli"), path.join(dir, each, "tmpoutput", testMode));
-                            }
-                            outputDir = dir + each + "/tmpoutput/" + testMode;
-                            extraOption = this.getOptions(testMode, outputDir);
-                            result = await this.runSingleTest(dir, each, extraOption, testMode); 
+            try {
+                const dimensions: Array<TestMode> = this.testDimensions.get(rp);
+                if (dimensions != null) {
+                    for (const dimension of dimensions) {
+                        let outputDir = "";
+                        if (dimension == TestMode.CoreDefault || dimension == TestMode.ExtIncremental || dimension == TestMode.CoreIncremental) {
+                            copyRecursiveSync(path.join(dir, rp, "basecli"), path.join(dir, rp, "tmpoutput", dimension));
                         }
-                    } else {
-                        outputDir = dir + each + "/tmpoutput/";
-                        extraOption = this.getOptions(GenerateTestMode.Default, outputDir);
-                        result = await this.runSingleTest(dir, each, extraOption, GenerateTestMode.Default);
+                        outputDir = path.join(dir, rp, "tmpoutput", dimension);
+                        let extraOption = this.getOptions(dimension, outputDir);
+                        result = await this.runSingleTest(dir, rp, extraOption, dimension);
                     }
-                } catch (error) {
-                    console.log(msg);
-                    result = false;
-                    break;
                 }
-                if (!result) {
-                    finalResult = false;
+                else {
+                    console.log(rp + " is not configure, pass here");
                 }
-                assert.strictEqual(result, true, msg);
             }
+            catch (error) {
+                console.log(msg);
+                result = false;
+                break;
+            }
+            if (!result) {
+                finalResult = false;
+            }
+            //assert.strictEqual(result, true, msg);
         }
         assert.strictEqual(finalResult, true, msg);
     }

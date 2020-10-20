@@ -31,10 +31,22 @@ export enum GenerateSdk {
 }
 
 export enum SystemType {
-    Darwin = "Darwin", 
-    Linux = "Linux", 
+    Darwin = "Darwin",
+    Linux = "Linux",
     windows = "windows"
 }
+
+export let EXCLUDED_PARAMS = [
+    'self',
+    'raw',
+    'polling',
+    'custom_headers',
+    'operation_config',
+    'content_version',
+    'kwargs',
+    'client',
+    'no_wait'
+];
 
 export class PathConstants {
     public static readonly generatedFolder: string = "generated";
@@ -48,13 +60,24 @@ export class PathConstants {
     public static readonly clientFactoryFile: string = "_client_factory.py";
     public static readonly validatorsFile: string = "_validators.py";
     public static readonly actionFile: string = "action.py";
+    public static readonly actionFileOldVersion: string = "_actions.py";
     public static readonly initFile: string = "__init__.py";
     public static readonly helpFile: string = "_help.py";
+    public static readonly reportFile: string = "report.md";
     public static readonly preparersFile: string = "preparers.py";
     public static readonly metadataFile: string = "azext_metadata.json";
     public static readonly setupPyFile: string = "setup.py";
     public static readonly docSourceJsonFile: string = "/doc/sphinx/azhelpgen/doc_source_map.json";
-    public static readonly mainSetUpPyFile: string = "src/azure-cli/setup.py";
+    public static readonly mainSetupPyFile: string = "src/azure-cli/setup.py";
+    public static readonly readmeFile: string = "README.md";
+
+    public static fullTestSceanrioFile(rpName: string): string {
+        return "test_" + rpName + "_scenario.py";
+    }
+
+    public static incTestScenarioFile(rpName: string): string {
+        return "test_" + rpName + "_scenario_incrementalGenerated.py";
+    }
 }
 
 export class ArgumentConstants {

@@ -59,6 +59,8 @@ export class CommandExample {
     public Method_IsLongRun: boolean;
     public MethodParams: MethodParam[];
     public ExampleObj: any;
+    public CommandString: string;
+    public WaitCommandString: string;
 }
 
 export interface CodeModelAz {
@@ -82,6 +84,9 @@ export interface CodeModelAz {
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
     Extension_Mode: string;   
+    CommandGroup_ExtensionMode: string;
+    Command_ExtensionMode: string;
+    MethodParameter_ExtensionMode: string;
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;
@@ -157,6 +162,7 @@ export interface CodeModelAz {
     MethodParameter_EnumValues: string[];
     MethodParameters_AddPolySubClass(oriParam, para): boolean;
     MethodParameter_DefaultValue: any | undefined;
+    MethodParameter_DefaultConfigKey: string | undefined;
     Parameter_Type(Parameter): string;
     Schema_Type(Schema): string;
     Parameter_IsList(Parameter): boolean;
@@ -177,6 +183,7 @@ export interface CodeModelAz {
     Parameter_NamePython(Parameter): string;
     Parameter_Description(Parameter): string;
     Parameter_DefaultValue(Parameter): any | undefined;
+    Parameter_DefaultConfigKey(Parameter): string | undefined;
     Schema_Description(Schema): string;
     Schema_FlattenedFrom(Schema): Schema;
 

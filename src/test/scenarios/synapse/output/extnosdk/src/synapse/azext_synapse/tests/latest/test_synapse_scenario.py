@@ -18,6 +18,7 @@ from azure.cli.testsdk import ResourceGroupPreparer
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
+# Env setup
 @try_manual
 def setup(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16,
           rg_17):
@@ -1407,12 +1408,14 @@ def step_delete_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, 
              checks=[])
 
 
+# Env cleanup
 @try_manual
 def cleanup(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16,
             rg_17):
     pass
 
 
+# Testcase
 @try_manual
 def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
                   rg_16, rg_17):

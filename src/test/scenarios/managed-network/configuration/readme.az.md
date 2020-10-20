@@ -46,6 +46,10 @@ cli:
             param: 'managementGroups'
         json: true
       - where:
+            group: 'ManagedNetworks'
+        set:
+            groupExtensionMode: 'experimental'
+      - where:
             type: 'ManagedNetwork'
             prop: 'properties'
         json: true

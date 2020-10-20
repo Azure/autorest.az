@@ -31,11 +31,11 @@ CLASSIFIERS = [
 ]
 
 DEPENDENCIES = [
-    'azure-mgmt-synapse~=0.3.0'
+    'azure-mgmt-synapse~=0.4.0'
 ]
 
 try:
-    from .manual.dependency import DEPENDENCIES
+    from azext_synapse.manual.dependency import DEPENDENCIES
 except ImportError:
     pass
 

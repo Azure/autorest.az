@@ -88,9 +88,6 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
 function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean = false) {
     let output_body: string[] = [];
     let opNames = model.Method_NameAz.split(' ');
-    if (model.Command_Name == "datafactory pipeline update") {
-        model.Command;
-    }
     let valueToMatch = null;
     if (opNames.length > 1) {
         valueToMatch = Capitalize(ToCamelCase(opNames[0]));
@@ -107,6 +104,14 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 skip = false;
             }
             if ((model.MethodParameter_IsCliFlattened && (!isNullOrUndefined(model.MethodParameter.language['cli']['cliFlattenTrace']) || model.SDK_NoFlatten || !isNullOrUndefined(model.MethodParameter['extensions']?.['cli-poly-as-resource-base-schema']))) || model.Method.extensions?.['cli-split-operation-original-operation']?.['genericSetterParam'] == model.MethodParameter || (model.MethodParameter_IsFlattened && model.MethodParameter['extensions']?.['cli-flattened'])) {
+                while (!isNullOrUndefined(model.MethodParameter.language?.['cli']?.['cliFlattenTrace']) && model.MethodParameter.language?.['cli']?.['cliFlattenTrace']?.length < originalParameterStack.length) {
+                    originalParameterStack.pop();
+                    originalParameterNameStack.pop();
+                }
+                if (!isNullOrUndefined(model.MethodParameter.language?.['cli']?.['cliFlattenTrace']) && model.MethodParameter.language?.['cli']?.['cliFlattenTrace']?.length == originalParameterStack.length && (isNullOrUndefined(model.Method.extensions?.['cli-poly-as-resource-original-operation']) || isNullOrUndefined((model.Method.extensions?.['cli-split-operation-original-operation'])))) {
+                    originalParameterStack.pop();
+                    originalParameterNameStack.pop();
+                } 
                 if (!addGenericSchema && needGeneric && !isNullOrUndefined(model.CommandGroup.language['az']['genericTargetSchema']) && model.Method.extensions?.['cli-split-operation-original-operation']?.['genericSetterParam'] != model.MethodParameter) {
                     originalParameterStack.push(
                         new Parameter(model.CommandGroup.language['az']['genericTargetSchema'].language['python']['name'], 
@@ -129,11 +134,15 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
                     if (!isNullOrUndefined(flattenedFrom) && flattenedFrom != originalParameterStack.last.schema) {
                         // If last originalParameter in the stack doesn't have language.az. it means this original Parameter was added because of the flattenedParam in python  
-                        if (flattenedFrom != originalParameterStack.last.schema && isNullOrUndefined(originalParameterStack.last.language['az'])) {
-                            originalParameterNameStack.pop();
+                        while (!isNullOrUndefined(model.MethodParameter.language?.['cli']?.['cliFlattenTrace']) && model.MethodParameter.language?.['cli']?.['cliFlattenTrace']?.length < originalParameterStack.length) {
                             originalParameterStack.pop();
+                            originalParameterNameStack.pop();
                         }
-                        if (!originalParameterStack.last.language['cli']['moved-from-python']) {
+                        if (!isNullOrUndefined(model.MethodParameter.language?.['cli']?.['cliFlattenTrace']) && model.MethodParameter.language?.['cli']?.['cliFlattenTrace']?.length == originalParameterStack.length && (isNullOrUndefined(model.Method.extensions?.['cli-poly-as-resource-original-operation']) || isNullOrUndefined((model.Method.extensions?.['cli-split-operation-original-operation'])))) {
+                            originalParameterStack.pop();
+                            originalParameterNameStack.pop();
+                        } 
+                        if (originalParameterStack.last?.language?.['cli']?.['moved-from-python'] != true) {
                             originalParameterStack.push(
                                 new Parameter(flattenedFrom.language['python']['name'], 
                                     flattenedFrom.language['python']['description'],
@@ -145,7 +154,6 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                                 output_body = output_body.concat(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
                             }
                         }
-                        
                     }
 
                     if (model.MethodParameter['targetProperty']?.['isDiscriminator'] == true) {
@@ -231,9 +239,6 @@ function GetSingleCommandDef(model: CodeModelAz, required: any) {
 
     let call = "def " + updatedMethodName + "(";
     let indent = " ".repeat(call.length);
-    if (model.Command_Name == "synapse sql-pool-blob-auditing-policy update") {
-        model.Command;
-    }
 
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     let hasLongRun = false;
@@ -538,13 +543,13 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
         let parameterPair = '';
         let m4FlattenedFrom = param.language['cli']?.['m4FlattenedFrom']
         if (isNullOrUndefined(m4FlattenedFrom) || m4FlattenedFrom.length <= 0) {
-            parameterPair = GetSimpleCallItem(model, param, required);
+            parameterPair = GetSimpleCallItem(model, param, required, false, null, optionName);
         } else {
             let items = [];
             for(let mparam of m4FlattenedFrom) {
                 items.push(GetSimpleCallItem(model, mparam, required, true, param));
             }
-            parameterPair = items.join(",\n"); 
+            parameterPair = items.join(",\n" + indent); 
         }
 
         if (methodCall.endsWith("(")) {
@@ -560,7 +565,7 @@ function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: O
     return methodCall.split("\n");
 }
 
-function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, m4Flattened: boolean = false, originParam: Parameter = null): string {
+function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, m4Flattened: boolean = false, originParam: Parameter = null, optionName: string = null): string {
     let parameterPair = "";
     if (m4Flattened && !isNullOrUndefined(originParam)) {
         let paramNamePython = model.Parameter_NamePython(originParam);
@@ -583,7 +588,7 @@ function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, 
             }
         }
         else {
-            parameterPair = paramNamePython + "=" + model.Parameter_MapsTo(originParam) + "['" + keyName + "']";
+            parameterPair = keyName + "=" + model.Parameter_MapsTo(originParam) + "['" + keyName + "']";
         }       
     } else {
         let paramNamePython = model.Parameter_NamePython(param);
@@ -603,7 +608,11 @@ function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, 
             }
         }
         else {
-            parameterPair = paramNamePython + "=" + model.Parameter_MapsTo(param);
+            if (!isNullOrUndefined(optionName)) {
+                parameterPair = paramNamePython + "=" + optionName;
+            } else {
+                parameterPair = paramNamePython + "=" + model.Parameter_MapsTo(param);
+            }
         }
     }
     return parameterPair;
@@ -657,7 +666,7 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
                 for(let mparam of m4FlattenedFrom) {
                     items.push(GetSimpleCallItem(model, mparam, required, true, param));
                 }
-                parameterPair = items.join(",\n" + indent); 
+                parameterPair = items.join("," + "\n" + indent); 
             }
             
 

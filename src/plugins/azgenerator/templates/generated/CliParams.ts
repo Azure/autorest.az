@@ -45,9 +45,9 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
                     }
                     if (command_output.length > 0) {
                         hasCommandParamContent = true;
-                    }         
+                    }
                     output_args = output_args.concat(command_output);
-     
+
                 }
                 while (model.SelectNextCommand());
                 if (needWait && show_output.length > 1) {
@@ -75,7 +75,7 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     if (parameterImports.length > 0) {
         header.addFromImport(model.CliCoreLib + ".commands.parameters", parameterImports);
     }
-    
+
     let validatorImports: string[] = [];
     if (hasLocationValidator) {
         validatorImports.push("get_default_location_from_resource_group");
@@ -93,7 +93,7 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
         } else {
             header.addFromImport("azext_" + model.Extension_NameUnderscored + ".action", actions);
         }
-        
+
     }
 
     var output: string[] = [];
@@ -102,7 +102,7 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     output = output.concat(output_args);
 
     output.push("");
-    
+
 
     output.forEach(element => {
         if (element.length > 120) header.disableLineTooLong = true;
@@ -128,7 +128,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
         do {
             let originalOperation = model.Method_GetOriginalOperation;
             if (!isNullOrUndefined(originalOperation)) {
-                for(let param of originalOperation.parameters) {
+                for (let param of originalOperation.parameters) {
                     if (model.Parameter_InGlobal(param)) {
                         continue;
                     }
@@ -138,14 +138,14 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if (param?.schema?.type == SchemaType.Constant || param['readOnly']) {
                         continue;
                     }
-                    if(!isNullOrUndefined(param?.language?.python?.name)) {
+                    if (!isNullOrUndefined(param?.language?.python?.name)) {
                         allPythonParam.set(param.language.python.name, true);
                     }
-                    
+
                 }
-                if(!isNullOrUndefined(originalOperation.requests[0].parameters)) {
-                    for(let param of originalOperation.requests[0].parameters) {
-                        if(model.Parameter_InGlobal(param)) {
+                if (!isNullOrUndefined(originalOperation.requests[0].parameters)) {
+                    for (let param of originalOperation.requests[0].parameters) {
+                        if (model.Parameter_InGlobal(param)) {
                             continue;
                         }
                         if (model.Parameter_IsFlattened(param) == true) {
@@ -154,7 +154,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         if (param?.schema?.type == SchemaType.Constant || param['readOnly']) {
                             continue;
                         }
-                        if(!isNullOrUndefined(param?.language?.python?.name)) {
+                        if (!isNullOrUndefined(param?.language?.python?.name)) {
                             allPythonParam.set(param.language.python.name, true);
                         }
                     }
@@ -175,7 +175,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         allPythonParam.set(model.MethodParameter_NamePython, true);
                     }
                     let parameterName = model.MethodParameter_MapsTo;
-                    if(!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
+                    if (!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.['isDiscriminator']) {
                         continue;
                     }
                     if (allPythonParam.has(parameterName)) {
@@ -189,7 +189,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                             model.MethodParameter.language['az']['alias'] = [];
                         }
                         model.MethodParameter.language['az']['alias'].push(parameterName.substr(0, parameterName.length - 1));
-                        
+
                     } else if (parameterName.endsWith('name') && !model.Method['hasName'] && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase()) {
                         if (isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
                             model.MethodParameter.language['az']['alias'] = [];
@@ -201,27 +201,27 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if (!isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
                         argument = "        c.argument('" + parameterName + "'";
                         let aliases = model.MethodParameter.language['az']['alias'];
-                        if(aliases.length > 0) {
+                        if (aliases.length > 0) {
                             let alias_str = [];
                             let ori_alias = [];
-                            for(let alias of aliases) {
+                            for (let alias of aliases) {
                                 alias = alias.replace(/'/g, '');
                                 let tmpAlias = alias;
-                                if(alias.length == 1) {
+                                if (alias.length == 1) {
                                     alias = "'-" + alias + "'";
-                                } else if(alias.length > 1) {
+                                } else if (alias.length > 1) {
                                     alias = "'--" + alias.replace(/_/g, '-') + "'";
                                 }
-                                if(alias_str.indexOf(alias) < 0) {
+                                if (alias_str.indexOf(alias) < 0) {
                                     alias_str.push(alias);
                                     ori_alias.push(tmpAlias)
                                 }
-                                
+
                             }
                             model.MethodParameter.language['az']['alias'] = ori_alias;
                             argument += ", options_list=[" + alias_str.join(', ') + "]";
                         }
-                        
+
                     }
 
                     if (allParam.has(parameterName)) {
@@ -268,9 +268,9 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         } else {
                             argument += ", nargs='*'";
                         }
-                        
+
                     } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
-                        if(model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                        if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             baseParam = model.MethodParameter;
                             continue;
                         }
@@ -294,16 +294,16 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if (!needSkip) {
                         if (model.MethodParameter_Type == SchemaType.Integer) {
                             argument += ", type=int"
-                        } else if(model.MethodParameter_Type == SchemaType.Number) {
+                        } else if (model.MethodParameter_Type == SchemaType.Number) {
                             argument += ", type=float"
-                        } else if(model.MethodParameter_Type == SchemaType.String) {
+                        } else if (model.MethodParameter_Type == SchemaType.String) {
                             argument += ", type=str"
                         }
-                        
+
                         argument += ", help='" + EscapeString(model.MethodParameter_Description).trimRight();
                         if (model.MethodParameter_IsList && !model.MethodParameter_IsSimpleArray) {
                             let netDescription = model.MethodParameter_Description.trim();
-                            if (netDescription.length>0 && netDescription[netDescription.length-1].match(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)) {
+                            if (netDescription.length > 0 && netDescription[netDescription.length - 1].match(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)) {
                                 argument += ".";
                             }
                             if (model.MethodParameter_IsListOfSimple) {
@@ -318,7 +318,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                                         options = GetActionOptions(model, model.MethodParameter);
                                     }
                                 }
-                                if (options.length>0) {
+                                if (options.length > 0) {
                                     // for those object has known KEYs, the help is in the _help.py file
                                 }
                                 else {
@@ -337,27 +337,37 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                             argument += " Swagger name=" + model.MethodParameter_CliKey;
                         }
                         argument += "'";
-                   
+
                         if (!isNullOrUndefined(baseParam) && model.MethodParameter['polyBaseParam'] == baseParam) {
                             argument += ", arg_group='" + Capitalize(ToCamelCase(model.Parameter_MapsTo(baseParam))) + "'";
                         }
                     }
-                    if(!model.Method_NameAz.startsWith('list') && !model.Method_NameAz.split(' ').last.startsWith('create')) {
-                        if(!isNullOrUndefined(model.MethodParameter_IdPart)) {
+                    if (!model.Method_NameAz.startsWith('list') && !model.Method_NameAz.split(' ').last.startsWith('create')) {
+                        if (!isNullOrUndefined(model.MethodParameter_IdPart)) {
                             argument += ", id_part='" + model.MethodParameter_IdPart + "'";
                         }
                     }
-                        
+
+                    if (!isNullOrUndefined(model.MethodParameter_DefaultConfigKey)) {
+                        argument += ", configured_default='" + model.MethodParameter_DefaultConfigKey + "'";
+                    }
+                    let parameterExtraInfo = "";
+                    if (model.MethodParameter_ExtensionMode == 'experimental') {
+                        parameterExtraInfo = ", is_experimental=True";
+                    } else if (model.MethodParameter_ExtensionMode == 'preview') {
+                        parameterExtraInfo = ", is_preview=True";
+                    }
+                    argument += parameterExtraInfo;
                     argument += ")";
-                    
+
                     ToMultiLine(argument, output_args);
-                } while(model.SelectNextMethodParameter());
+                } while (model.SelectNextMethodParameter());
             }
         } while (model.SelectNextMethod());
     }
-    if(needGeneric && allPythonParam.size > 0) {
+    if (needGeneric && allPythonParam.size > 0) {
         let argument = "        c.ignore(";
-        for(let k of allPythonParam.keys()) {
+        for (let k of allPythonParam.keys()) {
             argument += "'" + k + "'" + ", ";
         }
         argument = argument.slice(0, -2) + ")";
@@ -394,7 +404,7 @@ function GetActionOptions(model: CodeModelAz, param: Parameter, keyToMatch: stri
                 if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch) && model.Parameter_NamePython(model.SubMethodParameter) == keyToMatch) {
                     continue;
                 }
-                let azName =model.Parameter_NameAz(model.SubMethodParameter)
+                let azName = model.Parameter_NameAz(model.SubMethodParameter)
                 if (azName) {
                     options.push(azName);
                 }
@@ -402,6 +412,6 @@ function GetActionOptions(model: CodeModelAz, param: Parameter, keyToMatch: stri
         }
         model.ExitSubMethodParameters();
     }
-   
+
     return options;
 }
