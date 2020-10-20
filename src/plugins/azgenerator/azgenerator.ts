@@ -58,7 +58,8 @@ export async function processRequest(host: Host) {
         for (let f in files) {
             if (!isNullOrUndefined(files[f])) {
                 host.WriteFile(f, files[f].join(EOL));
-            }  
+            }
+            
         }
     } catch (E) {
         if (debug) {
