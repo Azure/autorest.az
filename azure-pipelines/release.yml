@@ -30,7 +30,7 @@ stages:
       steps:
       - task: NodeTool@0
         inputs:
-          versionSpec: '10.17.0'
+          versionSpec: '12.16.1'
         displayName: 'Install Node.js'
       - script: |
           echo -e "\e[32m[$(date -u)] LOG: Ensure latest npm is installed"
@@ -70,7 +70,7 @@ stages:
           downloadPath: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
       - task: NodeTool@0
         inputs:
-          versionSpec: '10.17.0'
+          versionSpec: '12.16.1'
         displayName: 'Install Node.js'
       - task: UsePythonVersion@0
         displayName: 'Use Python 3.6'
@@ -148,7 +148,7 @@ stages:
       steps:
       - task: NodeTool@0
         inputs:
-          versionSpec: '10.17.0'
+          versionSpec: '12.16.1'
         displayName: 'Install Node.js'
       - script: |
           LAST_TAG_COMMIT_HASH=$(git rev-list --tags --max-count=1)
@@ -213,7 +213,7 @@ stages:
       steps:
       - task: NodeTool@0
         inputs:
-          versionSpec: '10.17.0'
+          versionSpec: '12.16.1'
         displayName: 'Install Node.js'
       - task: DownloadBuildArtifacts@0
         inputs:
@@ -244,7 +244,7 @@ stages:
       steps:
       - task: NodeTool@0
         inputs:
-          versionSpec: '10.17.0'
+          versionSpec: '12.16.1'
         displayName: 'Install Node.js'
       - task: DownloadBuildArtifacts@0
         inputs:
@@ -281,7 +281,7 @@ stages:
     steps:
     - task: NodeTool@0
       inputs:
-        versionSpec: '10.17.0'
+        versionSpec: '12.16.1'
       displayName: 'Install Node.js'
     - script: |
         REPO_URL_REPLACE="$(USER_GITHUB_TOKEN)@github"
