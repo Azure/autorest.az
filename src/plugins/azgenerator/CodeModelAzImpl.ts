@@ -476,6 +476,10 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._configuredScenario = false;
         }
     }
+    public get ConfiguredScenario(): boolean{
+        // judge test-scenario whether have value
+        return this._configuredScenario
+    }
 
     public SelectFirstExtension(): boolean {
         // support only one initially
