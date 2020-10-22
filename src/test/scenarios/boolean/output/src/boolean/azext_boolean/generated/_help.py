@@ -19,30 +19,30 @@ helps['boolean bool'] = """
 
 helps['boolean bool get-false'] = """
     type: command
-    short-summary: "Get false Boolean value"
+    short-summary: "Get false Boolean value."
 """
 
 helps['boolean bool get-invalid'] = """
     type: command
-    short-summary: "Get invalid Boolean value"
+    short-summary: "Get invalid Boolean value."
 """
 
 helps['boolean bool get-null'] = """
     type: command
-    short-summary: "Get null Boolean value"
+    short-summary: "Get null Boolean value."
 """
 
 helps['boolean bool get-true'] = """
     type: command
-    short-summary: "Get true Boolean value"
+    short-summary: "Get true Boolean value."
 """
 
 helps['boolean bool put-false'] = """
     type: command
-    short-summary: "Set Boolean value false"
+    short-summary: "Set Boolean value false."
 """
 
 helps['boolean bool put-true'] = """
     type: command
-    short-summary: "Set Boolean value true"
+    short-summary: "Set Boolean value true."
 """

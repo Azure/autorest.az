@@ -115,7 +115,7 @@ helps['synapse operation'] = """
 
 helps['synapse operation get-azure-async-header-result'] = """
     type: command
-    short-summary: "Get the status of an operation"
+    short-summary: "Get the status of an operation."
     examples:
       - name: Get azure async operation header result
         text: |-
@@ -125,7 +125,7 @@ helps['synapse operation get-azure-async-header-result'] = """
 
 helps['synapse operation get-location-header-result'] = """
     type: command
-    short-summary: "Get the result of an operation"
+    short-summary: "Get the result of an operation."
     examples:
       - name: Get location header result
         text: |-
@@ -140,7 +140,7 @@ helps['synapse ip-firewall-rule'] = """
 
 helps['synapse ip-firewall-rule list'] = """
     type: command
-    short-summary: "Returns a list of firewall rules"
+    short-summary: "Returns a list of firewall rules."
     examples:
       - name: List IP firewall rules in a workspace
         text: |-
@@ -150,7 +150,7 @@ helps['synapse ip-firewall-rule list'] = """
 
 helps['synapse ip-firewall-rule show'] = """
     type: command
-    short-summary: "Get a firewall rule"
+    short-summary: "Get a firewall rule."
     examples:
       - name: Create an IP firewall rule
         text: |-
@@ -160,7 +160,7 @@ helps['synapse ip-firewall-rule show'] = """
 
 helps['synapse ip-firewall-rule create'] = """
     type: command
-    short-summary: "Create a firewall rule"
+    short-summary: "Create a firewall rule."
     examples:
       - name: Create an IP firewall rule
         text: |-
@@ -170,12 +170,12 @@ helps['synapse ip-firewall-rule create'] = """
 
 helps['synapse ip-firewall-rule update'] = """
     type: command
-    short-summary: "Update a firewall rule"
+    short-summary: "Update a firewall rule."
 """
 
 helps['synapse ip-firewall-rule delete'] = """
     type: command
-    short-summary: "Deletes a firewall rule"
+    short-summary: "Deletes a firewall rule."
     examples:
       - name: Delete an IP firewall rule from a workspace
         text: |-
@@ -185,7 +185,7 @@ helps['synapse ip-firewall-rule delete'] = """
 
 helps['synapse ip-firewall-rule replace-all'] = """
     type: command
-    short-summary: "Replaces firewall rules"
+    short-summary: "Replaces firewall rules."
     examples:
       - name: Replace all IP firewall rules in a workspace
         text: |-
@@ -220,7 +220,7 @@ helps['synapse sql-pool'] = """
 
 helps['synapse sql-pool list'] = """
     type: command
-    short-summary: "List all SQL pools"
+    short-summary: "List all SQL pools."
     examples:
       - name: List SQL Analytics pools in a workspace
         text: |-
@@ -232,7 +232,7 @@ helps['synapse sql-pool list'] = """
 
 helps['synapse sql-pool show'] = """
     type: command
-    short-summary: "Get SQL pool properties"
+    short-summary: "Get SQL pool properties."
     examples:
       - name: Get a SQL Analytics pool
         text: |-
@@ -242,7 +242,7 @@ helps['synapse sql-pool show'] = """
 
 helps['synapse sql-pool create'] = """
     type: command
-    short-summary: "Create a SQL pool"
+    short-summary: "Create a SQL pool."
     parameters:
       - name: --sku
         short-summary: "SQL pool SKU"
@@ -262,7 +262,7 @@ helps['synapse sql-pool create'] = """
 
 helps['synapse sql-pool update'] = """
     type: command
-    short-summary: "Apply a partial update to a SQL pool"
+    short-summary: "Apply a partial update to a SQL pool."
     parameters:
       - name: --sku
         short-summary: "SQL pool SKU"
@@ -282,7 +282,7 @@ helps['synapse sql-pool update'] = """
 
 helps['synapse sql-pool delete'] = """
     type: command
-    short-summary: "Delete a SQL pool"
+    short-summary: "Delete a SQL pool."
     examples:
       - name: Delete a SQL Analytics pool
         text: |-
@@ -292,7 +292,7 @@ helps['synapse sql-pool delete'] = """
 
 helps['synapse sql-pool pause'] = """
     type: command
-    short-summary: "Pause a SQL pool"
+    short-summary: "Pause a SQL pool."
     examples:
       - name: Pause a SQL Analytics pool
         text: |-
@@ -313,7 +313,7 @@ ult-SQL-SouthEastAsia/providers/Microsoft.Synapse/workspaces/testsvr/sqlPools/ne
 
 helps['synapse sql-pool resume'] = """
     type: command
-    short-summary: "Resume a SQL pool"
+    short-summary: "Resume a SQL pool."
     examples:
       - name: Resume a SQL Analytics pool
         text: |-
@@ -342,7 +342,7 @@ helps['synapse sql-pool-metadata-sync-config'] = """
 
 helps['synapse sql-pool-metadata-sync-config show'] = """
     type: command
-    short-summary: "Get the metadata sync configuration for a SQL pool"
+    short-summary: "Get the metadata sync configuration for a SQL pool."
     examples:
       - name: Get metadata sync config for a SQL Analytics pool
         text: |-
@@ -352,7 +352,7 @@ helps['synapse sql-pool-metadata-sync-config show'] = """
 
 helps['synapse sql-pool-metadata-sync-config create'] = """
     type: command
-    short-summary: "Set the metadata sync configuration for a SQL pool"
+    short-summary: "Set the metadata sync configuration for a SQL pool."
     examples:
       - name: Set metadata sync config for a SQL Analytics pool
         text: |-
@@ -367,7 +367,7 @@ helps['synapse sql-pool-operation-result'] = """
 
 helps['synapse sql-pool-operation-result get-location-header-result'] = """
     type: command
-    short-summary: "Get the status of a SQL pool operation"
+    short-summary: "Get the status of a SQL pool operation."
     examples:
       - name: Get the result of an operation on a SQL Analytics pool
         text: |-
@@ -383,7 +383,7 @@ helps['synapse sql-pool-geo-backup-policy'] = """
 
 helps['synapse sql-pool-geo-backup-policy show'] = """
     type: command
-    short-summary: "Get the specified SQL pool geo backup policy"
+    short-summary: "Get the specified SQL pool geo backup policy."
     examples:
       - name: Get Sql pool geo backup policy
         text: |-
@@ -398,7 +398,7 @@ helps['synapse sql-pool-data-warehouse-user-activity'] = """
 
 helps['synapse sql-pool-data-warehouse-user-activity show'] = """
     type: command
-    short-summary: "Gets the user activities of a SQL pool which includes running and suspended queries"
+    short-summary: "Gets the user activities of a SQL pool which includes running and suspended queries."
     examples:
       - name: Get a SQL Analytics pool user activity
         text: |-
@@ -413,7 +413,7 @@ helps['synapse sql-pool-restore-point'] = """
 
 helps['synapse sql-pool-restore-point list'] = """
     type: command
-    short-summary: "Get SQL pool backup information"
+    short-summary: "Get SQL pool backup information."
     examples:
       - name: Get a list of restore points of a SQL Analytics pool
         text: |-
@@ -554,7 +554,7 @@ helps['synapse sql-pool-sensitivity-label'] = """
 
 helps['synapse sql-pool-sensitivity-label create'] = """
     type: command
-    short-summary: "Create the sensitivity label of a given column in a Sql pool"
+    short-summary: "Create the sensitivity label of a given column in a Sql pool."
     examples:
       - name: Updates the sensitivity label of a given column with all parameters
         text: |-
@@ -566,12 +566,12 @@ helps['synapse sql-pool-sensitivity-label create'] = """
 
 helps['synapse sql-pool-sensitivity-label update'] = """
     type: command
-    short-summary: "Update the sensitivity label of a given column in a Sql pool"
+    short-summary: "Update the sensitivity label of a given column in a Sql pool."
 """
 
 helps['synapse sql-pool-sensitivity-label delete'] = """
     type: command
-    short-summary: "Deletes the sensitivity label of a given column in a Sql pool"
+    short-summary: "Deletes the sensitivity label of a given column in a Sql pool."
     examples:
       - name: Deletes the sensitivity label of a given column
         text: |-
@@ -581,7 +581,7 @@ helps['synapse sql-pool-sensitivity-label delete'] = """
 
 helps['synapse sql-pool-sensitivity-label disable-recommendation'] = """
     type: command
-    short-summary: "Disables sensitivity recommendations on a given column"
+    short-summary: "Disables sensitivity recommendations on a given column."
     examples:
       - name: Disables sensitivity recommendations on a given column
         text: |-
@@ -592,7 +592,7 @@ helps['synapse sql-pool-sensitivity-label disable-recommendation'] = """
 helps['synapse sql-pool-sensitivity-label enable-recommendation'] = """
     type: command
     short-summary: "Enables sensitivity recommendations on a given column (recommendations are enabled by default on \
-all columns)"
+all columns)."
     examples:
       - name: Enables sensitivity recommendations on a given column
         text: |-
@@ -783,7 +783,7 @@ helps['synapse sql-pool-vulnerability-assessment-scan list'] = """
 
 helps['synapse sql-pool-vulnerability-assessment-scan export'] = """
     type: command
-    short-summary: "Convert an existing scan result to a human readable format. If already exists nothing happens"
+    short-summary: "Convert an existing scan result to a human readable format. If already exists nothing happens."
     examples:
       - name: Export a database's vulnerability assessment scan results.
         text: |-
@@ -898,16 +898,20 @@ helps['synapse workspace'] = """
 
 helps['synapse workspace list'] = """
     type: command
-    short-summary: "Returns a list of workspaces in a subscription"
+    short-summary: "Returns a list of workspaces in a resource group And Returns a list of workspaces in a \
+subscription."
     examples:
       - name: List workspaces in resource group
         text: |-
                az synapse workspace list --resource-group "resourceGroup1"
+      - name: List workspaces in subscription
+        text: |-
+               az synapse workspace list
 """
 
 helps['synapse workspace show'] = """
     type: command
-    short-summary: "Gets a workspace"
+    short-summary: "Gets a workspace."
     examples:
       - name: Get a workspace
         text: |-
@@ -916,7 +920,7 @@ helps['synapse workspace show'] = """
 
 helps['synapse workspace create'] = """
     type: command
-    short-summary: "Create a workspace"
+    short-summary: "Create a workspace."
     parameters:
       - name: --default-data-lake-storage
         short-summary: "Workspace default data lake storage account details"
@@ -946,7 +950,7 @@ filesystem="default" --managed-resource-group-name "workspaceManagedResourceGrou
 
 helps['synapse workspace update'] = """
     type: command
-    short-summary: "Updates a workspace"
+    short-summary: "Updates a workspace."
     examples:
       - name: Update a workspace
         text: |-
@@ -956,7 +960,7 @@ helps['synapse workspace update'] = """
 
 helps['synapse workspace delete'] = """
     type: command
-    short-summary: "Deletes a workspace"
+    short-summary: "Deletes a workspace."
     examples:
       - name: Delete a workspace
         text: |-
@@ -985,7 +989,7 @@ helps['synapse workspace-aad-admin'] = """
 
 helps['synapse workspace-aad-admin show'] = """
     type: command
-    short-summary: "Gets a workspace active directory admin"
+    short-summary: "Gets a workspace active directory admin."
     examples:
       - name: Get workspace active directory admin
         text: |-
@@ -994,7 +998,7 @@ helps['synapse workspace-aad-admin show'] = """
 
 helps['synapse workspace-aad-admin create'] = """
     type: command
-    short-summary: "Create a workspace active directory admin"
+    short-summary: "Create a workspace active directory admin."
     examples:
       - name: Create or update workspace active directory admin
         text: |-
@@ -1005,12 +1009,12 @@ helps['synapse workspace-aad-admin create'] = """
 
 helps['synapse workspace-aad-admin update'] = """
     type: command
-    short-summary: "Update a workspace active directory admin"
+    short-summary: "Update a workspace active directory admin."
 """
 
 helps['synapse workspace-aad-admin delete'] = """
     type: command
-    short-summary: "Deletes a workspace active directory admin"
+    short-summary: "Deletes a workspace active directory admin."
     examples:
       - name: Delete workspace active directory admin
         text: |-
@@ -1042,7 +1046,7 @@ helps['synapse workspace-managed-identity-sql-control-setting'] = """
 
 helps['synapse workspace-managed-identity-sql-control-setting show'] = """
     type: command
-    short-summary: "Get Managed Identity Sql Control Settings"
+    short-summary: "Get Managed Identity Sql Control Settings."
     examples:
       - name: Get managed identity sql control settings
         text: |-
@@ -1052,7 +1056,7 @@ helps['synapse workspace-managed-identity-sql-control-setting show'] = """
 
 helps['synapse workspace-managed-identity-sql-control-setting create'] = """
     type: command
-    short-summary: "Create Managed Identity Sql Control Settings"
+    short-summary: "Create Managed Identity Sql Control Settings."
     examples:
       - name: Create or update managed identity sql control settings
         text: |-
@@ -1062,7 +1066,7 @@ helps['synapse workspace-managed-identity-sql-control-setting create'] = """
 
 helps['synapse workspace-managed-identity-sql-control-setting update'] = """
     type: command
-    short-summary: "Update Managed Identity Sql Control Settings"
+    short-summary: "Update Managed Identity Sql Control Settings."
 """
 
 helps['synapse integration-runtime'] = """
@@ -1072,7 +1076,7 @@ helps['synapse integration-runtime'] = """
 
 helps['synapse integration-runtime list'] = """
     type: command
-    short-summary: "List all integration runtimes"
+    short-summary: "List all integration runtimes."
     examples:
       - name: List integration runtimes
         text: |-
@@ -1082,7 +1086,7 @@ helps['synapse integration-runtime list'] = """
 
 helps['synapse integration-runtime show'] = """
     type: command
-    short-summary: "Get an integration runtime"
+    short-summary: "Get an integration runtime."
     examples:
       - name: Get integration runtime
         text: |-
@@ -1092,7 +1096,7 @@ helps['synapse integration-runtime show'] = """
 
 helps['synapse integration-runtime create'] = """
     type: command
-    short-summary: "Create an integration runtime"
+    short-summary: "Create an integration runtime."
     examples:
       - name: Create integration runtime
         text: |-
@@ -1103,7 +1107,7 @@ selfhosted integration runtime\\"}" --name "exampleIntegrationRuntime" --resourc
 
 helps['synapse integration-runtime update'] = """
     type: command
-    short-summary: "Update an integration runtime"
+    short-summary: "Update an integration runtime."
     examples:
       - name: Update integration runtime
         text: |-
@@ -1113,7 +1117,7 @@ helps['synapse integration-runtime update'] = """
 
 helps['synapse integration-runtime delete'] = """
     type: command
-    short-summary: "Delete an integration runtime"
+    short-summary: "Delete an integration runtime."
     examples:
       - name: Delete integration runtime
         text: |-
@@ -1123,7 +1127,7 @@ helps['synapse integration-runtime delete'] = """
 
 helps['synapse integration-runtime start'] = """
     type: command
-    short-summary: "Start an integration runtime"
+    short-summary: "Start an integration runtime."
     examples:
       - name: Start integration runtime
         text: |-
@@ -1133,7 +1137,7 @@ helps['synapse integration-runtime start'] = """
 
 helps['synapse integration-runtime stop'] = """
     type: command
-    short-summary: "Stop an integration runtime"
+    short-summary: "Stop an integration runtime."
     examples:
       - name: Stop integration runtime
         text: |-
@@ -1143,7 +1147,7 @@ helps['synapse integration-runtime stop'] = """
 
 helps['synapse integration-runtime upgrade'] = """
     type: command
-    short-summary: "Upgrade an integration runtime"
+    short-summary: "Upgrade an integration runtime."
     examples:
       - name: Upgrade integration runtime
         text: |-
@@ -1172,7 +1176,7 @@ helps['synapse integration-runtime-node-ip-address'] = """
 
 helps['synapse integration-runtime-node-ip-address get'] = """
     type: command
-    short-summary: "Get the IP address of an integration runtime node"
+    short-summary: "Get the IP address of an integration runtime node."
     examples:
       - name: Get integration runtime node IP address
         text: |-
@@ -1188,7 +1192,7 @@ helps['synapse integration-runtime-object-metadata'] = """
 
 helps['synapse integration-runtime-object-metadata get'] = """
     type: command
-    short-summary: "Get object metadata from an integration runtime"
+    short-summary: "Get object metadata from an integration runtime."
     examples:
       - name: Get integration runtime object metadata
         text: |-
@@ -1199,7 +1203,7 @@ helps['synapse integration-runtime-object-metadata get'] = """
 
 helps['synapse integration-runtime-object-metadata refresh'] = """
     type: command
-    short-summary: "Refresh the object metadata in an integration runtime"
+    short-summary: "Refresh the object metadata in an integration runtime."
     examples:
       - name: Refresh object metadata
         text: |-
@@ -1214,7 +1218,7 @@ helps['synapse integration-runtime-node'] = """
 
 helps['synapse integration-runtime-node show'] = """
     type: command
-    short-summary: "Get an integration runtime node"
+    short-summary: "Get an integration runtime node."
     examples:
       - name: Get integration runtime node
         text: |-
@@ -1224,7 +1228,7 @@ helps['synapse integration-runtime-node show'] = """
 
 helps['synapse integration-runtime-node update'] = """
     type: command
-    short-summary: "Create an integration runtime node"
+    short-summary: "Create an integration runtime node."
     examples:
       - name: Update integration runtime node
         text: |-
@@ -1235,7 +1239,7 @@ helps['synapse integration-runtime-node update'] = """
 
 helps['synapse integration-runtime-node delete'] = """
     type: command
-    short-summary: "Delete an integration runtime node"
+    short-summary: "Delete an integration runtime node."
     examples:
       - name: Delete integration runtime node
         text: |-
@@ -1268,7 +1272,7 @@ helps['synapse integration-runtime-connection-info'] = """
 
 helps['synapse integration-runtime-connection-info get'] = """
     type: command
-    short-summary: "Get connection info for an integration runtime"
+    short-summary: "Get connection info for an integration runtime."
     examples:
       - name: Get connection info
         text: |-
@@ -1283,7 +1287,7 @@ helps['synapse integration-runtime-auth-key'] = """
 
 helps['synapse integration-runtime-auth-key list'] = """
     type: command
-    short-summary: "List authentication keys in an integration runtime"
+    short-summary: "List authentication keys in an integration runtime."
     examples:
       - name: List auth keys
         text: |-
@@ -1293,7 +1297,7 @@ helps['synapse integration-runtime-auth-key list'] = """
 
 helps['synapse integration-runtime-auth-key regenerate'] = """
     type: command
-    short-summary: "Regenerate the authentication key for an integration runtime"
+    short-summary: "Regenerate the authentication key for an integration runtime."
     examples:
       - name: Regenerate auth key
         text: |-
@@ -1309,7 +1313,7 @@ helps['synapse integration-runtime-monitoring-data'] = """
 
 helps['synapse integration-runtime-monitoring-data get'] = """
     type: command
-    short-summary: "Get monitoring data for an integration runtime"
+    short-summary: "Get monitoring data for an integration runtime."
     examples:
       - name: Get monitoring data
         text: |-
@@ -1324,7 +1328,7 @@ helps['synapse integration-runtime-status'] = """
 
 helps['synapse integration-runtime-status get'] = """
     type: command
-    short-summary: "Get the integration runtime status"
+    short-summary: "Get the integration runtime status."
     examples:
       - name: Get status
         text: |-
@@ -1339,7 +1343,7 @@ helps['synapse private-link-resource'] = """
 
 helps['synapse private-link-resource list'] = """
     type: command
-    short-summary: "Get all private link resources for a workspaces"
+    short-summary: "Get all private link resources for a workspaces."
     examples:
       - name: Get private link resources for workspace
         text: |-
@@ -1349,7 +1353,7 @@ helps['synapse private-link-resource list'] = """
 
 helps['synapse private-link-resource show'] = """
     type: command
-    short-summary: "Get private link resource in workspace"
+    short-summary: "Get private link resource in workspace."
     examples:
       - name: Get private link resources for workspace
         text: |-
@@ -1426,16 +1430,20 @@ helps['synapse private-link-hub'] = """
 
 helps['synapse private-link-hub list'] = """
     type: command
-    short-summary: "Returns a list of privateLinkHubs in a subscription"
+    short-summary: "Returns a list of privateLinkHubs in a resource group And Returns a list of privateLinkHubs in a \
+subscription."
     examples:
       - name: List privateLinkHubs in resource group
         text: |-
                az synapse private-link-hub list --resource-group "resourceGroup1"
+      - name: List privateLinkHubs in subscription
+        text: |-
+               az synapse private-link-hub list
 """
 
 helps['synapse private-link-hub show'] = """
     type: command
-    short-summary: "Gets a privateLinkHub"
+    short-summary: "Gets a privateLinkHub."
     examples:
       - name: Get a privateLinkHub
         text: |-
@@ -1444,7 +1452,7 @@ helps['synapse private-link-hub show'] = """
 
 helps['synapse private-link-hub create'] = """
     type: command
-    short-summary: "Create a privateLinkHub"
+    short-summary: "Create a privateLinkHub."
     examples:
       - name: Create or update a privateLinkHub
         text: |-
@@ -1454,7 +1462,7 @@ helps['synapse private-link-hub create'] = """
 
 helps['synapse private-link-hub update'] = """
     type: command
-    short-summary: "Updates a privateLinkHub"
+    short-summary: "Updates a privateLinkHub."
     examples:
       - name: Update a privateLinkHub
         text: |-
@@ -1464,7 +1472,7 @@ helps['synapse private-link-hub update'] = """
 
 helps['synapse private-link-hub delete'] = """
     type: command
-    short-summary: "Deletes a privateLinkHub"
+    short-summary: "Deletes a privateLinkHub."
     examples:
       - name: Delete a privateLinkHub
         text: |-

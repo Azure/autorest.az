@@ -19,11 +19,15 @@ helps['kusto cluster'] = """
 
 helps['kusto cluster list'] = """
     type: command
-    short-summary: "Lists all Kusto clusters within a subscription."
+    short-summary: "Lists all Kusto clusters within a resource group. And Lists all Kusto clusters within a \
+subscription."
     examples:
       - name: KustoClustersListByResourceGroup
         text: |-
                az kusto cluster list --resource-group "kustorptest"
+      - name: KustoClustersList
+        text: |-
+               az kusto cluster list
 """
 
 helps['kusto cluster show'] = """
@@ -210,11 +214,15 @@ helps['kusto cluster list-language-extension'] = """
 
 helps['kusto cluster list-sku'] = """
     type: command
-    short-summary: "Lists eligible SKUs for Kusto resource provider."
+    short-summary: "Returns the SKUs available for the provided resource. And Lists eligible SKUs for Kusto resource \
+provider."
     examples:
       - name: KustoClustersListResourceSkus
         text: |-
                az kusto cluster list-sku --name "kustoclusterrptest4" --resource-group "kustorptest"
+      - name: KustoClustersListSkus
+        text: |-
+               az kusto cluster list-sku
 """
 
 helps['kusto cluster remove-language-extension'] = """

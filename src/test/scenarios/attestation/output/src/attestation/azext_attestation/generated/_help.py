@@ -91,11 +91,15 @@ helps['attestation attestation-provider provider'] = """
 
 helps['attestation attestation-provider provider list'] = """
     type: command
-    short-summary: "Returns a list of attestation providers in a subscription."
+    short-summary: "Returns attestation providers list in a resource group. And Returns a list of attestation \
+providers in a subscription."
     examples:
       - name: AttestationProviders_ListByResourceGroup
         text: |-
                az attestation attestation-provider provider list --resource-group "testrg1"
+      - name: AttestationProviders_List
+        text: |-
+               az attestation attestation-provider provider list
 """
 
 helps['attestation attestation-provider show'] = """

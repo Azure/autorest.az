@@ -19,11 +19,14 @@ helps['datafactory'] = """
 
 helps['datafactory list'] = """
     type: command
-    short-summary: "Lists factories under the specified subscription."
+    short-summary: "Lists factories. And Lists factories under the specified subscription."
     examples:
       - name: Factories_ListByResourceGroup
         text: |-
                az datafactory list --resource-group "myResourceGroup"
+      - name: Factories_List
+        text: |-
+               az datafactory list
 """
 
 helps['datafactory show'] = """

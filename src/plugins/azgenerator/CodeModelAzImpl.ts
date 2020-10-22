@@ -905,6 +905,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Method.requests[0].protocol?.http?.path;
     }
 
+    public get Method_Help(): string {
+        return this.Method.language['az'].description.replace(/\n/g, " ").replace(/"/g, '\\\\"');
+    }
+
     public get Method_HttpMethod(): string {
         let ret = this.Method.requests[0].protocol?.http?.method || "unknown";
         return ret.toLowerCase();
