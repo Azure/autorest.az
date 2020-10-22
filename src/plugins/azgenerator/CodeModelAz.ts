@@ -122,7 +122,8 @@ export interface CodeModelAz {
     Method_IsLast: boolean;
     Method_Name: string;
     Method_NameAz: string;
-    Method_NameCli: string 
+    Method_NameCli: string;
+    Method_Help: string;
     Method_CliKey: string;
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;

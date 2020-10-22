@@ -19,11 +19,14 @@ helps['datafactory'] = """
 
 helps['datafactory list'] = """
     type: command
-    short-summary: "Lists factories under the specified subscription."
+    short-summary: "Lists factories. And Lists factories under the specified subscription."
     examples:
       - name: Factories_ListByResourceGroup
         text: |-
                az datafactory list --resource-group "myResourceGroup"
+      - name: Factories_List
+        text: |-
+               az datafactory list
 """
 
 helps['datafactory show'] = """
@@ -37,7 +40,7 @@ helps['datafactory show'] = """
 
 helps['datafactory create'] = """
     type: command
-    short-summary: "Creates or updates a factory."
+    short-summary: "Create a factory."
     parameters:
       - name: --factory-vsts-configuration
         short-summary: "Factory's VSTS repo information."
@@ -186,7 +189,7 @@ helps['datafactory trigger show'] = """
 
 helps['datafactory trigger create'] = """
     type: command
-    short-summary: "Creates or updates a trigger."
+    short-summary: "Create a trigger."
     examples:
       - name: Triggers_Create
         text: |-
@@ -199,7 +202,7 @@ eoutput.csv\\"]},\\"pipelineReference\\":{\\"type\\":\\"PipelineReference\\",\\"
 
 helps['datafactory trigger update'] = """
     type: command
-    short-summary: "Creates or updates a trigger."
+    short-summary: "Update a trigger."
     examples:
       - name: Triggers_Update
         text: |-
@@ -336,7 +339,7 @@ helps['datafactory integration-runtime managed'] = """
 
 helps['datafactory integration-runtime managed create'] = """
     type: command
-    short-summary: "Creates or updates an integration runtime."
+    short-summary: "Create an integration runtime."
     parameters:
       - name: --factory-vsts-configuration
         short-summary: "Factory's VSTS repo information."
@@ -381,7 +384,7 @@ helps['datafactory integration-runtime self-hosted'] = """
 
 helps['datafactory integration-runtime self-hosted create'] = """
     type: command
-    short-summary: "Creates or updates an integration runtime."
+    short-summary: "Create an integration runtime."
     examples:
       - name: IntegrationRuntimes_Create
         text: |-

@@ -19,7 +19,7 @@ helps['spatial-anchors-account'] = """
 
 helps['spatial-anchors-account regenerate-key'] = """
     type: command
-    short-summary: "Regenerate specified Key of a Spatial Anchors Account"
+    short-summary: "Regenerate specified Key of a Spatial Anchors Account."
     examples:
       - name: Regenerate spatial anchors account keys
         text: |-
@@ -34,11 +34,14 @@ helps['remote-rendering-account'] = """
 
 helps['remote-rendering-account list'] = """
     type: command
-    short-summary: "List Remote Rendering Accounts by Subscription"
+    short-summary: "List Resources by Resource Group And List Remote Rendering Accounts by Subscription."
     examples:
       - name: List remote rendering accounts by resource group
         text: |-
                az remote-rendering-account list --resource-group "MyResourceGroup"
+      - name: List remote rendering accounts by subscription
+        text: |-
+               az remote-rendering-account list
 """
 
 helps['remote-rendering-account show'] = """
@@ -62,7 +65,7 @@ helps['remote-rendering-account create'] = """
 
 helps['remote-rendering-account update'] = """
     type: command
-    short-summary: "Updating a Remote Rendering Account"
+    short-summary: "Updating a Remote Rendering Account."
     examples:
       - name: Update remote rendering account
         text: |-
@@ -81,7 +84,7 @@ helps['remote-rendering-account delete'] = """
 
 helps['remote-rendering-account list-key'] = """
     type: command
-    short-summary: "List Both of the 2 Keys of a Remote Rendering Account"
+    short-summary: "List Both of the 2 Keys of a Remote Rendering Account."
     examples:
       - name: List remote rendering account key
         text: |-
@@ -90,7 +93,7 @@ helps['remote-rendering-account list-key'] = """
 
 helps['remote-rendering-account regenerate-key'] = """
     type: command
-    short-summary: "Regenerate specified Key of a Remote Rendering Account"
+    short-summary: "Regenerate specified Key of a Remote Rendering Account."
     examples:
       - name: Regenerate remote rendering account keys
         text: |-

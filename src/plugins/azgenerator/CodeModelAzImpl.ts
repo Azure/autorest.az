@@ -909,6 +909,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Method.requests[0].protocol?.http?.path;
     }
 
+    public get Method_Help(): string {
+        return this.Method.language['az'].description.replace(/\n/g, " ").replace(/"/g, '\\\\"');
+    }
+
     public get Method_HttpMethod(): string {
         let ret = this.Method.requests[0].protocol?.http?.method || "unknown";
         return ret.toLowerCase();
@@ -1548,7 +1552,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Schema_FlattenedFrom(schema: Schema): Schema {
-        return schema.language['cli']?.['pythonFlattenedFrom'];
+        return schema?.language['cli']?.['pythonFlattenedFrom'];
     }
 
     public Parameter_InGlobal(parameter: Parameter): boolean {

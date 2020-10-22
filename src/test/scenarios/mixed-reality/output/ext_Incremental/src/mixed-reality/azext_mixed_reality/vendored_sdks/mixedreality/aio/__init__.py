@@ -6,5 +6,5 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._mixed_reality_client_async import MixedRealityClient
+from ._mixed_reality_client import MixedRealityClient
 __all__ = ['MixedRealityClient']

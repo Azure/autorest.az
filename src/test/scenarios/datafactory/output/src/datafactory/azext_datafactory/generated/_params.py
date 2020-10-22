@@ -49,6 +49,8 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
+        c.argument('test_inherit', type=validate_file_or_dict, help='Test Job Base Expected value: '
+                   'json-string/@json-file.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='*', help='Factory\'s VSTS '
                    'repo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='*', help='Factory\'s '
