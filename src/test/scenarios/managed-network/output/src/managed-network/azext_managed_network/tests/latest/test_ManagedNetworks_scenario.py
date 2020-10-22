@@ -70,21 +70,6 @@ def step_managementnetworkgroupsput(test, rg):
              checks=[])
 
 
-# EXAMPLE: ScopeAssignmentsPut
-@try_manual
-def step_scopeassignmentsput(test, rg):
-    test.cmd('az managed-network mn scope-assignment create '
-             '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Mana'
-             'gedNetwork/managedNetworks/{myManagedNetwork}" '
-             '--scope "subscriptions/subscriptionC" '
-             '--name "{myScopeAssignment}"',
-             checks=[
-                 test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M"
-                            "icrosoft.ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
-                 test.check("name", "{myScopeAssignment}", case_sensitive=False),
-             ])
-
-
 # EXAMPLE: ManagedNetworkPeeringPoliciesPut
 @try_manual
 def step_managednetworkpeeringpoliciesput(test, rg):
@@ -128,27 +113,13 @@ def step_managednetworkslistbysubscription(test, rg):
              ])
 
 
-# EXAMPLE: ScopeAssignmentsGet
+# EXAMPLE: ManagedNetworksDelete
 @try_manual
-def step_scopeassignmentsget(test, rg):
-    test.cmd('az managed-network mn scope-assignment show '
-             '--scope "subscriptions/subscriptionC" '
-             '--name "{myScopeAssignment}"',
-             checks=[
-                 test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M"
-                            "icrosoft.ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
-                 test.check("name", "{myScopeAssignment}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: ScopeAssignmentsList
-@try_manual
-def step_scopeassignmentslist(test, rg):
-    test.cmd('az managed-network mn scope-assignment list '
-             '--scope "subscriptions/subscriptionC"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
+def step_managednetworksdelete(test, rg):
+    test.cmd('az managed-network mn delete -y '
+             '--name "{myManagedNetwork}" '
+             '--resource-group "{rg}"',
+             checks=[])
 
 
 # EXAMPLE: ManagementNetworkGroupsGet
@@ -208,30 +179,12 @@ def step_managednetworkpeeringpoliciesdelete(test, rg):
              checks=[])
 
 
-# EXAMPLE: ScopeAssignmentsDelete
-@try_manual
-def step_scopeassignmentsdelete(test, rg):
-    test.cmd('az managed-network mn scope-assignment delete -y '
-             '--scope "subscriptions/subscriptionC" '
-             '--name "{myScopeAssignment}"',
-             checks=[])
-
-
 # EXAMPLE: ManagementNetworkGroupsDelete
 @try_manual
 def step_managementnetworkgroupsdelete(test, rg):
     test.cmd('az managed-network mn group delete -y '
              '--group-name "{myManagedNetworkGroup}" '
              '--managed-network-name "{myManagedNetwork}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: ManagedNetworksDelete
-@try_manual
-def step_managednetworksdelete(test, rg):
-    test.cmd('az managed-network mn delete -y '
-             '--name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=[])
 
@@ -248,21 +201,17 @@ def call_scenario(test, rg):
     setup(test, rg)
     step_managednetworksput(test, rg)
     step_managementnetworkgroupsput(test, rg)
-    step_scopeassignmentsput(test, rg)
     step_managednetworkpeeringpoliciesput(test, rg)
     step_managednetworksget(test, rg)
     step_managednetworkslistbyresourcegroup(test, rg)
     step_managednetworkslistbysubscription(test, rg)
-    step_scopeassignmentsget(test, rg)
-    step_scopeassignmentslist(test, rg)
+    step_managednetworksdelete(test, rg)
     step_managementnetworkgroupsget(test, rg)
     step_managednetworksgroupslistbymanagednetwork(test, rg)
     step_managednetworkpeeringpoliciesget(test, rg)
     step_managednetworkpeeringpolicieslistbymanagednet(test, rg)
     step_managednetworkpeeringpoliciesdelete(test, rg)
-    step_scopeassignmentsdelete(test, rg)
     step_managementnetworkgroupsdelete(test, rg)
-    step_managednetworksdelete(test, rg)
     cleanup(test, rg)
 
 
