@@ -151,8 +151,9 @@ export class BaseSegment {
                 previousIndex = t;
                 this.children[t].addCustomize(seg);
             }
-            else if(seg.status == SegmentStatus.Added) {
+            else if(seg.status != SegmentStatus.Deleted) {
                 this.children.splice(previousIndex+1, 0, seg);
+                previousIndex += 1;
             }
         }
     } 
