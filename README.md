@@ -13,7 +13,7 @@ debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
   "@autorest/python": "5.4.0"
-  "@autorest/clicommon": "https://github.com/Azure/autorest.clicommon/releases/download/0.5.5-b.20201021.2/autorest-clicommon-0.5.5.tgz"
+  "@autorest/clicommon": "0.5.5"
   #"@autorest/python": "latest"
 
 require:
