@@ -1,0 +1,662 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "AttestationManagementClient",
+    "description": "Various APIs for managing resources in attestation service. This primarily encompasses per-tenant instance management.",
+    "version": "2018-09-01-preview"
+  },
+  "host": "management.azure.com",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "flow": "implicit",
+      "description": "Azure Active Directory OAuth2 Flow",
+      "scopes": {
+        "user_impersonation": "impersonate your user account"
+      }
+    }
+  },
+  "paths": {
+    "/providers/Microsoft.Attestation/operations": {
+      "get": {
+        "tags": ["Operation"],
+        "operationId": "Operation_List",
+        "description": "Lists all of the available Azure attestation operations.",
+        "x-ms-examples": {
+          "Operations_List": {
+            "$ref": "./examples/Operations_List.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List all the operations.",
+            "schema": {
+              "$ref": "#/definitions/OperationList"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}": {
+      "get": {
+        "tags": ["AttestationProviders"],
+        "operationId": "AttestationProviders_Get",
+        "description": "Get the status of Attestation Provider.",
+        "x-ms-examples": {
+          "AttestationProviders_Get": {
+            "$ref": "./examples/Get_AttestationProvider.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "name": "providerName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Name of the attestation service instance"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The status of the specified attestation service instance",
+            "schema": {
+              "$ref": "#/definitions/AttestationProvider"
+            }
+          },
+          "default": {
+            "description": "Error result from Attestation service",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["AttestationProviders"],
+        "operationId": "AttestationProviders_Create",
+        "description": "Creates or updates the Attestation Provider.",
+        "x-ms-examples": {
+          "AttestationProviders_Create": {
+            "$ref": "./examples/Create_AttestationProvider.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "name": "providerName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Name of the attestation service"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "creationParams",
+            "in": "body",
+            "required": true,
+            "description": "Client supplied parameters.",
+            "schema": {
+              "$ref": "#/definitions/AttestationServiceCreationParams"
+            },
+            "x-ms-parameter-location": "method"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created or updated attestation service",
+            "schema": {
+              "$ref": "#/definitions/AttestationProvider"
+            }
+          },
+          "201": {
+            "description": "Created or updated attestation service",
+            "schema": {
+              "$ref": "#/definitions/AttestationProvider"
+            }
+          },
+          "default": {
+            "description": "Error result from Attestation service",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["AttestationProviders"],
+        "operationId": "AttestationProviders_Update",
+        "description": "Updates the Attestation Provider.",
+        "x-ms-examples": {
+          "AttestationProviders_Update": {
+            "$ref": "./examples/Update_AttestationProvider.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "name": "providerName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Name of the attestation service"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "updateParams",
+            "in": "body",
+            "required": true,
+            "description": "Client supplied parameters.",
+            "schema": {
+              "$ref": "#/definitions/AttestationServicePatchParams"
+            },
+            "x-ms-parameter-location": "method"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated attestation service",
+            "schema": {
+              "$ref": "#/definitions/AttestationProvider"
+            }
+          },
+          "default": {
+            "description": "Error result from Attestation service",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["AttestationProviders"],
+        "operationId": "AttestationProviders_Delete",
+        "description": "Delete Attestation Service.",
+        "x-ms-examples": {
+          "AttestationProviders_Delete": {
+            "$ref": "./examples/Delete_AttestationProvider.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "name": "providerName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Name of the attestation service"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource exists and was deleted successfully"
+          },
+          "202": {
+            "description": "Request accepted for deletion of attestation service"
+          },
+          "204": {
+            "description": "Resource does not exist"
+          },
+          "default": {
+            "description": "Error result from Attestation service",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders": {
+      "get": {
+        "tags": ["AttestationProviders"],
+        "operationId": "AttestationProviders_List",
+        "description": "Returns a list of attestation providers in a subscription.",
+        "x-ms-examples": {
+          "AttestationProviders_List": {
+            "$ref": "./examples/Get_AttestationProvidersList.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AttestationProviderListResult"
+            }
+          },
+          "default": {
+            "description": "Attestation service error result",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders": {
+      "get": {
+        "tags": ["AttestationProviders"],
+        "operationId": "AttestationProviders_ListByResourceGroup",
+        "description": "Returns attestation providers list in a resource group.",
+        "x-ms-examples": {
+          "AttestationProviders_ListByResourceGroup": {
+            "$ref": "./examples/Get_AttestationProvidersListByResourceGroup.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AttestationProviderListResult"
+            }
+          },
+          "default": {
+            "description": "Attestation service error result",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "OperationList": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "description": "List of supported operations.",
+          "items": {
+            "$ref": "#/definitions/OperationsDefinition"
+          }
+        }
+      },
+      "description": "List of supported operations."
+    },
+    "OperationsDefinition": {
+      "type": "object",
+      "description": "Definition object with the name and properties of an operation.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the operation."
+        },
+        "display": {
+          "$ref": "#/definitions/OperationsDisplayDefinition",
+          "description": "Display object with properties of the operation."
+        }
+      }
+    },
+    "OperationsDisplayDefinition": {
+      "type": "object",
+      "description": "Display object with properties of the operation.",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "Resource provider of the operation."
+        },
+        "resource": {
+          "type": "string",
+          "description": "Resource for the operation."
+        },
+        "operation": {
+          "type": "string",
+          "description": "Short description of the operation."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the operation."
+        }
+      }
+    },
+    "AttestationProvider": {
+      "description": "Attestation service response message.",
+      "required": ["properties"],
+      "allOf": [
+        {
+          "$ref": "#/definitions/TrackedResource"
+        }
+      ],
+      "properties": {
+        "properties": {
+          "type": "object",
+          "$ref": "#/definitions/StatusResult",
+          "description": "Describes Attestation service status.",
+          "x-ms-client-flatten": true
+        }
+      }
+    },
+    "TrackedResource": {
+      "description": "The resource model definition for a ARM tracked top level resource",
+      "properties": {
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-ms-mutability": ["read", "create", "update"],
+          "description": "Resource tags."
+        },
+        "location": {
+          "type": "string",
+          "x-ms-mutability": ["read", "create"],
+          "description": "The geo-location where the resource lives"
+        }
+      },
+      "required": ["location"],
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        }
+      ]
+    },
+    "Resource": {
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+        },
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": "The name of the resource"
+        },
+        "type": {
+          "readOnly": true,
+          "type": "string",
+          "description": "The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts."
+        }
+      },
+      "x-ms-azure-resource": true
+    },
+    "StatusResult": {
+      "type": "object",
+      "description": "Status of attestation service.",
+      "required": ["status"],
+      "properties": {
+        "trustModel": {
+          "type": "string",
+          "description": "Trust model for the attestation service instance."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of attestation service.",
+          "enum": ["Ready", "NotReady", "Error"],
+          "x-ms-enum": {
+            "name": "AttestationServiceStatus",
+            "modelAsString": true
+          }
+        },
+        "attestUri": {
+          "type": "string",
+          "description": "Gets the uri of attestation service"
+        }
+      }
+    },
+    "JSONWebKey": {
+      "type": "object",
+      "required": ["use", "kty", "kid", "alg"],
+      "properties": {
+        "alg": {
+          "description": "The \"alg\" (algorithm) parameter identifies the algorithm intended for\nuse with the key.  The values used should either be registered in the\nIANA \"JSON Web Signature and Encryption Algorithms\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name.",
+          "type": "string"
+        },
+        "crv": {
+          "description": "The \"crv\" (curve) parameter identifies the curve type",
+          "type": "string"
+        },
+        "d": {
+          "description": "RSA private exponent or ECC private key",
+          "type": "string"
+        },
+        "dp": {
+          "description": "RSA Private Key Parameter",
+          "type": "string"
+        },
+        "dq": {
+          "description": "RSA Private Key Parameter",
+          "type": "string"
+        },
+        "e": {
+          "description": "RSA public exponent, in Base64",
+          "type": "string"
+        },
+        "k": {
+          "description": "Symmetric key",
+          "type": "string"
+        },
+        "kid": {
+          "description": "The \"kid\" (key ID) parameter is used to match a specific key.  This\nis used, for instance, to choose among a set of keys within a JWK Set\nduring key rollover.  The structure of the \"kid\" value is\nunspecified.  When \"kid\" values are used within a JWK Set, different\nkeys within the JWK Set SHOULD use distinct \"kid\" values.  (One\nexample in which different keys might use the same \"kid\" value is if\nthey have different \"kty\" (key type) values but are considered to be\nequivalent alternatives by the application using them.)  The \"kid\"\nvalue is a case-sensitive string.",
+          "type": "string"
+        },
+        "kty": {
+          "description": "The \"kty\" (key type) parameter identifies the cryptographic algorithm\nfamily used with the key, such as \"RSA\" or \"EC\". \"kty\" values should\neither be registered in the IANA \"JSON Web Key Types\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name.  The \"kty\" value is a case-sensitive string.",
+          "type": "string"
+        },
+        "n": {
+          "description": "RSA modulus, in Base64",
+          "type": "string"
+        },
+        "p": {
+          "description": "RSA secret prime",
+          "type": "string"
+        },
+        "q": {
+          "description": "RSA secret prime, with p < q",
+          "type": "string"
+        },
+        "qi": {
+          "description": "RSA Private Key Parameter",
+          "type": "string"
+        },
+        "use": {
+          "description": "Use (\"public key use\") identifies the intended use of\nthe public key. The \"use\" parameter is employed to indicate whether\na public key is used for encrypting data or verifying the signature\non data. Values are commonly \"sig\" (signature) or \"enc\" (encryption).",
+          "type": "string"
+        },
+        "x": {
+          "description": "X coordinate for the Elliptic Curve point",
+          "type": "string"
+        },
+        "x5c": {
+          "description": "The \"x5c\" (X.509 certificate chain) parameter contains a chain of one\nor more PKIX certificates [RFC5280].  The certificate chain is\nrepresented as a JSON array of certificate value strings.  Each\nstring in the array is a base64-encoded (Section 4 of [RFC4648] --\nnot base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.\nThe PKIX certificate containing the key value MUST be the first\ncertificate.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "y": {
+          "description": "Y coordinate for the Elliptic Curve point",
+          "type": "string"
+        }
+      }
+    },
+    "JSONWebKeySet": {
+      "type": "object",
+      "properties": {
+        "keys": {
+          "description": "The value of the \"keys\" parameter is an array of JWK values.  By\ndefault, the order of the JWK values within the array does not imply\nan order of preference among them, although applications of JWK Sets\ncan choose to assign a meaning to the order for their purposes, if\ndesired.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JSONWebKey"
+          }
+        }
+      }
+    },
+    "CloudError": {
+      "x-ms-external": true,
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/CloudErrorBody"
+        }
+      },
+      "description": "An error response from Attestation."
+    },
+    "CloudErrorBody": {
+      "x-ms-external": true,
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "An identifier for the error. Codes are invariant and are intended to be consumed programmatically."
+        },
+        "message": {
+          "type": "string",
+          "description": "A message describing the error, intended to be suitable for displaying in a user interface."
+        }
+      },
+      "description": "An error response from Attestation."
+    },
+    "AttestationProviderListResult": {
+      "description": "Attestation Providers List.",
+      "properties": {
+        "value": {
+          "type": "array",
+          "description": "Attestation Provider array.",
+          "items": {
+            "$ref": "#/definitions/AttestationProvider"
+          }
+        }
+      }
+    },
+    "AttestationServicePatchParams": {
+      "description": "Parameters for patching an attestation service instance",
+      "x-ms-azure-resource": true,
+      "properties": {
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The tags that will be assigned to the attestation service instance."
+        }
+      }
+    },
+    "AttestationServiceCreationParams": {
+      "description": "Parameters for creating an attestation service instance",
+      "required": ["location", "properties"],
+      "x-ms-azure-resource": true,
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "The supported Azure location where the attestation service instance should be created."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The tags that will be assigned to the attestation service instance."
+        },
+        "properties": {
+          "$ref": "#/definitions/AttestationServiceCreationSpecificParams",
+          "description": "Properties of the attestation service instance"
+        }
+      }
+    },
+    "AttestationServiceCreationSpecificParams": {
+      "description": "Client supplied parameters used to create a new attestation service instance.",
+      "properties": {
+        "attestationPolicy": {
+          "type": "string",
+          "description": "Name of attestation policy."
+        },
+        "policySigningCertificates": {
+          "description": "JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations",
+          "$ref": "#/definitions/JSONWebKeySet"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The ID of the target subscription.",
+      "minLength": 1
+    },
+    "ResourceGroupNameParameter": {
+      "name": "resourceGroupName",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The name of the resource group. The name is case insensitive.",
+      "pattern": "^[-\\w\\._\\(\\)]+$",
+      "minLength": 1,
+      "maxLength": 90,
+      "x-ms-parameter-location": "method"
+    },
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "Client API version.",
+      "enum": ["2018-09-01-preview"]
+    }
+  }
+}

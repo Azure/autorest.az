@@ -1,0 +1,5007 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "DataFactoryManagementClient",
+    "version": "2018-06-01"
+  },
+  "host": "management.azure.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "security": [
+    {
+      "azure_auth": [
+        "user_impersonation"
+      ]
+    }
+  ],
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "flow": "implicit",
+      "description": "Azure Active Directory OAuth2 Flow.",
+      "scopes": {
+        "user_impersonation": "impersonate your user account"
+      }
+    }
+  },
+  "paths": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories": {
+      "get": {
+        "tags": [
+          "factories"
+        ],
+        "operationId": "Factories_List",
+        "x-ms-examples": {
+          "Factories_List": {
+            "$ref": "./examples/Factories_List.json"
+          }
+        },
+        "description": "Lists factories under the specified subscription.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionId"
+          },
+          {
+            "$ref": "#/parameters/api-version"
+          },
+          {
+            "name": "customHeaders",
+            "in": "query",
+            "description": "Test the ability to rename ignoring attributes.", 
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "schema": {
+              "$ref": "#/definitions/FactoryListResponse"
+            }
+          },
+          "default": {
+            "description": "An error response received from the Azure Data Factory service.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepo": {
+      "post": {
+        "tags": [
+          "factories"
+        ],
+        "operationId": "Factories_ConfigureFactoryRepo",
+        "x-ms-examples": {
+          "Factories_ConfigureFactoryRepo": {
+            "$ref": "./examples/Factories_ConfigureFactoryRepo.json"
+          }
+        },
+        "description": "Updates a factory's repo information.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionId"
+          },
+          {
+            "$ref": "#/parameters/locationId"
+          },
+          {
+            "$ref": "#/parameters/api-version"
+          },
+          {
+            "name": "factoryRepoUpdate",
+            "description": "Update factory repo request definition.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FactoryRepoUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "schema": {
+              "$ref": "#/definitions/Factory"
+            }
+          },
+          "default": {
+            "description": "An error response received from the Azure Data Factory service.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories": {
+      "get": {
+        "tags": [
+          "factories"
+        ],
+        "operationId": "Factories_ListByResourceGroup",
+        "x-ms-examples": {
+          "Factories_ListByResourceGroup": {
+            "$ref": "./examples/Factories_ListByResourceGroup.json"
+          }
+        },
+        "description": "Lists factories.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionId"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupName"
+          },
+          {
+            "$ref": "#/parameters/api-version"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "schema": {
+              "$ref": "#/definitions/FactoryListResponse"
+            }
+          },
+          "default": {
+            "description": "An error response received from the Azure Data Factory service.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}": {
+      "put": {
+        "tags": [
+          "factories"
+        ],
+        "operationId": "Factories_CreateOrUpdate",
+        "x-ms-examples": {
+          "Factories_CreateOrUpdate": {
+            "$ref": "./examples/Factories_CreateOrUpdate.json"
+          }
+        },
+        "description": "Creates or updates a factory.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionId"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupName"
+          },
+          {
+            "$ref": "#/parameters/factoryName"
+          },
+          {
+            "$ref": "#/parameters/api-version"
+          },
+          {
+            "name": "factory",
+            "description": "Factory resource definition.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Factory"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "description": "ETag of the factory entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "schema": {
+              "$ref": "#/definitions/Factory"
+            }
+          },
+          "default": {
+            "description": "An error response received from the Azure Data Factory service.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "factories"
+        ],
+        "operationId": "Factories_Update",
+        "x-ms-examples": {
+          "Factories_Update": {
+            "$ref": "./examples/Factories_Update.json"
+          }
+        },
+        "description": "Updates a factory.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionId"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupName"
+          },
+          {
+            "$ref": "#/parameters/factoryName"
+          },
+          {
+            "$ref": "#/parameters/api-version"
+          },
+          {
+            "name": "factoryUpdateParameters",
+            "description": "The parameters for updating a factory.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FactoryUpdateParameters"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "schema": {
+              "$ref": "#/definitions/Factory"
+            }
+          },
+          "default": {
+            "description": "An error response received from the Azure Data Factory service.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "factories"
+        ],
+        "operationId": "Factories_Get",
+        "x-ms-examples": {
+          "Factories_Get": {
+            "$ref": "./examples/Factories_Get.json"
+          }
+        },
+        "description": "Gets a factory.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionId"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupName"
+          },
+          {
+            "$ref": "#/parameters/factoryName"
+          },
+          {
+            "$ref": "#/parameters/api-version"
+          },
+          {
+            "name": "If-None-Match",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "description": "ETag of the factory entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "schema": {
+              "$ref": "#/definitions/Factory"
+            }
+          },
+          "304": {
+            "description": "Not modified."
+          },
+          "default": {
+            "description": "An error response received from the Azure Data Factory service.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "factories"
+        ],
+        "operationId": "Factories_Delete",
+        "x-ms-examples": {
+          "Factories_Delete": {
+            "$ref": "./examples/Factories_Delete.json"
+          }
+        },
+        "description": "Deletes a factory.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionId"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupName"
+          },
+          {
+            "$ref": "#/parameters/factoryName"
+          },
+          {
+            "$ref": "#/parameters/api-version"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK."
+          },
+          "204": {
+            "description": "No Content."
+          },
+          "default": {
+            "description": "An error response received from the Azure Data Factory service.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/getGitHubAccessToken": {
+      "post": {
+        "tags": [
+          "factories"
+        ],
+        "operationId": "Factories_GetGitHubAccessToken",
+        "x-ms-examples": {
+          "Factories_GetGitHubAccessToken": {
+            "$ref": "./examples/Factories_GetGitHubAccessToken.json"
+          }
+        },
+        "description": "Get GitHub Access Token.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionId"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupName"
+          },
+          {
+            "$ref": "#/parameters/factoryName"
+          },
+          {
+            "$ref": "#/parameters/api-version"
+          },
+          {
+            "name": "gitHubAccessTokenRequest",
+            "description": "Get GitHub access token request definition.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GitHubAccessTokenRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "schema": {
+              "$ref": "#/definitions/GitHubAccessTokenResponse"
+            }
+          },
+          "default": {
+            "description": "An error response received from the Azure Data Factory service.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/getDataPlaneAccess": {
+      "post": {
+        "tags": [
+          "factories"
+        ],
+        "operationId": "Factories_GetDataPlaneAccess",
+        "x-ms-examples": {
+          "Factories_GetDataPlaneAccess": {
+            "$ref": "./examples/Factories_GetDataPlaneAccess.json"
+          }
+        },
+        "description": "Get Data Plane access.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionId"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupName"
+          },
+          {
+            "$ref": "#/parameters/factoryName"
+          },
+          {
+            "$ref": "#/parameters/api-version"
+          },
+          {
+            "name": "policy",
+            "description": "Data Plane user access policy definition.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserAccessPolicy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "schema": {
+              "$ref": "#/definitions/AccessPolicyResponse"
+            }
+          },
+          "default": {
+            "description": "An error response received from the Azure Data Factory service.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+      }
+  
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers": {
+        "get": {
+          "tags": [
+            "triggers"
+          ],
+          "operationId": "Triggers_ListByFactory",
+          "x-ms-examples": {
+            "Triggers_ListByFactory": {
+              "$ref": "./examples/Triggers_ListByFactory.json"
+            }
+          },
+          "description": "Lists triggers.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/TriggerListResponse"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          },
+          "x-ms-pageable": {
+            "nextLinkName": "nextLink"
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/querytriggers": {
+        "post": {
+          "tags": [
+            "triggers"
+          ],
+          "operationId": "Triggers_QueryByFactory",
+          "x-ms-examples": {
+            "Triggers_QueryByFactory": {
+              "$ref": "./examples/Triggers_QueryByFactory.json"
+            }
+          },
+          "description": "Query triggers.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            },
+            {
+              "name": "filterParameters",
+              "description": "Parameters to filter the triggers.",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TriggerFilterParameters"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/TriggerQueryResponse"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}": {
+        "put": {
+          "tags": [
+            "triggers"
+          ],
+          "operationId": "Triggers_CreateOrUpdate",
+          "x-ms-examples": {
+            "Triggers_Create": {
+              "$ref": "./examples/Triggers_Create.json"
+            },
+            "Triggers_Update": {
+              "$ref": "./examples/Triggers_Update.json"
+            }
+          },
+          "description": "Creates or updates a trigger.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/triggerName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            },
+            {
+              "name": "If-Match",
+              "in": "header",
+              "required": false,
+              "type": "string",
+              "description": "ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update."
+            },
+            {
+              "name": "trigger",
+              "description": "Trigger resource definition.",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TriggerResource"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/TriggerResource"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "trigger"
+          ],
+          "operationId": "Triggers_Get",
+          "x-ms-examples": {
+            "Triggers_Get": {
+              "$ref": "./examples/Triggers_Get.json"
+            }
+          },
+          "description": "Gets a trigger.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/triggerName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            },
+            {
+              "name": "If-None-Match",
+              "in": "header",
+              "required": false,
+              "type": "string",
+              "description": "ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/TriggerResource"
+              }
+            },
+            "304": {
+              "description": "Not modified."
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "triggers"
+          ],
+          "operationId": "Triggers_Delete",
+          "x-ms-examples": {
+            "Triggers_Delete": {
+              "$ref": "./examples/Triggers_Delete.json"
+            }
+          },
+          "description": "Deletes a trigger.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/triggerName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK."
+            },
+            "204": {
+              "description": "No Content."
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/subscribeToEvents": {
+        "post": {
+          "tags": [
+            "triggers"
+          ],
+          "operationId": "Triggers_SubscribeToEvents",
+          "x-ms-examples": {
+            "Triggers_SubscribeToEvents": {
+              "$ref": "./examples/Triggers_SubscribeToEvents.json"
+            }
+          },
+          "description": "Subscribe event trigger to events.",
+          "x-ms-long-running-operation": true,
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/triggerName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Trigger is subscribed to events.",
+              "schema": {
+                "$ref": "#/definitions/TriggerSubscriptionOperationStatus"
+              }
+            },
+            "202": {
+              "description": "Accepted."
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/getEventSubscriptionStatus": {
+        "post": {
+          "tags": [
+            "triggers"
+          ],
+          "operationId": "Triggers_GetEventSubscriptionStatus",
+          "x-ms-examples": {
+            "Triggers_GetEventSubscriptionStatus": {
+              "$ref": "./examples/Triggers_GetEventSubscriptionStatus.json"
+            }
+          },
+          "description": "Get a trigger's event subscription status.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/triggerName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Trigger event subscription state.",
+              "schema": {
+                "$ref": "#/definitions/TriggerSubscriptionOperationStatus"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/unsubscribeFromEvents": {
+        "post": {
+          "tags": [
+            "triggers"
+          ],
+          "operationId": "Triggers_UnsubscribeFromEvents",
+          "x-ms-examples": {
+            "Triggers_UnsubscribeFromEvents": {
+              "$ref": "./examples/Triggers_UnsubscribeFromEvents.json"
+            }
+          },
+          "description": "Unsubscribe event trigger from events.",
+          "x-ms-long-running-operation": true,
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/triggerName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Trigger is unsubscribed from events.",
+              "schema": {
+                "$ref": "#/definitions/TriggerSubscriptionOperationStatus"
+              }
+            },
+            "202": {
+              "description": "Accepted."
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/start": {
+        "post": {
+          "tags": [
+            "triggers"
+          ],
+          "operationId": "Triggers_Start",
+          "x-ms-examples": {
+            "Triggers_Start": {
+              "$ref": "./examples/Triggers_Start.json"
+            }
+          },
+          "description": "Starts a trigger.",
+          "x-ms-long-running-operation": true,
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/triggerName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Trigger has been started successfully."
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/stop": {
+        "post": {
+          "tags": [
+            "triggers"
+          ],
+          "operationId": "Triggers_Stop",
+          "x-ms-examples": {
+            "Triggers_Stop": {
+              "$ref": "./examples/Triggers_Stop.json"
+            }
+          },
+          "description": "Stops a trigger.",
+          "x-ms-long-running-operation": true,
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/triggerName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Trigger has been stopped successfully."
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes": {
+        "get": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_ListByFactory",
+          "x-ms-examples": {
+            "IntegrationRuntimes_ListByFactory": {
+              "$ref": "./examples/IntegrationRuntimes_ListByFactory.json"
+            }
+          },
+          "description": "Lists integration runtimes.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeListResponse"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          },
+          "x-ms-pageable": {
+            "nextLinkName": "nextLink"
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}": {
+        "put": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_CreateOrUpdate",
+          "x-ms-examples": {
+            "IntegrationRuntimes_Create": {
+              "$ref": "./examples/IntegrationRuntimes_Create.json"
+            }
+          },
+          "description": "Creates or updates an integration runtime.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            },
+            {
+              "name": "If-Match",
+              "in": "header",
+              "required": false,
+              "type": "string",
+              "description": "ETag of the integration runtime entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update."
+            },
+            {
+              "name": "integrationRuntime",
+              "description": "Integration runtime resource definition.",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeResource"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeResource"
+              }
+            },
+            "default": {
+              "description": "An error response received from PUT integration runtime operation.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_Get",
+          "x-ms-examples": {
+            "IntegrationRuntimes_Get": {
+              "$ref": "./examples/IntegrationRuntimes_Get.json"
+            }
+          },
+          "description": "Gets an integration runtime.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            },
+            {
+              "name": "If-None-Match",
+              "in": "header",
+              "required": false,
+              "type": "string",
+              "description": "ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeResource"
+              }
+            },
+            "304": {
+              "description": "Not modified."
+            },
+            "default": {
+              "description": "An error response received from GET integration runtime operation.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_Update",
+          "x-ms-examples": {
+            "IntegrationRuntimes_Update": {
+              "$ref": "./examples/IntegrationRuntimes_Update.json"
+            }
+          },
+          "description": "Updates an integration runtime.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            },
+            {
+              "name": "updateIntegrationRuntimeRequest",
+              "description": "The parameters for updating an integration runtime.",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UpdateIntegrationRuntimeRequest"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeResource"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_Delete",
+          "x-ms-examples": {
+            "IntegrationRuntimes_Delete": {
+              "$ref": "./examples/IntegrationRuntimes_Delete.json"
+            }
+          },
+          "description": "Deletes an integration runtime.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK."
+            },
+            "204": {
+              "description": "No Content."
+            },
+            "default": {
+              "description": "An error response received from DELETE integration runtime operation.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/getStatus": {
+        "post": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_GetStatus",
+          "x-ms-examples": {
+            "IntegrationRuntimes_GetStatus": {
+              "$ref": "./examples/IntegrationRuntimes_GetStatus.json"
+            }
+          },
+          "description": "Gets detailed status information for an integration runtime.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeStatusResponse"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/getConnectionInfo": {
+        "post": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_GetConnectionInfo",
+          "x-ms-examples": {
+            "IntegrationRuntimes_GetConnectionInfo": {
+              "$ref": "./examples/IntegrationRuntimes_GetConnectionInfo.json"
+            }
+          },
+          "description": "Gets the on-premises integration runtime connection information for encrypting the on-premises data source credentials.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeConnectionInfo"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/regenerateAuthKey": {
+        "post": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_RegenerateAuthKey",
+          "x-ms-examples": {
+            "IntegrationRuntimes_RegenerateAuthKey": {
+              "$ref": "./examples/IntegrationRuntimes_RegenerateAuthKey.json"
+            }
+          },
+          "description": "Regenerates the authentication key for an integration runtime.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            },
+            {
+              "name": "regenerateKeyParameters",
+              "description": "The parameters for regenerating integration runtime authentication key.",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeRegenerateKeyParameters"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeAuthKeys"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/listAuthKeys": {
+        "post": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_ListAuthKeys",
+          "x-ms-examples": {
+            "IntegrationRuntimes_ListAuthKeys": {
+              "$ref": "./examples/IntegrationRuntimes_ListAuthKeys.json"
+            }
+          },
+          "description": "Retrieves the authentication keys for an integration runtime.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeAuthKeys"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/start": {
+        "post": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_Start",
+          "x-ms-examples": {
+            "IntegrationRuntimes_Start": {
+              "$ref": "./examples/IntegrationRuntimes_Start.json"
+            }
+          },
+          "description": "Starts a ManagedReserved type integration runtime.",
+          "x-ms-long-running-operation": true,
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeStatusResponse"
+              }
+            },
+            "202": {
+              "description": "Accepted."
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/stop": {
+        "post": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_Stop",
+          "x-ms-examples": {
+            "IntegrationRuntimes_Stop": {
+              "$ref": "./examples/IntegrationRuntimes_Stop.json"
+            }
+          },
+          "description": "Stops a ManagedReserved type integration runtime.",
+          "x-ms-long-running-operation": true,
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK."
+            },
+            "202": {
+              "description": "Accepted."
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/syncCredentials": {
+        "post": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_SyncCredentials",
+          "x-ms-examples": {
+            "IntegrationRuntimes_SyncCredentials": {
+              "$ref": "./examples/IntegrationRuntimes_SyncCredentials.json"
+            }
+          },
+          "description": "Force the integration runtime to synchronize credentials across integration runtime nodes, and this will override the credentials across all worker nodes with those available on the dispatcher node. If you already have the latest credential backup file, you should manually import it (preferred) on any self-hosted integration runtime node than using this API directly.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK."
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/monitoringData": {
+        "post": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_GetMonitoringData",
+          "x-ms-examples": {
+            "IntegrationRuntimes_GetMonitoringData": {
+              "$ref": "./examples/IntegrationRuntimes_GetMonitoringData.json"
+            }
+          },
+          "description": "Get the integration runtime monitoring data, which includes the monitor data for all the nodes under this integration runtime.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeMonitoringData"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/upgrade": {
+        "post": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_Upgrade",
+          "x-ms-examples": {
+            "IntegrationRuntimes_Upgrade": {
+              "$ref": "./examples/IntegrationRuntimes_Upgrade.json"
+            }
+          },
+          "description": "Upgrade self-hosted integration runtime to latest version if availability.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK."
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/removeLinks": {
+        "post": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_RemoveLinks",
+          "x-ms-examples": {
+            "IntegrationRuntimes_RemoveLinks": {
+              "$ref": "./examples/IntegrationRuntimes_RemoveLinks.json"
+            }
+          },
+          "description": "Remove all linked integration runtimes under specific data factory in a self-hosted integration runtime.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            },
+            {
+              "name": "linkedIntegrationRuntimeRequest",
+              "description": "The data factory name for the linked integration runtime.",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/LinkedIntegrationRuntimeRequest"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK."
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/linkedIntegrationRuntime": {
+        "post": {
+          "tags": [
+            "integrationRuntimes"
+          ],
+          "operationId": "IntegrationRuntimes_CreateLinkedIntegrationRuntime",
+          "x-ms-examples": {
+            "IntegrationRuntimes_CreateLinkedIntegrationRuntime": {
+              "$ref": "./examples/IntegrationRuntimes_CreateLinkedIntegrationRuntime.json"
+            }
+          },
+          "description": "Create a linked integration runtime entry in a shared integration runtime.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/factoryName"
+            },
+            {
+              "$ref": "#/parameters/integrationRuntimeName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            },
+            {
+              "name": "createLinkedIntegrationRuntimeRequest",
+              "description": "The linked integration runtime properties.",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/CreateLinkedIntegrationRuntimeRequest"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK.",
+              "schema": {
+                "$ref": "#/definitions/IntegrationRuntimeStatusResponse"
+              }
+            },
+            "default": {
+              "description": "An error response received from the Azure Data Factory service.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          }
+        }
+      }
+  },
+  "definitions": {
+    "Resource": {
+      "x-ms-azure-resource": true,
+      "description": "Azure Data Factory top-level resource.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The resource identifier.",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "description": "The resource name.",
+          "readOnly": true
+        },
+        "type": {
+          "type": "string",
+          "description": "The resource type.",
+          "readOnly": true
+        },
+        "location": {
+          "type": "string",
+          "description": "The resource location.",
+          "x-ms-mutability": [
+            "create",
+            "read"
+          ]
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The resource tags."
+        },
+        "eTag": {
+          "type": "string",
+          "description": "Etag identifies change in the resource.",
+          "readOnly": true
+        }
+      }
+    },
+    "FactoryListResponse": {
+      "description": "A list of factory resources.",
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "type": "array",
+          "description": "List of factories.",
+          "items": {
+            "$ref": "#/definitions/Factory"
+          }
+        },
+        "nextLink": {
+          "description": "The link to the next page of results, if any remaining results exist.",
+          "type": "string"
+        }
+      }
+    },
+    "CloudError": {
+      "x-ms-external": true,
+      "description": "The object that defines the structure of an Azure Data Factory error response.",
+      "type": "object",
+      "properties": {
+        "error": {
+          "x-ms-client-flatten": true,
+          "description": "Error data",
+          "$ref": "#/definitions/CloudErrorBody"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "CloudErrorBody": {
+      "x-ms-external": true,
+      "description": "The object that defines the structure of an Azure Data Factory error.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code.",
+          "type": "string"
+        },
+        "message": {
+          "description": "Error message.",
+          "type": "string"
+        },
+        "target": {
+          "description": "Property name/path in request associated with error.",
+          "type": "string"
+        },
+        "details": {
+          "description": "Array with additional error details.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CloudError"
+          }
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ]
+    },
+    "FactoryRepoConfiguration": {
+      "description": "Factory's git repo information.",
+      "type": "object",
+      "discriminator": "type",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of repo configuration."
+        },
+        "accountName": {
+          "description": "Account name.",
+          "type": "string"
+        },
+        "repositoryName": {
+          "description": "Repository name.",
+          "type": "string"
+        },
+        "collaborationBranch": {
+          "description": "Collaboration branch.",
+          "type": "string"
+        },
+        "rootFolder": {
+          "description": "Root folder.",
+          "type": "string"
+        },
+        "lastCommitId": {
+          "description": "Last commit id.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "accountName",
+        "repositoryName",
+        "collaborationBranch",
+        "rootFolder"
+      ]
+    },
+    "FactoryVSTSConfiguration": {
+      "x-ms-discriminator-value": "FactoryVSTSConfiguration",
+      "description": "Factory's VSTS repo information.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/FactoryRepoConfiguration"
+        }
+      ],
+      "properties": {
+        "projectName": {
+          "description": "VSTS project name.",
+          "type": "string"
+        },
+        "tenantId": {
+          "description": "VSTS tenant id.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "projectName"
+      ]
+    },
+    "FactoryGitHubConfiguration": {
+      "x-ms-discriminator-value": "FactoryGitHubConfiguration",
+      "description": "Factory's GitHub repo information.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/FactoryRepoConfiguration"
+        }
+      ],
+      "properties": {
+        "hostName": {
+          "description": "GitHub Enterprise host name. For example: https://github.mydomain.com",
+          "type": "string"
+        }
+      }
+    },
+    "FactoryRepoUpdate": {
+      "description": "Factory's git repo information.",
+      "properties": {
+        "factoryResourceId": {
+          "description": "The factory resource id.",
+          "type": "string"
+        },
+        "repoConfiguration": {
+          "$ref": "#/definitions/FactoryRepoConfiguration",
+          "description": "Git repo information of the factory."
+        }
+      }
+    },
+    "GitHubAccessTokenRequest": {
+      "description": "Get GitHub access token request definition.",
+      "properties": {
+        "gitHubAccessCode": {
+          "description": "GitHub access code.",
+          "type": "string"
+        },
+        "gitHubClientId": {
+          "description": "GitHub application client ID.",
+          "type": "string"
+        },
+        "gitHubAccessTokenBaseUrl": {
+          "description": "GitHub access token base URL.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "gitHubAccessCode",
+        "gitHubAccessTokenBaseUrl"
+      ]
+    },
+    "GitHubAccessTokenResponse": {
+      "description": "Get GitHub access token response definition.",
+      "properties": {
+        "gitHubAccessToken": {
+          "description": "GitHub access token.",
+          "type": "string"
+        }
+      }
+    },
+    "UserAccessPolicy": {
+      "description": "Get Data Plane read only token request definition.",
+      "properties": {
+        "permissions": {
+          "description": "The string with permissions for Data Plane access. Currently only 'r' is supported which grants read only access.",
+          "type": "string"
+        },
+        "accessResourcePath": {
+          "description": "The resource path to get access relative to factory. Currently only empty string is supported which corresponds to the factory resource.",
+          "type": "string"
+        },
+        "profileName": {
+          "description": "The name of the profile. Currently only the default is supported. The default value is DefaultProfile.",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "Start time for the token. If not specified the current time will be used.",
+          "type": "string"
+        },
+        "expireTime": {
+          "description": "Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours.",
+          "type": "string"
+        }
+      }
+    },
+    "AccessPolicyResponse": {
+      "description": "Get Data Plane read only token response definition.",
+      "properties": {
+        "policy": {
+          "description": "The user access policy.",
+          "$ref": "#/definitions/UserAccessPolicy"
+        },
+        "accessToken": {
+          "description": "Data Plane read only access token.",
+          "type": "string"
+        },
+        "dataPlaneUrl": {
+          "description": "Data Plane service base URL.",
+          "type": "string"
+        }
+      }
+    },
+    "FactoryProperties": {
+      "description": "Factory resource properties.",
+      "properties": {
+        "provisioningState": {
+          "description": "Factory provisioning state, example Succeeded.",
+          "type": "string",
+          "readOnly": true
+        },
+        "createTime": {
+          "description": "Time the factory was created in ISO8601 format.",
+          "type": "string",
+          "readOnly": true,
+          "format": "date-time"
+        },
+        "version": {
+          "description": "Version of the factory.",
+          "type": "string",
+          "readOnly": true
+        },
+        "repoConfiguration": {
+          "$ref": "#/definitions/FactoryRepoConfiguration",
+          "description": "Git repo information of the factory."
+        },
+        "fakeIdentity": {
+          "$ref": "#/definitions/FakeFactoryIdentity",
+          "description": "This is only for az test."
+        },
+        "zones": {
+          "$ref": "#/definitions/Zone",
+          "description": "This is only for az test."
+        }
+      }
+    },
+    "Factory": {
+      "description": "Factory resource type.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        }
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/definitions/FactoryIdentity",
+          "description": "Managed service identity of the factory."
+        },
+        "properties": {
+          "x-ms-client-flatten": true,
+          "$ref": "#/definitions/FactoryProperties",
+          "description": "Properties of the factory."
+        },
+        "testInherit": {
+          "$ref": "#/definitions/JobBase",
+          "description": "Test Job Base"
+        }
+      },
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "JobBase": {
+      "description": "Job base definition",
+      "required": [
+        "jobType"
+      ],
+      "type": "object",
+      "properties": {
+        "jobType": {
+          "description": "Specifies the type of job.",
+          "enum": [
+            "Command",
+            "Sweep",
+            "Labeling",
+            "Pipeline",
+            "Data",
+            "AutoML"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "JobType",
+            "modelAsString": false
+          }
+        },
+        "interactionEndpoints": {
+          "description": "Dictonary of endpoint URIs, keyed by enumerated JobEndpoints, can be added, removed or updated",
+          "type": "object",
+          "properties": {
+            "Tracking": {
+              "format": "uri",
+              "type": "string"
+            },
+            "Studio": {
+              "format": "uri",
+              "type": "string"
+            },
+            "Grafana": {
+              "format": "uri",
+              "type": "string"
+            },
+            "Tensorboard": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          "readOnly": true,
+          "x-ms-mutability": [
+            "create",
+            "read",
+            "update"
+          ]
+        },
+        "description": {
+          "description": "The asset description text.",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Tag dictionary. Tags can be added, removed, and updated.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "discriminator": "jobType"
+    },
+    "ComputeJobBase": {
+      "description": "Compute job base definition",
+      "allOf": [
+        {
+          "$ref": "#/definitions/JobBase"
+        }
+      ],
+      "required": [
+        "computeBinding",
+        "jobType"
+      ],
+      "type": "object",
+      "properties": {
+        "experimentName": {
+          "description": "The name of the experiment the job belongs to. If not set, the job is placed in the \"Default\" experiment.",
+          "type": "string"
+        },
+        "computeBinding": {
+          "description": "computeBinding of the job.",
+          "type": "string"
+        }
+      }
+    },
+    "CommandJob": {
+      "description": "Code Job definition",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ComputeJobBase"
+        }
+      ],
+      "required": [
+        "codeConfiguration",
+        "computeBinding",
+        "jobType"
+      ],
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Status of the job.",
+          "enum": [
+            "NotStarted",
+            "Starting",
+            "Provisioning",
+            "Preparing",
+            "Queued",
+            "Running",
+            "Finalizing",
+            "CancelRequested",
+            "Completed",
+            "Failed",
+            "Canceled",
+            "NotResponding",
+            "Paused"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "JobStatus",
+            "modelAsString": false
+          }
+        },
+        "maxRunDurationSeconds": {
+          "format": "int64",
+          "description": "The max run duration in seconds, ater which the job will be cancelled.",
+          "type": "integer"
+        },
+        "codeConfiguration": {
+          "description": "Code Configuration of the job.",
+          "type": "string"
+        },
+        "environmentId": {
+          "description": "Environment specification of the job.",
+          "type": "string"
+        },
+        "dataBindings": {
+          "description": "Mapping of data bindings used in the job.",
+          "type": "object"
+        },
+        "distributionConfiguration": {
+          "description": "Distributon configuration of the job. This should be one of MpiConfiguration, TensorflowConfiguration, or PyTorchConfiguration."
+        }
+      }
+    },
+    "AutomlJob": {
+      "description": "Automl Job definition",
+      "allOf": [
+        {
+          "$ref": "#/definitions/CommandJob"
+        }
+      ],
+      "required": [
+        "codeConfiguration",
+        "computeBinding",
+        "jobType"
+      ],
+      "type": "object",
+      "properties": {
+        "runType": {
+          "description": "Run type",
+          "type": "string"
+        },
+        "runSource": {
+          "description": "Run source would be used by services calling AutoML CreateParentRun,\r\nif none is provided it would default to \"AutoML\"\r\nThis value would be used for RootAttribution",
+          "type": "string"
+        },
+        "numIterations": {
+          "format": "int32",
+          "description": "Number of iterations.",
+          "type": "integer"
+        },
+        "trainingType": {
+          "description": "Training type",
+          "enum": [
+            "TrainFull",
+            "TrainAndValidate",
+            "CrossValidate",
+            "MeanCrossValidate"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "TrainingType",
+            "modelAsString": false
+          }
+        },
+        "acquisitionFunction": {
+          "description": "Aquisition function",
+          "enum": [
+            "EI",
+            "PI",
+            "UCB"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "AcquisitionFunction",
+            "modelAsString": false
+          }
+        },
+        "metrics": {
+          "description": "Optimization metrics",
+          "type": "array",
+          "items": {
+            "enum": [
+              "AUC_weighted",
+              "Accuracy",
+              "Norm_macro_recall",
+              "Average_precision_score_weighted",
+              "Precision_score_weighted",
+              "Spearman_correlation",
+              "Normalized_root_mean_squared_error",
+              "R2_score",
+              "Normalized_mean_absolute_error",
+              "Normalized_root_mean_squared_log_error",
+              "Mean_average_precision",
+              "Iou"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+              "name": "OptimizationMetric",
+              "modelAsString": false
+            }
+          }
+        },
+        "primaryMetric": {
+          "description": "Primary optimization metric",
+          "enum": [
+            "AUC_weighted",
+            "Accuracy",
+            "Norm_macro_recall",
+            "Average_precision_score_weighted",
+            "Precision_score_weighted",
+            "Spearman_correlation",
+            "Normalized_root_mean_squared_error",
+            "R2_score",
+            "Normalized_mean_absolute_error",
+            "Normalized_root_mean_squared_log_error",
+            "Mean_average_precision",
+            "Iou"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "OptimizationMetric",
+            "modelAsString": false
+          }
+        },
+        "trainSplit": {
+          "format": "double",
+          "description": "Train split percentage",
+          "type": "number"
+        },
+        "acquisitionParameter": {
+          "format": "double",
+          "description": "Aquisition parameter",
+          "type": "number"
+        },
+        "numCrossValidation": {
+          "format": "int32",
+          "description": "Num cross validation",
+          "type": "integer"
+        },
+        "target": {
+          "description": "Target",
+          "type": "string"
+        },
+        "amlSettingsJsonString": {
+          "description": "AMLSettings Json string",
+          "type": "string"
+        },
+        "dataPrepJsonString": {
+          "description": "Serialized DataPrep dataflow object",
+          "type": "string"
+        },
+        "enableSubsampling": {
+          "description": "Enable subsampling",
+          "type": "boolean"
+        },
+        "scenario": {
+          "description": "Which scenario is being used to mapping to a curated environment",
+          "type": "string"
+        },
+        "parentRunId": {
+          "description": "The parent run id for the current parent run dto.",
+          "type": "string"
+        }
+      },
+      "x-ms-discriminator-value": "AutoML"
+    },
+    "TestJob": {
+      "description": "Automl Job definition",
+      "allOf": [
+        {
+          "$ref": "#/definitions/AutomlJob"
+        }
+      ],
+      "required": [
+        "codeConfiguration",
+        "computeBinding",
+        "jobType"
+      ],
+      "type": "object",
+      "properties": {
+        "testType": {
+          "description": "Run type",
+          "type": "string"
+        }
+      },
+      "x-ms-discriminator-value": "TestJob"
+    },
+    "FactoryUpdateParameters": {
+      "description": "Parameters for updating a factory resource.",
+      "properties": {
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The resource tags."
+        },
+        "identity": {
+          "$ref": "#/definitions/FactoryIdentity",
+          "description": "Managed service identity of the factory."
+        }
+      },
+      "required": [
+        "identity"
+      ]
+    },
+    "FactoryIdentity": {
+      "description": "Identity properties of the factory resource.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The identity type. Currently the only supported type is 'SystemAssigned'.",
+          "enum": [
+            "SystemAssigned"
+          ],
+          "x-ms-enum": {
+            "name": "FactoryIdentityType",
+            "modelAsString": true
+          }
+        },
+        "principalId": {
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true,
+          "description": "The principal id of the identity."
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true,
+          "description": "The client tenant id of the identity."
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "Zone": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "sample of simple array"
+    },
+    "FakeFactoryIdentity": {
+      "description": "This is only for az test.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": ".."
+        },
+        "zonesInside": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "sample of simple array"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "TriggerQueryResponse": {
+        "description": "A query of triggers.",
+        "type": "object",
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "List of triggers.",
+            "items": {
+              "$ref": "#/definitions/TriggerResource"
+            }
+          },
+          "continuationToken": {
+            "description": "The continuation token for getting the next page of results, if any remaining results exist, null otherwise.",
+            "type": "string"
+          }
+        }
+      },
+      "TriggerListResponse": {
+        "description": "A list of trigger resources.",
+        "type": "object",
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "List of triggers.",
+            "items": {
+              "$ref": "#/definitions/TriggerResource"
+            }
+          },
+          "nextLink": {
+            "description": "The link to the next page of results, if any remaining results exist.",
+            "type": "string"
+          }
+        }
+      },
+      "TriggerSubscriptionOperationStatus": {
+        "description": "Defines the response of a trigger subscription operation.",
+        "type": "object",
+        "properties": {
+          "triggerName": {
+            "description": "Trigger name.",
+            "type": "string",
+            "readOnly": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Enabled",
+              "Provisioning",
+              "Deprovisioning",
+              "Disabled",
+              "Unknown"
+            ],
+            "x-ms-enum": {
+              "name": "EventSubscriptionStatus",
+              "modelAsString": true
+            },
+            "description": "Event Subscription Status.",
+            "readOnly": true
+          }
+        }
+      },
+      "SubResource": {
+        "description": "Azure Data Factory nested resource, which belongs to a factory.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The resource identifier.",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The resource name.",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "description": "The resource type.",
+            "readOnly": true
+          },
+          "etag": {
+            "type": "string",
+            "description": "Etag identifies change in the resource.",
+            "readOnly": true
+          }
+        },
+        "x-ms-azure-resource": true
+      },
+      "TriggerResource": {
+        "description": "Trigger resource type.",
+        "allOf": [
+          {
+            "$ref": "#/definitions/SubResource"
+          }
+        ],
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/Trigger",
+            "description": "Properties of the trigger."
+          }
+        },
+        "required": [
+          "properties"
+        ]
+      },
+      "Trigger": {
+        "description": "Azure data factory nested object which contains information about creating pipeline run",
+        "type": "object",
+        "discriminator": "type",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Trigger type."
+          },
+          "description": {
+            "description": "Trigger description.",
+            "type": "string"
+          },
+          "runtimeState": {
+            "$ref": "#/definitions/TriggerRuntimeState",
+            "description": "Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.",
+            "readOnly": true
+          },
+          "annotations": {
+            "description": "List of tags that can be used for describing the trigger.",
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "TriggerFilterParameters": {
+        "description": "Query parameters for triggers.",
+        "type": "object",
+        "properties": {
+          "continuationToken": {
+            "description": "The continuation token for getting the next page of results. Null for first page.",
+            "type": "string"
+          },
+          "parentTriggerName": {
+            "description": "The name of the parent TumblingWindowTrigger to get the child rerun triggers",
+            "type": "string"
+          }
+        }
+      },
+      "TriggerRuntimeState": {
+        "type": "string",
+        "description": "Enumerates possible state of Triggers.",
+        "enum": [
+          "Started",
+          "Stopped",
+          "Disabled"
+        ],
+        "x-ms-enum": {
+          "name": "TriggerRuntimeState",
+          "modelAsString": true
+        }
+      },
+      "MultiplePipelineTrigger": {
+        "x-ms-discriminator-value": "MultiplePipelineTrigger",
+        "description": "Base class for all triggers that support one to many model for trigger to pipeline.",
+        "allOf": [
+          {
+            "$ref": "#/definitions/Trigger"
+          }
+        ],
+        "properties": {
+          "pipelines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TriggerPipelineReference"
+            },
+            "description": "Pipelines that need to be started."
+          }
+        }
+      },
+      "TriggerPipelineReference": {
+        "description": "Pipeline that needs to be triggered with the given parameters.",
+        "properties": {
+          "pipelineReference": {
+            "description": "Pipeline reference.",
+            "$ref": "#/definitions/PipelineReference"
+          },
+          "parameters": {
+            "description": "Pipeline parameters.",
+            "$ref": "#/definitions/ParameterValueSpecification"
+          }
+        }
+      },
+      "PipelineReference": {
+        "description": "Pipeline reference type.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Pipeline reference type.",
+            "enum": [
+              "PipelineReference"
+            ]
+          },
+          "referenceName": {
+            "type": "string",
+            "description": "Reference pipeline name."
+          },
+          "name": {
+            "type": "string",
+            "description": "Reference name."
+          }
+        },
+        "required": [
+          "type",
+          "referenceName"
+        ]
+      },
+      "ScheduleTrigger": {
+        "description": "Trigger that creates pipeline runs periodically, on schedule.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/MultiplePipelineTrigger"
+          }
+        ],
+        "properties": {
+          "typeProperties": {
+            "description": "Schedule Trigger properties.",
+            "x-ms-client-flatten": true,
+            "properties": {
+              "recurrence": {
+                "$ref": "#/definitions/ScheduleTriggerRecurrence",
+                "description": "Recurrence schedule configuration."
+              }
+            },
+            "required": [
+              "recurrence"
+            ]
+          }
+        },
+        "required": [
+          "typeProperties"
+        ]
+      },
+      "ScheduleTriggerRecurrence": {
+        "type": "object",
+        "properties": {
+          "frequency": {
+            "$ref": "#/definitions/RecurrenceFrequency",
+            "description": "The frequency."
+          },
+          "interval": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The interval."
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The start time."
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The end time."
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "The time zone."
+          },
+          "schedule": {
+            "$ref": "#/definitions/RecurrenceSchedule",
+            "description": "The recurrence schedule."
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        },
+        "description": "The workflow trigger recurrence."
+      },
+      "RecurrenceFrequency": {
+        "description": "Enumerates possible frequency option for the schedule trigger.",
+        "type": "string",
+        "enum": [
+          "NotSpecified",
+          "Minute",
+          "Hour",
+          "Day",
+          "Week",
+          "Month",
+          "Year"
+        ],
+        "x-ms-enum": {
+          "name": "RecurrenceFrequency",
+          "modelAsString": true
+        }
+      },
+      "RecurrenceSchedule": {
+        "type": "object",
+        "properties": {
+          "minutes": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "The minutes."
+          },
+          "hours": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "The hours."
+          },
+          "weekDays": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+              ],
+              "x-ms-enum": {
+                "name": "DaysOfWeek",
+                "modelAsString": false
+              }
+            },
+            "description": "The days of the week."
+          },
+          "monthDays": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "The month days."
+          },
+          "monthlyOccurrences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/RecurrenceScheduleOccurrence"
+            },
+            "description": "The monthly occurrences."
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        },
+        "description": "The recurrence schedule."
+      },
+      "RecurrenceScheduleOccurrence": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "$ref": "#/definitions/DayOfWeek",
+            "description": "The day of the week."
+          },
+          "occurrence": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The occurrence."
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        },
+        "description": "The recurrence schedule occurrence."
+      },
+      "DayOfWeek": {
+        "type": "string",
+        "enum": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "x-ms-enum": {
+          "name": "DayOfWeek",
+          "modelAsString": false
+        },
+        "description": "The days of the week."
+      },
+      "BlobTrigger": {
+        "description": "Trigger that runs every time the selected Blob container changes.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/MultiplePipelineTrigger"
+          }
+        ],
+        "properties": {
+          "typeProperties": {
+            "description": "Blob Trigger properties.",
+            "x-ms-client-flatten": true,
+            "properties": {
+              "folderPath": {
+                "description": "The path of the container/folder that will trigger the pipeline.",
+                "type": "string"
+              },
+              "maxConcurrency": {
+                "description": "The max number of parallel files to handle when it is triggered.",
+                "type": "integer"
+              },
+              "linkedService": {
+                "description": "The Azure Storage linked service reference.",
+                "$ref": "#/definitions/LinkedServiceReference"
+              }
+            },
+            "required": [
+              "folderPath",
+              "maxConcurrency",
+              "linkedService"
+            ]
+          }
+        },
+        "required": [
+          "typeProperties"
+        ]
+      },
+      "LinkedServiceReference": {
+        "description": "Linked service reference type.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Linked service reference type.",
+            "enum": [
+              "LinkedServiceReference"
+            ]
+          },
+          "referenceName": {
+            "type": "string",
+            "description": "Reference LinkedService name."
+          },
+          "parameters": {
+            "$ref": "#/definitions/ParameterValueSpecification",
+            "description": "Arguments for LinkedService."
+          }
+        },
+        "required": [
+          "type",
+          "referenceName"
+        ]
+      },
+      "BlobEventsTrigger": {
+        "description": "Trigger that runs every time a Blob event occurs.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/MultiplePipelineTrigger"
+          }
+        ],
+        "properties": {
+          "typeProperties": {
+            "description": "Blob Events Trigger properties.",
+            "x-ms-client-flatten": true,
+            "properties": {
+              "blobPathBeginsWith": {
+                "description": "The blob path must begin with the pattern provided for trigger to fire. For example, '/records/blobs/december/' will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith.",
+                "type": "string"
+              },
+              "blobPathEndsWith": {
+                "description": "The blob path must end with the pattern provided for trigger to fire. For example, 'december/boxes.csv' will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith.",
+                "type": "string"
+              },
+              "ignoreEmptyBlobs": {
+                "description": "If set to true, blobs with zero bytes will be ignored.",
+                "type": "boolean"
+              },
+              "events": {
+                "description": "The type of events that cause this trigger to fire.",
+                "$ref": "#/definitions/BlobEventTypes"
+              },
+              "scope": {
+                "description": "The ARM resource ID of the Storage Account.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "events",
+              "scope"
+            ]
+          }
+        },
+        "required": [
+          "typeProperties"
+        ]
+      },
+      "BlobEventTypes": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "Microsoft.Storage.BlobCreated",
+            "Microsoft.Storage.BlobDeleted"
+          ],
+          "x-ms-enum": {
+            "name": "BlobEventTypes",
+            "modelAsString": true
+          }
+        },
+        "description": "Blob event types."
+      },
+      "TumblingWindowTrigger": {
+        "description": "Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill scenarios (when start time is in the past).",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/Trigger"
+          }
+        ],
+        "properties": {
+          "pipeline": {
+            "$ref": "#/definitions/TriggerPipelineReference",
+            "description": "Pipeline for which runs are created when an event is fired for trigger window that is ready."
+          },
+          "typeProperties": {
+            "description": "Tumbling Window Trigger properties.",
+            "x-ms-client-flatten": true,
+            "properties": {
+              "frequency": {
+                "$ref": "#/definitions/TumblingWindowFrequency",
+                "description": "The frequency of the time windows."
+              },
+              "interval": {
+                "type": "integer",
+                "format": "int32",
+                "description": "The interval of the time windows. The minimum interval allowed is 15 Minutes."
+              },
+              "startTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported."
+              },
+              "endTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported."
+              },
+              "delay": {
+                "type": "object",
+                "description": "Specifies how long the trigger waits past due time before triggering new run. It doesn't alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))."
+              },
+              "maxConcurrency": {
+                "description": "The max number of parallel time windows (ready for execution) for which a new run is triggered.",
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 50
+              },
+              "retryPolicy": {
+                "$ref": "#/definitions/RetryPolicy",
+                "description": "Retry policy that will be applied for failed pipeline runs."
+              },
+              "dependsOn": {
+                "type": "array",
+                "description": "Triggers that this trigger depends on. Only tumbling window triggers are supported.",
+                "items": {
+                  "$ref": "#/definitions/DependencyReference"
+                }
+              }
+            },
+            "required": [
+              "frequency",
+              "interval",
+              "startTime",
+              "maxConcurrency"
+            ]
+          }
+        },
+        "required": [
+          "pipeline",
+          "typeProperties"
+        ]
+      },
+      "TumblingWindowFrequency": {
+        "description": "Enumerates possible frequency option for the tumbling window trigger.",
+        "type": "string",
+        "enum": [
+          "Minute",
+          "Hour"
+        ],
+        "x-ms-enum": {
+          "name": "TumblingWindowFrequency",
+          "modelAsString": true
+        }
+      },
+      "RetryPolicy": {
+        "description": "Execution policy for an activity.",
+        "properties": {
+          "count": {
+            "type": "object",
+            "description": "Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0."
+          },
+          "intervalInSeconds": {
+            "description": "Interval between retries in seconds. Default is 30.",
+            "type": "integer",
+            "minimum": 30,
+            "maximum": 86400
+          }
+        }
+      },
+      "TriggerReference": {
+        "description": "Trigger reference type.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "Trigger reference type.",
+            "type": "string",
+            "enum": [
+              "TriggerReference"
+            ]
+          },
+          "referenceName": {
+            "description": "Reference trigger name.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "referenceName"
+        ]
+      },
+      "DependencyReference": {
+        "description": "Referenced dependency.",
+        "type": "object",
+        "discriminator": "type",
+        "properties": {
+          "type": {
+            "description": "The type of dependency reference.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "TriggerDependencyReference": {
+        "description": "Trigger referenced dependency.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/DependencyReference"
+          }
+        ],
+        "properties": {
+          "referenceTrigger": {
+            "description": "Referenced trigger.",
+            "$ref": "#/definitions/TriggerReference"
+          }
+        },
+        "required": [
+          "referenceTrigger"
+        ]
+      },
+      "TumblingWindowTriggerDependencyReference": {
+        "description": "Referenced tumbling window trigger dependency.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/TriggerDependencyReference"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "description": "Timespan applied to the start time of a tumbling window when evaluating dependency.",
+            "type": "string",
+            "pattern": "-?((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))",
+            "minLength": 8,
+            "maxLength": 15
+          },
+          "size": {
+            "description": "The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used.",
+            "type": "string",
+            "pattern": "((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))",
+            "minLength": 8,
+            "maxLength": 15
+          }
+        }
+      },
+      "SelfDependencyTumblingWindowTriggerReference": {
+        "description": "Self referenced tumbling window trigger dependency.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/DependencyReference"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "description": "Timespan applied to the start time of a tumbling window when evaluating dependency.",
+            "type": "string",
+            "pattern": "-((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))",
+            "minLength": 8,
+            "maxLength": 15
+          },
+          "size": {
+            "description": "The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used.",
+            "type": "string",
+            "pattern": "((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))",
+            "minLength": 8,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "offset"
+        ]
+      },
+      "RerunTumblingWindowTrigger": {
+        "description": "Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/Trigger"
+          }
+        ],
+        "properties": {
+          "typeProperties": {
+            "description": "Rerun Trigger properties.",
+            "x-ms-client-flatten": true,
+            "properties": {
+              "parentTrigger": {
+                "type": "object",
+                "description": "The parent trigger reference."
+              },
+              "requestedStartTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The start time for the time period for which restatement is initiated. Only UTC time is currently supported."
+              },
+              "requestedEndTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The end time for the time period for which restatement is initiated. Only UTC time is currently supported."
+              },
+              "rerunConcurrency": {
+                "description": "The max number of parallel time windows (ready for execution) for which a rerun is triggered.",
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 50
+              }
+            },
+            "required": [
+              "parentTrigger",
+              "requestedStartTime",
+              "requestedEndTime",
+              "rerunConcurrency"
+            ]
+          }
+        },
+        "required": [
+          "typeProperties"
+        ]
+      },
+      "ChainingTrigger": {
+        "description": "Trigger that allows the referenced pipeline to depend on other pipeline runs based on runDimension Name/Value pairs. Upstream pipelines should declare the same runDimension Name and their runs should have the values for those runDimensions. The referenced pipeline run would be triggered if the values for the runDimension match for all upstream pipeline runs.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/Trigger"
+          }
+        ],
+        "properties": {
+          "pipeline": {
+            "$ref": "#/definitions/TriggerPipelineReference",
+            "description": "Pipeline for which runs are created when all upstream pipelines complete successfully."
+          },
+          "typeProperties": {
+            "description": "Chaining Trigger properties.",
+            "x-ms-client-flatten": true,
+            "properties": {
+              "dependsOn": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/PipelineReference"
+                },
+                "description": "Upstream Pipelines."
+              },
+              "runDimension": {
+                "description": "Run Dimension property that needs to be emitted by upstream pipelines.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "runDimension",
+              "dependsOn"
+            ]
+          }
+        },
+        "required": [
+          "pipeline",
+          "typeProperties"
+        ]
+      },
+      "IntegrationRuntimeListResponse": {
+        "description": "A list of integration runtime resources.",
+        "type": "object",
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "List of integration runtimes.",
+            "items": {
+              "$ref": "#/definitions/IntegrationRuntimeResource"
+            }
+          },
+          "nextLink": {
+            "description": "The link to the next page of results, if any remaining results exist.",
+            "type": "string"
+          }
+        }
+      },
+      "IntegrationRuntimeReference": {
+        "description": "Integration runtime reference type.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of integration runtime.",
+            "enum": [
+              "IntegrationRuntimeReference"
+            ]
+          },
+          "referenceName": {
+            "type": "string",
+            "description": "Reference integration runtime name."
+          },
+          "parameters": {
+            "$ref": "#/definitions/ParameterValueSpecification",
+            "description": "Arguments for integration runtime."
+          }
+        },
+        "required": [
+          "type",
+          "referenceName"
+        ]
+      },
+      "ParameterValueSpecification": {
+        "description": "An object mapping parameter names to argument values.",
+        "type": "object",
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "IntegrationRuntimeResource": {
+        "description": "Integration runtime resource type.",
+        "allOf": [
+          {
+            "$ref": "#/definitions/SubResource"
+          }
+        ],
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/IntegrationRuntime",
+            "description": "Integration runtime properties."
+          }
+        },
+        "required": [
+          "properties"
+        ]
+      },
+      "IntegrationRuntimeStatusResponse": {
+        "description": "Integration runtime status response.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The integration runtime name.",
+            "readOnly": true
+          },
+          "properties": {
+            "$ref": "#/definitions/IntegrationRuntimeStatus",
+            "description": "Integration runtime properties."
+          }
+        },
+        "required": [
+          "properties"
+        ]
+      },
+      "IntegrationRuntimeStatusListResponse": {
+        "description": "A list of integration runtime status.",
+        "type": "object",
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "List of integration runtime status.",
+            "items": {
+              "$ref": "#/definitions/IntegrationRuntimeStatusResponse"
+            }
+          },
+          "nextLink": {
+            "description": "The link to the next page of results, if any remaining results exist.",
+            "type": "string"
+          }
+        }
+      },
+      "UpdateIntegrationRuntimeRequest": {
+        "description": "Update integration runtime request.",
+        "type": "object",
+        "properties": {
+          "autoUpdate": {
+            "description": "Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.",
+            "$ref": "#/definitions/IntegrationRuntimeAutoUpdate"
+          },
+          "updateDelayOffset": {
+            "description": "The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.",
+            "type": "string"
+          }
+        }
+      },
+      "IntegrationRuntime": {
+        "description": "Azure Data Factory nested object which serves as a compute resource for activities.",
+        "type": "object",
+        "discriminator": "type",
+        "properties": {
+          "type": {
+            "description": "Type of integration runtime.",
+            "$ref": "#/definitions/IntegrationRuntimeType"
+          },
+          "description": {
+            "description": "Integration runtime description.",
+            "type": "string"
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "IntegrationRuntimeType": {
+        "description": "The type of integration runtime.",
+        "type": "string",
+        "enum": [
+          "Managed",
+          "SelfHosted"
+        ],
+        "x-ms-enum": {
+          "name": "IntegrationRuntimeType",
+          "modelAsString": true
+        }
+      },
+      "ManagedIntegrationRuntime": {
+        "x-ms-discriminator-value": "Managed",
+        "description": "Managed integration runtime, including managed elastic and managed dedicated integration runtimes.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/IntegrationRuntime"
+          }
+        ],
+        "properties": {
+          "state": {
+            "description": "Integration runtime state, only valid for managed dedicated integration runtime.",
+            "$ref": "#/definitions/IntegrationRuntimeState",
+            "readOnly": true
+          },
+          "typeProperties": {
+            "description": "Managed integration runtime properties.",
+            "x-ms-client-flatten": true,
+            "$ref": "#/definitions/ManagedIntegrationRuntimeTypeProperties"
+          },
+          "repoConfiguration": {
+            "$ref": "#/definitions/FactoryRepoConfiguration",
+            "description": "Git repo information of the factory."
+          },
+          "fakeIdentity": {
+            "$ref": "#/definitions/FakeFactoryIdentity",
+            "description": "This is only for az test."
+          },
+          "zones": {
+            "$ref": "#/definitions/Zone",
+            "description": "This is only for az test."
+          }
+        },
+        "required": [
+          "typeProperties"
+        ]
+      },
+      "ManagedIntegrationRuntimeTypeProperties": {
+        "description": "Managed integration runtime type properties.",
+        "type": "object",
+        "properties": {
+          "computeProperties": {
+            "description": "The compute resource for managed integration runtime.",
+            "$ref": "#/definitions/IntegrationRuntimeComputeProperties"
+          },
+          "ssisProperties": {
+            "description": "SSIS properties for managed integration runtime.",
+            "$ref": "#/definitions/IntegrationRuntimeSsisProperties"
+          }
+        }
+      },
+      "IntegrationRuntimeComputeProperties": {
+        "description": "The compute resource properties for managed integration runtime.",
+        "type": "object",
+        "properties": {
+          "location": {
+            "description": "The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities",
+            "type": "string"
+          },
+          "nodeSize": {
+            "description": "The node size requirement to managed integration runtime.",
+            "type": "string"
+          },
+          "numberOfNodes": {
+            "description": "The required number of nodes for managed integration runtime.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "maxParallelExecutionsPerNode": {
+            "description": "Maximum parallel executions count per node for managed integration runtime.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "dataFlowProperties": {
+            "description": "Data flow properties for managed integration runtime.",
+            "$ref": "#/definitions/IntegrationRuntimeDataFlowProperties"
+          },
+          "vNetProperties": {
+            "description": "VNet properties for managed integration runtime.",
+            "$ref": "#/definitions/IntegrationRuntimeVNetProperties"
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "IntegrationRuntimeDataFlowProperties": {
+        "description": "Data flow properties for managed integration runtime.",
+        "type": "object",
+        "properties": {
+          "computeType": {
+            "description": "Compute type of the cluster which will execute data flow job.",
+            "type": "string",
+            "enum": [
+              "General",
+              "MemoryOptimized",
+              "ComputeOptimized"
+            ],
+            "x-ms-enum": {
+              "name": "DataFlowComputeType",
+              "modelAsString": true
+            }
+          },
+          "coreCount": {
+            "description": "Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.",
+            "type": "integer"
+          },
+          "timeToLive": {
+            "description": "Time to live (in minutes) setting of the cluster which will execute data flow job.",
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "IntegrationRuntimeVNetProperties": {
+        "description": "VNet properties for managed integration runtime.",
+        "type": "object",
+        "properties": {
+          "vNetId": {
+            "description": "The ID of the VNet that this integration runtime will join.",
+            "type": "string"
+          },
+          "subnet": {
+            "description": "The name of the subnet this integration runtime will join.",
+            "type": "string"
+          },
+          "publicIPs": {
+            "description": "Resource IDs of the public IP addresses that this integration runtime will use.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "The ID of the public IP address."
+            }
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "IntegrationRuntimeSsisProperties": {
+        "description": "SSIS properties for managed integration runtime.",
+        "type": "object",
+        "properties": {
+          "catalogInfo": {
+            "description": "Catalog information for managed dedicated integration runtime.",
+            "$ref": "#/definitions/IntegrationRuntimeSsisCatalogInfo"
+          },
+          "licenseType": {
+            "description": "License type for bringing your own license scenario.",
+            "type": "string",
+            "enum": [
+              "BasePrice",
+              "LicenseIncluded"
+            ],
+            "x-ms-enum": {
+              "name": "IntegrationRuntimeLicenseType",
+              "modelAsString": true
+            }
+          },
+          "customSetupScriptProperties": {
+            "description": "Custom setup script properties for a managed dedicated integration runtime.",
+            "$ref": "#/definitions/IntegrationRuntimeCustomSetupScriptProperties"
+          },
+          "dataProxyProperties": {
+            "description": "Data proxy properties for a managed dedicated integration runtime.",
+            "$ref": "#/definitions/IntegrationRuntimeDataProxyProperties"
+          },
+          "edition": {
+            "description": "The edition for the SSIS Integration Runtime",
+            "type": "string",
+            "enum": [
+              "Standard",
+              "Enterprise"
+            ],
+            "x-ms-enum": {
+              "name": "IntegrationRuntimeEdition",
+              "modelAsString": true
+            }
+          },
+          "expressCustomSetupProperties": {
+            "description": "Custom setup without script properties for a SSIS integration runtime.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CustomSetupBase"
+            }
+          },
+          "packageStores": {
+            "description": "Package stores for the SSIS Integration Runtime.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/PackageStore"
+            }
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "SecureString": {
+        "x-ms-discriminator-value": "SecureString",
+        "description": "Azure Data Factory secure string definition. The string value will be masked with asterisks '*' during Get or List API calls.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/SecretBase"
+          }
+        ],
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "Value of secure string."
+          }
+        },
+        "required": [
+          "value"
+        ]
+      },
+      "SecretBase": {
+        "description": "The base definition of a secret type.",
+        "discriminator": "type",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of the secret."
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "IntegrationRuntimeSsisCatalogInfo": {
+        "description": "Catalog information for managed dedicated integration runtime.",
+        "type": "object",
+        "properties": {
+          "catalogServerEndpoint": {
+            "description": "The catalog database server URL.",
+            "type": "string"
+          },
+          "catalogAdminUserName": {
+            "description": "The administrator user name of catalog database.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "catalogAdminPassword": {
+            "description": "The password of the administrator user account of the catalog database.",
+            "$ref": "#/definitions/SecureString"
+          },
+          "catalogPricingTier": {
+            "description": "The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/",
+            "type": "string",
+            "enum": [
+              "Basic",
+              "Standard",
+              "Premium",
+              "PremiumRS"
+            ],
+            "x-ms-enum": {
+              "name": "IntegrationRuntimeSsisCatalogPricingTier",
+              "modelAsString": true
+            }
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "IntegrationRuntimeCustomSetupScriptProperties": {
+        "description": "Custom setup script properties for a managed dedicated integration runtime.",
+        "type": "object",
+        "properties": {
+          "blobContainerUri": {
+            "description": "The URI of the Azure blob container that contains the custom setup script.",
+            "type": "string"
+          },
+          "sasToken": {
+            "description": "The SAS token of the Azure blob container.",
+            "$ref": "#/definitions/SecureString"
+          }
+        }
+      },
+      "IntegrationRuntimeDataProxyProperties": {
+        "description": "Data proxy properties for a managed dedicated integration runtime.",
+        "type": "object",
+        "properties": {
+          "connectVia": {
+            "description": "The self-hosted integration runtime reference.",
+            "$ref": "#/definitions/EntityReference"
+          },
+          "stagingLinkedService": {
+            "description": "The staging linked service reference.",
+            "$ref": "#/definitions/EntityReference"
+          },
+          "path": {
+            "description": "The path to contain the staged data in the Blob storage.",
+            "type": "string"
+          }
+        }
+      },
+      "PackageStore": {
+        "description": "Package store for the SSIS integration runtime.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the package store",
+            "type": "string"
+          },
+          "packageStoreLinkedService": {
+            "description": "The package store linked service reference.",
+            "$ref": "#/definitions/EntityReference"
+          }
+        },
+        "required": [
+          "name",
+          "packageStoreLinkedService"
+        ]
+      },
+      "CustomSetupBase": {
+        "description": "The base definition of the custom setup.",
+        "type": "object",
+        "discriminator": "type",
+        "properties": {
+          "type": {
+            "description": "The type of custom setup.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "CmdkeySetup": {
+        "description": "The custom setup of running cmdkey commands.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/CustomSetupBase"
+          }
+        ],
+        "properties": {
+          "typeProperties": {
+            "description": "Cmdkey command custom setup type properties.",
+            "x-ms-client-flatten": true,
+            "$ref": "#/definitions/CmdkeySetupTypeProperties"
+          }
+        },
+        "required": [
+          "typeProperties"
+        ]
+      },
+      "CmdkeySetupTypeProperties": {
+        "description": "Cmdkey command custom setup type properties.",
+        "type": "object",
+        "properties": {
+          "targetName": {
+            "description": "The server name of data source access.",
+            "type": "object"
+          },
+          "userName": {
+            "description": "The user name of data source access.",
+            "type": "object"
+          },
+          "password": {
+            "description": "The password of data source access.",
+            "$ref": "#/definitions/SecretBase"
+          }
+        },
+        "required": [
+          "targetName",
+          "userName",
+          "password"
+        ]
+      },
+      "EnvironmentVariableSetup": {
+        "description": "The custom setup of setting environment variable.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/CustomSetupBase"
+          }
+        ],
+        "properties": {
+          "typeProperties": {
+            "description": "Add environment variable type properties.",
+            "x-ms-client-flatten": true,
+            "$ref": "#/definitions/EnvironmentVariableSetupTypeProperties"
+          }
+        },
+        "required": [
+          "typeProperties"
+        ]
+      },
+      "EnvironmentVariableSetupTypeProperties": {
+        "description": "Environment variable custom setup type properties.",
+        "type": "object",
+        "properties": {
+          "variableName": {
+            "description": "The name of the environment variable.",
+            "type": "string"
+          },
+          "variableValue": {
+            "description": "The value of the environment variable.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "variableName",
+          "variableValue"
+        ]
+      },
+      "ComponentSetup": {
+        "description": "The custom setup of installing 3rd party components.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/CustomSetupBase"
+          }
+        ],
+        "properties": {
+          "typeProperties": {
+            "description": "Install 3rd party component type properties.",
+            "x-ms-client-flatten": true,
+            "$ref": "#/definitions/LicensedComponentSetupTypeProperties"
+          }
+        },
+        "required": [
+          "typeProperties"
+        ]
+      },
+      "LicensedComponentSetupTypeProperties": {
+        "description": "Installation of licensed component setup type properties.",
+        "type": "object",
+        "properties": {
+          "componentName": {
+            "description": "The name of the 3rd party component.",
+            "type": "string"
+          },
+          "licenseKey": {
+            "description": "The license key to activate the component.",
+            "$ref": "#/definitions/SecretBase"
+          }
+        },
+        "required": [
+          "componentName"
+        ]
+      },
+      "EntityReference": {
+        "description": "The entity reference.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "The type of this referenced entity.",
+            "type": "string",
+            "enum": [
+              "IntegrationRuntimeReference",
+              "LinkedServiceReference"
+            ],
+            "x-ms-enum": {
+              "name": "IntegrationRuntimeEntityReferenceType",
+              "modelAsString": true
+            }
+          },
+          "referenceName": {
+            "description": "The name of this referenced entity.",
+            "type": "string"
+          }
+        }
+      },
+      "SelfHostedIntegrationRuntime": {
+        "x-ms-discriminator-value": "SelfHosted",
+        "description": "Self-hosted integration runtime.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/IntegrationRuntime"
+          }
+        ],
+        "properties": {
+          "typeProperties": {
+            "description": "When this property is not null, means this is a linked integration runtime. The property is used to access original integration runtime.",
+            "x-ms-client-flatten": true,
+            "$ref": "#/definitions/SelfHostedIntegrationRuntimeTypeProperties"
+          }
+        }
+      },
+      "SelfHostedIntegrationRuntimeTypeProperties": {
+        "description": "The self-hosted integration runtime properties.",
+        "type": "object",
+        "properties": {
+          "linkedInfo": {
+            "$ref": "#/definitions/LinkedIntegrationRuntimeType"
+          }
+        }
+      },
+      "LinkedIntegrationRuntimeType": {
+        "description": "The base definition of a linked integration runtime.",
+        "discriminator": "authorizationType",
+        "type": "object",
+        "properties": {
+          "authorizationType": {
+            "type": "string",
+            "description": "The authorization type for integration runtime sharing."
+          }
+        },
+        "required": [
+          "authorizationType"
+        ]
+      },
+      "LinkedIntegrationRuntimeKeyAuthorization": {
+        "x-ms-discriminator-value": "Key",
+        "description": "The key authorization type integration runtime.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/LinkedIntegrationRuntimeType"
+          }
+        ],
+        "properties": {
+          "key": {
+            "description": "The key used for authorization.",
+            "$ref": "#/definitions/SecureString"
+          }
+        },
+        "required": [
+          "key"
+        ]
+      },
+      "LinkedIntegrationRuntimeRbacAuthorization": {
+        "x-ms-discriminator-value": "RBAC",
+        "description": "The role based access control (RBAC) authorization type integration runtime.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/LinkedIntegrationRuntimeType"
+          }
+        ],
+        "properties": {
+          "resourceId": {
+            "description": "The resource identifier of the integration runtime to be shared.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "resourceId"
+        ]
+      },
+      "IntegrationRuntimeStatus": {
+        "description": "Integration runtime status.",
+        "type": "object",
+        "discriminator": "type",
+        "properties": {
+          "type": {
+            "description": "Type of integration runtime.",
+            "$ref": "#/definitions/IntegrationRuntimeType"
+          },
+          "dataFactoryName": {
+            "description": "The data factory name which the integration runtime belong to.",
+            "type": "string",
+            "readOnly": true
+          },
+          "state": {
+            "description": "The state of integration runtime.",
+            "$ref": "#/definitions/IntegrationRuntimeState",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "IntegrationRuntimeState": {
+        "description": "The state of integration runtime.",
+        "type": "string",
+        "readOnly": true,
+        "enum": [
+          "Initial",
+          "Stopped",
+          "Started",
+          "Starting",
+          "Stopping",
+          "NeedRegistration",
+          "Online",
+          "Limited",
+          "Offline",
+          "AccessDenied"
+        ],
+        "x-ms-enum": {
+          "name": "IntegrationRuntimeState",
+          "modelAsString": true
+        }
+      },
+      "ManagedIntegrationRuntimeStatus": {
+        "x-ms-discriminator-value": "Managed",
+        "description": "Managed integration runtime status.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/IntegrationRuntimeStatus"
+          }
+        ],
+        "properties": {
+          "typeProperties": {
+            "description": "Managed integration runtime status type properties.",
+            "x-ms-client-flatten": true,
+            "$ref": "#/definitions/ManagedIntegrationRuntimeStatusTypeProperties"
+          }
+        },
+        "required": [
+          "typeProperties"
+        ]
+      },
+      "ManagedIntegrationRuntimeStatusTypeProperties": {
+        "description": "Managed integration runtime status type properties.",
+        "type": "object",
+        "properties": {
+          "createTime": {
+            "description": "The time at which the integration runtime was created, in ISO8601 format.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "nodes": {
+            "description": "The list of nodes for managed integration runtime.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ManagedIntegrationRuntimeNode"
+            },
+            "readOnly": true
+          },
+          "otherErrors": {
+            "description": "The errors that occurred on this integration runtime.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ManagedIntegrationRuntimeError"
+            },
+            "readOnly": true
+          },
+          "lastOperation": {
+            "description": "The last operation result that occurred on this integration runtime.",
+            "$ref": "#/definitions/ManagedIntegrationRuntimeOperationResult",
+            "readOnly": true
+          }
+        }
+      },
+      "ManagedIntegrationRuntimeOperationResult": {
+        "description": "Properties of managed integration runtime operation result.",
+        "properties": {
+          "type": {
+            "description": "The operation type. Could be start or stop.",
+            "type": "string",
+            "readOnly": true
+          },
+          "startTime": {
+            "description": "The start time of the operation.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "result": {
+            "description": "The operation result.",
+            "type": "string",
+            "readOnly": true
+          },
+          "errorCode": {
+            "description": "The error code.",
+            "type": "string",
+            "readOnly": true
+          },
+          "parameters": {
+            "description": "Managed integration runtime error parameters.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Error message parameters."
+            },
+            "readOnly": true
+          },
+          "activityId": {
+            "description": "The activity id for the operation request.",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "ManagedIntegrationRuntimeNode": {
+        "description": "Properties of integration runtime node.",
+        "properties": {
+          "nodeId": {
+            "description": "The managed integration runtime node id.",
+            "type": "string",
+            "readOnly": true
+          },
+          "status": {
+            "description": "The managed integration runtime node status.",
+            "type": "string",
+            "readOnly": true,
+            "enum": [
+              "Starting",
+              "Available",
+              "Recycling",
+              "Unavailable"
+            ],
+            "x-ms-enum": {
+              "name": "ManagedIntegrationRuntimeNodeStatus",
+              "modelAsString": true
+            }
+          },
+          "errors": {
+            "description": "The errors that occurred on this integration runtime node.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ManagedIntegrationRuntimeError"
+            }
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "ManagedIntegrationRuntimeError": {
+        "description": "Error definition for managed integration runtime.",
+        "properties": {
+          "time": {
+            "description": "The time when the error occurred.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "code": {
+            "description": "Error code.",
+            "type": "string",
+            "readOnly": true
+          },
+          "parameters": {
+            "description": "Managed integration runtime error parameters.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Error message parameters."
+            },
+            "readOnly": true
+          },
+          "message": {
+            "description": "Error message.",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "SelfHostedIntegrationRuntimeStatus": {
+        "x-ms-discriminator-value": "SelfHosted",
+        "description": "Self-hosted integration runtime status.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/IntegrationRuntimeStatus"
+          }
+        ],
+        "properties": {
+          "typeProperties": {
+            "description": "Self-hosted integration runtime status type properties.",
+            "x-ms-client-flatten": true,
+            "$ref": "#/definitions/SelfHostedIntegrationRuntimeStatusTypeProperties"
+          }
+        },
+        "required": [
+          "typeProperties"
+        ]
+      },
+      "SelfHostedIntegrationRuntimeStatusTypeProperties": {
+        "description": "Self-hosted integration runtime status type properties.",
+        "type": "object",
+        "properties": {
+          "createTime": {
+            "description": "The time at which the integration runtime was created, in ISO8601 format.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "taskQueueId": {
+            "description": "The task queue id of the integration runtime.",
+            "type": "string",
+            "readOnly": true
+          },
+          "internalChannelEncryption": {
+            "description": "It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist).",
+            "type": "string",
+            "readOnly": true,
+            "enum": [
+              "NotSet",
+              "SslEncrypted",
+              "NotEncrypted"
+            ],
+            "x-ms-enum": {
+              "name": "IntegrationRuntimeInternalChannelEncryptionMode",
+              "modelAsString": true
+            }
+          },
+          "version": {
+            "description": "Version of the integration runtime.",
+            "type": "string",
+            "readOnly": true
+          },
+          "nodes": {
+            "description": "The list of nodes for this integration runtime.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/SelfHostedIntegrationRuntimeNode"
+            }
+          },
+          "scheduledUpdateDate": {
+            "description": "The date at which the integration runtime will be scheduled to update, in ISO8601 format.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updateDelayOffset": {
+            "description": "The time in the date scheduled by service to update the integration runtime, e.g., PT03H is 3 hours",
+            "type": "string",
+            "readOnly": true
+          },
+          "localTimeZoneOffset": {
+            "description": "The local time zone offset in hours.",
+            "type": "string",
+            "readOnly": true
+          },
+          "capabilities": {
+            "description": "Object with additional information about integration runtime capabilities.",
+            "type": "object",
+            "readOnly": true,
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "serviceUrls": {
+            "description": "The URLs for the services used in integration runtime backend service.",
+            "type": "array",
+            "items": {
+              "description": "The service URL",
+              "type": "string"
+            },
+            "readOnly": true
+          },
+          "autoUpdate": {
+            "description": "Whether Self-hosted integration runtime auto update has been turned on.",
+            "$ref": "#/definitions/IntegrationRuntimeAutoUpdate",
+            "readOnly": true
+          },
+          "versionStatus": {
+            "description": "Status of the integration runtime version.",
+            "type": "string",
+            "readOnly": true
+          },
+          "links": {
+            "description": "The list of linked integration runtimes that are created to share with this integration runtime.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/LinkedIntegrationRuntime"
+            }
+          },
+          "pushedVersion": {
+            "description": "The version that the integration runtime is going to update to.",
+            "type": "string",
+            "readOnly": true
+          },
+          "latestVersion": {
+            "description": "The latest version on download center.",
+            "type": "string",
+            "readOnly": true
+          },
+          "autoUpdateETA": {
+            "description": "The estimated time when the self-hosted integration runtime will be updated.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        }
+      },
+      "IntegrationRuntimeAutoUpdate": {
+        "description": "The state of integration runtime auto update.",
+        "type": "string",
+        "enum": [
+          "On",
+          "Off",
+          "fakeValue1",
+          "fakeValue2",
+          "fakeValue3",
+          "fakeValue4",
+          "fakeValue5",
+          "fakeValue6"
+        ],
+        "x-ms-enum": {
+          "name": "IntegrationRuntimeAutoUpdate",
+          "modelAsString": true
+        }
+      },
+      "LinkedIntegrationRuntime": {
+        "description": "The linked integration runtime information.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the linked integration runtime.",
+            "type": "string",
+            "readOnly": true
+          },
+          "subscriptionId": {
+            "description": "The subscription ID for which the linked integration runtime belong to.",
+            "type": "string",
+            "readOnly": true
+          },
+          "dataFactoryName": {
+            "description": "The name of the data factory for which the linked integration runtime belong to.",
+            "type": "string",
+            "readOnly": true
+          },
+          "dataFactoryLocation": {
+            "description": "The location of the data factory for which the linked integration runtime belong to.",
+            "type": "string",
+            "readOnly": true
+          },
+          "createTime": {
+            "description": "The creating time of the linked integration runtime.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        }
+      },
+      "SelfHostedIntegrationRuntimeNode": {
+        "description": "Properties of Self-hosted integration runtime node.",
+        "properties": {
+          "nodeName": {
+            "description": "Name of the integration runtime node.",
+            "type": "string",
+            "readOnly": true
+          },
+          "machineName": {
+            "description": "Machine name of the integration runtime node.",
+            "type": "string",
+            "readOnly": true
+          },
+          "hostServiceUri": {
+            "description": "URI for the host machine of the integration runtime.",
+            "type": "string",
+            "readOnly": true
+          },
+          "status": {
+            "description": "Status of the integration runtime node.",
+            "type": "string",
+            "readOnly": true,
+            "enum": [
+              "NeedRegistration",
+              "Online",
+              "Limited",
+              "Offline",
+              "Upgrading",
+              "Initializing",
+              "InitializeFailed"
+            ],
+            "x-ms-enum": {
+              "name": "SelfHostedIntegrationRuntimeNodeStatus",
+              "modelAsString": true
+            }
+          },
+          "capabilities": {
+            "description": "The integration runtime capabilities dictionary",
+            "type": "object",
+            "readOnly": true,
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "versionStatus": {
+            "description": "Status of the integration runtime node version.",
+            "type": "string",
+            "readOnly": true
+          },
+          "version": {
+            "description": "Version of the integration runtime node.",
+            "type": "string",
+            "readOnly": true
+          },
+          "registerTime": {
+            "description": "The time at which the integration runtime node was registered in ISO8601 format.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "lastConnectTime": {
+            "description": "The most recent time at which the integration runtime was connected in ISO8601 format.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "expiryTime": {
+            "description": "The time at which the integration runtime will expire in ISO8601 format.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "lastStartTime": {
+            "description": "The time the node last started up.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "lastStopTime": {
+            "description": "The integration runtime node last stop time.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "lastUpdateResult": {
+            "description": "The result of the last integration runtime node update.",
+            "type": "string",
+            "enum": [
+              "None",
+              "Succeed",
+              "Fail"
+            ],
+            "x-ms-enum": {
+              "name": "IntegrationRuntimeUpdateResult",
+              "modelAsString": true
+            },
+            "readOnly": true
+          },
+          "lastStartUpdateTime": {
+            "description": "The last time for the integration runtime node update start.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "lastEndUpdateTime": {
+            "description": "The last time for the integration runtime node update end.",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "isActiveDispatcher": {
+            "description": "Indicates whether this node is the active dispatcher for integration runtime requests.",
+            "type": "boolean",
+            "readOnly": true
+          },
+          "concurrentJobsLimit": {
+            "description": "Maximum concurrent jobs on the integration runtime node.",
+            "type": "integer",
+            "readOnly": true
+          },
+          "maxConcurrentJobs": {
+            "description": "The maximum concurrent jobs in this integration runtime.",
+            "type": "integer",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "IntegrationRuntimeConnectionInfo": {
+        "description": "Connection information for encrypting the on-premises data source credentials.",
+        "type": "object",
+        "properties": {
+          "serviceToken": {
+            "description": "The token generated in service. Callers use this token to authenticate to integration runtime.",
+            "type": "string",
+            "readOnly": true
+          },
+          "identityCertThumbprint": {
+            "description": "The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation.",
+            "type": "string",
+            "readOnly": true
+          },
+          "hostServiceUri": {
+            "description": "The on-premises integration runtime host URL.",
+            "type": "string",
+            "readOnly": true
+          },
+          "version": {
+            "description": "The integration runtime version.",
+            "type": "string",
+            "readOnly": true
+          },
+          "publicKey": {
+            "description": "The public key for encrypting a credential when transferring the credential to the integration runtime.",
+            "type": "string",
+            "readOnly": true
+          },
+          "isIdentityCertExprired": {
+            "description": "Whether the identity certificate is expired.",
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "IntegrationRuntimeRegenerateKeyParameters": {
+        "description": "Parameters to regenerate the authentication key.",
+        "type": "object",
+        "properties": {
+          "keyName": {
+            "description": "The name of the authentication key to regenerate.",
+            "type": "string",
+            "enum": [
+              "authKey1",
+              "authKey2"
+            ],
+            "x-ms-enum": {
+              "name": "IntegrationRuntimeAuthKeyName",
+              "modelAsString": true
+            }
+          }
+        }
+      },
+      "IntegrationRuntimeAuthKeys": {
+        "description": "The integration runtime authentication keys.",
+        "type": "object",
+        "properties": {
+          "authKey1": {
+            "type": "string",
+            "description": "The primary integration runtime authentication key."
+          },
+          "authKey2": {
+            "type": "string",
+            "description": "The secondary integration runtime authentication key."
+          }
+        }
+      },
+      "IntegrationRuntimeMonitoringData": {
+        "description": "Get monitoring data response.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Integration runtime name."
+          },
+          "nodes": {
+            "type": "array",
+            "description": "Integration runtime node monitoring data.",
+            "items": {
+              "$ref": "#/definitions/IntegrationRuntimeNodeMonitoringData"
+            }
+          }
+        }
+      },
+      "IntegrationRuntimeNodeMonitoringData": {
+        "description": "Monitoring data for integration runtime node.",
+        "type": "object",
+        "properties": {
+          "nodeName": {
+            "description": "Name of the integration runtime node.",
+            "type": "string",
+            "readOnly": true
+          },
+          "availableMemoryInMB": {
+            "description": "Available memory (MB) on the integration runtime node.",
+            "type": "integer",
+            "readOnly": true
+          },
+          "cpuUtilization": {
+            "description": "CPU percentage on the integration runtime node.",
+            "type": "integer",
+            "readOnly": true
+          },
+          "concurrentJobsLimit": {
+            "description": "Maximum concurrent jobs on the integration runtime node.",
+            "type": "integer",
+            "readOnly": true
+          },
+          "concurrentJobsRunning": {
+            "description": "The number of jobs currently running on the integration runtime node.",
+            "type": "integer",
+            "readOnly": true
+          },
+          "maxConcurrentJobs": {
+            "description": "The maximum concurrent jobs in this integration runtime.",
+            "type": "integer",
+            "readOnly": true
+          },
+          "sentBytes": {
+            "description": "Sent bytes on the integration runtime node.",
+            "type": "number",
+            "readOnly": true
+          },
+          "receivedBytes": {
+            "description": "Received bytes on the integration runtime node.",
+            "type": "number",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "IntegrationRuntimeNodeIpAddress": {
+        "type": "object",
+        "description": "The IP address of self-hosted integration runtime node.",
+        "properties": {
+          "ipAddress": {
+            "description": "The IP address of self-hosted integration runtime node.",
+            "type": "string",
+            "readOnly": true
+          }
+        }
+      },
+      "SsisObjectMetadataListResponse": {
+        "type": "object",
+        "description": "A list of SSIS object metadata.",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "List of SSIS object metadata.",
+            "items": {
+              "$ref": "#/definitions/SsisObjectMetadata"
+            }
+          },
+          "nextLink": {
+            "type": "string",
+            "description": "The link to the next page of results, if any remaining results exist."
+          }
+        }
+      },
+      "SsisObjectMetadata": {
+        "type": "object",
+        "description": "SSIS object metadata.",
+        "discriminator": "type",
+        "properties": {
+          "type": {
+            "description": "Type of metadata.",
+            "$ref": "#/definitions/SsisObjectMetadataType"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Metadata id."
+          },
+          "name": {
+            "type": "string",
+            "description": "Metadata name."
+          },
+          "description": {
+            "type": "string",
+            "description": "Metadata description."
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "SsisObjectMetadataType": {
+        "description": "The type of SSIS object metadata.",
+        "type": "string",
+        "enum": [
+          "Folder",
+          "Project",
+          "Package",
+          "Environment"
+        ],
+        "x-ms-enum": {
+          "name": "SsisObjectMetadataType",
+          "modelAsString": true
+        }
+      },
+      "SsisFolder": {
+        "x-ms-discriminator-value": "Folder",
+        "type": "object",
+        "description": "Ssis folder.",
+        "allOf": [
+          {
+            "$ref": "#/definitions/SsisObjectMetadata"
+          }
+        ]
+      },
+      "SsisProject": {
+        "x-ms-discriminator-value": "Project",
+        "type": "object",
+        "description": "Ssis project.",
+        "allOf": [
+          {
+            "$ref": "#/definitions/SsisObjectMetadata"
+          }
+        ],
+        "properties": {
+          "folderId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Folder id which contains project."
+          },
+          "version": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Project version."
+          },
+          "environmentRefs": {
+            "type": "array",
+            "description": "Environment reference in project",
+            "items": {
+              "$ref": "#/definitions/SsisEnvironmentReference"
+            }
+          },
+          "parameters": {
+            "type": "array",
+            "description": "Parameters in project",
+            "items": {
+              "$ref": "#/definitions/SsisParameter"
+            }
+          }
+        }
+      },
+      "SsisPackage": {
+        "x-ms-discriminator-value": "Package",
+        "type": "object",
+        "description": "Ssis Package.",
+        "allOf": [
+          {
+            "$ref": "#/definitions/SsisObjectMetadata"
+          }
+        ],
+        "properties": {
+          "folderId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Folder id which contains package."
+          },
+          "projectVersion": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Project version which contains package."
+          },
+          "projectId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Project id which contains package."
+          },
+          "parameters": {
+            "type": "array",
+            "description": "Parameters in package",
+            "items": {
+              "$ref": "#/definitions/SsisParameter"
+            }
+          }
+        }
+      },
+      "SsisEnvironment": {
+        "x-ms-discriminator-value": "Environment",
+        "type": "object",
+        "description": "Ssis environment.",
+        "allOf": [
+          {
+            "$ref": "#/definitions/SsisObjectMetadata"
+          }
+        ],
+        "properties": {
+          "folderId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Folder id which contains environment."
+          },
+          "variables": {
+            "type": "array",
+            "description": "Variable in environment",
+            "items": {
+              "$ref": "#/definitions/SsisVariable"
+            }
+          }
+        }
+      },
+      "SsisParameter": {
+        "type": "object",
+        "description": "Ssis parameter.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Parameter id."
+          },
+          "name": {
+            "type": "string",
+            "description": "Parameter name."
+          },
+          "description": {
+            "type": "string",
+            "description": "Parameter description."
+          },
+          "dataType": {
+            "type": "string",
+            "description": "Parameter type."
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Whether parameter is required."
+          },
+          "sensitive": {
+            "type": "boolean",
+            "description": "Whether parameter is sensitive."
+          },
+          "designDefaultValue": {
+            "type": "string",
+            "description": "Design default value of parameter."
+          },
+          "defaultValue": {
+            "type": "string",
+            "description": "Default value of parameter."
+          },
+          "sensitiveDefaultValue": {
+            "type": "string",
+            "description": "Default sensitive value of parameter."
+          },
+          "valueType": {
+            "type": "string",
+            "description": "Parameter value type."
+          },
+          "valueSet": {
+            "type": "boolean",
+            "description": "Parameter value set."
+          },
+          "variable": {
+            "type": "string",
+            "description": "Parameter reference variable."
+          }
+        }
+      },
+      "SsisVariable": {
+        "type": "object",
+        "description": "Ssis variable.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Variable id."
+          },
+          "name": {
+            "type": "string",
+            "description": "Variable name."
+          },
+          "description": {
+            "type": "string",
+            "description": "Variable description."
+          },
+          "dataType": {
+            "type": "string",
+            "description": "Variable type."
+          },
+          "sensitive": {
+            "type": "boolean",
+            "description": "Whether variable is sensitive."
+          },
+          "value": {
+            "type": "string",
+            "description": "Variable value."
+          },
+          "sensitiveValue": {
+            "type": "string",
+            "description": "Variable sensitive value."
+          }
+        }
+      },
+      "SsisEnvironmentReference": {
+        "type": "object",
+        "description": "Ssis environment reference.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Environment reference id."
+          },
+          "environmentFolderName": {
+            "type": "string",
+            "description": "Environment folder name."
+          },
+          "environmentName": {
+            "type": "string",
+            "description": "Environment name."
+          },
+          "referenceType": {
+            "type": "string",
+            "description": "Reference type"
+          }
+        }
+      },
+      "LinkedIntegrationRuntimeRequest": {
+        "description": "Data factory name for linked integration runtime request.",
+        "type": "object",
+        "properties": {
+          "factoryName": {
+            "description": "The data factory name for linked integration runtime.",
+            "type": "string",
+            "x-ms-client-name": "linkedFactoryName"
+          }
+        },
+        "required": [
+          "factoryName"
+        ]
+      },
+      "CreateLinkedIntegrationRuntimeRequest": {
+        "description": "The linked integration runtime information.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the linked integration runtime.",
+            "type": "string"
+          },
+          "subscriptionId": {
+            "description": "The ID of the subscription that the linked integration runtime belongs to.",
+            "type": "string"
+          },
+          "dataFactoryName": {
+            "description": "The name of the data factory that the linked integration runtime belongs to.",
+            "type": "string"
+          },
+          "dataFactoryLocation": {
+            "description": "The location of the data factory that the linked integration runtime belongs to.",
+            "type": "string"
+          }
+        }
+      }
+  },
+  "parameters": {
+    "subscriptionId": {
+      "name": "subscriptionId",
+      "description": "The subscription identifier.",
+      "in": "path",
+      "required": true,
+      "type": "string"
+    },
+    "resourceGroupName": {
+      "name": "resourceGroupName",
+      "description": "The resource group name.",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "pattern": "^[-\\w\\._\\(\\)]+$",
+      "minLength": 1,
+      "maxLength": 90,
+      "x-ms-parameter-location": "method"
+    },
+    "factoryName": {
+      "name": "factoryName",
+      "description": "The factory name.",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "pattern": "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
+      "minLength": 3,
+      "maxLength": 63,
+      "x-ms-parameter-location": "method"
+    },
+    "locationId": {
+      "name": "locationId",
+      "description": "The location identifier.",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "api-version": {
+      "name": "api-version",
+      "description": "The API version.",
+      "in": "query",
+      "required": true,
+      "type": "string"
+    },
+    "triggerName": {
+        "name": "triggerName",
+        "description": "The trigger name.",
+        "in": "path",
+        "required": true,
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$",
+        "minLength": 1,
+        "maxLength": 260,
+        "x-ms-parameter-location": "method"
+    },
+    "integrationRuntimeName": {
+        "name": "integrationRuntimeName",
+        "description": "The integration runtime name.",
+        "in": "path",
+        "required": true,
+        "type": "string",
+        "pattern": "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
+        "minLength": 3,
+        "maxLength": 63,
+        "x-ms-parameter-location": "method"
+    }
+  }
+}

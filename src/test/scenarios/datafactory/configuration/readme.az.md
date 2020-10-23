@@ -1,0 +1,64 @@
+## CLI
+
+These settings apply only when `--az` is specified on the command line.
+
+``` yaml $(az)
+az:
+  extensions: datafactory
+  package-name: azure-mgmt-datafactory
+  namespace: azure.mgmt.datafactory
+  formalize-names: true
+  disable-checks: true
+az-output-folder: $(azure-cli-extension-folder)/src/datafactory
+python-sdk-output-folder: "$(az-output-folder)/azext_datafactory/vendored_sdks/datafactory"
+extension-mode: preview
+
+directive:
+    - where:
+          group: datafactory factory
+      set:
+          group: datafactory
+    - where:
+          command: datafactory integration-runtime create-linked-integration-runtime
+      set:
+          command: datafactory integration-runtime linked-integration-runtime create
+
+cli:
+    cli-directive:
+    # directive on operationGroup
+      - where:
+            group: datafactory
+            parameter: factoryName
+        alias:
+            - name
+            - n
+      - where:
+            group: Datasets
+        set:
+            groupExtensionMode: stable
+      - where:
+            group: Datasets
+            op: CreateOrUpdate#Create
+        set:
+            commandExtensionMode: 'preview'
+      - where:
+            group: Datasets
+            op: CreateOrUpdate#Create
+            param: If-Match
+        set:
+            methodExtensionMode: 'experimental'
+      - where:
+            group: IntegrationRuntimes
+            op: CreateOrUpdate
+            param: properties
+        poly-resource: true
+      - where:
+            group: Triggers
+            op: CreateOrUpdate#Update
+            param: properties
+        cli-flatten: true
+      - where:
+            param: factoryName
+        set:
+            default-config-key: factory
+```
