@@ -82,9 +82,13 @@ export class CliTestScenario extends TemplateBase {
         let parameterNames = this.InitiateDependencies(model, imports, decorators, initiates);
         let jsonAdded = false;
 
-        function parameterLine() {
+        function parameterLine(withChecksDef=false) {
             let ret = "";
-            for (let name of parameterNames) {
+            var paramList: string[] = deepCopy(parameterNames) as string[];
+            if (withChecksDef) {
+                paramList.push("checks=None");
+            }
+            for (let name of [...parameterNames, "checks=None"]) {
                 ret += `, ${name}`;
             }
             return ret;
@@ -103,7 +107,8 @@ export class CliTestScenario extends TemplateBase {
                 let disabled: string = config[ci].disabled ? "# " : "";
                 steps.push("# EXAMPLE: " + exampleId);
                 steps.push("@try_manual");
-                steps.push(...ToMultiLine(`def ${functionName}(test${parameterLine()}):`));
+                steps.push(...ToMultiLine(`def ${functionName}(test${parameterLine(true)}):`));
+
                 // find example by name
                 let found = false;
                 let examples: CommandExample[] = [];
@@ -114,26 +119,46 @@ export class CliTestScenario extends TemplateBase {
                         if (exampleCmd[0].indexOf(' delete') > -1) {
                             exampleCmd[0] += " -y";
                         }
-                        for (let idx = 0; idx < exampleCmd.length; idx++) {
-                            let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
-                            let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
-                            ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
-                        }
+
                         let checks = model.GetExampleChecks(examples[exampleIdx++]);
                         if (checks.length > 0) {
-                            steps.push("    " + disabled + "         checks=[");
+                            steps.push("    " + disabled + "_checks=[");
                             for (let check of checks) {
-                                ToMultiLine("    " + disabled + "             " + check, steps);
+                                ToMultiLine("    " + disabled + "    " + check, steps);
                                 if (!jsonAdded && !disabled && check.indexOf("json.loads") >= 0) {
                                     header.addImport("json");
                                     jsonAdded = true;
                                 }
                             }
-                            steps.push("    " + disabled + "         ])");
+                            steps.push("    " + disabled + "]");
                         }
                         else {
-                            steps.push("    " + disabled + "         checks=[])");
+                            steps.push("    " + disabled + "_checks=[]");
                         }
+                        steps.push(`    if checks is not None:`);
+                        steps.push(`        _checks = checks`);
+
+                        for (let idx = 0; idx < exampleCmd.length; idx++) {
+                            let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
+                            let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
+                            ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
+                        }
+                        steps.push("    " + disabled + "         checks=_checks)");
+                        // let checks = model.GetExampleChecks(examples[exampleIdx++]);
+                        // if (checks.length > 0) {
+                        //     steps.push("    " + disabled + "         checks=[");
+                        //     for (let check of checks) {
+                        //         ToMultiLine("    " + disabled + "             " + check, steps);
+                        //         if (!jsonAdded && !disabled && check.indexOf("json.loads") >= 0) {
+                        //             header.addImport("json");
+                        //             jsonAdded = true;
+                        //         }
+                        //     }
+                        //     steps.push("    " + disabled + "         ])");
+                        // }
+                        // else {
+                        //     steps.push("    " + disabled + "         checks=[])");
+                        // }
                     }
                 }
                 if (!found) {

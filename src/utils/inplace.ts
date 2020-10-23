@@ -236,8 +236,7 @@ export class testStepSegment extends DefSegment {
         let seperators = [
             ["endwith", ":\n", "declare"],
             ["startwith", "    test.cmd(", "pre"],
-            ["endwith", "checks=[", "command"],
-            ["startwith", "])\n", "checkers"],
+            ["endwith", "checks=_checks)", "command"],
         ];
 
         let bias = this.startAt;
