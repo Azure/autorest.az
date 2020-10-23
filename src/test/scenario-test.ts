@@ -35,7 +35,7 @@ enum TestMode {
         for (let k in extraOption) {
             cmdOption.push("--" + k + "=" + extraOption[k]);
         }
-        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6271 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md " + cmdOption.join(" ");
+        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6320 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md " + cmdOption.join(" ");
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => {
             exec(cmd, function (error) {

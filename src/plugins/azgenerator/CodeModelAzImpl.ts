@@ -476,6 +476,10 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._configuredScenario = false;
         }
     }
+    public get ConfiguredScenario(): boolean{
+        // judge test-scenario whether have value
+        return this._configuredScenario
+    }
 
     public SelectFirstExtension(): boolean {
         // support only one initially
@@ -903,6 +907,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get Method_Path(): string {
         return this.Method.requests[0].protocol?.http?.path;
+    }
+
+    public get Method_Help(): string {
+        return this.Method.language['az'].description.replace(/\n/g, " ").replace(/"/g, '\\\\"');
     }
 
     public get Method_HttpMethod(): string {
@@ -1544,7 +1552,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Schema_FlattenedFrom(schema: Schema): Schema {
-        return schema.language['cli']?.['pythonFlattenedFrom'];
+        return schema?.language['cli']?.['pythonFlattenedFrom'];
     }
 
     public Parameter_InGlobal(parameter: Parameter): boolean {

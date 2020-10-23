@@ -26,6 +26,7 @@ import {CliTestInit} from "./templates/tests/CliTestInit";
 import { CliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { CliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
 import { inplaceGen } from "../../utils/inplace"
+import { deepCopy } from '../../utils/helper';
 
 export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -80,7 +81,20 @@ export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
         await this.generateIncrementalSingleAndAddtoOutput(new CliExtSetupPy(this.model, this.isDebugMode));
 
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
-        await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored)), true);
+        let config: any = deepCopy(this.model.Extension_TestScenario);
+        if(this.model.ConfiguredScenario){
+            for (var ci = 0; ci < config.length; ci++) {
+                let configValue :any = Object.entries(config[ci]);
+                if(configValue[0][0] == "name" || config.length == 0){
+                    await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored),config), true);
+                    break
+                }else{
+                    await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(configValue[0][0]),configValue[0][1]), true);
+                }
+            }
+        }else{
+            await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(this.model.Extension_NameUnderscored),config), true);
+        }
         if (NeedPreparer()) {
             await this.generateIncrementalSingleAndAddtoOutput(new CliTestPrepare(this.model, this.isDebugMode));
         }
