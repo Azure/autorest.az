@@ -356,8 +356,12 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         parameterExtraInfo = ", is_experimental=True";
                     } else if (model.MethodParameter_ExtensionMode == 'preview') {
                         parameterExtraInfo = ", is_preview=True";
-                    } else if (model.MethodParameter_ExtensionMode == 'stable'){
+                    } else if (model.MethodParameter_ExtensionMode == 'stable' && model.Command_ExtensionMode == 'stable'){
                         parameterExtraInfo = "";
+                    } else if (model.MethodParameter_ExtensionMode == 'stable' && model.Command_ExtensionMode == 'preview'){
+                        parameterExtraInfo = ", is_preview=False";
+                    } else if (model.MethodParameter_ExtensionMode == 'stable' && model.Command_ExtensionMode == 'experimental'){
+                        parameterExtraInfo = ", is_experimental=False";
                     }
                     argument += parameterExtraInfo;
                     argument += ")";

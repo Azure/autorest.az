@@ -104,8 +104,16 @@ function getCommandBody(model: CodeModelAz) {
         commandExtraInfo = ", is_experimental=True";
     } else if (model.Command_ExtensionMode == 'preview') {
         commandExtraInfo = ", is_preview=True";
-    } else if (model.Command_ExtensionMode == 'stable') {
+    } else if (model.Command_ExtensionMode == 'stable' && model.CommandGroup_ExtensionMode == 'stable') {
         commandExtraInfo = "";
+    } else if (model.Command_ExtensionMode == 'stable' && model.CommandGroup_ExtensionMode == 'preview'){
+        commandExtraInfo = ", is_preview=False";
+    } else if (model.Command_ExtensionMode == 'stable' && model.CommandGroup_ExtensionMode == 'experimental'){
+        commandExtraInfo = ", is_experimental=False";
+    } else if (model.Command_ExtensionMode == 'stable' && model.Extension_Mode == 'preview'){
+        commandExtraInfo = ", is_preview=False";
+    } else if (model.Command_ExtensionMode == 'stable' && model.Extension_Mode == 'experimental'){
+        commandExtraInfo = ", is_experimental=False";
     }
     if (methodName != "show") {
         if (model.Command_NeedGeneric) {
