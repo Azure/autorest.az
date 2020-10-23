@@ -145,7 +145,6 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
             output.push("                raise CLIError('usage error: {} [WRONG KEY] You only have the following keys to use : " + submethodparameters.join(", ") + ". And your key : '.format(option_string)" + " + kl + ' is invalid')");
         }
         model.ExitSubMethodParameters();
-        
     }
 
     if (!foundProperties && preParamType == SchemaType.Dictionary) {
