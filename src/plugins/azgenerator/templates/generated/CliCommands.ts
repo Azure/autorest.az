@@ -5,8 +5,9 @@
 
 import { CodeModelAz } from "../../CodeModelAz"
 import { HeaderGenerator } from "../../Header";
-import { ToMultiLine } from "../../../../utils/helper"
+import { ToMultiLine, getExtraModeInfo } from "../../../../utils/helper"
 import { isNullOrUndefined } from "util";
+import { ExtensionMode } from "../../../models";
 
 let showCommandFunctionName = undefined;
 export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
@@ -47,14 +48,11 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 output.push("        client_factory=" + cf_name + ")");
                 let groupinfos = model.CommandGroup_Name.split(' ');
                 let extraInfo = "";
-                if (groupinfos.length == 2 && model.CommandGroup_ExtensionMode == 'experimental') {
-                    extraInfo = ", is_experimental=True";
-                } else if (groupinfos.length == 2 && model.CommandGroup_ExtensionMode == 'preview') {
-                    extraInfo = ", is_preview=True";
-                } else if (groupinfos.length == 2 && model.Extension_Mode == 'experimental') {
-                    extraInfo = ", is_experimental=True";
-                } else if (groupinfos.length == 2 && model.Extension_Mode == 'preview') {
-                    extraInfo = ", is_preview=True";
+                if (groupinfos.length == 2) {
+                    extraInfo = getExtraModeInfo(model.CommandGroup_Mode, model.Extension_Mode);
+                }
+                if (extraInfo != "") {
+                    extraInfo = ", " + extraInfo;
                 }
                 ToMultiLine("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + extraInfo + ") as g:", output);
                 let needWait = false;
@@ -96,10 +94,9 @@ function getCommandBody(model: CodeModelAz) {
     if (methodName == "delete") {
         endStr += ", confirmation=True";
     }
-    if (model.Command_ExtensionMode == 'experimental') {
-        commandExtraInfo = ", is_experimental=True";
-    } else if (model.Command_ExtensionMode == 'preview') {
-        commandExtraInfo = ", is_preview=True";
+    commandExtraInfo = getExtraModeInfo(model.CommandGroup_Mode, model.Command_Mode);
+    if (commandExtraInfo != "") {
+        commandExtraInfo = ", " + commandExtraInfo;
     }
     if (methodName != "show") {
         if (model.Command_NeedGeneric) {

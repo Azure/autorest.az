@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Operation, OperationGroup, Parameter, Property, Schema } from "@azure-tools/codemodel";
-import { GenerationMode } from "../models";
+import { GenerationMode, ExtensionMode } from "../models";
 import { ResourcePool } from './templates/tests/ScenarioTool';
 
 export class MethodParam {
@@ -84,10 +84,8 @@ export interface CodeModelAz {
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
-    Extension_Mode: string;   
-    CommandGroup_ExtensionMode: string;
-    Command_ExtensionMode: string;
-    MethodParameter_ExtensionMode: string;
+    Extension_Mode: ExtensionMode;   
+
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;
@@ -98,6 +96,7 @@ export interface CodeModelAz {
     CommandGroup_DefaultName: string;
     CommandGroup_HasShowCommand: boolean;
     CommandGroup_CliKey: string;
+    CommandGroup_Mode: ExtensionMode;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
@@ -113,6 +112,8 @@ export interface CodeModelAz {
     Command_Help: string;
     Command_IsLongRun: boolean;
     Command_SubGroupName: string;
+    Command_Mode: ExtensionMode;
+
 
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
@@ -130,6 +131,7 @@ export interface CodeModelAz {
     Method_GetOriginalOperation: any;
     Method_GenericSetterParameter(Operation): Parameter;
     Method_NeedGeneric: boolean;
+    Method_Mode: ExtensionMode;
     Operation_IsHidden(op?: Operation): boolean;
 
 
@@ -165,6 +167,7 @@ export interface CodeModelAz {
     MethodParameters_AddPolySubClass(oriParam, para): boolean;
     MethodParameter_DefaultValue: any | undefined;
     MethodParameter_DefaultConfigKey: string | undefined;
+    MethodParameter_Mode: ExtensionMode;
     Parameter_Type(Parameter): string;
     Schema_Type(Schema): string;
     Parameter_IsList(Parameter): boolean;

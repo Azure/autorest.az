@@ -383,7 +383,7 @@ cli:
       - where:
             group: 'Clusters'
         set:
-            groupExtensionMode: 'experimental'
+            extensionMode: 'experimental'
 ```
 
 #### 3) You can also set the extension mode for command use the following directive
@@ -394,7 +394,7 @@ cli:
             group: 'Clusters'
             op: 'AddLanguageExtensions'
         set:
-            commandExtensionMode: 'preview'
+            extensionMode: 'preview'
 ```
 
 #### 4) Besides, you can set the extension mode for argument use the following directive
@@ -406,6 +406,6 @@ cli:
             op: 'AddLanguageExtensions'
             param: 'clusterName'
         set:
-            methodExtensionMode: 'preview'
+            extensionMode: 'preview'
 ```
-
+Please note that even if it's logically possible to let a command group as preview/experimental mode, and one or several commands of that group to be stable. But it won't take effect in actual and users should never have that kind of configuration.  
