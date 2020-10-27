@@ -2439,23 +2439,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
         }
 
-        let i = 0;
-        let swapped = new Set<string>();    //for loop detecting
-        while (i < this._defaultTestScenario.length) {
-            for (let j = i + 1; j < this._defaultTestScenario.length; j++) {
-                let swapId = `${i}<->${j}`;
-                if (swapped.has(swapId)) continue; // has loop, ignore the compare.
-                if (compare(scenarioExamples.get(this._defaultTestScenario[i]['name']), scenarioExamples.get(this._defaultTestScenario[j]['name'])) > 0) {
-                    let tmp = this._defaultTestScenario[i];
-                    this._defaultTestScenario[i] = this._defaultTestScenario[j];
-                    this._defaultTestScenario[j] = tmp;
-                    swapped.add(swapId);
-                    i--;
-                    break;
-                }
-            }
-            i++;
-        }
+        this._defaultTestScenario = MergeSort(this._defaultTestScenario, (example_a, example_b) => {
+            return compare(scenarioExamples.get(example_a['name']), scenarioExamples.get(example_b['name']));
+        });
     }
 
     public GetAllMethods(command_group?: string, callback?: () => void): any[] {
