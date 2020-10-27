@@ -23,11 +23,10 @@ import { GenerateAzureCliParams } from "./templates/generated/CliParams";
 import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
 import { CliTestInit } from "./templates/tests/CliTestInit";
 import { CliTestPrepare } from "./templates/tests/CliTestPrepare";
-import { CliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { CliTestScenario } from "./templates/tests/CliTestScenario";
 import { PathConstants } from '../models';
-import { inplaceGen } from "../../utils/inplace";
-import * as path from 'path';
 import { deepCopy } from '../../utils/helper';
+import { CliTestStep, NeedPreparer } from "./templates/tests/CliTestStep";
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -65,6 +64,7 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         await this.generateFullSingleAndAddtoOutput(new CliExtSetupPy(this.model, this.isDebugMode));
 
         await this.generateFullSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
+        await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model, this.isDebugMode), true, true);
         let config: any = deepCopy(this.model.Extension_TestScenario);
         if(this.model.ConfiguredScenario){
             for (var ci = 0; ci < config.length; ci++) {

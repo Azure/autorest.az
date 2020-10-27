@@ -65,6 +65,7 @@ export class PathConstants {
     public static readonly helpFile: string = "_help.py";
     public static readonly reportFile: string = "report.md";
     public static readonly preparersFile: string = "preparers.py";
+    public static readonly testStepFile: string = "example_steps.py"
     public static readonly metadataFile: string = "azext_metadata.json";
     public static readonly setupPyFile: string = "setup.py";
     public static readonly docSourceJsonFile: string = "/doc/sphinx/azhelpgen/doc_source_map.json";
