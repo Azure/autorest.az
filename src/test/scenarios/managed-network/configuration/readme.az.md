@@ -32,6 +32,10 @@ cli:
     cli-directive:
     # directive on operationGroup
       - where:
+            group: 'ManagedNetworks'
+        set:
+            extensionMode: 'experimental'
+      - where:
             parameter: location
         required: true
       - where:
@@ -45,10 +49,6 @@ cli:
             group: 'ManagedNetworkGroups'
             param: 'managementGroups'
         json: true
-      - where:
-            group: 'ManagedNetworks'
-        set:
-            groupExtensionMode: 'experimental'
       - where:
             type: 'ManagedNetwork'
             prop: 'properties'

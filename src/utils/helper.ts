@@ -526,7 +526,7 @@ export function keepHeaderLines(base: string[]): number {
     return futureImportLineIdx;
 }
 
-export function getExtraModeInfo(mode: ExtensionMode, skipMode: ExtensionMode = null): string {
+export function getExtraModeInfo(mode: string, skipMode: string = null): string {
     if (mode == ExtensionMode.Experimental && mode != skipMode) {
         return "is_experimental=True";
     } 

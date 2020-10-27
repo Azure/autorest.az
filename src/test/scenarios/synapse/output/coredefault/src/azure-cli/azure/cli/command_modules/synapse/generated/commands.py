@@ -19,8 +19,7 @@ def load_command_table(self, _):
     synapse_big_data_pool = CliCommandType(
         operations_tmpl='azure.mgmt.synapse.operations#BigDataPoolsOperations.{}',
         client_factory=cf_big_data_pool)
-    with self.command_group('synapse big-data-pool', synapse_big_data_pool, client_factory=cf_big_data_pool,
-                            is_experimental=True) as g:
+    with self.command_group('synapse big-data-pool', synapse_big_data_pool, client_factory=cf_big_data_pool) as g:
         g.custom_command('list', 'synapse_big_data_pool_list')
         g.custom_show_command('show', 'synapse_big_data_pool_show')
         g.custom_command('create', 'synapse_big_data_pool_create', supports_no_wait=True)
@@ -32,8 +31,7 @@ def load_command_table(self, _):
     synapse_operation = CliCommandType(
         operations_tmpl='azure.mgmt.synapse.operations#Operations.{}',
         client_factory=cf_operation)
-    with self.command_group('synapse operation', synapse_operation, client_factory=cf_operation,
-                            is_experimental=True) as g:
+    with self.command_group('synapse operation', synapse_operation, client_factory=cf_operation) as g:
         g.custom_command('get-azure-async-header-result', 'synapse_operation_get_azure_async_header_result')
         g.custom_command('get-location-header-result', 'synapse_operation_get_location_header_result')
 
@@ -41,8 +39,8 @@ def load_command_table(self, _):
     synapse_ip_firewall_rule = CliCommandType(
         operations_tmpl='azure.mgmt.synapse.operations#IpFirewallRulesOperations.{}',
         client_factory=cf_ip_firewall_rule)
-    with self.command_group('synapse ip-firewall-rule', synapse_ip_firewall_rule, client_factory=cf_ip_firewall_rule,
-                            is_experimental=True) as g:
+    with self.command_group('synapse ip-firewall-rule', synapse_ip_firewall_rule,
+                            client_factory=cf_ip_firewall_rule) as g:
         g.custom_command('list', 'synapse_ip_firewall_rule_list')
         g.custom_show_command('show', 'synapse_ip_firewall_rule_show')
         g.custom_command('create', 'synapse_ip_firewall_rule_create', supports_no_wait=True)
@@ -55,8 +53,7 @@ def load_command_table(self, _):
     synapse_sqlpool = CliCommandType(
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolsOperations.{}',
         client_factory=cf_sqlpool)
-    with self.command_group('synapse sql-pool', synapse_sqlpool, client_factory=cf_sqlpool,
-                            is_experimental=True) as g:
+    with self.command_group('synapse sql-pool', synapse_sqlpool, client_factory=cf_sqlpool) as g:
         g.custom_command('list', 'synapse_sql_pool_list')
         g.custom_show_command('show', 'synapse_sql_pool_show')
         g.custom_command('create', 'synapse_sql_pool_create', supports_no_wait=True)
@@ -72,7 +69,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolMetadataSyncConfigsOperations.{}',
         client_factory=cf_sqlpool_metadata_sync_config)
     with self.command_group('synapse sql-pool-metadata-sync-config', synapse_sqlpool_metadata_sync_config,
-                            client_factory=cf_sqlpool_metadata_sync_config, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_metadata_sync_config) as g:
         g.custom_show_command('show', 'synapse_sql_pool_metadata_sync_config_show')
         g.custom_command('create', 'synapse_sql_pool_metadata_sync_config_create')
 
@@ -81,7 +78,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolOperationResultsOperations.{}',
         client_factory=cf_sqlpool_operation_result)
     with self.command_group('synapse sql-pool-operation-result', synapse_sqlpool_operation_result,
-                            client_factory=cf_sqlpool_operation_result, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_operation_result) as g:
         g.custom_command('get-location-header-result', 'synapse_sql_pool_operation_result_get_location_header_result')
 
     from ..generated._client_factory import cf_sqlpool_geo_backup_policy
@@ -89,7 +86,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolGeoBackupPoliciesOperations.{}',
         client_factory=cf_sqlpool_geo_backup_policy)
     with self.command_group('synapse sql-pool-geo-backup-policy', synapse_sqlpool_geo_backup_policy,
-                            client_factory=cf_sqlpool_geo_backup_policy, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_geo_backup_policy) as g:
         g.custom_show_command('show', 'synapse_sql_pool_geo_backup_policy_show')
 
     from ..generated._client_factory import cf_sqlpool_data_warehouse_user_activity
@@ -98,7 +95,7 @@ def load_command_table(self, _):
         client_factory=cf_sqlpool_data_warehouse_user_activity)
     with self.command_group('synapse sql-pool-data-warehouse-user-activity',
                             synapse_sqlpool_data_warehouse_user_activity,
-                            client_factory=cf_sqlpool_data_warehouse_user_activity, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_data_warehouse_user_activity) as g:
         g.custom_show_command('show', 'synapse_sql_pool_data_warehouse_user_activity_show')
 
     from ..generated._client_factory import cf_sqlpool_restore_point
@@ -106,7 +103,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolRestorePointsOperations.{}',
         client_factory=cf_sqlpool_restore_point)
     with self.command_group('synapse sql-pool-restore-point', synapse_sqlpool_restore_point,
-                            client_factory=cf_sqlpool_restore_point, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_restore_point) as g:
         g.custom_command('list', 'synapse_sql_pool_restore_point_list')
         g.custom_command('create', 'synapse_sql_pool_restore_point_create')
 
@@ -115,7 +112,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolReplicationLinksOperations.{}',
         client_factory=cf_sqlpool_replication_link)
     with self.command_group('synapse sql-pool-replication-link', synapse_sqlpool_replication_link,
-                            client_factory=cf_sqlpool_replication_link, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_replication_link) as g:
         g.custom_command('list', 'synapse_sql_pool_replication_link_list')
 
     from ..generated._client_factory import cf_sqlpool_transparent_data_encryption
@@ -124,7 +121,7 @@ def load_command_table(self, _):
         client_factory=cf_sqlpool_transparent_data_encryption)
     with self.command_group('synapse sql-pool-transparent-data-encryption',
                             synapse_sqlpool_transparent_data_encryption,
-                            client_factory=cf_sqlpool_transparent_data_encryption, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_transparent_data_encryption) as g:
         g.custom_show_command('show', 'synapse_sql_pool_transparent_data_encryption_show')
         g.custom_command('create', 'synapse_sql_pool_transparent_data_encryption_create')
         g.custom_command('update', 'synapse_sql_pool_transparent_data_encryption_update')
@@ -134,7 +131,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolBlobAuditingPoliciesOperations.{}',
         client_factory=cf_sqlpool_blob_auditing_policy)
     with self.command_group('synapse sql-pool-blob-auditing-policy', synapse_sqlpool_blob_auditing_policy,
-                            client_factory=cf_sqlpool_blob_auditing_policy, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_blob_auditing_policy) as g:
         g.custom_show_command('show', 'synapse_sql_pool_blob_auditing_policy_show')
         g.custom_command('create', 'synapse_sql_pool_blob_auditing_policy_create')
         g.custom_command('update', 'synapse_sql_pool_blob_auditing_policy_update')
@@ -144,15 +141,14 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolOperationsOperations.{}',
         client_factory=cf_sqlpool_operation)
     with self.command_group('synapse sql-pool-operation', synapse_sqlpool_operation,
-                            client_factory=cf_sqlpool_operation, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_operation) as g:
         g.custom_command('list', 'synapse_sql_pool_operation_list')
 
     from ..generated._client_factory import cf_sqlpool_usage
     synapse_sqlpool_usage = CliCommandType(
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolUsagesOperations.{}',
         client_factory=cf_sqlpool_usage)
-    with self.command_group('synapse sql-pool-usage', synapse_sqlpool_usage, client_factory=cf_sqlpool_usage,
-                            is_experimental=True) as g:
+    with self.command_group('synapse sql-pool-usage', synapse_sqlpool_usage, client_factory=cf_sqlpool_usage) as g:
         g.custom_command('list', 'synapse_sql_pool_usage_list')
 
     from ..generated._client_factory import cf_sqlpool_sensitivity_label
@@ -160,7 +156,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolSensitivityLabelsOperations.{}',
         client_factory=cf_sqlpool_sensitivity_label)
     with self.command_group('synapse sql-pool-sensitivity-label', synapse_sqlpool_sensitivity_label,
-                            client_factory=cf_sqlpool_sensitivity_label, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_sensitivity_label) as g:
         g.custom_command('create', 'synapse_sql_pool_sensitivity_label_create')
         g.custom_command('update', 'synapse_sql_pool_sensitivity_label_update')
         g.custom_command('delete', 'synapse_sql_pool_sensitivity_label_delete', confirmation=True)
@@ -173,16 +169,14 @@ def load_command_table(self, _):
     synapse_sqlpool_schema = CliCommandType(
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolSchemasOperations.{}',
         client_factory=cf_sqlpool_schema)
-    with self.command_group('synapse sql-pool-schema', synapse_sqlpool_schema, client_factory=cf_sqlpool_schema,
-                            is_experimental=True) as g:
+    with self.command_group('synapse sql-pool-schema', synapse_sqlpool_schema, client_factory=cf_sqlpool_schema) as g:
         g.custom_command('list', 'synapse_sql_pool_schema_list')
 
     from ..generated._client_factory import cf_sqlpool_table
     synapse_sqlpool_table = CliCommandType(
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolTablesOperations.{}',
         client_factory=cf_sqlpool_table)
-    with self.command_group('synapse sql-pool-table', synapse_sqlpool_table, client_factory=cf_sqlpool_table,
-                            is_experimental=True) as g:
+    with self.command_group('synapse sql-pool-table', synapse_sqlpool_table, client_factory=cf_sqlpool_table) as g:
         g.custom_command('list', 'synapse_sql_pool_table_list')
 
     from ..generated._client_factory import cf_sqlpool_table_column
@@ -190,7 +184,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolTableColumnsOperations.{}',
         client_factory=cf_sqlpool_table_column)
     with self.command_group('synapse sql-pool-table-column', synapse_sqlpool_table_column,
-                            client_factory=cf_sqlpool_table_column, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_table_column) as g:
         g.custom_command('list', 'synapse_sql_pool_table_column_list')
 
     from ..generated._client_factory import cf_sqlpool_connection_policy
@@ -198,7 +192,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolConnectionPoliciesOperations.{}',
         client_factory=cf_sqlpool_connection_policy)
     with self.command_group('synapse sql-pool-connection-policy', synapse_sqlpool_connection_policy,
-                            client_factory=cf_sqlpool_connection_policy, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_connection_policy) as g:
         g.custom_show_command('show', 'synapse_sql_pool_connection_policy_show')
 
     from ..generated._client_factory import cf_sqlpool_vulnerability_assessment
@@ -206,7 +200,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolVulnerabilityAssessmentsOperations.{}',
         client_factory=cf_sqlpool_vulnerability_assessment)
     with self.command_group('synapse sql-pool-vulnerability-assessment', synapse_sqlpool_vulnerability_assessment,
-                            client_factory=cf_sqlpool_vulnerability_assessment, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_vulnerability_assessment) as g:
         g.custom_command('list', 'synapse_sql_pool_vulnerability_assessment_list')
         g.custom_show_command('show', 'synapse_sql_pool_vulnerability_assessment_show')
         g.custom_command('create', 'synapse_sql_pool_vulnerability_assessment_create')
@@ -219,7 +213,7 @@ def load_command_table(self, _):
         client_factory=cf_sqlpool_vulnerability_assessment_scan)
     with self.command_group('synapse sql-pool-vulnerability-assessment-scan',
                             synapse_sqlpool_vulnerability_assessment_scan,
-                            client_factory=cf_sqlpool_vulnerability_assessment_scan, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_vulnerability_assessment_scan) as g:
         g.custom_command('list', 'synapse_sql_pool_vulnerability_assessment_scan_list')
         g.custom_command('export', 'synapse_sql_pool_vulnerability_assessment_scan_export')
         g.custom_command('initiate-scan', 'synapse_sql_pool_vulnerability_assessment_scan_initiate_scan')
@@ -229,7 +223,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#SqlPoolSecurityAlertPoliciesOperations.{}',
         client_factory=cf_sqlpool_security_alert_policy)
     with self.command_group('synapse sql-pool-security-alert-policy', synapse_sqlpool_security_alert_policy,
-                            client_factory=cf_sqlpool_security_alert_policy, is_experimental=True) as g:
+                            client_factory=cf_sqlpool_security_alert_policy) as g:
         g.custom_show_command('show', 'synapse_sql_pool_security_alert_policy_show')
         g.custom_command('create', 'synapse_sql_pool_security_alert_policy_create')
         g.custom_command('update', 'synapse_sql_pool_security_alert_policy_update')
@@ -240,8 +234,7 @@ def load_command_table(self, _):
         client_factory=cf_sqlpool_vulnerability_assessment_rule_baseline)
     with self.command_group('synapse sql-pool-vulnerability-assessment-rule-baseline',
                             synapse_sqlpool_vulnerability_assessment_rule_baseline,
-                            client_factory=cf_sqlpool_vulnerability_assessment_rule_baseline,
-                            is_experimental=True) as g:
+                            client_factory=cf_sqlpool_vulnerability_assessment_rule_baseline) as g:
         g.custom_command('create', 'synapse_sql_pool_vulnerability_assessment_rule_baseline_create')
         g.custom_command('update', 'synapse_sql_pool_vulnerability_assessment_rule_baseline_update')
         g.custom_command('delete', 'synapse_sql_pool_vulnerability_assessment_rule_baseline_delete',
@@ -251,8 +244,7 @@ def load_command_table(self, _):
     synapse_workspace = CliCommandType(
         operations_tmpl='azure.mgmt.synapse.operations#WorkspacesOperations.{}',
         client_factory=cf_workspace)
-    with self.command_group('synapse workspace', synapse_workspace, client_factory=cf_workspace,
-                            is_experimental=True) as g:
+    with self.command_group('synapse workspace', synapse_workspace, client_factory=cf_workspace) as g:
         g.custom_command('list', 'synapse_workspace_list')
         g.custom_show_command('show', 'synapse_workspace_show')
         g.custom_command('create', 'synapse_workspace_create', supports_no_wait=True)
@@ -265,7 +257,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#WorkspaceAadAdminsOperations.{}',
         client_factory=cf_workspace_aadadmin)
     with self.command_group('synapse workspace-aad-admin', synapse_workspace_aadadmin,
-                            client_factory=cf_workspace_aadadmin, is_experimental=True) as g:
+                            client_factory=cf_workspace_aadadmin) as g:
         g.custom_show_command('show', 'synapse_workspace_aad_admin_show')
         g.custom_command('create', 'synapse_workspace_aad_admin_create', supports_no_wait=True)
         g.custom_command('update', 'synapse_workspace_aad_admin_update', supports_no_wait=True)
@@ -278,8 +270,7 @@ def load_command_table(self, _):
         client_factory=cf_workspace_managed_identity_sqlcontrol_setting)
     with self.command_group('synapse workspace-managed-identity-sql-control-setting',
                             synapse_workspace_managed_identity_sqlcontrol_setting,
-                            client_factory=cf_workspace_managed_identity_sqlcontrol_setting,
-                            is_experimental=True) as g:
+                            client_factory=cf_workspace_managed_identity_sqlcontrol_setting) as g:
         g.custom_show_command('show', 'synapse_workspace_managed_identity_sql_control_setting_show')
         g.custom_command('create', 'synapse_workspace_managed_identity_sql_control_setting_create')
         g.custom_command('update', 'synapse_workspace_managed_identity_sql_control_setting_update')
@@ -289,7 +280,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#IntegrationRuntimesOperations.{}',
         client_factory=cf_integration_runtime)
     with self.command_group('synapse integration-runtime', synapse_integration_runtime,
-                            client_factory=cf_integration_runtime, is_experimental=True) as g:
+                            client_factory=cf_integration_runtime) as g:
         g.custom_command('list', 'synapse_integration_runtime_list')
         g.custom_show_command('show', 'synapse_integration_runtime_show')
         g.custom_command('create', 'synapse_integration_runtime_create', supports_no_wait=True)
@@ -305,7 +296,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#IntegrationRuntimeNodeIpAddressOperations.{}',
         client_factory=cf_integration_runtime_node_ip_address)
     with self.command_group('synapse integration-runtime-node-ip-address', synapse_integration_runtime_node_ip_address,
-                            client_factory=cf_integration_runtime_node_ip_address, is_experimental=True) as g:
+                            client_factory=cf_integration_runtime_node_ip_address) as g:
         g.custom_command('get', 'synapse_integration_runtime_node_ip_address_get')
 
     from ..generated._client_factory import cf_integration_runtime_object_metadata
@@ -313,7 +304,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#IntegrationRuntimeObjectMetadataOperations.{}',
         client_factory=cf_integration_runtime_object_metadata)
     with self.command_group('synapse integration-runtime-object-metadata', synapse_integration_runtime_object_metadata,
-                            client_factory=cf_integration_runtime_object_metadata, is_experimental=True) as g:
+                            client_factory=cf_integration_runtime_object_metadata) as g:
         g.custom_command('get', 'synapse_integration_runtime_object_metadata_get')
         g.custom_command('refresh', 'synapse_integration_runtime_object_metadata_refresh')
 
@@ -322,7 +313,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#IntegrationRuntimeNodesOperations.{}',
         client_factory=cf_integration_runtime_node)
     with self.command_group('synapse integration-runtime-node', synapse_integration_runtime_node,
-                            client_factory=cf_integration_runtime_node, is_experimental=True) as g:
+                            client_factory=cf_integration_runtime_node) as g:
         g.custom_show_command('show', 'synapse_integration_runtime_node_show')
         g.custom_command('update', 'synapse_integration_runtime_node_update')
         g.custom_command('delete', 'synapse_integration_runtime_node_delete', confirmation=True)
@@ -332,7 +323,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#IntegrationRuntimeCredentialsOperations.{}',
         client_factory=cf_integration_runtime_credentials)
     with self.command_group('synapse integration-runtime-credentials', synapse_integration_runtime_credentials,
-                            client_factory=cf_integration_runtime_credentials, is_experimental=True) as g:
+                            client_factory=cf_integration_runtime_credentials) as g:
         g.custom_command('sync', 'synapse_integration_runtime_credentials_sync')
 
     from ..generated._client_factory import cf_integration_runtime_connection_info
@@ -340,7 +331,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#IntegrationRuntimeConnectionInfosOperations.{}',
         client_factory=cf_integration_runtime_connection_info)
     with self.command_group('synapse integration-runtime-connection-info', synapse_integration_runtime_connection_info,
-                            client_factory=cf_integration_runtime_connection_info, is_experimental=True) as g:
+                            client_factory=cf_integration_runtime_connection_info) as g:
         g.custom_command('get', 'synapse_integration_runtime_connection_info_get')
 
     from ..generated._client_factory import cf_integration_runtime_auth_key
@@ -348,7 +339,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#IntegrationRuntimeAuthKeysOperations.{}',
         client_factory=cf_integration_runtime_auth_key)
     with self.command_group('synapse integration-runtime-auth-key', synapse_integration_runtime_auth_key,
-                            client_factory=cf_integration_runtime_auth_key, is_experimental=True) as g:
+                            client_factory=cf_integration_runtime_auth_key) as g:
         g.custom_command('list', 'synapse_integration_runtime_auth_key_list')
         g.custom_command('regenerate', 'synapse_integration_runtime_auth_key_regenerate')
 
@@ -357,7 +348,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#IntegrationRuntimeMonitoringDataOperations.{}',
         client_factory=cf_integration_runtime_monitoring_data)
     with self.command_group('synapse integration-runtime-monitoring-data', synapse_integration_runtime_monitoring_data,
-                            client_factory=cf_integration_runtime_monitoring_data, is_experimental=True) as g:
+                            client_factory=cf_integration_runtime_monitoring_data) as g:
         g.custom_command('get', 'synapse_integration_runtime_monitoring_data_get')
 
     from ..generated._client_factory import cf_integration_runtime_status
@@ -365,7 +356,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#IntegrationRuntimeStatusOperations.{}',
         client_factory=cf_integration_runtime_status)
     with self.command_group('synapse integration-runtime-status', synapse_integration_runtime_status,
-                            client_factory=cf_integration_runtime_status, is_experimental=True) as g:
+                            client_factory=cf_integration_runtime_status) as g:
         g.custom_command('get', 'synapse_integration_runtime_status_get')
 
     from ..generated._client_factory import cf_private_link_resource
@@ -373,7 +364,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#PrivateLinkResourcesOperations.{}',
         client_factory=cf_private_link_resource)
     with self.command_group('synapse private-link-resource', synapse_private_link_resource,
-                            client_factory=cf_private_link_resource, is_experimental=True) as g:
+                            client_factory=cf_private_link_resource) as g:
         g.custom_command('list', 'synapse_private_link_resource_list')
         g.custom_show_command('show', 'synapse_private_link_resource_show')
 
@@ -382,7 +373,7 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations#PrivateEndpointConnectionsOperations.{}',
         client_factory=cf_private_endpoint_connection)
     with self.command_group('synapse private-endpoint-connection', synapse_private_endpoint_connection,
-                            client_factory=cf_private_endpoint_connection, is_experimental=True) as g:
+                            client_factory=cf_private_endpoint_connection) as g:
         g.custom_command('list', 'synapse_private_endpoint_connection_list')
         g.custom_show_command('show', 'synapse_private_endpoint_connection_show')
         g.custom_command('create', 'synapse_private_endpoint_connection_create', supports_no_wait=True)
@@ -394,8 +385,8 @@ def load_command_table(self, _):
     synapse_private_link_hub = CliCommandType(
         operations_tmpl='azure.mgmt.synapse.operations#PrivateLinkHubsOperations.{}',
         client_factory=cf_private_link_hub)
-    with self.command_group('synapse private-link-hub', synapse_private_link_hub, client_factory=cf_private_link_hub,
-                            is_experimental=True) as g:
+    with self.command_group('synapse private-link-hub', synapse_private_link_hub,
+                            client_factory=cf_private_link_hub) as g:
         g.custom_command('list', 'synapse_private_link_hub_list')
         g.custom_show_command('show', 'synapse_private_link_hub_show')
         g.custom_command('create', 'synapse_private_link_hub_create')

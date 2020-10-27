@@ -94,7 +94,7 @@ function getCommandBody(model: CodeModelAz) {
     if (methodName == "delete") {
         endStr += ", confirmation=True";
     }
-    commandExtraInfo = getExtraModeInfo(model.CommandGroup_Mode, model.Command_Mode);
+    commandExtraInfo = getExtraModeInfo(model.Command_Mode, model.CommandGroup_Mode);
     if (commandExtraInfo != "") {
         commandExtraInfo = ", " + commandExtraInfo;
     }

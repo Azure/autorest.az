@@ -84,7 +84,7 @@ export interface CodeModelAz {
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
-    Extension_Mode: ExtensionMode;   
+    Extension_Mode: string;   
 
 
     SelectFirstCommandGroup(): boolean;
@@ -96,7 +96,7 @@ export interface CodeModelAz {
     CommandGroup_DefaultName: string;
     CommandGroup_HasShowCommand: boolean;
     CommandGroup_CliKey: string;
-    CommandGroup_Mode: ExtensionMode;
+    CommandGroup_Mode: string;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
@@ -112,7 +112,7 @@ export interface CodeModelAz {
     Command_Help: string;
     Command_IsLongRun: boolean;
     Command_SubGroupName: string;
-    Command_Mode: ExtensionMode;
+    Command_Mode: string;
 
 
     SelectFirstMethod(): boolean;
@@ -131,7 +131,7 @@ export interface CodeModelAz {
     Method_GetOriginalOperation: any;
     Method_GenericSetterParameter(Operation): Parameter;
     Method_NeedGeneric: boolean;
-    Method_Mode: ExtensionMode;
+    Method_Mode: string;
     Operation_IsHidden(op?: Operation): boolean;
 
 
@@ -167,7 +167,7 @@ export interface CodeModelAz {
     MethodParameters_AddPolySubClass(oriParam, para): boolean;
     MethodParameter_DefaultValue: any | undefined;
     MethodParameter_DefaultConfigKey: string | undefined;
-    MethodParameter_Mode: ExtensionMode;
+    MethodParameter_Mode: string;
     Parameter_Type(Parameter): string;
     Schema_Type(Schema): string;
     Parameter_IsList(Parameter): boolean;
