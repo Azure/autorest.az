@@ -353,7 +353,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         argument += ", configured_default='" + model.MethodParameter_DefaultConfigKey + "'";
                     }
                     let parameterExtraInfo = "";
-                    parameterExtraInfo = getExtraModeInfo(model.Command_Mode, model.MethodParameter_Mode);
+                    parameterExtraInfo = getExtraModeInfo(model.MethodParameter_Mode, model.Command_Mode);
                     if (parameterExtraInfo != "") {
                         parameterExtraInfo = ", " + parameterExtraInfo;
                     }

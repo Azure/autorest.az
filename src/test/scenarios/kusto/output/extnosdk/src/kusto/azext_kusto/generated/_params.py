@@ -115,7 +115,7 @@ def load_arguments(self, _):
     with self.argument_context('kusto cluster add-language-extension') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('cluster_name', options_list=['--name', '-n', '--cluster-name'], type=str, help='The name of the '
-                   'Kusto cluster.', id_part='name', is_preview=True)
+                   'Kusto cluster.', id_part='name', is_experimental=True)
         c.argument('value', action=AddClustersValue, nargs='*', help='The list of language extensions.')
 
     with self.argument_context('kusto cluster detach-follower-database') as c:
