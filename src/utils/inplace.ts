@@ -70,7 +70,13 @@ export class BaseSegment {
         this.startAt = startAt;
         this.endAt = endAt;
         this.children = [];
-        this.name = this.constructor.name+ "_"+name;
+        if (name.length>0) {
+            this.name = this.constructor.name+ "_"+name;
+        }
+        else {
+            let content = target.content.substr(startAt, endAt-startAt);
+            this.name = this.constructor.name + "_"+content.split("\n")[0];
+        }
         this.status = SegmentStatus.Origin;
         this.target = target;
         this.customized = undefined;
@@ -178,6 +184,73 @@ export class BaseSegment {
         }
         return ret;
     }
+
+    public createChildrenByIndent() {
+        let lines = this.target.content.slice(this.startAt, this.endAt).split("\n");
+
+        function lineIndent(line) {
+            let firstCharAt = line.search(/\S/);
+            return firstCharAt>=0? firstCharAt: line.length;
+        }
+        let myIndent = lineIndent(lines[0]);
+
+        let curStart = 0;
+        let curEnd = 0;
+        let curParathesisCount = 0;
+
+        function getBiasOfLine(cur, startAt) {
+            let ret = startAt;
+            for (let i=0; i<cur; i++) {
+                ret += lines[i].length;
+                if (i<lines.length-1)   ret += 1; //for \n
+            }
+            return ret;
+        }
+
+        while (curEnd<lines.length) {
+            if (curParathesisCount==0   // all parathesis completed
+                && curEnd>curStart      // length greater than zero
+                && myIndent==lineIndent(lines[curEnd])  // in the same indent with the parent segment
+                && lines[curEnd].search(/\S/)>=0    // not full-of-space line
+                ) {
+                let child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
+                child.createChildrenByIndent();
+                this.children.push(child);
+                curStart = curEnd;
+            }
+            curParathesisCount += (lines[curEnd].match(/[\(\[\{]/g) || []).length;
+            curParathesisCount -= (lines[curEnd].match(/[\)\]\}]/g) || []).length;
+            curEnd += 1;
+        }
+
+        if (this.children.length>0) {
+            if (curEnd>curStart ) {
+                let child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
+                child.createChildrenByIndent();
+                this.children.push(child);
+            }
+        }
+        else {  // find child indents
+            let curIndent = myIndent;
+            curEnd = 0;
+            while (curEnd<lines.length) {
+                let t = lines[curEnd].search(/\S/);
+                if (t>curIndent ) {
+                    let child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
+                    child.createChildrenByIndent();
+                    this.children.push(child);
+                    curStart = curEnd;
+                    curIndent = t;
+                }
+                curEnd += 1;
+                if (curEnd>=lines.length && this.children.length>0) {
+                    let child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
+                    child.createChildrenByIndent();
+                    this.children.push(child);
+                }
+            }
+        }
+    }
 }
 
 function nextStepAt(content: string): number {
@@ -233,10 +306,14 @@ export class testStepSegment extends DefSegment {
     }
 
     public createChildren() {
+        this.createChildrenByIndent();
+    }
+
+    public createChildrenByTestCmd() {
         let seperators = [
             ["endwith", ":\n", "declare"],
             ["startwith", "    test.cmd(", "pre"],
-            ["endwith", "checks=_checks)", "command"],
+            ["endwith", "checks=checks)", "command"],
         ];
 
         let bias = this.startAt;

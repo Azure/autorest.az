@@ -75,7 +75,7 @@ export class CliTestScenario extends TemplateBase {
         let parameterNames = CliTestStep.InitiateDependencies(model, imports, decorators, initiates);
         let jsonAdded = false;
 
-        funcScenario.push("# Testcase");
+        funcScenario.push("# Testcase: Generated");
         funcScenario.push("@try_manual");
         funcScenario.push(...ToMultiLine(`def call_scenario(test${CliTestStep.parameterLine(parameterNames)}):`));
         model.GetResourcePool().clearExampleParams();
