@@ -49,7 +49,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 let groupinfos = model.CommandGroup_Name.split(' ');
                 let extraInfo = "";
                 if (groupinfos.length == 2) {
-                    extraInfo = getExtraModeInfo(model.CommandGroup_Mode, model.Extension_Mode);
+                    extraInfo = getExtraModeInfo(model.CommandGroup_Mode, "");
                 }
                 if (extraInfo != "") {
                     extraInfo = ", " + extraInfo;

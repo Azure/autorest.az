@@ -62,7 +62,7 @@ def load_command_table(self, _):
         client_factory=cf_managed_network_peering_policy)
     with self.command_group('managed-network managed-network-peering-policy',
                             managed_network_managed_network_peering_policy,
-                            client_factory=cf_managed_network_peering_policy) as g:
+                            client_factory=cf_managed_network_peering_policy, is_preview=True) as g:
         g.custom_command('list', 'managed_network_managed_network_peering_policy_list')
         g.custom_show_command('show', 'managed_network_managed_network_peering_policy_show')
         g.custom_command('hub-and-spoke-topology create', 'managed_network_managed_network_peering_policy_hub_and_spoke'

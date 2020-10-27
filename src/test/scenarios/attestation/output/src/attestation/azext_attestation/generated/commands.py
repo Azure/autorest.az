@@ -30,7 +30,7 @@ def load_command_table(self, _):
         'ationProviderOperations.{}',
         client_factory=cf_attestation_provider)
     with self.command_group('attestation attestation-provider', attestation_attestation_provider,
-                            client_factory=cf_attestation_provider) as g:
+                            client_factory=cf_attestation_provider, is_experimental=True) as g:
         g.custom_command('provider list', 'attestation_attestation_provider_provider_list')
         g.custom_show_command('show', 'attestation_attestation_provider_show')
         g.custom_command('update', 'attestation_attestation_provider_update')

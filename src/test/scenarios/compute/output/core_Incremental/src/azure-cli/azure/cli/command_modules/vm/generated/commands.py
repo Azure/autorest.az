@@ -19,6 +19,7 @@ def load_command_table(self, _):
     vm_virtual_machine = CliCommandType(
         operations_tmpl='azure.mgmt.compute.operations#VirtualMachinesOperations.{}',
         client_factory=cf_virtual_machine)
-    with self.command_group('vm virtual-machine', vm_virtual_machine, client_factory=cf_virtual_machine) as g:
+    with self.command_group('vm virtual-machine', vm_virtual_machine, client_factory=cf_virtual_machine,
+                            is_experimental=True) as g:
         g.custom_command('assess-patch', 'vm_virtual_machine_assess_patch', supports_no_wait=True)
         g.custom_wait_command('wait', 'undefined')

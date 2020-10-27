@@ -19,7 +19,7 @@ def load_command_table(self, _):
     boolean_bool = CliCommandType(
         operations_tmpl='azext_boolean.vendored_sdks.boolean.operations._bool_operations#BoolOperations.{}',
         client_factory=cf_bool)
-    with self.command_group('boolean bool', boolean_bool, client_factory=cf_bool) as g:
+    with self.command_group('boolean bool', boolean_bool, client_factory=cf_bool, is_experimental=True) as g:
         g.custom_command('get-false', 'boolean_bool_get_false')
         g.custom_command('get-invalid', 'boolean_bool_get_invalid')
         g.custom_command('get-null', 'boolean_bool_get_null')
