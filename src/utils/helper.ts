@@ -256,7 +256,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                         if (isStrTags[lenLast-2]) {
                             if (ret[ret.length-2].slice(0, -2).match(/^ *$/i))
                                 ret.splice(ret.length-2, 1);
-                            else
+                            else if(ret[ret.length-2].slice(-3)[0]!="=")
                             {
                                 ret[ret.length-2] = ret[ret.length-2].slice(0, -2); // remove "" at the tail
                                 while (ret[ret.length-2].slice(-1)[0] == " ") {     // remove all spaces before ""
