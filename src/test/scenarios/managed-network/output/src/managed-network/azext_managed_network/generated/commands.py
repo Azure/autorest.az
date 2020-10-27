@@ -34,7 +34,7 @@ def load_command_table(self, _):
         'peAssignmentOperations.{}',
         client_factory=cf_scope_assignment)
     with self.command_group('managed-network mn scope-assignment', managed_network_scope_assignment,
-                            client_factory=cf_scope_assignment) as g:
+                            client_factory=cf_scope_assignment, is_preview=True) as g:
         g.custom_command('list', 'managed_network_mn_scope_assignment_list')
         g.custom_show_command('show', 'managed_network_mn_scope_assignment_show')
         g.custom_command('create', 'managed_network_mn_scope_assignment_create')
@@ -47,7 +47,7 @@ def load_command_table(self, _):
         's#ManagedNetworkGroupOperations.{}',
         client_factory=cf_managed_network_group)
     with self.command_group('managed-network mn group', managed_network_managed_network_group,
-                            client_factory=cf_managed_network_group) as g:
+                            client_factory=cf_managed_network_group, is_preview=True) as g:
         g.custom_command('list', 'managed_network_mn_group_list')
         g.custom_show_command('show', 'managed_network_mn_group_show')
         g.custom_command('create', 'managed_network_mn_group_create', supports_no_wait=True)
