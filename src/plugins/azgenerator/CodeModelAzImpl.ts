@@ -498,18 +498,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.codeModel.info['extensionMode'];
     }
 
-    public get CommandGroup_ExtensionMode() {
-        return this.CommandGroup?.language?.['cli']?.['groupExtensionMode'];
-    }
-
-    public get Command_ExtensionMode() {
-        return this.Command?.language?.['cli']?.['commandExtensionMode'];
-    }
-
-    public get MethodParameter_ExtensionMode() {
-        return this.MethodParameter?.language?.['cli']?.['methodExtensionMode'];
-    }
-
     public get Extension_NameUnderscored() {
         return this.extensionName.replace(/-/g, '_');
     }
@@ -625,6 +613,14 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get CommandGroup_CliKey(): string {
         return this.CommandGroup.language['cli']?.cliKey;
+    }
+
+    
+    public get CommandGroup_Mode() {
+        if (isNullOrUndefined(this.CommandGroup?.language?.['cli']?.['extensionMode'])) {
+            return this.Extension_Mode;
+        }
+        return this.CommandGroup?.language?.['cli']?.['extensionMode'];
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -799,6 +795,14 @@ export class CodeModelCliImpl implements CodeModelAz {
         let subCommandGroupName = this.Command.language['az']['subCommandGroup'];
         return isNullOrUndefined(subCommandGroupName) ? "" : subCommandGroupName;
     }
+
+    public get Command_Mode() {
+        if (isNullOrUndefined(this.Command?.language?.['cli']?.['extensionMode'])) {
+            return this.CommandGroup_Mode;
+        }
+        return this.Command?.language?.['cli']?.['extensionMode'];
+    }
+
     //=================================================================================================================
     // Methods / Operations associated with the command.
     //
@@ -952,6 +956,14 @@ export class CodeModelCliImpl implements CodeModelAz {
     public get Method_GetSplitOriginalOperation(): any {
         return this.Method.extensions?.['cli-split-operation-original-operation'];
     }
+
+    public get Method_Mode() {
+        if (isNullOrUndefined(this.Method?.language?.['cli']?.['extensionMode'])) {
+            return this.Command_Mode;
+        }
+        return this.Method?.language?.['cli']?.['extensionMode'];
+    }
+
     //=================================================================================================================
     // Methods Parameters.
     //
@@ -1164,6 +1176,13 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_IsList(): boolean {
         return this.Parameter_IsList(this.MethodParameter);
+    }
+
+    public get MethodParameter_Mode() {
+        if (isNullOrUndefined(this.MethodParameter?.language?.['cli']?.['extensionMode'])) {
+            return this.Method_Mode;
+        }
+        return this.MethodParameter?.language?.['cli']?.['extensionMode'];
     }
 
     private isComplexSchema(type: string): boolean {

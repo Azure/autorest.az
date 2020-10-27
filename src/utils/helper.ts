@@ -8,6 +8,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as request from "request-promise-native";
 import { isNullOrUndefined } from 'util';
+import { ExtensionMode } from "../plugins/models"
 
 export function changeCamelToDash(str: string) {
     str = str.replace(/[A-Z][^A-Z]/g, letter => `-${letter.toLowerCase()}`);
@@ -523,4 +524,14 @@ export function keepHeaderLines(base: string[]): number {
         }
     }
     return futureImportLineIdx;
+}
+
+export function getExtraModeInfo(mode: string, skipMode: string = null): string {
+    if (mode == ExtensionMode.Experimental && mode != skipMode) {
+        return "is_experimental=True";
+    } 
+    if (mode == ExtensionMode.Preview && mode != skipMode) {
+        return "is_preview=True";
+    }
+    return "";
 }
