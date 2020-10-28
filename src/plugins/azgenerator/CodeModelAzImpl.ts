@@ -11,7 +11,7 @@ import { isArray, isNullOrUndefined } from "util";
 import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash } from '../../utils/helper';
 import { EXCLUDED_PARAMS, GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
-import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './templates/tests/ScenarioTool';
+import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus, GroupTestScenario} from './templates/tests/ScenarioTool';
 
 
 class ActionParam {
@@ -37,7 +37,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     substack: Array<[Parameter[], number]>;
     currentSubOptionIndex: number;
     paramActionNameReference: Map<Schema, string>;
-    private _testScenario: any[];
+    private _testScenario: any;
     private _defaultTestScenario: any[];
     private _configuredScenario: boolean;
     private _clientSubscriptionBound: boolean;
@@ -462,14 +462,15 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GenerateTestInit() {
         if (this.codeModel['test-scenario']) {
-            if ('examples' in this.codeModel['test-scenario']) {
-                //new style of example configuration
-                this._testScenario = this.codeModel['test-scenario']['examples'];
-            }
-            else {
-                //old style of example configuration
-                this._testScenario = this.codeModel['test-scenario']
-            }
+            // if ('examples' in this.codeModel['test-scenario']) {
+            //     //new style of example configuration
+            //     this._testScenario = this.codeModel['test-scenario']['examples'];
+            // }
+            // else {
+            //     //old style of example configuration
+            //     this._testScenario = this.codeModel['test-scenario']
+            // }
+            this._testScenario = GroupTestScenario(this.codeModel['test-scenario'], this.Extension_NameUnderscored);
             this._configuredScenario = true;
         }
         else {
@@ -2350,7 +2351,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
 
         if (!this._configuredScenario && isNullOrUndefined(this._testScenario)) {
-            this._testScenario = this._defaultTestScenario;
+            this._testScenario = GroupTestScenario(this._defaultTestScenario, this.Extension_NameUnderscored);
         }
 
         let commandParams = {};

@@ -64,20 +64,9 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
 
                 await this.generateFullSingleAndAddtoOutput(new CliTestInit(model, isDebugMode));
                 await this.generateFullSingleAndAddtoOutput(new CliTestStep(model, isDebugMode), true, true);
-                let config: any = deepCopy(model.Extension_TestScenario);
-                if(model.ConfiguredScenario){
-                    for (var ci = 0; ci < config.length; ci++) {
-                        let configValue :any = Object.entries(config[ci]);
-                        if(configValue[0][0] == "name" || config.length == 0){
-                            await this.generateFullSingleAndAddtoOutput(new CliTestScenario(model, isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored),config), true, true);
-                            break
-                        }else{
-                            await this.generateFullSingleAndAddtoOutput(new CliTestScenario(model, isDebugMode, PathConstants.fullTestSceanrioFile(configValue[0][0]),configValue[0][1]), true, true);
-                        }
-                    }
-                }else{
-                    await this.generateFullSingleAndAddtoOutput(new CliTestScenario(model, isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored),config), true, true);
-                } 
+                for (let testGroup of model.Extension_TestScenario? Object.getOwnPropertyNames(model.Extension_TestScenario): []) {
+                    await this.generateFullSingleAndAddtoOutput(new CliTestScenario(model, isDebugMode, PathConstants.fullTestSceanrioFile(testGroup),model.Extension_TestScenario[testGroup], testGroup), true, true);
+                }
                 if (NeedPreparer()) {
                     await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(model, isDebugMode));
                 }

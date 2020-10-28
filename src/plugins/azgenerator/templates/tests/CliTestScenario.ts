@@ -13,7 +13,7 @@ import { PathConstants } from "../../../models";
 
 
 export class CliTestScenario extends TemplateBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean, testFilename: string, configValue:any) {
+    constructor(model: CodeModelAz, isDebugMode: boolean, testFilename: string, configValue:any, groupName: string) {
         super(model, isDebugMode);
         if (this.model.IsCliCore) {
             this.relativePath = path.join(PathConstants.testFolder, PathConstants.latestFolder, testFilename);
@@ -22,43 +22,47 @@ export class CliTestScenario extends TemplateBase {
             this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.testFolder, PathConstants.latestFolder, testFilename);
         }
         this.configValue = configValue;
+        this.groupName = groupName;
     }
 
     public configValue : any;
+    private groupName: string;
+
+    private header: HeaderGenerator = new HeaderGenerator();
+    private scenarios: string[] = [];
 
     public async fullGeneration(): Promise<string[]> {
-        return this.GenerateAzureCliTestScenario(this.model,this.configValue);
+        this.StartGenerateAzureCliTestScenario();
+        for (let scenarioName of Object.getOwnPropertyNames(this.configValue))
+            this.GenerateAzureCliTestScenario(this.model,this.configValue[scenarioName], scenarioName);
+        return this.EndGenerateAzureCliTestScenario();
     }
 
     public async incrementalGeneration(base: string): Promise<string[]> {
         return this.fullGeneration();
     }
 
-    private GenerateAzureCliTestScenario(model: CodeModelAz, config:any): string[] {
-        var head: string[] = [];
-        let steps: string[] = [];
+    private StartGenerateAzureCliTestScenario() {
+        this.header.addImport("os");
+        this.header.addFromImport("azure.cli.testsdk", ["ScenarioTest"]);
+        this.scenarios.push("");
+        this.scenarios.push("");
+        this.scenarios.push("TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))");
+        this.scenarios.push("");
+        this.scenarios.push("");
+    }
+
+    private GenerateAzureCliTestScenario(model: CodeModelAz, config:any, scenarioName: string) {
+        let commandParams = model.GatherInternalResource();
+        config.unshift({ function: `setup_${scenarioName}` });
+        config.push({ function: `cleanup_${scenarioName}` });
+
         let class_info: string[] = [];
         let initiates: string[] = [];
         let body: string[] = [];
-        let funcScenario: string[] = [];
-
-        let commandParams = model.GatherInternalResource();
-        // let config: any = deepCopy(model.Extension_TestScenario);
-        config.unshift({ function: "setup" });
-        config.push({ function: "cleanup" });
-
-        let header: HeaderGenerator = new HeaderGenerator();
-
-        header.addImport("os");
-        head.push("from azure.cli.testsdk import ScenarioTest");
-        steps.push("");
-        steps.push("");
-        steps.push("TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))");
-        steps.push("");
-        steps.push("");
 
         class_info.push("@try_manual");
-        class_info.push("class " + model.Extension_NameClass + "ScenarioTest(ScenarioTest):");
+        class_info.push("class " + this.groupName + scenarioName + "Test(ScenarioTest):");
         class_info.push("");
         initiates.push("");
 
@@ -70,14 +74,15 @@ export class CliTestScenario extends TemplateBase {
             initiates.push("");
         }
 
-        let imports: string[] = [];
         let decorators: string[] = [];
-        let parameterNames = CliTestStep.InitiateDependencies(model, imports, decorators, initiates);
+        let parameterNames = CliTestStep.InitiateDependencies(model, this.header, decorators, initiates);
         let jsonAdded = false;
-
-        funcScenario.push("# Testcase: Generated");
+        
+        let funcScenario: string[] = [];
+        let steps: string[] = [];
+        funcScenario.push(`# Testcase: ${scenarioName}`);
         funcScenario.push("@try_manual");
-        funcScenario.push(...ToMultiLine(`def call_scenario(test${CliTestStep.parameterLine(parameterNames)}):`));
+        funcScenario.push(...ToMultiLine(`def call_${scenarioName}(test${CliTestStep.parameterLine(parameterNames)}):`));
         model.GetResourcePool().clearExampleParams();
 
         // go through the examples to generate steps
@@ -99,7 +104,7 @@ export class CliTestScenario extends TemplateBase {
                             for (let check of checks) {
                                 ToMultiLine("    " + disabled + "    " + check, funcScenario);
                                 if (!jsonAdded && !disabled && check.indexOf("json.loads") >= 0) {
-                                    header.addImport("json");
+                                    this.header.addImport("json");
                                     jsonAdded = true;
                                 }
                             }
@@ -111,7 +116,7 @@ export class CliTestScenario extends TemplateBase {
                     }
                 }
                 if (found) {
-                    head.push(`from example_steps import ${functionName}`);
+                    this.header.addFromImport(".example_steps", [functionName]);
                 }
                 else {
                     funcScenario.push(...ToMultiLine(`    # STEP NOT FOUND: ${exampleId}`));
@@ -129,16 +134,19 @@ export class CliTestScenario extends TemplateBase {
         }
         funcScenario.push("");
         funcScenario.push("");
-        body.push(`        call_scenario(self${CliTestStep.parameterLine(parameterNames)})`);
+        body.push(`        call_${scenarioName}(self${CliTestStep.parameterLine(parameterNames)})`);
         body.push(`        calc_coverage(__file__)`);
         body.push(`        raise_if()`);
         body.push("");
+        body.push("");
+        this.scenarios.push(...steps.concat(funcScenario, class_info, decorators, initiates, body));
+    }
 
-        head.push("from .. import try_manual, raise_if, calc_coverage");
-        let output = head.concat(imports, steps, funcScenario, class_info, decorators, initiates, body);
-        output.forEach(element => {
-            if (element.length > 120) header.disableLineTooLong = true;
+    private EndGenerateAzureCliTestScenario(): string[] {
+        this.header.addFromImport("..", ["try_manual", "raise_if", "calc_coverage"]);
+        this.scenarios.forEach(element => {
+            if (element.length > 120) this.header.disableLineTooLong = true;
         });
-        return header.getLines().concat(output);
+        return this.header.getLines().concat(this.scenarios);
     }
 }

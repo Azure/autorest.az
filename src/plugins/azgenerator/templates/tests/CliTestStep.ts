@@ -51,7 +51,7 @@ export class CliTestStep extends TemplateBase {
 
         let header: HeaderGenerator = new HeaderGenerator();
 
-        let parameterNames = CliTestStep.InitiateDependencies(model, [], [], []);
+        let parameterNames = CliTestStep.InitiateDependencies(model, new HeaderGenerator(), [], []);
         let jsonAdded = false;
         model.GetResourcePool().clearExampleParams();
 
@@ -138,7 +138,7 @@ export class CliTestStep extends TemplateBase {
         return ret;
     }
 
-    public static InitiateDependencies(model: CodeModelAz, imports: string[], decorators: string[], initiates: string[]): string[] {
+    public static InitiateDependencies(model: CodeModelAz, header: HeaderGenerator, decorators: string[], initiates: string[]): string[] {
         let decorated = [];
         let internalObjects = [];
         let parameterNames = [];
@@ -162,12 +162,12 @@ export class CliTestStep extends TemplateBase {
             ToMultiLine(line, decorators);
             if (decorated.indexOf(entity.info.name) < 0) {
                 if (entity.info.name == 'ResourceGroupPreparer') {
-                    imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
+                    header.addFromImport("azure.cli.testsdk", [entity.info.name]);
                 }
                 else if (entity.info.name == 'StorageAccountPreparer') {
-                    imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
+                    header.addFromImport("azure.cli.testsdk", [entity.info.name]);
                 } else {
-                    imports.push(`from .preparers import ${entity.info.name}`);
+                    header.addFromImport(".preparers", [entity.info.name]);
                     usePreparers = true;
                 }
                 decorated.push(entity.info.name);
