@@ -1185,6 +1185,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.MethodParameter?.language?.['cli']?.['extensionMode'];
     }
 
+    public get MethodParameter_IsPositional(): boolean {
+        return this.Parameter_IsPositional(this.MethodParameter);
+    }
+
     private isComplexSchema(type: string): boolean {
         if (type == SchemaType.Array || type == SchemaType.Object || type == SchemaType.Dictionary || type == SchemaType.Any ||
             this.MethodParameter.language['cli'].json == true)
@@ -1400,6 +1404,38 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
+    public Parameter_PositionalKeys(param: Parameter = this.MethodParameter): string[] {
+        let keys = [];
+        if (!(this.Parameter_IsList(param) && this.Parameter_IsListOfSimple(param))) {
+            return null;
+        }
+        if (param?.schema && !isNullOrUndefined(param.schema.language?.['cli']?.['positionalOrder']) && isArray(param.schema.language?.['cli']?.['positionalOrder'])) {
+            keys = param.schema.language?.['cli']?.['positionalOrder'];
+            return keys;
+        }
+        if (!isNullOrUndefined(param.language?.['cli']?.['positionalOrder']) && isArray(param.language?.['cli']?.['positionalOrder'])) {
+            keys = param.language?.['cli']?.['positionalOrder'];
+            return keys;
+        }
+
+        if (this.EnterSubMethodParameters()) {
+            if (this.SelectFirstMethodParameter(true)) {
+                do {
+                    if (this.SubMethodParameter['readOnly']) {
+                        continue;
+                    }
+                    if (this.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                        continue;
+                    }
+                    keys.push(this.Parameter_NamePython(this.SubMethodParameter));
+                } while (this.SelectNextMethodParameter(true));
+            }
+            this.ExitSubMethodParameters();
+        }
+
+        return keys;
+    }
+
     public Schema_IsList(schema: Schema = this.MethodParameter.schema): boolean {
         if (schema.language['cli'].json == true) {
             return true;
@@ -1574,6 +1610,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return schema?.language['cli']?.['pythonFlattenedFrom'];
     }
 
+    public Schema_IsPositional(schema: Schema): boolean {
+        return schema?.language?.['cli']?.['positional'];
+    }
+
     public Parameter_InGlobal(parameter: Parameter): boolean {
         if (this.codeModel.globalParameters.indexOf(parameter) > -1) {
             return true;
@@ -1598,6 +1638,13 @@ export class CodeModelCliImpl implements CodeModelAz {
             return param.language['cli']?.['track1_name'];
         }
         return param.language?.['python']?.name;
+    }
+
+    public Parameter_IsPositional(param: Parameter = this.MethodParameter): boolean {
+        if (param?.schema && this.Schema_IsPositional(param.schema)) {
+            return true;
+        }
+        return param?.language?.['cli']?.['positional']? true: false;
     }
 
     public get MethodParameter_IsRequired(): boolean {

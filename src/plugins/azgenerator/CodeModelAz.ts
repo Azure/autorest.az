@@ -168,6 +168,7 @@ export interface CodeModelAz {
     MethodParameter_DefaultValue: any | undefined;
     MethodParameter_DefaultConfigKey: string | undefined;
     MethodParameter_Mode: string;
+    MethodParameter_IsPositional: boolean;
     Parameter_Type(Parameter): string;
     Schema_Type(Schema): string;
     Parameter_IsList(Parameter): boolean;
@@ -189,8 +190,11 @@ export interface CodeModelAz {
     Parameter_Description(Parameter): string;
     Parameter_DefaultValue(Parameter): any | undefined;
     Parameter_DefaultConfigKey(Parameter): string | undefined;
+    Parameter_IsPositional(Parameter): boolean;
+    Parameter_PositionalKeys(Parameter): string[];
     Schema_Description(Schema): string;
     Schema_FlattenedFrom(Schema): Schema;
+    Schema_IsPositional(Schema): boolean;
 
     GetModuleOperationName(): string;
     GetModuleOperationNamePython(): string;

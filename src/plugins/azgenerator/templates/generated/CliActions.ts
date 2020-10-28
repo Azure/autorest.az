@@ -5,7 +5,7 @@
 
 import { Parameter, SchemaType } from "@azure-tools/codemodel";
 import { isNullOrUndefined } from "util";
-import { ToPythonString } from "../../../../utils/helper";
+import { ToPythonString, ToCamelCase, Capitalize } from "../../../../utils/helper";
 import { CodeModelAz } from "../../CodeModelAz";
 import { HeaderGenerator } from "../../Header";
 
@@ -34,7 +34,11 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                                         if (isNullOrUndefined(subActionName) || allActions.has(subActionName)) {
                                             continue;
                                         }
-                                        outputCode = outputCode.concat(GetAction(model, subActionName, model.MethodParameter, keyToMatch, valueToMatch))
+                                        if (model.MethodParameter_IsPositional) {
+                                            outputCode = outputCode.concat(GetPositionalAction(model, subActionName, model.MethodParameter));
+                                        } else { 
+                                            outputCode = outputCode.concat(GetAction(model, subActionName, model.MethodParameter, keyToMatch, valueToMatch));
+                                        }
                                     }
                                     let actionName = model.Schema_ActionName(model.MethodParameter.schema);
                                     if (isNullOrUndefined(actionName)) {
@@ -46,7 +50,12 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                                         if (allActions.has(actionName)) {
                                             continue;
                                         }
-                                        outputCode = outputCode.concat(GetAction(model, actionName, model.MethodParameter))
+                                        if (model.MethodParameter_IsPositional) {
+                                            outputCode = outputCode.concat(GetPositionalAction(model, actionName, model.MethodParameter));
+                                        } else {
+                                            outputCode = outputCode.concat(GetAction(model, actionName, model.MethodParameter))
+                                        }
+                                        
                                     }
                                 } while (model.SelectNextMethodParameter());
                             }
@@ -159,5 +168,84 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
         output.push("        d['" + keyToMatch + "'] = '" + valueToMatch + "'");
     }
     output.push("        return d");
+    return output;
+}
+
+function GetPositionalAction(model: CodeModelAz, actionName: string, param: Parameter, keyToMatch: string = null, valueToMatch: string = null) {
+    let output: string[] = [];
+    allActions.set(actionName, true);
+    output.push("");
+    output.push("");
+    let paramType = param?.schema?.type;
+    let keys = model.Parameter_PositionalKeys(model.MethodParameter);
+    output.push("class " + actionName + "(argparse._AppendAction):");
+    output.push("");
+    output.push("    def __call__(self, parser, namespace, values, option_string=None):");
+    if (keys.length <= 0) {
+        output.push("        pass");
+        return output;
+    }
+    output.push("        try:");
+    let actionClassName = "";
+    let pythonClassName = Capitalize(ToCamelCase(model.MethodParameter_NamePython));
+    if (paramType == SchemaType.Array) {
+        actionClassName = Capitalize(ToCamelCase(model.MethodParameter_NamePython));
+        pythonClassName =model.MethodParameter.schema?.['elementType']?.language?.['python']?.['name'];
+        output.push("            value_list = values.split()");
+        output.push("            value_chunk_list = [value_list[x:x+" + keys.length + "] for x in range(0, len(value_list), " + keys.length + ")]");
+        output.push("            " + pythonClassName + " = namespace._cmd.get_models('" + pythonClassName + "')");
+        output.push("            " + actionClassName + " = []");
+        output.push("            for chunk in value_chunk_list:")
+        output.push("                " + keys.join(", ") + (keys.length == 1? ",": "") + " = chunk");
+        output.push("                " + actionClassName + ".append(");
+        output = output.concat(generateConstructObject(model, "                    ", pythonClassName, keyToMatch, valueToMatch, false, keys));
+        output.push("                )");
+        output.push("            return " + actionClassName);
+    } else {
+        output.push("            " + pythonClassName + " = namespace._cmd.get_models('" + pythonClassName + "')");
+        output.push("            " + keys.join(", ") + " = values.split()");
+        output = output.concat(generateConstructObject(model, "            ", pythonClassName, keyToMatch, valueToMatch, true, keys))
+    }
+    output.push("        except ValueError:");
+    output.push("            raise CLIError('usage error: {} NAME METRIC OPERATION VALUE'.format(option_string))")
+    return output;
+}
+
+
+function generateConstructObject(model: CodeModelAz, indent: string, pythonClassName: string, keyToMatch: string, valueToMatch: string, needReturn: boolean, keys: string[]) {
+    let output: string[] = [];
+    output.push(indent + (needReturn? "return ": "") + pythonClassName + "(");
+    let hasPair = false;
+    if (keys.length > 0) {
+        for(let key of keys) {
+            hasPair = true;
+            output.push(indent + "    " + key + " = " + key + ",");
+        }
+    } else {
+        if (model.EnterSubMethodParameters()) {
+            if (model.SelectFirstMethodParameter(true)) {
+                do {
+                    if (model.SubMethodParameter['readOnly']) {
+                        continue;
+                    }
+                    if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                        continue;
+                    }
+                    if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch) && model.Parameter_NamePython(model.SubMethodParameter) == keyToMatch) {
+                        continue;
+                    }
+                    hasPair = true;
+                    output.push(indent + "    " + model.Parameter_NamePython(model.SubMethodParameter) + " = " + model.Parameter_NamePython(model.SubMethodParameter) + ",");
+                } while (model.SelectNextMethodParameter(true));
+            }
+            model.ExitSubMethodParameters();
+        }
+    }
+    if (hasPair) {
+        output[output.length - 1] = output.last.substring(0, output.last.length - 1);
+        output.push(indent + ")");
+    } else {
+        output.pop();
+    }
     return output;
 }
