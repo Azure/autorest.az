@@ -253,8 +253,16 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                         // if (lenLast >= 4 && ret[ret.length - 2][lenLast - 2] == ' ' && ret[ret.length - 2][lenLast - 3] == strTag && (ret[ret.length - 2][lenLast - 4] != "\\")) {   // remove empty string in the end of line
                         //     ret[ret.length - 1] = ret[ret.length - 1].substr(0, lenLast - 2);
                         // }
-                        if (isStrTags[lenLast-2] && ret[ret.length-2].slice(0, -2).match(/^ *$/i)) {
-                            ret.splice(ret.length-2, 1);
+                        if (isStrTags[lenLast-2]) {
+                            if (ret[ret.length-2].slice(0, -2).match(/^ *$/i))
+                                ret.splice(ret.length-2, 1);
+                            else if(ret[ret.length-2].slice(-3)[0]!="=")
+                            {
+                                ret[ret.length-2] = ret[ret.length-2].slice(0, -2); // remove "" at the tail
+                                while (ret[ret.length-2].slice(-1)[0] == " ") {     // remove all spaces before ""
+                                    ret[ret.length-2] = ret[ret.length-2].slice(0, -1); 
+                                }
+                            }
                         }
                     }
                 }
