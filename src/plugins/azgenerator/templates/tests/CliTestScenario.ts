@@ -4,9 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 import * as path from 'path';
 import { CodeModelAz, CommandExample } from "../../CodeModelAz"
-import { PreparerEntity, getResourceKey } from "./ScenarioTool"
 import { CliTestStep } from "./CliTestStep"
-import { ToMultiLine, deepCopy } from '../../../../utils/helper';
+import { ToMultiLine, Capitalize } from '../../../../utils/helper';
 import { HeaderGenerator } from "../../Header";
 import { TemplateBase } from "../TemplateBase";
 import { PathConstants } from "../../../models";
@@ -62,7 +61,7 @@ export class CliTestScenario extends TemplateBase {
         let body: string[] = [];
 
         class_info.push("@try_manual");
-        class_info.push("class " + this.groupName + scenarioName + "Test(ScenarioTest):");
+        class_info.push("class " + Capitalize(this.groupName) + scenarioName + "Test(ScenarioTest):");
         class_info.push("");
         initiates.push("");
 
@@ -82,7 +81,7 @@ export class CliTestScenario extends TemplateBase {
         let steps: string[] = [];
         funcScenario.push(`# Testcase: ${scenarioName}`);
         funcScenario.push("@try_manual");
-        funcScenario.push(...ToMultiLine(`def call_${scenarioName}(test${CliTestStep.parameterLine(parameterNames)}):`));
+        funcScenario.push(...ToMultiLine(`def call_${scenarioName.toLowerCase()}(test${CliTestStep.parameterLine(parameterNames)}):`));
         model.GetResourcePool().clearExampleParams();
 
         // go through the examples to generate steps
@@ -134,7 +133,7 @@ export class CliTestScenario extends TemplateBase {
         }
         funcScenario.push("");
         funcScenario.push("");
-        body.push(`        call_${scenarioName}(self${CliTestStep.parameterLine(parameterNames)})`);
+        body.push(`        call_${scenarioName.toLowerCase()}(self${CliTestStep.parameterLine(parameterNames)})`);
         body.push(`        calc_coverage(__file__)`);
         body.push(`        raise_if()`);
         body.push("");

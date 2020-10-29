@@ -101,7 +101,7 @@ export function GroupTestScenario(testScenario: any, extensionName: string) {
     if (isNullOrUndefined(testScenario))    return testScenario;
 
     let ret = {};
-    const defaultScenario = "default";
+    const defaultScenario = "Scenario";
 
     function addScenario(groupName: string, scenarioName: string, items: any[]) {
         if(!ret.hasOwnProperty(groupName))  ret[groupName] = {};

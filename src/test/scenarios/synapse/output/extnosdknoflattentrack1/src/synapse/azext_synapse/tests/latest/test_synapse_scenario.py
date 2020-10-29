@@ -11,1628 +11,486 @@
 
 import os
 from azure.cli.testsdk import ScenarioTest
-from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
+from .example_steps import step_create_or_update_a_workspace
+from .example_steps import step_create_or_update_a_big_data_pool
+from .example_steps import step_list_big_data_pools_in_a_workspace
+from .example_steps import step_update_a_big_data_pool
+from .example_steps import step_create_integration_runtime
+from .example_steps import step_get_integration_runtime
+from .example_steps import step_list_integration_runtimes
+from .example_steps import step_start_integration_runtime
+from .example_steps import step_stop_integration_runtime
+from .example_steps import step_upgrade_integration_runtime
+from .example_steps import step_update_integration_runtime
+from .example_steps import step_list_auth_keys
+from .example_steps import step_regenerate_auth_key
+from .example_steps import step_get_connection_info
+from .example_steps import step_sync_credentials
+from .example_steps import step_get_monitoring_data
+from .example_steps import step_get_integration_runtime_node_ip_address
+from .example_steps import step_get_integration_runtime_node
+from .example_steps import step_update_integration_runtime_node
+from .example_steps import step_get_integration_runtime_object_metadata
+from .example_steps import step_refresh_object_metadata
+from .example_steps import step_get_status
+from .example_steps import step_create_an_ip_firewall_rule
+from .example_steps import step_create_an_ip_firewall_rule
+from .example_steps import step_list_ip_firewall_rules_in_a_workspace
+from .example_steps import step_replace_all_ip_firewall_rules_in_a_workspace
+from .example_steps import step_get_azure_async_operation_header_result
+from .example_steps import step_get_location_header_result
+from .example_steps import step_approve_private_endpoint_connection
+from .example_steps import step_get_private_endpoint_connection
+from .example_steps import step_list_private_endpoint
+from .example_steps import step_create_or_update_a_privatelinkhub
+from .example_steps import step_get_a_privatelinkhub
+from .example_steps import step_list_privatelinkhubs_in_resource_group
+from .example_steps import step_list_privatelinkhubs_in_subscription
+from .example_steps import step_update_a_privatelinkhub
+from .example_steps import step_get_a_big_data_pool
+from .example_steps import step_get_a_workspace
+from .example_steps import step_list_workspaces_in_resource_group
+from .example_steps import step_list_workspaces_in_subscription
+from .example_steps import step_update_a_workspace
+from .example_steps import step_get_private_link_resources_for_workspace
+from .example_steps import step_get_private_link_resources_for_workspace
+from .example_steps import step_create_a_sql_analytics_pool
+from .example_steps import step_get_a_sql_analytics_pool
+from .example_steps import step_list_sql_analytics_pools_in_a_workspace
+from .example_steps import step_list_sql_analytics
+from .example_steps import step_pause_a_sql_analytics_pool
+from .example_steps import step_rename_a_sql_analytics_pool
+from .example_steps import step_resume_a_sql_analytics_pool
+from .example_steps import step_update_a_sql_analytics_pool
+from .example_steps import step_create_or_update
+from .example_steps import step_create_or_update2
+from .example_steps import step_get_blob_auditing
+from .example_steps import step_get_a_connection
+from .example_steps import step_get_a_sql_analytics_pool_user_activity
+from .example_steps import step_get_sql_pool_geo_backup_policy
+from .example_steps import step_set_metadata_sync
+from .example_steps import step_get_metadata_sync
+from .example_steps import step_get_the_result
+from .example_steps import step_list_the_sql
+from .example_steps import step_lists_a_sql_analytic_pool_s_replication_links
+from .example_steps import step_get_a_list
+from .example_steps import step_creates_sql_pool_restore_point_
+from .example_steps import step_list_the_schema_in_a_sql_analytics_pool
+from .example_steps import step_update_a_sql
+from .example_steps import step_update_a_sql2
+from .example_steps import step_get_a_security_alert_of_a_sql_analytics_pool
+from .example_steps import step_updates_the_sensitivity
+from .example_steps import step_gets_the_current
+from .example_steps import step_gets_the_recommended
+from .example_steps import step_disables_sensitivity_recommendations
+from .example_steps import step_enables_sensitivity_recommendations
+from .example_steps import step_list_the_columns
+from .example_steps import step_list_the_tables
+from .example_steps import step_create_or_update3
+from .example_steps import step_get_transparent_data
+from .example_steps import step_list_the_usages_of_a_sql_analytics_pool
+from .example_steps import step_creates_or_updates
+from .example_steps import step_get_a_vulnerability
+from .example_steps import step_executes_a_sql
+from .example_steps import step_export_a_database
+from .example_steps import step_create_a_database
+from .example_steps import step_create_a_database2
+from .example_steps import step_create_a_database3
+from .example_steps import step_get_a_sql_pool_s_vulnerability_assessment
+from .example_steps import step_get_a_vulnerability2
+from .example_steps import step_deletes_the_sensitivity
+from .example_steps import step_create_or_update4
+from .example_steps import step_get_workspace_active_directory_admin
+from .example_steps import step_create_or_update5
+from .example_steps import step_get_managed_identity_sql_control_settings
+from .example_steps import step_delete_a_big_data_pool
+from .example_steps import step_delete_integration_runtime_node
+from .example_steps import step_delete_integration_runtime
+from .example_steps import step_delete_an_ip_firewall_rule_from_a_workspace
+from .example_steps import step_delete_private_endpoint_connection
+from .example_steps import step_removes_a_database
+from .example_steps import step_delete_a_privatelinkhub
+from .example_steps import step_remove_a_database_s_vulnerability_assessment
+from .example_steps import step_delete_a_sql_analytics_pool
+from .example_steps import step_delete_workspace_active_directory_admin
+from .example_steps import step_delete_a_workspace
+from .. import (
+    try_manual,
+    raise_if,
+    calc_coverage
+)
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
-# Env setup
+# Env setup_scenario
 @try_manual
-def setup(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16,
-          rg_17):
+def setup_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
+                   rg_16, rg_17):
     pass
 
 
-# EXAMPLE: Create or update a workspace
+# Env cleanup_scenario
 @try_manual
-def step_create_or_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                      rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse workspace create '
-             '--resource-group "{rg_2}" '
-             '--identity-type "SystemAssigned" '
-             '--location "East US" '
-             '--default-data-lake-storage account-url="https://accountname.dfs.core.windows.net" filesystem="default" '
-             '--managed-resource-group-name "workspaceManagedResourceGroupUnique" '
-             '--managed-virtual-network "default" '
-             '--sql-administrator-login "login" '
-             '--sql-administrator-login-password "password" '
-             '--tags key="value" '
-             '--name "{myWorkspace2}"',
-             checks=[
-                 test.check("identity.type", "SystemAssigned", case_sensitive=False),
-                 test.check("location", "East US", case_sensitive=False),
-                 test.check("defaultDataLakeStorage.accountUrl", "https://accountname.dfs.core.windows.net",
-                            case_sensitive=False),
-                 test.check("defaultDataLakeStorage.filesystem", "default", case_sensitive=False),
-                 test.check("managedResourceGroupName", "workspaceManagedResourceGroupUnique", case_sensitive=False),
-                 test.check("managedVirtualNetwork", "default", case_sensitive=False),
-                 test.check("sqlAdministratorLogin", "login", case_sensitive=False),
-                 test.check("sqlAdministratorLoginPassword", "password", case_sensitive=False),
-                 test.check("tags.key", "value", case_sensitive=False),
-                 test.check("name", "{myWorkspace2}", case_sensitive=False),
-             ])
-    test.cmd('az synapse workspace wait --created '
-             '--resource-group "{rg_2}" '
-             '--name "{myWorkspace2}"',
-             checks=[])
-
-
-# EXAMPLE: Create or update a Big Data pool
-@try_manual
-def step_create_or_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse big-data-pool create '
-             '--location "West US 2" '
-             '--auto-pause delay-in-minutes=15 enabled=true '
-             '--auto-scale enabled=true max-node-count=50 min-node-count=3 '
-             '--default-spark-log-folder "/logs" '
-             '--library-requirements content="" filename="requirements.txt" '
-             '--node-count 4 '
-             '--node-size "Medium" '
-             '--node-size-family "MemoryOptimized" '
-             '--spark-events-folder "/events" '
-             '--spark-version "2.4" '
-             '--tags key="value" '
-             '--name "{myBigDataPool}" '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[
-                 test.check("location", "West US 2", case_sensitive=False),
-                 test.check("autoPause.delayInMinutes", 15),
-                 test.check("autoPause.enabled", True),
-                 test.check("autoScale.enabled", True),
-                 test.check("autoScale.maxNodeCount", 50),
-                 test.check("autoScale.minNodeCount", 3),
-                 test.check("defaultSparkLogFolder", "/logs", case_sensitive=False),
-                 test.check("nodeCount", 4),
-                 test.check("nodeSize", "Medium", case_sensitive=False),
-                 test.check("nodeSizeFamily", "MemoryOptimized", case_sensitive=False),
-                 test.check("sparkEventsFolder", "/events", case_sensitive=False),
-                 test.check("sparkVersion", "2.4", case_sensitive=False),
-                 test.check("tags.key", "value", case_sensitive=False),
-                 test.check("name", "{myBigDataPool}", case_sensitive=False),
-             ])
-    test.cmd('az synapse big-data-pool wait --created '
-             '--name "{myBigDataPool}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: List Big Data pools in a workspace
-@try_manual
-def step_list_big_data_pools_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse big-data-pool list '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: Update a Big Data pool
-@try_manual
-def step_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse big-data-pool update '
-             '--name "{myBigDataPool}" '
-             '--tags key="value" '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[
-                 test.check("location", "West US 2", case_sensitive=False),
-                 test.check("autoPause.delayInMinutes", 15),
-                 test.check("autoPause.enabled", True),
-                 test.check("autoScale.enabled", True),
-                 test.check("autoScale.maxNodeCount", 50),
-                 test.check("autoScale.minNodeCount", 3),
-                 test.check("defaultSparkLogFolder", "/logs", case_sensitive=False),
-                 test.check("nodeCount", 4),
-                 test.check("nodeSize", "Medium", case_sensitive=False),
-                 test.check("nodeSizeFamily", "MemoryOptimized", case_sensitive=False),
-                 test.check("sparkEventsFolder", "/events", case_sensitive=False),
-                 test.check("sparkVersion", "2.4", case_sensitive=False),
-                 test.check("tags.key", "value", case_sensitive=False),
-                 test.check("name", "{myBigDataPool}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: Create integration runtime
-@try_manual
-def step_create_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime create '
-             '--properties "{{\\"type\\":\\"SelfHosted\\",\\"description\\":\\"A selfhosted integration runtime\\"}}" '
-             '--name "{myIntegrationRuntime}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[
-                 test.check("properties.type", "SelfHosted", case_sensitive=False),
-                 test.check("properties.description", "A selfhosted integration runtime", case_sensitive=False),
-                 test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: Get integration runtime
-@try_manual
-def step_get_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime show '
-             '--name "{myIntegrationRuntime}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[
-                 test.check("properties.type", "SelfHosted", case_sensitive=False),
-                 test.check("properties.description", "A selfhosted integration runtime", case_sensitive=False),
-                 test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: List integration runtimes
-@try_manual
-def step_list_integration_runtimes(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime list '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: Start integration runtime
-@try_manual
-def step_start_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime start '
-             '--name "{myIntegrationRuntime2}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Stop integration runtime
-@try_manual
-def step_stop_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime stop '
-             '--name "{myIntegrationRuntime2}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Upgrade integration runtime
-@try_manual
-def step_upgrade_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime upgrade '
-             '--name "{myIntegrationRuntime}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Update integration runtime
-@try_manual
-def step_update_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime update '
-             '--name "{myIntegrationRuntime}" '
-             '--resource-group "{rg_17}" '
-             '--auto-update "Off" '
-             '--update-delay-offset "\\"PT3H\\"" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[
-                 test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: List auth keys
-@try_manual
-def step_list_auth_keys(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-auth-key list '
-             '--integration-runtime-name "{myIntegrationRuntime}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Regenerate auth key
-@try_manual
-def step_regenerate_auth_key(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-auth-key regenerate '
-             '--integration-runtime-name "{myIntegrationRuntime}" '
-             '--key-name "authKey2" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Get connection info
-@try_manual
-def step_get_connection_info(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-connection-info get '
-             '--integration-runtime-name "{myIntegrationRuntime}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Sync credentials
-@try_manual
-def step_sync_credentials(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-credentials sync '
-             '--integration-runtime-name "{myIntegrationRuntime}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Get monitoring data
-@try_manual
-def step_get_monitoring_data(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-monitoring-data get '
-             '--integration-runtime-name "{myIntegrationRuntime}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Get integration runtime node IP address
-@try_manual
-def step_get_integration_runtime_node_ip_address(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-node-ip-address get '
-             '--integration-runtime-name "{myIntegrationRuntime}" '
-             '--node-name "Node_1" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Get integration runtime node
-@try_manual
-def step_get_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                      rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-node show '
-             '--integration-runtime-name "{myIntegrationRuntime}" '
-             '--node-name "Node_1" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Update integration runtime node
-@try_manual
-def step_update_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-node update '
-             '--integration-runtime-name "{myIntegrationRuntime}" '
-             '--node-name "Node_1" '
-             '--resource-group "{rg_17}" '
-             '--concurrent-jobs-limit 2 '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Get integration runtime object metadata
-@try_manual
-def step_get_integration_runtime_object_metadata(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-object-metadata get '
-             '--metadata-path "ssisFolders" '
-             '--integration-runtime-name "{myIntegrationRuntime3}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Refresh object metadata
-@try_manual
-def step_refresh_object_metadata(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-object-metadata refresh '
-             '--integration-runtime-name "{myIntegrationRuntime3}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Get status
-@try_manual
-def step_get_status(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
-                    rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-status get '
-             '--integration-runtime-name "{myIntegrationRuntime}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Create an IP firewall rule
-@try_manual
-def step_create_an_ip_firewall_rule(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse ip-firewall-rule show '
-             '--resource-group "{rg}" '
-             '--rule-name "ExampleIpFirewallRule" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: Create an IP firewall rule
-@try_manual
-def step_create_an_ip_firewall_rule(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse ip-firewall-rule show '
-             '--resource-group "{rg}" '
-             '--rule-name "ExampleIpFirewallRule" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: List IP firewall rules in a workspace
-@try_manual
-def step_list_ip_firewall_rules_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse ip-firewall-rule list '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: Replace all IP firewall rules in a workspace
-@try_manual
-def step_replace_all_ip_firewall_rules_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse ip-firewall-rule replace-all '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}" '
-             '--ip-firewall-rules "{{\\"AnotherExampleFirewallRule\\":{{\\"endIpAddress\\":\\"10.0.1.254\\",\\"startIpA'
-             'ddress\\":\\"10.0.1.0\\"}},\\"ExampleFirewallRule\\":{{\\"endIpAddress\\":\\"10.0.0.254\\",\\"startIpAddr'
-             'ess\\":\\"10.0.0.0\\"}}}}"',
-             checks=[])
-
-
-# EXAMPLE: Get azure async operation header result
-@try_manual
-def step_get_azure_async_operation_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse operation get-azure-async-header-result '
-             '--operation-id "01234567-89ab-4def-0123-456789abcdef" '
-             '--resource-group "{rg_2}" '
-             '--workspace-name "{myWorkspace2}"',
-             checks=[])
-
-
-# EXAMPLE: Get location header result
-@try_manual
-def step_get_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse operation get-location-header-result '
-             '--operation-id "01234567-89ab-4def-0123-456789abcdef" '
-             '--resource-group "{rg_2}" '
-             '--workspace-name "{myWorkspace2}"',
-             checks=[])
-
-
-# EXAMPLE: Approve private endpoint connection
-@try_manual
-def step_approve_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-endpoint-connection create '
-             '--name "{myPrivateEndpointConnection}" '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-    test.cmd('az synapse private-endpoint-connection wait --created '
-             '--name "{myPrivateEndpointConnection}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: Get private endpoint connection
-@try_manual
-def step_get_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-endpoint-connection show '
-             '--name "{myPrivateEndpointConnection}" '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: List private endpoint connections in workspace
-@try_manual
-def step_list_private_endpoint(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-endpoint-connection list '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: Create or update a privateLinkHub
-@try_manual
-def step_create_or_update_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-link-hub create '
-             '--location "East US" '
-             '--tags key="value" '
-             '--name "{myPrivateLinkHub}" '
-             '--resource-group "{rg_2}"',
-             checks=[
-                 test.check("location", "East US", case_sensitive=False),
-                 test.check("tags.key", "value", case_sensitive=False),
-                 test.check("name", "{myPrivateLinkHub}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: Get a privateLinkHub
-@try_manual
-def step_get_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-link-hub show '
-             '--name "{myPrivateLinkHub}" '
-             '--resource-group "{rg_2}"',
-             checks=[
-                 test.check("location", "East US", case_sensitive=False),
-                 test.check("tags.key", "value", case_sensitive=False),
-                 test.check("name", "{myPrivateLinkHub}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: List privateLinkHubs in resource group
-@try_manual
-def step_list_privatelinkhubs_in_resource_group(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-link-hub list '
-             '--resource-group "{rg_2}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: List privateLinkHubs in subscription
-@try_manual
-def step_list_privatelinkhubs_in_subscription(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-link-hub list '
-             '-g ""',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: Update a privateLinkHub
-@try_manual
-def step_update_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-link-hub update '
-             '--name "{myPrivateLinkHub}" '
-             '--tags key="value" '
-             '--resource-group "{rg_2}"',
-             checks=[
-                 test.check("location", "East US", case_sensitive=False),
-                 test.check("tags.key", "value", case_sensitive=False),
-                 test.check("name", "{myPrivateLinkHub}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: Get a Big Data pool
-@try_manual
-def step_get_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse big-data-pool show '
-             '--name "{myBigDataPool}" '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[
-                 test.check("location", "West US 2", case_sensitive=False),
-                 test.check("autoPause.delayInMinutes", 15),
-                 test.check("autoPause.enabled", True),
-                 test.check("autoScale.enabled", True),
-                 test.check("autoScale.maxNodeCount", 50),
-                 test.check("autoScale.minNodeCount", 3),
-                 test.check("defaultSparkLogFolder", "/logs", case_sensitive=False),
-                 test.check("nodeCount", 4),
-                 test.check("nodeSize", "Medium", case_sensitive=False),
-                 test.check("nodeSizeFamily", "MemoryOptimized", case_sensitive=False),
-                 test.check("sparkEventsFolder", "/events", case_sensitive=False),
-                 test.check("sparkVersion", "2.4", case_sensitive=False),
-                 test.check("name", "{myBigDataPool}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: Get a workspace
-@try_manual
-def step_get_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17):
-    test.cmd('az synapse workspace show '
-             '--resource-group "{rg_2}" '
-             '--name "{myWorkspace2}"',
-             checks=[
-                 test.check("location", "East US", case_sensitive=False),
-                 test.check("defaultDataLakeStorage.accountUrl", "https://accountname.dfs.core.windows.net",
-                            case_sensitive=False),
-                 test.check("defaultDataLakeStorage.filesystem", "default", case_sensitive=False),
-                 test.check("sqlAdministratorLogin", "login", case_sensitive=False),
-                 test.check("sqlAdministratorLoginPassword", "password", case_sensitive=False),
-                 test.check("tags.key", "value", case_sensitive=False),
-                 test.check("name", "{myWorkspace2}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: List workspaces in resource group
-@try_manual
-def step_list_workspaces_in_resource_group(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse workspace list '
-             '--resource-group "{rg_2}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: List workspaces in subscription
-@try_manual
-def step_list_workspaces_in_subscription(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse workspace list '
-             '-g ""',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: Update a workspace
-@try_manual
-def step_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse workspace update '
-             '--resource-group "{rg_2}" '
-             '--name "{myWorkspace2}" '
-             '--identity-type "SystemAssigned" '
-             '--sql-administrator-login-password "password" '
-             '--tags key="value"',
-             checks=[
-                 test.check("location", "East US", case_sensitive=False),
-                 test.check("defaultDataLakeStorage.accountUrl", "https://accountname.dfs.core.windows.net",
-                            case_sensitive=False),
-                 test.check("defaultDataLakeStorage.filesystem", "default", case_sensitive=False),
-                 test.check("sqlAdministratorLogin", "login", case_sensitive=False),
-                 test.check("sqlAdministratorLoginPassword", "password", case_sensitive=False),
-                 test.check("tags.key", "value", case_sensitive=False),
-                 test.check("name", "{myWorkspace2}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: Get private link resources for workspace
-@try_manual
-def step_get_private_link_resources_for_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-link-resource list '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: Get private link resources for workspace
-@try_manual
-def step_get_private_link_resources_for_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-link-resource list '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: Create a SQL Analytics pool
-@try_manual
-def step_create_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool create '
-             '--resource-group "{rg}" '
-             '--location "West US 2" '
-             '--collation "" '
-             '--create-mode "" '
-             '--creation-date "1970-01-01T00:00:00.000Z" '
-             '--max-size-bytes 0 '
-             '--recoverable-database-id "" '
-             '--restore-point-in-time "1970-01-01T00:00:00.000Z" '
-             '--source-database-id "" '
-             '--sku name="" tier="" '
-             '--name "{mySqlPool2}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[
-                 test.check("location", "West US 2", case_sensitive=False),
-                 test.check("collation", "", case_sensitive=False),
-                 test.check("createMode", "", case_sensitive=False),
-                 test.check("creationDate", "1970-01-01T00:00:00.000Z", case_sensitive=False),
-                 test.check("maxSizeBytes", 0),
-                 test.check("recoverableDatabaseId", "", case_sensitive=False),
-                 test.check("restorePointInTime", "1970-01-01T00:00:00.000Z", case_sensitive=False),
-                 test.check("sourceDatabaseId", "", case_sensitive=False),
-                 test.check("sku.name", "", case_sensitive=False),
-                 test.check("sku.tier", "", case_sensitive=False),
-                 test.check("name", "{mySqlPool2}", case_sensitive=False),
-             ])
-    test.cmd('az synapse sql-pool wait --created '
-             '--resource-group "{rg}" '
-             '--name "{mySqlPool2}"',
-             checks=[])
-
-
-# EXAMPLE: Get a SQL Analytics pool
-@try_manual
-def step_get_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool show '
-             '--resource-group "{rg_4}" '
-             '--name "{mySqlPool}" '
-             '--workspace-name "{myWorkspace4}"',
-             checks=[])
-
-
-# EXAMPLE: List SQL Analytics pools in a workspace
-@try_manual
-def step_list_sql_analytics_pools_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool list '
-             '--resource-group "{rg_3}" '
-             '--workspace-name "{myWorkspace3}"',
-             checks=[])
-
-
-# EXAMPLE: List SQL Analytics pools in a workspace with filter
-@try_manual
-def step_list_sql_analytics(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool list '
-             '--resource-group "{rg_3}" '
-             '--workspace-name "{myWorkspace3}"',
-             checks=[])
-
-
-# EXAMPLE: Pause a SQL Analytics pool
-@try_manual
-def step_pause_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool pause '
-             '--resource-group "{rg_5}" '
-             '--name "{mySqlPool3}" '
-             '--workspace-name "{myWorkspace5}"',
-             checks=[])
-
-
-# EXAMPLE: Rename a SQL Analytics pool
-@try_manual
-def step_rename_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool rename '
-             '--id "/subscriptions/{subscription_id}/resourceGroups/{rg_5}/providers/Microsoft.Synapse/workspaces/{myWo'
-             'rkspace5}/sqlPools/{mySqlPool4}" '
-             '--resource-group "{rg_5}" '
-             '--name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace5}"',
-             checks=[])
-
-
-# EXAMPLE: Resume a SQL Analytics pool
-@try_manual
-def step_resume_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool resume '
-             '--resource-group "{rg_4}" '
-             '--name "{mySqlPool}" '
-             '--workspace-name "{myWorkspace4}"',
-             checks=[])
-
-
-# EXAMPLE: Update a SQL Analytics pool
-@try_manual
-def step_update_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool update '
-             '--resource-group "{rg}" '
-             '--location "West US 2" '
-             '--collation "" '
-             '--create-mode "" '
-             '--creation-date "1970-01-01T00:00:00.000Z" '
-             '--max-size-bytes 0 '
-             '--recoverable-database-id "" '
-             '--restore-point-in-time "1970-01-01T00:00:00.000Z" '
-             '--source-database-id "" '
-             '--sku name="" tier="" '
-             '--name "{mySqlPool2}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[
-                 test.check("location", "West US 2", case_sensitive=False),
-                 test.check("collation", "", case_sensitive=False),
-                 test.check("createMode", "", case_sensitive=False),
-                 test.check("creationDate", "1970-01-01T00:00:00.000Z", case_sensitive=False),
-                 test.check("maxSizeBytes", 0),
-                 test.check("recoverableDatabaseId", "", case_sensitive=False),
-                 test.check("restorePointInTime", "1970-01-01T00:00:00.000Z", case_sensitive=False),
-                 test.check("sourceDatabaseId", "", case_sensitive=False),
-                 test.check("sku.name", "", case_sensitive=False),
-                 test.check("sku.tier", "", case_sensitive=False),
-                 test.check("name", "{mySqlPool2}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: Create or update a database's blob auditing policy with all parameters
-@try_manual
-def step_create_or_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-blob-auditing-policy create '
-             '--audit-actions-and-groups "DATABASE_LOGOUT_GROUP" '
-             '--audit-actions-and-groups "DATABASE_ROLE_MEMBER_CHANGE_GROUP" '
-             '--audit-actions-and-groups "UPDATE on database::TestDatabaseName by public" '
-             '--is-azure-monitor-target-enabled true '
-             '--is-storage-secondary-key-in-use false '
-             '--retention-days 6 '
-             '--state "Enabled" '
-             '--storage-account-access-key "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD234230943284932847645'
-             '8/3RSD==" '
-             '--storage-account-subscription-id "00000000-1234-0000-5678-000000000000" '
-             '--storage-endpoint "https://mystorage.blob.core.windows.net" '
-             '--resource-group "{rg_8}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace10}"',
-             checks=[])
-
-
-# EXAMPLE: Create or update a database's blob auditing policy with minimal parameters
-@try_manual
-def step_create_or_update2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-blob-auditing-policy create '
-             '--state "Enabled" '
-             '--storage-account-access-key "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD234230943284932847645'
-             '8/3RSD==" '
-             '--storage-endpoint "https://mystorage.blob.core.windows.net" '
-             '--resource-group "{rg_8}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace10}"',
-             checks=[])
-
-
-# EXAMPLE: Get blob auditing policy of a SQL Analytics pool
-@try_manual
-def step_get_blob_auditing(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-blob-auditing-policy show '
-             '--resource-group "{rg_7}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace9}"',
-             checks=[])
-
-
-# EXAMPLE: Get a connection policy of a SQL Analytics pool
-@try_manual
-def step_get_a_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-connection-policy show '
-             '--resource-group "{rg_7}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace9}"',
-             checks=[])
-
-
-# EXAMPLE: Get a SQL Analytics pool user activity
-@try_manual
-def step_get_a_sql_analytics_pool_user_activity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-data-warehouse-user-activity show '
-             '--resource-group "{rg_5}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace5}"',
-             checks=[])
-
-
-# EXAMPLE: Get Sql pool geo backup policy
-@try_manual
-def step_get_sql_pool_geo_backup_policy(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-geo-backup-policy show '
-             '--resource-group "{rg_6}" '
-             '--sql-pool-name "{mySqlPool6}" '
-             '--workspace-name "{myWorkspace6}"',
-             checks=[])
-
-
-# EXAMPLE: Set metadata sync config for a SQL Analytics pool
-@try_manual
-def step_set_metadata_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-metadata-sync-config create '
-             '--enabled true '
-             '--resource-group "{rg}" '
-             '--sql-pool-name "{mySqlPool2}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: Get metadata sync config for a SQL Analytics pool
-@try_manual
-def step_get_metadata_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-metadata-sync-config show '
-             '--resource-group "{rg}" '
-             '--sql-pool-name "{mySqlPool2}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: Get the result of an operation on a SQL Analytics pool
-@try_manual
-def step_get_the_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-operation-result get-location-header-result '
-             '--operation-id "fedcba98-7654-4210-fedc-ba9876543210" '
-             '--resource-group "{rg}" '
-             '--sql-pool-name "{mySqlPool2}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: List the Sql Analytics pool management operations
-@try_manual
-def step_list_the_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                      rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-operation list '
-             '--resource-group "{rg_9}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace11}"',
-             checks=[])
-
-
-# EXAMPLE: Lists a Sql Analytic pool's replication links
-@try_manual
-def step_lists_a_sql_analytic_pool_s_replication_links(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-replication-link list '
-             '--resource-group "{rg_6}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace8}"',
-             checks=[])
-
-
-# EXAMPLE: Get a list of restore points of a SQL Analytics pool
-@try_manual
-def step_get_a_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
-                    rg_16, rg_17):
-    test.cmd('az synapse sql-pool-restore-point list '
-             '--resource-group "{rg_5}" '
-             '--sql-pool-name "{mySqlPool7}" '
-             '--workspace-name "{myWorkspace7}"',
-             checks=[])
-
-
-# EXAMPLE: Creates Sql pool restore point.
-@try_manual
-def step_creates_sql_pool_restore_point_(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-restore-point create '
-             '--restore-point-label "mylabel" '
-             '--resource-group "{rg_5}" '
-             '--sql-pool-name "{mySqlPool7}" '
-             '--workspace-name "{myWorkspace7}"',
-             checks=[])
-
-
-# EXAMPLE: List the schema in a SQL Analytics pool
-@try_manual
-def step_list_the_schema_in_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-schema list '
-             '--resource-group "{rg_11}" '
-             '--sql-pool-name "{mySqlPool9}" '
-             '--workspace-name "{myWorkspace14}"',
-             checks=[])
-
-
-# EXAMPLE: Update a Sql pool's threat detection policy with all parameters
-@try_manual
-def step_update_a_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                      rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-security-alert-policy create '
-             '--disabled-alerts "Sql_Injection" '
-             '--disabled-alerts "Usage_Anomaly" '
-             '--email-account-admins true '
-             '--email-addresses "test@microsoft.com" '
-             '--email-addresses "user@microsoft.com" '
-             '--retention-days 6 '
-             '--state "Enabled" '
-             '--storage-account-access-key "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD234230943284932847645'
-             '8/3RSD==" '
-             '--storage-endpoint "https://mystorage.blob.core.windows.net" '
-             '--resource-group "{rg_16}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace19}"',
-             checks=[])
-
-
-# EXAMPLE: Update a Sql pool's threat detection policy with minimal parameters
-@try_manual
-def step_update_a_sql2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                       rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-security-alert-policy create '
-             '--state "Enabled" '
-             '--resource-group "{rg_16}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace19}"',
-             checks=[])
-
-
-# EXAMPLE: Get a security alert of a SQL Analytics pool
-@try_manual
-def step_get_a_security_alert_of_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-security-alert-policy show '
-             '--resource-group "{rg_15}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace18}"',
-             checks=[])
-
-
-# EXAMPLE: Updates the sensitivity label of a given column with all parameters
-@try_manual
-def step_updates_the_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-sensitivity-label create '
-             '--column-name "myColumn" '
-             '--information-type "PhoneNumber" '
-             '--information-type-id "d22fa6e9-5ee4-3bde-4c2b-a409604c4646" '
-             '--label-id "bf91e08c-f4f0-478a-b016-25164b2a65ff" '
-             '--label-name "PII" '
-             '--resource-group "{rg_11}" '
-             '--schema-name "dbo" '
-             '--sql-pool-name "{mySqlPool9}" '
-             '--table-name "myTable" '
-             '--workspace-name "{myWorkspace13}"',
-             checks=[])
-
-
-# EXAMPLE: Gets the current sensitivity labels of a given SQL Analytics pool
-@try_manual
-def step_gets_the_current(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-sensitivity-label list-current '
-             '--resource-group "{rg_11}" '
-             '--sql-pool-name "{mySqlPool9}" '
-             '--workspace-name "{myWorkspace13}"',
-             checks=[])
-
-
-# EXAMPLE: Gets the recommended sensitivity labels of a given SQL Analytics pool
-@try_manual
-def step_gets_the_recommended(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-sensitivity-label list-recommended '
-             '--resource-group "{rg_11}" '
-             '--sql-pool-name "{mySqlPool9}" '
-             '--workspace-name "{myWorkspace13}"',
-             checks=[])
-
-
-# EXAMPLE: Disables sensitivity recommendations on a given column
-@try_manual
-def step_disables_sensitivity_recommendations(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-sensitivity-label disable-recommendation '
-             '--column-name "myColumn" '
-             '--resource-group "{rg_11}" '
-             '--schema-name "dbo" '
-             '--sql-pool-name "{mySqlPool9}" '
-             '--table-name "myTable" '
-             '--workspace-name "{myWorkspace13}"',
-             checks=[])
-
-
-# EXAMPLE: Enables sensitivity recommendations on a given column
-@try_manual
-def step_enables_sensitivity_recommendations(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-sensitivity-label enable-recommendation '
-             '--column-name "myColumn" '
-             '--resource-group "{rg_11}" '
-             '--schema-name "dbo" '
-             '--sql-pool-name "{mySqlPool9}" '
-             '--table-name "myTable" '
-             '--workspace-name "{myWorkspace13}"',
-             checks=[])
-
-
-# EXAMPLE: List the columns in a table of a given schema in a SQL Analytics pool
-@try_manual
-def step_list_the_columns(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-table-column list '
-             '--resource-group "{rg_11}" '
-             '--schema-name "dbo" '
-             '--sql-pool-name "{mySqlPool9}" '
-             '--table-name "table1" '
-             '--workspace-name "{myWorkspace14}"',
-             checks=[])
-
-
-# EXAMPLE: List the tables of a given schema in a SQL Analytics pool
-@try_manual
-def step_list_the_tables(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-table list '
-             '--resource-group "{rg_11}" '
-             '--schema-name "dbo" '
-             '--sql-pool-name "{mySqlPool9}" '
-             '--workspace-name "{myWorkspace14}"',
-             checks=[])
-
-
-# EXAMPLE: Create or update a Sql pool's transparent data encryption configuration
-@try_manual
-def step_create_or_update3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-transparent-data-encryption create '
-             '--status "Enabled" '
-             '--resource-group "{rg_4}" '
-             '--sql-pool-name "{mySqlPool}" '
-             '--workspace-name "{myWorkspace4}"',
-             checks=[])
-
-
-# EXAMPLE: Get transparent data encryption configuration of a SQL Analytics pool
-@try_manual
-def step_get_transparent_data(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-transparent-data-encryption show '
-             '--resource-group "{rg_4}" '
-             '--sql-pool-name "{mySqlPool}" '
-             '--workspace-name "{myWorkspace4}"',
-             checks=[])
-
-
-# EXAMPLE: List the usages of a SQL Analytics pool
-@try_manual
-def step_list_the_usages_of_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-usage list '
-             '--resource-group "{rg_10}" '
-             '--sql-pool-name "{mySqlPool8}" '
-             '--workspace-name "{myWorkspace12}"',
-             checks=[])
-
-
-# EXAMPLE: Creates or updates a database's vulnerability assessment rule baseline.
-@try_manual
-def step_creates_or_updates(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-vulnerability-assessment-rule-baseline create '
-             '--baseline-name "default" '
-             '--baseline-results result="userA" result="SELECT" '
-             '--baseline-results result="userB" result="SELECT" '
-             '--baseline-results result="userC" result="SELECT" result="tableId_4" '
-             '--resource-group "{rg_12}" '
-             '--rule-id "VA1001" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace15}"',
-             checks=[])
-
-
-# EXAMPLE: Get a vulnerability scan record of a SQL Analytics pool
-@try_manual
-def step_get_a_vulnerability(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-vulnerability-assessment-scan list '
-             '--resource-group "{rg_13}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace16}"',
-             checks=[])
-
-
-# EXAMPLE: Executes a Sql pool's vulnerability assessment scan.
-@try_manual
-def step_executes_a_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-vulnerability-assessment-scan initiate-scan '
-             '--resource-group "{rg_13}" '
-             '--scan-id "scan01" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace16}"',
-             checks=[])
-
-
-# EXAMPLE: Export a database's vulnerability assessment scan results.
-@try_manual
-def step_export_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-vulnerability-assessment-scan export '
-             '--resource-group "{rg_14}" '
-             '--scan-id "scan001" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace17}"',
-             checks=[])
-
-
-# EXAMPLE: Create a database's vulnerability assessment with all parameters
-@try_manual
-def step_create_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-vulnerability-assessment create '
-             '--recurring-scans email-subscription-admins=true emails="email1@mail.com" emails="email2@mail.com" '
-             'is-enabled=true '
-             '--storage-account-access-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" '
-             '--storage-container-path "https://myStorage.blob.core.windows.net/vulnerability-assessment/" '
-             '--storage-container-sas-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" '
-             '--resource-group "{rg_12}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace15}"',
-             checks=[])
-
-
-# EXAMPLE: Create a database's vulnerability assessment with minimal parameters, when storageAccountAccessKey is specified
-@try_manual
-def step_create_a_database2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-vulnerability-assessment create '
-             '--storage-account-access-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" '
-             '--storage-container-path "https://myStorage.blob.core.windows.net/vulnerability-assessment/" '
-             '--resource-group "{rg_12}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace15}"',
-             checks=[])
-
-
-# EXAMPLE: Create a database's vulnerability assessment with minimal parameters, when storageContainerSasKey is specified
-@try_manual
-def step_create_a_database3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-vulnerability-assessment create '
-             '--storage-container-path "https://myStorage.blob.core.windows.net/vulnerability-assessment/" '
-             '--storage-container-sas-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" '
-             '--resource-group "{rg_12}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace15}"',
-             checks=[])
-
-
-# EXAMPLE: Get a Sql pool's vulnerability assessment
-@try_manual
-def step_get_a_sql_pool_s_vulnerability_assessment(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-vulnerability-assessment show '
-             '--resource-group "{rg_12}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace15}"',
-             checks=[])
-
-
-# EXAMPLE: Get a vulnerability assessment of a SQL Analytics pool
-@try_manual
-def step_get_a_vulnerability2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-vulnerability-assessment list '
-             '--resource-group "{rg_12}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace15}"',
-             checks=[])
-
-
-# EXAMPLE: Deletes the sensitivity label of a given column
-@try_manual
-def step_deletes_the_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-sensitivity-label delete -y '
-             '--column-name "myColumn" '
-             '--resource-group "{rg_11}" '
-             '--schema-name "dbo" '
-             '--sql-pool-name "{mySqlPool9}" '
-             '--table-name "myTable" '
-             '--workspace-name "{myWorkspace13}"',
-             checks=[])
-
-
-# EXAMPLE: Create or update workspace active directory admin
-@try_manual
-def step_create_or_update4(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17):
-    test.cmd('az synapse workspace-aad-admin create '
-             '--administrator-type "ActiveDirectory" '
-             '--login "bob@contoso.com" '
-             '--sid "c6b82b90-a647-49cb-8a62-0d2d3cb7ac7c" '
-             '--tenant-id "c6b82b90-a647-49cb-8a62-0d2d3cb7ac7c" '
-             '--resource-group "{rg_2}" '
-             '--workspace-name "{myWorkspace2}"',
-             checks=[])
-
-
-# EXAMPLE: Get workspace active directory admin
-@try_manual
-def step_get_workspace_active_directory_admin(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse workspace-aad-admin show '
-             '--resource-group "{rg_2}" '
-             '--workspace-name "{myWorkspace2}"',
-             checks=[])
-
-
-# EXAMPLE: Create or update managed identity sql control settings
-@try_manual
-def step_create_or_update5(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17):
-    test.cmd('az synapse workspace-managed-identity-sql-control-setting create '
-             '--resource-group "{rg_2}" '
-             '--workspace-name "{myWorkspace2}"',
-             checks=[])
-
-
-# EXAMPLE: Get managed identity sql control settings
-@try_manual
-def step_get_managed_identity_sql_control_settings(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse workspace-managed-identity-sql-control-setting show '
-             '--resource-group "{rg_2}" '
-             '--workspace-name "{myWorkspace2}"',
-             checks=[])
-
-
-# EXAMPLE: Delete a Big Data pool
-@try_manual
-def step_delete_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse big-data-pool delete -y '
-             '--name "{myBigDataPool}" '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: Delete integration runtime node
-@try_manual
-def step_delete_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime-node delete -y '
-             '--integration-runtime-name "{myIntegrationRuntime}" '
-             '--node-name "Node_1" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Delete integration runtime
-@try_manual
-def step_delete_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse integration-runtime delete -y '
-             '--name "{myIntegrationRuntime}" '
-             '--resource-group "{rg_17}" '
-             '--workspace-name "{myWorkspace20}"',
-             checks=[])
-
-
-# EXAMPLE: Delete an IP firewall rule from a workspace
-@try_manual
-def step_delete_an_ip_firewall_rule_from_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse ip-firewall-rule delete -y '
-             '--resource-group "{rg}" '
-             '--rule-name "ExampleIpFirewallRule" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: Delete private endpoint connection
-@try_manual
-def step_delete_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-endpoint-connection delete -y '
-             '--name "{myPrivateEndpointConnection}" '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: Removes a database's vulnerability assessment rule baseline.
-@try_manual
-def step_removes_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-vulnerability-assessment-rule-baseline delete -y '
-             '--baseline-name "default" '
-             '--resource-group "{rg_12}" '
-             '--rule-id "VA1001" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace15}"',
-             checks=[])
-
-
-# EXAMPLE: Delete a privateLinkHub
-@try_manual
-def step_delete_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse private-link-hub delete -y '
-             '--name "{myPrivateLinkHub}" '
-             '--resource-group "{rg_2}"',
-             checks=[])
-
-
-# EXAMPLE: Remove a database's vulnerability assessment
-@try_manual
-def step_remove_a_database_s_vulnerability_assessment(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool-vulnerability-assessment delete -y '
-             '--resource-group "{rg_12}" '
-             '--sql-pool-name "{mySqlPool5}" '
-             '--workspace-name "{myWorkspace15}"',
-             checks=[])
-
-
-# EXAMPLE: Delete a SQL Analytics pool
-@try_manual
-def step_delete_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse sql-pool delete -y '
-             '--resource-group "{rg}" '
-             '--name "{mySqlPool2}" '
-             '--workspace-name "{myWorkspace}"',
-             checks=[])
-
-
-# EXAMPLE: Delete workspace active directory admin
-@try_manual
-def step_delete_workspace_active_directory_admin(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse workspace-aad-admin delete -y '
-             '--resource-group "{rg_2}" '
-             '--workspace-name "{myWorkspace2}"',
-             checks=[])
-
-
-# EXAMPLE: Delete a workspace
-@try_manual
-def step_delete_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17):
-    test.cmd('az synapse workspace delete -y '
-             '--resource-group "{rg_2}" '
-             '--name "{myWorkspace2}"',
-             checks=[])
-
-
-# Env cleanup
-@try_manual
-def cleanup(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16,
-            rg_17):
+def cleanup_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                     rg_15, rg_16, rg_17):
     pass
 
 
-# Testcase
+# Testcase: Scenario
 @try_manual
-def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
+def call_Scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
                   rg_16, rg_17):
-    setup(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16,
-          rg_17)
+    setup_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
+                   rg_16, rg_17)
     step_create_or_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                      rg_13, rg_14, rg_15, rg_16, rg_17)
+                                      rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("identity.type", "SystemAssigned", case_sensitive=False),
+        test.check("location", "East US", case_sensitive=False),
+        test.check("defaultDataLakeStorage.accountUrl", "https://accountname.dfs.core.windows.net",
+                   case_sensitive=False),
+        test.check("defaultDataLakeStorage.filesystem", "default", case_sensitive=False),
+        test.check("managedResourceGroupName", "workspaceManagedResourceGroupUnique", case_sensitive=False),
+        test.check("managedVirtualNetwork", "default", case_sensitive=False),
+        test.check("sqlAdministratorLogin", "login", case_sensitive=False),
+        test.check("sqlAdministratorLoginPassword", "password", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myWorkspace2}", case_sensitive=False),
+    ])
     step_create_or_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("location", "West US 2", case_sensitive=False),
+        test.check("autoPause.delayInMinutes", 15),
+        test.check("autoPause.enabled", True),
+        test.check("autoScale.enabled", True),
+        test.check("autoScale.maxNodeCount", 50),
+        test.check("autoScale.minNodeCount", 3),
+        test.check("defaultSparkLogFolder", "/logs", case_sensitive=False),
+        test.check("nodeCount", 4),
+        test.check("nodeSize", "Medium", case_sensitive=False),
+        test.check("nodeSizeFamily", "MemoryOptimized", case_sensitive=False),
+        test.check("sparkEventsFolder", "/events", case_sensitive=False),
+        test.check("sparkVersion", "2.4", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myBigDataPool}", case_sensitive=False),
+    ])
     step_list_big_data_pools_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check('length(@)', 1),
+    ])
     step_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17)
+                                rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("location", "West US 2", case_sensitive=False),
+        test.check("autoPause.delayInMinutes", 15),
+        test.check("autoPause.enabled", True),
+        test.check("autoScale.enabled", True),
+        test.check("autoScale.maxNodeCount", 50),
+        test.check("autoScale.minNodeCount", 3),
+        test.check("defaultSparkLogFolder", "/logs", case_sensitive=False),
+        test.check("nodeCount", 4),
+        test.check("nodeSize", "Medium", case_sensitive=False),
+        test.check("nodeSizeFamily", "MemoryOptimized", case_sensitive=False),
+        test.check("sparkEventsFolder", "/events", case_sensitive=False),
+        test.check("sparkVersion", "2.4", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myBigDataPool}", case_sensitive=False),
+    ])
     step_create_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("properties.type", "SelfHosted", case_sensitive=False),
+        test.check("properties.description", "A selfhosted integration runtime", case_sensitive=False),
+        test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
+    ])
     step_get_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17)
+                                 rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("properties.type", "SelfHosted", case_sensitive=False),
+        test.check("properties.description", "A selfhosted integration runtime", case_sensitive=False),
+        test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
+    ])
     step_list_integration_runtimes(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17)
+                                   rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check('length(@)', 1),
+    ])
     step_start_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17)
+                                   rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_stop_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17)
+                                  rg_14, rg_15, rg_16, rg_17, checks=[])
     step_upgrade_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17)
+                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_update_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
+    ])
     step_list_auth_keys(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17)
+                        rg_15, rg_16, rg_17, checks=[])
     step_regenerate_auth_key(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17)
+                             rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_connection_info(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17)
+                             rg_14, rg_15, rg_16, rg_17, checks=[])
     step_sync_credentials(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17)
+                          rg_15, rg_16, rg_17, checks=[])
     step_get_monitoring_data(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17)
+                             rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_integration_runtime_node_ip_address(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                      rg_13, rg_14, rg_15, rg_16, rg_17)
+                                      rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_update_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
+                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_integration_runtime_object_metadata(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_refresh_object_metadata(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17)
+                                 rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_status(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
-                    rg_16, rg_17)
+                    rg_16, rg_17, checks=[])
     step_create_an_ip_firewall_rule(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_create_an_ip_firewall_rule(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_list_ip_firewall_rules_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_replace_all_ip_firewall_rules_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_azure_async_operation_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_approve_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
+                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_list_private_endpoint(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17)
+                               rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check('length(@)', 1),
+    ])
     step_create_or_update_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("location", "East US", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myPrivateLinkHub}", case_sensitive=False),
+    ])
     step_get_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17)
+                              rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("location", "East US", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myPrivateLinkHub}", case_sensitive=False),
+    ])
     step_list_privatelinkhubs_in_resource_group(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check('length(@)', 1),
+    ])
     step_list_privatelinkhubs_in_subscription(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check('length(@)', 1),
+    ])
     step_update_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17)
+                                 rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("location", "East US", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myPrivateLinkHub}", case_sensitive=False),
+    ])
     step_get_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17)
+                             rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("location", "West US 2", case_sensitive=False),
+        test.check("autoPause.delayInMinutes", 15),
+        test.check("autoPause.enabled", True),
+        test.check("autoScale.enabled", True),
+        test.check("autoScale.maxNodeCount", 50),
+        test.check("autoScale.minNodeCount", 3),
+        test.check("defaultSparkLogFolder", "/logs", case_sensitive=False),
+        test.check("nodeCount", 4),
+        test.check("nodeSize", "Medium", case_sensitive=False),
+        test.check("nodeSizeFamily", "MemoryOptimized", case_sensitive=False),
+        test.check("sparkEventsFolder", "/events", case_sensitive=False),
+        test.check("sparkVersion", "2.4", case_sensitive=False),
+        test.check("name", "{myBigDataPool}", case_sensitive=False),
+    ])
     step_get_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17)
+                         rg_15, rg_16, rg_17, checks=[
+        test.check("location", "East US", case_sensitive=False),
+        test.check("defaultDataLakeStorage.accountUrl", "https://accountname.dfs.core.windows.net",
+                   case_sensitive=False),
+        test.check("defaultDataLakeStorage.filesystem", "default", case_sensitive=False),
+        test.check("sqlAdministratorLogin", "login", case_sensitive=False),
+        test.check("sqlAdministratorLoginPassword", "password", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myWorkspace2}", case_sensitive=False),
+    ])
     step_list_workspaces_in_resource_group(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check('length(@)', 1),
+    ])
     step_list_workspaces_in_subscription(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
+                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check('length(@)', 1),
+    ])
     step_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17)
+                            rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("location", "East US", case_sensitive=False),
+        test.check("defaultDataLakeStorage.accountUrl", "https://accountname.dfs.core.windows.net",
+                   case_sensitive=False),
+        test.check("defaultDataLakeStorage.filesystem", "default", case_sensitive=False),
+        test.check("sqlAdministratorLogin", "login", case_sensitive=False),
+        test.check("sqlAdministratorLoginPassword", "password", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myWorkspace2}", case_sensitive=False),
+    ])
     step_get_private_link_resources_for_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_private_link_resources_for_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_create_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17)
+                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("location", "West US 2", case_sensitive=False),
+        test.check("collation", "", case_sensitive=False),
+        test.check("createMode", "", case_sensitive=False),
+        test.check("creationDate", "1970-01-01T00:00:00.000Z", case_sensitive=False),
+        test.check("maxSizeBytes", 0),
+        test.check("recoverableDatabaseId", "", case_sensitive=False),
+        test.check("restorePointInTime", "1970-01-01T00:00:00.000Z", case_sensitive=False),
+        test.check("sourceDatabaseId", "", case_sensitive=False),
+        test.check("sku.name", "", case_sensitive=False),
+        test.check("sku.tier", "", case_sensitive=False),
+        test.check("name", "{mySqlPool2}", case_sensitive=False),
+    ])
     step_get_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17)
+                                  rg_14, rg_15, rg_16, rg_17, checks=[])
     step_list_sql_analytics_pools_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_list_sql_analytics(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17)
+                            rg_14, rg_15, rg_16, rg_17, checks=[])
     step_pause_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_rename_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17)
+                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_resume_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17)
+                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_update_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17)
+                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("location", "West US 2", case_sensitive=False),
+        test.check("collation", "", case_sensitive=False),
+        test.check("createMode", "", case_sensitive=False),
+        test.check("creationDate", "1970-01-01T00:00:00.000Z", case_sensitive=False),
+        test.check("maxSizeBytes", 0),
+        test.check("recoverableDatabaseId", "", case_sensitive=False),
+        test.check("restorePointInTime", "1970-01-01T00:00:00.000Z", case_sensitive=False),
+        test.check("sourceDatabaseId", "", case_sensitive=False),
+        test.check("sku.name", "", case_sensitive=False),
+        test.check("sku.tier", "", case_sensitive=False),
+        test.check("name", "{mySqlPool2}", case_sensitive=False),
+    ])
     step_create_or_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17)
+                          rg_15, rg_16, rg_17, checks=[])
     step_create_or_update2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17)
+                           rg_15, rg_16, rg_17, checks=[])
     step_get_blob_auditing(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17)
+                           rg_15, rg_16, rg_17, checks=[])
     step_get_a_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17)
+                          rg_15, rg_16, rg_17, checks=[])
     step_get_a_sql_analytics_pool_user_activity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_sql_pool_geo_backup_policy(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17)
+                                        rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_set_metadata_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17)
+                           rg_15, rg_16, rg_17, checks=[])
     step_get_metadata_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17)
+                           rg_15, rg_16, rg_17, checks=[])
     step_get_the_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17)
+                        rg_15, rg_16, rg_17, checks=[])
     step_list_the_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                      rg_15, rg_16, rg_17)
+                      rg_15, rg_16, rg_17, checks=[])
     step_lists_a_sql_analytic_pool_s_replication_links(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_a_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
-                    rg_16, rg_17)
+                    rg_16, rg_17, checks=[])
     step_creates_sql_pool_restore_point_(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
+                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_list_the_schema_in_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_update_a_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                      rg_15, rg_16, rg_17)
+                      rg_15, rg_16, rg_17, checks=[])
     step_update_a_sql2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                       rg_15, rg_16, rg_17)
+                       rg_15, rg_16, rg_17, checks=[])
     step_get_a_security_alert_of_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_updates_the_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17)
+                                 rg_14, rg_15, rg_16, rg_17, checks=[])
     step_gets_the_current(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17)
+                          rg_15, rg_16, rg_17, checks=[])
     step_gets_the_recommended(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17)
+                              rg_14, rg_15, rg_16, rg_17, checks=[])
     step_disables_sensitivity_recommendations(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_enables_sensitivity_recommendations(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_list_the_columns(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17)
+                          rg_15, rg_16, rg_17, checks=[])
     step_list_the_tables(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17)
+                         rg_15, rg_16, rg_17, checks=[])
     step_create_or_update3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17)
+                           rg_15, rg_16, rg_17, checks=[])
     step_get_transparent_data(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17)
+                              rg_14, rg_15, rg_16, rg_17, checks=[])
     step_list_the_usages_of_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_creates_or_updates(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17)
+                            rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_a_vulnerability(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17)
+                             rg_14, rg_15, rg_16, rg_17, checks=[])
     step_executes_a_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17)
+                        rg_15, rg_16, rg_17, checks=[])
     step_export_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17)
+                           rg_15, rg_16, rg_17, checks=[])
     step_create_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17)
+                           rg_15, rg_16, rg_17, checks=[])
     step_create_a_database2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17)
+                            rg_14, rg_15, rg_16, rg_17, checks=[])
     step_create_a_database3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17)
+                            rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_a_sql_pool_s_vulnerability_assessment(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_get_a_vulnerability2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17)
+                              rg_14, rg_15, rg_16, rg_17, checks=[])
     step_deletes_the_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17)
+                                 rg_14, rg_15, rg_16, rg_17, checks=[])
     step_create_or_update4(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17)
+                           rg_15, rg_16, rg_17, checks=[])
     step_get_workspace_active_directory_admin(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_create_or_update5(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17)
+                           rg_15, rg_16, rg_17, checks=[])
     step_get_managed_identity_sql_control_settings(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_delete_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17)
+                                rg_14, rg_15, rg_16, rg_17, checks=[])
     step_delete_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17)
+                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_delete_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17)
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_delete_an_ip_firewall_rule_from_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_delete_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_removes_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17)
+                            rg_14, rg_15, rg_16, rg_17, checks=[])
     step_delete_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17)
+                                 rg_14, rg_15, rg_16, rg_17, checks=[])
     step_remove_a_database_s_vulnerability_assessment(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_delete_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17)
+                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_delete_workspace_active_directory_admin(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_delete_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17)
-    cleanup(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16,
-            rg_17)
+                            rg_14, rg_15, rg_16, rg_17, checks=[])
+    cleanup_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                     rg_15, rg_16, rg_17)
 
 
 @try_manual
-class SynapseManagementClientScenarioTest(ScenarioTest):
+class synapseScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestsynapse_Default-SQL-SouthEastAsia'[:7], key='rg_5', parameter_name=''
                            'rg_5')
@@ -1701,6 +559,7 @@ class SynapseManagementClientScenarioTest(ScenarioTest):
             'mySqlPool9': 'myDatabase',
         })
 
-        call_scenario(self, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+        call_Scenario(self, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
         calc_coverage(__file__)
         raise_if()
+

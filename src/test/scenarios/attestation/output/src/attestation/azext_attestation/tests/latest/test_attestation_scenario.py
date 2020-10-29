@@ -10,42 +10,27 @@
 
 import os
 from azure.cli.testsdk import ScenarioTest
-from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
+from .example_steps import step_operations_list
+from .example_steps import step_attestationproviders_create
+from .example_steps import step_attestationproviders_get
+from .example_steps import step_attestationproviders_list
+from .example_steps import step_attestationproviders_listbyresourcegroup
+from .example_steps import step_attestationproviders_delete
+from .. import (
+    try_manual,
+    raise_if,
+    calc_coverage
+)
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
-# Env setup
+# Env setup_scenario
 @try_manual
-def setup(test, rg, rg_2, rg_3):
+def setup_scenario(test, rg, rg_2, rg_3):
     pass
-
-
-# EXAMPLE: Operations_List
-@try_manual
-def step_operations_list(test, rg, rg_2, rg_3):
-    test.cmd('az attestation list-operation',
-             checks=[])
-
-
-# EXAMPLE: AttestationProviders_Create
-@try_manual
-def step_attestationproviders_create(test, rg, rg_2, rg_3):
-    test.cmd('az attestation create-provider '
-             '--provider-name "myattestationprovider" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: AttestationProviders_Get
-@try_manual
-def step_attestationproviders_get(test, rg, rg_2, rg_3):
-    test.cmd('az attestation attestation-provider show '
-             '--provider-name "myattestationprovider" '
-             '--resource-group "{rg}"',
-             checks=[])
 
 
 # Env mytest
@@ -54,53 +39,28 @@ def mytest(test, rg, rg_2, rg_3):
     pass
 
 
-# EXAMPLE: AttestationProviders_List
+# Env cleanup_scenario
 @try_manual
-def step_attestationproviders_list(test, rg, rg_2, rg_3):
-    test.cmd('az attestation attestation-provider provider list '
-             '-g ""',
-             checks=[])
-
-
-# EXAMPLE: AttestationProviders_ListByResourceGroup
-@try_manual
-def step_attestationproviders_listbyresourcegroup(test, rg, rg_2, rg_3):
-    test.cmd('az attestation attestation-provider provider list '
-             '--resource-group "{rg_2}"',
-             checks=[])
-
-
-# EXAMPLE: AttestationProviders_Delete
-@try_manual
-def step_attestationproviders_delete(test, rg, rg_2, rg_3):
-    test.cmd('az attestation attestation-provider delete -y '
-             '--provider-name "myattestationprovider" '
-             '--resource-group "{rg_3}"',
-             checks=[])
-
-
-# Env cleanup
-@try_manual
-def cleanup(test, rg, rg_2, rg_3):
+def cleanup_scenario(test, rg, rg_2, rg_3):
     pass
 
 
-# Testcase
+# Testcase: Scenario
 @try_manual
 def call_scenario(test, rg, rg_2, rg_3):
-    setup(test, rg, rg_2, rg_3)
-    step_operations_list(test, rg, rg_2, rg_3)
-    step_attestationproviders_create(test, rg, rg_2, rg_3)
-    step_attestationproviders_get(test, rg, rg_2, rg_3)
+    setup_scenario(test, rg, rg_2, rg_3)
+    step_operations_list(test, rg, rg_2, rg_3, checks=[])
+    step_attestationproviders_create(test, rg, rg_2, rg_3, checks=[])
+    step_attestationproviders_get(test, rg, rg_2, rg_3, checks=[])
     mytest(test, rg, rg_2, rg_3)
-    step_attestationproviders_list(test, rg, rg_2, rg_3)
-    step_attestationproviders_listbyresourcegroup(test, rg, rg_2, rg_3)
-    step_attestationproviders_delete(test, rg, rg_2, rg_3)
-    cleanup(test, rg, rg_2, rg_3)
+    step_attestationproviders_list(test, rg, rg_2, rg_3, checks=[])
+    step_attestationproviders_listbyresourcegroup(test, rg, rg_2, rg_3, checks=[])
+    step_attestationproviders_delete(test, rg, rg_2, rg_3, checks=[])
+    cleanup_scenario(test, rg, rg_2, rg_3)
 
 
 @try_manual
-class AttestationManagementClientScenarioTest(ScenarioTest):
+class AttestationScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestattestation_MyResourceGroup'[:7], key='rg', parameter_name='rg')
     @ResourceGroupPreparer(name_prefix='clitestattestation_testrg1'[:7], key='rg_2', parameter_name='rg_2')
@@ -111,3 +71,4 @@ class AttestationManagementClientScenarioTest(ScenarioTest):
         call_scenario(self, rg, rg_2, rg_3)
         calc_coverage(__file__)
         raise_if()
+
