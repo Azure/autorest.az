@@ -134,26 +134,31 @@ export class AzNamer {
         }
     }
 
-    addAlias(param: Parameter, isSchema: boolean = false) {
+    addAttributes(param: Parameter, isSchema: boolean, key: string) {
         let obj: any = param;
         if (isSchema) {
             obj = param.schema;
         }
-        if (!isNullOrUndefined(obj.language['cli']['alias'])) {
-            if (isNullOrUndefined(param.language['az']['alias'])) {
-                param.language['az']['alias'] = []
+        if (isNullOrUndefined(obj.language?.['cli'])) {
+            return false;
+        }
+        if (!isNullOrUndefined(obj.language['cli'][key])) {
+            if (isNullOrUndefined(param.language['az'][key])) {
+                param.language['az'][key] = []
             }
-            if (typeof (param.language['cli']['alias']) == "string") {
-                if (EXCLUDED_PARAMS.indexOf(obj.language['cli']['alias']) > -1) {
-                    obj.language['cli']['alias'] = 'gen_' + obj.language['cli']['alias'];
-                }
-                param.language['az']['alias'].push(changeCamelToDash(obj.language['cli']['alias']));
-            } else if (isArray(obj.language['cli']['alias'])) {
-                for (let alias of obj.language['cli']['alias']) {
-                    if (EXCLUDED_PARAMS.indexOf(alias) > -1) {
-                        alias = 'gen_' + alias;
+            if (typeof (obj.language['cli'][key]) == "string") {
+                if (EXCLUDED_PARAMS.indexOf(obj.language['cli'][key]) > -1) {
+                    if (key == "alias") {
+                        obj.language['cli'][key] = 'gen_' + obj.language['cli'][key];
                     }
-                    param.language['az']['alias'].push(changeCamelToDash(alias));
+                }
+                param.language['az'][key].push(changeCamelToDash(obj.language['cli'][key]));
+            } else if (isArray(obj.language['cli'][key])) {
+                for (let item of obj.language['cli'][key]) {
+                    if (key == "alias" && EXCLUDED_PARAMS.indexOf(item) > -1) {
+                        item = 'gen_' + item;
+                    }
+                    param.language['az'][key].push(changeCamelToDash(item));
                 }
             }
         }
@@ -207,8 +212,10 @@ export class AzNamer {
                     operation.parameters.forEach(parameter => {
                         if (!isNullOrUndefined(parameter.language['cli'])) {
                             this.getAzName(parameter);
-                            this.addAlias(parameter, false);
-                            this.addAlias(parameter, true);
+                            for (let k of ["alias", "positionalKeys"]) {
+                                this.addAttributes(parameter, false, k);
+                                this.addAttributes(parameter, true, k);
+                            }
                             if (!isNullOrUndefined(parameter.language['cli']['m4FlattenedFrom'])) {
                                 for (let param of parameter.language['cli']['m4FlattenedFrom']) {
                                     this.getAzName(param);
@@ -220,24 +227,9 @@ export class AzNamer {
                         request.parameters.forEach(parameter => {
                             if (!isNullOrUndefined(parameter.language['cli'])) {
                                 this.getAzName(parameter);
-  
-                                if (!isNullOrUndefined(parameter.schema.language['cli']?.['alias'])) {
-                                    if (isNullOrUndefined(parameter.language['az']['alias'])) {
-                                        parameter.language['az']['alias'] = []
-                                    }
-                                    if (typeof (parameter.schema.language['cli']['alias']) == "string") {
-                                        if (EXCLUDED_PARAMS.indexOf(parameter.language['cli']['alias']) > -1) {
-                                            parameter.language['cli']['alias'] = 'gen_' + parameter.language['cli']['alias'];
-                                        }
-                                        parameter.language['az']['alias'].push(changeCamelToDash(parameter.schema.language['cli']['alias']));
-                                    } else if (isArray(parameter.schema.language['cli']['alias'])) {
-                                        for (let alias of parameter.schema.language['cli']['alias']) {
-                                            if (EXCLUDED_PARAMS.indexOf(alias) > -1) {
-                                                alias = 'gen_' + alias;
-                                            }
-                                            parameter.language['az']['alias'].push(changeCamelToDash(alias));
-                                        }
-                                    }
+                                for (let k of ["alias", "positionalKeys"]) {
+                                    this.addAttributes(parameter, false, k);
+                                    this.addAttributes(parameter, true, k);
                                 }
                                 if (!isNullOrUndefined(parameter.language['cli']['m4FlattenedFrom'])) {
                                     for (let param of parameter.language['cli']['m4FlattenedFrom']) {

@@ -177,11 +177,11 @@ function GetPositionalAction(model: CodeModelAz, actionName: string, param: Para
     output.push("");
     output.push("");
     let paramType = param?.schema?.type;
-    let keys = model.Parameter_PositionalKeys(model.MethodParameter);
+    let keys = model.MethodParameter_PositionalKeys;
     output.push("class " + actionName + "(argparse._AppendAction):");
     output.push("");
     output.push("    def __call__(self, parser, namespace, values, option_string=None):");
-    if (keys.length <= 0) {
+    if (isNullOrUndefined(keys) || keys.length <= 0) {
         output.push("        pass");
         return output;
     }

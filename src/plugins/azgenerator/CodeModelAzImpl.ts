@@ -1404,20 +1404,21 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
-    public Parameter_PositionalKeys(param: Parameter = this.MethodParameter): string[] {
+
+    public 
+
+    public get MethodParameter_PositionalKeys(): string[] {
+        let param: Parameter = this.MethodParameter;
         let keys = [];
         if (!(this.Parameter_IsList(param) && this.Parameter_IsListOfSimple(param))) {
             return null;
         }
-        if (param?.schema && !isNullOrUndefined(param.schema.language?.['cli']?.['positionalOrder']) && isArray(param.schema.language?.['cli']?.['positionalOrder'])) {
-            keys = param.schema.language?.['cli']?.['positionalOrder'];
-            return keys;
-        }
-        if (!isNullOrUndefined(param.language?.['cli']?.['positionalOrder']) && isArray(param.language?.['cli']?.['positionalOrder'])) {
-            keys = param.language?.['cli']?.['positionalOrder'];
-            return keys;
+        if (!isNullOrUndefined(param.language?.['az']?.['positionalKeys']) && isArray(param.language?.['az']?.['positionalKeys'])) {
+            keys = param.language?.['az']?.['positionalKeys'];
         }
 
+        let allPossibleKeys = [];
+        let requiredKeys = [];
         if (this.EnterSubMethodParameters()) {
             if (this.SelectFirstMethodParameter(true)) {
                 do {
@@ -1427,13 +1428,37 @@ export class CodeModelCliImpl implements CodeModelAz {
                     if (this.SubMethodParameter['schema']?.type == SchemaType.Constant) {
                         continue;
                     }
-                    keys.push(this.Parameter_NamePython(this.SubMethodParameter));
+                    allPossibleKeys.push(this.Parameter_NamePython(this.SubMethodParameter));
+                    if (this.SubMethodParameter['required'] || this.SubMethodParameter.language?.['cli']['required']) {
+                        if (!this.Parameter_IsHidden(this.SubMethodParameter)) {
+                            requiredKeys.push(this.Parameter_NamePython(this.SubMethodParameter))
+                        }
+                    }
                 } while (this.SelectNextMethodParameter(true));
             }
             this.ExitSubMethodParameters();
         }
 
-        return keys;
+        let coveredResult  = keys.every(val => allPossibleKeys.includes(val));
+        let requiredCovered = requiredKeys.every(val => keys.includes(val));
+
+        if(keys.length > 0) {
+            if (coveredResult && requiredCovered) {
+                return keys;
+            } else {
+                let text = "";
+                if (!coveredResult) {
+                    text += "The defined positional keys for " + this.MethodParameter_CliKey + " contains invalid keys. All possible keys are: " + allPossibleKeys.join(", ") + " \n";
+                } 
+                if (!requiredCovered) {
+                    text += "The defined positional keys for " + this.MethodParameter_CliKey + " doesn't contain all required keys. All required keys are: " + requiredKeys.join(", ") + " \n";
+                }
+                this.session.message({Channel: Channel.Fatal, Text: text});
+                return null;
+            }
+        }
+
+        return allPossibleKeys;
     }
 
     public Schema_IsList(schema: Schema = this.MethodParameter.schema): boolean {
@@ -1535,9 +1560,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                 this.ExitSubMethodParameters();
             }
 
-            if (parameter.language['az']['name'] == 'identity') {
-                parameter;
-            }
             // Handle simple parameter
             if (parameter?.language?.['cli']?.removed || parameter?.language?.['cli']?.hidden) {
                 if (this.Parameter_DefaultValue(parameter) == undefined && parameter.required == true) {

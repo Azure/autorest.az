@@ -425,10 +425,10 @@ cli:
             param: paramName
           set:
             positional: true
-            positionalOrder:
+            positionalKeys:
               - key1
               - key2
               - key3
 ```
 In this way. we can use `--param-name value1 value2 value3` instead of `--param-name key1=value1 key2=value2 key3=value3` to input the argument.  
-Here if the positionalOrder hasn't been set then we will use default order.
+Here if the positionalOrder hasn't been set then we will use default order. and please specify key1, key2, key3 in python underscore case.  
