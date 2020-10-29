@@ -141,7 +141,7 @@ def cleanup_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, r
 
 # Testcase: Scenario
 @try_manual
-def call_Scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
+def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
                   rg_16, rg_17):
     setup_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
                    rg_16, rg_17)
@@ -490,7 +490,7 @@ def call_Scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
 
 
 @try_manual
-class synapseScenarioTest(ScenarioTest):
+class SynapseScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestsynapse_Default-SQL-SouthEastAsia'[:7], key='rg_5', parameter_name=''
                            'rg_5')
@@ -559,7 +559,7 @@ class synapseScenarioTest(ScenarioTest):
             'mySqlPool9': 'myDatabase',
         })
 
-        call_Scenario(self, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+        call_scenario(self, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
         calc_coverage(__file__)
         raise_if()
 
