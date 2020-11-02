@@ -493,8 +493,8 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
 @try_manual
 class SynapseScenarioTest(ScenarioTest):
 
-    @ResourceGroupPreparer(name_prefix='clitestsynapse_Default-SQL-SouthEastAsia'[:7], key='rg_5', parameter_name=''
-                           'rg_5')
+    @ResourceGroupPreparer(name_prefix='clitestsynapse_Default-SQL-SouthEastAsia'[:7], key='rg_5',
+                           parameter_name='rg_5')
     @ResourceGroupPreparer(name_prefix='clitestsynapse_ExampleResourceGroup'[:7], key='rg', parameter_name='rg')
     @ResourceGroupPreparer(name_prefix='clitestsynapse_resourceGroup1'[:7], key='rg_2', parameter_name='rg_2')
     @ResourceGroupPreparer(name_prefix='clitestsynapse_sqlcrudtest-6845'[:7], key='rg_3', parameter_name='rg_3')

@@ -65,8 +65,8 @@ class AttestationScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestattestation_MyResourceGroup'[:7], key='rg', parameter_name='rg')
     @ResourceGroupPreparer(name_prefix='clitestattestation_testrg1'[:7], key='rg_2', parameter_name='rg_2')
-    @ResourceGroupPreparer(name_prefix='clitestattestation_sample-resource-group'[:7], key='rg_3', parameter_name=''
-                           'rg_3')
+    @ResourceGroupPreparer(name_prefix='clitestattestation_sample-resource-group'[:7], key='rg_3',
+                           parameter_name='rg_3')
     def test_attestation(self, rg, rg_2, rg_3):
 
         call_scenario(self, rg, rg_2, rg_3)
