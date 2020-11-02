@@ -617,6 +617,16 @@ export class CodeModelCliImpl implements CodeModelAz {
         return eps.singularize(this.CommandGroup.language['cli'].cliKey);
     }
 
+    public get CommandGroup_MaxApi(): string {
+        let eps = new EnglishPluralizationService();
+        return eps.singularize(this.CommandGroup.language['cli']?.['max-api']);
+    }
+
+    public get CommandGroup_MinApi(): string {
+        let eps = new EnglishPluralizationService();
+        return eps.singularize(this.CommandGroup.language['cli']?.['min-api']);
+    }
+
     public get CommandGroup_CliKey(): string {
         return this.CommandGroup.language['cli']?.cliKey;
     }
@@ -809,6 +819,14 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Command?.language?.['cli']?.['extensionMode'];
     }
 
+    public get Command_MaxApi(): string {
+        return this.Command.language['cli']?.['max-api'];
+    }
+
+    public get Command_MinApi(): string {
+        return this.Command.language['cli']?.['min-api'];
+    }
+
     //=================================================================================================================
     // Methods / Operations associated with the command.
     //
@@ -909,6 +927,14 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
     public get Method_CliKey(): string {
         return this.Method.language['cli']?.cliKey;
+    }
+
+    public get Method_MaxApi(): string {
+        return this.Method.language['cli']?.['max-api'];
+    }
+
+    public get Method_MinApi(): string {
+        return this.Method.language['cli']?.['min-api'];
     }
 
     public get Method_BodyParameterName(): string {
@@ -1132,6 +1158,14 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_CliKey(): string {
         return this.Parameter_CliKey(this.MethodParameter);
+    }
+
+    public get MethodParameter_MaxApi(): string {
+        return this.MethodParameter.language['cli']?.['max-api'];
+    }
+
+    public get MethodParameter_MinApi(): string {
+        return this.MethodParameter.language['cli']?.['min-api'];
     }
 
     public get MethodParameter_IdPart(): string {

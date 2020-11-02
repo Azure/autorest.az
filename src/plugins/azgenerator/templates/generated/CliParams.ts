@@ -352,6 +352,12 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if (!isNullOrUndefined(model.MethodParameter_DefaultConfigKey)) {
                         argument += ", configured_default='" + model.MethodParameter_DefaultConfigKey + "'";
                     }
+                    if(model.MethodParameter_MaxApi) {
+                        argument += ", max_api='" + model.MethodParameter_MaxApi + "'";
+                    }
+                    if(model.MethodParameter_MinApi) {
+                        argument += ", min_api='" + model.MethodParameter_MinApi + "'";
+                    }
                     let parameterExtraInfo = "";
                     parameterExtraInfo = getExtraModeInfo(model.MethodParameter_Mode, model.Command_Mode);
                     if (parameterExtraInfo != "") {

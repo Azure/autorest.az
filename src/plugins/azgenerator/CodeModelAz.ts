@@ -97,6 +97,8 @@ export interface CodeModelAz {
     CommandGroup_DefaultName: string;
     CommandGroup_HasShowCommand: boolean;
     CommandGroup_CliKey: string;
+    CommandGroup_MaxApi: string;
+    CommandGroup_MinApi: string;
     CommandGroup_Mode: string;
 
     SelectFirstCommand(): boolean;
@@ -108,6 +110,8 @@ export interface CodeModelAz {
     Command_FunctionName: string;
     Command_GetOriginalOperation: any;
     Command_NeedGeneric: boolean;
+    Command_MaxApi: string;
+    Command_MinApi: string;
     Command_GenericSetterParameter(Operation): Parameter;
 
     Command_Help: string;
@@ -127,6 +131,8 @@ export interface CodeModelAz {
     Method_NameCli: string;
     Method_Help: string;
     Method_CliKey: string;
+    Method_MaxApi: string;
+    Method_MinApi: string;
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
     Method_GetOriginalOperation: any;
@@ -144,6 +150,8 @@ export interface CodeModelAz {
     MethodParameter_Name: string;
     MethodParameter_NameAz: string;
     MethodParameter_CliKey: string;
+    MethodParameter_MaxApi: string;
+    MethodParameter_MinApi: string;
     MethodParameter_IsArray: boolean
     MethodParameter_NamePython: string
     MethodParameter_MapsTo: string;

@@ -58,6 +58,20 @@ cli:
             op: CreateOrUpdate
             param: properties
         poly-resource: true
+      # - where:
+      #       group: managedNetworkPeeringPolicies
+      #       op: CreateOrUpdate
+      #   max-api: '2020-09-01'
+      #   min-api: '2019-09-01'
+      # - where:
+      #       group: managedNetworkPeeringPolicies
+      #   max-api: '2020-07-01-preview'
+      #   min-api: '2019-07-01'
+      # - where:
+      #       type: 'HubAndSpokePeeringPolicyProperties'
+      #       prop: 'spokes'
+      #   max-api: '2020-08-01'
+      #   min-api: '2019-08-01'
         #cli-flatten-directive:
         #    - where:
         #        type: ResourceProviderOperation

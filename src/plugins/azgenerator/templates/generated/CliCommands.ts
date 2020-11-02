@@ -54,7 +54,15 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 if (extraInfo != "") {
                     extraInfo = ", " + extraInfo;
                 }
-                ToMultiLine("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + extraInfo + ") as g:", output);
+                let commandGroupOutput = "    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + extraInfo;
+                if (model.CommandGroup_MaxApi) {
+                    commandGroupOutput += ", max_api='" + model.CommandGroup_MaxApi + "'";
+                }
+                if (model.CommandGroup_MinApi) {
+                    commandGroupOutput += ", min_api='" + model.CommandGroup_MinApi + "'";
+                }
+                commandGroupOutput += ") as g:";
+                ToMultiLine(commandGroupOutput, output);
                 let needWait = false;
                 do {
                     if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
@@ -114,16 +122,38 @@ function getCommandBody(model: CodeModelAz) {
                 if (model.Command_IsLongRun && !model.SDK_IsTrack1) {
                     generic_update += "', setter_name='begin_create_or_update";
                 }
+                if (model.Method_MaxApi) {
+                    generic_update += `', max_api='${model.Method_MaxApi}`;
+                }
+                if (model.Method_MinApi) {
+                    generic_update += `', min_api='${model.Method_MinApi}`;
+                }
                 generic_update += "', custom_func_name='" + functionName + "'" + endStr + commandExtraInfo + ')';
                 ToMultiLine(generic_update, output);
             }
         } else {
-            ToMultiLine("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo + ')', output);
+            let customCommand = "        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo;
+            if (model.Command_MaxApi) {
+                customCommand += `, max_api='${model.Command_MaxApi}'`;
+            }
+            if (model.Command_MinApi) {
+                customCommand += `, min_api='${model.Command_MinApi}'`;
+            }
+            customCommand += ")";
+            ToMultiLine(customCommand, output);
         }
     }
     else {
         showCommandFunctionName = functionName;
-        ToMultiLine("        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo + ')', output);
+        let customCommand = "        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo;
+        if (model.Command_MaxApi) {
+            customCommand += `, max_api='${model.Command_MaxApi}'`;
+        }
+        if (model.Command_MinApi) {
+            customCommand += `, min_api='${model.Command_MinApi}'`;
+        }
+        customCommand += ")";
+        ToMultiLine(customCommand, output);
     }
     return output;
 }
