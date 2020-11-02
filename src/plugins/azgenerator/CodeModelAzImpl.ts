@@ -1404,9 +1404,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
-
-    public 
-
     public get MethodParameter_PositionalKeys(): string[] {
         let param: Parameter = this.MethodParameter;
         let keys = [];
@@ -1415,6 +1412,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
         if (!isNullOrUndefined(param.language?.['az']?.['positionalKeys']) && isArray(param.language?.['az']?.['positionalKeys'])) {
             keys = param.language?.['az']?.['positionalKeys'];
+        }
+
+        if (keys.length == 0 && !isNullOrUndefined(param.schema.language?.['cli']?.['positionalKeys']) && isArray(param.schema.language?.['cli']?.['positionalKeys'])) {
+            keys = param.schema.language?.['cli']?.['positionalKeys'];
         }
 
         let allPossibleKeys = [];

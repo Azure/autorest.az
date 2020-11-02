@@ -187,10 +187,10 @@ function GetPositionalAction(model: CodeModelAz, actionName: string, param: Para
     }
     output.push("        try:");
     let actionClassName = "";
-    let pythonClassName = Capitalize(ToCamelCase(model.MethodParameter_NamePython));
+    let pythonClassName = Capitalize(ToCamelCase(model.MethodParameter_NameAz.replace('/-/g', '_')));
     if (paramType == SchemaType.Array) {
-        actionClassName = Capitalize(ToCamelCase(model.MethodParameter_NamePython));
-        pythonClassName =model.MethodParameter.schema?.['elementType']?.language?.['python']?.['name'];
+        actionClassName = Capitalize(ToCamelCase(model.MethodParameter_NameAz.replace('/-/g', '_')));
+        pythonClassName = Capitalize(ToCamelCase(model.MethodParameter.schema?.['elementType']?.language?.['az']?.['name']).replace('/-/g', '_'));
         output.push("            value_list = values.split()");
         output.push("            value_chunk_list = [value_list[x:x+" + keys.length + "] for x in range(0, len(value_list), " + keys.length + ")]");
         output.push("            " + pythonClassName + " = namespace._cmd.get_models('" + pythonClassName + "')");

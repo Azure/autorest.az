@@ -299,6 +299,13 @@ function GetKeyValueActionOptions(model: CodeModelAz, positionalKeys: string[], 
     if (!SchemaType.Object || !SchemaType.Array) {
         return options;
     }
+
+    if (model.MethodParameter_IsPositional) {
+        for(let item of positionalKeys) {
+            options.push(null);
+        }
+    }
+
     if (model.EnterSubMethodParameters()) {
         if (model.SelectFirstMethodParameter()) {
             do {
@@ -314,7 +321,7 @@ function GetKeyValueActionOptions(model: CodeModelAz, positionalKeys: string[], 
                 if (model.SubMethodParameter) {
                     if (model.MethodParameter_IsPositional) {
                         if (!isNullOrUndefined(positionalKeys) && isArray(positionalKeys) && positionalKeys.length > 0 && positionalKeys.indexOf(model.Parameter_NamePython(model.SubMethodParameter)) > -1) {
-                            options.push(model.SubMethodParameter);
+                            options[positionalKeys.indexOf(model.Parameter_NamePython(model.SubMethodParameter))] = model.SubMethodParameter;
                         }
                     } else {
                         options.push(model.SubMethodParameter);

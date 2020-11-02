@@ -134,7 +134,7 @@ export class AzNamer {
         }
     }
 
-    addAttributes(param: Parameter, isSchema: boolean, key: string) {
+    addAttributes(param: any, isSchema: boolean, key: string) {
         let obj: any = param;
         if (isSchema) {
             obj = param.schema;
