@@ -26,18 +26,18 @@ cli:
       - where:
             group: 'Clusters'
         set:
-            groupExtensionMode: 'experimental'
+            extensionMode: 'experimental'
       - where:
             group: 'Clusters'
             op: 'AddLanguageExtensions'
         set:
-            commandExtensionMode: 'preview'
+            extensionMode: 'preview'
       - where:
             group: 'Clusters'
             op: 'AddLanguageExtensions'
             param: 'clusterName'
         set:
-            methodExtensionMode: 'preview'
+            extensionMode: 'experimental'
 
 ```
 

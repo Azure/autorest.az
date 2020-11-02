@@ -383,7 +383,7 @@ cli:
       - where:
             group: 'Clusters'
         set:
-            groupExtensionMode: 'experimental'
+            extensionMode: 'experimental'
 ```
 
 #### 3) You can also set the extension mode for command use the following directive
@@ -394,7 +394,7 @@ cli:
             group: 'Clusters'
             op: 'AddLanguageExtensions'
         set:
-            commandExtensionMode: 'preview'
+            extensionMode: 'preview'
 ```
 
 #### 4) Besides, you can set the extension mode for argument use the following directive
@@ -406,6 +406,29 @@ cli:
             op: 'AddLanguageExtensions'
             param: 'clusterName'
         set:
-            methodExtensionMode: 'preview'
+            extensionMode: 'preview'
 ```
+Please note that even if it's logically possible to let a command group as preview/experimental mode, and one or several commands of that group to be stable. But it won't take effect in actual and users should never have that kind of configuration.  
 
+
+## How to set an action argument as positional argument
+CLI support users to set an argument as positional so that users don't need to input every key of that object. See details [here](https://github.com/Azure/azure-cli/blob/dev/doc/command_guidelines.md#positional-arguments)
+
+In code generation. we allow user to add configuration to declare the argument is positional like below
+
+``` yaml
+cli:
+    cli-directive:
+        - where:
+            group: GroupName
+            op: OperationName
+            param: paramName
+          set:
+            positional: true
+            positionalKeys:
+              - key1
+              - key2
+              - key3
+```
+In this way. we can use `--param-name value1 value2 value3` instead of `--param-name key1=value1 key2=value2 key3=value3` to input the argument.  
+Here if the positionalOrder hasn't been set then we will use default order. and please specify key1, key2, key3 in python underscore case.  

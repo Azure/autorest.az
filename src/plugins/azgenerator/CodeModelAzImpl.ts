@@ -476,6 +476,10 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._configuredScenario = false;
         }
     }
+    public get ConfiguredScenario(): boolean{
+        // judge test-scenario whether have value
+        return this._configuredScenario
+    }
 
     public SelectFirstExtension(): boolean {
         // support only one initially
@@ -492,18 +496,6 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get Extension_Mode() {
         return this.codeModel.info['extensionMode'];
-    }
-
-    public get CommandGroup_ExtensionMode() {
-        return this.CommandGroup?.language?.['cli']?.['groupExtensionMode'];
-    }
-
-    public get Command_ExtensionMode() {
-        return this.Command?.language?.['cli']?.['commandExtensionMode'];
-    }
-
-    public get MethodParameter_ExtensionMode() {
-        return this.MethodParameter?.language?.['cli']?.['methodExtensionMode'];
     }
 
     public get Extension_NameUnderscored() {
@@ -621,6 +613,14 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get CommandGroup_CliKey(): string {
         return this.CommandGroup.language['cli']?.cliKey;
+    }
+
+    
+    public get CommandGroup_Mode() {
+        if (isNullOrUndefined(this.CommandGroup?.language?.['cli']?.['extensionMode'])) {
+            return this.Extension_Mode;
+        }
+        return this.CommandGroup?.language?.['cli']?.['extensionMode'];
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -795,6 +795,14 @@ export class CodeModelCliImpl implements CodeModelAz {
         let subCommandGroupName = this.Command.language['az']['subCommandGroup'];
         return isNullOrUndefined(subCommandGroupName) ? "" : subCommandGroupName;
     }
+
+    public get Command_Mode() {
+        if (isNullOrUndefined(this.Command?.language?.['cli']?.['extensionMode'])) {
+            return this.CommandGroup_Mode;
+        }
+        return this.Command?.language?.['cli']?.['extensionMode'];
+    }
+
     //=================================================================================================================
     // Methods / Operations associated with the command.
     //
@@ -905,6 +913,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Method.requests[0].protocol?.http?.path;
     }
 
+    public get Method_Help(): string {
+        return this.Method.language['az'].description.replace(/\n/g, " ").replace(/"/g, '\\\\"');
+    }
+
     public get Method_HttpMethod(): string {
         let ret = this.Method.requests[0].protocol?.http?.method || "unknown";
         return ret.toLowerCase();
@@ -944,6 +956,14 @@ export class CodeModelCliImpl implements CodeModelAz {
     public get Method_GetSplitOriginalOperation(): any {
         return this.Method.extensions?.['cli-split-operation-original-operation'];
     }
+
+    public get Method_Mode() {
+        if (isNullOrUndefined(this.Method?.language?.['cli']?.['extensionMode'])) {
+            return this.Command_Mode;
+        }
+        return this.Method?.language?.['cli']?.['extensionMode'];
+    }
+
     //=================================================================================================================
     // Methods Parameters.
     //
@@ -1156,6 +1176,17 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_IsList(): boolean {
         return this.Parameter_IsList(this.MethodParameter);
+    }
+
+    public get MethodParameter_Mode() {
+        if (isNullOrUndefined(this.MethodParameter?.language?.['cli']?.['extensionMode'])) {
+            return this.Method_Mode;
+        }
+        return this.MethodParameter?.language?.['cli']?.['extensionMode'];
+    }
+
+    public get MethodParameter_IsPositional(): boolean {
+        return this.Parameter_IsPositional(this.MethodParameter);
     }
 
     private isComplexSchema(type: string): boolean {
@@ -1373,6 +1404,64 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
+    public get MethodParameter_PositionalKeys(): string[] {
+        let param: Parameter = this.MethodParameter;
+        let keys = [];
+        if (!(this.Parameter_IsList(param) && this.Parameter_IsListOfSimple(param))) {
+            return null;
+        }
+        if (!isNullOrUndefined(param.language?.['az']?.['positionalKeys']) && isArray(param.language?.['az']?.['positionalKeys'])) {
+            keys = param.language?.['az']?.['positionalKeys'];
+        }
+
+        if (keys.length == 0 && !isNullOrUndefined(param.schema.language?.['cli']?.['positionalKeys']) && isArray(param.schema.language?.['cli']?.['positionalKeys'])) {
+            keys = param.schema.language?.['cli']?.['positionalKeys'];
+        }
+
+        let allPossibleKeys = [];
+        let requiredKeys = [];
+        if (this.EnterSubMethodParameters()) {
+            if (this.SelectFirstMethodParameter(true)) {
+                do {
+                    if (this.SubMethodParameter['readOnly']) {
+                        continue;
+                    }
+                    if (this.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                        continue;
+                    }
+                    allPossibleKeys.push(this.Parameter_NamePython(this.SubMethodParameter));
+                    if (this.SubMethodParameter['required'] || this.SubMethodParameter.language?.['cli']['required']) {
+                        if (!this.Parameter_IsHidden(this.SubMethodParameter)) {
+                            requiredKeys.push(this.Parameter_NamePython(this.SubMethodParameter))
+                        }
+                    }
+                } while (this.SelectNextMethodParameter(true));
+            }
+            this.ExitSubMethodParameters();
+        }
+
+        let coveredResult  = keys.every(val => allPossibleKeys.includes(val));
+        let requiredCovered = requiredKeys.every(val => keys.includes(val));
+
+        if(keys.length > 0) {
+            if (coveredResult && requiredCovered) {
+                return keys;
+            } else {
+                let text = "";
+                if (!coveredResult) {
+                    text += "The defined positional keys for " + this.MethodParameter_CliKey + " contains invalid keys. All possible keys are: " + allPossibleKeys.join(", ") + " \n";
+                } 
+                if (!requiredCovered) {
+                    text += "The defined positional keys for " + this.MethodParameter_CliKey + " doesn't contain all required keys. All required keys are: " + requiredKeys.join(", ") + " \n";
+                }
+                this.session.message({Channel: Channel.Fatal, Text: text});
+                return null;
+            }
+        }
+
+        return allPossibleKeys;
+    }
+
     public Schema_IsList(schema: Schema = this.MethodParameter.schema): boolean {
         if (schema.language['cli'].json == true) {
             return true;
@@ -1472,9 +1561,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                 this.ExitSubMethodParameters();
             }
 
-            if (parameter.language['az']['name'] == 'identity') {
-                parameter;
-            }
             // Handle simple parameter
             if (parameter?.language?.['cli']?.removed || parameter?.language?.['cli']?.hidden) {
                 if (this.Parameter_DefaultValue(parameter) == undefined && parameter.required == true) {
@@ -1544,7 +1630,11 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Schema_FlattenedFrom(schema: Schema): Schema {
-        return schema.language['cli']?.['pythonFlattenedFrom'];
+        return schema?.language['cli']?.['pythonFlattenedFrom'];
+    }
+
+    public Schema_IsPositional(schema: Schema): boolean {
+        return schema?.language?.['cli']?.['positional'];
     }
 
     public Parameter_InGlobal(parameter: Parameter): boolean {
@@ -1571,6 +1661,13 @@ export class CodeModelCliImpl implements CodeModelAz {
             return param.language['cli']?.['track1_name'];
         }
         return param.language?.['python']?.name;
+    }
+
+    public Parameter_IsPositional(param: Parameter = this.MethodParameter): boolean {
+        if (param?.schema && this.Schema_IsPositional(param.schema)) {
+            return true;
+        }
+        return param?.language?.['cli']?.['positional']? true: false;
     }
 
     public get MethodParameter_IsRequired(): boolean {

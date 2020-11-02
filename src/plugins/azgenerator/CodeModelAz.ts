@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Operation, OperationGroup, Parameter, Property, Schema } from "@azure-tools/codemodel";
-import { GenerationMode } from "../models";
+import { GenerationMode, ExtensionMode } from "../models";
 import { ResourcePool } from './templates/tests/ScenarioTool';
 
 export class MethodParam {
@@ -78,15 +78,14 @@ export interface CodeModelAz {
     azOutputFolder: string;
     Extension_Name: string;
     Extension_NameUnderscored: string;
+    ConfiguredScenario:boolean;
     Extension_NameClass: string;
     Extension_TestScenario: any;
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
     Extension_Mode: string;   
-    CommandGroup_ExtensionMode: string;
-    Command_ExtensionMode: string;
-    MethodParameter_ExtensionMode: string;
+
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;
@@ -97,6 +96,7 @@ export interface CodeModelAz {
     CommandGroup_DefaultName: string;
     CommandGroup_HasShowCommand: boolean;
     CommandGroup_CliKey: string;
+    CommandGroup_Mode: string;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
@@ -112,6 +112,8 @@ export interface CodeModelAz {
     Command_Help: string;
     Command_IsLongRun: boolean;
     Command_SubGroupName: string;
+    Command_Mode: string;
+
 
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
@@ -121,13 +123,15 @@ export interface CodeModelAz {
     Method_IsLast: boolean;
     Method_Name: string;
     Method_NameAz: string;
-    Method_NameCli: string 
+    Method_NameCli: string;
+    Method_Help: string;
     Method_CliKey: string;
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
     Method_GetOriginalOperation: any;
     Method_GenericSetterParameter(Operation): Parameter;
     Method_NeedGeneric: boolean;
+    Method_Mode: string;
     Operation_IsHidden(op?: Operation): boolean;
 
 
@@ -163,6 +167,9 @@ export interface CodeModelAz {
     MethodParameters_AddPolySubClass(oriParam, para): boolean;
     MethodParameter_DefaultValue: any | undefined;
     MethodParameter_DefaultConfigKey: string | undefined;
+    MethodParameter_Mode: string;
+    MethodParameter_IsPositional: boolean;
+    MethodParameter_PositionalKeys: string[];
     Parameter_Type(Parameter): string;
     Schema_Type(Schema): string;
     Parameter_IsList(Parameter): boolean;
@@ -184,8 +191,10 @@ export interface CodeModelAz {
     Parameter_Description(Parameter): string;
     Parameter_DefaultValue(Parameter): any | undefined;
     Parameter_DefaultConfigKey(Parameter): string | undefined;
+    Parameter_IsPositional(Parameter): boolean;
     Schema_Description(Schema): string;
     Schema_FlattenedFrom(Schema): Schema;
+    Schema_IsPositional(Schema): boolean;
 
     GetModuleOperationName(): string;
     GetModuleOperationNamePython(): string;

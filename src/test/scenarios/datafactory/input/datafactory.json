@@ -2046,11 +2046,326 @@
           "x-ms-client-flatten": true,
           "$ref": "#/definitions/FactoryProperties",
           "description": "Properties of the factory."
+        },
+        "testInherit": {
+          "$ref": "#/definitions/JobBase",
+          "description": "Test Job Base"
         }
       },
       "additionalProperties": {
         "type": "object"
       }
+    },
+    "JobBase": {
+      "description": "Job base definition",
+      "required": [
+        "jobType"
+      ],
+      "type": "object",
+      "properties": {
+        "jobType": {
+          "description": "Specifies the type of job.",
+          "enum": [
+            "Command",
+            "Sweep",
+            "Labeling",
+            "Pipeline",
+            "Data",
+            "AutoML"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "JobType",
+            "modelAsString": false
+          }
+        },
+        "interactionEndpoints": {
+          "description": "Dictonary of endpoint URIs, keyed by enumerated JobEndpoints, can be added, removed or updated",
+          "type": "object",
+          "properties": {
+            "Tracking": {
+              "format": "uri",
+              "type": "string"
+            },
+            "Studio": {
+              "format": "uri",
+              "type": "string"
+            },
+            "Grafana": {
+              "format": "uri",
+              "type": "string"
+            },
+            "Tensorboard": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          "readOnly": true,
+          "x-ms-mutability": [
+            "create",
+            "read",
+            "update"
+          ]
+        },
+        "description": {
+          "description": "The asset description text.",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Tag dictionary. Tags can be added, removed, and updated.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "discriminator": "jobType"
+    },
+    "ComputeJobBase": {
+      "description": "Compute job base definition",
+      "allOf": [
+        {
+          "$ref": "#/definitions/JobBase"
+        }
+      ],
+      "required": [
+        "computeBinding",
+        "jobType"
+      ],
+      "type": "object",
+      "properties": {
+        "experimentName": {
+          "description": "The name of the experiment the job belongs to. If not set, the job is placed in the \"Default\" experiment.",
+          "type": "string"
+        },
+        "computeBinding": {
+          "description": "computeBinding of the job.",
+          "type": "string"
+        }
+      }
+    },
+    "CommandJob": {
+      "description": "Code Job definition",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ComputeJobBase"
+        }
+      ],
+      "required": [
+        "codeConfiguration",
+        "computeBinding",
+        "jobType"
+      ],
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Status of the job.",
+          "enum": [
+            "NotStarted",
+            "Starting",
+            "Provisioning",
+            "Preparing",
+            "Queued",
+            "Running",
+            "Finalizing",
+            "CancelRequested",
+            "Completed",
+            "Failed",
+            "Canceled",
+            "NotResponding",
+            "Paused"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "JobStatus",
+            "modelAsString": false
+          }
+        },
+        "maxRunDurationSeconds": {
+          "format": "int64",
+          "description": "The max run duration in seconds, ater which the job will be cancelled.",
+          "type": "integer"
+        },
+        "codeConfiguration": {
+          "description": "Code Configuration of the job.",
+          "type": "string"
+        },
+        "environmentId": {
+          "description": "Environment specification of the job.",
+          "type": "string"
+        },
+        "dataBindings": {
+          "description": "Mapping of data bindings used in the job.",
+          "type": "object"
+        },
+        "distributionConfiguration": {
+          "description": "Distributon configuration of the job. This should be one of MpiConfiguration, TensorflowConfiguration, or PyTorchConfiguration."
+        }
+      }
+    },
+    "AutomlJob": {
+      "description": "Automl Job definition",
+      "allOf": [
+        {
+          "$ref": "#/definitions/CommandJob"
+        }
+      ],
+      "required": [
+        "codeConfiguration",
+        "computeBinding",
+        "jobType"
+      ],
+      "type": "object",
+      "properties": {
+        "runType": {
+          "description": "Run type",
+          "type": "string"
+        },
+        "runSource": {
+          "description": "Run source would be used by services calling AutoML CreateParentRun,\r\nif none is provided it would default to \"AutoML\"\r\nThis value would be used for RootAttribution",
+          "type": "string"
+        },
+        "numIterations": {
+          "format": "int32",
+          "description": "Number of iterations.",
+          "type": "integer"
+        },
+        "trainingType": {
+          "description": "Training type",
+          "enum": [
+            "TrainFull",
+            "TrainAndValidate",
+            "CrossValidate",
+            "MeanCrossValidate"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "TrainingType",
+            "modelAsString": false
+          }
+        },
+        "acquisitionFunction": {
+          "description": "Aquisition function",
+          "enum": [
+            "EI",
+            "PI",
+            "UCB"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "AcquisitionFunction",
+            "modelAsString": false
+          }
+        },
+        "metrics": {
+          "description": "Optimization metrics",
+          "type": "array",
+          "items": {
+            "enum": [
+              "AUC_weighted",
+              "Accuracy",
+              "Norm_macro_recall",
+              "Average_precision_score_weighted",
+              "Precision_score_weighted",
+              "Spearman_correlation",
+              "Normalized_root_mean_squared_error",
+              "R2_score",
+              "Normalized_mean_absolute_error",
+              "Normalized_root_mean_squared_log_error",
+              "Mean_average_precision",
+              "Iou"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+              "name": "OptimizationMetric",
+              "modelAsString": false
+            }
+          }
+        },
+        "primaryMetric": {
+          "description": "Primary optimization metric",
+          "enum": [
+            "AUC_weighted",
+            "Accuracy",
+            "Norm_macro_recall",
+            "Average_precision_score_weighted",
+            "Precision_score_weighted",
+            "Spearman_correlation",
+            "Normalized_root_mean_squared_error",
+            "R2_score",
+            "Normalized_mean_absolute_error",
+            "Normalized_root_mean_squared_log_error",
+            "Mean_average_precision",
+            "Iou"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "OptimizationMetric",
+            "modelAsString": false
+          }
+        },
+        "trainSplit": {
+          "format": "double",
+          "description": "Train split percentage",
+          "type": "number"
+        },
+        "acquisitionParameter": {
+          "format": "double",
+          "description": "Aquisition parameter",
+          "type": "number"
+        },
+        "numCrossValidation": {
+          "format": "int32",
+          "description": "Num cross validation",
+          "type": "integer"
+        },
+        "target": {
+          "description": "Target",
+          "type": "string"
+        },
+        "amlSettingsJsonString": {
+          "description": "AMLSettings Json string",
+          "type": "string"
+        },
+        "dataPrepJsonString": {
+          "description": "Serialized DataPrep dataflow object",
+          "type": "string"
+        },
+        "enableSubsampling": {
+          "description": "Enable subsampling",
+          "type": "boolean"
+        },
+        "scenario": {
+          "description": "Which scenario is being used to mapping to a curated environment",
+          "type": "string"
+        },
+        "parentRunId": {
+          "description": "The parent run id for the current parent run dto.",
+          "type": "string"
+        }
+      },
+      "x-ms-discriminator-value": "AutoML"
+    },
+    "TestJob": {
+      "description": "Automl Job definition",
+      "allOf": [
+        {
+          "$ref": "#/definitions/AutomlJob"
+        }
+      ],
+      "required": [
+        "codeConfiguration",
+        "computeBinding",
+        "jobType"
+      ],
+      "type": "object",
+      "properties": {
+        "testType": {
+          "description": "Run type",
+          "type": "string"
+        }
+      },
+      "x-ms-discriminator-value": "TestJob"
     },
     "FactoryUpdateParameters": {
       "description": "Parameters for updating a factory resource.",

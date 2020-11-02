@@ -20,14 +20,14 @@ enum TestMode {
 
 @suite class Process {
     private testDimensions: Map<string, Array<TestMode>> = new Map([
-        ["attestation", [TestMode.ExtDefault]],
-        ["boolean", [TestMode.ExtDefault]],
+        // ["attestation", [TestMode.ExtDefault]],
+        // ["boolean", [TestMode.ExtDefault]],
         ["datafactory", [TestMode.ExtDefault]],
-        ["managed-network", [TestMode.ExtDefault]],
-        ["mixed-reality", [TestMode.ExtIncremental]],
-        ["kusto", [TestMode.CoreDefault, TestMode.Ext_NoFlatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
-        ["synapse", [TestMode.CoreDefault, TestMode.Ext_NoFlatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
-        ["compute", [TestMode.CoreIncremental]]
+        // ["managed-network", [TestMode.ExtDefault]],
+        // ["mixed-reality", [TestMode.ExtIncremental]],
+        // ["kusto", [TestMode.CoreDefault, TestMode.Ext_NoFlatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
+        // ["synapse", [TestMode.CoreDefault, TestMode.Ext_NoFlatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
+        // ["compute", [TestMode.CoreIncremental]]
     ]);
 
     async runAz(directory: string, extraOption: {}) {
@@ -35,7 +35,7 @@ enum TestMode {
         for (let k in extraOption) {
             cmdOption.push("--" + k + "=" + extraOption[k]);
         }
-        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6271 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md " + cmdOption.join(" ");
+        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6320 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md " + cmdOption.join(" ");
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => {
             exec(cmd, function (error) {

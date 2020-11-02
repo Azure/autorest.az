@@ -4,10 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "../../CodeModelAz"
-import { EscapeString, ToCamelCase, Capitalize, ToMultiLine } from "../../../../utils/helper";
+import { EscapeString, ToCamelCase, Capitalize, ToMultiLine, getExtraModeInfo } from "../../../../utils/helper";
 import { SchemaType, Parameter } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "../../Header";
 import { isNullOrUndefined, isArray } from "util";
+import { ExtensionMode } from "../../../models"
 
 
 let hasActions: boolean = false;
@@ -352,10 +353,9 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         argument += ", configured_default='" + model.MethodParameter_DefaultConfigKey + "'";
                     }
                     let parameterExtraInfo = "";
-                    if (model.MethodParameter_ExtensionMode == 'experimental') {
-                        parameterExtraInfo = ", is_experimental=True";
-                    } else if (model.MethodParameter_ExtensionMode == 'preview') {
-                        parameterExtraInfo = ", is_preview=True";
+                    parameterExtraInfo = getExtraModeInfo(model.MethodParameter_Mode, model.Command_Mode);
+                    if (parameterExtraInfo != "") {
+                        parameterExtraInfo = ", " + parameterExtraInfo;
                     }
                     argument += parameterExtraInfo;
                     argument += ")";

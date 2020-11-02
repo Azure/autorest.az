@@ -49,6 +49,8 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
+        c.argument('test_inherit', type=validate_file_or_dict, help='Test Job Base Expected value: '
+                   'json-string/@json-file.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='*', help='Factory\'s VSTS '
                    'repo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='*', help='Factory\'s '
@@ -244,7 +246,7 @@ def load_arguments(self, _):
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
                    help='The integration runtime name.', id_part='child_name_1')
-        c.argument('auto_update', arg_type=get_enum_type(['On', 'Off', 'fakeValue1', 'fakeValue2', 'fakeValue3', ''
+        c.argument('auto_update', arg_type=get_enum_type(['On', 'Off', 'fakeValue1', 'fakeValue2', 'fakeValue3',
                                                           'fakeValue4', 'fakeValue5', 'fakeValue6']), help='Enables or '
                    'disables the auto-update feature of the self-hosted integration runtime. See '
                    'https://go.microsoft.com/fwlink/?linkid=854189.')

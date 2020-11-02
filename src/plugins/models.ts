@@ -9,10 +9,10 @@ export enum GenerationMode {
     Incremental
 }
 
-export enum ExtensionMode {
-    Preview = "preview",
-    Experimental = "experimental",
-    Stable = "stable"
+export let ExtensionMode = {
+    Preview: "preview",
+    Experimental: "experimental",
+    Stable: "stable"
 }
 
 export enum TargetMode {

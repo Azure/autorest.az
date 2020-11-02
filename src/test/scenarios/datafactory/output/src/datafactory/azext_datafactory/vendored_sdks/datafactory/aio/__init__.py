@@ -6,5 +6,5 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._dfaz_management_client_async import DFAZManagementClient
+from ._dfaz_management_client import DFAZManagementClient
 __all__ = ['DFAZManagementClient']
