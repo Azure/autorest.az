@@ -20,6 +20,7 @@ let hasLocation = false;
 let hasLocationValidator = false;
 let hasTags = false;
 let actions: string[] = [];
+let useResourceType = false;
 
 export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): string[] {
     var output_args: string[] = [];
@@ -108,6 +109,10 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     output.forEach(element => {
         if (element.length > 120) header.disableLineTooLong = true;
     });
+
+    if (useResourceType){
+        header.addFromImport("azure.cli.core.profiles", ["ResourceType"]);
+    }
 
     return header.getLines().concat(output);
 }
@@ -359,7 +364,8 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         argument += ", min_api='" + model.MethodParameter_MinApi + "'";
                     }
                     if(model.MethodParameter_ResourceType) {
-                        argument += ", resource_type='" + model.MethodParameter_ResourceType + "'";
+                        argument += ", resource_type=" + model.MethodParameter_ResourceType;
+                        useResourceType = true;
                     }
                     let parameterExtraInfo = "";
                     parameterExtraInfo = getExtraModeInfo(model.MethodParameter_Mode, model.Command_Mode);

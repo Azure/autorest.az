@@ -63,7 +63,7 @@ def load_command_table(self, _):
     with self.command_group('managed-network managed-network-peering-policy',
                             managed_network_managed_network_peering_policy,
                             client_factory=cf_managed_network_peering_policy, is_preview=True,
-                            max_api='20200701Preview', min_api='20190701') as g:
+                            max_api='2020-07-01-preview', min_api='2019-07-01') as g:
         g.custom_command('list', 'managed_network_managed_network_peering_policy_list')
         g.custom_show_command('show', 'managed_network_managed_network_peering_policy_show')
         g.custom_command('hub-and-spoke-topology create', 'managed_network_managed_network_peering_policy_hub_and_spoke'

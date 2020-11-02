@@ -9,6 +9,7 @@ az:
   package-name: azure-mgmt-managednetwork
   randomize-names: true
   formalize-names: true
+  resource-type: DATA_NETWORK
 az-output-folder: $(azure-cli-extension-folder)/src/managed-network
 python-sdk-output-folder: $(az-output-folder)/azext_managed_network/vendored_sdks/managednetwork
 
@@ -63,16 +64,19 @@ cli:
             op: Delete
         max-api: '2020-09-01'
         min-api: '2019-09-01'
+        # resource-type: DATA_COMPUTE   # enable this after clicommon support it
       - where:
             group: managedNetworkPeeringPolicies
         max-api: '2020-07-01-preview'
         min-api: '2019-07-01'
+        # resource-type: DATA_STORAGE_BLOB
       - where:
             group: managedNetworkPeeringPolicies
             op: Delete
             param: managedNetworkName
         max-api: '2020-05-01'
         min-api: '2019-05-01'
+        # resource-type: DATA_NETWORK
         #cli-flatten-directive:
         #    - where:
         #        type: ResourceProviderOperation

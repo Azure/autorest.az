@@ -10,6 +10,7 @@ import { isNullOrUndefined } from "util";
 import { ExtensionMode } from "../../../models";
 
 let showCommandFunctionName = undefined;
+let useResourceType = false;
 export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
 
@@ -62,7 +63,8 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                     commandGroupOutput += ", min_api='" + model.CommandGroup_MinApi + "'";
                 }
                 if (model.CommandGroup_ResourceType) {
-                    commandGroupOutput += ", resource_type='" + model.CommandGroup_ResourceType + "'";
+                    commandGroupOutput += ", resource_type=" + model.CommandGroup_ResourceType;
+                    useResourceType = true;
                 }
                 commandGroupOutput += ") as g:";
                 ToMultiLine(commandGroupOutput, output);
@@ -88,6 +90,9 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
 
     if (output.length + header.getLines().length > 1000) {
         header.disableTooManyLines = true;
+    }
+    if (useResourceType) {
+        header.addFromImport("azure.cli.core.profiles", ["ResourceType"]);
     }
 
     return header.getLines().concat(output);
@@ -131,10 +136,12 @@ function getCommandBody(model: CodeModelAz) {
                 if (model.Method_MinApi) {
                     generic_update += `', min_api='${model.Method_MinApi}`;
                 }
+                generic_update += "'";
                 if (model.Method_ResourceType) {
-                    generic_update += ", resource_type='" + model.Method_ResourceType + "'";
+                    generic_update += ", resource_type=" + model.Method_ResourceType;
+                    useResourceType = true;
                 }
-                generic_update += "', custom_func_name='" + functionName + "'" + endStr + commandExtraInfo + ')';
+                generic_update += ", custom_func_name='" + functionName + "'" + endStr + commandExtraInfo + ')';
                 ToMultiLine(generic_update, output);
             }
         } else {
@@ -146,7 +153,8 @@ function getCommandBody(model: CodeModelAz) {
                 customCommand += `, min_api='${model.Command_MinApi}'`;
             }
             if (model.Command_ResourceType) {
-                customCommand += ", resource_type='" + model.Command_ResourceType + "'";
+                customCommand += ", resource_type=" + model.Command_ResourceType;
+                useResourceType = true;
             }
             customCommand += ")";
             ToMultiLine(customCommand, output);
@@ -162,7 +170,8 @@ function getCommandBody(model: CodeModelAz) {
             customCommand += `, min_api='${model.Command_MinApi}'`;
         }
         if (model.Command_ResourceType) {
-            customCommand += ", resource_type='" + model.Command_ResourceType + "'";
+            customCommand += ", resource_type=" + model.Command_ResourceType;
+            useResourceType = true;
         }
         customCommand += ")";
         ToMultiLine(customCommand, output);

@@ -136,6 +136,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
+    public get ResourceType(): string | undefined {
+        return this.formResourceType(this.options?.['resource-type']);
+    }
+
     public get GenChecks(): boolean {
         let disableChecks = this.options?.['disable-checks'];
         if (disableChecks) return false;
@@ -625,8 +629,8 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.CommandGroup.language['cli']?.['min-api'];
     }
 
-    public get CommandGroup_ResourceType(): string {
-        return this.ResourceType(this.CommandGroup.language['cli']?.['resource-type']);
+    public get CommandGroup_ResourceType(): string | undefined {
+        return this.formResourceType(this.CommandGroup.language['cli']?.['resource-type']);
     }
 
     public get CommandGroup_CliKey(): string {
@@ -829,11 +833,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Command.language['cli']?.['min-api'];
     }
 
-    public get Command_ResourceType(): string {
-        return this.ResourceType(this.Command.language['cli']?.['resource-type']);
+    public get Command_ResourceType(): string | undefined {
+        return this.formResourceType(this.Command.language['cli']?.['resource-type']);
     }
 
-    public ResourceType(config: string) {
+    public formResourceType(config: string|undefined) {
         if (isNullOrUndefined(config) || config.startsWith("ResourceType.")) return config;
         else return "ResourceType." + config;
     }
@@ -948,8 +952,8 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Method.language['cli']?.['min-api'];
     }
 
-    public get Method_ResourceType(): string {
-        return this.ResourceType(this.Method.language['cli']?.['resource-type']);
+    public get Method_ResourceType(): string | undefined {
+        return this.formResourceType(this.Method.language['cli']?.['resource-type']);
     }
 
     public get Method_BodyParameterName(): string {
@@ -1183,8 +1187,8 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.MethodParameter.language['cli']?.['min-api'];
     }
 
-    public get MethodParameter_ResourceType(): string {
-        return this.ResourceType(this.MethodParameter.language['cli']?.['resource-type']);
+    public get MethodParameter_ResourceType(): string | undefined {
+        return this.formResourceType(this.MethodParameter.language['cli']?.['resource-type']);
     }
 
     public get MethodParameter_IdPart(): string {
