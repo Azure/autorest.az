@@ -45,4 +45,20 @@ cli:
             param: factoryName
         set:
             default-config-key: factory
+      - where:
+            param: fakeIdentity
+        set:
+            positional: true
+      - where:
+            type: FactoryVstsConfiguration
+        set:
+            positional: true
+            positionalKeys:
+              - type
+              - project_name
+              - tenant_id
+              - account_name
+              - repository_name
+              - root_folder
+              - collaboration_branch
 ```

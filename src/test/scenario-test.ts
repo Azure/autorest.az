@@ -20,14 +20,14 @@ enum TestMode {
 
 @suite class Process {
     private testDimensions: Map<string, Array<TestMode>> = new Map([
-        ["attestation", [TestMode.ExtDefault]],
-        ["boolean", [TestMode.ExtDefault]],
+        // ["attestation", [TestMode.ExtDefault]],
+        // ["boolean", [TestMode.ExtDefault]],
         ["datafactory", [TestMode.ExtDefault]],
-        ["managed-network", [TestMode.ExtDefault]],
-        ["mixed-reality", [TestMode.ExtIncremental]],
-        ["kusto", [TestMode.CoreDefault, TestMode.Ext_NoFlatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
-        ["synapse", [TestMode.CoreDefault, TestMode.Ext_NoFlatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
-        ["compute", [TestMode.CoreIncremental]]
+        // ["managed-network", [TestMode.ExtDefault]],
+        // ["mixed-reality", [TestMode.ExtIncremental]],
+        // ["kusto", [TestMode.CoreDefault, TestMode.Ext_NoFlatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
+        // ["synapse", [TestMode.CoreDefault, TestMode.Ext_NoFlatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
+        // ["compute", [TestMode.CoreIncremental]]
     ]);
 
     async runAz(directory: string, extraOption: {}) {
