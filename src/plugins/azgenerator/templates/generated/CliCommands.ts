@@ -61,6 +61,9 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 if (model.CommandGroup_MinApi) {
                     commandGroupOutput += ", min_api='" + model.CommandGroup_MinApi + "'";
                 }
+                if (model.CommandGroup_ResourceType) {
+                    commandGroupOutput += ", resource_type='" + model.CommandGroup_ResourceType + "'";
+                }
                 commandGroupOutput += ") as g:";
                 ToMultiLine(commandGroupOutput, output);
                 let needWait = false;
@@ -128,6 +131,9 @@ function getCommandBody(model: CodeModelAz) {
                 if (model.Method_MinApi) {
                     generic_update += `', min_api='${model.Method_MinApi}`;
                 }
+                if (model.Method_ResourceType) {
+                    generic_update += ", resource_type='" + model.Method_ResourceType + "'";
+                }
                 generic_update += "', custom_func_name='" + functionName + "'" + endStr + commandExtraInfo + ')';
                 ToMultiLine(generic_update, output);
             }
@@ -138,6 +144,9 @@ function getCommandBody(model: CodeModelAz) {
             }
             if (model.Command_MinApi) {
                 customCommand += `, min_api='${model.Command_MinApi}'`;
+            }
+            if (model.Command_ResourceType) {
+                customCommand += ", resource_type='" + model.Command_ResourceType + "'";
             }
             customCommand += ")";
             ToMultiLine(customCommand, output);
@@ -151,6 +160,9 @@ function getCommandBody(model: CodeModelAz) {
         }
         if (model.Command_MinApi) {
             customCommand += `, min_api='${model.Command_MinApi}'`;
+        }
+        if (model.Command_ResourceType) {
+            customCommand += ", resource_type='" + model.Command_ResourceType + "'";
         }
         customCommand += ")";
         ToMultiLine(customCommand, output);

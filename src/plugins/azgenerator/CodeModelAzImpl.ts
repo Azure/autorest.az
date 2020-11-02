@@ -834,7 +834,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public ResourceType(config: string) {
-        if (config.startsWith("ResourceType.")) return config;
+        if (isNullOrUndefined(config) || config.startsWith("ResourceType.")) return config;
         else return "ResourceType." + config;
     }
 

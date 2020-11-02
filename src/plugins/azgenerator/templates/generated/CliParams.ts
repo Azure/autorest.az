@@ -358,6 +358,9 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if(model.MethodParameter_MinApi) {
                         argument += ", min_api='" + model.MethodParameter_MinApi + "'";
                     }
+                    if(model.MethodParameter_ResourceType) {
+                        argument += ", resource_type='" + model.MethodParameter_ResourceType + "'";
+                    }
                     let parameterExtraInfo = "";
                     parameterExtraInfo = getExtraModeInfo(model.MethodParameter_Mode, model.Command_Mode);
                     if (parameterExtraInfo != "") {
