@@ -45,17 +45,17 @@ helps['datafactory create'] = """
       - name: --factory-vsts-configuration
         short-summary: "Factory's VSTS repo information."
         long-summary: |
-            Usage: --factory-vsts-configuration project-name=XX tenant-id=XX type=XX account-name=XX \
-repository-name=XX collaboration-branch=XX root-folder=XX last-commit-id=XX
+            The order of this parameter is specific customized. Usage:  --factory-vsts-configuration type-value \
+project-name-value tenant-id-value account-name-value repository-name-value root-folder-value \
+collaboration-branch-value
 
-            project-name: Required. VSTS project name.
-            tenant-id: VSTS tenant id.
             type: Required. Type of repo configuration.
+            project-name: Required. VSTS project name.
+            tenant-id: Required. VSTS tenant id.
             account-name: Required. Account name.
             repository-name: Required. Repository name.
-            collaboration-branch: Required. Collaboration branch.
             root-folder: Required. Root folder.
-            last-commit-id: Last commit id.
+            collaboration-branch: Required. Collaboration branch.
       - name: --factory-git-hub-configuration
         short-summary: "Factory's GitHub repo information."
         long-summary: |
@@ -72,10 +72,10 @@ collaboration-branch=XX root-folder=XX last-commit-id=XX
       - name: --fake-identity
         short-summary: "This is only for az test."
         long-summary: |
-            Usage: --fake-identity name=XX zones-inside=XX
+            The order of this parameter is specific customized. Usage:  --fake-identity name-value zones-inside-value
 
             name: Required. ..
-            zones-inside: sample of simple array
+            zones-inside: Required. sample of simple array
     examples:
       - name: Factories_CreateOrUpdate
         text: |-
@@ -109,17 +109,17 @@ helps['datafactory configure-factory-repo'] = """
       - name: --factory-vsts-configuration
         short-summary: "Factory's VSTS repo information."
         long-summary: |
-            Usage: --factory-vsts-configuration project-name=XX tenant-id=XX type=XX account-name=XX \
-repository-name=XX collaboration-branch=XX root-folder=XX last-commit-id=XX
+            The order of this parameter is specific customized. Usage:  --factory-vsts-configuration type-value \
+project-name-value tenant-id-value account-name-value repository-name-value root-folder-value \
+collaboration-branch-value
 
-            project-name: Required. VSTS project name.
-            tenant-id: VSTS tenant id.
             type: Required. Type of repo configuration.
+            project-name: Required. VSTS project name.
+            tenant-id: Required. VSTS tenant id.
             account-name: Required. Account name.
             repository-name: Required. Repository name.
-            collaboration-branch: Required. Collaboration branch.
             root-folder: Required. Root folder.
-            last-commit-id: Last commit id.
+            collaboration-branch: Required. Collaboration branch.
       - name: --factory-git-hub-configuration
         short-summary: "Factory's GitHub repo information."
         long-summary: |
@@ -344,17 +344,17 @@ helps['datafactory integration-runtime managed create'] = """
       - name: --factory-vsts-configuration
         short-summary: "Factory's VSTS repo information."
         long-summary: |
-            Usage: --factory-vsts-configuration project-name=XX tenant-id=XX type=XX account-name=XX \
-repository-name=XX collaboration-branch=XX root-folder=XX last-commit-id=XX
+            The order of this parameter is specific customized. Usage:  --factory-vsts-configuration type-value \
+project-name-value tenant-id-value account-name-value repository-name-value root-folder-value \
+collaboration-branch-value
 
-            project-name: Required. VSTS project name.
-            tenant-id: VSTS tenant id.
             type: Required. Type of repo configuration.
+            project-name: Required. VSTS project name.
+            tenant-id: Required. VSTS tenant id.
             account-name: Required. Account name.
             repository-name: Required. Repository name.
-            collaboration-branch: Required. Collaboration branch.
             root-folder: Required. Root folder.
-            last-commit-id: Last commit id.
+            collaboration-branch: Required. Collaboration branch.
       - name: --factory-git-hub-configuration
         short-summary: "Factory's GitHub repo information."
         long-summary: |
@@ -371,10 +371,10 @@ collaboration-branch=XX root-folder=XX last-commit-id=XX
       - name: --fake-identity
         short-summary: "This is only for az test."
         long-summary: |
-            Usage: --fake-identity name=XX zones-inside=XX
+            The order of this parameter is specific customized. Usage:  --fake-identity name-value zones-inside-value
 
             name: Required. ..
-            zones-inside: sample of simple array
+            zones-inside: Required. sample of simple array
 """
 
 helps['datafactory integration-runtime self-hosted'] = """
