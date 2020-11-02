@@ -293,7 +293,7 @@ def load_arguments(self, _):
         c.argument('principal_assignment_name', type=str, help='The name of the Kusto principalAssignment.')
         c.argument('principal_id', type=str, help='The principal ID assigned to the database principal. It can be a '
                    'user email, application ID, or security group name.')
-        c.argument('role', arg_type=get_enum_type(['Admin', 'Ingestor', 'Monitor', 'User', 'UnrestrictedViewers', ''
+        c.argument('role', arg_type=get_enum_type(['Admin', 'Ingestor', 'Monitor', 'User', 'UnrestrictedViewers',
                                                    'Viewer']), help='Database principal role.')
         c.argument('tenant_id', type=str, help='The tenant id of the principal')
         c.argument('principal_type', arg_type=get_enum_type(['App', 'Group', 'User']), help='Principal type.')
@@ -307,7 +307,7 @@ def load_arguments(self, _):
                    'child_name_2')
         c.argument('principal_id', type=str, help='The principal ID assigned to the database principal. It can be a '
                    'user email, application ID, or security group name.')
-        c.argument('role', arg_type=get_enum_type(['Admin', 'Ingestor', 'Monitor', 'User', 'UnrestrictedViewers', ''
+        c.argument('role', arg_type=get_enum_type(['Admin', 'Ingestor', 'Monitor', 'User', 'UnrestrictedViewers',
                                                    'Viewer']), help='Database principal role.')
         c.argument('tenant_id', type=str, help='The tenant id of the principal')
         c.argument('principal_type', arg_type=get_enum_type(['App', 'Group', 'User']), help='Principal type.')
@@ -335,14 +335,14 @@ def load_arguments(self, _):
     with self.argument_context('kusto attached-database-configuration show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('cluster_name', type=str, help='The name of the Kusto cluster.', id_part='name')
-        c.argument('attached_database_configuration_name', options_list=['--name', '-n', ''
+        c.argument('attached_database_configuration_name', options_list=['--name', '-n',
                                                                          '--attached-database-configuration-name'],
                    type=str, help='The name of the attached database configuration.', id_part='child_name_1')
 
     with self.argument_context('kusto attached-database-configuration create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('cluster_name', type=str, help='The name of the Kusto cluster.')
-        c.argument('attached_database_configuration_name', options_list=['--name', '-n', ''
+        c.argument('attached_database_configuration_name', options_list=['--name', '-n',
                                                                          '--attached-database-configuration-name'],
                    type=str, help='The name of the attached database configuration.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
@@ -357,7 +357,7 @@ def load_arguments(self, _):
     with self.argument_context('kusto attached-database-configuration update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('cluster_name', type=str, help='The name of the Kusto cluster.', id_part='name')
-        c.argument('attached_database_configuration_name', options_list=['--name', '-n', ''
+        c.argument('attached_database_configuration_name', options_list=['--name', '-n',
                                                                          '--attached-database-configuration-name'],
                    type=str, help='The name of the attached database configuration.', id_part='child_name_1')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
@@ -372,14 +372,14 @@ def load_arguments(self, _):
     with self.argument_context('kusto attached-database-configuration delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('cluster_name', type=str, help='The name of the Kusto cluster.', id_part='name')
-        c.argument('attached_database_configuration_name', options_list=['--name', '-n', ''
+        c.argument('attached_database_configuration_name', options_list=['--name', '-n',
                                                                          '--attached-database-configuration-name'],
                    type=str, help='The name of the attached database configuration.', id_part='child_name_1')
 
     with self.argument_context('kusto attached-database-configuration wait') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('cluster_name', type=str, help='The name of the Kusto cluster.', id_part='name')
-        c.argument('attached_database_configuration_name', options_list=['--name', '-n', ''
+        c.argument('attached_database_configuration_name', options_list=['--name', '-n',
                                                                          '--attached-database-configuration-name'],
                    type=str, help='The name of the attached database configuration.', id_part='child_name_1')
 
@@ -413,13 +413,13 @@ def load_arguments(self, _):
                    'information can be added to each message.')
         c.argument('mapping_rule_name', type=str, help='The mapping rule to be used to ingest the data. Optionally the '
                    'mapping information can be added to each message.')
-        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', ''
+        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
         c.argument('ignore_first_record', arg_type=get_three_state_flag(), help='A Boolean value that, if set to true, '
                    'indicates that ingestion should ignore the first record of every file')
-        c.argument('blob_storage_event_type', arg_type=get_enum_type(['Microsoft.Storage.BlobCreated', ''
+        c.argument('blob_storage_event_type', arg_type=get_enum_type(['Microsoft.Storage.BlobCreated',
                                                                       'Microsoft.Storage.BlobRenamed']), help='The '
                    'name of blob storage event type to process.')
 
@@ -438,7 +438,7 @@ def load_arguments(self, _):
                    'information can be added to each message.')
         c.argument('mapping_rule_name', type=str, help='The mapping rule to be used to ingest the data. Optionally the '
                    'mapping information can be added to each message.')
-        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', ''
+        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
@@ -461,7 +461,7 @@ def load_arguments(self, _):
                    'information can be added to each message.')
         c.argument('mapping_rule_name', type=str, help='The mapping rule to be used to ingest the data. Optionally the '
                    'mapping information can be added to each message.')
-        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', ''
+        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
@@ -486,13 +486,13 @@ def load_arguments(self, _):
                    'information can be added to each message.')
         c.argument('mapping_rule_name', type=str, help='The mapping rule to be used to ingest the data. Optionally the '
                    'mapping information can be added to each message.')
-        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', ''
+        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
         c.argument('ignore_first_record', arg_type=get_three_state_flag(), help='A Boolean value that, if set to true, '
                    'indicates that ingestion should ignore the first record of every file')
-        c.argument('blob_storage_event_type', arg_type=get_enum_type(['Microsoft.Storage.BlobCreated', ''
+        c.argument('blob_storage_event_type', arg_type=get_enum_type(['Microsoft.Storage.BlobCreated',
                                                                       'Microsoft.Storage.BlobRenamed']), help='The '
                    'name of blob storage event type to process.')
 
@@ -512,7 +512,7 @@ def load_arguments(self, _):
                    'information can be added to each message.')
         c.argument('mapping_rule_name', type=str, help='The mapping rule to be used to ingest the data. Optionally the '
                    'mapping information can be added to each message.')
-        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', ''
+        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
@@ -536,7 +536,7 @@ def load_arguments(self, _):
                    'information can be added to each message.')
         c.argument('mapping_rule_name', type=str, help='The mapping rule to be used to ingest the data. Optionally the '
                    'mapping information can be added to each message.')
-        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', ''
+        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
@@ -569,13 +569,13 @@ def load_arguments(self, _):
                    'information can be added to each message.')
         c.argument('mapping_rule_name', type=str, help='The mapping rule to be used to ingest the data. Optionally the '
                    'mapping information can be added to each message.')
-        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', ''
+        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
         c.argument('ignore_first_record', arg_type=get_three_state_flag(), help='A Boolean value that, if set to true, '
                    'indicates that ingestion should ignore the first record of every file')
-        c.argument('blob_storage_event_type', arg_type=get_enum_type(['Microsoft.Storage.BlobCreated', ''
+        c.argument('blob_storage_event_type', arg_type=get_enum_type(['Microsoft.Storage.BlobCreated',
                                                                       'Microsoft.Storage.BlobRenamed']), help='The '
                    'name of blob storage event type to process.')
 
@@ -595,7 +595,7 @@ def load_arguments(self, _):
                    'information can be added to each message.')
         c.argument('mapping_rule_name', type=str, help='The mapping rule to be used to ingest the data. Optionally the '
                    'mapping information can be added to each message.')
-        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', ''
+        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
@@ -619,7 +619,7 @@ def load_arguments(self, _):
                    'information can be added to each message.')
         c.argument('mapping_rule_name', type=str, help='The mapping rule to be used to ingest the data. Optionally the '
                    'mapping information can be added to each message.')
-        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', ''
+        c.argument('data_format', arg_type=get_enum_type(['MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
