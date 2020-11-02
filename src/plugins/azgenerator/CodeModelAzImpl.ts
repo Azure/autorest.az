@@ -618,13 +618,15 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get CommandGroup_MaxApi(): string {
-        let eps = new EnglishPluralizationService();
-        return eps.singularize(this.CommandGroup.language['cli']?.['max-api']);
+        return this.CommandGroup.language['cli']?.['max-api'];
     }
 
     public get CommandGroup_MinApi(): string {
-        let eps = new EnglishPluralizationService();
-        return eps.singularize(this.CommandGroup.language['cli']?.['min-api']);
+        return this.CommandGroup.language['cli']?.['min-api'];
+    }
+
+    public get CommandGroup_ResourceType(): string {
+        return this.ResourceType(this.CommandGroup.language['cli']?.['resource-type']);
     }
 
     public get CommandGroup_CliKey(): string {
@@ -827,6 +829,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Command.language['cli']?.['min-api'];
     }
 
+    public get Command_ResourceType(): string {
+        return this.ResourceType(this.Command.language['cli']?.['resource-type']);
+    }
+
+    public ResourceType(config: string) {
+        if (config.startsWith("ResourceType.")) return config;
+        else return "ResourceType." + config;
+    }
+
     //=================================================================================================================
     // Methods / Operations associated with the command.
     //
@@ -935,6 +946,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get Method_MinApi(): string {
         return this.Method.language['cli']?.['min-api'];
+    }
+
+    public get Method_ResourceType(): string {
+        return this.ResourceType(this.Method.language['cli']?.['resource-type']);
     }
 
     public get Method_BodyParameterName(): string {
@@ -1166,6 +1181,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_MinApi(): string {
         return this.MethodParameter.language['cli']?.['min-api'];
+    }
+
+    public get MethodParameter_ResourceType(): string {
+        return this.ResourceType(this.MethodParameter.language['cli']?.['resource-type']);
     }
 
     public get MethodParameter_IdPart(): string {
