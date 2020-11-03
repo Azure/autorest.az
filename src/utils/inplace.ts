@@ -2,6 +2,7 @@ import {readFileSync, existsSync, writeFileSync, mkdirSync} from 'fs';
 import { isNullOrUndefined } from 'util';
 import {join, dirname} from "path"
 import JSZip = require('jszip-sync');
+import { distancePercentage } from './helper'
 
 export class TargetFile {
     content: string;
@@ -45,7 +46,8 @@ export class TargetFile {
         this.root.matchVA(originA.root);
         if (!isNullOrUndefined(customizedA)) {
             this.root.addCustomize(customizedA.root);
-        }
+            this.root.alignOrder(customizedA.root);
+        }   
     }
 }
 
@@ -99,26 +101,17 @@ export class BaseSegment {
         for (let i=0; i<this.children.length;i++) {
             let originSeg = this.children[i];
             originSeg.status = SegmentStatus.Deleted;
-            for (let j=0; j<customized.children.length; j++) {
-                let customizedSeg = customized.children[j];
-                if (originSeg.name == customizedSeg.name) {
-                    originSeg.matchCustomize(customizedSeg);
-                    break
-                }
+            
+            let customizedIdx = customized.findChild(originSeg);
+            if (customizedIdx>=0) {
+                originSeg.matchCustomize(customized.children[customizedIdx]);
             }
         }
 
         for (let i=0; i<customized.children.length;i++) {
             let customizedSeg = customized.children[i];
-            let found = false;
-            for (let j=0; j<this.children.length; j++) {
-                let originSeg = this.children[j];
-                if (originSeg.name == customizedSeg.name) {
-                    found = true;
-                    break
-                }
-            }
-            if (!found) {
+            let thisIdx = this.findChild(customizedSeg);
+            if (thisIdx<0) {
                 customizedSeg.status = SegmentStatus.Added;
             }
         }
@@ -128,23 +121,47 @@ export class BaseSegment {
         this.originA = originA;
         for (let i=0; i<this.children.length;i++) {
             let vBSeg = this.children[i];
-            for (let j=0; j<originA.children.length; j++) {
-                let vASeg = originA.children[j];
-                if (vBSeg.name == vASeg.name) {
-                    vBSeg.matchVA(vASeg);
-                    break;
-                }
+            let oAIdx = originA.findChild(vBSeg);
+            if (oAIdx>=0) {
+                vBSeg.matchVA(originA.children[oAIdx]);
             }
         }
     }
 
-    public findChild(childSeg: BaseSegment): number {
-        for (let i=0; i<this.children.length;i++) {
+    public findChild(childSeg: BaseSegment, startPos = 0): number {
+        for (let i=startPos; i<this.children.length;i++) {
             if (this.children[i].name == childSeg.name) {
                 return i;
             }
         }
+
+        let minDist = 1;
+        let ret = -1;
+        for (let i=startPos; i<this.children.length;i++) {  
+            let d = distancePercentage(childSeg.Content, this.children[i].Content);
+            if (d<minDist)  {
+                minDist = d;
+                ret = i;
+            }
+        }
+        if (minDist<0.3)    return ret;
+        
         return -1;
+    }
+
+    public alignOrder(baseline: BaseSegment) {
+        let p = 0;
+        for (let child of baseline.children) {
+            while(p<this.children.length && baseline.findChild(this.children[p])<0) p++;
+
+            let curPos = this.findChild(child, p);
+            if (curPos>=0) {
+                let moving = this.children[curPos];
+                this.children.splice(curPos, 1);
+                this.children.splice(p, 0, moving);
+                p += 1;
+            }
+        }
     }
 
     public addCustomize(customizedA: BaseSegment) {
