@@ -44,10 +44,9 @@ export class TargetFile {
             originA.root.matchCustomize(customizedA.root);
         }
         this.root.matchVA(originA.root);
-        if (!isNullOrUndefined(customizedA)) {
-            this.root.addCustomize(customizedA.root);
-            this.root.alignOrder(customizedA.root);
-        }   
+
+        this.root.alignOrder(customizedA.root);
+        this.root.addCustomize(customizedA.root); 
     }
 }
 
@@ -95,23 +94,23 @@ export class BaseSegment {
         }
         else {
             this.status = SegmentStatus.Modified;
-            this.customized = customized;
         }
+        this.customized = customized;
 
+        let usedChild = [];
         for (let i=0; i<this.children.length;i++) {
             let originSeg = this.children[i];
             originSeg.status = SegmentStatus.Deleted;
             
-            let customizedIdx = customized.findChild(originSeg);
+            let customizedIdx = customized.findChild(originSeg, usedChild);
             if (customizedIdx>=0) {
                 originSeg.matchCustomize(customized.children[customizedIdx]);
             }
         }
 
         for (let i=0; i<customized.children.length;i++) {
-            let customizedSeg = customized.children[i];
-            let thisIdx = this.findChild(customizedSeg);
-            if (thisIdx<0) {
+            if (!usedChild.includes(i)) {
+                let customizedSeg = customized.children[i];
                 customizedSeg.status = SegmentStatus.Added;
             }
         }
@@ -119,18 +118,21 @@ export class BaseSegment {
 
     public matchVA(originA: BaseSegment) {
         this.originA = originA;
+        let usedChild = [];
         for (let i=0; i<this.children.length;i++) {
             let vBSeg = this.children[i];
-            let oAIdx = originA.findChild(vBSeg);
+            let oAIdx = originA.findChild(vBSeg, usedChild);
             if (oAIdx>=0) {
                 vBSeg.matchVA(originA.children[oAIdx]);
             }
         }
     }
 
-    public findChild(childSeg: BaseSegment, startPos = 0): number {
+    public findChild(childSeg: BaseSegment,  used:any[]=undefined, startPos=0): number {
+        if (isNullOrUndefined(used))    used = [];
         for (let i=startPos; i<this.children.length;i++) {
-            if (this.children[i].name == childSeg.name) {
+            if (!used.includes(i) && this.children[i].name == childSeg.name) {
+                used.push(i);
                 return i;
             }
         }
@@ -138,23 +140,37 @@ export class BaseSegment {
         let minDist = 1;
         let ret = -1;
         for (let i=startPos; i<this.children.length;i++) {  
+            if (used.includes(i)) continue;
             let d = distancePercentage(childSeg.Content, this.children[i].Content);
             if (d<minDist)  {
                 minDist = d;
                 ret = i;
+                break;
             }
         }
-        if (minDist<0.3)    return ret;
+        if (minDist<0.3) {
+            used.push(ret);
+            return ret;
+        }   
         
         return -1;
     }
 
     public alignOrder(baseline: BaseSegment) {
+        if (isNullOrUndefined(baseline))    return;
+
         let p = 0;
         for (let child of baseline.children) {
-            while(p<this.children.length && baseline.findChild(this.children[p])<0) p++;
+            // new segement  --> keep current position
+            while(p<this.children.length && isNullOrUndefined(this.children[p].originA?.customized)) p++;
 
-            let curPos = this.findChild(child, p);
+            // customized segement --> find pos in customize, and move.
+            let curPos = -1;
+            for (let j=p; j<this.children.length; j++) {
+                if (this.children[j].originA?.customized==child) {
+                    curPos = j;
+                }
+            }
             if (curPos>=0) {
                 let moving = this.children[curPos];
                 this.children.splice(curPos, 1);
@@ -162,41 +178,65 @@ export class BaseSegment {
                 p += 1;
             }
         }
+
+        for (let child of this.children) {
+            child.alignOrder(child.originA);
+        }
     }
 
     public addCustomize(customizedA: BaseSegment) {
+        if (isNullOrUndefined(customizedA)) return;
+
         //merge new added in customziedA into this
         let previousIndex: number = -1;
+        for (let child of this.children) {
+            child.addCustomize(child.originA?.customized);
+        }
+
         for (let i=0; i<customizedA.children.length;i++) {
             let seg = customizedA.children[i];
-            let t = this.findChild(seg);
-            if (t>=0) {
-                previousIndex = t;
-                this.children[t].addCustomize(seg);
-            }
-            else if(seg.status == SegmentStatus.Added) {
+            
+            if(seg.status == SegmentStatus.Added) {
                 this.children.splice(previousIndex+1, 0, seg);
                 previousIndex += 1;
+            }
+            else {
+                for (let j=0; j<this.children.length; j++) {
+                    if (this.children[j].originA?.customized==seg) {
+                        previousIndex = j;
+                        break;
+                    }
+                }
             }
         }
     } 
 
     public genResult(): string {
+        if (this.originA?.status == SegmentStatus.Deleted) {
+            if (this.originA.Content!=this.Content) {
+                return this.Content;
+            }
+            else {
+                return "";
+            }
+        }
+
+        let solidChildren = this.children.filter(child => {
+            return child.originA?.status != SegmentStatus.Deleted;
+        });
+
         let ret = "";
-        if (this.children.length==0) {
+        if (solidChildren.length==0) {
             if (isNullOrUndefined(this.originA) || this.status==SegmentStatus.Added || this.originA.status== SegmentStatus.Origin || this.originA.Content!=this.Content) {
                 ret += this.Content;
-            }
-            else if (this.originA.status==SegmentStatus.Deleted) {
-                // skip this segment
             }
             else if (this.originA.status == SegmentStatus.Modified) {
                 ret +=this.originA.customized.Content;
             }
         }
         else {
-            for (let i=0; i<this.children.length;i++) {
-                ret += this.children[i].genResult();
+            for (let i=0; i<solidChildren.length;i++) {
+                ret += solidChildren[i].genResult();
             }
         }
         return ret;
@@ -249,20 +289,43 @@ export class BaseSegment {
         }
         else {  // find child indents
             let curIndent = myIndent;
-            curEnd = 0;
+            curEnd = 1;
+            curParathesisCount = 0;
+            let postIdx = 1;
             while (curEnd<lines.length) {
-                let t = lines[curEnd].search(/\S/);
-                if (t>curIndent ) {
-                    let child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
-                    child.createChildrenByIndent();
-                    this.children.push(child);
-                    curStart = curEnd;
-                    curIndent = t;
+                // let t = lines[curEnd].search(/\S/);
+                // if (t>curIndent ) {
+                //     let child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
+                //     child.createChildrenByIndent();
+                //     this.children.push(child);
+                //     curStart = curEnd;
+                //     curIndent = t;
+                // }
+                // curEnd += 1;
+                // if (curEnd>=lines.length && this.children.length>0) {
+                //     let child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
+                //     child.createChildrenByIndent();
+                //     this.children.push(child);
+                // }
+                if (lineIndent(lines[curEnd]) > myIndent) {
+                    postIdx = curEnd + 1
+                    while (postIdx<lines.length && (lineIndent(lines[postIdx]) !=myIndent || lines[postIdx].trim().length==0)) {
+                        postIdx += 1;
+                    }
+                    break;
                 }
-                curEnd += 1;
-                if (curEnd>=lines.length && this.children.length>0) {
-                    let child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
-                    child.createChildrenByIndent();
+                curEnd +=1;
+            }
+            if (postIdx>curEnd && curEnd<lines.length) {
+                let child = new BaseSegment(this.target, getBiasOfLine(0, this.startAt), getBiasOfLine(curEnd, this.startAt), "pre");
+                this.children.push(child);
+
+                child = new BaseSegment(this.target, getBiasOfLine(curEnd, this.startAt), getBiasOfLine(postIdx, this.startAt), "body");
+                child.createChildrenByIndent();
+                this.children.push(child);
+                
+                if (lines.length>postIdx) {
+                    let child = new BaseSegment(this.target, getBiasOfLine(postIdx, this.startAt), getBiasOfLine(lines.length, this.startAt), "post");
                     this.children.push(child);
                 }
             }
