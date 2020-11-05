@@ -10,44 +10,41 @@
 
 import os
 from azure.cli.testsdk import ScenarioTest
-from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
+from .example_steps import step__virtualmachines_post
+from .. import (
+    try_manual,
+    raise_if,
+    calc_coverage
+)
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
-# Env setup
+# Env setup_scenario
 @try_manual
-def setup(test, rg):
+def setup_scenario(test, rg):
     pass
 
 
-# EXAMPLE: /VirtualMachines/post/Assess patch state of a virtual machine.
+# Env cleanup_scenario
 @try_manual
-def step__virtualmachines_post(test, rg):
-    test.cmd('az vm virtual-machine assess-patch '
-             '--resource-group "{rg}" '
-             '--vm-name "myVMName"',
-             checks=[])
-
-
-# Env cleanup
-@try_manual
-def cleanup(test, rg):
+def cleanup_scenario(test, rg):
     pass
 
 
-# Testcase
+# Testcase: Scenario
 @try_manual
 def call_scenario(test, rg):
-    setup(test, rg)
-    step__virtualmachines_post(test, rg)
-    cleanup(test, rg)
+    setup_scenario(test, rg)
+    step__virtualmachines_post(test, rg, checks=[])
+    cleanup_scenario(test, rg)
 
 
+# Test class for ${scenarioName}
 @try_manual
-class ComputeManagementClientScenarioTest(ScenarioTest):
+class VmScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestvm_myResourceGroupName'[:7], key='rg', parameter_name='rg')
     def test_vm(self, rg):
@@ -55,3 +52,4 @@ class ComputeManagementClientScenarioTest(ScenarioTest):
         call_scenario(self, rg)
         calc_coverage(__file__)
         raise_if()
+

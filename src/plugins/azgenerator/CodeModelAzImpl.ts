@@ -11,7 +11,7 @@ import { isArray, isNullOrUndefined } from "util";
 import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash } from '../../utils/helper';
 import { EXCLUDED_PARAMS, GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
-import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus } from './templates/tests/ScenarioTool';
+import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus, GroupTestScenario} from './templates/tests/ScenarioTool';
 
 
 class ActionParam {
@@ -37,7 +37,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     substack: Array<[Parameter[], number]>;
     currentSubOptionIndex: number;
     paramActionNameReference: Map<Schema, string>;
-    private _testScenario: any[];
+    private _testScenario: any;
+    private _defaultTestScenario: any[];
     private _configuredScenario: boolean;
     private _clientSubscriptionBound: boolean;
     private _clientBaseUrlBound: boolean;
@@ -461,14 +462,15 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GenerateTestInit() {
         if (this.codeModel['test-scenario']) {
-            if ('examples' in this.codeModel['test-scenario']) {
-                //new style of example configuration
-                this._testScenario = this.codeModel['test-scenario']['examples'];
-            }
-            else {
-                //old style of example configuration
-                this._testScenario = this.codeModel['test-scenario']
-            }
+            // if ('examples' in this.codeModel['test-scenario']) {
+            //     //new style of example configuration
+            //     this._testScenario = this.codeModel['test-scenario']['examples'];
+            // }
+            // else {
+            //     //old style of example configuration
+            //     this._testScenario = this.codeModel['test-scenario']
+            // }
+            this._testScenario = GroupTestScenario(this.codeModel['test-scenario'], this.Extension_NameUnderscored);
             this._configuredScenario = true;
         }
         else {
@@ -508,6 +510,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get Extension_TestScenario(): any {
         return this._testScenario;
+    }
+
+    public get Extension_DefaultTestScenario(): any {
+        return this._defaultTestScenario;
     }
 
     public get Extension_ClientSubscriptionBound(): boolean {
@@ -2333,11 +2339,15 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.resource_pool.setResourceDepends(this.CommandGroup_Key, depend_resources, depend_parameters, createdObjectNames);
         });
 
-        if (!this._configuredScenario && isNullOrUndefined(this._testScenario)) {
-            this._testScenario = GenerateDefaultTestScenario(this.GetAllExamples());
-            this._testScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool, this._testScenario);
+        if (isNullOrUndefined(this._defaultTestScenario)) {
+            this._defaultTestScenario = GenerateDefaultTestScenario(this.GetAllExamples());
+            this._defaultTestScenario = GenerateDefaultTestScenarioByDependency(this.GetAllExamples(), this.resource_pool, this._defaultTestScenario);
             this.SortExamplesByDependency();
-            PrintTestScenario(this._testScenario);
+            PrintTestScenario(this._defaultTestScenario);
+        }
+
+        if (!this._configuredScenario && isNullOrUndefined(this._testScenario)) {
+            this._testScenario = GroupTestScenario(this._defaultTestScenario, this.Extension_NameUnderscored);
         }
 
         let commandParams = {};
@@ -2417,34 +2427,18 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         let scenarioExamples: Map<string, CommandExample> = new Map<string, CommandExample>();
         let commandExamples = this.GetAllExamples();
-        for (let i = 0; i < this._testScenario.length; i++) {
+        for (let i = 0; i < this._defaultTestScenario.length; i++) {
             for (let commandExample of commandExamples) {
-                if (this.matchExample(commandExample, this._testScenario[i]['name'])) {
-                    scenarioExamples.set(this._testScenario[i]['name'], commandExample);
+                if (this.matchExample(commandExample, this._defaultTestScenario[i]['name'])) {
+                    scenarioExamples.set(this._defaultTestScenario[i]['name'], commandExample);
                     break;
                 }
             }
-
         }
 
-        let i = 0;
-        let swapped = new Set<string>();    //for loop detecting
-        while (i < this._testScenario.length) {
-            for (let j = i + 1; j < this._testScenario.length; j++) {
-                let swapId = `${i}<->${j}`;
-                if (swapped.has(swapId)) continue; // has loop, ignore the compare.
-                if (compare(scenarioExamples.get(this._testScenario[i]['name']), scenarioExamples.get(this._testScenario[j]['name'])) > 0) {
-                    let tmp = this._testScenario[i];
-                    this._testScenario[i] = this._testScenario[j];
-                    this._testScenario[j] = tmp;
-                    swapped.add(swapId);
-                    i--;
-                    break;
-                }
-            }
-            i++;
-        }
-        //this._testScenario = MergeSort(this._testScenario,compare);
+        this._defaultTestScenario = MergeSort(this._defaultTestScenario, (example_a, example_b) => {
+            return compare(scenarioExamples.get(example_a['name']), scenarioExamples.get(example_b['name']));
+        });
     }
 
     public GetAllMethods(command_group?: string, callback?: () => void): any[] {

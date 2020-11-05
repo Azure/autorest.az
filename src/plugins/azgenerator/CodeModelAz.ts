@@ -82,6 +82,7 @@ export interface CodeModelAz {
     ConfiguredScenario:boolean;
     Extension_NameClass: string;
     Extension_TestScenario: any;
+    Extension_DefaultTestScenario: any;
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;

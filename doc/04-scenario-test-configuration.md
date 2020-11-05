@@ -16,6 +16,9 @@ Notice 1: *Once configurations are provided, autorest.az will not add any other 
 Notice 2: *Even if no configuration is provided, you can still override the auto-generated steps.*
 
 ## How to configure?
+
+### Basic test-scenario
+In basic test-scenario, all test examples are composed in one testcase.
 Test scenario configuration can be done in file readme.cli.md, here is an example for it.
 ~~~
 cli:
@@ -40,6 +43,37 @@ Two kind of step can be used in the test-scenario, they are:
           }
         },
 ~~~
+
+### Mutli-testcase scenario
+You can config multiple testcases in the test-scenario with below format:
+~~~
+cli:
+  cli-name: managednetwork
+  test-scenario:
+    ManagedNetworks_scenario1:
+      - name: ManagementNetworkGroupsPut
+      - name: ManagementNetworkGroupsDelete
+    ManagedNetworks_scenario2:
+      - name: ManagedNetworksListByResourceGroup
+      - name: ManagedNetworksListBySubscription
+      - name: ManagementNetworkGroupsGet
+    ManagedNetworks_scenario3:
+      - name: ManagedNetworkPeeringPoliciesPut
+      - name: ManagedNetworkPeeringPoliciesGet
+      - name: ManagedNetworkPeeringPoliciesListByManagedNetwork
+      - name: ManagedNetworkPeeringPoliciesDelete
+    ScopeAssignments:
+      - name: ScopeAssignmentsPut
+      - name: ScopeAssignmentsGet
+      - name: ScopeAssignmentsList
+      - name: ScopeAssignmentsDelete
+~~~
+In above sample, four testcases are configured, and they will be generated in two test files:
+- test_ManagedNetworks_scenario.py: three testcases will be generated in it: ManagedNetworks_scenario1, ManagedNetworks_scenario2, ManagedNetworks_scenario3.
+- test_ScopeAssignments_scenario.py: one testcase generated in it: ScopeAssignments.
+
+Note: the part before the underscore('_') in the testcase name will be used to descibe in which test file the case will be generated.
+
 
 ## What if multiple examples in swagger have duplicated name?
 Occasionally several examples have a same example name. Since each test-scenario item represent only one example, you can assign a full example name in this condition. A full example name can be formed as:

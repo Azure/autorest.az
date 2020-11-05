@@ -2,6 +2,7 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import * as path from 'path';
 import { AzGeneratorBase } from "./AzGeneratorBase";
 import { CodeModelAz } from "./CodeModelAz";
 import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
@@ -23,11 +24,10 @@ import { GenerateAzureCliParams } from "./templates/generated/CliParams";
 import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
 import { CliTestInit } from "./templates/tests/CliTestInit";
 import { CliTestPrepare } from "./templates/tests/CliTestPrepare";
-import { CliTestScenario, NeedPreparer } from "./templates/tests/CliTestScenario";
+import { CliTestScenario } from "./templates/tests/CliTestScenario";
 import { PathConstants } from '../models';
-import { inplaceGen } from "../../utils/inplace";
-import * as path from 'path';
 import { deepCopy } from '../../utils/helper';
+import { CliTestStep, NeedPreparer } from "./templates/tests/CliTestStep";
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -65,20 +65,10 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         await this.generateFullSingleAndAddtoOutput(new CliExtSetupPy(this.model, this.isDebugMode));
 
         await this.generateFullSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
-        let config: any = deepCopy(this.model.Extension_TestScenario);
-        if(this.model.ConfiguredScenario){
-            for (var ci = 0; ci < config.length; ci++) {
-                let configValue :any = Object.entries(config[ci]);  
-                if(configValue[0][0] == "name" || config.length == 0){
-                    await this.generateFullSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored),config), true, true);
-                    break
-                }else{
-                    await this.generateFullSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.fullTestSceanrioFile(configValue[0][0]),configValue[0][1]), true, true);
-                }
-            }
-        }else{
-            await this.generateFullSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.fullTestSceanrioFile(this.model.Extension_NameUnderscored),config), true, true);
-        } 
+        await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model, this.isDebugMode), true, true);
+        for (let testGroup of this.model.Extension_TestScenario? Object.getOwnPropertyNames(this.model.Extension_TestScenario): []) {
+            await this.generateFullSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.fullTestSceanrioFile(testGroup),this.model.Extension_TestScenario[testGroup], testGroup), true, true);
+        }
         if (NeedPreparer()) {
             await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(this.model, this.isDebugMode));
         }

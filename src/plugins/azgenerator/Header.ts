@@ -44,11 +44,22 @@ export class HeaderGenerator {
     }
 
     public addFromImport(from: string, imports: string[]) {
-        this.fromImports.push(new FromImport(from, imports));
+        // TODO: search already-import-history-list by import target
+        let found = false;
+        for (let fi of this.fromImports) {
+            if (fi.from == from && fi.imports==imports) {
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+            this.fromImports.push(new FromImport(from, imports));
     }
 
     public addImport(name) {
-        this.imports.push(name);
+        // TODO: search already-import-history-list together with addFromImport
+        if (this.imports.indexOf(name)<0)
+            this.imports.push(name);
     }
 
     public getLines(): string[] {
