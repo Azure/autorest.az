@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "../../CodeModelAz"
-import { EscapeString, ToCamelCase, Capitalize, ToMultiLine, getExtraModeInfo } from "../../../../utils/helper";
+import { EscapeString, ToCamelCase, Capitalize, ToMultiLine, getExtraModeInfo, composeParamString } from "../../../../utils/helper";
 import { SchemaType, Parameter } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "../../Header";
 import { isNullOrUndefined, isArray } from "util";
@@ -357,16 +357,9 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if (!isNullOrUndefined(model.MethodParameter_DefaultConfigKey)) {
                         argument += ", configured_default='" + model.MethodParameter_DefaultConfigKey + "'";
                     }
-                    if(model.MethodParameter_MaxApi) {
-                        argument += ", max_api='" + model.MethodParameter_MaxApi + "'";
-                    }
-                    if(model.MethodParameter_MinApi) {
-                        argument += ", min_api='" + model.MethodParameter_MinApi + "'";
-                    }
-                    if(model.MethodParameter_ResourceType) {
-                        argument += ", resource_type=" + model.MethodParameter_ResourceType;
-                        useResourceType = true;
-                    }
+                    const paramRet = composeParamString(model.MethodParameter_MaxApi, model.MethodParameter_MinApi, model.MethodParameter_ResourceType);
+                    argument += paramRet[0];
+                    if (paramRet[1])    useResourceType = true;
                     let parameterExtraInfo = "";
                     parameterExtraInfo = getExtraModeInfo(model.MethodParameter_Mode, model.Command_Mode);
                     if (parameterExtraInfo != "") {

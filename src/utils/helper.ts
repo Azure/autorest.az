@@ -604,3 +604,19 @@ export function distancePercentage(src: string, tgt: string) {
     let distance = calculateLevDistance(src, tgt);
     return distance/src.length;
 }
+
+export function composeParamString(maxApi: string, minApi: string, resourceType: string) {
+    let ret = "";
+    let useResourceType = false;
+    if(!isNullOrUndefined(maxApi) && maxApi.length>0) {
+        ret += ", max_api='" + maxApi + "'";
+    }
+    if(!isNullOrUndefined(minApi) && minApi.length>0) {
+        ret += ", min_api='" + minApi + "'";
+    }
+    if(!isNullOrUndefined(resourceType) && resourceType.length>0) {
+        ret += ", resource_type=" + resourceType;
+        useResourceType = true;
+    }
+    return [ret, useResourceType];
+}

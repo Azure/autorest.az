@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from "../../CodeModelAz"
 import { HeaderGenerator } from "../../Header";
-import { ToMultiLine, getExtraModeInfo } from "../../../../utils/helper"
+import { ToMultiLine, getExtraModeInfo, composeParamString } from "../../../../utils/helper"
 import { isNullOrUndefined } from "util";
 import { ExtensionMode } from "../../../models";
 
@@ -56,16 +56,9 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                     extraInfo = ", " + extraInfo;
                 }
                 let commandGroupOutput = "    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + extraInfo;
-                if (model.CommandGroup_MaxApi) {
-                    commandGroupOutput += ", max_api='" + model.CommandGroup_MaxApi + "'";
-                }
-                if (model.CommandGroup_MinApi) {
-                    commandGroupOutput += ", min_api='" + model.CommandGroup_MinApi + "'";
-                }
-                if (model.CommandGroup_ResourceType) {
-                    commandGroupOutput += ", resource_type=" + model.CommandGroup_ResourceType;
-                    useResourceType = true;
-                }
+                const paramRet = composeParamString(model.CommandGroup_MaxApi, model.CommandGroup_MinApi, model.CommandGroup_ResourceType);
+                commandGroupOutput += paramRet[0];
+                if (paramRet[1])    useResourceType = true;
                 commandGroupOutput += ") as g:";
                 ToMultiLine(commandGroupOutput, output);
                 let needWait = false;
@@ -130,32 +123,18 @@ function getCommandBody(model: CodeModelAz) {
                 if (model.Command_IsLongRun && !model.SDK_IsTrack1) {
                     generic_update += "', setter_name='begin_create_or_update";
                 }
-                if (model.Method_MaxApi) {
-                    generic_update += `', max_api='${model.Method_MaxApi}`;
-                }
-                if (model.Method_MinApi) {
-                    generic_update += `', min_api='${model.Method_MinApi}`;
-                }
                 generic_update += "'";
-                if (model.Method_ResourceType) {
-                    generic_update += ", resource_type=" + model.Method_ResourceType;
-                    useResourceType = true;
-                }
+                const paramRet = composeParamString(model.Method_MaxApi, model.Method_MinApi, model.Method_ResourceType);
+                generic_update += paramRet[0];
+                if (paramRet[1])    useResourceType = true;
                 generic_update += ", custom_func_name='" + functionName + "'" + endStr + commandExtraInfo + ')';
                 ToMultiLine(generic_update, output);
             }
         } else {
             let customCommand = "        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo;
-            if (model.Command_MaxApi) {
-                customCommand += `, max_api='${model.Command_MaxApi}'`;
-            }
-            if (model.Command_MinApi) {
-                customCommand += `, min_api='${model.Command_MinApi}'`;
-            }
-            if (model.Command_ResourceType) {
-                customCommand += ", resource_type=" + model.Command_ResourceType;
-                useResourceType = true;
-            }
+            const paramRet = composeParamString(model.Command_MaxApi, model.Command_MinApi, model.Command_ResourceType);
+            customCommand += paramRet[0];
+            if (paramRet[1])    useResourceType = true;
             customCommand += ")";
             ToMultiLine(customCommand, output);
         }
@@ -163,16 +142,9 @@ function getCommandBody(model: CodeModelAz) {
     else {
         showCommandFunctionName = functionName;
         let customCommand = "        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo;
-        if (model.Command_MaxApi) {
-            customCommand += `, max_api='${model.Command_MaxApi}'`;
-        }
-        if (model.Command_MinApi) {
-            customCommand += `, min_api='${model.Command_MinApi}'`;
-        }
-        if (model.Command_ResourceType) {
-            customCommand += ", resource_type=" + model.Command_ResourceType;
-            useResourceType = true;
-        }
+        const paramRet = composeParamString(model.Command_MaxApi, model.Command_MinApi, model.Command_ResourceType);
+        customCommand += paramRet[0];
+        if (paramRet[1])    useResourceType = true;
         customCommand += ")";
         ToMultiLine(customCommand, output);
     }
