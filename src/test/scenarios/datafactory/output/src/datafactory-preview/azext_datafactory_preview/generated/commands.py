@@ -15,10 +15,10 @@ from azure.cli.core.commands import CliCommandType
 
 def load_command_table(self, _):
 
-    from azext_datafactory.generated._client_factory import cf_factory
+    from azext_datafactory_preview.generated._client_factory import cf_factory
     datafactory_factory = CliCommandType(
-        operations_tmpl='azext_datafactory.vendored_sdks.datafactory.operations._factory_operations#FactoryOperations.{'
-        '}',
+        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations#FactoryOperations.{}'
+        '',
         client_factory=cf_factory)
     with self.command_group('datafactory', datafactory_factory, client_factory=cf_factory) as g:
         g.custom_command('list', 'datafactory_list')
@@ -30,10 +30,10 @@ def load_command_table(self, _):
         g.custom_command('get-data-plane-access', 'datafactory_get_data_plane_access')
         g.custom_command('get-git-hub-access-token', 'datafactory_get_git_hub_access_token')
 
-    from azext_datafactory.generated._client_factory import cf_trigger
+    from azext_datafactory_preview.generated._client_factory import cf_trigger
     datafactory_trigger = CliCommandType(
-        operations_tmpl='azext_datafactory.vendored_sdks.datafactory.operations._trigger_operations#TriggerOperations.{'
-        '}',
+        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations#TriggerOperations.{}'
+        '',
         client_factory=cf_trigger)
     with self.command_group('datafactory trigger', datafactory_trigger, client_factory=cf_trigger,
                             is_experimental=True) as g:
@@ -52,10 +52,10 @@ def load_command_table(self, _):
                          supports_no_wait=True)
         g.custom_wait_command('wait', 'datafactory_trigger_show')
 
-    from azext_datafactory.generated._client_factory import cf_integration_runtime
+    from azext_datafactory_preview.generated._client_factory import cf_integration_runtime
     datafactory_integration_runtime = CliCommandType(
-        operations_tmpl='azext_datafactory.vendored_sdks.datafactory.operations._integration_runtime_operations#Integra'
-        'tionRuntimeOperations.{}',
+        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations#IntegrationRuntimeOp'
+        'erations.{}',
         client_factory=cf_integration_runtime)
     with self.command_group('datafactory integration-runtime', datafactory_integration_runtime,
                             client_factory=cf_integration_runtime, is_experimental=True) as g:

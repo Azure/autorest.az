@@ -25,7 +25,7 @@ export class CliTestScenario extends TemplateBase {
             this.relativePath = path.join(PathConstants.testFolder, PathConstants.latestFolder, testFilename);
         }
         else {
-            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.testFolder, PathConstants.latestFolder, testFilename);
+            this.relativePath = path.join(model.AzextFolder, PathConstants.testFolder, PathConstants.latestFolder, testFilename);
         }
         this.configValue = configValue;
     }

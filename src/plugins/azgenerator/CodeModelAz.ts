@@ -69,6 +69,7 @@ export interface CodeModelAz {
     SelectNextExtension(): boolean;
     CliGenerationMode: GenerationMode;
     CliOutputFolder: string;
+    AzextFolder: string;
 
     IsCliCore: boolean;
     SDK_NeedSDK: boolean;
@@ -205,7 +206,6 @@ export interface CodeModelAz {
 
     // Python
     PythonMgmtClient: string;
-    PythonOperationsName: string;
 
     GenerateTestInit(): void;
     SelectFirstExample(): boolean;

@@ -17,8 +17,7 @@ def load_command_table(self, _):
 
     from azext_managed_network.generated._client_factory import cf_mn
     managed_network_mn = CliCommandType(
-        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_operations#Mana'
-        'gedNetworkOperations.{}',
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations#ManagedNetworkOperations.{}',
         client_factory=cf_mn)
     with self.command_group('managed-network mn', managed_network_mn, client_factory=cf_mn,
                             is_experimental=True) as g:
@@ -30,8 +29,7 @@ def load_command_table(self, _):
 
     from azext_managed_network.generated._client_factory import cf_scope_assignment
     managed_network_scope_assignment = CliCommandType(
-        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._scope_assignment_operations#Sco'
-        'peAssignmentOperations.{}',
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations#ScopeAssignmentOperations.{}',
         client_factory=cf_scope_assignment)
     with self.command_group('managed-network mn scope-assignment', managed_network_scope_assignment,
                             client_factory=cf_scope_assignment, is_preview=True) as g:
@@ -43,8 +41,8 @@ def load_command_table(self, _):
 
     from azext_managed_network.generated._client_factory import cf_managed_network_group
     managed_network_managed_network_group = CliCommandType(
-        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_group_operation'
-        's#ManagedNetworkGroupOperations.{}',
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations#ManagedNetworkGroupOperations.{}'
+        '',
         client_factory=cf_managed_network_group)
     with self.command_group('managed-network mn group', managed_network_managed_network_group,
                             client_factory=cf_managed_network_group, is_preview=True) as g:
@@ -57,8 +55,8 @@ def load_command_table(self, _):
 
     from azext_managed_network.generated._client_factory import cf_managed_network_peering_policy
     managed_network_managed_network_peering_policy = CliCommandType(
-        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_peering_policy_'
-        'operations#ManagedNetworkPeeringPolicyOperations.{}',
+        operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations#ManagedNetworkPeeringPolicyOpera'
+        'tions.{}',
         client_factory=cf_managed_network_peering_policy)
     with self.command_group('managed-network managed-network-peering-policy',
                             managed_network_managed_network_peering_policy,

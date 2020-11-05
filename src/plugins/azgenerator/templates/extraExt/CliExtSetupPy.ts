@@ -80,7 +80,7 @@ export class CliExtSetupPy extends TemplateBase {
         output.push("# HISTORY.rst entry.");
         output.push("VERSION = '0.1.0'");
         output.push("try:");
-        output.push("    from azext_" + model.Extension_NameUnderscored + ".manual.version import VERSION");
+        output.push("    from " + model.AzextFolder + ".manual.version import VERSION");
         output.push("except ImportError:");
         output.push("    pass");
         output.push("")
@@ -111,7 +111,7 @@ export class CliExtSetupPy extends TemplateBase {
         output.push("");
 
         output.push("try:");
-        output.push("    from azext_" + model.Extension_NameUnderscored + ".manual.dependency import DEPENDENCIES");
+        output.push("    from " + model.AzextFolder  + ".manual.dependency import DEPENDENCIES");
         output.push("except ImportError:");
         output.push("    pass");
         output.push("");
@@ -132,7 +132,7 @@ export class CliExtSetupPy extends TemplateBase {
         output.push("    classifiers=CLASSIFIERS,");
         output.push("    packages=find_packages(),");
         output.push("    install_requires=DEPENDENCIES,");
-        output.push("    package_data={'azext_" + model.Extension_NameUnderscored + "': ['azext_metadata.json']},");
+        output.push("    package_data={'" + model.AzextFolder + "': ['azext_metadata.json']},");
         output.push(")");
         output.push("");
 

@@ -31,7 +31,7 @@ import { deepCopy } from '../../utils/helper';
 export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
-        this.azDirectory = "azext_" + this.model.Extension_NameUnderscored;
+        this.azDirectory = model.AzextFolder;
     }
 
     public async generateAll(): Promise<void> {

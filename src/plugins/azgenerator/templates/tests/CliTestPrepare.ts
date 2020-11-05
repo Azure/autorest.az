@@ -12,7 +12,7 @@ export class CliTestPrepare extends TemplateBase {
             this.relativePath = path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.preparersFile);
         }
         else {
-            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.preparersFile);
+            this.relativePath = path.join(model.AzextFolder, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.preparersFile);
         }
     }
 

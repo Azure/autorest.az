@@ -466,6 +466,7 @@ export async function processRequest(host: Host) {
         session.model.language['az']['sdkTrack1'] = isTrack1;
         session.model.language['az']['sdkNoFlatten'] = sdkNoFlatten;
         session.model.info['extensionMode'] = extensionMode;
+        await processFolderPath(session);
         const plugin = new Merger(session);
         const result = await plugin.process();
         host.WriteFile('azmerger-cli-temp-output-after.yaml', serialize(result));
@@ -474,6 +475,30 @@ export async function processRequest(host: Host) {
             console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
         }
         throw E;
+    }
+
+
+    async function processFolderPath(session: Session<CodeModel>) {
+        let options = await session.getValue("az");
+        let extensionName = options['extensions'];
+        let azOutputFolder = await host.GetValue("az-output-folder");
+        let pythonSdkOutputFolder = await host.GetValue("python-sdk-output-folder");
+        let sdkFolder = pythonSdkOutputFolder.replace(azOutputFolder, "");
+        if (sdkFolder.startsWith("/")) {
+            sdkFolder = sdkFolder.substring(1, sdkFolder.length);
+        }
+        let azextFolder = sdkFolder.split("/")[0];
+        if (!isNullOrUndefined(azextFolder) && azextFolder.startsWith("azext_")) {
+            session.model.language['az']['azextFolder'] = azextFolder;
+        } else {
+            session.model.language['az']['azextFolder'] = "azext_" + extensionName.replace(/-/g, "_");
+        }
+        if (!session.model.language['az']['sdkNeeded'] && !isNullOrUndefined(options['namespace'])) {
+            session.model.language['az']['pythonNamespace'] = options['namespace'];
+        } else if(session.model.language['az']['sdkNeeded'] || isNullOrUndefined(options['namespace'])) {
+            session.model.language['az']['pythonNamespace'] = sdkFolder.replace(/\//g, ".");
+        }
+        
     }
 
 }

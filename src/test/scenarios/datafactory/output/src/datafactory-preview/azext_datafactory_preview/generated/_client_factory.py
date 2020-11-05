@@ -11,7 +11,7 @@
 
 def cf_datafactory_cl(cli_ctx, *_):
     from azure.cli.core.commands.client_factory import get_mgmt_service_client
-    from ..vendored_sdks.datafactory import DFAZManagementClient
+    from azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory import DFAZManagementClient
     return get_mgmt_service_client(cli_ctx,
                                    DFAZManagementClient)
 

@@ -32,26 +32,26 @@ import { deepCopy } from '../../utils/helper';
 export class AzExtensionFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
-        this.azDirectory = "azext_" + this.model.Extension_NameUnderscored + "/";
+        this.azDirectory = model.AzextFolder;
     }
 
     public async generateAll(): Promise<void> {
-        this.files[this.azDirectory + "generated/_params.py"] = GenerateAzureCliParams(this.model, this.isDebugMode);
-        this.files[this.azDirectory + "generated/commands.py"] = GenerateAzureCliCommands(this.model);
-        this.files[this.azDirectory + "generated/custom.py"] = GenerateAzureCliCustom(this.model);
-        this.files[this.azDirectory + "generated/_client_factory.py"] = GenerateAzureCliClientFactory(this.model);
-        this.files[this.azDirectory + "generated/_validators.py"] = GenerateAzureCliValidators(this.model);
-        this.files[this.azDirectory + "generated/action.py"] = GenerateAzureCliActions(this.model);
-        this.files[this.azDirectory + "generated/__init__.py"] = GenerateNamespaceInit(this.model);
-        this.files[this.azDirectory + "tests/latest/__init__.py"] = GenerateNamespaceInit(this.model);
+        this.files[path.join(this.azDirectory, "generated/_params.py")] = GenerateAzureCliParams(this.model, this.isDebugMode);
+        this.files[path.join(this.azDirectory, "generated/commands.py")] = GenerateAzureCliCommands(this.model);
+        this.files[path.join(this.azDirectory, "generated/custom.py")] = GenerateAzureCliCustom(this.model);
+        this.files[path.join(this.azDirectory, "generated/_client_factory.py")] = GenerateAzureCliClientFactory(this.model);
+        this.files[path.join(this.azDirectory, "generated/_validators.py")] = GenerateAzureCliValidators(this.model);
+        this.files[path.join(this.azDirectory, "generated/action.py")] = GenerateAzureCliActions(this.model);
+        this.files[path.join(this.azDirectory, "generated/__init__.py")] = GenerateNamespaceInit(this.model);
+        this.files[path.join(this.azDirectory, "tests/latest/__init__.py")] = GenerateNamespaceInit(this.model);
 
-        this.files[this.azDirectory + "generated/_help.py"] = GenerateAzureCliHelp(this.model, this.isDebugMode);
+        this.files[path.join(this.azDirectory, "generated/_help.py")] = GenerateAzureCliHelp(this.model, this.isDebugMode);
 
 
-        this.files[this.azDirectory + "manual/__init__.py"] = GenerateNamespaceInit(this.model);
+        this.files[path.join(this.azDirectory,  "manual/__init__.py")] = GenerateNamespaceInit(this.model);
 
         if (this.model.SDK_NeedSDK) {
-            this.files[this.azDirectory + "vendored_sdks/__init__.py"] = GenerateNamespaceInit(this.model);
+            this.files[path.join(this.azDirectory, "vendored_sdks/__init__.py")] = GenerateNamespaceInit(this.model);
         }
 
         await this.generateFullSingleAndAddtoOutput(new CliTopAction(this.model, this.isDebugMode));

@@ -18,7 +18,7 @@ export class CliTopInit extends TemplateBase {
             this.relativePath = path.join(PathConstants.initFile);
         }
         else {
-            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.initFile);
+            this.relativePath = path.join(model.AzextFolder, PathConstants.initFile);
         }
     }
 
@@ -114,7 +114,7 @@ export class CliTopInit extends TemplateBase {
         let header: HeaderGenerator = new HeaderGenerator();
         header.addFromImport(model.CliCoreLib, ["AzCommandsLoader"]);
         var output: string[] = header.getLines();
-        let importPath = "azext_" + model.Extension_NameUnderscored;
+        let importPath = model.AzextFolder;
         if (model.IsCliCore) {
             importPath = "";
         }
@@ -134,7 +134,7 @@ export class CliTopInit extends TemplateBase {
         if (model.IsCliCore) {
             output.push("            operations_tmpl='azure.cli.command_modules." + model.Extension_NameUnderscored + ".custom#{}',");
         } else {
-            output.push("            operations_tmpl='azext_" + model.Extension_NameUnderscored + ".custom#{}',");
+            output.push("            operations_tmpl='" + model.AzextFolder + ".custom#{}',");
         }
         output.push("            client_factory=cf_" + model.Extension_NameUnderscored + "_cl)");
         output.push(`        parent = super(${model.Extension_NameClass}CommandsLoader, self)`);

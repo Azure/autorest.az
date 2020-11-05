@@ -11,7 +11,7 @@
 
 def cf_synapse_cl(cli_ctx, *_):
     from azure.cli.core.commands.client_factory import get_mgmt_service_client
-    from ..vendored_sdks.synapse import SynapseManagementClient
+    from azext_synapse.vendored_sdks.synapse import SynapseManagementClient
     return get_mgmt_service_client(cli_ctx,
                                    SynapseManagementClient)
 
