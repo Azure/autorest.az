@@ -10,213 +10,67 @@
 
 import os
 from azure.cli.testsdk import ScenarioTest
-from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
 from .preparers import VirtualNetworkPreparer
+from .example_steps import step_managednetworksput
+from .example_steps import step_managementnetworkgroupsput
+from .example_steps import step_managednetworkpeeringpoliciesput
+from .example_steps import step_managednetworksget
+from azure.cli.testsdk import ResourceGroupPreparer
+from .preparers import VirtualNetworkPreparer
+from .example_steps import step_managednetworkslistbyresourcegroup
+from .example_steps import step_managednetworkslistbysubscription
+from .example_steps import step_managednetworksdelete
+from .example_steps import step_managementnetworkgroupsget
+from azure.cli.testsdk import ResourceGroupPreparer
+from .preparers import VirtualNetworkPreparer
+from .example_steps import step_managednetworksgroupslistbymanagednetwork
+from .example_steps import step_managednetworkpeeringpoliciesget
+from .example_steps import step_managednetworkpeeringpolicieslistbymanagednet
+from .example_steps import step_managednetworkpeeringpoliciesdelete
+from .example_steps import step_managementnetworkgroupsdelete
+from .. import (
+    try_manual,
+    raise_if,
+    calc_coverage
+)
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
-# Env setup
+# Env setup_scenario1
 @try_manual
-def setup(test, rg):
+def setup_scenario1(test, rg):
     pass
 
 
-# EXAMPLE: ManagedNetworksPut
+# Env cleanup_scenario1
 @try_manual
-def step_managednetworksput(test, rg):
-    test.cmd('az managed-network mn create '
-             '--location "eastus" '
-             '--properties "{{\\"managementGroups\\":[{{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20'
-             '000000-0001-0000-0000-000000000000\\"}},{{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20'
-             '000000-0002-0000-0000-000000000000\\"}}],\\"subscriptions\\":[{{\\"id\\":\\"subscriptionA\\"}},{{\\"id\\"'
-             ':\\"subscriptionB\\"}}],\\"virtualNetworks\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGro'
-             'ups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn}\\"}},{{\\"id\\":\\"/subscriptions/{subscription'
-             '_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_2}\\"}}],\\"subnets\\":[{{\\"id'
-             '\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{'
-             'vn_3}/subnets/default\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M'
-             'icrosoft.Network/virtualNetworks/{vn_3}/subnets/default\\"}}]}}" '
-             '--name "{myManagedNetwork}" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check("location", "eastus", case_sensitive=False),
-                 test.check("name", "{myManagedNetwork}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: ManagementNetworkGroupsPut
-@try_manual
-def step_managementnetworkgroupsput(test, rg):
-    test.cmd('az managed-network mn group create '
-             '--management-groups "[]" '
-             '--subnets id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/V'
-             'netA/subnets/subnetA" '
-             '--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualN'
-             'etworks/VnetA" '
-             '--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualN'
-             'etworks/VnetB" '
-             '--group-name "{myManagedNetworkGroup}" '
-             '--managed-network-name "{myManagedNetwork}" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check("managementGroups", []),
-                 test.check("name", "{myManagedNetworkGroup}", case_sensitive=False),
-             ])
-    test.cmd('az managed-network mn group wait --created '
-             '--group-name "{myManagedNetworkGroup}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: ManagedNetworkPeeringPoliciesPut
-@try_manual
-def step_managednetworkpeeringpoliciesput(test, rg):
-    test.cmd('az managed-network managed-network-peering-policy hub-and-spoke-topology create '
-             '--managed-network-name "{myManagedNetwork}" '
-             '--policy-name "{myManagedNetworkPeeringPolicy}" '
-             '--hub id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetwork'
-             's/{vn_4}" '
-             '--spokes id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/mana'
-             'gedNetworks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: ManagedNetworksGet
-@try_manual
-def step_managednetworksget(test, rg):
-    test.cmd('az managed-network mn get-modify '
-             '--name "{myManagedNetwork}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: ManagedNetworksListByResourceGroup
-@try_manual
-def step_managednetworkslistbyresourcegroup(test, rg):
-    test.cmd('az managed-network mn list '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: ManagedNetworksListBySubscription
-@try_manual
-def step_managednetworkslistbysubscription(test, rg):
-    test.cmd('az managed-network mn list '
-             '-g ""',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: ManagedNetworksDelete
-@try_manual
-def step_managednetworksdelete(test, rg):
-    test.cmd('az managed-network mn delete -y '
-             '--name "{myManagedNetwork}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: ManagementNetworkGroupsGet
-@try_manual
-def step_managementnetworkgroupsget(test, rg):
-    test.cmd('az managed-network mn group show '
-             '--group-name "{myManagedNetworkGroup}" '
-             '--managed-network-name "{myManagedNetwork}" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check("managementGroups", []),
-                 test.check("name", "{myManagedNetworkGroup}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: ManagedNetworksGroupsListByManagedNetwork
-@try_manual
-def step_managednetworksgroupslistbymanagednetwork(test, rg):
-    test.cmd('az managed-network mn group list '
-             '--managed-network-name "{myManagedNetwork}" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: ManagedNetworkPeeringPoliciesGet
-@try_manual
-def step_managednetworkpeeringpoliciesget(test, rg):
-    test.cmd('az managed-network managed-network-peering-policy show '
-             '--managed-network-name "{myManagedNetwork}" '
-             '--policy-name "{myManagedNetworkPeeringPolicy}" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check("name", "{myManagedNetworkPeeringPolicy}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: ManagedNetworkPeeringPoliciesListByManagedNetwork
-@try_manual
-def step_managednetworkpeeringpolicieslistbymanagednet(test, rg):
-    test.cmd('az managed-network managed-network-peering-policy list '
-             '--managed-network-name "{myManagedNetwork}" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: ManagedNetworkPeeringPoliciesDelete
-@try_manual
-def step_managednetworkpeeringpoliciesdelete(test, rg):
-    test.cmd('az managed-network managed-network-peering-policy delete -y '
-             '--managed-network-name "{myManagedNetwork}" '
-             '--policy-name "{myManagedNetworkPeeringPolicy}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: ManagementNetworkGroupsDelete
-@try_manual
-def step_managementnetworkgroupsdelete(test, rg):
-    test.cmd('az managed-network mn group delete -y '
-             '--group-name "{myManagedNetworkGroup}" '
-             '--managed-network-name "{myManagedNetwork}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# Env cleanup
-@try_manual
-def cleanup(test, rg):
+def cleanup_scenario1(test, rg):
     pass
 
 
-# Testcase
+# Testcase: scenario1
 @try_manual
-def call_scenario(test, rg):
-    setup(test, rg)
-    step_managednetworksput(test, rg)
-    step_managementnetworkgroupsput(test, rg)
-    step_managednetworkpeeringpoliciesput(test, rg)
-    step_managednetworksget(test, rg)
-    step_managednetworkslistbyresourcegroup(test, rg)
-    step_managednetworkslistbysubscription(test, rg)
-    step_managednetworksdelete(test, rg)
-    step_managementnetworkgroupsget(test, rg)
-    step_managednetworksgroupslistbymanagednetwork(test, rg)
-    step_managednetworkpeeringpoliciesget(test, rg)
-    step_managednetworkpeeringpolicieslistbymanagednet(test, rg)
-    step_managednetworkpeeringpoliciesdelete(test, rg)
-    step_managementnetworkgroupsdelete(test, rg)
-    cleanup(test, rg)
+def call_scenario1(test, rg):
+    setup_scenario1(test, rg)
+    step_managednetworksput(test, rg, checks=[
+        test.check("location", "eastus", case_sensitive=False),
+        test.check("name", "{myManagedNetwork}", case_sensitive=False),
+    ])
+    step_managementnetworkgroupsput(test, rg, checks=[
+        test.check("managementGroups", []),
+        test.check("name", "{myManagedNetworkGroup}", case_sensitive=False),
+    ])
+    step_managednetworkpeeringpoliciesput(test, rg, checks=[])
+    step_managednetworksget(test, rg, checks=[])
+    cleanup_scenario1(test, rg)
 
 
+# Test class for ${scenarioName}
 @try_manual
-class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
+class ManagedNetworksscenario1Test(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
@@ -236,6 +90,110 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
             'myManagedNetworkPeeringPolicy': self.create_random_name(prefix='myHubAndSpoke'[:6], length=13),
         })
 
-        call_scenario(self, rg)
+        call_scenario1(self, rg)
         calc_coverage(__file__)
         raise_if()
+
+
+# Env setup_scenario2
+@try_manual
+def setup_scenario2(test, rg):
+    pass
+
+
+# Env cleanup_scenario2
+@try_manual
+def cleanup_scenario2(test, rg):
+    pass
+
+
+# Testcase: scenario2
+@try_manual
+def call_scenario2(test, rg):
+    setup_scenario2(test, rg)
+    step_managednetworkslistbyresourcegroup(test, rg, checks=[])
+    step_managednetworkslistbysubscription(test, rg, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_managednetworksdelete(test, rg, checks=[])
+    step_managementnetworkgroupsget(test, rg, checks=[])
+    cleanup_scenario2(test, rg)
+
+
+# Test class for ${scenarioName}
+@try_manual
+class ManagedNetworksscenario2Test(ScenarioTest):
+
+    @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
+    def test_managed_network(self, rg):
+
+        self.kwargs.update({
+            'subscription_id': self.get_subscription_id()
+        })
+
+        self.kwargs.update({
+            'myManagedNetwork': self.create_random_name(prefix='myManagedNetwork'[:8], length=16),
+            'myScopeAssignment': self.create_random_name(prefix='subscriptionCAssignment'[:11], length=23),
+            'myManagedNetworkGroup': self.create_random_name(prefix='myManagedNetworkGroup1'[:11], length=22),
+            'myManagedNetworkPeeringPolicy': self.create_random_name(prefix='myHubAndSpoke'[:6], length=13),
+        })
+
+        call_scenario2(self, rg)
+        calc_coverage(__file__)
+        raise_if()
+
+
+# Env setup_scenario3
+@try_manual
+def setup_scenario3(test, rg):
+    pass
+
+
+# Env cleanup_scenario3
+@try_manual
+def cleanup_scenario3(test, rg):
+    pass
+
+
+# Testcase: scenario3
+@try_manual
+def call_scenario3(test, rg):
+    setup_scenario3(test, rg)
+    step_managednetworksgroupslistbymanagednetwork(test, rg, checks=[])
+    step_managednetworkpeeringpoliciesget(test, rg, checks=[])
+    step_managednetworkpeeringpolicieslistbymanagednet(test, rg, checks=[])
+    step_managednetworkpeeringpoliciesdelete(test, rg, checks=[])
+    step_managementnetworkgroupsdelete(test, rg, checks=[])
+    cleanup_scenario3(test, rg)
+
+
+# Test class for ${scenarioName}
+@try_manual
+class ManagedNetworksscenario3Test(ScenarioTest):
+
+    @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
+    def test_managed_network(self, rg):
+
+        self.kwargs.update({
+            'subscription_id': self.get_subscription_id()
+        })
+
+        self.kwargs.update({
+            'myManagedNetwork': self.create_random_name(prefix='myManagedNetwork'[:8], length=16),
+            'myScopeAssignment': self.create_random_name(prefix='subscriptionCAssignment'[:11], length=23),
+            'myManagedNetworkGroup': self.create_random_name(prefix='myManagedNetworkGroup1'[:11], length=22),
+            'myManagedNetworkPeeringPolicy': self.create_random_name(prefix='myHubAndSpoke'[:6], length=13),
+        })
+
+        call_scenario3(self, rg)
+        calc_coverage(__file__)
+        raise_if()
+

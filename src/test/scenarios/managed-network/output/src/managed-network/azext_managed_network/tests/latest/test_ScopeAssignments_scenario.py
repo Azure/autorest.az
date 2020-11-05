@@ -10,86 +10,58 @@
 
 import os
 from azure.cli.testsdk import ScenarioTest
-from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
 from .preparers import VirtualNetworkPreparer
+from .example_steps import step_scopeassignmentsput
+from .example_steps import step_scopeassignmentsget
+from .example_steps import step_scopeassignmentslist
+from .example_steps import step_scopeassignmentsdelete
+from .. import (
+    try_manual,
+    raise_if,
+    calc_coverage
+)
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
-# Env setup
+# Env setup_scenario
 @try_manual
-def setup(test, rg):
+def setup_scenario(test, rg):
     pass
 
 
-# EXAMPLE: ScopeAssignmentsPut
+# Env cleanup_scenario
 @try_manual
-def step_scopeassignmentsput(test, rg):
-    test.cmd('az managed-network mn scope-assignment create '
-             '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Mana'
-             'gedNetwork/managedNetworks/{myManagedNetwork}" '
-             '--scope "subscriptions/subscriptionC" '
-             '--name "{myScopeAssignment}"',
-             checks=[
-                 test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M"
-                            "icrosoft.ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
-                 test.check("name", "{myScopeAssignment}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: ScopeAssignmentsGet
-@try_manual
-def step_scopeassignmentsget(test, rg):
-    test.cmd('az managed-network mn scope-assignment show '
-             '--scope "subscriptions/subscriptionC" '
-             '--name "{myScopeAssignment}"',
-             checks=[
-                 test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/M"
-                            "icrosoft.ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
-                 test.check("name", "{myScopeAssignment}", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: ScopeAssignmentsList
-@try_manual
-def step_scopeassignmentslist(test, rg):
-    test.cmd('az managed-network mn scope-assignment list '
-             '--scope "subscriptions/subscriptionC"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: ScopeAssignmentsDelete
-@try_manual
-def step_scopeassignmentsdelete(test, rg):
-    test.cmd('az managed-network mn scope-assignment delete -y '
-             '--scope "subscriptions/subscriptionC" '
-             '--name "{myScopeAssignment}"',
-             checks=[])
-
-
-# Env cleanup
-@try_manual
-def cleanup(test, rg):
+def cleanup_scenario(test, rg):
     pass
 
 
-# Testcase
+# Testcase: Scenario
 @try_manual
 def call_scenario(test, rg):
-    setup(test, rg)
-    step_scopeassignmentsput(test, rg)
-    step_scopeassignmentsget(test, rg)
-    step_scopeassignmentslist(test, rg)
-    step_scopeassignmentsdelete(test, rg)
-    cleanup(test, rg)
+    setup_scenario(test, rg)
+    step_scopeassignmentsput(test, rg, checks=[
+        test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft."
+                   "ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
+        test.check("name", "{myScopeAssignment}", case_sensitive=False),
+    ])
+    step_scopeassignmentsget(test, rg, checks=[
+        test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft."
+                   "ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
+        test.check("name", "{myScopeAssignment}", case_sensitive=False),
+    ])
+    step_scopeassignmentslist(test, rg, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_scopeassignmentsdelete(test, rg, checks=[])
+    cleanup_scenario(test, rg)
 
 
+# Test class for ${scenarioName}
 @try_manual
-class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
+class ScopeAssignmentsScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
@@ -112,3 +84,4 @@ class ManagedNetworkManagementClientScenarioTest(ScenarioTest):
         call_scenario(self, rg)
         calc_coverage(__file__)
         raise_if()
+

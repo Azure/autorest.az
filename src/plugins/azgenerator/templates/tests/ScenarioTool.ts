@@ -3,7 +3,7 @@ import * as path from "path"
 import { CommandExample, ExampleParam } from "../../CodeModelAz";
 import { deepCopy, isDict, ToCamelCase, ToPythonString, changeCamelToDash, MergeSort } from "../../../../utils/helper"
 import { EnglishPluralizationService } from "@azure-tools/codegen";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, isArray } from "util";
 import { stringify } from "querystring";
 
 export let azOptions = {}
@@ -86,8 +86,7 @@ export function GenerateDefaultTestScenarioByDependency(
 
 export function PrintTestScenario(testScenario: any[]) {
     console.warn("");
-    console.warn("NO TEST SCENARIO PROVIDED - DEFAULT WILL BE USED");
-    console.warn("ADD FOLLOWING SECTION TO readme.cli.md FILE TO MODIFY IT");
+    console.warn("BELOW TEST SCENARIO SECTION CAN BE USED IN readme.cli.md");
     console.warn("--------------------------------------------------------");
     console.warn("  test-scenario:");
 
@@ -98,6 +97,40 @@ export function PrintTestScenario(testScenario: any[]) {
     console.warn("--------------------------------------------------------");
 }
 
+export function GroupTestScenario(testScenario: any, extensionName: string) {
+    if (isNullOrUndefined(testScenario))    return testScenario;
+
+    let ret = {};
+    const defaultScenario = "Scenario";
+
+    function addScenario(groupName: string, scenarioName: string, items: any[]) {
+        if(!ret.hasOwnProperty(groupName))  ret[groupName] = {};
+        if(!ret[groupName].hasOwnProperty(scenarioName))    ret[groupName][scenarioName] = [];
+        ret[groupName][scenarioName].push(...items);
+    }
+
+    if (isDict(testScenario)) {
+        let keys = Object.getOwnPropertyNames(testScenario);
+        for (var key of keys) {
+            let item = testScenario[key];
+            let splitedName = key.split("_");
+            if (splitedName.length > 1) {
+                addScenario(splitedName[0], splitedName.slice(1).join("_"), item);
+            }
+            else {
+                addScenario(splitedName[0], defaultScenario, item);
+            }
+        }
+    }
+    else if (isArray(testScenario))
+    {
+        for (var ci = 0; ci < testScenario.length; ci++) {
+            addScenario(extensionName, defaultScenario, [testScenario[ci]]);
+        }
+    }
+
+    return ret;
+}
 
 
 const SUBSCRIPTIONS = "subscriptions";

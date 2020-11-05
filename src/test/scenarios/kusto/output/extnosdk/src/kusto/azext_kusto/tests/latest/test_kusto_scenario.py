@@ -10,590 +10,174 @@
 
 import os
 from azure.cli.testsdk import ScenarioTest
-from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
+from .example_steps import step__attacheddatabaseconfigurations_put
+from .example_steps import step__attacheddatabaseconfigurations_get
+from .example_steps import step__attacheddatabaseconfigurations_get2
+from .example_steps import step__clusters_put_kustoclusterscreateorupdate
+from .example_steps import step__clusters_get_kustoclustersget
+from .example_steps import step__clusters_get_kustoclusterslist
+from .example_steps import step__clusters_get
+from .example_steps import step__clusters_get_kustoclusterslistresourceskus
+from .example_steps import step__clusters_get_kustoclusterslistskus
+from .example_steps import step__clusters_patch_kustoclustersupdate
+from .example_steps import step__clusters_post
+from .example_steps import step__clusters_post2
+from .example_steps import step__clusters_post3
+from .example_steps import step__clusters_post4
+from .example_steps import step__clusters_post5
+from .example_steps import step__clusters_post6
+from .example_steps import step__clusters_post_kustoclustersstart
+from .example_steps import step__clusters_post_kustoclustersstop
+from .example_steps import step__clusterprincipalassignments_put
+from .example_steps import step__clusterprincipalassignments_get
+from .example_steps import step__clusterprincipalassignments_get2
+from .example_steps import step__databaseprincipalassignments_put
+from .example_steps import step__databaseprincipalassignments_get
+from .example_steps import step__clusterprincipalassignments_get2
+from .example_steps import step__databaseprincipalassignments_delete
+from .example_steps import step__databases_put_kustodatabasescreateorupdate
+from .example_steps import step__databases_get_kustodatabasesget
+from .example_steps import step__databases_get_kustodatabaseslistbycluster
+from .example_steps import step__databases_patch_kustodatabasesupdate
+from .example_steps import step__databases_post_kustodatabaseaddprincipals
+from .example_steps import step__databases_post_kustodatabaselistprincipals
+from .example_steps import step__databases_post_kustodatabaseremoveprincipals
+from .example_steps import step__databases_delete_kustodatabasesdelete
+from .example_steps import step__dataconnections_put
+from .example_steps import step__databases_get_kustodatabaseslistbycluster
+from .example_steps import step__dataconnections_get_kustodataconnectionsget
+from .example_steps import step__dataconnections_patch
+from .example_steps import step__dataconnections_post
+from .example_steps import step__dataconnections_delete
+from .example_steps import step__clusters_delete_kustoclustersdelete
+from .example_steps import step__attacheddatabaseconfigurations_delete
+from .example_steps import step__clusterprincipalassignments_delete
+from .. import (
+    try_manual,
+    raise_if,
+    calc_coverage
+)
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
-# Env setup
+# Env setup_scenario
 @try_manual
-def setup(test, rg):
+def setup_scenario(test, rg):
     pass
 
 
-# EXAMPLE: /Clusters/get/KustoClustersListResourceSkus
+# Env cleanup_scenario
 @try_manual
-def step__clusters_get_kustoclusterslistresourceskus(test, rg):
-    test.cmd('az kusto cluster list-sku '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Clusters/put/KustoClustersCreateOrUpdate
-@try_manual
-def step__clusters_put_kustoclusterscreateorupdate(test, rg):
-    test.cmd('az kusto cluster create '
-             '--name "{myCluster}" '
-             '--identity-type "SystemAssigned" '
-             '--location "westus" '
-             '--enable-double-encryption false '
-             '--enable-purge true '
-             '--enable-streaming-ingest true '
-             '--sku name="Standard_L8s" capacity=2 tier="Standard" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check("name", "{myCluster}", case_sensitive=False),
-                 test.check("identity.type", "SystemAssigned", case_sensitive=False),
-                 test.check("location", "westus", case_sensitive=False),
-                 test.check("enableDoubleEncryption", False),
-                 test.check("enablePurge", True),
-                 test.check("enableStreamingIngest", True),
-                 test.check("sku.name", "Standard_L8s", case_sensitive=False),
-                 test.check("sku.capacity", 2),
-                 test.check("sku.tier", "Standard", case_sensitive=False),
-             ])
-    test.cmd('az kusto cluster wait --created '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Clusters/get/KustoClustersGet
-@try_manual
-def step__clusters_get_kustoclustersget(test, rg):
-    test.cmd('az kusto cluster show '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check("name", "{myCluster}", case_sensitive=False),
-                 test.check("identity.type", "SystemAssigned", case_sensitive=False),
-                 test.check("location", "westus", case_sensitive=False),
-                 test.check("enableStreamingIngest", True),
-                 test.check("sku.name", "Standard_L8s", case_sensitive=False),
-                 test.check("sku.capacity", 2),
-                 test.check("sku.tier", "Standard", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: /Clusters/get/KustoClustersList
-@try_manual
-def step__clusters_get_kustoclusterslist(test, rg):
-    test.cmd('az kusto cluster list '
-             '-g ""',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: /Clusters/get/KustoClustersListByResourceGroup
-@try_manual
-def step__clusters_get(test, rg):
-    test.cmd('az kusto cluster list '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: /Clusters/patch/KustoClustersUpdate
-@try_manual
-def step__clusters_patch_kustoclustersupdate(test, rg):
-    test.cmd('az kusto cluster update '
-             '--name "{myCluster}" '
-             '--identity-type "SystemAssigned" '
-             '--location "westus" '
-             '--enable-purge true '
-             '--enable-streaming-ingest true '
-             '--key-vault-properties key-name="keyName" key-vault-uri="https://dummy.keyvault.com" '
-             'key-version="keyVersion" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check("name", "{myCluster}", case_sensitive=False),
-                 test.check("identity.type", "SystemAssigned", case_sensitive=False),
-                 test.check("location", "westus", case_sensitive=False),
-                 test.check("enablePurge", True),
-                 test.check("enableStreamingIngest", True),
-                 test.check("sku.name", "Standard_L8s", case_sensitive=False),
-                 test.check("sku.capacity", 2),
-                 test.check("sku.tier", "Standard", case_sensitive=False),
-                 test.check("keyVaultProperties.keyName", "keyName", case_sensitive=False),
-                 test.check("keyVaultProperties.keyVaultUri", "https://dummy.keyvault.com", case_sensitive=False),
-                 test.check("keyVaultProperties.keyVersion", "keyVersion", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: /Clusters/post/KustoClusterDetachFollowerDatabases
-@try_manual
-def step__clusters_post(test, rg):
-    test.cmd('az kusto cluster detach-follower-database '
-             '--name "{myCluster}" '
-             '--attached-database-configuration-name "{myAttachedDatabaseConfiguration}" '
-             '--cluster-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Kusto/clu'
-             'sters/{myCluster2}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Clusters/post/KustoClusterDiagnoseVirtualNetwork
-@try_manual
-def step__clusters_post2(test, rg):
-    test.cmd('az kusto cluster diagnose-virtual-network '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Clusters/post/KustoClusterListFollowerDatabases
-@try_manual
-def step__clusters_post3(test, rg):
-    test.cmd('az kusto cluster list-follower-database '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Clusters/post/KustoClusterListLanguageExtensions
-@try_manual
-def step__clusters_post4(test, rg):
-    test.cmd('az kusto cluster list-language-extension '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Clusters/post/KustoClusterRemoveLanguageExtensions
-@try_manual
-def step__clusters_post5(test, rg):
-    test.cmd('az kusto cluster remove-language-extension '
-             '--name "{myCluster}" '
-             '--value language-extension-name="PYTHON" '
-             '--value language-extension-name="R" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Clusters/post/KustoClustersStart
-@try_manual
-def step__clusters_post_kustoclustersstart(test, rg):
-    test.cmd('az kusto cluster start '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /AttachedDatabaseConfigurations/get/KustoAttachedDatabaseConfigurationsListByCluster
-@try_manual
-def step__attacheddatabaseconfigurations_get(test, rg):
-    test.cmd('az kusto attached-database-configuration list '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Clusters/post/KustoClusterAddLanguageExtensions
-@try_manual
-def step__clusters_post6(test, rg):
-    test.cmd('az kusto cluster add-language-extension '
-             '--name "{myCluster}" '
-             '--value language-extension-name="PYTHON" '
-             '--value language-extension-name="R" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Clusters/post/KustoClustersStop
-@try_manual
-def step__clusters_post_kustoclustersstop(test, rg):
-    test.cmd('az kusto cluster stop '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /AttachedDatabaseConfigurations/put/AttachedDatabaseConfigurationsCreateOrUpdate
-@try_manual
-def step__attacheddatabaseconfigurations_put(test, rg):
-    test.cmd('az kusto attached-database-configuration create '
-             '--name "{myAttachedDatabaseConfiguration2}" '
-             '--cluster-name "{myCluster}" '
-             '--location "westus" '
-             '--cluster-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Kusto/Clu'
-             'sters/{myCluster3}" '
-             '--database-name "kustodatabase" '
-             '--default-principals-modification-kind "Union" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check("location", "westus", case_sensitive=False),
-                 test.check("clusterResourceId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Micros"
-                            "oft.Kusto/Clusters/{myCluster3}", case_sensitive=False),
-                 test.check("defaultPrincipalsModificationKind", "Union", case_sensitive=False),
-             ])
-    test.cmd('az kusto attached-database-configuration wait --created '
-             '--name "{myAttachedDatabaseConfiguration2}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /AttachedDatabaseConfigurations/get/AttachedDatabaseConfigurationsGet
-@try_manual
-def step__attacheddatabaseconfigurations_get2(test, rg):
-    test.cmd('az kusto attached-database-configuration show '
-             '--name "{myAttachedDatabaseConfiguration2}" '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check("location", "westus", case_sensitive=False),
-                 test.check("defaultPrincipalsModificationKind", "Union", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: /Clusters/get/KustoClustersListSkus
-@try_manual
-def step__clusters_get_kustoclusterslistskus(test, rg):
-    test.cmd('az kusto cluster list-sku '
-             '-g ""',
-             checks=[])
-
-
-# EXAMPLE: /AttachedDatabaseConfigurations/delete/AttachedDatabaseConfigurationsDelete
-@try_manual
-def step__attacheddatabaseconfigurations_delete(test, rg):
-    test.cmd('az kusto attached-database-configuration delete -y '
-             '--name "{myAttachedDatabaseConfiguration2}" '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /ClusterPrincipalAssignments/put/KustoClusterPrincipalAssignmentsCreateOrUpdate
-@try_manual
-def step__clusterprincipalassignments_put(test, rg):
-    test.cmd('az kusto cluster-principal-assignment create '
-             '--cluster-name "{myCluster}" '
-             '--principal-id "87654321-1234-1234-1234-123456789123" '
-             '--principal-type "App" '
-             '--role "AllDatabasesAdmin" '
-             '--tenant-id "12345678-1234-1234-1234-123456789123" '
-             '--principal-assignment-name "kustoprincipal1" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /ClusterPrincipalAssignments/get/KustoClusterPrincipalAssignmentsGet
-@try_manual
-def step__clusterprincipalassignments_get(test, rg):
-    test.cmd('az kusto cluster-principal-assignment show '
-             '--cluster-name "{myCluster}" '
-             '--principal-assignment-name "kustoprincipal1" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /ClusterPrincipalAssignments/get/KustoPrincipalAssignmentsList
-@try_manual
-def step__clusterprincipalassignments_get2(test, rg):
-    test.cmd('az kusto cluster-principal-assignment list '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /ClusterPrincipalAssignments/delete/KustoClusterPrincipalAssignmentsDelete
-@try_manual
-def step__clusterprincipalassignments_delete(test, rg):
-    test.cmd('az kusto cluster-principal-assignment delete -y '
-             '--cluster-name "{myCluster}" '
-             '--principal-assignment-name "kustoprincipal1" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /DatabasePrincipalAssignments/put/KustoDatabasePrincipalAssignmentsCreateOrUpdate
-@try_manual
-def step__databaseprincipalassignments_put(test, rg):
-    test.cmd('az kusto database-principal-assignment create '
-             '--cluster-name "{myCluster}" '
-             '--database-name "Kustodatabase8" '
-             '--principal-id "87654321-1234-1234-1234-123456789123" '
-             '--principal-type "App" '
-             '--role "Admin" '
-             '--tenant-id "12345678-1234-1234-1234-123456789123" '
-             '--principal-assignment-name "kustoprincipal1" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /DatabasePrincipalAssignments/get/KustoDatabasePrincipalAssignmentsGet
-@try_manual
-def step__databaseprincipalassignments_get(test, rg):
-    test.cmd('az kusto database-principal-assignment show '
-             '--cluster-name "{myCluster}" '
-             '--database-name "Kustodatabase8" '
-             '--principal-assignment-name "kustoprincipal1" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /DatabasePrincipalAssignments/get/KustoPrincipalAssignmentsList
-@try_manual
-def step__databaseprincipalassignments_get2(test, rg):
-    test.cmd('az kusto database-principal-assignment list '
-             '--cluster-name "{myCluster}" '
-             '--database-name "Kustodatabase8" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /DatabasePrincipalAssignments/delete/KustoDatabasePrincipalAssignmentsDelete
-@try_manual
-def step__databaseprincipalassignments_delete(test, rg):
-    test.cmd('az kusto database-principal-assignment delete -y '
-             '--cluster-name "{myCluster}" '
-             '--database-name "Kustodatabase8" '
-             '--principal-assignment-name "kustoprincipal1" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Databases/put/KustoDatabasesCreateOrUpdate
-@try_manual
-def step__databases_put_kustodatabasescreateorupdate(test, rg):
-    test.cmd('az kusto database create '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--read-write-database location="westus" soft-delete-period="P1D" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Databases/get/KustoDatabasesGet
-@try_manual
-def step__databases_get_kustodatabasesget(test, rg):
-    test.cmd('az kusto database show '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Databases/get/KustoDatabasesListByCluster
-@try_manual
-def step__databases_get_kustodatabaseslistbycluster(test, rg):
-    test.cmd('az kusto database list '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Databases/patch/KustoDatabasesUpdate
-@try_manual
-def step__databases_patch_kustodatabasesupdate(test, rg):
-    test.cmd('az kusto database update '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--parameters "{{\\"properties\\":{{\\"softDeletePeriod\\":\\"P1D\\"}}}}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Databases/post/KustoDatabaseAddPrincipals
-@try_manual
-def step__databases_post_kustodatabaseaddprincipals(test, rg):
-    test.cmd('az kusto database add-principal '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--value name="Some User" type="User" app-id="" email="user@microsoft.com" fqn="aaduser role="Admin" '
-             '--value name="Kusto" type="Group" app-id="" email="kusto@microsoft.com" fqn="aadgroup role="Viewer" '
-             '--value name="SomeApp" type="App" app-id="some_guid_app_id" email="" fqn="aadapp role="Admin" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Databases/post/KustoDatabaseListPrincipals
-@try_manual
-def step__databases_post_kustodatabaselistprincipals(test, rg):
-    test.cmd('az kusto database list-principal '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Databases/post/KustoDatabaseRemovePrincipals
-@try_manual
-def step__databases_post_kustodatabaseremoveprincipals(test, rg):
-    test.cmd('az kusto database remove-principal '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--value name="Some User" type="User" app-id="" email="user@microsoft.com" fqn="aaduser role="Admin" '
-             '--value name="Kusto" type="Group" app-id="" email="kusto@microsoft.com" fqn="aadgroup role="Viewer" '
-             '--value name="SomeApp" type="App" app-id="some_guid_app_id" email="" fqn="aadapp role="Admin" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Databases/delete/KustoDatabasesDelete
-@try_manual
-def step__databases_delete_kustodatabasesdelete(test, rg):
-    test.cmd('az kusto database delete -y '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /DataConnections/put/KustoDataConnectionsCreateOrUpdate
-@try_manual
-def step__dataconnections_put(test, rg):
-    test.cmd('az kusto data-connection event-hub create '
-             '--cluster-name "{myCluster}" '
-             '--name "{myDataConnection}" '
-             '--database-name "KustoDatabase8" '
-             '--location "westus" '
-             '--consumer-group "testConsumerGroup1" '
-             '--event-hub-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.EventHu'
-             'b/namespaces/eventhubTestns1/eventhubs/eventhubTest1" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /DataConnections/get/KustoDatabasesListByCluster
-@try_manual
-def step__dataconnections_get(test, rg):
-    test.cmd('az kusto data-connection list '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check('length(@)', 1),
-             ])
-
-
-# EXAMPLE: /DataConnections/get/KustoDataConnectionsGet
-@try_manual
-def step__dataconnections_get_kustodataconnectionsget(test, rg):
-    test.cmd('az kusto data-connection show '
-             '--cluster-name "{myCluster}" '
-             '--name "{myDataConnection}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=[
-                 test.check("location", "westus", case_sensitive=False),
-                 test.check("consumerGroup", "testConsumerGroup1", case_sensitive=False),
-                 test.check("eventHubResourceId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Micro"
-                            "soft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1", case_sensitive=False),
-             ])
-
-
-# EXAMPLE: /DataConnections/patch/KustoDataConnectionsUpdate
-@try_manual
-def step__dataconnections_patch(test, rg):
-    test.cmd('az kusto data-connection event-hub update '
-             '--cluster-name "{myCluster}" '
-             '--name "{myDataConnection}" '
-             '--database-name "KustoDatabase8" '
-             '--location "westus" '
-             '--consumer-group "testConsumerGroup1" '
-             '--event-hub-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.EventHu'
-             'b/namespaces/eventhubTestns1/eventhubs/eventhubTest1" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /DataConnections/post/KustoDataConnectionValidation
-@try_manual
-def step__dataconnections_post(test, rg):
-    test.cmd('az kusto data-connection event-hub data-connection-validation '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--name "{myDataConnection}" '
-             '--consumer-group "testConsumerGroup1" '
-             '--event-hub-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.EventHu'
-             'b/namespaces/eventhubTestns1/eventhubs/eventhubTest1" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /DataConnections/delete/KustoDataConnectionsDelete
-@try_manual
-def step__dataconnections_delete(test, rg):
-    test.cmd('az kusto data-connection delete -y '
-             '--cluster-name "{myCluster}" '
-             '--name "{myDataConnection2}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# EXAMPLE: /Clusters/delete/KustoClustersDelete
-@try_manual
-def step__clusters_delete_kustoclustersdelete(test, rg):
-    test.cmd('az kusto cluster delete -y '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=[])
-
-
-# Env cleanup
-@try_manual
-def cleanup(test, rg):
+def cleanup_scenario(test, rg):
     pass
 
 
-# Testcase
+# Testcase: Scenario
 @try_manual
 def call_scenario(test, rg):
-    setup(test, rg)
-    step__clusters_get_kustoclusterslistresourceskus(test, rg)
-    step__clusters_put_kustoclusterscreateorupdate(test, rg)
-    step__clusters_get_kustoclustersget(test, rg)
-    step__clusters_get_kustoclusterslist(test, rg)
-    step__clusters_get(test, rg)
-    step__clusters_patch_kustoclustersupdate(test, rg)
-    step__clusters_post(test, rg)
-    step__clusters_post2(test, rg)
-    step__clusters_post3(test, rg)
-    step__clusters_post4(test, rg)
-    step__clusters_post5(test, rg)
-    step__clusters_post_kustoclustersstart(test, rg)
-    step__attacheddatabaseconfigurations_get(test, rg)
-    step__clusters_post6(test, rg)
-    step__clusters_post_kustoclustersstop(test, rg)
-    step__attacheddatabaseconfigurations_put(test, rg)
-    step__attacheddatabaseconfigurations_get2(test, rg)
-    step__clusters_get_kustoclusterslistskus(test, rg)
-    step__attacheddatabaseconfigurations_delete(test, rg)
-    step__clusterprincipalassignments_put(test, rg)
-    step__clusterprincipalassignments_get(test, rg)
-    step__clusterprincipalassignments_get2(test, rg)
-    step__clusterprincipalassignments_delete(test, rg)
-    step__databaseprincipalassignments_put(test, rg)
-    step__databaseprincipalassignments_get(test, rg)
-    step__databaseprincipalassignments_get2(test, rg)
-    step__databaseprincipalassignments_delete(test, rg)
-    step__databases_put_kustodatabasescreateorupdate(test, rg)
-    step__databases_get_kustodatabasesget(test, rg)
-    step__databases_get_kustodatabaseslistbycluster(test, rg)
-    step__databases_patch_kustodatabasesupdate(test, rg)
-    step__databases_post_kustodatabaseaddprincipals(test, rg)
-    step__databases_post_kustodatabaselistprincipals(test, rg)
-    step__databases_post_kustodatabaseremoveprincipals(test, rg)
-    step__databases_delete_kustodatabasesdelete(test, rg)
-    step__dataconnections_put(test, rg)
-    step__dataconnections_get(test, rg)
-    step__dataconnections_get_kustodataconnectionsget(test, rg)
-    step__dataconnections_patch(test, rg)
-    step__dataconnections_post(test, rg)
-    step__dataconnections_delete(test, rg)
-    step__clusters_delete_kustoclustersdelete(test, rg)
-    cleanup(test, rg)
+    setup_scenario(test, rg)
+    step__attacheddatabaseconfigurations_put(test, rg, checks=[
+        test.check("location", "westus", case_sensitive=False),
+        test.check("clusterResourceId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Kusto"
+                   "/Clusters/{myCluster3}", case_sensitive=False),
+        test.check("defaultPrincipalsModificationKind", "Union", case_sensitive=False),
+    ])
+    step__attacheddatabaseconfigurations_get(test, rg, checks=[
+        test.check("location", "westus", case_sensitive=False),
+        test.check("defaultPrincipalsModificationKind", "Union", case_sensitive=False),
+    ])
+    step__attacheddatabaseconfigurations_get2(test, rg, checks=[
+        test.check('length(@)', 1),
+    ])
+    step__clusters_put_kustoclusterscreateorupdate(test, rg, checks=[
+        test.check("name", "{myCluster}", case_sensitive=False),
+        test.check("identity.type", "SystemAssigned", case_sensitive=False),
+        test.check("location", "westus", case_sensitive=False),
+        test.check("enableDoubleEncryption", False),
+        test.check("enablePurge", True),
+        test.check("enableStreamingIngest", True),
+        test.check("sku.name", "Standard_L8s", case_sensitive=False),
+        test.check("sku.capacity", 2),
+        test.check("sku.tier", "Standard", case_sensitive=False),
+    ])
+    step__clusters_get_kustoclustersget(test, rg, checks=[
+        test.check("name", "{myCluster}", case_sensitive=False),
+        test.check("identity.type", "SystemAssigned", case_sensitive=False),
+        test.check("location", "westus", case_sensitive=False),
+        test.check("enableStreamingIngest", True),
+        test.check("sku.name", "Standard_L8s", case_sensitive=False),
+        test.check("sku.capacity", 2),
+        test.check("sku.tier", "Standard", case_sensitive=False),
+    ])
+    step__clusters_get_kustoclusterslist(test, rg, checks=[
+        test.check('length(@)', 1),
+    ])
+    step__clusters_get(test, rg, checks=[
+        test.check('length(@)', 1),
+    ])
+    step__clusters_get_kustoclusterslistresourceskus(test, rg, checks=[])
+    step__clusters_get_kustoclusterslistskus(test, rg, checks=[])
+    step__clusters_patch_kustoclustersupdate(test, rg, checks=[
+        test.check("name", "{myCluster}", case_sensitive=False),
+        test.check("identity.type", "SystemAssigned", case_sensitive=False),
+        test.check("location", "westus", case_sensitive=False),
+        test.check("enablePurge", True),
+        test.check("enableStreamingIngest", True),
+        test.check("sku.name", "Standard_L8s", case_sensitive=False),
+        test.check("sku.capacity", 2),
+        test.check("sku.tier", "Standard", case_sensitive=False),
+        test.check("keyVaultProperties.keyName", "keyName", case_sensitive=False),
+        test.check("keyVaultProperties.keyVaultUri", "https://dummy.keyvault.com", case_sensitive=False),
+        test.check("keyVaultProperties.keyVersion", "keyVersion", case_sensitive=False),
+    ])
+    step__clusters_post(test, rg, checks=[])
+    step__clusters_post2(test, rg, checks=[])
+    step__clusters_post3(test, rg, checks=[])
+    step__clusters_post4(test, rg, checks=[])
+    step__clusters_post5(test, rg, checks=[])
+    step__clusters_post6(test, rg, checks=[])
+    step__clusters_post_kustoclustersstart(test, rg, checks=[])
+    step__clusters_post_kustoclustersstop(test, rg, checks=[])
+    step__clusterprincipalassignments_put(test, rg, checks=[])
+    step__clusterprincipalassignments_get(test, rg, checks=[])
+    step__clusterprincipalassignments_get2(test, rg, checks=[])
+    step__databaseprincipalassignments_put(test, rg, checks=[])
+    step__databaseprincipalassignments_get(test, rg, checks=[])
+    step__clusterprincipalassignments_get2(test, rg, checks=[])
+    step__databaseprincipalassignments_delete(test, rg, checks=[])
+    step__databases_put_kustodatabasescreateorupdate(test, rg, checks=[])
+    step__databases_get_kustodatabasesget(test, rg, checks=[])
+    step__databases_get_kustodatabaseslistbycluster(test, rg, checks=[])
+    step__databases_patch_kustodatabasesupdate(test, rg, checks=[])
+    step__databases_post_kustodatabaseaddprincipals(test, rg, checks=[])
+    step__databases_post_kustodatabaselistprincipals(test, rg, checks=[])
+    step__databases_post_kustodatabaseremoveprincipals(test, rg, checks=[])
+    step__databases_delete_kustodatabasesdelete(test, rg, checks=[])
+    step__dataconnections_put(test, rg, checks=[])
+    step__databases_get_kustodatabaseslistbycluster(test, rg, checks=[
+        test.check('length(@)', 1),
+    ])
+    step__dataconnections_get_kustodataconnectionsget(test, rg, checks=[
+        test.check("location", "westus", case_sensitive=False),
+        test.check("consumerGroup", "testConsumerGroup1", case_sensitive=False),
+        test.check("eventHubResourceId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Even"
+                   "tHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1", case_sensitive=False),
+    ])
+    step__dataconnections_patch(test, rg, checks=[])
+    step__dataconnections_post(test, rg, checks=[])
+    step__dataconnections_delete(test, rg, checks=[])
+    step__clusters_delete_kustoclustersdelete(test, rg, checks=[])
+    step__attacheddatabaseconfigurations_delete(test, rg, checks=[])
+    step__clusterprincipalassignments_delete(test, rg, checks=[])
+    cleanup_scenario(test, rg)
 
 
+# Test class for ${scenarioName}
 @try_manual
-class KustoManagementClientScenarioTest(ScenarioTest):
+class KustoScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestkusto_kustorptest'[:7], key='rg', parameter_name='rg')
     def test_kusto(self, rg):
@@ -617,3 +201,4 @@ class KustoManagementClientScenarioTest(ScenarioTest):
         call_scenario(self, rg)
         calc_coverage(__file__)
         raise_if()
+

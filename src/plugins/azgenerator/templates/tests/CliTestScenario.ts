@@ -4,22 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 import * as path from 'path';
 import { CodeModelAz, CommandExample } from "../../CodeModelAz"
-import { PreparerEntity, getResourceKey } from "./ScenarioTool"
-import { ToMultiLine, deepCopy } from '../../../../utils/helper';
+import { CliTestStep } from "./CliTestStep"
+import { ToMultiLine, Capitalize } from '../../../../utils/helper';
 import { HeaderGenerator } from "../../Header";
 import { TemplateBase } from "../TemplateBase";
 import { PathConstants } from "../../../models";
 
-let usePreparers = false;
-let nameMap = {};
-let nameSeq = {};
-
-export function NeedPreparer(): boolean {
-    return usePreparers;
-}
 
 export class CliTestScenario extends TemplateBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean, testFilename: string, configValue:any) {
+    constructor(model: CodeModelAz, isDebugMode: boolean, testFilename: string, configValue:any, groupName: string) {
         super(model, isDebugMode);
         if (this.model.IsCliCore) {
             this.relativePath = path.join(PathConstants.testFolder, PathConstants.latestFolder, testFilename);
@@ -28,44 +21,48 @@ export class CliTestScenario extends TemplateBase {
             this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.testFolder, PathConstants.latestFolder, testFilename);
         }
         this.configValue = configValue;
+        this.groupName = groupName;
     }
 
     public configValue : any;
+    private groupName: string;
+
+    private header: HeaderGenerator = new HeaderGenerator();
+    private scenarios: string[] = [];
 
     public async fullGeneration(): Promise<string[]> {
-        return this.GenerateAzureCliTestScenario(this.model,this.configValue);
+        this.StartGenerateAzureCliTestScenario();
+        for (let scenarioName of Object.getOwnPropertyNames(this.configValue))
+            this.GenerateAzureCliTestScenario(this.model,this.configValue[scenarioName], scenarioName);
+        return this.EndGenerateAzureCliTestScenario();
     }
 
     public async incrementalGeneration(base: string): Promise<string[]> {
         return this.fullGeneration();
     }
 
-    private GenerateAzureCliTestScenario(model: CodeModelAz, config:any): string[] {
-        var head: string[] = [];
-        let steps: string[] = [];
+    private StartGenerateAzureCliTestScenario() {
+        this.header.addImport("os");
+        this.header.addFromImport("azure.cli.testsdk", ["ScenarioTest"]);
+        this.scenarios.push("");
+        this.scenarios.push("");
+        this.scenarios.push("TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))");
+        this.scenarios.push("");
+        this.scenarios.push("");
+    }
+
+    private GenerateAzureCliTestScenario(model: CodeModelAz, config:any, scenarioName: string) {
+        let commandParams = model.GatherInternalResource();
+        config.unshift({ function: `setup_${scenarioName}` });
+        config.push({ function: `cleanup_${scenarioName}` });
+
         let class_info: string[] = [];
         let initiates: string[] = [];
         let body: string[] = [];
-        let funcScenario: string[] = [];
 
-        let commandParams = model.GatherInternalResource();
-        // let config: any = deepCopy(model.Extension_TestScenario);
-        config.unshift({ function: "setup" });
-        config.push({ function: "cleanup" });
-
-        let header: HeaderGenerator = new HeaderGenerator();
-
-        header.addImport("os");
-        head.push("from azure.cli.testsdk import ScenarioTest");
-        head.push("from .. import try_manual, raise_if, calc_coverage");
-        steps.push("");
-        steps.push("");
-        steps.push("TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))");
-        steps.push("");
-        steps.push("");
-
+        class_info.push("# Test class for ${scenarioName}");
         class_info.push("@try_manual");
-        class_info.push("class " + model.Extension_NameClass + "ScenarioTest(ScenarioTest):");
+        class_info.push("class " + Capitalize(this.groupName) + scenarioName + "Test(ScenarioTest):");
         class_info.push("");
         initiates.push("");
 
@@ -77,33 +74,23 @@ export class CliTestScenario extends TemplateBase {
             initiates.push("");
         }
 
-        let imports: string[] = [];
         let decorators: string[] = [];
-        let parameterNames = this.InitiateDependencies(model, imports, decorators, initiates);
+        let parameterNames = CliTestStep.InitiateDependencies(model, this.header, decorators, initiates);
         let jsonAdded = false;
-
-        function parameterLine() {
-            let ret = "";
-            for (let name of parameterNames) {
-                ret += `, ${name}`;
-            }
-            return ret;
-        }
-
-        funcScenario.push("# Testcase");
+        
+        let funcScenario: string[] = [];
+        let steps: string[] = [];
+        funcScenario.push(`# Testcase: ${scenarioName}`);
         funcScenario.push("@try_manual");
-        funcScenario.push(...ToMultiLine(`def call_scenario(test${parameterLine()}):`));
+        funcScenario.push(...ToMultiLine(`def call_${scenarioName.toLowerCase()}(test${CliTestStep.parameterLine(parameterNames)}):`));
         model.GetResourcePool().clearExampleParams();
 
         // go through the examples to generate steps
         for (var ci = 0; ci < config.length; ci++) {
             let exampleId: string = config[ci].name;
-            let functionName: string = this.ToFunctionName(config[ci]);
+            let functionName: string = CliTestStep.ToFunctionName(config[ci]);
             if (exampleId) {
                 let disabled: string = config[ci].disabled ? "# " : "";
-                steps.push("# EXAMPLE: " + exampleId);
-                steps.push("@try_manual");
-                steps.push(...ToMultiLine(`def ${functionName}(test${parameterLine()}):`));
                 // find example by name
                 let found = false;
                 let examples: CommandExample[] = [];
@@ -111,174 +98,55 @@ export class CliTestScenario extends TemplateBase {
                 for (let exampleCmd of model.FindExampleById(exampleId, commandParams, examples)) {
                     if (exampleCmd && exampleCmd.length > 0) {
                         found = true;
-                        if (exampleCmd[0].indexOf(' delete') > -1) {
-                            exampleCmd[0] += " -y";
-                        }
-                        for (let idx = 0; idx < exampleCmd.length; idx++) {
-                            let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
-                            let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
-                            ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
-                        }
                         let checks = model.GetExampleChecks(examples[exampleIdx++]);
                         if (checks.length > 0) {
-                            steps.push("    " + disabled + "         checks=[");
+                            funcScenario.push(...ToMultiLine(`    ${disabled}${functionName}(test${CliTestStep.parameterLine(parameterNames)}, checks=[`));
                             for (let check of checks) {
-                                ToMultiLine("    " + disabled + "             " + check, steps);
+                                ToMultiLine("    " + disabled + "    " + check, funcScenario);
                                 if (!jsonAdded && !disabled && check.indexOf("json.loads") >= 0) {
-                                    header.addImport("json");
+                                    this.header.addImport("json");
                                     jsonAdded = true;
                                 }
                             }
-                            steps.push("    " + disabled + "         ])");
+                            funcScenario.push(`    ${disabled}])`);
                         }
                         else {
-                            steps.push("    " + disabled + "         checks=[])");
+                            funcScenario.push(...ToMultiLine(`    ${functionName}(test${CliTestStep.parameterLine(parameterNames)}, checks=[])`));
                         }
                     }
                 }
-                if (!found) {
-                    steps.push("    # EXAMPLE NOT FOUND!");
-                    steps.push("    pass");
+                if (found) {
+                    this.header.addFromImport(".example_steps", [functionName]);
                 }
                 else {
-                    for (let exampleCmd of model.FindExampleWaitById(exampleId)) {
-                        if (exampleCmd && exampleCmd.length > 0) {
-                            found = true;
-                            for (let idx = 0; idx < exampleCmd.length; idx++) {
-                                let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
-                                let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
-                                ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
-                            }
-                            steps.push("    " + disabled + "         checks=[])");
-                        }
-                    }
+                    funcScenario.push(...ToMultiLine(`    # STEP NOT FOUND: ${exampleId}`));
                 }
-                if (disabled) {
-                    steps.push("    pass");
-                }
-                steps.push("");
-                steps.push("");
-                funcScenario.push(...ToMultiLine(`    ${functionName}(test${parameterLine()})`));
             }
-            else if (functionName) {
+            else {
                 steps.push(`# Env ${functionName}`);
                 steps.push("@try_manual");
-                steps.push(...ToMultiLine(`def ${functionName}(test${parameterLine()}):`));
+                steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames)}):`));
                 steps.push("    pass");
                 steps.push("");
                 steps.push("");
-                funcScenario.push(...ToMultiLine(`    ${functionName}(test${parameterLine()})`));
-            }
+                funcScenario.push(...ToMultiLine(`    ${functionName}(test${CliTestStep.parameterLine(parameterNames)})`));
+            }   
         }
         funcScenario.push("");
         funcScenario.push("");
-        body.push(`        call_scenario(self${parameterLine()})`);
+        body.push(`        call_${scenarioName.toLowerCase()}(self${CliTestStep.parameterLine(parameterNames)})`);
         body.push(`        calc_coverage(__file__)`);
         body.push(`        raise_if()`);
         body.push("");
+        body.push("");
+        this.scenarios.push(...steps.concat(funcScenario, class_info, decorators, initiates, body));
+    }
 
-        let output = head.concat(imports, steps, funcScenario, class_info, decorators, initiates, body);
-        output.forEach(element => {
-            if (element.length > 120) header.disableLineTooLong = true;
+    private EndGenerateAzureCliTestScenario(): string[] {
+        this.header.addFromImport("..", ["try_manual", "raise_if", "calc_coverage"]);
+        this.scenarios.forEach(element => {
+            if (element.length > 120) this.header.disableLineTooLong = true;
         });
-        return header.getLines().concat(output);
-    }
-
-    private InitiateDependencies(model: CodeModelAz, imports: string[], decorators: string[], initiates: string[]): string[] {
-        let decorated = [];
-        let internalObjects = [];
-        let parameterNames = [];
-        for (let entity of (model.GetPreparerEntities() as PreparerEntity[])) {
-            if (!entity.info.name) {
-                internalObjects.push([entity.info.class_name, getResourceKey(entity.info.class_name, entity.object_name), entity.info.createdObjectNames.indexOf(entity.object_name) >= 0, entity.object_name]);
-                continue;
-            }
-
-            // create preparers for outside dependency
-            let line: string = `    @${entity.info.name}(name_prefix='clitest${model.Extension_NameUnderscored}_${entity.object_name}'[:7], key='${getResourceKey(entity.info.class_name, entity.object_name)}'`;
-            for (let i = 0; i < entity.depend_parameter_values.length; i++) {
-                line += `, ${entity.info.depend_parameters[i]}='${entity.depend_parameter_values[i]}'`
-            }
-            if (entity.info.name == 'ResourceGroupPreparer') {
-                let parameterName = getResourceKey(entity.info.class_name, entity.object_name);
-                line += `, parameter_name='${parameterName}'`;
-                parameterNames.push(parameterName);
-            }
-            line += ")";
-            ToMultiLine(line, decorators);
-            if (decorated.indexOf(entity.info.name) < 0) {
-                if (entity.info.name == 'ResourceGroupPreparer') {
-                    imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
-                }
-                else if (entity.info.name == 'StorageAccountPreparer') {
-                    imports.push(`from azure.cli.testsdk import ${entity.info.name}`);
-                } else {
-                    imports.push(`from .preparers import ${entity.info.name}`);
-                    usePreparers = true;
-                }
-                decorated.push(entity.info.name);
-            }
-        }
-        let funcLine = "    def test_" + model.Extension_NameUnderscored + "(self";
-        for (let parameterName of parameterNames) {
-            funcLine += `, ${parameterName}`;
-        }
-        funcLine += "):";
-        initiates.unshift(...ToMultiLine(funcLine));
-
-        // randomize name for internal resources
-        if (internalObjects.length > 0) {
-            initiates.push("        self.kwargs.update({");
-            for (let [class_name, kargs_key, hasCreateExample, object_name] of internalObjects) {
-                if (hasCreateExample && model.RandomizeNames) {
-                    const RANDOMIZE_MIN_LEN = 4;
-                    let prefixLen = Math.floor(object_name.length / 2);
-                    if (object_name.length - prefixLen < RANDOMIZE_MIN_LEN) prefixLen = Math.max(object_name.length - RANDOMIZE_MIN_LEN, 0);
-                    ToMultiLine(`            '${kargs_key}': self.create_random_name(prefix='${object_name}'[:${prefixLen}], length=${Math.max(object_name.length, RANDOMIZE_MIN_LEN)}),`, initiates);
-                }
-                else
-                    initiates.push(`            '${kargs_key}': '${object_name}',`);   // keep the original name in example if there is no create example in the test-scenario
-            }
-            initiates.push("        })");
-            initiates.push("");
-        }
-        return parameterNames;
-    }
-
-    private ToFunctionName(step: any): string {
-        let ret = undefined;
-        if (step.name)
-            ret = "step_" + step.name;
-        else if (step.function)
-            ret = step.function;
-        if (!ret) return undefined;
-
-        let funcname = "";
-        var letterNumber = /^[0-9a-zA-Z]+$/;
-        ret = (ret as string).toLowerCase();
-        for (let i = 0; i < ret.length; i++) {
-            funcname += ret[i].match(letterNumber) ? ret[i] : '_';
-        }
-        if (funcname.length > 50) {
-            if (!nameMap.hasOwnProperty(funcname)) {
-                let arr = funcname.split("_");
-                let shortName = arr.join("_");
-                if (arr.length > 4) {
-                    shortName = arr.slice(0, 4).join("_");
-                }
-                if (shortName.length > 50) shortName = shortName.substr(0, 50);
-
-                if (nameSeq.hasOwnProperty(shortName)) {
-                    nameSeq[shortName] += 1;
-                    nameMap[funcname] = shortName + nameSeq[shortName];
-                }
-                else {
-                    nameSeq[shortName] = 1;
-                    nameMap[funcname] = shortName;
-                }
-            }
-            funcname = nameMap[funcname];
-        }
-        return funcname;
+        return this.header.getLines().concat(this.scenarios);
     }
 }
