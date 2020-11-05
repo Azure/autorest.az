@@ -130,30 +130,48 @@ export class BaseSegment {
 
     public findChild(childSeg: BaseSegment,  used:any[]=undefined, startPos=0): number {
         if (isNullOrUndefined(used))    used = [];
+
+        let candidates = [];
+        let distThreashold = undefined;
+
+        // filter candidates by totally-match-name
         for (let i=startPos; i<this.children.length;i++) {
             if (!used.includes(i) && this.children[i].name == childSeg.name) {
-                used.push(i);
-                return i;
+                candidates.push(i);
             }
         }
+        if (candidates.length==1) {
+            used.push(candidates[0]);
+            return candidates[0];
+        }
 
-        let minDist = 1;
+        // // if no name matched, all members are candidates
+        // if (candidates.length<=0) {
+        //     distThreashold = 0.3
+        //     for (let i=startPos; i<this.children.length; i++) {
+        //         if (!used.includes(i)) {
+        //             candidates.push(i);
+        //         }
+        //     }
+        // }
+
+        // select candidate by edit distance
+        let minDist = undefined;
         let ret = -1;
-        for (let i=startPos; i<this.children.length;i++) {  
-            if (used.includes(i)) continue;
+        for (let i of candidates) {  
             let d = distancePercentage(childSeg.Content, this.children[i].Content);
-            if (d<minDist)  {
+            if (isNullOrUndefined(minDist) || d<minDist)  {
                 minDist = d;
                 ret = i;
                 break;
             }
         }
-        if (minDist<0.3) {
+        if ( ret>=0 &&
+            (isNullOrUndefined(distThreashold) || minDist<distThreashold)) {
             used.push(ret);
             return ret;
-        }   
-        
-        return -1;
+        }  
+        return -1; 
     }
 
     public alignOrder(baseline: BaseSegment) {
@@ -222,7 +240,7 @@ export class BaseSegment {
         }
 
         let solidChildren = this.children.filter(child => {
-            return child.originA?.status != SegmentStatus.Deleted;
+            return child.originA?.status != SegmentStatus.Deleted || child.Content!=child.originA?.Content;
         });
 
         let ret = "";
@@ -293,20 +311,6 @@ export class BaseSegment {
             curParathesisCount = 0;
             let postIdx = 1;
             while (curEnd<lines.length) {
-                // let t = lines[curEnd].search(/\S/);
-                // if (t>curIndent ) {
-                //     let child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
-                //     child.createChildrenByIndent();
-                //     this.children.push(child);
-                //     curStart = curEnd;
-                //     curIndent = t;
-                // }
-                // curEnd += 1;
-                // if (curEnd>=lines.length && this.children.length>0) {
-                //     let child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
-                //     child.createChildrenByIndent();
-                //     this.children.push(child);
-                // }
                 if (lineIndent(lines[curEnd]) > myIndent) {
                     postIdx = curEnd + 1
                     while (postIdx<lines.length && (lineIndent(lines[postIdx]) !=myIndent || lines[postIdx].trim().length==0)) {
@@ -337,8 +341,9 @@ function nextStepAt(content: string): number {
     const nextEnv = content.search(/\n# Env/);
     const nextExample = content.search(/\n# EXAMPLE/);
     const nextCase = content.search(/\n# Testcase/);
+    const nextClass = content.search(/\n# Test class/);
 
-    let candidates = [nextEnv, nextExample, nextCase];
+    let candidates = [nextEnv, nextExample, nextCase, nextClass];
     candidates.sort((a, b) => a - b);
     for (let ret of candidates) {
         if (ret>=0) {

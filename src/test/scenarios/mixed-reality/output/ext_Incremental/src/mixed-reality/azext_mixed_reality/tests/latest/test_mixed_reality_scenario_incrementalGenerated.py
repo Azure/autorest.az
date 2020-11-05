@@ -66,6 +66,7 @@ def call_scenario(test, rg):
     cleanup_scenario(test, rg)
 
 
+# Test class for ${scenarioName}
 @try_manual
 class Mixed_realityScenarioTest(ScenarioTest):
 

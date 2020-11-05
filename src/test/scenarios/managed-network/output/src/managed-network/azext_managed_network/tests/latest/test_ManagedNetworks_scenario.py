@@ -68,6 +68,7 @@ def call_scenario1(test, rg):
     cleanup_scenario1(test, rg)
 
 
+# Test class for ${scenarioName}
 @try_manual
 class ManagedNetworksscenario1Test(ScenarioTest):
 
@@ -119,6 +120,7 @@ def call_scenario2(test, rg):
     cleanup_scenario2(test, rg)
 
 
+# Test class for ${scenarioName}
 @try_manual
 class ManagedNetworksscenario2Test(ScenarioTest):
 
@@ -169,6 +171,7 @@ def call_scenario3(test, rg):
     cleanup_scenario3(test, rg)
 
 
+# Test class for ${scenarioName}
 @try_manual
 class ManagedNetworksscenario3Test(ScenarioTest):
 

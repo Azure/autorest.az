@@ -60,6 +60,7 @@ export class CliTestScenario extends TemplateBase {
         let initiates: string[] = [];
         let body: string[] = [];
 
+        class_info.push("# Test class for ${scenarioName}");
         class_info.push("@try_manual");
         class_info.push("class " + Capitalize(this.groupName) + scenarioName + "Test(ScenarioTest):");
         class_info.push("");

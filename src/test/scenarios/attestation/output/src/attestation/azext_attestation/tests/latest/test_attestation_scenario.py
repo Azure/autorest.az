@@ -59,6 +59,7 @@ def call_scenario(test, rg, rg_2, rg_3):
     cleanup_scenario(test, rg, rg_2, rg_3)
 
 
+# Test class for ${scenarioName}
 @try_manual
 class AttestationScenarioTest(ScenarioTest):
 
