@@ -489,6 +489,7 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
                      rg_15, rg_16, rg_17)
 
 
+# Test class for ${scenarioName}
 @try_manual
 class SynapseScenarioTest(ScenarioTest):
 
