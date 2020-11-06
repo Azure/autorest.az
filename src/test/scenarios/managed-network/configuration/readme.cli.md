@@ -24,7 +24,7 @@ cli:
       - name: ManagementNetworkGroupsDelete
     ScopeAssignments:
       - name: ScopeAssignmentsPut
-      - name: ScopeAssignmentsGet
-      - name: ScopeAssignmentsList
-      - name: ScopeAssignmentsDelete
+      - name: /ScopeAssignments/get/ScopeAssignmentsGet
+      - name: /ScopeAssignments/get/ScopeAssignmentsList
+      - name: /ScopeAssignments/delete/ScopeAssignmentsDelete
 ```
