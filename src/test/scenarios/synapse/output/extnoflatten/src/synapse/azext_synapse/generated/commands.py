@@ -17,7 +17,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_big_data_pool
     synapse_big_data_pool = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#BigDataPoolsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._big_data_pools_operations#BigDataPoolsOperatio'
+        'ns.{}',
         client_factory=cf_big_data_pool)
     with self.command_group('synapse big-data-pool', synapse_big_data_pool, client_factory=cf_big_data_pool,
                             is_experimental=True) as g:
@@ -30,7 +31,7 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_operation
     synapse_operation = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#Operations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._operations_operations#Operations.{}',
         client_factory=cf_operation)
     with self.command_group('synapse operation', synapse_operation, client_factory=cf_operation,
                             is_experimental=True) as g:
@@ -39,7 +40,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_ip_firewall_rule
     synapse_ip_firewall_rule = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#IpFirewallRulesOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._ip_firewall_rules_operations#IpFirewallRulesOp'
+        'erations.{}',
         client_factory=cf_ip_firewall_rule)
     with self.command_group('synapse ip-firewall-rule', synapse_ip_firewall_rule, client_factory=cf_ip_firewall_rule,
                             is_experimental=True) as g:
@@ -53,7 +55,7 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool
     synapse_sqlpool = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pools_operations#SqlPoolsOperations.{}',
         client_factory=cf_sqlpool)
     with self.command_group('synapse sql-pool', synapse_sqlpool, client_factory=cf_sqlpool,
                             is_experimental=True) as g:
@@ -69,7 +71,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_metadata_sync_config
     synapse_sqlpool_metadata_sync_config = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolMetadataSyncConfigsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_metadata_sync_configs_operations#SqlP'
+        'oolMetadataSyncConfigsOperations.{}',
         client_factory=cf_sqlpool_metadata_sync_config)
     with self.command_group('synapse sql-pool-metadata-sync-config', synapse_sqlpool_metadata_sync_config,
                             client_factory=cf_sqlpool_metadata_sync_config, is_experimental=True) as g:
@@ -78,7 +81,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_operation_result
     synapse_sqlpool_operation_result = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolOperationResultsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_operation_results_operations#SqlPoolO'
+        'perationResultsOperations.{}',
         client_factory=cf_sqlpool_operation_result)
     with self.command_group('synapse sql-pool-operation-result', synapse_sqlpool_operation_result,
                             client_factory=cf_sqlpool_operation_result, is_experimental=True) as g:
@@ -86,7 +90,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_geo_backup_policy
     synapse_sqlpool_geo_backup_policy = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolGeoBackupPoliciesOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_geo_backup_policies_operations#SqlPoo'
+        'lGeoBackupPoliciesOperations.{}',
         client_factory=cf_sqlpool_geo_backup_policy)
     with self.command_group('synapse sql-pool-geo-backup-policy', synapse_sqlpool_geo_backup_policy,
                             client_factory=cf_sqlpool_geo_backup_policy, is_experimental=True) as g:
@@ -94,8 +99,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_data_warehouse_user_activity
     synapse_sqlpool_data_warehouse_user_activity = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolDataWarehouseUserActivitiesOperations.{}'
-        '',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_data_warehouse_user_activities_operat'
+        'ions#SqlPoolDataWarehouseUserActivitiesOperations.{}',
         client_factory=cf_sqlpool_data_warehouse_user_activity)
     with self.command_group('synapse sql-pool-data-warehouse-user-activity',
                             synapse_sqlpool_data_warehouse_user_activity,
@@ -104,7 +109,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_restore_point
     synapse_sqlpool_restore_point = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolRestorePointsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_restore_points_operations#SqlPoolRest'
+        'orePointsOperations.{}',
         client_factory=cf_sqlpool_restore_point)
     with self.command_group('synapse sql-pool-restore-point', synapse_sqlpool_restore_point,
                             client_factory=cf_sqlpool_restore_point, is_experimental=True) as g:
@@ -113,7 +119,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_replication_link
     synapse_sqlpool_replication_link = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolReplicationLinksOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_replication_links_operations#SqlPoolR'
+        'eplicationLinksOperations.{}',
         client_factory=cf_sqlpool_replication_link)
     with self.command_group('synapse sql-pool-replication-link', synapse_sqlpool_replication_link,
                             client_factory=cf_sqlpool_replication_link, is_experimental=True) as g:
@@ -121,7 +128,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_transparent_data_encryption
     synapse_sqlpool_transparent_data_encryption = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolTransparentDataEncryptionsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_transparent_data_encryptions_operatio'
+        'ns#SqlPoolTransparentDataEncryptionsOperations.{}',
         client_factory=cf_sqlpool_transparent_data_encryption)
     with self.command_group('synapse sql-pool-transparent-data-encryption',
                             synapse_sqlpool_transparent_data_encryption,
@@ -132,7 +140,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_blob_auditing_policy
     synapse_sqlpool_blob_auditing_policy = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolBlobAuditingPoliciesOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_blob_auditing_policies_operations#Sql'
+        'PoolBlobAuditingPoliciesOperations.{}',
         client_factory=cf_sqlpool_blob_auditing_policy)
     with self.command_group('synapse sql-pool-blob-auditing-policy', synapse_sqlpool_blob_auditing_policy,
                             client_factory=cf_sqlpool_blob_auditing_policy, is_experimental=True) as g:
@@ -142,7 +151,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_operation
     synapse_sqlpool_operation = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolOperationsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_operations_operations#SqlPoolOperatio'
+        'nsOperations.{}',
         client_factory=cf_sqlpool_operation)
     with self.command_group('synapse sql-pool-operation', synapse_sqlpool_operation,
                             client_factory=cf_sqlpool_operation, is_experimental=True) as g:
@@ -150,7 +160,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_usage
     synapse_sqlpool_usage = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolUsagesOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_usages_operations#SqlPoolUsagesOperat'
+        'ions.{}',
         client_factory=cf_sqlpool_usage)
     with self.command_group('synapse sql-pool-usage', synapse_sqlpool_usage, client_factory=cf_sqlpool_usage,
                             is_experimental=True) as g:
@@ -158,7 +169,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_sensitivity_label
     synapse_sqlpool_sensitivity_label = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolSensitivityLabelsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_sensitivity_labels_operations#SqlPool'
+        'SensitivityLabelsOperations.{}',
         client_factory=cf_sqlpool_sensitivity_label)
     with self.command_group('synapse sql-pool-sensitivity-label', synapse_sqlpool_sensitivity_label,
                             client_factory=cf_sqlpool_sensitivity_label, is_experimental=True) as g:
@@ -172,7 +184,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_schema
     synapse_sqlpool_schema = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolSchemasOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_schemas_operations#SqlPoolSchemasOper'
+        'ations.{}',
         client_factory=cf_sqlpool_schema)
     with self.command_group('synapse sql-pool-schema', synapse_sqlpool_schema, client_factory=cf_sqlpool_schema,
                             is_experimental=True) as g:
@@ -180,7 +193,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_table
     synapse_sqlpool_table = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolTablesOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_tables_operations#SqlPoolTablesOperat'
+        'ions.{}',
         client_factory=cf_sqlpool_table)
     with self.command_group('synapse sql-pool-table', synapse_sqlpool_table, client_factory=cf_sqlpool_table,
                             is_experimental=True) as g:
@@ -188,7 +202,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_table_column
     synapse_sqlpool_table_column = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolTableColumnsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_table_columns_operations#SqlPoolTable'
+        'ColumnsOperations.{}',
         client_factory=cf_sqlpool_table_column)
     with self.command_group('synapse sql-pool-table-column', synapse_sqlpool_table_column,
                             client_factory=cf_sqlpool_table_column, is_experimental=True) as g:
@@ -196,7 +211,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_connection_policy
     synapse_sqlpool_connection_policy = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolConnectionPoliciesOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_connection_policies_operations#SqlPoo'
+        'lConnectionPoliciesOperations.{}',
         client_factory=cf_sqlpool_connection_policy)
     with self.command_group('synapse sql-pool-connection-policy', synapse_sqlpool_connection_policy,
                             client_factory=cf_sqlpool_connection_policy, is_experimental=True) as g:
@@ -204,7 +220,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_vulnerability_assessment
     synapse_sqlpool_vulnerability_assessment = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolVulnerabilityAssessmentsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_vulnerability_assessments_operations#'
+        'SqlPoolVulnerabilityAssessmentsOperations.{}',
         client_factory=cf_sqlpool_vulnerability_assessment)
     with self.command_group('synapse sql-pool-vulnerability-assessment', synapse_sqlpool_vulnerability_assessment,
                             client_factory=cf_sqlpool_vulnerability_assessment, is_experimental=True) as g:
@@ -216,8 +233,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_vulnerability_assessment_scan
     synapse_sqlpool_vulnerability_assessment_scan = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolVulnerabilityAssessmentScansOperations.{'
-        '}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_vulnerability_assessment_scans_operat'
+        'ions#SqlPoolVulnerabilityAssessmentScansOperations.{}',
         client_factory=cf_sqlpool_vulnerability_assessment_scan)
     with self.command_group('synapse sql-pool-vulnerability-assessment-scan',
                             synapse_sqlpool_vulnerability_assessment_scan,
@@ -228,7 +245,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_security_alert_policy
     synapse_sqlpool_security_alert_policy = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolSecurityAlertPoliciesOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_security_alert_policies_operations#Sq'
+        'lPoolSecurityAlertPoliciesOperations.{}',
         client_factory=cf_sqlpool_security_alert_policy)
     with self.command_group('synapse sql-pool-security-alert-policy', synapse_sqlpool_security_alert_policy,
                             client_factory=cf_sqlpool_security_alert_policy, is_experimental=True) as g:
@@ -238,8 +256,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_sqlpool_vulnerability_assessment_rule_baseline
     synapse_sqlpool_vulnerability_assessment_rule_baseline = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#SqlPoolVulnerabilityAssessmentRuleBaselinesOper'
-        'ations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._sql_pool_vulnerability_assessment_rule_baselin'
+        'es_operations#SqlPoolVulnerabilityAssessmentRuleBaselinesOperations.{}',
         client_factory=cf_sqlpool_vulnerability_assessment_rule_baseline)
     with self.command_group('synapse sql-pool-vulnerability-assessment-rule-baseline',
                             synapse_sqlpool_vulnerability_assessment_rule_baseline,
@@ -252,7 +270,7 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_workspace
     synapse_workspace = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#WorkspacesOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._workspaces_operations#WorkspacesOperations.{}',
         client_factory=cf_workspace)
     with self.command_group('synapse workspace', synapse_workspace, client_factory=cf_workspace,
                             is_experimental=True) as g:
@@ -265,7 +283,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_workspace_aadadmin
     synapse_workspace_aadadmin = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#WorkspaceAadAdminsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._workspace_aad_admins_operations#WorkspaceAadAd'
+        'minsOperations.{}',
         client_factory=cf_workspace_aadadmin)
     with self.command_group('synapse workspace-aad-admin', synapse_workspace_aadadmin,
                             client_factory=cf_workspace_aadadmin, is_experimental=True) as g:
@@ -277,8 +296,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_workspace_managed_identity_sqlcontrol_setting
     synapse_workspace_managed_identity_sqlcontrol_setting = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#WorkspaceManagedIdentitySqlControlSettingsOpera'
-        'tions.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._workspace_managed_identity_sql_control_setting'
+        's_operations#WorkspaceManagedIdentitySqlControlSettingsOperations.{}',
         client_factory=cf_workspace_managed_identity_sqlcontrol_setting)
     with self.command_group('synapse workspace-managed-identity-sql-control-setting',
                             synapse_workspace_managed_identity_sqlcontrol_setting,
@@ -290,7 +309,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_integration_runtime
     synapse_integration_runtime = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#IntegrationRuntimesOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._integration_runtimes_operations#IntegrationRun'
+        'timesOperations.{}',
         client_factory=cf_integration_runtime)
     with self.command_group('synapse integration-runtime', synapse_integration_runtime,
                             client_factory=cf_integration_runtime, is_experimental=True) as g:
@@ -306,7 +326,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_node_ip_address
     synapse_integration_runtime_node_ip_address = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#IntegrationRuntimeNodeIpAddressOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._integration_runtime_node_ip_address_operations'
+        '#IntegrationRuntimeNodeIpAddressOperations.{}',
         client_factory=cf_integration_runtime_node_ip_address)
     with self.command_group('synapse integration-runtime-node-ip-address', synapse_integration_runtime_node_ip_address,
                             client_factory=cf_integration_runtime_node_ip_address, is_experimental=True) as g:
@@ -314,7 +335,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_object_metadata
     synapse_integration_runtime_object_metadata = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#IntegrationRuntimeObjectMetadataOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._integration_runtime_object_metadata_operations'
+        '#IntegrationRuntimeObjectMetadataOperations.{}',
         client_factory=cf_integration_runtime_object_metadata)
     with self.command_group('synapse integration-runtime-object-metadata', synapse_integration_runtime_object_metadata,
                             client_factory=cf_integration_runtime_object_metadata, is_experimental=True) as g:
@@ -323,7 +345,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_node
     synapse_integration_runtime_node = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#IntegrationRuntimeNodesOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._integration_runtime_nodes_operations#Integrati'
+        'onRuntimeNodesOperations.{}',
         client_factory=cf_integration_runtime_node)
     with self.command_group('synapse integration-runtime-node', synapse_integration_runtime_node,
                             client_factory=cf_integration_runtime_node, is_experimental=True) as g:
@@ -333,7 +356,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_credentials
     synapse_integration_runtime_credentials = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#IntegrationRuntimeCredentialsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._integration_runtime_credentials_operations#Int'
+        'egrationRuntimeCredentialsOperations.{}',
         client_factory=cf_integration_runtime_credentials)
     with self.command_group('synapse integration-runtime-credentials', synapse_integration_runtime_credentials,
                             client_factory=cf_integration_runtime_credentials, is_experimental=True) as g:
@@ -341,7 +365,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_connection_info
     synapse_integration_runtime_connection_info = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#IntegrationRuntimeConnectionInfosOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._integration_runtime_connection_infos_operation'
+        's#IntegrationRuntimeConnectionInfosOperations.{}',
         client_factory=cf_integration_runtime_connection_info)
     with self.command_group('synapse integration-runtime-connection-info', synapse_integration_runtime_connection_info,
                             client_factory=cf_integration_runtime_connection_info, is_experimental=True) as g:
@@ -349,7 +374,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_auth_key
     synapse_integration_runtime_auth_key = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#IntegrationRuntimeAuthKeysOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._integration_runtime_auth_keys_operations#Integ'
+        'rationRuntimeAuthKeysOperations.{}',
         client_factory=cf_integration_runtime_auth_key)
     with self.command_group('synapse integration-runtime-auth-key', synapse_integration_runtime_auth_key,
                             client_factory=cf_integration_runtime_auth_key, is_experimental=True) as g:
@@ -358,7 +384,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_monitoring_data
     synapse_integration_runtime_monitoring_data = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#IntegrationRuntimeMonitoringDataOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._integration_runtime_monitoring_data_operations'
+        '#IntegrationRuntimeMonitoringDataOperations.{}',
         client_factory=cf_integration_runtime_monitoring_data)
     with self.command_group('synapse integration-runtime-monitoring-data', synapse_integration_runtime_monitoring_data,
                             client_factory=cf_integration_runtime_monitoring_data, is_experimental=True) as g:
@@ -366,7 +393,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_status
     synapse_integration_runtime_status = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#IntegrationRuntimeStatusOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._integration_runtime_status_operations#Integrat'
+        'ionRuntimeStatusOperations.{}',
         client_factory=cf_integration_runtime_status)
     with self.command_group('synapse integration-runtime-status', synapse_integration_runtime_status,
                             client_factory=cf_integration_runtime_status, is_experimental=True) as g:
@@ -374,7 +402,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_private_link_resource
     synapse_private_link_resource = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#PrivateLinkResourcesOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._private_link_resources_operations#PrivateLinkR'
+        'esourcesOperations.{}',
         client_factory=cf_private_link_resource)
     with self.command_group('synapse private-link-resource', synapse_private_link_resource,
                             client_factory=cf_private_link_resource, is_experimental=True) as g:
@@ -383,7 +412,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_private_endpoint_connection
     synapse_private_endpoint_connection = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#PrivateEndpointConnectionsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._private_endpoint_connections_operations#Privat'
+        'eEndpointConnectionsOperations.{}',
         client_factory=cf_private_endpoint_connection)
     with self.command_group('synapse private-endpoint-connection', synapse_private_endpoint_connection,
                             client_factory=cf_private_endpoint_connection, is_experimental=True) as g:
@@ -396,7 +426,8 @@ def load_command_table(self, _):
 
     from azext_synapse.generated._client_factory import cf_private_link_hub
     synapse_private_link_hub = CliCommandType(
-        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations#PrivateLinkHubsOperations.{}',
+        operations_tmpl='azext_synapse.vendored_sdks.synapse.operations._private_link_hubs_operations#PrivateLinkHubsOp'
+        'erations.{}',
         client_factory=cf_private_link_hub)
     with self.command_group('synapse private-link-hub', synapse_private_link_hub, client_factory=cf_private_link_hub,
                             is_experimental=True) as g:

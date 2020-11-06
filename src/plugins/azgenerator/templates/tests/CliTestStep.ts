@@ -26,7 +26,7 @@ export class CliTestStep extends TemplateBase {
             this.relativePath = path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.testStepFile);
         }
         else {
-            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.testStepFile);
+            this.relativePath = path.join(model.AzextFolder, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.testStepFile);
         }
     }
 

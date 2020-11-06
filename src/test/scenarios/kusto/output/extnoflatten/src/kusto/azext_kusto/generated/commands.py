@@ -17,7 +17,7 @@ def load_command_table(self, _):
 
     from azext_kusto.generated._client_factory import cf_cluster
     kusto_cluster = CliCommandType(
-        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations#ClustersOperations.{}',
+        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations._clusters_operations#ClustersOperations.{}',
         client_factory=cf_cluster)
     with self.command_group('kusto cluster', kusto_cluster, client_factory=cf_cluster, is_experimental=True) as g:
         g.custom_command('list', 'kusto_cluster_list')
@@ -40,7 +40,8 @@ def load_command_table(self, _):
 
     from azext_kusto.generated._client_factory import cf_cluster_principal_assignment
     kusto_cluster_principal_assignment = CliCommandType(
-        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations#ClusterPrincipalAssignmentsOperations.{}',
+        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations._cluster_principal_assignments_operations#ClusterPr'
+        'incipalAssignmentsOperations.{}',
         client_factory=cf_cluster_principal_assignment)
     with self.command_group('kusto cluster-principal-assignment', kusto_cluster_principal_assignment,
                             client_factory=cf_cluster_principal_assignment) as g:
@@ -54,7 +55,7 @@ def load_command_table(self, _):
 
     from azext_kusto.generated._client_factory import cf_database
     kusto_database = CliCommandType(
-        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations#DatabasesOperations.{}',
+        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations._databases_operations#DatabasesOperations.{}',
         client_factory=cf_database)
     with self.command_group('kusto database', kusto_database, client_factory=cf_database) as g:
         g.custom_command('list', 'kusto_database_list')
@@ -69,7 +70,8 @@ def load_command_table(self, _):
 
     from azext_kusto.generated._client_factory import cf_database_principal_assignment
     kusto_database_principal_assignment = CliCommandType(
-        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations#DatabasePrincipalAssignmentsOperations.{}',
+        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations._database_principal_assignments_operations#Database'
+        'PrincipalAssignmentsOperations.{}',
         client_factory=cf_database_principal_assignment)
     with self.command_group('kusto database-principal-assignment', kusto_database_principal_assignment,
                             client_factory=cf_database_principal_assignment) as g:
@@ -83,7 +85,8 @@ def load_command_table(self, _):
 
     from azext_kusto.generated._client_factory import cf_attached_database_configuration
     kusto_attached_database_configuration = CliCommandType(
-        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations#AttachedDatabaseConfigurationsOperations.{}',
+        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations._attached_database_configurations_operations#Attach'
+        'edDatabaseConfigurationsOperations.{}',
         client_factory=cf_attached_database_configuration)
     with self.command_group('kusto attached-database-configuration', kusto_attached_database_configuration,
                             client_factory=cf_attached_database_configuration) as g:
@@ -97,7 +100,8 @@ def load_command_table(self, _):
 
     from azext_kusto.generated._client_factory import cf_data_connection
     kusto_data_connection = CliCommandType(
-        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations#DataConnectionsOperations.{}',
+        operations_tmpl='azext_kusto.vendored_sdks.kusto.operations._data_connections_operations#DataConnectionsOperati'
+        'ons.{}',
         client_factory=cf_data_connection)
     with self.command_group('kusto data-connection', kusto_data_connection, client_factory=cf_data_connection) as g:
         g.custom_command('list', 'kusto_data_connection_list')

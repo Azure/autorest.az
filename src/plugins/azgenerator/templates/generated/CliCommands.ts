@@ -38,7 +38,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 }
 
                 output.push("    " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + " = CliCommandType(");
-                ToMultiLine("        operations_tmpl='" + model.GetPythonNamespace() + ".operations#" + model.GetModuleOperationNamePythonUpper() + ".{}',", output);
+                ToMultiLine("        operations_tmpl='" + model.GetPythonNamespace() + ".operations._" + model.GetModuleOperationNamePython() + "_operations#" + model.GetModuleOperationNamePythonUpper() + ".{}',", output);
 
 
                 output.push("        client_factory=" + cf_name + ")");
