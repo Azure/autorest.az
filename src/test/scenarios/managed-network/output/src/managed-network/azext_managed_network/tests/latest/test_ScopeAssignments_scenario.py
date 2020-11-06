@@ -12,10 +12,10 @@ import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
 from .preparers import VirtualNetworkPreparer
-from .example_steps import step_scopeassignmentsput
-from .example_steps import step_scopeassignmentsget
-from .example_steps import step_scopeassignmentslist
-from .example_steps import step_scopeassignmentsdelete
+from .example_steps import step_mn_scope_assignment_create
+from .example_steps import step_mn_scope_assignment_show
+from .example_steps import step_mn_scope_assignment_list
+from .example_steps import step_mn_scope_assignment_delete
 from .. import (
     try_manual,
     raise_if,
@@ -42,24 +42,24 @@ def cleanup_scenario(test, rg):
 @try_manual
 def call_scenario(test, rg):
     setup_scenario(test, rg)
-    step_scopeassignmentsput(test, rg, checks=[
+    step_mn_scope_assignment_create(test, rg, checks=[
         test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft."
                    "ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
         test.check("name", "{myScopeAssignment}", case_sensitive=False),
     ])
-    step_scopeassignmentsget(test, rg, checks=[
+    step_mn_scope_assignment_show(test, rg, checks=[
         test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft."
                    "ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
         test.check("name", "{myScopeAssignment}", case_sensitive=False),
     ])
-    step_scopeassignmentslist(test, rg, checks=[
+    step_mn_scope_assignment_list(test, rg, checks=[
         test.check('length(@)', 1),
     ])
-    step_scopeassignmentsdelete(test, rg, checks=[])
+    step_mn_scope_assignment_delete(test, rg, checks=[])
     cleanup_scenario(test, rg)
 
 
-# Test class for ${scenarioName}
+# Test class for Scenario
 @try_manual
 class ScopeAssignmentsScenarioTest(ScenarioTest):
 
@@ -68,7 +68,7 @@ class ScopeAssignmentsScenarioTest(ScenarioTest):
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
-    def test_managed_network(self, rg):
+    def test_ScopeAssignments_Scenario(self, rg):
 
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()

@@ -12,109 +12,109 @@
 import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
-from .example_steps import step_create_or_update_a_workspace
-from .example_steps import step_create_or_update_a_big_data_pool
-from .example_steps import step_list_big_data_pools_in_a_workspace
-from .example_steps import step_update_a_big_data_pool
-from .example_steps import step_create_integration_runtime
-from .example_steps import step_get_integration_runtime
-from .example_steps import step_list_integration_runtimes
-from .example_steps import step_start_integration_runtime
-from .example_steps import step_stop_integration_runtime
-from .example_steps import step_upgrade_integration_runtime
-from .example_steps import step_update_integration_runtime
-from .example_steps import step_list_auth_keys
-from .example_steps import step_regenerate_auth_key
-from .example_steps import step_get_connection_info
-from .example_steps import step_sync_credentials
-from .example_steps import step_get_monitoring_data
-from .example_steps import step_get_integration_runtime_node_ip_address
-from .example_steps import step_get_integration_runtime_node
-from .example_steps import step_update_integration_runtime_node
-from .example_steps import step_get_integration_runtime_object_metadata
-from .example_steps import step_refresh_object_metadata
-from .example_steps import step_get_status
-from .example_steps import step_create_an_ip_firewall_rule
-from .example_steps import step_create_an_ip_firewall_rule
-from .example_steps import step_list_ip_firewall_rules_in_a_workspace
-from .example_steps import step_replace_all_ip_firewall_rules_in_a_workspace
-from .example_steps import step_get_azure_async_operation_header_result
-from .example_steps import step_get_location_header_result
-from .example_steps import step_approve_private_endpoint_connection
-from .example_steps import step_get_private_endpoint_connection
-from .example_steps import step_list_private_endpoint
-from .example_steps import step_create_or_update_a_privatelinkhub
-from .example_steps import step_get_a_privatelinkhub
-from .example_steps import step_list_privatelinkhubs_in_resource_group
-from .example_steps import step_list_privatelinkhubs_in_subscription
-from .example_steps import step_update_a_privatelinkhub
-from .example_steps import step_get_a_big_data_pool
-from .example_steps import step_get_a_workspace
-from .example_steps import step_list_workspaces_in_resource_group
-from .example_steps import step_list_workspaces_in_subscription
-from .example_steps import step_update_a_workspace
-from .example_steps import step_get_private_link_resources_for_workspace
-from .example_steps import step_get_private_link_resources_for_workspace
-from .example_steps import step_create_a_sql_analytics_pool
-from .example_steps import step_get_a_sql_analytics_pool
-from .example_steps import step_list_sql_analytics_pools_in_a_workspace
-from .example_steps import step_list_sql_analytics
-from .example_steps import step_pause_a_sql_analytics_pool
-from .example_steps import step_rename_a_sql_analytics_pool
-from .example_steps import step_resume_a_sql_analytics_pool
-from .example_steps import step_update_a_sql_analytics_pool
-from .example_steps import step_create_or_update
-from .example_steps import step_create_or_update2
-from .example_steps import step_get_blob_auditing
-from .example_steps import step_get_a_connection
-from .example_steps import step_get_a_sql_analytics_pool_user_activity
-from .example_steps import step_get_sql_pool_geo_backup_policy
-from .example_steps import step_set_metadata_sync
-from .example_steps import step_get_metadata_sync
-from .example_steps import step_get_the_result
-from .example_steps import step_list_the_sql
-from .example_steps import step_lists_a_sql_analytic_pool_s_replication_links
-from .example_steps import step_get_a_list
-from .example_steps import step_creates_sql_pool_restore_point_
-from .example_steps import step_list_the_schema_in_a_sql_analytics_pool
-from .example_steps import step_update_a_sql
-from .example_steps import step_update_a_sql2
-from .example_steps import step_get_a_security_alert_of_a_sql_analytics_pool
-from .example_steps import step_updates_the_sensitivity
-from .example_steps import step_gets_the_current
-from .example_steps import step_gets_the_recommended
-from .example_steps import step_disables_sensitivity_recommendations
-from .example_steps import step_enables_sensitivity_recommendations
-from .example_steps import step_list_the_columns
-from .example_steps import step_list_the_tables
-from .example_steps import step_create_or_update3
-from .example_steps import step_get_transparent_data
-from .example_steps import step_list_the_usages_of_a_sql_analytics_pool
-from .example_steps import step_creates_or_updates
-from .example_steps import step_get_a_vulnerability
-from .example_steps import step_executes_a_sql
-from .example_steps import step_export_a_database
-from .example_steps import step_create_a_database
-from .example_steps import step_create_a_database2
-from .example_steps import step_create_a_database3
-from .example_steps import step_get_a_sql_pool_s_vulnerability_assessment
-from .example_steps import step_get_a_vulnerability2
-from .example_steps import step_deletes_the_sensitivity
-from .example_steps import step_create_or_update4
-from .example_steps import step_get_workspace_active_directory_admin
-from .example_steps import step_create_or_update5
-from .example_steps import step_get_managed_identity_sql_control_settings
-from .example_steps import step_delete_a_big_data_pool
-from .example_steps import step_delete_integration_runtime_node
-from .example_steps import step_delete_integration_runtime
-from .example_steps import step_delete_an_ip_firewall_rule_from_a_workspace
-from .example_steps import step_delete_private_endpoint_connection
-from .example_steps import step_removes_a_database
-from .example_steps import step_delete_a_privatelinkhub
-from .example_steps import step_remove_a_database_s_vulnerability_assessment
-from .example_steps import step_delete_a_sql_analytics_pool
-from .example_steps import step_delete_workspace_active_directory_admin
-from .example_steps import step_delete_a_workspace
+from .example_steps import step_workspace_create
+from .example_steps import step_big_data_pool_create
+from .example_steps import step_big_data_pool_list
+from .example_steps import step_big_data_pool_update
+from .example_steps import step_integration_runtime_create
+from .example_steps import step_integration_runtime_show
+from .example_steps import step_integration_runtime_list
+from .example_steps import step_integration_runtime_start
+from .example_steps import step_integration_runtime_stop
+from .example_steps import step_integration_runtime_upgrade
+from .example_steps import step_integration_runtime_update
+from .example_steps import step_integration_runtime_auth_key_list
+from .example_steps import step_integration_runtime_auth_key_regenerate
+from .example_steps import step_integration_runtime_connection_info_get
+from .example_steps import step_integration_runtime_credentials_sync
+from .example_steps import step_integration_runtime_monitoring_data_get
+from .example_steps import step_integration_runtime_node_ip_address_get
+from .example_steps import step_integration_runtime_node_show
+from .example_steps import step_integration_runtime_node_update
+from .example_steps import step_integration_runtime_object_metadata_get
+from .example_steps import step_integration_runtime_object_metadata_refresh
+from .example_steps import step_integration_runtime_status_get
+from .example_steps import step_ip_firewall_rule_show
+from .example_steps import step_ip_firewall_rule_show
+from .example_steps import step_ip_firewall_rule_list
+from .example_steps import step_ip_firewall_rule_replace_all
+from .example_steps import step_operation_get_azure_async_header_result
+from .example_steps import step_operation_get_location_header_result
+from .example_steps import step_private_endpoint_connection_create
+from .example_steps import step_private_endpoint_connection_show
+from .example_steps import step_private_endpoint_connection_list
+from .example_steps import step_private_link_hub_create
+from .example_steps import step_private_link_hub_show
+from .example_steps import step_private_link_hub_list
+from .example_steps import step_private_link_hub_list
+from .example_steps import step_private_link_hub_update
+from .example_steps import step_big_data_pool_show
+from .example_steps import step_workspace_show
+from .example_steps import step_workspace_list
+from .example_steps import step_workspace_list
+from .example_steps import step_workspace_update
+from .example_steps import step_private_link_resource_list
+from .example_steps import step_private_link_resource_list
+from .example_steps import step_sql_pool_create
+from .example_steps import step_sql_pool_show
+from .example_steps import step_sql_pool_list
+from .example_steps import step_sql_pool_list
+from .example_steps import step_sql_pool_pause
+from .example_steps import step_sql_pool_rename
+from .example_steps import step_sql_pool_resume
+from .example_steps import step_sql_pool_update
+from .example_steps import step_sql_pool_blob_auditing_policy_create
+from .example_steps import step_sql_pool_blob_auditing_policy_create
+from .example_steps import step_sql_pool_blob_auditing_policy_show
+from .example_steps import step_sql_pool_connection_policy_show
+from .example_steps import step_sql_pool_data_warehouse_user_activity_show
+from .example_steps import step_sql_pool_geo_backup_policy_show
+from .example_steps import step_sql_pool_metadata_sync_config_create
+from .example_steps import step_sql_pool_metadata_sync_config_show
+from .example_steps import step_sql_pool_operation
+from .example_steps import step_sql_pool_operation_list
+from .example_steps import step_sql_pool_replication_link_list
+from .example_steps import step_sql_pool_restore_point_list
+from .example_steps import step_sql_pool_restore_point_create
+from .example_steps import step_sql_pool_schema_list
+from .example_steps import step_sql_pool_security_alert_policy_create
+from .example_steps import step_sql_pool_security_alert_policy_create
+from .example_steps import step_sql_pool_security_alert_policy_show
+from .example_steps import step_sql_pool_sensitivity_label_create
+from .example_steps import step_sql_pool_sensitivity_label_list_current
+from .example_steps import step_sql_pool_sensitivity_label_list_recommended
+from .example_steps import step_sql_pool_sensitivity
+from .example_steps import step_sql_pool_sensitivity2
+from .example_steps import step_sql_pool_table_column_list
+from .example_steps import step_sql_pool_table_list
+from .example_steps import step_sql_pool_transparent_data_encryption_create
+from .example_steps import step_sql_pool_transparent_data_encryption_show
+from .example_steps import step_sql_pool_usage_list
+from .example_steps import step_sql_pool_vulnerability
+from .example_steps import step_sql_pool_vulnerability_assessment_scan_list
+from .example_steps import step_sql_pool_vulnerability3
+from .example_steps import step_sql_pool_vulnerability_assessment_scan_export
+from .example_steps import step_sql_pool_vulnerability_assessment_create
+from .example_steps import step_sql_pool_vulnerability_assessment_create
+from .example_steps import step_sql_pool_vulnerability_assessment_create
+from .example_steps import step_sql_pool_vulnerability_assessment_show
+from .example_steps import step_sql_pool_vulnerability_assessment_list
+from .example_steps import step_sql_pool_sensitivity_label_delete
+from .example_steps import step_workspace_aad_admin_create
+from .example_steps import step_workspace_aad_admin_show
+from .example_steps import step_workspace_managed_identity
+from .example_steps import step_workspace_managed_identity2
+from .example_steps import step_big_data_pool_delete
+from .example_steps import step_integration_runtime_node_delete
+from .example_steps import step_integration_runtime_delete
+from .example_steps import step_ip_firewall_rule_delete
+from .example_steps import step_private_endpoint_connection_delete
+from .example_steps import step_sql_pool_vulnerability2
+from .example_steps import step_private_link_hub_delete
+from .example_steps import step_sql_pool_vulnerability_assessment_delete
+from .example_steps import step_sql_pool_delete
+from .example_steps import step_workspace_aad_admin_delete
+from .example_steps import step_workspace_delete
 from .. import (
     try_manual,
     raise_if,
@@ -145,8 +145,8 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
                   rg_16, rg_17):
     setup_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
                    rg_16, rg_17)
-    step_create_or_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                      rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+    step_workspace_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17, checks=[
         test.check("identity.type", "SystemAssigned", case_sensitive=False),
         test.check("location", "East US", case_sensitive=False),
         test.check("defaultDataLakeStorage.accountUrl", "https://accountname.dfs.core.windows.net",
@@ -159,8 +159,8 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
         test.check("tags.key", "value", case_sensitive=False),
         test.check("name", "{myWorkspace2}", case_sensitive=False),
     ])
-    step_create_or_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+    step_big_data_pool_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17, checks=[
         test.check("location", "West US 2", case_sensitive=False),
         test.check("autoPause.delayInMinutes", 15),
         test.check("autoPause.enabled", True),
@@ -176,12 +176,12 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
         test.check("tags.key", "value", case_sensitive=False),
         test.check("name", "{myBigDataPool}", case_sensitive=False),
     ])
-    step_list_big_data_pools_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+    step_big_data_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17, checks=[
         test.check('length(@)', 1),
     ])
-    step_update_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17, checks=[
+    step_big_data_pool_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17, checks=[
         test.check("location", "West US 2", case_sensitive=False),
         test.check("autoPause.delayInMinutes", 15),
         test.check("autoPause.enabled", True),
@@ -197,102 +197,102 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
         test.check("tags.key", "value", case_sensitive=False),
         test.check("name", "{myBigDataPool}", case_sensitive=False),
     ])
-    step_create_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+    step_integration_runtime_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
         test.check("properties.type", "SelfHosted", case_sensitive=False),
         test.check("properties.description", "A selfhosted integration runtime", case_sensitive=False),
         test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
     ])
-    step_get_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=[
+    step_integration_runtime_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                  rg_14, rg_15, rg_16, rg_17, checks=[
         test.check("properties.type", "SelfHosted", case_sensitive=False),
         test.check("properties.description", "A selfhosted integration runtime", case_sensitive=False),
         test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
     ])
-    step_list_integration_runtimes(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+    step_integration_runtime_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                  rg_14, rg_15, rg_16, rg_17, checks=[
         test.check('length(@)', 1),
     ])
-    step_start_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+    step_integration_runtime_start(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_stop_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+    step_integration_runtime_stop(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
                                   rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_upgrade_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+    step_integration_runtime_upgrade(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                      rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_update_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+    step_integration_runtime_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
         test.check("name", "{myIntegrationRuntime}", case_sensitive=False),
     ])
-    step_list_auth_keys(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17, checks=[])
-    step_regenerate_auth_key(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_connection_info(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_sync_credentials(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17, checks=[])
-    step_get_monitoring_data(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_integration_runtime_node_ip_address(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+    step_integration_runtime_auth_key_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_integration_runtime_auth_key_regenerate(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+    step_integration_runtime_connection_info_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_integration_runtime_credentials_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_integration_runtime_monitoring_data_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_integration_runtime_node_ip_address_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_integration_runtime_node_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                       rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_integration_runtime_node_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_integration_runtime_object_metadata_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_integration_runtime_object_metadata_refresh(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_integration_runtime_status_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                        rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_ip_firewall_rule_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                               rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_ip_firewall_rule_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                               rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_ip_firewall_rule_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                               rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_ip_firewall_rule_replace_all(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                       rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_update_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_integration_runtime_object_metadata(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+    step_operation_get_azure_async_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_refresh_object_metadata(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_status(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
-                    rg_16, rg_17, checks=[])
-    step_create_an_ip_firewall_rule(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_create_an_ip_firewall_rule(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_list_ip_firewall_rules_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_replace_all_ip_firewall_rules_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_azure_async_operation_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_approve_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_list_private_endpoint(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+    step_operation_get_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_private_endpoint_connection_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_private_endpoint_connection_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_private_endpoint_connection_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_private_link_hub_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("location", "East US", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myPrivateLinkHub}", case_sensitive=False),
+    ])
+    step_private_link_hub_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                               rg_14, rg_15, rg_16, rg_17, checks=[
+        test.check("location", "East US", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myPrivateLinkHub}", case_sensitive=False),
+    ])
+    step_private_link_hub_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
                                rg_14, rg_15, rg_16, rg_17, checks=[
         test.check('length(@)', 1),
     ])
-    step_create_or_update_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
-        test.check("location", "East US", case_sensitive=False),
-        test.check("tags.key", "value", case_sensitive=False),
-        test.check("name", "{myPrivateLinkHub}", case_sensitive=False),
-    ])
-    step_get_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17, checks=[
-        test.check("location", "East US", case_sensitive=False),
-        test.check("tags.key", "value", case_sensitive=False),
-        test.check("name", "{myPrivateLinkHub}", case_sensitive=False),
-    ])
-    step_list_privatelinkhubs_in_resource_group(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
+    step_private_link_hub_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                               rg_14, rg_15, rg_16, rg_17, checks=[
         test.check('length(@)', 1),
     ])
-    step_list_privatelinkhubs_in_subscription(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
-        test.check('length(@)', 1),
-    ])
-    step_update_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+    step_private_link_hub_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
                                  rg_14, rg_15, rg_16, rg_17, checks=[
         test.check("location", "East US", case_sensitive=False),
         test.check("tags.key", "value", case_sensitive=False),
         test.check("name", "{myPrivateLinkHub}", case_sensitive=False),
     ])
-    step_get_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17, checks=[
+    step_big_data_pool_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                            rg_14, rg_15, rg_16, rg_17, checks=[
         test.check("location", "West US 2", case_sensitive=False),
         test.check("autoPause.delayInMinutes", 15),
         test.check("autoPause.enabled", True),
@@ -307,42 +307,42 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
         test.check("sparkVersion", "2.4", case_sensitive=False),
         test.check("name", "{myBigDataPool}", case_sensitive=False),
     ])
-    step_get_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+    step_workspace_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                        rg_15, rg_16, rg_17, checks=[
+        test.check("location", "East US", case_sensitive=False),
+        test.check("defaultDataLakeStorage.accountUrl", "https://accountname.dfs.core.windows.net",
+                   case_sensitive=False),
+        test.check("defaultDataLakeStorage.filesystem", "default", case_sensitive=False),
+        test.check("sqlAdministratorLogin", "login", case_sensitive=False),
+        test.check("sqlAdministratorLoginPassword", "password", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myWorkspace2}", case_sensitive=False),
+    ])
+    step_workspace_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                        rg_15, rg_16, rg_17, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_workspace_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                        rg_15, rg_16, rg_17, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_workspace_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17, checks=[
+        test.check("location", "East US", case_sensitive=False),
+        test.check("defaultDataLakeStorage.accountUrl", "https://accountname.dfs.core.windows.net",
+                   case_sensitive=False),
+        test.check("defaultDataLakeStorage.filesystem", "default", case_sensitive=False),
+        test.check("sqlAdministratorLogin", "login", case_sensitive=False),
+        test.check("sqlAdministratorLoginPassword", "password", case_sensitive=False),
+        test.check("tags.key", "value", case_sensitive=False),
+        test.check("name", "{myWorkspace2}", case_sensitive=False),
+    ])
+    step_private_link_resource_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_private_link_resource_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
                          rg_15, rg_16, rg_17, checks=[
-        test.check("location", "East US", case_sensitive=False),
-        test.check("defaultDataLakeStorage.accountUrl", "https://accountname.dfs.core.windows.net",
-                   case_sensitive=False),
-        test.check("defaultDataLakeStorage.filesystem", "default", case_sensitive=False),
-        test.check("sqlAdministratorLogin", "login", case_sensitive=False),
-        test.check("sqlAdministratorLoginPassword", "password", case_sensitive=False),
-        test.check("tags.key", "value", case_sensitive=False),
-        test.check("name", "{myWorkspace2}", case_sensitive=False),
-    ])
-    step_list_workspaces_in_resource_group(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
-        test.check('length(@)', 1),
-    ])
-    step_list_workspaces_in_subscription(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
-        test.check('length(@)', 1),
-    ])
-    step_update_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17, checks=[
-        test.check("location", "East US", case_sensitive=False),
-        test.check("defaultDataLakeStorage.accountUrl", "https://accountname.dfs.core.windows.net",
-                   case_sensitive=False),
-        test.check("defaultDataLakeStorage.filesystem", "default", case_sensitive=False),
-        test.check("sqlAdministratorLogin", "login", case_sensitive=False),
-        test.check("sqlAdministratorLoginPassword", "password", case_sensitive=False),
-        test.check("tags.key", "value", case_sensitive=False),
-        test.check("name", "{myWorkspace2}", case_sensitive=False),
-    ])
-    step_get_private_link_resources_for_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_private_link_resources_for_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_create_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
         test.check("location", "West US 2", case_sensitive=False),
         test.check("collation", "", case_sensitive=False),
         test.check("createMode", "", case_sensitive=False),
@@ -355,141 +355,141 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
         test.check("sku.tier", "", case_sensitive=False),
         test.check("name", "{mySqlPool2}", case_sensitive=False),
     ])
-    step_get_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_list_sql_analytics_pools_in_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_list_sql_analytics(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_pause_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_rename_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_resume_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_update_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[
-        test.check("location", "West US 2", case_sensitive=False),
-        test.check("collation", "", case_sensitive=False),
-        test.check("createMode", "", case_sensitive=False),
-        test.check("creationDate", "1970-01-01T00:00:00.000Z", case_sensitive=False),
-        test.check("maxSizeBytes", 0),
-        test.check("recoverableDatabaseId", "", case_sensitive=False),
-        test.check("restorePointInTime", "1970-01-01T00:00:00.000Z", case_sensitive=False),
-        test.check("sourceDatabaseId", "", case_sensitive=False),
-        test.check("sku.name", "", case_sensitive=False),
-        test.check("sku.tier", "", case_sensitive=False),
-        test.check("name", "{mySqlPool2}", case_sensitive=False),
-    ])
-    step_create_or_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17, checks=[])
-    step_create_or_update2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17, checks=[])
-    step_get_blob_auditing(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17, checks=[])
-    step_get_a_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17, checks=[])
-    step_get_a_sql_analytics_pool_user_activity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_sql_pool_geo_backup_policy(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_set_metadata_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17, checks=[])
-    step_get_metadata_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17, checks=[])
-    step_get_the_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17, checks=[])
-    step_list_the_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                      rg_15, rg_16, rg_17, checks=[])
-    step_lists_a_sql_analytic_pool_s_replication_links(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_a_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15,
-                    rg_16, rg_17, checks=[])
-    step_creates_sql_pool_restore_point_(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_list_the_schema_in_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_update_a_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                      rg_15, rg_16, rg_17, checks=[])
-    step_update_a_sql2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+    step_sql_pool_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
                        rg_15, rg_16, rg_17, checks=[])
-    step_get_a_security_alert_of_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_updates_the_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_gets_the_current(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17, checks=[])
-    step_gets_the_recommended(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_disables_sensitivity_recommendations(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_enables_sensitivity_recommendations(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_list_the_columns(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17, checks=[])
-    step_list_the_tables(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17, checks=[])
-    step_create_or_update3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17, checks=[])
-    step_get_transparent_data(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_list_the_usages_of_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_creates_or_updates(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_a_vulnerability(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_executes_a_sql(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+    step_sql_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                       rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                       rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_pause(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
                         rg_15, rg_16, rg_17, checks=[])
-    step_export_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17, checks=[])
-    step_create_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17, checks=[])
-    step_create_a_database2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_create_a_database3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_a_sql_pool_s_vulnerability_assessment(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_get_a_vulnerability2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_deletes_the_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_create_or_update4(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17, checks=[])
-    step_get_workspace_active_directory_admin(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+    step_sql_pool_rename(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                         rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_resume(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                         rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                         rg_15, rg_16, rg_17, checks=[
+        test.check("location", "West US 2", case_sensitive=False),
+        test.check("collation", "", case_sensitive=False),
+        test.check("createMode", "", case_sensitive=False),
+        test.check("creationDate", "1970-01-01T00:00:00.000Z", case_sensitive=False),
+        test.check("maxSizeBytes", 0),
+        test.check("recoverableDatabaseId", "", case_sensitive=False),
+        test.check("restorePointInTime", "1970-01-01T00:00:00.000Z", case_sensitive=False),
+        test.check("sourceDatabaseId", "", case_sensitive=False),
+        test.check("sku.name", "", case_sensitive=False),
+        test.check("sku.tier", "", case_sensitive=False),
+        test.check("name", "{mySqlPool2}", case_sensitive=False),
+    ])
+    step_sql_pool_blob_auditing_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_create_or_update5(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                           rg_15, rg_16, rg_17, checks=[])
-    step_get_managed_identity_sql_control_settings(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_delete_a_big_data_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_delete_integration_runtime_node(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_delete_integration_runtime(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_delete_an_ip_firewall_rule_from_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_delete_private_endpoint_connection(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+    step_sql_pool_blob_auditing_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_blob_auditing_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_removes_a_database(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+    step_sql_pool_connection_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_data_warehouse_user_activity_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_geo_backup_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_metadata_sync_config_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_metadata_sync_config_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_operation(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
                             rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_delete_a_privatelinkhub(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+    step_sql_pool_operation_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
                                  rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_remove_a_database_s_vulnerability_assessment(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                      rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_delete_a_sql_analytics_pool(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+    step_sql_pool_replication_link_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                        rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_restore_point_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                      rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_delete_workspace_active_directory_admin(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+    step_sql_pool_restore_point_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                       rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_schema_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_security_alert_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_security_alert_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_security_alert_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_sensitivity_label_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_sensitivity_label_list_current(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_delete_a_workspace(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_sensitivity_label_list_recommended(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_sensitivity2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                               rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_table_column_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_table_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_transparent_data_encryption_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_transparent_data_encryption_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_usage_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                             rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability_assessment_scan_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability_assessment_scan_export(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability_assessment_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability_assessment_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_sensitivity_label_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_workspace_aad_admin_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_workspace_aad_admin_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                  rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_workspace_managed_identity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_workspace_managed_identity2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_big_data_pool_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_integration_runtime_node_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_integration_runtime_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_ip_firewall_rule_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_private_endpoint_connection_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_private_link_hub_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                 rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability_assessment_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                         rg_15, rg_16, rg_17, checks=[])
+    step_workspace_aad_admin_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
+                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_workspace_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                          rg_15, rg_16, rg_17, checks=[])
     cleanup_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
                      rg_15, rg_16, rg_17)
 
 
-# Test class for ${scenarioName}
+# Test class for Scenario
 @try_manual
 class SynapseScenarioTest(ScenarioTest):
 
@@ -514,8 +514,8 @@ class SynapseScenarioTest(ScenarioTest):
     @ResourceGroupPreparer(name_prefix='clitestsynapse_securityalert-6852'[:7], key='rg_15', parameter_name='rg_15')
     @ResourceGroupPreparer(name_prefix='clitestsynapse_securityalert-4799'[:7], key='rg_16', parameter_name='rg_16')
     @ResourceGroupPreparer(name_prefix='clitestsynapse_exampleResourceGroup'[:7], key='rg_17', parameter_name='rg_17')
-    def test_synapse(self, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                     rg_15, rg_16, rg_17):
+    def test_synapse_Scenario(self, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                              rg_14, rg_15, rg_16, rg_17):
 
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
