@@ -236,6 +236,7 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                     }
                 }
                 else {
+                    let CommaPos = lastComma;
                     if (lastNormal != ret[ret.length - 1].length - 1) {
                         let newLine = ' '.repeat(indent > 0 ? indent : spaceNum) + strTag + ret[ret.length - 1].substr(lastNormal + 1);
                         ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastNormal + 1) + strTag;
@@ -256,13 +257,28 @@ export function ToMultiLine(sentence: string, output: string[] = undefined, maxL
                         if (isStrTags[lenLast-2]) {
                             if (ret[ret.length-2].slice(0, -2).match(/^ *$/i))
                                 ret.splice(ret.length-2, 1);
-                            else if(ret[ret.length-2].slice(-3)[0]!="=")
+                            else
                             {
                                 ret[ret.length-2] = ret[ret.length-2].slice(0, -2); // remove "" at the tail
-                                while (ret[ret.length-2].slice(-1)[0] == " ") {     // remove all spaces before ""
-                                    ret[ret.length-2] = ret[ret.length-2].slice(0, -1); 
+                                if (ret[ret.length-2].slice(-1)[0]!="=") {
+                                    while (ret[ret.length-2].slice(-1)[0] == " ") {     // remove all spaces before ""
+                                        ret[ret.length-2] = ret[ret.length-2].slice(0, -1); 
+                                    }
+                                }
+                                else {
+                                    // there is = in the end of line --> create new line from the last comma
+                                    let tmp = ret[ret.length-2].slice(CommaPos+1).trimLeft();
+                                    ret[ret.length-2] = ret[ret.length-2].slice(0, CommaPos+1);
+                                    let startSpaceNum = ret[ret.length-1].search(/\S|$/);
+                                    if (startSpaceNum>=0) {
+                                        ret[ret.length-1] = ' '.repeat(startSpaceNum) + tmp + ret[ret.length-1].substr(startSpaceNum);
+                                    }
+                                    else {
+                                        ret[ret.length-1] = tmp + ret[ret.length-1];
+                                    }
                                 }
                             }
+                            
                         }
                     }
                 }
@@ -587,4 +603,20 @@ export function calculateLevDistance(src: string, tgt: string) {
 export function distancePercentage(src: string, tgt: string) {
     let distance = calculateLevDistance(src, tgt);
     return distance/src.length;
+}
+
+export function composeParamString(maxApi: string, minApi: string, resourceType: string) {
+    let ret = "";
+    let useResourceType = false;
+    if(!isNullOrUndefined(maxApi) && maxApi.length>0) {
+        ret += ", max_api='" + maxApi + "'";
+    }
+    if(!isNullOrUndefined(minApi) && minApi.length>0) {
+        ret += ", min_api='" + minApi + "'";
+    }
+    if(!isNullOrUndefined(resourceType) && resourceType.length>0) {
+        ret += ", resource_type=" + resourceType;
+        useResourceType = true;
+    }
+    return [ret, useResourceType];
 }

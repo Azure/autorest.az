@@ -85,7 +85,8 @@ export interface CodeModelAz {
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
-    Extension_Mode: string;   
+    Extension_Mode: string;
+    ResourceType: string | undefined;   
 
 
     SelectFirstCommandGroup(): boolean;
@@ -97,6 +98,9 @@ export interface CodeModelAz {
     CommandGroup_DefaultName: string;
     CommandGroup_HasShowCommand: boolean;
     CommandGroup_CliKey: string;
+    CommandGroup_MaxApi: string;
+    CommandGroup_MinApi: string;
+    CommandGroup_ResourceType: string | undefined;
     CommandGroup_Mode: string;
 
     SelectFirstCommand(): boolean;
@@ -108,6 +112,9 @@ export interface CodeModelAz {
     Command_FunctionName: string;
     Command_GetOriginalOperation: any;
     Command_NeedGeneric: boolean;
+    Command_MaxApi: string;
+    Command_MinApi: string;
+    Command_ResourceType: string | undefined;
     Command_GenericSetterParameter(Operation): Parameter;
 
     Command_Help: string;
@@ -127,6 +134,9 @@ export interface CodeModelAz {
     Method_NameCli: string;
     Method_Help: string;
     Method_CliKey: string;
+    Method_MaxApi: string;
+    Method_MinApi: string;
+    Method_ResourceType: string | undefined;
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
     Method_GetOriginalOperation: any;
@@ -144,6 +154,9 @@ export interface CodeModelAz {
     MethodParameter_Name: string;
     MethodParameter_NameAz: string;
     MethodParameter_CliKey: string;
+    MethodParameter_MaxApi: string;
+    MethodParameter_MinApi: string;
+    MethodParameter_ResourceType: string | undefined;
     MethodParameter_IsArray: boolean
     MethodParameter_NamePython: string
     MethodParameter_MapsTo: string;

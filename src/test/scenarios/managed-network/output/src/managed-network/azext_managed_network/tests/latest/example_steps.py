@@ -14,7 +14,7 @@ from .. import try_manual
 
 # EXAMPLE: /ManagedNetworks/put/ManagedNetworksPut
 @try_manual
-def step__managednetworks_put_managednetworksput(test, rg, checks=None):
+def step_mn_create(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn create '
@@ -35,7 +35,7 @@ def step__managednetworks_put_managednetworksput(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworks/get/ManagedNetworksGet
 @try_manual
-def step__managednetworks_get_managednetworksget(test, rg, checks=None):
+def step_mn_get_modify(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn get-modify '
@@ -46,7 +46,7 @@ def step__managednetworks_get_managednetworksget(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworks/get/ManagedNetworksListByResourceGroup
 @try_manual
-def step__managednetworks_get(test, rg, checks=None):
+def step_mn_list(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn list '
@@ -56,7 +56,7 @@ def step__managednetworks_get(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworks/get/ManagedNetworksListBySubscription
 @try_manual
-def step__managednetworks_get2(test, rg, checks=None):
+def step_mn_list(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn list '
@@ -66,7 +66,7 @@ def step__managednetworks_get2(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworks/patch/ManagedNetworksPatch
 @try_manual
-def step__managednetworks_patch_managednetworkspatch(test, rg, checks=None):
+def step_mn_update(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn update '
@@ -77,7 +77,7 @@ def step__managednetworks_patch_managednetworkspatch(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworkGroups/put/ManagementNetworkGroupsPut
 @try_manual
-def step__managednetworkgroups_put(test, rg, checks=None):
+def step_mn_group_create(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn group create '
@@ -100,7 +100,7 @@ def step__managednetworkgroups_put(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworkGroups/get/ManagedNetworksGroupsListByManagedNetwork
 @try_manual
-def step__managednetworkgroups_get(test, rg, checks=None):
+def step_mn_group_list(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn group list '
@@ -111,7 +111,7 @@ def step__managednetworkgroups_get(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworkGroups/get/ManagementNetworkGroupsGet
 @try_manual
-def step__managednetworkgroups_get2(test, rg, checks=None):
+def step_mn_group_show(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn group show '
@@ -123,7 +123,7 @@ def step__managednetworkgroups_get2(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworkPeeringPolicies/put/ManagedNetworkPeeringPoliciesPut
 @try_manual
-def step__managednetworkpeeringpolicies_put(test, rg, checks=None):
+def step_managed_network_peering(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network managed-network-peering-policy hub-and-spoke-topology create '
@@ -139,7 +139,7 @@ def step__managednetworkpeeringpolicies_put(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworkPeeringPolicies/put/ManagedNetworkPeeringPoliciesPut
 @try_manual
-def step__managednetworkpeeringpolicies_put(test, rg, checks=None):
+def step_managed_network_peering(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network managed-network-peering-policy hub-and-spoke-topology create '
@@ -155,7 +155,7 @@ def step__managednetworkpeeringpolicies_put(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworkPeeringPolicies/get/ManagedNetworkPeeringPoliciesGet
 @try_manual
-def step__managednetworkpeeringpolicies_get(test, rg, checks=None):
+def step_managed_network_peering_policy_show(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network managed-network-peering-policy show '
@@ -167,7 +167,7 @@ def step__managednetworkpeeringpolicies_get(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworkPeeringPolicies/get/ManagedNetworkPeeringPoliciesListByManagedNetwork
 @try_manual
-def step__managednetworkpeeringpolicies_get2(test, rg, checks=None):
+def step_managed_network_peering_policy_list(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network managed-network-peering-policy list '
@@ -178,7 +178,7 @@ def step__managednetworkpeeringpolicies_get2(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworkPeeringPolicies/delete/ManagedNetworkPeeringPoliciesDelete
 @try_manual
-def step__managednetworkpeeringpolicies_delete(test, rg, checks=None):
+def step_managed_network_peering_policy_delete(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network managed-network-peering-policy delete -y '
@@ -190,7 +190,7 @@ def step__managednetworkpeeringpolicies_delete(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworkGroups/delete/ManagementNetworkGroupsDelete
 @try_manual
-def step__managednetworkgroups_delete(test, rg, checks=None):
+def step_mn_group_delete(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn group delete -y '
@@ -202,7 +202,7 @@ def step__managednetworkgroups_delete(test, rg, checks=None):
 
 # EXAMPLE: /ScopeAssignments/put/ScopeAssignmentsPut
 @try_manual
-def step__scopeassignments_put_scopeassignmentsput(test, rg, checks=None):
+def step_mn_scope_assignment_create(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn scope-assignment create '
@@ -215,7 +215,7 @@ def step__scopeassignments_put_scopeassignmentsput(test, rg, checks=None):
 
 # EXAMPLE: /ScopeAssignments/get/ScopeAssignmentsGet
 @try_manual
-def step__scopeassignments_get_scopeassignmentsget(test, rg, checks=None):
+def step_mn_scope_assignment_show(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn scope-assignment show '
@@ -226,7 +226,7 @@ def step__scopeassignments_get_scopeassignmentsget(test, rg, checks=None):
 
 # EXAMPLE: /ScopeAssignments/get/ScopeAssignmentsList
 @try_manual
-def step__scopeassignments_get_scopeassignmentslist(test, rg, checks=None):
+def step_mn_scope_assignment_list(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn scope-assignment list '
@@ -236,7 +236,7 @@ def step__scopeassignments_get_scopeassignmentslist(test, rg, checks=None):
 
 # EXAMPLE: /ScopeAssignments/delete/ScopeAssignmentsDelete
 @try_manual
-def step__scopeassignments_delete(test, rg, checks=None):
+def step_mn_scope_assignment_delete(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn scope-assignment delete -y '
@@ -247,7 +247,7 @@ def step__scopeassignments_delete(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworks/delete/ManagedNetworksDelete
 @try_manual
-def step__managednetworks_delete_managednetworksdelete(test, rg, checks=None):
+def step_mn_delete(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn delete -y '

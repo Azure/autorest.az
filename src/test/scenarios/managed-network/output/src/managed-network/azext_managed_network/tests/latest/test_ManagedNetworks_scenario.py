@@ -12,23 +12,23 @@ import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
 from .preparers import VirtualNetworkPreparer
-from .example_steps import step_managednetworksput
-from .example_steps import step_managementnetworkgroupsput
-from .example_steps import step_managednetworkpeeringpoliciesput
-from .example_steps import step_managednetworksget
+from .example_steps import step_mn_create
+from .example_steps import step_mn_group_create
+from .example_steps import step_managed_network_peering
+from .example_steps import step_mn_get_modify
 from azure.cli.testsdk import ResourceGroupPreparer
 from .preparers import VirtualNetworkPreparer
-from .example_steps import step_managednetworkslistbyresourcegroup
-from .example_steps import step_managednetworkslistbysubscription
-from .example_steps import step_managednetworksdelete
-from .example_steps import step_managementnetworkgroupsget
+from .example_steps import step_mn_list
+from .example_steps import step_mn_list
+from .example_steps import step_mn_delete
+from .example_steps import step_mn_group_show
 from azure.cli.testsdk import ResourceGroupPreparer
 from .preparers import VirtualNetworkPreparer
-from .example_steps import step_managednetworksgroupslistbymanagednetwork
-from .example_steps import step_managednetworkpeeringpoliciesget
-from .example_steps import step_managednetworkpeeringpolicieslistbymanagednet
-from .example_steps import step_managednetworkpeeringpoliciesdelete
-from .example_steps import step_managementnetworkgroupsdelete
+from .example_steps import step_mn_group_list
+from .example_steps import step_managed_network_peering_policy_show
+from .example_steps import step_managed_network_peering_policy_list
+from .example_steps import step_managed_network_peering_policy_delete
+from .example_steps import step_mn_group_delete
 from .. import (
     try_manual,
     raise_if,
@@ -55,20 +55,20 @@ def cleanup_scenario1(test, rg):
 @try_manual
 def call_scenario1(test, rg):
     setup_scenario1(test, rg)
-    step_managednetworksput(test, rg, checks=[
+    step_mn_create(test, rg, checks=[
         test.check("location", "eastus", case_sensitive=False),
         test.check("name", "{myManagedNetwork}", case_sensitive=False),
     ])
-    step_managementnetworkgroupsput(test, rg, checks=[
+    step_mn_group_create(test, rg, checks=[
         test.check("managementGroups", []),
         test.check("name", "{myManagedNetworkGroup}", case_sensitive=False),
     ])
-    step_managednetworkpeeringpoliciesput(test, rg, checks=[])
-    step_managednetworksget(test, rg, checks=[])
+    step_managed_network_peering(test, rg, checks=[])
+    step_mn_get_modify(test, rg, checks=[])
     cleanup_scenario1(test, rg)
 
 
-# Test class for ${scenarioName}
+# Test class for scenario1
 @try_manual
 class ManagedNetworksscenario1Test(ScenarioTest):
 
@@ -77,7 +77,7 @@ class ManagedNetworksscenario1Test(ScenarioTest):
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
-    def test_managed_network(self, rg):
+    def test_ManagedNetworks_scenario1(self, rg):
 
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
@@ -111,16 +111,16 @@ def cleanup_scenario2(test, rg):
 @try_manual
 def call_scenario2(test, rg):
     setup_scenario2(test, rg)
-    step_managednetworkslistbyresourcegroup(test, rg, checks=[])
-    step_managednetworkslistbysubscription(test, rg, checks=[
+    step_mn_list(test, rg, checks=[])
+    step_mn_list(test, rg, checks=[
         test.check('length(@)', 1),
     ])
-    step_managednetworksdelete(test, rg, checks=[])
-    step_managementnetworkgroupsget(test, rg, checks=[])
+    step_mn_delete(test, rg, checks=[])
+    step_mn_group_show(test, rg, checks=[])
     cleanup_scenario2(test, rg)
 
 
-# Test class for ${scenarioName}
+# Test class for scenario2
 @try_manual
 class ManagedNetworksscenario2Test(ScenarioTest):
 
@@ -129,7 +129,7 @@ class ManagedNetworksscenario2Test(ScenarioTest):
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
-    def test_managed_network(self, rg):
+    def test_ManagedNetworks_scenario2(self, rg):
 
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
@@ -163,15 +163,15 @@ def cleanup_scenario3(test, rg):
 @try_manual
 def call_scenario3(test, rg):
     setup_scenario3(test, rg)
-    step_managednetworksgroupslistbymanagednetwork(test, rg, checks=[])
-    step_managednetworkpeeringpoliciesget(test, rg, checks=[])
-    step_managednetworkpeeringpolicieslistbymanagednet(test, rg, checks=[])
-    step_managednetworkpeeringpoliciesdelete(test, rg, checks=[])
-    step_managementnetworkgroupsdelete(test, rg, checks=[])
+    step_mn_group_list(test, rg, checks=[])
+    step_managed_network_peering_policy_show(test, rg, checks=[])
+    step_managed_network_peering_policy_list(test, rg, checks=[])
+    step_managed_network_peering_policy_delete(test, rg, checks=[])
+    step_mn_group_delete(test, rg, checks=[])
     cleanup_scenario3(test, rg)
 
 
-# Test class for ${scenarioName}
+# Test class for scenario3
 @try_manual
 class ManagedNetworksscenario3Test(ScenarioTest):
 
@@ -180,7 +180,7 @@ class ManagedNetworksscenario3Test(ScenarioTest):
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
-    def test_managed_network(self, rg):
+    def test_ManagedNetworks_scenario3(self, rg):
 
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()

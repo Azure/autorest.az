@@ -27,6 +27,7 @@ from azext_managed_network.action import (
     AddSpokes,
     AddMesh
 )
+from azure.cli.core.profiles import ResourceType
 
 
 def load_arguments(self, _):
@@ -40,8 +41,8 @@ def load_arguments(self, _):
 
     with self.argument_context('managed-network mn create') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str, help=''
-                   'The name of the Managed Network.')
+        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str,
+                   help='The name of the Managed Network.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
@@ -50,27 +51,27 @@ def load_arguments(self, _):
 
     with self.argument_context('managed-network mn update') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str, help=''
-                   'The name of the Managed Network.', id_part='name')
+        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str,
+                   help='The name of the Managed Network.', id_part='name')
         c.argument('tags', tags_type)
 
     with self.argument_context('managed-network mn delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str, help=''
-                   'The name of the Managed Network.', id_part='name')
+        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str,
+                   help='The name of the Managed Network.', id_part='name')
 
     with self.argument_context('managed-network mn get-modify') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str, help=''
-                   'The name of the Managed Network.', id_part='name')
+        c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str,
+                   help='The name of the Managed Network.', id_part='name')
 
     with self.argument_context('managed-network mn scope-assignment list') as c:
         c.argument('scope', type=str, help='The base resource of the scope assignment.')
 
     with self.argument_context('managed-network mn scope-assignment show') as c:
         c.argument('scope', type=str, help='The base resource of the scope assignment.')
-        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str, help=''
-                   'The name of the scope assignment to get.')
+        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str,
+                   help='The name of the scope assignment to get.')
 
     with self.argument_context('managed-network mn scope-assignment create') as c:
         c.argument('scope', type=str, help='The base resource of the scope assignment to create. The scope can be any '
@@ -78,8 +79,8 @@ def load_arguments(self, _):
                    '\'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}\' for a resource group, and '
                    '\'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider'
                    '}/{resource-type}/{resource-name}\' for a resource.')
-        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str, help=''
-                   'The name of the scope assignment to create.')
+        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str,
+                   help='The name of the scope assignment to create.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('assigned_managed_network', type=str,
                    help='The managed network ID with scope will be assigned to.')
@@ -90,16 +91,16 @@ def load_arguments(self, _):
                    '\'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}\' for a resource group, and '
                    '\'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider'
                    '}/{resource-type}/{resource-name}\' for a resource.')
-        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str, help=''
-                   'The name of the scope assignment to create.')
+        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str,
+                   help='The name of the scope assignment to create.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('assigned_managed_network', type=str,
                    help='The managed network ID with scope will be assigned to.')
 
     with self.argument_context('managed-network mn scope-assignment delete') as c:
         c.argument('scope', type=str, help='The scope of the scope assignment to delete.')
-        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str, help=''
-                   'The name of the scope assignment to delete.')
+        c.argument('scope_assignment_name', options_list=['--name', '-n', '--scope-assignment-name'], type=str,
+                   help='The name of the scope assignment to delete.')
 
     with self.argument_context('managed-network mn group list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -165,8 +166,8 @@ def load_arguments(self, _):
     with self.argument_context('managed-network managed-network-peering-policy show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', type=str, help='The name of the Managed Network.', id_part='name')
-        c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.', id_part=''
-                   'child_name_1')
+        c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.',
+                   id_part='child_name_1')
 
     with self.argument_context('managed-network managed-network-peering-policy hub-and-spoke-topology create') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -191,8 +192,8 @@ def load_arguments(self, _):
     with self.argument_context('managed-network managed-network-peering-policy hub-and-spoke-topology update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', type=str, help='The name of the Managed Network.', id_part='name')
-        c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.', id_part=''
-                   'child_name_1')
+        c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.',
+                   id_part='child_name_1')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
         c.argument('hub', action=AddHub, nargs='*', help='Gets or sets the hub virtual network ID')
@@ -203,8 +204,8 @@ def load_arguments(self, _):
     with self.argument_context('managed-network managed-network-peering-policy mesh-topology update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', type=str, help='The name of the Managed Network.', id_part='name')
-        c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.', id_part=''
-                   'child_name_1')
+        c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.',
+                   id_part='child_name_1')
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
         c.argument('hub', action=AddHub, nargs='*', help='Gets or sets the hub virtual network ID')
@@ -214,12 +215,13 @@ def load_arguments(self, _):
 
     with self.argument_context('managed-network managed-network-peering-policy delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('managed_network_name', type=str, help='The name of the Managed Network.', id_part='name')
-        c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.', id_part=''
-                   'child_name_1')
+        c.argument('managed_network_name', type=str, help='The name of the Managed Network.', id_part='name',
+                   max_api='2020-05-01', min_api='2019-05-01', resource_type=ResourceType.DATA_NETWORK)
+        c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.',
+                   id_part='child_name_1')
 
     with self.argument_context('managed-network managed-network-peering-policy wait') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', type=str, help='The name of the Managed Network.', id_part='name')
-        c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.', id_part=''
-                   'child_name_1')
+        c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.',
+                   id_part='child_name_1')

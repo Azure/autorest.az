@@ -11,48 +11,48 @@
 import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
-from .example_steps import step__attacheddatabaseconfigurations_put
-from .example_steps import step__attacheddatabaseconfigurations_get
-from .example_steps import step__attacheddatabaseconfigurations_get2
-from .example_steps import step__clusters_put_kustoclusterscreateorupdate
-from .example_steps import step__clusters_get_kustoclustersget
-from .example_steps import step__clusters_get_kustoclusterslist
-from .example_steps import step__clusters_get
-from .example_steps import step__clusters_get_kustoclusterslistresourceskus
-from .example_steps import step__clusters_get_kustoclusterslistskus
-from .example_steps import step__clusters_patch_kustoclustersupdate
-from .example_steps import step__clusters_post
-from .example_steps import step__clusters_post2
-from .example_steps import step__clusters_post3
-from .example_steps import step__clusters_post4
-from .example_steps import step__clusters_post5
-from .example_steps import step__clusters_post6
-from .example_steps import step__clusters_post_kustoclustersstart
-from .example_steps import step__clusters_post_kustoclustersstop
-from .example_steps import step__clusterprincipalassignments_put
-from .example_steps import step__clusterprincipalassignments_get
-from .example_steps import step__clusterprincipalassignments_get2
-from .example_steps import step__databaseprincipalassignments_put
-from .example_steps import step__databaseprincipalassignments_get
-from .example_steps import step__clusterprincipalassignments_get2
-from .example_steps import step__databaseprincipalassignments_delete
-from .example_steps import step__databases_put_kustodatabasescreateorupdate
-from .example_steps import step__databases_get_kustodatabasesget
-from .example_steps import step__databases_get_kustodatabaseslistbycluster
-from .example_steps import step__databases_patch_kustodatabasesupdate
-from .example_steps import step__databases_post_kustodatabaseaddprincipals
-from .example_steps import step__databases_post_kustodatabaselistprincipals
-from .example_steps import step__databases_post_kustodatabaseremoveprincipals
-from .example_steps import step__databases_delete_kustodatabasesdelete
-from .example_steps import step__dataconnections_put
-from .example_steps import step__databases_get_kustodatabaseslistbycluster
-from .example_steps import step__dataconnections_get_kustodataconnectionsget
-from .example_steps import step__dataconnections_patch
-from .example_steps import step__dataconnections_post
-from .example_steps import step__dataconnections_delete
-from .example_steps import step__clusters_delete_kustoclustersdelete
-from .example_steps import step__attacheddatabaseconfigurations_delete
-from .example_steps import step__clusterprincipalassignments_delete
+from .example_steps import step_attached_database_configuration_create
+from .example_steps import step_attached_database_configuration_show
+from .example_steps import step_attached_database_configuration_list
+from .example_steps import step_cluster_create
+from .example_steps import step_cluster_show
+from .example_steps import step_cluster_list
+from .example_steps import step_cluster_list
+from .example_steps import step_cluster_list_sku
+from .example_steps import step_cluster_list_sku
+from .example_steps import step_cluster_update
+from .example_steps import step_cluster_add_language_extension
+from .example_steps import step_cluster_detach_follower_database
+from .example_steps import step_cluster_diagnose_virtual_network
+from .example_steps import step_cluster_list_follower_database
+from .example_steps import step_cluster_list_language_extension
+from .example_steps import step_cluster_remove_language_extension
+from .example_steps import step_cluster_start
+from .example_steps import step_cluster_stop
+from .example_steps import step_cluster_principal_assignment_create
+from .example_steps import step_cluster_principal_assignment_show
+from .example_steps import step_cluster_principal_assignment_list
+from .example_steps import step_database_principal_assignment_create
+from .example_steps import step_database_principal_assignment_show
+from .example_steps import step_database_principal_assignment_list
+from .example_steps import step_database_principal_assignment_delete
+from .example_steps import step_database_create
+from .example_steps import step_database_show
+from .example_steps import step_database_list
+from .example_steps import step_database_update
+from .example_steps import step_database_add_principal
+from .example_steps import step_database_list_principal
+from .example_steps import step_database_remove_principal
+from .example_steps import step_database_delete
+from .example_steps import step_data_connection_event_hub_create
+from .example_steps import step_data_connection_list
+from .example_steps import step_data_connection_show
+from .example_steps import step_data_connection_event_hub_update
+from .example_steps import step_data_connection_event
+from .example_steps import step_data_connection_delete
+from .example_steps import step_cluster_delete
+from .example_steps import step_attached_database_configuration_delete
+from .example_steps import step_cluster_principal_assignment_delete
 from .. import (
     try_manual,
     raise_if,
@@ -79,20 +79,20 @@ def cleanup_scenario(test, rg):
 @try_manual
 def call_scenario(test, rg):
     setup_scenario(test, rg)
-    step__attacheddatabaseconfigurations_put(test, rg, checks=[
+    step_attached_database_configuration_create(test, rg, checks=[
         test.check("location", "westus", case_sensitive=False),
         test.check("clusterResourceId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Kusto"
                    "/Clusters/{myCluster3}", case_sensitive=False),
         test.check("defaultPrincipalsModificationKind", "Union", case_sensitive=False),
     ])
-    step__attacheddatabaseconfigurations_get(test, rg, checks=[
+    step_attached_database_configuration_show(test, rg, checks=[
         test.check("location", "westus", case_sensitive=False),
         test.check("defaultPrincipalsModificationKind", "Union", case_sensitive=False),
     ])
-    step__attacheddatabaseconfigurations_get2(test, rg, checks=[
+    step_attached_database_configuration_list(test, rg, checks=[
         test.check('length(@)', 1),
     ])
-    step__clusters_put_kustoclusterscreateorupdate(test, rg, checks=[
+    step_cluster_create(test, rg, checks=[
         test.check("name", "{myCluster}", case_sensitive=False),
         test.check("identity.type", "SystemAssigned", case_sensitive=False),
         test.check("location", "westus", case_sensitive=False),
@@ -103,7 +103,7 @@ def call_scenario(test, rg):
         test.check("sku.capacity", 2),
         test.check("sku.tier", "Standard", case_sensitive=False),
     ])
-    step__clusters_get_kustoclustersget(test, rg, checks=[
+    step_cluster_show(test, rg, checks=[
         test.check("name", "{myCluster}", case_sensitive=False),
         test.check("identity.type", "SystemAssigned", case_sensitive=False),
         test.check("location", "westus", case_sensitive=False),
@@ -112,15 +112,15 @@ def call_scenario(test, rg):
         test.check("sku.capacity", 2),
         test.check("sku.tier", "Standard", case_sensitive=False),
     ])
-    step__clusters_get_kustoclusterslist(test, rg, checks=[
+    step_cluster_list(test, rg, checks=[
         test.check('length(@)', 1),
     ])
-    step__clusters_get(test, rg, checks=[
+    step_cluster_list(test, rg, checks=[
         test.check('length(@)', 1),
     ])
-    step__clusters_get_kustoclusterslistresourceskus(test, rg, checks=[])
-    step__clusters_get_kustoclusterslistskus(test, rg, checks=[])
-    step__clusters_patch_kustoclustersupdate(test, rg, checks=[
+    step_cluster_list_sku(test, rg, checks=[])
+    step_cluster_list_sku(test, rg, checks=[])
+    step_cluster_update(test, rg, checks=[
         test.check("name", "{myCluster}", case_sensitive=False),
         test.check("identity.type", "SystemAssigned", case_sensitive=False),
         test.check("location", "westus", case_sensitive=False),
@@ -133,54 +133,54 @@ def call_scenario(test, rg):
         test.check("keyVaultProperties.keyVaultUri", "https://dummy.keyvault.com", case_sensitive=False),
         test.check("keyVaultProperties.keyVersion", "keyVersion", case_sensitive=False),
     ])
-    step__clusters_post(test, rg, checks=[])
-    step__clusters_post2(test, rg, checks=[])
-    step__clusters_post3(test, rg, checks=[])
-    step__clusters_post4(test, rg, checks=[])
-    step__clusters_post5(test, rg, checks=[])
-    step__clusters_post6(test, rg, checks=[])
-    step__clusters_post_kustoclustersstart(test, rg, checks=[])
-    step__clusters_post_kustoclustersstop(test, rg, checks=[])
-    step__clusterprincipalassignments_put(test, rg, checks=[])
-    step__clusterprincipalassignments_get(test, rg, checks=[])
-    step__clusterprincipalassignments_get2(test, rg, checks=[])
-    step__databaseprincipalassignments_put(test, rg, checks=[])
-    step__databaseprincipalassignments_get(test, rg, checks=[])
-    step__clusterprincipalassignments_get2(test, rg, checks=[])
-    step__databaseprincipalassignments_delete(test, rg, checks=[])
-    step__databases_put_kustodatabasescreateorupdate(test, rg, checks=[])
-    step__databases_get_kustodatabasesget(test, rg, checks=[])
-    step__databases_get_kustodatabaseslistbycluster(test, rg, checks=[])
-    step__databases_patch_kustodatabasesupdate(test, rg, checks=[])
-    step__databases_post_kustodatabaseaddprincipals(test, rg, checks=[])
-    step__databases_post_kustodatabaselistprincipals(test, rg, checks=[])
-    step__databases_post_kustodatabaseremoveprincipals(test, rg, checks=[])
-    step__databases_delete_kustodatabasesdelete(test, rg, checks=[])
-    step__dataconnections_put(test, rg, checks=[])
-    step__databases_get_kustodatabaseslistbycluster(test, rg, checks=[
+    step_cluster_add_language_extension(test, rg, checks=[])
+    step_cluster_detach_follower_database(test, rg, checks=[])
+    step_cluster_diagnose_virtual_network(test, rg, checks=[])
+    step_cluster_list_follower_database(test, rg, checks=[])
+    step_cluster_list_language_extension(test, rg, checks=[])
+    step_cluster_remove_language_extension(test, rg, checks=[])
+    step_cluster_start(test, rg, checks=[])
+    step_cluster_stop(test, rg, checks=[])
+    step_cluster_principal_assignment_create(test, rg, checks=[])
+    step_cluster_principal_assignment_show(test, rg, checks=[])
+    step_cluster_principal_assignment_list(test, rg, checks=[])
+    step_database_principal_assignment_create(test, rg, checks=[])
+    step_database_principal_assignment_show(test, rg, checks=[])
+    step_database_principal_assignment_list(test, rg, checks=[])
+    step_database_principal_assignment_delete(test, rg, checks=[])
+    step_database_create(test, rg, checks=[])
+    step_database_show(test, rg, checks=[])
+    step_database_list(test, rg, checks=[])
+    step_database_update(test, rg, checks=[])
+    step_database_add_principal(test, rg, checks=[])
+    step_database_list_principal(test, rg, checks=[])
+    step_database_remove_principal(test, rg, checks=[])
+    step_database_delete(test, rg, checks=[])
+    step_data_connection_event_hub_create(test, rg, checks=[])
+    step_data_connection_list(test, rg, checks=[
         test.check('length(@)', 1),
     ])
-    step__dataconnections_get_kustodataconnectionsget(test, rg, checks=[
+    step_data_connection_show(test, rg, checks=[
         test.check("location", "westus", case_sensitive=False),
         test.check("consumerGroup", "testConsumerGroup1", case_sensitive=False),
         test.check("eventHubResourceId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Even"
                    "tHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1", case_sensitive=False),
     ])
-    step__dataconnections_patch(test, rg, checks=[])
-    step__dataconnections_post(test, rg, checks=[])
-    step__dataconnections_delete(test, rg, checks=[])
-    step__clusters_delete_kustoclustersdelete(test, rg, checks=[])
-    step__attacheddatabaseconfigurations_delete(test, rg, checks=[])
-    step__clusterprincipalassignments_delete(test, rg, checks=[])
+    step_data_connection_event_hub_update(test, rg, checks=[])
+    step_data_connection_event(test, rg, checks=[])
+    step_data_connection_delete(test, rg, checks=[])
+    step_cluster_delete(test, rg, checks=[])
+    step_attached_database_configuration_delete(test, rg, checks=[])
+    step_cluster_principal_assignment_delete(test, rg, checks=[])
     cleanup_scenario(test, rg)
 
 
-# Test class for ${scenarioName}
+# Test class for Scenario
 @try_manual
 class KustoScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestkusto_kustorptest'[:7], key='rg', parameter_name='rg')
-    def test_kusto(self, rg):
+    def test_kusto_Scenario(self, rg):
 
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
