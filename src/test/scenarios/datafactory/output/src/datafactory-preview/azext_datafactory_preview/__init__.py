@@ -9,9 +9,9 @@
 # --------------------------------------------------------------------------
 
 from azure.cli.core import AzCommandsLoader
-from azext_datafactory.generated._help import helps  # pylint: disable=unused-import
+from azext_datafactory_preview.generated._help import helps  # pylint: disable=unused-import
 try:
-    from azext_datafactory.manual._help import helps  # pylint: disable=reimported
+    from azext_datafactory_preview.manual._help import helps  # pylint: disable=reimported
 except ImportError:
     pass
 
@@ -20,28 +20,28 @@ class DFAZManagementClientCommandsLoader(AzCommandsLoader):
 
     def __init__(self, cli_ctx=None):
         from azure.cli.core.commands import CliCommandType
-        from azext_datafactory.generated._client_factory import cf_datafactory_cl
+        from azext_datafactory_preview.generated._client_factory import cf_datafactory_cl
         datafactory_custom = CliCommandType(
-            operations_tmpl='azext_datafactory.custom#{}',
+            operations_tmpl='azext_datafactory_preview.custom#{}',
             client_factory=cf_datafactory_cl)
         parent = super(DFAZManagementClientCommandsLoader, self)
         parent.__init__(cli_ctx=cli_ctx, custom_command_type=datafactory_custom)
 
     def load_command_table(self, args):
-        from azext_datafactory.generated.commands import load_command_table
+        from azext_datafactory_preview.generated.commands import load_command_table
         load_command_table(self, args)
         try:
-            from azext_datafactory.manual.commands import load_command_table as load_command_table_manual
+            from azext_datafactory_preview.manual.commands import load_command_table as load_command_table_manual
             load_command_table_manual(self, args)
         except ImportError:
             pass
         return self.command_table
 
     def load_arguments(self, command):
-        from azext_datafactory.generated._params import load_arguments
+        from azext_datafactory_preview.generated._params import load_arguments
         load_arguments(self, command)
         try:
-            from azext_datafactory.manual._params import load_arguments as load_arguments_manual
+            from azext_datafactory_preview.manual._params import load_arguments as load_arguments_manual
             load_arguments_manual(self, command)
         except ImportError:
             pass

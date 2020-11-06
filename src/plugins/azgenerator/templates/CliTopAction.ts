@@ -18,7 +18,7 @@ export class CliTopAction extends TemplateBase {
             this.relativePath = path.join(PathConstants.actionFile);
         }
         else {
-            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.actionFile);
+            this.relativePath = path.join(model.AzextFolder, PathConstants.actionFile);
         }
     }
 

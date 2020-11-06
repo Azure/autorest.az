@@ -11,7 +11,7 @@
 
 def cf_boolean_cl(cli_ctx, *_):
     from azure.cli.core.commands.client_factory import get_mgmt_service_client
-    from ..vendored_sdks.boolean import AutoRestTestService
+    from azext_boolean.vendored_sdks.boolean import AutoRestTestService
     from azure.core.pipeline.policies import SansIOHTTPPolicy
     return get_mgmt_service_client(cli_ctx,
                                    AutoRestTestService,

@@ -12,7 +12,7 @@ import { TemplateBase } from "../TemplateBase";
 export class CliTopMetadata extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
-        this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.metadataFile);
+        this.relativePath = path.join(model.AzextFolder, PathConstants.metadataFile);
     }
 
     public async fullGeneration(): Promise<string[]> {

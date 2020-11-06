@@ -30,7 +30,7 @@ export async function processRequest(host: Host) {
 
         // Read existing file generation-mode
         let options = await session.getValue('az');
-        model.CliGenerationMode = await autoDetectGenerationMode(host, options['extensions'], model.IsCliCore);
+        model.CliGenerationMode = await autoDetectGenerationMode(host, model.AzextFolder, model.IsCliCore);
         model.CliOutputFolder = azOutputFolder;
 
         let generator = await AzGeneratorFactory.createAzGenerator(model, debug);
@@ -39,7 +39,7 @@ export async function processRequest(host: Host) {
 
         if (model.SelectFirstExtension()) {
             do {
-                let path = "azext_" + model.Extension_Name.replace("-", "_") + "/";
+                let path = model.AzextFolder;
                 session.protectFiles(path + "manual");
                 session.protectFiles(path + "tests/latest/recordings");
                 session.protectFiles("README.md");
@@ -69,9 +69,9 @@ export async function processRequest(host: Host) {
     }
 }
 
-async function autoDetectGenerationMode(host: Host, name: string, isCliCore: boolean): Promise<GenerationMode> {
+async function autoDetectGenerationMode(host: Host, azextFolder: string, isCliCore: boolean): Promise<GenerationMode> {
     // Verify the __init__.py in generated folder
-    if (isNullOrUndefined(name)) {
+    if (isNullOrUndefined(azextFolder)) {
         throw new Error("name should not be null");
     }
     let result: GenerationMode;
@@ -84,7 +84,7 @@ async function autoDetectGenerationMode(host: Host, name: string, isCliCore: boo
     else {
         let azName: string = "";
         if (!isCliCore) {
-            azName = "azext_" + name.replace("-", "_");
+            azName = azextFolder;
         }
         let relativePath = path.join(azName, PathConstants.initFile);
         let rootInit = await host.ReadFile(relativePath);

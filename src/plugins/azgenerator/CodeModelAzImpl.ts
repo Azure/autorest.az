@@ -1775,7 +1775,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public GetPythonNamespace(): string {
-        return this.options['namespace'];
+        return this.codeModel.language['az']['pythonNamespace'];
     }
 
     public GetPythonPackageName(): string {
@@ -1784,10 +1784,6 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get PythonMgmtClient(): string {
         return this.codeModel.info['pascal_case_title'];
-    }
-
-    public get PythonOperationsName(): string {
-        return this.options['namespace'].split('.').pop();
     }
 
     //=================================================================================================================
@@ -2560,7 +2556,12 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get AzureCliFolder(): string {
-        return this.codeModel.language['az']?.['azureCliFolder']
+        return this.codeModel.language['az']?.['azureCliFolder'] + "/";
+    }
+
+
+    public get AzextFolder(): string {
+        return this.codeModel.language['az']?.['azextFolder'];
     }
 
     public get azOutputFolder(): string {

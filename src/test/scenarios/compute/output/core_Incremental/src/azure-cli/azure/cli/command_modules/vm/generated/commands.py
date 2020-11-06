@@ -17,7 +17,7 @@ def load_command_table(self, _):
 
     from ..generated._client_factory import cf_virtual_machine
     vm_virtual_machine = CliCommandType(
-        operations_tmpl='azure.mgmt.compute.operations#VirtualMachinesOperations.{}',
+        operations_tmpl='azure.mgmt.compute.operations._virtual_machines_operations#VirtualMachinesOperations.{}',
         client_factory=cf_virtual_machine)
     with self.command_group('vm virtual-machine', vm_virtual_machine, client_factory=cf_virtual_machine,
                             is_experimental=True) as g:

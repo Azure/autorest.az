@@ -20,7 +20,7 @@ from azure.cli.core.commands.validators import (
     get_default_location_from_resource_group,
     validate_file_or_dict
 )
-from azext_datafactory.action import (
+from azext_datafactory_preview.action import (
     AddFactoryVstsConfiguration,
     AddFactoryGitHubConfiguration,
     AddFakeIdentity

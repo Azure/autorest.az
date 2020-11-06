@@ -15,7 +15,7 @@ export class CliTestInit extends TemplateBase {
             this.relativePath = path.join(PathConstants.testFolder, PathConstants.initFile);
         }
         else {
-            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.testFolder, PathConstants.initFile);
+            this.relativePath = path.join(model.AzextFolder, PathConstants.testFolder, PathConstants.initFile);
         }
     }
 

@@ -19,7 +19,7 @@ export class CliTopCustom extends TemplateBase {
             this.relativePath = path.join(PathConstants.customFile);
         }
         else {
-            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.customFile);
+            this.relativePath = path.join(model.AzextFolder, PathConstants.customFile);
         }
     }
 

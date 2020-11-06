@@ -18,7 +18,7 @@ export class CliTopHelp extends TemplateBase {
             this.relativePath = path.join(PathConstants.helpFile);
         }
         else {
-            this.relativePath = path.join("azext_" + this.model.Extension_NameUnderscored, PathConstants.helpFile);
+            this.relativePath = path.join(model.AzextFolder, PathConstants.helpFile);
         }
     }
 

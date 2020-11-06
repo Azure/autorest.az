@@ -11,7 +11,7 @@
 
 def cf_mixed_reality_cl(cli_ctx, *_):
     from azure.cli.core.commands.client_factory import get_mgmt_service_client
-    from ..vendored_sdks.mixedreality import MixedRealityClient
+    from azext_mixed_reality.vendored_sdks.mixedreality import MixedRealityClient
     return get_mgmt_service_client(cli_ctx,
                                    MixedRealityClient)
 
