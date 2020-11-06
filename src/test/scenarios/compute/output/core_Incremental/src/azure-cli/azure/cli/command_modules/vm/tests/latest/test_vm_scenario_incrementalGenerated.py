@@ -11,7 +11,7 @@
 import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
-from .example_steps import step__virtualmachines_post
+from .example_steps import step_virtual_machine_assess_patch
 from .. import (
     try_manual,
     raise_if,
@@ -38,16 +38,16 @@ def cleanup_scenario(test, rg):
 @try_manual
 def call_scenario(test, rg):
     setup_scenario(test, rg)
-    step__virtualmachines_post(test, rg, checks=[])
+    step_virtual_machine_assess_patch(test, rg, checks=[])
     cleanup_scenario(test, rg)
 
 
-# Test class for ${scenarioName}
+# Test class for Scenario
 @try_manual
 class VmScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestvm_myResourceGroupName'[:7], key='rg', parameter_name='rg')
-    def test_vm(self, rg):
+    def test_vm_Scenario(self, rg):
 
         call_scenario(self, rg)
         calc_coverage(__file__)

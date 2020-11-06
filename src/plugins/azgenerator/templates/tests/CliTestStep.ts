@@ -9,6 +9,7 @@ import { ToMultiLine, deepCopy } from '../../../../utils/helper';
 import { HeaderGenerator } from "../../Header";
 import { TemplateBase } from "../TemplateBase";
 import { PathConstants } from "../../../models";
+import { isNullOrUndefined } from 'util';
 
 let usePreparers = false;
 let nameMap = {};
@@ -51,8 +52,7 @@ export class CliTestStep extends TemplateBase {
 
         let header: HeaderGenerator = new HeaderGenerator();
 
-        let parameterNames = CliTestStep.InitiateDependencies(model, new HeaderGenerator(), [], []);
-        let jsonAdded = false;
+        let parameterNames = CliTestStep.InitiateDependencies(model, new HeaderGenerator(), [], [], "");
         model.GetResourcePool().clearExampleParams();
 
         // go through the examples to generate steps
@@ -63,14 +63,18 @@ export class CliTestStep extends TemplateBase {
                 let disabled: string = config[ci].disabled ? "# " : "";
                 steps.push("# EXAMPLE: " + exampleId);
                 steps.push("@try_manual");
-                steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames, true)}):`));
 
                 // find example by name
                 let found = false;
                 let examples: CommandExample[] = [];
-                let exampleIdx = 0;
+                let exampleIdx = -1;
                 for (let exampleCmd of model.FindExampleById(exampleId, commandParams, examples)) {
+                    exampleIdx += 1;
                     if (exampleCmd && exampleCmd.length > 0) {
+                        functionName = CliTestStep.ToFunctionName({name: examples[exampleIdx].Id}, exampleCmd[0]);
+                        if (exampleIdx==0) {
+                            steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames, true)}):`));
+                        }
                         found = true;
                         if (exampleCmd[0].indexOf(' delete') > -1) {
                             exampleCmd[0] += " -y";
@@ -88,6 +92,7 @@ export class CliTestStep extends TemplateBase {
                     }
                 }
                 if (!found) {
+                    steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames, true)}):`));
                     steps.push("    # EXAMPLE NOT FOUND!");
                     steps.push("    pass");
                 }
@@ -138,7 +143,7 @@ export class CliTestStep extends TemplateBase {
         return ret;
     }
 
-    public static InitiateDependencies(model: CodeModelAz, header: HeaderGenerator, decorators: string[], initiates: string[]): string[] {
+    public static InitiateDependencies(model: CodeModelAz, header: HeaderGenerator, decorators: string[], initiates: string[], scenarioName: string): string[] {
         let decorated = [];
         let internalObjects = [];
         let parameterNames = [];
@@ -173,7 +178,7 @@ export class CliTestStep extends TemplateBase {
                 decorated.push(entity.info.name);
             }
         }
-        let funcLine = "    def test_" + model.Extension_NameUnderscored + "(self";
+        let funcLine = "    def test_" + scenarioName + "(self";
         for (let parameterName of parameterNames) {
             funcLine += `, ${parameterName}`;
         }
@@ -199,12 +204,17 @@ export class CliTestStep extends TemplateBase {
         return parameterNames;
     }
 
-    public static ToFunctionName(step: any): string {
+    public static ToFunctionName(step: any, azCmd: string=undefined): string {
         let ret: undefined| string = undefined;
-        if (step.name)
-            ret = "step_" + step.name;
-        else if (step.function)
-            ret = step.function;
+        if (isNullOrUndefined(azCmd)) {
+            if (step.name)
+                ret = "step_" + step.name;
+            else if (step.function)
+                ret = step.function;
+        }
+        else {
+            ret = "step_" + azCmd.split(" ").slice(2).join("_");
+        }
         if (!ret) return undefined;
 
         let shortName = ret.split("/").slice(-1)[0];

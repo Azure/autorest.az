@@ -564,15 +564,15 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace', id_part='name')
         c.argument('sql_pool_name', type=str, help='SQL pool name', id_part='child_name_1')
-        c.argument('scan_id', type=str, help='The vulnerability assessment scan Id of the scan to retrieve.', id_part=''
-                   'child_name_3')
+        c.argument('scan_id', type=str, help='The vulnerability assessment scan Id of the scan to retrieve.',
+                   id_part='child_name_3')
 
     with self.argument_context('synapse sql-pool-vulnerability-assessment-scan initiate-scan') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace', id_part='name')
         c.argument('sql_pool_name', type=str, help='SQL pool name', id_part='child_name_1')
-        c.argument('scan_id', type=str, help='The vulnerability assessment scan Id of the scan to retrieve.', id_part=''
-                   'child_name_3')
+        c.argument('scan_id', type=str, help='The vulnerability assessment scan Id of the scan to retrieve.',
+                   id_part='child_name_3')
 
     with self.argument_context('synapse sql-pool-security-alert-policy show') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -740,15 +740,15 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace')
         c.argument('grant_sql_control_to_managed_identity_desired_state', arg_type=get_enum_type(['Enabled',
-                                                                                                  'Disabled']), help=''
-                   'Desired state')
+                                                                                                  'Disabled']),
+                   help='Desired state')
 
     with self.argument_context('synapse workspace-managed-identity-sql-control-setting update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace', id_part='name')
         c.argument('grant_sql_control_to_managed_identity_desired_state', arg_type=get_enum_type(['Enabled',
-                                                                                                  'Disabled']), help=''
-                   'Desired state')
+                                                                                                  'Disabled']),
+                   help='Desired state')
 
     with self.argument_context('synapse integration-runtime list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -933,24 +933,24 @@ def load_arguments(self, _):
 
     with self.argument_context('synapse private-link-hub show') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('private_link_hub_name', options_list=['--name', '-n', '--private-link-hub-name'], type=str, help=''
-                   'The name of the privateLinkHub', id_part='name')
+        c.argument('private_link_hub_name', options_list=['--name', '-n', '--private-link-hub-name'], type=str,
+                   help='The name of the privateLinkHub', id_part='name')
 
     with self.argument_context('synapse private-link-hub create') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('private_link_hub_name', options_list=['--name', '-n', '--private-link-hub-name'], type=str, help=''
-                   'The name of the privateLinkHub')
+        c.argument('private_link_hub_name', options_list=['--name', '-n', '--private-link-hub-name'], type=str,
+                   help='The name of the privateLinkHub')
         c.argument('tags', tags_type)
         c.argument('location', arg_type=get_location_type(self.cli_ctx),
                    validator=get_default_location_from_resource_group)
 
     with self.argument_context('synapse private-link-hub update') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('private_link_hub_name', options_list=['--name', '-n', '--private-link-hub-name'], type=str, help=''
-                   'The name of the privateLinkHub', id_part='name')
+        c.argument('private_link_hub_name', options_list=['--name', '-n', '--private-link-hub-name'], type=str,
+                   help='The name of the privateLinkHub', id_part='name')
         c.argument('tags', tags_type)
 
     with self.argument_context('synapse private-link-hub delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('private_link_hub_name', options_list=['--name', '-n', '--private-link-hub-name'], type=str, help=''
-                   'The name of the privateLinkHub', id_part='name')
+        c.argument('private_link_hub_name', options_list=['--name', '-n', '--private-link-hub-name'], type=str,
+                   help='The name of the privateLinkHub', id_part='name')

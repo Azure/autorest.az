@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelAz } from "../../CodeModelAz"
-import { EscapeString, ToCamelCase, Capitalize, ToMultiLine, getExtraModeInfo } from "../../../../utils/helper";
+import { EscapeString, ToCamelCase, Capitalize, ToMultiLine, getExtraModeInfo, composeParamString } from "../../../../utils/helper";
 import { SchemaType, Parameter } from "@azure-tools/codemodel";
 import { HeaderGenerator } from "../../Header";
 import { isNullOrUndefined, isArray } from "util";
@@ -20,6 +20,7 @@ let hasLocation = false;
 let hasLocationValidator = false;
 let hasTags = false;
 let actions: string[] = [];
+let useResourceType = false;
 
 export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): string[] {
     var output_args: string[] = [];
@@ -108,6 +109,10 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     output.forEach(element => {
         if (element.length > 120) header.disableLineTooLong = true;
     });
+
+    if (useResourceType){
+        header.addFromImport("azure.cli.core.profiles", ["ResourceType"]);
+    }
 
     return header.getLines().concat(output);
 }
@@ -352,6 +357,9 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if (!isNullOrUndefined(model.MethodParameter_DefaultConfigKey)) {
                         argument += ", configured_default='" + model.MethodParameter_DefaultConfigKey + "'";
                     }
+                    const paramRet = composeParamString(model.MethodParameter_MaxApi, model.MethodParameter_MinApi, model.MethodParameter_ResourceType);
+                    argument += paramRet[0];
+                    if (paramRet[1])    useResourceType = true;
                     let parameterExtraInfo = "";
                     parameterExtraInfo = getExtraModeInfo(model.MethodParameter_Mode, model.Command_Mode);
                     if (parameterExtraInfo != "") {

@@ -14,7 +14,7 @@ from .. import try_manual
 
 # EXAMPLE: /VirtualMachines/post/Assess patch state of a virtual machine.
 @try_manual
-def step__virtualmachines_post(test, rg, checks=None):
+def step_virtual_machine_assess_patch(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az vm virtual-machine assess-patch '

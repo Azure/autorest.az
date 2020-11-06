@@ -11,3 +11,4 @@ test-results.xml
 *.njsproj
 *.user
 *.orig
+gen.zip

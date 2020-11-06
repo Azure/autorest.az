@@ -360,7 +360,9 @@ export class HeadSegment extends BaseSegment {
                 nextAt = target.content.length-1;
             }
             nextAt += 1;
-            target.root.children.push(new HeadSegment(target, target.currentAt, nextAt));
+            const newStep = new HeadSegment(target, target.currentAt, nextAt);
+            target.root.children.push(newStep);
+            newStep.createChildrenByIndent();
             target.currentAt = nextAt;
             return true;
         }
@@ -383,15 +385,11 @@ export class testStepSegment extends DefSegment {
             nextAt +=  target.currentAt + 1;
             const newStep = new testStepSegment(target, target.currentAt, nextAt, remain.slice(2, remain.indexOf("\n")))
             target.root.children.push(newStep);
-            newStep.createChildren();
+            newStep.createChildrenByIndent();
             target.currentAt = nextAt;
             return true;
         }
         return false;
-    }
-
-    public createChildren() {
-        this.createChildrenByIndent();
     }
 
     public createChildrenByTestCmd() {
@@ -438,7 +436,9 @@ export class TailSegment extends BaseSegment {
             return false;
         }
         const nextAt = target.content.length;
-        target.root.children.push(new TailSegment(target, target.currentAt, nextAt));
+        const newStep = new TailSegment(target, target.currentAt, nextAt);
+        target.root.children.push(newStep);
+        newStep.createChildrenByIndent();
         target.currentAt = nextAt;
         return true;
     }

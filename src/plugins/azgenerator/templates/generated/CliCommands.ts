@@ -5,11 +5,12 @@
 
 import { CodeModelAz } from "../../CodeModelAz"
 import { HeaderGenerator } from "../../Header";
-import { ToMultiLine, getExtraModeInfo } from "../../../../utils/helper"
+import { ToMultiLine, getExtraModeInfo, composeParamString } from "../../../../utils/helper"
 import { isNullOrUndefined } from "util";
 import { ExtensionMode } from "../../../models";
 
 let showCommandFunctionName = undefined;
+let useResourceType = false;
 export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
     let header: HeaderGenerator = new HeaderGenerator();
 
@@ -50,7 +51,12 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 if (extraInfo != "") {
                     extraInfo = ", " + extraInfo;
                 }
-                ToMultiLine("    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + extraInfo + ") as g:", output);
+                let commandGroupOutput = "    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + "_" + model.GetModuleOperationName() + ", client_factory=" + cf_name + extraInfo;
+                const paramRet = composeParamString(model.CommandGroup_MaxApi, model.CommandGroup_MinApi, model.CommandGroup_ResourceType);
+                commandGroupOutput += paramRet[0];
+                if (paramRet[1])    useResourceType = true;
+                commandGroupOutput += ") as g:";
+                ToMultiLine(commandGroupOutput, output);
                 let needWait = false;
                 do {
                     if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
@@ -73,6 +79,9 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
 
     if (output.length + header.getLines().length > 1000) {
         header.disableTooManyLines = true;
+    }
+    if (useResourceType) {
+        header.addFromImport("azure.cli.core.profiles", ["ResourceType"]);
     }
 
     return header.getLines().concat(output);
@@ -110,16 +119,30 @@ function getCommandBody(model: CodeModelAz) {
                 if (model.Command_IsLongRun && !model.SDK_IsTrack1) {
                     generic_update += "', setter_name='begin_create_or_update";
                 }
-                generic_update += "', custom_func_name='" + functionName + "'" + endStr + commandExtraInfo + ')';
+                generic_update += "'";
+                const paramRet = composeParamString(model.Method_MaxApi, model.Method_MinApi, model.Method_ResourceType);
+                generic_update += paramRet[0];
+                if (paramRet[1])    useResourceType = true;
+                generic_update += ", custom_func_name='" + functionName + "'" + endStr + commandExtraInfo + ')';
                 ToMultiLine(generic_update, output);
             }
         } else {
-            ToMultiLine("        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo + ')', output);
+            let customCommand = "        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo;
+            const paramRet = composeParamString(model.Command_MaxApi, model.Command_MinApi, model.Command_ResourceType);
+            customCommand += paramRet[0];
+            if (paramRet[1])    useResourceType = true;
+            customCommand += ")";
+            ToMultiLine(customCommand, output);
         }
     }
     else {
         showCommandFunctionName = functionName;
-        ToMultiLine("        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo + ')', output);
+        let customCommand = "        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo;
+        const paramRet = composeParamString(model.Command_MaxApi, model.Command_MinApi, model.Command_ResourceType);
+        customCommand += paramRet[0];
+        if (paramRet[1])    useResourceType = true;
+        customCommand += ")";
+        ToMultiLine(customCommand, output);
     }
     return output;
 }

@@ -11,14 +11,14 @@
 import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
-from .example_steps import step_create_remote_rendering_account
-from .example_steps import step_list_remote_rendering
-from .example_steps import step_get_remote_rendering_account
-from .example_steps import step_list_remote_rendering2
-from .example_steps import step_regenerate_remote_rendering_account_keys
-from .example_steps import step_regenerate_spatial_anchors_account_keys
-from .example_steps import step_update_remote_rendering_account
-from .example_steps import step_delete_remote_rendering_account
+from .example_steps import step_create
+from .example_steps import step_list
+from .example_steps import step_show
+from .example_steps import step_list
+from .example_steps import step_regenerate_key
+from .example_steps import step_regenerate_key
+from .example_steps import step_update
+from .example_steps import step_delete
 from .. import (
     try_manual,
     raise_if,
@@ -46,32 +46,32 @@ def cleanup_scenario(test, rg):
 def call_scenario(test, rg):
     setup_scenario(test, rg)
     # STEP NOT FOUND: Create spatial anchor account
-    step_create_remote_rendering_account(test, rg, checks=[])
+    step_create(test, rg, checks=[])
     # STEP NOT FOUND: Get remote rendering account key
     # STEP NOT FOUND: Get spatial anchor account key
     # STEP NOT FOUND: List spatial anchor accounts by resource group
-    step_list_remote_rendering(test, rg, checks=[])
+    step_list(test, rg, checks=[])
     # STEP NOT FOUND: Get spatial anchors account
-    step_get_remote_rendering_account(test, rg, checks=[])
-    step_list_remote_rendering2(test, rg, checks=[])
+    step_show(test, rg, checks=[])
+    step_list(test, rg, checks=[])
     # STEP NOT FOUND: List spatial anchors accounts by subscription
     # STEP NOT FOUND: List available operations
-    step_regenerate_remote_rendering_account_keys(test, rg, checks=[])
-    step_regenerate_spatial_anchors_account_keys(test, rg, checks=[])
-    step_update_remote_rendering_account(test, rg, checks=[])
+    step_regenerate_key(test, rg, checks=[])
+    step_regenerate_key(test, rg, checks=[])
+    step_update(test, rg, checks=[])
     # STEP NOT FOUND: Update spatial anchors account
     # STEP NOT FOUND: CheckLocalNameAvailability
     # STEP NOT FOUND: Delete spatial anchors account
-    step_delete_remote_rendering_account(test, rg, checks=[])
+    step_delete(test, rg, checks=[])
     cleanup_scenario(test, rg)
 
 
-# Test class for ${scenarioName}
+# Test class for Scenario
 @try_manual
 class Mixed_realityScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestmixed_reality_MyResourceGroup'[:7], key='rg', parameter_name='rg')
-    def test_mixed_reality(self, rg):
+    def test_mixed_reality_Scenario(self, rg):
 
         call_scenario(self, rg)
         calc_coverage(__file__)

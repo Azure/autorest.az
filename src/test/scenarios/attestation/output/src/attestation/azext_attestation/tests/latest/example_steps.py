@@ -14,7 +14,7 @@ from .. import try_manual
 
 # EXAMPLE: /AttestationProviders/get/AttestationProviders_Get
 @try_manual
-def step__attestationproviders_get(test, rg, rg_2, rg_3, checks=None):
+def step_attestation_provider_show(test, rg, rg_2, rg_3, checks=None):
     if checks is None:
         checks = []
     test.cmd('az attestation attestation-provider show '
@@ -25,7 +25,7 @@ def step__attestationproviders_get(test, rg, rg_2, rg_3, checks=None):
 
 # EXAMPLE: /AttestationProviders/get/AttestationProviders_List
 @try_manual
-def step__attestationproviders_get2(test, rg, rg_2, rg_3, checks=None):
+def step_attestation_provider_provider_list(test, rg, rg_2, rg_3, checks=None):
     if checks is None:
         checks = []
     test.cmd('az attestation attestation-provider provider list '
@@ -35,7 +35,7 @@ def step__attestationproviders_get2(test, rg, rg_2, rg_3, checks=None):
 
 # EXAMPLE: /AttestationProviders/get/AttestationProviders_ListByResourceGroup
 @try_manual
-def step__attestationproviders_get3(test, rg, rg_2, rg_3, checks=None):
+def step_attestation_provider_provider_list(test, rg, rg_2, rg_3, checks=None):
     if checks is None:
         checks = []
     test.cmd('az attestation attestation-provider provider list '
@@ -45,7 +45,7 @@ def step__attestationproviders_get3(test, rg, rg_2, rg_3, checks=None):
 
 # EXAMPLE: /AttestationProviders/patch/AttestationProviders_Update
 @try_manual
-def step__attestationproviders_patch(test, rg, rg_2, rg_3, checks=None):
+def step_attestation_provider_update(test, rg, rg_2, rg_3, checks=None):
     if checks is None:
         checks = []
     test.cmd('az attestation attestation-provider update '
@@ -57,7 +57,7 @@ def step__attestationproviders_patch(test, rg, rg_2, rg_3, checks=None):
 
 # EXAMPLE: /AttestationProviders/delete/AttestationProviders_Delete
 @try_manual
-def step__attestationproviders_delete(test, rg, rg_2, rg_3, checks=None):
+def step_attestation_provider_delete(test, rg, rg_2, rg_3, checks=None):
     if checks is None:
         checks = []
     test.cmd('az attestation attestation-provider delete -y '
@@ -68,7 +68,7 @@ def step__attestationproviders_delete(test, rg, rg_2, rg_3, checks=None):
 
 # EXAMPLE: /Operation/put/AttestationProviders_Create
 @try_manual
-def step__operation_put_attestationproviders_create(test, rg, rg_2, rg_3, checks=None):
+def step_create_provider(test, rg, rg_2, rg_3, checks=None):
     if checks is None:
         checks = []
     test.cmd('az attestation create-provider '
@@ -79,7 +79,7 @@ def step__operation_put_attestationproviders_create(test, rg, rg_2, rg_3, checks
 
 # EXAMPLE: /Operation/get/Operations_List
 @try_manual
-def step__operation_get_operations_list(test, rg, rg_2, rg_3, checks=None):
+def step_list_operation(test, rg, rg_2, rg_3, checks=None):
     if checks is None:
         checks = []
     test.cmd('az attestation list-operation',

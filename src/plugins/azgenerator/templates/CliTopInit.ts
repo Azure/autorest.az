@@ -5,7 +5,7 @@
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from "util";
-import { getIndentString, skipCommentLines, ToMultiLine } from "../../../utils/helper";
+import { getIndentString, skipCommentLines, ToMultiLine, composeParamString} from "../../../utils/helper";
 import { GenerationMode, PathConstants } from "../../models";
 import { CodeModelAz } from "../CodeModelAz";
 import { HeaderGenerator } from "../Header";
@@ -113,6 +113,9 @@ export class CliTopInit extends TemplateBase {
     private GenerateAzureCliInit(model: CodeModelAz): string[] {
         let header: HeaderGenerator = new HeaderGenerator();
         header.addFromImport(model.CliCoreLib, ["AzCommandsLoader"]);
+        if (model.ResourceType) {
+            header.addFromImport("azure.cli.core.profiles", ["ResourceType"]);
+        }
         var output: string[] = header.getLines();
         let importPath = model.AzextFolder;
         if (model.IsCliCore) {
@@ -138,7 +141,7 @@ export class CliTopInit extends TemplateBase {
         }
         output.push("            client_factory=cf_" + model.Extension_NameUnderscored + "_cl)");
         output.push(`        parent = super(${model.Extension_NameClass}CommandsLoader, self)`);
-        ToMultiLine(`        parent.__init__(cli_ctx=cli_ctx, custom_command_type=${model.Extension_NameUnderscored}_custom)`, output);
+        ToMultiLine(`        parent.__init__(cli_ctx=cli_ctx, custom_command_type=${model.Extension_NameUnderscored}_custom${composeParamString(undefined, undefined, model.ResourceType)[0]})`, output);
         output.push("");
         output.push("    def load_command_table(self, args):");
         output.push("        from " + importPath + ".generated.commands import load_command_table");

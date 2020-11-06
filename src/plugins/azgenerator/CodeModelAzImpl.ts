@@ -136,6 +136,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
+    public get ResourceType(): string | undefined {
+        return this.formResourceType(this.options?.['resource-type']);
+    }
+
     public get GenChecks(): boolean {
         let disableChecks = this.options?.['disable-checks'];
         if (disableChecks) return false;
@@ -617,6 +621,18 @@ export class CodeModelCliImpl implements CodeModelAz {
         return eps.singularize(this.CommandGroup.language['cli'].cliKey);
     }
 
+    public get CommandGroup_MaxApi(): string {
+        return this.CommandGroup.language['cli']?.['max-api'];
+    }
+
+    public get CommandGroup_MinApi(): string {
+        return this.CommandGroup.language['cli']?.['min-api'];
+    }
+
+    public get CommandGroup_ResourceType(): string | undefined {
+        return this.formResourceType(this.CommandGroup.language['cli']?.['resource-type']);
+    }
+
     public get CommandGroup_CliKey(): string {
         return this.CommandGroup.language['cli']?.cliKey;
     }
@@ -809,6 +825,23 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Command?.language?.['cli']?.['extensionMode'];
     }
 
+    public get Command_MaxApi(): string {
+        return this.Command.language['cli']?.['max-api'];
+    }
+
+    public get Command_MinApi(): string {
+        return this.Command.language['cli']?.['min-api'];
+    }
+
+    public get Command_ResourceType(): string | undefined {
+        return this.formResourceType(this.Command.language['cli']?.['resource-type']);
+    }
+
+    public formResourceType(config: string|undefined) {
+        if (isNullOrUndefined(config) || config.startsWith("ResourceType.")) return config;
+        else return "ResourceType." + config;
+    }
+
     //=================================================================================================================
     // Methods / Operations associated with the command.
     //
@@ -909,6 +942,18 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
     public get Method_CliKey(): string {
         return this.Method.language['cli']?.cliKey;
+    }
+
+    public get Method_MaxApi(): string {
+        return this.Method.language['cli']?.['max-api'];
+    }
+
+    public get Method_MinApi(): string {
+        return this.Method.language['cli']?.['min-api'];
+    }
+
+    public get Method_ResourceType(): string | undefined {
+        return this.formResourceType(this.Method.language['cli']?.['resource-type']);
     }
 
     public get Method_BodyParameterName(): string {
@@ -1132,6 +1177,18 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_CliKey(): string {
         return this.Parameter_CliKey(this.MethodParameter);
+    }
+
+    public get MethodParameter_MaxApi(): string {
+        return this.MethodParameter.language['cli']?.['max-api'];
+    }
+
+    public get MethodParameter_MinApi(): string {
+        return this.MethodParameter.language['cli']?.['min-api'];
+    }
+
+    public get MethodParameter_ResourceType(): string | undefined {
+        return this.formResourceType(this.MethodParameter.language['cli']?.['resource-type']);
     }
 
     public get MethodParameter_IdPart(): string {

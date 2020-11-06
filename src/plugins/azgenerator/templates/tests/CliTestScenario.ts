@@ -60,7 +60,7 @@ export class CliTestScenario extends TemplateBase {
         let initiates: string[] = [];
         let body: string[] = [];
 
-        class_info.push("# Test class for ${scenarioName}");
+        class_info.push(`# Test class for ${scenarioName}`);
         class_info.push("@try_manual");
         class_info.push("class " + Capitalize(this.groupName) + scenarioName + "Test(ScenarioTest):");
         class_info.push("");
@@ -75,7 +75,7 @@ export class CliTestScenario extends TemplateBase {
         }
 
         let decorators: string[] = [];
-        let parameterNames = CliTestStep.InitiateDependencies(model, this.header, decorators, initiates);
+        let parameterNames = CliTestStep.InitiateDependencies(model, this.header, decorators, initiates, this.groupName + "_" + scenarioName);
         let jsonAdded = false;
         
         let funcScenario: string[] = [];
@@ -94,11 +94,13 @@ export class CliTestScenario extends TemplateBase {
                 // find example by name
                 let found = false;
                 let examples: CommandExample[] = [];
-                let exampleIdx = 0;
+                let exampleIdx = -1;
                 for (let exampleCmd of model.FindExampleById(exampleId, commandParams, examples)) {
+                    exampleIdx += 1;
                     if (exampleCmd && exampleCmd.length > 0) {
                         found = true;
-                        let checks = model.GetExampleChecks(examples[exampleIdx++]);
+                        let checks = model.GetExampleChecks(examples[exampleIdx]);
+                        functionName = CliTestStep.ToFunctionName({name: examples[exampleIdx].Id}, exampleCmd[0]);
                         if (checks.length > 0) {
                             funcScenario.push(...ToMultiLine(`    ${disabled}${functionName}(test${CliTestStep.parameterLine(parameterNames)}, checks=[`));
                             for (let check of checks) {
