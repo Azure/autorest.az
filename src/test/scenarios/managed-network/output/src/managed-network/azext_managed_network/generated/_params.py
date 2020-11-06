@@ -27,6 +27,7 @@ from azext_managed_network.action import (
     AddSpokes,
     AddMesh
 )
+from azure.cli.core.profiles import ResourceType
 
 
 def load_arguments(self, _):
@@ -215,7 +216,7 @@ def load_arguments(self, _):
     with self.argument_context('managed-network managed-network-peering-policy delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', type=str, help='The name of the Managed Network.', id_part='name',
-                   max_api='2020-05-01', min_api='2019-05-01')
+                   max_api='2020-05-01', min_api='2019-05-01', resource_type=ResourceType.DATA_NETWORK)
         c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.',
                    id_part='child_name_1')
 
