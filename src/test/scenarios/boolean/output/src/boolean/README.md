@@ -8,4 +8,4 @@ az extension add --name boolean
 ```
 
 ### Included Features ###
-#### boolean bool ####
+#### test-server boolean bool ####

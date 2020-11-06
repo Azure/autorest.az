@@ -5,6 +5,7 @@ These settings apply only when `--az` is specified on the command line.
 ``` yaml $(az)
 az:
   extensions: boolean
+  parent-extension: test-server
   package-name: azure-mgmt-boolean
   namespace: azure.mgmt.boolean
   client-subscription-bound: false

@@ -12,37 +12,37 @@
 from knack.help_files import helps
 
 
-helps['boolean bool'] = """
+helps['test-server boolean bool'] = """
     type: group
-    short-summary: boolean bool
+    short-summary: test-server boolean bool
 """
 
-helps['boolean bool get-false'] = """
+helps['test-server boolean bool get-false'] = """
     type: command
     short-summary: "Get false Boolean value."
 """
 
-helps['boolean bool get-invalid'] = """
+helps['test-server boolean bool get-invalid'] = """
     type: command
     short-summary: "Get invalid Boolean value."
 """
 
-helps['boolean bool get-null'] = """
+helps['test-server boolean bool get-null'] = """
     type: command
     short-summary: "Get null Boolean value."
 """
 
-helps['boolean bool get-true'] = """
+helps['test-server boolean bool get-true'] = """
     type: command
     short-summary: "Get true Boolean value."
 """
 
-helps['boolean bool put-false'] = """
+helps['test-server boolean bool put-false'] = """
     type: command
     short-summary: "Set Boolean value false."
 """
 
-helps['boolean bool put-true'] = """
+helps['test-server boolean bool put-true'] = """
     type: command
     short-summary: "Set Boolean value true."
 """
