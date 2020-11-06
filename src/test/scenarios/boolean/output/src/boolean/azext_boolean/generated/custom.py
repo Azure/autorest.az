@@ -10,25 +10,25 @@
 # pylint: disable=too-many-lines
 
 
-def boolean_bool_get_false(client):
+def test_server_boolean_bool_get_false(client):
     return client.get_false()
 
 
-def boolean_bool_get_invalid(client):
+def test_server_boolean_bool_get_invalid(client):
     return client.get_invalid()
 
 
-def boolean_bool_get_null(client):
+def test_server_boolean_bool_get_null(client):
     return client.get_null()
 
 
-def boolean_bool_get_true(client):
+def test_server_boolean_bool_get_true(client):
     return client.get_true()
 
 
-def boolean_bool_put_false(client):
+def test_server_boolean_bool_put_false(client):
     return client.put_false()
 
 
-def boolean_bool_put_true(client):
+def test_server_boolean_bool_put_true(client):
     return client.put_true()

@@ -171,6 +171,10 @@ export class AzNamer {
         if (extensionName == '' || extensionName == undefined) {
             this.session.message({ Channel: Channel.Error, Text: "probably missing readme.az.md possible settings are:\naz:\n  extensions: managed-network\n  namespace: azure.mgmt.managednetwork\n  package-name: azure-mgmt-managednetwork\npython-sdk-output-folder: \"$(output-folder)/src/managed-network/azext_managed_network/vendored_sdks/managed-network\"\n" })
         }
+        
+        if (!isNullOrUndefined(azSettings['parent-extension'])) {
+            extensionName = azSettings['parent-extension'].trim() + " " + extensionName.trim();
+        }
         this.codeModel.operationGroups.forEach(operationGroup => {
             let operationGroupName = "";
             if (!isNullOrUndefined(operationGroup.language['cli'])) {
