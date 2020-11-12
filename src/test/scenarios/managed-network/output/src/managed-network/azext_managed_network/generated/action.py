@@ -64,20 +64,22 @@ class AddSubnets(argparse._AppendAction):
         super(AddSubnets, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
-        try:
+        ret = []
+        for item in values:
             properties = defaultdict(list)
-            for (k, v) in (x.split('=', 1) for x in values):
-                properties[k].append(v)
-            properties = dict(properties)
-        except ValueError:
-            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
-        d = {}
-        for k in properties:
-            kl = k.lower()
-            v = properties[k]
-            if kl == 'id':
-                d['id'] = v[0]
-        return d
+            try:
+                for (k, v) in (x.split('=', 1) for x in item.split(',')):
+                    properties[k].append(v)
+                properties = dict(properties)
+            except ValueError:
+                raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+            d = {}
+            for k in properties:
+                kl = k.lower()
+                v = properties[k]
+                if kl == 'id':
+                    d['id'] = v[0]
+        return ret
 
 
 class AddHub(argparse.Action):

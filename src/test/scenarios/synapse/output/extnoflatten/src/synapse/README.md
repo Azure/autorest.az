@@ -412,7 +412,8 @@ az synapse workspace-aad-admin delete --resource-group "resourceGroup1" --worksp
 #### synapse workspace-managed-identity-sql-control-setting ####
 ##### Create #####
 ```
-az synapse workspace-managed-identity-sql-control-setting create --resource-group "resourceGroup1" \
+az synapse workspace-managed-identity-sql-control-setting create \
+    --grant-sql-control-to-managed-identity-desired-state "Enabled" --resource-group "resourceGroup1" \
     --workspace-name "workspace1" 
 ```
 ##### Show #####

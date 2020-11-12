@@ -77,6 +77,10 @@ cli:
         max-api: '2020-05-01'
         min-api: '2019-05-01'
         resource-type: DATA_NETWORK
+      - where:
+            param: subnets
+        set:
+            shorthandSyntax: true
         #cli-flatten-directive:
         #    - where:
         #        type: ResourceProviderOperation

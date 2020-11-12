@@ -1251,6 +1251,10 @@ export class CodeModelCliImpl implements CodeModelAz {
     public get MethodParameter_IsPositional(): boolean {
         return this.Parameter_IsPositional(this.MethodParameter);
     }
+      
+    public get MethodParameter_IsShorthandSyntax(): boolean {
+        return this.Parameter_IsShorthandSyntax(this.MethodParameter);
+    }
 
     private isComplexSchema(type: string): boolean {
         if (type == SchemaType.Array || type == SchemaType.Object || type == SchemaType.Dictionary || type == SchemaType.Any ||
@@ -1279,6 +1283,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return param['flattened'] ? true : false;
     }
 
+    public Parameter_IsShorthandSyntax(param: Parameter = this.MethodParameter): boolean {
+        return param.language['cli']?.['shorthandSyntax'] ? true: false;
+    }
+ 
     public Parameter_IsCliFlattened(param: Parameter = this.MethodParameter): boolean {
         if (param?.language?.['cli']?.['cli-flattened'] && !param.language['cli']['cli-m4-flattened']) {
             if (param['nameBaseParam']?.language?.['cli']?.['cli-m4-flattened']) {

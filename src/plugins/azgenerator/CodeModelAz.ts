@@ -184,6 +184,7 @@ export interface CodeModelAz {
     MethodParameter_DefaultConfigKey: string | undefined;
     MethodParameter_Mode: string;
     MethodParameter_IsPositional: boolean;
+    MethodParameter_IsShorthandSyntax: boolean;
     MethodParameter_PositionalKeys: string[];
     Parameter_Type(Parameter): string;
     Schema_Type(Schema): string;
@@ -207,6 +208,7 @@ export interface CodeModelAz {
     Parameter_DefaultValue(Parameter): any | undefined;
     Parameter_DefaultConfigKey(Parameter): string | undefined;
     Parameter_IsPositional(Parameter): boolean;
+    Parameter_IsShorthandSyntax(Parameter): boolean;
     Schema_Description(Schema): string;
     Schema_FlattenedFrom(Schema): Schema;
     Schema_IsPositional(Schema): boolean;
