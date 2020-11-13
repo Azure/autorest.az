@@ -88,9 +88,6 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
 function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean = false) {
     let output_body: string[] = [];
     let opNames = model.Method_NameAz.split(' ');
-    if (model.Command_Name == "streamanalytics streaming-job create") {
-        model.Command;
-    }
     let valueToMatch = null;
     if (opNames.length > 1) {
         valueToMatch = Capitalize(ToCamelCase(opNames[0]));
@@ -136,15 +133,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                     let access = [];
                     let paramName = model.Parameter_NamePython(model.MethodParameter['targetProperty']);
                     if (!isNullOrUndefined(flattenedFrom) && flattenedFrom != originalParameterStack.last.schema) {
-                        // If last originalParameter in the stack doesn't have language.az. it means this original Parameter was added because of the flattenedParam in python  
-                        // while (!isNullOrUndefined(model.MethodParameter.language?.['cli']?.['cliFlattenTrace']) && model.MethodParameter.language?.['cli']?.['cliFlattenTrace']?.length < originalParameterStack.length) {
-                        //     originalParameterStack.pop();
-                        //     originalParameterNameStack.pop();
-                        // }
-                        // if (!isNullOrUndefined(model.MethodParameter.language?.['cli']?.['cliFlattenTrace']) && model.MethodParameter.language?.['cli']?.['cliFlattenTrace']?.length == originalParameterStack.length && (isNullOrUndefined(model.Method.extensions?.['cli-poly-as-resource-original-operation']) || isNullOrUndefined((model.Method.extensions?.['cli-split-operation-original-operation'])))) {
-                        //     originalParameterStack.pop();
-                        //     originalParameterNameStack.pop();
-                        // } 
+                        // If last originalParameter in the stack doesn't have originalParameterStack.last cliM4Path. it means this argument is not flattened from originalParameterStack.last. We should pop the last item out.
                         while (!isNullOrUndefined(model.MethodParameter.language?.['cli']?.['cliFlattenTrace']) && !isNullOrUndefined(originalParameterStack.last.language?.['cli']?.['cliM4Path']) && model.MethodParameter.language?.['cli']?.['cliFlattenTrace'].indexOf(originalParameterStack.last.language?.['cli']?.['cliM4Path']) == -1) {
                             originalParameterStack.pop();
                             originalParameterNameStack.pop();
