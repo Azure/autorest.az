@@ -79,6 +79,7 @@ class AddSubnets(argparse._AppendAction):
                 v = properties[k]
                 if kl == 'id':
                     d['id'] = v[0]
+            ret.append(d)
         return ret
 
 

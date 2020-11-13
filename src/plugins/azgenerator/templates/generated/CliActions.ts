@@ -303,6 +303,7 @@ function GetShorthandSyntaxAction(model: CodeModelAz, actionName: string, param:
     else if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch)) {
         output.push("            d['" + keyToMatch + "'] = '" + valueToMatch + "'");
     }
+    output.push("            ret.append(d)");
     if (model.MethodParameter_Type == SchemaType.Array) {
         output.push("        return ret");
     } else {
