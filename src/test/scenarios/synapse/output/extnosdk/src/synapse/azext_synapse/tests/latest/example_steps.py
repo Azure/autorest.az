@@ -1441,6 +1441,7 @@ def step_workspace_managed_identity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
     if checks is None:
         checks = []
     test.cmd('az synapse workspace-managed-identity-sql-control-setting create '
+             '--grant-sql-control-to-managed-identity-desired-state "Enabled" '
              '--resource-group "{rg_2}" '
              '--workspace-name "{myWorkspace2}"',
              checks=checks)

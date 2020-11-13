@@ -179,7 +179,7 @@ helps['managed-network mn group create'] = """
       - name: --subnets
         short-summary: "The collection of  subnets covered by the Managed Network"
         long-summary: |
-            Usage: --subnets id=XX
+            Usage: --subnets id=XX id=XX
 
             id: Resource Id
 
@@ -217,7 +217,7 @@ helps['managed-network mn group update'] = """
       - name: --subnets
         short-summary: "The collection of  subnets covered by the Managed Network"
         long-summary: |
-            Usage: --subnets id=XX
+            Usage: --subnets id=XX id=XX
 
             id: Resource Id
 

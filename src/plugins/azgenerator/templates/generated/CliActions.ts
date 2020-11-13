@@ -36,6 +36,8 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                                         }
                                         if (model.MethodParameter_IsPositional) {
                                             outputCode = outputCode.concat(GetPositionalAction(model, subActionName, model.MethodParameter));
+                                        } else if(model.MethodParameter_IsShorthandSyntax) {
+                                            outputCode = outputCode.concat(GetShorthandSyntaxAction(model, subActionName, model.MethodParameter));
                                         } else { 
                                             outputCode = outputCode.concat(GetAction(model, subActionName, model.MethodParameter, keyToMatch, valueToMatch));
                                         }
@@ -52,10 +54,11 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                                         }
                                         if (model.MethodParameter_IsPositional) {
                                             outputCode = outputCode.concat(GetPositionalAction(model, actionName, model.MethodParameter));
+                                        } else if(model.MethodParameter_IsShorthandSyntax) {
+                                            outputCode = outputCode.concat(GetShorthandSyntaxAction(model, actionName, model.MethodParameter));
                                         } else {
                                             outputCode = outputCode.concat(GetAction(model, actionName, model.MethodParameter))
                                         }
-                                        
                                     }
                                 } while (model.SelectNextMethodParameter());
                             }
@@ -208,6 +211,104 @@ function GetPositionalAction(model: CodeModelAz, actionName: string, param: Para
     }
     output.push("        except ValueError:");
     output.push("            raise CLIError('usage error: {} NAME METRIC OPERATION VALUE'.format(option_string))")
+    return output;
+}
+
+
+function GetShorthandSyntaxAction(model: CodeModelAz, actionName: string, param: Parameter, keyToMatch: string = null, valueToMatch: string = null) {
+    let output: string[] = [];
+    allActions.set(actionName, true);
+
+    output.push("");
+    output.push("");
+    let baseAction = "Action";
+    let paramType = param?.schema?.type;
+    if (paramType == SchemaType.Array) baseAction = "_Append" + baseAction;
+    output.push("class " + actionName + "(argparse." + baseAction + "):");
+    output.push("    def __call__(self, parser, namespace, values, option_string=None):");
+    output.push("        action = self.get_action(values, option_string)");
+    if (paramType == SchemaType.Array) {
+        output.push("        super(" + actionName + ", self).__call__(parser, namespace, action, option_string)");
+    } else {
+        output.push("        namespace." + model.Parameter_MapsTo(param) + " = action");
+    }
+    output.push("");
+    output.push("    def get_action(self, values, option_string):  # pylint: disable=no-self-use");
+    output.push("        ret = []");
+    output.push("        for item in values:")
+    output.push("            properties = defaultdict(list)");
+    output.push("            try:");
+    output.push("                for (k, v) in (x.split('=', 1) for x in item.split(',')):");
+    output.push("                    properties[k].append(v)");
+    output.push("                properties = dict(properties)");
+    output.push("            except ValueError:");
+    output.push("                raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))");
+    output.push("            d = {}");
+
+    if (model.EnterSubMethodParameters()) {
+        if (model.SelectFirstMethodParameter(true)) {
+            do {
+                if (model.Parameter_DefaultValue(model.SubMethodParameter) !== undefined) {
+                    output.push("            d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = " + ToPythonString(model.Parameter_DefaultValue(model.SubMethodParameter), model.Parameter_Type(model.SubMethodParameter)));
+                }
+            } while (model.SelectNextMethodParameter(true));
+        }
+        model.ExitSubMethodParameters();
+    }
+
+    output.push("            for k in properties:");
+    output.push("                kl = k.lower()");
+    output.push("                v = properties[k]");
+    let foundProperties = false;
+    let preParamType = paramType;
+    if (model.EnterSubMethodParameters()) {
+        if (model.SelectFirstMethodParameter()) {
+            foundProperties = true;
+            let ifkv = "if";
+            do {
+                if (model.SubMethodParameter['readOnly']) {
+                    continue;
+                }
+                if (model.SubMethodParameter['schema']?.type == SchemaType.Constant) {
+                    continue;
+                }
+                if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch) && model.Parameter_NamePython(model.SubMethodParameter) == keyToMatch) {
+                    continue;
+                }
+                output.push("                " + ifkv + " kl == '" + model.Parameter_NameAz(model.SubMethodParameter) + "':");
+                if (model.MethodParameter_IsArray) {
+                    output.push("                    d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = v");
+                }
+                else {
+                    output.push("                    d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = v[0]");
+                }
+                ifkv = "elif";
+            } while (model.SelectNextMethodParameter());
+        }
+        model.ExitSubMethodParameters();
+    }
+
+    if (!foundProperties && preParamType == SchemaType.Dictionary) {
+        output.pop();
+        output.pop();
+        output.push("                v = properties[k]");
+        output.push("                d[k] = v[0]");
+    }
+    else if (!foundProperties && model.MethodParameter_IsArray) {
+        output.pop();
+        output.pop();
+        output.push("                v = properties[k]");
+        output.push("                d[k] = v");
+    }
+    else if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch)) {
+        output.push("            d['" + keyToMatch + "'] = '" + valueToMatch + "'");
+    }
+    output.push("            ret.append(d)");
+    if (model.MethodParameter_Type == SchemaType.Array) {
+        output.push("        return ret");
+    } else {
+        output.push("        return ret[0]");
+    }
     return output;
 }
 

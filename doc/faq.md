@@ -432,3 +432,21 @@ cli:
 ```
 In this way. we can use `--param-name value1 value2 value3` instead of `--param-name key1=value1 key2=value2 key3=value3` to input the argument.  
 Here if the positionalOrder hasn't been set then we will use default order. and please specify key1, key2, key3 in python underscore case.  
+
+## How to set an action argument as aws shorthand syntax
+Shorthand syntax argument use space ' ' to split between objects in an array and comma ',' to split between properties 
+
+In code generation. we allow user to add configuration to declare the argument is positional like below
+
+``` yaml
+cli:
+    cli-directive:
+        - where:
+            group: GroupName
+            op: OperationName
+            param: paramName
+          set:
+            shorthandSyntax: true
+```
+In this way. we can use `--param-name key1=value1,key2=value2 key1=valuea,key2=valueb` instead of `--param-name key1=value1 key2=value2 key1=valuea key2=valueb` to suggest that we want to input  
+two items (value1, value2) and (valuea, valueb).    

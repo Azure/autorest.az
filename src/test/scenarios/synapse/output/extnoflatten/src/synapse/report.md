@@ -1961,8 +1961,8 @@ az synapse workspace-managed-identity-sql-control-setting show --resource-group 
 
 ##### <a name="ExamplesWorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Create">Example</a>
 ```
-az synapse workspace-managed-identity-sql-control-setting create --resource-group "resourceGroup1" --workspace-name \
-"workspace1"
+az synapse workspace-managed-identity-sql-control-setting create --grant-sql-control-to-managed-identity-desired-state \
+"Enabled" --resource-group "resourceGroup1" --workspace-name "workspace1"
 ```
 ##### <a name="ParametersWorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
