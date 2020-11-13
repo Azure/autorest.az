@@ -1,6 +1,6 @@
 
 import * as path from "path"
-import { CommandExample, ExampleParam } from "../../CodeModelAz";
+import { CommandExample, ExampleParam, KeyValueType } from "../../CodeModelAz";
 import { deepCopy, isDict, ToCamelCase, ToPythonString, changeCamelToDash, MergeSort } from "../../../../utils/helper"
 import { EnglishPluralizationService } from "@azure-tools/codegen";
 import { isNullOrUndefined, isArray } from "util";
@@ -709,24 +709,24 @@ export class ResourcePool {
         return false;
 
     }
-    public addEndpointResource(endpoint: any, isJson: boolean, isKeyValues: boolean, placeholders: string[], resources: string[], exampleParam: ExampleParam, isTest = true): any {
+    public addEndpointResource(endpoint: any, isJson: boolean, keyValue: KeyValueType, placeholders: string[], resources: string[], exampleParam: ExampleParam, isTest = true): any {
         if (placeholders == undefined) placeholders = new Array();
         if (isJson) {
             let body = typeof endpoint == 'string' ? JSON.parse(endpoint) : endpoint;
             if (typeof body == 'object') {
                 if (body instanceof Array) {
                     body = body.map((value) => {
-                        return this.addEndpointResource(value, typeof value == 'object', isKeyValues, placeholders, resources, exampleParam, isTest);
+                        return this.addEndpointResource(value, typeof value == 'object', keyValue, placeholders, resources, exampleParam, isTest);
                     });
                 }
                 else if (isDict(body)) {
                     for (let k in body) {
-                        body[k] = this.addEndpointResource(body[k], typeof body[k] == 'object', isKeyValues, placeholders, resources, exampleParam, isTest);
+                        body[k] = this.addEndpointResource(body[k], typeof body[k] == 'object', keyValue, placeholders, resources, exampleParam, isTest);
                     }
                 }
             }
             else {
-                body = this.addEndpointResource(body, false, isKeyValues, placeholders, resources, exampleParam, isTest);
+                body = this.addEndpointResource(body, false, keyValue, placeholders, resources, exampleParam, isTest);
             }
 
             if (typeof endpoint == 'string') {
@@ -741,7 +741,7 @@ export class ResourcePool {
         if (typeof endpoint !== 'string') return endpoint;
 
         //if the input is in form of "key1=value2 key2=value2 ...", then analyse the values one by one
-        if (isKeyValues) {
+        if (keyValue==KeyValueType.Classic) {
             let ret = "";
             let attrs = endpoint.split(" ");
             for (let i = 1; i < attrs.length; i++) {
@@ -755,7 +755,7 @@ export class ResourcePool {
                 let kv = attr.split("=");
                 if (ret.length > 0) ret += " ";
                 if (kv[1].length >= 2 && kv[1][0] == '"' && kv[1][kv[1].length - 1] == '"') {
-                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, false, placeholders, resources, exampleParam, isTest);
+                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
                     if (isTest) {
                         ret += `${kv[0]}="${this.formatable(v, placeholders)}"`;
                     }
@@ -764,7 +764,7 @@ export class ResourcePool {
                     }
                 }
                 else {
-                    let v = this.addEndpointResource(kv[1], isJson, false, placeholders, resources, exampleParam, isTest);
+                    let v = this.addEndpointResource(kv[1], isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
                     if (isTest) {
                         ret += `${kv[0]}=${this.formatable(v, placeholders)}`;
                     }
@@ -772,6 +772,14 @@ export class ResourcePool {
                         ret += `${kv[0]}=${v}`;
                     }
                 }
+            }
+            return ret;
+        }
+        else if (keyValue==KeyValueType.PositionalKey) {
+            let ret = "";
+            for (let item of endpoint.split(' ')) {
+                if (ret.length > 0) ret += " ";
+                ret += this.addEndpointResource(item, isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
             }
             return ret;
         }
@@ -817,8 +825,8 @@ export class ResourcePool {
         return nodes.join('/');
     }
 
-    public addParamResource(param_name: string, param_value: string, isJson: boolean, isKeyValues: boolean, isTest = true): string {
-        if (typeof param_value !== 'string' || isJson || isKeyValues) return param_value;
+    public addParamResource(param_name: string, param_value: string, isJson: boolean, keyValue: KeyValueType, isTest = true): string {
+        if (typeof param_value !== 'string' || isJson || keyValue!=KeyValueType.No) return param_value;
 
         if (param_name.startsWith('--')) {
             param_name = param_name.substr(2);

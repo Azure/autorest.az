@@ -30,8 +30,7 @@ az datafactory update --name "myFactory" --tags exampleTag="exampleValue" --reso
 ```
 az datafactory configure-factory-repo \
     --factory-resource-id "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/myResourceGroup/providers/Microsoft.DataFactory/factories/myFactory" \
-    --factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-name="project" repository-name="repo" root-folder="/" tenant-id="" \
-    --location-id "East US" 
+    --factory-vsts-configuration FactoryVSTSConfiguration project  ADF repo / master --location-id "East US" 
 ```
 ##### Get-data-plane-access #####
 ```

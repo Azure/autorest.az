@@ -6,11 +6,11 @@
 import { Channel, Session } from "@azure-tools/autorest-extension-base";
 import { EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { CodeModel, Operation, OperationGroup, Parameter, ParameterLocation, Property, Request, Schema, SchemaType } from '@azure-tools/codemodel';
-import { values } from "@azure-tools/linq";
+import { values, keys } from "@azure-tools/linq";
 import { isArray, isNullOrUndefined } from "util";
 import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash } from '../../utils/helper';
 import { EXCLUDED_PARAMS, GenerationMode } from "../models";
-import { CodeModelAz, CommandExample, ExampleParam, MethodParam } from "./CodeModelAz";
+import { CodeModelAz, CommandExample, ExampleParam, MethodParam, KeyValueType} from "./CodeModelAz";
 import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus, GroupTestScenario} from './templates/tests/ScenarioTool';
 
 
@@ -1481,8 +1481,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
-    public get MethodParameter_PositionalKeys(): string[] {
-        let param: Parameter = this.MethodParameter;
+    public Parameter_PositionalKeys(param: Parameter, subMethodParams: Parameter[]): string[] {
         let keys = [];
         if (!(this.Parameter_IsList(param) && this.Parameter_IsListOfSimple(param))) {
             return null;
@@ -1497,24 +1496,19 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         let allPossibleKeys = [];
         let requiredKeys = [];
-        if (this.EnterSubMethodParameters()) {
-            if (this.SelectFirstMethodParameter(true)) {
-                do {
-                    if (this.SubMethodParameter['readOnly']) {
-                        continue;
-                    }
-                    if (this.SubMethodParameter['schema']?.type == SchemaType.Constant) {
-                        continue;
-                    }
-                    allPossibleKeys.push(this.Parameter_NamePython(this.SubMethodParameter));
-                    if (this.SubMethodParameter['required'] || this.SubMethodParameter.language?.['cli']['required']) {
-                        if (!this.Parameter_IsHidden(this.SubMethodParameter)) {
-                            requiredKeys.push(this.Parameter_NamePython(this.SubMethodParameter))
-                        }
-                    }
-                } while (this.SelectNextMethodParameter(true));
+        for (let subMethodParam of subMethodParams) {
+            if (subMethodParam['readOnly']) {
+                continue;
             }
-            this.ExitSubMethodParameters();
+            if (subMethodParam['schema']?.type == SchemaType.Constant) {
+                continue;
+            }
+            allPossibleKeys.push(this.Parameter_NamePython(subMethodParam));
+            if (subMethodParam['required'] || subMethodParam.language?.['cli']['required']) {
+                if (!this.Parameter_IsHidden(subMethodParam)) {
+                    requiredKeys.push(this.Parameter_NamePython(subMethodParam))
+                }
+            }
         }
 
         let coveredResult  = keys.every(val => allPossibleKeys.includes(val));
@@ -1526,10 +1520,10 @@ export class CodeModelCliImpl implements CodeModelAz {
             } else {
                 let text = "";
                 if (!coveredResult) {
-                    text += "The defined positional keys for " + this.MethodParameter_CliKey + " contains invalid keys. All possible keys are: " + allPossibleKeys.join(", ") + " \n";
+                    text += "The defined positional keys for " + this.Parameter_CliKey(param) + " contains invalid keys. All possible keys are: " + allPossibleKeys.join(", ") + " \n";
                 } 
                 if (!requiredCovered) {
-                    text += "The defined positional keys for " + this.MethodParameter_CliKey + " doesn't contain all required keys. All required keys are: " + requiredKeys.join(", ") + " \n";
+                    text += "The defined positional keys for " + this.Parameter_CliKey(param) + " doesn't contain all required keys. All required keys are: " + requiredKeys.join(", ") + " \n";
                 }
                 this.session.message({Channel: Channel.Fatal, Text: text});
                 return null;
@@ -1537,6 +1531,19 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
 
         return allPossibleKeys;
+    }
+
+    public get MethodParameter_PositionalKeys(): string[] {
+        let subMethodParams: Parameter[] = [];
+        if (this.EnterSubMethodParameters()) {
+            if (this.SelectFirstMethodParameter(true)) {
+                do {
+                    subMethodParams.push(this.SubMethodParameter);
+                } while (this.SelectNextMethodParameter(true));
+            }
+            this.ExitSubMethodParameters();
+        }
+        return this.Parameter_PositionalKeys(this.MethodParameter, subMethodParams);
     }
 
     public Schema_IsList(schema: Schema = this.MethodParameter.schema): boolean {
@@ -1887,7 +1894,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return (this.Command_GetOriginalOperation && param?.targetProperty?.['isDiscriminator']) ? true : false;
     }
 
-    private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any, polySubParam: MethodParam, ancestors: string[]): boolean {
+    private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any, polySubParam: MethodParam, ancestors: string[], rawValue: any): boolean {
         let isList: boolean = methodParam.isList;
         let isSimpleListOrArray: boolean = methodParam.isSimpleListOrArray;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
@@ -1909,68 +1916,90 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (isList) {
             if (isSimpleListOrArray) {
                 if (value instanceof Array) {       // spread list
-                    for (let e of value) {
-                        this.AddExampleParameter(methodParam, example_param, e, polySubParam, ancestors);
+                    for (let i=0; i<value.length; i++) {
+                        this.AddExampleParameter(methodParam, example_param, value[i], polySubParam, ancestors, rawValue[i]);
                     }
                     handled = true;
                 }
-                else if (typeof value == 'object') {    // KEY=VALUE form
+                else if (typeof rawValue == 'object') {    // KEY=VALUE form
                     let ret = "";
                     let keys = [];
-                    for (let k in value) {
-                        let cliName = null;
-                        for (let param of [methodParam, polySubParam]) {
-                            if (param?.submethodparameters) {
-                                for (let submethodProperty of param.submethodparameters) {
-                                    if (submethodProperty.language['cli'].cliKey.toLowerCase() == k.toLowerCase()) {
-                                        cliName = this.Parameter_NameAz(submethodProperty);
+                    handled = true;
+                    if (this.Parameter_IsPositional(methodParam.value) || this.Parameter_IsPositional(polySubParam?.value)) {
+                        for (let k of this.Parameter_PositionalKeys(polySubParam.value, polySubParam.submethodparameters) || this.Parameter_PositionalKeys(methodParam.value, methodParam.submethodparameters)) {
+                            ret += " ";
+                            FIND_PARAM:
+                            for (let param of [polySubParam, methodParam]) {
+                                if (param?.submethodparameters) {
+                                    for (let subMethodParam of param.submethodparameters) {
+                                        if (this.Parameter_NamePython(subMethodParam) == k) {
+                                            ret += String(rawValue[subMethodParam.language['cli'].cliKey]);
+                                            break FIND_PARAM;
+                                        }
                                     }
                                 }
                             }
                         }
-                        if (!cliName) {
-                            // If no submethodparameters, keep all KEYs as the origin name
-                            // This is for type of schema.Dictionary
-                            cliName = k;
-                        }
-                        if (value[k] instanceof Array) {
-                            for (let v of value[k]) {
+                    }
+                    ret = ret.trim();
+                    if (ret.trim().length > 0) {
+                        example_param.push(new ExampleParam(name, ret, false, KeyValueType.PositionalKey, keys, defaultName, methodParam, ancestors, value));
+                    }
+                    else {
+                        for (let k in value) {
+                            let cliName = null;
+                            for (let param of [methodParam, polySubParam]) {
+                                if (param?.submethodparameters) {
+                                    for (let submethodProperty of param.submethodparameters) {
+                                        if (submethodProperty.language['cli'].cliKey.toLowerCase() == k.toLowerCase()) {
+                                            cliName = this.Parameter_NameAz(submethodProperty);
+                                        }
+                                    }
+                                }
+                            }
+                            if (!cliName) {
+                                // If no submethodparameters, keep all KEYs as the origin name
+                                // This is for type of schema.Dictionary
+                                cliName = k;
+                            }
+                            if (value[k] instanceof Array) {
+                                for (let v of value[k]) {
+                                    if (ret.length > 0) {
+                                        ret += " ";
+                                    }
+                                    ret += `${cliName}=${ToJsonString(v)}`;
+                                }
+                            }
+                            else {
                                 if (ret.length > 0) {
                                     ret += " ";
                                 }
-                                ret += `${cliName}=${ToJsonString(v)}`;
+                                let v = ToJsonString(value[k]);
+                                // if (v.startsWith("\"")) {
+                                //     v = v.substr(1, v.length-2);
+                                // }
+                                ret += `${cliName}=${v}`;
                             }
+                            keys.push(cliName)
                         }
-                        else {
-                            if (ret.length > 0) {
-                                ret += " ";
-                            }
-                            let v = ToJsonString(value[k]);
-                            // if (v.startsWith("\"")) {
-                            //     v = v.substr(1, v.length-2);
-                            // }
-                            ret += `${cliName}=${v}`;
+                        if (ret.length > 0) {
+                            example_param.push(new ExampleParam(name, ret, false, KeyValueType.Classic, keys, defaultName, methodParam, ancestors, value));
                         }
-                        keys.push(cliName)
-                    }
-                    if (ret.length > 0) {
-                        example_param.push(new ExampleParam(name, ret, false, true, keys, defaultName, methodParam, ancestors, value));
-                    }
-                    handled = true;
+                    }    
                 }
             }
             if (!handled) {
                 if (typeof value == 'string') {
-                    example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam, ancestors, value));
+                    example_param.push(new ExampleParam(name, value, false, KeyValueType.No, [], defaultName, methodParam, ancestors, value));
                 }
                 else {
                     // JSON form
-                    example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, false, [], defaultName, methodParam, ancestors, value));
+                    example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, KeyValueType.No, [], defaultName, methodParam, ancestors, value));
                 }
             }
         }
         else if (typeof value != 'object') {
-            example_param.push(new ExampleParam(name, value, false, false, [], defaultName, methodParam, ancestors, value));
+            example_param.push(new ExampleParam(name, value, false, KeyValueType.No, [], defaultName, methodParam, ancestors, value));
         }
         else {
             // ignore object values if not isList.
@@ -2035,6 +2064,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         for (let methodParam of this.matchMethodParam(method_param_list, name)) {
             let polySubParam: MethodParam = null;
             let netValue = typeof value === 'object' && value !== null ? deepCopy(value) : value;
+            let rawValue = deepCopy(netValue);
             if (methodParam.value['isPolyOfSimple']) {
                 let keyToMatch = methodParam.value.schema.discriminator?.property?.language?.default?.name;
                 if (keyToMatch) {
@@ -2053,9 +2083,11 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             if (polySubParam) {
                 netValue = this.FlattenProperty(polySubParam.value?.schema, netValue);
+                rawValue = this.FlattenProperty(polySubParam.value?.schema, rawValue);
             }
             else {
                 netValue = this.FlattenProperty(methodParam.value?.schema, netValue);
+                rawValue = this.FlattenProperty(methodParam.value?.schema, rawValue);
             }
             if ('pathToProperty' in methodParam.value && ancestors.length - methodParam.value['pathToProperty'].length == 1) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
@@ -2069,7 +2101,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors);
+                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors, rawValue);
                     return;
                 }
             }
@@ -2092,13 +2124,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 if (match) {
                     // example_param.set(name, value);
-                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors);
+                    this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors, rawValue);
                     return;
                 }
             }
             else if (ancestors.length == 0) {
                 // example_param.set(name, value);
-                if (this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors)) return;
+                if (this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors, rawValue)) return;
             }
         }
 
@@ -2123,7 +2155,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 // }
             }
             param_name = param_name.split("_").join("-");
-            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.isKeyValues, param.keys, param.defaultName, param.methodParam, param.ancestors, param.rawValue));
+            ret.push(new ExampleParam("--" + param_name, param.value, param.isJson, param.keyValue, param.keys, param.defaultName, param.methodParam, param.ancestors, param.rawValue));
         };
         return ret;
     }
@@ -2235,15 +2267,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         for (let param of example.Parameters) {
             let param_value = param.value;
             if (isTest || this.FormalizeNames) {
-                let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues, [], [], param, isTest);
+                let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.keyValue, [], [], param, isTest);
                 if (replaced_value == param_value) {
-                    replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues, isTest);
+                    replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.keyValue, isTest);
                 }
                 param_value = replaced_value;
                 param.replacedValue = replaced_value;
             }
             let slp = param_value;
-            if (!param.isKeyValues) {
+            if (param.keyValue == KeyValueType.No) {
                 slp = ToJsonString(slp);
             }
             parameters.push(param.name + " " + slp);
@@ -2297,13 +2329,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                 let paramKey = param.methodParam.value.language?.cli?.cliKey;
                 if (paramKey == 'resourceGroupName' || this.resource_pool.isResource(paramKey) == example.ResourceClassName) {
                     let param_value = param.value;
-                    let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.isKeyValues, [], [], param);
+                    let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.keyValue, [], [], param);
                     if (replaced_value == param_value) {
-                        replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.isKeyValues);
+                        replaced_value = this.resource_pool.addParamResource(param.defaultName, param_value, param.isJson, param.keyValue);
                     }
                     param_value = replaced_value;
                     let slp = param_value;
-                    if (!param.isKeyValues) {
+                    if (param.keyValue == KeyValueType.No) {
                         slp = ToJsonString(slp);
                     }
                     parameters.push(param.name + " " + slp);
@@ -2370,14 +2402,14 @@ export class CodeModelCliImpl implements CodeModelAz {
             for (let example of examples) {
                 for (let param of example.Parameters) {
                     let resources = [];
-                    this.resource_pool.addEndpointResource(param.value, param.isJson, param.isKeyValues, [], resources, param);
+                    this.resource_pool.addEndpointResource(param.value, param.isJson, param.keyValue, [], resources, param);
                     for (let on_resource of resources) {
                         if (on_resource != this.CommandGroup_Key && depend_resources.indexOf(on_resource) < 0) {
                             depend_resources.push(on_resource);
                             depend_parameters.push(param.name);
                         }
                     }
-                    this.resource_pool.addParamResource(param.defaultName, param.value, param.isJson, param.isKeyValues);
+                    this.resource_pool.addParamResource(param.defaultName, param.value, param.isJson, param.keyValue);
                 }
             }
 
