@@ -1912,21 +1912,79 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
         }
 
+        function toActionString(model: CodeModelCliImpl,dict, seperator=" ", init_keys=undefined): [string, string[]] {
+            let ret: string = "";
+            let keys: string[] = [];
+            if (!isNullOrUndefined(init_keys)) {
+                keys = init_keys;
+            }
+            for (let k in dict) {
+                let cliName = null;
+                for (let param of [methodParam, polySubParam]) {
+                    if (param?.submethodparameters) {
+                        for (let submethodProperty of param.submethodparameters) {
+                            if (submethodProperty.language['cli'].cliKey.toLowerCase() == k.toLowerCase()) {
+                                cliName = model.Parameter_NameAz(submethodProperty);
+                            }
+                        }
+                    }
+                }
+                if (!cliName) {
+                    // If no submethodparameters, keep all KEYs as the origin name
+                    // This is for type of schema.Dictionary
+                    cliName = k;
+                }
+                if (dict[k] instanceof Array) {
+                    for (let v of dict[k]) {
+                        if (ret.length > 0) {
+                            ret += seperator;
+                        }
+                        ret += `${cliName}=${ToJsonString(v)}`;
+                    }
+                }
+                else {
+                    if (ret.length > 0) {
+                        ret += seperator;
+                    }
+                    let v = ToJsonString(dict[k]);
+                    // if (v.startsWith("\"")) {
+                    //     v = v.substr(1, v.length-2);
+                    // }
+                    ret += `${cliName}=${v}`;
+                }
+                if (!keys.includes(cliName)) keys.push(cliName)
+            }
+            return [ret, keys];
+        } 
+
         let handled = false;
         if (isList) {
             if (isSimpleListOrArray) {
+                let keys = [];
+                let ret = "";
                 if (value instanceof Array) {       // spread list
-                    for (let i=0; i<value.length; i++) {
-                        this.AddExampleParameter(methodParam, example_param, value[i], polySubParam, ancestors, rawValue[i]);
-                    }
                     handled = true;
+                    if (polySubParam && this.Parameter_IsShorthandSyntax(polySubParam.value) || this.Parameter_IsShorthandSyntax(methodParam.value)) {
+                        for (let i=0; i<value.length; i++) {
+                            let instanceString: string;
+                            [instanceString, keys] = toActionString(this, value[i], ",", keys);
+                            instanceString = instanceString.trim();
+                            if (ret.length>0 && instanceString.length>0) ret += " ";
+                            ret += instanceString;
+                        }
+                        example_param.push(new ExampleParam(name, ret, false, KeyValueType.ShorthandSyntax, keys, defaultName, methodParam, ancestors, value));
+                    }
+                    else {
+                        for (let i=0; i<value.length; i++) {
+                            this.AddExampleParameter(methodParam, example_param, value[i], polySubParam, ancestors, rawValue[i]);
+                        }
+                    }
                 }
                 else if (typeof rawValue == 'object') {    // KEY=VALUE form
-                    let ret = "";
-                    let keys = [];
                     handled = true;
                     if (this.Parameter_IsPositional(methodParam.value) || this.Parameter_IsPositional(polySubParam?.value)) {
-                        for (let k of this.Parameter_PositionalKeys(polySubParam.value, polySubParam.submethodparameters) || this.Parameter_PositionalKeys(methodParam.value, methodParam.submethodparameters)) {
+                        keys = this.Parameter_PositionalKeys(polySubParam.value, polySubParam.submethodparameters) || this.Parameter_PositionalKeys(methodParam.value, methodParam.submethodparameters);
+                        for (let k of keys) {
                             ret += " ";
                             FIND_PARAM:
                             for (let param of [polySubParam, methodParam]) {
@@ -1946,42 +2004,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                         example_param.push(new ExampleParam(name, ret, false, KeyValueType.PositionalKey, keys, defaultName, methodParam, ancestors, value));
                     }
                     else {
-                        for (let k in value) {
-                            let cliName = null;
-                            for (let param of [methodParam, polySubParam]) {
-                                if (param?.submethodparameters) {
-                                    for (let submethodProperty of param.submethodparameters) {
-                                        if (submethodProperty.language['cli'].cliKey.toLowerCase() == k.toLowerCase()) {
-                                            cliName = this.Parameter_NameAz(submethodProperty);
-                                        }
-                                    }
-                                }
-                            }
-                            if (!cliName) {
-                                // If no submethodparameters, keep all KEYs as the origin name
-                                // This is for type of schema.Dictionary
-                                cliName = k;
-                            }
-                            if (value[k] instanceof Array) {
-                                for (let v of value[k]) {
-                                    if (ret.length > 0) {
-                                        ret += " ";
-                                    }
-                                    ret += `${cliName}=${ToJsonString(v)}`;
-                                }
-                            }
-                            else {
-                                if (ret.length > 0) {
-                                    ret += " ";
-                                }
-                                let v = ToJsonString(value[k]);
-                                // if (v.startsWith("\"")) {
-                                //     v = v.substr(1, v.length-2);
-                                // }
-                                ret += `${cliName}=${v}`;
-                            }
-                            keys.push(cliName)
-                        }
+                        ////////////
+                        [ret, keys] = toActionString(this, value);
                         if (ret.length > 0) {
                             example_param.push(new ExampleParam(name, ret, false, KeyValueType.Classic, keys, defaultName, methodParam, ancestors, value));
                         }

@@ -740,12 +740,11 @@ export class ResourcePool {
 
         if (typeof endpoint !== 'string') return endpoint;
 
-        //if the input is in form of "key1=value2 key2=value2 ...", then analyse the values one by one
-        if (keyValue==KeyValueType.Classic) {
+        function parseActionString(rp: ResourcePool, endpoint, seperator=" "): string {
             let ret = "";
-            let attrs = endpoint.split(" ");
+            let attrs = endpoint.split(seperator);
             for (let i = 1; i < attrs.length; i++) {
-                if (!this.isSubParam(exampleParam, attrs[i])) {
+                if (!rp.isSubParam(exampleParam, attrs[i])) {
                     attrs[i - 1] += ' ' + attrs[i];
                     attrs.splice(i, 1);
                     i--;
@@ -753,20 +752,20 @@ export class ResourcePool {
             }
             for (let attr of attrs) {
                 let kv = attr.split("=");
-                if (ret.length > 0) ret += " ";
+                if (ret.length > 0) ret += seperator;
                 if (kv[1].length >= 2 && kv[1][0] == '"' && kv[1][kv[1].length - 1] == '"') {
-                    let v = this.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+                    let v = rp.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
                     if (isTest) {
-                        ret += `${kv[0]}="${this.formatable(v, placeholders)}"`;
+                        ret += `${kv[0]}="${rp.formatable(v, placeholders)}"`;
                     }
                     else {
                         ret += `${kv[0]}="${v}"`;
                     }
                 }
                 else {
-                    let v = this.addEndpointResource(kv[1], isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+                    let v = rp.addEndpointResource(kv[1], isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
                     if (isTest) {
-                        ret += `${kv[0]}=${this.formatable(v, placeholders)}`;
+                        ret += `${kv[0]}=${rp.formatable(v, placeholders)}`;
                     }
                     else {
                         ret += `${kv[0]}=${v}`;
@@ -775,11 +774,25 @@ export class ResourcePool {
             }
             return ret;
         }
+
+        //if the input is in form of "key1=value2 key2=value2 ...", then analyse the values one by one
+        if (keyValue==KeyValueType.Classic) {
+            return parseActionString(this, endpoint);
+        }
         else if (keyValue==KeyValueType.PositionalKey) {
             let ret = "";
             for (let item of endpoint.split(' ')) {
                 if (ret.length > 0) ret += " ";
                 ret += this.addEndpointResource(item, isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+            }
+            return ret;
+        }
+        else if (keyValue==KeyValueType.ShorthandSyntax) {
+            let instanceStrings = endpoint.split(" ");
+            let ret = "";
+            for (let instanceString of instanceStrings) {
+                if (ret.length>0) ret+= " ";
+                ret += parseActionString(this, instanceString, ",");
             }
             return ret;
         }
