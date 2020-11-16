@@ -55,7 +55,7 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('sku', action=AddSku, nargs='+', help='The SKU of the cluster.')
-        c.argument('zones', nargs='*', help='The availability zones of the cluster.')
+        c.argument('zones', nargs='+', help='The availability zones of the cluster.')
         c.argument('trusted_external_tenants', action=AddTrustedExternalTenants, nargs='*', help='The cluster\'s '
                    'external tenants.')
         c.argument('optimized_autoscale', action=AddOptimizedAutoscale, nargs='*', help='Optimized auto scale '

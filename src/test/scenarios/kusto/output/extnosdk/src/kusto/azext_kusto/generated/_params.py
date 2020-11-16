@@ -52,7 +52,7 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('sku', action=AddSku, nargs='+', help='The SKU of the cluster.')
-        c.argument('zones', nargs='*', help='The availability zones of the cluster.')
+        c.argument('zones', nargs='+', help='The availability zones of the cluster.')
         c.argument('trusted_external_tenants', action=AddTrustedExternalTenants, nargs='*', help='The cluster\'s '
                    'external tenants.')
         c.argument('optimized_autoscale', action=AddOptimizedAutoscale, nargs='*', help='Optimized auto scale '
@@ -442,7 +442,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the event hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the event hub')
         c.argument('compression', arg_type=get_enum_type(['None', 'GZip']), help='The event hub messages compression '
                    'type')
 
@@ -465,7 +465,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the iot hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the iot hub')
         c.argument('shared_access_policy_name', type=str, help='The name of the share access policy')
 
     with self.argument_context('kusto data-connection event-grid update') as c:
@@ -516,7 +516,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the event hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the event hub')
         c.argument('compression', arg_type=get_enum_type(['None', 'GZip']), help='The event hub messages compression '
                    'type')
 
@@ -540,7 +540,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the iot hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the iot hub')
         c.argument('shared_access_policy_name', type=str, help='The name of the share access policy')
 
     with self.argument_context('kusto data-connection delete') as c:
@@ -599,7 +599,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the event hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the event hub')
         c.argument('compression', arg_type=get_enum_type(['None', 'GZip']), help='The event hub messages compression '
                    'type')
 
@@ -623,7 +623,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the iot hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the iot hub')
         c.argument('shared_access_policy_name', type=str, help='The name of the share access policy')
 
     with self.argument_context('kusto data-connection wait') as c:

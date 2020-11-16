@@ -269,12 +269,11 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         hasLocation = true;
                         needSkip = true;
                     } else if (model.MethodParameter_IsSimpleArray) {
-                        if (model.MethodParameter['required'] === true) {
-                            argument += ", nargs='+'";
-                        } else {
+                        if (model.MethodParameter.language['cli']['required'] === false) {
                             argument += ", nargs='*'";
+                        } else {
+                            argument += ", nargs='+'";
                         }
-
                     } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             baseParam = model.MethodParameter;

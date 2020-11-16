@@ -302,7 +302,7 @@ def load_arguments(self, _):
                    'required.')
         c.argument('retention_days', type=int, help='Specifies the number of days to keep in the audit logs in the '
                    'storage account.')
-        c.argument('audit_actions_and_groups', nargs='*', help='Specifies the Actions-Groups and Actions to audit.  '
+        c.argument('audit_actions_and_groups', nargs='+', help='Specifies the Actions-Groups and Actions to audit.  '
                    'The recommended set of action groups to use is the following combination - this will audit all the '
                    'queries and stored procedures executed against the database, as well as successful and failed '
                    'logins:  BATCH_COMPLETED_GROUP, SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP, '
@@ -360,7 +360,7 @@ def load_arguments(self, _):
                    'required.')
         c.argument('retention_days', type=int, help='Specifies the number of days to keep in the audit logs in the '
                    'storage account.')
-        c.argument('audit_actions_and_groups', nargs='*', help='Specifies the Actions-Groups and Actions to audit.  '
+        c.argument('audit_actions_and_groups', nargs='+', help='Specifies the Actions-Groups and Actions to audit.  '
                    'The recommended set of action groups to use is the following combination - this will audit all the '
                    'queries and stored procedures executed against the database, as well as successful and failed '
                    'logins:  BATCH_COMPLETED_GROUP, SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP, '
@@ -586,9 +586,9 @@ def load_arguments(self, _):
         c.argument('state', arg_type=get_enum_type(['New', 'Enabled', 'Disabled']), help='Specifies the state of the '
                    'policy, whether it is enabled or disabled or a policy has not been applied yet on the specific Sql '
                    'pool.')
-        c.argument('disabled_alerts', nargs='*', help='Specifies an array of alerts that are disabled. Allowed values '
+        c.argument('disabled_alerts', nargs='+', help='Specifies an array of alerts that are disabled. Allowed values '
                    'are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action')
-        c.argument('email_addresses', nargs='*', help='Specifies an array of e-mail addresses to which the alert is '
+        c.argument('email_addresses', nargs='+', help='Specifies an array of e-mail addresses to which the alert is '
                    'sent.')
         c.argument('email_account_admins', arg_type=get_three_state_flag(), help='Specifies that the alert is sent to '
                    'the account administrators.')
@@ -607,9 +607,9 @@ def load_arguments(self, _):
         c.argument('state', arg_type=get_enum_type(['New', 'Enabled', 'Disabled']), help='Specifies the state of the '
                    'policy, whether it is enabled or disabled or a policy has not been applied yet on the specific Sql '
                    'pool.')
-        c.argument('disabled_alerts', nargs='*', help='Specifies an array of alerts that are disabled. Allowed values '
+        c.argument('disabled_alerts', nargs='+', help='Specifies an array of alerts that are disabled. Allowed values '
                    'are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action')
-        c.argument('email_addresses', nargs='*', help='Specifies an array of e-mail addresses to which the alert is '
+        c.argument('email_addresses', nargs='+', help='Specifies an array of e-mail addresses to which the alert is '
                    'sent.')
         c.argument('email_account_admins', arg_type=get_three_state_flag(), help='Specifies that the alert is sent to '
                    'the account administrators.')

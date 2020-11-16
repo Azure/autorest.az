@@ -2646,7 +2646,7 @@ operationGroups:
           az:
             name: show
             description: 'The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name'
-            command: managed-network managed-network show
+            command: managed-network show
           cli:
             name: Get
             description: 'The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name'
@@ -2916,7 +2916,7 @@ operationGroups:
           az:
             name: create
             description: 'The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name'
-            command: managed-network managed-network create
+            command: managed-network create
           cli:
             name: CreateOrUpdate
             description: 'The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name'
@@ -3042,7 +3042,7 @@ operationGroups:
           az:
             name: delete
             description: 'The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource group and Managed Network name'
-            command: managed-network managed-network delete
+            command: managed-network delete
           cli:
             name: Delete
             description: 'The Delete ManagedNetworks operation deletes a Managed Network Resource, specified by the  resource group and Managed Network name'
@@ -3264,7 +3264,7 @@ operationGroups:
           az:
             name: update
             description: Updates the specified Managed Network resource tags.
-            command: managed-network managed-network update
+            command: managed-network update
           cli:
             name: Update
             description: Updates the specified Managed Network resource tags.
@@ -3428,7 +3428,7 @@ operationGroups:
           az:
             name: list
             description: The ListByResourceGroup ManagedNetwork operation retrieves all the Managed Network resources in a resource group in a paginated format.
-            command: managed-network managed-network list
+            command: managed-network list
           cli:
             name: ListByResourceGroup
             description: The ListByResourceGroup ManagedNetwork operation retrieves all the Managed Network resources in a resource group in a paginated format.
@@ -3570,7 +3570,7 @@ operationGroups:
           az:
             name: list
             description: The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
-            command: managed-network managed-network list
+            command: managed-network list
           cli:
             name: ListBySubscription
             description: The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
@@ -3583,7 +3583,7 @@ operationGroups:
       az:
         name: ManagedNetwork
         description: ''
-        command: managed-network managed-network
+        command: managed-network
         genericTargetSchema: *ref_34
         hasShowCommand: true
       cli:
