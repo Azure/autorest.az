@@ -46,7 +46,7 @@ def load_arguments(self, _):
                    configured_default='factory')
         c.argument('if_match', type=str, help='ETag of the factory entity. Should only be specified for update, for '
                    'which it should match existing entity or can be * for unconditional update.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
         c.argument('test_inherit', type=validate_file_or_dict, help='Test Job Base Expected value: '

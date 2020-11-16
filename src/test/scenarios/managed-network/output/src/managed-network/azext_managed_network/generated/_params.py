@@ -43,7 +43,7 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str,
                    help='The name of the Managed Network.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
         c.argument('properties', type=validate_file_or_dict, help='The MNC properties Expected value: '
@@ -119,7 +119,7 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', type=str, help='The name of the Managed Network.')
         c.argument('group_name', type=str, help='The name of the Managed Network Group.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('management_groups', type=validate_file_or_dict, help='The collection of management groups covered '
                    'by the Managed Network Expected value: json-string/@json-file.')
@@ -134,7 +134,7 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', type=str, help='The name of the Managed Network.', id_part='name')
         c.argument('group_name', type=str, help='The name of the Managed Network Group.', id_part='child_name_1')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('management_groups', type=validate_file_or_dict, help='The collection of management groups covered '
                    'by the Managed Network Expected value: json-string/@json-file.')
@@ -173,7 +173,7 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', type=str, help='The name of the Managed Network.')
         c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('hub', action=AddHub, nargs='*', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='*', help='Gets or sets the spokes group IDs')
@@ -183,7 +183,7 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', type=str, help='The name of the Managed Network.')
         c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('hub', action=AddHub, nargs='*', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='*', help='Gets or sets the spokes group IDs')
@@ -194,7 +194,7 @@ def load_arguments(self, _):
         c.argument('managed_network_name', type=str, help='The name of the Managed Network.', id_part='name')
         c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.',
                    id_part='child_name_1')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('hub', action=AddHub, nargs='*', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='*', help='Gets or sets the spokes group IDs')
@@ -206,7 +206,7 @@ def load_arguments(self, _):
         c.argument('managed_network_name', type=str, help='The name of the Managed Network.', id_part='name')
         c.argument('policy_name', type=str, help='The name of the Managed Network Peering Policy.',
                    id_part='child_name_1')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('hub', action=AddHub, nargs='*', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='*', help='Gets or sets the spokes group IDs')

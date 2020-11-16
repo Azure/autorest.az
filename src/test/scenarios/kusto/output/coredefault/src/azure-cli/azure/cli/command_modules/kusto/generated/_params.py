@@ -52,7 +52,7 @@ def load_arguments(self, _):
         c.argument('cluster_name', options_list=['--name', '-n', '--cluster-name'], type=str, help='The name of the '
                    'Kusto cluster.')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('sku', action=AddSku, nargs='+', help='The SKU of the cluster.')
         c.argument('zones', nargs='*', help='The availability zones of the cluster.')
@@ -84,7 +84,7 @@ def load_arguments(self, _):
         c.argument('cluster_name', options_list=['--name', '-n', '--cluster-name'], type=str, help='The name of the '
                    'Kusto cluster.', id_part='name')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('sku', action=AddSku, nargs='*', help='The SKU of the cluster.')
         c.argument('trusted_external_tenants', action=AddTrustedExternalTenants, nargs='*', help='The cluster\'s '
@@ -348,7 +348,7 @@ def load_arguments(self, _):
         c.argument('attached_database_configuration_name', options_list=['--name', '-n',
                                                                          '--attached-database-configuration-name'],
                    type=str, help='The name of the attached database configuration.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('database_name', type=str, help='The name of the database which you would like to attach, use * if '
                    'you want to follow all current and future databases.')
@@ -363,7 +363,7 @@ def load_arguments(self, _):
         c.argument('attached_database_configuration_name', options_list=['--name', '-n',
                                                                          '--attached-database-configuration-name'],
                    type=str, help='The name of the attached database configuration.', id_part='child_name_1')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('database_name', type=str, help='The name of the database which you would like to attach, use * if '
                    'you want to follow all current and future databases.')

@@ -24,7 +24,7 @@ def load_arguments(self, _):
     with self.argument_context('attestation create-provider') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('provider_name', type=str, help='Name of the attestation service')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
         c.argument('attestation_policy', type=str, help='Name of attestation policy.')

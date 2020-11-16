@@ -37,14 +37,14 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('account_name', type=str, help='Name of an Mixed Reality Account.')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
 
     with self.argument_context('remote-rendering-account update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('account_name', type=str, help='Name of an Mixed Reality Account.', id_part='name')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
 
     with self.argument_context('remote-rendering-account delete') as c:

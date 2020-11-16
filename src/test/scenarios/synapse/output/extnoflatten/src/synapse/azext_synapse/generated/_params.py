@@ -54,7 +54,7 @@ def load_arguments(self, _):
         c.argument('force', arg_type=get_three_state_flag(), help='Whether to stop any running jobs in the Big Data '
                    'pool')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('provisioning_state', type=str, help='The state of the Big Data pool.')
         c.argument('auto_scale', action=AddAutoScale, nargs='*', help='Auto-scaling properties')
@@ -158,7 +158,7 @@ def load_arguments(self, _):
         c.argument('workspace_name', type=str, help='The name of the workspace')
         c.argument('sql_pool_name', options_list=['--name', '-n', '--sql-pool-name'], type=str, help='SQL pool name')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('sku', action=AddSku, nargs='*', help='SQL pool SKU')
         c.argument('max_size_bytes', type=int, help='Maximum size in bytes')
@@ -177,7 +177,7 @@ def load_arguments(self, _):
         c.argument('sql_pool_name', options_list=['--name', '-n', '--sql-pool-name'], type=str, help='SQL pool name',
                    id_part='child_name_1')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('sku', action=AddSku, nargs='*', help='SQL pool SKU')
         c.argument('max_size_bytes', type=int, help='Maximum size in bytes')
@@ -663,7 +663,7 @@ def load_arguments(self, _):
         c.argument('workspace_name', options_list=['--name', '-n', '--workspace-name'], type=str, help='The name of '
                    'the workspace')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('default_data_lake_storage', action=AddDefaultDataLakeStorage, nargs='*', help='Workspace default '
                    'data lake storage account details')
@@ -941,7 +941,7 @@ def load_arguments(self, _):
         c.argument('private_link_hub_name', options_list=['--name', '-n', '--private-link-hub-name'], type=str,
                    help='The name of the privateLinkHub')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
 
     with self.argument_context('synapse private-link-hub update') as c:

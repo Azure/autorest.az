@@ -263,7 +263,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     } else if (parameterName == "location") {
                         argument += ", arg_type=get_location_type(self.cli_ctx)";
                         if (hasResourceGroupInOperation) {
-                            argument += ", validator=get_default_location_from_resource_group";
+                            argument += ", required=False, validator=get_default_location_from_resource_group";
                             hasLocationValidator = true;
                         }
                         hasLocation = true;
