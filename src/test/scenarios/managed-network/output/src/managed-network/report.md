@@ -285,11 +285,13 @@ az managed-network mn group show --group-name "myManagedNetworkGroup" --managed-
 
 ##### <a name="ExamplesManagedNetworkGroupsCreateOrUpdate#Create">Example</a>
 ```
-az managed-network mn group create --management-groups "[]" --subnets id="/subscriptionB/resourceGroups/myResourceGroup\
-/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" --virtual-networks id="/subscriptionB/resourceGroup\
-s/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" --virtual-networks id="/subscriptionB/resourceGrou\
-ps/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" --group-name "myManagedNetworkGroup" \
---managed-network-name "myManagedNetwork" --resource-group "myResourceGroup"
+az managed-network mn group create --management-groups "[]" --subnets id="/subscriptions/subscriptionB/resourceGroups/m\
+yResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/default" \
+id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNe\
+twork2/subnets/default" --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Networ\
+k/virtualNetworks/VnetA" --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Netwo\
+rk/virtualNetworks/VnetB" --group-name "myManagedNetworkGroup" --managed-network-name "myManagedNetwork" \
+--resource-group "myResourceGroup"
 ```
 ##### <a name="ParametersManagedNetworkGroupsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|

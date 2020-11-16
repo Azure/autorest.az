@@ -22,22 +22,29 @@ export class MethodParam {
     }
 }
 
+export enum KeyValueType {
+    No,
+    Classic,
+    PositionalKey,
+    ShorthandSyntax,
+}
+
 export class ExampleParam {
     name: string;
     value: any;
     isJson: boolean;
-    isKeyValues: boolean;
+    keyValue: KeyValueType;
     keys: string[];
     defaultName: string;
     methodParam: MethodParam;
     ancestors: string[];
     replacedValue: any;
     rawValue: any;
-    public constructor(name: string, value: any, isJson: boolean, isKeyValues: boolean, keys: string[], defaultName: string, methodParam: MethodParam, ancestors: string[], rawValue: any) {
+    public constructor(name: string, value: any, isJson: boolean, keyValue: KeyValueType, keys: string[], defaultName: string, methodParam: MethodParam, ancestors: string[], rawValue: any) {
         this.name = name;
         this.value = value;
         this.isJson = isJson;
-        this.isKeyValues = isKeyValues;
+        this.keyValue = keyValue;
         this.keys = keys;
         this.defaultName = defaultName;
         this.methodParam = methodParam;

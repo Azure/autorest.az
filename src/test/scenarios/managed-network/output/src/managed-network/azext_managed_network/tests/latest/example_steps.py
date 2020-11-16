@@ -82,8 +82,9 @@ def step_mn_group_create(test, rg, checks=None):
         checks = []
     test.cmd('az managed-network mn group create '
              '--management-groups "[]" '
-             '--subnets id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/V'
-             'netA/subnets/subnetA" '
+             '--subnets id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNet'
+             'works/{vn}/subnets/default" id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.'
+             'Network/virtualNetworks/{vn_2}/subnets/default" '
              '--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualN'
              'etworks/VnetA" '
              '--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualN'
