@@ -289,10 +289,10 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         if (actions.indexOf(actionName) < 0) {
                             actions.push(actionName);
                         }
-                        if (model.MethodParameter['required'] === true) {
-                            argument += ", nargs='+'";
-                        } else {
+                        if (model.MethodParameter.language['cli']['required'] === false) {
                             argument += ", nargs='*'";
+                        } else {
+                            argument += ", nargs='+'";
                         }
                     }
 
