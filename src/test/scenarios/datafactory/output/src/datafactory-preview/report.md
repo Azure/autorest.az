@@ -154,7 +154,7 @@ az datafactory delete --name "myFactory" --resource-group "myResourceGroup"
 ```
 az datafactory configure-factory-repo --factory-resource-id "/subscriptions/12345678-1234-1234-1234-12345678abc/resourc\
 eGroups/myResourceGroup/providers/Microsoft.DataFactory/factories/myFactory" --factory-vsts-configuration \
-FactoryVSTSConfiguration project  ADF repo / master --location-id "East US"
+"FactoryVSTSConfiguration" "project" "" "ADF" "repo" "/" "master" --location-id "East US"
 ```
 ##### <a name="ParametersFactoriesConfigureFactoryRepo">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|

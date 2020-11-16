@@ -1991,7 +1991,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                 if (param?.submethodparameters) {
                                     for (let subMethodParam of param.submethodparameters) {
                                         if (this.Parameter_NamePython(subMethodParam) == k) {
-                                            ret += String(rawValue[subMethodParam.language['cli'].cliKey]);
+                                            ret += ToJsonString(rawValue[subMethodParam.language['cli'].cliKey]);
                                             break FIND_PARAM;
                                         }
                                     }
