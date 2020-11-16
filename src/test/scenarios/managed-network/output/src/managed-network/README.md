@@ -54,7 +54,7 @@ az managed-network mn scope-assignment delete --scope "subscriptions/subscriptio
 ##### Create #####
 ```
 az managed-network mn group create --management-groups "[]" \
-    --subnets id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA" id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetB" \
+    --subnets id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/default" id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork2/subnets/default" \
     --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA" \
     --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" \
     --group-name "myManagedNetworkGroup" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup" 
