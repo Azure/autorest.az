@@ -16,14 +16,13 @@ from azure.cli.core.commands import CliCommandType
 def load_command_table(self, _):
 
     from azext_boolean.generated._client_factory import cf_bool
-    boolean_bool = CliCommandType(
+    bool_bool = CliCommandType(
         operations_tmpl='azext_boolean.vendored_sdks.boolean.operations._bool_operations#BoolOperations.{}',
         client_factory=cf_bool)
-    with self.command_group('test-server boolean bool', boolean_bool, client_factory=cf_bool,
-                            is_experimental=True) as g:
-        g.custom_command('get-false', 'test_server_boolean_bool_get_false')
-        g.custom_command('get-invalid', 'test_server_boolean_bool_get_invalid')
-        g.custom_command('get-null', 'test_server_boolean_bool_get_null')
-        g.custom_command('get-true', 'test_server_boolean_bool_get_true')
-        g.custom_command('put-false', 'test_server_boolean_bool_put_false')
-        g.custom_command('put-true', 'test_server_boolean_bool_put_true')
+    with self.command_group('test-server bool', bool_bool, client_factory=cf_bool, is_experimental=True) as g:
+        g.custom_command('get-false', 'test_server_bool_get_false')
+        g.custom_command('get-invalid', 'test_server_bool_get_invalid')
+        g.custom_command('get-null', 'test_server_bool_get_null')
+        g.custom_command('get-true', 'test_server_bool_get_true')
+        g.custom_command('put-false', 'test_server_bool_put_false')
+        g.custom_command('put-true', 'test_server_bool_put_true')
