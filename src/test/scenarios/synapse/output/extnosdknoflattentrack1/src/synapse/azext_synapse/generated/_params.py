@@ -54,15 +54,15 @@ def load_arguments(self, _):
         c.argument('force', arg_type=get_three_state_flag(), help='Whether to stop any running jobs in the Big Data '
                    'pool')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('provisioning_state', type=str, help='The state of the Big Data pool.')
-        c.argument('auto_scale', action=AddAutoScale, nargs='*', help='Auto-scaling properties')
+        c.argument('auto_scale', action=AddAutoScale, nargs='+', help='Auto-scaling properties')
         c.argument('creation_date', help='The time when the Big Data pool was created.')
-        c.argument('auto_pause', action=AddAutoPause, nargs='*', help='Auto-pausing properties')
+        c.argument('auto_pause', action=AddAutoPause, nargs='+', help='Auto-pausing properties')
         c.argument('spark_events_folder', type=str, help='The Spark events folder')
         c.argument('node_count', type=int, help='The number of nodes in the Big Data pool.')
-        c.argument('library_requirements', action=AddLibraryRequirements, nargs='*', help='Library version '
+        c.argument('library_requirements', action=AddLibraryRequirements, nargs='+', help='Library version '
                    'requirements')
         c.argument('spark_version', type=str, help='The Apache Spark version.')
         c.argument('default_spark_log_folder', type=str, help='The default folder where Spark logs will be written.')
@@ -158,9 +158,9 @@ def load_arguments(self, _):
         c.argument('workspace_name', type=str, help='The name of the workspace')
         c.argument('sql_pool_name', options_list=['--name', '-n', '--sql-pool-name'], type=str, help='SQL pool name')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
-        c.argument('sku', action=AddSku, nargs='*', help='SQL pool SKU')
+        c.argument('sku', action=AddSku, nargs='+', help='SQL pool SKU')
         c.argument('max_size_bytes', type=int, help='Maximum size in bytes')
         c.argument('collation', type=str, help='Collation mode')
         c.argument('source_database_id', type=str, help='Source database to create from')
@@ -177,9 +177,9 @@ def load_arguments(self, _):
         c.argument('sql_pool_name', options_list=['--name', '-n', '--sql-pool-name'], type=str, help='SQL pool name',
                    id_part='child_name_1')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
-        c.argument('sku', action=AddSku, nargs='*', help='SQL pool SKU')
+        c.argument('sku', action=AddSku, nargs='+', help='SQL pool SKU')
         c.argument('max_size_bytes', type=int, help='Maximum size in bytes')
         c.argument('collation', type=str, help='Collation mode')
         c.argument('source_database_id', type=str, help='Source database to create from')
@@ -302,7 +302,7 @@ def load_arguments(self, _):
                    'required.')
         c.argument('retention_days', type=int, help='Specifies the number of days to keep in the audit logs in the '
                    'storage account.')
-        c.argument('audit_actions_and_groups', nargs='*', help='Specifies the Actions-Groups and Actions to audit.  '
+        c.argument('audit_actions_and_groups', nargs='+', help='Specifies the Actions-Groups and Actions to audit.  '
                    'The recommended set of action groups to use is the following combination - this will audit all the '
                    'queries and stored procedures executed against the database, as well as successful and failed '
                    'logins:  BATCH_COMPLETED_GROUP, SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP, '
@@ -360,7 +360,7 @@ def load_arguments(self, _):
                    'required.')
         c.argument('retention_days', type=int, help='Specifies the number of days to keep in the audit logs in the '
                    'storage account.')
-        c.argument('audit_actions_and_groups', nargs='*', help='Specifies the Actions-Groups and Actions to audit.  '
+        c.argument('audit_actions_and_groups', nargs='+', help='Specifies the Actions-Groups and Actions to audit.  '
                    'The recommended set of action groups to use is the following combination - this will audit all the '
                    'queries and stored procedures executed against the database, as well as successful and failed '
                    'logins:  BATCH_COMPLETED_GROUP, SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP, '
@@ -533,7 +533,7 @@ def load_arguments(self, _):
         c.argument('storage_account_access_key', type=str, help='Specifies the identifier key of the storage account '
                    'for vulnerability assessment scan results. If \'StorageContainerSasKey\' isn\'t specified, '
                    'storageAccountAccessKey is required.')
-        c.argument('recurring_scans', action=AddRecurringScans, nargs='*', help='The recurring scans settings')
+        c.argument('recurring_scans', action=AddRecurringScans, nargs='+', help='The recurring scans settings')
 
     with self.argument_context('synapse sql-pool-vulnerability-assessment update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -548,7 +548,7 @@ def load_arguments(self, _):
         c.argument('storage_account_access_key', type=str, help='Specifies the identifier key of the storage account '
                    'for vulnerability assessment scan results. If \'StorageContainerSasKey\' isn\'t specified, '
                    'storageAccountAccessKey is required.')
-        c.argument('recurring_scans', action=AddRecurringScans, nargs='*', help='The recurring scans settings')
+        c.argument('recurring_scans', action=AddRecurringScans, nargs='+', help='The recurring scans settings')
 
     with self.argument_context('synapse sql-pool-vulnerability-assessment delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -586,9 +586,9 @@ def load_arguments(self, _):
         c.argument('state', arg_type=get_enum_type(['New', 'Enabled', 'Disabled']), help='Specifies the state of the '
                    'policy, whether it is enabled or disabled or a policy has not been applied yet on the specific Sql '
                    'pool.')
-        c.argument('disabled_alerts', nargs='*', help='Specifies an array of alerts that are disabled. Allowed values '
+        c.argument('disabled_alerts', nargs='+', help='Specifies an array of alerts that are disabled. Allowed values '
                    'are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action')
-        c.argument('email_addresses', nargs='*', help='Specifies an array of e-mail addresses to which the alert is '
+        c.argument('email_addresses', nargs='+', help='Specifies an array of e-mail addresses to which the alert is '
                    'sent.')
         c.argument('email_account_admins', arg_type=get_three_state_flag(), help='Specifies that the alert is sent to '
                    'the account administrators.')
@@ -607,9 +607,9 @@ def load_arguments(self, _):
         c.argument('state', arg_type=get_enum_type(['New', 'Enabled', 'Disabled']), help='Specifies the state of the '
                    'policy, whether it is enabled or disabled or a policy has not been applied yet on the specific Sql '
                    'pool.')
-        c.argument('disabled_alerts', nargs='*', help='Specifies an array of alerts that are disabled. Allowed values '
+        c.argument('disabled_alerts', nargs='+', help='Specifies an array of alerts that are disabled. Allowed values '
                    'are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action')
-        c.argument('email_addresses', nargs='*', help='Specifies an array of e-mail addresses to which the alert is '
+        c.argument('email_addresses', nargs='+', help='Specifies an array of e-mail addresses to which the alert is '
                    'sent.')
         c.argument('email_account_admins', arg_type=get_three_state_flag(), help='Specifies that the alert is sent to '
                    'the account administrators.')
@@ -629,7 +629,7 @@ def load_arguments(self, _):
         c.argument('baseline_name', arg_type=get_enum_type(['master', 'default']), help='The name of the vulnerability '
                    'assessment rule baseline (default implies a baseline on a Sql pool level rule and master for '
                    'workspace level rule).')
-        c.argument('baseline_results', action=AddBaselineResults, nargs='*', help='The rule baseline result')
+        c.argument('baseline_results', action=AddBaselineResults, nargs='+', help='The rule baseline result')
 
     with self.argument_context('synapse sql-pool-vulnerability-assessment-rule-baseline update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -639,7 +639,7 @@ def load_arguments(self, _):
         c.argument('baseline_name', arg_type=get_enum_type(['master', 'default']), help='The name of the vulnerability '
                    'assessment rule baseline (default implies a baseline on a Sql pool level rule and master for '
                    'workspace level rule).', id_part='child_name_4')
-        c.argument('baseline_results', action=AddBaselineResults, nargs='*', help='The rule baseline result')
+        c.argument('baseline_results', action=AddBaselineResults, nargs='+', help='The rule baseline result')
 
     with self.argument_context('synapse sql-pool-vulnerability-assessment-rule-baseline delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -663,9 +663,9 @@ def load_arguments(self, _):
         c.argument('workspace_name', options_list=['--name', '-n', '--workspace-name'], type=str, help='The name of '
                    'the workspace')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
-        c.argument('default_data_lake_storage', action=AddDefaultDataLakeStorage, nargs='*', help='Workspace default '
+        c.argument('default_data_lake_storage', action=AddDefaultDataLakeStorage, nargs='+', help='Workspace default '
                    'data lake storage account details')
         c.argument('sql_administrator_login_password', type=str, help='SQL administrator login password')
         c.argument('managed_resource_group_name', type=str, help='Workspace managed resource group. The resource group '
@@ -674,11 +674,11 @@ def load_arguments(self, _):
                    '(Char.IsLetterOrDigit()) and \'-\', \'_\', \'(\', \')\' and\'.\'. Note that the name cannot end '
                    'with \'.\'')
         c.argument('sql_administrator_login', type=str, help='Login for workspace SQL active directory administrator')
-        c.argument('connectivity_endpoints', action=AddConnectivityEndpoints, nargs='*', help='Connectivity endpoints '
+        c.argument('connectivity_endpoints', action=AddConnectivityEndpoints, nargs='+', help='Connectivity endpoints '
                    'Expect value: KEY1=VALUE1 KEY2=VALUE2 ...')
         c.argument('managed_virtual_network', type=str, help='Setting this to \'default\' will ensure that all compute '
                    'for this workspace is in a virtual network managed on behalf of the user.')
-        c.argument('private_endpoint_connections', action=AddPrivateEndpointConnections, nargs='*', help='Private '
+        c.argument('private_endpoint_connections', action=AddPrivateEndpointConnections, nargs='+', help='Private '
                    'endpoint connections to the workspace')
         c.argument('virtual_network_profile_compute_subnet_id', type=str, help='Subnet ID used for computes in '
                    'workspace')
@@ -941,7 +941,7 @@ def load_arguments(self, _):
         c.argument('private_link_hub_name', options_list=['--name', '-n', '--private-link-hub-name'], type=str,
                    help='The name of the privateLinkHub')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
 
     with self.argument_context('synapse private-link-hub update') as c:

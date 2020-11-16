@@ -14,7 +14,7 @@ from knack.help_files import helps
 
 helps['attestation'] = """
     type: group
-    short-summary: attestation
+    short-summary: Manage operation with attestation
 """
 
 helps['attestation create-provider'] = """
@@ -81,12 +81,12 @@ helps['attestation list-operation'] = """
 
 helps['attestation attestation-provider'] = """
     type: group
-    short-summary: attestation attestation-provider
+    short-summary: Manage attestation provider with attestation
 """
 
 helps['attestation attestation-provider provider'] = """
     type: group
-    short-summary: attestation attestation-provider sub group provider
+    short-summary: Manage attestation provider with attestation sub group provider
 """
 
 helps['attestation attestation-provider provider list'] = """

@@ -181,7 +181,12 @@ export class AzNamer {
                 operationGroup.language['az'] = new Language();
                 operationGroup.language['az']['name'] = operationGroup.language['cli']['name'];
                 operationGroup.language['az']['description'] = operationGroup.language['cli']['description'];
-                operationGroupName = extensionName + " " + changeCamelToDash(operationGroup.language['az']['name'])
+                let groupName =  changeCamelToDash(operationGroup.language['az']['name']);
+                if(extensionName.endsWith(groupName)) {
+                    operationGroupName = extensionName
+                } else {
+                    operationGroupName = extensionName + " " + groupName;
+                }
                 operationGroup.language['az']['command'] = operationGroupName;
             }
 

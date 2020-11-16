@@ -14,7 +14,7 @@ from knack.help_files import helps
 
 helps['spatial-anchors-account'] = """
     type: group
-    short-summary: spatial-anchors-account
+    short-summary: Manage spatial anchor account with mixed reality
 """
 
 helps['spatial-anchors-account regenerate-key'] = """
@@ -29,7 +29,7 @@ helps['spatial-anchors-account regenerate-key'] = """
 
 helps['remote-rendering-account'] = """
     type: group
-    short-summary: remote-rendering-account
+    short-summary: Manage remote rendering account with mixed reality
 """
 
 helps['remote-rendering-account list'] = """

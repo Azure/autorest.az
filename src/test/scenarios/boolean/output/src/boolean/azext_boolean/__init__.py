@@ -20,12 +20,12 @@ class AutoRestTestServiceCommandsLoader(AzCommandsLoader):
 
     def __init__(self, cli_ctx=None):
         from azure.cli.core.commands import CliCommandType
-        from azext_boolean.generated._client_factory import cf_boolean_cl
-        boolean_custom = CliCommandType(
+        from azext_boolean.generated._client_factory import cf_bool_cl
+        bool_custom = CliCommandType(
             operations_tmpl='azext_boolean.custom#{}',
-            client_factory=cf_boolean_cl)
+            client_factory=cf_bool_cl)
         parent = super(AutoRestTestServiceCommandsLoader, self)
-        parent.__init__(cli_ctx=cli_ctx, custom_command_type=boolean_custom)
+        parent.__init__(cli_ctx=cli_ctx, custom_command_type=bool_custom)
 
     def load_command_table(self, args):
         from azext_boolean.generated.commands import load_command_table

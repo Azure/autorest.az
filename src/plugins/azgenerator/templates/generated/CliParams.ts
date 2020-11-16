@@ -263,18 +263,17 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     } else if (parameterName == "location") {
                         argument += ", arg_type=get_location_type(self.cli_ctx)";
                         if (hasResourceGroupInOperation) {
-                            argument += ", validator=get_default_location_from_resource_group";
+                            argument += ", required=False, validator=get_default_location_from_resource_group";
                             hasLocationValidator = true;
                         }
                         hasLocation = true;
                         needSkip = true;
                     } else if (model.MethodParameter_IsSimpleArray) {
-                        if (model.MethodParameter['required'] === true) {
-                            argument += ", nargs='+'";
-                        } else {
+                        if (model.MethodParameter.language['cli']['required'] === false) {
                             argument += ", nargs='*'";
+                        } else {
+                            argument += ", nargs='+'";
                         }
-
                     } else if (model.MethodParameter_IsList && !model.MethodParameter_IsListOfSimple) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             baseParam = model.MethodParameter;
@@ -290,10 +289,10 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         if (actions.indexOf(actionName) < 0) {
                             actions.push(actionName);
                         }
-                        if (model.MethodParameter['required'] === true) {
-                            argument += ", nargs='+'";
-                        } else {
+                        if (model.MethodParameter.language['cli']['required'] === false) {
                             argument += ", nargs='*'";
+                        } else {
+                            argument += ", nargs='+'";
                         }
                     }
 

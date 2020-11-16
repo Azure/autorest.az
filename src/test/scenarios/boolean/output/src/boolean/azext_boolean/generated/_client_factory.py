@@ -9,7 +9,7 @@
 # --------------------------------------------------------------------------
 
 
-def cf_boolean_cl(cli_ctx, *_):
+def cf_bool_cl(cli_ctx, *_):
     from azure.cli.core.commands.client_factory import get_mgmt_service_client
     from azext_boolean.vendored_sdks.boolean import AutoRestTestService
     from azure.core.pipeline.policies import SansIOHTTPPolicy
@@ -21,4 +21,4 @@ def cf_boolean_cl(cli_ctx, *_):
 
 
 def cf_bool(cli_ctx, *_):
-    return cf_boolean_cl(cli_ctx).bool
+    return cf_bool_cl(cli_ctx).bool

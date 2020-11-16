@@ -49,21 +49,21 @@ def load_arguments(self, _):
         c.argument('cluster_name', options_list=['--name', '-n', '--cluster-name'], type=str, help='The name of the '
                    'Kusto cluster.')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('sku', action=AddSku, nargs='+', help='The SKU of the cluster.')
-        c.argument('zones', nargs='*', help='The availability zones of the cluster.')
-        c.argument('trusted_external_tenants', action=AddTrustedExternalTenants, nargs='*', help='The cluster\'s '
+        c.argument('zones', nargs='+', help='The availability zones of the cluster.')
+        c.argument('trusted_external_tenants', action=AddTrustedExternalTenants, nargs='+', help='The cluster\'s '
                    'external tenants.')
-        c.argument('optimized_autoscale', action=AddOptimizedAutoscale, nargs='*', help='Optimized auto scale '
+        c.argument('optimized_autoscale', action=AddOptimizedAutoscale, nargs='+', help='Optimized auto scale '
                    'definition.')
         c.argument('enable_disk_encryption', arg_type=get_three_state_flag(), help='A boolean value that indicates if '
                    'the cluster\'s disks are encrypted.')
         c.argument('enable_streaming_ingest', arg_type=get_three_state_flag(), help='A boolean value that indicates if '
                    'the streaming ingest is enabled.')
-        c.argument('virtual_network_configuration', action=AddVirtualNetworkConfiguration, nargs='*', help='Virtual '
+        c.argument('virtual_network_configuration', action=AddVirtualNetworkConfiguration, nargs='+', help='Virtual '
                    'network definition.')
-        c.argument('key_vault_properties', action=AddKeyVaultProperties, nargs='*', help='KeyVault properties for the '
+        c.argument('key_vault_properties', action=AddKeyVaultProperties, nargs='+', help='KeyVault properties for the '
                    'cluster encryption.')
         c.argument('enable_purge', arg_type=get_three_state_flag(), help='A boolean value that indicates if the purge '
                    'operations are enabled.')
@@ -81,20 +81,20 @@ def load_arguments(self, _):
         c.argument('cluster_name', options_list=['--name', '-n', '--cluster-name'], type=str, help='The name of the '
                    'Kusto cluster.', id_part='name')
         c.argument('tags', tags_type)
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
-        c.argument('sku', action=AddSku, nargs='*', help='The SKU of the cluster.')
-        c.argument('trusted_external_tenants', action=AddTrustedExternalTenants, nargs='*', help='The cluster\'s '
+        c.argument('sku', action=AddSku, nargs='+', help='The SKU of the cluster.')
+        c.argument('trusted_external_tenants', action=AddTrustedExternalTenants, nargs='+', help='The cluster\'s '
                    'external tenants.')
-        c.argument('optimized_autoscale', action=AddOptimizedAutoscale, nargs='*', help='Optimized auto scale '
+        c.argument('optimized_autoscale', action=AddOptimizedAutoscale, nargs='+', help='Optimized auto scale '
                    'definition.')
         c.argument('enable_disk_encryption', arg_type=get_three_state_flag(), help='A boolean value that indicates if '
                    'the cluster\'s disks are encrypted.')
         c.argument('enable_streaming_ingest', arg_type=get_three_state_flag(), help='A boolean value that indicates if '
                    'the streaming ingest is enabled.')
-        c.argument('virtual_network_configuration', action=AddVirtualNetworkConfiguration, nargs='*', help='Virtual '
+        c.argument('virtual_network_configuration', action=AddVirtualNetworkConfiguration, nargs='+', help='Virtual '
                    'network definition.')
-        c.argument('key_vault_properties', action=AddKeyVaultProperties, nargs='*', help='KeyVault properties for the '
+        c.argument('key_vault_properties', action=AddKeyVaultProperties, nargs='+', help='KeyVault properties for the '
                    'cluster encryption.')
         c.argument('enable_purge', arg_type=get_three_state_flag(), help='A boolean value that indicates if the purge '
                    'operations are enabled.')
@@ -116,7 +116,7 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('cluster_name', options_list=['--name', '-n', '--cluster-name'], type=str, help='The name of the '
                    'Kusto cluster.', id_part='name', is_experimental=True)
-        c.argument('value', action=AddClustersValue, nargs='*', help='The list of language extensions.')
+        c.argument('value', action=AddClustersValue, nargs='+', help='The list of language extensions.')
 
     with self.argument_context('kusto cluster detach-follower-database') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -151,7 +151,7 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('cluster_name', options_list=['--name', '-n', '--cluster-name'], type=str, help='The name of the '
                    'Kusto cluster.', id_part='name')
-        c.argument('value', action=AddClustersValue, nargs='*', help='The list of language extensions.')
+        c.argument('value', action=AddClustersValue, nargs='+', help='The list of language extensions.')
 
     with self.argument_context('kusto cluster start') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -227,9 +227,9 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('cluster_name', type=str, help='The name of the Kusto cluster.')
         c.argument('database_name', type=str, help='The name of the database in the Kusto cluster.')
-        c.argument('read_write_database', action=AddReadWriteDatabase, nargs='*', help='Class representing a read '
+        c.argument('read_write_database', action=AddReadWriteDatabase, nargs='+', help='Class representing a read '
                    'write database.', arg_group='Parameters')
-        c.argument('read_only_following_database', action=AddReadOnlyFollowingDatabase, nargs='*', help='Class '
+        c.argument('read_only_following_database', action=AddReadOnlyFollowingDatabase, nargs='+', help='Class '
                    'representing a read only following database.', arg_group='Parameters')
 
     with self.argument_context('kusto database update') as c:
@@ -237,9 +237,9 @@ def load_arguments(self, _):
         c.argument('cluster_name', type=str, help='The name of the Kusto cluster.', id_part='name')
         c.argument('database_name', type=str, help='The name of the database in the Kusto cluster.',
                    id_part='child_name_1')
-        c.argument('read_write_database', action=AddReadWriteDatabase, nargs='*', help='Class representing a read '
+        c.argument('read_write_database', action=AddReadWriteDatabase, nargs='+', help='Class representing a read '
                    'write database.', arg_group='Parameters')
-        c.argument('read_only_following_database', action=AddReadOnlyFollowingDatabase, nargs='*', help='Class '
+        c.argument('read_only_following_database', action=AddReadOnlyFollowingDatabase, nargs='+', help='Class '
                    'representing a read only following database.', arg_group='Parameters')
 
     with self.argument_context('kusto database delete') as c:
@@ -253,7 +253,7 @@ def load_arguments(self, _):
         c.argument('cluster_name', type=str, help='The name of the Kusto cluster.', id_part='name')
         c.argument('database_name', type=str, help='The name of the database in the Kusto cluster.',
                    id_part='child_name_1')
-        c.argument('value', action=AddDatabasesValue, nargs='*', help='The list of Kusto database principals.')
+        c.argument('value', action=AddDatabasesValue, nargs='+', help='The list of Kusto database principals.')
 
     with self.argument_context('kusto database list-principal') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -265,7 +265,7 @@ def load_arguments(self, _):
         c.argument('cluster_name', type=str, help='The name of the Kusto cluster.', id_part='name')
         c.argument('database_name', type=str, help='The name of the database in the Kusto cluster.',
                    id_part='child_name_1')
-        c.argument('value', action=AddDatabasesValue, nargs='*', help='The list of Kusto database principals.')
+        c.argument('value', action=AddDatabasesValue, nargs='+', help='The list of Kusto database principals.')
 
     with self.argument_context('kusto database wait') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -345,7 +345,7 @@ def load_arguments(self, _):
         c.argument('attached_database_configuration_name', options_list=['--name', '-n',
                                                                          '--attached-database-configuration-name'],
                    type=str, help='The name of the attached database configuration.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('database_name', type=str, help='The name of the database which you would like to attach, use * if '
                    'you want to follow all current and future databases.')
@@ -360,7 +360,7 @@ def load_arguments(self, _):
         c.argument('attached_database_configuration_name', options_list=['--name', '-n',
                                                                          '--attached-database-configuration-name'],
                    type=str, help='The name of the attached database configuration.', id_part='child_name_1')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('database_name', type=str, help='The name of the database which you would like to attach, use * if '
                    'you want to follow all current and future databases.')
@@ -402,7 +402,7 @@ def load_arguments(self, _):
         c.argument('database_name', type=str, help='The name of the database in the Kusto cluster.')
         c.argument('data_connection_name', options_list=['--name', '-n', '--data-connection-name'], type=str,
                    help='The name of the data connection.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('storage_account_resource_id', type=str, help='The resource ID of the storage account where the '
                    'data resides.')
@@ -429,7 +429,7 @@ def load_arguments(self, _):
         c.argument('database_name', type=str, help='The name of the database in the Kusto cluster.')
         c.argument('data_connection_name', options_list=['--name', '-n', '--data-connection-name'], type=str,
                    help='The name of the data connection.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('event_hub_resource_id', type=str, help='The resource ID of the event hub to be used to create a '
                    'data connection.')
@@ -442,7 +442,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the event hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the event hub')
         c.argument('compression', arg_type=get_enum_type(['None', 'GZip']), help='The event hub messages compression '
                    'type')
 
@@ -452,7 +452,7 @@ def load_arguments(self, _):
         c.argument('database_name', type=str, help='The name of the database in the Kusto cluster.')
         c.argument('data_connection_name', options_list=['--name', '-n', '--data-connection-name'], type=str,
                    help='The name of the data connection.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('iot_hub_resource_id', type=str, help='The resource ID of the Iot hub to be used to create a data '
                    'connection.')
@@ -465,7 +465,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the iot hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the iot hub')
         c.argument('shared_access_policy_name', type=str, help='The name of the share access policy')
 
     with self.argument_context('kusto data-connection event-grid update') as c:
@@ -475,7 +475,7 @@ def load_arguments(self, _):
                    id_part='child_name_1')
         c.argument('data_connection_name', options_list=['--name', '-n', '--data-connection-name'], type=str,
                    help='The name of the data connection.', id_part='child_name_2')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('storage_account_resource_id', type=str, help='The resource ID of the storage account where the '
                    'data resides.')
@@ -503,7 +503,7 @@ def load_arguments(self, _):
                    id_part='child_name_1')
         c.argument('data_connection_name', options_list=['--name', '-n', '--data-connection-name'], type=str,
                    help='The name of the data connection.', id_part='child_name_2')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('event_hub_resource_id', type=str, help='The resource ID of the event hub to be used to create a '
                    'data connection.')
@@ -516,7 +516,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the event hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the event hub')
         c.argument('compression', arg_type=get_enum_type(['None', 'GZip']), help='The event hub messages compression '
                    'type')
 
@@ -527,7 +527,7 @@ def load_arguments(self, _):
                    id_part='child_name_1')
         c.argument('data_connection_name', options_list=['--name', '-n', '--data-connection-name'], type=str,
                    help='The name of the data connection.', id_part='child_name_2')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('iot_hub_resource_id', type=str, help='The resource ID of the Iot hub to be used to create a data '
                    'connection.')
@@ -540,7 +540,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the iot hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the iot hub')
         c.argument('shared_access_policy_name', type=str, help='The name of the share access policy')
 
     with self.argument_context('kusto data-connection delete') as c:
@@ -558,7 +558,7 @@ def load_arguments(self, _):
                    id_part='child_name_1')
         c.argument('data_connection_name', options_list=['--name', '-n', '--data-connection-name'], type=str,
                    help='The name of the data connection.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('storage_account_resource_id', type=str, help='The resource ID of the storage account where the '
                    'data resides.')
@@ -586,7 +586,7 @@ def load_arguments(self, _):
                    id_part='child_name_1')
         c.argument('data_connection_name', options_list=['--name', '-n', '--data-connection-name'], type=str,
                    help='The name of the data connection.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('event_hub_resource_id', type=str, help='The resource ID of the event hub to be used to create a '
                    'data connection.')
@@ -599,7 +599,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the event hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the event hub')
         c.argument('compression', arg_type=get_enum_type(['None', 'GZip']), help='The event hub messages compression '
                    'type')
 
@@ -610,7 +610,7 @@ def load_arguments(self, _):
                    id_part='child_name_1')
         c.argument('data_connection_name', options_list=['--name', '-n', '--data-connection-name'], type=str,
                    help='The name of the data connection.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('iot_hub_resource_id', type=str, help='The resource ID of the Iot hub to be used to create a data '
                    'connection.')
@@ -623,7 +623,7 @@ def load_arguments(self, _):
                                                           'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
                                                           'APACHEAVRO', 'W3CLOGFILE']), help='The data format of the '
                    'message. Optionally the data format can be added to each message.')
-        c.argument('event_system_properties', nargs='*', help='System properties of the iot hub')
+        c.argument('event_system_properties', nargs='+', help='System properties of the iot hub')
         c.argument('shared_access_policy_name', type=str, help='The name of the share access policy')
 
     with self.argument_context('kusto data-connection wait') as c:

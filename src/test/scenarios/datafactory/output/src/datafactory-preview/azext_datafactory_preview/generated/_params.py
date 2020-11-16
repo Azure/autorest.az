@@ -46,17 +46,17 @@ def load_arguments(self, _):
                    configured_default='factory')
         c.argument('if_match', type=str, help='ETag of the factory entity. Should only be specified for update, for '
                    'which it should match existing entity or can be * for unconditional update.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx),
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
         c.argument('test_inherit', type=validate_file_or_dict, help='Test Job Base Expected value: '
                    'json-string/@json-file.')
-        c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='*', help='Factory\'s VSTS '
+        c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS '
                    'repo information.', arg_group='RepoConfiguration')
-        c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='*', help='Factory\'s '
+        c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s '
                    'GitHub repo information.', arg_group='RepoConfiguration')
-        c.argument('fake_identity', action=AddFakeIdentity, nargs='*', help='This is only for az test.')
-        c.argument('zones', nargs='*', help='This is only for az test.')
+        c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
+        c.argument('zones', nargs='+', help='This is only for az test.')
 
     with self.argument_context('datafactory update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -72,9 +72,9 @@ def load_arguments(self, _):
     with self.argument_context('datafactory configure-factory-repo') as c:
         c.argument('location_id', type=str, help='The location identifier.', id_part='name')
         c.argument('factory_resource_id', type=str, help='The factory resource id.')
-        c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='*', help='Factory\'s VSTS '
+        c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS '
                    'repo information.', arg_group='RepoConfiguration')
-        c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='*', help='Factory\'s '
+        c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s '
                    'GitHub repo information.', arg_group='RepoConfiguration')
 
     with self.argument_context('datafactory get-data-plane-access') as c:
@@ -219,12 +219,12 @@ def load_arguments(self, _):
         c.argument('if_match', type=str, help='ETag of the integration runtime entity. Should only be specified for '
                    'update, for which it should match existing entity or can be * for unconditional update.')
         c.argument('description', type=str, help='Integration runtime description.')
-        c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='*', help='Factory\'s VSTS '
+        c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS '
                    'repo information.', arg_group='RepoConfiguration')
-        c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='*', help='Factory\'s '
+        c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s '
                    'GitHub repo information.', arg_group='RepoConfiguration')
-        c.argument('fake_identity', action=AddFakeIdentity, nargs='*', help='This is only for az test.')
-        c.argument('zones', nargs='*', help='This is only for az test.')
+        c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
+        c.argument('zones', nargs='+', help='This is only for az test.')
         c.argument('type_properties_compute_properties', type=validate_file_or_dict, help='The compute resource for '
                    'managed integration runtime. Expected value: json-string/@json-file.')
         c.argument('type_properties_ssis_properties', type=validate_file_or_dict, help='SSIS properties for managed '

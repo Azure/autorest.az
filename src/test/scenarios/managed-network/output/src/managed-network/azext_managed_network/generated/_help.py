@@ -14,7 +14,7 @@ from knack.help_files import helps
 
 helps['managed-network mn'] = """
     type: group
-    short-summary: managed-network mn
+    short-summary: Manage mn with managed network
 """
 
 helps['managed-network mn list'] = """
@@ -81,7 +81,7 @@ and Managed Network name."
 
 helps['managed-network mn scope-assignment'] = """
     type: group
-    short-summary: managed-network mn scope-assignment
+    short-summary: Manage scope assignment with managed network
 """
 
 helps['managed-network mn scope-assignment list'] = """
@@ -131,7 +131,7 @@ helps['managed-network mn scope-assignment delete'] = """
 
 helps['managed-network mn group'] = """
     type: group
-    short-summary: managed-network mn group
+    short-summary: Manage managed network group with managed network
 """
 
 helps['managed-network mn group list'] = """
@@ -255,7 +255,7 @@ helps['managed-network mn group wait'] = """
 
 helps['managed-network managed-network-peering-policy'] = """
     type: group
-    short-summary: managed-network managed-network-peering-policy
+    short-summary: Manage managed network peering policy with managed network
 """
 
 helps['managed-network managed-network-peering-policy list'] = """
@@ -282,7 +282,7 @@ specified by the  resource group, Managed Network name, and peering policy name.
 
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology'] = """
     type: group
-    short-summary: managed-network managed-network-peering-policy sub group hub-and-spoke-topology
+    short-summary: Manage managed network peering policy with managed network sub group hub-and-spoke-topology
 """
 
 helps['managed-network managed-network-peering-policy hub-and-spoke-topology create'] = """
@@ -323,7 +323,7 @@ ps/myManagedNetworkGroup" --resource-group "myResourceGroup"
 
 helps['managed-network managed-network-peering-policy mesh-topology'] = """
     type: group
-    short-summary: managed-network managed-network-peering-policy sub group mesh-topology
+    short-summary: Manage managed network peering policy with managed network sub group mesh-topology
 """
 
 helps['managed-network managed-network-peering-policy mesh-topology create'] = """

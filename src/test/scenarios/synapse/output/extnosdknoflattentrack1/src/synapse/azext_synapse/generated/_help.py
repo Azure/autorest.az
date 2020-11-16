@@ -15,7 +15,7 @@ from knack.help_files import helps
 
 helps['synapse big-data-pool'] = """
     type: group
-    short-summary: synapse big-data-pool
+    short-summary: Manage big data pool with synapse
 """
 
 helps['synapse big-data-pool list'] = """
@@ -110,7 +110,7 @@ helps['synapse big-data-pool wait'] = """
 
 helps['synapse operation'] = """
     type: group
-    short-summary: synapse operation
+    short-summary: Manage operation with synapse
 """
 
 helps['synapse operation get-azure-async-header-result'] = """
@@ -135,7 +135,7 @@ helps['synapse operation get-location-header-result'] = """
 
 helps['synapse ip-firewall-rule'] = """
     type: group
-    short-summary: synapse ip-firewall-rule
+    short-summary: Manage ip firewall rule with synapse
 """
 
 helps['synapse ip-firewall-rule list'] = """
@@ -215,7 +215,7 @@ helps['synapse ip-firewall-rule wait'] = """
 
 helps['synapse sql-pool'] = """
     type: group
-    short-summary: synapse sql-pool
+    short-summary: Manage sql pool with synapse
 """
 
 helps['synapse sql-pool list'] = """
@@ -337,7 +337,7 @@ helps['synapse sql-pool wait'] = """
 
 helps['synapse sql-pool-metadata-sync-config'] = """
     type: group
-    short-summary: synapse sql-pool-metadata-sync-config
+    short-summary: Manage sql pool metadata sync config with synapse
 """
 
 helps['synapse sql-pool-metadata-sync-config show'] = """
@@ -362,7 +362,7 @@ helps['synapse sql-pool-metadata-sync-config create'] = """
 
 helps['synapse sql-pool-operation-result'] = """
     type: group
-    short-summary: synapse sql-pool-operation-result
+    short-summary: Manage sql pool operation result with synapse
 """
 
 helps['synapse sql-pool-operation-result get-location-header-result'] = """
@@ -378,7 +378,7 @@ helps['synapse sql-pool-operation-result get-location-header-result'] = """
 
 helps['synapse sql-pool-geo-backup-policy'] = """
     type: group
-    short-summary: synapse sql-pool-geo-backup-policy
+    short-summary: Manage sql pool geo backup policy with synapse
 """
 
 helps['synapse sql-pool-geo-backup-policy show'] = """
@@ -393,7 +393,7 @@ helps['synapse sql-pool-geo-backup-policy show'] = """
 
 helps['synapse sql-pool-data-warehouse-user-activity'] = """
     type: group
-    short-summary: synapse sql-pool-data-warehouse-user-activity
+    short-summary: Manage sql pool data warehouse user activity with synapse
 """
 
 helps['synapse sql-pool-data-warehouse-user-activity show'] = """
@@ -408,7 +408,7 @@ helps['synapse sql-pool-data-warehouse-user-activity show'] = """
 
 helps['synapse sql-pool-restore-point'] = """
     type: group
-    short-summary: synapse sql-pool-restore-point
+    short-summary: Manage sql pool restore point with synapse
 """
 
 helps['synapse sql-pool-restore-point list'] = """
@@ -433,7 +433,7 @@ helps['synapse sql-pool-restore-point create'] = """
 
 helps['synapse sql-pool-replication-link'] = """
     type: group
-    short-summary: synapse sql-pool-replication-link
+    short-summary: Manage sql pool replication link with synapse
 """
 
 helps['synapse sql-pool-replication-link list'] = """
@@ -448,7 +448,7 @@ helps['synapse sql-pool-replication-link list'] = """
 
 helps['synapse sql-pool-transparent-data-encryption'] = """
     type: group
-    short-summary: synapse sql-pool-transparent-data-encryption
+    short-summary: Manage sql pool transparent data encryption with synapse
 """
 
 helps['synapse sql-pool-transparent-data-encryption show'] = """
@@ -478,7 +478,7 @@ helps['synapse sql-pool-transparent-data-encryption update'] = """
 
 helps['synapse sql-pool-blob-auditing-policy'] = """
     type: group
-    short-summary: synapse sql-pool-blob-auditing-policy
+    short-summary: Manage sql pool blob auditing policy with synapse
 """
 
 helps['synapse sql-pool-blob-auditing-policy show'] = """
@@ -519,7 +519,7 @@ helps['synapse sql-pool-blob-auditing-policy update'] = """
 
 helps['synapse sql-pool-operation'] = """
     type: group
-    short-summary: synapse sql-pool-operation
+    short-summary: Manage sql pool operation with synapse
 """
 
 helps['synapse sql-pool-operation list'] = """
@@ -534,7 +534,7 @@ helps['synapse sql-pool-operation list'] = """
 
 helps['synapse sql-pool-usage'] = """
     type: group
-    short-summary: synapse sql-pool-usage
+    short-summary: Manage sql pool usage with synapse
 """
 
 helps['synapse sql-pool-usage list'] = """
@@ -549,7 +549,7 @@ helps['synapse sql-pool-usage list'] = """
 
 helps['synapse sql-pool-sensitivity-label'] = """
     type: group
-    short-summary: synapse sql-pool-sensitivity-label
+    short-summary: Manage sql pool sensitivity label with synapse
 """
 
 helps['synapse sql-pool-sensitivity-label create'] = """
@@ -622,7 +622,7 @@ helps['synapse sql-pool-sensitivity-label list-recommended'] = """
 
 helps['synapse sql-pool-schema'] = """
     type: group
-    short-summary: synapse sql-pool-schema
+    short-summary: Manage sql pool schema with synapse
 """
 
 helps['synapse sql-pool-schema list'] = """
@@ -637,7 +637,7 @@ helps['synapse sql-pool-schema list'] = """
 
 helps['synapse sql-pool-table'] = """
     type: group
-    short-summary: synapse sql-pool-table
+    short-summary: Manage sql pool table with synapse
 """
 
 helps['synapse sql-pool-table list'] = """
@@ -652,7 +652,7 @@ helps['synapse sql-pool-table list'] = """
 
 helps['synapse sql-pool-table-column'] = """
     type: group
-    short-summary: synapse sql-pool-table-column
+    short-summary: Manage sql pool table column with synapse
 """
 
 helps['synapse sql-pool-table-column list'] = """
@@ -667,7 +667,7 @@ helps['synapse sql-pool-table-column list'] = """
 
 helps['synapse sql-pool-connection-policy'] = """
     type: group
-    short-summary: synapse sql-pool-connection-policy
+    short-summary: Manage sql pool connection policy with synapse
 """
 
 helps['synapse sql-pool-connection-policy show'] = """
@@ -682,7 +682,7 @@ helps['synapse sql-pool-connection-policy show'] = """
 
 helps['synapse sql-pool-vulnerability-assessment'] = """
     type: group
-    short-summary: synapse sql-pool-vulnerability-assessment
+    short-summary: Manage sql pool vulnerability assessment with synapse
 """
 
 helps['synapse sql-pool-vulnerability-assessment list'] = """
@@ -768,7 +768,7 @@ helps['synapse sql-pool-vulnerability-assessment delete'] = """
 
 helps['synapse sql-pool-vulnerability-assessment-scan'] = """
     type: group
-    short-summary: synapse sql-pool-vulnerability-assessment-scan
+    short-summary: Manage sql pool vulnerability assessment scan with synapse
 """
 
 helps['synapse sql-pool-vulnerability-assessment-scan list'] = """
@@ -805,7 +805,7 @@ helps['synapse sql-pool-vulnerability-assessment-scan initiate-scan'] = """
 
 helps['synapse sql-pool-security-alert-policy'] = """
     type: group
-    short-summary: synapse sql-pool-security-alert-policy
+    short-summary: Manage sql pool security alert policy with synapse
 """
 
 helps['synapse sql-pool-security-alert-policy show'] = """
@@ -842,7 +842,7 @@ helps['synapse sql-pool-security-alert-policy update'] = """
 
 helps['synapse sql-pool-vulnerability-assessment-rule-baseline'] = """
     type: group
-    short-summary: synapse sql-pool-vulnerability-assessment-rule-baseline
+    short-summary: Manage sql pool vulnerability assessment rule baseline with synapse
 """
 
 helps['synapse sql-pool-vulnerability-assessment-rule-baseline create'] = """
@@ -893,7 +893,7 @@ helps['synapse sql-pool-vulnerability-assessment-rule-baseline delete'] = """
 
 helps['synapse workspace'] = """
     type: group
-    short-summary: synapse workspace
+    short-summary: Manage workspace with synapse
 """
 
 helps['synapse workspace list'] = """
@@ -984,7 +984,7 @@ helps['synapse workspace wait'] = """
 
 helps['synapse workspace-aad-admin'] = """
     type: group
-    short-summary: synapse workspace-aad-admin
+    short-summary: Manage workspace aad admin with synapse
 """
 
 helps['synapse workspace-aad-admin show'] = """
@@ -1041,7 +1041,7 @@ helps['synapse workspace-aad-admin wait'] = """
 
 helps['synapse workspace-managed-identity-sql-control-setting'] = """
     type: group
-    short-summary: synapse workspace-managed-identity-sql-control-setting
+    short-summary: Manage workspace managed identity sql control setting with synapse
 """
 
 helps['synapse workspace-managed-identity-sql-control-setting show'] = """
@@ -1071,7 +1071,7 @@ helps['synapse workspace-managed-identity-sql-control-setting update'] = """
 
 helps['synapse integration-runtime'] = """
     type: group
-    short-summary: synapse integration-runtime
+    short-summary: Manage integration runtime with synapse
 """
 
 helps['synapse integration-runtime list'] = """
@@ -1171,7 +1171,7 @@ helps['synapse integration-runtime wait'] = """
 
 helps['synapse integration-runtime-node-ip-address'] = """
     type: group
-    short-summary: synapse integration-runtime-node-ip-address
+    short-summary: Manage integration runtime node ip address with synapse
 """
 
 helps['synapse integration-runtime-node-ip-address get'] = """
@@ -1187,7 +1187,7 @@ helps['synapse integration-runtime-node-ip-address get'] = """
 
 helps['synapse integration-runtime-object-metadata'] = """
     type: group
-    short-summary: synapse integration-runtime-object-metadata
+    short-summary: Manage integration runtime object metadata with synapse
 """
 
 helps['synapse integration-runtime-object-metadata get'] = """
@@ -1213,7 +1213,7 @@ helps['synapse integration-runtime-object-metadata refresh'] = """
 
 helps['synapse integration-runtime-node'] = """
     type: group
-    short-summary: synapse integration-runtime-node
+    short-summary: Manage integration runtime node with synapse
 """
 
 helps['synapse integration-runtime-node show'] = """
@@ -1249,7 +1249,7 @@ helps['synapse integration-runtime-node delete'] = """
 
 helps['synapse integration-runtime-credentials'] = """
     type: group
-    short-summary: synapse integration-runtime-credentials
+    short-summary: Manage integration runtime credentials with synapse
 """
 
 helps['synapse integration-runtime-credentials sync'] = """
@@ -1267,7 +1267,7 @@ runtime node than using this API directly."
 
 helps['synapse integration-runtime-connection-info'] = """
     type: group
-    short-summary: synapse integration-runtime-connection-info
+    short-summary: Manage integration runtime connection info with synapse
 """
 
 helps['synapse integration-runtime-connection-info get'] = """
@@ -1282,7 +1282,7 @@ helps['synapse integration-runtime-connection-info get'] = """
 
 helps['synapse integration-runtime-auth-key'] = """
     type: group
-    short-summary: synapse integration-runtime-auth-key
+    short-summary: Manage integration runtime auth key with synapse
 """
 
 helps['synapse integration-runtime-auth-key list'] = """
@@ -1308,7 +1308,7 @@ helps['synapse integration-runtime-auth-key regenerate'] = """
 
 helps['synapse integration-runtime-monitoring-data'] = """
     type: group
-    short-summary: synapse integration-runtime-monitoring-data
+    short-summary: Manage integration runtime monitoring data with synapse
 """
 
 helps['synapse integration-runtime-monitoring-data get'] = """
@@ -1323,7 +1323,7 @@ helps['synapse integration-runtime-monitoring-data get'] = """
 
 helps['synapse integration-runtime-status'] = """
     type: group
-    short-summary: synapse integration-runtime-status
+    short-summary: Manage integration runtime status with synapse
 """
 
 helps['synapse integration-runtime-status get'] = """
@@ -1338,7 +1338,7 @@ helps['synapse integration-runtime-status get'] = """
 
 helps['synapse private-link-resource'] = """
     type: group
-    short-summary: synapse private-link-resource
+    short-summary: Manage private link resource with synapse
 """
 
 helps['synapse private-link-resource list'] = """
@@ -1363,7 +1363,7 @@ helps['synapse private-link-resource show'] = """
 
 helps['synapse private-endpoint-connection'] = """
     type: group
-    short-summary: synapse private-endpoint-connection
+    short-summary: Manage private endpoint connection with synapse
 """
 
 helps['synapse private-endpoint-connection list'] = """
@@ -1425,7 +1425,7 @@ deleted.
 
 helps['synapse private-link-hub'] = """
     type: group
-    short-summary: synapse private-link-hub
+    short-summary: Manage private link hub with synapse
 """
 
 helps['synapse private-link-hub list'] = """
