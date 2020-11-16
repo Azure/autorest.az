@@ -14,7 +14,7 @@ from knack.help_files import helps
 
 helps['datafactory'] = """
     type: group
-    short-summary: datafactory
+    short-summary: Manage factory with datafactory
 """
 
 helps['datafactory list'] = """
@@ -165,7 +165,7 @@ helps['datafactory get-git-hub-access-token'] = """
 
 helps['datafactory trigger'] = """
     type: group
-    short-summary: datafactory trigger
+    short-summary: Manage trigger with datafactory
 """
 
 helps['datafactory trigger list'] = """
@@ -292,7 +292,7 @@ helps['datafactory trigger wait'] = """
 
 helps['datafactory integration-runtime'] = """
     type: group
-    short-summary: datafactory integration-runtime
+    short-summary: Manage integration runtime with datafactory
 """
 
 helps['datafactory integration-runtime list'] = """
@@ -316,7 +316,7 @@ helps['datafactory integration-runtime show'] = """
 
 helps['datafactory integration-runtime linked-integration-runtime'] = """
     type: group
-    short-summary: datafactory integration-runtime sub group linked-integration-runtime
+    short-summary: Manage integration runtime with datafactory sub group linked-integration-runtime
 """
 
 helps['datafactory integration-runtime linked-integration-runtime create'] = """
@@ -334,7 +334,7 @@ helps['datafactory integration-runtime linked-integration-runtime create'] = """
 
 helps['datafactory integration-runtime managed'] = """
     type: group
-    short-summary: datafactory integration-runtime sub group managed
+    short-summary: Manage integration runtime with datafactory sub group managed
 """
 
 helps['datafactory integration-runtime managed create'] = """
@@ -379,7 +379,7 @@ collaboration-branch=XX root-folder=XX last-commit-id=XX
 
 helps['datafactory integration-runtime self-hosted'] = """
     type: group
-    short-summary: datafactory integration-runtime sub group self-hosted
+    short-summary: Manage integration runtime with datafactory sub group self-hosted
 """
 
 helps['datafactory integration-runtime self-hosted create'] = """

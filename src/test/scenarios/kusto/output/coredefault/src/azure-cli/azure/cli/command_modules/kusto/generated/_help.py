@@ -14,7 +14,7 @@ from knack.help_files import helps
 
 helps['kusto cluster'] = """
     type: group
-    short-summary: kusto cluster
+    short-summary: Manage cluster with kusto
 """
 
 helps['kusto cluster list'] = """
@@ -279,7 +279,7 @@ helps['kusto cluster wait'] = """
 
 helps['kusto cluster-principal-assignment'] = """
     type: group
-    short-summary: kusto cluster-principal-assignment
+    short-summary: Manage cluster principal assignment with kusto
 """
 
 helps['kusto cluster-principal-assignment list'] = """
@@ -352,7 +352,7 @@ deleted.
 
 helps['kusto database'] = """
     type: group
-    short-summary: kusto database
+    short-summary: Manage database with kusto
 """
 
 helps['kusto database list'] = """
@@ -526,7 +526,7 @@ helps['kusto database wait'] = """
 
 helps['kusto database-principal-assignment'] = """
     type: group
-    short-summary: kusto database-principal-assignment
+    short-summary: Manage database principal assignment with kusto
 """
 
 helps['kusto database-principal-assignment list'] = """
@@ -600,7 +600,7 @@ deleted.
 
 helps['kusto attached-database-configuration'] = """
     type: group
-    short-summary: kusto attached-database-configuration
+    short-summary: Manage attached database configuration with kusto
 """
 
 helps['kusto attached-database-configuration list'] = """
@@ -674,7 +674,7 @@ deleted.
 
 helps['kusto data-connection'] = """
     type: group
-    short-summary: kusto data-connection
+    short-summary: Manage data connection with kusto
 """
 
 helps['kusto data-connection list'] = """

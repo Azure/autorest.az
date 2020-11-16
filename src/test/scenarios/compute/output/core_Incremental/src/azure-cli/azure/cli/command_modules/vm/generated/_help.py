@@ -14,7 +14,7 @@ from knack.help_files import helps
 
 helps['vm virtual-machine'] = """
     type: group
-    short-summary: vm virtual-machine
+    short-summary: Manage virtual machine with vm
 """
 
 helps['vm virtual-machine assess-patch'] = """

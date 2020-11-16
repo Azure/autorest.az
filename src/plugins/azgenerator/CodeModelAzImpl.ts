@@ -605,7 +605,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get CommandGroup_Help(): string {
-        return this.CommandGroup.language['az'].command;
+        return "Manage " + changeCamelToDash(this.CommandGroup.language['az']?.['name'])?.replace(/-/g, " ") + " with " + this.Extension_Name.replace(/-/g, " ");
     }
 
     public get CommandGroup_Key(): string {
