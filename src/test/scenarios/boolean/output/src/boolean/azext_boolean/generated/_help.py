@@ -14,7 +14,7 @@ from knack.help_files import helps
 
 helps['test-server bool'] = """
     type: group
-    short-summary: Manage bool with bool
+    short-summary: Manage bool
 """
 
 helps['test-server bool get-false'] = """
