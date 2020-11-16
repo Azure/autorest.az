@@ -20,7 +20,10 @@
         ],
         "subnets": [
           {
-            "id": "/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA"
+            "id": "/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA"
+          },
+          {
+            "id": "/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB/subnets/subnetB"
           }
         ]
       }
