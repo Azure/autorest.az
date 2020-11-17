@@ -1778,7 +1778,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     //=================================================================================================================
 
     public GetModuleOperationName(): string {
-        return ToSnakeCase(this.CommandGroup.language['az'].name);
+        return ToSnakeCase(this.CommandGroup.language.default.name);
     }
 
     public GetModuleOperationNamePython(): string {

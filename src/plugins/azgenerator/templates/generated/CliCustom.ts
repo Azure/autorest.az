@@ -499,7 +499,6 @@ function GetGenericCall(model: CodeModelAz, required) {
 
 function GetPolyMethodCall(model: CodeModelAz, prefix: any, originalOperation: Operation, originalParameters: Parameter[], required: any): string[] {
     let methodCall: string = prefix + "return ";
-    //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let indent = "";
     let methodName = originalOperation.language['python'].name;
     if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
@@ -616,7 +615,6 @@ function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, 
 
 function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[] {
     let methodCall: string = prefix + "return ";
-    //methodCall += "client." + mode.GetModuleOperationName() +"." + ctx.Methods[methodIdx].Name +  "(";
     let methodName = model.Method_Name;
     let indent = "";
     if (model.Method_IsLongRun && model.CommandGroup_HasShowCommand) {
