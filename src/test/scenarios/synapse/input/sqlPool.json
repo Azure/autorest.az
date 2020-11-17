@@ -2501,7 +2501,7 @@
           "Update a Sql pool's threat detection policy with minimal parameters": {
             "$ref": "./examples/CreateOrUpdateSqlPoolSecurityAlertWithMinParameters.json"
           },
-          "Update a Sql pool's threat detection policy with all parameters": {
+          "Create a Sql pool's threat detection policy with all parameters": {
             "$ref": "./examples/CreateOrUpdateSqlPoolSecurityAlertWithAllParameters.json"
           }
         }

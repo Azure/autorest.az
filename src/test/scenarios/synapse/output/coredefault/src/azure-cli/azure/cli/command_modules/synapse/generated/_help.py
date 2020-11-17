@@ -822,22 +822,23 @@ helps['synapse sql-pool-security-alert-policy create'] = """
     type: command
     short-summary: "Create a Sql pool's security alert policy."
     examples:
-      - name: Update a Sql pool's threat detection policy with all parameters
+      - name: Create a Sql pool's threat detection policy with all parameters
         text: |-
                az synapse sql-pool-security-alert-policy create --disabled-alerts "Sql_Injection" --disabled-alerts \
 "Usage_Anomaly" --email-account-admins true --email-addresses "test@microsoft.com" --email-addresses \
 "user@microsoft.com" --retention-days 6 --state "Enabled" --storage-account-access-key "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTE\
 RLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==" --storage-endpoint "https://mystorage.blob.core.windows.net" \
 --resource-group "securityalert-4799" --sql-pool-name "testdb" --workspace-name "securityalert-6440"
-      - name: Update a Sql pool's threat detection policy with minimal parameters
-        text: |-
-               az synapse sql-pool-security-alert-policy create --state "Enabled" --resource-group \
-"securityalert-4799" --sql-pool-name "testdb" --workspace-name "securityalert-6440"
 """
 
 helps['synapse sql-pool-security-alert-policy update'] = """
     type: command
     short-summary: "Update a Sql pool's security alert policy."
+    examples:
+      - name: Update a Sql pool's threat detection policy with minimal parameters
+        text: |-
+               az synapse sql-pool-security-alert-policy update --state "Enabled" --resource-group \
+"securityalert-4799" --sql-pool-name "testdb" --workspace-name "securityalert-6440"
 """
 
 helps['synapse sql-pool-vulnerability-assessment-rule-baseline'] = """
