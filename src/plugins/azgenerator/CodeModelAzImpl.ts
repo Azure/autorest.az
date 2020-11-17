@@ -1859,6 +1859,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return (extensions && 'x-ms-examples' in extensions ? extensions['x-ms-examples'] : {})
     }
 
+    public get ExampleAmount(): number {
+        return Object.keys(this.Examples).length;
+    }
+
     /**
      * Gets method parameters dict
      * @returns method parameters dict : key is parameter name, value is the parameter schema
@@ -2226,6 +2230,13 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public GetExamples(): CommandExample[] {
+        function forUpdate(model: CodeModelCliImpl,exampleName:string): boolean {
+            let lowercase: string = exampleName.toLowerCase();
+            return (lowercase.endsWith("_update") ||
+            model.ExampleAmount>1 && lowercase.indexOf("update")>=0 && lowercase.indexOf("create")<0
+            );
+        }
+
         let examples: CommandExample[] = [];
         if (this.Examples) {
             Object.entries(this.Examples).forEach(([id, example_obj]) => {
@@ -2243,9 +2254,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                 example.ExampleObj = example_obj;
                 if (this.Method_GetSplitOriginalOperation) {
                     //filter example by name for generic createorupdate
-                    if (this.Command_MethodName.toLowerCase() == "update" && !id.toLowerCase().endsWith("_update"))
+                    if (this.Command_MethodName.toLowerCase() == "update" && !forUpdate(this, id))
                         return;
-                    if (this.Command_MethodName.toLowerCase() != "update" && id.toLowerCase().endsWith("_update"))
+                    if (this.Command_MethodName.toLowerCase() != "update" && forUpdate(this, id))
                         return;
                 }
                 if (this.filterExampleByPoly(example_obj, example)) {
