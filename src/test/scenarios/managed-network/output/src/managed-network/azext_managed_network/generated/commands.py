@@ -16,12 +16,12 @@ from azure.cli.core.profiles import ResourceType
 
 def load_command_table(self, _):
 
-    from azext_managed_network.generated._client_factory import cf_mn
-    managed_network_mn = CliCommandType(
+    from azext_managed_network.generated._client_factory import cf_managed_network
+    managed_network_managed_network = CliCommandType(
         operations_tmpl='azext_managed_network.vendored_sdks.managednetwork.operations._managed_network_operations#Mana'
         'gedNetworkOperations.{}',
-        client_factory=cf_mn)
-    with self.command_group('managed-network mn', managed_network_mn, client_factory=cf_mn,
+        client_factory=cf_managed_network)
+    with self.command_group('managed-network mn', managed_network_managed_network, client_factory=cf_managed_network,
                             is_experimental=True) as g:
         g.custom_command('list', 'managed_network_mn_list')
         g.custom_command('create', 'managed_network_mn_create')

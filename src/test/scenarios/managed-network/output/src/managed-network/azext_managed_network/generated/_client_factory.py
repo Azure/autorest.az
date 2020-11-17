@@ -16,7 +16,7 @@ def cf_managed_network_cl(cli_ctx, *_):
                                    ManagedNetworkManagementClient)
 
 
-def cf_mn(cli_ctx, *_):
+def cf_managed_network(cli_ctx, *_):
     return cf_managed_network_cl(cli_ctx).managed_network
 
 
