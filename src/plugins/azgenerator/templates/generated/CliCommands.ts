@@ -23,6 +23,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
     output.push("");
     output.push("");
     output.push("def load_command_table(self, _):");
+    let extensionHasMode = false;
 
     if (model.SelectFirstCommandGroup()) {
         do {
@@ -45,7 +46,10 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 output.push("        client_factory=" + cf_name + ")");
                 let groupinfos = model.CommandGroup_Name.split(' ');
                 let extraInfo = "";
-                if (groupinfos.length >= 1) {
+                if (groupinfos.length >= 2) {
+                    extraInfo = getExtraModeInfo(model.CommandGroup_Mode, model.Extension_Mode);
+                } else if (groupinfos.length == 1 && groupinfos[0] == model.Extension_Name) {
+                    extensionHasMode = true;
                     extraInfo = getExtraModeInfo(model.CommandGroup_Mode, "");
                 }
                 if (extraInfo != "") {
@@ -72,6 +76,12 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
         } while (model.SelectNextCommandGroup());
     }
     output.push("");
+    let modeInfo = getExtraModeInfo(model.Extension_Mode, "");
+    if (!extensionHasMode && modeInfo != "") {
+        output.push("    with self.command_group('" + model.Extension_Name + "', " + modeInfo + "):");
+        output.push("        pass");
+        output.push("");  
+    }
 
     output.forEach(element => {
         if (element.length > 120) header.disableLineTooLong = true;
