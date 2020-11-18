@@ -57,7 +57,11 @@ export class CliReport extends TemplateBase{
                 if (model.SelectFirstCommand()) {
     
                     mo = this.getCommandBody(model);
-                    cmds[model.CommandGroup_Name] = mo;
+                    if (!isNullOrUndefined(cmds[model.CommandGroup_Name])) {
+                        cmds[model.CommandGroup_Name] = cmds[model.CommandGroup_Name].concat(mo);
+                    } else {
+                        cmds[model.CommandGroup_Name] = mo;
+                    }
                 }
     
             } while (model.SelectNextCommandGroup());;
@@ -81,7 +85,11 @@ export class CliReport extends TemplateBase{
             do {
                 if (model.SelectFirstCommand()) {
                     mo = this.getCommandDetails(model);
-                    cmds[model.CommandGroup_Name] = mo;
+                    if (!isNullOrUndefined(cmds[model.CommandGroup_Name])) {
+                        cmds[model.CommandGroup_Name] = cmds[model.CommandGroup_Name].concat(mo);
+                    } else {
+                        cmds[model.CommandGroup_Name] = mo;
+                    }
                 }
             } while (model.SelectNextCommandGroup());
         }

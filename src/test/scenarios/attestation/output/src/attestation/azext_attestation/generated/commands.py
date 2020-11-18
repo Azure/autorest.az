@@ -20,7 +20,8 @@ def load_command_table(self, _):
         operations_tmpl='azext_attestation.vendored_sdks.attestation.operations._operation_operations#OperationOperatio'
         'ns.{}',
         client_factory=cf_operation)
-    with self.command_group('attestation', attestation_operation, client_factory=cf_operation) as g:
+    with self.command_group('attestation', attestation_operation, client_factory=cf_operation,
+                            is_experimental=True) as g:
         g.custom_command('create-provider', 'attestation_create_provider')
         g.custom_command('list-operation', 'attestation_list_operation')
 
