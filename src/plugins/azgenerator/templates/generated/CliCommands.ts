@@ -70,7 +70,12 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 }
                 while (model.SelectNextCommand());
                 if (needWait) {
-                    output.push("        g.custom_wait_command('wait', '" + showCommandFunctionName + "')");
+                    if (showCommandFunctionName) {
+                        output.push("        g.custom_wait_command('wait', '" + showCommandFunctionName + "')");
+                    } else {
+                        output.push("        g.custom_wait_command('wait')");
+                    }
+                    
                 }
             }
         } while (model.SelectNextCommandGroup());
