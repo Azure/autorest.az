@@ -129,6 +129,8 @@ export class Modifiers {
 
     async process() {
         directives = await this.session.getValue('directive');
+        let options = await this.session.getValue('az');
+        let globalExtension = "";
         if (directives != null) {
             for (const directive of directives.filter(each => !each.transform)) {
                 const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
@@ -236,6 +238,10 @@ export class Modifiers {
                                     }
                                 }
                             }
+                        }
+
+                        if (operationGroup.language['az']['command'] == options['extensions'] && !isNullOrUndefined(operationGroup.language['cli']['extensionMode']) && operationGroup.language['cli']['extensionMode'] != this.codeModel.info['extensionMode']) {
+                            this.codeModel.info['extensionMode'] = operationGroup.language['cli']['extensionMode'];
                         }
                     }
                 }
