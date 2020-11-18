@@ -35,7 +35,7 @@ def load_command_table(self, _):
         'peAssignmentOperations.{}',
         client_factory=cf_scope_assignment)
     with self.command_group('managed-network mn scope-assignment', managed_network_scope_assignment,
-                            client_factory=cf_scope_assignment, is_preview=True) as g:
+                            client_factory=cf_scope_assignment) as g:
         g.custom_command('list', 'managed_network_mn_scope_assignment_list')
         g.custom_show_command('show', 'managed_network_mn_scope_assignment_show')
         g.custom_command('create', 'managed_network_mn_scope_assignment_create')
@@ -48,7 +48,7 @@ def load_command_table(self, _):
         's#ManagedNetworkGroupOperations.{}',
         client_factory=cf_managed_network_group)
     with self.command_group('managed-network mn group', managed_network_managed_network_group,
-                            client_factory=cf_managed_network_group, is_preview=True) as g:
+                            client_factory=cf_managed_network_group) as g:
         g.custom_command('list', 'managed_network_mn_group_list')
         g.custom_show_command('show', 'managed_network_mn_group_show')
         g.custom_command('create', 'managed_network_mn_group_create', supports_no_wait=True)
@@ -63,9 +63,8 @@ def load_command_table(self, _):
         client_factory=cf_managed_network_peering_policy)
     with self.command_group('managed-network managed-network-peering-policy',
                             managed_network_managed_network_peering_policy,
-                            client_factory=cf_managed_network_peering_policy, is_preview=True,
-                            max_api='2020-07-01-preview', min_api='2019-07-01',
-                            resource_type=ResourceType.DATA_STORAGE_BLOB) as g:
+                            client_factory=cf_managed_network_peering_policy, max_api='2020-07-01-preview',
+                            min_api='2019-07-01', resource_type=ResourceType.DATA_STORAGE_BLOB) as g:
         g.custom_command('list', 'managed_network_managed_network_peering_policy_list')
         g.custom_show_command('show', 'managed_network_managed_network_peering_policy_show')
         g.custom_command('hub-and-spoke-topology create', 'managed_network_managed_network_peering_policy_hub_and_spoke'
@@ -84,3 +83,6 @@ def load_command_table(self, _):
                          confirmation=True, max_api='2020-09-01', min_api='2019-09-01',
                          resource_type=ResourceType.DATA_COMPUTE)
         g.custom_wait_command('wait', 'managed_network_managed_network_peering_policy_show')
+
+    with self.command_group('managed-network', is_preview=True):
+        pass

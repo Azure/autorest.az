@@ -35,8 +35,7 @@ def load_command_table(self, _):
         operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._trigger_operations#'
         'TriggerOperations.{}',
         client_factory=cf_trigger)
-    with self.command_group('datafactory trigger', datafactory_trigger, client_factory=cf_trigger,
-                            is_experimental=True) as g:
+    with self.command_group('datafactory trigger', datafactory_trigger, client_factory=cf_trigger) as g:
         g.custom_command('list', 'datafactory_trigger_list')
         g.custom_show_command('show', 'datafactory_trigger_show')
         g.custom_command('create', 'datafactory_trigger_create')
@@ -58,7 +57,7 @@ def load_command_table(self, _):
         '_operations#IntegrationRuntimeOperations.{}',
         client_factory=cf_integration_runtime)
     with self.command_group('datafactory integration-runtime', datafactory_integration_runtime,
-                            client_factory=cf_integration_runtime, is_experimental=True) as g:
+                            client_factory=cf_integration_runtime) as g:
         g.custom_command('list', 'datafactory_integration_runtime_list')
         g.custom_show_command('show', 'datafactory_integration_runtime_show')
         g.custom_command('linked-integration-runtime create', 'datafactory_integration_runtime_linked_integration_runti'

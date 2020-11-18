@@ -23,4 +23,4 @@ def load_command_table(self, _):
                             is_experimental=True) as g:
         g.custom_command('assess-patch', 'vm_virtual_machine_assess_patch', supports_no_wait=True,
                          min_api='2020-06-01')
-        g.custom_wait_command('wait', 'undefined')
+        g.custom_wait_command('wait')
