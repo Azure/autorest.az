@@ -225,7 +225,7 @@
 |---------|------------|--------|-----------|
 |[az synapse sql-pool-security-alert-policy show](#SqlPoolSecurityAlertPoliciesGet)|Get|[Parameters](#ParametersSqlPoolSecurityAlertPoliciesGet)|[Example](#ExamplesSqlPoolSecurityAlertPoliciesGet)|
 |[az synapse sql-pool-security-alert-policy create](#SqlPoolSecurityAlertPoliciesCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersSqlPoolSecurityAlertPoliciesCreateOrUpdate#Create)|[Example](#ExamplesSqlPoolSecurityAlertPoliciesCreateOrUpdate#Create)|
-|[az synapse sql-pool-security-alert-policy update](#SqlPoolSecurityAlertPoliciesCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersSqlPoolSecurityAlertPoliciesCreateOrUpdate#Update)|Not Found|
+|[az synapse sql-pool-security-alert-policy update](#SqlPoolSecurityAlertPoliciesCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersSqlPoolSecurityAlertPoliciesCreateOrUpdate#Update)|[Example](#ExamplesSqlPoolSecurityAlertPoliciesCreateOrUpdate#Update)|
 
 ### <a name="CommandsInSqlPoolSensitivityLabels">Commands in `az synapse sql-pool-sensitivity-label` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
@@ -1367,11 +1367,6 @@ az synapse sql-pool-security-alert-policy create --disabled-alerts "Sql_Injectio
 fD2342309432849328476458/3RSD==" --storage-endpoint "https://mystorage.blob.core.windows.net" --resource-group \
 "securityalert-4799" --sql-pool-name "testdb" --workspace-name "securityalert-6440"
 ```
-##### <a name="ExamplesSqlPoolSecurityAlertPoliciesCreateOrUpdate#Create">Example</a>
-```
-az synapse sql-pool-security-alert-policy create --state "Enabled" --resource-group "securityalert-4799" \
---sql-pool-name "testdb" --workspace-name "securityalert-6440"
-```
 ##### <a name="ParametersSqlPoolSecurityAlertPoliciesCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -1388,6 +1383,11 @@ az synapse sql-pool-security-alert-policy create --state "Enabled" --resource-gr
 
 #### <a name="SqlPoolSecurityAlertPoliciesCreateOrUpdate#Update">Command `az synapse sql-pool-security-alert-policy update`</a>
 
+##### <a name="ExamplesSqlPoolSecurityAlertPoliciesCreateOrUpdate#Update">Example</a>
+```
+az synapse sql-pool-security-alert-policy update --state "Enabled" --resource-group "securityalert-4799" \
+--sql-pool-name "testdb" --workspace-name "securityalert-6440"
+```
 ##### <a name="ParametersSqlPoolSecurityAlertPoliciesCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|

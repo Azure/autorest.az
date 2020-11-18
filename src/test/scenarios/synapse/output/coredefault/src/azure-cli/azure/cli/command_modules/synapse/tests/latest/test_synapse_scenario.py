@@ -77,8 +77,7 @@ from .example_steps import step_sql_pool_replication_link_list
 from .example_steps import step_sql_pool_restore_point_list
 from .example_steps import step_sql_pool_restore_point_create
 from .example_steps import step_sql_pool_schema_list
-from .example_steps import step_sql_pool_security_alert_policy_create
-from .example_steps import step_sql_pool_security_alert_policy_create
+from .example_steps import step_sql_pool_security_alert_policy_update
 from .example_steps import step_sql_pool_security_alert_policy_show
 from .example_steps import step_sql_pool_sensitivity_label_create
 from .example_steps import step_sql_pool_sensitivity_label_list_current
@@ -409,9 +408,8 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
                                        rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_sql_pool_schema_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
                               rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_sql_pool_security_alert_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_sql_pool_security_alert_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+    # STEP NOT FOUND: Update a Sql pool's threat detection policy with all parameters
+    step_sql_pool_security_alert_policy_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_sql_pool_security_alert_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])

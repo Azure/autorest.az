@@ -341,9 +341,9 @@ az synapse sql-pool-security-alert-policy create --disabled-alerts "Sql_Injectio
     --storage-endpoint "https://mystorage.blob.core.windows.net" --resource-group "securityalert-4799" \
     --sql-pool-name "testdb" --workspace-name "securityalert-6440" 
 ```
-##### Create #####
+##### Update #####
 ```
-az synapse sql-pool-security-alert-policy create --state "Enabled" --resource-group "securityalert-4799" \
+az synapse sql-pool-security-alert-policy update --state "Enabled" --resource-group "securityalert-4799" \
     --sql-pool-name "testdb" --workspace-name "securityalert-6440" 
 ```
 ##### Show #####

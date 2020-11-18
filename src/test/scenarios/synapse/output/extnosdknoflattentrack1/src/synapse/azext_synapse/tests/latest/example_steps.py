@@ -1007,7 +1007,7 @@ def step_sql_pool_schema_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8
              checks=checks)
 
 
-# EXAMPLE: /SqlPoolSecurityAlertPolicies/put/Update a Sql pool's threat detection policy with all parameters
+# EXAMPLE: /SqlPoolSecurityAlertPolicies/put/Create a Sql pool's threat detection policy with all parameters
 @try_manual
 def step_sql_pool_security_alert_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
@@ -1032,11 +1032,11 @@ def step_sql_pool_security_alert_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4,
 
 # EXAMPLE: /SqlPoolSecurityAlertPolicies/put/Update a Sql pool's threat detection policy with minimal parameters
 @try_manual
-def step_sql_pool_security_alert_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+def step_sql_pool_security_alert_policy_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az synapse sql-pool-security-alert-policy create '
+    test.cmd('az synapse sql-pool-security-alert-policy update '
              '--state "Enabled" '
              '--resource-group "{rg_16}" '
              '--sql-pool-name "{mySqlPool5}" '
