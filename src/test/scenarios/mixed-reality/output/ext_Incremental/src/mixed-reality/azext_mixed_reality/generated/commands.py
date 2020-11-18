@@ -21,7 +21,7 @@ def load_command_table(self, _):
         'patialAnchorAccountOperations.{}',
         client_factory=cf_spatial_anchor_account)
     with self.command_group('spatial-anchors-account', mixed_reality_spatial_anchor_account,
-                            client_factory=cf_spatial_anchor_account) as g:
+                            client_factory=cf_spatial_anchor_account, is_experimental=True) as g:
         g.custom_command('regenerate-key', 'spatial_anchors_account_regenerate_key')
 
     from azext_mixed_reality.generated._client_factory import cf_remote_rendering_account
@@ -30,7 +30,7 @@ def load_command_table(self, _):
         '#RemoteRenderingAccountOperations.{}',
         client_factory=cf_remote_rendering_account)
     with self.command_group('remote-rendering-account', mixed_reality_remote_rendering_account,
-                            client_factory=cf_remote_rendering_account) as g:
+                            client_factory=cf_remote_rendering_account, is_experimental=True) as g:
         g.custom_command('list', 'remote_rendering_account_list')
         g.custom_show_command('show', 'remote_rendering_account_show')
         g.custom_command('create', 'remote_rendering_account_create')
