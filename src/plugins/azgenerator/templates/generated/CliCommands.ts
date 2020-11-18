@@ -45,7 +45,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                 output.push("        client_factory=" + cf_name + ")");
                 let groupinfos = model.CommandGroup_Name.split(' ');
                 let extraInfo = "";
-                if (groupinfos.length >= 2) {
+                if (groupinfos.length >= 1) {
                     extraInfo = getExtraModeInfo(model.CommandGroup_Mode, "");
                 }
                 if (extraInfo != "") {
