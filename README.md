@@ -13,13 +13,16 @@ debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
   "@autorest/python": "5.4.0"
-  "@autorest/clicommon": "0.5.7"
+  "@autorest/clicommon": "0.5.8"
   #"@autorest/python": "latest"
 
 require:
   - ./readme.python.md
   - ./readme.cli.md
   - $(this-folder)/readme.az.common.md
+
+try-require:
+  - ./readme.test.md
 
 pipeline-model: v3
 
