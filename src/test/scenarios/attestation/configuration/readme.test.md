@@ -1,7 +1,5 @@
 ## TEST
 
-These settings don't need to apply `--test` on the command line.
-
 ``` yaml 
 test:
   cli-name: attestation
