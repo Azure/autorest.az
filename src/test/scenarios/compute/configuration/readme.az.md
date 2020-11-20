@@ -10,6 +10,8 @@ az:
 az-output-folder: $(azure-cli-folder)/src/azure-cli/azure/cli/command_modules/vm
 python-sdk-output-folder: "$(az-output-folder)/az_vm/vendored_sdks/vm"
 
+extension-mode: stable
+
 cli:
     cli-directive:
         - where:
@@ -21,5 +23,8 @@ cli:
               op: AssessPatches
           hidden: false
           min-api: '2020-06-01'
-
+        - where:
+              group: VirtualMachines
+          set:
+              extensionMode: experimental
 ```

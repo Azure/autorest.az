@@ -129,13 +129,13 @@ export class Modifiers {
 
     async process() {
         directives = await this.session.getValue('directive');
+        let options = await this.session.getValue('az');
         if (directives != null) {
             for (const directive of directives.filter(each => !each.transform)) {
                 const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
                     return selector? !hasSpecialChars(selector)? new RegExp(`^${selector}$`, "gi"): new RegExp(selector, "gi"): undefined;
                 };
                 if (isWhereCommandDirective(directive)) {
-                    const selectType = directive.select;
                     const groupRegex = getPatternToMatch(directive.where["group"]);
                     const parameterRegex = getPatternToMatch(directive.where["parameter-name"]);
                     const commandRegex = getPatternToMatch(directive.where["command"]);
@@ -236,6 +236,10 @@ export class Modifiers {
                                     }
                                 }
                             }
+                        }
+
+                        if (operationGroup.language['az']['command'] == options['extensions'] && !isNullOrUndefined(operationGroup.language['cli']['extensionMode']) && operationGroup.language['cli']['extensionMode'] != this.codeModel.info['extensionMode']) {
+                            this.codeModel.info['extensionMode'] = operationGroup.language['cli']['extensionMode'];
                         }
                     }
                 }
