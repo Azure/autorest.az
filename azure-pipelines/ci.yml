@@ -38,11 +38,11 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: 3.6
-      - script: 'npx @microsoft/rush sync-versions && npx @microsoft/rush update && npx @microsoft/rush rebuild'
+      - script: 'npm run build'
         displayName: 'npm build'
       - script: 'npm test'
         displayName: 'npm test'
-      - script: 'npx @microsoft/rush publish --publish --pack --release-folder $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY) --include-all --tag latest'
+      - script: 'npm pack'
         displayName: 'npm pack'
       - task: PublishBuildArtifacts@1
         inputs:

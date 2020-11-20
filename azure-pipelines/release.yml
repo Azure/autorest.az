@@ -33,20 +33,21 @@ stages:
         inputs:
           versionSpec: '$(NodeVersion)'
         displayName: 'Install Node.js'
-      - script: |
-          echo -e "\e[32m[$(date -u)] LOG: Ensure latest npm is installed"
-          npm install -g npm
 
-          echo -e "\e[32m[$(date -u)] LOG: Make sure the vesions are all synchronized and pull in dependencies"
-          npx @microsoft/rush sync-versions
-          npx @microsoft/rush update 
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          verbose: true
 
-          echo -e "\e[32m[$(date -u)] LOG: Compile the code"
-          npx @microsoft/rush rebuild 
+      - script: 'npm run build'
+        displayName: 'npm build'
 
-          echo -e "\e[32m[$(date -u)] LOG: Build the package"
-          npx @microsoft/rush publish --publish --pack --release-folder $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY) --include-all --tag latest
-        displayName: 'Build and Pack'
+      - script: 'npm pack'
+        displayName: 'npm pack'
+      
+      - script: 'cp autorest-clicommon-*.tgz $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
+        displayName: 'copy to staging dir'
+        
       - task: PublishBuildArtifacts@1
         inputs:
           PathtoPublish: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
