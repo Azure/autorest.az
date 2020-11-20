@@ -1899,6 +1899,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     private AddExampleParameter(methodParam: MethodParam, example_param: ExampleParam[], value: any, polySubParam: MethodParam, ancestors: string[], rawValue: any): boolean {
+        if (isNullOrUndefined(methodParam)) return false;
         let isList: boolean = methodParam.isList;
         let isSimpleListOrArray: boolean = methodParam.isSimpleListOrArray;
         let defaultName: string = methodParam.value.language['cli'].cliKey;
@@ -1906,6 +1907,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (!isNullOrUndefined(methodParam.value.language?.['az']?.['alias']) && isArray(methodParam.value.language['az']['alias']) && methodParam.value.language['az']['alias'].length > 0) {
             name = methodParam.value.language['az']['alias'][0];
         }
+        let realParam = methodParam;
         if (polySubParam) {
             isList = polySubParam.isList;
             isSimpleListOrArray = polySubParam.isSimpleListOrArray;
@@ -1914,6 +1916,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             if (!isNullOrUndefined(polySubParam.value.language?.['az']?.['alias']) && isArray(polySubParam.value.language['az']['alias']) && polySubParam.value.language['az']['alias'].length > 0) {
                 name = polySubParam.value.language['az']['alias'][0];
             }
+            realParam = polySubParam;
         }
 
         function toActionString(model: CodeModelCliImpl,dict, seperator=" ", init_keys=undefined): [string, string[]] {
@@ -1968,7 +1971,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 let ret = "";
                 if (value instanceof Array) {       // spread list
                     handled = true;
-                    if (polySubParam && this.Parameter_IsShorthandSyntax(polySubParam.value) || this.Parameter_IsShorthandSyntax(methodParam.value)) {
+                    if (this.Parameter_IsShorthandSyntax(realParam.value)) {
                         for (let i=0; i<value.length; i++) {
                             let instanceString: string;
                             [instanceString, keys] = toActionString(this, value[i], ",", keys);
@@ -1976,7 +1979,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                             if (ret.length>0 && instanceString.length>0) ret += " ";
                             ret += instanceString;
                         }
-                        example_param.push(new ExampleParam(name, ret, false, KeyValueType.ShorthandSyntax, keys, defaultName, methodParam, ancestors, value));
+                        example_param.push(new ExampleParam(name, ret, false, KeyValueType.ShorthandSyntax, keys, defaultName, realParam, ancestors, value));
                     }
                     else {
                         for (let i=0; i<value.length; i++) {
@@ -1986,8 +1989,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 else if (typeof rawValue == 'object') {    // KEY=VALUE form
                     handled = true;
-                    if (this.Parameter_IsPositional(methodParam.value) || this.Parameter_IsPositional(polySubParam?.value)) {
-                        keys = this.Parameter_PositionalKeys(polySubParam.value, polySubParam.submethodparameters) || this.Parameter_PositionalKeys(methodParam.value, methodParam.submethodparameters);
+                    if (this.Parameter_IsPositional(realParam.value)) {
+                        keys = this.Parameter_PositionalKeys(realParam.value, realParam.submethodparameters);
                         for (let k of keys) {
                             ret += " ";
                             FIND_PARAM:
@@ -2005,29 +2008,29 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                     ret = ret.trim();
                     if (ret.trim().length > 0) {
-                        example_param.push(new ExampleParam(name, ret, false, KeyValueType.PositionalKey, keys, defaultName, methodParam, ancestors, value));
+                        example_param.push(new ExampleParam(name, ret, false, KeyValueType.PositionalKey, keys, defaultName, realParam, ancestors, value));
                     }
                     else {
                         ////////////
                         [ret, keys] = toActionString(this, value);
                         if (ret.length > 0) {
-                            example_param.push(new ExampleParam(name, ret, false, KeyValueType.Classic, keys, defaultName, methodParam, ancestors, value));
+                            example_param.push(new ExampleParam(name, ret, false, KeyValueType.Classic, keys, defaultName, realParam, ancestors, value));
                         }
                     }    
                 }
             }
             if (!handled) {
                 if (typeof value == 'string') {
-                    example_param.push(new ExampleParam(name, value, false, KeyValueType.No, [], defaultName, methodParam, ancestors, value));
+                    example_param.push(new ExampleParam(name, value, false, KeyValueType.No, [], defaultName, realParam, ancestors, value));
                 }
                 else {
                     // JSON form
-                    example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, KeyValueType.No, [], defaultName, methodParam, ancestors, value));
+                    example_param.push(new ExampleParam(name, JSON.stringify(value).split(/[\r\n]+/).join(""), true, KeyValueType.No, [], defaultName, realParam, ancestors, value));
                 }
             }
         }
         else if (typeof value != 'object') {
-            example_param.push(new ExampleParam(name, value, false, KeyValueType.No, [], defaultName, methodParam, ancestors, value));
+            example_param.push(new ExampleParam(name, value, false, KeyValueType.No, [], defaultName, realParam, ancestors, value));
         }
         else {
             // ignore object values if not isList.
