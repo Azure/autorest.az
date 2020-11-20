@@ -94,7 +94,7 @@ export class ArgumentConstants {
 }
 
 export class CodeGenConstants {
-    public static readonly minCliCoreVersion = "2.11.0";
+    public static readonly minCliCoreVersion = "2.15.0";
 }
 
 export interface AzextMetadata {

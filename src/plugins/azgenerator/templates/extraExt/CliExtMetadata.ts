@@ -41,7 +41,7 @@ export class CliTopMetadata extends TemplateBase {
             output.push('    "azext.isPreview": true,');
         }
 
-        output.push('    "azext.minCliCoreVersion": "2.11.0"');
+        output.push('    "azext.minCliCoreVersion": "' + CodeGenConstants.minCliCoreVersion + '"');
         output.push('}');
 
         return output;
