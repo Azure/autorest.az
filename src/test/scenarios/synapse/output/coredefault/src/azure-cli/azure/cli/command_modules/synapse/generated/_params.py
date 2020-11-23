@@ -90,12 +90,12 @@ def load_arguments(self, _):
         c.argument('big_data_pool_name', options_list=['--name', '-n', '--big-data-pool-name'], type=str, help='Big '
                    'Data pool name', id_part='child_name_1')
 
-    with self.argument_context('synapse operation get-azure-async-header-result') as c:
+    with self.argument_context('synapse operation show-azure-async-header-result') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace', id_part='name')
         c.argument('operation_id', type=str, help='Operation ID', id_part='child_name_1')
 
-    with self.argument_context('synapse operation get-location-header-result') as c:
+    with self.argument_context('synapse operation show-location-header-result') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace', id_part='name')
         c.argument('operation_id', type=str, help='Operation ID', id_part='child_name_1')
@@ -233,7 +233,7 @@ def load_arguments(self, _):
         c.argument('enabled', arg_type=get_three_state_flag(), help='Indicates whether the metadata sync is enabled or '
                    'disabled')
 
-    with self.argument_context('synapse sql-pool-operation-result get-location-header-result') as c:
+    with self.argument_context('synapse sql-pool-operation-result show-location-header-result') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace', id_part='name')
         c.argument('sql_pool_name', type=str, help='SQL pool name', id_part='child_name_1')

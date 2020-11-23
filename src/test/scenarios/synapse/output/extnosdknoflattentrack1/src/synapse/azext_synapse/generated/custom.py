@@ -96,19 +96,19 @@ def synapse_big_data_pool_delete(client,
                        big_data_pool_name=big_data_pool_name)
 
 
-def synapse_operation_get_azure_async_header_result(client,
-                                                    resource_group_name,
-                                                    workspace_name,
-                                                    operation_id):
+def synapse_operation_show_azure_async_header_result(client,
+                                                     resource_group_name,
+                                                     workspace_name,
+                                                     operation_id):
     return client.get_azure_async_header_result(resource_group_name=resource_group_name,
                                                 workspace_name=workspace_name,
                                                 operation_id=operation_id)
 
 
-def synapse_operation_get_location_header_result(client,
-                                                 resource_group_name,
-                                                 workspace_name,
-                                                 operation_id):
+def synapse_operation_show_location_header_result(client,
+                                                  resource_group_name,
+                                                  workspace_name,
+                                                  operation_id):
     return client.get_location_header_result(resource_group_name=resource_group_name,
                                              workspace_name=workspace_name,
                                              operation_id=operation_id)
@@ -342,11 +342,11 @@ def synapse_sql_pool_metadata_sync_config_create(client,
                          enabled=enabled)
 
 
-def synapse_sql_pool_operation_result_get_location_header_result(client,
-                                                                 resource_group_name,
-                                                                 workspace_name,
-                                                                 sql_pool_name,
-                                                                 operation_id):
+def synapse_sql_pool_operation_result_show_location_header_result(client,
+                                                                  resource_group_name,
+                                                                  workspace_name,
+                                                                  sql_pool_name,
+                                                                  operation_id):
     return client.get_location_header_result(resource_group_name=resource_group_name,
                                              workspace_name=workspace_name,
                                              sql_pool_name=sql_pool_name,

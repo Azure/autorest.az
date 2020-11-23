@@ -35,10 +35,10 @@ def step_mn_create(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworks/get/ManagedNetworksGet
 @try_manual
-def step_mn_get_modify(test, rg, checks=None):
+def step_mn_show_modify(test, rg, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az managed-network mn get-modify '
+    test.cmd('az managed-network mn show-modify '
              '--name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=checks)
