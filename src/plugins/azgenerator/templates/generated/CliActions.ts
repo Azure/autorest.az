@@ -10,8 +10,10 @@ import { CodeModelAz } from "../../CodeModelAz";
 import { HeaderGenerator } from "../../Header";
 
 
-let allActions: Map<string, boolean> = new Map<string, boolean>();
+let allActions: Map<string, boolean>;
+
 export function GenerateAzureCliActions(model: CodeModelAz): string[] {
+    allActions = new Map<string, boolean>();
     let header: HeaderGenerator = new HeaderGenerator();
 
     header.disableProtectedAccess = true;

@@ -9,10 +9,15 @@ import { HeaderGenerator } from "../../Header";
 import { EscapeString,  ToCamelCase, Capitalize,  ToMultiLine, ToJsonString } from "../../../../utils/helper"
 import { isNullOrUndefined, isArray } from "util";
 
-const maxShortSummary = 119
-let showExampleStr = "";
-let allSupportWaited = ['create', 'update', 'delete'];
+let showExampleStr: string;
+const allSupportWaited = ['create', 'update', 'delete'];
+
+function initVars() {
+    showExampleStr = "";
+}
+
 export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string[] {
+    initVars();
     let header: HeaderGenerator = new HeaderGenerator();
     header.disableTooManyLines = true;
     header.addFromImport("knack.help_files", ["helps"])
