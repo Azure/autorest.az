@@ -11,18 +11,23 @@ import { isNullOrUndefined, isArray } from "util";
 import { ExtensionMode } from "../../../models"
 
 
-let hasActions: boolean = false;
-let hasBoolean: boolean = false;
-let hasEnum: boolean = false;
-let hasJson: boolean = false;
-let hasResourceGroup: boolean = false;
-let hasLocation = false;
-let hasLocationValidator = false;
-let hasTags = false;
-let actions: string[] = [];
-let useResourceType = false;
+let hasActions: boolean, hasBoolean: boolean, hasEnum: boolean, hasJson: boolean, hasResourceGroup: boolean, hasLocation: boolean, hasLocationValidator: boolean, hasTags: boolean, actions: string[], useResourceType: boolean;
+
+function initVars() {
+    hasActions= false;
+    hasBoolean = false;
+    hasEnum = false;
+    hasJson = false;
+    hasResourceGroup = false;
+    hasLocation = false;
+    hasLocationValidator = false;
+    hasTags = false;
+    actions = [];
+    useResourceType = false;
+}
 
 export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): string[] {
+    initVars();
     var output_args: string[] = [];
 
     output_args.push("");

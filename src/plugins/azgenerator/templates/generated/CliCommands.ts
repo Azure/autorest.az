@@ -9,9 +9,16 @@ import { ToMultiLine, getExtraModeInfo, composeParamString } from "../../../../u
 import { isNullOrUndefined } from "util";
 import { ExtensionMode } from "../../../models";
 
-let showCommandFunctionName = undefined;
-let useResourceType = false;
+let showCommandFunctionName: string;
+let useResourceType: boolean;
+
+function initVars() {
+    showCommandFunctionName = undefined;
+    useResourceType = false;
+}
+
 export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
+    initVars();
     let header: HeaderGenerator = new HeaderGenerator();
 
     // this can't be currently reproduced
