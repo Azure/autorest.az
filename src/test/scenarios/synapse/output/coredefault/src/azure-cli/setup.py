@@ -136,7 +136,7 @@ DEPENDENCIES = [
     'xmltodict~=0.12',
     'javaproperties==0.5.1',
     'jsondiff==1.2.0',
-    'azure-mgmt-synapse~=0.4.0'
+    'azure-mgmt-synapse~=0.5.0'
 ]
 
 TESTS_REQUIRE = [
