@@ -11,13 +11,13 @@ import { TemplateBase } from "../TemplateBase";
 import { PathConstants } from "../../../models";
 import { isNullOrUndefined } from 'util';
 
-let usePreparers: boolean, nameMap, nameSeq, shortToLongName;
+let usePreparers: boolean, shortToLongName, funcNames, allSteps;
 
 function initVars() {
     usePreparers = false;
-    nameMap = {};
-    nameSeq = {};
     shortToLongName = {};
+    funcNames = {};
+    allSteps = [];
 }
 
 export function NeedPreparer(): boolean {
@@ -64,6 +64,8 @@ export class CliTestStep extends TemplateBase {
         for (var ci = 0; ci < config.length; ci++) {
             let exampleId: string = config[ci].name;
             let functionName: string = CliTestStep.ToFunctionName(config[ci]);
+            if (allSteps.includes(functionName))    continue;
+            allSteps.push(functionName);
             if (exampleId) {
                 let disabled: string = config[ci].disabled ? "# " : "";
                 steps.push("# EXAMPLE: " + exampleId);
@@ -210,52 +212,46 @@ export class CliTestStep extends TemplateBase {
     }
 
     public static ToFunctionName(step: any, azCmd: string=undefined): string {
-        let ret: undefined| string = undefined;
-        if (isNullOrUndefined(azCmd)) {
+        for (let round=1; true; round+=1) {
+            let ret: undefined| string = undefined;
+            let stepId: string;
             if (step.name)
-                ret = "step_" + step.name;
+                stepId = "step_" + step.name;
             else if (step.function)
-                ret = step.function;
-        }
-        else {
-            ret = "step_" + azCmd.split(" ").slice(2).join("_");
-        }
-        if (!ret) return undefined;
+                stepId = step.function;
+            ret = isNullOrUndefined(azCmd)? stepId: "step_" + azCmd.split(" ").slice(2).join("_");
+            if (!ret) return undefined;
 
-        let shortName = ret.split("/").slice(-1)[0];
-        if (shortToLongName.hasOwnProperty(shortName)){
-            ret = shortToLongName[shortName];
-        }
-        if (shortName.length+1<ret.length) {
-            shortToLongName[shortName] = ret;
-        }
+            let shortName = ret.split("/").slice(-1)[0];
+            if (shortToLongName.hasOwnProperty(shortName)){
+                ret = shortToLongName[shortName];
+            }
+            if (shortName.length+1<ret.length) {
+                shortToLongName[shortName] = ret;
+            }
 
-        let funcname = "";
-        var letterNumber = /^[0-9a-zA-Z]+$/;
-        ret = (ret as string).toLowerCase();
-        for (let i = 0; i < ret.length; i++) {
-            funcname += ret[i].match(letterNumber) ? ret[i] : '_';
-        }
-        if (funcname.length > 50) {
-            if (!nameMap.hasOwnProperty(funcname)) {
+            let funcname = "";
+            var letterNumber = /^[0-9a-zA-Z]+$/;
+            ret = (ret as string).toLowerCase();
+            for (let i = 0; i < ret.length; i++) {
+                funcname += ret[i].match(letterNumber) ? ret[i] : '_';
+            }
+            if (funcname.length > 50) {
                 let arr = funcname.split("_");
                 let shortName = arr.join("_");
                 if (arr.length > 4) {
                     shortName = arr.slice(0, 4).join("_");
                 }
                 if (shortName.length > 50) shortName = shortName.substr(0, 50);
-
-                if (nameSeq.hasOwnProperty(shortName)) {
-                    nameSeq[shortName] += 1;
-                    nameMap[funcname] = shortName + nameSeq[shortName];
-                }
-                else {
-                    nameSeq[shortName] = 1;
-                    nameMap[funcname] = shortName;
-                }
+                funcname = shortName;
             }
-            funcname = nameMap[funcname];
+
+            if (round>1) funcname += round.toString();
+
+            if (!funcNames.hasOwnProperty(funcname) || funcNames[funcname] == stepId) {
+                funcNames[funcname] = stepId;
+                return funcname;
+            }
         }
-        return funcname;
     }
 }

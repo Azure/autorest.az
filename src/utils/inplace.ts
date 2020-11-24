@@ -45,8 +45,8 @@ export class TargetFile {
         }
         this.root.matchVA(originA.root);
 
-        this.root.alignOrder(customizedA.root);
-        this.root.addCustomize(customizedA.root); 
+        this.root.alignOrder(customizedA?.root);
+        this.root.addCustomize(customizedA?.root); 
     }
 }
 
