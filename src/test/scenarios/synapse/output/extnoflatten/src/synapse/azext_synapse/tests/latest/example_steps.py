@@ -62,8 +62,8 @@ def step_workspace_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9
 
 # EXAMPLE: /Workspaces/get/List workspaces in subscription
 @try_manual
-def step_workspace_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17, checks=None):
+def step_workspace_list2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                         rg_15, rg_16, rg_17, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace list '
@@ -623,8 +623,8 @@ def step_private_link_hub_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_
 
 # EXAMPLE: /PrivateLinkHubs/get/List privateLinkHubs in subscription
 @try_manual
-def step_private_link_hub_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_link_hub_list2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                rg_14, rg_15, rg_16, rg_17, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-link-hub list '
@@ -654,18 +654,6 @@ def step_private_link_hub_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
     test.cmd('az synapse private-link-hub delete -y '
              '--name "{myPrivateLinkHub}" '
              '--resource-group "{rg_2}"',
-             checks=checks)
-
-
-# EXAMPLE: /PrivateLinkResources/get/Get private link resources for workspace
-@try_manual
-def step_private_link_resource_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az synapse private-link-resource list '
-             '--resource-group "{rg}" '
-             '--workspace-name "{myWorkspace}"',
              checks=checks)
 
 
@@ -734,8 +722,8 @@ def step_sql_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9,
 
 # EXAMPLE: /SqlPools/get/List SQL Analytics pools in a workspace with filter
 @try_manual
-def step_sql_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                       rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_list2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                        rg_15, rg_16, rg_17, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool list '
@@ -833,8 +821,8 @@ def step_sql_pool_blob_auditing_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, 
 
 # EXAMPLE: /SqlPoolBlobAuditingPolicies/put/Create or update a database's blob auditing policy with minimal parameters
 @try_manual
-def step_sql_pool_blob_auditing_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_blob_auditing_policy_create2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-blob-auditing-policy create '
@@ -1273,8 +1261,8 @@ def step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessments/put/Create a database's vulnerability assessment with minimal parameters, when storageAccountAccessKey is specified
 @try_manual
-def step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability_assessment_create2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment create '
@@ -1288,8 +1276,8 @@ def step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessments/put/Create a database's vulnerability assessment with minimal parameters, when storageContainerSasKey is specified
 @try_manual
-def step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability_assessment_create3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment create '

@@ -100,7 +100,7 @@ def step_cluster_list(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/get/KustoClustersListByResourceGroup
 @try_manual
-def step_cluster_list(test, rg, checks=None):
+def step_cluster_list2(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster list '
@@ -121,7 +121,7 @@ def step_cluster_list_sku(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/get/KustoClustersListSkus
 @try_manual
-def step_cluster_list_sku(test, rg, checks=None):
+def step_cluster_list_sku2(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster list-sku '

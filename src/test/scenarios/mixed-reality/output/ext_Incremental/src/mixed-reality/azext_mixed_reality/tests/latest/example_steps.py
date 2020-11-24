@@ -47,7 +47,7 @@ def step_list(test, rg, checks=None):
 
 # EXAMPLE: /RemoteRenderingAccounts/get/List remote rendering accounts by subscription
 @try_manual
-def step_list(test, rg, checks=None):
+def step_list2(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account list '
@@ -104,7 +104,7 @@ def step_delete(test, rg, checks=None):
 
 # EXAMPLE: /SpatialAnchorsAccounts/post/Regenerate spatial anchors account keys
 @try_manual
-def step_regenerate_key(test, rg, checks=None):
+def step_regenerate_key2(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az spatial-anchors-account regenerate-key '

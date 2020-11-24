@@ -14,9 +14,9 @@ from azure.cli.testsdk import ResourceGroupPreparer
 from .example_steps import step_create
 from .example_steps import step_list
 from .example_steps import step_show
-from .example_steps import step_list
+from .example_steps import step_list2
 from .example_steps import step_regenerate_key
-from .example_steps import step_regenerate_key
+from .example_steps import step_regenerate_key2
 from .example_steps import step_update
 from .example_steps import step_delete
 from .. import (
@@ -53,11 +53,11 @@ def call_scenario(test, rg):
     step_list(test, rg, checks=[])
     # STEP NOT FOUND: Get spatial anchors account
     step_show(test, rg, checks=[])
-    step_list(test, rg, checks=[])
+    step_list2(test, rg, checks=[])
     # STEP NOT FOUND: List spatial anchors accounts by subscription
     # STEP NOT FOUND: List available operations
     step_regenerate_key(test, rg, checks=[])
-    step_regenerate_key(test, rg, checks=[])
+    step_regenerate_key2(test, rg, checks=[])
     step_update(test, rg, checks=[])
     # STEP NOT FOUND: Update spatial anchors account
     # STEP NOT FOUND: CheckLocalNameAvailability

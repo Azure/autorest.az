@@ -15,7 +15,7 @@ from .example_steps import step_list_operation
 from .example_steps import step_create_provider
 from .example_steps import step_attestation_provider_show
 from .example_steps import step_attestation_provider_provider_list
-from .example_steps import step_attestation_provider_provider_list
+from .example_steps import step_attestation_provider_provider_list2
 from .example_steps import step_attestation_provider_delete
 from .. import (
     try_manual,
@@ -54,7 +54,7 @@ def call_scenario(test, rg, rg_2, rg_3):
     step_attestation_provider_show(test, rg, rg_2, rg_3, checks=[])
     mytest(test, rg, rg_2, rg_3)
     step_attestation_provider_provider_list(test, rg, rg_2, rg_3, checks=[])
-    step_attestation_provider_provider_list(test, rg, rg_2, rg_3, checks=[])
+    step_attestation_provider_provider_list2(test, rg, rg_2, rg_3, checks=[])
     step_attestation_provider_delete(test, rg, rg_2, rg_3, checks=[])
     cleanup_scenario(test, rg, rg_2, rg_3)
 

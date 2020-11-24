@@ -56,7 +56,7 @@ def step_mn_list(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworks/get/ManagedNetworksListBySubscription
 @try_manual
-def step_mn_list(test, rg, checks=None):
+def step_mn_list2(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn list '
@@ -118,22 +118,6 @@ def step_mn_group_show(test, rg, checks=None):
     test.cmd('az managed-network mn group show '
              '--group-name "{myManagedNetworkGroup}" '
              '--managed-network-name "{myManagedNetwork}" '
-             '--resource-group "{rg}"',
-             checks=checks)
-
-
-# EXAMPLE: /ManagedNetworkPeeringPolicies/put/ManagedNetworkPeeringPoliciesPut
-@try_manual
-def step_managed_network_peering(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az managed-network managed-network-peering-policy hub-and-spoke-topology create '
-             '--managed-network-name "{myManagedNetwork}" '
-             '--policy-name "{myManagedNetworkPeeringPolicy}" '
-             '--hub id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetwork'
-             's/{vn_4}" '
-             '--spokes id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/mana'
-             'gedNetworks/{myManagedNetwork}/managedNetworkGroups/{myManagedNetworkGroup}" '
              '--resource-group "{rg}"',
              checks=checks)
 
