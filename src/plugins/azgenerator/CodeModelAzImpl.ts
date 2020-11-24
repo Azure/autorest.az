@@ -22,6 +22,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     codeModel: CodeModel;
     options: any;
     extensionName: string;
+    parentExtension: string;
     currentOperationGroupIndex: number;
     currentSubOperationGroupIndex: number;
     currentOperationIndex: number;
@@ -53,6 +54,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.options = await this.session.getValue('az');
         Object.assign(azOptions, this.options);
         this.extensionName = this.options['extensions'];
+        this.parentExtension = this.options['parent-extension']
         this.currentOperationGroupIndex = -1;
         this.currentSubOperationGroupIndex = -1;
         this.currentOperationIndex = -1;
@@ -498,6 +500,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get Extension_Name() {
         return this.extensionName;
+    }
+
+    public get Extension_Parent() {
+        return this.parentExtension;
     }
 
     public get Extension_Mode() {
