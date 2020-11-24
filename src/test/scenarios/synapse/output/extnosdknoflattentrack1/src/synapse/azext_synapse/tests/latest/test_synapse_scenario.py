@@ -38,8 +38,8 @@ from .example_steps import step_ip_firewall_rule_show
 from .example_steps import step_ip_firewall_rule_show
 from .example_steps import step_ip_firewall_rule_list
 from .example_steps import step_ip_firewall_rule_replace_all
-from .example_steps import step_operation_get_azure_async_header_result
-from .example_steps import step_operation_get_location_header_result
+from .example_steps import step_operation_show_azure_async_header_result
+from .example_steps import step_operation_show_location_header_result
 from .example_steps import step_private_endpoint_connection_create
 from .example_steps import step_private_endpoint_connection_show
 from .example_steps import step_private_endpoint_connection_list
@@ -252,10 +252,10 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
                                rg_14, rg_15, rg_16, rg_17, checks=[])
     step_ip_firewall_rule_replace_all(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
                                       rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_operation_get_azure_async_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_operation_get_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_operation_show_azure_async_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_operation_show_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_private_endpoint_connection_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_private_endpoint_connection_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,

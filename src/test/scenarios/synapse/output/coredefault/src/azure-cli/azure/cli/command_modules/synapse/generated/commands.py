@@ -32,8 +32,8 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.synapse.operations._operations_operations#Operations.{}',
         client_factory=cf_operation)
     with self.command_group('synapse operation', synapse_operation, client_factory=cf_operation) as g:
-        g.custom_command('get-azure-async-header-result', 'synapse_operation_get_azure_async_header_result')
-        g.custom_command('get-location-header-result', 'synapse_operation_get_location_header_result')
+        g.custom_command('show-azure-async-header-result', 'synapse_operation_show_azure_async_header_result')
+        g.custom_command('show-location-header-result', 'synapse_operation_show_location_header_result')
 
     from ..generated._client_factory import cf_ip_firewall_rule
     synapse_ip_firewall_rule = CliCommandType(
@@ -81,7 +81,8 @@ def load_command_table(self, _):
         client_factory=cf_sqlpool_operation_result)
     with self.command_group('synapse sql-pool-operation-result', synapse_sqlpool_operation_result,
                             client_factory=cf_sqlpool_operation_result) as g:
-        g.custom_command('get-location-header-result', 'synapse_sql_pool_operation_result_get_location_header_result')
+        g.custom_command('show-location-header-result',
+                         'synapse_sql_pool_operation_result_show_location_header_result')
 
     from ..generated._client_factory import cf_sqlpool_geo_backup_policy
     synapse_sqlpool_geo_backup_policy = CliCommandType(

@@ -15,7 +15,7 @@ from .preparers import VirtualNetworkPreparer
 from .example_steps import step_mn_create
 from .example_steps import step_mn_group_create
 from .example_steps import step_managed_network_peering
-from .example_steps import step_mn_get_modify
+from .example_steps import step_mn_show_modify
 from azure.cli.testsdk import ResourceGroupPreparer
 from .preparers import VirtualNetworkPreparer
 from .example_steps import step_mn_list
@@ -64,7 +64,7 @@ def call_scenario1(test, rg):
         test.check("name", "{myManagedNetworkGroup}", case_sensitive=False),
     ])
     step_managed_network_peering(test, rg, checks=[])
-    step_mn_get_modify(test, rg, checks=[])
+    step_mn_show_modify(test, rg, checks=[])
     cleanup_scenario1(test, rg)
 
 

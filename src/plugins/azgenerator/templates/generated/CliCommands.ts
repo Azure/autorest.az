@@ -31,7 +31,10 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
     output.push("");
     output.push("def load_command_table(self, _):");
     let extensionHasMode = false;
-
+    let extensionName = model.Extension_Name;
+    if (!isNullOrUndefined(model.Extension_Parent)) {
+        extensionName = model.Extension_Parent.trim() + " " + extensionName.trim();
+    }
     if (model.SelectFirstCommandGroup()) {
         do {
             // if there's no operation in this command group, just continue
@@ -51,11 +54,11 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
 
 
                 output.push("        client_factory=" + cf_name + ")");
-                let groupinfos = model.CommandGroup_Name.split(' ');
+                let groupName = model.CommandGroup_Name;
                 let extraInfo = "";
-                if (groupinfos.length >= 2) {
+                if (groupName.startsWith(extensionName + " ")) {
                     extraInfo = getExtraModeInfo(model.CommandGroup_Mode, model.Extension_Mode);
-                } else if (groupinfos.length == 1 && groupinfos[0] == model.Extension_Name) {
+                } else if (model.CommandGroup_Name == extensionName) {
                     extensionHasMode = true;
                     extraInfo = getExtraModeInfo(model.CommandGroup_Mode, "");
                 }
@@ -90,7 +93,7 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
     output.push("");
     let modeInfo = getExtraModeInfo(model.Extension_Mode, "");
     if (!extensionHasMode && modeInfo != "") {
-        output.push("    with self.command_group('" + model.Extension_Name + "', " + modeInfo + "):");
+        output.push("    with self.command_group('" + extensionName + "', " + modeInfo + "):");
         output.push("        pass");
         output.push("");  
     }

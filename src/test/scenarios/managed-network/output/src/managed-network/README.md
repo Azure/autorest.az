@@ -23,9 +23,9 @@ az managed-network mn list --resource-group "myResourceGroup"
 ```
 az managed-network mn update --name "myManagedNetwork" --resource-group "myResourceGroup"
 ```
-##### Get-modify #####
+##### Show-modify #####
 ```
-az managed-network mn get-modify --name "myManagedNetwork" --resource-group "myResourceGroup"
+az managed-network mn show-modify --name "myManagedNetwork" --resource-group "myResourceGroup"
 ```
 ##### Delete #####
 ```

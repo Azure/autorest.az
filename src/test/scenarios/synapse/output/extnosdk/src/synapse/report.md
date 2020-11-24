@@ -127,8 +127,8 @@
 ### <a name="CommandsInOperations">Commands in `az synapse operation` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
-|[az synapse operation get-azure-async-header-result](#OperationsGetAzureAsyncHeaderResult)|GetAzureAsyncHeaderResult|[Parameters](#ParametersOperationsGetAzureAsyncHeaderResult)|[Example](#ExamplesOperationsGetAzureAsyncHeaderResult)|
-|[az synapse operation get-location-header-result](#OperationsGetLocationHeaderResult)|GetLocationHeaderResult|[Parameters](#ParametersOperationsGetLocationHeaderResult)|[Example](#ExamplesOperationsGetLocationHeaderResult)|
+|[az synapse operation show-azure-async-header-result](#OperationsGetAzureAsyncHeaderResult)|GetAzureAsyncHeaderResult|[Parameters](#ParametersOperationsGetAzureAsyncHeaderResult)|[Example](#ExamplesOperationsGetAzureAsyncHeaderResult)|
+|[az synapse operation show-location-header-result](#OperationsGetLocationHeaderResult)|GetLocationHeaderResult|[Parameters](#ParametersOperationsGetLocationHeaderResult)|[Example](#ExamplesOperationsGetLocationHeaderResult)|
 
 ### <a name="CommandsInPrivateEndpointConnections">Commands in `az synapse private-endpoint-connection` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
@@ -202,7 +202,7 @@
 ### <a name="CommandsInSqlPoolOperationResults">Commands in `az synapse sql-pool-operation-result` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
-|[az synapse sql-pool-operation-result get-location-header-result](#SqlPoolOperationResultsGetLocationHeaderResult)|GetLocationHeaderResult|[Parameters](#ParametersSqlPoolOperationResultsGetLocationHeaderResult)|[Example](#ExamplesSqlPoolOperationResultsGetLocationHeaderResult)|
+|[az synapse sql-pool-operation-result show-location-header-result](#SqlPoolOperationResultsGetLocationHeaderResult)|GetLocationHeaderResult|[Parameters](#ParametersSqlPoolOperationResultsGetLocationHeaderResult)|[Example](#ExamplesSqlPoolOperationResultsGetLocationHeaderResult)|
 
 ### <a name="CommandsInSqlPoolReplicationLinks">Commands in `az synapse sql-pool-replication-link` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
@@ -782,11 +782,11 @@ az synapse ip-firewall-rule replace-all --resource-group "ExampleResourceGroup" 
 |**--ip-firewall-rules**|dictionary|IP firewall rule properties|ip_firewall_rules|ipFirewallRules|
 
 ### group `az synapse operation`
-#### <a name="OperationsGetAzureAsyncHeaderResult">Command `az synapse operation get-azure-async-header-result`</a>
+#### <a name="OperationsGetAzureAsyncHeaderResult">Command `az synapse operation show-azure-async-header-result`</a>
 
 ##### <a name="ExamplesOperationsGetAzureAsyncHeaderResult">Example</a>
 ```
-az synapse operation get-azure-async-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" \
+az synapse operation show-azure-async-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" \
 --resource-group "resourceGroup1" --workspace-name "workspace1"
 ```
 ##### <a name="ParametersOperationsGetAzureAsyncHeaderResult">Parameters</a> 
@@ -796,12 +796,12 @@ az synapse operation get-azure-async-header-result --operation-id "01234567-89ab
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--operation-id**|string|Operation ID|operation_id|operationId|
 
-#### <a name="OperationsGetLocationHeaderResult">Command `az synapse operation get-location-header-result`</a>
+#### <a name="OperationsGetLocationHeaderResult">Command `az synapse operation show-location-header-result`</a>
 
 ##### <a name="ExamplesOperationsGetLocationHeaderResult">Example</a>
 ```
-az synapse operation get-location-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" --resource-group \
-"resourceGroup1" --workspace-name "workspace1"
+az synapse operation show-location-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" \
+--resource-group "resourceGroup1" --workspace-name "workspace1"
 ```
 ##### <a name="ParametersOperationsGetLocationHeaderResult">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -1267,11 +1267,11 @@ az synapse sql-pool-operation list --resource-group "sqlcrudtest-7398" --sql-poo
 |**--sql-pool-name**|string|SQL pool name|sql_pool_name|sqlPoolName|
 
 ### group `az synapse sql-pool-operation-result`
-#### <a name="SqlPoolOperationResultsGetLocationHeaderResult">Command `az synapse sql-pool-operation-result get-location-header-result`</a>
+#### <a name="SqlPoolOperationResultsGetLocationHeaderResult">Command `az synapse sql-pool-operation-result show-location-header-result`</a>
 
 ##### <a name="ExamplesSqlPoolOperationResultsGetLocationHeaderResult">Example</a>
 ```
-az synapse sql-pool-operation-result get-location-header-result --operation-id "fedcba98-7654-4210-fedc-ba9876543210" \
+az synapse sql-pool-operation-result show-location-header-result --operation-id "fedcba98-7654-4210-fedc-ba9876543210" \
 --resource-group "ExampleResourceGroup" --sql-pool-name "ExampleSqlPool" --workspace-name "ExampleWorkspace"
 ```
 ##### <a name="ParametersSqlPoolOperationResultsGetLocationHeaderResult">Parameters</a> 

@@ -85,6 +85,7 @@ export interface CodeModelAz {
     AzureCliFolder: string;
     azOutputFolder: string;
     Extension_Name: string;
+    Extension_Parent: string;
     Extension_NameUnderscored: string;
     ConfiguredScenario:boolean;
     Extension_NameClass: string;

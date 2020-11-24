@@ -69,14 +69,14 @@ resource group and Managed Network name."
                az managed-network mn delete --name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
-helps['managed-network mn get-modify'] = """
+helps['managed-network mn show-modify'] = """
     type: command
     short-summary: "The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group \
 and Managed Network name."
     examples:
       - name: Get Managed Network
         text: |-
-               az managed-network mn get-modify --name "myManagedNetwork" --resource-group "myResourceGroup"
+               az managed-network mn show-modify --name "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network mn scope-assignment'] = """

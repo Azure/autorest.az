@@ -17,26 +17,6 @@ helps['test-server bool'] = """
     short-summary: Manage bool
 """
 
-helps['test-server bool get-false'] = """
-    type: command
-    short-summary: "Get false Boolean value."
-"""
-
-helps['test-server bool get-invalid'] = """
-    type: command
-    short-summary: "Get invalid Boolean value."
-"""
-
-helps['test-server bool get-null'] = """
-    type: command
-    short-summary: "Get null Boolean value."
-"""
-
-helps['test-server bool get-true'] = """
-    type: command
-    short-summary: "Get true Boolean value."
-"""
-
 helps['test-server bool put-false'] = """
     type: command
     short-summary: "Set Boolean value false."
@@ -45,4 +25,24 @@ helps['test-server bool put-false'] = """
 helps['test-server bool put-true'] = """
     type: command
     short-summary: "Set Boolean value true."
+"""
+
+helps['test-server bool show-false'] = """
+    type: command
+    short-summary: "Get false Boolean value."
+"""
+
+helps['test-server bool show-invalid'] = """
+    type: command
+    short-summary: "Get invalid Boolean value."
+"""
+
+helps['test-server bool show-null'] = """
+    type: command
+    short-summary: "Get null Boolean value."
+"""
+
+helps['test-server bool show-true'] = """
+    type: command
+    short-summary: "Get true Boolean value."
 """

@@ -34,7 +34,7 @@
 |[az managed-network mn create](#ManagedNetworksCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersManagedNetworksCreateOrUpdate#Create)|[Example](#ExamplesManagedNetworksCreateOrUpdate#Create)|
 |[az managed-network mn update](#ManagedNetworksUpdate)|Update|[Parameters](#ParametersManagedNetworksUpdate)|[Example](#ExamplesManagedNetworksUpdate)|
 |[az managed-network mn delete](#ManagedNetworksDelete)|Delete|[Parameters](#ParametersManagedNetworksDelete)|[Example](#ExamplesManagedNetworksDelete)|
-|[az managed-network mn get-modify](#ManagedNetworksGetModify)|GetModify|[Parameters](#ParametersManagedNetworksGetModify)|[Example](#ExamplesManagedNetworksGetModify)|
+|[az managed-network mn show-modify](#ManagedNetworksGetModify)|GetModify|[Parameters](#ParametersManagedNetworksGetModify)|[Example](#ExamplesManagedNetworksGetModify)|
 
 ### <a name="CommandsInManagedNetworkGroups">Commands in `az managed-network mn group` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
@@ -240,11 +240,11 @@ az managed-network mn delete --name "myManagedNetwork" --resource-group "myResou
 |**--resource-group-name**|string|The name of the resource group.|resource_group_name|resourceGroupName|
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|managedNetworkName|
 
-#### <a name="ManagedNetworksGetModify">Command `az managed-network mn get-modify`</a>
+#### <a name="ManagedNetworksGetModify">Command `az managed-network mn show-modify`</a>
 
 ##### <a name="ExamplesManagedNetworksGetModify">Example</a>
 ```
-az managed-network mn get-modify --name "myManagedNetwork" --resource-group "myResourceGroup"
+az managed-network mn show-modify --name "myManagedNetwork" --resource-group "myResourceGroup"
 ```
 ##### <a name="ParametersManagedNetworksGetModify">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|

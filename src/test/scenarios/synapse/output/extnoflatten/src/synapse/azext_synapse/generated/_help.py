@@ -113,23 +113,23 @@ helps['synapse operation'] = """
     short-summary: Manage operation with synapse
 """
 
-helps['synapse operation get-azure-async-header-result'] = """
+helps['synapse operation show-azure-async-header-result'] = """
     type: command
     short-summary: "Get the status of an operation."
     examples:
       - name: Get azure async operation header result
         text: |-
-               az synapse operation get-azure-async-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef"\
- --resource-group "resourceGroup1" --workspace-name "workspace1"
+               az synapse operation show-azure-async-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef\
+" --resource-group "resourceGroup1" --workspace-name "workspace1"
 """
 
-helps['synapse operation get-location-header-result'] = """
+helps['synapse operation show-location-header-result'] = """
     type: command
     short-summary: "Get the result of an operation."
     examples:
       - name: Get location header result
         text: |-
-               az synapse operation get-location-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" \
+               az synapse operation show-location-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" \
 --resource-group "resourceGroup1" --workspace-name "workspace1"
 """
 
@@ -365,13 +365,13 @@ helps['synapse sql-pool-operation-result'] = """
     short-summary: Manage sql pool operation result with synapse
 """
 
-helps['synapse sql-pool-operation-result get-location-header-result'] = """
+helps['synapse sql-pool-operation-result show-location-header-result'] = """
     type: command
     short-summary: "Get the status of a SQL pool operation."
     examples:
       - name: Get the result of an operation on a SQL Analytics pool
         text: |-
-               az synapse sql-pool-operation-result get-location-header-result --operation-id \
+               az synapse sql-pool-operation-result show-location-header-result --operation-id \
 "fedcba98-7654-4210-fedc-ba9876543210" --resource-group "ExampleResourceGroup" --sql-pool-name "ExampleSqlPool" \
 --workspace-name "ExampleWorkspace"
 """

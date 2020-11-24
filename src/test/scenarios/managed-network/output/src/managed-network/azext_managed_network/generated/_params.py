@@ -60,7 +60,7 @@ def load_arguments(self, _):
         c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str,
                    help='The name of the Managed Network.', id_part='name')
 
-    with self.argument_context('managed-network mn get-modify') as c:
+    with self.argument_context('managed-network mn show-modify') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str,
                    help='The name of the Managed Network.', id_part='name')

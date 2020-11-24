@@ -505,11 +505,11 @@ def step_ip_firewall_rule_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
 
 # EXAMPLE: /Operations/get/Get azure async operation header result
 @try_manual
-def step_operation_get_azure_async_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_operation_show_azure_async_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az synapse operation get-azure-async-header-result '
+    test.cmd('az synapse operation show-azure-async-header-result '
              '--operation-id "01234567-89ab-4def-0123-456789abcdef" '
              '--resource-group "{rg_2}" '
              '--workspace-name "{myWorkspace2}"',
@@ -518,11 +518,11 @@ def step_operation_get_azure_async_header_result(test, rg_5, rg, rg_2, rg_3, rg_
 
 # EXAMPLE: /Operations/get/Get location header result
 @try_manual
-def step_operation_get_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_operation_show_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az synapse operation get-location-header-result '
+    test.cmd('az synapse operation show-location-header-result '
              '--operation-id "01234567-89ab-4def-0123-456789abcdef" '
              '--resource-group "{rg_2}" '
              '--workspace-name "{myWorkspace2}"',
@@ -933,7 +933,7 @@ def step_sql_pool_operation(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, 
                             rg_14, rg_15, rg_16, rg_17, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az synapse sql-pool-operation-result get-location-header-result '
+    test.cmd('az synapse sql-pool-operation-result show-location-header-result '
              '--operation-id "fedcba98-7654-4210-fedc-ba9876543210" '
              '--resource-group "{rg}" '
              '--sql-pool-name "{mySqlPool2}" '

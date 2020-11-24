@@ -54,9 +54,9 @@ def managed_network_mn_delete(client,
                                managed_network_name=managed_network_name)
 
 
-def managed_network_mn_get_modify(client,
-                                  resource_group_name,
-                                  managed_network_name):
+def managed_network_mn_show_modify(client,
+                                   resource_group_name,
+                                   managed_network_name):
     return client.get_modify(resource_group_name=resource_group_name,
                              managed_network_name=managed_network_name)
 

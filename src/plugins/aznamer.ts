@@ -31,8 +31,24 @@ export class AzNamer {
             return subOperationGroupName == "" ? "create" : subOperationGroupName + " " + "create";
         } else if (operationName == "update" && (httpProtocol == "put" || httpProtocol == "patch")) {
             return subOperationGroupName == "" ? "update" : subOperationGroupName + " " + "update";
-        } else if (operationName == "get" && httpProtocol == "get") {
-            return subOperationGroupName == "" ? "show" : subOperationGroupName + " " + "show";
+        } else if (operationName.startsWith("get") && httpProtocol == "get") {
+            //return subOperationGroupName == "" ? "show" : subOperationGroupName + " " + "show";
+            // for show scenarios like kusto, if there's list, listbyresourcegroup, listsku, listskubyresource
+            // we should divide it into two groups 
+            // group list contains list and listbyresourcegroup
+            // group listsku contains listsku and listskubyresource
+            // a temporary way is to treat the part after 'by' as parameter distinguish part and the part before by as command.
+            // the split is valid only the By is not first word and the letter before By is capital and the letter after By is lowercase \
+            const regex = /^(?<show>Get[a-zA-Z0-9]*)(?<by>By[A-Z].*)$/;
+            let groups = operationNameOri.match(regex);
+            let cmd = "show";
+            if (groups && groups.length > 2) {
+                cmd = changeCamelToDash(groups[1]);
+            } else {
+                cmd = changeCamelToDash(operationNameOri);
+            }
+            cmd = cmd.replace(/^get/i, 'show');
+            return subOperationGroupName == "" ? cmd : subOperationGroupName + " " + cmd;
         } else if (operationName.startsWith("list") && httpProtocol == "get") {
             // for list scenarios like kusto, if there's list, listbyresourcegroup, listsku, listskubyresource
             // we should divide it into two groups 

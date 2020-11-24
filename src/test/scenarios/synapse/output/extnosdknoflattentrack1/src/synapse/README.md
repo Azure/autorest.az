@@ -39,14 +39,14 @@ az synapse big-data-pool delete --name "ExamplePool" --resource-group "ExampleRe
     --workspace-name "ExampleWorkspace" 
 ```
 #### synapse operation ####
-##### Get-azure-async-header-result #####
+##### Show-azure-async-header-result #####
 ```
-az synapse operation get-azure-async-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" \
+az synapse operation show-azure-async-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" \
     --resource-group "resourceGroup1" --workspace-name "workspace1" 
 ```
-##### Get-location-header-result #####
+##### Show-location-header-result #####
 ```
-az synapse operation get-location-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" \
+az synapse operation show-location-header-result --operation-id "01234567-89ab-4def-0123-456789abcdef" \
     --resource-group "resourceGroup1" --workspace-name "workspace1" 
 ```
 #### synapse ip-firewall-rule ####
@@ -136,9 +136,9 @@ az synapse sql-pool-metadata-sync-config show --resource-group "ExampleResourceG
     --workspace-name "ExampleWorkspace" 
 ```
 #### synapse sql-pool-operation-result ####
-##### Get-location-header-result #####
+##### Show-location-header-result #####
 ```
-az synapse sql-pool-operation-result get-location-header-result --operation-id "fedcba98-7654-4210-fedc-ba9876543210" \
+az synapse sql-pool-operation-result show-location-header-result --operation-id "fedcba98-7654-4210-fedc-ba9876543210" \
     --resource-group "ExampleResourceGroup" --sql-pool-name "ExampleSqlPool" --workspace-name "ExampleWorkspace" 
 ```
 #### synapse sql-pool-geo-backup-policy ####
