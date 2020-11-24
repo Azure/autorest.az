@@ -11,10 +11,14 @@ import { TemplateBase } from "../TemplateBase";
 import { PathConstants } from "../../../models";
 import { isNullOrUndefined } from 'util';
 
-let usePreparers = false;
-let nameMap = {};
-let nameSeq = {};
-let shortToLongName = {};
+let usePreparers: boolean, nameMap, nameSeq, shortToLongName;
+
+function initVars() {
+    usePreparers = false;
+    nameMap = {};
+    nameSeq = {};
+    shortToLongName = {};
+}
 
 export function NeedPreparer(): boolean {
     return usePreparers;
@@ -40,6 +44,7 @@ export class CliTestStep extends TemplateBase {
     }
 
     private GenerateAzureCliTestStep(model: CodeModelAz): string[] {
+        initVars();
         let steps: string[] = [];
         steps.push("");
         steps.push("");
