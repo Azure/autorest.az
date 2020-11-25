@@ -35,7 +35,7 @@ def step_attestation_provider_provider_list(test, rg, rg_2, rg_3, checks=None):
 
 # EXAMPLE: /AttestationProviders/get/AttestationProviders_ListByResourceGroup
 @try_manual
-def step_attestation_provider_provider_list(test, rg, rg_2, rg_3, checks=None):
+def step_attestation_provider_provider_list2(test, rg, rg_2, rg_3, checks=None):
     if checks is None:
         checks = []
     test.cmd('az attestation attestation-provider provider list '

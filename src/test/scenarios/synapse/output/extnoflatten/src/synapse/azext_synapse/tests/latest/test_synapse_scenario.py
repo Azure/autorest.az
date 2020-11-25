@@ -46,25 +46,25 @@ from .example_steps import step_private_endpoint_connection_list
 from .example_steps import step_private_link_hub_create
 from .example_steps import step_private_link_hub_show
 from .example_steps import step_private_link_hub_list
-from .example_steps import step_private_link_hub_list
+from .example_steps import step_private_link_hub_list2
 from .example_steps import step_private_link_hub_update
 from .example_steps import step_big_data_pool_show
 from .example_steps import step_workspace_show
 from .example_steps import step_workspace_list
-from .example_steps import step_workspace_list
+from .example_steps import step_workspace_list2
 from .example_steps import step_workspace_update
 from .example_steps import step_private_link_resource_list
 from .example_steps import step_private_link_resource_list
 from .example_steps import step_sql_pool_create
 from .example_steps import step_sql_pool_show
 from .example_steps import step_sql_pool_list
-from .example_steps import step_sql_pool_list
+from .example_steps import step_sql_pool_list2
 from .example_steps import step_sql_pool_pause
 from .example_steps import step_sql_pool_rename
 from .example_steps import step_sql_pool_resume
 from .example_steps import step_sql_pool_update
 from .example_steps import step_sql_pool_blob_auditing_policy_create
-from .example_steps import step_sql_pool_blob_auditing_policy_create
+from .example_steps import step_sql_pool_blob_auditing_policy_create2
 from .example_steps import step_sql_pool_blob_auditing_policy_show
 from .example_steps import step_sql_pool_connection_policy_show
 from .example_steps import step_sql_pool_data_warehouse_user_activity_show
@@ -94,8 +94,8 @@ from .example_steps import step_sql_pool_vulnerability_assessment_scan_list
 from .example_steps import step_sql_pool_vulnerability3
 from .example_steps import step_sql_pool_vulnerability_assessment_scan_export
 from .example_steps import step_sql_pool_vulnerability_assessment_create
-from .example_steps import step_sql_pool_vulnerability_assessment_create
-from .example_steps import step_sql_pool_vulnerability_assessment_create
+from .example_steps import step_sql_pool_vulnerability_assessment_create2
+from .example_steps import step_sql_pool_vulnerability_assessment_create3
 from .example_steps import step_sql_pool_vulnerability_assessment_show
 from .example_steps import step_sql_pool_vulnerability_assessment_list
 from .example_steps import step_sql_pool_sensitivity_label_delete
@@ -280,8 +280,8 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
                                rg_14, rg_15, rg_16, rg_17, checks=[
         test.check('length(@)', 1),
     ])
-    step_private_link_hub_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17, checks=[
+    step_private_link_hub_list2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
+                                rg_14, rg_15, rg_16, rg_17, checks=[
         test.check('length(@)', 1),
     ])
     step_private_link_hub_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
@@ -321,8 +321,8 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
                         rg_15, rg_16, rg_17, checks=[
         test.check('length(@)', 1),
     ])
-    step_workspace_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17, checks=[
+    step_workspace_list2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                         rg_15, rg_16, rg_17, checks=[
         test.check('length(@)', 1),
     ])
     step_workspace_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
@@ -358,8 +358,8 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
                        rg_15, rg_16, rg_17, checks=[])
     step_sql_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
                        rg_15, rg_16, rg_17, checks=[])
-    step_sql_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                       rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_list2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
+                        rg_15, rg_16, rg_17, checks=[])
     step_sql_pool_pause(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
                         rg_15, rg_16, rg_17, checks=[])
     step_sql_pool_rename(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
@@ -382,8 +382,8 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
     ])
     step_sql_pool_blob_auditing_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_sql_pool_blob_auditing_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_blob_auditing_policy_create2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
+                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_sql_pool_blob_auditing_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_sql_pool_connection_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
@@ -443,10 +443,10 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
                                                        rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
-    step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability_assessment_create2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
+    step_sql_pool_vulnerability_assessment_create3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
+                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_sql_pool_vulnerability_assessment_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
                                                 rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=[])
     step_sql_pool_vulnerability_assessment_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,

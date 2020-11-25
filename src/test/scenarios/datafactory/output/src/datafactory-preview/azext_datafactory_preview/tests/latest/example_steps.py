@@ -49,7 +49,7 @@ def step_list(test, rg, checks=None):
 
 # EXAMPLE: /Factories/get/Factories_ListByResourceGroup
 @try_manual
-def step_list(test, rg, checks=None):
+def step_list2(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az datafactory list '

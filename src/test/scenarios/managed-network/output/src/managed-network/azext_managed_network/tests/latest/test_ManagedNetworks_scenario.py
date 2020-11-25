@@ -19,7 +19,7 @@ from .example_steps import step_mn_show_modify
 from azure.cli.testsdk import ResourceGroupPreparer
 from .preparers import VirtualNetworkPreparer
 from .example_steps import step_mn_list
-from .example_steps import step_mn_list
+from .example_steps import step_mn_list2
 from .example_steps import step_mn_delete
 from .example_steps import step_mn_group_show
 from azure.cli.testsdk import ResourceGroupPreparer
@@ -112,7 +112,7 @@ def cleanup_scenario2(test, rg):
 def call_scenario2(test, rg):
     setup_scenario2(test, rg)
     step_mn_list(test, rg, checks=[])
-    step_mn_list(test, rg, checks=[
+    step_mn_list2(test, rg, checks=[
         test.check('length(@)', 1),
     ])
     step_mn_delete(test, rg, checks=[])

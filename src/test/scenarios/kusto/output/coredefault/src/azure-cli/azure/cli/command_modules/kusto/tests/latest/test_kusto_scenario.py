@@ -17,9 +17,9 @@ from .example_steps import step_attached_database_configuration_list
 from .example_steps import step_cluster_create
 from .example_steps import step_cluster_show
 from .example_steps import step_cluster_list
-from .example_steps import step_cluster_list
+from .example_steps import step_cluster_list2
 from .example_steps import step_cluster_list_sku
-from .example_steps import step_cluster_list_sku
+from .example_steps import step_cluster_list_sku2
 from .example_steps import step_cluster_update
 from .example_steps import step_cluster_add_language_extension
 from .example_steps import step_cluster_detach_follower_database
@@ -115,11 +115,11 @@ def call_scenario(test, rg):
     step_cluster_list(test, rg, checks=[
         test.check('length(@)', 1),
     ])
-    step_cluster_list(test, rg, checks=[
+    step_cluster_list2(test, rg, checks=[
         test.check('length(@)', 1),
     ])
     step_cluster_list_sku(test, rg, checks=[])
-    step_cluster_list_sku(test, rg, checks=[])
+    step_cluster_list_sku2(test, rg, checks=[])
     step_cluster_update(test, rg, checks=[
         test.check("name", "{myCluster}", case_sensitive=False),
         test.check("identity.type", "SystemAssigned", case_sensitive=False),
