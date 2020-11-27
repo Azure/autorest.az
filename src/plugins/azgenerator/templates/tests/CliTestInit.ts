@@ -73,6 +73,7 @@ export class CliTestInit extends TemplateBase {
         output.push('        module_name, _ = os.path.splitext(manual_file_name)');
         output.push('        manual_module = "..manual." + \\');
         output.push('            ".".join(manual_file_path.split(os.path.sep) + [module_name, ])');
+        output.push('        print("@@!!!!!!!!!!!!!!!!", manual_module, "#", __name__, "#", origin_func.__name__)')
         output.push('        return getattr(import_module(manual_module, package=__name__), origin_func.__name__)');
         output.push('');
         output.push('    def get_func_to_call():');
@@ -80,7 +81,8 @@ export class CliTestInit extends TemplateBase {
         output.push('        try:');
         output.push('            func_to_call = import_manual_function(func)');
         output.push('            logger.info("Found manual override for %s(...)", func.__name__)')
-        output.push('        except (ImportError, AttributeError):');
+        output.push('        except (ImportError, AttributeError) as e:');
+        output.push('            print("@!!!!!!!!!!!!!!!!", e)')
         output.push('            pass');
         output.push('        return func_to_call');
         output.push('');
