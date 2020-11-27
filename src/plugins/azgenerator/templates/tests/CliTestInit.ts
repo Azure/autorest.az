@@ -64,6 +64,7 @@ export class CliTestInit extends TemplateBase {
         output.push('        from importlib import import_module');
         output.push('        decorated_path = inspect.getfile(origin_func)');
         output.push('        module_path = __path__[0]');
+        output.push('        print("!!!!!!!!!!!!!!!!", decorated_path, "#", origin_func, "#", module_path)')
         output.push('        if not decorated_path.startswith(module_path):');
         output.push('            raise Exception("Decorator can only be used in submodules!")');
         output.push('        manual_path = os.path.join(');
@@ -77,7 +78,6 @@ export class CliTestInit extends TemplateBase {
         output.push('    def get_func_to_call():');
         output.push('        func_to_call = func');
         output.push('        try:');
-        output.push('            func_to_call = import_manual_function(func)');
         output.push('            func_to_call = import_manual_function(func)');
         output.push('            logger.info("Found manual override for %s(...)", func.__name__)')
         output.push('        except (ImportError, AttributeError):');
