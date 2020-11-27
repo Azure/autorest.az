@@ -83,6 +83,10 @@ export class CliTestInit extends TemplateBase {
         output.push('            logger.info("Found manual override for %s(...)", func.__name__)')
         output.push('        except (ImportError, AttributeError) as e:');
         output.push('            print("@!!!!!!!!!!!!!!!!", e)')
+        output.push('            import glob')
+        output.push('            for filename in glob.iglob(os.path.dirname(os.path.abspath(__file__))+"/../**", recursive=True):')
+        output.push('                print(filename)')
+        output.push('            print("#!!!!!!!!!!!!!!!!")')
         output.push('            pass');
         output.push('        return func_to_call');
         output.push('');
