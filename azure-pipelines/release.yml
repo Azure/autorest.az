@@ -122,6 +122,7 @@ stages:
           echo -e "\e[32m[$(date -u)] LOG: Az login"
           az login --service-principal -u $(USER_SERVICE_PRINCIPAL_ID) -p $(USER_SERVICE_PRINCIPAL_SECRET) --tenant $(USER_SERVICE_PRINCIPAL_TENANT)
           echo -e "\e[32m[$(date -u)] LOG: Start test script"
+          pwd
           ls -R ../azure-cli-extensions
           pytest -s ../s/.scripts/e2e/testcases.py --all --az ../s --azpack $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)/$(VAR_ARIFACT_NAME)/autorest-az-$CURRENT_VERSION.tgz --swagger ../azure-rest-api-specs --cliext ../azure-cli-extensions --testserver ../autorest.testserver --junitxml=../s/.scripts/e2e/test-results.xml
         displayName: 'Pytest'
