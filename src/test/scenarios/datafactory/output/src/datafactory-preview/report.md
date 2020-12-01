@@ -106,7 +106,7 @@ az datafactory show --name "myFactory" --resource-group "myResourceGroup"
 
 ##### <a name="ExamplesFactoriesCreateOrUpdate#Create">Example</a>
 ```
-az datafactory create --location "East US" --zones "earth" --zones "moon" --name "myFactory" --resource-group \
+az datafactory create --location "East US" --zones "earth" "moon" --name "myFactory" --resource-group \
 "myResourceGroup"
 ```
 ##### <a name="ParametersFactoriesCreateOrUpdate#Create">Parameters</a> 

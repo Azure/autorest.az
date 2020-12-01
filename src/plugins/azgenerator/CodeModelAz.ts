@@ -27,6 +27,7 @@ export enum KeyValueType {
     Classic,
     PositionalKey,
     ShorthandSyntax,
+    SimpleArray,
 }
 
 export class ExampleParam {

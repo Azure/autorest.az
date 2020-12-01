@@ -1467,8 +1467,12 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_IsSimpleArray(): boolean {
-        if (this.MethodParameter_Type == SchemaType.Array) {
-            let elementType = this.MethodParameter['schema']['elementType'].type;
+        return this.Parameter_IsSimpleArray(this.MethodParameter);
+    }
+
+    private Parameter_IsSimpleArray(param: Parameter): boolean {
+        if (this.Parameter_Type(param) == SchemaType.Array) {
+            let elementType = param['schema']['elementType'].type;
             if (!this.isComplexSchema(elementType)) {
                 return true;
             }
@@ -1986,6 +1990,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                             ret += instanceString;
                         }
                         example_param.push(new ExampleParam(name, ret, false, KeyValueType.ShorthandSyntax, keys, defaultName, realParam, ancestors, value));
+                    }
+                    else if (this.Parameter_IsSimpleArray(realParam.value)) {
+                        for (let i=0; i<value.length; i++) {
+                            ret += ToJsonString(value[i]) + " ";
+                        }
+                        ret = ret.trim();
+                        example_param.push(new ExampleParam(name, ret, false, KeyValueType.SimpleArray, [], defaultName, realParam, ancestors, value));
                     }
                     else {
                         for (let i=0; i<value.length; i++) {
