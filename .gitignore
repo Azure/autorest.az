@@ -1,6 +1,5 @@
 node_modules/
 dist/
-.vscode/
 .vs/
 __pycache__/
 src/test/scenarios/testserver/input/
