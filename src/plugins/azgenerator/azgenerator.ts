@@ -28,6 +28,14 @@ export async function processRequest(host: Host) {
             model.CliCoreLib = cliCoreLib;
         }
 
+        if (model.SelectFirstExtension()) {
+            do {
+                let azextpath = path.join(model.azOutputFolder,  model.AzextFolder);
+                session.protectFiles(path.join(azextpath, "manual"));
+                session.protectFiles(path.join(azextpath,  "tests/latest/recordings"));
+                session.protectFiles(path.join(azextpath, "README.md"));
+            } while (model.SelectNextExtension());
+        }
         // Read existing file generation-mode
         let options = await session.getValue('az');
         model.CliGenerationMode = await autoDetectGenerationMode(host, model.AzextFolder, model.IsCliCore);
@@ -36,15 +44,6 @@ export async function processRequest(host: Host) {
         let generator = await AzGeneratorFactory.createAzGenerator(model, debug);
         await generator.generateAll();
         let files = generator.files;
-
-        if (model.SelectFirstExtension()) {
-            do {
-                let path = model.AzextFolder;
-                session.protectFiles(path + "manual");
-                session.protectFiles(path + "tests/latest/recordings");
-                session.protectFiles("README.md");
-            } while (model.SelectNextExtension());
-        }
 
         // Remove the README.md from the write file list if it is exists
         let notGeneratedFileifExist: Array<string> = ["README.md"];
