@@ -26,7 +26,7 @@ cli:
     cli-directive:
     # directive on operationGroup
       - where:
-            group: datafactory
+            group: Factories
             parameter: factoryName
         alias:
             - name

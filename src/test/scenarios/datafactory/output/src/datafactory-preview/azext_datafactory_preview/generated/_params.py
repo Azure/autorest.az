@@ -35,14 +35,14 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory show') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n', '--factory-name'], type=str, help='The factory name.',
-                   id_part='name', configured_default='factory')
+        c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.', id_part='name',
+                   configured_default='factory')
         c.argument('if_none_match', type=str, help='ETag of the factory entity. Should only be specified for get. If '
                    'the ETag matches the existing entity tag, or if * was provided, then no content will be returned.')
 
     with self.argument_context('datafactory create') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n', '--factory-name'], type=str, help='The factory name.',
+        c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.',
                    configured_default='factory')
         c.argument('if_match', type=str, help='ETag of the factory entity. Should only be specified for update, for '
                    'which it should match existing entity or can be * for unconditional update.')
@@ -60,14 +60,14 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory update') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n', '--factory-name'], type=str, help='The factory name.',
-                   id_part='name', configured_default='factory')
+        c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.', id_part='name',
+                   configured_default='factory')
         c.argument('tags', tags_type)
 
     with self.argument_context('datafactory delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n', '--factory-name'], type=str, help='The factory name.',
-                   id_part='name', configured_default='factory')
+        c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.', id_part='name',
+                   configured_default='factory')
 
     with self.argument_context('datafactory configure-factory-repo') as c:
         c.argument('location_id', type=str, help='The location identifier.', id_part='name')
@@ -79,8 +79,8 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory get-data-plane-access') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n', '--factory-name'], type=str, help='The factory name.',
-                   id_part='name', configured_default='factory')
+        c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.', id_part='name',
+                   configured_default='factory')
         c.argument('permissions', type=str, help='The string with permissions for Data Plane access. Currently only '
                    '\'r\' is supported which grants read only access.')
         c.argument('access_resource_path', type=str, help='The resource path to get access relative to factory. '
@@ -94,8 +94,8 @@ def load_arguments(self, _):
 
     with self.argument_context('datafactory get-git-hub-access-token') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', options_list=['--name', '-n', '--factory-name'], type=str, help='The factory name.',
-                   id_part='name', configured_default='factory')
+        c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.', id_part='name',
+                   configured_default='factory')
         c.argument('git_hub_access_code', type=str, help='GitHub access code.')
         c.argument('git_hub_client_id', type=str, help='GitHub application client ID.')
         c.argument('git_hub_access_token_base_url', type=str, help='GitHub access token base URL.')
