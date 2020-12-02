@@ -11,8 +11,7 @@ az extension add --name datafactory
 #### datafactory ####
 ##### Create #####
 ```
-az datafactory create --location "East US" --zones "earth" --zones "moon" --name "myFactory" \
-    --resource-group "myResourceGroup" 
+az datafactory create --location "East US" --zones "earth" "moon" --name "myFactory" --resource-group "myResourceGroup"
 ```
 ##### Show #####
 ```

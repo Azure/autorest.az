@@ -19,8 +19,7 @@ def step_create(test, rg, checks=None):
         checks = []
     test.cmd('az datafactory create '
              '--location "East US" '
-             '--zones "earth" '
-             '--zones "moon" '
+             '--zones "earth" "moon" '
              '--name "{myFactory}" '
              '--resource-group "{rg}"',
              checks=checks)

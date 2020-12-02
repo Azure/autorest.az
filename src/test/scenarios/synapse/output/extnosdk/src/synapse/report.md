@@ -1130,12 +1130,11 @@ az synapse sql-pool-blob-auditing-policy show --resource-group "blobauditingtest
 ##### <a name="ExamplesSqlPoolBlobAuditingPoliciesCreateOrUpdate#Create">Example</a>
 ```
 az synapse sql-pool-blob-auditing-policy create --audit-actions-and-groups "DATABASE_LOGOUT_GROUP" \
---audit-actions-and-groups "DATABASE_ROLE_MEMBER_CHANGE_GROUP" --audit-actions-and-groups "UPDATE on \
-database::TestDatabaseName by public" --is-azure-monitor-target-enabled true --is-storage-secondary-key-in-use false \
---retention-days 6 --state "Enabled" --storage-account-access-key "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdk\
-fD2342309432849328476458/3RSD==" --storage-account-subscription-id "00000000-1234-0000-5678-000000000000" \
---storage-endpoint "https://mystorage.blob.core.windows.net" --resource-group "blobauditingtest-4799" --sql-pool-name \
-"testdb" --workspace-name "blobauditingtest-6440"
+"DATABASE_ROLE_MEMBER_CHANGE_GROUP" "UPDATE on database::TestDatabaseName by public" --is-azure-monitor-target-enabled \
+true --is-storage-secondary-key-in-use false --retention-days 6 --state "Enabled" --storage-account-access-key \
+"sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==" --storage-account-subscription-id\
+ "00000000-1234-0000-5678-000000000000" --storage-endpoint "https://mystorage.blob.core.windows.net" --resource-group \
+"blobauditingtest-4799" --sql-pool-name "testdb" --workspace-name "blobauditingtest-6440"
 ```
 ##### <a name="ExamplesSqlPoolBlobAuditingPoliciesCreateOrUpdate#Create">Example</a>
 ```
@@ -1361,11 +1360,11 @@ az synapse sql-pool-security-alert-policy show --resource-group "securityalert-6
 
 ##### <a name="ExamplesSqlPoolSecurityAlertPoliciesCreateOrUpdate#Create">Example</a>
 ```
-az synapse sql-pool-security-alert-policy create --disabled-alerts "Sql_Injection" --disabled-alerts "Usage_Anomaly" \
---email-account-admins true --email-addresses "test@microsoft.com" --email-addresses "user@microsoft.com" \
---retention-days 6 --state "Enabled" --storage-account-access-key "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdk\
-fD2342309432849328476458/3RSD==" --storage-endpoint "https://mystorage.blob.core.windows.net" --resource-group \
-"securityalert-4799" --sql-pool-name "testdb" --workspace-name "securityalert-6440"
+az synapse sql-pool-security-alert-policy create --disabled-alerts "Sql_Injection" "Usage_Anomaly" \
+--email-account-admins true --email-addresses "test@microsoft.com" "user@microsoft.com" --retention-days 6 --state \
+"Enabled" --storage-account-access-key "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3R\
+SD==" --storage-endpoint "https://mystorage.blob.core.windows.net" --resource-group "securityalert-4799" \
+--sql-pool-name "testdb" --workspace-name "securityalert-6440"
 ```
 ##### <a name="ParametersSqlPoolSecurityAlertPoliciesCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
