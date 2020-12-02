@@ -801,6 +801,29 @@ export class ResourcePool {
             }
             return ret;
         }
+        else if (keyValue==KeyValueType.SimpleArray) {
+            let ret = [];
+            for (let instanceString of endpoint.split(" ")) {
+                let p = "";
+                if (instanceString.length >= 2 && instanceString[0] == '"' && instanceString[instanceString.length - 1] == '"') {
+                    p = this.addEndpointResource(instanceString.substr(1, instanceString.length - 2), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+                    if (isTest) {
+                        p= `"${this.formatable(p, placeholders)}"`;
+                    }
+                    else {
+                        p= `"${p}"`;
+                    }
+                }
+                else {
+                    p = this.addEndpointResource(instanceString, isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+                    if (isTest) {
+                        p = `${this.formatable(p, placeholders)}`;
+                    }
+                }
+                ret.push(p);
+            }
+            return ret.join(" ");
+        }
         return this.replaceResourceString(endpoint, placeholders, resources, isTest);
     }
     public replaceResourceString(endpoint: string, placeholders: string[], resources: string[], isTest = true): any {

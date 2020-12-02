@@ -79,8 +79,8 @@ collaboration-branch=XX root-folder=XX last-commit-id=XX
     examples:
       - name: Factories_CreateOrUpdate
         text: |-
-               az datafactory create --location "East US" --zones "earth" --zones "moon" --name "myFactory" \
---resource-group "myResourceGroup"
+               az datafactory create --location "East US" --zones "earth" "moon" --name "myFactory" --resource-group \
+"myResourceGroup"
 """
 
 helps['datafactory update'] = """

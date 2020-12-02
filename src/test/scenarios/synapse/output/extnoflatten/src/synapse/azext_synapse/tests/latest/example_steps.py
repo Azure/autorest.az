@@ -802,9 +802,8 @@ def step_sql_pool_blob_auditing_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, 
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-blob-auditing-policy create '
-             '--audit-actions-and-groups "DATABASE_LOGOUT_GROUP" '
-             '--audit-actions-and-groups "DATABASE_ROLE_MEMBER_CHANGE_GROUP" '
-             '--audit-actions-and-groups "UPDATE on database::TestDatabaseName by public" '
+             '--audit-actions-and-groups "DATABASE_LOGOUT_GROUP" "DATABASE_ROLE_MEMBER_CHANGE_GROUP" "UPDATE on '
+             'database::TestDatabaseName by public" '
              '--is-azure-monitor-target-enabled true '
              '--is-storage-secondary-key-in-use false '
              '--retention-days 6 '
@@ -1002,11 +1001,9 @@ def step_sql_pool_security_alert_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4,
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-security-alert-policy create '
-             '--disabled-alerts "Sql_Injection" '
-             '--disabled-alerts "Usage_Anomaly" '
+             '--disabled-alerts "Sql_Injection" "Usage_Anomaly" '
              '--email-account-admins true '
-             '--email-addresses "test@microsoft.com" '
-             '--email-addresses "user@microsoft.com" '
+             '--email-addresses "test@microsoft.com" "user@microsoft.com" '
              '--retention-days 6 '
              '--state "Enabled" '
              '--storage-account-access-key "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD234230943284932847645'
