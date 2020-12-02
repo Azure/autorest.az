@@ -16,27 +16,27 @@ if TYPE_CHECKING:
     from azure.core.credentials_async import AsyncTokenCredential
 
 from ._configuration import ManagedNetworkManagementClientConfiguration
-from .operations import ManagedNetworkOperations
-from .operations import ScopeAssignmentOperations
-from .operations import ManagedNetworkGroupOperations
-from .operations import ManagedNetworkPeeringPolicyOperations
-from .operations import OperationOperations
+from .operations import ManagedNetworksOperations
+from .operations import ScopeAssignmentsOperations
+from .operations import ManagedNetworkGroupsOperations
+from .operations import ManagedNetworkPeeringPoliciesOperations
+from .operations import Operations
 from .. import models
 
 
 class ManagedNetworkManagementClient(object):
     """The Microsoft Azure Managed Network management API provides a RESTful set of web services that interact with Microsoft Azure Networks service to programmatically view, control, change, and monitor your entire Azure network centrally and with ease.
 
-    :ivar managed_network: ManagedNetworkOperations operations
-    :vartype managed_network: managed_network_management_client.aio.operations.ManagedNetworkOperations
-    :ivar scope_assignment: ScopeAssignmentOperations operations
-    :vartype scope_assignment: managed_network_management_client.aio.operations.ScopeAssignmentOperations
-    :ivar managed_network_group: ManagedNetworkGroupOperations operations
-    :vartype managed_network_group: managed_network_management_client.aio.operations.ManagedNetworkGroupOperations
-    :ivar managed_network_peering_policy: ManagedNetworkPeeringPolicyOperations operations
-    :vartype managed_network_peering_policy: managed_network_management_client.aio.operations.ManagedNetworkPeeringPolicyOperations
-    :ivar operation: OperationOperations operations
-    :vartype operation: managed_network_management_client.aio.operations.OperationOperations
+    :ivar managed_networks: ManagedNetworksOperations operations
+    :vartype managed_networks: managed_network_management_client.aio.operations.ManagedNetworksOperations
+    :ivar scope_assignments: ScopeAssignmentsOperations operations
+    :vartype scope_assignments: managed_network_management_client.aio.operations.ScopeAssignmentsOperations
+    :ivar managed_network_groups: ManagedNetworkGroupsOperations operations
+    :vartype managed_network_groups: managed_network_management_client.aio.operations.ManagedNetworkGroupsOperations
+    :ivar managed_network_peering_policies: ManagedNetworkPeeringPoliciesOperations operations
+    :vartype managed_network_peering_policies: managed_network_management_client.aio.operations.ManagedNetworkPeeringPoliciesOperations
+    :ivar operations: Operations operations
+    :vartype operations: managed_network_management_client.aio.operations.Operations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
@@ -62,15 +62,15 @@ class ManagedNetworkManagementClient(object):
         self._serialize.client_side_validation = False
         self._deserialize = Deserializer(client_models)
 
-        self.managed_network = ManagedNetworkOperations(
+        self.managed_networks = ManagedNetworksOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.scope_assignment = ScopeAssignmentOperations(
+        self.scope_assignments = ScopeAssignmentsOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.managed_network_group = ManagedNetworkGroupOperations(
+        self.managed_network_groups = ManagedNetworkGroupsOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.managed_network_peering_policy = ManagedNetworkPeeringPolicyOperations(
+        self.managed_network_peering_policies = ManagedNetworkPeeringPoliciesOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.operation = OperationOperations(
+        self.operations = Operations(
             self._client, self._config, self._serialize, self._deserialize)
 
     async def close(self) -> None:

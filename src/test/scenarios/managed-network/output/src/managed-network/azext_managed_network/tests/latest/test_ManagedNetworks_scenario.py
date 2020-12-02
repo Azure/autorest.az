@@ -56,7 +56,6 @@ def cleanup_scenario1(test, rg):
 def call_scenario1(test, rg):
     setup_scenario1(test, rg)
     step_mn_create(test, rg, checks=[
-        test.check("location", "eastus", case_sensitive=False),
         test.check("name", "{myManagedNetwork}", case_sensitive=False),
     ])
     step_mn_group_create(test, rg, checks=[

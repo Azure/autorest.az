@@ -17,16 +17,16 @@ def cf_managed_network_cl(cli_ctx, *_):
 
 
 def cf_managed_network(cli_ctx, *_):
-    return cf_managed_network_cl(cli_ctx).managed_network
+    return cf_managed_network_cl(cli_ctx).managed_networks
 
 
 def cf_scope_assignment(cli_ctx, *_):
-    return cf_managed_network_cl(cli_ctx).scope_assignment
+    return cf_managed_network_cl(cli_ctx).scope_assignments
 
 
 def cf_managed_network_group(cli_ctx, *_):
-    return cf_managed_network_cl(cli_ctx).managed_network_group
+    return cf_managed_network_cl(cli_ctx).managed_network_groups
 
 
 def cf_managed_network_peering_policy(cli_ctx, *_):
-    return cf_managed_network_cl(cli_ctx).managed_network_peering_policy
+    return cf_managed_network_cl(cli_ctx).managed_network_peering_policies

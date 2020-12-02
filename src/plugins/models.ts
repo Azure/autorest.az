@@ -88,6 +88,7 @@ export class ArgumentConstants {
     public static readonly targetMode: string = "target-mode";
     public static readonly compatibleLevel: string = "compatible-level";
     public static readonly sdkNoFlatten = "sdk-no-flatten";
+    public static readonly sdkFlatten = "sdk-flatten";
     public static readonly extensionMode = "extension-mode";
     public static readonly azureCliFolder = "azure-cli-folder";
     public static readonly azureCliExtFolder = "azure-cli-extension-folder";

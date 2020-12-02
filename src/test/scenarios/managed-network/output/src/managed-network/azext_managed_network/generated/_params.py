@@ -43,11 +43,8 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str,
                    help='The name of the Managed Network.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
-                   validator=get_default_location_from_resource_group)
-        c.argument('tags', tags_type)
-        c.argument('properties', type=validate_file_or_dict, help='The MNC properties Expected value: '
-                   'json-string/@json-file.')
+        c.argument('managed_network', type=validate_file_or_dict, help='Parameters supplied to the create/update a '
+                   'Managed Network Resource Expected value: json-string/@json-file.')
 
     with self.argument_context('managed-network mn update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -199,7 +196,7 @@ def load_arguments(self, _):
         c.argument('hub', action=AddHub, nargs='+', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='+', help='Gets or sets the spokes group IDs')
         c.argument('mesh', action=AddMesh, nargs='+', help='Gets or sets the mesh group IDs')
-        c.ignore('managed_network_peering_policy_name', 'properties')
+        c.ignore('managed_network_peering_policy_name')
 
     with self.argument_context('managed-network managed-network-peering-policy mesh-topology update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -211,7 +208,7 @@ def load_arguments(self, _):
         c.argument('hub', action=AddHub, nargs='+', help='Gets or sets the hub virtual network ID')
         c.argument('spokes', action=AddSpokes, nargs='+', help='Gets or sets the spokes group IDs')
         c.argument('mesh', action=AddMesh, nargs='+', help='Gets or sets the mesh group IDs')
-        c.ignore('managed_network_peering_policy_name', 'properties')
+        c.ignore('managed_network_peering_policy_name')
 
     with self.argument_context('managed-network managed-network-peering-policy delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
