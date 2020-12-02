@@ -177,25 +177,20 @@ class AttestationServiceCreationParams(msrest.serialization.Model):
     :type location: str
     :param tags: A set of tags. The tags that will be assigned to the attestation service instance.
     :type tags: dict[str, str]
-    :param attestation_policy: Name of attestation policy.
-    :type attestation_policy: str
-    :param keys: The value of the "keys" parameter is an array of JWK values.  By
-     default, the order of the JWK values within the array does not imply
-     an order of preference among them, although applications of JWK Sets
-     can choose to assign a meaning to the order for their purposes, if
-     desired.
-    :type keys: list[~attestation_management_client.models.JsonWebKey]
+    :param properties: Required. Properties of the attestation service instance.
+    :type properties:
+     ~attestation_management_client.models.AttestationServiceCreationSpecificParams
     """
 
     _validation = {
         'location': {'required': True},
+        'properties': {'required': True},
     }
 
     _attribute_map = {
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
-        'attestation_policy': {'key': 'properties.attestationPolicy', 'type': 'str'},
-        'keys': {'key': 'properties.policySigningCertificates.keys', 'type': '[JsonWebKey]'},
+        'properties': {'key': 'properties', 'type': 'AttestationServiceCreationSpecificParams'},
     }
 
     def __init__(
@@ -205,8 +200,31 @@ class AttestationServiceCreationParams(msrest.serialization.Model):
         super(AttestationServiceCreationParams, self).__init__(**kwargs)
         self.location = kwargs['location']
         self.tags = kwargs.get('tags', None)
+        self.properties = kwargs['properties']
+
+
+class AttestationServiceCreationSpecificParams(msrest.serialization.Model):
+    """Client supplied parameters used to create a new attestation service instance.
+
+    :param attestation_policy: Name of attestation policy.
+    :type attestation_policy: str
+    :param policy_signing_certificates: JSON Web Key Set defining a set of X.509 Certificates that
+     will represent the parent certificate for the signing certificate used for policy operations.
+    :type policy_signing_certificates: ~attestation_management_client.models.JsonWebKeySet
+    """
+
+    _attribute_map = {
+        'attestation_policy': {'key': 'attestationPolicy', 'type': 'str'},
+        'policy_signing_certificates': {'key': 'policySigningCertificates', 'type': 'JsonWebKeySet'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(AttestationServiceCreationSpecificParams, self).__init__(**kwargs)
         self.attestation_policy = kwargs.get('attestation_policy', None)
-        self.keys = kwargs.get('keys', None)
+        self.policy_signing_certificates = kwargs.get('policy_signing_certificates', None)
 
 
 class AttestationServicePatchParams(msrest.serialization.Model):
@@ -368,6 +386,29 @@ class JsonWebKey(msrest.serialization.Model):
         self.x = kwargs.get('x', None)
         self.x5_c = kwargs.get('x5_c', None)
         self.y = kwargs.get('y', None)
+
+
+class JsonWebKeySet(msrest.serialization.Model):
+    """JsonWebKeySet.
+
+    :param keys: The value of the "keys" parameter is an array of JWK values.  By
+     default, the order of the JWK values within the array does not imply
+     an order of preference among them, although applications of JWK Sets
+     can choose to assign a meaning to the order for their purposes, if
+     desired.
+    :type keys: list[~attestation_management_client.models.JsonWebKey]
+    """
+
+    _attribute_map = {
+        'keys': {'key': 'keys', 'type': '[JsonWebKey]'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(JsonWebKeySet, self).__init__(**kwargs)
+        self.keys = kwargs.get('keys', None)
 
 
 class OperationList(msrest.serialization.Model):

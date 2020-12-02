@@ -6,14 +6,14 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._operation_operations import OperationOperations
+from ._operations import Operations
 from ._mixed_reality_client_operations import MixedRealityClientOperationsMixin
-from ._spatial_anchor_account_operations import SpatialAnchorAccountOperations
-from ._remote_rendering_account_operations import RemoteRenderingAccountOperations
+from ._spatial_anchors_accounts_operations import SpatialAnchorsAccountsOperations
+from ._remote_rendering_accounts_operations import RemoteRenderingAccountsOperations
 
 __all__ = [
-    'OperationOperations',
+    'Operations',
     'MixedRealityClientOperationsMixin',
-    'SpatialAnchorAccountOperations',
-    'RemoteRenderingAccountOperations',
+    'SpatialAnchorsAccountsOperations',
+    'RemoteRenderingAccountsOperations',
 ]

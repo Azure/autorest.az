@@ -16,22 +16,22 @@ if TYPE_CHECKING:
     from azure.core.credentials_async import AsyncTokenCredential
 
 from ._configuration import MixedRealityClientConfiguration
-from .operations import OperationOperations
+from .operations import Operations
 from .operations import MixedRealityClientOperationsMixin
-from .operations import SpatialAnchorAccountOperations
-from .operations import RemoteRenderingAccountOperations
+from .operations import SpatialAnchorsAccountsOperations
+from .operations import RemoteRenderingAccountsOperations
 from .. import models
 
 
 class MixedRealityClient(MixedRealityClientOperationsMixin):
     """Mixed Reality Client.
 
-    :ivar operation: OperationOperations operations
-    :vartype operation: mixed_reality_client.aio.operations.OperationOperations
-    :ivar spatial_anchor_account: SpatialAnchorAccountOperations operations
-    :vartype spatial_anchor_account: mixed_reality_client.aio.operations.SpatialAnchorAccountOperations
-    :ivar remote_rendering_account: RemoteRenderingAccountOperations operations
-    :vartype remote_rendering_account: mixed_reality_client.aio.operations.RemoteRenderingAccountOperations
+    :ivar operations: Operations operations
+    :vartype operations: mixed_reality_client.aio.operations.Operations
+    :ivar spatial_anchors_accounts: SpatialAnchorsAccountsOperations operations
+    :vartype spatial_anchors_accounts: mixed_reality_client.aio.operations.SpatialAnchorsAccountsOperations
+    :ivar remote_rendering_accounts: RemoteRenderingAccountsOperations operations
+    :vartype remote_rendering_accounts: mixed_reality_client.aio.operations.RemoteRenderingAccountsOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
@@ -56,11 +56,11 @@ class MixedRealityClient(MixedRealityClientOperationsMixin):
         self._serialize.client_side_validation = False
         self._deserialize = Deserializer(client_models)
 
-        self.operation = OperationOperations(
+        self.operations = Operations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.spatial_anchor_account = SpatialAnchorAccountOperations(
+        self.spatial_anchors_accounts = SpatialAnchorsAccountsOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.remote_rendering_account = RemoteRenderingAccountOperations(
+        self.remote_rendering_accounts = RemoteRenderingAccountsOperations(
             self._client, self._config, self._serialize, self._deserialize)
 
     async def close(self) -> None:

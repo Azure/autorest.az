@@ -9,8 +9,6 @@
 # --------------------------------------------------------------------------
 # pylint: disable=too-many-lines
 
-import json
-
 
 def spatial_anchors_account_regenerate_key(client,
                                            resource_group_name,
@@ -18,9 +16,11 @@ def spatial_anchors_account_regenerate_key(client,
                                            serial=None):
     if serial is None:
         serial = 1
-    return client.regenerate_key(resource_group_name=resource_group_name,
-                                 account_name=account_name,
-                                 serial=serial)
+    regenerate = {}
+    regenerate['serial'] = 1 if serial is None else serial
+    return client.regenerate_keys(resource_group_name=resource_group_name,
+                                  account_name=account_name,
+                                  regenerate=regenerate)
 
 
 def remote_rendering_account_list(client,
@@ -42,11 +42,13 @@ def remote_rendering_account_create(client,
                                     account_name,
                                     location,
                                     tags=None):
+    remote_rendering_account = {}
+    remote_rendering_account['tags'] = tags
+    remote_rendering_account['location'] = location
+    remote_rendering_account['identity'] = "{\"type\": \"SystemAssigned\"}"
     return client.create(resource_group_name=resource_group_name,
                          account_name=account_name,
-                         tags=tags,
-                         location=location,
-                         identity=json.loads("{\"type\": \"SystemAssigned\"}"))
+                         remote_rendering_account=remote_rendering_account)
 
 
 def remote_rendering_account_update(client,
@@ -54,11 +56,13 @@ def remote_rendering_account_update(client,
                                     account_name,
                                     location,
                                     tags=None):
+    remote_rendering_account = {}
+    remote_rendering_account['tags'] = tags
+    remote_rendering_account['location'] = location
+    remote_rendering_account['identity'] = "{\"type\": \"SystemAssigned\"}"
     return client.update(resource_group_name=resource_group_name,
                          account_name=account_name,
-                         tags=tags,
-                         location=location,
-                         identity=json.loads("{\"type\": \"SystemAssigned\"}"))
+                         remote_rendering_account=remote_rendering_account)
 
 
 def remote_rendering_account_delete(client,
@@ -71,8 +75,8 @@ def remote_rendering_account_delete(client,
 def remote_rendering_account_list_key(client,
                                       resource_group_name,
                                       account_name):
-    return client.list_key(resource_group_name=resource_group_name,
-                           account_name=account_name)
+    return client.list_keys(resource_group_name=resource_group_name,
+                            account_name=account_name)
 
 
 def remote_rendering_account_regenerate_key(client,
@@ -81,6 +85,8 @@ def remote_rendering_account_regenerate_key(client,
                                             serial=None):
     if serial is None:
         serial = 1
-    return client.regenerate_key(resource_group_name=resource_group_name,
-                                 account_name=account_name,
-                                 serial=serial)
+    regenerate = {}
+    regenerate['serial'] = 1 if serial is None else serial
+    return client.regenerate_keys(resource_group_name=resource_group_name,
+                                  account_name=account_name,
+                                  regenerate=regenerate)

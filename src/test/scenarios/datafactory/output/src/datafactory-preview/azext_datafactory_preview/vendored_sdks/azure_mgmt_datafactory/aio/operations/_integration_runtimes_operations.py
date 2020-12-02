@@ -21,8 +21,8 @@ from ... import models
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
-class IntegrationRuntimeOperations:
-    """IntegrationRuntimeOperations async operations.
+class IntegrationRuntimesOperations:
+    """IntegrationRuntimesOperations async operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
@@ -122,7 +122,7 @@ class IntegrationRuntimeOperations:
         resource_group_name: str,
         factory_name: str,
         integration_runtime_name: str,
-        properties: "models.IntegrationRuntime",
+        integration_runtime: "models.IntegrationRuntimeResource",
         if_match: Optional[str] = None,
         **kwargs
     ) -> "models.IntegrationRuntimeResource":
@@ -134,8 +134,8 @@ class IntegrationRuntimeOperations:
         :type factory_name: str
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
-        :param properties: Integration runtime properties.
-        :type properties: ~dfaz_management_client.models.IntegrationRuntime
+        :param integration_runtime: Integration runtime resource definition.
+        :type integration_runtime: ~dfaz_management_client.models.IntegrationRuntimeResource
         :param if_match: ETag of the integration runtime entity. Should only be specified for update,
          for which it should match existing entity or can be * for unconditional update.
         :type if_match: str
@@ -149,8 +149,6 @@ class IntegrationRuntimeOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-
-        integration_runtime = models.IntegrationRuntimeResource(properties=properties)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -271,8 +269,7 @@ class IntegrationRuntimeOperations:
         resource_group_name: str,
         factory_name: str,
         integration_runtime_name: str,
-        auto_update: Optional[Union[str, "models.IntegrationRuntimeAutoUpdate"]] = None,
-        update_delay_offset: Optional[str] = None,
+        update_integration_runtime_request: "models.UpdateIntegrationRuntimeRequest",
         **kwargs
     ) -> "models.IntegrationRuntimeResource":
         """Updates an integration runtime.
@@ -283,12 +280,8 @@ class IntegrationRuntimeOperations:
         :type factory_name: str
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
-        :param auto_update: Enables or disables the auto-update feature of the self-hosted integration
-         runtime. See https://go.microsoft.com/fwlink/?linkid=854189.
-        :type auto_update: str or ~dfaz_management_client.models.IntegrationRuntimeAutoUpdate
-        :param update_delay_offset: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The
-         integration runtime auto update will happen on that time.
-        :type update_delay_offset: str
+        :param update_integration_runtime_request: The parameters for updating an integration runtime.
+        :type update_integration_runtime_request: ~dfaz_management_client.models.UpdateIntegrationRuntimeRequest
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: IntegrationRuntimeResource, or the result of cls(response)
         :rtype: ~dfaz_management_client.models.IntegrationRuntimeResource
@@ -299,8 +292,6 @@ class IntegrationRuntimeOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-
-        update_integration_runtime_request = models.UpdateIntegrationRuntimeRequest(auto_update=auto_update, update_delay_offset=update_delay_offset)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -532,7 +523,7 @@ class IntegrationRuntimeOperations:
         resource_group_name: str,
         factory_name: str,
         integration_runtime_name: str,
-        key_name: Optional[Union[str, "models.IntegrationRuntimeAuthKeyName"]] = None,
+        regenerate_key_parameters: "models.IntegrationRuntimeRegenerateKeyParameters",
         **kwargs
     ) -> "models.IntegrationRuntimeAuthKeys":
         """Regenerates the authentication key for an integration runtime.
@@ -543,8 +534,9 @@ class IntegrationRuntimeOperations:
         :type factory_name: str
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
-        :param key_name: The name of the authentication key to regenerate.
-        :type key_name: str or ~dfaz_management_client.models.IntegrationRuntimeAuthKeyName
+        :param regenerate_key_parameters: The parameters for regenerating integration runtime
+         authentication key.
+        :type regenerate_key_parameters: ~dfaz_management_client.models.IntegrationRuntimeRegenerateKeyParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: IntegrationRuntimeAuthKeys, or the result of cls(response)
         :rtype: ~dfaz_management_client.models.IntegrationRuntimeAuthKeys
@@ -555,8 +547,6 @@ class IntegrationRuntimeOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-
-        regenerate_key_parameters = models.IntegrationRuntimeRegenerateKeyParameters(key_name=key_name)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -599,7 +589,7 @@ class IntegrationRuntimeOperations:
         return deserialized
     regenerate_auth_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/regenerateAuthKey'}  # type: ignore
 
-    async def list_auth_key(
+    async def list_auth_keys(
         self,
         resource_group_name: str,
         factory_name: str,
@@ -628,7 +618,7 @@ class IntegrationRuntimeOperations:
         accept = "application/json"
 
         # Construct URL
-        url = self.list_auth_key.metadata['url']  # type: ignore
+        url = self.list_auth_keys.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
@@ -659,7 +649,7 @@ class IntegrationRuntimeOperations:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    list_auth_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/listAuthKeys'}  # type: ignore
+    list_auth_keys.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/listAuthKeys'}  # type: ignore
 
     async def _start_initial(
         self,
@@ -1083,12 +1073,12 @@ class IntegrationRuntimeOperations:
 
     upgrade.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/upgrade'}  # type: ignore
 
-    async def remove_link(
+    async def remove_links(
         self,
         resource_group_name: str,
         factory_name: str,
         integration_runtime_name: str,
-        linked_factory_name: str,
+        linked_integration_runtime_request: "models.LinkedIntegrationRuntimeRequest",
         **kwargs
     ) -> None:
         """Remove all linked integration runtimes under specific data factory in a self-hosted integration
@@ -1100,8 +1090,9 @@ class IntegrationRuntimeOperations:
         :type factory_name: str
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
-        :param linked_factory_name: The data factory name for linked integration runtime.
-        :type linked_factory_name: str
+        :param linked_integration_runtime_request: The data factory name for the linked integration
+         runtime.
+        :type linked_integration_runtime_request: ~dfaz_management_client.models.LinkedIntegrationRuntimeRequest
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None, or the result of cls(response)
         :rtype: None
@@ -1112,14 +1103,12 @@ class IntegrationRuntimeOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-
-        linked_integration_runtime_request = models.LinkedIntegrationRuntimeRequest(linked_factory_name=linked_factory_name)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
         # Construct URL
-        url = self.remove_link.metadata['url']  # type: ignore
+        url = self.remove_links.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
@@ -1151,17 +1140,14 @@ class IntegrationRuntimeOperations:
         if cls:
             return cls(pipeline_response, None, {})
 
-    remove_link.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/removeLinks'}  # type: ignore
+    remove_links.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/removeLinks'}  # type: ignore
 
     async def create_linked_integration_runtime(
         self,
         resource_group_name: str,
         factory_name: str,
         integration_runtime_name: str,
-        name: Optional[str] = None,
-        subscription_id: Optional[str] = None,
-        data_factory_name: Optional[str] = None,
-        data_factory_location: Optional[str] = None,
+        create_linked_integration_runtime_request: "models.CreateLinkedIntegrationRuntimeRequest",
         **kwargs
     ) -> "models.IntegrationRuntimeStatusResponse":
         """Create a linked integration runtime entry in a shared integration runtime.
@@ -1172,17 +1158,8 @@ class IntegrationRuntimeOperations:
         :type factory_name: str
         :param integration_runtime_name: The integration runtime name.
         :type integration_runtime_name: str
-        :param name: The name of the linked integration runtime.
-        :type name: str
-        :param subscription_id: The ID of the subscription that the linked integration runtime belongs
-         to.
-        :type subscription_id: str
-        :param data_factory_name: The name of the data factory that the linked integration runtime
-         belongs to.
-        :type data_factory_name: str
-        :param data_factory_location: The location of the data factory that the linked integration
-         runtime belongs to.
-        :type data_factory_location: str
+        :param create_linked_integration_runtime_request: The linked integration runtime properties.
+        :type create_linked_integration_runtime_request: ~dfaz_management_client.models.CreateLinkedIntegrationRuntimeRequest
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: IntegrationRuntimeStatusResponse, or the result of cls(response)
         :rtype: ~dfaz_management_client.models.IntegrationRuntimeStatusResponse
@@ -1193,8 +1170,6 @@ class IntegrationRuntimeOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-
-        create_linked_integration_runtime_request = models.CreateLinkedIntegrationRuntimeRequest(name=name, subscription_id=subscription_id, data_factory_name=data_factory_name, data_factory_location=data_factory_location)
         api_version = "2018-06-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"

@@ -17,12 +17,12 @@ def cf_datafactory_cl(cli_ctx, *_):
 
 
 def cf_factory(cli_ctx, *_):
-    return cf_datafactory_cl(cli_ctx).factory
+    return cf_datafactory_cl(cli_ctx).factories
 
 
 def cf_trigger(cli_ctx, *_):
-    return cf_datafactory_cl(cli_ctx).trigger
+    return cf_datafactory_cl(cli_ctx).triggers
 
 
 def cf_integration_runtime(cli_ctx, *_):
-    return cf_datafactory_cl(cli_ctx).integration_runtime
+    return cf_datafactory_cl(cli_ctx).integration_runtimes

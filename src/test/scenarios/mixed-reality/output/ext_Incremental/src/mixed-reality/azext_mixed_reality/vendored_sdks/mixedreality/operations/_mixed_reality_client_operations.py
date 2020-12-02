@@ -27,8 +27,7 @@ class MixedRealityClientOperationsMixin(object):
     def check_name_availability_local(
         self,
         location,  # type: str
-        name,  # type: str
-        type,  # type: str
+        check_name_availability,  # type: "models.CheckNameAvailabilityRequest"
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.CheckNameAvailabilityResponse"
@@ -36,10 +35,8 @@ class MixedRealityClientOperationsMixin(object):
 
         :param location: The location in which uniqueness will be verified.
         :type location: str
-        :param name: Resource Name To Verify.
-        :type name: str
-        :param type: Fully qualified resource type which includes provider namespace.
-        :type type: str
+        :param check_name_availability: Check Name Availability Request.
+        :type check_name_availability: ~mixed_reality_client.models.CheckNameAvailabilityRequest
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: CheckNameAvailabilityResponse, or the result of cls(response)
         :rtype: ~mixed_reality_client.models.CheckNameAvailabilityResponse
@@ -50,8 +47,6 @@ class MixedRealityClientOperationsMixin(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-
-        check_name_availability = models.CheckNameAvailabilityRequest(name=name, type=type)
         api_version = "2020-05-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"

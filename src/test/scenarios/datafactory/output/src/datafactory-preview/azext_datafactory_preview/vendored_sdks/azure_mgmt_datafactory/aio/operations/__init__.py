@@ -6,12 +6,12 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._factory_operations import FactoryOperations
-from ._trigger_operations import TriggerOperations
-from ._integration_runtime_operations import IntegrationRuntimeOperations
+from ._factories_operations import FactoriesOperations
+from ._triggers_operations import TriggersOperations
+from ._integration_runtimes_operations import IntegrationRuntimesOperations
 
 __all__ = [
-    'FactoryOperations',
-    'TriggerOperations',
-    'IntegrationRuntimeOperations',
+    'FactoriesOperations',
+    'TriggersOperations',
+    'IntegrationRuntimesOperations',
 ]

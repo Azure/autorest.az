@@ -17,8 +17,8 @@ def load_command_table(self, _):
 
     from azext_datafactory_preview.generated._client_factory import cf_factory
     datafactory_factory = CliCommandType(
-        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._factory_operations#'
-        'FactoryOperations.{}',
+        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._factories_operation'
+        's#FactoriesOperations.{}',
         client_factory=cf_factory)
     with self.command_group('datafactory', datafactory_factory, client_factory=cf_factory, is_experimental=True) as g:
         g.custom_command('list', 'datafactory_list')
@@ -32,15 +32,14 @@ def load_command_table(self, _):
 
     from azext_datafactory_preview.generated._client_factory import cf_trigger
     datafactory_trigger = CliCommandType(
-        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._trigger_operations#'
-        'TriggerOperations.{}',
+        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._triggers_operations'
+        '#TriggersOperations.{}',
         client_factory=cf_trigger)
     with self.command_group('datafactory trigger', datafactory_trigger, client_factory=cf_trigger) as g:
         g.custom_command('list', 'datafactory_trigger_list')
         g.custom_show_command('show', 'datafactory_trigger_show')
         g.custom_command('create', 'datafactory_trigger_create')
-        g.generic_update_command('update', setter_arg_name='properties',
-                                 custom_func_name='datafactory_trigger_update')
+        g.generic_update_command('update', custom_func_name='datafactory_trigger_update')
         g.custom_command('delete', 'datafactory_trigger_delete', confirmation=True)
         g.custom_command('get-event-subscription-status', 'datafactory_trigger_get_event_subscription_status')
         g.custom_command('query-by-factory', 'datafactory_trigger_query_by_factory')
@@ -54,7 +53,7 @@ def load_command_table(self, _):
     from azext_datafactory_preview.generated._client_factory import cf_integration_runtime
     datafactory_integration_runtime = CliCommandType(
         operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._integration_runtime'
-        '_operations#IntegrationRuntimeOperations.{}',
+        's_operations#IntegrationRuntimesOperations.{}',
         client_factory=cf_integration_runtime)
     with self.command_group('datafactory integration-runtime', datafactory_integration_runtime,
                             client_factory=cf_integration_runtime) as g:

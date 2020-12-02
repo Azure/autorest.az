@@ -21,4 +21,4 @@ def cf_operation(cli_ctx, *_):
 
 
 def cf_attestation_provider(cli_ctx, *_):
-    return cf_attestation_cl(cli_ctx).attestation_provider
+    return cf_attestation_cl(cli_ctx).attestation_providers

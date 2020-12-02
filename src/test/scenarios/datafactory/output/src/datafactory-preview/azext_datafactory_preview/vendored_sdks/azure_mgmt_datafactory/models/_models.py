@@ -1007,6 +1007,8 @@ class Factory(Resource):
     :param additional_properties: Unmatched properties from the message are deserialized to this
      collection.
     :type additional_properties: dict[str, object]
+    :param identity: Managed service identity of the factory.
+    :type identity: ~dfaz_management_client.models.FactoryIdentity
     :param test_inherit: Test Job Base.
     :type test_inherit: ~dfaz_management_client.models.JobBase
     :ivar provisioning_state: Factory provisioning state, example Succeeded.
@@ -1021,13 +1023,6 @@ class Factory(Resource):
     :type fake_identity: ~dfaz_management_client.models.FakeFactoryIdentity
     :param zones: This is only for az test.
     :type zones: list[str]
-    :param type_identity_type: The identity type. Currently the only supported type is
-     'SystemAssigned'. Possible values include: "SystemAssigned".
-    :type type_identity_type: str or ~dfaz_management_client.models.FactoryIdentityType
-    :ivar principal_id: The principal id of the identity.
-    :vartype principal_id: str
-    :ivar tenant_id: The client tenant id of the identity.
-    :vartype tenant_id: str
     """
 
     _validation = {
@@ -1038,8 +1033,6 @@ class Factory(Resource):
         'provisioning_state': {'readonly': True},
         'create_time': {'readonly': True},
         'version': {'readonly': True},
-        'principal_id': {'readonly': True},
-        'tenant_id': {'readonly': True},
     }
 
     _attribute_map = {
@@ -1050,6 +1043,7 @@ class Factory(Resource):
         'tags': {'key': 'tags', 'type': '{str}'},
         'e_tag': {'key': 'eTag', 'type': 'str'},
         'additional_properties': {'key': '', 'type': '{object}'},
+        'identity': {'key': 'identity', 'type': 'FactoryIdentity'},
         'test_inherit': {'key': 'testInherit', 'type': 'JobBase'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'create_time': {'key': 'properties.createTime', 'type': 'iso-8601'},
@@ -1057,9 +1051,6 @@ class Factory(Resource):
         'repo_configuration': {'key': 'properties.repoConfiguration', 'type': 'FactoryRepoConfiguration'},
         'fake_identity': {'key': 'properties.fakeIdentity', 'type': 'FakeFactoryIdentity'},
         'zones': {'key': 'properties.zones', 'type': '[str]'},
-        'type_identity_type': {'key': 'identity.type', 'type': 'str'},
-        'principal_id': {'key': 'identity.principalId', 'type': 'str'},
-        'tenant_id': {'key': 'identity.tenantId', 'type': 'str'},
     }
 
     def __init__(
@@ -1068,6 +1059,7 @@ class Factory(Resource):
     ):
         super(Factory, self).__init__(**kwargs)
         self.additional_properties = kwargs.get('additional_properties', None)
+        self.identity = kwargs.get('identity', None)
         self.test_inherit = kwargs.get('test_inherit', None)
         self.provisioning_state = None
         self.create_time = None
@@ -1075,9 +1067,6 @@ class Factory(Resource):
         self.repo_configuration = kwargs.get('repo_configuration', None)
         self.fake_identity = kwargs.get('fake_identity', None)
         self.zones = kwargs.get('zones', None)
-        self.type_identity_type = kwargs.get('type_identity_type', None)
-        self.principal_id = None
-        self.tenant_id = None
 
 
 class FactoryRepoConfiguration(msrest.serialization.Model):
@@ -1184,6 +1173,44 @@ class FactoryGitHubConfiguration(FactoryRepoConfiguration):
         self.host_name = kwargs.get('host_name', None)
 
 
+class FactoryIdentity(msrest.serialization.Model):
+    """Identity properties of the factory resource.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: Required. The identity type. Currently the only supported type is
+     'SystemAssigned'. Possible values include: "SystemAssigned".
+    :type type: str or ~dfaz_management_client.models.FactoryIdentityType
+    :ivar principal_id: The principal id of the identity.
+    :vartype principal_id: str
+    :ivar tenant_id: The client tenant id of the identity.
+    :vartype tenant_id: str
+    """
+
+    _validation = {
+        'type': {'required': True},
+        'principal_id': {'readonly': True},
+        'tenant_id': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'principal_id': {'key': 'principalId', 'type': 'str'},
+        'tenant_id': {'key': 'tenantId', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(FactoryIdentity, self).__init__(**kwargs)
+        self.type = kwargs['type']
+        self.principal_id = None
+        self.tenant_id = None
+
+
 class FactoryListResponse(msrest.serialization.Model):
     """A list of factory resources.
 
@@ -1239,32 +1266,21 @@ class FactoryRepoUpdate(msrest.serialization.Model):
 class FactoryUpdateParameters(msrest.serialization.Model):
     """Parameters for updating a factory resource.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
     :param tags: A set of tags. The resource tags.
     :type tags: dict[str, str]
-    :param type: Required. The identity type. Currently the only supported type is
-     'SystemAssigned'. Possible values include: "SystemAssigned".
-    :type type: str or ~dfaz_management_client.models.FactoryIdentityType
-    :ivar principal_id: The principal id of the identity.
-    :vartype principal_id: str
-    :ivar tenant_id: The client tenant id of the identity.
-    :vartype tenant_id: str
+    :param identity: Required. Managed service identity of the factory.
+    :type identity: ~dfaz_management_client.models.FactoryIdentity
     """
 
     _validation = {
-        'type': {'required': True},
-        'principal_id': {'readonly': True},
-        'tenant_id': {'readonly': True},
+        'identity': {'required': True},
     }
 
     _attribute_map = {
         'tags': {'key': 'tags', 'type': '{str}'},
-        'type': {'key': 'identity.type', 'type': 'str'},
-        'principal_id': {'key': 'identity.principalId', 'type': 'str'},
-        'tenant_id': {'key': 'identity.tenantId', 'type': 'str'},
+        'identity': {'key': 'identity', 'type': 'FactoryIdentity'},
     }
 
     def __init__(
@@ -1273,9 +1289,7 @@ class FactoryUpdateParameters(msrest.serialization.Model):
     ):
         super(FactoryUpdateParameters, self).__init__(**kwargs)
         self.tags = kwargs.get('tags', None)
-        self.type = kwargs['type']
-        self.principal_id = None
-        self.tenant_id = None
+        self.identity = kwargs['identity']
 
 
 class FactoryVstsConfiguration(FactoryRepoConfiguration):

@@ -17,13 +17,13 @@ from .. import models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Callable, Dict, Generic, List, Optional, TypeVar, Union
+    from typing import Any, Callable, Dict, Generic, Optional, TypeVar, Union
 
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
 
-class AttestationProviderOperations(object):
-    """AttestationProviderOperations operations.
+class AttestationProvidersOperations(object):
+    """AttestationProvidersOperations operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
@@ -107,10 +107,7 @@ class AttestationProviderOperations(object):
         self,
         resource_group_name,  # type: str
         provider_name,  # type: str
-        location,  # type: str
-        tags=None,  # type: Optional[Dict[str, str]]
-        attestation_policy=None,  # type: Optional[str]
-        keys=None,  # type: Optional[List["models.JsonWebKey"]]
+        creation_params,  # type: "models.AttestationServiceCreationParams"
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.AttestationProvider"
@@ -120,19 +117,8 @@ class AttestationProviderOperations(object):
         :type resource_group_name: str
         :param provider_name: Name of the attestation service.
         :type provider_name: str
-        :param location: The supported Azure location where the attestation service instance should be
-         created.
-        :type location: str
-        :param tags: The tags that will be assigned to the attestation service instance.
-        :type tags: dict[str, str]
-        :param attestation_policy: Name of attestation policy.
-        :type attestation_policy: str
-        :param keys: The value of the "keys" parameter is an array of JWK values.  By
-         default, the order of the JWK values within the array does not imply
-         an order of preference among them, although applications of JWK Sets
-         can choose to assign a meaning to the order for their purposes, if
-         desired.
-        :type keys: list[~attestation_management_client.models.JsonWebKey]
+        :param creation_params: Client supplied parameters.
+        :type creation_params: ~attestation_management_client.models.AttestationServiceCreationParams
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: AttestationProvider, or the result of cls(response)
         :rtype: ~attestation_management_client.models.AttestationProvider
@@ -143,8 +129,6 @@ class AttestationProviderOperations(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-
-        creation_params = models.AttestationServiceCreationParams(location=location, tags=tags, attestation_policy=attestation_policy, keys=keys)
         api_version = "2018-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -194,7 +178,7 @@ class AttestationProviderOperations(object):
         self,
         resource_group_name,  # type: str
         provider_name,  # type: str
-        tags=None,  # type: Optional[Dict[str, str]]
+        update_params,  # type: "models.AttestationServicePatchParams"
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.AttestationProvider"
@@ -204,8 +188,8 @@ class AttestationProviderOperations(object):
         :type resource_group_name: str
         :param provider_name: Name of the attestation service.
         :type provider_name: str
-        :param tags: The tags that will be assigned to the attestation service instance.
-        :type tags: dict[str, str]
+        :param update_params: Client supplied parameters.
+        :type update_params: ~attestation_management_client.models.AttestationServicePatchParams
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: AttestationProvider, or the result of cls(response)
         :rtype: ~attestation_management_client.models.AttestationProvider
@@ -216,8 +200,6 @@ class AttestationProviderOperations(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-
-        update_params = models.AttestationServicePatchParams(tags=tags)
         api_version = "2018-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
