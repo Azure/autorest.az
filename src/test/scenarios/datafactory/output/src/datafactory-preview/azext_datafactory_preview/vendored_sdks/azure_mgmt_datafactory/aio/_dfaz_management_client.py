@@ -16,21 +16,21 @@ if TYPE_CHECKING:
     from azure.core.credentials_async import AsyncTokenCredential
 
 from ._configuration import DFAZManagementClientConfiguration
-from .operations import FactoryOperations
-from .operations import TriggerOperations
-from .operations import IntegrationRuntimeOperations
+from .operations import FactoriesOperations
+from .operations import TriggersOperations
+from .operations import IntegrationRuntimesOperations
 from .. import models
 
 
 class DFAZManagementClient(object):
     """The DFAZ Client.
 
-    :ivar factory: FactoryOperations operations
-    :vartype factory: dfaz_management_client.aio.operations.FactoryOperations
-    :ivar trigger: TriggerOperations operations
-    :vartype trigger: dfaz_management_client.aio.operations.TriggerOperations
-    :ivar integration_runtime: IntegrationRuntimeOperations operations
-    :vartype integration_runtime: dfaz_management_client.aio.operations.IntegrationRuntimeOperations
+    :ivar factories: FactoriesOperations operations
+    :vartype factories: dfaz_management_client.aio.operations.FactoriesOperations
+    :ivar triggers: TriggersOperations operations
+    :vartype triggers: dfaz_management_client.aio.operations.TriggersOperations
+    :ivar integration_runtimes: IntegrationRuntimesOperations operations
+    :vartype integration_runtimes: dfaz_management_client.aio.operations.IntegrationRuntimesOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The subscription identifier.
@@ -56,11 +56,11 @@ class DFAZManagementClient(object):
         self._serialize.client_side_validation = False
         self._deserialize = Deserializer(client_models)
 
-        self.factory = FactoryOperations(
+        self.factories = FactoriesOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.trigger = TriggerOperations(
+        self.triggers = TriggersOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.integration_runtime = IntegrationRuntimeOperations(
+        self.integration_runtimes = IntegrationRuntimesOperations(
             self._client, self._config, self._serialize, self._deserialize)
 
     async def close(self) -> None:

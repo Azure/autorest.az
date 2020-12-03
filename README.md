@@ -13,7 +13,7 @@ debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
   "@autorest/python": "5.4.0"
-  "@autorest/clicommon": "0.5.7"
+  "@autorest/clicommon": "0.5.8"
   #"@autorest/python": "latest"
 
 require:
@@ -55,9 +55,10 @@ modelerfour:
     group-parameters: true
     flatten-models: true
     flatten-payloads: true
+    # keep-unused-flattened-models: true
 ```
 
-``` yaml $(target-mode) != 'core' && !$(sdk-no-flatten)
+``` yaml $(sdk-flatten) && !$(sdk-no-flatten)
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true
 
@@ -92,7 +93,7 @@ pipeline:
         scope: scope-az
 ```
 
-``` yaml $(target-mode) == 'core' || $(sdk-no-flatten)
+``` yaml !$(sdk-flatten) || $(sdk-no-flatten)
 
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true

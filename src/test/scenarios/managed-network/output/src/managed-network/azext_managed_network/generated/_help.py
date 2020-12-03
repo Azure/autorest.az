@@ -38,16 +38,16 @@ and Managed Network name."
     examples:
       - name: Create/Update Managed Network
         text: |-
-               az managed-network mn create --location "eastus" --properties "{\\"managementGroups\\":[{\\"id\\":\\"/pr\
-oviders/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000\\"},{\\"id\\":\\"/providers/Microsof\
-t.Management/managementGroups/20000000-0002-0000-0000-000000000000\\"}],\\"subscriptions\\":[{\\"id\\":\\"subscriptionA\
-\\"},{\\"id\\":\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/my\
-ResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork\\"},{\\"id\\":\\"/subscriptions/subscription\
-C/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork2\\"}],\\"subnets\\":[{\\"\
-id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirt\
-ualNetwork3/subnets/default\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Micr\
-osoft.Network/virtualNetworks/myVirtualNetwork3/subnets/default\\"}]}" --name "myManagedNetwork" --resource-group \
-"myResourceGroup"
+               az managed-network mn create --managed-network "{\\"location\\":\\"eastus\\",\\"tags\\":{},\\"management\
+Groups\\":[{\\"id\\":\\"/providers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000\\"},{\\"i\
+d\\":\\"/providers/Microsoft.Management/managementGroups/20000000-0002-0000-0000-000000000000\\"}],\\"subscriptions\\":\
+[{\\"id\\":\\"subscriptionA\\"},{\\"id\\":\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\":\\"/subscriptions/subs\
+criptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork\\"},{\\"id\\":\\"\
+/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwor\
+k2\\"}],\\"subnets\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Net\
+work/virtualNetworks/myVirtualNetwork3/subnets/default\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myR\
+esourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork3/subnets/default\\"}]}" --name \
+"myManagedNetwork" --resource-group "myResourceGroup"
 """
 
 helps['managed-network mn update'] = """

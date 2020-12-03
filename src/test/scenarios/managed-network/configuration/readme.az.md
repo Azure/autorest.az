@@ -51,8 +51,8 @@ cli:
             param: 'managementGroups'
         json: true
       - where:
-            type: 'ManagedNetwork'
-            prop: 'properties'
+            group: 'ManagedNetworks'
+            param: 'managedNetwork'
         json: true
       - where:
             group: managedNetworkPeeringPolicies

@@ -204,10 +204,10 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     } else if (parameterName.endsWith('name') && !model.Method['hasName'] && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase()) {
                         if (isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
                             model.MethodParameter.language['az']['alias'] = [];
+                            model.MethodParameter.language['az']['alias'].push('name');
+                            model.MethodParameter.language['az']['alias'].push('n');
+                            model.MethodParameter.language['az']['alias'].push(parameterName);
                         }
-                        model.MethodParameter.language['az']['alias'].push('name');
-                        model.MethodParameter.language['az']['alias'].push('n');
-                        model.MethodParameter.language['az']['alias'].push(parameterName);
                     }
                     if (!isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
                         argument = "        c.argument('" + parameterName + "'";

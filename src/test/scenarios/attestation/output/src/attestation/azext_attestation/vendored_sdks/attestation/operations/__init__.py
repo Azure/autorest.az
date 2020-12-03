@@ -7,9 +7,9 @@
 # --------------------------------------------------------------------------
 
 from ._operation_operations import OperationOperations
-from ._attestation_provider_operations import AttestationProviderOperations
+from ._attestation_providers_operations import AttestationProvidersOperations
 
 __all__ = [
     'OperationOperations',
-    'AttestationProviderOperations',
+    'AttestationProvidersOperations',
 ]

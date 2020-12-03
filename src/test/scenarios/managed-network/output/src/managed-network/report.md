@@ -196,24 +196,23 @@ az managed-network mn list
 
 ##### <a name="ExamplesManagedNetworksCreateOrUpdate#Create">Example</a>
 ```
-az managed-network mn create --location "eastus" --properties "{\\"managementGroups\\":[{\\"id\\":\\"/providers/Microso\
-ft.Management/managementGroups/20000000-0001-0000-0000-000000000000\\"},{\\"id\\":\\"/providers/Microsoft.Management/ma\
-nagementGroups/20000000-0002-0000-0000-000000000000\\"}],\\"subscriptions\\":[{\\"id\\":\\"subscriptionA\\"},{\\"id\\":\
-\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/p\
-roviders/Microsoft.Network/virtualNetworks/myVirtualNetwork\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroup\
-s/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork2\\"}],\\"subnets\\":[{\\"id\\":\\"/subsc\
-riptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork3/sub\
-nets/default\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/v\
-irtualNetworks/myVirtualNetwork3/subnets/default\\"}]}" --name "myManagedNetwork" --resource-group "myResourceGroup"
+az managed-network mn create --managed-network "{\\"location\\":\\"eastus\\",\\"tags\\":{},\\"managementGroups\\":[{\\"\
+id\\":\\"/providers/Microsoft.Management/managementGroups/20000000-0001-0000-0000-000000000000\\"},{\\"id\\":\\"/provid\
+ers/Microsoft.Management/managementGroups/20000000-0002-0000-0000-000000000000\\"}],\\"subscriptions\\":[{\\"id\\":\\"s\
+ubscriptionA\\"},{\\"id\\":\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resou\
+rceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork\\"},{\\"id\\":\\"/subscriptions/\
+subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork2\\"}],\\"subn\
+ets\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNet\
+works/myVirtualNetwork3/subnets/default\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/pr\
+oviders/Microsoft.Network/virtualNetworks/myVirtualNetwork3/subnets/default\\"}]}" --name "myManagedNetwork" \
+--resource-group "myResourceGroup"
 ```
 ##### <a name="ParametersManagedNetworksCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group.|resource_group_name|resourceGroupName|
 |**--managed-network-name**|string|The name of the Managed Network.|managed_network_name|managedNetworkName|
-|**--location**|string|The geo-location where the resource lives|location|location|
-|**--tags**|dictionary|Resource tags|tags|tags|
-|**--properties**|object|The MNC properties|properties|properties|
+|**--managed-network**|object|Parameters supplied to the create/update a Managed Network Resource|managed_network|managedNetwork|
 
 #### <a name="ManagedNetworksUpdate">Command `az managed-network mn update`</a>
 

@@ -17,12 +17,16 @@ def attestation_create_provider(client,
                                 tags=None,
                                 attestation_policy=None,
                                 policy_signing_certificates_keys=None):
+    creation_params = {}
+    creation_params['location'] = location
+    creation_params['tags'] = tags
+    creation_params['properties'] = {}
+    creation_params['properties']['attestation_policy'] = attestation_policy
+    creation_params['properties']['policy_signing_certificates'] = {}
+    creation_params['properties']['policy_signing_certificates']['keys'] = policy_signing_certificates_keys
     return client.create(resource_group_name=resource_group_name,
                          provider_name=provider_name,
-                         location=location,
-                         tags=tags,
-                         attestation_policy=attestation_policy,
-                         keys=policy_signing_certificates_keys)
+                         creation_params=creation_params)
 
 
 def attestation_list_operation(client):
@@ -47,9 +51,11 @@ def attestation_attestation_provider_update(client,
                                             resource_group_name,
                                             provider_name,
                                             tags=None):
+    update_params = {}
+    update_params['tags'] = tags
     return client.update(resource_group_name=resource_group_name,
                          provider_name=provider_name,
-                         tags=tags)
+                         update_params=update_params)
 
 
 def attestation_attestation_provider_delete(client,

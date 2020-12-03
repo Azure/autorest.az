@@ -17,8 +17,8 @@ def cf_mixed_reality_cl(cli_ctx, *_):
 
 
 def cf_spatial_anchor_account(cli_ctx, *_):
-    return cf_mixed_reality_cl(cli_ctx).spatial_anchor_account
+    return cf_mixed_reality_cl(cli_ctx).spatial_anchors_accounts
 
 
 def cf_remote_rendering_account(cli_ctx, *_):
-    return cf_mixed_reality_cl(cli_ctx).remote_rendering_account
+    return cf_mixed_reality_cl(cli_ctx).remote_rendering_accounts

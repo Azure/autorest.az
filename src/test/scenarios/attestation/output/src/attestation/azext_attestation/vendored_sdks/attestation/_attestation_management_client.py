@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
 from ._configuration import AttestationManagementClientConfiguration
 from .operations import OperationOperations
-from .operations import AttestationProviderOperations
+from .operations import AttestationProvidersOperations
 from . import models
 
 
@@ -28,8 +28,8 @@ class AttestationManagementClient(object):
 
     :ivar operation: OperationOperations operations
     :vartype operation: attestation_management_client.operations.OperationOperations
-    :ivar attestation_provider: AttestationProviderOperations operations
-    :vartype attestation_provider: attestation_management_client.operations.AttestationProviderOperations
+    :ivar attestation_providers: AttestationProvidersOperations operations
+    :vartype attestation_providers: attestation_management_client.operations.AttestationProvidersOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials.TokenCredential
     :param subscription_id: The ID of the target subscription.
@@ -57,7 +57,7 @@ class AttestationManagementClient(object):
 
         self.operation = OperationOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.attestation_provider = AttestationProviderOperations(
+        self.attestation_providers = AttestationProvidersOperations(
             self._client, self._config, self._serialize, self._deserialize)
 
     def close(self):
