@@ -128,7 +128,7 @@ class ManagedNetworksscenario1Test(ScenarioTest):
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
     def test_ManagedNetworks_scenario1_min(self, rg):
-        call_scenario1(self, rg)
+        call_scenario1_min(self, rg)
         calc_coverage(__file__)
         raise_if()
 
@@ -202,7 +202,7 @@ class ManagedNetworksscenario2Test(ScenarioTest):
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
     def test_ManagedNetworks_scenario2_min(self, rg):
-        call_scenario2(self, rg)
+        call_scenario2_min(self, rg)
         calc_coverage(__file__)
         raise_if()
 
@@ -276,7 +276,7 @@ class ManagedNetworksscenario3Test(ScenarioTest):
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
     def test_ManagedNetworks_scenario3_min(self, rg):
-        call_scenario3(self, rg)
+        call_scenario3_min(self, rg)
         calc_coverage(__file__)
         raise_if()
 

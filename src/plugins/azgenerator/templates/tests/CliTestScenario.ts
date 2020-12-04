@@ -156,22 +156,26 @@ export class CliTestScenario extends TemplateBase {
         class_info.push("");
         class_info.push("");
 
-        function buildTestcase(testcaseName) {
+        function buildTestcase(testcaseName: string, minimum: boolean) {
             let ret = [...decorators];
+            if (minimum)    testcaseName += "_min";
             let funcLine = "    def test_" + testcaseName + "(self";
             for (let parameterName of parameterNames) {
                 funcLine += `, ${parameterName}`;
             }
             funcLine += "):";
             ToMultiLine(funcLine, ret);
-            ret.push(`        call_${scenarioName.toLowerCase()}(self${CliTestStep.parameterLine(parameterNames)})`);
+            let _scenarioName = scenarioName;
+            if (minimum)    _scenarioName += "_min";
+            ret.push(`        call_${_scenarioName.toLowerCase()}(self${CliTestStep.parameterLine(parameterNames)})`);
             ret.push(`        calc_coverage(__file__)`);
             ret.push(`        raise_if()`);
             ret.push("");
             ret.push("");
             return ret;
         }
-        this.scenarios.push(...steps.concat(funcScenario, funcMinScenario, class_info, buildTestcase(this.groupName + "_" + scenarioName), buildTestcase(this.groupName + "_" + scenarioName + "_min")));
+        let testCaseName = this.groupName + "_" + scenarioName;
+        this.scenarios.push(...steps.concat(funcScenario, funcMinScenario, class_info, buildTestcase(testCaseName, false), buildTestcase(testCaseName, true)));
     }
 
     private EndGenerateAzureCliTestScenario(): string[] {

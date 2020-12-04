@@ -101,7 +101,7 @@ class AttestationScenarioTest(ScenarioTest):
     @ResourceGroupPreparer(name_prefix='clitestattestation_sample-resource-group'[:7], key='rg_3',
                            parameter_name='rg_3')
     def test_attestation_Scenario_min(self, rg, rg_2, rg_3):
-        call_scenario(self, rg, rg_2, rg_3)
+        call_scenario_min(self, rg, rg_2, rg_3)
         calc_coverage(__file__)
         raise_if()
 

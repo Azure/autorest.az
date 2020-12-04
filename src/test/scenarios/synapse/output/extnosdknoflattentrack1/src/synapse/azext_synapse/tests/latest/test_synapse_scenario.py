@@ -966,7 +966,7 @@ class SynapseScenarioTest(ScenarioTest):
     @ResourceGroupPreparer(name_prefix='clitestsynapse_exampleResourceGroup'[:7], key='rg_17', parameter_name='rg_17')
     def test_synapse_Scenario_min(self, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
                                   rg_14, rg_15, rg_16, rg_17):
-        call_scenario(self, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
+        call_scenario_min(self, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17)
         calc_coverage(__file__)
         raise_if()
 

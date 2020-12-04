@@ -317,7 +317,7 @@ class KustoScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestkusto_kustorptest'[:7], key='rg', parameter_name='rg')
     def test_kusto_Scenario_min(self, rg):
-        call_scenario(self, rg)
+        call_scenario_min(self, rg)
         calc_coverage(__file__)
         raise_if()
 

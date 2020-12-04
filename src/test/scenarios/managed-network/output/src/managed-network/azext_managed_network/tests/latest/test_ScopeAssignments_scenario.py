@@ -113,7 +113,7 @@ class ScopeAssignmentsScenarioTest(ScenarioTest):
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
     def test_ScopeAssignments_Scenario_min(self, rg):
-        call_scenario(self, rg)
+        call_scenario_min(self, rg)
         calc_coverage(__file__)
         raise_if()
 

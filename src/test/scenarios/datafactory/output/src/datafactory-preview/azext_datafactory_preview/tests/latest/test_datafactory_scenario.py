@@ -216,7 +216,7 @@ class DatafactoryScenarioTest(ScenarioTest):
 
     @ResourceGroupPreparer(name_prefix='clitestdatafactory_exampleResourceGroup'[:7], key='rg', parameter_name='rg')
     def test_datafactory_Scenario_min(self, rg):
-        call_scenario(self, rg)
+        call_scenario_min(self, rg)
         calc_coverage(__file__)
         raise_if()
 
