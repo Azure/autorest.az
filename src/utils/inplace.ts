@@ -500,12 +500,24 @@ export function loadFromZip(zipFile: string, genFile: string): string[] {
     return undefined;
 }
 
+let zipBuffer = [];
+
+export function openInplaceGen() {
+    zipBuffer = [];
+}
+
 export function inplaceGen(outputFolder: string, filename: string, genContent: string[]): string[] {
     let zipGenFile = join(outputFolder, "gen.zip");
     let originA = createTarget(loadFromZip(zipGenFile, filename));
     let customizedA = createTarget(join(outputFolder, filename));
-    zipFile(zipGenFile, filename, genContent);
+    zipBuffer.push([zipGenFile, filename, genContent]);
     let target = createTarget(genContent);
     target.merge(originA, customizedA);
     return target.getContent();
+}
+
+export function closeInplaceGen()  {
+    for (let meta of zipBuffer) {
+        zipFile(meta[0], meta[1], meta[2]);
+    }
 }

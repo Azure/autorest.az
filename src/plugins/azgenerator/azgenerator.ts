@@ -7,6 +7,7 @@ import { ArgumentConstants, GenerationMode, PathConstants } from "../models";
 import { AzGeneratorFactory } from "./AzGeneratorFactory";
 import { CodeModelCliImpl } from "./CodeModelAzImpl";
 import { HeaderGenerator } from './Header';
+import { openInplaceGen, closeInplaceGen} from '../../utils/inplace'
 
 export async function processRequest(host: Host) {
     const debug = await host.GetValue('debug') || false;
@@ -41,6 +42,7 @@ export async function processRequest(host: Host) {
         model.CliGenerationMode = await autoDetectGenerationMode(host, model.AzextFolder, model.IsCliCore);
         model.CliOutputFolder = azOutputFolder;
 
+        openInplaceGen();
         let generator = await AzGeneratorFactory.createAzGenerator(model, debug);
         await generator.generateAll();
         let files = generator.files;
@@ -58,8 +60,8 @@ export async function processRequest(host: Host) {
             if (!isNullOrUndefined(files[f])) {
                 host.WriteFile(f, files[f].join(EOL));
             }
-            
         }
+        closeInplaceGen();
     } catch (E) {
         if (debug) {
             console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
