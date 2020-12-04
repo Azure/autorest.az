@@ -206,7 +206,6 @@ export class CliTestStep extends TemplateBase {
                     initiates.push(`            '${kargs_key}': '${object_name}',`);   // keep the original name in example if there is no create example in the test-scenario
             }
             initiates.push("        })");
-            initiates.push("");
         }
         return parameterNames;
     }

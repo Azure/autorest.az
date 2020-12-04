@@ -63,7 +63,6 @@ export class CliTestScenario extends TemplateBase {
         class_info.push("@try_manual");
         class_info.push("class " + Capitalize(this.groupName) + scenarioName + "Test(ScenarioTest):");
         class_info.push("");
-        initiates.push("");
 
         let subscription_id = model.GetSubscriptionKey();
         if (subscription_id) {
@@ -130,13 +129,14 @@ export class CliTestScenario extends TemplateBase {
                     }
                 }
                 else {
-                    if (minimum) functionName += "_min";
-                    steps.push(`# Env ${functionName}`);
-                    steps.push("@try_manual");
-                    steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames)}):`));
-                    steps.push("    pass");
-                    steps.push("");
-                    steps.push("");
+                    if (!minimum) {
+                        steps.push(`# Env ${functionName}`);
+                        steps.push("@try_manual");
+                        steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames)}):`));
+                        steps.push("    pass");
+                        steps.push("");
+                        steps.push("");
+                    }
                     outputFunc.push(...ToMultiLine(`    ${functionName}(test${CliTestStep.parameterLine(parameterNames)})`));
                 }   
             }
@@ -147,11 +147,18 @@ export class CliTestScenario extends TemplateBase {
         buildSenario(this.header, funcMinScenario, true);
 
         class_info.push("    def __init__(self):");
-        class_info.push(...initiates);
+        if (initiates.length>0) {
+            class_info.push(...initiates);
+        }
+        else {
+            class_info.push("        pass");
+        }
+        class_info.push("");
+        class_info.push("");
 
-        function buildTestcase(scenarioName) {
+        function buildTestcase(testcaseName) {
             let ret = [...decorators];
-            let funcLine = "    def test_" + scenarioName + "(self";
+            let funcLine = "    def test_" + testcaseName + "(self";
             for (let parameterName of parameterNames) {
                 funcLine += `, ${parameterName}`;
             }

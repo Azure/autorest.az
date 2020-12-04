@@ -22,3 +22,13 @@ def step_virtual_machine_assess_patch(test, rg, checks=None):
              '--vm-name "myVMName"',
              checks=checks)
 
+
+@try_manual
+def step_virtual_machine_assess_patch_min(test, rg, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az vm virtual-machine assess-patch '
+             '--resource-group "{rg}" '
+             '--vm-name "myVMName"',
+             checks=checks)
+

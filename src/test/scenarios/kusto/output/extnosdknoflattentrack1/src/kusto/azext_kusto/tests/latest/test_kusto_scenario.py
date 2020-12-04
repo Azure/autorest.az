@@ -53,6 +53,48 @@ from .example_steps import step_data_connection_delete
 from .example_steps import step_cluster_delete
 from .example_steps import step_attached_database_configuration_delete
 from .example_steps import step_cluster_principal_assignment_delete
+from .example_steps import step_attached_database_configuration_create_min
+from .example_steps import step_attached_database_configuration_show_min
+from .example_steps import step_attached_database_configuration_list_min
+from .example_steps import step_cluster_create_min
+from .example_steps import step_cluster_show_min
+from .example_steps import step_cluster_list_min
+from .example_steps import step_cluster_list2_min
+from .example_steps import step_cluster_list_sku_min
+from .example_steps import step_cluster_list_sku2_min
+from .example_steps import step_cluster_update_min
+from .example_steps import step_cluster_add_language_extension_min
+from .example_steps import step_cluster_detach_follower_database_min
+from .example_steps import step_cluster_diagnose_virtual_network_min
+from .example_steps import step_cluster_list_follower_database_min
+from .example_steps import step_cluster_list_language_extension_min
+from .example_steps import step_cluster_remove_language_extension_min
+from .example_steps import step_cluster_start_min
+from .example_steps import step_cluster_stop_min
+from .example_steps import step_cluster_principal_assignment_create_min
+from .example_steps import step_cluster_principal_assignment_show_min
+from .example_steps import step_cluster_principal_assignment_list_min
+from .example_steps import step_database_principal_assignment_create_min
+from .example_steps import step_database_principal_assignment_show_min
+from .example_steps import step_database_principal_assignment_list_min
+from .example_steps import step_database_principal_assignment_delete_min
+from .example_steps import step_database_create_min
+from .example_steps import step_database_show_min
+from .example_steps import step_database_list_min
+from .example_steps import step_database_update_min
+from .example_steps import step_database_add_principal_min
+from .example_steps import step_database_list_principal_min
+from .example_steps import step_database_remove_principal_min
+from .example_steps import step_database_delete_min
+from .example_steps import step_data_connection_event_hub_create_min
+from .example_steps import step_data_connection_list_min
+from .example_steps import step_data_connection_show_min
+from .example_steps import step_data_connection_event_hub_update_min
+from .example_steps import step_data_connection_event_min
+from .example_steps import step_data_connection_delete_min
+from .example_steps import step_cluster_delete_min
+from .example_steps import step_attached_database_configuration_delete_min
+from .example_steps import step_cluster_principal_assignment_delete_min
 from .. import (
     try_manual,
     raise_if,
@@ -175,13 +217,85 @@ def call_scenario(test, rg):
     cleanup_scenario(test, rg)
 
 
+@try_manual
+def call_scenario_min(test, rg):
+    setup_scenario(test, rg)
+    step_attached_database_configuration_create_min(test, rg, checks=[])
+    step_attached_database_configuration_show_min(test, rg, checks=[])
+    step_attached_database_configuration_list_min(test, rg, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_cluster_create_min(test, rg, checks=[
+        test.check("name", "{myCluster}", case_sensitive=False),
+        test.check("location", "westus", case_sensitive=False),
+        test.check("sku.name", "Standard_L8s", case_sensitive=False),
+        test.check("sku.capacity", 2),
+        test.check("sku.tier", "Standard", case_sensitive=False),
+    ])
+    step_cluster_show_min(test, rg, checks=[
+        test.check("name", "{myCluster}", case_sensitive=False),
+        test.check("location", "westus", case_sensitive=False),
+        test.check("sku.name", "Standard_L8s", case_sensitive=False),
+        test.check("sku.capacity", 2),
+        test.check("sku.tier", "Standard", case_sensitive=False),
+    ])
+    step_cluster_list_min(test, rg, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_cluster_list2_min(test, rg, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_cluster_list_sku_min(test, rg, checks=[])
+    step_cluster_list_sku2_min(test, rg, checks=[])
+    step_cluster_update_min(test, rg, checks=[
+        test.check("name", "{myCluster}", case_sensitive=False),
+        test.check("location", "westus", case_sensitive=False),
+        test.check("sku.name", "Standard_L8s", case_sensitive=False),
+        test.check("sku.capacity", 2),
+        test.check("sku.tier", "Standard", case_sensitive=False),
+    ])
+    step_cluster_add_language_extension_min(test, rg, checks=[])
+    step_cluster_detach_follower_database_min(test, rg, checks=[])
+    step_cluster_diagnose_virtual_network_min(test, rg, checks=[])
+    step_cluster_list_follower_database_min(test, rg, checks=[])
+    step_cluster_list_language_extension_min(test, rg, checks=[])
+    step_cluster_remove_language_extension_min(test, rg, checks=[])
+    step_cluster_start_min(test, rg, checks=[])
+    step_cluster_stop_min(test, rg, checks=[])
+    step_cluster_principal_assignment_create_min(test, rg, checks=[])
+    step_cluster_principal_assignment_show_min(test, rg, checks=[])
+    step_cluster_principal_assignment_list_min(test, rg, checks=[])
+    step_database_principal_assignment_create_min(test, rg, checks=[])
+    step_database_principal_assignment_show_min(test, rg, checks=[])
+    step_database_principal_assignment_list_min(test, rg, checks=[])
+    step_database_principal_assignment_delete_min(test, rg, checks=[])
+    step_database_create_min(test, rg, checks=[])
+    step_database_show_min(test, rg, checks=[])
+    step_database_list_min(test, rg, checks=[])
+    step_database_update_min(test, rg, checks=[])
+    step_database_add_principal_min(test, rg, checks=[])
+    step_database_list_principal_min(test, rg, checks=[])
+    step_database_remove_principal_min(test, rg, checks=[])
+    step_database_delete_min(test, rg, checks=[])
+    step_data_connection_event_hub_create_min(test, rg, checks=[])
+    step_data_connection_list_min(test, rg, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_data_connection_show_min(test, rg, checks=[])
+    step_data_connection_event_hub_update_min(test, rg, checks=[])
+    step_data_connection_event_min(test, rg, checks=[])
+    step_data_connection_delete_min(test, rg, checks=[])
+    step_cluster_delete_min(test, rg, checks=[])
+    step_attached_database_configuration_delete_min(test, rg, checks=[])
+    step_cluster_principal_assignment_delete_min(test, rg, checks=[])
+    cleanup_scenario(test, rg)
+
+
 # Test class for Scenario
 @try_manual
 class KustoScenarioTest(ScenarioTest):
 
-    @ResourceGroupPreparer(name_prefix='clitestkusto_kustorptest'[:7], key='rg', parameter_name='rg')
-    def test_kusto_Scenario(self, rg):
-
+    def __init__(self):
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
         })
@@ -198,6 +312,16 @@ class KustoScenarioTest(ScenarioTest):
             'myDataConnection2': 'kustoeventhubconnection1',
         })
 
+
+    @ResourceGroupPreparer(name_prefix='clitestkusto_kustorptest'[:7], key='rg', parameter_name='rg')
+    def test_kusto_Scenario(self, rg):
+        call_scenario(self, rg)
+        calc_coverage(__file__)
+        raise_if()
+
+
+    @ResourceGroupPreparer(name_prefix='clitestkusto_kustorptest'[:7], key='rg', parameter_name='rg')
+    def test_kusto_Scenario_min(self, rg):
         call_scenario(self, rg)
         calc_coverage(__file__)
         raise_if()

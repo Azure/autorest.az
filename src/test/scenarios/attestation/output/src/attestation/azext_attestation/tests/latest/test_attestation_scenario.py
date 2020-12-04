@@ -17,6 +17,12 @@ from .example_steps import step_attestation_provider_show
 from .example_steps import step_attestation_provider_provider_list
 from .example_steps import step_attestation_provider_provider_list2
 from .example_steps import step_attestation_provider_delete
+from .example_steps import step_list_operation_min
+from .example_steps import step_create_provider_min
+from .example_steps import step_attestation_provider_show_min
+from .example_steps import step_attestation_provider_provider_list_min
+from .example_steps import step_attestation_provider_provider_list2_min
+from .example_steps import step_attestation_provider_delete_min
 from .. import (
     try_manual,
     raise_if,
@@ -59,16 +65,42 @@ def call_scenario(test, rg, rg_2, rg_3):
     cleanup_scenario(test, rg, rg_2, rg_3)
 
 
+@try_manual
+def call_scenario_min(test, rg, rg_2, rg_3):
+    setup_scenario(test, rg, rg_2, rg_3)
+    step_list_operation_min(test, rg, rg_2, rg_3, checks=[])
+    step_create_provider_min(test, rg, rg_2, rg_3, checks=[])
+    step_attestation_provider_show_min(test, rg, rg_2, rg_3, checks=[])
+    mytest(test, rg, rg_2, rg_3)
+    step_attestation_provider_provider_list_min(test, rg, rg_2, rg_3, checks=[])
+    step_attestation_provider_provider_list2_min(test, rg, rg_2, rg_3, checks=[])
+    step_attestation_provider_delete_min(test, rg, rg_2, rg_3, checks=[])
+    cleanup_scenario(test, rg, rg_2, rg_3)
+
+
 # Test class for Scenario
 @try_manual
 class AttestationScenarioTest(ScenarioTest):
+
+    def __init__(self):
+        pass
+
 
     @ResourceGroupPreparer(name_prefix='clitestattestation_MyResourceGroup'[:7], key='rg', parameter_name='rg')
     @ResourceGroupPreparer(name_prefix='clitestattestation_testrg1'[:7], key='rg_2', parameter_name='rg_2')
     @ResourceGroupPreparer(name_prefix='clitestattestation_sample-resource-group'[:7], key='rg_3',
                            parameter_name='rg_3')
     def test_attestation_Scenario(self, rg, rg_2, rg_3):
+        call_scenario(self, rg, rg_2, rg_3)
+        calc_coverage(__file__)
+        raise_if()
 
+
+    @ResourceGroupPreparer(name_prefix='clitestattestation_MyResourceGroup'[:7], key='rg', parameter_name='rg')
+    @ResourceGroupPreparer(name_prefix='clitestattestation_testrg1'[:7], key='rg_2', parameter_name='rg_2')
+    @ResourceGroupPreparer(name_prefix='clitestattestation_sample-resource-group'[:7], key='rg_3',
+                           parameter_name='rg_3')
+    def test_attestation_Scenario_min(self, rg, rg_2, rg_3):
         call_scenario(self, rg, rg_2, rg_3)
         calc_coverage(__file__)
         raise_if()
