@@ -58,7 +58,6 @@ export class CliTestScenario extends TemplateBase {
 
         let class_info: string[] = [];
         let initiates: string[] = [];
-        let body: string[] = [];
 
         class_info.push(`# Test class for ${scenarioName}`);
         class_info.push("@try_manual");
@@ -75,73 +74,97 @@ export class CliTestScenario extends TemplateBase {
         }
 
         let decorators: string[] = [];
-        let parameterNames = CliTestStep.InitiateDependencies(model, this.header, decorators, initiates, this.groupName + "_" + scenarioName);
+        let parameterNames = CliTestStep.InitiateDependencies(model, this.header, decorators, initiates);
         let jsonAdded = false;
         
         let funcScenario: string[] = [];
+        let funcMinScenario: string[] = [];
         let steps: string[] = [];
         funcScenario.push(`# Testcase: ${scenarioName}`);
         funcScenario.push("@try_manual");
         funcScenario.push(...ToMultiLine(`def call_${scenarioName.toLowerCase()}(test${CliTestStep.parameterLine(parameterNames)}):`));
-        model.GetResourcePool().clearExampleParams();
+        funcMinScenario.push("@try_manual");
+        funcMinScenario.push(...ToMultiLine(`def call_${scenarioName.toLowerCase()}_min(test${CliTestStep.parameterLine(parameterNames)}):`));
 
-        // go through the examples to generate steps
-        for (var ci = 0; ci < config.length; ci++) {
-            let exampleId: string = config[ci].name;
-            let functionName: string = CliTestStep.ToFunctionName(config[ci]);
-            if (exampleId) {
-                let disabled: string = config[ci].disabled ? "# " : "";
-                // find example by name
-                let found = false;
-                let examples: CommandExample[] = [];
-                let exampleIdx = -1;
-                for (let exampleCmd of model.FindExampleById(exampleId, commandParams, examples)) {
-                    exampleIdx += 1;
-                    if (exampleCmd && exampleCmd.length > 0) {
-                        found = true;
-                        let checks = model.GetExampleChecks(examples[exampleIdx]);
-                        functionName = CliTestStep.ToFunctionName({name: examples[exampleIdx].Id}, exampleCmd[0]);
-                        if (checks.length > 0) {
-                            funcScenario.push(...ToMultiLine(`    ${disabled}${functionName}(test${CliTestStep.parameterLine(parameterNames)}, checks=[`));
-                            for (let check of checks) {
-                                ToMultiLine("    " + disabled + "    " + check, funcScenario);
-                                if (!jsonAdded && !disabled && check.indexOf("json.loads") >= 0) {
-                                    this.header.addImport("json");
-                                    jsonAdded = true;
+        function buildSenario(header: HeaderGenerator, outputFunc: string[], minimum: boolean) {
+            model.GetResourcePool().clearExampleParams();
+
+            // go through the examples to generate steps
+            for (var ci = 0; ci < config.length; ci++) {
+                let exampleId: string = config[ci].name;
+                let functionName: string = CliTestStep.ToFunctionName(config[ci]);
+                if (exampleId) {
+                    let disabled: string = config[ci].disabled ? "# " : "";
+                    // find example by name
+                    let found = false;
+                    let examples: CommandExample[] = [];
+                    let exampleIdx = -1;
+                    for (let exampleCmd of model.FindExampleById(exampleId, commandParams, examples, minimum)) {
+                        exampleIdx += 1;
+                        if (exampleCmd && exampleCmd.length > 0) {
+                            found = true;
+                            let checks = model.GetExampleChecks(examples[exampleIdx]);
+                            functionName = CliTestStep.ToFunctionName({name: examples[exampleIdx].Id}, exampleCmd[0]);
+                            if (minimum) functionName += "_min";
+                            if (checks.length > 0) {
+                                outputFunc.push(...ToMultiLine(`    ${disabled}${functionName}(test${CliTestStep.parameterLine(parameterNames)}, checks=[`));
+                                for (let check of checks) {
+                                    ToMultiLine("    " + disabled + "    " + check, outputFunc);
+                                    if (!jsonAdded && !disabled && check.indexOf("json.loads") >= 0) {
+                                        header.addImport("json");
+                                        jsonAdded = true;
+                                    }
                                 }
+                                outputFunc.push(`    ${disabled}])`);
                             }
-                            funcScenario.push(`    ${disabled}])`);
-                        }
-                        else {
-                            funcScenario.push(...ToMultiLine(`    ${functionName}(test${CliTestStep.parameterLine(parameterNames)}, checks=[])`));
+                            else {
+                                outputFunc.push(...ToMultiLine(`    ${functionName}(test${CliTestStep.parameterLine(parameterNames)}, checks=[])`));
+                            }
                         }
                     }
-                }
-                if (found) {
-                    this.header.addFromImport(".example_steps", [functionName]);
+                    if (found) {
+                        header.addFromImport(".example_steps", [functionName]);
+                    }
+                    else {
+                        outputFunc.push(...ToMultiLine(`    # STEP NOT FOUND: ${exampleId}`));
+                    }
                 }
                 else {
-                    funcScenario.push(...ToMultiLine(`    # STEP NOT FOUND: ${exampleId}`));
-                }
+                    if (minimum) functionName += "_min";
+                    steps.push(`# Env ${functionName}`);
+                    steps.push("@try_manual");
+                    steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames)}):`));
+                    steps.push("    pass");
+                    steps.push("");
+                    steps.push("");
+                    outputFunc.push(...ToMultiLine(`    ${functionName}(test${CliTestStep.parameterLine(parameterNames)})`));
+                }   
             }
-            else {
-                steps.push(`# Env ${functionName}`);
-                steps.push("@try_manual");
-                steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames)}):`));
-                steps.push("    pass");
-                steps.push("");
-                steps.push("");
-                funcScenario.push(...ToMultiLine(`    ${functionName}(test${CliTestStep.parameterLine(parameterNames)})`));
-            }   
+            outputFunc.push("");
+            outputFunc.push("");
         }
-        funcScenario.push("");
-        funcScenario.push("");
-        body.push(`        call_${scenarioName.toLowerCase()}(self${CliTestStep.parameterLine(parameterNames)})`);
-        body.push(`        calc_coverage(__file__)`);
-        body.push(`        raise_if()`);
-        body.push("");
-        body.push("");
-        this.scenarios.push(...steps.concat(funcScenario, class_info, decorators, initiates, body));
+        buildSenario(this.header, funcScenario, false);
+        buildSenario(this.header, funcMinScenario, true);
+
+        class_info.push("    def __init__(self):");
+        class_info.push(...initiates);
+
+        function buildTestcase(scenarioName) {
+            let ret = [...decorators];
+            let funcLine = "    def test_" + scenarioName + "(self";
+            for (let parameterName of parameterNames) {
+                funcLine += `, ${parameterName}`;
+            }
+            funcLine += "):";
+            ToMultiLine(funcLine, ret);
+            ret.push(`        call_${scenarioName.toLowerCase()}(self${CliTestStep.parameterLine(parameterNames)})`);
+            ret.push(`        calc_coverage(__file__)`);
+            ret.push(`        raise_if()`);
+            ret.push("");
+            ret.push("");
+            return ret;
+        }
+        this.scenarios.push(...steps.concat(funcScenario, funcMinScenario, class_info, buildTestcase(this.groupName + "_" + scenarioName), buildTestcase(this.groupName + "_" + scenarioName + "_min")));
     }
 
     private EndGenerateAzureCliTestScenario(): string[] {
