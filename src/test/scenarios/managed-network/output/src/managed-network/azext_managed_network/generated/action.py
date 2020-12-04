@@ -33,6 +33,9 @@ class AddSubscriptions(argparse._AppendAction):
             v = properties[k]
             if kl == 'id':
                 d['id'] = v[0]
+            else:
+                raise CLIError('Unsupported Key {} is provided for parameter subscriptions. All possible keys are: id'.
+                format(k))
         return d
 
 
@@ -55,6 +58,9 @@ class AddVirtualNetworks(argparse._AppendAction):
             v = properties[k]
             if kl == 'id':
                 d['id'] = v[0]
+            else:
+                raise CLIError('Unsupported Key {} is provided for parameter virtual-networks. All possible keys are: '
+                               'id'.format(k))
         return d
 
 
@@ -80,6 +86,9 @@ class AddSubnets(argparse._AppendAction):
                 v = properties[k]
                 if kl == 'id':
                     d['id'] = v[0]
+                else:
+                    raise CLIError('Unsupported Key {} is provided for parameter subnets. All possible keys are: id'.
+                    format(k))
             ret.append(d)
         return ret
 
@@ -103,6 +112,9 @@ class AddHub(argparse.Action):
             v = properties[k]
             if kl == 'id':
                 d['id'] = v[0]
+            else:
+                raise CLIError('Unsupported Key {} is provided for parameter hub-and-spoke-topology_hub. All possible '
+                               'keys are: id'.format(k))
         return d
 
 
@@ -125,6 +137,9 @@ class AddSpokes(argparse._AppendAction):
             v = properties[k]
             if kl == 'id':
                 d['id'] = v[0]
+            else:
+                raise CLIError('Unsupported Key {} is provided for parameter hub-and-spoke-topology_spokes. All '
+                               'possible keys are: id'.format(k))
         return d
 
 
@@ -147,4 +162,7 @@ class AddMesh(argparse._AppendAction):
             v = properties[k]
             if kl == 'id':
                 d['id'] = v[0]
+            else:
+                raise CLIError('Unsupported Key {} is provided for parameter hub-and-spoke-topology_mesh. All possible '
+                               'keys are: id'.format(k))
         return d

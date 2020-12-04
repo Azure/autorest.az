@@ -5,7 +5,7 @@
 
 import { Parameter, SchemaType } from "@azure-tools/codemodel";
 import { isNullOrUndefined } from "util";
-import { ToPythonString, ToCamelCase, Capitalize } from "../../../../utils/helper";
+import { ToPythonString, ToCamelCase, Capitalize, ToMultiLine } from "../../../../utils/helper";
 import { CodeModelAz } from "../../CodeModelAz";
 import { HeaderGenerator } from "../../Header";
 
@@ -130,6 +130,7 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
     output.push("            v = properties[k]");
     let foundProperties = false;
     let preParamType = paramType;
+    let allPossibleKeys = []
     if (model.EnterSubMethodParameters()) {
         if (model.SelectFirstMethodParameter()) {
             foundProperties = true;
@@ -145,6 +146,7 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
                     continue;
                 }
                 output.push("            " + ifkv + " kl == '" + model.Parameter_NameAz(model.SubMethodParameter) + "':");
+                allPossibleKeys.push(model.Parameter_NameAz(model.SubMethodParameter));
                 if (model.MethodParameter_IsArray) {
                     output.push("                d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = v");
                 }
@@ -157,6 +159,10 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
         model.ExitSubMethodParameters();
     }
 
+    if (allPossibleKeys.length > 0) {
+        output.push("            else:");
+        ToMultiLine("                raise CLIError('Unsupported Key {} is provided for parameter " + model.Parameter_NameAz(param) + ". All possible keys are: " + allPossibleKeys.join(", ") + "'.format(k))", output)
+    }
     if (!foundProperties && preParamType == SchemaType.Dictionary) {
         output.pop();
         output.pop();
@@ -262,6 +268,7 @@ function GetShorthandSyntaxAction(model: CodeModelAz, actionName: string, param:
     output.push("                v = properties[k]");
     let foundProperties = false;
     let preParamType = paramType;
+    let allPossibleKeys = [];
     if (model.EnterSubMethodParameters()) {
         if (model.SelectFirstMethodParameter()) {
             foundProperties = true;
@@ -277,6 +284,7 @@ function GetShorthandSyntaxAction(model: CodeModelAz, actionName: string, param:
                     continue;
                 }
                 output.push("                " + ifkv + " kl == '" + model.Parameter_NameAz(model.SubMethodParameter) + "':");
+                allPossibleKeys.push(model.Parameter_NameAz(model.SubMethodParameter));
                 if (model.MethodParameter_IsArray) {
                     output.push("                    d['" + model.Parameter_NamePython(model.SubMethodParameter) + "'] = v");
                 }
@@ -289,6 +297,10 @@ function GetShorthandSyntaxAction(model: CodeModelAz, actionName: string, param:
         model.ExitSubMethodParameters();
     }
 
+    if (allPossibleKeys.length > 0) {
+        output.push("                else:");
+        ToMultiLine("                    raise CLIError('Unsupported Key {} is provided for parameter " + model.Parameter_NameAz(param) + ". All possible keys are: " + allPossibleKeys.join(", ") + "'.format(k))", output)
+    }
     if (!foundProperties && preParamType == SchemaType.Dictionary) {
         output.pop();
         output.pop();
