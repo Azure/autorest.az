@@ -71,7 +71,7 @@ class AddFactoryGitHubConfiguration(argparse.Action):
             elif kl == 'last-commit-id':
                 d['last_commit_id'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter factory-git-hub-configuration. All '
+                raise CLIError('Unsupported Key {} is provided for parameter factory_git_hub_configuration. All '
                                'possible keys are: host-name, account-name, repository-name, collaboration-branch, '
                                'root-folder, last-commit-id'.format(k))
         d['type'] = 'FactoryGitHubConfiguration'

@@ -38,7 +38,7 @@ class AddAutoScale(argparse.Action):
             elif kl == 'max-node-count':
                 d['max_node_count'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter auto-scale. All possible keys are: '
+                raise CLIError('Unsupported Key {} is provided for parameter auto_scale. All possible keys are: '
                                'min-node-count, enabled, max-node-count'.format(k))
         return d
 
@@ -65,7 +65,7 @@ class AddAutoPause(argparse.Action):
             elif kl == 'enabled':
                 d['enabled'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter auto-pause. All possible keys are: '
+                raise CLIError('Unsupported Key {} is provided for parameter auto_pause. All possible keys are: '
                                'delay-in-minutes, enabled'.format(k))
         return d
 
@@ -92,7 +92,7 @@ class AddLibraryRequirements(argparse.Action):
             elif kl == 'filename':
                 d['filename'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter library-requirements. All possible keys '
+                raise CLIError('Unsupported Key {} is provided for parameter library_requirements. All possible keys '
                                'are: content, filename'.format(k))
         return d
 
@@ -149,7 +149,7 @@ class AddRecurringScans(argparse.Action):
             elif kl == 'emails':
                 d['emails'] = v
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter recurring-scans. All possible keys are: '
+                raise CLIError('Unsupported Key {} is provided for parameter recurring_scans. All possible keys are: '
                                'is-enabled, email-subscription-admins, emails'.format(k))
         return d
 
@@ -174,7 +174,7 @@ class AddBaselineResults(argparse._AppendAction):
             if kl == 'result':
                 d['result'] = v
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter baseline-results. All possible keys are: '
+                raise CLIError('Unsupported Key {} is provided for parameter baseline_results. All possible keys are: '
                                'result'.format(k))
         return d
 
@@ -201,7 +201,7 @@ class AddDefaultDataLakeStorage(argparse.Action):
             elif kl == 'filesystem':
                 d['filesystem'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter default-data-lake-storage. All possible '
+                raise CLIError('Unsupported Key {} is provided for parameter default_data_lake_storage. All possible '
                                'keys are: account-url, filesystem'.format(k))
         return d
 
@@ -248,6 +248,6 @@ class AddPrivateEndpointConnections(argparse._AppendAction):
             elif kl == 'description':
                 d['description'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter private-endpoint-connections. All '
+                raise CLIError('Unsupported Key {} is provided for parameter private_endpoint_connections. All '
                                'possible keys are: status, description'.format(k))
         return d

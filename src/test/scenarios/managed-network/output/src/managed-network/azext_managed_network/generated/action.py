@@ -59,7 +59,7 @@ class AddVirtualNetworks(argparse._AppendAction):
             if kl == 'id':
                 d['id'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter virtual-networks. All possible keys are: '
+                raise CLIError('Unsupported Key {} is provided for parameter virtual_networks. All possible keys are: '
                                'id'.format(k))
         return d
 
@@ -113,8 +113,7 @@ class AddHub(argparse.Action):
             if kl == 'id':
                 d['id'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter hub-and-spoke-topology_hub. All possible '
-                               'keys are: id'.format(k))
+                raise CLIError('Unsupported Key {} is provided for parameter hub. All possible keys are: id'.format(k))
         return d
 
 
@@ -138,8 +137,7 @@ class AddSpokes(argparse._AppendAction):
             if kl == 'id':
                 d['id'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter hub-and-spoke-topology_spokes. All '
-                               'possible keys are: id'.format(k))
+                raise CLIError('Unsupported Key {} is provided for parameter spokes. All possible keys are: id'.format(k))
         return d
 
 
@@ -163,6 +161,5 @@ class AddMesh(argparse._AppendAction):
             if kl == 'id':
                 d['id'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter hub-and-spoke-topology_mesh. All possible '
-                               'keys are: id'.format(k))
+                raise CLIError('Unsupported Key {} is provided for parameter mesh. All possible keys are: id'.format(k))
         return d

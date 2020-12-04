@@ -66,6 +66,7 @@ class AddPolicySigningCertificatesKeys(argparse._AppendAction):
             elif kl == 'y':
                 d['y'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter keys. All possible keys are: alg, crv, d, '
-                               'dp, dq, e, k, kid, kty, n, p, q, qi, use, x, x5-c, y'.format(k))
+                raise CLIError('Unsupported Key {} is provided for parameter policy_signing_certificates_keys. All '
+                               'possible keys are: alg, crv, d, dp, dq, e, k, kid, kty, n, p, q, qi, use, x, x5-c, y'.
+                               format(k))
         return d

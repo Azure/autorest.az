@@ -63,7 +63,7 @@ class AddTrustedExternalTenants(argparse._AppendAction):
             if kl == 'value':
                 d['value'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter trusted-external-tenants. All possible '
+                raise CLIError('Unsupported Key {} is provided for parameter trusted_external_tenants. All possible '
                                'keys are: value'.format(k))
         return d
 
@@ -94,7 +94,7 @@ class AddOptimizedAutoscale(argparse.Action):
             elif kl == 'maximum':
                 d['maximum'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter optimized-autoscale. All possible keys '
+                raise CLIError('Unsupported Key {} is provided for parameter optimized_autoscale. All possible keys '
                                'are: version, is-enabled, minimum, maximum'.format(k))
         return d
 
@@ -123,7 +123,7 @@ class AddVirtualNetworkConfiguration(argparse.Action):
             elif kl == 'data-management-public-ip-id':
                 d['data_management_public_ip_id'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter virtual-network-configuration. All '
+                raise CLIError('Unsupported Key {} is provided for parameter virtual_network_configuration. All '
                                'possible keys are: subnet-id, engine-public-ip-id, data-management-public-ip-id'.
                                format(k))
         return d
@@ -153,7 +153,7 @@ class AddKeyVaultProperties(argparse.Action):
             elif kl == 'key-vault-uri':
                 d['key_vault_uri'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter key-vault-properties. All possible keys '
+                raise CLIError('Unsupported Key {} is provided for parameter key_vault_properties. All possible keys '
                                'are: key-name, key-version, key-vault-uri'.format(k))
         return d
 
@@ -207,7 +207,7 @@ class AddReadWriteDatabase(argparse.Action):
             elif kl == 'location':
                 d['location'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter read-write-database. All possible keys '
+                raise CLIError('Unsupported Key {} is provided for parameter read_write_database. All possible keys '
                                'are: soft-delete-period, hot-cache-period, location'.format(k))
         d['kind'] = 'ReadWrite'
         return d
@@ -235,7 +235,7 @@ class AddReadOnlyFollowingDatabase(argparse.Action):
             elif kl == 'location':
                 d['location'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter read-only-following-database. All '
+                raise CLIError('Unsupported Key {} is provided for parameter read_only_following_database. All '
                                'possible keys are: hot-cache-period, location'.format(k))
         d['kind'] = 'ReadOnlyFollowing'
         return d
@@ -310,7 +310,7 @@ class AddEventHubDataConnection(argparse.Action):
             elif kl == 'location':
                 d['location'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter event-hub-data-connection. All possible '
+                raise CLIError('Unsupported Key {} is provided for parameter event_hub_data_connection. All possible '
                                'keys are: event-hub-resource-id, consumer-group, table-name, mapping-rule-name, '
                                'data-format, event-system-properties, compression, location'.format(k))
         d['kind'] = 'EventHub'
@@ -351,7 +351,7 @@ class AddIotHubDataConnection(argparse.Action):
             elif kl == 'location':
                 d['location'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter iot-hub-data-connection. All possible '
+                raise CLIError('Unsupported Key {} is provided for parameter iot_hub_data_connection. All possible '
                                'keys are: iot-hub-resource-id, consumer-group, table-name, mapping-rule-name, '
                                'data-format, event-system-properties, shared-access-policy-name, location'.format(k))
         d['kind'] = 'IotHub'
@@ -394,7 +394,7 @@ class AddEventGridDataConnection(argparse.Action):
             elif kl == 'location':
                 d['location'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter event-grid-data-connection. All possible '
+                raise CLIError('Unsupported Key {} is provided for parameter event_grid_data_connection. All possible '
                                'keys are: storage-account-resource-id, event-hub-resource-id, consumer-group, '
                                'table-name, mapping-rule-name, data-format, ignore-first-record, '
                                'blob-storage-event-type, location'.format(k))

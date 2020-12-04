@@ -161,7 +161,7 @@ function GetAction(model: CodeModelAz, actionName: string, param: Parameter, key
 
     if (allPossibleKeys.length > 0) {
         output.push("            else:");
-        ToMultiLine("                raise CLIError('Unsupported Key {} is provided for parameter " + model.Parameter_NameAz(param) + ". All possible keys are: " + allPossibleKeys.join(", ") + "'.format(k))", output)
+        ToMultiLine("                raise CLIError('Unsupported Key {} is provided for parameter " + model.Parameter_MapsTo(param) + ". All possible keys are: " + allPossibleKeys.join(", ") + "'.format(k))", output)
     }
     if (!foundProperties && preParamType == SchemaType.Dictionary) {
         output.pop();
@@ -299,7 +299,7 @@ function GetShorthandSyntaxAction(model: CodeModelAz, actionName: string, param:
 
     if (allPossibleKeys.length > 0) {
         output.push("                else:");
-        ToMultiLine("                    raise CLIError('Unsupported Key {} is provided for parameter " + model.Parameter_NameAz(param) + ". All possible keys are: " + allPossibleKeys.join(", ") + "'.format(k))", output)
+        ToMultiLine("                    raise CLIError('Unsupported Key {} is provided for parameter " + model.Parameter_MapsTo(param) + ". All possible keys are: " + allPossibleKeys.join(", ") + "'.format(k))", output)
     }
     if (!foundProperties && preParamType == SchemaType.Dictionary) {
         output.pop();
