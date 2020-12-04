@@ -189,9 +189,10 @@ function GetPositionalAction(model: CodeModelAz, actionName: string, param: Para
     output.push("    def __call__(self, parser, namespace, values, option_string=None):");
     output.push("        action = self.get_action(values, option_string)");
     if (paramType == SchemaType.Array) {
-        output.push("        super(" + actionName + ", self).__call__(parser, namespace, action, option_string)");
+        output.push("        for item in action:");
+        output.push("            super(" + actionName + ", self).__call__(parser, namespace, item, option_string)");
     } else {
-        output.push("        namespace." + model.Parameter_MapsTo(param) + " = action");
+        output.push("        namespace." + model.Parameter_MapsTo(param) + " = action[0]");
     }
     output.push("");
     output.push("    def get_action(self, values, option_string=None):");
@@ -200,16 +201,14 @@ function GetPositionalAction(model: CodeModelAz, actionName: string, param: Para
         return output;
     }
     output.push("        try:");
-    let actionClassName = "";
-    let pythonClassName = Capitalize(ToCamelCase(model.MethodParameter_NameAz.replace('/-/g', '_')));
-    if (paramType == SchemaType.Array) {
-        actionClassName = Capitalize(ToCamelCase(model.MethodParameter_NameAz.replace('/-/g', '_')));
-        pythonClassName = Capitalize(ToCamelCase(model.MethodParameter.schema?.['elementType']?.language?.['az']?.['name']).replace('/-/g', '_'));
-        output.push("            value_chunk_list = [values[x:x+" + keys.length + "] for x in range(0, len(values), " + keys.length + ")]");
-        output.push("            for chunk in value_chunk_list:")
-        output.push("                " + keys.join(", ") + (keys.length == 1? ",": "") + " = chunk");
-        output = output.concat(generateConstructObject(model, "                ", keyToMatch, valueToMatch, true, keys));
-    }
+    output.push("            value_chunk_list = [values[x:x+" + keys.length + "] for x in range(0, len(values), " + keys.length + ")]");
+    output.push("            value_list = []");
+    output.push("            for chunk in value_chunk_list:");
+    output.push("                " + keys.join(", ") + (keys.length == 1? ",": "") + " = chunk");
+    output.push("                value_list.append(");
+    output = output.concat(generateConstructObject(model, "                    ", keyToMatch, valueToMatch, false, keys));
+    output.push("                )");
+    output.push("            return value_list");
     output.push("        except ValueError:");
     output.push("            raise CLIError('usage error: {} NAME METRIC OPERATION VALUE'.format(option_string))")
     return output;
@@ -229,7 +228,8 @@ function GetShorthandSyntaxAction(model: CodeModelAz, actionName: string, param:
     output.push("    def __call__(self, parser, namespace, values, option_string=None):");
     output.push("        action = self.get_action(values, option_string)");
     if (paramType == SchemaType.Array) {
-        output.push("        super(" + actionName + ", self).__call__(parser, namespace, action, option_string)");
+        output.push("        for item in action:");
+        output.push("            super(" + actionName + ", self).__call__(parser, namespace, item, option_string)");
     } else {
         output.push("        namespace." + model.Parameter_MapsTo(param) + " = action");
     }

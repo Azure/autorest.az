@@ -61,7 +61,8 @@ class AddVirtualNetworks(argparse._AppendAction):
 class AddSubnets(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-        super(AddSubnets, self).__call__(parser, namespace, action, option_string)
+        for item in action:
+            super(AddSubnets, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         ret = []

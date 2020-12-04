@@ -14,21 +14,29 @@ from collections import defaultdict
 from knack.util import CLIError
 
 
-class AddFactoryVstsConfiguration(argparse._AppendAction):
-
+class AddFactoryVstsConfiguration(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.factory_vsts_configuration = action[0]
+
+    def get_action(self, values, option_string=None):
         try:
-            FactoryVstsConfiguration = namespace._cmd.get_models('FactoryVstsConfiguration')
-            type, project_name, tenant_id, account_name, repository_name, root_folder, collaboration_branch = values.split()
-            return FactoryVstsConfiguration(
-                type = type,
-                project_name = project_name,
-                tenant_id = tenant_id,
-                account_name = account_name,
-                repository_name = repository_name,
-                root_folder = root_folder,
-                collaboration_branch = collaboration_branch
-            )
+            value_chunk_list = [values[x:x+7] for x in range(0, len(values), 7)]
+            value_list = []
+            for chunk in value_chunk_list:
+                type, project_name, tenant_id, account_name, repository_name, root_folder, collaboration_branch = chunk
+                value_list.append(
+                    {
+                        'type': type,
+                        'project_name': project_name,
+                        'tenant_id': tenant_id,
+                        'account_name': account_name,
+                        'repository_name': repository_name,
+                        'root_folder': root_folder,
+                        'collaboration_branch': collaboration_branch
+                    }
+                )
+            return value_list
         except ValueError:
             raise CLIError('usage error: {} NAME METRIC OPERATION VALUE'.format(option_string))
 
@@ -66,15 +74,23 @@ class AddFactoryGitHubConfiguration(argparse.Action):
         return d
 
 
-class AddFakeIdentity(argparse._AppendAction):
-
+class AddFakeIdentity(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.fake_identity = action[0]
+
+    def get_action(self, values, option_string=None):
         try:
-            FakeIdentity = namespace._cmd.get_models('FakeIdentity')
-            name, zones_inside = values.split()
-            return FakeIdentity(
-                name = name,
-                zones_inside = zones_inside
-            )
+            value_chunk_list = [values[x:x+2] for x in range(0, len(values), 2)]
+            value_list = []
+            for chunk in value_chunk_list:
+                name, zones_inside = chunk
+                value_list.append(
+                    {
+                        'name': name,
+                        'zones_inside': zones_inside
+                    }
+                )
+            return value_list
         except ValueError:
             raise CLIError('usage error: {} NAME METRIC OPERATION VALUE'.format(option_string))
