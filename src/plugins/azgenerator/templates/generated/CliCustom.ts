@@ -565,6 +565,9 @@ function GetSimpleCallItem(model: CodeModelAz, param: Parameter, required: any, 
     if (m4Flattened && !isNullOrUndefined(originParam)) {
         let paramNamePython = model.Parameter_NamePython(originParam);
         let keyName = model.Parameter_NamePython(param);
+        if (keyName == "identity") {
+            keyName;
+        }
         let paramDefaultValue = model.Parameter_DefaultValue(originParam);
         if (model.Parameter_IsHidden(originParam)) {
             if (paramDefaultValue) {
@@ -639,7 +642,9 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
             if (skip) {
                 skip = false;
             }
-            let param = model.MethodParameter;
+
+            let param = model.MethodParameter; 
+
             if ((model.MethodParameter_IsFlattened && !model.MethodParameter_IsCliFlattened ) || (model.MethodParameter_IsCliFlattened && !model.SDK_NoFlatten)) {
                 continue;
             }
@@ -648,6 +653,20 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
             }
 
             if(isNullOrUndefined(model.MethodParameter_NamePython)) {
+                if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
+                    let baseParam = model.MethodParameter;
+                    let hasNext = false;
+                    if(model.SelectNextMethodParameter(true)) {
+                        hasNext = true;
+                        while (hasNext && model.MethodParameter['polyBaseParam'] == baseParam) {
+                            hasNext = model.SelectNextMethodParameter(true);
+                        }
+                    }
+                    
+                    if (hasNext && model.MethodParameter['polyBaseParam'] != baseParam) {
+                        skip = true;
+                    }   
+                }
                 continue;
             }
             let parameterPair = '';
@@ -668,6 +687,7 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
                 // XXX - split and pop is a hack
                 methodCall += parameterPair;
             }
+            
             else {
                 methodCall += "," + "\n" + indent + parameterPair;
             }
@@ -684,8 +704,7 @@ function GetMethodCall(model: CodeModelAz, required: any, prefix: any): string[]
                 
                 if (hasNext && model.MethodParameter['polyBaseParam'] != baseParam) {
                     skip = true;
-                }
-                
+                }   
             }
         }
         while (skip || model.SelectNextMethodParameter(true));

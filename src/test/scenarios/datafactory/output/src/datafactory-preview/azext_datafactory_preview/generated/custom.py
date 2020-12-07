@@ -55,12 +55,11 @@ def datafactory_create(client,
     factory = {}
     factory['location'] = location
     factory['tags'] = tags
+    factory['identity'] = "{\"type\": \"SystemAssigned\"}"
     factory['test_inherit'] = test_inherit
     factory['repo_configuration'] = repo_configuration
     factory['fake_identity'] = fake_identity
     factory['zones'] = zones
-    factory['identity'] = {}
-    factory['identity']['type'] = "SystemAssigned"
     return client.create_or_update(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    if_match=if_match,
@@ -73,8 +72,7 @@ def datafactory_update(client,
                        tags=None):
     factory_update_parameters = {}
     factory_update_parameters['tags'] = tags
-    factory_update_parameters['identity'] = {}
-    factory_update_parameters['identity']['type'] = "SystemAssigned"
+    factory_update_parameters['identity'] = "{\"type\": \"SystemAssigned\"}"
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          factory_update_parameters=factory_update_parameters)
@@ -105,9 +103,7 @@ def datafactory_configure_factory_repo(client,
     factory_repo_update['factory_resource_id'] = factory_resource_id
     factory_repo_update['repo_configuration'] = repo_configuration
     return client.configure_factory_repo(location_id=location_id,
-                                         factory_repo_update=factory_repo_update,
-                                         FactoryVstsConfiguration=factory_vsts_configuration,
-                                         FactoryGitHubConfiguration=factory_git_hub_configuration)
+                                         factory_repo_update=factory_repo_update)
 
 
 def datafactory_get_data_plane_access(client,
