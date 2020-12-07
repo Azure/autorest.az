@@ -1992,11 +1992,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                         example_param.push(new ExampleParam(name, ret, false, KeyValueType.ShorthandSyntax, keys, defaultName, realParam, ancestors, value));
                     }
                     else if (this.Parameter_IsSimpleArray(realParam.value)) {
-                        for (let i=0; i<value.length; i++) {
-                            ret += ToJsonString(value[i]) + " ";
+                        if (value.length>0) {           // use value only when it's lenght > 0
+                            for (let i=0; i<value.length; i++) {
+                                ret += ToJsonString(value[i]) + " ";
+                            }
+                            ret = ret.trim();
+                            example_param.push(new ExampleParam(name, ret, false, KeyValueType.SimpleArray, [], defaultName, realParam, ancestors, value));
                         }
-                        ret = ret.trim();
-                        example_param.push(new ExampleParam(name, ret, false, KeyValueType.SimpleArray, [], defaultName, realParam, ancestors, value));
                     }
                     else {
                         for (let i=0; i<value.length; i++) {
