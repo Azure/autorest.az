@@ -97,6 +97,7 @@ export interface CodeModelAz {
     Extension_ClientAuthenticationPolicy: string;
     Extension_Mode: string;
     ResourceType: string | undefined;   
+    isComplexSchema(type: string): boolean
 
 
     SelectFirstCommandGroup(): boolean;

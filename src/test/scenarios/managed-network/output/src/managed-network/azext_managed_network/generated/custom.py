@@ -269,7 +269,7 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update
                                                                                  mesh=None,
                                                                                  no_wait=False):
     if location is not None:
-        instance.managed_network_policy.location = location
+        instance.location = location
     instance.properties.type = 'HubAndSpokeTopology'
     if hub is not None:
         instance.properties.hub = hub
@@ -277,7 +277,7 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update
         instance.properties.spokes = spokes
     if mesh is not None:
         instance.properties.mesh = mesh
-    return instance.undefined
+    return instance
 
 
 def managed_network_managed_network_peering_policy_mesh_topology_update(instance,
@@ -290,7 +290,7 @@ def managed_network_managed_network_peering_policy_mesh_topology_update(instance
                                                                         mesh=None,
                                                                         no_wait=False):
     if location is not None:
-        instance.managed_network_policy.location = location
+        instance.location = location
     instance.properties.type = 'MeshTopology'
     if hub is not None:
         instance.properties.hub = hub
@@ -298,7 +298,7 @@ def managed_network_managed_network_peering_policy_mesh_topology_update(instance
         instance.properties.spokes = spokes
     if mesh is not None:
         instance.properties.mesh = mesh
-    return instance.undefined
+    return instance
 
 
 def managed_network_managed_network_peering_policy_delete(client,

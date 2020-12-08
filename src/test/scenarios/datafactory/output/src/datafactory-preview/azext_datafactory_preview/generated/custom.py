@@ -11,6 +11,7 @@
 # pylint: disable=too-many-lines
 # pylint: disable=unused-argument
 
+import json
 from knack.util import CLIError
 from azure.cli.core.util import sdk_no_wait
 
@@ -55,7 +56,7 @@ def datafactory_create(client,
     factory = {}
     factory['location'] = location
     factory['tags'] = tags
-    factory['identity'] = "{\"type\": \"SystemAssigned\"}"
+    factory['identity'] = json.loads("{\"type\": \"SystemAssigned\"}")
     factory['test_inherit'] = test_inherit
     factory['repo_configuration'] = repo_configuration
     factory['fake_identity'] = fake_identity
@@ -72,7 +73,7 @@ def datafactory_update(client,
                        tags=None):
     factory_update_parameters = {}
     factory_update_parameters['tags'] = tags
-    factory_update_parameters['identity'] = "{\"type\": \"SystemAssigned\"}"
+    factory_update_parameters['identity'] = json.loads("{\"type\": \"SystemAssigned\"}")
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          factory_update_parameters=factory_update_parameters)
@@ -181,10 +182,10 @@ def datafactory_trigger_update(instance,
                                description=None,
                                annotations=None):
     if description is not None:
-        instance.description = description
+        instance.properties.description = description
     if annotations is not None:
-        instance.annotations = annotations
-    return instance.undefined
+        instance.properties.annotations = annotations
+    return instance
 
 
 def datafactory_trigger_delete(client,
