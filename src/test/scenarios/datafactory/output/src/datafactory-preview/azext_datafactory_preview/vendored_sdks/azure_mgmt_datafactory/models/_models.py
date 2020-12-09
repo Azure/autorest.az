@@ -1180,9 +1180,9 @@ class FactoryIdentity(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :ivar type: Required. The identity type. Currently the only supported type is 'SystemAssigned'.
-     Default value: "SystemAssigned".
-    :vartype type: str
+    :param type: Required. The identity type. Currently the only supported type is
+     'SystemAssigned'. Possible values include: "SystemAssigned".
+    :type type: str or ~dfaz_management_client.models.FactoryIdentityType
     :ivar principal_id: The principal id of the identity.
     :vartype principal_id: str
     :ivar tenant_id: The client tenant id of the identity.
@@ -1190,7 +1190,7 @@ class FactoryIdentity(msrest.serialization.Model):
     """
 
     _validation = {
-        'type': {'required': True, 'constant': True},
+        'type': {'required': True},
         'principal_id': {'readonly': True},
         'tenant_id': {'readonly': True},
     }
@@ -1201,13 +1201,12 @@ class FactoryIdentity(msrest.serialization.Model):
         'tenant_id': {'key': 'tenantId', 'type': 'str'},
     }
 
-    type = "SystemAssigned"
-
     def __init__(
         self,
         **kwargs
     ):
         super(FactoryIdentity, self).__init__(**kwargs)
+        self.type = kwargs['type']
         self.principal_id = None
         self.tenant_id = None
 

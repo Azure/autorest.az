@@ -79,6 +79,12 @@ class EventSubscriptionStatus(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum
     DISABLED = "Disabled"
     UNKNOWN = "Unknown"
 
+class FactoryIdentityType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """The identity type. Currently the only supported type is 'SystemAssigned'.
+    """
+
+    SYSTEM_ASSIGNED = "SystemAssigned"
+
 class IntegrationRuntimeAuthKeyName(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The name of the authentication key to regenerate.
     """

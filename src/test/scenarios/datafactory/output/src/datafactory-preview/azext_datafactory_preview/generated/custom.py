@@ -11,7 +11,6 @@
 # pylint: disable=too-many-lines
 # pylint: disable=unused-argument
 
-import json
 from knack.util import CLIError
 from azure.cli.core.util import sdk_no_wait
 
@@ -56,11 +55,12 @@ def datafactory_create(client,
     factory = {}
     factory['location'] = location
     factory['tags'] = tags
-    factory['identity'] = json.loads("{\"type\": \"SystemAssigned\"}")
     factory['test_inherit'] = test_inherit
     factory['repo_configuration'] = repo_configuration
     factory['fake_identity'] = fake_identity
     factory['zones'] = zones
+    factory['identity'] = {}
+    factory['identity']['type'] = "SystemAssigned"
     return client.create_or_update(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    if_match=if_match,
@@ -73,7 +73,8 @@ def datafactory_update(client,
                        tags=None):
     factory_update_parameters = {}
     factory_update_parameters['tags'] = tags
-    factory_update_parameters['identity'] = json.loads("{\"type\": \"SystemAssigned\"}")
+    factory_update_parameters['identity'] = {}
+    factory_update_parameters['identity']['type'] = "SystemAssigned"
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          factory_update_parameters=factory_update_parameters)
