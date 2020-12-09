@@ -48,6 +48,7 @@ except (SyntaxError, ImportError):
 from ._mixed_reality_client_enums import (
     NameAvailability,
     NameUnavailableReason,
+    ResourceIdentityType,
     Serial,
 )
 
@@ -72,5 +73,6 @@ __all__ = [
     'TrackedResource',
     'NameAvailability',
     'NameUnavailableReason',
+    'ResourceIdentityType',
     'Serial',
 ]

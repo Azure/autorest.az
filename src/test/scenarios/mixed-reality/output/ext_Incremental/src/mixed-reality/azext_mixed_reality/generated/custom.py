@@ -45,7 +45,8 @@ def remote_rendering_account_create(client,
     remote_rendering_account = {}
     remote_rendering_account['tags'] = tags
     remote_rendering_account['location'] = location
-    remote_rendering_account['identity'] = "{\"type\": \"SystemAssigned\"}"
+    remote_rendering_account['identity'] = {}
+    remote_rendering_account['identity']['type'] = "SystemAssigned"
     return client.create(resource_group_name=resource_group_name,
                          account_name=account_name,
                          remote_rendering_account=remote_rendering_account)
@@ -59,7 +60,8 @@ def remote_rendering_account_update(client,
     remote_rendering_account = {}
     remote_rendering_account['tags'] = tags
     remote_rendering_account['location'] = location
-    remote_rendering_account['identity'] = "{\"type\": \"SystemAssigned\"}"
+    remote_rendering_account['identity'] = {}
+    remote_rendering_account['identity']['type'] = "SystemAssigned"
     return client.update(resource_group_name=resource_group_name,
                          account_name=account_name,
                          remote_rendering_account=remote_rendering_account)

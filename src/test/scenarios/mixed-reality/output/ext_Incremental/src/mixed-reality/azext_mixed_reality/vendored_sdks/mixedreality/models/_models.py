@@ -219,14 +219,13 @@ class Identity(msrest.serialization.Model):
     :vartype principal_id: str
     :ivar tenant_id: The tenant ID of resource.
     :vartype tenant_id: str
-    :ivar type: The identity type. Default value: "SystemAssigned".
-    :vartype type: str
+    :param type: The identity type. Possible values include: "SystemAssigned".
+    :type type: str or ~mixed_reality_client.models.ResourceIdentityType
     """
 
     _validation = {
         'principal_id': {'readonly': True},
         'tenant_id': {'readonly': True},
-        'type': {'constant': True},
     }
 
     _attribute_map = {
@@ -235,8 +234,6 @@ class Identity(msrest.serialization.Model):
         'type': {'key': 'type', 'type': 'str'},
     }
 
-    type = "SystemAssigned"
-
     def __init__(
         self,
         **kwargs
@@ -244,6 +241,7 @@ class Identity(msrest.serialization.Model):
         super(Identity, self).__init__(**kwargs)
         self.principal_id = None
         self.tenant_id = None
+        self.type = kwargs.get('type', None)
 
 
 class Operation(msrest.serialization.Model):
@@ -481,14 +479,13 @@ class RemoteRenderingAccountIdentity(Identity):
     :vartype principal_id: str
     :ivar tenant_id: The tenant ID of resource.
     :vartype tenant_id: str
-    :ivar type: The identity type. Default value: "SystemAssigned".
-    :vartype type: str
+    :param type: The identity type. Possible values include: "SystemAssigned".
+    :type type: str or ~mixed_reality_client.models.ResourceIdentityType
     """
 
     _validation = {
         'principal_id': {'readonly': True},
         'tenant_id': {'readonly': True},
-        'type': {'constant': True},
     }
 
     _attribute_map = {
@@ -496,8 +493,6 @@ class RemoteRenderingAccountIdentity(Identity):
         'tenant_id': {'key': 'tenantId', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
     }
-
-    type = "SystemAssigned"
 
     def __init__(
         self,

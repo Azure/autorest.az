@@ -450,7 +450,7 @@
           ],
           "x-ms-enum": {
             "name": "ResourceIdentityType",
-            "modelAsString": false
+            "modelAsString": true
           }
         }
       }

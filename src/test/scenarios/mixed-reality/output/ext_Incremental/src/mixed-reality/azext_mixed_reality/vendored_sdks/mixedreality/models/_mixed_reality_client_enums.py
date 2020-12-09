@@ -40,6 +40,12 @@ class NameUnavailableReason(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum))
     INVALID = "Invalid"
     ALREADY_EXISTS = "AlreadyExists"
 
+class ResourceIdentityType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """The identity type.
+    """
+
+    SYSTEM_ASSIGNED = "SystemAssigned"
+
 class Serial(with_metaclass(_CaseInsensitiveEnumMeta, int, Enum)):
     """serial of key to be regenerated
     """
