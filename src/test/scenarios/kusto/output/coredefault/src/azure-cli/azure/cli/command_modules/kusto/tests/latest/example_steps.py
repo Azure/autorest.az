@@ -62,13 +62,7 @@ def step_attached_database_configuration_show(test, rg, checks=None):
 
 @try_manual
 def step_attached_database_configuration_show_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto attached-database-configuration show '
-             '--name "{myAttachedDatabaseConfiguration2}" '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_attached_database_configuration_show(test, rg, checks)
 
 
 # EXAMPLE: /AttachedDatabaseConfigurations/get/KustoAttachedDatabaseConfigurationsListByCluster
@@ -84,12 +78,7 @@ def step_attached_database_configuration_list(test, rg, checks=None):
 
 @try_manual
 def step_attached_database_configuration_list_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto attached-database-configuration list '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_attached_database_configuration_list(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/put/KustoClustersCreateOrUpdate
@@ -142,12 +131,7 @@ def step_cluster_show(test, rg, checks=None):
 
 @try_manual
 def step_cluster_show_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster show '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_show(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/get/KustoClustersList
@@ -162,11 +146,7 @@ def step_cluster_list(test, rg, checks=None):
 
 @try_manual
 def step_cluster_list_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster list '
-             '-g ""',
-             checks=checks)
+    return step_cluster_list(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/get/KustoClustersListByResourceGroup
@@ -181,11 +161,7 @@ def step_cluster_list2(test, rg, checks=None):
 
 @try_manual
 def step_cluster_list2_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster list '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_list2(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/get/KustoClustersListResourceSkus
@@ -201,12 +177,7 @@ def step_cluster_list_sku(test, rg, checks=None):
 
 @try_manual
 def step_cluster_list_sku_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster list-sku '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_list_sku(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/get/KustoClustersListSkus
@@ -221,11 +192,7 @@ def step_cluster_list_sku2(test, rg, checks=None):
 
 @try_manual
 def step_cluster_list_sku2_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster list-sku '
-             '-g ""',
-             checks=checks)
+    return step_cluster_list_sku2(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/patch/KustoClustersUpdate
@@ -294,15 +261,7 @@ def step_cluster_detach_follower_database(test, rg, checks=None):
 
 @try_manual
 def step_cluster_detach_follower_database_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster detach-follower-database '
-             '--name "{myCluster}" '
-             '--attached-database-configuration-name "{myAttachedDatabaseConfiguration}" '
-             '--cluster-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Kusto/clu'
-             'sters/{myCluster2}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_detach_follower_database(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/post/KustoClusterDiagnoseVirtualNetwork
@@ -318,12 +277,7 @@ def step_cluster_diagnose_virtual_network(test, rg, checks=None):
 
 @try_manual
 def step_cluster_diagnose_virtual_network_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster diagnose-virtual-network '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_diagnose_virtual_network(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/post/KustoClusterListFollowerDatabases
@@ -339,12 +293,7 @@ def step_cluster_list_follower_database(test, rg, checks=None):
 
 @try_manual
 def step_cluster_list_follower_database_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster list-follower-database '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_list_follower_database(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/post/KustoClusterListLanguageExtensions
@@ -360,12 +309,7 @@ def step_cluster_list_language_extension(test, rg, checks=None):
 
 @try_manual
 def step_cluster_list_language_extension_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster list-language-extension '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_list_language_extension(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/post/KustoClusterRemoveLanguageExtensions
@@ -404,12 +348,7 @@ def step_cluster_start(test, rg, checks=None):
 
 @try_manual
 def step_cluster_start_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster start '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_start(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/post/KustoClustersStop
@@ -425,12 +364,7 @@ def step_cluster_stop(test, rg, checks=None):
 
 @try_manual
 def step_cluster_stop_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster stop '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_stop(test, rg, checks)
 
 
 # EXAMPLE: /ClusterPrincipalAssignments/put/KustoClusterPrincipalAssignmentsCreateOrUpdate
@@ -474,13 +408,7 @@ def step_cluster_principal_assignment_show(test, rg, checks=None):
 
 @try_manual
 def step_cluster_principal_assignment_show_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster-principal-assignment show '
-             '--cluster-name "{myCluster}" '
-             '--principal-assignment-name "kustoprincipal1" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_principal_assignment_show(test, rg, checks)
 
 
 # EXAMPLE: /ClusterPrincipalAssignments/get/KustoPrincipalAssignmentsList
@@ -496,12 +424,7 @@ def step_cluster_principal_assignment_list(test, rg, checks=None):
 
 @try_manual
 def step_cluster_principal_assignment_list_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster-principal-assignment list '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_principal_assignment_list(test, rg, checks)
 
 
 # EXAMPLE: /DatabasePrincipalAssignments/put/KustoDatabasePrincipalAssignmentsCreateOrUpdate
@@ -548,14 +471,7 @@ def step_database_principal_assignment_show(test, rg, checks=None):
 
 @try_manual
 def step_database_principal_assignment_show_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto database-principal-assignment show '
-             '--cluster-name "{myCluster}" '
-             '--database-name "Kustodatabase8" '
-             '--principal-assignment-name "kustoprincipal1" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_database_principal_assignment_show(test, rg, checks)
 
 
 # EXAMPLE: /DatabasePrincipalAssignments/get/KustoPrincipalAssignmentsList
@@ -572,13 +488,7 @@ def step_database_principal_assignment_list(test, rg, checks=None):
 
 @try_manual
 def step_database_principal_assignment_list_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto database-principal-assignment list '
-             '--cluster-name "{myCluster}" '
-             '--database-name "Kustodatabase8" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_database_principal_assignment_list(test, rg, checks)
 
 
 # EXAMPLE: /DatabasePrincipalAssignments/delete/KustoDatabasePrincipalAssignmentsDelete
@@ -596,14 +506,7 @@ def step_database_principal_assignment_delete(test, rg, checks=None):
 
 @try_manual
 def step_database_principal_assignment_delete_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto database-principal-assignment delete -y '
-             '--cluster-name "{myCluster}" '
-             '--database-name "Kustodatabase8" '
-             '--principal-assignment-name "kustoprincipal1" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_database_principal_assignment_delete(test, rg, checks)
 
 
 # EXAMPLE: /Databases/put/KustoDatabasesCreateOrUpdate
@@ -644,13 +547,7 @@ def step_database_show(test, rg, checks=None):
 
 @try_manual
 def step_database_show_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto database show '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_database_show(test, rg, checks)
 
 
 # EXAMPLE: /Databases/get/KustoDatabasesListByCluster
@@ -666,12 +563,7 @@ def step_database_list(test, rg, checks=None):
 
 @try_manual
 def step_database_list_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto database list '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_database_list(test, rg, checks)
 
 
 # EXAMPLE: /Databases/patch/KustoDatabasesUpdate
@@ -689,14 +581,7 @@ def step_database_update(test, rg, checks=None):
 
 @try_manual
 def step_database_update_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto database update '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--parameters "{{\\"properties\\":{{\\"softDeletePeriod\\":\\"P1D\\"}}}}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_database_update(test, rg, checks)
 
 
 # EXAMPLE: /Databases/post/KustoDatabaseAddPrincipals
@@ -739,13 +624,7 @@ def step_database_list_principal(test, rg, checks=None):
 
 @try_manual
 def step_database_list_principal_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto database list-principal '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_database_list_principal(test, rg, checks)
 
 
 # EXAMPLE: /Databases/post/KustoDatabaseRemovePrincipals
@@ -788,13 +667,7 @@ def step_database_delete(test, rg, checks=None):
 
 @try_manual
 def step_database_delete_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto database delete -y '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_database_delete(test, rg, checks)
 
 
 # EXAMPLE: /DataConnections/put/KustoDataConnectionsCreateOrUpdate
@@ -839,13 +712,7 @@ def step_data_connection_list(test, rg, checks=None):
 
 @try_manual
 def step_data_connection_list_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto data-connection list '
-             '--cluster-name "{myCluster}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_data_connection_list(test, rg, checks)
 
 
 # EXAMPLE: /DataConnections/get/KustoDataConnectionsGet
@@ -863,14 +730,7 @@ def step_data_connection_show(test, rg, checks=None):
 
 @try_manual
 def step_data_connection_show_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto data-connection show '
-             '--cluster-name "{myCluster}" '
-             '--name "{myDataConnection}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_data_connection_show(test, rg, checks)
 
 
 # EXAMPLE: /DataConnections/patch/KustoDataConnectionsUpdate
@@ -943,14 +803,7 @@ def step_data_connection_delete(test, rg, checks=None):
 
 @try_manual
 def step_data_connection_delete_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto data-connection delete -y '
-             '--cluster-name "{myCluster}" '
-             '--name "{myDataConnection2}" '
-             '--database-name "KustoDatabase8" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_data_connection_delete(test, rg, checks)
 
 
 # EXAMPLE: /Clusters/delete/KustoClustersDelete
@@ -966,12 +819,7 @@ def step_cluster_delete(test, rg, checks=None):
 
 @try_manual
 def step_cluster_delete_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster delete -y '
-             '--name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_delete(test, rg, checks)
 
 
 # EXAMPLE: /AttachedDatabaseConfigurations/delete/AttachedDatabaseConfigurationsDelete
@@ -988,13 +836,7 @@ def step_attached_database_configuration_delete(test, rg, checks=None):
 
 @try_manual
 def step_attached_database_configuration_delete_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto attached-database-configuration delete -y '
-             '--name "{myAttachedDatabaseConfiguration2}" '
-             '--cluster-name "{myCluster}" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_attached_database_configuration_delete(test, rg, checks)
 
 
 # EXAMPLE: /ClusterPrincipalAssignments/delete/KustoClusterPrincipalAssignmentsDelete
@@ -1011,11 +853,5 @@ def step_cluster_principal_assignment_delete(test, rg, checks=None):
 
 @try_manual
 def step_cluster_principal_assignment_delete_min(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az kusto cluster-principal-assignment delete -y '
-             '--cluster-name "{myCluster}" '
-             '--principal-assignment-name "kustoprincipal1" '
-             '--resource-group "{rg}"',
-             checks=checks)
+    return step_cluster_principal_assignment_delete(test, rg, checks)
 

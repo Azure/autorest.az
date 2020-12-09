@@ -11,13 +11,14 @@ import { TemplateBase } from "../TemplateBase";
 import { PathConstants } from "../../../models";
 import { isNullOrUndefined } from 'util';
 
-let usePreparers: boolean, shortToLongName, funcNames, allSteps;
+let usePreparers: boolean, shortToLongName, funcNames, allSteps, stepBuff: object;
 
 function initVars() {
     usePreparers = false;
     shortToLongName = {};
     funcNames = {};
     allSteps = [];
+    stepBuff = {};
 }
 
 export function NeedPreparer(): boolean {
@@ -85,19 +86,27 @@ export class CliTestStep extends TemplateBase {
                                 steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames, true)}):`));
                             }
                             found = true;
-                            if (exampleCmd[0].indexOf(' delete') > -1) {
-                                exampleCmd[0] += " -y";
-                            }
 
-                            steps.push(`    if checks is None:`);
-                            steps.push(`        checks = []`);
-
-                            for (let idx = 0; idx < exampleCmd.length; idx++) {
-                                let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
-                                let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
-                                ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
+                            let cmdString = exampleCmd.join("\n");
+                            if (stepBuff.hasOwnProperty(cmdString)) {
+                                steps.push(...ToMultiLine(`    return ${stepBuff[cmdString]}(test${CliTestStep.parameterLine(parameterNames)}, checks)`));
                             }
-                            steps.push("    " + disabled + "         checks=checks)");
+                            else {
+                                stepBuff[cmdString] = functionName;
+                                if (exampleCmd[0].indexOf(' delete') > -1) {
+                                    exampleCmd[0] += " -y";
+                                }
+
+                                steps.push(`    if checks is None:`);
+                                steps.push(`        checks = []`);
+
+                                for (let idx = 0; idx < exampleCmd.length; idx++) {
+                                    let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
+                                    let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
+                                    ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
+                                }
+                                steps.push("    " + disabled + "         checks=checks)");
+                            }
                         }
                     }
                     if (!found) {
