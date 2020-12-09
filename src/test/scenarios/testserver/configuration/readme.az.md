@@ -12,6 +12,7 @@ az:
   client-authentication-policy: SansIOHTTPPolicy
 az-output-folder: $(azure-cli-extension-folder)/src/testserver
 python-sdk-output-folder: "$(az-output-folder)/azext_testserver/vendored_sdks/testserver"
+sdk-flatten: true
   
 #cli:
 #    cli-directive:
