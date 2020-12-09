@@ -164,7 +164,11 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                     else {
                         let defaultValue = ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type);
                         if (!model.MethodParameter_IsHidden) {
-                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, defaultValue);
+                            let needIfClause = true;
+                            if (model.MethodParameter_Type == SchemaType.Constant) {
+                                needIfClause = false;
+                            }
+                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, defaultValue, needIfClause);
                         } 
                         else if (!isNullOrUndefined(model.MethodParameter_DefaultValue)) {
                             if (model.isComplexSchema(model.MethodParameter_Type)) {
@@ -199,7 +203,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     return output_body;
 }
 
-function ConstructValuation(isGeneric: boolean, prefix: string, classNames: string[], paramName: string, value: string, defaultValue: string = null): string[] {
+function ConstructValuation(isGeneric: boolean, prefix: string, classNames: string[], paramName: string, value: string, defaultValue: string = null, needIfClause: boolean = true): string[] {
     let str = [];
     if (isNullOrUndefined(defaultValue)) {
         let left = "";
@@ -228,7 +232,11 @@ function ConstructValuation(isGeneric: boolean, prefix: string, classNames: stri
         str.push(left + " = " + value);
     }
     else {
-        str = str.concat(ConstructValuation(isGeneric, prefix, classNames, paramName, defaultValue) + " if " + value + " is None else " + value);
+        let ifClause = "";
+        if (needIfClause) {
+            ifClause = " if " + value + " is None else " + value;
+        }
+        str = str.concat(ConstructValuation(isGeneric, prefix, classNames, paramName, defaultValue) + ifClause);
     }
     return str;
 
@@ -241,7 +249,6 @@ function GetSingleCommandDef(model: CodeModelAz, required: any) {
 
     let call = "def " + updatedMethodName + "(";
     let indent = " ".repeat(call.length);
-
     let allParam: Map<string, boolean> = new Map<string, boolean>();
     let hasLongRun = false;
     let firstLine = false;
