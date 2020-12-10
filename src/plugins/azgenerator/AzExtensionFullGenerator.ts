@@ -26,7 +26,7 @@ import { CliTestInit } from './templates/tests/CliTestInit';
 import { CliTestPrepare } from './templates/tests/CliTestPrepare';
 import { CliTestScenario } from './templates/tests/CliTestScenario';
 import { PathConstants } from '../../utils/models';
-import { CliTestStep, NeedPreparer } from './templates/tests/CliTestStep';
+import { CliTestStep, NeedPreparers } from './templates/tests/CliTestStep';
 import { GenerateMetaFile } from './templates/CliMeta';
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
@@ -115,10 +115,9 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
                 true,
             );
         }
-        if (NeedPreparer()) {
-            await this.generateFullSingleAndAddtoOutput(
-                new CliTestPrepare(this.model, this.isDebugMode),
-            );
+        let needPreparers = NeedPreparers();
+        if (needPreparers.size>0) {
+            await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(this.model, this.isDebugMode, [...needPreparers]));
         }
         GenerateMetaFile(this.model);
     }

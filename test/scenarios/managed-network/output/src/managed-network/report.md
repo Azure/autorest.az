@@ -207,8 +207,8 @@ ubscriptionA\\"},{\\"id\\":\\"subscriptionB\\"}],\\"virtualNetworks\\":[{\\"id\\
 rceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork\\"},{\\"id\\":\\"/subscriptions/\
 subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork2\\"}],\\"subn\
 ets\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNet\
-works/myVirtualNetwork3/subnets/default\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/pr\
-oviders/Microsoft.Network/virtualNetworks/myVirtualNetwork3/subnets/default\\"}]}" --name "myManagedNetwork" \
+works/myVirtualNetwork3/subnets/mySubnet\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/p\
+roviders/Microsoft.Network/virtualNetworks/myVirtualNetwork3/subnets/mySubnet2\\"}]}" --name "myManagedNetwork" \
 --resource-group "myResourceGroup"
 ```
 ##### <a name="ParametersManagedNetworksCreateOrUpdate#Create">Parameters</a> 
@@ -289,11 +289,11 @@ az managed-network mn group show --group-name "myManagedNetworkGroup" --managed-
 ##### <a name="ExamplesManagedNetworkGroupsCreateOrUpdate#Create">Example</a>
 ```
 az managed-network mn group create --management-groups "[]" --subnets id="/subscriptions/subscriptionB/resourceGroups/m\
-yResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/default" \
+yResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/mySubnet" \
 id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNe\
-twork2/subnets/default" --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Networ\
-k/virtualNetworks/VnetA" --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Netwo\
-rk/virtualNetworks/VnetB" --group-name "myManagedNetworkGroup" --managed-network-name "myManagedNetwork" \
+twork2/subnets/mySubnet2" --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Netw\
+ork/virtualNetworks/VnetA" --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Net\
+work/virtualNetworks/VnetB" --group-name "myManagedNetworkGroup" --managed-network-name "myManagedNetwork" \
 --resource-group "myResourceGroup"
 ```
 ##### <a name="ParametersManagedNetworkGroupsCreateOrUpdate#Create">Parameters</a> 

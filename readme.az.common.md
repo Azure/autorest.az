@@ -32,6 +32,31 @@ cli:
         cli-flatten-payload: true
         cli-flatten-schema: false
         cli-flatten-all-overwrite-swagger: false
+
+az:
+  preparers:
+    virtualNetworks:
+      fullType: microsoft.network/virtualnetworks
+      abbr:  vn
+      alias:
+        - virtualnetwork
+      create:
+        - az network vnet create --resource-group {resourceGroups} --name {name}
+      delete:
+        - az network vnet delete --resource-group {resourceGroups} --name {name}
+
+    subnets:
+      # forInstance: mySubnet
+      create: |-
+        az network vnet subnet create -n {name} --vnet-name {virtualNetworks} -g {resourceGroups} --address-prefixes "10.0.0.0/21"
+      delete:  |-
+        az network vnet subnet delete --name {name} --resource-group {resourceGroups} --vnet-name {virtualNetworks}
+
+    serviceendpointpolicies:
+      create: |-
+        az network service-endpoint policy create --name {name} --resource-group {resourceGroups}
+      delete:  |-
+        az network service-endpoint policy delete --name {name} -g {resourceGroups}
 ```
  
 ``` yaml $(python) && ($(generate-sdk) == 'yes' || ($(target-mode) != 'core' && !$(generate-sdk)))

@@ -1,4 +1,4 @@
-import { CommandExample, ExampleParam, KeyValueType } from '../../CodeModelAz';
+import { CommandExample, ExampleParam, KeyValueType, CodeModelAz } from '../../CodeModelAz';
 import {
     deepCopy,
     isDict,
@@ -7,6 +7,8 @@ import {
     changeCamelToDash,
     MergeSort,
     isNullOrUndefined,
+    Capitalize,
+    ToSnakeCase,
 } from '../../../../utils/helper';
 import { EnglishPluralizationService } from '@azure-tools/codegen';
 
@@ -135,43 +137,46 @@ export function GroupTestScenario(testScenario: any, extensionName: string) {
     return ret;
 }
 
-const SUBSCRIPTIONS = 'subscriptions';
-const RESOUREGROUP = 'resource-group';
-const VIRTUALNETWORK = 'virtual-network';
-const STORAGEACCOUNT = 'storage-account';
-const SUBNET = 'subnet';
-const NETWORKINTERFACE = 'network-interface';
+const SUBSCRIPTIONS = "subscriptions";
+const RESOUREGROUP = "resourceGroups";
+const VIRTUALNETWORK = "virtualNetworks";
+const STORAGEACCOUNT = "storageAccounts";
+const SUBNET = "subnets";
+const NETWORKINTERFACE = "networkInterfaces";
 
-const resourceClassDepends = {
-    [RESOUREGROUP]: [],
-    [VIRTUALNETWORK]: [RESOUREGROUP],
-    [SUBNET]: [VIRTUALNETWORK, RESOUREGROUP],
-    [STORAGEACCOUNT]: [RESOUREGROUP],
-    [NETWORKINTERFACE]: [VIRTUALNETWORK, RESOUREGROUP],
-};
+// let resourceClassDepends = {
+//     [RESOUREGROUP]: [],
+//     [STORAGEACCOUNT]: [RESOUREGROUP,],
+//     // [VIRTUALNETWORK]: [RESOUREGROUP,],
+//     // [SUBNET]: [VIRTUALNETWORK, RESOUREGROUP],
+//     // [NETWORKINTERFACE]: [VIRTUALNETWORK, RESOUREGROUP],
+// }
 
-const resourceLanguages = {
-    [RESOUREGROUP]: ['resource-group', 'resourceGroupName', 'resourceGroups'],
-    [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworkName', 'virtualNetworks'],
-    [SUBNET]: ['subnet', 'subnetName', 'subnets'],
-    [STORAGEACCOUNT]: ['storage-account', 'storageAccountName', 'storageAccounts'],
-    [NETWORKINTERFACE]: ['network-interface', 'networkInterfaceName', 'networkInterfaces'],
-};
+// let resourceLanguages = {
+//     [RESOUREGROUP]: ['resource-group', 'resourceGroupName', 'resourceGroups'],
+//     [STORAGEACCOUNT]: ['storage-account', 'storageAccountName', 'storageAccounts'],
+//     // [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworkName', 'virtualNetworks'],
+//     // [SUBNET]: ['subnet', 'subnetName', 'subnets'],
+//     // [NETWORKINTERFACE]: ['network-interface', 'networkInterfaceName', 'networkInterfaces'],
+// }
 
-const resourceClassKeys = {
-    [RESOUREGROUP]: 'rg',
-    [VIRTUALNETWORK]: 'vn',
-    [SUBNET]: 'sn',
-    [STORAGEACCOUNT]: 'sa',
-    [NETWORKINTERFACE]: 'nic',
-};
+// let resourceClassKeys = {
+//     [RESOUREGROUP]: 'rg',
+//     [STORAGEACCOUNT]: 'sa',
+//     // [VIRTUALNETWORK]: 'vn',
+//     // [SUBNET]: 'sn',
+//     // [NETWORKINTERFACE]: 'nic',
+// }
 
 export function TopoSortResource() {
-    const ret = [];
-    const resources = Object.keys(resourceClassDepends);
-    // let reverse_depends = { };
-    const depends = deepCopy(resourceClassDepends);
-    while (ret.length < Object.keys(resourceClassDepends).length) {
+    let ret = [];
+    let resources = Object.keys(preparerInfos);
+    //let reverse_depends = { };
+    let depends = {};
+    for (let r in preparerInfos) {
+        depends[r] = deepCopy(preparerInfos[r].dependResources);
+    }
+    while (ret.length < Object.keys(preparerInfos).length) {
         let decreasing = false;
         for (const a of resources) {
             if (!isNullOrUndefined(depends[a]) && depends[a].length === 0) {
@@ -199,52 +204,110 @@ export function TopoSortResource() {
     return ret;
 }
 
-class PreparerInfo {
+export class PreparerConfig {
+    resource: string;
+    fullType: string;
+    abbr: string;
+    alias: string[];
+    forInstance: string;
+    create: string[];
+    delete: string[];
+    inits: {[key: string]: any;};
+}
+
+export class PreparerInfo {
     name: string;
     className: string;
     dependParameters: string[];
     dependResources: string[];
+    needGen: boolean;
+    key: string;
+    alias: string[];
+    config: PreparerConfig;
     public createdObjectNames: string[];
     public constructor(
         name: string,
         className: string,
         dependParameters: string[],
         dependResources: string[],
+        key: string,
+        alias: string[],
+        needGen: boolean=false,
+        config: PreparerConfig=undefined,
     ) {
         this.name = name;
         this.className = className;
         this.dependParameters = dependParameters;
         this.dependResources = dependResources;
         this.createdObjectNames = [];
+        this.key = key;
+        this.alias = alias;
+        this.needGen = needGen;
+        this.config = config;
     }
 }
-const preparerInfos = {
-    [RESOUREGROUP]: new PreparerInfo('ResourceGroupPreparer', RESOUREGROUP, [], []),
-    [VIRTUALNETWORK]: new PreparerInfo(
-        'VirtualNetworkPreparer',
-        VIRTUALNETWORK,
-        ['resource_group_key'],
-        [RESOUREGROUP],
-    ),
-    [SUBNET]: new PreparerInfo(
-        'VnetSubnetPreparer',
-        SUBNET,
-        ['resource_group_key', 'vnet_key'],
-        [RESOUREGROUP, VIRTUALNETWORK],
-    ),
-    [STORAGEACCOUNT]: new PreparerInfo(
-        'StorageAccountPreparer',
-        STORAGEACCOUNT,
-        ['resource_group_parameter_name'],
-        [RESOUREGROUP],
-    ),
-    [NETWORKINTERFACE]: new PreparerInfo(
-        'VnetNicPreparer',
-        NETWORKINTERFACE,
-        ['resource_group_key', 'vnet_key'],
-        [RESOUREGROUP, VIRTUALNETWORK],
-    ),
-};
+
+export let preparerInfos: { [key: string]: PreparerInfo; } = {
+    [RESOUREGROUP]: new PreparerInfo('ResourceGroupPreparer', RESOUREGROUP, [], [], 'rg', ['resource-group', 'resourceGroupName', 'resourceGroups']),
+    [STORAGEACCOUNT]: new PreparerInfo('StorageAccountPreparer', STORAGEACCOUNT, ['resource_group_parameter_name'], [RESOUREGROUP], 'sa', ['storage-account', 'storageAccountName', 'storageAccounts']),
+    // [VIRTUALNETWORK]: new PreparerInfo('VirtualNetworkPreparer', VIRTUALNETWORK, ['resource_group_parameter_name'], [RESOUREGROUP], 'vnet', ['virtualNetworks', 'virtual-network', 'virtualNetworkName',]),
+    // [SUBNET]: new PreparerInfo('VnetSubnetPreparer', SUBNET, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
+    // [NETWORKINTERFACE]: new PreparerInfo('VnetNicPreparer', NETWORKINTERFACE, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
+}
+
+export function GenPreparerName(className: string): string {
+    let eps = new EnglishPluralizationService();
+    return Capitalize(eps.singularize(ToCamelCase(ToSnakeCase(className)))) + "Preparer";
+}
+
+export function GenPreparerDependParamName(className: string): string {
+    let eps = new EnglishPluralizationService();
+    return ToSnakeCase(eps.singularize(className)) + "_key";
+}
+
+export function LoadPreparesConfig(preparers: {[key: string]: PreparerConfig;}) {
+    if (isNullOrUndefined(preparers))   return;
+    for (let resourceClass in preparers) {
+        // let resourceClass: string = config.resource;
+        let config = preparers[resourceClass];
+        let classKey = config.abbr;
+        if (isNullOrUndefined(classKey)) {
+            classKey = resourceClass;
+        }
+        // resourceClassKeys[resourceClass] = classKey;
+        // resourceLanguages[resourceClass] = [resourceClass];
+        let alias = [resourceClass];
+        if (config.alias) {
+            alias.push(...config.alias);
+        }
+        if (typeof config.create === 'string') {
+            config.create = [config.create];
+        }
+        if (typeof config.delete === 'string') {
+            config.delete = [config.delete];
+        }
+        if (isNullOrUndefined(config.inits)) {
+            config.inits = {};
+        }
+        if (Object.getOwnPropertyNames(config.inits).indexOf('name_prefix')<0) {
+            config.inits['name_prefix'] = "clitest." + classKey;
+        }
+        if (Object.getOwnPropertyNames(config.inits).indexOf('random_name_length')<0) {
+            config.inits['random_name_length'] = 24;
+        }
+        let depends: string[] = config.create.concat(config.delete).join("\n").match(/\{.*?\}/g);
+        depends = depends.map((x: string)=>{
+            return x.substr(1, x.length-2);
+        });
+        depends = Array.from(new Set(depends));
+        let nameIndex = depends.indexOf('name');
+        if (nameIndex !== -1) {
+            depends.splice(nameIndex, 1);
+        }
+        // resourceClassDepends[resourceClass] = depends;
+        preparerInfos[resourceClass] = new PreparerInfo(GenPreparerName(resourceClass), resourceClass, depends.map(GenPreparerDependParamName), depends, classKey, alias, true, config);
+    }
+}
 
 export class PreparerEntity {
     info: PreparerInfo;
@@ -481,11 +544,27 @@ function singlizeLast(word: string) {
     return ws.join('-');
 }
 
-const keyCache = {}; // className+objectname->key
-const formalCache = {};
-const keySeq = {}; // className ->seq
+let keyCache = {}  //class_name+objectname->key
+let formalCache = {}
+let keySeq = {}    // class_name ->seq
+let uniqueNames = {};
+
+function addUniqueName(className: string, objectName: string): string {
+    let ret = objectName;
+    if (azOptions?.['test-unique-resource']) {
+        if (uniqueNames.hasOwnProperty(className)) {
+            ret = uniqueNames[className];
+        }
+        else {
+            uniqueNames[className] = ret;
+        }
+    }
+    return ret;
+}
+
 export function getResourceKey(className: string, objectName: string, formalName = false): string {
-    const longKey = (resourceClassKeys[className] || className) + '_' + objectName;
+    let originObjectName = addUniqueName(className, objectName);
+    let longKey = (preparerInfos[className]?.key || className) + '_' + originObjectName;
     if (formalName && longKey in formalCache) {
         return formalCache[longKey];
     }
@@ -493,28 +572,26 @@ export function getResourceKey(className: string, objectName: string, formalName
         return keyCache[longKey];
     }
 
-    if (Object.prototype.hasOwnProperty.call(keySeq, className)) {
-        const key = (resourceClassKeys[className] || className) + '_' + keySeq[className];
+    if (keySeq.hasOwnProperty(className)) {
+        let key = (preparerInfos[className]?.key || className) + '_' + keySeq[className];
         keySeq[className] += 1;
         formalCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}${keySeq[className] - 1}`);
-        if (preparerInfos[className]?.name) {
-            // is external resource
+        if (preparerInfos[className]?.name) {  // is external resource
             keyCache[longKey] = key;
-        } else {
-            keyCache[longKey] = ToCamelCase(
-                `my-${singlizeLast(className)}${keySeq[className] - 1}`,
-            );
         }
-    } else {
+        else {
+            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}${keySeq[className] - 1}`);
+        }
+    }
+    else {
         keySeq[className] = 2;
         formalCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}`);
-        if (preparerInfos[className]?.name) {
-            // is external resource
-            keyCache[longKey] = resourceClassKeys[className] || className;
-        } else {
-            // is internal resource
-            // generally, internal resource objectName is shorter than className
-            // keyCache[longKey] = objectName;
+        if (preparerInfos[className]?.name) {  // is external resource
+            keyCache[longKey] = preparerInfos[className]?.key || className;
+        }
+        else {                              // is internal resource
+            // generally, internal resource object_name is shorter than class_name
+            // keyCache[longKey] = object_name;
             keyCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}`);
         }
     }
@@ -544,7 +621,7 @@ export class ResourcePool {
         entitys: PreparerEntity[],
         preparings: string[][],
     ) {
-        if (className === SUBNET) return; // use default subnet, no need to prepare it.
+        // if (className === SUBNET) return; // use default subnet, no need to prepare it.
 
         function inPreparings(): boolean {
             for (const [pCName, pOName] of preparings) {
@@ -660,6 +737,7 @@ export class ResourcePool {
         objectName: string,
         parentObject: ResourceObject,
     ): ResourceObject {
+        objectName = addUniqueName(className, objectName);
         const resources: Map<string, ResourceClass> = parentObject
             ? parentObject.subResources
             : this.root;
@@ -806,7 +884,8 @@ export class ResourcePool {
     }
 
     public addMapResource(className: string, objectName: string): ResourceObject {
-        const resourceObject = this.findTreeResource(className, objectName, this.root);
+        objectName = addUniqueName(className, objectName);
+        let resourceObject = this.findTreeResource(className, objectName, this.root);
         if (resourceObject) {
             return resourceObject;
         }
@@ -822,14 +901,40 @@ export class ResourcePool {
         return this.map[className].objects[objectName];
     }
 
-    public isResource(language: string): string | null {
-        if (language.startsWith('--')) language = language.substr(2);
-        for (const resource in resourceLanguages) {
-            for (const resourceLanguage of resourceLanguages[resource]) {
-                if (resourceLanguage.toLowerCase() === language.toLowerCase()) return resource;
+    public matchFullType(preparerConfig: PreparerConfig, instanceName: string, fullType: string[]) {
+        const configedFullType = preparerConfig?.fullType?.split("/");
+        if (isNullOrUndefined(configedFullType) ||isNullOrUndefined(fullType))    return true;
+        if (configedFullType.length!=fullType.length)   return false;
+        for (let i=0;i<configedFullType.length; i++) {
+            const resourceA = configedFullType[i];
+            const resourceB = fullType[i];
+            if (resourceA.toLowerCase()!=resourceB.toLowerCase() && this.isResource(resourceA, instanceName)!=this.isResource(resourceB, instanceName)) return false;
+        }
+        return true;
+    }
+
+    public isResource(language: string, instanceName: string, fullType: string[]=undefined): string | null {
+        if (language.startsWith("--")) language = language.substr(2);
+        let classResource = null;
+        let instanceResource = null;
+        for (let resource in preparerInfos) {
+            for (let resourceLanguage of preparerInfos[resource]?.alias || []) {
+                if (resourceLanguage.toLowerCase() == language.toLowerCase() &&
+                    this.matchFullType(preparerInfos[resource]?.config, instanceName, fullType)) {
+                    if (isNullOrUndefined(preparerInfos[resource]?.config?.forInstance)) {
+                        classResource = resource;
+                    }
+                    else if(typeof instanceName === 'string' && preparerInfos[resource]?.config?.forInstance?.toLowerCase() == instanceName?.toLowerCase()) {
+                        instanceResource = resource;
+                    }
+                } 
             }
         }
-        return null;
+        if (isNullOrUndefined(instanceName)) {
+            return classResource;
+        }
+
+        return instanceResource || classResource;
     }
 
     private formatable(str: string, placeholders: string[]) {
@@ -1048,10 +1153,19 @@ export class ResourcePool {
         this.useSubscription = true;
         let i = 3;
         let resourceObject: ResourceObject = null;
-        while (i < nodes.length - 1) {
-            const resource = this.isResource(nodes[i]);
+        let fullType: string[] = [];
+        while (i < (nodes.length - 1)) {
+            if (nodes[i].toLowerCase()=="providers") {
+                fullType.push(nodes[i+1].toLowerCase());
+            }
+            else {
+                if (fullType.length>=1) {
+                    fullType.push(nodes[i].toLowerCase());
+                }
+            }
+            const resource = this.isResource(nodes[i], nodes[i+1], fullType);
             if (resource) {
-                if (resource === SUBNET) {
+                if (false && resource == SUBNET) {
                     // since the subnet can't be created with rand name, just use the dfault one.
                     nodes[i + 1] = 'default';
                 } else {
@@ -1086,34 +1200,30 @@ export class ResourcePool {
         if (paramName.startsWith('--')) {
             paramName = paramName.substr(2);
         }
-        const resource = this.isResource(paramName);
+        const resource = this.isResource(paramName, paramValue);
         if (!resource) {
-            return this.getPlaceholder(paramValue, isTest);
+            return this.getPlaceholder(paramValue, isTest, null, resource);
         }
-        if (resource === SUBNET) {
-            // since the subnet can't be created with rand name, just use the dfault one.
-            return 'default';
-        }
-        const resourceObject = this.addMapResource(resource, paramValue);
+        // if (resource == SUBNET) {
+        //     // since the subnet can't be created with rand name, just use the dfault one.
+        //     return 'default';
+        // }
+        let resourceObject = this.addMapResource(resource, paramValue);
         if (resourceObject) {
             return resourceObject.placeholder(isTest);
-        } else {
+        }
+        else {
             return this.getPlaceholder(paramValue, isTest);
         }
     }
 
-    public getPlaceholder(
-        objectName: string,
-        isTest: boolean,
-        placeholders: string[] = null,
-    ): string {
+
+    public getPlaceholder(objectName: string, isTest: boolean, placeholders: string[] = null, targetClassName=undefined): string {
         // find in MapResource
-        for (const className in this.map) {
-            if (
-                !isNullOrUndefined(this.map[className].objects) &&
-                Object.prototype.hasOwnProperty.call(this.map[className].objects, objectName)
-            ) {
-                const ret = this.map[className].objects[objectName].placeholder(isTest);
+        for (let className in this.map) {
+            if (!isNullOrUndefined(targetClassName) && className != targetClassName)   continue;
+            if ( !isNullOrUndefined(this.map[className].objects) && this.map[className].objects.hasOwnProperty(objectName)) {
+                let ret = this.map[className].objects[objectName].placeholder(isTest);
                 if (!isNullOrUndefined(placeholders)) {
                     if (placeholders.indexOf(ret) < 0) {
                         placeholders.push(ret);
@@ -1124,7 +1234,7 @@ export class ResourcePool {
         }
 
         // find in TreeResource
-        const resourceObject = this.findTreeResource(null, objectName, this.root);
+        let resourceObject = this.findTreeResource(targetClassName, objectName, this.root);
         if (resourceObject) {
             const ret = resourceObject.placeholder(isTest);
             if (!isNullOrUndefined(placeholders)) {
@@ -1147,34 +1257,31 @@ export class ResourcePool {
         return objectName;
     }
 
-    public addResourcesInfo(resources: any) {
-        for (const className in resources) {
-            resourceClassKeys[className] = className; // TODO: brief key for internal resources
-            resourceLanguages[className] = resources[className];
+    public addResourcesInfo(resources: object) {
+        for (let className in resources) {
+            if (!(className in preparerInfos)) {
+                preparerInfos[className] = new PreparerInfo(null, className, [], [], className, resources[className]);
+            }
+            else {
+                preparerInfos[className].key = className; // TODO: brief key for internal resources
+                for (let a of resources[className]) {
+                    if (preparerInfos[className].alias.indexOf(a)<0)
+                        preparerInfos[className].alias.push(a);
+                }
+            }
         }
     }
 
-    public setResourceDepends(
-        resourceClassName: string,
-        dependResources: string[],
-        dependParameters: string[],
-        createdObjectNames: string[],
-    ) {
-        if (!(resourceClassName in resourceClassDepends)) {
-            resourceClassDepends[resourceClassName] = deepCopy(dependResources);
-            preparerInfos[resourceClassName] = new PreparerInfo(
-                null,
-                resourceClassName,
-                dependParameters,
-                dependResources,
-            );
-        } else {
+    public setResourceDepends(resourceClassName: string, dependResources: string[], dependParameters: string[], createdObjectNames: string[]) {
+        if (!(resourceClassName in preparerInfos)) {
+            preparerInfos[resourceClassName] = new PreparerInfo(null, resourceClassName, dependParameters, deepCopy(dependResources) as string[], resourceClassName, [resourceClassName]);
+        }
+        else {
             for (let i = 0; i < dependResources.length; i++) {
-                const dependResource = dependResources[i];
-                if (resourceClassDepends[resourceClassName].indexOf(dependResource) < 0) {
-                    resourceClassDepends[resourceClassName].push(dependResource);
+                let dependResource = dependResources[i];
+                if (preparerInfos[resourceClassName].dependResources.indexOf(dependResource) < 0) {
                     preparerInfos[resourceClassName].dependParameters.push(dependParameters[i]);
-                    preparerInfos[resourceClassName].dependResources.push(dependResources[i]);
+                    preparerInfos[resourceClassName].dependResources.push(dependResource);
                 }
             }
         }
@@ -1187,7 +1294,7 @@ export class ResourcePool {
     }
 
     public isDependResource(child: string, parent: string) {
-        const depends = resourceClassDepends[child];
+        let depends = preparerInfos[child].dependResources;
         return depends && depends.indexOf(parent) >= 0;
     }
 
