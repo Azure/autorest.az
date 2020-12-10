@@ -147,14 +147,20 @@ def synapse_ip_firewall_rule_create(client,
                        start_ip_address=start_ip_address)
 
 
-def synapse_ip_firewall_rule_update(instance,
+def synapse_ip_firewall_rule_update(client,
                                     resource_group_name,
                                     workspace_name,
                                     rule_name,
                                     end_ip_address=None,
                                     start_ip_address=None,
                                     no_wait=False):
-    return instance
+    return sdk_no_wait(no_wait,
+                       client.create_or_update,
+                       resource_group_name=resource_group_name,
+                       workspace_name=workspace_name,
+                       rule_name=rule_name,
+                       end_ip_address=end_ip_address,
+                       start_ip_address=start_ip_address)
 
 
 def synapse_ip_firewall_rule_delete(client,
@@ -419,12 +425,16 @@ def synapse_sql_pool_transparent_data_encryption_create(client,
                                    status=status)
 
 
-def synapse_sql_pool_transparent_data_encryption_update(instance,
+def synapse_sql_pool_transparent_data_encryption_update(client,
                                                         resource_group_name,
                                                         workspace_name,
                                                         sql_pool_name,
                                                         status=None):
-    return instance
+    return client.create_or_update(resource_group_name=resource_group_name,
+                                   workspace_name=workspace_name,
+                                   sql_pool_name=sql_pool_name,
+                                   transparent_data_encryption_name="current",
+                                   status=status)
 
 
 def synapse_sql_pool_blob_auditing_policy_show(client,

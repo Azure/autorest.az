@@ -283,7 +283,6 @@ def load_arguments(self, _):
         c.argument('sql_pool_name', type=str, help='SQL pool name', id_part='child_name_1')
         c.argument('status', arg_type=get_enum_type(['Enabled', 'Disabled']), help='The status of the database '
                    'transparent data encryption.')
-        c.ignore('transparent_data_encryption_name')
 
     with self.argument_context('synapse sql-pool-blob-auditing-policy show') as c:
         c.argument('resource_group_name', resource_group_name_type)

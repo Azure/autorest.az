@@ -44,8 +44,7 @@ def load_command_table(self, _):
         g.custom_command('list', 'synapse_ip_firewall_rule_list')
         g.custom_show_command('show', 'synapse_ip_firewall_rule_show')
         g.custom_command('create', 'synapse_ip_firewall_rule_create', supports_no_wait=True)
-        g.generic_update_command('update', setter_arg_name='ip_firewall_rule_info',
-                                 custom_func_name='synapse_ip_firewall_rule_update', supports_no_wait=True)
+        g.custom_command('update', 'synapse_ip_firewall_rule_update', supports_no_wait=True)
         g.custom_command('delete', 'synapse_ip_firewall_rule_delete', supports_no_wait=True, confirmation=True)
         g.custom_command('replace-all', 'synapse_ip_firewall_rule_replace_all', supports_no_wait=True)
         g.custom_wait_command('wait', 'synapse_ip_firewall_rule_show')
@@ -133,7 +132,7 @@ def load_command_table(self, _):
                             client_factory=cf_sqlpool_transparent_data_encryption) as g:
         g.custom_show_command('show', 'synapse_sql_pool_transparent_data_encryption_show')
         g.custom_command('create', 'synapse_sql_pool_transparent_data_encryption_create')
-        g.generic_update_command('update', custom_func_name='synapse_sql_pool_transparent_data_encryption_update')
+        g.custom_command('update', 'synapse_sql_pool_transparent_data_encryption_update')
 
     from ..generated._client_factory import cf_sqlpool_blob_auditing_policy
     synapse_sqlpool_blob_auditing_policy = CliCommandType(

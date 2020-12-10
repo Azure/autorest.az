@@ -9,7 +9,6 @@
 # --------------------------------------------------------------------------
 # pylint: disable=line-too-long
 # pylint: disable=too-many-lines
-# pylint: disable=unused-argument
 
 from azure.cli.core.util import sdk_no_wait
 
@@ -145,14 +144,20 @@ def synapse_ip_firewall_rule_create(client,
                        start_ip_address=start_ip_address)
 
 
-def synapse_ip_firewall_rule_update(instance,
+def synapse_ip_firewall_rule_update(client,
                                     resource_group_name,
                                     workspace_name,
                                     rule_name,
                                     end_ip_address=None,
                                     start_ip_address=None,
                                     no_wait=False):
-    return instance
+    return sdk_no_wait(no_wait,
+                       client.begin_create_or_update,
+                       resource_group_name=resource_group_name,
+                       workspace_name=workspace_name,
+                       rule_name=rule_name,
+                       end_ip_address=end_ip_address,
+                       start_ip_address=start_ip_address)
 
 
 def synapse_ip_firewall_rule_delete(client,
@@ -413,12 +418,16 @@ def synapse_sql_pool_transparent_data_encryption_create(client,
                                    status=status)
 
 
-def synapse_sql_pool_transparent_data_encryption_update(instance,
+def synapse_sql_pool_transparent_data_encryption_update(client,
                                                         resource_group_name,
                                                         workspace_name,
                                                         sql_pool_name,
                                                         status=None):
-    return instance
+    return client.create_or_update(resource_group_name=resource_group_name,
+                                   workspace_name=workspace_name,
+                                   sql_pool_name=sql_pool_name,
+                                   transparent_data_encryption_name="current",
+                                   status=status)
 
 
 def synapse_sql_pool_blob_auditing_policy_show(client,
@@ -455,7 +464,7 @@ def synapse_sql_pool_blob_auditing_policy_create(client,
                                    is_azure_monitor_target_enabled=is_azure_monitor_target_enabled)
 
 
-def synapse_sql_pool_blob_auditing_policy_update(instance,
+def synapse_sql_pool_blob_auditing_policy_update(client,
                                                  resource_group_name,
                                                  workspace_name,
                                                  sql_pool_name,
@@ -467,7 +476,17 @@ def synapse_sql_pool_blob_auditing_policy_update(instance,
                                                  storage_account_subscription_id=None,
                                                  is_storage_secondary_key_in_use=None,
                                                  is_azure_monitor_target_enabled=None):
-    return instance
+    return client.create_or_update(resource_group_name=resource_group_name,
+                                   workspace_name=workspace_name,
+                                   sql_pool_name=sql_pool_name,
+                                   state=state,
+                                   storage_endpoint=storage_endpoint,
+                                   storage_account_access_key=storage_account_access_key,
+                                   retention_days=retention_days,
+                                   audit_actions_and_groups=audit_actions_and_groups,
+                                   storage_account_subscription_id=storage_account_subscription_id,
+                                   is_storage_secondary_key_in_use=is_storage_secondary_key_in_use,
+                                   is_azure_monitor_target_enabled=is_azure_monitor_target_enabled)
 
 
 def synapse_sql_pool_operation_list(client,
@@ -691,7 +710,7 @@ def synapse_sql_pool_vulnerability_assessment_create(client,
                                    recurring_scans=recurring_scans)
 
 
-def synapse_sql_pool_vulnerability_assessment_update(instance,
+def synapse_sql_pool_vulnerability_assessment_update(client,
                                                      resource_group_name,
                                                      workspace_name,
                                                      sql_pool_name,
@@ -699,7 +718,14 @@ def synapse_sql_pool_vulnerability_assessment_update(instance,
                                                      storage_container_sas_key=None,
                                                      storage_account_access_key=None,
                                                      recurring_scans=None):
-    return instance
+    return client.create_or_update(resource_group_name=resource_group_name,
+                                   workspace_name=workspace_name,
+                                   sql_pool_name=sql_pool_name,
+                                   vulnerability_assessment_name="default",
+                                   storage_container_path=storage_container_path,
+                                   storage_container_sas_key=storage_container_sas_key,
+                                   storage_account_access_key=storage_account_access_key,
+                                   recurring_scans=recurring_scans)
 
 
 def synapse_sql_pool_vulnerability_assessment_delete(client,
@@ -780,7 +806,7 @@ def synapse_sql_pool_security_alert_policy_create(client,
                                    retention_days=retention_days)
 
 
-def synapse_sql_pool_security_alert_policy_update(instance,
+def synapse_sql_pool_security_alert_policy_update(client,
                                                   resource_group_name,
                                                   workspace_name,
                                                   sql_pool_name,
@@ -791,7 +817,17 @@ def synapse_sql_pool_security_alert_policy_update(instance,
                                                   storage_endpoint=None,
                                                   storage_account_access_key=None,
                                                   retention_days=None):
-    return instance
+    return client.create_or_update(resource_group_name=resource_group_name,
+                                   workspace_name=workspace_name,
+                                   sql_pool_name=sql_pool_name,
+                                   security_alert_policy_name="default",
+                                   state=state,
+                                   disabled_alerts=disabled_alerts,
+                                   email_addresses=email_addresses,
+                                   email_account_admins=email_account_admins,
+                                   storage_endpoint=storage_endpoint,
+                                   storage_account_access_key=storage_account_access_key,
+                                   retention_days=retention_days)
 
 
 def synapse_sql_pool_vulnerability_assessment_rule_baseline_create(client,
@@ -937,7 +973,7 @@ def synapse_workspace_aad_admin_create(client,
                        sid=sid)
 
 
-def synapse_workspace_aad_admin_update(instance,
+def synapse_workspace_aad_admin_update(client,
                                        resource_group_name,
                                        workspace_name,
                                        tenant_id=None,
@@ -945,7 +981,14 @@ def synapse_workspace_aad_admin_update(instance,
                                        administrator_type=None,
                                        sid=None,
                                        no_wait=False):
-    return instance
+    return sdk_no_wait(no_wait,
+                       client.begin_create_or_update,
+                       resource_group_name=resource_group_name,
+                       workspace_name=workspace_name,
+                       tenant_id=tenant_id,
+                       login=login,
+                       administrator_type=administrator_type,
+                       sid=sid)
 
 
 def synapse_workspace_aad_admin_delete(client,
@@ -974,11 +1017,13 @@ def synapse_workspace_managed_identity_sql_control_setting_create(client,
                                    desired_state=grant_sql_control_to_managed_identity_desired_state)
 
 
-def synapse_workspace_managed_identity_sql_control_setting_update(instance,
+def synapse_workspace_managed_identity_sql_control_setting_update(client,
                                                                   resource_group_name,
                                                                   workspace_name,
                                                                   grant_sql_control_to_managed_identity_desired_state=None):
-    return instance
+    return client.create_or_update(resource_group_name=resource_group_name,
+                                   workspace_name=workspace_name,
+                                   desired_state=grant_sql_control_to_managed_identity_desired_state)
 
 
 def synapse_integration_runtime_list(client,
