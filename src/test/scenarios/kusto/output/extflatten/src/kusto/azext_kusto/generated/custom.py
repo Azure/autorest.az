@@ -8,6 +8,7 @@
 # regenerated.
 # --------------------------------------------------------------------------
 # pylint: disable=too-many-lines
+# pylint: disable=unused-argument
 
 from knack.util import CLIError
 from azure.cli.core.util import sdk_no_wait
@@ -250,7 +251,7 @@ def kusto_cluster_principal_assignment_create(client,
                        principal_type=principal_type)
 
 
-def kusto_cluster_principal_assignment_update(client,
+def kusto_cluster_principal_assignment_update(instance,
                                               resource_group_name,
                                               cluster_name,
                                               principal_assignment_name,
@@ -259,15 +260,7 @@ def kusto_cluster_principal_assignment_update(client,
                                               tenant_id=None,
                                               principal_type=None,
                                               no_wait=False):
-    return sdk_no_wait(no_wait,
-                       client.begin_create_or_update,
-                       resource_group_name=resource_group_name,
-                       cluster_name=cluster_name,
-                       principal_assignment_name=principal_assignment_name,
-                       principal_id=principal_id,
-                       role=role,
-                       tenant_id=tenant_id,
-                       principal_type=principal_type)
+    return instance
 
 
 def kusto_cluster_principal_assignment_delete(client,
@@ -435,7 +428,7 @@ def kusto_database_principal_assignment_create(client,
                        principal_type=principal_type)
 
 
-def kusto_database_principal_assignment_update(client,
+def kusto_database_principal_assignment_update(instance,
                                                resource_group_name,
                                                cluster_name,
                                                database_name,
@@ -445,16 +438,7 @@ def kusto_database_principal_assignment_update(client,
                                                tenant_id=None,
                                                principal_type=None,
                                                no_wait=False):
-    return sdk_no_wait(no_wait,
-                       client.begin_create_or_update,
-                       resource_group_name=resource_group_name,
-                       cluster_name=cluster_name,
-                       database_name=database_name,
-                       principal_assignment_name=principal_assignment_name,
-                       principal_id=principal_id,
-                       role=role,
-                       tenant_id=tenant_id,
-                       principal_type=principal_type)
+    return instance
 
 
 def kusto_database_principal_assignment_delete(client,
@@ -507,7 +491,7 @@ def kusto_attached_database_configuration_create(client,
                        default_principals_modification_kind=default_principals_modification_kind)
 
 
-def kusto_attached_database_configuration_update(client,
+def kusto_attached_database_configuration_update(instance,
                                                  resource_group_name,
                                                  cluster_name,
                                                  attached_database_configuration_name,
@@ -516,15 +500,7 @@ def kusto_attached_database_configuration_update(client,
                                                  cluster_resource_id=None,
                                                  default_principals_modification_kind=None,
                                                  no_wait=False):
-    return sdk_no_wait(no_wait,
-                       client.begin_create_or_update,
-                       resource_group_name=resource_group_name,
-                       cluster_name=cluster_name,
-                       attached_database_configuration_name=attached_database_configuration_name,
-                       location=location,
-                       database_name=database_name,
-                       cluster_resource_id=cluster_resource_id,
-                       default_principals_modification_kind=default_principals_modification_kind)
+    return instance
 
 
 def kusto_attached_database_configuration_delete(client,

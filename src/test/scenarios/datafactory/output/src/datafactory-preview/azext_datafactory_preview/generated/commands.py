@@ -39,7 +39,7 @@ def load_command_table(self, _):
         g.custom_command('list', 'datafactory_trigger_list')
         g.custom_show_command('show', 'datafactory_trigger_show')
         g.custom_command('create', 'datafactory_trigger_create')
-        g.generic_update_command('update', custom_func_name='datafactory_trigger_update')
+        g.generic_update_command('update', setter_arg_name='trigger', custom_func_name='datafactory_trigger_update')
         g.custom_command('delete', 'datafactory_trigger_delete', confirmation=True)
         g.custom_command('get-event-subscription-status', 'datafactory_trigger_get_event_subscription_status')
         g.custom_command('query-by-factory', 'datafactory_trigger_query_by_factory')

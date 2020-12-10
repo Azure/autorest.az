@@ -126,6 +126,7 @@ def load_arguments(self, _):
                    'Must be greater than or equal to startIpAddress')
         c.argument('start_ip_address', type=str,
                    help='The start IP address of the firewall rule. Must be IPv4 format')
+        c.ignore('ip_firewall_rule_info')
 
     with self.argument_context('synapse ip-firewall-rule delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -283,6 +284,7 @@ def load_arguments(self, _):
         c.argument('sql_pool_name', type=str, help='SQL pool name', id_part='child_name_1')
         c.argument('status', arg_type=get_enum_type(['Enabled', 'Disabled']), help='The status of the database '
                    'transparent data encryption.')
+        c.ignore('transparent_data_encryption_name', 'parameters')
 
     with self.argument_context('synapse sql-pool-blob-auditing-policy show') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -404,6 +406,7 @@ def load_arguments(self, _):
                    'ion=2017-05-01-preview  For more information, see `Diagnostic Settings REST API '
                    '<https://go.microsoft.com/fwlink/?linkid=2033207>`_ or `Diagnostic Settings PowerShell '
                    '<https://go.microsoft.com/fwlink/?linkid=2033043>`_')
+        c.ignore('parameters')
 
     with self.argument_context('synapse sql-pool-operation list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -549,6 +552,7 @@ def load_arguments(self, _):
                    'for vulnerability assessment scan results. If \'StorageContainerSasKey\' isn\'t specified, '
                    'storageAccountAccessKey is required.')
         c.argument('recurring_scans', action=AddRecurringScans, nargs='+', help='The recurring scans settings')
+        c.ignore('vulnerability_assessment_name', 'parameters')
 
     with self.argument_context('synapse sql-pool-vulnerability-assessment delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -620,6 +624,7 @@ def load_arguments(self, _):
                    'audit storage account.')
         c.argument('retention_days', type=int, help='Specifies the number of days to keep in the Threat Detection '
                    'audit logs.')
+        c.ignore('security_alert_policy_name', 'parameters')
 
     with self.argument_context('synapse sql-pool-vulnerability-assessment-rule-baseline create') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -723,6 +728,7 @@ def load_arguments(self, _):
         c.argument('login', type=str, help='Login of the workspace active directory administrator')
         c.argument('administrator_type', type=str, help='Workspace active directory administrator type')
         c.argument('sid', type=str, help='Object ID of the workspace active directory administrator')
+        c.ignore('aad_admin_info')
 
     with self.argument_context('synapse workspace-aad-admin delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -749,6 +755,7 @@ def load_arguments(self, _):
         c.argument('grant_sql_control_to_managed_identity_desired_state', arg_type=get_enum_type(['Enabled',
                                                                                                   'Disabled']),
                    help='Desired state')
+        c.ignore('managed_identity_sql_control_settings', 'desired_state')
 
     with self.argument_context('synapse integration-runtime list') as c:
         c.argument('resource_group_name', resource_group_name_type)

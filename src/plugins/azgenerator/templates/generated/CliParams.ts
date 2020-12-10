@@ -159,7 +159,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                         if (model.Parameter_InGlobal(param)) {
                             continue;
                         }
-                        if (model.Parameter_IsFlattened(param) == true) {
+                        if (model.Parameter_IsFlattened(param) == true && !model.Parameter_IsCliFlattened(param)) {
                             continue;
                         }
                         if (param?.schema?.type == SchemaType.Constant || param['readOnly']) {
