@@ -105,9 +105,7 @@ def datafactory_configure_factory_repo(client,
     factory_repo_update['factory_resource_id'] = factory_resource_id
     factory_repo_update['repo_configuration'] = repo_configuration
     return client.configure_factory_repo(location_id=location_id,
-                                         factory_repo_update=factory_repo_update,
-                                         FactoryVstsConfiguration=factory_vsts_configuration,
-                                         FactoryGitHubConfiguration=factory_git_hub_configuration)
+                                         factory_repo_update=factory_repo_update)
 
 
 def datafactory_get_data_plane_access(client,
@@ -185,10 +183,10 @@ def datafactory_trigger_update(instance,
                                description=None,
                                annotations=None):
     if description is not None:
-        instance.description = description
+        instance.properties.description = description
     if annotations is not None:
-        instance.annotations = annotations
-    return instance.undefined
+        instance.properties.annotations = annotations
+    return instance
 
 
 def datafactory_trigger_delete(client,

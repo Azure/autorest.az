@@ -89,17 +89,16 @@ def managed_network_mn_scope_assignment_create(client,
                                    parameters=parameters)
 
 
-def managed_network_mn_scope_assignment_update(client,
+def managed_network_mn_scope_assignment_update(instance,
                                                scope,
                                                scope_assignment_name,
                                                location,
                                                assigned_managed_network=None):
-    parameters = {}
-    parameters['location'] = location
-    parameters['assigned_managed_network'] = assigned_managed_network
-    return client.create_or_update(scope=scope,
-                                   scope_assignment_name=scope_assignment_name,
-                                   parameters=parameters)
+    if location is not None:
+        instance.location = location
+    if assigned_managed_network is not None:
+        instance.assigned_managed_network = assigned_managed_network
+    return instance
 
 
 def managed_network_mn_scope_assignment_delete(client,
@@ -154,7 +153,7 @@ def managed_network_mn_group_create(client,
                        managed_network_group=managed_network_group)
 
 
-def managed_network_mn_group_update(client,
+def managed_network_mn_group_update(instance,
                                     resource_group_name,
                                     managed_network_name,
                                     group_name,
@@ -164,19 +163,19 @@ def managed_network_mn_group_update(client,
                                     virtual_networks=None,
                                     subnets=None,
                                     no_wait=False):
-    managed_network_group = {}
-    managed_network_group['location'] = location
-    managed_network_group['kind'] = "Connectivity"
-    managed_network_group['management_groups'] = management_groups
-    managed_network_group['subscriptions'] = subscriptions
-    managed_network_group['virtual_networks'] = virtual_networks
-    managed_network_group['subnets'] = subnets
-    return sdk_no_wait(no_wait,
-                       client.begin_create_or_update,
-                       resource_group_name=resource_group_name,
-                       managed_network_name=managed_network_name,
-                       managed_network_group_name=group_name,
-                       managed_network_group=managed_network_group)
+    if location is not None:
+        instance.location = location
+    if "Connectivity" is not None:
+        instance.kind = "Connectivity"
+    if management_groups is not None:
+        instance.management_groups = management_groups
+    if subscriptions is not None:
+        instance.subscriptions = subscriptions
+    if virtual_networks is not None:
+        instance.virtual_networks = virtual_networks
+    if subnets is not None:
+        instance.subnets = subnets
+    return instance
 
 
 def managed_network_mn_group_delete(client,
@@ -269,7 +268,7 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update
                                                                                  mesh=None,
                                                                                  no_wait=False):
     if location is not None:
-        instance.managed_network_policy.location = location
+        instance.location = location
     instance.properties.type = 'HubAndSpokeTopology'
     if hub is not None:
         instance.properties.hub = hub
@@ -277,7 +276,7 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update
         instance.properties.spokes = spokes
     if mesh is not None:
         instance.properties.mesh = mesh
-    return instance.undefined
+    return instance
 
 
 def managed_network_managed_network_peering_policy_mesh_topology_update(instance,
@@ -290,7 +289,7 @@ def managed_network_managed_network_peering_policy_mesh_topology_update(instance
                                                                         mesh=None,
                                                                         no_wait=False):
     if location is not None:
-        instance.managed_network_policy.location = location
+        instance.location = location
     instance.properties.type = 'MeshTopology'
     if hub is not None:
         instance.properties.hub = hub
@@ -298,7 +297,7 @@ def managed_network_managed_network_peering_policy_mesh_topology_update(instance
         instance.properties.spokes = spokes
     if mesh is not None:
         instance.properties.mesh = mesh
-    return instance.undefined
+    return instance
 
 
 def managed_network_managed_network_peering_policy_delete(client,

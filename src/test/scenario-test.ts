@@ -15,6 +15,7 @@ enum TestMode {
     CoreIncremental = "core_Incremental",
     Ext_Flatten = "extflatten",
     Ext_NoSdk = "extnosdk",
+    ExtDefaultFolder = "ext_default_folder",
     Ext_NoSdk_NoFlatten_Track1 = "extnosdknoflattentrack1"
 }
 
@@ -25,8 +26,8 @@ enum TestMode {
         ["datafactory", [TestMode.ExtDefault]],
         ["managed-network", [TestMode.ExtDefault]],
         ["mixed-reality", [TestMode.ExtIncremental]],
-        ["kusto", [TestMode.CoreDefault, TestMode.Ext_Flatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
-        ["synapse", [TestMode.CoreDefault, TestMode.Ext_Flatten, TestMode.Ext_NoSdk, TestMode.Ext_NoSdk_NoFlatten_Track1]],
+        ["kusto", [TestMode.CoreDefault, TestMode.Ext_Flatten, TestMode.ExtDefaultFolder, TestMode.Ext_NoSdk_NoFlatten_Track1]],
+        ["synapse", [TestMode.CoreDefault, TestMode.Ext_Flatten, TestMode.ExtDefaultFolder, TestMode.Ext_NoSdk_NoFlatten_Track1]],
         ["compute", [TestMode.CoreIncremental]]
     ]);
 
@@ -68,7 +69,7 @@ enum TestMode {
 
     getOptions(testMode: string, outputDir: string) {
         let extraOption: {} = {};
-        if (testMode == TestMode.ExtDefault || testMode == TestMode.ExtIncremental) {
+        if (testMode == TestMode.ExtDefault || testMode == TestMode.ExtIncremental || testMode  == TestMode.ExtDefaultFolder) {
             let key = ArgumentConstants.azureCliExtFolder
             extraOption[key] = outputDir;
             return extraOption;

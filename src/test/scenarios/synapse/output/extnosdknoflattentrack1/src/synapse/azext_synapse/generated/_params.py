@@ -404,6 +404,7 @@ def load_arguments(self, _):
                    'ion=2017-05-01-preview  For more information, see [Diagnostic Settings REST '
                    'API](https://go.microsoft.com/fwlink/?linkid=2033207) or [Diagnostic Settings '
                    'PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)')
+        c.ignore('parameters')
 
     with self.argument_context('synapse sql-pool-operation list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -549,6 +550,7 @@ def load_arguments(self, _):
                    'for vulnerability assessment scan results. If \'StorageContainerSasKey\' isn\'t specified, '
                    'storageAccountAccessKey is required.')
         c.argument('recurring_scans', action=AddRecurringScans, nargs='+', help='The recurring scans settings')
+        c.ignore('vulnerability_assessment_name', 'parameters')
 
     with self.argument_context('synapse sql-pool-vulnerability-assessment delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -620,6 +622,7 @@ def load_arguments(self, _):
                    'audit storage account.')
         c.argument('retention_days', type=int, help='Specifies the number of days to keep in the Threat Detection '
                    'audit logs.')
+        c.ignore('security_alert_policy_name', 'parameters')
 
     with self.argument_context('synapse sql-pool-vulnerability-assessment-rule-baseline create') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -723,6 +726,7 @@ def load_arguments(self, _):
         c.argument('login', type=str, help='Login of the workspace active directory administrator')
         c.argument('administrator_type', type=str, help='Workspace active directory administrator type')
         c.argument('sid', type=str, help='Object ID of the workspace active directory administrator')
+        c.ignore('aad_admin_info')
 
     with self.argument_context('synapse workspace-aad-admin delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -749,6 +753,7 @@ def load_arguments(self, _):
         c.argument('grant_sql_control_to_managed_identity_desired_state', arg_type=get_enum_type(['Enabled',
                                                                                                   'Disabled']),
                    help='Desired state')
+        c.ignore('grant_sql_control_to_managed_identity')
 
     with self.argument_context('synapse integration-runtime list') as c:
         c.argument('resource_group_name', resource_group_name_type)

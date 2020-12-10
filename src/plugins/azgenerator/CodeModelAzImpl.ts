@@ -1268,7 +1268,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Parameter_IsShorthandSyntax(this.MethodParameter);
     }
 
-    private isComplexSchema(type: string): boolean {
+    public isComplexSchema(type: string): boolean {
         if (type == SchemaType.Array || type == SchemaType.Object || type == SchemaType.Dictionary || type == SchemaType.Any ||
             this.MethodParameter.language['cli'].json == true)
             return true;

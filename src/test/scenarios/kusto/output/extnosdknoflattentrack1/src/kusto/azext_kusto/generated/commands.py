@@ -48,7 +48,8 @@ def load_command_table(self, _):
         g.custom_command('list', 'kusto_cluster_principal_assignment_list')
         g.custom_show_command('show', 'kusto_cluster_principal_assignment_show')
         g.custom_command('create', 'kusto_cluster_principal_assignment_create', supports_no_wait=True)
-        g.custom_command('update', 'kusto_cluster_principal_assignment_update', supports_no_wait=True)
+        g.generic_update_command('update', custom_func_name='kusto_cluster_principal_assignment_update',
+                                 supports_no_wait=True)
         g.custom_command('delete', 'kusto_cluster_principal_assignment_delete', supports_no_wait=True,
                          confirmation=True)
         g.custom_wait_command('wait', 'kusto_cluster_principal_assignment_show')
@@ -78,7 +79,8 @@ def load_command_table(self, _):
         g.custom_command('list', 'kusto_database_principal_assignment_list')
         g.custom_show_command('show', 'kusto_database_principal_assignment_show')
         g.custom_command('create', 'kusto_database_principal_assignment_create', supports_no_wait=True)
-        g.custom_command('update', 'kusto_database_principal_assignment_update', supports_no_wait=True)
+        g.generic_update_command('update', custom_func_name='kusto_database_principal_assignment_update',
+                                 supports_no_wait=True)
         g.custom_command('delete', 'kusto_database_principal_assignment_delete', supports_no_wait=True,
                          confirmation=True)
         g.custom_wait_command('wait', 'kusto_database_principal_assignment_show')
@@ -93,7 +95,8 @@ def load_command_table(self, _):
         g.custom_command('list', 'kusto_attached_database_configuration_list')
         g.custom_show_command('show', 'kusto_attached_database_configuration_show')
         g.custom_command('create', 'kusto_attached_database_configuration_create', supports_no_wait=True)
-        g.custom_command('update', 'kusto_attached_database_configuration_update', supports_no_wait=True)
+        g.generic_update_command('update', custom_func_name='kusto_attached_database_configuration_update',
+                                 supports_no_wait=True)
         g.custom_command('delete', 'kusto_attached_database_configuration_delete', supports_no_wait=True,
                          confirmation=True)
         g.custom_wait_command('wait', 'kusto_attached_database_configuration_show')

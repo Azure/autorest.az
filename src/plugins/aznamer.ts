@@ -270,28 +270,32 @@ export class AzNamer {
             operations.forEach(operation => {
                 //if generic update exists, set the setter_arg_name in the original operation
                 if (operation.language['az']['isSplitUpdate'] && !isNullOrUndefined(operationGroup.language['az']['genericTargetSchema'])) {
-                    let foundGeneric = false;
-                    // disable generic update for now
-                    // foundGeneric = true;
                     for (let n = 0; n < operation.requests.length; n++) {
                         let request = operation.requests[n];
-                        let genericSetter = null;
                         if (request.parameters) {
                             for (let m = 0; m < request.parameters.length; m++) {
                                 let parameter = request.parameters[m];
                                 if (parameter.schema == operationGroup.language['az']['genericTargetSchema']) {
-                                    foundGeneric = true;
-                                    if (isNullOrUndefined(parameter['flattened']) || !isNullOrUndefined(parameter.language['cli']?.['cli-flattened']) && !isNullOrUndefined(parameter['nameBaseParam']) && isNullOrUndefined(parameter['nameBaseParam']['flattened'])) {
-                                        operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter;
-                                    }
-                                    m++;
-                                    while (m < request.parameters.length) {
-                                        let param = request.parameters[m];
-                                        if (!isNullOrUndefined(param['flattened']) && !isNullOrUndefined(param['nameBaseParam']) && isNullOrUndefined(param['nameBaseParam']['flattened'])) {
-                                            operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = param['nameBaseParam'];
-                                            break;
-                                        }
+                                    // Since the update is splited from the CreateOrUpdate the nameBaseParam of that parameter can't be null
+                                    // The condition of a generic update exists are
+                                    // 1. the parameter's schema equals to genericTargetSchema
+                                    // 2. the parameter is not flattened in Python code model 
+                                    if (!isNullOrUndefined(parameter['nameBaseParam']) && !isNullOrUndefined(parameter['nameBaseParam']?.language?.['python'])) {
+                                        operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter['nameBaseParam'];
+                                        // If found any parameter doesn't have nameBaseParam or has nameBaseParam but don't have language Python, then this parameter is flattened from CLI not in Python.
+                                        let onlyCliFlattened = false;
                                         m++;
+                                        while (m < request.parameters.length) {
+                                            let param = request.parameters[m];
+                                            if (isNullOrUndefined(param['nameBaseParam']) || (!isNullOrUndefined(param['nameBaseParam']) && isNullOrUndefined(param['nameBaseParam']?.language?.['python']))) {
+                                                onlyCliFlattened = true
+                                                break;
+                                            }
+                                            m++;
+                                        }
+                                        if (!onlyCliFlattened) {
+                                            operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = null;
+                                        }
                                     }
                                     break;
                                 }
