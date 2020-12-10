@@ -1,4 +1,4 @@
-/* ---------------------------------------------------------------------------------------------
+﻿/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
@@ -29,6 +29,7 @@ export class CliTestScenario extends TemplateBase {
         }
         this.configValue = configValue;
         this.groupName = groupName;
+        this.skip = true;
     }
 
     public configValue: any;
@@ -109,7 +110,7 @@ export class CliTestScenario extends TemplateBase {
             ),
         );
 
-        function buildSenario(header: HeaderGenerator, outputFunc: string[], minimum: boolean) {
+        function buildSenario(template: CliTestScenario, outputFunc: string[], minimum: boolean) {
             model.GetResourcePool().clearExampleParams();
 
             // go through the examples to generate steps
@@ -127,6 +128,7 @@ export class CliTestScenario extends TemplateBase {
                         commandParams,
                         examples,
                         minimum,
+                        config[ci].step,
                     )) {
                         exampleIdx += 1;
                         if (exampleCmd && exampleCmd.length > 0) {
@@ -152,7 +154,7 @@ export class CliTestScenario extends TemplateBase {
                                         !disabled &&
                                         check.indexOf('json.loads') >= 0
                                     ) {
-                                        header.addImport('json');
+                                        template.header.addImport('json');
                                         jsonAdded = true;
                                     }
                                 }
@@ -169,7 +171,8 @@ export class CliTestScenario extends TemplateBase {
                         }
                     }
                     if (found) {
-                        header.addFromImport('.example_steps', [functionName]);
+                        template.header.addFromImport('.example_steps', [functionName]);
+                        template.skip = false;
                     } else {
                         outputFunc.push(...ToMultiLine(`    # STEP NOT FOUND: ${exampleId}`));
                     }
@@ -184,7 +187,14 @@ export class CliTestScenario extends TemplateBase {
                                 )}):`,
                             ),
                         );
-                        steps.push('    pass');
+                        if (
+                            functionName.startsWith('setup_') &&
+                            model.GetResourcePool().hasTestResourceScenario
+                        ) {
+                            steps.push(...model.GetResourcePool().setupWithArmTemplate());
+                        } else {
+                            steps.push('    pass');
+                        }
                         steps.push('');
                         steps.push('');
                     }
@@ -198,7 +208,7 @@ export class CliTestScenario extends TemplateBase {
             outputFunc.push('');
             outputFunc.push('');
         }
-        buildSenario(this.header, funcScenario, false);
+        buildSenario(this, funcScenario, false);
         if (model.GenMinTest) {
             funcMinScenario.push('@try_manual');
             funcMinScenario.push(
@@ -208,7 +218,7 @@ export class CliTestScenario extends TemplateBase {
                     )}):`,
                 ),
             );
-            buildSenario(this.header, funcMinScenario, true);
+            buildSenario(this, funcMinScenario, true);
         }
         classInfo.push('    def __init__(self, *args, **kwargs):');
         classInfo.push(`        super(${testClassName}, self).__init__(*args, **kwargs)`);

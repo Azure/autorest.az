@@ -11,12 +11,14 @@ export abstract class TemplateBase {
     protected isDebugMode: boolean;
     public relativePath: string;
     protected tmplPath: string;
+    public skip: boolean;
 
     constructor(model: CodeModelAz) {
         this.model = model;
         this.isDebugMode = AzConfiguration.getValue(CodeGenConstants.debug);
         this.relativePath = '';
         this.tmplPath = '';
+        this.skip = false;
     }
 
     public abstract async fullGeneration(): Promise<string[]>;
