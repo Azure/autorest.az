@@ -21,7 +21,7 @@ AZ_PREFIX = DEV_PREFIX + "autorest.az"
 AZ_CLI_EXT_PREFIX = DEV_PREFIX + "azure-cli-extensions"
 AWAGGER_PREFIX = DEV_PREFIX + "azure-rest-api-specs"
 
-
+os.environ['TEST_EXCEPTION_CACHE'] = 'true'
 Base = declarative_base()
 
 # Models
