@@ -280,18 +280,36 @@ export class AzNamer {
                                     // The condition of a generic update exists are
                                     // 1. the parameter's schema equals to genericTargetSchema
                                     // 2. the parameter is not flattened in Python code model 
-                                    if (!isNullOrUndefined(parameter['nameBaseParam']) && !isNullOrUndefined(parameter['nameBaseParam']?.language?.['python'])) {
+                                    let lastGenericSetter = null;
+                                    let genericSetter = null;
+                                    // purely using cli-flattened isn't enough to determine whether only CLI has flattened it. 
+                                    if (!isNullOrUndefined(parameter['nameBaseParam']) && !isNullOrUndefined(parameter['nameBaseParam']?.language?.['python']) && parameter?.language?.['cli']?.['cli-flattened']) {
                                         operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = parameter['nameBaseParam'];
+                                        genericSetter = parameter['nameBaseParam'];
+                                        operation.extensions['cli-split-operation-original-operation']['genericPath'] = [];
                                         // If found any parameter doesn't have nameBaseParam or has nameBaseParam but don't have language Python, then this parameter is flattened from CLI not in Python.
                                         let onlyCliFlattened = false;
                                         m++;
                                         while (m < request.parameters.length) {
                                             let param = request.parameters[m];
-                                            if (isNullOrUndefined(param['nameBaseParam']) || (!isNullOrUndefined(param['nameBaseParam']) && isNullOrUndefined(param['nameBaseParam']?.language?.['python']))) {
-                                                onlyCliFlattened = true
+                                            m++;
+                                             // the original parameter which schema equals to genericTargetSchema must at most flatten out one generic setter param
+                                            if (!isNullOrUndefined(lastGenericSetter) && !isNullOrUndefined(param['nameBaseParam']) && param['nameBaseParam']['originalParameter'] == lastGenericSetter) {
+                                                onlyCliFlattened = false;
                                                 break;
                                             }
-                                            m++;
+                                            if (!isNullOrUndefined(param['nameBaseParam']) && !isNullOrUndefined(param['nameBaseParam']?.language?.['python']) && param?.language?.['cli']?.['cli-flattened']){
+                                                operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = param['nameBaseParam'];
+                                                lastGenericSetter = genericSetter;
+                                                genericSetter = param['nameBaseParam'];
+                                                operation.extensions['cli-split-operation-original-operation']['genericPath'].push(param['nameBaseParam']?.language?.['python']['name']);
+                                                continue;
+                                            }
+                                            
+                                            if (isNullOrUndefined(param['nameBaseParam']) || (!isNullOrUndefined(param['nameBaseParam']) && isNullOrUndefined(param['nameBaseParam']?.language?.['python']))) {
+                                                onlyCliFlattened = true
+                                            }
+                                            
                                         }
                                         if (!onlyCliFlattened) {
                                             operation.extensions['cli-split-operation-original-operation']['genericSetterParam'] = null;

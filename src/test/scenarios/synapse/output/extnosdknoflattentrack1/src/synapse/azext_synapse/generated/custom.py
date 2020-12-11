@@ -1062,8 +1062,8 @@ def synapse_workspace_managed_identity_sql_control_setting_update(instance,
                                                                   workspace_name,
                                                                   grant_sql_control_to_managed_identity_desired_state=None):
     if grant_sql_control_to_managed_identity_desired_state is not None:
-        instance.desired_state = grant_sql_control_to_managed_identity_desired_state
-    return instance
+        instance.grant_sql_control_to_managed_identity.desired_state = grant_sql_control_to_managed_identity_desired_state
+    return instance.grant_sql_control_to_managed_identity
 
 
 def synapse_integration_runtime_list(client,

@@ -125,7 +125,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                 originalParameterStack.push(model.MethodParameter);
                 originalParameterNameStack.push(model.MethodParameter_Name);
                 if (!needGeneric) {
-                    output_body = output_body.concat(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
+                    output_body = output_body.concat(ConstructValuation(model, required, needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
                 }
             }
             else if (originalParameterStack.length > 0) {
@@ -148,14 +148,14 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                             originalParameterStack.push(newParam);
                             originalParameterNameStack.push(flattenedFrom.language['python']['name']);
                             if(!needGeneric) {
-                                output_body = output_body.concat(ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
+                                output_body = output_body.concat(ConstructValuation(model, required, needGeneric, prefixIndent, originalParameterNameStack, null, "{}"));
                             }
                         }
                     }
 
                     if (model.MethodParameter['targetProperty']?.['isDiscriminator'] == true) {
                         if (!isNullOrUndefined(valueToMatch)) {
-                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, "'" + valueToMatch + "'");
+                            access = ConstructValuation(model, required, needGeneric, prefixIndent, originalParameterNameStack, paramName, "'" + valueToMatch + "'");
                         } else {
                             continue;
                         }
@@ -168,14 +168,14 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                             if (model.MethodParameter_Type == SchemaType.Constant) {
                                 needIfClause = false;
                             }
-                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, defaultValue, needIfClause);
+                            access = ConstructValuation(model, required, needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, defaultValue, needIfClause);
                         } 
                         else if (!isNullOrUndefined(model.MethodParameter_DefaultValue)) {
                             if (model.isComplexSchema(model.MethodParameter_Type)) {
                                 defaultValue = "json.loads(" + defaultValue + ")";
                                 required['json'] = true;
                             }
-                            access = ConstructValuation(needGeneric, prefixIndent, originalParameterNameStack, paramName, defaultValue);
+                            access = ConstructValuation(model, required, needGeneric, prefixIndent, originalParameterNameStack, paramName, defaultValue);
                         }
                     }
                     output_body = output_body.concat(access);
@@ -203,16 +203,16 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
     return output_body;
 }
 
-function ConstructValuation(isGeneric: boolean, prefix: string, classNames: string[], paramName: string, value: string, defaultValue: string = null, needIfClause: boolean = true): string[] {
+function ConstructValuation(model: CodeModelAz, required: any, isGeneric: boolean, prefix: string, classNames: string[], paramName: string, value: string, defaultValue: string = null, needIfClause: boolean = true): string[] {
     let str = [];
     if (isNullOrUndefined(defaultValue)) {
         let left = "";
         if (isGeneric) {
             if(value.startsWith("'") && value.endsWith("'")) {
-                left = prefix + "instance.";
+                left = prefix + GetInstancePath(model, required) + ".";
             } else {
                 str.push(prefix + "if " + value + " is not None:");
-                left = prefix + "    instance.";
+                left = prefix + "    " + GetInstancePath(model, required) + ".";
             }
             for (var i = 1; i < classNames.length; ++i) {
                 left = left + classNames[i] + ".";
@@ -236,7 +236,7 @@ function ConstructValuation(isGeneric: boolean, prefix: string, classNames: stri
         if (needIfClause) {
             ifClause = " if " + value + " is None else " + value;
         }
-        str = str.concat(ConstructValuation(isGeneric, prefix, classNames, paramName, defaultValue) + ifClause);
+        str = str.concat(ConstructValuation(model, required, isGeneric, prefix, classNames, paramName, defaultValue) + ifClause);
     }
     return str;
 
@@ -497,9 +497,25 @@ function GetCommandBody(model: CodeModelAz, required: any) {
     return output;
 }
 
+function GetInstancePath(model: CodeModelAz, required) {
+    let { originalOperation } = getCustomParam(model, required);
+    let ret = "";
+    if (!isNullOrUndefined(originalOperation['genericPath']) && originalOperation['genericPath'].length > 0) {
+        ret = originalOperation['genericPath'].join(".");
+    }
+    if (ret == "") {
+        ret = "instance";
+    } else {
+        ret = "instance." + ret;
+    }
+    return ret;
+}
+
 function GetGenericCall(model: CodeModelAz, required) {
     let output: string[] = [];
-    output.push("    return instance");
+    let ipath = GetInstancePath(model, required);
+    output.push("    return " + ipath);
+    
     return output;
     
 }
