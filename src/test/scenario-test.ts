@@ -138,6 +138,8 @@ enum TestMode {
         const folders = fs.readdirSync(dir);
         let msg = "";
         let finalResult = true;
+        let parallelTest = process.env.parallelTest?.toLowerCase() == "true";
+        let allTests: Promise<Boolean>[] = [];
         for (const rp of folders) {
             let result = true;
             console.log("Start Processing: " + rp);
@@ -156,7 +158,13 @@ enum TestMode {
                         }
                         outputDir = path.join(dir, rp, "tmpoutput", dimension);
                         let extraOption = this.getOptions(dimension, outputDir);
-                        result = await this.runSingleTest(dir, rp, extraOption, dimension);
+                        let test = this.runSingleTest(dir, rp, extraOption, dimension);
+                        if (!parallelTest) {
+                            result = await test;
+                        }
+                        else {
+                            allTests.push(test);
+                        }
                     }
                 }
                 else {
@@ -172,6 +180,9 @@ enum TestMode {
                 finalResult = false;
             }
             //assert.strictEqual(result, true, msg);
+        }
+        if (parallelTest) {
+            finalResult = (await Promise.all(allTests)).every((x)=>x);
         }
         assert.strictEqual(finalResult, true, msg);
     }
