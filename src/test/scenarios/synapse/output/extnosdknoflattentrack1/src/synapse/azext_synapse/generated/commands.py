@@ -292,7 +292,7 @@ def load_command_table(self, _):
                             client_factory=cf_workspace_managed_identity_sqlcontrol_setting) as g:
         g.custom_show_command('show', 'synapse_workspace_managed_identity_sql_control_setting_show')
         g.custom_command('create', 'synapse_workspace_managed_identity_sql_control_setting_create')
-        g.generic_update_command('update', setter_arg_name='managed_identity_sql_control_settings',
+        g.generic_update_command('update', setter_arg_name='grant_sql_control_to_managed_identity',
                                  custom_func_name='synapse_workspace_managed_identity_sql_control_setting_update')
 
     from ..generated._client_factory import cf_integration_runtime
