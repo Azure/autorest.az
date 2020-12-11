@@ -52,7 +52,7 @@ license-header: MICROSOFT_MIT_NO_VERSION
 scope-codegen/emitter: false
 ```
 
-``` yaml $(az) && (($(target-mode) == 'core' && $(compatible-level) != "track2") || ($(sdk-no-flatten) && $(compatible-level) == 'track1'))
+``` yaml $(az) && (($(target-mode) == 'core' && $(compatible-level) != "track2") || ((!$(sdk-flatten) || ($(sdk-flatten) && $(sdk-no-flatten))) && $(compatible-level) == 'track1'))
 cli:
     flatten:
         cli-m4flatten-payload-max-prop: 2
