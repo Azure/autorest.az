@@ -97,7 +97,7 @@ export class CliTestInit extends TemplateBase {
         output.push('        except (AssertionError, AzureError, CliTestError, CliExecutionError, SystemExit,');
         output.push('                JMESPathCheckAssertionError) as e:');
         output.push('            use_exception_cache = os.getenv("TEST_EXCEPTION_CACHE")');
-        output.push('            if use_exception_cache is not None and use_exception_cache.lower() == "true":');
+        output.push('            if use_exception_cache is None or use_exception_cache.lower() != "true":');
         output.push('                raise');
         output.push('            test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()');
         output.push('            test_map[func.__name__]["result"] = FAILED');
