@@ -8,7 +8,7 @@ import { EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { CodeModel, Operation, OperationGroup, Parameter, ParameterLocation, Property, Request, Schema, SchemaType } from '@azure-tools/codemodel';
 import { values, keys } from "@azure-tools/linq";
 import { isArray, isNullOrUndefined } from "util";
-import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash } from '../../utils/helper';
+import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash, isEqualStringArray } from '../../utils/helper';
 import { EXCLUDED_PARAMS, GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam, KeyValueType} from "./CodeModelAz";
 import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus, GroupTestScenario} from './templates/tests/ScenarioTool';
@@ -2103,15 +2103,12 @@ export class CodeModelCliImpl implements CodeModelAz {
         return deepCopy(exampleValue);
     }
 
-    public isEqualStringArray(array1: string[], array2: string[]): boolean {
-        if (isNullOrUndefined(array1) && isNullOrUndefined(array2)) return true;
-        if (isNullOrUndefined(array1) || isNullOrUndefined(array2)) return false;
-        if (array1.length != array2.length) return false;
-        for (let i=0; i<array1.length; i++) {
-            if (typeof array1[i] !== 'string' || typeof array2[i] !== 'string') return false;
-            if (array1[i].toLowerCase() != array2[i].toLowerCase()) return false;
-        }
-        return true;
+    private checkPathToProperty(methodParam: MethodParam, paramName: string, ancestors: string[]): boolean {
+        return ancestors.length>0 && isEqualStringArray(methodParam.value['pathToProperty'].map(x=>x?.language?.az?.name), ancestors.slice(1));
+    }
+
+    private checkFlattenedNames(methodParam: MethodParam, paramName: string, ancestors: string[]): boolean {
+        return isEqualStringArray((methodParam.value['targetProperty']['flattenedNames'] || [paramName]).slice(0, -1), ancestors.slice(1));
     }
 
     private matchMethodParam(method_param_list: MethodParam[], paramName: string, ancestors: string[]): MethodParam[] {
@@ -2123,8 +2120,8 @@ export class CodeModelCliImpl implements CodeModelAz {
             // let method_param_key = methodParam.value.language['cli'].cliKey;
             if (serializedName.toLowerCase() == paramName.toLowerCase()) {
                 if (!('pathToProperty' in methodParam.value) ||
-                    ancestors.length>0 && this.isEqualStringArray(methodParam.value['pathToProperty'].map(x=>x?.language?.az?.name), ancestors.slice(1)) ||
-                    this.isEqualStringArray((methodParam.value['targetProperty']['flattenedNames'] || [paramName]).slice(0, -1), ancestors.slice(1))) {
+                    this.checkPathToProperty(methodParam, paramName, ancestors) ||
+                    this.checkFlattenedNames(methodParam, paramName, ancestors)) {
                     ret.push(methodParam);
                 }
             }
@@ -2163,15 +2160,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             if ('pathToProperty' in methodParam.value && ancestors.length - methodParam.value['pathToProperty'].length == 1) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
-                let ancestors_ = deepCopy(ancestors) as string[];
-                let match = true;
-                for (let i = methodParam.value['pathToProperty'].length - 1; i >= 0; i--) {
-                    let parent = ancestors_.pop();
-                    if (methodParam.value['pathToProperty'][i].language.az.name.toLowerCase() != parent.toLowerCase()) {
-                        match = false;
-                    };
-                }
-                if (match) {
+                if (this.checkPathToProperty(methodParam, name, ancestors)) {
                     // example_param.set(name, value);
                     this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors, rawValue);
                     return;
@@ -2179,22 +2168,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             else if ('targetProperty' in methodParam.value && 'flattenedNames' in methodParam.value['targetProperty'] && ancestors.length - methodParam.value['targetProperty']['flattenedNames'].length == 0 && ancestors.length > 0) {
                 // if the method parameter has 'flattenedNames', check the names (except the last name) with example parameter full path.
-                let ancestors_ = deepCopy(ancestors) as string[];
-                let match = true;
-                for (let i = methodParam.value['targetProperty']['flattenedNames'].length - 2; i >= 0; i--) {
-                    if (ancestors_.length <= 0) {
-                        match = false;
-                        break;
-                    }
-                    let parent = ancestors_.pop();
-                    if (methodParam.value['targetProperty']['flattenedNames'][i].toLowerCase() != parent.toLowerCase()) {
-                        match = false;
-                    };
-                }
-                if (methodParam.inBody && ancestors_.length != 1 || !methodParam.inBody && ancestors_.length > 0) {
-                    match = false;
-                }
-                if (match) {
+                if (this.checkFlattenedNames(methodParam, name, ancestors)) {
                     // example_param.set(name, value);
                     this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors, rawValue);
                     return;
