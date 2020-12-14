@@ -35,7 +35,6 @@ from .example_steps import step_integration_runtime_object_metadata_get
 from .example_steps import step_integration_runtime_object_metadata_refresh
 from .example_steps import step_integration_runtime_status_get
 from .example_steps import step_ip_firewall_rule_show
-from .example_steps import step_ip_firewall_rule_show
 from .example_steps import step_ip_firewall_rule_list
 from .example_steps import step_ip_firewall_rule_replace_all
 from .example_steps import step_operation_show_azure_async_header_result
@@ -53,7 +52,6 @@ from .example_steps import step_workspace_show
 from .example_steps import step_workspace_list
 from .example_steps import step_workspace_list2
 from .example_steps import step_workspace_update
-from .example_steps import step_private_link_resource_list
 from .example_steps import step_private_link_resource_list
 from .example_steps import step_sql_pool_create
 from .example_steps import step_sql_pool_show

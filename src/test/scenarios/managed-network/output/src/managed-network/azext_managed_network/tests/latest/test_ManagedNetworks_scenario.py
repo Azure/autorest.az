@@ -20,8 +20,6 @@ from .example_steps import step_mn_create_min
 from .example_steps import step_mn_group_create_min
 from .example_steps import step_managed_network_peering_min
 from .example_steps import step_mn_show_modify_min
-from azure.cli.testsdk import ResourceGroupPreparer
-from .preparers import VirtualNetworkPreparer
 from .example_steps import step_mn_list
 from .example_steps import step_mn_list2
 from .example_steps import step_mn_delete
@@ -30,8 +28,6 @@ from .example_steps import step_mn_list_min
 from .example_steps import step_mn_list2_min
 from .example_steps import step_mn_delete_min
 from .example_steps import step_mn_group_show_min
-from azure.cli.testsdk import ResourceGroupPreparer
-from .preparers import VirtualNetworkPreparer
 from .example_steps import step_mn_group_list
 from .example_steps import step_managed_network_peering_policy_show
 from .example_steps import step_managed_network_peering_policy_list
