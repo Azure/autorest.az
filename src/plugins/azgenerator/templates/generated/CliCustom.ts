@@ -163,6 +163,9 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                     }
                     else {
                         let defaultValue = ToPythonString(model.MethodParameter_DefaultValue, model.MethodParameter_Type);
+                        if (model.MethodParameter_DefaultValue == "{}") {
+                            defaultValue = "{}";
+                        }
                         if (!model.MethodParameter_IsHidden) {
                             let needIfClause = true;
                             if (model.MethodParameter_Type == SchemaType.Constant) {
@@ -171,7 +174,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric: boolean =
                             access = ConstructValuation(model, required, needGeneric, prefixIndent, originalParameterNameStack, paramName, model.MethodParameter_MapsTo, defaultValue, needIfClause);
                         } 
                         else if (!isNullOrUndefined(model.MethodParameter_DefaultValue)) {
-                            if (model.isComplexSchema(model.MethodParameter_Type)) {
+                            if (model.isComplexSchema(model.MethodParameter_Type) && defaultValue != "{}") {
                                 defaultValue = "json.loads(" + defaultValue + ")";
                                 required['json'] = true;
                             }
