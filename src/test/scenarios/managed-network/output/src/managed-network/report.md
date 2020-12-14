@@ -92,10 +92,10 @@ az managed-network managed-network-peering-policy show --managed-network-name "m
 ##### <a name="ExamplesManagedNetworkPeeringPoliciesCreateOrUpdate#Create#HubAndSpokeTopology">Example</a>
 ```
 az managed-network managed-network-peering-policy hub-and-spoke-topology create --managed-network-name \
-"myManagedNetwork" --policy-name "myManagedNetworkPeeringPolicy" --hub id="/subscriptions/subscriptionB/resourceGroups/\
-myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork4" --spokes id="/subscriptions/subscription\
-B/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGrou\
-ps/myManagedNetworkGroup" --resource-group "myResourceGroup"
+"myManagedNetwork" --policy-name "myManagedNetworkPeeringPolicy" --managed-network-policy "lslsd" --hub \
+id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNe\
+twork4" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/man\
+agedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup" --resource-group "myResourceGroup"
 ```
 ##### <a name="ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Create#HubAndSpokeTopology">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -107,6 +107,7 @@ ps/myManagedNetworkGroup" --resource-group "myResourceGroup"
 |**--hub**|object|Gets or sets the hub virtual network ID|hub_and_spoke_topology_hub|hub|
 |**--spokes**|array|Gets or sets the spokes group IDs|hub_and_spoke_topology_spokes|spokes|
 |**--mesh**|array|Gets or sets the mesh group IDs|hub_and_spoke_topology_mesh|mesh|
+|**--managed-network-policy**|string|inside managedNetworkPolicy|managed_network_policy|managedNetworkPolicy|
 
 #### <a name="ManagedNetworkPeeringPoliciesCreateOrUpdate#Create#MeshTopology">Command `az managed-network managed-network-peering-policy mesh-topology create`</a>
 
@@ -120,16 +121,17 @@ ps/myManagedNetworkGroup" --resource-group "myResourceGroup"
 |**--hub**|object|Gets or sets the hub virtual network ID|mesh_topology_hub|hub|
 |**--spokes**|array|Gets or sets the spokes group IDs|mesh_topology_spokes|spokes|
 |**--mesh**|array|Gets or sets the mesh group IDs|mesh_topology_mesh|mesh|
+|**--managed-network-policy**|string|inside managedNetworkPolicy|managed_network_policy|managedNetworkPolicy|
 
 #### <a name="ManagedNetworkPeeringPoliciesCreateOrUpdate#Update#HubAndSpokeTopology">Command `az managed-network managed-network-peering-policy hub-and-spoke-topology update`</a>
 
 ##### <a name="ExamplesManagedNetworkPeeringPoliciesCreateOrUpdate#Update#HubAndSpokeTopology">Example</a>
 ```
 az managed-network managed-network-peering-policy hub-and-spoke-topology update --managed-network-name \
-"myManagedNetwork" --policy-name "myManagedNetworkPeeringPolicy" --hub id="/subscriptions/subscriptionB/resourceGroups/\
-myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork4" --spokes id="/subscriptions/subscription\
-B/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGrou\
-ps/myManagedNetworkGroup" --resource-group "myResourceGroup"
+"myManagedNetwork" --policy-name "myManagedNetworkPeeringPolicy" --managed-network-policy "lslsd" --hub \
+id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNe\
+twork4" --spokes id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/man\
+agedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup" --resource-group "myResourceGroup"
 ```
 ##### <a name="ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Update#HubAndSpokeTopology">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -141,6 +143,7 @@ ps/myManagedNetworkGroup" --resource-group "myResourceGroup"
 |**--hub**|object|Gets or sets the hub virtual network ID|hub_and_spoke_topology_hub|hub|
 |**--spokes**|array|Gets or sets the spokes group IDs|hub_and_spoke_topology_spokes|spokes|
 |**--mesh**|array|Gets or sets the mesh group IDs|hub_and_spoke_topology_mesh|mesh|
+|**--managed-network-policy**|string|inside managedNetworkPolicy|managed_network_policy|managedNetworkPolicy|
 
 #### <a name="ManagedNetworkPeeringPoliciesCreateOrUpdate#Update#MeshTopology">Command `az managed-network managed-network-peering-policy mesh-topology update`</a>
 
@@ -154,6 +157,7 @@ ps/myManagedNetworkGroup" --resource-group "myResourceGroup"
 |**--hub**|object|Gets or sets the hub virtual network ID|mesh_topology_hub|hub|
 |**--spokes**|array|Gets or sets the spokes group IDs|mesh_topology_spokes|spokes|
 |**--mesh**|array|Gets or sets the mesh group IDs|mesh_topology_mesh|mesh|
+|**--managed-network-policy**|string|inside managedNetworkPolicy|managed_network_policy|managedNetworkPolicy|
 
 #### <a name="ManagedNetworkPeeringPoliciesDelete">Command `az managed-network managed-network-peering-policy delete`</a>
 
