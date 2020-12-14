@@ -66,7 +66,7 @@ def try_manual(func):
         except (AssertionError, AzureError, CliTestError, CliExecutionError, SystemExit,
                 JMESPathCheckAssertionError) as e:
             use_exception_cache = os.getenv("TEST_EXCEPTION_CACHE")
-            if use_exception_cache is not None and use_exception_cache.lower() == "true":
+            if use_exception_cache is None or use_exception_cache.lower() != "true":
                 raise
             test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()
             test_map[func.__name__]["result"] = FAILED
