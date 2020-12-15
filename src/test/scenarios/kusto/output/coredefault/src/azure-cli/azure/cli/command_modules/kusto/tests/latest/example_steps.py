@@ -63,7 +63,7 @@ def step_cluster_create(test, rg, checks=None):
         checks = []
     test.cmd('az kusto cluster create '
              '--name "{myCluster}" '
-             '--identity-type "SystemAssigned" '
+             '--type "SystemAssigned" '
              '--location "westus" '
              '--enable-double-encryption false '
              '--enable-purge true '
@@ -136,7 +136,7 @@ def step_cluster_update(test, rg, checks=None):
         checks = []
     test.cmd('az kusto cluster update '
              '--name "{myCluster}" '
-             '--identity-type "SystemAssigned" '
+             '--type "SystemAssigned" '
              '--location "westus" '
              '--enable-purge true '
              '--enable-streaming-ingest true '

@@ -21,13 +21,13 @@ helps['attestation create-provider'] = """
     type: command
     short-summary: "Creates or updates the Attestation Provider."
     parameters:
-      - name: --policy-signing-certificates-keys
+      - name: --keys
         short-summary: "The value of the \\"keys\\" parameter is an array of JWK values.  By default, the order of the \
 JWK values within the array does not imply an order of preference among them, although applications of JWK Sets can \
 choose to assign a meaning to the order for their purposes, if desired."
         long-summary: |
-            Usage: --policy-signing-certificates-keys alg=XX crv=XX d=XX dp=XX dq=XX e=XX k=XX kid=XX kty=XX n=XX p=XX \
-q=XX qi=XX use=XX x=XX x5-c=XX y=XX
+            Usage: --keys alg=XX crv=XX d=XX dp=XX dq=XX e=XX k=XX kid=XX kty=XX n=XX p=XX q=XX qi=XX use=XX x=XX \
+x5-c=XX y=XX
 
             alg: Required. The "alg" (algorithm) parameter identifies the algorithm intended for use with the key.  \
 The values used should either be registered in the IANA "JSON Web Signature and Encryption Algorithms" registry \
@@ -62,7 +62,7 @@ array is a base64-encoded (Section 4 of [RFC4648] -- not base64url-encoded) DER 
 value. The PKIX certificate containing the key value MUST be the first certificate.
             y: Y coordinate for the Elliptic Curve point
 
-            Multiple actions can be specified by using more than one --policy-signing-certificates-keys argument.
+            Multiple actions can be specified by using more than one --keys argument.
     examples:
       - name: AttestationProviders_Create
         text: |-

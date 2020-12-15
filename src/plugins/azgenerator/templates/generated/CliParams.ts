@@ -350,6 +350,8 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
 
                         if (!isNullOrUndefined(baseParam) && model.MethodParameter['polyBaseParam'] == baseParam) {
                             argument += ", arg_group='" + Capitalize(ToCamelCase(model.Parameter_MapsTo(baseParam))) + "'";
+                        } else if (!isNullOrUndefined(model.MethodParameter_ArgGroup)) {
+                            argument += ", arg_group='" + model.MethodParameter_ArgGroup + "'";
                         }
                     }
                     if (!model.Method_NameAz.startsWith('list') && !model.Method_NameAz.split(' ').last.startsWith('create')) {

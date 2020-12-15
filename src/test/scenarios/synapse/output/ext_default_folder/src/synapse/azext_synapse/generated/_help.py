@@ -941,11 +941,10 @@ helps['synapse workspace create'] = """
     examples:
       - name: Create or update a workspace
         text: |-
-               az synapse workspace create --resource-group "resourceGroup1" --identity-type "SystemAssigned" \
---location "East US" --default-data-lake-storage account-url="https://accountname.dfs.core.windows.net" \
-filesystem="default" --managed-resource-group-name "workspaceManagedResourceGroupUnique" --managed-virtual-network \
-"default" --sql-administrator-login "login" --sql-administrator-login-password "password" --tags key="value" --name \
-"workspace1"
+               az synapse workspace create --resource-group "resourceGroup1" --type "SystemAssigned" --location "East \
+US" --default-data-lake-storage account-url="https://accountname.dfs.core.windows.net" filesystem="default" \
+--managed-resource-group-name "workspaceManagedResourceGroupUnique" --managed-virtual-network "default" \
+--sql-administrator-login "login" --sql-administrator-login-password "password" --tags key="value" --name "workspace1"
 """
 
 helps['synapse workspace update'] = """
@@ -954,7 +953,7 @@ helps['synapse workspace update'] = """
     examples:
       - name: Update a workspace
         text: |-
-               az synapse workspace update --resource-group "resourceGroup1" --name "workspace1" --identity-type \
+               az synapse workspace update --resource-group "resourceGroup1" --name "workspace1" --type \
 "SystemAssigned" --sql-administrator-login-password "password" --tags key="value"
 """
 
@@ -1060,8 +1059,8 @@ helps['synapse workspace-managed-identity-sql-control-setting create'] = """
     examples:
       - name: Create or update managed identity sql control settings
         text: |-
-               az synapse workspace-managed-identity-sql-control-setting create --grant-sql-control-to-managed-identity\
--desired-state "Enabled" --resource-group "resourceGroup1" --workspace-name "workspace1"
+               az synapse workspace-managed-identity-sql-control-setting create --desired-state "Enabled" \
+--resource-group "resourceGroup1" --workspace-name "workspace1"
 """
 
 helps['synapse workspace-managed-identity-sql-control-setting update'] = """

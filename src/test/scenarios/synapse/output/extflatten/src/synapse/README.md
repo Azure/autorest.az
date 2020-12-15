@@ -369,7 +369,7 @@ az synapse sql-pool-vulnerability-assessment-rule-baseline delete --baseline-nam
 #### synapse workspace ####
 ##### Create #####
 ```
-az synapse workspace create --resource-group "resourceGroup1" --identity-type "SystemAssigned" --location "East US" \
+az synapse workspace create --resource-group "resourceGroup1" --type "SystemAssigned" --location "East US" \
     --default-data-lake-storage account-url="https://accountname.dfs.core.windows.net" filesystem="default" \
     --managed-resource-group-name "workspaceManagedResourceGroupUnique" --managed-virtual-network "default" \
     --sql-administrator-login "login" --sql-administrator-login-password "password" --tags key="value" \
@@ -387,7 +387,7 @@ az synapse workspace list --resource-group "resourceGroup1"
 ```
 ##### Update #####
 ```
-az synapse workspace update --resource-group "resourceGroup1" --name "workspace1" --identity-type "SystemAssigned" \
+az synapse workspace update --resource-group "resourceGroup1" --name "workspace1" --type "SystemAssigned" \
     --sql-administrator-login-password "password" --tags key="value" 
 ```
 ##### Delete #####
@@ -412,9 +412,8 @@ az synapse workspace-aad-admin delete --resource-group "resourceGroup1" --worksp
 #### synapse workspace-managed-identity-sql-control-setting ####
 ##### Create #####
 ```
-az synapse workspace-managed-identity-sql-control-setting create \
-    --grant-sql-control-to-managed-identity-desired-state "Enabled" --resource-group "resourceGroup1" \
-    --workspace-name "workspace1" 
+az synapse workspace-managed-identity-sql-control-setting create --desired-state "Enabled" \
+    --resource-group "resourceGroup1" --workspace-name "workspace1" 
 ```
 ##### Show #####
 ```

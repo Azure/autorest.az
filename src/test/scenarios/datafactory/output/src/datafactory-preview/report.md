@@ -261,8 +261,8 @@ az datafactory integration-runtime linked-integration-runtime create --name "bfa
 |**--factory-git-hub-configuration**|object|Factory's GitHub repo information.|factory_git_hub_configuration|FactoryGitHubConfiguration|
 |**--fake-identity**|object|This is only for az test.|managed_fake_identity|fakeIdentity|
 |**--zones**|array|This is only for az test.|managed_zones|zones|
-|**--type-properties-compute-properties**|object|The compute resource for managed integration runtime.|managed_compute_properties|computeProperties|
-|**--type-properties-ssis-properties**|object|SSIS properties for managed integration runtime.|managed_ssis_properties|ssisProperties|
+|**--compute-properties**|object|The compute resource for managed integration runtime.|managed_compute_properties|computeProperties|
+|**--ssis-properties**|object|SSIS properties for managed integration runtime.|managed_ssis_properties|ssisProperties|
 
 #### <a name="IntegrationRuntimesCreateOrUpdate#Create#SelfHosted">Command `az datafactory integration-runtime self-hosted create`</a>
 
@@ -279,7 +279,7 @@ integration runtime" --name "myIntegrationRuntime" --resource-group "myResourceG
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 |**--if-match**|string|ETag of the integration runtime entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|If-Match|
 |**--description**|string|Integration runtime description.|self_hosted_description|description|
-|**--type-properties-linked-info**|object|The base definition of a linked integration runtime.|self_hosted_linked_info|linkedInfo|
+|**--linked-info**|object|The base definition of a linked integration runtime.|self_hosted_linked_info|linkedInfo|
 
 #### <a name="IntegrationRuntimesUpdate">Command `az datafactory integration-runtime update`</a>
 

@@ -1837,7 +1837,7 @@ az synapse workspace show --resource-group "resourceGroup1" --name "workspace1"
 
 ##### <a name="ExamplesWorkspacesCreateOrUpdate#Create">Example</a>
 ```
-az synapse workspace create --resource-group "resourceGroup1" --identity-type "SystemAssigned" --location "East US" \
+az synapse workspace create --resource-group "resourceGroup1" --type "SystemAssigned" --location "East US" \
 --default-data-lake-storage account-url="https://accountname.dfs.core.windows.net" filesystem="default" \
 --managed-resource-group-name "workspaceManagedResourceGroupUnique" --managed-virtual-network "default" \
 --sql-administrator-login "login" --sql-administrator-login-password "password" --tags key="value" --name "workspace1"
@@ -1856,14 +1856,14 @@ az synapse workspace create --resource-group "resourceGroup1" --identity-type "S
 |**--connectivity-endpoints**|dictionary|Connectivity endpoints|connectivity_endpoints|connectivityEndpoints|
 |**--managed-virtual-network**|string|Setting this to 'default' will ensure that all compute for this workspace is in a virtual network managed on behalf of the user.|managed_virtual_network|managedVirtualNetwork|
 |**--private-endpoint-connections**|array|Private endpoint connections to the workspace|private_endpoint_connections|privateEndpointConnections|
-|**--virtual-network-profile-compute-subnet-id**|string|Subnet ID used for computes in workspace|compute_subnet_id|computeSubnetId|
-|**--identity-type**|sealed-choice|The type of managed identity for the workspace|type|type|
+|**--compute-subnet-id**|string|Subnet ID used for computes in workspace|compute_subnet_id|computeSubnetId|
+|**--type**|sealed-choice|The type of managed identity for the workspace|type|type|
 
 #### <a name="WorkspacesUpdate">Command `az synapse workspace update`</a>
 
 ##### <a name="ExamplesWorkspacesUpdate">Example</a>
 ```
-az synapse workspace update --resource-group "resourceGroup1" --name "workspace1" --identity-type "SystemAssigned" \
+az synapse workspace update --resource-group "resourceGroup1" --name "workspace1" --type "SystemAssigned" \
 --sql-administrator-login-password "password" --tags key="value"
 ```
 ##### <a name="ParametersWorkspacesUpdate">Parameters</a> 
@@ -1873,7 +1873,7 @@ az synapse workspace update --resource-group "resourceGroup1" --name "workspace1
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--tags**|dictionary|Resource tags|tags|tags|
 |**--sql-administrator-login-password**|string|SQL administrator login password|sql_administrator_login_password|sqlAdministratorLoginPassword|
-|**--identity-type**|sealed-choice|The type of managed identity for the workspace|type|type|
+|**--type**|sealed-choice|The type of managed identity for the workspace|type|type|
 
 #### <a name="WorkspacesDelete">Command `az synapse workspace delete`</a>
 
@@ -1960,15 +1960,15 @@ az synapse workspace-managed-identity-sql-control-setting show --resource-group 
 
 ##### <a name="ExamplesWorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Create">Example</a>
 ```
-az synapse workspace-managed-identity-sql-control-setting create --grant-sql-control-to-managed-identity-desired-state \
-"Enabled" --resource-group "resourceGroup1" --workspace-name "workspace1"
+az synapse workspace-managed-identity-sql-control-setting create --desired-state "Enabled" --resource-group \
+"resourceGroup1" --workspace-name "workspace1"
 ```
 ##### <a name="ParametersWorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--grant-sql-control-to-managed-identity-desired-state**|choice|Desired state|desired_state|desiredState|
+|**--desired-state**|choice|Desired state|desired_state|desiredState|
 
 #### <a name="WorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Update">Command `az synapse workspace-managed-identity-sql-control-setting update`</a>
 
@@ -1977,4 +1977,4 @@ az synapse workspace-managed-identity-sql-control-setting create --grant-sql-con
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
-|**--grant-sql-control-to-managed-identity-desired-state**|choice|Desired state|desired_state|desiredState|
+|**--desired-state**|choice|Desired state|desired_state|desiredState|

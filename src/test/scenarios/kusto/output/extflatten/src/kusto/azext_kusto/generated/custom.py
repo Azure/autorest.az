@@ -42,8 +42,8 @@ def kusto_cluster_create(client,
                          key_vault_properties=None,
                          enable_purge=None,
                          enable_double_encryption=None,
-                         identity_type=None,
-                         identity_user_assigned_identities=None,
+                         type_=None,
+                         user_assigned_identities=None,
                          no_wait=False):
     if enable_streaming_ingest is None:
         enable_streaming_ingest = False
@@ -67,8 +67,8 @@ def kusto_cluster_create(client,
                        key_vault_properties=key_vault_properties,
                        enable_purge=enable_purge,
                        enable_double_encryption=enable_double_encryption,
-                       type=identity_type,
-                       user_assigned_identities=identity_user_assigned_identities)
+                       type=type_,
+                       user_assigned_identities=user_assigned_identities)
 
 
 def kusto_cluster_update(client,
@@ -85,8 +85,8 @@ def kusto_cluster_update(client,
                          key_vault_properties=None,
                          enable_purge=None,
                          enable_double_encryption=None,
-                         identity_type=None,
-                         identity_user_assigned_identities=None,
+                         type_=None,
+                         user_assigned_identities=None,
                          no_wait=False):
     if enable_streaming_ingest is None:
         enable_streaming_ingest = False
@@ -109,8 +109,8 @@ def kusto_cluster_update(client,
                        key_vault_properties=key_vault_properties,
                        enable_purge=enable_purge,
                        enable_double_encryption=enable_double_encryption,
-                       type=identity_type,
-                       user_assigned_identities=identity_user_assigned_identities)
+                       type=type_,
+                       user_assigned_identities=user_assigned_identities)
 
 
 def kusto_cluster_delete(client,

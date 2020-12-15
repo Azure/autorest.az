@@ -16,7 +16,7 @@ from azure.cli.core.commands.parameters import (
     get_location_type
 )
 from azure.cli.core.commands.validators import get_default_location_from_resource_group
-from azext_attestation.action import AddPolicySigningCertificatesKeys
+from azext_attestation.action import AddKeys
 
 
 def load_arguments(self, _):
@@ -28,10 +28,10 @@ def load_arguments(self, _):
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
         c.argument('attestation_policy', type=str, help='Name of attestation policy.')
-        c.argument('policy_signing_certificates_keys', action=AddPolicySigningCertificatesKeys, nargs='+', help='The '
-                   'value of the "keys" parameter is an array of JWK values.  By default, the order of the JWK values '
-                   'within the array does not imply an order of preference among them, although applications of JWK '
-                   'Sets can choose to assign a meaning to the order for their purposes, if desired.')
+        c.argument('keys', action=AddKeys, nargs='+', help='The value of the "keys" parameter is an array of JWK '
+                   'values.  By default, the order of the JWK values within the array does not imply an order of '
+                   'preference among them, although applications of JWK Sets can choose to assign a meaning to the '
+                   'order for their purposes, if desired.', arg_group='policySigningCertificates')
 
     with self.argument_context('attestation attestation-provider provider list') as c:
         c.argument('resource_group_name', resource_group_name_type)

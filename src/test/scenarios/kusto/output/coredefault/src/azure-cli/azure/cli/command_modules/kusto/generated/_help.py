@@ -87,8 +87,8 @@ helps['kusto cluster create'] = """
     examples:
       - name: KustoClustersCreateOrUpdate
         text: |-
-               az kusto cluster create --name "kustoclusterrptest4" --identity-type "SystemAssigned" --location \
-"westus" --enable-double-encryption false --enable-purge true --enable-streaming-ingest true --sku name="Standard_L8s" \
+               az kusto cluster create --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" \
+--enable-double-encryption false --enable-purge true --enable-streaming-ingest true --sku name="Standard_L8s" \
 capacity=2 tier="Standard" --resource-group "kustorptest"
 """
 
@@ -140,8 +140,8 @@ helps['kusto cluster update'] = """
     examples:
       - name: KustoClustersUpdate
         text: |-
-               az kusto cluster update --name "kustoclusterrptest4" --identity-type "SystemAssigned" --location \
-"westus" --enable-purge true --enable-streaming-ingest true --key-vault-properties key-name="keyName" \
+               az kusto cluster update --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" \
+--enable-purge true --enable-streaming-ingest true --key-vault-properties key-name="keyName" \
 key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --resource-group "kustorptest"
 """
 

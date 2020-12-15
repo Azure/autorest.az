@@ -177,6 +177,7 @@ export interface CodeModelAz {
     MethodParameter_IsSimpleArray: boolean;
     MethodParameter_IsListOfSimple: boolean;
     MethodParameter_IdPart: string;
+    MethodParameter_ArgGroup: string;
     MethodParameter: Parameter;
     MethodParameters: Array<Parameter>;
     SubMethodParameter: Parameter;

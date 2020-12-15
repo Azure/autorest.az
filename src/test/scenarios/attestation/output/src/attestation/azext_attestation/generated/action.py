@@ -14,10 +14,10 @@ from collections import defaultdict
 from knack.util import CLIError
 
 
-class AddPolicySigningCertificatesKeys(argparse._AppendAction):
+class AddKeys(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-        super(AddPolicySigningCertificatesKeys, self).__call__(parser, namespace, action, option_string)
+        super(AddKeys, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):  # pylint: disable=no-self-use
         try:
@@ -66,7 +66,6 @@ class AddPolicySigningCertificatesKeys(argparse._AppendAction):
             elif kl == 'y':
                 d['y'] = v[0]
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter policy_signing_certificates_keys. All '
-                               'possible keys are: alg, crv, d, dp, dq, e, k, kid, kty, n, p, q, qi, use, x, x5-c, y'.
-                               format(k))
+                raise CLIError('Unsupported Key {} is provided for parameter keys. All possible keys are: alg, crv, d, '
+                               'dp, dq, e, k, kid, kty, n, p, q, qi, use, x, x5-c, y'.format(k))
         return d
