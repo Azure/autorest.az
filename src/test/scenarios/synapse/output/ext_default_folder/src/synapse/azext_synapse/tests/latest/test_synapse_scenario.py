@@ -135,7 +135,6 @@ from .example_steps import step_integration_runtime_object_metadata_get_min
 from .example_steps import step_integration_runtime_object_metadata_refresh_min
 from .example_steps import step_integration_runtime_status_get_min
 from .example_steps import step_ip_firewall_rule_show_min
-from .example_steps import step_ip_firewall_rule_show_min
 from .example_steps import step_ip_firewall_rule_list_min
 from .example_steps import step_ip_firewall_rule_replace_all_min
 from .example_steps import step_operation_show_azure_async_header_result_min
@@ -153,7 +152,6 @@ from .example_steps import step_workspace_show_min
 from .example_steps import step_workspace_list_min
 from .example_steps import step_workspace_list2_min
 from .example_steps import step_workspace_update_min
-from .example_steps import step_private_link_resource_list_min
 from .example_steps import step_private_link_resource_list_min
 from .example_steps import step_sql_pool_create_min
 from .example_steps import step_sql_pool_show_min
