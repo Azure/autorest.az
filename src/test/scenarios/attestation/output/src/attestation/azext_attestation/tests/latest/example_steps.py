@@ -23,6 +23,11 @@ def step_attestation_provider_show(test, rg, rg_2, rg_3, checks=None):
              checks=checks)
 
 
+@try_manual
+def step_attestation_provider_show_min(test, rg, rg_2, rg_3, checks=None):
+    return step_attestation_provider_show(test, rg, rg_2, rg_3, checks)
+
+
 # EXAMPLE: /AttestationProviders/get/AttestationProviders_List
 @try_manual
 def step_attestation_provider_provider_list(test, rg, rg_2, rg_3, checks=None):
@@ -33,6 +38,11 @@ def step_attestation_provider_provider_list(test, rg, rg_2, rg_3, checks=None):
              checks=checks)
 
 
+@try_manual
+def step_attestation_provider_provider_list_min(test, rg, rg_2, rg_3, checks=None):
+    return step_attestation_provider_provider_list(test, rg, rg_2, rg_3, checks)
+
+
 # EXAMPLE: /AttestationProviders/get/AttestationProviders_ListByResourceGroup
 @try_manual
 def step_attestation_provider_provider_list2(test, rg, rg_2, rg_3, checks=None):
@@ -41,6 +51,11 @@ def step_attestation_provider_provider_list2(test, rg, rg_2, rg_3, checks=None):
     test.cmd('az attestation attestation-provider provider list '
              '--resource-group "{rg_2}"',
              checks=checks)
+
+
+@try_manual
+def step_attestation_provider_provider_list2_min(test, rg, rg_2, rg_3, checks=None):
+    return step_attestation_provider_provider_list2(test, rg, rg_2, rg_3, checks)
 
 
 # EXAMPLE: /AttestationProviders/patch/AttestationProviders_Update
@@ -55,6 +70,16 @@ def step_attestation_provider_update(test, rg, rg_2, rg_3, checks=None):
              checks=checks)
 
 
+@try_manual
+def step_attestation_provider_update_min(test, rg, rg_2, rg_3, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az attestation attestation-provider update '
+             '--provider-name "myattestationprovider" '
+             '--resource-group "{rg}"',
+             checks=checks)
+
+
 # EXAMPLE: /AttestationProviders/delete/AttestationProviders_Delete
 @try_manual
 def step_attestation_provider_delete(test, rg, rg_2, rg_3, checks=None):
@@ -64,6 +89,11 @@ def step_attestation_provider_delete(test, rg, rg_2, rg_3, checks=None):
              '--provider-name "myattestationprovider" '
              '--resource-group "{rg_3}"',
              checks=checks)
+
+
+@try_manual
+def step_attestation_provider_delete_min(test, rg, rg_2, rg_3, checks=None):
+    return step_attestation_provider_delete(test, rg, rg_2, rg_3, checks)
 
 
 # EXAMPLE: /Operation/put/AttestationProviders_Create
@@ -77,6 +107,11 @@ def step_create_provider(test, rg, rg_2, rg_3, checks=None):
              checks=checks)
 
 
+@try_manual
+def step_create_provider_min(test, rg, rg_2, rg_3, checks=None):
+    return step_create_provider(test, rg, rg_2, rg_3, checks)
+
+
 # EXAMPLE: /Operation/get/Operations_List
 @try_manual
 def step_list_operation(test, rg, rg_2, rg_3, checks=None):
@@ -84,4 +119,9 @@ def step_list_operation(test, rg, rg_2, rg_3, checks=None):
         checks = []
     test.cmd('az attestation list-operation',
              checks=checks)
+
+
+@try_manual
+def step_list_operation_min(test, rg, rg_2, rg_3, checks=None):
+    return step_list_operation(test, rg, rg_2, rg_3, checks)
 

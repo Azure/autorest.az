@@ -12,6 +12,7 @@ import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
 from .example_steps import step_virtual_machine_assess_patch
+from .example_steps import step_virtual_machine_assess_patch_min
 from .. import (
     try_manual,
     raise_if,
@@ -42,14 +43,31 @@ def call_scenario(test, rg):
     cleanup_scenario(test, rg)
 
 
+@try_manual
+def call_scenario_min(test, rg):
+    setup_scenario(test, rg)
+    step_virtual_machine_assess_patch_min(test, rg, checks=[])
+    cleanup_scenario(test, rg)
+
+
 # Test class for Scenario
 @try_manual
 class VmScenarioTest(ScenarioTest):
 
+    def __init__(self):
+        pass
+
+
     @ResourceGroupPreparer(name_prefix='clitestvm_myResourceGroupName'[:7], key='rg', parameter_name='rg')
     def test_vm_Scenario(self, rg):
-
         call_scenario(self, rg)
+        calc_coverage(__file__)
+        raise_if()
+
+
+    @ResourceGroupPreparer(name_prefix='clitestvm_myResourceGroupName'[:7], key='rg', parameter_name='rg')
+    def test_vm_Scenario_min(self, rg):
+        call_scenario_min(self, rg)
         calc_coverage(__file__)
         raise_if()
 
