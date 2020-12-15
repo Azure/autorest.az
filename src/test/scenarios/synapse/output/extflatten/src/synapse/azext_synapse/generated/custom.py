@@ -7,7 +7,6 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
-# pylint: disable=line-too-long
 # pylint: disable=too-many-lines
 
 from azure.cli.core.util import sdk_no_wait
@@ -902,8 +901,8 @@ def synapse_workspace_create(client,
                              connectivity_endpoints=None,
                              managed_virtual_network=None,
                              private_endpoint_connections=None,
-                             virtual_network_profile_compute_subnet_id=None,
-                             identity_type=None,
+                             compute_subnet_id=None,
+                             type_=None,
                              no_wait=False):
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
@@ -918,8 +917,8 @@ def synapse_workspace_create(client,
                        connectivity_endpoints=connectivity_endpoints,
                        managed_virtual_network=managed_virtual_network,
                        private_endpoint_connections=private_endpoint_connections,
-                       compute_subnet_id=virtual_network_profile_compute_subnet_id,
-                       type=identity_type)
+                       compute_subnet_id=compute_subnet_id,
+                       type=type_)
 
 
 def synapse_workspace_update(client,
@@ -927,7 +926,7 @@ def synapse_workspace_update(client,
                              workspace_name,
                              tags=None,
                              sql_administrator_login_password=None,
-                             identity_type=None,
+                             type_=None,
                              no_wait=False):
     return sdk_no_wait(no_wait,
                        client.begin_update,
@@ -935,7 +934,7 @@ def synapse_workspace_update(client,
                        workspace_name=workspace_name,
                        tags=tags,
                        sql_administrator_login_password=sql_administrator_login_password,
-                       type=identity_type)
+                       type=type_)
 
 
 def synapse_workspace_delete(client,
@@ -1011,19 +1010,19 @@ def synapse_workspace_managed_identity_sql_control_setting_show(client,
 def synapse_workspace_managed_identity_sql_control_setting_create(client,
                                                                   resource_group_name,
                                                                   workspace_name,
-                                                                  grant_sql_control_to_managed_identity_desired_state=None):
+                                                                  desired_state=None):
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
-                                   desired_state=grant_sql_control_to_managed_identity_desired_state)
+                                   desired_state=desired_state)
 
 
 def synapse_workspace_managed_identity_sql_control_setting_update(client,
                                                                   resource_group_name,
                                                                   workspace_name,
-                                                                  grant_sql_control_to_managed_identity_desired_state=None):
+                                                                  desired_state=None):
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
-                                   desired_state=grant_sql_control_to_managed_identity_desired_state)
+                                   desired_state=desired_state)
 
 
 def synapse_integration_runtime_list(client,

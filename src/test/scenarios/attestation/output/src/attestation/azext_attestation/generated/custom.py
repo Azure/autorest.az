@@ -16,14 +16,14 @@ def attestation_create_provider(client,
                                 location,
                                 tags=None,
                                 attestation_policy=None,
-                                policy_signing_certificates_keys=None):
+                                keys=None):
     creation_params = {}
     creation_params['location'] = location
     creation_params['tags'] = tags
     creation_params['properties'] = {}
     creation_params['properties']['attestation_policy'] = attestation_policy
     creation_params['properties']['policy_signing_certificates'] = {}
-    creation_params['properties']['policy_signing_certificates']['keys'] = policy_signing_certificates_keys
+    creation_params['properties']['policy_signing_certificates']['keys'] = keys
     return client.create(resource_group_name=resource_group_name,
                          provider_name=provider_name,
                          creation_params=creation_params)

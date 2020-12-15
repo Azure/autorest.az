@@ -21,7 +21,7 @@ def step_workspace_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg
         checks = []
     test.cmd('az synapse workspace create '
              '--resource-group "{rg_2}" '
-             '--identity-type "SystemAssigned" '
+             '--type "SystemAssigned" '
              '--location "East US" '
              '--default-data-lake-storage account-url="https://accountname.dfs.core.windows.net" filesystem="default" '
              '--managed-resource-group-name "workspaceManagedResourceGroupUnique" '
@@ -117,7 +117,7 @@ def step_workspace_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg
     test.cmd('az synapse workspace update '
              '--resource-group "{rg_2}" '
              '--name "{myWorkspace2}" '
-             '--identity-type "SystemAssigned" '
+             '--type "SystemAssigned" '
              '--sql-administrator-login-password "password" '
              '--tags key="value"',
              checks=checks)
@@ -2271,7 +2271,7 @@ def step_workspace_managed_identity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
     if checks is None:
         checks = []
     test.cmd('az synapse workspace-managed-identity-sql-control-setting create '
-             '--grant-sql-control-to-managed-identity-desired-state "Enabled" '
+             '--desired-state "Enabled" '
              '--resource-group "{rg_2}" '
              '--workspace-name "{myWorkspace2}"',
              checks=checks)

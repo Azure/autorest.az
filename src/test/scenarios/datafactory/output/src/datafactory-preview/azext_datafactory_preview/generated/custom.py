@@ -315,8 +315,8 @@ def datafactory_integration_runtime_managed_create(client,
                                                    factory_git_hub_configuration=None,
                                                    fake_identity=None,
                                                    zones=None,
-                                                   type_properties_compute_properties=None,
-                                                   type_properties_ssis_properties=None):
+                                                   compute_properties=None,
+                                                   ssis_properties=None):
     all_repo_configuration = []
     if factory_vsts_configuration is not None:
         all_repo_configuration.append(factory_vsts_configuration)
@@ -333,8 +333,8 @@ def datafactory_integration_runtime_managed_create(client,
     integration_runtime['properties']['repo_configuration'] = repo_configuration
     integration_runtime['properties']['fake_identity'] = fake_identity
     integration_runtime['properties']['zones'] = zones
-    integration_runtime['properties']['compute_properties'] = type_properties_compute_properties
-    integration_runtime['properties']['ssis_properties'] = type_properties_ssis_properties
+    integration_runtime['properties']['compute_properties'] = compute_properties
+    integration_runtime['properties']['ssis_properties'] = ssis_properties
     return client.create_or_update(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    integration_runtime_name=integration_runtime_name,
@@ -348,12 +348,12 @@ def datafactory_integration_runtime_self_hosted_create(client,
                                                        integration_runtime_name,
                                                        if_match=None,
                                                        description=None,
-                                                       type_properties_linked_info=None):
+                                                       linked_info=None):
     integration_runtime = {}
     integration_runtime['properties'] = {}
     integration_runtime['properties']['type'] = 'SelfHosted'
     integration_runtime['properties']['description'] = description
-    integration_runtime['properties']['linked_info'] = type_properties_linked_info
+    integration_runtime['properties']['linked_info'] = linked_info
     return client.create_or_update(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    integration_runtime_name=integration_runtime_name,

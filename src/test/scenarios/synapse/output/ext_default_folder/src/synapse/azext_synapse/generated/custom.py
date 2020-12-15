@@ -7,7 +7,6 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
-# pylint: disable=line-too-long
 # pylint: disable=too-many-lines
 # pylint: disable=unused-argument
 
@@ -944,8 +943,8 @@ def synapse_workspace_create(client,
                              connectivity_endpoints=None,
                              managed_virtual_network=None,
                              private_endpoint_connections=None,
-                             virtual_network_profile_compute_subnet_id=None,
-                             identity_type=None,
+                             compute_subnet_id=None,
+                             type_=None,
                              no_wait=False):
     workspace_info = {}
     workspace_info['tags'] = tags
@@ -958,9 +957,9 @@ def synapse_workspace_create(client,
     workspace_info['managed_virtual_network'] = managed_virtual_network
     workspace_info['private_endpoint_connections'] = private_endpoint_connections
     workspace_info['virtual_network_profile'] = {}
-    workspace_info['virtual_network_profile']['compute_subnet_id'] = virtual_network_profile_compute_subnet_id
+    workspace_info['virtual_network_profile']['compute_subnet_id'] = compute_subnet_id
     workspace_info['identity'] = {}
-    workspace_info['identity']['type'] = identity_type
+    workspace_info['identity']['type'] = type_
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
                        resource_group_name=resource_group_name,
@@ -973,13 +972,13 @@ def synapse_workspace_update(client,
                              workspace_name,
                              tags=None,
                              sql_administrator_login_password=None,
-                             identity_type=None,
+                             type_=None,
                              no_wait=False):
     workspace_patch_info = {}
     workspace_patch_info['tags'] = tags
     workspace_patch_info['sql_administrator_login_password'] = sql_administrator_login_password
     workspace_patch_info['identity'] = {}
-    workspace_patch_info['identity']['type'] = identity_type
+    workspace_patch_info['identity']['type'] = type_
     return sdk_no_wait(no_wait,
                        client.begin_update,
                        resource_group_name=resource_group_name,
@@ -1063,10 +1062,10 @@ def synapse_workspace_managed_identity_sql_control_setting_show(client,
 def synapse_workspace_managed_identity_sql_control_setting_create(client,
                                                                   resource_group_name,
                                                                   workspace_name,
-                                                                  grant_sql_control_to_managed_identity_desired_state=None):
+                                                                  desired_state=None):
     managed_identity_sql_control_settings = {}
     managed_identity_sql_control_settings['grant_sql_control_to_managed_identity'] = {}
-    managed_identity_sql_control_settings['grant_sql_control_to_managed_identity']['desired_state'] = grant_sql_control_to_managed_identity_desired_state
+    managed_identity_sql_control_settings['grant_sql_control_to_managed_identity']['desired_state'] = desired_state
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    managed_identity_sql_control_settings=managed_identity_sql_control_settings)
@@ -1075,9 +1074,9 @@ def synapse_workspace_managed_identity_sql_control_setting_create(client,
 def synapse_workspace_managed_identity_sql_control_setting_update(instance,
                                                                   resource_group_name,
                                                                   workspace_name,
-                                                                  grant_sql_control_to_managed_identity_desired_state=None):
-    if grant_sql_control_to_managed_identity_desired_state is not None:
-        instance.grant_sql_control_to_managed_identity.desired_state = grant_sql_control_to_managed_identity_desired_state
+                                                                  desired_state=None):
+    if desired_state is not None:
+        instance.grant_sql_control_to_managed_identity.desired_state = desired_state
     return instance
 
 

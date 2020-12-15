@@ -330,8 +330,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         let names = this.Method_NameAz.split(' ');
                                         if (flattenedNames && flattenedNames.length > 0) {
                                             for (let item of flattenedNames) {
-                                                mapName.push(ToSnakeCase(item));
+                                                mapName.push(item);
                                             }
+                                            mapName.pop();
                                             mapName.reverse();
                                             if (mapName[mapName.length - 1] == 'properties' || mapName[mapName.length - 1] == 'parameters') {
                                                 mapName.pop();
@@ -339,12 +340,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                 mapName.pop();
                                             }
                                             if (mapName.length > 0) {
-                                                let tmpParamName = mapName.reverse().join("_");
-                                                if (paramFlattenedName == mapName.last || names.length > 1 && paramFlattenedName.startsWith(names[0].replace(/-/g, '_'))) {
-                                                    paramFlattenedName = tmpParamName;
-                                                }
+                                                let argGroupName = mapName.reverse().join("_"); 
+                                                this.MethodParameter.language['az']['arg_group'] = argGroupName;
                                             }
-                                        } else if (names.length > 1) {
+                                            paramFlattenedName = paramName;
+                                        }
+                                        if (names.length > 1) {
                                             let subgroup: string = names[0];
                                             subgroup = subgroup.replace(/-/g, '_');
                                             if (paramFlattenedName.startsWith(subgroup)) {
@@ -1251,6 +1252,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_IsList(): boolean {
         return this.Parameter_IsList(this.MethodParameter);
+    }
+
+    public get MethodParameter_ArgGroup(): string {
+        return this.MethodParameter.language['az']?.['arg_group'];
     }
 
     public get MethodParameter_Mode() {

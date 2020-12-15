@@ -43,8 +43,8 @@ def kusto_cluster_create(client,
                          key_vault_properties=None,
                          enable_purge=None,
                          enable_double_encryption=None,
-                         identity_type=None,
-                         identity_user_assigned_identities=None,
+                         type_=None,
+                         user_assigned_identities=None,
                          no_wait=False):
     if enable_streaming_ingest is None:
         enable_streaming_ingest = False
@@ -66,8 +66,8 @@ def kusto_cluster_create(client,
     parameters['enable_purge'] = False if enable_purge is None else enable_purge
     parameters['enable_double_encryption'] = False if enable_double_encryption is None else enable_double_encryption
     parameters['identity'] = {}
-    parameters['identity']['type'] = identity_type
-    parameters['identity']['user_assigned_identities'] = identity_user_assigned_identities
+    parameters['identity']['type'] = type_
+    parameters['identity']['user_assigned_identities'] = user_assigned_identities
     return sdk_no_wait(no_wait,
                        client.create_or_update,
                        resource_group_name=resource_group_name,
@@ -89,8 +89,8 @@ def kusto_cluster_update(client,
                          key_vault_properties=None,
                          enable_purge=None,
                          enable_double_encryption=None,
-                         identity_type=None,
-                         identity_user_assigned_identities=None,
+                         type_=None,
+                         user_assigned_identities=None,
                          no_wait=False):
     if enable_streaming_ingest is None:
         enable_streaming_ingest = False
@@ -111,8 +111,8 @@ def kusto_cluster_update(client,
     parameters['enable_purge'] = False if enable_purge is None else enable_purge
     parameters['enable_double_encryption'] = False if enable_double_encryption is None else enable_double_encryption
     parameters['identity'] = {}
-    parameters['identity']['type'] = identity_type
-    parameters['identity']['user_assigned_identities'] = identity_user_assigned_identities
+    parameters['identity']['type'] = type_
+    parameters['identity']['user_assigned_identities'] = user_assigned_identities
     return sdk_no_wait(no_wait,
                        client.update,
                        resource_group_name=resource_group_name,

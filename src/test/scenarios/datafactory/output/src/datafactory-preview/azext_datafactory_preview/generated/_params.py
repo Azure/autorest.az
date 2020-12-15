@@ -225,10 +225,10 @@ def load_arguments(self, _):
                    'GitHub repo information.', arg_group='RepoConfiguration')
         c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
         c.argument('zones', nargs='+', help='This is only for az test.')
-        c.argument('type_properties_compute_properties', type=validate_file_or_dict, help='The compute resource for '
-                   'managed integration runtime. Expected value: json-string/@json-file.')
-        c.argument('type_properties_ssis_properties', type=validate_file_or_dict, help='SSIS properties for managed '
-                   'integration runtime. Expected value: json-string/@json-file.')
+        c.argument('compute_properties', type=validate_file_or_dict, help='The compute resource for managed '
+                   'integration runtime. Expected value: json-string/@json-file.', arg_group='typeProperties')
+        c.argument('ssis_properties', type=validate_file_or_dict, help='SSIS properties for managed integration '
+                   'runtime. Expected value: json-string/@json-file.', arg_group='typeProperties')
 
     with self.argument_context('datafactory integration-runtime self-hosted create') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -238,8 +238,8 @@ def load_arguments(self, _):
         c.argument('if_match', type=str, help='ETag of the integration runtime entity. Should only be specified for '
                    'update, for which it should match existing entity or can be * for unconditional update.')
         c.argument('description', type=str, help='Integration runtime description.')
-        c.argument('type_properties_linked_info', type=validate_file_or_dict, help='The base definition of a linked '
-                   'integration runtime. Expected value: json-string/@json-file.')
+        c.argument('linked_info', type=validate_file_or_dict, help='The base definition of a linked integration '
+                   'runtime. Expected value: json-string/@json-file.', arg_group='typeProperties')
 
     with self.argument_context('datafactory integration-runtime update') as c:
         c.argument('resource_group_name', resource_group_name_type)
