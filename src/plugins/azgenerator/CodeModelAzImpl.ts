@@ -1768,7 +1768,11 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_IsRequired(): boolean {
-        return this.MethodParameter.required;
+        return this.Parameter_IsRequired(this.MethodParameter);
+    }
+
+    private Parameter_IsRequired(param: Parameter): boolean {
+        return param?.required;
     }
 
     public get MethodParameter_IsFlattened(): boolean {
@@ -2318,13 +2322,14 @@ export class CodeModelCliImpl implements CodeModelAz {
         return ret;
     }
 
-    public GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[] {
+    public GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any, minimum=false): string[] {
         let parameters: string[] = [];
         parameters.push("az " + this.Command_Name);
 
         let hasRG = false;
         let resourceObjectName = undefined;
         for (let param of example.Parameters) {
+            if (minimum && !this.Parameter_IsRequired(param.methodParam.value)) continue;
             let param_value = param.value;
             if (isTest || this.FormalizeNames) {
                 let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.keyValue, [], [], param, isTest);
@@ -2362,6 +2367,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         resourceObject.example_params = [];
                     }
                     for (let param of example.Parameters) {
+                        if (minimum && !this.Parameter_IsRequired(param.methodParam.value)) continue;
                         resourceObject.addOrUpdateParam(param);
                     }
                     resourceObject.testStatus = ObjectStatus.Created;
@@ -2419,11 +2425,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public FindExampleById(id: string, commandParams: any, examples: CommandExample[]): string[][] {
+    public FindExampleById(id: string, commandParams: any, examples: CommandExample[], minimum=false): string[][] {
         let ret: string[][] = [];
         this.GetAllExamples(id, (example) => {
             examples.push(example);
-            ret.push(this.GetExampleItems(example, true, commandParams));
+            ret.push(this.GetExampleItems(example, true, commandParams, minimum));
         });
         return ret;
     }

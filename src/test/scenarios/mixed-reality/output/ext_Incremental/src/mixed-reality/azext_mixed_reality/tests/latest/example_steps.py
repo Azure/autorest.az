@@ -24,6 +24,11 @@ def step_create(test, rg, checks=None):
              checks=checks)
 
 
+@try_manual
+def step_create_min(test, rg, checks=None):
+    return step_create(test, rg, checks)
+
+
 # EXAMPLE: /RemoteRenderingAccounts/get/Get remote rendering account
 @try_manual
 def step_show(test, rg, checks=None):
@@ -33,6 +38,11 @@ def step_show(test, rg, checks=None):
              '--account-name "MyAccount" '
              '--resource-group "{rg}"',
              checks=checks)
+
+
+@try_manual
+def step_show_min(test, rg, checks=None):
+    return step_show(test, rg, checks)
 
 
 # EXAMPLE: /RemoteRenderingAccounts/get/List remote rendering accounts by resource group
@@ -45,6 +55,11 @@ def step_list(test, rg, checks=None):
              checks=checks)
 
 
+@try_manual
+def step_list_min(test, rg, checks=None):
+    return step_list(test, rg, checks)
+
+
 # EXAMPLE: /RemoteRenderingAccounts/get/List remote rendering accounts by subscription
 @try_manual
 def step_list2(test, rg, checks=None):
@@ -53,6 +68,11 @@ def step_list2(test, rg, checks=None):
     test.cmd('az remote-rendering-account list '
              '-g ""',
              checks=checks)
+
+
+@try_manual
+def step_list2_min(test, rg, checks=None):
+    return step_list2(test, rg, checks)
 
 
 # EXAMPLE: /RemoteRenderingAccounts/patch/Update remote rendering account
@@ -68,6 +88,17 @@ def step_update(test, rg, checks=None):
              checks=checks)
 
 
+@try_manual
+def step_update_min(test, rg, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az remote-rendering-account update '
+             '--account-name "MyAccount" '
+             '--location "eastus2euap" '
+             '--resource-group "{rg}"',
+             checks=checks)
+
+
 # EXAMPLE: /RemoteRenderingAccounts/post/List remote rendering account key
 @try_manual
 def step_list_key(test, rg, checks=None):
@@ -79,6 +110,11 @@ def step_list_key(test, rg, checks=None):
              checks=checks)
 
 
+@try_manual
+def step_list_key_min(test, rg, checks=None):
+    return step_list_key(test, rg, checks)
+
+
 # EXAMPLE: /RemoteRenderingAccounts/post/Regenerate remote rendering account keys
 @try_manual
 def step_regenerate_key(test, rg, checks=None):
@@ -87,6 +123,16 @@ def step_regenerate_key(test, rg, checks=None):
     test.cmd('az remote-rendering-account regenerate-key '
              '--account-name "MyAccount" '
              '--serial 1 '
+             '--resource-group "{rg}"',
+             checks=checks)
+
+
+@try_manual
+def step_regenerate_key_min(test, rg, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az remote-rendering-account regenerate-key '
+             '--account-name "MyAccount" '
              '--resource-group "{rg}"',
              checks=checks)
 
@@ -102,6 +148,11 @@ def step_delete(test, rg, checks=None):
              checks=checks)
 
 
+@try_manual
+def step_delete_min(test, rg, checks=None):
+    return step_delete(test, rg, checks)
+
+
 # EXAMPLE: /SpatialAnchorsAccounts/post/Regenerate spatial anchors account keys
 @try_manual
 def step_regenerate_key2(test, rg, checks=None):
@@ -110,6 +161,16 @@ def step_regenerate_key2(test, rg, checks=None):
     test.cmd('az spatial-anchors-account regenerate-key '
              '--account-name "MyAccount" '
              '--serial 1 '
+             '--resource-group "{rg}"',
+             checks=checks)
+
+
+@try_manual
+def step_regenerate_key2_min(test, rg, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az spatial-anchors-account regenerate-key '
+             '--account-name "MyAccount" '
              '--resource-group "{rg}"',
              checks=checks)
 

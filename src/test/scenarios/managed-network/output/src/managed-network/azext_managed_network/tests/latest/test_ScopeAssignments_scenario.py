@@ -16,6 +16,10 @@ from .example_steps import step_mn_scope_assignment_create
 from .example_steps import step_mn_scope_assignment_show
 from .example_steps import step_mn_scope_assignment_list
 from .example_steps import step_mn_scope_assignment_delete
+from .example_steps import step_mn_scope_assignment_create_min
+from .example_steps import step_mn_scope_assignment_show_min
+from .example_steps import step_mn_scope_assignment_list_min
+from .example_steps import step_mn_scope_assignment_delete_min
 from .. import (
     try_manual,
     raise_if,
@@ -59,17 +63,27 @@ def call_scenario(test, rg):
     cleanup_scenario(test, rg)
 
 
+@try_manual
+def call_scenario_min(test, rg):
+    setup_scenario(test, rg)
+    step_mn_scope_assignment_create_min(test, rg, checks=[
+        test.check("name", "{myScopeAssignment}", case_sensitive=False),
+    ])
+    step_mn_scope_assignment_show_min(test, rg, checks=[
+        test.check("name", "{myScopeAssignment}", case_sensitive=False),
+    ])
+    step_mn_scope_assignment_list_min(test, rg, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_mn_scope_assignment_delete_min(test, rg, checks=[])
+    cleanup_scenario(test, rg)
+
+
 # Test class for Scenario
 @try_manual
 class ScopeAssignmentsScenarioTest(ScenarioTest):
 
-    @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
-    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
-    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
-    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
-    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
-    def test_ScopeAssignments_Scenario(self, rg):
-
+    def __init__(self):
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
         })
@@ -81,7 +95,25 @@ class ScopeAssignmentsScenarioTest(ScenarioTest):
             'myManagedNetworkPeeringPolicy': self.create_random_name(prefix='myHubAndSpoke'[:6], length=13),
         })
 
+
+    @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
+    def test_ScopeAssignments_Scenario(self, rg):
         call_scenario(self, rg)
+        calc_coverage(__file__)
+        raise_if()
+
+
+    @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
+    @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
+    def test_ScopeAssignments_Scenario_min(self, rg):
+        call_scenario_min(self, rg)
         calc_coverage(__file__)
         raise_if()
 
