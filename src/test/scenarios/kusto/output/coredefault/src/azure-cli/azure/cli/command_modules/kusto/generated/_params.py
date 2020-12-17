@@ -73,12 +73,12 @@ def load_arguments(self, _):
         c.argument('enable_double_encryption', arg_type=get_three_state_flag(), help='A boolean value that indicates '
                    'if double encryption is enabled.')
         c.argument('type_', options_list=['--type'], arg_type=get_enum_type(['None', 'SystemAssigned']), help='The '
-                   'identity type.', arg_group='identity')
+                   'identity type.', arg_group='Identity')
         c.argument('user_assigned_identities', type=validate_file_or_dict, help='The list of user identities '
                    'associated with the Kusto cluster. The user identity dictionary key references will be ARM '
                    'resource ids in the form: \'/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/prov'
                    'iders/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}\'. Expected value: '
-                   'json-string/@json-file.', arg_group='identity')
+                   'json-string/@json-file.', arg_group='Identity')
 
     with self.argument_context('kusto cluster update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -105,12 +105,12 @@ def load_arguments(self, _):
         c.argument('enable_double_encryption', arg_type=get_three_state_flag(), help='A boolean value that indicates '
                    'if double encryption is enabled.')
         c.argument('type_', options_list=['--type'], arg_type=get_enum_type(['None', 'SystemAssigned']), help='The '
-                   'identity type.', arg_group='identity')
+                   'identity type.', arg_group='Identity')
         c.argument('user_assigned_identities', type=validate_file_or_dict, help='The list of user identities '
                    'associated with the Kusto cluster. The user identity dictionary key references will be ARM '
                    'resource ids in the form: \'/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/prov'
                    'iders/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}\'. Expected value: '
-                   'json-string/@json-file.', arg_group='identity')
+                   'json-string/@json-file.', arg_group='Identity')
 
     with self.argument_context('kusto cluster delete') as c:
         c.argument('resource_group_name', resource_group_name_type)

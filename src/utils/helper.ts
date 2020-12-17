@@ -32,6 +32,11 @@ export function Uncapitalize(v: string) {
     return v.charAt(0).toLowerCase() + v.slice(1);
 }
 
+export function ToSentence(v: string) {
+    v = v.replace(/[a-z0-9][A-Z]/g, letter => `${letter[0]} ${letter[1]}`);
+    return Capitalize(v);
+}
+
 export function ToCamelCase(v: string) {
     v = v.toLowerCase().replace(/[^A-Za-z0-9]/g, ' ').split(' ')
         .reduce((result, word) => result + Capitalize(word.toLowerCase()));

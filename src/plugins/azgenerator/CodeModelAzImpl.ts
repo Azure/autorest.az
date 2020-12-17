@@ -8,7 +8,7 @@ import { EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { CodeModel, Operation, OperationGroup, Parameter, ParameterLocation, Property, Request, Schema, SchemaType } from '@azure-tools/codemodel';
 import { values, keys } from "@azure-tools/linq";
 import { isArray, isNullOrUndefined } from "util";
-import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash, isEqualStringArray } from '../../utils/helper';
+import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash, isEqualStringArray, ToSentence } from '../../utils/helper';
 import { EXCLUDED_PARAMS, GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam, KeyValueType} from "./CodeModelAz";
 import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus, GroupTestScenario} from './templates/tests/ScenarioTool';
@@ -340,7 +340,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                 mapName.pop();
                                             }
                                             if (mapName.length > 0) {
-                                                let argGroupName = mapName.reverse().join("_"); 
+                                                let argGroupName = mapName.reverse().map(item => {return ToSentence(item)}).join(" "); 
                                                 this.MethodParameter.language['az']['arg_group'] = argGroupName;
                                             }
                                             paramFlattenedName = paramName;
