@@ -180,6 +180,7 @@ def step_managed_network_peering(test, rg, checks=None):
     test.cmd('az managed-network managed-network-peering-policy hub-and-spoke-topology create '
              '--managed-network-name "{myManagedNetwork}" '
              '--policy-name "{myManagedNetworkPeeringPolicy}" '
+             '--managed-network-policy "lslsd" '
              '--hub id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetwork'
              's/{vn_4}" '
              '--spokes id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.ManagedNetwork/mana'

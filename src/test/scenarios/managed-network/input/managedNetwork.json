@@ -1229,6 +1229,10 @@
         "properties": {
           "$ref": "#/definitions/ManagedNetworkPeeringPolicyProperties",
           "description": "Gets or sets the properties of a Managed Network Policy"
+        },
+        "managedNetworkPolicy":  {
+          "type": "string",
+          "description": "inside managedNetworkPolicy"
         }
       },
       "allOf": [

@@ -755,21 +755,11 @@ export class ResourcePool {
                 if (ret.length > 0) ret += seperator;
                 if (kv[1].length >= 2 && kv[1][0] == '"' && kv[1][kv[1].length - 1] == '"') {
                     let v = rp.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
-                    if (isTest) {
-                        ret += `${kv[0]}="${rp.formatable(v, placeholders)}"`;
-                    }
-                    else {
-                        ret += `${kv[0]}="${v}"`;
-                    }
+                    ret += `${kv[0]}="${v}"`;
                 }
                 else {
                     let v = rp.addEndpointResource(kv[1], isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
-                    if (isTest) {
-                        ret += `${kv[0]}=${rp.formatable(v, placeholders)}`;
-                    }
-                    else {
-                        ret += `${kv[0]}=${v}`;
-                    }
+                    ret += `${kv[0]}=${v}`;
                 }
             }
             return ret;
@@ -807,18 +797,10 @@ export class ResourcePool {
                 let p = "";
                 if (instanceString.length >= 2 && instanceString[0] == '"' && instanceString[instanceString.length - 1] == '"') {
                     p = this.addEndpointResource(instanceString.substr(1, instanceString.length - 2), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
-                    if (isTest) {
-                        p= `"${this.formatable(p, placeholders)}"`;
-                    }
-                    else {
-                        p= `"${p}"`;
-                    }
+                    p= `"${p}"`;
                 }
                 else {
                     p = this.addEndpointResource(instanceString, isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
-                    if (isTest) {
-                        p = `${this.formatable(p, placeholders)}`;
-                    }
                 }
                 ret.push(p);
             }
@@ -829,7 +811,8 @@ export class ResourcePool {
     public replaceResourceString(endpoint: string, placeholders: string[], resources: string[], isTest = true): any {
         let nodes = endpoint.split('/');
         if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
-            return this.getPlaceholder(endpoint, isTest, placeholders);
+            let ret = this.getPlaceholder(endpoint, isTest, placeholders);
+            return isTest ? this.formatable(ret, placeholders) : ret;
         }
         if (isTest) {
             nodes[2] = `{${ResourcePool.KEY_SUBSCRIPTIONID}}`;
@@ -863,7 +846,8 @@ export class ResourcePool {
             }
             i += 2;
         }
-        return nodes.join('/');
+        let ret = nodes.join('/');
+        return isTest ? this.formatable(ret, placeholders) : ret;
     }
 
     public addParamResource(param_name: string, param_value: string, isJson: boolean, keyValue: KeyValueType, isTest = true): string {
