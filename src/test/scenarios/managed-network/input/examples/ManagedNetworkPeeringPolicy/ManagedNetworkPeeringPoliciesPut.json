@@ -17,7 +17,8 @@
             "id": "/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup1"
           }
         ]
-      }
+      },
+      "managedNetworkPolicy": "lslsd"
     }
   },
   "responses": {

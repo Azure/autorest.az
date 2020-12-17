@@ -8,7 +8,7 @@ import { EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { CodeModel, Operation, OperationGroup, Parameter, ParameterLocation, Property, Request, Schema, SchemaType } from '@azure-tools/codemodel';
 import { values, keys } from "@azure-tools/linq";
 import { isArray, isNullOrUndefined } from "util";
-import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash, ToSentence } from '../../utils/helper';
+import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash, isEqualStringArray, ToSentence } from '../../utils/helper';
 import { EXCLUDED_PARAMS, GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam, KeyValueType} from "./CodeModelAz";
 import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus, GroupTestScenario} from './templates/tests/ScenarioTool';
@@ -2103,22 +2103,37 @@ export class CodeModelCliImpl implements CodeModelAz {
         return deepCopy(exampleValue);
     }
 
-    private matchMethodParam(method_param_list: MethodParam[], paramName: string): MethodParam[] {
+    private checkPathToProperty(methodParam: MethodParam, ancestors: string[]): boolean {
+        return ancestors.length>0 && isEqualStringArray(methodParam.value['pathToProperty'].map(x=>x?.language?.az?.name), ancestors.slice(1));
+    }
+
+    private checkFlattenedNames(methodParam: MethodParam, ancestors: string[]): boolean {
+        const flattenedNames = methodParam.value['targetProperty']['flattenedNames'];
+        return !isNullOrUndefined(flattenedNames) && 
+                flattenedNames.length == ancestors.length &&
+                isEqualStringArray((methodParam.value['targetProperty']['flattenedNames']).slice(0, -1), ancestors.slice(1));
+    }
+
+    private matchMethodParam(method_param_list: MethodParam[], paramName: string, ancestors: string[]): MethodParam[] {
         let ret: MethodParam[] = [];
         if (!paramName) return ret;
-        for (let method_param of method_param_list) {
-            let serializedName = method_param.value.targetProperty?.serializedName;
-            if (!serializedName) serializedName = method_param.value.language['cli'].cliKey;
-            // let method_param_key = method_param.value.language['cli'].cliKey;
+        for (let methodParam of method_param_list) {
+            let serializedName = methodParam.value.targetProperty?.serializedName;
+            if (!serializedName) serializedName = methodParam.value.language['cli'].cliKey;
+            // let method_param_key = methodParam.value.language['cli'].cliKey;
             if (serializedName.toLowerCase() == paramName.toLowerCase()) {
-                ret.push(method_param);
+                if (!('pathToProperty' in methodParam.value) ||
+                    this.checkPathToProperty(methodParam, ancestors) ||
+                    this.checkFlattenedNames(methodParam, ancestors)) {
+                    ret.push(methodParam);
+                }
             }
         }
         return ret;
     }
 
     public FlattenExampleParameter(method_param_list: MethodParam[], example_param: ExampleParam[], name: string, value: any, ancestors: string[]) {
-        for (let methodParam of this.matchMethodParam(method_param_list, name)) {
+        for (let methodParam of this.matchMethodParam(method_param_list, name, ancestors)) {
             let polySubParam: MethodParam = null;
             let netValue = typeof value === 'object' && value !== null ? deepCopy(value) : value;
             let rawValue = deepCopy(netValue);
@@ -2148,15 +2163,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             if ('pathToProperty' in methodParam.value && ancestors.length - methodParam.value['pathToProperty'].length == 1) {
                 // if the method parameter has 'pathToProperty', check the path with example parameter full path.
-                let ancestors_ = deepCopy(ancestors) as string[];
-                let match = true;
-                for (let i = methodParam.value['pathToProperty'].length - 1; i >= 0; i--) {
-                    let parent = ancestors_.pop();
-                    if (methodParam.value['pathToProperty'][i].language.az.name.toLowerCase() != parent.toLowerCase()) {
-                        match = false;
-                    };
-                }
-                if (match) {
+                if (this.checkPathToProperty(methodParam, ancestors)) {
                     // example_param.set(name, value);
                     this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors, rawValue);
                     return;
@@ -2164,22 +2171,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             else if ('targetProperty' in methodParam.value && 'flattenedNames' in methodParam.value['targetProperty'] && ancestors.length - methodParam.value['targetProperty']['flattenedNames'].length == 0 && ancestors.length > 0) {
                 // if the method parameter has 'flattenedNames', check the names (except the last name) with example parameter full path.
-                let ancestors_ = deepCopy(ancestors) as string[];
-                let match = true;
-                for (let i = methodParam.value['targetProperty']['flattenedNames'].length - 2; i >= 0; i--) {
-                    if (ancestors_.length <= 0) {
-                        match = false;
-                        break;
-                    }
-                    let parent = ancestors_.pop();
-                    if (methodParam.value['targetProperty']['flattenedNames'][i].toLowerCase() != parent.toLowerCase()) {
-                        match = false;
-                    };
-                }
-                if (methodParam.inBody && ancestors_.length != 1 || !methodParam.inBody && ancestors_.length > 0) {
-                    match = false;
-                }
-                if (match) {
+                if (this.checkFlattenedNames(methodParam, ancestors)) {
                     // example_param.set(name, value);
                     this.AddExampleParameter(methodParam, example_param, netValue, polySubParam, ancestors, rawValue);
                     return;

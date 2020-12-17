@@ -47,7 +47,8 @@ export class HeaderGenerator {
         // TODO: search already-import-history-list by import target
         let found = false;
         for (let fi of this.fromImports) {
-            if (fi.from == from && fi.imports==imports) {
+            if (fi.from == from && 
+                fi.imports.length === imports.length && fi.imports.every((value, index) => value === imports[index])) {
                 found = true;
                 break;
             }

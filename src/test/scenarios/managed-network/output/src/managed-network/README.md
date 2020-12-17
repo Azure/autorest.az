@@ -80,6 +80,7 @@ az managed-network mn group delete --group-name "myManagedNetworkGroup" --manage
 ```
 az managed-network managed-network-peering-policy hub-and-spoke-topology create \
     --managed-network-name "myManagedNetwork" --policy-name "myManagedNetworkPeeringPolicy" \
+    --managed-network-policy "lslsd" \
     --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork4" \
     --spokes id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup" \
     --resource-group "myResourceGroup" 
@@ -88,6 +89,7 @@ az managed-network managed-network-peering-policy hub-and-spoke-topology create 
 ```
 az managed-network managed-network-peering-policy hub-and-spoke-topology update \
     --managed-network-name "myManagedNetwork" --policy-name "myManagedNetworkPeeringPolicy" \
+    --managed-network-policy "lslsd" \
     --hub id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork4" \
     --spokes id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup" \
     --resource-group "myResourceGroup" 

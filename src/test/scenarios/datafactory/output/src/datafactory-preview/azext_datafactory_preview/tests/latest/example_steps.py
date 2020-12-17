@@ -271,8 +271,7 @@ def step_integration_runtime_linked(test, rg, checks=None):
              '--subscription-id "061774c7-4b5a-4159-a55b-365581830283" '
              '--factory-name "{myFactory}" '
              '--integration-runtime-name "{myIntegrationRuntime}" '
-             '--resource-group "{rg}" '
-             '--subscription-id "12345678-1234-1234-1234-12345678abc"',
+             '--resource-group "{rg}"',
              checks=checks)
 
 

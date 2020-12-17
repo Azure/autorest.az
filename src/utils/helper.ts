@@ -625,3 +625,14 @@ export function composeParamString(maxApi: string, minApi: string, resourceType:
     }
     return [ret, useResourceType];
 }
+
+export function isEqualStringArray(array1: string[], array2: string[]): boolean {
+    if (isNullOrUndefined(array1) && isNullOrUndefined(array2)) return true;
+    if (isNullOrUndefined(array1) || isNullOrUndefined(array2)) return false;
+    if (array1.length != array2.length) return false;
+    for (let i=0; i<array1.length; i++) {
+        if (typeof array1[i] !== 'string' || typeof array2[i] !== 'string') return false;
+        if (array1[i].toLowerCase() != array2[i].toLowerCase()) return false;
+    }
+    return true;
+}

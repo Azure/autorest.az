@@ -555,6 +555,8 @@ class ManagedNetworkPeeringPolicy(Resource):
     :param properties: Gets or sets the properties of a Managed Network Policy.
     :type properties:
      ~managed_network_management_client.models.ManagedNetworkPeeringPolicyProperties
+    :param managed_network_policy: inside managedNetworkPolicy.
+    :type managed_network_policy: str
     """
 
     _validation = {
@@ -569,6 +571,7 @@ class ManagedNetworkPeeringPolicy(Resource):
         'type': {'key': 'type', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
         'properties': {'key': 'properties', 'type': 'ManagedNetworkPeeringPolicyProperties'},
+        'managed_network_policy': {'key': 'managedNetworkPolicy', 'type': 'str'},
     }
 
     def __init__(
@@ -576,10 +579,12 @@ class ManagedNetworkPeeringPolicy(Resource):
         *,
         location: Optional[str] = None,
         properties: Optional["ManagedNetworkPeeringPolicyProperties"] = None,
+        managed_network_policy: Optional[str] = None,
         **kwargs
     ):
         super(ManagedNetworkPeeringPolicy, self).__init__(location=location, **kwargs)
         self.properties = properties
+        self.managed_network_policy = managed_network_policy
 
 
 class ManagedNetworkPeeringPolicyListResult(msrest.serialization.Model):
