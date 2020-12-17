@@ -226,9 +226,9 @@ def load_arguments(self, _):
         c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
         c.argument('zones', nargs='+', help='This is only for az test.')
         c.argument('compute_properties', type=validate_file_or_dict, help='The compute resource for managed '
-                   'integration runtime. Expected value: json-string/@json-file.', arg_group='typeProperties')
+                   'integration runtime. Expected value: json-string/@json-file.', arg_group='Type Properties')
         c.argument('ssis_properties', type=validate_file_or_dict, help='SSIS properties for managed integration '
-                   'runtime. Expected value: json-string/@json-file.', arg_group='typeProperties')
+                   'runtime. Expected value: json-string/@json-file.', arg_group='Type Properties')
 
     with self.argument_context('datafactory integration-runtime self-hosted create') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -239,7 +239,7 @@ def load_arguments(self, _):
                    'update, for which it should match existing entity or can be * for unconditional update.')
         c.argument('description', type=str, help='Integration runtime description.')
         c.argument('linked_info', type=validate_file_or_dict, help='The base definition of a linked integration '
-                   'runtime. Expected value: json-string/@json-file.', arg_group='typeProperties')
+                   'runtime. Expected value: json-string/@json-file.', arg_group='Type Properties')
 
     with self.argument_context('datafactory integration-runtime update') as c:
         c.argument('resource_group_name', resource_group_name_type)
