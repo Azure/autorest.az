@@ -234,7 +234,7 @@ az datafactory integration-runtime show --factory-name "myFactory" --name "myInt
 az datafactory integration-runtime linked-integration-runtime create --name "bfa92911-9fb6-4fbe-8f23-beae87bc1c83" \
 --data-factory-location "West US" --data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" --subscription-id \
 "061774c7-4b5a-4159-a55b-365581830283" --factory-name "myFactory" --integration-runtime-name "myIntegrationRuntime" \
---resource-group "myResourceGroup" --subscription-id "12345678-1234-1234-1234-12345678abc"
+--resource-group "myResourceGroup"
 ```
 ##### <a name="ParametersIntegrationRuntimesCreateLinkedIntegrationRuntime">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|

@@ -680,10 +680,10 @@ def load_arguments(self, _):
                    'for this workspace is in a virtual network managed on behalf of the user.')
         c.argument('private_endpoint_connections', action=AddPrivateEndpointConnections, nargs='+', help='Private '
                    'endpoint connections to the workspace')
-        c.argument('compute_subnet_id', type=str, help='Subnet ID used for computes in workspace',
-                   arg_group='virtualNetworkProfile')
+        c.argument('compute_subnet_id', type=str, help='Subnet ID used for computes in workspace', arg_group='Virtual '
+                   'Network Profile')
         c.argument('type_', options_list=['--type'], arg_type=get_enum_type(['None', 'SystemAssigned']), help='The '
-                   'type of managed identity for the workspace', arg_group='identity')
+                   'type of managed identity for the workspace', arg_group='Identity')
 
     with self.argument_context('synapse workspace update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -692,7 +692,7 @@ def load_arguments(self, _):
         c.argument('tags', tags_type)
         c.argument('sql_administrator_login_password', type=str, help='SQL administrator login password')
         c.argument('type_', options_list=['--type'], arg_type=get_enum_type(['None', 'SystemAssigned']), help='The '
-                   'type of managed identity for the workspace', arg_group='identity')
+                   'type of managed identity for the workspace', arg_group='Identity')
 
     with self.argument_context('synapse workspace delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -740,13 +740,13 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace')
         c.argument('desired_state', arg_type=get_enum_type(['Enabled', 'Disabled']), help='Desired state',
-                   arg_group='grantSqlControlToManagedIdentity')
+                   arg_group='Grant Sql Control To Managed Identity')
 
     with self.argument_context('synapse workspace-managed-identity-sql-control-setting update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace', id_part='name')
         c.argument('desired_state', arg_type=get_enum_type(['Enabled', 'Disabled']), help='Desired state',
-                   arg_group='grantSqlControlToManagedIdentity')
+                   arg_group='Grant Sql Control To Managed Identity')
 
     with self.argument_context('synapse integration-runtime list') as c:
         c.argument('resource_group_name', resource_group_name_type)

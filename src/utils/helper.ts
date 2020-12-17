@@ -32,6 +32,11 @@ export function Uncapitalize(v: string) {
     return v.charAt(0).toLowerCase() + v.slice(1);
 }
 
+export function ToSentence(v: string) {
+    v = v.replace(/[a-z0-9][A-Z]/g, letter => `${letter[0]} ${letter[1]}`);
+    return Capitalize(v);
+}
+
 export function ToCamelCase(v: string) {
     v = v.toLowerCase().replace(/[^A-Za-z0-9]/g, ' ').split(' ')
         .reduce((result, word) => result + Capitalize(word.toLowerCase()));
@@ -619,4 +624,15 @@ export function composeParamString(maxApi: string, minApi: string, resourceType:
         useResourceType = true;
     }
     return [ret, useResourceType];
+}
+
+export function isEqualStringArray(array1: string[], array2: string[]): boolean {
+    if (isNullOrUndefined(array1) && isNullOrUndefined(array2)) return true;
+    if (isNullOrUndefined(array1) || isNullOrUndefined(array2)) return false;
+    if (array1.length != array2.length) return false;
+    for (let i=0; i<array1.length; i++) {
+        if (typeof array1[i] !== 'string' || typeof array2[i] !== 'string') return false;
+        if (array1[i].toLowerCase() != array2[i].toLowerCase()) return false;
+    }
+    return true;
 }

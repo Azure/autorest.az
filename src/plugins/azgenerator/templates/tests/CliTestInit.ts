@@ -62,8 +62,8 @@ export class CliTestInit extends TemplateBase {
         output.push('def try_manual(func):');
         output.push('    def import_manual_function(origin_func):');
         output.push('        from importlib import import_module');
-        output.push('        decorated_path = inspect.getfile(origin_func)');
-        output.push('        module_path = __path__[0]');
+        output.push('        decorated_path = inspect.getfile(origin_func).lower()');
+        output.push('        module_path = __path__[0].lower()');
         output.push('        if not decorated_path.startswith(module_path):');
         output.push('            raise Exception("Decorator can only be used in submodules!")');
         output.push('        manual_path = os.path.join(');
@@ -77,7 +77,6 @@ export class CliTestInit extends TemplateBase {
         output.push('    def get_func_to_call():');
         output.push('        func_to_call = func');
         output.push('        try:');
-        output.push('            func_to_call = import_manual_function(func)');
         output.push('            func_to_call = import_manual_function(func)');
         output.push('            logger.info("Found manual override for %s(...)", func.__name__)')
         output.push('        except (ImportError, AttributeError):');
@@ -97,6 +96,9 @@ export class CliTestInit extends TemplateBase {
         output.push('            ret = func_to_call(*args, **kwargs)');
         output.push('        except (AssertionError, AzureError, CliTestError, CliExecutionError, SystemExit,');
         output.push('                JMESPathCheckAssertionError) as e:');
+        output.push('            use_exception_cache = os.getenv("TEST_EXCEPTION_CACHE")');
+        output.push('            if use_exception_cache is None or use_exception_cache.lower() != "true":');
+        output.push('                raise');
         output.push('            test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()');
         output.push('            test_map[func.__name__]["result"] = FAILED');
         output.push('            test_map[func.__name__]["error_message"] = str(e).replace("\\r\\n", " ").replace("\\n", " ")[:500]');
