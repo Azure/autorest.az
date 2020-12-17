@@ -13,15 +13,42 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
+
+
 # Introduction
 
-This project is for Azure CLI Code Generator. We support to generate as both cli extensions and cli main repo modules. In this section, we will briefly introduce how to use CLI code generator and what's the advanced features of CLI Code generator.
+This project is for Azure CLI Code Generator. We support to generate as both cli extensions and cli main repo modules. In this README file, we will briefly introduce how the Azure CLI Code Generator works. Secondly, we will introduce how to use the CLI code generator and what kinds of advanced features of CLI code generator do we support. Then, we will introduce how to debug the CLI Code Generator. Finally, we will end this document with Autorest Pipeline definitions.  
 
-## Authoring readme configurations
+# Assumption
 
+This document is mainly for Azure CLI developers and people who are interested in generating Azure CLI by themselves.  
+# How Does the CLI Code Generator Work.
+The Azure Code Generator is basically a Autorest extension which takes swagger in azure-rest-api-specs or azure-rest-api-specs-pr repos as input and output functional Azure CLI code. It uses Autorest V3 to handle the configuration interpretation, pipeline resolving, pipeline scheduling and uses Autorest.Modelerfour as a basic code model. 
+
+Besides the Autorest.Modelerfour, Autorest.Az has two more Autorest extensions dependencies, the Autorest.Clicommon and Autorest.Python, the Autorest.Clicommon mainly handles the user defined cli directives and properly mark it in the code model, the Autorest.Python is integrated by Autorest.Az as the Azure CLI modules don't call the rest api directly, instead, it either call the vendored SDKs in the case of Azure CLI Extensions or call the public released SDK in the case of Azure CLI main repo modules.
+
+
+Both the Autorest.Clicommon and Autorest.Python take Autorest.Modelerfour as input, 
+
+
+
+# How to use the CLI Code Generator
+
+## Preparing Environment
+
+
+## Authoring readme files
+Because the Autorest.Az depends on Autorest.Clicommon and Autorest.Python, it needs three readme files the readme.az.md, readme.cli.md and readme.python.md to be ready before we use it.
+
+Users can refer to this document for more details. https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/code-gen/configure-cli.md  
+
+## 
+# Advanced Features
 ## 
 
 # configuration
+
+This configuration is for Autorest Pipeline definition.
 
 See documentation [here](doc/00-onboarding-guide.md)
 
