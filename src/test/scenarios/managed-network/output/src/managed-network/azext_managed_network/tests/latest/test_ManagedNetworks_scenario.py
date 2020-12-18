@@ -94,7 +94,8 @@ def call_scenario1_min(test, rg):
 @try_manual
 class ManagedNetworksscenario1Test(ScenarioTest):
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super(ManagedNetworksscenario1Test, self).__init__(*args, **kwargs)
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
         })
@@ -168,7 +169,8 @@ def call_scenario2_min(test, rg):
 @try_manual
 class ManagedNetworksscenario2Test(ScenarioTest):
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super(ManagedNetworksscenario2Test, self).__init__(*args, **kwargs)
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
         })
@@ -242,7 +244,8 @@ def call_scenario3_min(test, rg):
 @try_manual
 class ManagedNetworksscenario3Test(ScenarioTest):
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super(ManagedNetworksscenario3Test, self).__init__(*args, **kwargs)
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
         })

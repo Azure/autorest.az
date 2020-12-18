@@ -61,7 +61,8 @@ export class CliTestScenario extends TemplateBase {
 
         class_info.push(`# Test class for ${scenarioName}`);
         class_info.push("@try_manual");
-        class_info.push("class " + Capitalize(this.groupName) + scenarioName + "Test(ScenarioTest):");
+        const testClassName = Capitalize(this.groupName) + scenarioName + "Test";
+        class_info.push("class " + testClassName + "(ScenarioTest):");
         class_info.push("");
 
         let subscription_id = model.GetSubscriptionKey();
@@ -146,13 +147,9 @@ export class CliTestScenario extends TemplateBase {
         buildSenario(this.header, funcScenario, false);
         buildSenario(this.header, funcMinScenario, true);
 
-        class_info.push("    def __init__(self):");
-        if (initiates.length>0) {
-            class_info.push(...initiates);
-        }
-        else {
-            class_info.push("        pass");
-        }
+        class_info.push("    def __init__(self, *args, **kwargs):");
+        class_info.push(`        super(${testClassName}, self).__init__(*args, **kwargs)`);
+        class_info.push(...initiates);
         class_info.push("");
         class_info.push("");
 

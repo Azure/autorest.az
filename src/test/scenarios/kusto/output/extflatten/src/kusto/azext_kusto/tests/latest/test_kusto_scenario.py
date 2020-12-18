@@ -295,7 +295,8 @@ def call_scenario_min(test, rg):
 @try_manual
 class KustoScenarioTest(ScenarioTest):
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super(KustoScenarioTest, self).__init__(*args, **kwargs)
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
         })
