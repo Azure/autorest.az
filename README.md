@@ -110,12 +110,16 @@ If you found the everything goes well so far and you want to start the onboard p
 # Advanced Features
 
 In this section, we will introduce what kinds of advanced features do we support and how users can use the advanced features.  
+
+Before we start, The Autorest.az is using directive for customization, which kind of like SQL language, except SQL Language operates on data but directive operates on code model. 
 ## Folder customization
 
-## Manual customization
+## Manual override customization
 
 ## CLI user interface customization
-
+### extension rename
+### move command groups/command layer
+### rename/hide command groups, commands, parameters
 ## Test customization
 
 ## Parameter customization
