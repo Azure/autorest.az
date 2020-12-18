@@ -194,7 +194,8 @@ def call_scenario_min(test, rg):
 @try_manual
 class DatafactoryScenarioTest(ScenarioTest):
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super(DatafactoryScenarioTest, self).__init__(*args, **kwargs)
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
         })
