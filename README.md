@@ -160,7 +160,7 @@ python-sdk-output-folder: "$(az-output-folder)/azext_storage_preview/vendored_sd
 we want the extension name to be `storage` but we want the code in `src/storage-preview` folder, and since `storage-preview` extension has both data plane sdks and mgmt plane sdks, and the sdks is multi-api, in this way we should follow the sdk path conventions, 
 
 ## CLI user interface customization
-1. **add parent extension**   
+### **add parent extension**   
 In the case of RP ApplicationInsights, It's actually a sub module of Monitor. which means we should design the CLI user interface like `az monitor app-insight` instead of `az app-insight`. In such case, we need to add a parent extension monitor of app-insight.
 We can do that by 
 ```
@@ -168,11 +168,12 @@ az:
   extensions: app-insight
   parent-extension: monitor
 ```
-1. **set extension/command groups/commands/parameters mode**  
+
+### **set extension/command groups/commands/parameters mode**   
 In Azure CLI, we allow user to set different mode like is_preview or is_experimental for different kinds of layers including extension/command groups/commands/parameters. We can configure it in readme.az.md so the generated code can work in different mode.  
 see [how to configure is_preview/is_experimental in different levels](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-support-configuring-is_previewis_experimental-in-different-levels) for more details.
 
-1. **set min-api/max-api in command groups/commands/parameters layers**  
+### **set min-api/max-api in command groups/commands/parameters layers**  
 In Azure CLI, we allow user to set the min or max api versions of a specific command groups or command or parameters. We can configure in readme.az.md so the generate code can work in that way too.  
 For example:
 ```
@@ -186,10 +187,61 @@ cli:
       max-api: 2020-12-01
 ```
 * Note: you don't need to specify both the min-api and max-api. and the group, op, param conditions are not all necessary either.   
-1. **move command groups/command layer**  
 
-1. rename/hide command groups, commands, parameters
-1. parameter specific customization  
+### **move command groups/command layer**  
+Before we talk about move command groups and command layer. we need to have some basic ideas about what command group name comes from and what command name comes from.  
+
+As we probably know that in Swagger the operationId are usually in the format of **A_B** where **A** is resource name in the format of plural and **B** is the action name you want to perform on that resource for example create, update, get, start, stop, delete etc.   
+
+In CLI code generation, we view **A** as group name, **B** as the command name and the CLI command of operationId **A_B** would be like `az <extension-name> A B`.  
+    
+In Azure CLI it's quite common that we want to move the same functional command into the same command group. For example:   
+```
+directive:
+    ## remove a sub group share
+    - where:
+          group: datashare share
+      set:
+          group: datashare
+
+    ## add a sub group consumer
+    - where:
+          group: datashare trigger
+      set:
+          group: datashare consumer trigger
+
+    ## change the group and name of a command
+    - where:
+          command: datafactory integration-runtime create-linked-integration-runtime
+      set:
+          command: datafactory integration-runtime linked-integration-runtime create
+
+
+```
+See [how to add or remove subgroups](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-addremove-subgroup) for more details.   
+
+### **rename/hide command groups, commands, parameters**  
+We provide the ability for user to rename or hide command groups or commands or parameters. For example:
+```
+cli:
+  cli-directive:
+    ## rename a parameter 
+    - where:
+        group: groupCondition
+        op: opCondition
+        param: paramCondition
+      name: new_op_name
+
+    ## hide an operation
+    - where:
+        group: groupCondition
+        op: opCondition
+      hide: true    
+```
+* Note: if a parameter has the flattened schema prefix in the name, then we can't rename it in this way, because in Autorest.Clicommon it doesn't have the flattened schema prefix. We can only add alias for this parameter in such case.
+
+### **parameter specific customization**  
+There are some customization that we provide only applicable for parameter layer.  
    1. flatten a parameter
    1. set a parameter as required 
    1. set default value for a parameter
@@ -200,9 +252,12 @@ cli:
 
 ## SDK customization
 1. flattened SDK and un-flattened SDK
+The previous version of Autorest.Az code generator can only support the flattened SDK, and we are using flattened sdk 
 1. track1 SDK and track2 SDK
 ## Manual override 
-1. Override 
+In some scenarios, we might find the generated code doesn't work for us  and there's no way to use customization to meet our requirements. Though we are trying to reduce the manual override work, we can't rule out the possibility of generated code won't work in some complex scenaros.  
+
+Therefore, we provide the manual override ability for users to do manual override. See [manual customization](https://github.com/Azure/autorest.az/blob/master/doc/03-manual-customizations.md) for more details.   
 ## Test customization
 1. In-place edit
 1. randomize test parameters
