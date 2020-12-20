@@ -27,7 +27,6 @@ The Azure Code Generator is basically a [Autorest](https://github.com/Azure/auto
 
 Besides the Autorest.Modelerfour, Autorest.Az has two more Autorest extensions dependencies, the [Autorest.Clicommon](https://github.com/Azure/autorest.clicommon) and [Autorest.Python](https://github.com/Azure/autorest.python), the Autorest.Clicommon mainly handles the user defined cli directives such as split operations, handle polymorphism, rename, hide etc. and properly mark it in the code model, the Autorest.Python is integrated by Autorest.Az as the Azure CLI modules don't call the rest api directly, instead, it either call the vendored SDKs in the case of Azure CLI Extensions or call the public released SDK in the case of Azure CLI main repo modules.
 
-
 Both the Autorest.Clicommon and Autorest.Python take Autorest.Modelerfour as input, Normally autorest.python will not flatten the code model because the Python Language naturally support complex object, they don't need to flatten the parameter but for command line tools like Azure CLI, the parameter layer must not deeper than 2, otherwise it's hard to express the complex object without using a bunch of delimiters. Therefore, autorest.clicommon will flatten the code model. Autorest az will merge the two code model from autorest.python and autorest.clicommon.    
 
 After autorest.az has done some CLI specific logic, it will render the code model into code template finally output the generated code.   
@@ -111,18 +110,111 @@ If you found the everything goes well so far and you want to start the onboard p
 
 In this section, we will introduce what kinds of advanced features do we support and how users can use the advanced features.  
 
-Before we start, The Autorest.az is using directive for customization, which kind of like SQL language, except SQL Language operates on data but directive operates on code model. 
-## Folder customization
+Before we start, The Autorest.az is using directive for customization,   
+1. the autorest directive. For example:
+```
+directive:
+  - where:
+      command: datafactory factory create
+    set:
+      command: datafactory create
+```
+1. the cli directive. For example:
+```
+cli:
+  cli-directive:
+    - where:
+        group: Factories
+        param: factoryName
+      alias:
+        - name
+        - n
+```
+**The only supported usage for autorest directive is for moving the command groups/commands layer like remove subgroups or add subgroups.** 
 
-## Manual override customization
+which kind of like SQL language, where you can have the **where clause** to specify which groups or operations or parameters or schemas that you want to modify, and **set clause or directive action clause** to specify what kind of change you want to make, oexcept the SQL Language operates on data but directive operates on code model.  see the details on [cli directive doc](https://github.com/Azure/autorest.clicommon/blob/master/doc/cli-directive.md)
+
+* Note: the name conventions in the **where clause** are always using swagger name format. The name conventions in the **set clause** are always using snake case. You may refer to [this document](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-find-swagger-name-used-by-directive) for more details if having trouble finding the name in **where clause** 
+
+## Folder customization
+A typical readme.az.md configuration would look like this 
+```
+az:
+    extensions: {extensionName}
+    namespace: azure.mgmt.{extensionName}
+    package-name: azure-mgmt-{extensionName}
+$(azure-cli-extension-folder)/src/{extensionName}
+python-sdk-output-folder: "$(az-output-folder)/azext_{extensionName}/vendored_sdks/{extensionName}"
+```
+Where all the place holder for {extensionName} should be the same. 
+
+But users are allowed to specify different value for every place holder for different scenarios, for example, in the case of storage-preview extension. 
+``` 
+az:
+    extensions: storage
+    namespace: azure.mgmt.storage
+    package-name: azure-mgmt-storage
+az-output-folder: $(azure-cli-extension-folder)/src/storage-preview
+python-sdk-output-folder: "$(az-output-folder)/azext_storage_preview/vendored_sdks/azure_mgmt_storage/v2019_06_01"
+```
+we want the extension name to be `storage` but we want the code in `src/storage-preview` folder, and since `storage-preview` extension has both data plane sdks and mgmt plane sdks, and the sdks is multi-api, in this way we should follow the sdk path conventions, 
 
 ## CLI user interface customization
-### extension rename
-### move command groups/command layer
-### rename/hide command groups, commands, parameters
-## Test customization
+1. **add parent extension**   
+In the case of RP ApplicationInsights, It's actually a sub module of Monitor. which means we should design the CLI user interface like `az monitor app-insight` instead of `az app-insight`. In such case, we need to add a parent extension monitor of app-insight.
+We can do that by 
+```
+az:
+  extensions: app-insight
+  parent-extension: monitor
+```
+1. **set extension/command groups/commands/parameters mode**  
+In Azure CLI, we allow user to set different mode like is_preview or is_experimental for different kinds of layers including extension/command groups/commands/parameters. We can configure it in readme.az.md so the generated code can work in different mode.  
+see [how to configure is_preview/is_experimental in different levels](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-support-configuring-is_previewis_experimental-in-different-levels) for more details.
 
-## Parameter customization
+1. **set min-api/max-api in command groups/commands/parameters layers**  
+In Azure CLI, we allow user to set the min or max api versions of a specific command groups or command or parameters. We can configure in readme.az.md so the generate code can work in that way too.  
+For example:
+```
+cli:
+  cli-directive:
+    - where:
+        group: groupCondition
+        op: opCondition
+        param: paramCondition
+      min-api: 2019-01-01
+      max-api: 2020-12-01
+```
+* Note: you don't need to specify both the min-api and max-api. and the group, op, param conditions are not all necessary either.   
+1. **move command groups/command layer**  
+
+1. rename/hide command groups, commands, parameters
+1. parameter specific customization  
+   1. flatten a parameter
+   1. set a parameter as required 
+   1. set default value for a parameter
+   1. add alias for a parameter
+   1. how action parameter is handled
+   1. set an action as positional argument
+   1. set an action as AWS shorthand syntax
+
+## SDK customization
+1. flattened SDK and un-flattened SDK
+1. track1 SDK and track2 SDK
+## Manual override 
+1. Override 
+## Test customization
+1. In-place edit
+1. randomize test parameters
+1. 
+
+## Special Parameter Type
+1. Identity
+1. Nested Resource
+1. SKU
+
+## Incremental Code Generation
+The basic idea of current incremental code generation is to hide those operations you don't need. see above sections to find out how to set operations as hidden. 
 
 # Autorest pipeline configuration
 
