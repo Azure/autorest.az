@@ -252,5 +252,5 @@ export interface CodeModelAz {
     
     // readme config
     CliCoreLib: string;
-    
+    GenMinTest: boolean;
 }
