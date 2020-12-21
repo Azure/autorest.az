@@ -485,9 +485,6 @@ def call_scenario(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_1
                      rg_15, rg_16, rg_17)
 
 
-@try_manual
-def call_scenario_min(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                      rg_15, rg_16, rg_17):
 # Test class for Scenario
 @try_manual
 class SynapseScenarioTest(ScenarioTest):

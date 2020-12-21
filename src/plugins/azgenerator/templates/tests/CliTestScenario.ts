@@ -83,9 +83,7 @@ export class CliTestScenario extends TemplateBase {
         funcScenario.push(`# Testcase: ${scenarioName}`);
         funcScenario.push("@try_manual");
         funcScenario.push(...ToMultiLine(`def call_${scenarioName.toLowerCase()}(test${CliTestStep.parameterLine(parameterNames)}):`));
-        funcMinScenario.push("@try_manual");
-        funcMinScenario.push(...ToMultiLine(`def call_${scenarioName.toLowerCase()}_min(test${CliTestStep.parameterLine(parameterNames)}):`));
-
+        
         function buildSenario(header: HeaderGenerator, outputFunc: string[], minimum: boolean) {
             model.GetResourcePool().clearExampleParams();
 
@@ -145,8 +143,11 @@ export class CliTestScenario extends TemplateBase {
             outputFunc.push("");
         }
         buildSenario(this.header, funcScenario, false);
-        if (model.GenMinTest)   buildSenario(this.header, funcMinScenario, true);
-
+        if (model.GenMinTest) {
+            funcMinScenario.push("@try_manual");
+            funcMinScenario.push(...ToMultiLine(`def call_${scenarioName.toLowerCase()}_min(test${CliTestStep.parameterLine(parameterNames)}):`));
+            buildSenario(this.header, funcMinScenario, true);
+        }
         class_info.push("    def __init__(self, *args, **kwargs):");
         class_info.push(`        super(${testClassName}, self).__init__(*args, **kwargs)`);
         class_info.push(...initiates);
