@@ -112,7 +112,7 @@ In this section, we will introduce what kinds of advanced features do we support
 
 Before we start, The Autorest.az is using directive for customization,   
 1. the autorest directive. For example:
-```
+``` yaml
 directive:
   - where:
       command: datafactory factory create
@@ -120,7 +120,7 @@ directive:
       command: datafactory create
 ```
 1. the cli directive. For example:
-```
+``` yaml
 cli:
   cli-directive:
     - where:
@@ -138,7 +138,7 @@ which kind of like SQL language, where you can have the **where clause** to spec
 
 ## Folder customization
 A typical readme.az.md configuration would look like this 
-```
+``` yaml
 az:
     extensions: {extensionName}
     namespace: azure.mgmt.{extensionName}
@@ -149,7 +149,7 @@ python-sdk-output-folder: "$(az-output-folder)/azext_{extensionName}/vendored_sd
 Where all the place holder for {extensionName} should be the same. 
 
 But users are allowed to specify different value for every place holder for different scenarios, for example, in the case of storage-preview extension. 
-``` 
+``` yaml
 az:
     extensions: storage
     namespace: azure.mgmt.storage
@@ -163,7 +163,7 @@ we want the extension name to be `storage` but we want the code in `src/storage-
 ### **add parent extension**   
 In the case of RP ApplicationInsights, It's actually a sub module of Monitor. which means we should design the CLI user interface like `az monitor app-insight` instead of `az app-insight`. In such case, we need to add a parent extension monitor of app-insight.
 We can do that by 
-```
+``` yaml
 az:
   extensions: app-insight
   parent-extension: monitor
@@ -176,7 +176,7 @@ see [how to configure is_preview/is_experimental in different levels](https://gi
 ### **set min-api/max-api in command groups/commands/parameters layers**  
 In Azure CLI, we allow user to set the min or max api versions of a specific command groups or command or parameters. We can configure in readme.az.md so the generate code can work in that way too.  
 For example:
-```
+``` yaml
 cli:
   cli-directive:
     - where:
@@ -196,7 +196,7 @@ As we probably know that in Swagger the operationId are usually in the format of
 In CLI code generation, we view **A** as group name, **B** as the command name and the CLI command of operationId **A_B** would be like `az <extension-name> A B`.  
     
 In Azure CLI it's quite common that we want to move the same functional command into the same command group. For example:   
-```
+``` yaml
 directive:
     ## remove a sub group share
     - where:
@@ -222,7 +222,7 @@ See [how to add or remove subgroups](https://github.com/Azure/autorest.az/blob/m
 
 ### **rename/hide command groups, commands, parameters**  
 We provide the ability for user to rename or hide command groups or commands or parameters. For example:
-```
+``` yaml
 cli:
   cli-directive:
     ## rename a parameter 
@@ -240,20 +240,110 @@ cli:
 ```
 * Note: if a parameter has the flattened schema prefix in the name, then we can't rename it in this way, because in Autorest.Clicommon it doesn't have the flattened schema prefix. We can only add alias for this parameter in such case.
 
+
+### **Client Factory Customization**
+By default, the client factory should not expose the subscriptionId, baseUrl parameters to customer as well as authentication policy but we provide customization for these scenarios.
+1. Subscription bound 
+1. Base Url Bound
+1. Authentication Policy
+For example: 
+``` yaml
+az:
+  extensions: bool
+  parent-extension: test-server
+  package-name: azure-mgmt-boolean
+  namespace: azure.mgmt.boolean
+  # client factory customization for subscription bound
+  client-subscription-bound: false
+  # client factory customization for base url bound
+  client-base-url-bound: false
+  # authentication policy customization
+  client-authentication-policy: SansIOHTTPPolicy
+az-output-folder: $(azure-cli-extension-folder)/src/boolean
+python-sdk-output-folder: "$(az-output-folder)/azext_boolean/vendored_sdks/boolean"
+```
+The generated _client_factory.py would take effect like:  
+```python
+def cf_bool_cl(cli_ctx, *_):
+    from azure.cli.core.commands.client_factory import get_mgmt_service_client
+    from azext_boolean.vendored_sdks.boolean import AutoRestTestService
+    from azure.core.pipeline.policies import SansIOHTTPPolicy
+    return get_mgmt_service_client(cli_ctx,
+                                   AutoRestTestService,
+                                   subscription_bound=False,
+                                   base_url_bound=False,
+                                   authentication_policy=SansIOHTTPPolicy())
+```
+
+
 ### **parameter specific customization**  
 There are some customization that we provide only applicable for parameter layer.  
-   1. flatten a parameter
-   1. set a parameter as required 
-   1. set default value for a parameter
-   1. add alias for a parameter
-   1. how action parameter is handled
-   1. set an action as positional argument
-   1. set an action as AWS shorthand syntax
+#### flatten a parameter  
+   let's say we have a parameter A which type is object and it has three properties a, b, c, and we want the a, b, c to be the command line parameters directly. In such case, we need to flatten the parameter. An example would be    
+``` yaml
+cli:
+    cli-directive:
+      - where:
+            group: Triggers
+            op: CreateOrUpdate#Update
+            param: properties
+        cli-flatten: true
+```
+#### set a parameter as required  
+   See [how to mark a parameter as required](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-mark-a-parameter-as-required) for more details.   
+    **According to Autorest.Modelerfour, the current required logic of a parameter is that parameter has to be required in all layers in its swagger definition.** 
+#### set default value for a parameter
+Users can use the following directive to set a default value for a parameter
+``` yaml 
+cli:
+    cli-directive:
+      - where:
+            group: Factories
+            parameter: identityType
+        default-value: SystemAssigned
+```
+This is useful when CLI has some special handling logic for parameters like SKU tier. it doesn't want customer to pass this value and in such case, they can give SKU tier a default value and then hide it. 
+#### add alias for a parameter  
+It's quite common that in Azure CLI a parameter can have one or more aliases.
+``` yaml
+cli:
+    cli-directive:
+      - where:
+            group: Factories
+            parameter: factoryName
+        alias:
+            - name
+            - n
+```  
+#### how an action parameter is handled  
+An action parameter means a simple object that is not base class of polymorphic and satisfy one of the six conditions
+1. objects with simple properties 
+1. or objects with arrays as properties but has simple element type 
+1. or arrays with simple element types
+1. or arrays with object element types but has simple properties
+1. or dicts with simple element properties
+1. or dicts with arrays as element properties but has simple element type  
 
+By default we will use the key value format to handle the action. in the case of object A has three properties a, b, c and a, b, c are all simple type. if we use action to express it. it will be like `--A a=a1 b=b1 c=c1` to express an object instance `{a1, b1, c1}`.
+#### set an action as positional argument  
+see [how to set an action argument as postional](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-set-an-action-argument-as-positional-argument) for more details   
+#### set an action as AWS shorthand syntax  
+see [how to set an action argument as aws shorthand syntax](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-set-an-action-argument-as-aws-shorthand-syntax) for more details.  
+   
 ## SDK customization
-1. flattened SDK and un-flattened SDK
-The previous version of Autorest.Az code generator can only support the flattened SDK, and we are using flattened sdk 
-1. track1 SDK and track2 SDK
+We also provide some SDK layer customization options. See [how to generate with different options](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md) for more details. 
+### flattened SDK and un-flattened SDK
+The previous version of Autorest.Az code generator can only support the flattened SDK(before 1.6.0 release), and after we have supported the CLI main repo modules(since 1.6.0 release). We are using flattened sdk by default for generating CLI extension modules and using un-flattened sdk by default for generating CLI main repo modules.(current 1.6.1 release)  
+Current in our private releases we have changed the default generated SDK to un-flattened way as well. which should be public release very soon.
+Users can use `--sdk-no-flatten` to specific an un-flattened sdk and `--sdk-flatten` to generate a flattened sdk. If users use both `--sdk-no-flatten` and `--sdk-flatten` we will still generate the un-flattened sdk.
+
+### track1 SDK and track2 SDK
+In the current CLI main repo. most of the modules are still using track1 publish released SDKs. but in CLI extensions generation we are using track2 sdk as vendored sdk. 
+
+By default, we will use track1 mode for CLI main repo modules generation and track2 mode for CLI extension modules generation.
+
+Users can use `compatible-level=track1` or `compatible-level=track2` to specific which kind of sdk they want. 
+
 ## Manual override 
 In some scenarios, we might find the generated code doesn't work for us  and there's no way to use customization to meet our requirements. Though we are trying to reduce the manual override work, we can't rule out the possibility of generated code won't work in some complex scenaros.  
 
@@ -264,6 +354,7 @@ Therefore, we provide the manual override ability for users to do manual overrid
 1. 
 
 ## Special Parameter Type
+To be done ...
 1. Identity
 1. Nested Resource
 1. SKU
