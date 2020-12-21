@@ -145,7 +145,7 @@ export class CliTestScenario extends TemplateBase {
             outputFunc.push("");
         }
         buildSenario(this.header, funcScenario, false);
-        buildSenario(this.header, funcMinScenario, true);
+        if (model.GenMinTest)   buildSenario(this.header, funcMinScenario, true);
 
         class_info.push("    def __init__(self, *args, **kwargs):");
         class_info.push(`        super(${testClassName}, self).__init__(*args, **kwargs)`);
@@ -172,7 +172,10 @@ export class CliTestScenario extends TemplateBase {
             return ret;
         }
         let testCaseName = this.groupName + "_" + scenarioName;
-        this.scenarios.push(...steps.concat(funcScenario, funcMinScenario, class_info, buildTestcase(testCaseName, false), buildTestcase(testCaseName, true)));
+        this.scenarios.push(...steps.concat(funcScenario, funcMinScenario, class_info, buildTestcase(testCaseName, false)));
+        if (model.GenMinTest) {
+            this.scenarios.push(...buildTestcase(testCaseName, true));
+        }
     }
 
     private EndGenerateAzureCliTestScenario(): string[] {

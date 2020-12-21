@@ -397,35 +397,11 @@ az:
   ...
   randomize-names: true
 ~~~
-## How to write readme.cli.md foramt
-As shown below, Testcases with the same keyword are grouped together, and it is desirable that each group contain only testCases with that group name
+
+## How to generate test-scenario for required parameters
+You can ask autorest.az to generate minimal tests (using only required parameters for all step). To enable the minimal test scenario, please add gen-min-test configuration like below in readme.az.md
 ~~~
-## CLI
-
-These settings don't need to apply `--cli` on the command line.
-
-``` yaml $(cli)
-cli:
-  cli-name: managednetwork
-  test-scenario:
-    - ManagedNetworks:
-      - name: ManagedNetworksPut
-      - name: ManagementNetworkGroupsPut
-      - name: ManagedNetworkPeeringPoliciesPut
-      - name: ManagedNetworksGet
-      - name: ManagedNetworksListByResourceGroup
-      - name: ManagedNetworksListBySubscription
-      - name: ManagedNetworksDelete
-      - name: ManagementNetworkGroupsGet
-      - name: ManagedNetworksGroupsListByManagedNetwork
-      - name: ManagedNetworkPeeringPoliciesGet
-      - name: ManagedNetworkPeeringPoliciesListByManagedNetwork
-      - name: ManagedNetworkPeeringPoliciesDelete
-      - name: ManagementNetworkGroupsDelete
-    - ScopeAssignments:
-      - name: ScopeAssignmentsPut
-      - name: ScopeAssignmentsGet
-      - name: ScopeAssignmentsList
-      - name: ScopeAssignmentsDelete
-```
+az:
+  ...
+  gen-min-test: true
 ~~~

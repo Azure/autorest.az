@@ -47,42 +47,6 @@ from .example_steps import step_trigger_subscribe_to_event
 from .example_steps import step_trigger_unsubscribe_from_event
 from .example_steps import step_trigger_delete
 from .example_steps import step_delete
-from .example_steps import step_create_min
-from .example_steps import step_show_min
-from .example_steps import step_list_min
-from .example_steps import step_list2_min
-from .example_steps import step_update_min
-from .example_steps import step_configure_factory_repo_min
-from .example_steps import step_get_data_plane_access_min
-from .example_steps import step_get_git_hub_access_token_min
-from .example_steps import step_integration_runtime_self_hosted_create_min
-from .example_steps import step_integration_runtime_show_min
-from .example_steps import step_integration_runtime_list_min
-from .example_steps import step_integration_runtime_update_min
-from .example_steps import step_integration_runtime_linked_min
-from .example_steps import step_integration_runtime_get_connection_info_min
-from .example_steps import step_integration_runtime_get_monitoring_data_min
-from .example_steps import step_integration_runtime_get_status_min
-from .example_steps import step_integration_runtime_list_auth_key_min
-from .example_steps import step_integration_runtime_regenerate_auth_key_min
-from .example_steps import step_integration_runtime_remove_link_min
-from .example_steps import step_integration_runtime_start_min
-from .example_steps import step_integration_runtime_stop_min
-from .example_steps import step_integration_runtime_sync_credentials_min
-from .example_steps import step_integration_runtime_upgrade_min
-from .example_steps import step_integration_runtime_delete_min
-from .example_steps import step_trigger_create_min
-from .example_steps import step_trigger_update_min
-from .example_steps import step_trigger_show_min
-from .example_steps import step_trigger_list_min
-from .example_steps import step_trigger_get_event_subscription_status_min
-from .example_steps import step_trigger_query_by_factory_min
-from .example_steps import step_trigger_start_min
-from .example_steps import step_trigger_stop_min
-from .example_steps import step_trigger_subscribe_to_event_min
-from .example_steps import step_trigger_unsubscribe_from_event_min
-from .example_steps import step_trigger_delete_min
-from .example_steps import step_delete_min
 from .. import (
     try_manual,
     raise_if,
@@ -150,46 +114,6 @@ def call_scenario(test, rg):
 
 @try_manual
 def call_scenario_min(test, rg):
-    setup_scenario(test, rg)
-    step_create_min(test, rg, checks=[])
-    step_show_min(test, rg, checks=[])
-    step_list_min(test, rg, checks=[])
-    step_list2_min(test, rg, checks=[])
-    step_update_min(test, rg, checks=[])
-    step_configure_factory_repo_min(test, rg, checks=[])
-    step_get_data_plane_access_min(test, rg, checks=[])
-    step_get_git_hub_access_token_min(test, rg, checks=[])
-    step_integration_runtime_self_hosted_create_min(test, rg, checks=[])
-    step_integration_runtime_show_min(test, rg, checks=[])
-    step_integration_runtime_list_min(test, rg, checks=[])
-    step_integration_runtime_update_min(test, rg, checks=[])
-    step_integration_runtime_linked_min(test, rg, checks=[])
-    step_integration_runtime_get_connection_info_min(test, rg, checks=[])
-    step_integration_runtime_get_monitoring_data_min(test, rg, checks=[])
-    step_integration_runtime_get_status_min(test, rg, checks=[])
-    step_integration_runtime_list_auth_key_min(test, rg, checks=[])
-    step_integration_runtime_regenerate_auth_key_min(test, rg, checks=[])
-    step_integration_runtime_remove_link_min(test, rg, checks=[])
-    step_integration_runtime_start_min(test, rg, checks=[])
-    step_integration_runtime_stop_min(test, rg, checks=[])
-    step_integration_runtime_sync_credentials_min(test, rg, checks=[])
-    step_integration_runtime_upgrade_min(test, rg, checks=[])
-    step_integration_runtime_delete_min(test, rg, checks=[])
-    step_trigger_create_min(test, rg, checks=[])
-    step_trigger_update_min(test, rg, checks=[])
-    step_trigger_show_min(test, rg, checks=[])
-    step_trigger_list_min(test, rg, checks=[])
-    step_trigger_get_event_subscription_status_min(test, rg, checks=[])
-    step_trigger_query_by_factory_min(test, rg, checks=[])
-    step_trigger_start_min(test, rg, checks=[])
-    step_trigger_stop_min(test, rg, checks=[])
-    step_trigger_subscribe_to_event_min(test, rg, checks=[])
-    step_trigger_unsubscribe_from_event_min(test, rg, checks=[])
-    step_trigger_delete_min(test, rg, checks=[])
-    step_delete_min(test, rg, checks=[])
-    cleanup_scenario(test, rg)
-
-
 # Test class for Scenario
 @try_manual
 class DatafactoryScenarioTest(ScenarioTest):
@@ -211,13 +135,6 @@ class DatafactoryScenarioTest(ScenarioTest):
     @ResourceGroupPreparer(name_prefix='clitestdatafactory_exampleResourceGroup'[:7], key='rg', parameter_name='rg')
     def test_datafactory_Scenario(self, rg):
         call_scenario(self, rg)
-        calc_coverage(__file__)
-        raise_if()
-
-
-    @ResourceGroupPreparer(name_prefix='clitestdatafactory_exampleResourceGroup'[:7], key='rg', parameter_name='rg')
-    def test_datafactory_Scenario_min(self, rg):
-        call_scenario_min(self, rg)
         calc_coverage(__file__)
         raise_if()
 

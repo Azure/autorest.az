@@ -148,6 +148,12 @@ export class CodeModelCliImpl implements CodeModelAz {
         return true;
     }
 
+    public get GenMinTest(): boolean {
+        let genMinTest = this.options?.['gen-min-test'];
+        if (genMinTest) return true;
+        return false;
+    }
+
     public GetResourcePool(): ResourcePool {
         return this.resource_pool;
     }
