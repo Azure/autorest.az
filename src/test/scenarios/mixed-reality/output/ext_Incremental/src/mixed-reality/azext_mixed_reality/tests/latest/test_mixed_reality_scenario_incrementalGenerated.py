@@ -19,14 +19,6 @@ from .example_steps import step_regenerate_key
 from .example_steps import step_regenerate_key2
 from .example_steps import step_update
 from .example_steps import step_delete
-from .example_steps import step_create_min
-from .example_steps import step_list_min
-from .example_steps import step_show_min
-from .example_steps import step_list2_min
-from .example_steps import step_regenerate_key_min
-from .example_steps import step_regenerate_key2_min
-from .example_steps import step_update_min
-from .example_steps import step_delete_min
 from .. import (
     try_manual,
     raise_if,
@@ -76,28 +68,6 @@ def call_scenario(test, rg):
 
 @try_manual
 def call_scenario_min(test, rg):
-    setup_scenario(test, rg)
-    # STEP NOT FOUND: Create spatial anchor account
-    step_create_min(test, rg, checks=[])
-    # STEP NOT FOUND: Get remote rendering account key
-    # STEP NOT FOUND: Get spatial anchor account key
-    # STEP NOT FOUND: List spatial anchor accounts by resource group
-    step_list_min(test, rg, checks=[])
-    # STEP NOT FOUND: Get spatial anchors account
-    step_show_min(test, rg, checks=[])
-    step_list2_min(test, rg, checks=[])
-    # STEP NOT FOUND: List spatial anchors accounts by subscription
-    # STEP NOT FOUND: List available operations
-    step_regenerate_key_min(test, rg, checks=[])
-    step_regenerate_key2_min(test, rg, checks=[])
-    step_update_min(test, rg, checks=[])
-    # STEP NOT FOUND: Update spatial anchors account
-    # STEP NOT FOUND: CheckLocalNameAvailability
-    # STEP NOT FOUND: Delete spatial anchors account
-    step_delete_min(test, rg, checks=[])
-    cleanup_scenario(test, rg)
-
-
 # Test class for Scenario
 @try_manual
 class Mixed_realityScenarioTest(ScenarioTest):
@@ -109,13 +79,6 @@ class Mixed_realityScenarioTest(ScenarioTest):
     @ResourceGroupPreparer(name_prefix='clitestmixed_reality_MyResourceGroup'[:7], key='rg', parameter_name='rg')
     def test_mixed_reality_Scenario(self, rg):
         call_scenario(self, rg)
-        calc_coverage(__file__)
-        raise_if()
-
-
-    @ResourceGroupPreparer(name_prefix='clitestmixed_reality_MyResourceGroup'[:7], key='rg', parameter_name='rg')
-    def test_mixed_reality_Scenario_min(self, rg):
-        call_scenario_min(self, rg)
         calc_coverage(__file__)
         raise_if()
 

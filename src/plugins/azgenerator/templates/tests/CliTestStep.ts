@@ -135,7 +135,7 @@ export class CliTestStep extends TemplateBase {
                     steps.push("");
                 }
                 create_step();
-                create_step(true);
+                if (model.GenMinTest)  create_step(true);
             }
             else if (functionName) {
                 steps.push(`# Env ${functionName}`);

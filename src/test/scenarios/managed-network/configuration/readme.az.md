@@ -10,6 +10,7 @@ az:
   randomize-names: true
   formalize-names: true
   resource-type: DATA_NETWORK
+  gen-min-test: true
 az-output-folder: $(azure-cli-extension-folder)/src/managed-network
 python-sdk-output-folder: $(az-output-folder)/azext_managed_network/vendored_sdks/managednetwork
 
