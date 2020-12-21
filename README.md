@@ -112,7 +112,7 @@ In this section, we will introduce what kinds of advanced features do we support
 
 Before we start, The Autorest.az is using directive for customization,   
 1. the autorest directive. For example:
-``` yaml
+``` 
 directive:
   - where:
       command: datafactory factory create
@@ -120,7 +120,7 @@ directive:
       command: datafactory create
 ```
 1. the cli directive. For example:
-``` yaml
+```
 cli:
   cli-directive:
     - where:
@@ -138,7 +138,7 @@ which kind of like SQL language, where you can have the **where clause** to spec
 
 ## Folder customization
 A typical readme.az.md configuration would look like this 
-``` yaml
+```
 az:
     extensions: {extensionName}
     namespace: azure.mgmt.{extensionName}
@@ -149,7 +149,7 @@ python-sdk-output-folder: "$(az-output-folder)/azext_{extensionName}/vendored_sd
 Where all the place holder for {extensionName} should be the same. 
 
 But users are allowed to specify different value for every place holder for different scenarios, for example, in the case of storage-preview extension. 
-``` yaml
+```
 az:
     extensions: storage
     namespace: azure.mgmt.storage
@@ -163,7 +163,7 @@ we want the extension name to be `storage` but we want the code in `src/storage-
 ### **add parent extension**   
 In the case of RP ApplicationInsights, It's actually a sub module of Monitor. which means we should design the CLI user interface like `az monitor app-insight` instead of `az app-insight`. In such case, we need to add a parent extension monitor of app-insight.
 We can do that by 
-``` yaml
+```
 az:
   extensions: app-insight
   parent-extension: monitor
@@ -176,7 +176,7 @@ see [how to configure is_preview/is_experimental in different levels](https://gi
 ### **set min-api/max-api in command groups/commands/parameters layers**  
 In Azure CLI, we allow user to set the min or max api versions of a specific command groups or command or parameters. We can configure in readme.az.md so the generate code can work in that way too.  
 For example:
-``` yaml
+```
 cli:
   cli-directive:
     - where:
@@ -196,7 +196,7 @@ As we probably know that in Swagger the operationId are usually in the format of
 In CLI code generation, we view **A** as group name, **B** as the command name and the CLI command of operationId **A_B** would be like `az <extension-name> A B`.  
     
 In Azure CLI it's quite common that we want to move the same functional command into the same command group. For example:   
-``` yaml
+```
 directive:
     ## remove a sub group share
     - where:
@@ -222,7 +222,7 @@ See [how to add or remove subgroups](https://github.com/Azure/autorest.az/blob/m
 
 ### **rename/hide command groups, commands, parameters**  
 We provide the ability for user to rename or hide command groups or commands or parameters. For example:
-``` yaml
+```
 cli:
   cli-directive:
     ## rename a parameter 
@@ -247,7 +247,7 @@ By default, the client factory should not expose the subscriptionId, baseUrl par
 1. Base Url Bound
 1. Authentication Policy
 For example: 
-``` yaml
+```
 az:
   extensions: bool
   parent-extension: test-server
@@ -263,7 +263,7 @@ az-output-folder: $(azure-cli-extension-folder)/src/boolean
 python-sdk-output-folder: "$(az-output-folder)/azext_boolean/vendored_sdks/boolean"
 ```
 The generated _client_factory.py would take effect like:  
-```python
+```
 def cf_bool_cl(cli_ctx, *_):
     from azure.cli.core.commands.client_factory import get_mgmt_service_client
     from azext_boolean.vendored_sdks.boolean import AutoRestTestService
@@ -280,7 +280,7 @@ def cf_bool_cl(cli_ctx, *_):
 There are some customization that we provide only applicable for parameter layer.  
 #### flatten a parameter  
    let's say we have a parameter A which type is object and it has three properties a, b, c, and we want the a, b, c to be the command line parameters directly. In such case, we need to flatten the parameter. An example would be    
-``` yaml
+```
 cli:
     cli-directive:
       - where:
@@ -294,7 +294,7 @@ cli:
     **According to Autorest.Modelerfour, the current required logic of a parameter is that parameter has to be required in all layers in its swagger definition.** 
 #### set default value for a parameter
 Users can use the following directive to set a default value for a parameter
-``` yaml 
+```
 cli:
     cli-directive:
       - where:
@@ -305,7 +305,7 @@ cli:
 This is useful when CLI has some special handling logic for parameters like SKU tier. it doesn't want customer to pass this value and in such case, they can give SKU tier a default value and then hide it. 
 #### add alias for a parameter  
 It's quite common that in Azure CLI a parameter can have one or more aliases.
-``` yaml
+```
 cli:
     cli-directive:
       - where:
