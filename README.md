@@ -349,9 +349,10 @@ In some scenarios, we might find the generated code doesn't work for us  and the
 
 Therefore, we provide the manual override ability for users to do manual override. See [manual customization](https://github.com/Azure/autorest.az/blob/master/doc/03-manual-customizations.md) for more details.   
 ## Test customization
-1. In-place edit
-1. randomize test parameters
-1. 
+By default the Autorest.Az can generate all the tests from examples in the Order of CURD and it can resolve the resource dependencies within one RP, it also support users to define test scenarios by themselves 
+see [test configuration](https://github.com/Azure/autorest.az/blob/master/doc/04-scenario-test-configuration.md) for more details
+
+
 
 ## Special Parameter Type
 To be done ...
