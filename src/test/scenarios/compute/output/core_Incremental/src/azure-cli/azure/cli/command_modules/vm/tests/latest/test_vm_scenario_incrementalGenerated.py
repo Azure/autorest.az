@@ -54,8 +54,8 @@ def call_scenario_min(test, rg):
 @try_manual
 class VmScenarioTest(ScenarioTest):
 
-    def __init__(self):
-        pass
+    def __init__(self, *args, **kwargs):
+        super(VmScenarioTest, self).__init__(*args, **kwargs)
 
 
     @ResourceGroupPreparer(name_prefix='clitestvm_myResourceGroupName'[:7], key='rg', parameter_name='rg')

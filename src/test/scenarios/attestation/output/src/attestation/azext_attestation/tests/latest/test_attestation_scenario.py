@@ -82,8 +82,8 @@ def call_scenario_min(test, rg, rg_2, rg_3):
 @try_manual
 class AttestationScenarioTest(ScenarioTest):
 
-    def __init__(self):
-        pass
+    def __init__(self, *args, **kwargs):
+        super(AttestationScenarioTest, self).__init__(*args, **kwargs)
 
 
     @ResourceGroupPreparer(name_prefix='clitestattestation_MyResourceGroup'[:7], key='rg', parameter_name='rg')

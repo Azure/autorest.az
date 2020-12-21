@@ -102,8 +102,8 @@ def call_scenario_min(test, rg):
 @try_manual
 class Mixed_realityScenarioTest(ScenarioTest):
 
-    def __init__(self):
-        pass
+    def __init__(self, *args, **kwargs):
+        super(Mixed_realityScenarioTest, self).__init__(*args, **kwargs)
 
 
     @ResourceGroupPreparer(name_prefix='clitestmixed_reality_MyResourceGroup'[:7], key='rg', parameter_name='rg')

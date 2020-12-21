@@ -866,7 +866,8 @@ def call_scenario_min(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, 
 @try_manual
 class SynapseScenarioTest(ScenarioTest):
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super(SynapseScenarioTest, self).__init__(*args, **kwargs)
         self.kwargs.update({
             'subscription_id': self.get_subscription_id()
         })
