@@ -1,6 +1,7 @@
 # Autorest.Az
 [1. Introduction](#Introduction)  
 [2. How does CLI Code Generator Work](#How-does-CLI-Code-Generator-Work)  
+&nbsp;  [2.1. Different Generation Options](#Different-Generation-Options)  
 [3. How to use CLI Code Generator](#How-to-use-CLI-Code-Generator)  
 &nbsp;  [3.1. Preparing Environment](#Preparing-Environment)  
 &nbsp;  [3.2. Authoring Readme Files](#Authoring-Readme-Files)  
