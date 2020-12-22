@@ -175,8 +175,6 @@ def call_scenario(test, rg):
     cleanup_scenario(test, rg)
 
 
-@try_manual
-def call_scenario_min(test, rg):
 # Test class for Scenario
 @try_manual
 class KustoScenarioTest(ScenarioTest):

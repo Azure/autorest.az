@@ -117,11 +117,11 @@ def step_mn_group_create(test, rg, checks=None):
              '--group-name "{myManagedNetworkGroup}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
-             checks=checks)
+             checks=[])
     test.cmd('az managed-network mn group wait --created '
              '--group-name "{myManagedNetworkGroup}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=checks)
 
 
 @try_manual
@@ -132,11 +132,11 @@ def step_mn_group_create_min(test, rg, checks=None):
              '--group-name "{myManagedNetworkGroup}" '
              '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
-             checks=checks)
+             checks=[])
     test.cmd('az managed-network mn group wait --created '
              '--group-name "{myManagedNetworkGroup}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=checks)
 
 
 # EXAMPLE: /ManagedNetworkGroups/get/ManagedNetworksGroupsListByManagedNetwork
