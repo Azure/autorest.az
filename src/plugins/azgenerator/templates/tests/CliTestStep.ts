@@ -77,6 +77,7 @@ export class CliTestStep extends TemplateBase {
                     let found = false;
                     let examples: CommandExample[] = [];
                     let exampleIdx = -1;
+                    let waitCmds:string[][] = undefined;
                     for (let exampleCmd of model.FindExampleById(exampleId, commandParams, examples, minimum)) {
                         exampleIdx += 1;
                         if (exampleCmd && exampleCmd.length > 0) {
@@ -86,6 +87,9 @@ export class CliTestStep extends TemplateBase {
                                 steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames, true)}):`));
                             }
                             found = true;
+                            if (isNullOrUndefined(waitCmds)) {
+                                waitCmds =  model.FindExampleWaitById(exampleId);
+                            }
 
                             let cmdString = exampleCmd.join("\n");
                             if (stepBuff.hasOwnProperty(cmdString)) {
@@ -105,7 +109,12 @@ export class CliTestStep extends TemplateBase {
                                     let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
                                     ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
                                 }
-                                steps.push("    " + disabled + "         checks=checks)");
+                                if (isNullOrUndefined(waitCmds) || waitCmds.length==0) {
+                                    steps.push("    " + disabled + "         checks=checks)");
+                                }
+                                else {
+                                    steps.push("    " + disabled + "         checks=[])");
+                                }
                             }
                         }
                     }
@@ -116,15 +125,14 @@ export class CliTestStep extends TemplateBase {
                         steps.push("    pass");
                     }
                     else {
-                        for (let exampleCmd of model.FindExampleWaitById(exampleId)) {
+                        for (let exampleCmd of waitCmds) {
                             if (exampleCmd && exampleCmd.length > 0) {
-                                found = true;
                                 for (let idx = 0; idx < exampleCmd.length; idx++) {
                                     let prefix: string = "    " + disabled + ((idx == 0) ? "test.cmd('" : "         '");
                                     let postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
                                     ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
                                 }
-                                steps.push("    " + disabled + "         checks=[])");
+                                steps.push("    " + disabled + "         checks=checks)");
                             }
                         }
                     }

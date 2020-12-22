@@ -30,11 +30,11 @@ def step_workspace_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg
              '--sql-administrator-login-password "password" '
              '--tags key="value" '
              '--name "{myWorkspace2}"',
-             checks=checks)
+             checks=[])
     test.cmd('az synapse workspace wait --created '
              '--resource-group "{rg_2}" '
              '--name "{myWorkspace2}"',
-             checks=[])
+             checks=checks)
 
 
 # EXAMPLE: /Workspaces/get/Get a workspace
@@ -107,11 +107,11 @@ def step_big_data_pool_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8
              '--name "{myBigDataPool}" '
              '--resource-group "{rg}" '
              '--workspace-name "{myWorkspace}"',
-             checks=checks)
+             checks=[])
     test.cmd('az synapse big-data-pool wait --created '
              '--name "{myBigDataPool}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=checks)
 
 
 # EXAMPLE: /BigDataPools/get/Get a Big Data pool
@@ -539,11 +539,11 @@ def step_private_endpoint_connection_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg
              '--name "{myPrivateEndpointConnection}" '
              '--resource-group "{rg}" '
              '--workspace-name "{myWorkspace}"',
-             checks=checks)
+             checks=[])
     test.cmd('az synapse private-endpoint-connection wait --created '
              '--name "{myPrivateEndpointConnection}" '
              '--resource-group "{rg}"',
-             checks=[])
+             checks=checks)
 
 
 # EXAMPLE: /PrivateEndpointConnections/get/Get private endpoint connection
@@ -688,11 +688,11 @@ def step_sql_pool_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_
              '--sku name="" tier="" '
              '--name "{mySqlPool2}" '
              '--workspace-name "{myWorkspace}"',
-             checks=checks)
+             checks=[])
     test.cmd('az synapse sql-pool wait --created '
              '--resource-group "{rg}" '
              '--name "{mySqlPool2}"',
-             checks=[])
+             checks=checks)
 
 
 # EXAMPLE: /SqlPools/get/Get a SQL Analytics pool
