@@ -1,5 +1,4 @@
-# Catalog
-
+# Autorest.Az
 [1. Introduction](#Introduction)  
 [2. How does CLI Code Generator Work](#How-does-CLI-Code-Generator-Work)  
 [3. How to use CLI Code Generator](#How-to-use-CLI-Code-Generator)  
@@ -8,8 +7,8 @@
 &nbsp;  [3.3. Generating the Code](#Generating-the-Code)  
 &nbsp;  [3.4. Building the Code](#Building-the-Code)  
 &nbsp;  [3.5. Play with Azure CLI](#Play-with-Azure-CLI)  
-&nbsp;  &nbsp;  [3.5.a. Checks](#Checks)  
-&nbsp;  &nbsp;  [3.5.b. Live Tests](#Live-Tests)  
+&nbsp;  &nbsp;  [a. Checks](#Checks)  
+&nbsp;  &nbsp;  [b. Live Tests](#Live-Tests)  
 [4. Advanced Features](#Advanced-Features)  
 &nbsp;  [4.1. Folder Customization](#Folder-Customization)  
 &nbsp;  [4.2. CLI User Interface Customization](#CLI-User-Interface-Customization)  
