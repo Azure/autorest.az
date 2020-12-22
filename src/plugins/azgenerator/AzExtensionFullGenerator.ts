@@ -28,6 +28,7 @@ import { CliTestScenario } from "./templates/tests/CliTestScenario";
 import { PathConstants } from '../models';
 import { deepCopy } from '../../utils/helper';
 import { CliTestStep, NeedPreparer } from "./templates/tests/CliTestStep";
+import { GenerateMetaFile } from "./templates/CliMeta"
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -72,5 +73,6 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         if (NeedPreparer()) {
             await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(this.model, this.isDebugMode));
         }
+        GenerateMetaFile(this.model);
     }
 }

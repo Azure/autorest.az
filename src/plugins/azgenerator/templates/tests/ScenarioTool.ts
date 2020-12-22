@@ -317,36 +317,46 @@ class ResourceObject {
             return false;
         }
 
-        function addParam(obj: any, param: ExampleParam, checkPath: string, ret: string[]) {
+        function addParam(obj: any, param: ExampleParam, checkPath: string, ret: string[]): boolean {
             if (isDict(obj)) {
                 if (checkPath.length > 0) checkPath += ".";
                 if (param.defaultName in obj && typeof obj[param.defaultName] == typeof param.rawValue && JSON.stringify(obj[param.defaultName]).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
                     if (hasComplexArray(param.rawValue)) return;
                     formatChecker(checkPath + resource_pool.replaceResourceString(param.defaultName, [], [], true), param.rawValue, ret);
-                    return;
+                    return true;
                 }
-                else if ('name' in obj && checkPath.length==0 && param.defaultName.toLowerCase().endsWith("name") && typeof obj['name'] == typeof param.rawValue && JSON.stringify(obj['name']).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
-                    if (hasComplexArray(param.rawValue)) return;
-                    formatChecker(checkPath + 'name', param.rawValue, ret);
-                    return;
-                }
-
             }
             if (obj instanceof Array) {
                 if (obj.length > 1) return;
                 addParam(obj[0], param, checkPath + "[0]", ret);
             }
-            if (isDict(obj)) {
+            else if (isDict(obj)) {
                 if (checkPath.length > 0) checkPath += ".";
+                let handled = false;
                 for (let key in obj) {
                     if (checkPath.length==0 && key.toLowerCase()=='properties') {
-                        addParam(obj[key], param, checkPath, ret);
+                        if (addParam(obj[key], param, checkPath, ret)) {
+                            handled = true;
+                            break;
+                        }
                     }
                     else {
-                        addParam(obj[key], param, checkPath + resource_pool.replaceResourceString(key, [], [], true), ret);
+                        if (addParam(obj[key], param, checkPath + resource_pool.replaceResourceString(key, [], [], true), ret)) {
+                            handled = true;
+                            break;
+                        }
+                    }
+                }
+                if (!handled) {
+                    if (checkPath.length > 0) checkPath = checkPath.slice(0, -1);
+                    if ('name' in obj && checkPath.length==0 && param.defaultName.toLowerCase().endsWith("name") && typeof obj['name'] == typeof param.rawValue && JSON.stringify(obj['name']).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
+                        if (hasComplexArray(param.rawValue)) return;
+                        formatChecker(checkPath + 'name', param.rawValue, ret);
+                        return true;
                     }
                 }
             }
+            return false;
         }
 
         function formatChecker(checkPath: string, rawValue: any, ret: string[]) {
@@ -384,8 +394,8 @@ class ResourceObject {
         let ret: string[] = [];
         if (['create', 'delete', 'show', 'list', 'update'].indexOf(example.Method) < 0) return ret;
         let example_resp_body = null;
-        for (let statusCode of [200, 201, 204]) {
-            example_resp_body = example.ExampleObj.responses?.[200]?.body;
+        for (let statusCode of [200/*, 201, 204*/]) {
+            example_resp_body = example.ExampleObj.responses?.[statusCode]?.body;
             if (!isNullOrUndefined(example_resp_body)) break;
         }
         if (isNullOrUndefined(example_resp_body)) return ret;

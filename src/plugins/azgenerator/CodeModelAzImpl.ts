@@ -1781,6 +1781,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return param?.required;
     }
 
+    private Parameter_IsRequiredOrCLIRequired(param: Parameter): boolean {
+        return this.Parameter_IsRequired(param) || param?.language?.["cli"]?.["required"];
+    }
+
     public get MethodParameter_IsFlattened(): boolean {
         return this.Parameter_IsFlattened(this.MethodParameter);
     }
@@ -2327,7 +2331,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         let hasRG = false;
         let resourceObjectName = undefined;
         for (let param of example.Parameters) {
-            if (minimum && !this.Parameter_IsRequired(param.methodParam.value)) continue;
+            if (minimum && !this.Parameter_IsRequiredOrCLIRequired(param.methodParam.value)) continue;
             let param_value = param.value;
             if (isTest || this.FormalizeNames) {
                 let replaced_value = this.resource_pool.addEndpointResource(param_value, param.isJson, param.keyValue, [], [], param, isTest);
@@ -2365,7 +2369,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         resourceObject.example_params = [];
                     }
                     for (let param of example.Parameters) {
-                        if (minimum && !this.Parameter_IsRequired(param.methodParam.value)) continue;
+                        if (minimum && !this.Parameter_IsRequiredOrCLIRequired(param.methodParam.value)) continue;
                         resourceObject.addOrUpdateParam(param);
                     }
                     resourceObject.testStatus = ObjectStatus.Created;

@@ -27,6 +27,7 @@ import { CliTestPrepare } from "./templates/tests/CliTestPrepare";
 import { CliTestScenario } from "./templates/tests/CliTestScenario";
 import { deepCopy } from '../../utils/helper';
 import { CliTestStep, NeedPreparer } from "./templates/tests/CliTestStep";
+import { GenerateMetaFile } from "./templates/CliMeta"
 
 export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -88,5 +89,6 @@ export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
         if (NeedPreparer()) {
             await this.generateIncrementalSingleAndAddtoOutput(new CliTestPrepare(this.model, this.isDebugMode));
         }
+        GenerateMetaFile(this.model);
     }
 }
