@@ -55,6 +55,32 @@ Both the Autorest.Clicommon and Autorest.Python take Autorest.Modelerfour as inp
 After Autorest.Az has done some Azure CLI specific logic, it will render the code model into code template finally output the generated code.   
 
 
+## Different Generation Options
+**Autorest Options**
+1. *--use*  
+This *--use* option is to specify which package you want to use as code generator. For Autorest.Az, if nothing specified, it will use the [latest publish released package in npmjs](https://www.npmjs.com/package/@autorest/az). Private releases can be found in [github releases](https://github.com/Azure/autorest.az/releases) if users want to try out some private releases for preview some new features and fixes. For example:  `--use=https://github.com/Azure/autorest.az/releases/download/1.6.2-b.20201211.1/autorest-az-1.6.2.tgz` 
+1. *--debug*  
+This *--debug* option will show more information while generating the code. This is helpful if you found no code is generated in the `az-output-folder` for new beginners due to the wrong configuration in readme.az.md. 
+1. *--interactive*  
+This *--interactive* option is useful when users want to know how the Autorest Pipeline is scheduled during runtime.  
+ 
+**Autorest.Az Specific Options**
+1. *--az.debugger*  
+Actually this *--xxx.debugger* option is provided by Autorest, by which you can debug the Autorest extension where `xxx` is the name of the Autorest extensions in our autorest.az's case, the CLI code generator step by step by adding break points. 
+1. *--sdk-no-flatten*  
+CLI code generator supports to generate the flattened SDK or the un-flattened SDK. Users can specify *--sdk-no-flatten* to generate the un-flattened SDK. The current publish released autorest.az (version 1.6.2) will still generate the flattened SDK in Azure CLI extensions generation. But in our latest private release, we have change the default behavior into un-flattened SDKs for both Azure CLI extensions and Azure CLI main repo modules generation.
+1. *--sdk-flatten*  
+This *--sdk-flatten* option is still in private releases. It will only take effect when no *--sdk-no-flatten* is specified. It's useful for those RPs that was onboard with previous CLI code generator when users don't want to intro the SDK code breaking changes.
+1. --generate-sdk  
+This *--generate-sdk* has two available value "yes" or "no". By default the value is "yes" for Azure CLI extensions generation, and "no" for Azure CLI main repo modules.
+1. --compatible-level  
+This *--generate-sdk* has two available value "track1" or "track2". By default the value is "track2" for Azure CLI extensions generation, and "track1" for Azure CLI main repo modules.
+1. --target-mode  
+This *--target-mode* option is a convenience option for users who working on Azure CLI main repo modules. It basically equals to `--sdk-no-flatten --generate-sdk=no --compatible-level=track1`.
+
+Other command line options can be found in the [generate with different options doc](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md)
+
+
 # How to Use CLI Code Generator
 
 Users can use Autorest.Az to generate the Azure CLI code both in rest api specs PR pipeline and in their local environment. Guidance for generating the Azure CLI code in rest api specs PR pipeline can be found in [rest api specs documentation](https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/code-gen/configure-cli.md). Here we only focus on the guidance to generate the Azure CLI code in local.  
@@ -92,15 +118,12 @@ Users can refer to [this document](https://github.com/Azure/azure-rest-api-specs
 
 ## Generating the Code
 1. A simple command for authoring Azure CLI extensions would be  
-`autorest --az --use=@autorest/az@latest <path-to-the-swagger-readme.md> --azure-cli-extension-folder=<path-to-the-azure-cli-extension-repo>`
+`autorest --az --use=@autorest/az@latest <path-to-the-swagger-readme.md> --sdk-no-flatten --azure-cli-extension-folder=<path-to-the-azure-cli-extension-repo>`
 
 2. A simple command for authoring Azure CLI main modules would be  
-`autorest --az --use=@autorest/az@latest <path-to-the-swagger-readme.md> --azure-cli-folder=<path-to-the-azure-cli-repo>`
+`autorest --az --use=https://github.com/Azure/autorest.az/releases/download/1.6.2-b.20201211.1/autorest-az-1.6.2.tgz <path-to-the-swagger-readme.md> --compatible-level=track2 --azure-cli-folder=<path-to-the-azure-cli-repo>`
 
-The `--use=@autorest/az@latest` will use the latest `@autorest/az` public releases, private releases can be found in [github releases](https://github.com/Azure/autorest.az/releases) if users want to try out some private releases for preview some new features and fixes.  
-
-Other command line options can be found in the [generate with different options doc](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md)
-
+See [different combination of generation options](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md#most-useful-command-options-combination) for more useful scenarios.
 
 ## Building the Code
 If it's try out mode, 
