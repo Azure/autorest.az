@@ -104,7 +104,7 @@ pip install azdev // this is optional if for simple try out.
 3. Autorest  
 it can be installed by running `npm install -g autorest@latest` 
 4. Repos (Optional)  
-if users only want to try out the generated CLI extensions, you can also build the wheel artifact by themselves with `python setup.py sdist bdist_wheel` in the azure-cli-extensions/src/{serviceName} folder.  
+if users only want to try out the generated CLI extensions, you can also build the wheel artifact by yourselves with `python setup.py sdist bdist_wheel` in the azure-cli-extensions/src/{serviceName} folder.  
 * Users need to prepare their swagger and prepare  
 [azure-cli-extensions](https://github.com/Azure/azure-cli-extensions) repo if targeting at Azure CLI extensions development. Or the generated code needs some manual customization after trying out.   
 [azure-cli](https://github.com/Azure/azure-cli) repo if targeting at Azure CLI main repo modules development.   
