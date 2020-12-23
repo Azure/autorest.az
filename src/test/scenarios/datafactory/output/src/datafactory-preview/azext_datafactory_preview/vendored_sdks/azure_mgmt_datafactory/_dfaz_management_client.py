@@ -21,6 +21,8 @@ from ._configuration import DFAZManagementClientConfiguration
 from .operations import FactoriesOperations
 from .operations import TriggersOperations
 from .operations import IntegrationRuntimesOperations
+from .operations import DomainServicesOperations
+from .operations import GroupsOperations
 from . import models
 
 
@@ -33,6 +35,10 @@ class DFAZManagementClient(object):
     :vartype triggers: dfaz_management_client.operations.TriggersOperations
     :ivar integration_runtimes: IntegrationRuntimesOperations operations
     :vartype integration_runtimes: dfaz_management_client.operations.IntegrationRuntimesOperations
+    :ivar domain_services: DomainServicesOperations operations
+    :vartype domain_services: dfaz_management_client.operations.DomainServicesOperations
+    :ivar groups: GroupsOperations operations
+    :vartype groups: dfaz_management_client.operations.GroupsOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials.TokenCredential
     :param subscription_id: The subscription identifier.
@@ -64,6 +70,10 @@ class DFAZManagementClient(object):
         self.triggers = TriggersOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.integration_runtimes = IntegrationRuntimesOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.domain_services = DomainServicesOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.groups = GroupsOperations(
             self._client, self._config, self._serialize, self._deserialize)
 
     def close(self):

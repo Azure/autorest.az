@@ -20,6 +20,7 @@ try:
     from ._models_py3 import CreateLinkedIntegrationRuntimeRequest
     from ._models_py3 import CustomSetupBase
     from ._models_py3 import DependencyReference
+    from ._models_py3 import DomainService
     from ._models_py3 import EntityReference
     from ._models_py3 import EnvironmentVariableSetup
     from ._models_py3 import Factory
@@ -33,6 +34,10 @@ try:
     from ._models_py3 import FakeFactoryIdentity
     from ._models_py3 import GitHubAccessTokenRequest
     from ._models_py3 import GitHubAccessTokenResponse
+    from ._models_py3 import Group
+    from ._models_py3 import GroupProperties
+    from ._models_py3 import HealthAlert
+    from ._models_py3 import HealthMonitor
     from ._models_py3 import IntegrationRuntime
     from ._models_py3 import IntegrationRuntimeAuthKeys
     from ._models_py3 import IntegrationRuntimeComputeProperties
@@ -71,6 +76,7 @@ try:
     from ._models_py3 import PipelineReference
     from ._models_py3 import RecurrenceSchedule
     from ._models_py3 import RecurrenceScheduleOccurrence
+    from ._models_py3 import ReplicaSet
     from ._models_py3 import RerunTumblingWindowTrigger
     from ._models_py3 import Resource
     from ._models_py3 import RetryPolicy
@@ -120,6 +126,7 @@ except (SyntaxError, ImportError):
     from ._models import CreateLinkedIntegrationRuntimeRequest  # type: ignore
     from ._models import CustomSetupBase  # type: ignore
     from ._models import DependencyReference  # type: ignore
+    from ._models import DomainService  # type: ignore
     from ._models import EntityReference  # type: ignore
     from ._models import EnvironmentVariableSetup  # type: ignore
     from ._models import Factory  # type: ignore
@@ -133,6 +140,10 @@ except (SyntaxError, ImportError):
     from ._models import FakeFactoryIdentity  # type: ignore
     from ._models import GitHubAccessTokenRequest  # type: ignore
     from ._models import GitHubAccessTokenResponse  # type: ignore
+    from ._models import Group  # type: ignore
+    from ._models import GroupProperties  # type: ignore
+    from ._models import HealthAlert  # type: ignore
+    from ._models import HealthMonitor  # type: ignore
     from ._models import IntegrationRuntime  # type: ignore
     from ._models import IntegrationRuntimeAuthKeys  # type: ignore
     from ._models import IntegrationRuntimeComputeProperties  # type: ignore
@@ -171,6 +182,7 @@ except (SyntaxError, ImportError):
     from ._models import PipelineReference  # type: ignore
     from ._models import RecurrenceSchedule  # type: ignore
     from ._models import RecurrenceScheduleOccurrence  # type: ignore
+    from ._models import ReplicaSet  # type: ignore
     from ._models import RerunTumblingWindowTrigger  # type: ignore
     from ._models import Resource  # type: ignore
     from ._models import RetryPolicy  # type: ignore
@@ -213,8 +225,12 @@ from ._dfaz_management_client_enums import (
     DataFlowComputeType,
     DayOfWeek,
     DaysOfWeek,
+    DomainServicePropertiesDomainConfigurationType,
+    DomainServicePropertiesSku,
     EventSubscriptionStatus,
     FactoryIdentityType,
+    FilteredSync,
+    GroupStatus,
     IntegrationRuntimeAuthKeyName,
     IntegrationRuntimeAutoUpdate,
     IntegrationRuntimeEdition,
@@ -251,6 +267,7 @@ __all__ = [
     'CreateLinkedIntegrationRuntimeRequest',
     'CustomSetupBase',
     'DependencyReference',
+    'DomainService',
     'EntityReference',
     'EnvironmentVariableSetup',
     'Factory',
@@ -264,6 +281,10 @@ __all__ = [
     'FakeFactoryIdentity',
     'GitHubAccessTokenRequest',
     'GitHubAccessTokenResponse',
+    'Group',
+    'GroupProperties',
+    'HealthAlert',
+    'HealthMonitor',
     'IntegrationRuntime',
     'IntegrationRuntimeAuthKeys',
     'IntegrationRuntimeComputeProperties',
@@ -302,6 +323,7 @@ __all__ = [
     'PipelineReference',
     'RecurrenceSchedule',
     'RecurrenceScheduleOccurrence',
+    'ReplicaSet',
     'RerunTumblingWindowTrigger',
     'Resource',
     'RetryPolicy',
@@ -342,8 +364,12 @@ __all__ = [
     'DataFlowComputeType',
     'DayOfWeek',
     'DaysOfWeek',
+    'DomainServicePropertiesDomainConfigurationType',
+    'DomainServicePropertiesSku',
     'EventSubscriptionStatus',
     'FactoryIdentityType',
+    'FilteredSync',
+    'GroupStatus',
     'IntegrationRuntimeAuthKeyName',
     'IntegrationRuntimeAutoUpdate',
     'IntegrationRuntimeEdition',

@@ -98,3 +98,30 @@ class AddFakeIdentity(argparse.Action):
             return value_list
         except ValueError:
             raise CLIError('usage error: {} NAME METRIC OPERATION VALUE'.format(option_string))
+
+
+class AddReplicaSets(argparse._AppendAction):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        super(AddReplicaSets, self).__call__(parser, namespace, action, option_string)
+
+    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+            if kl == 'location':
+                d['location'] = v[0]
+            elif kl == 'subnet-id':
+                d['subnet_id'] = v[0]
+            else:
+                raise CLIError('Unsupported Key {} is provided for parameter replica_sets. All possible keys are: '
+                               'location, subnet-id'.format(k))
+        return d

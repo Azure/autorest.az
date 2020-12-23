@@ -986,6 +986,157 @@ class DependencyReference(msrest.serialization.Model):
         self.type = None  # type: Optional[str]
 
 
+class Resource(msrest.serialization.Model):
+    """Azure Data Factory top-level resource.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: The resource identifier.
+    :vartype id: str
+    :ivar name: The resource name.
+    :vartype name: str
+    :ivar type: The resource type.
+    :vartype type: str
+    :param location: The resource location.
+    :type location: str
+    :param tags: A set of tags. The resource tags.
+    :type tags: dict[str, str]
+    :ivar e_tag: Etag identifies change in the resource.
+    :vartype e_tag: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'e_tag': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'location': {'key': 'location', 'type': 'str'},
+        'tags': {'key': 'tags', 'type': '{str}'},
+        'e_tag': {'key': 'eTag', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        location: Optional[str] = None,
+        tags: Optional[Dict[str, str]] = None,
+        **kwargs
+    ):
+        super(Resource, self).__init__(**kwargs)
+        self.id = None
+        self.name = None
+        self.type = None
+        self.location = location
+        self.tags = tags
+        self.e_tag = None
+
+
+class DomainService(Resource):
+    """Domain service.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: The resource identifier.
+    :vartype id: str
+    :ivar name: The resource name.
+    :vartype name: str
+    :ivar type: The resource type.
+    :vartype type: str
+    :param location: The resource location.
+    :type location: str
+    :param tags: A set of tags. The resource tags.
+    :type tags: dict[str, str]
+    :ivar e_tag: Etag identifies change in the resource.
+    :vartype e_tag: str
+    :ivar version: Data Model Version.
+    :vartype version: int
+    :ivar tenant_id: Azure Active Directory Tenant Id.
+    :vartype tenant_id: str
+    :param domain_name: The name of the Azure domain that the user would like to deploy Domain
+     Services to.
+    :type domain_name: str
+    :ivar deployment_id: Deployment Id.
+    :vartype deployment_id: str
+    :ivar sync_owner: SyncOwner ReplicaSet Id.
+    :vartype sync_owner: str
+    :param replica_sets: List of ReplicaSets.
+    :type replica_sets: list[~dfaz_management_client.models.ReplicaSet]
+    :param domain_configuration_type: Domain Configuration Type. Possible values include:
+     "FullySynced", "ResourceTrusting".
+    :type domain_configuration_type: str or
+     ~dfaz_management_client.models.DomainServicePropertiesDomainConfigurationType
+    :param sku: Sku Type. Possible values include: "Standard", "Enterprise", "Premium".
+    :type sku: str or ~dfaz_management_client.models.DomainServicePropertiesSku
+    :param filtered_sync: Enabled or Disabled flag to turn on Group-based filtered sync. Possible
+     values include: "Enabled", "Disabled".
+    :type filtered_sync: str or ~dfaz_management_client.models.FilteredSync
+    :ivar provisioning_state: the current deployment or provisioning state, which only appears in
+     the response.
+    :vartype provisioning_state: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'e_tag': {'readonly': True},
+        'version': {'readonly': True},
+        'tenant_id': {'readonly': True},
+        'deployment_id': {'readonly': True},
+        'sync_owner': {'readonly': True},
+        'provisioning_state': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'location': {'key': 'location', 'type': 'str'},
+        'tags': {'key': 'tags', 'type': '{str}'},
+        'e_tag': {'key': 'eTag', 'type': 'str'},
+        'version': {'key': 'properties.version', 'type': 'int'},
+        'tenant_id': {'key': 'properties.tenantId', 'type': 'str'},
+        'domain_name': {'key': 'properties.domainName', 'type': 'str'},
+        'deployment_id': {'key': 'properties.deploymentId', 'type': 'str'},
+        'sync_owner': {'key': 'properties.syncOwner', 'type': 'str'},
+        'replica_sets': {'key': 'properties.replicaSets', 'type': '[ReplicaSet]'},
+        'domain_configuration_type': {'key': 'properties.domainConfigurationType', 'type': 'str'},
+        'sku': {'key': 'properties.sku', 'type': 'str'},
+        'filtered_sync': {'key': 'properties.filteredSync', 'type': 'str'},
+        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        location: Optional[str] = None,
+        tags: Optional[Dict[str, str]] = None,
+        domain_name: Optional[str] = None,
+        replica_sets: Optional[List["ReplicaSet"]] = None,
+        domain_configuration_type: Optional[Union[str, "DomainServicePropertiesDomainConfigurationType"]] = None,
+        sku: Optional[Union[str, "DomainServicePropertiesSku"]] = None,
+        filtered_sync: Optional[Union[str, "FilteredSync"]] = None,
+        **kwargs
+    ):
+        super(DomainService, self).__init__(location=location, tags=tags, **kwargs)
+        self.version = None
+        self.tenant_id = None
+        self.domain_name = domain_name
+        self.deployment_id = None
+        self.sync_owner = None
+        self.replica_sets = replica_sets
+        self.domain_configuration_type = domain_configuration_type
+        self.sku = sku
+        self.filtered_sync = filtered_sync
+        self.provisioning_state = None
+
+
 class EntityReference(msrest.serialization.Model):
     """The entity reference.
 
@@ -1049,57 +1200,6 @@ class EnvironmentVariableSetup(CustomSetupBase):
         self.type = 'EnvironmentVariableSetup'  # type: str
         self.variable_name = variable_name
         self.variable_value = variable_value
-
-
-class Resource(msrest.serialization.Model):
-    """Azure Data Factory top-level resource.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
-
-    :ivar id: The resource identifier.
-    :vartype id: str
-    :ivar name: The resource name.
-    :vartype name: str
-    :ivar type: The resource type.
-    :vartype type: str
-    :param location: The resource location.
-    :type location: str
-    :param tags: A set of tags. The resource tags.
-    :type tags: dict[str, str]
-    :ivar e_tag: Etag identifies change in the resource.
-    :vartype e_tag: str
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'e_tag': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'e_tag': {'key': 'eTag', 'type': 'str'},
-    }
-
-    def __init__(
-        self,
-        *,
-        location: Optional[str] = None,
-        tags: Optional[Dict[str, str]] = None,
-        **kwargs
-    ):
-        super(Resource, self).__init__(**kwargs)
-        self.id = None
-        self.name = None
-        self.type = None
-        self.location = location
-        self.tags = tags
-        self.e_tag = None
 
 
 class Factory(Resource):
@@ -1590,6 +1690,199 @@ class GitHubAccessTokenResponse(msrest.serialization.Model):
     ):
         super(GitHubAccessTokenResponse, self).__init__(**kwargs)
         self.git_hub_access_token = git_hub_access_token
+
+
+class Group(msrest.serialization.Model):
+    """A group created in a Migration project.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar id: Path reference to this group.
+     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}/groups/{groupName}.
+    :vartype id: str
+    :ivar name: Name of the group.
+    :vartype name: str
+    :param e_tag: For optimistic concurrency control.
+    :type e_tag: str
+    :ivar type: Type of the object = [Microsoft.Migrate/assessmentProjects/groups].
+    :vartype type: str
+    :param properties: Required. Properties of the group.
+    :type properties: ~dfaz_management_client.models.GroupProperties
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'properties': {'required': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'e_tag': {'key': 'eTag', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'properties': {'key': 'properties', 'type': 'GroupProperties'},
+    }
+
+    def __init__(
+        self,
+        *,
+        properties: "GroupProperties",
+        e_tag: Optional[str] = None,
+        **kwargs
+    ):
+        super(Group, self).__init__(**kwargs)
+        self.id = None
+        self.name = None
+        self.e_tag = e_tag
+        self.type = None
+        self.properties = properties
+
+
+class GroupProperties(msrest.serialization.Model):
+    """Properties of group resource.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar group_status: Whether the group has been created and is valid. Possible values include:
+     "Created", "Updated", "Running", "Completed", "Invalid".
+    :vartype group_status: str or ~dfaz_management_client.models.GroupStatus
+    :ivar machine_count: Number of machines part of this group.
+    :vartype machine_count: int
+    :ivar assessments: List of References to Assessments created on this group.
+    :vartype assessments: list[str]
+    :ivar are_assessments_running: If the assessments are in running state.
+    :vartype are_assessments_running: bool
+    :ivar created_timestamp: Time when this group was created. Date-Time represented in ISO-8601
+     format.
+    :vartype created_timestamp: ~datetime.datetime
+    :ivar updated_timestamp: Time when this group was last updated. Date-Time represented in
+     ISO-8601 format.
+    :vartype updated_timestamp: ~datetime.datetime
+    """
+
+    _validation = {
+        'group_status': {'readonly': True},
+        'machine_count': {'readonly': True},
+        'assessments': {'readonly': True},
+        'are_assessments_running': {'readonly': True},
+        'created_timestamp': {'readonly': True},
+        'updated_timestamp': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'group_status': {'key': 'groupStatus', 'type': 'str'},
+        'machine_count': {'key': 'machineCount', 'type': 'int'},
+        'assessments': {'key': 'assessments', 'type': '[str]'},
+        'are_assessments_running': {'key': 'areAssessmentsRunning', 'type': 'bool'},
+        'created_timestamp': {'key': 'createdTimestamp', 'type': 'iso-8601'},
+        'updated_timestamp': {'key': 'updatedTimestamp', 'type': 'iso-8601'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(GroupProperties, self).__init__(**kwargs)
+        self.group_status = None
+        self.machine_count = None
+        self.assessments = None
+        self.are_assessments_running = None
+        self.created_timestamp = None
+        self.updated_timestamp = None
+
+
+class HealthAlert(msrest.serialization.Model):
+    """Health Alert Description.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Health Alert Id.
+    :vartype id: str
+    :ivar name: Health Alert Name.
+    :vartype name: str
+    :ivar issue: Health Alert Issue.
+    :vartype issue: str
+    :ivar severity: Health Alert Severity.
+    :vartype severity: str
+    :ivar raised: Health Alert Raised DateTime.
+    :vartype raised: ~datetime.datetime
+    :ivar last_detected: Health Alert Last Detected DateTime.
+    :vartype last_detected: ~datetime.datetime
+    :ivar resolution_uri: Health Alert TSG Link.
+    :vartype resolution_uri: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'issue': {'readonly': True},
+        'severity': {'readonly': True},
+        'raised': {'readonly': True},
+        'last_detected': {'readonly': True},
+        'resolution_uri': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'issue': {'key': 'issue', 'type': 'str'},
+        'severity': {'key': 'severity', 'type': 'str'},
+        'raised': {'key': 'raised', 'type': 'iso-8601'},
+        'last_detected': {'key': 'lastDetected', 'type': 'iso-8601'},
+        'resolution_uri': {'key': 'resolutionUri', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(HealthAlert, self).__init__(**kwargs)
+        self.id = None
+        self.name = None
+        self.issue = None
+        self.severity = None
+        self.raised = None
+        self.last_detected = None
+        self.resolution_uri = None
+
+
+class HealthMonitor(msrest.serialization.Model):
+    """Health Monitor Description.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Health Monitor Id.
+    :vartype id: str
+    :ivar name: Health Monitor Name.
+    :vartype name: str
+    :ivar details: Health Monitor Details.
+    :vartype details: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'details': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'details': {'key': 'details', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(HealthMonitor, self).__init__(**kwargs)
+        self.id = None
+        self.name = None
+        self.details = None
 
 
 class IntegrationRuntime(msrest.serialization.Model):
@@ -3138,6 +3431,79 @@ class RecurrenceScheduleOccurrence(msrest.serialization.Model):
         self.additional_properties = additional_properties
         self.day = day
         self.occurrence = occurrence
+
+
+class ReplicaSet(msrest.serialization.Model):
+    """Replica Set Definition.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar replica_set_id: ReplicaSet Id.
+    :vartype replica_set_id: str
+    :param location: Virtual network location.
+    :type location: str
+    :ivar vnet_site_id: Virtual network site id.
+    :vartype vnet_site_id: str
+    :param subnet_id: The name of the virtual network that Domain Services will be deployed on. The
+     id of the subnet that Domain Services will be deployed on.
+     /virtualNetwork/vnetName/subnets/subnetName.
+    :type subnet_id: str
+    :ivar domain_controller_ip_address: List of Domain Controller IP Address.
+    :vartype domain_controller_ip_address: list[str]
+    :ivar external_access_ip_address: External access ip address.
+    :vartype external_access_ip_address: str
+    :ivar service_status: Status of Domain Service instance.
+    :vartype service_status: str
+    :ivar health_last_evaluated: Last domain evaluation run DateTime.
+    :vartype health_last_evaluated: ~datetime.datetime
+    :ivar health_monitors: List of Domain Health Monitors.
+    :vartype health_monitors: list[~dfaz_management_client.models.HealthMonitor]
+    :ivar health_alerts: List of Domain Health Alerts.
+    :vartype health_alerts: list[~dfaz_management_client.models.HealthAlert]
+    """
+
+    _validation = {
+        'replica_set_id': {'readonly': True},
+        'vnet_site_id': {'readonly': True},
+        'domain_controller_ip_address': {'readonly': True},
+        'external_access_ip_address': {'readonly': True},
+        'service_status': {'readonly': True},
+        'health_last_evaluated': {'readonly': True},
+        'health_monitors': {'readonly': True},
+        'health_alerts': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'replica_set_id': {'key': 'replicaSetId', 'type': 'str'},
+        'location': {'key': 'location', 'type': 'str'},
+        'vnet_site_id': {'key': 'vnetSiteId', 'type': 'str'},
+        'subnet_id': {'key': 'subnetId', 'type': 'str'},
+        'domain_controller_ip_address': {'key': 'domainControllerIpAddress', 'type': '[str]'},
+        'external_access_ip_address': {'key': 'externalAccessIpAddress', 'type': 'str'},
+        'service_status': {'key': 'serviceStatus', 'type': 'str'},
+        'health_last_evaluated': {'key': 'healthLastEvaluated', 'type': 'rfc-1123'},
+        'health_monitors': {'key': 'healthMonitors', 'type': '[HealthMonitor]'},
+        'health_alerts': {'key': 'healthAlerts', 'type': '[HealthAlert]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        location: Optional[str] = None,
+        subnet_id: Optional[str] = None,
+        **kwargs
+    ):
+        super(ReplicaSet, self).__init__(**kwargs)
+        self.replica_set_id = None
+        self.location = location
+        self.vnet_site_id = None
+        self.subnet_id = subnet_id
+        self.domain_controller_ip_address = None
+        self.external_access_ip_address = None
+        self.service_status = None
+        self.health_last_evaluated = None
+        self.health_monitors = None
+        self.health_alerts = None
 
 
 class RerunTumblingWindowTrigger(Trigger):

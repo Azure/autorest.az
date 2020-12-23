@@ -487,3 +487,63 @@ def datafactory_integration_runtime_upgrade(client,
     return client.upgrade(resource_group_name=resource_group_name,
                           factory_name=factory_name,
                           integration_runtime_name=integration_runtime_name)
+
+
+def datafactory_domain_service_create(client,
+                                      resource_group_name,
+                                      domain_service_name,
+                                      location=None,
+                                      tags=None,
+                                      domain_name=None,
+                                      replica_sets=None,
+                                      domain_configuration_type=None,
+                                      sku=None,
+                                      filtered_sync=None):
+    domain_service = {}
+    domain_service['location'] = location
+    domain_service['tags'] = tags
+    domain_service['domain_name'] = domain_name
+    domain_service['replica_sets'] = replica_sets
+    domain_service['domain_configuration_type'] = domain_configuration_type
+    domain_service['sku'] = sku
+    domain_service['filtered_sync'] = filtered_sync
+    return client.begin_create_or_update(resource_group_name=resource_group_name,
+                                         domain_service_name=domain_service_name,
+                                         domain_service=domain_service)
+
+
+def datafactory_domain_service_update(client,
+                                      resource_group_name,
+                                      domain_service_name,
+                                      location=None,
+                                      tags=None,
+                                      domain_name=None,
+                                      replica_sets=None,
+                                      domain_configuration_type=None,
+                                      sku=None,
+                                      filtered_sync=None):
+    domain_service = {}
+    domain_service['location'] = location
+    domain_service['tags'] = tags
+    domain_service['domain_name'] = domain_name
+    domain_service['replica_sets'] = replica_sets
+    domain_service['domain_configuration_type'] = domain_configuration_type
+    domain_service['sku'] = sku
+    domain_service['filtered_sync'] = filtered_sync
+    return client.begin_create_or_update(resource_group_name=resource_group_name,
+                                         domain_service_name=domain_service_name,
+                                         domain_service=domain_service)
+
+
+def datafactory_group_create(client,
+                             resource_group_name,
+                             project_name,
+                             group_name,
+                             e_tag=None):
+    group = {}
+    group['e_tag'] = e_tag
+    group['properties'] = {}
+    return client.create(resource_group_name=resource_group_name,
+                         project_name=project_name,
+                         group_name=group_name,
+                         group=group)
