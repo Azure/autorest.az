@@ -1640,6 +1640,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             // Handle complex
             let shouldHidden = undefined;
             let defaultValue = undefined;
+            let hasDefault = false;
             if (this.EnterSubMethodParameters(parameter)) {
                 shouldHidden = true;
                 defaultValue = "{";
@@ -1652,10 +1653,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                         }
                         else if (this.Parameter_Type(this.SubMethodParameter) == SchemaType.Constant) {
                             defaultValue = defaultValue + "\"" + this.Parameter_NameAz(this.SubMethodParameter) + "\": \"" + this.Parameter_DefaultValue(this.SubMethodParameter) + "\"";
+                            hasDefault = true;
                         }
                     } while (this.SelectNextMethodParameter())
                 }
-                if (shouldHidden == true) {
+                if (shouldHidden == true && (hasDefault || this.Schema_IsRequired(parameter))) {
                     defaultValue = defaultValue + "}";
                 }
                 else {
@@ -1783,6 +1785,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     private Parameter_IsRequiredOrCLIRequired(param: Parameter): boolean {
         return this.Parameter_IsRequired(param) || param?.language?.["cli"]?.["required"];
+    }
+
+    private Schema_IsRequired(param: Parameter): boolean {
+        return param?.['targetProperty']?.required;
     }
 
     public get MethodParameter_IsFlattened(): boolean {

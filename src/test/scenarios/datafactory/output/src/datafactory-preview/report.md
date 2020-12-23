@@ -12,6 +12,8 @@
 |az datafactory|Factories|[commands](#CommandsInFactories)|
 |az datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
 |az datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
+|az datafactory domain-service|DomainServices|[commands](#CommandsInDomainServices)|
+|az datafactory group|Groups|[commands](#CommandsInGroups)|
 
 ## COMMANDS
 ### <a name="CommandsInFactories">Commands in `az datafactory` group</a>
@@ -26,6 +28,17 @@
 |[az datafactory configure-factory-repo](#FactoriesConfigureFactoryRepo)|ConfigureFactoryRepo|[Parameters](#ParametersFactoriesConfigureFactoryRepo)|[Example](#ExamplesFactoriesConfigureFactoryRepo)|
 |[az datafactory get-data-plane-access](#FactoriesGetDataPlaneAccess)|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|[Example](#ExamplesFactoriesGetDataPlaneAccess)|
 |[az datafactory get-git-hub-access-token](#FactoriesGetGitHubAccessToken)|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|[Example](#ExamplesFactoriesGetGitHubAccessToken)|
+
+### <a name="CommandsInDomainServices">Commands in `az datafactory domain-service` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az datafactory domain-service create](#DomainServicesCreateOrUpdate#Create)|CreateOrUpdate#Create|[Parameters](#ParametersDomainServicesCreateOrUpdate#Create)|Not Found|
+|[az datafactory domain-service update](#DomainServicesCreateOrUpdate#Update)|CreateOrUpdate#Update|[Parameters](#ParametersDomainServicesCreateOrUpdate#Update)|Not Found|
+
+### <a name="CommandsInGroups">Commands in `az datafactory group` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az datafactory group create](#GroupsCreate)|Create|[Parameters](#ParametersGroupsCreate)|Not Found|
 
 ### <a name="CommandsInIntegrationRuntimes">Commands in `az datafactory integration-runtime` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
@@ -198,6 +211,48 @@ az datafactory get-git-hub-access-token --name "myFactory" --git-hub-access-code
 |**--git-hub-access-code**|string|GitHub access code.|git_hub_access_code|gitHubAccessCode|
 |**--git-hub-access-token-base-url**|string|GitHub access token base URL.|git_hub_access_token_base_url|gitHubAccessTokenBaseUrl|
 |**--git-hub-client-id**|string|GitHub application client ID.|git_hub_client_id|gitHubClientId|
+
+### group `az datafactory domain-service`
+#### <a name="DomainServicesCreateOrUpdate#Create">Command `az datafactory domain-service create`</a>
+
+##### <a name="ParametersDomainServicesCreateOrUpdate#Create">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
+|**--domain-service-name**|string|The name of the domain service.|domain_service_name|domainServiceName|
+|**--location**|string|The resource location.|location|location|
+|**--tags**|dictionary|The resource tags.|tags|tags|
+|**--domain-name**|string|The name of the Azure domain that the user would like to deploy Domain Services to.|domain_name|domainName|
+|**--replica-sets**|array|List of ReplicaSets|replica_sets|replicaSets|
+|**--domain-configuration-type**|choice|Domain Configuration Type|domain_configuration_type|domainConfigurationType|
+|**--sku**|choice|Sku Type|sku|sku|
+|**--filtered-sync**|choice|Enabled or Disabled flag to turn on Group-based filtered sync|filtered_sync|filteredSync|
+
+#### <a name="DomainServicesCreateOrUpdate#Update">Command `az datafactory domain-service update`</a>
+
+##### <a name="ParametersDomainServicesCreateOrUpdate#Update">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
+|**--domain-service-name**|string|The name of the domain service.|domain_service_name|domainServiceName|
+|**--location**|string|The resource location.|location|location|
+|**--tags**|dictionary|The resource tags.|tags|tags|
+|**--domain-name**|string|The name of the Azure domain that the user would like to deploy Domain Services to.|domain_name|domainName|
+|**--replica-sets**|array|List of ReplicaSets|replica_sets|replicaSets|
+|**--domain-configuration-type**|choice|Domain Configuration Type|domain_configuration_type|domainConfigurationType|
+|**--sku**|choice|Sku Type|sku|sku|
+|**--filtered-sync**|choice|Enabled or Disabled flag to turn on Group-based filtered sync|filtered_sync|filteredSync|
+
+### group `az datafactory group`
+#### <a name="GroupsCreate">Command `az datafactory group create`</a>
+
+##### <a name="ParametersGroupsCreate">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
+|**--project-name**|string|Name of the Azure Migrate project.|project_name|projectName|
+|**--group-name**|string|Unique name of a group within a project.|group_name|groupName|
+|**--e-tag**|string|For optimistic concurrency control.|e_tag|eTag|
 
 ### group `az datafactory integration-runtime`
 #### <a name="IntegrationRuntimesListByFactory">Command `az datafactory integration-runtime list`</a>

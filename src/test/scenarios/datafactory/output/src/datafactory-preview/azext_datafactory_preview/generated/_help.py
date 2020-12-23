@@ -526,3 +526,55 @@ created.
                az datafactory integration-runtime wait --factory-name "myFactory" --name "myIntegrationRuntime" \
 --resource-group "myResourceGroup" --created
 """
+
+helps['datafactory domain-service'] = """
+    type: group
+    short-summary: Manage domain service with datafactory
+"""
+
+helps['datafactory domain-service create'] = """
+    type: command
+    short-summary: "The Create Domain Service operation creates a new domain service with the specified parameters. If \
+the specific service already exists, then any patchable properties will be updated and any immutable properties will \
+remain unchanged."
+    parameters:
+      - name: --replica-sets
+        short-summary: "List of ReplicaSets"
+        long-summary: |
+            Usage: --replica-sets location=XX subnet-id=XX
+
+            location: Virtual network location
+            subnet-id: The name of the virtual network that Domain Services will be deployed on. The id of the subnet \
+that Domain Services will be deployed on. /virtualNetwork/vnetName/subnets/subnetName.
+
+            Multiple actions can be specified by using more than one --replica-sets argument.
+"""
+
+helps['datafactory domain-service update'] = """
+    type: command
+    short-summary: "The Update Domain Service operation Update a new domain service with the specified parameters. If \
+the specific service already exists, then any patchable properties will be updated and any immutable properties will \
+remain unchanged."
+    parameters:
+      - name: --replica-sets
+        short-summary: "List of ReplicaSets"
+        long-summary: |
+            Usage: --replica-sets location=XX subnet-id=XX
+
+            location: Virtual network location
+            subnet-id: The name of the virtual network that Domain Services will be deployed on. The id of the subnet \
+that Domain Services will be deployed on. /virtualNetwork/vnetName/subnets/subnetName.
+
+            Multiple actions can be specified by using more than one --replica-sets argument.
+"""
+
+helps['datafactory group'] = """
+    type: group
+    short-summary: Manage group with datafactory
+"""
+
+helps['datafactory group create'] = """
+    type: command
+    short-summary: "Create a new group by sending a json object of type 'group' as given in Models section as part of \
+the Request Body. The group name in a project is unique.  This operation is Idempotent."
+"""
