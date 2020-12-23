@@ -26,3 +26,11 @@ def cf_trigger(cli_ctx, *_):
 
 def cf_integration_runtime(cli_ctx, *_):
     return cf_datafactory_cl(cli_ctx).integration_runtimes
+
+
+def cf_domain_service(cli_ctx, *_):
+    return cf_datafactory_cl(cli_ctx).domain_services
+
+
+def cf_group(cli_ctx, *_):
+    return cf_datafactory_cl(cli_ctx).groups

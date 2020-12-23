@@ -69,6 +69,21 @@ class DaysOfWeek(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     FRIDAY = "Friday"
     SATURDAY = "Saturday"
 
+class DomainServicePropertiesDomainConfigurationType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """Domain Configuration Type
+    """
+
+    FULLY_SYNCED = "FullySynced"
+    RESOURCE_TRUSTING = "ResourceTrusting"
+
+class DomainServicePropertiesSku(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """Sku Type
+    """
+
+    STANDARD = "Standard"
+    ENTERPRISE = "Enterprise"
+    PREMIUM = "Premium"
+
 class EventSubscriptionStatus(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Event Subscription Status.
     """
@@ -84,6 +99,23 @@ class FactoryIdentityType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """
 
     SYSTEM_ASSIGNED = "SystemAssigned"
+
+class FilteredSync(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """Enabled or Disabled flag to turn on Group-based filtered sync
+    """
+
+    ENABLED = "Enabled"
+    DISABLED = "Disabled"
+
+class GroupStatus(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """Whether the group has been created and is valid.
+    """
+
+    CREATED = "Created"
+    UPDATED = "Updated"
+    RUNNING = "Running"
+    COMPLETED = "Completed"
+    INVALID = "Invalid"
 
 class IntegrationRuntimeAuthKeyName(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The name of the authentication key to regenerate.

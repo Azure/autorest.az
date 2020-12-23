@@ -23,7 +23,8 @@ from azure.cli.core.commands.validators import (
 from azext_datafactory_preview.action import (
     AddFactoryVstsConfiguration,
     AddFactoryGitHubConfiguration,
-    AddFakeIdentity
+    AddFakeIdentity,
+    AddReplicaSets
 )
 
 
@@ -330,3 +331,42 @@ def load_arguments(self, _):
         c.argument('if_none_match', type=str, help='ETag of the integration runtime entity. Should only be specified '
                    'for get. If the ETag matches the existing entity tag, or if * was provided, then no content will '
                    'be returned.')
+
+    with self.argument_context('datafactory domain-service create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('domain_service_name', options_list=['--name', '-n', '--domain-service-name'], type=str, help='The '
+                   'name of the domain service.')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
+                   validator=get_default_location_from_resource_group)
+        c.argument('tags', tags_type)
+        c.argument('domain_name', type=str, help='The name of the Azure domain that the user would like to deploy '
+                   'Domain Services to.')
+        c.argument('replica_sets', action=AddReplicaSets, nargs='+', help='List of ReplicaSets')
+        c.argument('domain_configuration_type', arg_type=get_enum_type(['FullySynced', 'ResourceTrusting']),
+                   help='Domain Configuration Type')
+        c.argument('sku', arg_type=get_enum_type(['Standard', 'Enterprise', 'Premium']), help='Sku Type')
+        c.argument('filtered_sync', arg_type=get_enum_type(['Enabled', 'Disabled']), help='Enabled or Disabled flag to '
+                   'turn on Group-based filtered sync')
+
+    with self.argument_context('datafactory domain-service update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('domain_service_name', options_list=['--name', '-n', '--domain-service-name'], type=str, help='The '
+                   'name of the domain service.', id_part='name')
+        c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
+                   validator=get_default_location_from_resource_group)
+        c.argument('tags', tags_type)
+        c.argument('domain_name', type=str, help='The name of the Azure domain that the user would like to deploy '
+                   'Domain Services to.')
+        c.argument('replica_sets', action=AddReplicaSets, nargs='+', help='List of ReplicaSets')
+        c.argument('domain_configuration_type', arg_type=get_enum_type(['FullySynced', 'ResourceTrusting']),
+                   help='Domain Configuration Type')
+        c.argument('sku', arg_type=get_enum_type(['Standard', 'Enterprise', 'Premium']), help='Sku Type')
+        c.argument('filtered_sync', arg_type=get_enum_type(['Enabled', 'Disabled']), help='Enabled or Disabled flag to '
+                   'turn on Group-based filtered sync')
+
+    with self.argument_context('datafactory group create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('project_name', type=str, help='Name of the Azure Migrate project.')
+        c.argument('group_name', options_list=['--name', '-n', '--group-name'], type=str, help='Unique name of a group '
+                   'within a project.')
+        c.argument('e_tag', type=str, help='For optimistic concurrency control.')

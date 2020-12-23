@@ -1725,6 +1725,140 @@
             }
           }
         }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AAD/domainServices/{domainServiceName}": {
+        "put": {
+          "tags": [
+            "DomainServices"
+          ],
+          "operationId": "DomainServices_CreateOrUpdate",
+          "summary": "Create or Update Domain Service (PUT Resource)",
+          "description": "The Create Domain Service operation creates a new domain service with the specified parameters. If the specific service already exists, then any patchable properties will be updated and any immutable properties will remain unchanged.",
+          "parameters": [
+            {
+              "$ref": "#/parameters/api-version"
+            },
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/DomainServiceNameParameter"
+            },
+            {
+              "name": "domainService",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/DomainService"
+              },
+              "description": "Properties supplied to the Create or Update a Domain Service operation."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "HTTP 200 (OK) if the operation was successful.",
+              "schema": {
+                "$ref": "#/definitions/DomainService"
+              }
+            },
+            "201": {
+              "description": "HTTP 201 (Created) if the operation completed successfully.",
+              "schema": {
+                "$ref": "#/definitions/DomainService"
+              }
+            },
+            "202": {
+              "description": "HTTP 202 (Accepted) if the operation was successfully started and will complete asynchronously.",
+              "schema": {
+                "$ref": "#/definitions/DomainService"
+              }
+            },
+            "default": {
+              "description": "Error response describing why the operation failed.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          },
+          "x-ms-long-running-operation": true,
+          "x-ms-examples": {
+            "Create Domain Service": {
+              "$ref": "./examples/CreateDomainService.json"
+            }
+          }
+        }
+      },
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}/groups/{groupName}": {
+        "put": {
+          "summary": "Create a new group with specified settings.",
+          "description": "Create a new group by sending a json object of type 'group' as given in Models section as part of the Request Body. The group name in a project is unique.\n\nThis operation is Idempotent.\n",
+          "operationId": "Groups_Create",
+          "parameters": [
+            {
+              "$ref": "#/parameters/subscriptionId"
+            },
+            {
+              "$ref": "#/parameters/resourceGroupName"
+            },
+            {
+              "$ref": "#/parameters/projectName"
+            },
+            {
+              "$ref": "#/parameters/groupName"
+            },
+            {
+              "$ref": "#/parameters/api-version"
+            },
+            {
+              "name": "group",
+              "description": "New or Updated Group object.",
+              "in": "body",
+              "schema": {
+                "$ref": "#/definitions/Group"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK. Existing group updated.",
+              "headers": {
+                "x-ms-request-id": {
+                  "type": "string",
+                  "description": "Service generated Request ID."
+                }
+              },
+              "schema": {
+                "$ref": "#/definitions/Group"
+              }
+            },
+            "201": {
+              "description": "Created. New group was created.",
+              "headers": {
+                "x-ms-request-id": {
+                  "type": "string",
+                  "description": "Service generated Request ID."
+                }
+              },
+              "schema": {
+                "$ref": "#/definitions/Group"
+              }
+            },
+            "default": {
+              "description": "Error response describing why the operation failed.",
+              "schema": {
+                "$ref": "#/definitions/CloudError"
+              }
+            }
+          },
+          "x-ms-examples": {
+            "Groups_Create": {
+              "$ref": "./examples/Groups_Create.json"
+            }
+          }
+        }        
       }
   },
   "definitions": {
@@ -1766,6 +1900,221 @@
           "type": "string",
           "description": "Etag identifies change in the resource.",
           "readOnly": true
+        }
+      }
+    },
+    "DomainService": {
+      "description": "Domain service.",
+      "properties": {
+        "properties": {
+          "x-ms-client-flatten": true,
+          "$ref": "#/definitions/DomainServiceProperties",
+          "description": "Domain service properties"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        }
+      ]
+    },
+    "DomainServiceProperties": {
+      "description": "Properties of the Domain Service.",
+      "properties": {
+        "version": {
+          "readOnly": true,
+          "type": "integer",
+          "format": "int32",
+          "description": "Data Model Version"
+        },
+        "tenantId": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Azure Active Directory Tenant Id"
+        },
+        "domainName": {
+          "type": "string",
+          "description": "The name of the Azure domain that the user would like to deploy Domain Services to."
+        },
+        "deploymentId": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Deployment Id"
+        },
+        "syncOwner": {
+          "readOnly": true,
+          "type": "string",
+          "description": "SyncOwner ReplicaSet Id"
+        },
+        "replicaSets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReplicaSet",
+            "description": "ReplicaSet"
+          },
+          "description": "List of ReplicaSets"
+        },
+        "domainConfigurationType": {
+          "type": "string",
+          "enum": [
+            "FullySynced",
+            "ResourceTrusting"
+          ],
+          "description": "Domain Configuration Type"
+        },
+        "sku": {
+          "type": "string",
+          "enum": [
+            "Standard",
+            "Enterprise",
+            "Premium"
+          ],
+          "description": "Sku Type"
+        },
+        "filteredSync": {
+          "type": "string",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "description": "Enabled or Disabled flag to turn on Group-based filtered sync",
+          "x-ms-enum": {
+            "name": "FilteredSync",
+            "modelAsString": true
+          }
+        },
+        "provisioningState": {
+          "readOnly": true,
+          "type": "string",
+          "description": "the current deployment or provisioning state, which only appears in the response."
+        }
+      }
+    },
+    "ReplicaSet": {
+      "description": "Replica Set Definition",
+      "properties": {
+        "replicaSetId": {
+          "readOnly": true,
+          "type": "string",
+          "description": "ReplicaSet Id"
+        },
+        "location": {
+          "type": "string",
+          "description": "Virtual network location"
+        },
+        "vnetSiteId": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Virtual network site id"
+        },
+        "subnetId": {
+          "type": "string",
+          "description": "The name of the virtual network that Domain Services will be deployed on. The id of the subnet that Domain Services will be deployed on. /virtualNetwork/vnetName/subnets/subnetName."
+        },
+        "domainControllerIpAddress": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Domain Controller IP Address"
+          },
+          "description": "List of Domain Controller IP Address"
+        },
+        "externalAccessIpAddress": {
+          "readOnly": true,
+          "type": "string",
+          "description": "External access ip address."
+        },
+        "serviceStatus": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Status of Domain Service instance"
+        },
+        "healthLastEvaluated": {
+          "readOnly": true,
+          "type": "string",
+          "format": "date-time-rfc1123",
+          "description": "Last domain evaluation run DateTime"
+        },
+        "healthMonitors": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HealthMonitor",
+            "description": "Domain Health Monitors"
+          },
+          "description": "List of Domain Health Monitors"
+        },
+        "healthAlerts": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HealthAlert",
+            "description": "Domain Health Alerts"
+          },
+          "description": "List of Domain Health Alerts"
+        }
+      }
+    },
+    "HealthMonitor": {
+      "description": "Health Monitor Description",
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Health Monitor Id"
+        },
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Health Monitor Name"
+        },
+        "details": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Health Monitor Details"
+        }
+      }
+    },
+    "HealthAlert": {
+      "description": "Health Alert Description",
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Health Alert Id"
+        },
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Health Alert Name"
+        },
+        "issue": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Health Alert Issue"
+        },
+        "severity": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Health Alert Severity"
+        },
+        "raised": {
+          "readOnly": true,
+          "type": "string",
+          "format": "date-time",
+          "description": "Health Alert Raised DateTime"
+        },
+        "lastDetected": {
+          "readOnly": true,
+          "type": "string",
+          "format": "date-time",
+          "description": "Health Alert Last Detected DateTime"
+        },
+        "resolutionUri": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Health Alert TSG Link"
         }
       }
     },
@@ -4934,6 +5283,94 @@
             "type": "string"
           }
         }
+      },
+      "Group": {
+        "type": "object",
+        "x-ms-azure-resource": true,
+        "description": "A group created in a Migration project.",
+        "required": [
+          "properties"
+        ],
+        "properties": {
+          "id": {
+            "description": "Path reference to this group. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}/groups/{groupName}",
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "description": "Name of the group.",
+            "type": "string",
+            "readOnly": true
+          },
+          "eTag": {
+            "type": "string",
+            "description": "For optimistic concurrency control."
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of the object = [Microsoft.Migrate/assessmentProjects/groups].",
+            "readOnly": true
+          },
+          "properties": {
+            "description": "Properties of the group.",
+            "$ref": "#/definitions/GroupProperties"
+          }
+        }
+      },
+      "GroupProperties": {
+        "type": "object",
+        "description": "Properties of group resource.",
+        "properties": {
+          "groupStatus": {
+            "type": "string",
+            "enum": [
+              "Created",
+              "Updated",
+              "Running",
+              "Completed",
+              "Invalid"
+            ],
+            "description": "Whether the group has been created and is valid.",
+            "readOnly": true,
+            "x-ms-enum": {
+              "name": "GroupStatus",
+              "modelAsString": true
+            }
+          },
+          "machineCount": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of machines part of this group.",
+            "readOnly": true
+          },
+          "assessments": {
+            "type": "array",
+            "description": "List of References to Assessments created on this group.",
+            "readOnly": true,
+            "items": {
+              "type": "string",
+              "description": "Reference to an Assessment. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}/groups/{groupName}/assessments/{assessmentName}",
+              "readOnly": true
+            }
+          },
+          "areAssessmentsRunning": {
+            "type": "boolean",
+            "description": "If the assessments are in running state.",
+            "readOnly": true
+          },
+          "createdTimestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Time when this group was created. Date-Time represented in ISO-8601 format.",
+            "readOnly": true
+          },
+          "updatedTimestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Time when this group was last updated. Date-Time represented in ISO-8601 format.",
+            "readOnly": true
+          }
+        }
       }
   },
   "parameters": {
@@ -5002,6 +5439,30 @@
         "minLength": 3,
         "maxLength": 63,
         "x-ms-parameter-location": "method"
+    },
+    "DomainServiceNameParameter": {
+      "name": "domainServiceName",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The name of the domain service.",
+      "x-ms-parameter-location": "method"
+    },
+    "projectName": {
+      "name": "projectName",
+      "description": "Name of the Azure Migrate project.",
+      "type": "string",
+      "in": "path",
+      "x-ms-parameter-location": "method",
+      "required": true
+    },
+    "groupName": {
+      "name": "groupName",
+      "description": "Unique name of a group within a project.",
+      "type": "string",
+      "in": "path",
+      "x-ms-parameter-location": "method",
+      "required": true
     }
   }
 }

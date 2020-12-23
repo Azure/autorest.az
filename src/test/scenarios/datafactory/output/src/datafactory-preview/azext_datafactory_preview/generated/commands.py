@@ -76,3 +76,21 @@ def load_command_table(self, _):
         g.custom_command('sync-credentials', 'datafactory_integration_runtime_sync_credentials')
         g.custom_command('upgrade', 'datafactory_integration_runtime_upgrade')
         g.custom_wait_command('wait', 'datafactory_integration_runtime_show')
+
+    from azext_datafactory_preview.generated._client_factory import cf_domain_service
+    datafactory_domain_service = CliCommandType(
+        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._domain_services_ope'
+        'rations#DomainServicesOperations.{}',
+        client_factory=cf_domain_service)
+    with self.command_group('datafactory domain-service', datafactory_domain_service,
+                            client_factory=cf_domain_service) as g:
+        g.custom_command('create', 'datafactory_domain_service_create')
+        g.custom_command('update', 'datafactory_domain_service_update')
+
+    from azext_datafactory_preview.generated._client_factory import cf_group
+    datafactory_group = CliCommandType(
+        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._groups_operations#G'
+        'roupsOperations.{}',
+        client_factory=cf_group)
+    with self.command_group('datafactory group', datafactory_group, client_factory=cf_group) as g:
+        g.custom_command('create', 'datafactory_group_create')

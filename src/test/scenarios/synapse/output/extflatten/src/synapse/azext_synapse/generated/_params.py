@@ -29,8 +29,7 @@ from azext_synapse.action import (
     AddRecurringScans,
     AddBaselineResults,
     AddDefaultDataLakeStorage,
-    AddConnectivityEndpoints,
-    AddPrivateEndpointConnections
+    AddConnectivityEndpoints
 )
 
 
@@ -678,8 +677,8 @@ def load_arguments(self, _):
                    'Expect value: KEY1=VALUE1 KEY2=VALUE2 ...')
         c.argument('managed_virtual_network', type=str, help='Setting this to \'default\' will ensure that all compute '
                    'for this workspace is in a virtual network managed on behalf of the user.')
-        c.argument('private_endpoint_connections', action=AddPrivateEndpointConnections, nargs='+', help='Private '
-                   'endpoint connections to the workspace')
+        c.argument('private_endpoint_connections', type=validate_file_or_dict, help='Private endpoint connections to '
+                   'the workspace Expected value: json-string/@json-file.')
         c.argument('compute_subnet_id', type=str, help='Subnet ID used for computes in workspace', arg_group='Virtual '
                    'Network Profile')
         c.argument('type_', options_list=['--type'], arg_type=get_enum_type(['None', 'SystemAssigned']), help='The '

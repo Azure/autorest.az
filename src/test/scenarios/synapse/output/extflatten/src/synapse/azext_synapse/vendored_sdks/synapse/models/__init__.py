@@ -69,6 +69,7 @@ try:
     from ._models_py3 import OperationMetaMetricSpecification
     from ._models_py3 import OperationMetaServiceSpecification
     from ._models_py3 import OperationResource
+    from ._models_py3 import PrivateEndpoint
     from ._models_py3 import PrivateEndpointConnection
     from ._models_py3 import PrivateEndpointConnectionList
     from ._models_py3 import PrivateLinkHub
@@ -77,6 +78,7 @@ try:
     from ._models_py3 import PrivateLinkResource
     from ._models_py3 import PrivateLinkResourceListResult
     from ._models_py3 import PrivateLinkResourceProperties
+    from ._models_py3 import PrivateLinkServiceConnectionState
     from ._models_py3 import ProxyResource
     from ._models_py3 import QueryInterval
     from ._models_py3 import QueryMetric
@@ -206,6 +208,7 @@ except (SyntaxError, ImportError):
     from ._models import OperationMetaMetricSpecification  # type: ignore
     from ._models import OperationMetaServiceSpecification  # type: ignore
     from ._models import OperationResource  # type: ignore
+    from ._models import PrivateEndpoint  # type: ignore
     from ._models import PrivateEndpointConnection  # type: ignore
     from ._models import PrivateEndpointConnectionList  # type: ignore
     from ._models import PrivateLinkHub  # type: ignore
@@ -214,6 +217,7 @@ except (SyntaxError, ImportError):
     from ._models import PrivateLinkResource  # type: ignore
     from ._models import PrivateLinkResourceListResult  # type: ignore
     from ._models import PrivateLinkResourceProperties  # type: ignore
+    from ._models import PrivateLinkServiceConnectionState  # type: ignore
     from ._models import ProxyResource  # type: ignore
     from ._models import QueryInterval  # type: ignore
     from ._models import QueryMetric  # type: ignore
@@ -392,6 +396,7 @@ __all__ = [
     'OperationMetaMetricSpecification',
     'OperationMetaServiceSpecification',
     'OperationResource',
+    'PrivateEndpoint',
     'PrivateEndpointConnection',
     'PrivateEndpointConnectionList',
     'PrivateLinkHub',
@@ -400,6 +405,7 @@ __all__ = [
     'PrivateLinkResource',
     'PrivateLinkResourceListResult',
     'PrivateLinkResourceProperties',
+    'PrivateLinkServiceConnectionState',
     'ProxyResource',
     'QueryInterval',
     'QueryMetric',

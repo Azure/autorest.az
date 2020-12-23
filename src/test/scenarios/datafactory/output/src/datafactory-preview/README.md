@@ -181,3 +181,5 @@ az datafactory integration-runtime upgrade --factory-name "myFactory" --name "my
 az datafactory integration-runtime delete --factory-name "myFactory" --name "myIntegrationRuntime" \
     --resource-group "myResourceGroup" 
 ```
+#### datafactory domain-service ####
+#### datafactory group ####
