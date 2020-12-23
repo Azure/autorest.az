@@ -2627,6 +2627,31 @@ class OperationResource(msrest.serialization.Model):
         self.percent_complete = percent_complete
 
 
+class PrivateEndpoint(msrest.serialization.Model):
+    """Private endpoint details.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Resource id of the private endpoint.
+    :vartype id: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateEndpoint, self).__init__(**kwargs)
+        self.id = None
+
+
 class PrivateEndpointConnection(Resource):
     """A private endpoint connection.
 
@@ -2640,17 +2665,14 @@ class PrivateEndpointConnection(Resource):
     :ivar type: The type of the resource. Ex- Microsoft.Compute/virtualMachines or
      Microsoft.Storage/storageAccounts.
     :vartype type: str
+    :param private_endpoint: The private endpoint which the connection belongs to.
+    :type private_endpoint: ~synapse_management_client.models.PrivateEndpoint
+    :param private_link_service_connection_state: Connection state of the private endpoint
+     connection.
+    :type private_link_service_connection_state:
+     ~synapse_management_client.models.PrivateLinkServiceConnectionState
     :ivar provisioning_state: Provisioning state of the private endpoint connection.
     :vartype provisioning_state: str
-    :param status: The private link service connection status. Possible values include: "Approved",
-     "Pending", "Rejected", "Disconnected".
-    :type status: str or ~synapse_management_client.models.PrivateLinkServiceConnectionStateStatus
-    :param description: The private link service connection description.
-    :type description: str
-    :ivar actions_required: The actions required for private link service connection.
-    :vartype actions_required: str
-    :ivar id_properties_private_endpoint_id: Resource id of the private endpoint.
-    :vartype id_properties_private_endpoint_id: str
     """
 
     _validation = {
@@ -2658,34 +2680,28 @@ class PrivateEndpointConnection(Resource):
         'name': {'readonly': True},
         'type': {'readonly': True},
         'provisioning_state': {'readonly': True},
-        'actions_required': {'readonly': True},
-        'id_properties_private_endpoint_id': {'readonly': True},
     }
 
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
+        'private_endpoint': {'key': 'properties.privateEndpoint', 'type': 'PrivateEndpoint'},
+        'private_link_service_connection_state': {'key': 'properties.privateLinkServiceConnectionState', 'type': 'PrivateLinkServiceConnectionState'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'status': {'key': 'properties.privateLinkServiceConnectionState.status', 'type': 'str'},
-        'description': {'key': 'properties.privateLinkServiceConnectionState.description', 'type': 'str'},
-        'actions_required': {'key': 'properties.privateLinkServiceConnectionState.actionsRequired', 'type': 'str'},
-        'id_properties_private_endpoint_id': {'key': 'properties.privateEndpoint.id', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
-        status: Optional[Union[str, "PrivateLinkServiceConnectionStateStatus"]] = None,
-        description: Optional[str] = None,
+        private_endpoint: Optional["PrivateEndpoint"] = None,
+        private_link_service_connection_state: Optional["PrivateLinkServiceConnectionState"] = None,
         **kwargs
     ):
         super(PrivateEndpointConnection, self).__init__(**kwargs)
+        self.private_endpoint = private_endpoint
+        self.private_link_service_connection_state = private_link_service_connection_state
         self.provisioning_state = None
-        self.status = status
-        self.description = description
-        self.actions_required = None
-        self.id_properties_private_endpoint_id = None
 
 
 class PrivateEndpointConnectionList(msrest.serialization.Model):
@@ -2920,6 +2936,43 @@ class PrivateLinkResourceProperties(msrest.serialization.Model):
         self.group_id = None
         self.required_members = None
         self.required_zone_names = None
+
+
+class PrivateLinkServiceConnectionState(msrest.serialization.Model):
+    """Connection state details of the private endpoint.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :param status: The private link service connection status. Possible values include: "Approved",
+     "Pending", "Rejected", "Disconnected".
+    :type status: str or ~synapse_management_client.models.PrivateLinkServiceConnectionStateStatus
+    :param description: The private link service connection description.
+    :type description: str
+    :ivar actions_required: The actions required for private link service connection.
+    :vartype actions_required: str
+    """
+
+    _validation = {
+        'actions_required': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'status': {'key': 'status', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'actions_required': {'key': 'actionsRequired', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        status: Optional[Union[str, "PrivateLinkServiceConnectionStateStatus"]] = None,
+        description: Optional[str] = None,
+        **kwargs
+    ):
+        super(PrivateLinkServiceConnectionState, self).__init__(**kwargs)
+        self.status = status
+        self.description = description
+        self.actions_required = None
 
 
 class ProxyResource(Resource):

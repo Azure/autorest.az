@@ -9,6 +9,9 @@ az:
   namespace: azure.mgmt.datafactory
   formalize-names: true
   disable-checks: true
+  resource-type-name: CUSTOM_MGMT_PREVIEW_DATAFACTORY
+  resource-type-version: 2018-02-01
+  
 az-output-folder: $(azure-cli-extension-folder)/src/datafactory-preview
 python-sdk-output-folder: "$(az-output-folder)/azext_datafactory_preview/vendored_sdks/azure_mgmt_datafactory"
 
