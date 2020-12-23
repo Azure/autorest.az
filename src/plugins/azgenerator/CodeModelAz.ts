@@ -253,4 +253,5 @@ export interface CodeModelAz {
     // readme config
     CliCoreLib: string;
     GenMinTest: boolean;
+    GetMetaData(): {[key: string]: any};
 }

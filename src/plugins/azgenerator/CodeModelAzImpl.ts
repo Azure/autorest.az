@@ -8,7 +8,7 @@ import { EnglishPluralizationService, pascalCase } from "@azure-tools/codegen";
 import { CodeModel, Operation, OperationGroup, Parameter, ParameterLocation, Property, Request, Schema, SchemaType } from '@azure-tools/codemodel';
 import { values, keys } from "@azure-tools/linq";
 import { isArray, isNullOrUndefined } from "util";
-import { Capitalize, deepCopy, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash, isEqualStringArray, ToSentence } from '../../utils/helper';
+import { Capitalize, deepCopy, getGitStatus, MergeSort, parseResourceId, ToCamelCase, ToJsonString, ToSnakeCase, changeCamelToDash, isEqualStringArray, ToSentence } from '../../utils/helper';
 import { EXCLUDED_PARAMS, GenerationMode } from "../models";
 import { CodeModelAz, CommandExample, ExampleParam, MethodParam, KeyValueType} from "./CodeModelAz";
 import { azOptions, GenerateDefaultTestScenario, GenerateDefaultTestScenarioByDependency, PrintTestScenario, ResourcePool, ObjectStatus, GroupTestScenario} from './templates/tests/ScenarioTool';
@@ -46,12 +46,16 @@ export class CodeModelCliImpl implements CodeModelAz {
     private _clientAuthenticationPolicy: string;
     private _generationMode: GenerationMode = GenerationMode.Full;
     private _outputPath: string;
+    private _parentOptions: any;
+    private _useOptions: string[];
 
     private _cliCoreLib: string;
     private static readonly DEFAULT_CLI_CORE_LIB = 'azure.cli.core';
 
     async init() {
         this.options = await this.session.getValue('az');
+        this._parentOptions = await this.session.getValue('__parents');
+        this._useOptions = await this.session.getValue('use');
         Object.assign(azOptions, this.options);
         this.extensionName = this.options['extensions'];
         this.parentExtension = this.options['parent-extension']
@@ -156,6 +160,31 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GetResourcePool(): ResourcePool {
         return this.resource_pool;
+    }
+
+    public GetMetaData(): {[key: string]: any} {
+        function getSwaggerFolder(parentsOptions: {[key: string]: any}) {
+            for (const k in parentsOptions) {
+                const v: string = parentsOptions[k];
+                if (k.endsWith(".json") && typeof v === 'string' && v.startsWith("file:///") && v.indexOf("specification")>0) {
+                    const p = v.indexOf("specification");
+                    return v.slice("file:///".length, p-1);
+                }
+            }
+            return undefined;
+        }
+        let ret = {};
+        ret["--use"] = this._useOptions;
+
+        const swaggerFolder = getSwaggerFolder(this._parentOptions);
+        if (swaggerFolder)
+            ret["swagger git status"] = getGitStatus(swaggerFolder).split("\n");
+
+        const path=require('path');
+        const azpkg = path.join(__dirname, "..","..","..", "package.json")
+        var pjson = require(azpkg);
+        ret["package info"] = `${pjson.name} ${pjson.version}`;
+        return ret;
     }
 
     private calcOptionRequiredByMethod() {

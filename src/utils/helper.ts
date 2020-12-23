@@ -636,3 +636,9 @@ export function isEqualStringArray(array1: string[], array2: string[]): boolean 
     }
     return true;
 }
+
+export function getGitStatus(folder: string) {
+    const execSync = require('child_process').execSync;
+    const cmd = `cd ${folder} & git log -50 & echo ********GIT STATUS******** & git status`
+    return execSync(cmd).toString();
+}
