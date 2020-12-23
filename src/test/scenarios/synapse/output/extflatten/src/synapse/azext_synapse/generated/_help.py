@@ -929,15 +929,6 @@ helps['synapse workspace create'] = """
 
             account-url: Account URL
             filesystem: Filesystem name
-      - name: --private-endpoint-connections
-        short-summary: "Private endpoint connections to the workspace"
-        long-summary: |
-            Usage: --private-endpoint-connections status=XX description=XX
-
-            status: The private link service connection status.
-            description: The private link service connection description.
-
-            Multiple actions can be specified by using more than one --private-endpoint-connections argument.
     examples:
       - name: Create or update a workspace
         text: |-
