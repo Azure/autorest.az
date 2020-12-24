@@ -13,7 +13,7 @@ jobs:
       vmImage: 'vs2017-win2016'
     steps:
       - task: Npm@1
-        displayName: 'npm install'
+        displayName: 'npm install -g eslint@^7.16.0'
         inputs:
           verbose: false
       - script: 'eslint src\index.ts'
