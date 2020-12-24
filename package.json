@@ -9,8 +9,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/index.js",
-    "eslint-fix": "eslint  . --fix --ext .ts",
-    "eslint": "eslint  . --ext .ts",
+    "eslint-fix": "eslint . .scripts --ext .js --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/ --fix",
+    "eslint": "eslint . .scripts --ext .js --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/",
     "build": "tsc -p .",
     "start-testserver": "./node_modules/.bin/start-autorest-testserver",
     "stop-testserver": "./node_modules/.bin/stop-autorest-testserver",
