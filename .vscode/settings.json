@@ -1,0 +1,10 @@
+{
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": ["--max-line-length=120"],
+    "eslint.validate": ["typescript", "typescriptreact", "javascript"],
+    "eslint.format.enable": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.workingDirectories": [".", ".scripts"],
+}

@@ -15,5 +15,10 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "semi": [2, "always"],
+        "prefer-template": 0,
+        "linebreak-style": ["error", "windows"],
+        "indent": ["error", 4],
+        "no-console": "off"
     }
 }
