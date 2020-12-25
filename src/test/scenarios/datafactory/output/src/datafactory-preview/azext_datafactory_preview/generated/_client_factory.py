@@ -11,26 +11,38 @@
 
 def cf_datafactory_cl(cli_ctx, *_):
     from azure.cli.core.commands.client_factory import get_mgmt_service_client
-    from azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory import DFAZManagementClient
+    from azure.cli.core.profiles import ResourceType
     return get_mgmt_service_client(cli_ctx,
-                                   DFAZManagementClient)
+                                   resource_type=ResourceType.MGMT_DATAFACTORY)
 
+def cf_datafactory_cl1(cli_ctx, *_):
+    from azure.cli.core.commands.client_factory import get_mgmt_service_client
+    from .profiles import CUSTOM_MGMT_DATAFACTORY
+    return get_mgmt_service_client(cli_ctx,
+                                   resource_type=CUSTOM_MGMT_DATAFACTORY)
+
+
+def cf_datafactory_cl2(cli_ctx, *_):
+    from azure.cli.core.commands.client_factory import get_mgmt_service_client
+    from .profiles import CUSTOM_MGMT_PREVIEW_DATAFACTORY
+    return get_mgmt_service_client(cli_ctx,
+                                   resource_type=CUSTOM_MGMT_PREVIEW_DATAFACTORY)
 
 def cf_factory(cli_ctx, *_):
     return cf_datafactory_cl(cli_ctx).factories
 
 
 def cf_trigger(cli_ctx, *_):
-    return cf_datafactory_cl(cli_ctx).triggers
+    return cf_datafactory_cl1(cli_ctx).triggers
 
 
 def cf_integration_runtime(cli_ctx, *_):
-    return cf_datafactory_cl(cli_ctx).integration_runtimes
+    return cf_datafactory_cl1(cli_ctx).integration_runtimes
 
 
 def cf_domain_service(cli_ctx, *_):
-    return cf_datafactory_cl(cli_ctx).domain_services
+    return cf_datafactory_cl2(cli_ctx).domain_services
 
 
 def cf_group(cli_ctx, *_):
-    return cf_datafactory_cl(cli_ctx).groups
+    return cf_datafactory_cl2(cli_ctx).groups

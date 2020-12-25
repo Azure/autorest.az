@@ -9,6 +9,9 @@
 # --------------------------------------------------------------------------
 
 from azure.cli.core import AzCommandsLoader
+from azure.cli.core.profiles import register_resource_type
+from azure.cli.core.profiles import ResourceType
+from azext_datafactory_preview.generated.profiles import CUSTOM_MGMT_DATAFACTORY, CUSTOM_MGMT_PREVIEW_DATAFACTORY
 from azext_datafactory_preview.generated._help import helps  # pylint: disable=unused-import
 try:
     from azext_datafactory_preview.manual._help import helps  # pylint: disable=reimported
@@ -20,14 +23,17 @@ class DFAZManagementClientCommandsLoader(AzCommandsLoader):
 
     def __init__(self, cli_ctx=None):
         from azure.cli.core.commands import CliCommandType
-        from azext_datafactory_preview.generated._client_factory import cf_datafactory_cl
+        register_resource_type('latest', CUSTOM_MGMT_DATAFACTORY, '2018-01-01')
+        register_resource_type('latest', CUSTOM_MGMT_PREVIEW_DATAFACTORY, '2019-01-02-preview')
         datafactory_custom = CliCommandType(
-            operations_tmpl='azext_datafactory_preview.custom#{}',
-            client_factory=cf_datafactory_cl)
+            operations_tmpl='azext_datafactory_preview.custom#{}')
         parent = super(DFAZManagementClientCommandsLoader, self)
-        parent.__init__(cli_ctx=cli_ctx, custom_command_type=datafactory_custom)
+        parent.__init__(cli_ctx=cli_ctx,
+                        resource_type=ResourceType.MGMT_DATAFACTORY,
+                        custom_command_type=datafactory_custom)
 
     def load_command_table(self, args):
+        super(DFAZManagementClientCommandsLoader, self).load_command_table(args)
         from azext_datafactory_preview.generated.commands import load_command_table
         load_command_table(self, args)
         try:
@@ -38,6 +44,7 @@ class DFAZManagementClientCommandsLoader(AzCommandsLoader):
         return self.command_table
 
     def load_arguments(self, command):
+        super(DFAZManagementClientCommandsLoader, self).load_arguments(command)
         from azext_datafactory_preview.generated._params import load_arguments
         load_arguments(self, command)
         try:

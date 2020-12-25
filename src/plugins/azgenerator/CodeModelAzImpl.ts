@@ -146,6 +146,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.formResourceType(this.options?.['resource-type']);
     }
 
+    public get CustomResourceType(): string | undefined {
+        return this.options?.['custom-resource-type'];
+    }
+
     public get GenChecks(): boolean {
         let disableChecks = this.options?.['disable-checks'];
         if (disableChecks) return false;
@@ -681,6 +685,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.formResourceType(this.CommandGroup.language['cli']?.['resource-type']);
     }
 
+    public get CommandGroup_CustomResourceType(): string | undefined {
+        return this.CommandGroup.language['cli']?.['custom-resource-type'];
+    }
+
     public get CommandGroup_CliKey(): string {
         return this.CommandGroup.language['cli']?.cliKey;
     }
@@ -885,6 +893,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.formResourceType(this.Command.language['cli']?.['resource-type']);
     }
 
+    public get Command_CustomResourceType(): string | undefined {
+        return this.Command.language['cli']?.['custom-resource-type'];
+    }
+
     public formResourceType(config: string|undefined) {
         if (isNullOrUndefined(config) || config.startsWith("ResourceType.")) return config;
         else return "ResourceType." + config;
@@ -1002,6 +1014,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get Method_ResourceType(): string | undefined {
         return this.formResourceType(this.Method.language['cli']?.['resource-type']);
+    }
+
+    public get Method_CustomResourceType(): string | undefined {
+        return this.Method.language['cli']?.['custom-resource-type'];
     }
 
     public get Method_BodyParameterName(): string {
@@ -1237,6 +1253,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_ResourceType(): string | undefined {
         return this.formResourceType(this.MethodParameter.language['cli']?.['resource-type']);
+    }
+
+    public get MethodParameter_CustomResourceType(): string | undefined {
+        return this.MethodParameter.language['cli']?.['custom-resource-type'];
     }
 
     public get MethodParameter_IdPart(): string {

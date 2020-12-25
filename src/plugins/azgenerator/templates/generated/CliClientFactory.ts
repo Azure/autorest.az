@@ -22,6 +22,10 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz): string[] {
         output.push("    from azure.core.pipeline.policies import " + model.Extension_ClientAuthenticationPolicy);
     }
 
+    if (model.ResourceType) {
+        output.push("    from azure.cli.core.profiles import ResourceType");
+    }
+
     // Start handle arguments
     output.push("    return get_mgmt_service_client(cli_ctx,");
     output.push("                                   " + model.PythonMgmtClient);
@@ -36,6 +40,10 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz): string[] {
     if (!isNullOrUndefined(model.Extension_ClientAuthenticationPolicy)) {
         output.push(output.pop() + ",");
         output.push("                                   authentication_policy=" + model.Extension_ClientAuthenticationPolicy + "()");
+    }
+    if (model.ResourceType) {
+        output.push(output.pop() + ",");
+        output.push("                                   resource_type=" + model.ResourceType);     
     }
     output.push(output.pop()+ ")");
     // End

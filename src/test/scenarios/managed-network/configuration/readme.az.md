@@ -74,7 +74,7 @@ cli:
       - where:
             group: managedNetworkPeeringPolicies
             op: Delete
-            param: managedNetworkName
+            #param: managedNetworkName
         max-api: '2020-05-01'
         min-api: '2019-05-01'
         resource-type: DATA_NETWORK

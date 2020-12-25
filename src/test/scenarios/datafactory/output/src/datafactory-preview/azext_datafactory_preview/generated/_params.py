@@ -26,22 +26,27 @@ from azext_datafactory_preview.action import (
     AddFakeIdentity,
     AddReplicaSets
 )
+from azure.cli.core.profiles import ResourceType
+from azext_datafactory_preview.generated.profiles import (
+    CUSTOM_MGMT_DATAFACTORY,
+    CUSTOM_MGMT_PREVIEW_DATAFACTORY 
+)
 
 
 def load_arguments(self, _):
 
-    with self.argument_context('datafactory list') as c:
+    with self.argument_context('datafactory list', resource_type=ResourceType.MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('gen_custom_headers', type=str, help='Test the ability to rename ignoring attributes.')
 
-    with self.argument_context('datafactory show') as c:
+    with self.argument_context('datafactory show', resource_type=ResourceType.MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.', id_part='name',
                    configured_default='factory')
         c.argument('if_none_match', type=str, help='ETag of the factory entity. Should only be specified for get. If '
                    'the ETag matches the existing entity tag, or if * was provided, then no content will be returned.')
 
-    with self.argument_context('datafactory create') as c:
+    with self.argument_context('datafactory create', resource_type=ResourceType.MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.',
                    configured_default='factory')
@@ -59,18 +64,18 @@ def load_arguments(self, _):
         c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
         c.argument('zones', nargs='+', help='This is only for az test.')
 
-    with self.argument_context('datafactory update') as c:
+    with self.argument_context('datafactory update', resource_type=ResourceType.MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.', id_part='name',
                    configured_default='factory')
         c.argument('tags', tags_type)
 
-    with self.argument_context('datafactory delete') as c:
+    with self.argument_context('datafactory delete', resource_type=ResourceType.MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.', id_part='name',
                    configured_default='factory')
 
-    with self.argument_context('datafactory configure-factory-repo') as c:
+    with self.argument_context('datafactory configure-factory-repo', resource_type=ResourceType.MGMT_DATAFACTORY) as c:
         c.argument('location_id', type=str, help='The location identifier.', id_part='name')
         c.argument('factory_resource_id', type=str, help='The factory resource id.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS '
@@ -78,7 +83,7 @@ def load_arguments(self, _):
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s '
                    'GitHub repo information.', arg_group='RepoConfiguration')
 
-    with self.argument_context('datafactory get-data-plane-access') as c:
+    with self.argument_context('datafactory get-data-plane-access', resource_type=ResourceType.MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.', id_part='name',
                    configured_default='factory')
@@ -93,7 +98,7 @@ def load_arguments(self, _):
         c.argument('expire_time', type=str, help='Expiration time for the token. Maximum duration for the token is '
                    'eight hours and by default the token will expire in eight hours.')
 
-    with self.argument_context('datafactory get-git-hub-access-token') as c:
+    with self.argument_context('datafactory get-git-hub-access-token', resource_type=ResourceType.MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', options_list=['--name', '-n'], type=str, help='The factory name.', id_part='name',
                    configured_default='factory')
@@ -101,11 +106,11 @@ def load_arguments(self, _):
         c.argument('git_hub_client_id', type=str, help='GitHub application client ID.')
         c.argument('git_hub_access_token_base_url', type=str, help='GitHub access token base URL.')
 
-    with self.argument_context('datafactory trigger list') as c:
+    with self.argument_context('datafactory trigger list', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
 
-    with self.argument_context('datafactory trigger show') as c:
+    with self.argument_context('datafactory trigger show', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('trigger_name', options_list=['--name', '-n', '--trigger-name'], type=str, help='The trigger name.',
@@ -113,7 +118,7 @@ def load_arguments(self, _):
         c.argument('if_none_match', type=str, help='ETag of the trigger entity. Should only be specified for get. If '
                    'the ETag matches the existing entity tag, or if * was provided, then no content will be returned.')
 
-    with self.argument_context('datafactory trigger create') as c:
+    with self.argument_context('datafactory trigger create', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
         c.argument('trigger_name', options_list=['--name', '-n', '--trigger-name'], type=str,
@@ -123,7 +128,7 @@ def load_arguments(self, _):
         c.argument('properties', type=validate_file_or_dict, help='Properties of the trigger. Expected value: '
                    'json-string/@json-file.')
 
-    with self.argument_context('datafactory trigger update') as c:
+    with self.argument_context('datafactory trigger update', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('trigger_name', options_list=['--name', '-n', '--trigger-name'], type=str, help='The trigger name.',
@@ -135,19 +140,19 @@ def load_arguments(self, _):
                    'trigger. Expected value: json-string/@json-file.')
         c.ignore('trigger')
 
-    with self.argument_context('datafactory trigger delete') as c:
+    with self.argument_context('datafactory trigger delete', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('trigger_name', options_list=['--name', '-n', '--trigger-name'], type=str, help='The trigger name.',
                    id_part='child_name_1')
 
-    with self.argument_context('datafactory trigger get-event-subscription-status') as c:
+    with self.argument_context('datafactory trigger get-event-subscription-status', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('trigger_name', options_list=['--name', '-n', '--trigger-name'], type=str, help='The trigger name.',
                    id_part='child_name_1')
 
-    with self.argument_context('datafactory trigger query-by-factory') as c:
+    with self.argument_context('datafactory trigger query-by-factory', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('continuation_token', type=str, help='The continuation token for getting the next page of results. '
@@ -155,31 +160,31 @@ def load_arguments(self, _):
         c.argument('parent_trigger_name', type=str, help='The name of the parent TumblingWindowTrigger to get the '
                    'child rerun triggers')
 
-    with self.argument_context('datafactory trigger start') as c:
+    with self.argument_context('datafactory trigger start', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('trigger_name', options_list=['--name', '-n', '--trigger-name'], type=str, help='The trigger name.',
                    id_part='child_name_1')
 
-    with self.argument_context('datafactory trigger stop') as c:
+    with self.argument_context('datafactory trigger stop', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('trigger_name', options_list=['--name', '-n', '--trigger-name'], type=str, help='The trigger name.',
                    id_part='child_name_1')
 
-    with self.argument_context('datafactory trigger subscribe-to-event') as c:
+    with self.argument_context('datafactory trigger subscribe-to-event', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('trigger_name', options_list=['--name', '-n', '--trigger-name'], type=str, help='The trigger name.',
                    id_part='child_name_1')
 
-    with self.argument_context('datafactory trigger unsubscribe-from-event') as c:
+    with self.argument_context('datafactory trigger unsubscribe-from-event', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('trigger_name', options_list=['--name', '-n', '--trigger-name'], type=str, help='The trigger name.',
                    id_part='child_name_1')
 
-    with self.argument_context('datafactory trigger wait') as c:
+    with self.argument_context('datafactory trigger wait', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('trigger_name', options_list=['--name', '-n', '--trigger-name'], type=str, help='The trigger name.',
@@ -187,11 +192,11 @@ def load_arguments(self, _):
         c.argument('if_none_match', type=str, help='ETag of the trigger entity. Should only be specified for get. If '
                    'the ETag matches the existing entity tag, or if * was provided, then no content will be returned.')
 
-    with self.argument_context('datafactory integration-runtime list') as c:
+    with self.argument_context('datafactory integration-runtime list', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
 
-    with self.argument_context('datafactory integration-runtime show') as c:
+    with self.argument_context('datafactory integration-runtime show', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
@@ -200,7 +205,7 @@ def load_arguments(self, _):
                    'for get. If the ETag matches the existing entity tag, or if * was provided, then no content will '
                    'be returned.')
 
-    with self.argument_context('datafactory integration-runtime linked-integration-runtime create') as c:
+    with self.argument_context('datafactory integration-runtime linked-integration-runtime create', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
         c.argument('integration_runtime_name', type=str, help='The integration runtime name.')
@@ -212,7 +217,7 @@ def load_arguments(self, _):
         c.argument('data_factory_location', type=str, help='The location of the data factory that the linked '
                    'integration runtime belongs to.')
 
-    with self.argument_context('datafactory integration-runtime managed create') as c:
+    with self.argument_context('datafactory integration-runtime managed create', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
@@ -231,7 +236,7 @@ def load_arguments(self, _):
         c.argument('ssis_properties', type=validate_file_or_dict, help='SSIS properties for managed integration '
                    'runtime. Expected value: json-string/@json-file.', arg_group='Type Properties')
 
-    with self.argument_context('datafactory integration-runtime self-hosted create') as c:
+    with self.argument_context('datafactory integration-runtime self-hosted create', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
@@ -242,7 +247,7 @@ def load_arguments(self, _):
         c.argument('linked_info', type=validate_file_or_dict, help='The base definition of a linked integration '
                    'runtime. Expected value: json-string/@json-file.', arg_group='Type Properties')
 
-    with self.argument_context('datafactory integration-runtime update') as c:
+    with self.argument_context('datafactory integration-runtime update', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
@@ -254,37 +259,37 @@ def load_arguments(self, _):
         c.argument('update_delay_offset', type=str, help='The time offset (in hours) in the day, e.g., PT03H is 3 '
                    'hours. The integration runtime auto update will happen on that time.')
 
-    with self.argument_context('datafactory integration-runtime delete') as c:
+    with self.argument_context('datafactory integration-runtime delete', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
                    help='The integration runtime name.', id_part='child_name_1')
 
-    with self.argument_context('datafactory integration-runtime get-connection-info') as c:
+    with self.argument_context('datafactory integration-runtime get-connection-info', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
                    help='The integration runtime name.', id_part='child_name_1')
 
-    with self.argument_context('datafactory integration-runtime get-monitoring-data') as c:
+    with self.argument_context('datafactory integration-runtime get-monitoring-data', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
                    help='The integration runtime name.', id_part='child_name_1')
 
-    with self.argument_context('datafactory integration-runtime get-status') as c:
+    with self.argument_context('datafactory integration-runtime get-status', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
                    help='The integration runtime name.', id_part='child_name_1')
 
-    with self.argument_context('datafactory integration-runtime list-auth-key') as c:
+    with self.argument_context('datafactory integration-runtime list-auth-key', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
                    help='The integration runtime name.')
 
-    with self.argument_context('datafactory integration-runtime regenerate-auth-key') as c:
+    with self.argument_context('datafactory integration-runtime regenerate-auth-key', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
@@ -292,38 +297,38 @@ def load_arguments(self, _):
         c.argument('key_name', arg_type=get_enum_type(['authKey1', 'authKey2']), help='The name of the authentication '
                    'key to regenerate.')
 
-    with self.argument_context('datafactory integration-runtime remove-link') as c:
+    with self.argument_context('datafactory integration-runtime remove-link', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
                    help='The integration runtime name.', id_part='child_name_1')
         c.argument('linked_factory_name', type=str, help='The data factory name for linked integration runtime.')
 
-    with self.argument_context('datafactory integration-runtime start') as c:
+    with self.argument_context('datafactory integration-runtime start', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
                    help='The integration runtime name.', id_part='child_name_1')
 
-    with self.argument_context('datafactory integration-runtime stop') as c:
+    with self.argument_context('datafactory integration-runtime stop', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
                    help='The integration runtime name.', id_part='child_name_1')
 
-    with self.argument_context('datafactory integration-runtime sync-credentials') as c:
+    with self.argument_context('datafactory integration-runtime sync-credentials', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
                    help='The integration runtime name.', id_part='child_name_1')
 
-    with self.argument_context('datafactory integration-runtime upgrade') as c:
+    with self.argument_context('datafactory integration-runtime upgrade', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
                    help='The integration runtime name.', id_part='child_name_1')
 
-    with self.argument_context('datafactory integration-runtime wait') as c:
+    with self.argument_context('datafactory integration-runtime wait', resource_type=CUSTOM_MGMT_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', id_part='name', configured_default='factory')
         c.argument('integration_runtime_name', options_list=['--name', '-n', '--integration-runtime-name'], type=str,
@@ -332,7 +337,7 @@ def load_arguments(self, _):
                    'for get. If the ETag matches the existing entity tag, or if * was provided, then no content will '
                    'be returned.')
 
-    with self.argument_context('datafactory domain-service create') as c:
+    with self.argument_context('datafactory domain-service create', resource_type=CUSTOM_MGMT_PREVIEW_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('domain_service_name', options_list=['--name', '-n', '--domain-service-name'], type=str, help='The '
                    'name of the domain service.')
@@ -348,7 +353,7 @@ def load_arguments(self, _):
         c.argument('filtered_sync', arg_type=get_enum_type(['Enabled', 'Disabled']), help='Enabled or Disabled flag to '
                    'turn on Group-based filtered sync')
 
-    with self.argument_context('datafactory domain-service update') as c:
+    with self.argument_context('datafactory domain-service update', resource_type=CUSTOM_MGMT_PREVIEW_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('domain_service_name', options_list=['--name', '-n', '--domain-service-name'], type=str, help='The '
                    'name of the domain service.', id_part='name')
@@ -364,7 +369,7 @@ def load_arguments(self, _):
         c.argument('filtered_sync', arg_type=get_enum_type(['Enabled', 'Disabled']), help='Enabled or Disabled flag to '
                    'turn on Group-based filtered sync')
 
-    with self.argument_context('datafactory group create') as c:
+    with self.argument_context('datafactory group create', resource_type=CUSTOM_MGMT_PREVIEW_DATAFACTORY) as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('project_name', type=str, help='Name of the Azure Migrate project.')
         c.argument('group_name', options_list=['--name', '-n', '--group-name'], type=str, help='Unique name of a group '
