@@ -1,6 +1,6 @@
 {
   "name": "@autorest/az",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "Autorest Azure AZ extension",
   "main": "dist/index.js",
   "engines": {
