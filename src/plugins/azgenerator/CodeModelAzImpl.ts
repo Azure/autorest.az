@@ -1251,14 +1251,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.MethodParameter.language['cli']?.['min-api'];
     }
 
-    public get MethodParameter_ResourceType(): string | undefined {
-        return this.formResourceType(this.MethodParameter.language['cli']?.['resource-type']);
-    }
-
-    public get MethodParameter_CustomResourceType(): string | undefined {
-        return this.MethodParameter.language['cli']?.['custom-resource-type'];
-    }
-
     public get MethodParameter_IdPart(): string {
         return this.MethodParameter.language['az']['id_part'];
     }

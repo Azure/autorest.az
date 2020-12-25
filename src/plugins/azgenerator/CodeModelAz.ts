@@ -171,8 +171,6 @@ export interface CodeModelAz {
     MethodParameter_CliKey: string;
     MethodParameter_MaxApi: string;
     MethodParameter_MinApi: string;
-    MethodParameter_ResourceType: string | undefined;
-    MethodParameter_CustomResourceType: string | undefined;
     MethodParameter_IsArray: boolean
     MethodParameter_NamePython: string
     MethodParameter_MapsTo: string;

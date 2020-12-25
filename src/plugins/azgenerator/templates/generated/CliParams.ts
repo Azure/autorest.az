@@ -122,6 +122,115 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     return header.getLines().concat(output);
 }
 
+
+function getOptionsListItem(model: CodeModelAz) {
+    let param = model.MethodParameter;
+    let parameterName = model.Parameter_MapsTo(param);
+    let optionsList = undefined
+    // this is to handle names like "format", "type", etc
+    if (parameterName.endsWith("_")) {
+        if (isNullOrUndefined(param.language['az']['alias'])) {
+            param.language['az']['alias'] = [];
+        }
+        param.language['az']['alias'].push(parameterName.substr(0, parameterName.length - 1));
+
+    } else if (parameterName.endsWith('name') && !model.Method['hasName'] && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase()) {
+        if (isNullOrUndefined(param.language['az']['alias'])) {
+            param.language['az']['alias'] = [];
+            param.language['az']['alias'].push('name');
+            param.language['az']['alias'].push('n');
+            param.language['az']['alias'].push(parameterName);
+        }
+    } 
+    if (!isNullOrUndefined(param.language['az']['alias'])) {
+        let aliases = param.language['az']['alias'];
+        if (aliases.length > 0) {
+            let alias_str = [];
+            let ori_alias = [];
+            for (let alias of aliases) {
+                alias = alias.replace(/'/g, '');
+                let tmpAlias = alias;
+                if (alias.length == 1) {
+                    alias = "'-" + alias + "'";
+                } else if (alias.length > 1) {
+                    alias = "'--" + alias.replace(/_/g, '-') + "'";
+                }
+                if (alias_str.indexOf(alias) < 0) {
+                    alias_str.push(alias);
+                    ori_alias.push(tmpAlias)
+                }
+
+            }
+            param.language['az']['alias'] = ori_alias;
+            optionsList = "options_list=[" + alias_str.join(', ') + "]";
+        }
+
+    }
+    return optionsList;
+}
+
+function getArgTypeItem() {
+
+    if (model.MethodParameter_Type == SchemaType.Boolean) {
+        hasBoolean = true;
+        argument += ", arg_type=get_three_state_flag()";
+    }
+    else if (model.MethodParameter_Type == SchemaType.Choice || model.MethodParameter_Type == SchemaType.SealedChoice) {
+        hasEnum = true;
+        argument += ", arg_type=get_enum_type([";
+
+        model.MethodParameter_EnumValues.forEach(element => {
+            if (!argument.endsWith("[")) argument += ", ";
+            argument += "'" + element + "'";
+        });
+        argument += "])";
+    }
+}
+
+function getTypeItem() {
+
+}
+
+function getHelpItem() {
+    argument += ", help='" + EscapeString(model.MethodParameter_Description).trimRight();
+    if (model.MethodParameter_IsList && !model.MethodParameter_IsSimpleArray) {
+        let netDescription = model.MethodParameter_Description.trim();
+        if (netDescription.length > 0 && netDescription[netDescription.length - 1].match(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)) {
+            argument += ".";
+        }
+        if (model.MethodParameter_IsListOfSimple) {
+            let options = [];
+            if (!isNullOrUndefined(model.Schema_ActionName(model.MethodParameter.schema))) {
+                if (baseParam && model.MethodParameter['polyBaseParam'] == baseParam) {
+                    let keyToMatch = baseParam.schema?.['discriminator']?.property?.language['python']?.name;
+                    let valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
+                    options = GetActionOptions(model, model.MethodParameter, keyToMatch, valueToMatch);
+                }
+                else {
+                    options = GetActionOptions(model, model.MethodParameter);
+                }
+            }
+            if (options.length > 0) {
+                // for those object has known KEYs, the help is in the _help.py file
+            }
+            else {
+                argument += " Expect value: KEY1=VALUE1 KEY2=VALUE2 ...";
+            }
+
+        }
+        else {
+            argument += " Expected value: json-string/@json-file.";
+        }
+    }
+    if (debug) {
+        if (!argument.endsWith(".")) {
+            argument += ".";
+        }
+        argument += " Swagger name=" + model.MethodParameter_CliKey;
+    }
+    argument += "'";
+}
+
 function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug: boolean = false) {
     //let method: string = methods[mi];
 
@@ -194,66 +303,14 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     }
                     let argument = "        c.argument('" + parameterName + "'";
 
-                    // this is to handle names like "format", "type", etc
-                    if (parameterName.endsWith("_")) {
-                        if (isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
-                            model.MethodParameter.language['az']['alias'] = [];
-                        }
-                        model.MethodParameter.language['az']['alias'].push(parameterName.substr(0, parameterName.length - 1));
-
-                    } else if (parameterName.endsWith('name') && !model.Method['hasName'] && parameterName.replace(/_name$|_/g, '') == model.CommandGroup_DefaultName.toLowerCase()) {
-                        if (isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
-                            model.MethodParameter.language['az']['alias'] = [];
-                            model.MethodParameter.language['az']['alias'].push('name');
-                            model.MethodParameter.language['az']['alias'].push('n');
-                            model.MethodParameter.language['az']['alias'].push(parameterName);
-                        }
-                    }
-                    if (!isNullOrUndefined(model.MethodParameter.language['az']['alias'])) {
-                        argument = "        c.argument('" + parameterName + "'";
-                        let aliases = model.MethodParameter.language['az']['alias'];
-                        if (aliases.length > 0) {
-                            let alias_str = [];
-                            let ori_alias = [];
-                            for (let alias of aliases) {
-                                alias = alias.replace(/'/g, '');
-                                let tmpAlias = alias;
-                                if (alias.length == 1) {
-                                    alias = "'-" + alias + "'";
-                                } else if (alias.length > 1) {
-                                    alias = "'--" + alias.replace(/_/g, '-') + "'";
-                                }
-                                if (alias_str.indexOf(alias) < 0) {
-                                    alias_str.push(alias);
-                                    ori_alias.push(tmpAlias)
-                                }
-
-                            }
-                            model.MethodParameter.language['az']['alias'] = ori_alias;
-                            argument += ", options_list=[" + alias_str.join(', ') + "]";
-                        }
-
-                    }
-
+                    let items = [];
+                    let optionsList = getOptionsListItem(model);
+                    optionsList? items.push(optionsList): undefined;
                     if (allParam.has(parameterName)) {
                         continue;
                     }
                     allParam.set(parameterName, true);
 
-                    if (model.MethodParameter_Type == SchemaType.Boolean) {
-                        hasBoolean = true;
-                        argument += ", arg_type=get_three_state_flag()";
-                    }
-                    else if (model.MethodParameter_Type == SchemaType.Choice || model.MethodParameter_Type == SchemaType.SealedChoice) {
-                        hasEnum = true;
-                        argument += ", arg_type=get_enum_type([";
-
-                        model.MethodParameter_EnumValues.forEach(element => {
-                            if (!argument.endsWith("[")) argument += ", ";
-                            argument += "'" + element + "'";
-                        });
-                        argument += "])";
-                    }
 
                     let needSkip = false;
                     if (parameterName == "resource_group_name") {
@@ -310,43 +367,6 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                             argument += ", type=str"
                         }
 
-                        argument += ", help='" + EscapeString(model.MethodParameter_Description).trimRight();
-                        if (model.MethodParameter_IsList && !model.MethodParameter_IsSimpleArray) {
-                            let netDescription = model.MethodParameter_Description.trim();
-                            if (netDescription.length > 0 && netDescription[netDescription.length - 1].match(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)) {
-                                argument += ".";
-                            }
-                            if (model.MethodParameter_IsListOfSimple) {
-                                let options = [];
-                                if (!isNullOrUndefined(model.Schema_ActionName(model.MethodParameter.schema))) {
-                                    if (baseParam && model.MethodParameter['polyBaseParam'] == baseParam) {
-                                        let keyToMatch = baseParam.schema?.['discriminator']?.property?.language['python']?.name;
-                                        let valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
-                                        options = GetActionOptions(model, model.MethodParameter, keyToMatch, valueToMatch);
-                                    }
-                                    else {
-                                        options = GetActionOptions(model, model.MethodParameter);
-                                    }
-                                }
-                                if (options.length > 0) {
-                                    // for those object has known KEYs, the help is in the _help.py file
-                                }
-                                else {
-                                    argument += " Expect value: KEY1=VALUE1 KEY2=VALUE2 ...";
-                                }
-
-                            }
-                            else {
-                                argument += " Expected value: json-string/@json-file.";
-                            }
-                        }
-                        if (debug) {
-                            if (!argument.endsWith(".")) {
-                                argument += ".";
-                            }
-                            argument += " Swagger name=" + model.MethodParameter_CliKey;
-                        }
-                        argument += "'";
 
                         if (!isNullOrUndefined(baseParam) && model.MethodParameter['polyBaseParam'] == baseParam) {
                             argument += ", arg_group='" + Capitalize(ToCamelCase(model.Parameter_MapsTo(baseParam))) + "'";
@@ -363,7 +383,7 @@ function getCommandBody(model: CodeModelAz, needGeneric: boolean = false, debug:
                     if (!isNullOrUndefined(model.MethodParameter_DefaultConfigKey)) {
                         argument += ", configured_default='" + model.MethodParameter_DefaultConfigKey + "'";
                     }
-                    const paramRet = composeParamString(model.MethodParameter_MaxApi, model.MethodParameter_MinApi, model.MethodParameter_ResourceType);
+                    const paramRet = composeParamString(model.MethodParameter_MaxApi, model.MethodParameter_MinApi, "");
                     argument += paramRet[0];
                     if (paramRet[1])    useResourceType = true;
                     let parameterExtraInfo = "";
