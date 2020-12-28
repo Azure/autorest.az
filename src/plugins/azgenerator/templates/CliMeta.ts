@@ -7,11 +7,7 @@ import { CodeModelAz } from "../CodeModelAz"
 import { putToZip } from "../../../utils/inplace"
 
 export function GenerateMetaFile(model: CodeModelAz) {
-    var output: string[] = [];
-
-    const path=require('path');
-    const azpkg = path.join(__dirname, "..","..","..","..", "package.json")
-    var pjson = require(azpkg);
-    output.push(`${pjson.name} version: ${pjson.version}`);
+    const output: string[] = JSON.stringify( model.GetMetaData(), null, 2).split("\n");
+    
     putToZip(model.CliOutputFolder, "meta.txt", output);
 }
