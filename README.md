@@ -41,19 +41,19 @@
 
 # Introduction
 
-This project is for Azure CLI Code Generator. it supports both Azure CLI extensions and Azure CLI main repository modules generation. This document introduces how Azure CLI Code Generator works and how to use it as well as some advanced features. Then, it introduces how to debug the code generator. Finally, it shows the Autorest Pipeline definitions. 
+The Azure CLI Code Generator provides Azure CLI module generation for both Azure CLI extensions and Azure CLI main repository. In this document, we will first introduce how Azure CLI Code Generator works including the basic usage as well as some advanced features. Then, we will describe how to debug the code generator. Finally, we will show the Autorest Pipeline definitions. 
 
 **Assumption**
 
-This document is mainly for Azure CLI developers and people who are interested in generating Azure CLI by yourselves.  
+This document is mainly for Azure CLI developers and people who are interested in generating Azure CLI by themselves.  
 # How does CLI Code Generator Work
-The Azure Code Generator is basically a [Autorest](https://github.com/Azure/autorest) extension which takes swagger in [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) or [azure-rest-api-specs-pr](https://github.com/Azure/azure-rest-api-specs-pr) repos as input and output functional Azure CLI code. It uses Autorest V3 to handle the configuration interpretation, pipeline resolving, pipeline scheduling and uses [Autorest.Modelerfour](https://github.com/Azure/autorest.modelerfour) as a basic code model. 
+The Azure Code Generator is an [Autorest](https://github.com/Azure/autorest) extension which generates functional Azure CLI code for Azure services by using Swagger specifications defined in [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) or [azure-rest-api-specs-pr](https://github.com/Azure/azure-rest-api-specs-pr) repos. It uses Autorest V3 to handle the configuration interpretation, pipeline resolving, pipeline scheduling and uses [Autorest.Modelerfour](https://github.com/Azure/autorest.modelerfour) as a basic code model. 
 
-Besides the Autorest.Modelerfour, Autorest.Az has two more Autorest extensions dependencies, the [Autorest.Clicommon](https://github.com/Azure/autorest.clicommon) and [Autorest.Python](https://github.com/Azure/autorest.python), the Autorest.Clicommon mainly handles the user defined cli directives such as split operations, handle polymorphism, rename, hide etc. and properly mark it in the code model, the Autorest.Python is integrated by Autorest.Az as Azure CLI doesn't call the rest api directly, instead, it either call the vendored SDKs in the case of Azure CLI Extensions or call the public released SDK in the case of Azure CLI main repo modules.
+Besides the Autorest.Modelerfour, Autorest.Az has two more Autorest extensions dependencies, the [Autorest.Clicommon](https://github.com/Azure/autorest.clicommon) and [Autorest.Python](https://github.com/Azure/autorest.python), the Autorest.Clicommon is responsiblefor handling the user defined CLI directives such as operations splitting, polymorphism, renaming, hiding etc. and marking them properly in the code model. The Autorest.Python is integrated into Autorest.Az for the Rest APIs calls. Azure CLI does not do the Rest call directly. It either call the vendored SDKs from Azure CLI Extensions or call the public released SDK from Azure CLI main repo modules.
 
-Both the Autorest.Clicommon and Autorest.Python take Autorest.Modelerfour as input, Normally autorest.python will not flatten the code model because the Python Language naturally support complex object, you don't need to flatten the parameter. But for command line tools like Azure CLI, the parameter layer must not deeper than two, otherwise it's hard to express the complex object without using a bunch of delimiters. Therefore, Autorest.Clicommon will flatten the code model. Autorest az will merge the two code model from Autorest.Python and Autorest.Clicommon.    
+Both the Autorest.Clicommon and Autorest.Python take Autorest.Modelerfour as input. Normally Autorest.Python will not flatten the code model because Python naturally support complex object. However, for Azure CLI, the object nesting level could not be deeper than two, otherwise it would be hard to express the complex object without using a bunch of delimiters. Therefore, Autorest.Clicommon will flatten the code model. Autorest az will merge the two code model from Autorest.Python and Autorest.Clicommon.    
 
-After Autorest.Az has done some Azure CLI specific logic, it will render the code model into code template finally output the generated code.   
+After Autorest.Az has done some Azure CLI specific logic, it will render the code model into code template and finally output the generated code.   
 
 
 ## Different Generation Options
@@ -71,7 +71,7 @@ Actually this *--xxx.debugger* option is provided by Autorest, by which you can 
 1. *--sdk-no-flatten*  
 CLI code generator supports to generate the flattened SDK or the un-flattened SDK. Users can specify *--sdk-no-flatten* to generate the un-flattened SDK. The current publish released autorest.az (version 1.6.2) will still generate the flattened SDK in Azure CLI extensions generation. But in our latest private release, we have change the default behavior into un-flattened SDKs for both Azure CLI extensions and Azure CLI main repo modules generation.
 1. *--sdk-flatten*  
-This *--sdk-flatten* option is still in private releases. It will only take effect when no *--sdk-no-flatten* is specified. It's useful for those RPs that was onboard with previous CLI code generator when users don't want to intro the SDK code breaking changes.
+This *--sdk-flatten* option is still in private releases. It will only take effect when no *--sdk-no-flatten* is specified. It's useful for those RPs that was onboard with previous CLI code generator when users don't want to introduce the SDK breaking changes.
 1. --generate-sdk  
 This *--generate-sdk* has two available value "yes" or "no". By default the value is "yes" for Azure CLI extensions generation, and "no" for Azure CLI main repo modules.
 1. --compatible-level  
