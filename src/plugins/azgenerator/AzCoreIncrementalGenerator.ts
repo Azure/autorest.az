@@ -1,41 +1,40 @@
-/*---------------------------------------------------------------------------------------------
+/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+ *-------------------------------------------------------------------------------------------- */
 import * as fs from 'fs';
 import * as path from 'path';
-import { PathConstants, SystemType } from "../models";
-import { AzGeneratorBase } from "./AzGeneratorBase";
-import { CodeModelAz } from "./CodeModelAz";
-import { GenerateNamespaceInit } from "./templates/CliNamespaceInit";
+import { PathConstants, SystemType } from '../models';
+import { AzGeneratorBase } from './AzGeneratorBase';
+import { CodeModelAz } from './CodeModelAz';
+import { GenerateNamespaceInit } from './templates/CliNamespaceInit';
 import { CliReport } from './templates/CliReport';
-import { CliTopAction } from "./templates/CliTopAction";
-import { CliTopCustom } from "./templates/CliTopCustom";
-import { CliTopHelp } from "./templates/CliTopHelp";
-import { CliTopInit } from "./templates/CliTopInit";
+import { CliTopAction } from './templates/CliTopAction';
+import { CliTopCustom } from './templates/CliTopCustom';
+import { CliTopHelp } from './templates/CliTopHelp';
+import { CliTopInit } from './templates/CliTopInit';
 import { CliMainRequirement } from './templates/extraMain/CliMainRequirement';
 import { CliMainSetupPy } from './templates/extraMain/CliMainSetupPy';
-import { GenerateAzureCliActions } from "./templates/generated/CliActions";
-import { GenerateAzureCliClientFactory } from "./templates/generated/CliClientFactory";
-import { GenerateAzureCliCommands } from "./templates/generated/CliCommands";
-import { GenerateAzureCliCustom } from "./templates/generated/CliCustom";
-import { GenerateAzureCliHelp } from "./templates/generated/CliHelp";
-import { GenerateAzureCliParams } from "./templates/generated/CliParams";
-import { GenerateAzureCliValidators } from "./templates/generated/CliValidators";
-import {CliTestInit} from "./templates/tests/CliTestInit";
-import { CliTestPrepare } from "./templates/tests/CliTestPrepare";
-import { CliTestScenario } from "./templates/tests/CliTestScenario";
-import { deepCopy } from '../../utils/helper';
-import {CliTestStep, NeedPreparer} from "./templates/tests/CliTestStep";
-import { GenerateMetaFile } from "./templates/CliMeta"
+import { GenerateAzureCliActions } from './templates/generated/CliActions';
+import { GenerateAzureCliClientFactory } from './templates/generated/CliClientFactory';
+import { GenerateAzureCliCommands } from './templates/generated/CliCommands';
+import { GenerateAzureCliCustom } from './templates/generated/CliCustom';
+import { GenerateAzureCliHelp } from './templates/generated/CliHelp';
+import { GenerateAzureCliParams } from './templates/generated/CliParams';
+import { GenerateAzureCliValidators } from './templates/generated/CliValidators';
+import { CliTestInit } from './templates/tests/CliTestInit';
+import { CliTestPrepare } from './templates/tests/CliTestPrepare';
+import { CliTestScenario } from './templates/tests/CliTestScenario';
+import { CliTestStep, NeedPreparer } from './templates/tests/CliTestStep';
+import { GenerateMetaFile } from './templates/CliMeta';
 
 export class AzCoreIncrementalGenerator extends AzGeneratorBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
+    constructor (model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
-        this.azDirectory = "";
+        this.azDirectory = '';
     }
 
-    public async generateAll(): Promise<void> {
+    public async generateAll (): Promise<void> {
         // generated and test folder
         this.files[path.join(PathConstants.generatedFolder, PathConstants.paramsFile)] = GenerateAzureCliParams(this.model, this.isDebugMode);
         this.files[path.join(PathConstants.generatedFolder, PathConstants.commandsFile)] = GenerateAzureCliCommands(this.model);
@@ -68,13 +67,12 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
 
         // Add Import from generated folder (Action)
         const cliTopActionGenerator = new CliTopAction(this.model, this.isDebugMode);
-        let cliTopActionBase: string = "";
+        let cliTopActionBase = '';
         const relativePathOldVersion = cliTopActionGenerator.relativePath.replace(PathConstants.actionFile, PathConstants.actionFileOldVersion);
         if (fs.existsSync(path.join(this.model.CliOutputFolder, relativePathOldVersion))) {
             cliTopActionBase = fs.readFileSync(path.join(this.model.CliOutputFolder, relativePathOldVersion)).toString();
-            cliTopActionGenerator.relativePath = relativePathOldVersion
-        }
-        else if (fs.existsSync(path.join(this.model.CliOutputFolder, cliTopActionGenerator.relativePath))) {
+            cliTopActionGenerator.relativePath = relativePathOldVersion;
+        } else if (fs.existsSync(path.join(this.model.CliOutputFolder, cliTopActionGenerator.relativePath))) {
             cliTopActionBase = fs.readFileSync(path.join(this.model.CliOutputFolder, cliTopActionGenerator.relativePath)).toString();
         }
         this.files[cliTopActionGenerator.relativePath] = await cliTopActionGenerator.incrementalGeneration(cliTopActionBase);
@@ -83,15 +81,15 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         await this.generateIncrementalSingleAndAddtoOutput(new CliMainSetupPy(this.model, this.isDebugMode));
 
         const cliRequirement = new CliMainRequirement(this.model, this.isDebugMode);
-        for (let sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
-            cliRequirement.relativePath = path.join(this.model.AzureCliFolder, "/src/azure-cli/requirements.py3." + sys + ".txt");
+        for (const sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
+            cliRequirement.relativePath = path.join(this.model.AzureCliFolder, '/src/azure-cli/requirements.py3.' + sys + '.txt');
             this.files[cliRequirement.relativePath] = await cliRequirement.incrementalGeneration(null);
         }
 
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
         await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model, this.isDebugMode), true, true);
-        for (let testGroup of this.model.Extension_TestScenario? Object.getOwnPropertyNames(this.model.Extension_TestScenario): []) {
-            await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(testGroup),this.model.Extension_TestScenario[testGroup], testGroup), true);
+        for (const testGroup of this.model.Extension_TestScenario ? Object.getOwnPropertyNames(this.model.Extension_TestScenario) : []) {
+            await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(testGroup), this.model.Extension_TestScenario[testGroup], testGroup), true);
         }
         if (NeedPreparer()) {
             await this.generateIncrementalSingleAndAddtoOutput(new CliTestPrepare(this.model, this.isDebugMode));

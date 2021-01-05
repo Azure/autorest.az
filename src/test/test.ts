@@ -1,1 +1,2 @@
-import { suite, test } from "mocha";
+import { suite, test } from 'mocha';
+export { suite, test };

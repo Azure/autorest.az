@@ -4,39 +4,40 @@ import * as fs from 'fs';
 import { slow, suite, test, timeout } from 'mocha-typescript';
 import * as path from 'path';
 import { ArgumentConstants, CompatibleLevel, GenerateSdk, TargetMode } from '../plugins/models';
-import { copyRecursiveSync, deleteFolderRecursive } from "../utils/helper";
+import { copyRecursiveSync, deleteFolderRecursive } from '../utils/helper';
+import * as sourceMapSupport from 'source-map-support';
 
-require('source-map-support').install();
+sourceMapSupport.install();
 
-enum TestMode {
-    ExtDefault = "",
-    ExtIncremental = "ext_Incremental",
-    CoreDefault = "coredefault",
-    CoreIncremental = "core_Incremental",
-    Ext_Flatten = "extflatten",
-    Ext_NoSdk = "extnosdk",
-    ExtDefaultFolder = "ext_default_folder",
-    Ext_NoSdk_NoFlatten_Track1 = "extnosdknoflattentrack1"
+export enum TestMode {
+    ExtDefault = '',
+    ExtIncremental = 'ext_Incremental',
+    CoreDefault = 'coredefault',
+    CoreIncremental = 'core_Incremental',
+    ExtFlatten = 'extflatten',
+    ExtNoSdk = 'extnosdk',
+    ExtDefaultFolder = 'ext_default_folder',
+    ExtNoSdkNoFlattenTrack1 = 'extnosdknoflattentrack1'
 }
 
-@suite class Process {
+@suite export class Process {
     private testDimensions: Map<string, Array<TestMode>> = new Map([
-        ["attestation", [TestMode.ExtDefault]],
-        ["boolean", [TestMode.ExtDefault]],
-        ["datafactory", [TestMode.ExtDefault]],
-        ["managed-network", [TestMode.ExtDefault]],
-        ["mixed-reality", [TestMode.ExtIncremental]],
-        ["kusto", [TestMode.CoreDefault, TestMode.Ext_Flatten, TestMode.ExtDefaultFolder, TestMode.Ext_NoSdk_NoFlatten_Track1]],
-        ["synapse", [TestMode.CoreDefault, TestMode.Ext_Flatten, TestMode.ExtDefaultFolder, TestMode.Ext_NoSdk_NoFlatten_Track1]],
-        ["compute", [TestMode.CoreIncremental]]
+        ['attestation', [TestMode.ExtDefault]],
+        ['boolean', [TestMode.ExtDefault]],
+        ['datafactory', [TestMode.ExtDefault]],
+        ['managed-network', [TestMode.ExtDefault]],
+        ['mixed-reality', [TestMode.ExtIncremental]],
+        ['kusto', [TestMode.CoreDefault, TestMode.ExtFlatten, TestMode.ExtDefaultFolder, TestMode.ExtNoSdkNoFlattenTrack1]],
+        ['synapse', [TestMode.CoreDefault, TestMode.ExtFlatten, TestMode.ExtDefaultFolder, TestMode.ExtNoSdkNoFlattenTrack1]],
+        ['compute', [TestMode.CoreIncremental]]
     ]);
 
-    async runAz(directory: string, extraOption: {}) {
-        let cmdOption = [];
-        for (let k in extraOption) {
-            cmdOption.push("--" + k + "=" + extraOption[k]);
+    async runAz (directory: string, extraOption: any) {
+        const cmdOption = [];
+        for (const k in extraOption) {
+            cmdOption.push('--' + k + '=' + extraOption[k]);
         }
-        let cmd = `${__dirname}/../../` + "node_modules/.bin/autorest --version=3.0.6320 --az --use=" + `${__dirname}/../../` + " " + directory + "/configuration/readme.md " + cmdOption.join(" ");
+        const cmd = path.join(`${__dirname}`, '/../../' + 'node_modules/.bin/autorest') + ' --version=3.0.6320 --az --use=' + path.join(`${__dirname}`, '/../../' + directory + '/configuration/readme.md') + ' ' + cmdOption.join(' ');
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => {
             exec(cmd, function (error) {
@@ -51,13 +52,13 @@ enum TestMode {
         });
     }
 
-    async compare(dir1: string, dir2: string) {
-        let cmd = "diff -r --exclude=gen.zip --strip-trailing-cr " + dir1 + " " + dir2;
+    async compare (dir1: string, dir2: string) {
+        const cmd = 'diff -r --exclude=gen.zip --strip-trailing-cr ' + dir1 + ' ' + dir2;
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => {
             exec(cmd, function (error, stdout) {
                 if (error !== null) {
-                    console.log('exec error: ' + error + ", " + stdout);
+                    console.log('exec error: ' + error + ', ' + stdout);
                     // Reject if there is an error:
                     return reject(false);
                 }
@@ -67,34 +68,34 @@ enum TestMode {
         });
     }
 
-    getOptions(testMode: string, outputDir: string) {
-        let extraOption: {} = {};
-        if (testMode == TestMode.ExtDefault || testMode == TestMode.ExtIncremental || testMode  == TestMode.ExtDefaultFolder) {
-            let key = ArgumentConstants.azureCliExtFolder
+    getOptions (testMode: string, outputDir: string) {
+        const extraOption: any = {};
+        if (testMode === TestMode.ExtDefault || testMode === TestMode.ExtIncremental || testMode === TestMode.ExtDefaultFolder) {
+            const key = ArgumentConstants.azureCliExtFolder;
             extraOption[key] = outputDir;
             return extraOption;
-        } else if (testMode == TestMode.CoreDefault || testMode == TestMode.CoreIncremental) {
+        } else if (testMode === TestMode.CoreDefault || testMode === TestMode.CoreIncremental) {
             let key = ArgumentConstants.targetMode;
             extraOption[key] = TargetMode.Core;
             key = ArgumentConstants.azureCliFolder;
             extraOption[key] = outputDir;
             return extraOption;
-        } else if (testMode == TestMode.Ext_Flatten) {
-            let key = ArgumentConstants.azureCliExtFolder
+        } else if (testMode === TestMode.ExtFlatten) {
+            let key = ArgumentConstants.azureCliExtFolder;
             extraOption[key] = outputDir;
             key = ArgumentConstants.sdkFlatten;
             extraOption[key] = true;
             return extraOption;
-        } else if (testMode == TestMode.Ext_NoSdk) {
-            let key = ArgumentConstants.azureCliExtFolder
+        } else if (testMode === TestMode.ExtNoSdk) {
+            let key = ArgumentConstants.azureCliExtFolder;
             extraOption[key] = outputDir;
             key = ArgumentConstants.sdkNoFlatten;
             extraOption[key] = true;
             key = ArgumentConstants.generateSDK;
             extraOption[key] = GenerateSdk.No;
             return extraOption;
-        } else if (testMode == TestMode.Ext_NoSdk_NoFlatten_Track1) {
-            let key = ArgumentConstants.azureCliExtFolder
+        } else if (testMode === TestMode.ExtNoSdkNoFlattenTrack1) {
+            let key = ArgumentConstants.azureCliExtFolder;
             extraOption[key] = outputDir;
             key = ArgumentConstants.sdkNoFlatten;
             extraOption[key] = true;
@@ -107,71 +108,68 @@ enum TestMode {
         return extraOption;
     }
 
-    async runSingleTest(dir: string, each: string, extraOption: {}, testMode: string) {
+    async runSingleTest (dir: string, each: string, extraOption: any, testMode: string) {
         let result = true;
-        let msg = "";
+        let msg = '';
         await this.runAz(dir + each, extraOption).then(res => {
-            if (res == false) {
-                msg = "Run autorest not successfully!";
+            if (res === false) {
+                msg = 'Run autorest not successfully!';
             }
             result = res;
         }).catch(err => {
-            msg = "Run autorest failed!";
+            msg = 'Run autorest failed!';
             result = err;
         });
         if (result) {
-            await this.compare(dir + each + "/output/" + testMode, dir + each + "/tmpoutput/" + testMode).then(res1 => {
-                if (res1 == false) {
-                    msg = "The generated files have changed!";
+            await this.compare(dir + each + '/output/' + testMode, dir + each + '/tmpoutput/' + testMode).then(res1 => {
+                if (res1 === false) {
+                    msg = 'The generated files have changed!';
                 }
                 result = res1;
             }).catch(e => {
-                msg = "The diff has some error";
+                msg = 'The diff has some error';
                 result = e;
             });
         }
         return result;
     }
 
-    @test(slow(600000), timeout(1500000)) async acceptanceSuite() {
-        const dir = `${__dirname}/../../src/test/scenarios/`;
+    @test(slow(600000), timeout(1500000)) async acceptanceSuite () {
+        const dir = path.join(`${__dirname}`, '/../../src/test/scenarios/');
         const folders = fs.readdirSync(dir);
-        let msg = "";
+        const msg = '';
         let finalResult = true;
-        let parallelTest = process.env.parallelTest?.toLowerCase() == "true";
-        let allTests: Promise<Boolean>[] = [];
+        const parallelTest = process.env.parallelTest?.toLowerCase() === 'true';
+        const allTests: Promise<boolean>[] = [];
         for (const rp of folders) {
             let result = true;
-            console.log("Start Processing: " + rp);
+            console.log('Start Processing: ' + rp);
 
             // Remove tmpoutput
-            deleteFolderRecursive(path.join(dir, rp, "tmpoutput"));
-            fs.mkdirSync(path.join(dir, rp, "tmpoutput"));
+            deleteFolderRecursive(path.join(dir, rp, 'tmpoutput'));
+            fs.mkdirSync(path.join(dir, rp, 'tmpoutput'));
 
             try {
                 const dimensions: Array<TestMode> = this.testDimensions.get(rp);
                 if (dimensions != null) {
                     for (const dimension of dimensions) {
-                        let outputDir = "";
-                        if (dimension == TestMode.CoreDefault || dimension == TestMode.ExtIncremental || dimension == TestMode.CoreIncremental) {
-                            copyRecursiveSync(path.join(dir, rp, "basecli"), path.join(dir, rp, "tmpoutput", dimension));
+                        let outputDir = '';
+                        if (dimension === TestMode.CoreDefault || dimension === TestMode.ExtIncremental || dimension === TestMode.CoreIncremental) {
+                            copyRecursiveSync(path.join(dir, rp, 'basecli'), path.join(dir, rp, 'tmpoutput', dimension));
                         }
-                        outputDir = path.join(dir, rp, "tmpoutput", dimension);
-                        let extraOption = this.getOptions(dimension, outputDir);
-                        let test = this.runSingleTest(dir, rp, extraOption, dimension);
+                        outputDir = path.join(dir, rp, 'tmpoutput', dimension);
+                        const extraOption = this.getOptions(dimension, outputDir);
+                        const test = this.runSingleTest(dir, rp, extraOption, dimension);
                         if (!parallelTest) {
                             result = await test;
-                        }
-                        else {
+                        } else {
                             allTests.push(test);
                         }
                     }
+                } else {
+                    console.log(rp + ' is not configure, pass here');
                 }
-                else {
-                    console.log(rp + " is not configure, pass here");
-                }
-            }
-            catch (error) {
+            } catch (error) {
                 console.log(msg);
                 result = false;
                 break;
@@ -179,10 +177,10 @@ enum TestMode {
             if (!result) {
                 finalResult = false;
             }
-            //assert.strictEqual(result, true, msg);
+            // assert.strictEqual(result, true, msg);
         }
         if (parallelTest) {
-            finalResult = (await Promise.all(allTests)).every((x)=>x);
+            finalResult = (await Promise.all(allTests)).every((x) => x);
         }
         assert.strictEqual(finalResult, true, msg);
     }

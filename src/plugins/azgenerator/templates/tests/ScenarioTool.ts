@@ -1,130 +1,120 @@
 
-import * as path from "path"
-import { CommandExample, ExampleParam, KeyValueType } from "../../CodeModelAz";
-import { deepCopy, isDict, ToCamelCase, ToPythonString, changeCamelToDash, MergeSort } from "../../../../utils/helper"
-import { EnglishPluralizationService } from "@azure-tools/codegen";
-import { isNullOrUndefined, isArray } from "util";
-import { stringify } from "querystring";
+import { CommandExample, ExampleParam, KeyValueType } from '../../CodeModelAz';
+import { deepCopy, isDict, ToCamelCase, ToPythonString, changeCamelToDash, MergeSort, isNullOrUndefined } from '../../../../utils/helper';
+import { EnglishPluralizationService } from '@azure-tools/codegen';
 
-export let azOptions = {}
+export const azOptions = {};
 
-function MethodToOrder(httpMethod: string): number {
-    if (httpMethod == 'put') return 0;
-    else if (httpMethod == 'get') return 1;
-    else if (httpMethod == 'post') return 4;
-    else if (httpMethod == 'patch') return 5;
+function MethodToOrder (httpMethod: string): number {
+    if (httpMethod === 'put') return 0;
+    else if (httpMethod === 'get') return 1;
+    else if (httpMethod === 'post') return 4;
+    else if (httpMethod === 'patch') return 5;
     else return 3;
 }
 
-export function GenerateDefaultTestScenario(
+export function GenerateDefaultTestScenario (
     examples: CommandExample[]): any[] {
-
-    let testScenario = [];
+    const testScenario = [];
 
     // sort to make it examples stable
     examples = examples.sort((e1, e2) => {
-        if (e1.Id == e2.Id) return e1.Method > e2.Method ? 1 : -1;
+        if (e1.Id === e2.Id) return e1.Method > e2.Method ? 1 : -1;
         return e1.Id > e2.Id ? 1 : -1;
     });
 
-    let sorted: CommandExample[] = examples.sort((e1, e2) => {
-        let isDelete1 = e1.HttpMethod.toLowerCase() == 'delete';
-        let isDelete2 = e2.HttpMethod.toLowerCase() == 'delete';
+    const sorted: CommandExample[] = examples.sort((e1, e2) => {
+        const isDelete1 = e1.HttpMethod.toLowerCase() === 'delete';
+        const isDelete2 = e2.HttpMethod.toLowerCase() === 'delete';
         if (isDelete1 && !isDelete2) return 1;
         if (isDelete2 && !isDelete1) return -1;
         if (isDelete1 && isDelete2) {
             return e1.ResourceClassName > e2.ResourceClassName ? 1 : -1;
         }
 
-        if (e1.ResourceClassName == e2.ResourceClassName) {
-            let n1 = MethodToOrder(e1.HttpMethod);
-            let n2 = MethodToOrder(e2.HttpMethod);
-            if (n1 == n2) return e1.Id > e2.Id ? 1 : -1;
+        if (e1.ResourceClassName === e2.ResourceClassName) {
+            const n1 = MethodToOrder(e1.HttpMethod);
+            const n2 = MethodToOrder(e2.HttpMethod);
+            if (n1 === n2) return e1.Id > e2.Id ? 1 : -1;
             return n1 > n2 ? 1 : -1;
-        }
-        else {
+        } else {
             return e1.ResourceClassName > e2.ResourceClassName ? 1 : -1;
         }
-    })
+    });
 
-
-    for (var i = 0; i < sorted.length; i++) {
-        var example: CommandExample = sorted[i];
-        testScenario.push({ name: example.Id })
+    for (let i = 0; i < sorted.length; i++) {
+        const example: CommandExample = sorted[i];
+        testScenario.push({ name: example.Id });
     }
     return testScenario;
 }
 
-export function GenerateDefaultTestScenarioByDependency(
-    examples: CommandExample[], resource_pool: ResourcePool, originalScenario: any[]): any[] {
-
-    let depend_on = (example_a: CommandExample, example_b: CommandExample): boolean => {
-        return resource_pool.isDependResource(example_a.ResourceClassName, example_b.ResourceClassName);
-    }
-    let getExample = (name) => {
-        for (let example of examples) {
-            if (example.Id == name) return example;
+export function GenerateDefaultTestScenarioByDependency (
+    examples: CommandExample[], resourcePool: ResourcePool, originalScenario: any[]): any[] {
+    const dependOn = (exampleA: CommandExample, exampleB: CommandExample): boolean => {
+        return resourcePool.isDependResource(exampleA.ResourceClassName, exampleB.ResourceClassName);
+    };
+    const getExample = (name) => {
+        for (const example of examples) {
+            if (example.Id === name) return example;
         }
         return null;
-    }
+    };
 
-    originalScenario = originalScenario.sort((s1, s2) =>{
+    originalScenario = originalScenario.sort((s1, s2) => {
         return s1.name.localeCompare(s2.name);
-    })
+    });
 
     originalScenario = MergeSort(originalScenario, (s1, s2) => {
-        let e1 = getExample(s1.name);
-        let e2 = getExample(s2.name);
+        const e1 = getExample(s1.name);
+        const e2 = getExample(s2.name);
         if (!e1 || !e2) return 0;
-        if (depend_on(e1, e2)) return 1;
-        if (depend_on(e2, e1)) return -1;
+        if (dependOn(e1, e2)) return 1;
+        if (dependOn(e2, e1)) return -1;
         return e1.Id.localeCompare(e2.Id);
     });
 
     return originalScenario;
 }
 
-export function PrintTestScenario(testScenario: any[]) {
-    console.warn("");
-    console.warn("BELOW TEST SCENARIO SECTION CAN BE USED IN readme.cli.md");
-    console.warn("--------------------------------------------------------");
-    console.warn("  test-scenario:");
+export function PrintTestScenario (testScenario: any[]) {
+    console.warn('');
+    console.warn('BELOW TEST SCENARIO SECTION CAN BE USED IN readme.cli.md');
+    console.warn('--------------------------------------------------------');
+    console.warn('  test-scenario:');
 
-    for (var i = 0; i < testScenario.length; i++) {
-        var step: any = testScenario[i];
-        console.warn("    - name: " + step.name);
+    for (let i = 0; i < testScenario.length; i++) {
+        const step: any = testScenario[i];
+        console.warn('    - name: ' + step.name);
     }
-    console.warn("--------------------------------------------------------");
+    console.warn('--------------------------------------------------------');
 }
 
-export function GroupTestScenario(testScenario: any, extensionName: string) {
-    if (isNullOrUndefined(testScenario))    return testScenario;
+export function GroupTestScenario (testScenario: any, extensionName: string) {
+    if (isNullOrUndefined(testScenario)) return testScenario;
 
-    let ret = {};
-    const defaultScenario = "Scenario";
+    const ret = {};
+    const defaultScenario = 'Scenario';
 
-    function addScenario(groupName: string, scenarioName: string, items: any[]) {
-        if(!ret.hasOwnProperty(groupName))  ret[groupName] = {};
-        if(!ret[groupName].hasOwnProperty(scenarioName))    ret[groupName][scenarioName] = [];
+    function addScenario (groupName: string, scenarioName: string, items: any[]) {
+        if (!Object.prototype.hasOwnProperty.call(ret, groupName)) ret[groupName] = {};
+        if (!Object.prototype.hasOwnProperty.call(ret[groupName], scenarioName)) ret[groupName][scenarioName] = [];
         ret[groupName][scenarioName].push(...items);
     }
 
     if (isDict(testScenario)) {
-        let keys = Object.getOwnPropertyNames(testScenario);
-        for (var key of keys) {
-            let item = testScenario[key];
-            let splitedName = key.split("_");
+        const keys = Object.getOwnPropertyNames(testScenario);
+        for (const key of keys) {
+            const item = testScenario[key];
+            const splitedName = key.split('_');
             if (splitedName.length > 1) {
-                addScenario(splitedName[0], splitedName.slice(1).join("_"), item);
-            }
-            else {
+                addScenario(splitedName[0], splitedName.slice(1).join('_'), item);
+            } else {
                 addScenario(splitedName[0], defaultScenario, item);
             }
         }
-    }
-    else if (isArray(testScenario))
-    {
-        for (var ci = 0; ci < testScenario.length; ci++) {
+    } else if (Array.isArray(testScenario)) {
+        for (let ci = 0; ci < testScenario.length; ci++) {
             addScenario(extensionName, defaultScenario, [testScenario[ci]]);
         }
     }
@@ -132,53 +122,52 @@ export function GroupTestScenario(testScenario: any, extensionName: string) {
     return ret;
 }
 
+const SUBSCRIPTIONS = 'subscriptions';
+const RESOUREGROUP = 'resource-group';
+const VIRTUALNETWORK = 'virtual-network';
+const STORAGEACCOUNT = 'storage-account';
+const SUBNET = 'subnet';
+const NETWORKINTERFACE = 'network-interface';
 
-const SUBSCRIPTIONS = "subscriptions";
-const RESOUREGROUP = "resource-group";
-const VIRTUALNETWORK = "virtual-network";
-const STORAGEACCOUNT = "storage-account";
-const SUBNET = "subnet";
-const NETWORKINTERFACE = "network-interface";
-
-let resourceClassDepends = {
+const resourceClassDepends = {
     [RESOUREGROUP]: [],
-    [VIRTUALNETWORK]: [RESOUREGROUP,],
+    [VIRTUALNETWORK]: [RESOUREGROUP],
     [SUBNET]: [VIRTUALNETWORK, RESOUREGROUP],
-    [STORAGEACCOUNT]: [RESOUREGROUP,],
-    [NETWORKINTERFACE]: [VIRTUALNETWORK, RESOUREGROUP],
-}
+    [STORAGEACCOUNT]: [RESOUREGROUP],
+    [NETWORKINTERFACE]: [VIRTUALNETWORK, RESOUREGROUP]
+};
 
-let resourceLanguages = {
+const resourceLanguages = {
     [RESOUREGROUP]: ['resource-group', 'resourceGroupName', 'resourceGroups'],
     [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworkName', 'virtualNetworks'],
     [SUBNET]: ['subnet', 'subnetName', 'subnets'],
     [STORAGEACCOUNT]: ['storage-account', 'storageAccountName', 'storageAccounts'],
-    [NETWORKINTERFACE]: ['network-interface', 'networkInterfaceName', 'networkInterfaces'],
-}
+    [NETWORKINTERFACE]: ['network-interface', 'networkInterfaceName', 'networkInterfaces']
+};
 
-let resourceClassKeys = {
+const resourceClassKeys = {
     [RESOUREGROUP]: 'rg',
     [VIRTUALNETWORK]: 'vn',
     [SUBNET]: 'sn',
     [STORAGEACCOUNT]: 'sa',
-    [NETWORKINTERFACE]: 'nic',
-}
+    [NETWORKINTERFACE]: 'nic'
+};
 
-export function TopoSortResource() {
-    let ret = [];
-    let resources = Object.keys(resourceClassDepends);
-    //let reverse_depends = { };
-    let depends = deepCopy(resourceClassDepends);
+export function TopoSortResource () {
+    const ret = [];
+    const resources = Object.keys(resourceClassDepends);
+    // let reverse_depends = { };
+    const depends = deepCopy(resourceClassDepends);
     while (ret.length < Object.keys(resourceClassDepends).length) {
         let decreasing = false;
-        for (let a of resources) {
-            if (a in depends && depends[a].length == 0) {
+        for (const a of resources) {
+            if (!isNullOrUndefined(depends[a]) && depends[a].length === 0) {
                 ret.push(a);
                 delete depends[a];
                 decreasing = true;
-                for (let b in depends) {
+                for (const b in depends) {
                     for (let i = 0; i < depends[b].length; i++) {
-                        if (depends[b][i] == a) {
+                        if (depends[b][i] === a) {
                             depends[b].splice(i, 1);
                             i--;
                         }
@@ -188,7 +177,7 @@ export function TopoSortResource() {
         }
         if (!decreasing) {
             // append all remains if there is loop dependency.
-            for (let d in depends) {
+            for (const d in depends) {
                 ret.push(d);
             }
             break;
@@ -199,15 +188,15 @@ export function TopoSortResource() {
 
 class PreparerInfo {
     name: string;
-    class_name: string
-    depend_parameters: string[];
-    depend_resources: string[];
+    className: string
+    dependParameters: string[];
+    dependResources: string[];
     public createdObjectNames: string[];
-    public constructor(name: string, class_name: string, depend_parameters: string[], depend_resources: string[]) {
+    public constructor (name: string, className: string, dependParameters: string[], dependResources: string[]) {
         this.name = name;
-        this.class_name = class_name
-        this.depend_parameters = depend_parameters;
-        this.depend_resources = depend_resources;
+        this.className = className;
+        this.dependParameters = dependParameters;
+        this.dependResources = dependResources;
         this.createdObjectNames = [];
     }
 }
@@ -216,29 +205,28 @@ const preparerInfos = {
     [VIRTUALNETWORK]: new PreparerInfo('VirtualNetworkPreparer', VIRTUALNETWORK, ['resource_group_key'], [RESOUREGROUP]),
     [SUBNET]: new PreparerInfo('VnetSubnetPreparer', SUBNET, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
     [STORAGEACCOUNT]: new PreparerInfo('StorageAccountPreparer', STORAGEACCOUNT, ['resource_group_parameter_name'], [RESOUREGROUP]),
-    [NETWORKINTERFACE]: new PreparerInfo('VnetNicPreparer', NETWORKINTERFACE, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
-}
+    [NETWORKINTERFACE]: new PreparerInfo('VnetNicPreparer', NETWORKINTERFACE, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK])
+};
 
 export class PreparerEntity {
     info: PreparerInfo;
-    object_name: string;
-    depend_parameter_values: string[];
-    public constructor(info: PreparerInfo, object_name: string) {
+    objectName: string;
+    dependParameterValues: string[];
+    public constructor (info: PreparerInfo, objectName: string) {
         this.info = info;
-        this.object_name = object_name;
-        this.depend_parameter_values = [];
+        this.objectName = objectName;
+        this.dependParameterValues = [];
     }
 }
 
 class ResourceClass {
-    class_name: string;
-    objects: Map<string, ResourceObject>;  // object_name --> resource_object
+    className: string;
+    objects: Map<string, ResourceObject>; // objectName --> resourceObject
 
-    public constructor(class_name: string) {
-        this.class_name = class_name;
+    public constructor (className: string) {
+        this.className = className;
         this.objects = new Map<string, ResourceObject>();
     }
-
 }
 
 export enum ObjectStatus {
@@ -247,101 +235,99 @@ export enum ObjectStatus {
     Deleted,
 }
 class ResourceObject {
-    object_name: string;
-    class_name: string;
+    objectName: string;
+    className: string;
     // key: string;
-    sub_resources: Map<string, ResourceClass>; //class_name --> resource_class
-    example_params: ExampleParam[];
+    subResources: Map<string, ResourceClass>; // className --> resource_class
+    exampleParams: ExampleParam[];
     testStatus: ObjectStatus;
 
-    public constructor(object_name: string, class_name: string) {
-        this.object_name = object_name;
-        this.class_name = class_name;
-        this.sub_resources = new Map<string, ResourceClass>();
-        this.example_params = [];
+    public constructor (objectName: string, className: string) {
+        this.objectName = objectName;
+        this.className = className;
+        this.subResources = new Map<string, ResourceClass>();
+        this.exampleParams = [];
         this.testStatus = ObjectStatus.None;
     }
 
-    public get key(): string {
-        return getResourceKey(this.class_name, this.object_name);
+    public get key (): string {
+        return getResourceKey(this.className, this.objectName);
     }
 
-    public placeholder(isTest: boolean): string {
+    public placeholder (isTest: boolean): string {
         if (isTest) return '{' + this.key + '}';
-        return getResourceKey(this.class_name, this.object_name, true);
+        return getResourceKey(this.className, this.objectName, true);
     }
 
-    public addOrUpdateParam(example_param: ExampleParam) {
+    public addOrUpdateParam (exampleParam: ExampleParam) {
         // remove all children
-        let coveredPath = [example_param.ancestors.concat([example_param.name])];
-        for (let i = 0; i < this.example_params.length; i++) {
-            let param = this.example_params[i];
-            if (param.name == example_param.name) {
+        const coveredPath = [exampleParam.ancestors.concat([exampleParam.name])];
+        for (let i = 0; i < this.exampleParams.length; i++) {
+            const param = this.exampleParams[i];
+            if (param.name === exampleParam.name) {
                 coveredPath.push(param.ancestors.concat([param.name]));
             }
         }
-        for (let i = 0; i < this.example_params.length; i++) {
-            let param = this.example_params[i];
-            if (coveredPath.indexOf(param.ancestors)>=0 ) {
-                this.example_params.splice(i);
+        for (let i = 0; i < this.exampleParams.length; i++) {
+            const param = this.exampleParams[i];
+            if (coveredPath.indexOf(param.ancestors) >= 0) {
+                this.exampleParams.splice(i);
                 i--;
             }
         }
 
         // replace if already there
-        for (let i = 0; i < this.example_params.length; i++) {
-            let param = this.example_params[i];
-            if (param.name == example_param.name) {
-                this.example_params[i] = example_param;
+        for (let i = 0; i < this.exampleParams.length; i++) {
+            const param = this.exampleParams[i];
+            if (param.name === exampleParam.name) {
+                this.exampleParams[i] = exampleParam;
                 return;
             }
         }
 
         // append to the tail
-        this.example_params.push(example_param);
+        this.exampleParams.push(exampleParam);
     }
 
-    public getCheckers(resource_pool: ResourcePool, example: CommandExample): string[] {
-        function hasComplexArray(obj: any): boolean {
+    public getCheckers (resourcePool: ResourcePool, example: CommandExample): string[] {
+        function hasComplexArray (obj: any): boolean {
             if (obj instanceof Array) {
                 if (obj.length > 1) return true;
-                for (let s of obj) {
+                for (const s of obj) {
                     if (hasComplexArray(s)) return true;
                 }
             }
             if (isDict(obj)) {
-                for (let key in obj) {
+                for (const key in obj) {
                     if (hasComplexArray(obj[key])) return true;
                 }
             }
             return false;
         }
 
-        function addParam(obj: any, param: ExampleParam, checkPath: string, ret: string[]): boolean {
+        function addParam (obj: any, param: ExampleParam, checkPath: string, ret: string[]): boolean {
             if (isDict(obj)) {
-                if (checkPath.length > 0) checkPath += ".";
-                if (param.defaultName in obj && typeof obj[param.defaultName] == typeof param.rawValue && JSON.stringify(obj[param.defaultName]).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
+                if (checkPath.length > 0) checkPath += '.';
+                if (param.defaultName in obj && typeof obj[param.defaultName] === typeof param.rawValue && JSON.stringify(obj[param.defaultName]).toLowerCase() === JSON.stringify(param.rawValue).toLowerCase()) {
                     if (hasComplexArray(param.rawValue)) return;
-                    formatChecker(checkPath + resource_pool.replaceResourceString(param.defaultName, [], [], true), param.rawValue, ret);
+                    formatChecker(checkPath + resourcePool.replaceResourceString(param.defaultName, [], [], true), param.rawValue, ret);
                     return true;
                 }
             }
             if (obj instanceof Array) {
                 if (obj.length > 1) return;
-                addParam(obj[0], param, checkPath + "[0]", ret);
-            }
-            else if (isDict(obj)) {
-                if (checkPath.length > 0) checkPath += ".";
+                addParam(obj[0], param, checkPath + '[0]', ret);
+            } else if (isDict(obj)) {
+                if (checkPath.length > 0) checkPath += '.';
                 let handled = false;
-                for (let key in obj) {
-                    if (checkPath.length==0 && key.toLowerCase()=='properties') {
+                for (const key in obj) {
+                    if (checkPath.length === 0 && key.toLowerCase() === 'properties') {
                         if (addParam(obj[key], param, checkPath, ret)) {
                             handled = true;
                             break;
                         }
-                    }
-                    else {
-                        if (addParam(obj[key], param, checkPath + resource_pool.replaceResourceString(key, [], [], true), ret)) {
+                    } else {
+                        if (addParam(obj[key], param, checkPath + resourcePool.replaceResourceString(key, [], [], true), ret)) {
                             handled = true;
                             break;
                         }
@@ -349,7 +335,7 @@ class ResourceObject {
                 }
                 if (!handled) {
                     if (checkPath.length > 0) checkPath = checkPath.slice(0, -1);
-                    if ('name' in obj && checkPath.length==0 && param.defaultName.toLowerCase().endsWith("name") && typeof obj['name'] == typeof param.rawValue && JSON.stringify(obj['name']).toLowerCase() == JSON.stringify(param.rawValue).toLowerCase()) {
+                    if ('name' in obj && checkPath.length === 0 && param.defaultName.toLowerCase().endsWith('name') && typeof obj.name === typeof param.rawValue && JSON.stringify(obj.name).toLowerCase() === JSON.stringify(param.rawValue).toLowerCase()) {
                         if (hasComplexArray(param.rawValue)) return;
                         formatChecker(checkPath + 'name', param.rawValue, ret);
                         return true;
@@ -359,68 +345,64 @@ class ResourceObject {
             return false;
         }
 
-        function formatChecker(checkPath: string, rawValue: any, ret: string[]) {
-            if (typeof rawValue == 'object') {
+        function formatChecker (checkPath: string, rawValue: any, ret: string[]) {
+            if (typeof rawValue === 'object') {
                 if (rawValue instanceof Array) {
                     if (rawValue.length > 1) return;
-                    if (rawValue.length == 0) {
+                    if (rawValue.length === 0) {
                         ret.push(`test.check("${checkPath}", []),`);
+                    } else {
+                        formatChecker(checkPath + '[0]', rawValue[0], ret);
                     }
-                    else {
-                        formatChecker(checkPath + "[0]", rawValue[0], ret);
-                    }
-                }
-                else if (isDict(rawValue)) {
-                    if (checkPath.length > 0) checkPath += ".";
-                    if (Object.keys(rawValue).length == 0) {
+                } else if (isDict(rawValue)) {
+                    if (checkPath.length > 0) checkPath += '.';
+                    if (Object.keys(rawValue).length === 0) {
                         ret.push(`test.check("${checkPath}", {}),`);
                     }
-                    for (let key in rawValue) {
-                        formatChecker(checkPath + resource_pool.replaceResourceString(key, [], [], true), rawValue[key], ret);
+                    for (const key in rawValue) {
+                        formatChecker(checkPath + resourcePool.replaceResourceString(key, [], [], true), rawValue[key], ret);
                     }
                 }
-            }
-            else {
-                if (typeof rawValue == 'string') {
-                    let replacedValue = resource_pool.replaceResourceString(rawValue, [], [], true);
+            } else {
+                if (typeof rawValue === 'string') {
+                    const replacedValue = resourcePool.replaceResourceString(rawValue, [], [], true);
                     ret.push(`test.check("${checkPath}", ${ToPythonString(replacedValue, typeof replacedValue)}, case_sensitive=False),`);
-                }
-                else {
+                } else {
                     ret.push(`test.check("${checkPath}", ${ToPythonString(rawValue, typeof rawValue)}),`);
                 }
             }
         }
 
-        let ret: string[] = [];
+        const ret: string[] = [];
         if (['create', 'delete', 'show', 'list', 'update'].indexOf(example.Method) < 0) return ret;
-        let example_resp_body = null;
-        for (let statusCode of [200/*, 201, 204*/]) {
-            example_resp_body = example.ExampleObj.responses?.[statusCode]?.body;
-            if (!isNullOrUndefined(example_resp_body)) break;
+        let exampleRespBody = null;
+        for (const statusCode of [200/*, 201, 204 */]) {
+            exampleRespBody = example.ExampleObj.responses?.[statusCode]?.body;
+            if (!isNullOrUndefined(exampleRespBody)) break;
         }
-        if (isNullOrUndefined(example_resp_body)) return ret;
+        if (isNullOrUndefined(exampleRespBody)) return ret;
 
-        for (let param of this.example_params) {
-            addParam(example_resp_body, param, "", ret);
+        for (const param of this.exampleParams) {
+            addParam(exampleRespBody, param, '', ret);
         }
 
         return ret;
     }
 }
 
-function singlizeLast(word: string) {
-    let eps = new EnglishPluralizationService();
-    let ws = changeCamelToDash(word).split('-');
-    let l = ws.length;
+function singlizeLast (word: string) {
+    const eps = new EnglishPluralizationService();
+    const ws = changeCamelToDash(word).split('-');
+    const l = ws.length;
     ws[l - 1] = eps.singularize(ws[l - 1]);
     return ws.join('-');
 }
 
-let keyCache = {}  //class_name+objectname->key
-let formalCache = {}
-let keySeq = {}    // class_name ->seq
-export function getResourceKey(class_name: string, object_name: string, formalName = false): string {
-    let longKey = (resourceClassKeys[class_name] || class_name) + '_' + object_name;
+const keyCache = {}; // className+objectname->key
+const formalCache = {};
+const keySeq = {}; // className ->seq
+export function getResourceKey (className: string, objectName: string, formalName = false): string {
+    const longKey = (resourceClassKeys[className] || className) + '_' + objectName;
     if (formalName && longKey in formalCache) {
         return formalCache[longKey];
     }
@@ -428,27 +410,24 @@ export function getResourceKey(class_name: string, object_name: string, formalNa
         return keyCache[longKey];
     }
 
-    if (keySeq.hasOwnProperty(class_name)) {
-        let key = (resourceClassKeys[class_name] || class_name) + '_' + keySeq[class_name];
-        keySeq[class_name] += 1;
-        formalCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name] - 1}`);
-        if (preparerInfos[class_name]?.name) {  // is external resource
+    if (Object.prototype.hasOwnProperty.call(keySeq, className)) {
+        const key = (resourceClassKeys[className] || className) + '_' + keySeq[className];
+        keySeq[className] += 1;
+        formalCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}${keySeq[className] - 1}`);
+        if (preparerInfos[className]?.name) { // is external resource
             keyCache[longKey] = key;
+        } else {
+            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}${keySeq[className] - 1}`);
         }
-        else {
-            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}${keySeq[class_name] - 1}`);
-        }
-    }
-    else {
-        keySeq[class_name] = 2;
-        formalCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}`);
-        if (preparerInfos[class_name]?.name) {  // is external resource
-            keyCache[longKey] = resourceClassKeys[class_name] || class_name;
-        }
-        else {                              // is internal resource
-            // generally, internal resource object_name is shorter than class_name
-            // keyCache[longKey] = object_name;
-            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(class_name)}`);
+    } else {
+        keySeq[className] = 2;
+        formalCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}`);
+        if (preparerInfos[className]?.name) { // is external resource
+            keyCache[longKey] = resourceClassKeys[className] || className;
+        } else { // is internal resource
+            // generally, internal resource objectName is shorter than className
+            // keyCache[longKey] = objectName;
+            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}`);
         }
     }
 
@@ -456,303 +435,297 @@ export function getResourceKey(class_name: string, object_name: string, formalNa
 }
 
 export class ResourcePool {
-    //resources: Map<string, Map<string, resource_object[]>>; // resource_class-->resource_name-->resource_object
-    root: Map<string, ResourceClass>;    //resource_class_name --> resource_class
+    // resources: Map<string, Map<string, resourceObject[]>>; // resource_class-->resource_name-->resourceObject
+    root: Map<string, ResourceClass>; // resourceClassName --> resource_class
     map: Map<string, ResourceClass>;
-    use_subscription: boolean;
-    static KEY_SUBSCRIPTIONID = "subscription_id";
+    useSubscription: boolean;
+    static KEY_SUBSCRIPTIONID = 'subscription_id';
     replacements: Map<string, string>;
 
-    public constructor() {
+    public constructor () {
         this.root = new Map<string, ResourceClass>();
         this.map = new Map<string, ResourceClass>();
-        this.use_subscription = false;
+        this.useSubscription = false;
         this.replacements = new Map<string, string>();
     }
 
-    private prepareResource(class_name: string, object_name: string, depends: string[][], entitys: PreparerEntity[], preparings: string[][]) {
-        if (class_name == SUBNET) return; // use default subnet, no need to prepare it.
+    private prepareResource (className: string, objectName: string, depends: string[][], entitys: PreparerEntity[], preparings: string[][]) {
+        if (className === SUBNET) return; // use default subnet, no need to prepare it.
 
-        function inPreparings(): boolean {
-            for (let [pCName, pOName] of preparings) {
-                if (class_name == pCName && object_name == pOName) return true;
+        function inPreparings (): boolean {
+            for (const [pCName, pOName] of preparings) {
+                if (className === pCName && objectName === pOName) return true;
             }
             return false;
         }
         if (inPreparings()) return;
 
-        for (let e of entitys) {
-            if (e.info.class_name == class_name && e.object_name == object_name) {
+        for (const e of entitys) {
+            if (e.info.className === className && e.objectName === objectName) {
                 return;
             }
         }
 
         for (let i = depends.length - 1; i >= 0; i--) {
-            preparings.push([class_name, object_name]);
+            preparings.push([className, objectName]);
             this.prepareResource(depends[i][0], depends[i][1], depends.slice(0, i), entitys, preparings);
             preparings.pop();
         }
 
-        let entity = new PreparerEntity(preparerInfos[class_name], object_name);
-        for (let depend_resource of entity.info.depend_resources) {
+        const entity = new PreparerEntity(preparerInfos[className], objectName);
+        for (const dependResource of entity.info.dependResources) {
             let found = false;
             for (let i = depends.length - 1; i >= 0; i--) {
-                if (depends[i][0] == depend_resource) {
+                if (depends[i][0] === dependResource) {
                     found = true;
-                    entity.depend_parameter_values.push(getResourceKey(depends[i][0], depends[i][1]));
+                    entity.dependParameterValues.push(getResourceKey(depends[i][0], depends[i][1]));
                     break;
                 }
             }
             if (found) continue;
 
             // find any depend resource in the ready entitys list
-            for (let e of entitys) {
-                if (e.info.class_name == depend_resource) {
+            for (const e of entitys) {
+                if (e.info.className === dependResource) {
                     found = true;
-                    entity.depend_parameter_values.push(getResourceKey(e.info.class_name, e.object_name));
+                    entity.dependParameterValues.push(getResourceKey(e.info.className, e.objectName));
                     break;
                 }
             }
 
             if (found) continue;
 
-            //if there is no entity for this depend has been exist, create a new of it.
-            const default_name = 'default';
-            preparings.push([class_name, object_name]);
-            this.prepareResource(depend_resource, default_name, depends, entitys, preparings);
+            // if there is no entity for this depend has been exist, create a new of it.
+            const defaultName = 'default';
+            preparings.push([className, objectName]);
+            this.prepareResource(dependResource, defaultName, depends, entitys, preparings);
             preparings.pop();
-            entity.depend_parameter_values.push(getResourceKey(depend_resource, default_name));
+            entity.dependParameterValues.push(getResourceKey(dependResource, defaultName));
         }
         entitys.push(entity);
     }
 
-    private prepareInTree(resource: string, entitys: PreparerEntity[], root: Map<string, ResourceClass>, depends: string[][]) {
+    private prepareInTree (resource: string, entitys: PreparerEntity[], root: Map<string, ResourceClass>, depends: string[][]) {
         if (resource in root) {
-            for (let object_name in root[resource].objects) {
-                this.prepareResource(resource, object_name, depends, entitys, []);
+            for (const objectName in root[resource].objects) {
+                this.prepareResource(resource, objectName, depends, entitys, []);
             }
         }
-        for (let r_name in root) {
-            for (let o_name in root[r_name].objects) {
-                depends.push([r_name, o_name]);
-                this.prepareInTree(resource, entitys, root[r_name].objects[o_name].sub_resources, depends);
+        for (const rName in root) {
+            for (const oName in root[rName].objects) {
+                depends.push([rName, oName]);
+                this.prepareInTree(resource, entitys, root[rName].objects[oName].subResources, depends);
                 depends.pop();
             }
         }
     }
 
-    private prepareInMap(resource, entitys: PreparerEntity[]) {
+    private prepareInMap (resource, entitys: PreparerEntity[]) {
         if (resource in this.map) {
-            for (let o_name in this.map[resource].objects) {
-                this.prepareResource(resource, o_name, [], entitys, []);
+            for (const oName in this.map[resource].objects) {
+                this.prepareResource(resource, oName, [], entitys, []);
             }
         }
     }
 
-    public createPreparerEntities(): PreparerEntity[] {
-        let ret: PreparerEntity[] = [];
-        for (let resource of TopoSortResource()) {
+    public createPreparerEntities (): PreparerEntity[] {
+        const ret: PreparerEntity[] = [];
+        for (const resource of TopoSortResource()) {
             this.prepareInTree(resource, ret, this.root, []);
             this.prepareInMap(resource, ret);
         }
         return ret;
     }
 
-    private removeMapResource(class_name: string, object_name: string) {
-        if (class_name in this.map && object_name in this.map[class_name].objects) {
-            this.map[class_name].objects.delete(object_name);
+    private removeMapResource (className: string, objectName: string) {
+        if (className in this.map && objectName in this.map[className].objects) {
+            this.map[className].objects.delete(objectName);
         }
     }
 
-    public addTreeResource(class_name: string, object_name: string, parent_object: ResourceObject): ResourceObject {
-        let resources: Map<string, ResourceClass> = parent_object ? parent_object.sub_resources : this.root;
+    public addTreeResource (className: string, objectName: string, parentObject: ResourceObject): ResourceObject {
+        const resources: Map<string, ResourceClass> = parentObject ? parentObject.subResources : this.root;
 
-        if (!(class_name in resources)) {
-            resources[class_name] = new ResourceClass(class_name);
+        if (!(className in resources)) {
+            resources[className] = new ResourceClass(className);
         }
 
-        if (!(object_name in resources[class_name].objects)) {
-            resources[class_name].objects[object_name] = new ResourceObject(object_name, class_name);
+        if (!(objectName in resources[className].objects)) {
+            resources[className].objects[objectName] = new ResourceObject(objectName, className);
         }
 
-        this.removeMapResource(class_name, object_name);
-        return resources[class_name].objects[object_name];
+        this.removeMapResource(className, objectName);
+        return resources[className].objects[objectName];
     }
 
-    public findResource(class_name: string, object_name: string, testStatus: ObjectStatus): ResourceObject | undefined {
-        if (isNullOrUndefined(class_name) || isNullOrUndefined(object_name)) return null;
+    public findResource (className: string, objectName: string, testStatus: ObjectStatus): ResourceObject | undefined {
+        if (isNullOrUndefined(className) || isNullOrUndefined(objectName)) return null;
 
-        let resource_object = this.findTreeResource(class_name, object_name, this.root, testStatus);
-        if (resource_object) {
-            return resource_object;
+        const resourceObject = this.findTreeResource(className, objectName, this.root, testStatus);
+        if (resourceObject) {
+            return resourceObject;
         }
 
-        if (class_name in this.map && object_name in this.map[class_name].objects) {
-            if (isNullOrUndefined(testStatus) || testStatus == this.map[class_name].objects[object_name].testStatus) {
-                return this.map[class_name].objects[object_name];
+        if (className in this.map && objectName in this.map[className].objects) {
+            if (isNullOrUndefined(testStatus) || testStatus === this.map[className].objects[objectName].testStatus) {
+                return this.map[className].objects[objectName];
             }
         }
 
         return undefined;
     }
 
-    public findAllResource(class_name: string, exampleParams: ExampleParam[] = null, testStatus: ObjectStatus = null): ResourceObject[] {
-        let ret: ResourceObject[] = [];
+    public findAllResource (className: string, exampleParams: ExampleParam[] = null, testStatus: ObjectStatus = null): ResourceObject[] {
+        const ret: ResourceObject[] = [];
 
-        this.findAllTreeResource(class_name, this.root, ret);
+        this.findAllTreeResource(className, this.root, ret);
 
-        if (isNullOrUndefined(class_name)) {
-            for (let c in this.map) {
-                for (let o in this.map[c].objects) {
+        if (isNullOrUndefined(className)) {
+            for (const c in this.map) {
+                for (const o in this.map[c].objects) {
                     ret.push(this.map[c].objects[o]);
                 }
             }
-        }
-        else if (class_name in this.map) {
-            for (let key in this.map[class_name].objects) {
-                ret.push(this.map[class_name].objects[key]);
+        } else if (className in this.map) {
+            for (const key in this.map[className].objects) {
+                ret.push(this.map[className].objects[key]);
             }
         }
 
         return ret.filter((resourceObject) => {
-            for (let critParam of exampleParams) {
+            for (const critParam of exampleParams) {
                 let found = false;
-                for (let resourceParam of resourceObject.example_params) {
-                    if (critParam.name == resourceParam.name && critParam.rawValue == resourceParam.rawValue) {
+                for (const resourceParam of resourceObject.exampleParams) {
+                    if (critParam.name === resourceParam.name && critParam.rawValue === resourceParam.rawValue) {
                         found = true;
                         break;
                     }
                 }
                 if (!found) return false;
-            };
-            return isNullOrUndefined(testStatus) || testStatus == resourceObject.testStatus;
+            }
+            return isNullOrUndefined(testStatus) || testStatus === resourceObject.testStatus;
         });
     }
 
-    public findAllTreeResource(class_name: string, root: Map<string, ResourceClass>, ret: ResourceObject[]) {
-        if (class_name in root) {
-            for (let key in root[class_name].objects) {
-                ret.push(root[class_name].objects[key]);
+    public findAllTreeResource (className: string, root: Map<string, ResourceClass>, ret: ResourceObject[]) {
+        if (className in root) {
+            for (const key in root[className].objects) {
+                ret.push(root[className].objects[key]);
             }
         }
 
-        for (let c in root) {
-            if (isNullOrUndefined(class_name)) {
-                for (let o in root[c].objects) {
+        for (const c in root) {
+            if (isNullOrUndefined(className)) {
+                for (const o in root[c].objects) {
                     ret.push(root[c].objects[o]);
                 }
             }
-            for (let o in root[c].objects) {
-                this.findAllTreeResource(class_name, root[c].objects[o].sub_resources, ret);
+            for (const o in root[c].objects) {
+                this.findAllTreeResource(className, root[c].objects[o].subResources, ret);
             }
         }
     }
 
-
-    public findTreeResource(class_name: string, object_name: string, root: Map<string, ResourceClass>, testStatus: ObjectStatus = null): ResourceObject {
-        if (class_name in root && root[class_name].objects.hasOwnProperty(object_name)) {
-            if (isNullOrUndefined(testStatus) || testStatus == root[class_name].objects[object_name].testStatus) {
-                return root[class_name].objects[object_name];
+    public findTreeResource (className: string, objectName: string, root: Map<string, ResourceClass>, testStatus: ObjectStatus = null): ResourceObject {
+        if (className in root && Object.prototype.hasOwnProperty.call(root[className].objects, objectName)) {
+            if (isNullOrUndefined(testStatus) || testStatus === root[className].objects[objectName].testStatus) {
+                return root[className].objects[objectName];
             }
         }
-        if (!class_name) {
-            for (let c in root) {
-                if (root[c].objects.hasOwnProperty(object_name)) {
-                    if (isNullOrUndefined(testStatus) || testStatus == root[c].objects[object_name].testStatus) {
-                        return root[c].objects[object_name];
+        if (!className) {
+            for (const c in root) {
+                if (Object.prototype.hasOwnProperty.call(root[c].objects, objectName)) {
+                    if (isNullOrUndefined(testStatus) || testStatus === root[c].objects[objectName].testStatus) {
+                        return root[c].objects[objectName];
                     }
                 }
             }
         }
-        for (let c in root) {
-            for (let o in root[c].objects) {
-                let ret = this.findTreeResource(class_name, object_name, root[c].objects[o].sub_resources, testStatus);
+        for (const c in root) {
+            for (const o in root[c].objects) {
+                const ret = this.findTreeResource(className, objectName, root[c].objects[o].subResources, testStatus);
                 if (ret) return ret;
             }
         }
         return null;
     }
 
-    public addMapResource(class_name: string, object_name: string): ResourceObject {
-        let resource_object = this.findTreeResource(class_name, object_name, this.root);
-        if (resource_object) {
-            return resource_object;
+    public addMapResource (className: string, objectName: string): ResourceObject {
+        const resourceObject = this.findTreeResource(className, objectName, this.root);
+        if (resourceObject) {
+            return resourceObject;
         }
 
-        if (class_name in this.map) {
-            if (!(object_name in this.map[class_name].objects)) {
-                this.map[class_name].objects[object_name] = new ResourceObject(object_name, class_name)
+        if (className in this.map) {
+            if (!(objectName in this.map[className].objects)) {
+                this.map[className].objects[objectName] = new ResourceObject(objectName, className);
             }
+        } else {
+            this.map[className] = new ResourceClass(className);
+            this.map[className].objects[objectName] = new ResourceObject(objectName, className);
         }
-        else {
-            this.map[class_name] = new ResourceClass(class_name);
-            this.map[class_name].objects[object_name] = new ResourceObject(object_name, class_name);
-        }
-        return this.map[class_name].objects[object_name];
+        return this.map[className].objects[objectName];
     }
 
-    public isResource(language: string): string | null {
-        if (language.startsWith("--")) language = language.substr(2);
-        for (let resource in resourceLanguages) {
-            for (let resource_language of resourceLanguages[resource]) {
-                if (resource_language.toLowerCase() == language.toLowerCase()) return resource;
+    public isResource (language: string): string | null {
+        if (language.startsWith('--')) language = language.substr(2);
+        for (const resource in resourceLanguages) {
+            for (const resourceLanguage of resourceLanguages[resource]) {
+                if (resourceLanguage.toLowerCase() === language.toLowerCase()) return resource;
             }
         }
         return null;
     }
 
-    private formatable(str: string, placeholders: string[]) {
-        str = str.split("{").join("{{").split("}").join("}}");
-        for (let placeholder of placeholders) {
+    private formatable (str: string, placeholders: string[]) {
+        str = str.split('{').join('{{').split('}').join('}}');
+        for (const placeholder of placeholders) {
             str = str.split(`{${placeholder}}`).join(placeholder);
         }
         return str;
     }
 
-    private isSubParam(exampleParam: ExampleParam, attr: string): boolean {
-        for (let subparam of exampleParam.methodParam.submethodparameters || []) {
-            if (attr.toLowerCase().startsWith(subparam.language['cli'].cliKey.toLowerCase() + "=")) return true;
+    private isSubParam (exampleParam: ExampleParam, attr: string): boolean {
+        for (const subparam of exampleParam.methodParam.submethodparameters || []) {
+            if (attr.toLowerCase().startsWith(subparam.language['cli'].cliKey.toLowerCase() + '=')) return true;
         }
-        for (let k of exampleParam.keys) {
-            if (attr.toLowerCase().startsWith(k.toLowerCase() + "=")) return true;
+        for (const k of exampleParam.keys) {
+            if (attr.toLowerCase().startsWith(k.toLowerCase() + '=')) return true;
         }
         return false;
-
     }
-    public addEndpointResource(endpoint: any, isJson: boolean, keyValue: KeyValueType, placeholders: string[], resources: string[], exampleParam: ExampleParam, isTest = true): any {
-        if (placeholders == undefined) placeholders = new Array();
+
+    public addEndpointResource (endpoint: any, isJson: boolean, keyValue: KeyValueType, placeholders: string[], resources: string[], exampleParam: ExampleParam, isTest = true): any {
+        if (placeholders === undefined) placeholders = [];
         if (isJson) {
-            let body = typeof endpoint == 'string' ? JSON.parse(endpoint) : endpoint;
-            if (typeof body == 'object') {
+            let body = typeof endpoint === 'string' ? JSON.parse(endpoint) : endpoint;
+            if (typeof body === 'object') {
                 if (body instanceof Array) {
                     body = body.map((value) => {
-                        return this.addEndpointResource(value, typeof value == 'object', keyValue, placeholders, resources, exampleParam, isTest);
+                        return this.addEndpointResource(value, typeof value === 'object', keyValue, placeholders, resources, exampleParam, isTest);
                     });
-                }
-                else if (isDict(body)) {
-                    for (let k in body) {
-                        body[k] = this.addEndpointResource(body[k], typeof body[k] == 'object', keyValue, placeholders, resources, exampleParam, isTest);
+                } else if (isDict(body)) {
+                    for (const k in body) {
+                        body[k] = this.addEndpointResource(body[k], typeof body[k] === 'object', keyValue, placeholders, resources, exampleParam, isTest);
                     }
                 }
-            }
-            else {
+            } else {
                 body = this.addEndpointResource(body, false, keyValue, placeholders, resources, exampleParam, isTest);
             }
 
-            if (typeof endpoint == 'string') {
-                let ret = JSON.stringify(body).split(/[\r\n]+/).join("");
+            if (typeof endpoint === 'string') {
+                const ret = JSON.stringify(body).split(/[\r\n]+/).join('');
                 return isTest ? this.formatable(ret, placeholders) : ret;
-            }
-            else {
+            } else {
                 return body;
             }
         }
 
         if (typeof endpoint !== 'string') return endpoint;
 
-        function parseActionString(rp: ResourcePool, endpoint, seperator=" "): string {
-            let ret = "";
-            let attrs = endpoint.split(seperator);
+        function parseActionString (rp: ResourcePool, endpoint, seperator = ' '): string {
+            let ret = '';
+            const attrs = endpoint.split(seperator);
             for (let i = 1; i < attrs.length; i++) {
                 if (!rp.isSubParam(exampleParam, attrs[i])) {
                     attrs[i - 1] += ' ' + attrs[i];
@@ -760,68 +733,63 @@ export class ResourcePool {
                     i--;
                 }
             }
-            for (let attr of attrs) {
-                let kv = attr.split("=");
+            for (const attr of attrs) {
+                const kv = attr.split('=');
                 if (ret.length > 0) ret += seperator;
-                if (kv[1].length >= 2 && kv[1][0] == '"' && kv[1][kv[1].length - 1] == '"') {
-                    let v = rp.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+                if (kv[1].length >= 2 && kv[1][0] === '"' && kv[1][kv[1].length - 1] === '"') {
+                    const v = rp.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
                     ret += `${kv[0]}="${v}"`;
-                }
-                else {
-                    let v = rp.addEndpointResource(kv[1], isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+                } else {
+                    const v = rp.addEndpointResource(kv[1], isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
                     ret += `${kv[0]}=${v}`;
                 }
             }
             return ret;
         }
 
-        //if the input is in form of "key1=value2 key2=value2 ...", then analyse the values one by one
-        if (keyValue==KeyValueType.Classic) {
+        // if the input is in form of "key1=value2 key2=value2 ...", then analyse the values one by one
+        if (keyValue === KeyValueType.Classic) {
             return parseActionString(this, endpoint);
-        }
-        else if (keyValue==KeyValueType.PositionalKey) {
-            let ret = "";
-            for (let item of endpoint.split(' ')) {
-                if (ret.length > 0) ret += " ";
-                if (item.length>=2 && item.startsWith('"') && item.endsWith('"')) {
+        } else if (keyValue === KeyValueType.PositionalKey) {
+            let ret = '';
+            for (const item of endpoint.split(' ')) {
+                if (ret.length > 0) ret += ' ';
+                if (item.length >= 2 && item.startsWith('"') && item.endsWith('"')) {
                     ret += `"${this.addEndpointResource(item.slice(1, -1), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest)}"`;
-                }
-                else {
+                } else {
                     ret += this.addEndpointResource(item, isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
                 }
             }
             return ret;
-        }
-        else if (keyValue==KeyValueType.ShorthandSyntax) {
-            let instanceStrings = endpoint.split(" ");
-            let ret = "";
-            for (let instanceString of instanceStrings) {
-                if (ret.length>0) ret+= " ";
-                ret += parseActionString(this, instanceString, ",");
+        } else if (keyValue === KeyValueType.ShorthandSyntax) {
+            const instanceStrings = endpoint.split(' ');
+            let ret = '';
+            for (const instanceString of instanceStrings) {
+                if (ret.length > 0) ret += ' ';
+                ret += parseActionString(this, instanceString, ',');
             }
             return ret;
-        }
-        else if (keyValue==KeyValueType.SimpleArray) {
-            let ret = [];
-            for (let instanceString of endpoint.split(" ")) {
-                let p = "";
-                if (instanceString.length >= 2 && instanceString[0] == '"' && instanceString[instanceString.length - 1] == '"') {
+        } else if (keyValue === KeyValueType.SimpleArray) {
+            const ret = [];
+            for (const instanceString of endpoint.split(' ')) {
+                let p = '';
+                if (instanceString.length >= 2 && instanceString[0] === '"' && instanceString[instanceString.length - 1] === '"') {
                     p = this.addEndpointResource(instanceString.substr(1, instanceString.length - 2), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
-                    p= `"${p}"`;
-                }
-                else {
+                    p = `"${p}"`;
+                } else {
                     p = this.addEndpointResource(instanceString, isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
                 }
                 ret.push(p);
             }
-            return ret.join(" ");
+            return ret.join(' ');
         }
         return this.replaceResourceString(endpoint, placeholders, resources, isTest);
     }
-    public replaceResourceString(endpoint: string, placeholders: string[], resources: string[], isTest = true): any {
-        let nodes = endpoint.split('/');
-        if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() != SUBSCRIPTIONS) {
-            let ret = this.getPlaceholder(endpoint, isTest, placeholders);
+
+    public replaceResourceString (endpoint: string, placeholders: string[], resources: string[], isTest = true): any {
+        const nodes = endpoint.split('/');
+        if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() !== SUBSCRIPTIONS) {
+            const ret = this.getPlaceholder(endpoint, isTest, placeholders);
             return isTest ? this.formatable(ret, placeholders) : ret;
         }
         if (isTest) {
@@ -830,78 +798,74 @@ export class ResourcePool {
         if (placeholders.indexOf(nodes[2]) < 0) {
             placeholders.push(nodes[2]);
         }
-        this.use_subscription = true;
+        this.useSubscription = true;
         let i = 3;
-        let resource_object: ResourceObject = null;
+        let resourceObject: ResourceObject = null;
         while (i < (nodes.length - 1)) {
             const resource = this.isResource(nodes[i]);
             if (resource) {
-                if (resource == SUBNET) {
+                if (resource === SUBNET) {
                     // since the subnet can't be created with rand name, just use the dfault one.
                     nodes[i + 1] = 'default';
-                }
-                else {
-                    resource_object = this.addTreeResource(resource, nodes[i + 1], resource_object);
-                    nodes[i + 1] = resource_object.placeholder(isTest);
-                    if (placeholders.indexOf(resource_object.placeholder(isTest)) < 0) {
-                        placeholders.push(resource_object.placeholder(isTest));
+                } else {
+                    resourceObject = this.addTreeResource(resource, nodes[i + 1], resourceObject);
+                    nodes[i + 1] = resourceObject.placeholder(isTest);
+                    if (placeholders.indexOf(resourceObject.placeholder(isTest)) < 0) {
+                        placeholders.push(resourceObject.placeholder(isTest));
                     }
                     if (resources.indexOf(resource) < 0) {
                         resources.push(resource);
                     }
                 }
-            }
-            else {
+            } else {
                 nodes[i + 1] = this.getPlaceholder(nodes[i + 1], isTest);
             }
             i += 2;
         }
-        let ret = nodes.join('/');
+        const ret = nodes.join('/');
         return isTest ? this.formatable(ret, placeholders) : ret;
     }
 
-    public addParamResource(param_name: string, param_value: string, isJson: boolean, keyValue: KeyValueType, isTest = true): string {
-        if (typeof param_value !== 'string' || isJson || keyValue!=KeyValueType.No) return param_value;
+    public addParamResource (paramName: string, paramValue: string, isJson: boolean, keyValue: KeyValueType, isTest = true): string {
+        if (typeof paramValue !== 'string' || isJson || keyValue !== KeyValueType.No) return paramValue;
 
-        if (param_name.startsWith('--')) {
-            param_name = param_name.substr(2);
+        if (paramName.startsWith('--')) {
+            paramName = paramName.substr(2);
         }
-        let resource = this.isResource(param_name);
+        const resource = this.isResource(paramName);
         if (!resource) {
-            return this.getPlaceholder(param_value, isTest);
+            return this.getPlaceholder(paramValue, isTest);
         }
-        if (resource == SUBNET) {
+        if (resource === SUBNET) {
             // since the subnet can't be created with rand name, just use the dfault one.
             return 'default';
         }
-        let resource_object = this.addMapResource(resource, param_value);
-        if (resource_object) {
-            return resource_object.placeholder(isTest);
-        }
-        else {
-            return this.getPlaceholder(param_value, isTest);
+        const resourceObject = this.addMapResource(resource, paramValue);
+        if (resourceObject) {
+            return resourceObject.placeholder(isTest);
+        } else {
+            return this.getPlaceholder(paramValue, isTest);
         }
     }
 
-
-    public getPlaceholder(object_name: string, isTest: boolean, placeholders: string[] = null): string {
+    public getPlaceholder (objectName: string, isTest: boolean, placeholders: string[] = null): string {
         // find in MapResource
-        for (let class_name in this.map) {
-            if ( !isNullOrUndefined(this.map[class_name].objects) && this.map[class_name].objects.hasOwnProperty(object_name)) {
-                let ret = this.map[class_name].objects[object_name].placeholder(isTest);
+        for (const className in this.map) {
+            if (!isNullOrUndefined(this.map[className].objects) && Object.prototype.hasOwnProperty.call(this.map[className].objects, objectName)) {
+                const ret = this.map[className].objects[objectName].placeholder(isTest);
                 if (!isNullOrUndefined(placeholders)) {
                     if (placeholders.indexOf(ret) < 0) {
                         placeholders.push(ret);
                     }
                 }
-                return ret
+                return ret;
             }
         }
 
         // find in TreeResource
-        let resource_object = this.findTreeResource(null, object_name, this.root);
-        if (resource_object) {
-            let ret = resource_object.placeholder(isTest);
+        const resourceObject = this.findTreeResource(null, objectName, this.root);
+        if (resourceObject) {
+            const ret = resourceObject.placeholder(isTest);
             if (!isNullOrUndefined(placeholders)) {
                 if (placeholders.indexOf(ret) < 0) {
                     placeholders.push(ret);
@@ -910,68 +874,65 @@ export class ResourcePool {
             return ret;
         }
 
-        let regex = /^\d\d\d\d\-\d\d\-\d\dT\d\d:\d\d:\d\d.\d+Z$/g
-        if (azOptions?.['replace-datetime'] && regex.test(object_name)) {
-            if (!this.replacements.has(object_name)) {
-                let date = new Date();
+        const regex = /^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d.\d+Z$/g;
+        if (azOptions?.['replace-datetime'] && regex.test(objectName)) {
+            if (!this.replacements.has(objectName)) {
+                const date = new Date();
                 date.setDate(date.getDate() + 10);
-                this.replacements.set(object_name, date.toISOString());
+                this.replacements.set(objectName, date.toISOString());
             }
-            return this.replacements.get(object_name)
+            return this.replacements.get(objectName);
         }
-        return object_name;
+        return objectName;
     }
 
-    public addResourcesInfo(resources: object) {
-        for (let class_name in resources) {
-            resourceClassKeys[class_name] = class_name; // TODO: brief key for internal resources
-            resourceLanguages[class_name] = resources[class_name];
+    public addResourcesInfo (resources: any) {
+        for (const className in resources) {
+            resourceClassKeys[className] = className; // TODO: brief key for internal resources
+            resourceLanguages[className] = resources[className];
         }
     }
 
-    public setResourceDepends(resource_class_name: string, depend_resources: string[], depend_parameters: string[], createdObjectNames: string[]) {
-        if (!(resource_class_name in resourceClassDepends)) {
-            resourceClassDepends[resource_class_name] = deepCopy(depend_resources);
-            preparerInfos[resource_class_name] = new PreparerInfo(null, resource_class_name, depend_parameters, depend_resources);
-        }
-        else {
-            for (let i = 0; i < depend_resources.length; i++) {
-                let dependResource = depend_resources[i];
-                if (resourceClassDepends[resource_class_name].indexOf(dependResource) < 0) {
-                    resourceClassDepends[resource_class_name].push(dependResource);
-                    preparerInfos[resource_class_name].depend_parameters.push(depend_parameters[i]);
-                    preparerInfos[resource_class_name].depend_resources.push(depend_resources[i]);
+    public setResourceDepends (resourceClassName: string, dependResources: string[], dependParameters: string[], createdObjectNames: string[]) {
+        if (!(resourceClassName in resourceClassDepends)) {
+            resourceClassDepends[resourceClassName] = deepCopy(dependResources);
+            preparerInfos[resourceClassName] = new PreparerInfo(null, resourceClassName, dependParameters, dependResources);
+        } else {
+            for (let i = 0; i < dependResources.length; i++) {
+                const dependResource = dependResources[i];
+                if (resourceClassDepends[resourceClassName].indexOf(dependResource) < 0) {
+                    resourceClassDepends[resourceClassName].push(dependResource);
+                    preparerInfos[resourceClassName].dependParameters.push(dependParameters[i]);
+                    preparerInfos[resourceClassName].dependResources.push(dependResources[i]);
                 }
             }
         }
 
-        for (let objectName of createdObjectNames) {
-            if (preparerInfos[resource_class_name].createdObjectNames.indexOf(objectName) < 0) {
-                preparerInfos[resource_class_name].createdObjectNames.push(objectName);
+        for (const objectName of createdObjectNames) {
+            if (preparerInfos[resourceClassName].createdObjectNames.indexOf(objectName) < 0) {
+                preparerInfos[resourceClassName].createdObjectNames.push(objectName);
             }
         }
-
     }
 
-    public isDependResource(child: string, parent: string) {
-        let depends = resourceClassDepends[child];
+    public isDependResource (child: string, parent: string) {
+        const depends = resourceClassDepends[child];
         return depends && depends.indexOf(parent) >= 0;
     }
 
-    public getListCheckers(example: CommandExample): string[] {
-        let ret = [];
-        if (example.Method != "list") return ret;
-        let len = this.findAllResource(example.ResourceClassName, example.Parameters, ObjectStatus.Created).length;
+    public getListCheckers (example: CommandExample): string[] {
+        const ret = [];
+        if (example.Method !== 'list') return ret;
+        const len = this.findAllResource(example.ResourceClassName, example.Parameters, ObjectStatus.Created).length;
         if (len > 0) {
             ret.push(`test.check('length(@)', ${len}),`);
         }
         return ret;
     }
 
-    public clearExampleParams() {
-        for (let resource of this.findAllResource(null, [], null)) {
-            resource.example_params = [];
-        }  
+    public clearExampleParams () {
+        for (const resource of this.findAllResource(null, [], null)) {
+            resource.exampleParams = [];
+        }
     }
 }
-

@@ -1,22 +1,21 @@
-/*---------------------------------------------------------------------------------------------
+/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-import { CodeModelAz } from "../CodeModelAz";
+ *-------------------------------------------------------------------------------------------- */
+import { CodeModelAz } from '../CodeModelAz';
 
 export abstract class TemplateBase {
     protected model: CodeModelAz;
     protected isDebugMode: boolean;
     public relativePath: string;
 
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
+    constructor (model: CodeModelAz, isDebugMode: boolean) {
         this.model = model;
         this.isDebugMode = isDebugMode;
-        this.relativePath = "";
+        this.relativePath = '';
     }
 
     public abstract async fullGeneration(): Promise<string[]>;
 
     public abstract async incrementalGeneration(base: string): Promise<string[]>;
-
 }

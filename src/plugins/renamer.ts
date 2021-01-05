@@ -1,20 +1,20 @@
-import { CodeModel, codeModelSchema, Language, Parameter } from "@azure-tools/codemodel";
-import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
-import { serialize, deserialize } from "@azure-tools/codegen";
+import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
+import { Session, startSession, Host } from '@azure-tools/autorest-extension-base';
+import { serialize } from '@azure-tools/codegen';
 
 export class Renamer {
     codeModel: CodeModel;
 
-    constructor(protected session: Session<CodeModel>) {
+    constructor (protected session: Session<CodeModel>) {
         this.codeModel = session.model;
     }
 
-    async process() {
+    async process () {
         return this.codeModel;
     }
 }
 
-export async function processRequest(host: Host) {
+export async function processRequest (host: Host) {
     const debug = await host.GetValue('debug') || false;
 
     try {
@@ -28,5 +28,4 @@ export async function processRequest(host: Host) {
         }
         throw E;
     }
-
 }

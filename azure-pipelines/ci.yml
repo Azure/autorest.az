@@ -16,7 +16,7 @@ jobs:
         displayName: 'npm install'
         inputs:
           verbose: false
-      - script: 'node_modules\.bin\eslint . .scripts --ext .js --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/'
+      - script: 'node_modules\.bin\eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/'
         displayName: 'eslint'
 
   - job: Build
