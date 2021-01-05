@@ -126,7 +126,7 @@ export class Modifiers {
     async process () {
         directives = await this.session.getValue('directive');
         const options = await this.session.getValue('az');
-        if (directives !== null) {
+        if (!isNullOrUndefined(directives)) {
             for (const directive of directives.filter(each => !each.transform)) {
                 const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
                     return selector ? !hasSpecialChars(selector) ? new RegExp(`^${selector}$`, 'gi') : new RegExp(selector, 'gi') : undefined;

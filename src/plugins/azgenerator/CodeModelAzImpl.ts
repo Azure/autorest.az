@@ -1059,7 +1059,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     // This interface is designed to enumerate all parameters of the selected method and their mapping to Python SDK.
     //= ================================================================================================================
     public SelectFirstMethodParameter (containHidden = false): boolean {
-        if (this.submethodparameters !== null) {
+        if (!isNullOrUndefined(this.submethodparameters)) {
             this.currentSubOptionIndex = 0;
             const parameter = this.submethodparameters[this.currentSubOptionIndex];
             if (this.Parameter_IsHidden(parameter) && !containHidden) {
@@ -1085,7 +1085,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public SelectNextMethodParameter (containHidden = false): boolean {
-        if (this.submethodparameters !== null) {
+        if (!isNullOrUndefined(this.submethodparameters)) {
             this.currentSubOptionIndex++;
 
             if (this.currentSubOptionIndex >= this.submethodparameters.length) {
@@ -1174,7 +1174,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public ExitSubMethodParameters (): boolean {
-        if (this.submethodparameters !== null) {
+        if (!isNullOrUndefined(this.submethodparameters)) {
             if (this.substack.length > 0) {
                 const lastsub = this.substack.last;
                 this.submethodparameters = lastsub[0];
@@ -1232,7 +1232,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get MethodParameter_IsArray (): boolean {
-        if (this.submethodparameters !== null) {
+        if (!isNullOrUndefined(this.submethodparameters)) {
             return this.submethodparameters[this.currentSubOptionIndex].schema?.type === SchemaType.Array;
         } else {
             return this.MethodParameter.schema?.type === SchemaType.Array;
@@ -1426,7 +1426,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             return true;
         } else if (this.Schema_Type(schema) === SchemaType.Dictionary) {
-            if (schema['children'] !== null && schema['discriminator'] !== null) {
+            if (!isNullOrUndefined(schema['children']) && !isNullOrUndefined(schema['discriminator'])) {
                 return false;
             }
             const p = schema['elementType'];
@@ -1615,7 +1615,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get SubMethodParameter (): Parameter {
-        if (this.submethodparameters !== null) {
+        if (!isNullOrUndefined(this.submethodparameters)) {
             return this.submethodparameters[this.currentSubOptionIndex];
         }
         return null;
@@ -1906,7 +1906,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         if (this.SelectFirstMethodParameter()) {
             do {
-                if ((this.MethodParameter.implementation === 'Method' || (this.MethodParameter as any).polyBaseParam) && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type !== 'constant') {
+                if ((this.MethodParameter.implementation === 'Method' || this.MethodParameter['polyBaseParam']) && !this.MethodParameter_IsFlattened && this.MethodParameter?.schema?.type !== 'constant') {
                     let submethodparameters = null;
                     if (this.EnterSubMethodParameters()) {
                         submethodparameters = this.submethodparameters;
@@ -1929,7 +1929,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     private isDiscriminator (param: any): boolean {
-        return !!((this.Command_GetOriginalOperation && param?.targetProperty?.isDiscriminator));
+        return this.Command_GetOriginalOperation && param?.targetProperty?.isDiscriminator? true: false;
     }
 
     private AddExampleParameter (methodParam: MethodParam, exampleParam: ExampleParam[], value: any, polySubParam: MethodParam, ancestors: string[], rawValue: any): boolean {
@@ -2144,14 +2144,14 @@ export class CodeModelCliImpl implements CodeModelAz {
     public FlattenExampleParameter (methodParamList: MethodParam[], exampleParam: ExampleParam[], name: string, value: any, ancestors: string[]) {
         for (const methodParam of this.matchMethodParam(methodParamList, name, ancestors)) {
             let polySubParam: MethodParam = null;
-            let netValue = typeof value === 'object' && value !== null ? deepCopy(value) : value;
+            let netValue = typeof value === 'object' && !isNullOrUndefined(value) ? deepCopy(value) : value;
             let rawValue = deepCopy(netValue);
-            if (methodParam.value.isPolyOfSimple) {
+            if (methodParam.value['isPolyOfSimple']) {
                 const keyToMatch = methodParam.value.schema.discriminator?.property?.language?.default?.name;
                 if (keyToMatch) {
                     for (const methodParam of methodParamList) {
                         const polySubParamObj = methodParam.value;
-                        if (polySubParamObj.polyBaseParam === methodParam.value && polySubParamObj.schema.extensions) {
+                        if (polySubParamObj.schema.extensions) {
                             const valueToMatch = polySubParamObj.schema.extensions['x-ms-discriminator-value'];
                             if (netValue[keyToMatch] === valueToMatch) {
                                 polySubParam = methodParam;
@@ -2189,7 +2189,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
         }
 
-        if (value !== null && typeof value === 'object') {
+        if (!isNullOrUndefined(value) && typeof value === 'object') {
             for (const subName in value) {
                 this.FlattenExampleParameter(methodParamList, exampleParam, subName, value[subName], ancestors.concat(name));
             }

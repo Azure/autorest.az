@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { slow, suite, test, timeout } from 'mocha-typescript';
 import * as path from 'path';
 import { ArgumentConstants, CompatibleLevel, GenerateSdk, TargetMode } from '../plugins/models';
-import { copyRecursiveSync, deleteFolderRecursive } from '../utils/helper';
+import { copyRecursiveSync, deleteFolderRecursive, isNullOrUndefined } from '../utils/helper';
 import * as sourceMapSupport from 'source-map-support';
 
 sourceMapSupport.install();
@@ -37,11 +37,11 @@ export enum TestMode {
         for (const k in extraOption) {
             cmdOption.push('--' + k + '=' + extraOption[k]);
         }
-        const cmd = path.join(`${__dirname}`, '/../../' + 'node_modules/.bin/autorest') + ' --version=3.0.6320 --az --use=' + path.join(`${__dirname}`, '/../../' + directory + '/configuration/readme.md') + ' ' + cmdOption.join(' ');
+        const cmd = path.join(`${__dirname}`, '/../../' + 'node_modules/.bin/autorest') + ' --version=3.0.6320 --az --use=' + path.join(`${__dirname}`, '/../../') + " " + directory + '/configuration/readme.md ' + cmdOption.join(' ');
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => {
             exec(cmd, function (error) {
-                if (error !== null) {
+                if (!isNullOrUndefined(error)) {
                     console.log('exec error: ' + error);
                     // Reject if there is an error:
                     return reject(false);
@@ -57,7 +57,7 @@ export enum TestMode {
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => {
             exec(cmd, function (error, stdout) {
-                if (error !== null) {
+                if (!isNullOrUndefined(error)) {
                     console.log('exec error: ' + error + ', ' + stdout);
                     // Reject if there is an error:
                     return reject(false);

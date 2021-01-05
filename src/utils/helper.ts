@@ -112,7 +112,7 @@ function Merge (left: any[], right: any[], comparer: (left, right) => number): a
 }
 
 export function isDict (v: unknown): boolean {
-    return typeof v === 'object' && v !== null && !(v instanceof Array) && !(v instanceof Date);
+    return typeof v === 'object' && !isNullOrUndefined(v) && !(v instanceof Array) && !(v instanceof Date);
 }
 
 export function ToJsonString (_in: unknown): string {
@@ -375,6 +375,9 @@ export function parseResourceId (mpath: string): Map<string, string> {
         let result = null;
         while (childStr != "") {
             result = childRegex.exec(childStr);
+            if (isNullOrUndefined(result)) {
+                break;
+            }
             count++;
             for (const key of ['child_namespace', 'child_type', 'child_name']) {
                 ret.set(key + '_' + count, result.groups[key]);

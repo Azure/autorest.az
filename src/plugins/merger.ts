@@ -408,9 +408,9 @@ export async function processRequest (host: Host) {
     const cliCore = targetMode === TargetMode.Core;
     // change both core and extension mode into no flattened mode.
     let sdkFlatten = false;
-    sdkFlatten = await host.GetValue(ArgumentConstants.sdkFlatten) !== undefined ? true : sdkFlatten;
-    sdkFlatten = await host.GetValue(ArgumentConstants.sdkNoFlatten) !== undefined ? false : sdkFlatten;
-    const sdkNoFlatten = await host.GetValue(ArgumentConstants.sdkNoFlatten) !== undefined ? true : !sdkFlatten;
+    sdkFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkFlatten)) ? true : sdkFlatten;
+    sdkFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkNoFlatten)) ? false : sdkFlatten;
+    const sdkNoFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkNoFlatten)) ? true : !sdkFlatten;
     if (cliCore && !sdkNoFlatten) {
         host.Message({ Channel: Channel.Fatal, Text: 'You have specified the --target-mode=core and --sdk-no-flatten=false at the same time. which is not a valid configuration' });
         throw new Error('Wrong configuration detected, please check!');
