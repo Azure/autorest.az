@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from '../../CodeModelAz';
 
-export function GenerateAzureCliSetupCfg (model: CodeModelAz) : string[] {
+export function GenerateAzureCliSetupCfg(model: CodeModelAz): string[] {
     const output: string[] = [];
 
     output.push('#setup.cfg');

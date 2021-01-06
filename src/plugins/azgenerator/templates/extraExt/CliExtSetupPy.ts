@@ -11,22 +11,24 @@ import { TemplateBase } from '../TemplateBase';
 import compareVersions = require('compare-versions');
 
 export class CliExtSetupPy extends TemplateBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         this.relativePath = PathConstants.setupPyFile;
     }
 
-    public async fullGeneration (): Promise<string[]> {
+    public async fullGeneration(): Promise<string[]> {
         return await this.GenerateAzureCliSetupPy(this.model);
     }
 
-    public async incrementalGeneration (base: string): Promise<string[]> {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         if (isNullOrUndefined(base) || base.length === 0) {
             return null;
         } else {
             const existingMode: GenerationMode = HeaderGenerator.GetCliGenerationMode(base);
             if (existingMode === GenerationMode.Full) {
-                throw new Error('GenerationMode Error: Should not set Incremental mode on existing Full generation RP.');
+                throw new Error(
+                    'GenerationMode Error: Should not set Incremental mode on existing Full generation RP.',
+                );
             } else {
                 const rst = compareVersions(CodeGenConstants.minCliCoreVersion, '2.3.1');
                 if (rst === 0 || rst === 1) {
@@ -47,9 +49,20 @@ export class CliExtSetupPy extends TemplateBase {
                         }
                     }
                     if (firstNoneCommentLineIdx !== -1) {
-                        for (let i: number = firstNoneCommentLineIdx + 1; i < baseSplit.length; ++i) {
-                            if (!(baseSplit[i].indexOf("'Programming Language :: Python :: 2',") > -1 ||
-                                baseSplit[i].indexOf("'Programming Language :: Python :: 2.7',") > -1)) {
+                        for (
+                            let i: number = firstNoneCommentLineIdx + 1;
+                            i < baseSplit.length;
+                            ++i
+                        ) {
+                            if (
+                                !(
+                                    baseSplit[i].indexOf("'Programming Language :: Python :: 2',") >
+                                        -1 ||
+                                    baseSplit[i].indexOf(
+                                        "'Programming Language :: Python :: 2.7',",
+                                    ) > -1
+                                )
+                            ) {
                                 output.push(baseSplit[i]);
                             }
                         }
@@ -60,15 +73,21 @@ export class CliExtSetupPy extends TemplateBase {
         }
     }
 
-    private async GenerateAzureCliSetupPy (model: CodeModelAz): Promise<string[]> {
+    private async GenerateAzureCliSetupPy(model: CodeModelAz): Promise<string[]> {
         const output: string[] = [];
 
         output.push('#!/usr/bin/env python');
         output.push('');
-        output.push('# --------------------------------------------------------------------------------------------');
+        output.push(
+            '# --------------------------------------------------------------------------------------------',
+        );
         output.push('# Copyright (c) Microsoft Corporation. All rights reserved.');
-        output.push('# Licensed under the MIT License. See License.txt in the project root for license information.');
-        output.push('# --------------------------------------------------------------------------------------------');
+        output.push(
+            '# Licensed under the MIT License. See License.txt in the project root for license information.',
+        );
+        output.push(
+            '# --------------------------------------------------------------------------------------------',
+        );
         output.push('');
         output.push('');
         output.push('from codecs import open');
@@ -120,10 +139,18 @@ export class CliExtSetupPy extends TemplateBase {
         output.push('setup(');
         output.push("    name='" + model.Extension_NameUnderscored + "',");
         output.push('    version=VERSION,');
-        output.push("    description='Microsoft Azure Command-Line Tools " + model.Extension_NameClass + " Extension',");
+        output.push(
+            "    description='Microsoft Azure Command-Line Tools " +
+                model.Extension_NameClass +
+                " Extension',",
+        );
         output.push("    author='Microsoft Corporation',");
         output.push("    author_email='azpycli@microsoft.com',");
-        output.push("    url='https://github.com/Azure/azure-cli-extensions/tree/master/src/" + model.Extension_Name + "',");
+        output.push(
+            "    url='https://github.com/Azure/azure-cli-extensions/tree/master/src/" +
+                model.Extension_Name +
+                "',",
+        );
         output.push("    long_description=README + '\\n\\n' + HISTORY,");
         output.push("    license='MIT',");
         output.push('    classifiers=CLASSIFIERS,');

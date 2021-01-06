@@ -1,11 +1,18 @@
-
 import { CommandExample, ExampleParam, KeyValueType } from '../../CodeModelAz';
-import { deepCopy, isDict, ToCamelCase, ToPythonString, changeCamelToDash, MergeSort, isNullOrUndefined } from '../../../../utils/helper';
+import {
+    deepCopy,
+    isDict,
+    ToCamelCase,
+    ToPythonString,
+    changeCamelToDash,
+    MergeSort,
+    isNullOrUndefined,
+} from '../../../../utils/helper';
 import { EnglishPluralizationService } from '@azure-tools/codegen';
 
 export const azOptions = {};
 
-function MethodToOrder (httpMethod: string): number {
+function MethodToOrder(httpMethod: string): number {
     if (httpMethod === 'put') return 0;
     else if (httpMethod === 'get') return 1;
     else if (httpMethod === 'post') return 4;
@@ -13,8 +20,7 @@ function MethodToOrder (httpMethod: string): number {
     else return 3;
 }
 
-export function GenerateDefaultTestScenario (
-    examples: CommandExample[]): any[] {
+export function GenerateDefaultTestScenario(examples: CommandExample[]): any[] {
     const testScenario = [];
 
     // sort to make it examples stable
@@ -49,10 +55,16 @@ export function GenerateDefaultTestScenario (
     return testScenario;
 }
 
-export function GenerateDefaultTestScenarioByDependency (
-    examples: CommandExample[], resourcePool: ResourcePool, originalScenario: any[]): any[] {
+export function GenerateDefaultTestScenarioByDependency(
+    examples: CommandExample[],
+    resourcePool: ResourcePool,
+    originalScenario: any[],
+): any[] {
     const dependOn = (exampleA: CommandExample, exampleB: CommandExample): boolean => {
-        return resourcePool.isDependResource(exampleA.ResourceClassName, exampleB.ResourceClassName);
+        return resourcePool.isDependResource(
+            exampleA.ResourceClassName,
+            exampleB.ResourceClassName,
+        );
     };
     const getExample = (name) => {
         for (const example of examples) {
@@ -77,7 +89,7 @@ export function GenerateDefaultTestScenarioByDependency (
     return originalScenario;
 }
 
-export function PrintTestScenario (testScenario: any[]) {
+export function PrintTestScenario(testScenario: any[]) {
     console.warn('');
     console.warn('BELOW TEST SCENARIO SECTION CAN BE USED IN readme.cli.md');
     console.warn('--------------------------------------------------------');
@@ -90,15 +102,16 @@ export function PrintTestScenario (testScenario: any[]) {
     console.warn('--------------------------------------------------------');
 }
 
-export function GroupTestScenario (testScenario: any, extensionName: string) {
+export function GroupTestScenario(testScenario: any, extensionName: string) {
     if (isNullOrUndefined(testScenario)) return testScenario;
 
     const ret = {};
     const defaultScenario = 'Scenario';
 
-    function addScenario (groupName: string, scenarioName: string, items: any[]) {
+    function addScenario(groupName: string, scenarioName: string, items: any[]) {
         if (!Object.prototype.hasOwnProperty.call(ret, groupName)) ret[groupName] = {};
-        if (!Object.prototype.hasOwnProperty.call(ret[groupName], scenarioName)) ret[groupName][scenarioName] = [];
+        if (!Object.prototype.hasOwnProperty.call(ret[groupName], scenarioName))
+            ret[groupName][scenarioName] = [];
         ret[groupName][scenarioName].push(...items);
     }
 
@@ -134,7 +147,7 @@ const resourceClassDepends = {
     [VIRTUALNETWORK]: [RESOUREGROUP],
     [SUBNET]: [VIRTUALNETWORK, RESOUREGROUP],
     [STORAGEACCOUNT]: [RESOUREGROUP],
-    [NETWORKINTERFACE]: [VIRTUALNETWORK, RESOUREGROUP]
+    [NETWORKINTERFACE]: [VIRTUALNETWORK, RESOUREGROUP],
 };
 
 const resourceLanguages = {
@@ -142,7 +155,7 @@ const resourceLanguages = {
     [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworkName', 'virtualNetworks'],
     [SUBNET]: ['subnet', 'subnetName', 'subnets'],
     [STORAGEACCOUNT]: ['storage-account', 'storageAccountName', 'storageAccounts'],
-    [NETWORKINTERFACE]: ['network-interface', 'networkInterfaceName', 'networkInterfaces']
+    [NETWORKINTERFACE]: ['network-interface', 'networkInterfaceName', 'networkInterfaces'],
 };
 
 const resourceClassKeys = {
@@ -150,10 +163,10 @@ const resourceClassKeys = {
     [VIRTUALNETWORK]: 'vn',
     [SUBNET]: 'sn',
     [STORAGEACCOUNT]: 'sa',
-    [NETWORKINTERFACE]: 'nic'
+    [NETWORKINTERFACE]: 'nic',
 };
 
-export function TopoSortResource () {
+export function TopoSortResource() {
     const ret = [];
     const resources = Object.keys(resourceClassDepends);
     // let reverse_depends = { };
@@ -188,11 +201,16 @@ export function TopoSortResource () {
 
 class PreparerInfo {
     name: string;
-    className: string
+    className: string;
     dependParameters: string[];
     dependResources: string[];
     public createdObjectNames: string[];
-    public constructor (name: string, className: string, dependParameters: string[], dependResources: string[]) {
+    public constructor(
+        name: string,
+        className: string,
+        dependParameters: string[],
+        dependResources: string[],
+    ) {
         this.name = name;
         this.className = className;
         this.dependParameters = dependParameters;
@@ -202,17 +220,37 @@ class PreparerInfo {
 }
 const preparerInfos = {
     [RESOUREGROUP]: new PreparerInfo('ResourceGroupPreparer', RESOUREGROUP, [], []),
-    [VIRTUALNETWORK]: new PreparerInfo('VirtualNetworkPreparer', VIRTUALNETWORK, ['resource_group_key'], [RESOUREGROUP]),
-    [SUBNET]: new PreparerInfo('VnetSubnetPreparer', SUBNET, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
-    [STORAGEACCOUNT]: new PreparerInfo('StorageAccountPreparer', STORAGEACCOUNT, ['resource_group_parameter_name'], [RESOUREGROUP]),
-    [NETWORKINTERFACE]: new PreparerInfo('VnetNicPreparer', NETWORKINTERFACE, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK])
+    [VIRTUALNETWORK]: new PreparerInfo(
+        'VirtualNetworkPreparer',
+        VIRTUALNETWORK,
+        ['resource_group_key'],
+        [RESOUREGROUP],
+    ),
+    [SUBNET]: new PreparerInfo(
+        'VnetSubnetPreparer',
+        SUBNET,
+        ['resource_group_key', 'vnet_key'],
+        [RESOUREGROUP, VIRTUALNETWORK],
+    ),
+    [STORAGEACCOUNT]: new PreparerInfo(
+        'StorageAccountPreparer',
+        STORAGEACCOUNT,
+        ['resource_group_parameter_name'],
+        [RESOUREGROUP],
+    ),
+    [NETWORKINTERFACE]: new PreparerInfo(
+        'VnetNicPreparer',
+        NETWORKINTERFACE,
+        ['resource_group_key', 'vnet_key'],
+        [RESOUREGROUP, VIRTUALNETWORK],
+    ),
 };
 
 export class PreparerEntity {
     info: PreparerInfo;
     objectName: string;
     dependParameterValues: string[];
-    public constructor (info: PreparerInfo, objectName: string) {
+    public constructor(info: PreparerInfo, objectName: string) {
         this.info = info;
         this.objectName = objectName;
         this.dependParameterValues = [];
@@ -223,7 +261,7 @@ class ResourceClass {
     className: string;
     objects: Map<string, ResourceObject>; // objectName --> resourceObject
 
-    public constructor (className: string) {
+    public constructor(className: string) {
         this.className = className;
         this.objects = new Map<string, ResourceObject>();
     }
@@ -242,7 +280,7 @@ class ResourceObject {
     exampleParams: ExampleParam[];
     testStatus: ObjectStatus;
 
-    public constructor (objectName: string, className: string) {
+    public constructor(objectName: string, className: string) {
         this.objectName = objectName;
         this.className = className;
         this.subResources = new Map<string, ResourceClass>();
@@ -250,16 +288,16 @@ class ResourceObject {
         this.testStatus = ObjectStatus.None;
     }
 
-    public get key (): string {
+    public get key(): string {
         return getResourceKey(this.className, this.objectName);
     }
 
-    public placeholder (isTest: boolean): string {
+    public placeholder(isTest: boolean): string {
         if (isTest) return '{' + this.key + '}';
         return getResourceKey(this.className, this.objectName, true);
     }
 
-    public addOrUpdateParam (exampleParam: ExampleParam) {
+    public addOrUpdateParam(exampleParam: ExampleParam) {
         // remove all children
         const coveredPath = [exampleParam.ancestors.concat([exampleParam.name])];
         for (let i = 0; i < this.exampleParams.length; i++) {
@@ -289,8 +327,8 @@ class ResourceObject {
         this.exampleParams.push(exampleParam);
     }
 
-    public getCheckers (resourcePool: ResourcePool, example: CommandExample): string[] {
-        function hasComplexArray (obj: any): boolean {
+    public getCheckers(resourcePool: ResourcePool, example: CommandExample): string[] {
+        function hasComplexArray(obj: any): boolean {
             if (obj instanceof Array) {
                 if (obj.length > 1) return true;
                 for (const s of obj) {
@@ -305,12 +343,27 @@ class ResourceObject {
             return false;
         }
 
-        function addParam (obj: any, param: ExampleParam, checkPath: string, ret: string[]): boolean {
+        function addParam(
+            obj: any,
+            param: ExampleParam,
+            checkPath: string,
+            ret: string[],
+        ): boolean {
             if (isDict(obj)) {
                 if (checkPath.length > 0) checkPath += '.';
-                if (param.defaultName in obj && typeof obj[param.defaultName] === typeof param.rawValue && JSON.stringify(obj[param.defaultName]).toLowerCase() === JSON.stringify(param.rawValue).toLowerCase()) {
+                if (
+                    param.defaultName in obj &&
+                    typeof obj[param.defaultName] === typeof param.rawValue &&
+                    JSON.stringify(obj[param.defaultName]).toLowerCase() ===
+                        JSON.stringify(param.rawValue).toLowerCase()
+                ) {
                     if (hasComplexArray(param.rawValue)) return;
-                    formatChecker(checkPath + resourcePool.replaceResourceString(param.defaultName, [], [], true), param.rawValue, ret);
+                    formatChecker(
+                        checkPath +
+                            resourcePool.replaceResourceString(param.defaultName, [], [], true),
+                        param.rawValue,
+                        ret,
+                    );
                     return true;
                 }
             }
@@ -327,7 +380,14 @@ class ResourceObject {
                             break;
                         }
                     } else {
-                        if (addParam(obj[key], param, checkPath + resourcePool.replaceResourceString(key, [], [], true), ret)) {
+                        if (
+                            addParam(
+                                obj[key],
+                                param,
+                                checkPath + resourcePool.replaceResourceString(key, [], [], true),
+                                ret,
+                            )
+                        ) {
                             handled = true;
                             break;
                         }
@@ -335,7 +395,14 @@ class ResourceObject {
                 }
                 if (!handled) {
                     if (checkPath.length > 0) checkPath = checkPath.slice(0, -1);
-                    if ('name' in obj && checkPath.length === 0 && param.defaultName.toLowerCase().endsWith('name') && typeof obj.name === typeof param.rawValue && JSON.stringify(obj.name).toLowerCase() === JSON.stringify(param.rawValue).toLowerCase()) {
+                    if (
+                        'name' in obj &&
+                        checkPath.length === 0 &&
+                        param.defaultName.toLowerCase().endsWith('name') &&
+                        typeof obj.name === typeof param.rawValue &&
+                        JSON.stringify(obj.name).toLowerCase() ===
+                            JSON.stringify(param.rawValue).toLowerCase()
+                    ) {
                         if (hasComplexArray(param.rawValue)) return;
                         formatChecker(checkPath + 'name', param.rawValue, ret);
                         return true;
@@ -345,7 +412,7 @@ class ResourceObject {
             return false;
         }
 
-        function formatChecker (checkPath: string, rawValue: any, ret: string[]) {
+        function formatChecker(checkPath: string, rawValue: any, ret: string[]) {
             if (typeof rawValue === 'object') {
                 if (rawValue instanceof Array) {
                     if (rawValue.length > 1) return;
@@ -360,15 +427,31 @@ class ResourceObject {
                         ret.push(`test.check("${checkPath}", {}),`);
                     }
                     for (const key in rawValue) {
-                        formatChecker(checkPath + resourcePool.replaceResourceString(key, [], [], true), rawValue[key], ret);
+                        formatChecker(
+                            checkPath + resourcePool.replaceResourceString(key, [], [], true),
+                            rawValue[key],
+                            ret,
+                        );
                     }
                 }
             } else {
                 if (typeof rawValue === 'string') {
-                    const replacedValue = resourcePool.replaceResourceString(rawValue, [], [], true);
-                    ret.push(`test.check("${checkPath}", ${ToPythonString(replacedValue, typeof replacedValue)}, case_sensitive=False),`);
+                    const replacedValue = resourcePool.replaceResourceString(
+                        rawValue,
+                        [],
+                        [],
+                        true,
+                    );
+                    ret.push(
+                        `test.check("${checkPath}", ${ToPythonString(
+                            replacedValue,
+                            typeof replacedValue,
+                        )}, case_sensitive=False),`,
+                    );
                 } else {
-                    ret.push(`test.check("${checkPath}", ${ToPythonString(rawValue, typeof rawValue)}),`);
+                    ret.push(
+                        `test.check("${checkPath}", ${ToPythonString(rawValue, typeof rawValue)}),`,
+                    );
                 }
             }
         }
@@ -376,7 +459,7 @@ class ResourceObject {
         const ret: string[] = [];
         if (['create', 'delete', 'show', 'list', 'update'].indexOf(example.Method) < 0) return ret;
         let exampleRespBody = null;
-        for (const statusCode of [200/*, 201, 204 */]) {
+        for (const statusCode of [200 /*, 201, 204 */]) {
             exampleRespBody = example.ExampleObj.responses?.[statusCode]?.body;
             if (!isNullOrUndefined(exampleRespBody)) break;
         }
@@ -390,7 +473,7 @@ class ResourceObject {
     }
 }
 
-function singlizeLast (word: string) {
+function singlizeLast(word: string) {
     const eps = new EnglishPluralizationService();
     const ws = changeCamelToDash(word).split('-');
     const l = ws.length;
@@ -401,7 +484,7 @@ function singlizeLast (word: string) {
 const keyCache = {}; // className+objectname->key
 const formalCache = {};
 const keySeq = {}; // className ->seq
-export function getResourceKey (className: string, objectName: string, formalName = false): string {
+export function getResourceKey(className: string, objectName: string, formalName = false): string {
     const longKey = (resourceClassKeys[className] || className) + '_' + objectName;
     if (formalName && longKey in formalCache) {
         return formalCache[longKey];
@@ -414,17 +497,22 @@ export function getResourceKey (className: string, objectName: string, formalNam
         const key = (resourceClassKeys[className] || className) + '_' + keySeq[className];
         keySeq[className] += 1;
         formalCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}${keySeq[className] - 1}`);
-        if (preparerInfos[className]?.name) { // is external resource
+        if (preparerInfos[className]?.name) {
+            // is external resource
             keyCache[longKey] = key;
         } else {
-            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}${keySeq[className] - 1}`);
+            keyCache[longKey] = ToCamelCase(
+                `my-${singlizeLast(className)}${keySeq[className] - 1}`,
+            );
         }
     } else {
         keySeq[className] = 2;
         formalCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}`);
-        if (preparerInfos[className]?.name) { // is external resource
+        if (preparerInfos[className]?.name) {
+            // is external resource
             keyCache[longKey] = resourceClassKeys[className] || className;
-        } else { // is internal resource
+        } else {
+            // is internal resource
             // generally, internal resource objectName is shorter than className
             // keyCache[longKey] = objectName;
             keyCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}`);
@@ -442,17 +530,23 @@ export class ResourcePool {
     static KEY_SUBSCRIPTIONID = 'subscription_id';
     replacements: Map<string, string>;
 
-    public constructor () {
+    public constructor() {
         this.root = new Map<string, ResourceClass>();
         this.map = new Map<string, ResourceClass>();
         this.useSubscription = false;
         this.replacements = new Map<string, string>();
     }
 
-    private prepareResource (className: string, objectName: string, depends: string[][], entitys: PreparerEntity[], preparings: string[][]) {
+    private prepareResource(
+        className: string,
+        objectName: string,
+        depends: string[][],
+        entitys: PreparerEntity[],
+        preparings: string[][],
+    ) {
         if (className === SUBNET) return; // use default subnet, no need to prepare it.
 
-        function inPreparings (): boolean {
+        function inPreparings(): boolean {
             for (const [pCName, pOName] of preparings) {
                 if (className === pCName && objectName === pOName) return true;
             }
@@ -468,7 +562,13 @@ export class ResourcePool {
 
         for (let i = depends.length - 1; i >= 0; i--) {
             preparings.push([className, objectName]);
-            this.prepareResource(depends[i][0], depends[i][1], depends.slice(0, i), entitys, preparings);
+            this.prepareResource(
+                depends[i][0],
+                depends[i][1],
+                depends.slice(0, i),
+                entitys,
+                preparings,
+            );
             preparings.pop();
         }
 
@@ -488,7 +588,9 @@ export class ResourcePool {
             for (const e of entitys) {
                 if (e.info.className === dependResource) {
                     found = true;
-                    entity.dependParameterValues.push(getResourceKey(e.info.className, e.objectName));
+                    entity.dependParameterValues.push(
+                        getResourceKey(e.info.className, e.objectName),
+                    );
                     break;
                 }
             }
@@ -505,7 +607,12 @@ export class ResourcePool {
         entitys.push(entity);
     }
 
-    private prepareInTree (resource: string, entitys: PreparerEntity[], root: Map<string, ResourceClass>, depends: string[][]) {
+    private prepareInTree(
+        resource: string,
+        entitys: PreparerEntity[],
+        root: Map<string, ResourceClass>,
+        depends: string[][],
+    ) {
         if (resource in root) {
             for (const objectName in root[resource].objects) {
                 this.prepareResource(resource, objectName, depends, entitys, []);
@@ -514,13 +621,18 @@ export class ResourcePool {
         for (const rName in root) {
             for (const oName in root[rName].objects) {
                 depends.push([rName, oName]);
-                this.prepareInTree(resource, entitys, root[rName].objects[oName].subResources, depends);
+                this.prepareInTree(
+                    resource,
+                    entitys,
+                    root[rName].objects[oName].subResources,
+                    depends,
+                );
                 depends.pop();
             }
         }
     }
 
-    private prepareInMap (resource, entitys: PreparerEntity[]) {
+    private prepareInMap(resource, entitys: PreparerEntity[]) {
         if (resource in this.map) {
             for (const oName in this.map[resource].objects) {
                 this.prepareResource(resource, oName, [], entitys, []);
@@ -528,7 +640,7 @@ export class ResourcePool {
         }
     }
 
-    public createPreparerEntities (): PreparerEntity[] {
+    public createPreparerEntities(): PreparerEntity[] {
         const ret: PreparerEntity[] = [];
         for (const resource of TopoSortResource()) {
             this.prepareInTree(resource, ret, this.root, []);
@@ -537,14 +649,20 @@ export class ResourcePool {
         return ret;
     }
 
-    private removeMapResource (className: string, objectName: string) {
+    private removeMapResource(className: string, objectName: string) {
         if (className in this.map && objectName in this.map[className].objects) {
             this.map[className].objects.delete(objectName);
         }
     }
 
-    public addTreeResource (className: string, objectName: string, parentObject: ResourceObject): ResourceObject {
-        const resources: Map<string, ResourceClass> = parentObject ? parentObject.subResources : this.root;
+    public addTreeResource(
+        className: string,
+        objectName: string,
+        parentObject: ResourceObject,
+    ): ResourceObject {
+        const resources: Map<string, ResourceClass> = parentObject
+            ? parentObject.subResources
+            : this.root;
 
         if (!(className in resources)) {
             resources[className] = new ResourceClass(className);
@@ -558,7 +676,11 @@ export class ResourcePool {
         return resources[className].objects[objectName];
     }
 
-    public findResource (className: string, objectName: string, testStatus: ObjectStatus): ResourceObject | undefined {
+    public findResource(
+        className: string,
+        objectName: string,
+        testStatus: ObjectStatus,
+    ): ResourceObject | undefined {
         if (isNullOrUndefined(className) || isNullOrUndefined(objectName)) return null;
 
         const resourceObject = this.findTreeResource(className, objectName, this.root, testStatus);
@@ -567,7 +689,10 @@ export class ResourcePool {
         }
 
         if (className in this.map && objectName in this.map[className].objects) {
-            if (isNullOrUndefined(testStatus) || testStatus === this.map[className].objects[objectName].testStatus) {
+            if (
+                isNullOrUndefined(testStatus) ||
+                testStatus === this.map[className].objects[objectName].testStatus
+            ) {
                 return this.map[className].objects[objectName];
             }
         }
@@ -575,7 +700,11 @@ export class ResourcePool {
         return undefined;
     }
 
-    public findAllResource (className: string, exampleParams: ExampleParam[] = null, testStatus: ObjectStatus = null): ResourceObject[] {
+    public findAllResource(
+        className: string,
+        exampleParams: ExampleParam[] = null,
+        testStatus: ObjectStatus = null,
+    ): ResourceObject[] {
         const ret: ResourceObject[] = [];
 
         this.findAllTreeResource(className, this.root, ret);
@@ -596,7 +725,10 @@ export class ResourcePool {
             for (const critParam of exampleParams) {
                 let found = false;
                 for (const resourceParam of resourceObject.exampleParams) {
-                    if (critParam.name === resourceParam.name && critParam.rawValue === resourceParam.rawValue) {
+                    if (
+                        critParam.name === resourceParam.name &&
+                        critParam.rawValue === resourceParam.rawValue
+                    ) {
                         found = true;
                         break;
                     }
@@ -607,7 +739,11 @@ export class ResourcePool {
         });
     }
 
-    public findAllTreeResource (className: string, root: Map<string, ResourceClass>, ret: ResourceObject[]) {
+    public findAllTreeResource(
+        className: string,
+        root: Map<string, ResourceClass>,
+        ret: ResourceObject[],
+    ) {
         if (className in root) {
             for (const key in root[className].objects) {
                 ret.push(root[className].objects[key]);
@@ -626,16 +762,30 @@ export class ResourcePool {
         }
     }
 
-    public findTreeResource (className: string, objectName: string, root: Map<string, ResourceClass>, testStatus: ObjectStatus = null): ResourceObject {
-        if (className in root && Object.prototype.hasOwnProperty.call(root[className].objects, objectName)) {
-            if (isNullOrUndefined(testStatus) || testStatus === root[className].objects[objectName].testStatus) {
+    public findTreeResource(
+        className: string,
+        objectName: string,
+        root: Map<string, ResourceClass>,
+        testStatus: ObjectStatus = null,
+    ): ResourceObject {
+        if (
+            className in root &&
+            Object.prototype.hasOwnProperty.call(root[className].objects, objectName)
+        ) {
+            if (
+                isNullOrUndefined(testStatus) ||
+                testStatus === root[className].objects[objectName].testStatus
+            ) {
                 return root[className].objects[objectName];
             }
         }
         if (!className) {
             for (const c in root) {
                 if (Object.prototype.hasOwnProperty.call(root[c].objects, objectName)) {
-                    if (isNullOrUndefined(testStatus) || testStatus === root[c].objects[objectName].testStatus) {
+                    if (
+                        isNullOrUndefined(testStatus) ||
+                        testStatus === root[c].objects[objectName].testStatus
+                    ) {
                         return root[c].objects[objectName];
                     }
                 }
@@ -643,14 +793,19 @@ export class ResourcePool {
         }
         for (const c in root) {
             for (const o in root[c].objects) {
-                const ret = this.findTreeResource(className, objectName, root[c].objects[o].subResources, testStatus);
+                const ret = this.findTreeResource(
+                    className,
+                    objectName,
+                    root[c].objects[o].subResources,
+                    testStatus,
+                );
                 if (ret) return ret;
             }
         }
         return null;
     }
 
-    public addMapResource (className: string, objectName: string): ResourceObject {
+    public addMapResource(className: string, objectName: string): ResourceObject {
         const resourceObject = this.findTreeResource(className, objectName, this.root);
         if (resourceObject) {
             return resourceObject;
@@ -667,7 +822,7 @@ export class ResourcePool {
         return this.map[className].objects[objectName];
     }
 
-    public isResource (language: string): string | null {
+    public isResource(language: string): string | null {
         if (language.startsWith('--')) language = language.substr(2);
         for (const resource in resourceLanguages) {
             for (const resourceLanguage of resourceLanguages[resource]) {
@@ -677,7 +832,7 @@ export class ResourcePool {
         return null;
     }
 
-    private formatable (str: string, placeholders: string[]) {
+    private formatable(str: string, placeholders: string[]) {
         str = str.split('{').join('{{').split('}').join('}}');
         for (const placeholder of placeholders) {
             str = str.split(`{${placeholder}}`).join(placeholder);
@@ -685,9 +840,10 @@ export class ResourcePool {
         return str;
     }
 
-    private isSubParam (exampleParam: ExampleParam, attr: string): boolean {
+    private isSubParam(exampleParam: ExampleParam, attr: string): boolean {
         for (const subparam of exampleParam.methodParam.submethodparameters || []) {
-            if (attr.toLowerCase().startsWith(subparam.language['cli'].cliKey.toLowerCase() + '=')) return true;
+            if (attr.toLowerCase().startsWith(subparam.language['cli'].cliKey.toLowerCase() + '='))
+                return true;
         }
         for (const k of exampleParam.keys) {
             if (attr.toLowerCase().startsWith(k.toLowerCase() + '=')) return true;
@@ -695,26 +851,60 @@ export class ResourcePool {
         return false;
     }
 
-    public addEndpointResource (endpoint: any, isJson: boolean, keyValue: KeyValueType, placeholders: string[], resources: string[], exampleParam: ExampleParam, isTest = true): any {
+    public addEndpointResource(
+        endpoint: any,
+        isJson: boolean,
+        keyValue: KeyValueType,
+        placeholders: string[],
+        resources: string[],
+        exampleParam: ExampleParam,
+        isTest = true,
+    ): any {
         if (placeholders === undefined) placeholders = [];
         if (isJson) {
             let body = typeof endpoint === 'string' ? JSON.parse(endpoint) : endpoint;
             if (typeof body === 'object') {
                 if (body instanceof Array) {
                     body = body.map((value) => {
-                        return this.addEndpointResource(value, typeof value === 'object', keyValue, placeholders, resources, exampleParam, isTest);
+                        return this.addEndpointResource(
+                            value,
+                            typeof value === 'object',
+                            keyValue,
+                            placeholders,
+                            resources,
+                            exampleParam,
+                            isTest,
+                        );
                     });
                 } else if (isDict(body)) {
                     for (const k in body) {
-                        body[k] = this.addEndpointResource(body[k], typeof body[k] === 'object', keyValue, placeholders, resources, exampleParam, isTest);
+                        body[k] = this.addEndpointResource(
+                            body[k],
+                            typeof body[k] === 'object',
+                            keyValue,
+                            placeholders,
+                            resources,
+                            exampleParam,
+                            isTest,
+                        );
                     }
                 }
             } else {
-                body = this.addEndpointResource(body, false, keyValue, placeholders, resources, exampleParam, isTest);
+                body = this.addEndpointResource(
+                    body,
+                    false,
+                    keyValue,
+                    placeholders,
+                    resources,
+                    exampleParam,
+                    isTest,
+                );
             }
 
             if (typeof endpoint === 'string') {
-                const ret = JSON.stringify(body).split(/[\r\n]+/).join('');
+                const ret = JSON.stringify(body)
+                    .split(/[\r\n]+/)
+                    .join('');
                 return isTest ? this.formatable(ret, placeholders) : ret;
             } else {
                 return body;
@@ -723,7 +913,7 @@ export class ResourcePool {
 
         if (typeof endpoint !== 'string') return endpoint;
 
-        function parseActionString (rp: ResourcePool, endpoint, seperator = ' '): string {
+        function parseActionString(rp: ResourcePool, endpoint, seperator = ' '): string {
             let ret = '';
             const attrs = endpoint.split(seperator);
             for (let i = 1; i < attrs.length; i++) {
@@ -737,10 +927,26 @@ export class ResourcePool {
                 const kv = attr.split('=');
                 if (ret.length > 0) ret += seperator;
                 if (kv[1].length >= 2 && kv[1][0] === '"' && kv[1][kv[1].length - 1] === '"') {
-                    const v = rp.addEndpointResource(kv[1].substr(1, kv[1].length - 2), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+                    const v = rp.addEndpointResource(
+                        kv[1].substr(1, kv[1].length - 2),
+                        isJson,
+                        KeyValueType.No,
+                        placeholders,
+                        resources,
+                        exampleParam,
+                        isTest,
+                    );
                     ret += `${kv[0]}="${v}"`;
                 } else {
-                    const v = rp.addEndpointResource(kv[1], isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+                    const v = rp.addEndpointResource(
+                        kv[1],
+                        isJson,
+                        KeyValueType.No,
+                        placeholders,
+                        resources,
+                        exampleParam,
+                        isTest,
+                    );
                     ret += `${kv[0]}=${v}`;
                 }
             }
@@ -755,9 +961,25 @@ export class ResourcePool {
             for (const item of endpoint.split(' ')) {
                 if (ret.length > 0) ret += ' ';
                 if (item.length >= 2 && item.startsWith('"') && item.endsWith('"')) {
-                    ret += `"${this.addEndpointResource(item.slice(1, -1), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest)}"`;
+                    ret += `"${this.addEndpointResource(
+                        item.slice(1, -1),
+                        isJson,
+                        KeyValueType.No,
+                        placeholders,
+                        resources,
+                        exampleParam,
+                        isTest,
+                    )}"`;
                 } else {
-                    ret += this.addEndpointResource(item, isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+                    ret += this.addEndpointResource(
+                        item,
+                        isJson,
+                        KeyValueType.No,
+                        placeholders,
+                        resources,
+                        exampleParam,
+                        isTest,
+                    );
                 }
             }
             return ret;
@@ -773,11 +995,31 @@ export class ResourcePool {
             const ret = [];
             for (const instanceString of endpoint.split(' ')) {
                 let p = '';
-                if (instanceString.length >= 2 && instanceString[0] === '"' && instanceString[instanceString.length - 1] === '"') {
-                    p = this.addEndpointResource(instanceString.substr(1, instanceString.length - 2), isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+                if (
+                    instanceString.length >= 2 &&
+                    instanceString[0] === '"' &&
+                    instanceString[instanceString.length - 1] === '"'
+                ) {
+                    p = this.addEndpointResource(
+                        instanceString.substr(1, instanceString.length - 2),
+                        isJson,
+                        KeyValueType.No,
+                        placeholders,
+                        resources,
+                        exampleParam,
+                        isTest,
+                    );
                     p = `"${p}"`;
                 } else {
-                    p = this.addEndpointResource(instanceString, isJson, KeyValueType.No, placeholders, resources, exampleParam, isTest);
+                    p = this.addEndpointResource(
+                        instanceString,
+                        isJson,
+                        KeyValueType.No,
+                        placeholders,
+                        resources,
+                        exampleParam,
+                        isTest,
+                    );
                 }
                 ret.push(p);
             }
@@ -786,7 +1028,12 @@ export class ResourcePool {
         return this.replaceResourceString(endpoint, placeholders, resources, isTest);
     }
 
-    public replaceResourceString (endpoint: string, placeholders: string[], resources: string[], isTest = true): any {
+    public replaceResourceString(
+        endpoint: string,
+        placeholders: string[],
+        resources: string[],
+        isTest = true,
+    ): any {
         const nodes = endpoint.split('/');
         if (nodes.length < 3 || nodes[0].length > 0 || nodes[1].toLowerCase() !== SUBSCRIPTIONS) {
             const ret = this.getPlaceholder(endpoint, isTest, placeholders);
@@ -801,7 +1048,7 @@ export class ResourcePool {
         this.useSubscription = true;
         let i = 3;
         let resourceObject: ResourceObject = null;
-        while (i < (nodes.length - 1)) {
+        while (i < nodes.length - 1) {
             const resource = this.isResource(nodes[i]);
             if (resource) {
                 if (resource === SUBNET) {
@@ -826,8 +1073,15 @@ export class ResourcePool {
         return isTest ? this.formatable(ret, placeholders) : ret;
     }
 
-    public addParamResource (paramName: string, paramValue: string, isJson: boolean, keyValue: KeyValueType, isTest = true): string {
-        if (typeof paramValue !== 'string' || isJson || keyValue !== KeyValueType.No) return paramValue;
+    public addParamResource(
+        paramName: string,
+        paramValue: string,
+        isJson: boolean,
+        keyValue: KeyValueType,
+        isTest = true,
+    ): string {
+        if (typeof paramValue !== 'string' || isJson || keyValue !== KeyValueType.No)
+            return paramValue;
 
         if (paramName.startsWith('--')) {
             paramName = paramName.substr(2);
@@ -848,10 +1102,17 @@ export class ResourcePool {
         }
     }
 
-    public getPlaceholder (objectName: string, isTest: boolean, placeholders: string[] = null): string {
+    public getPlaceholder(
+        objectName: string,
+        isTest: boolean,
+        placeholders: string[] = null,
+    ): string {
         // find in MapResource
         for (const className in this.map) {
-            if (!isNullOrUndefined(this.map[className].objects) && Object.prototype.hasOwnProperty.call(this.map[className].objects, objectName)) {
+            if (
+                !isNullOrUndefined(this.map[className].objects) &&
+                Object.prototype.hasOwnProperty.call(this.map[className].objects, objectName)
+            ) {
                 const ret = this.map[className].objects[objectName].placeholder(isTest);
                 if (!isNullOrUndefined(placeholders)) {
                     if (placeholders.indexOf(ret) < 0) {
@@ -886,17 +1147,27 @@ export class ResourcePool {
         return objectName;
     }
 
-    public addResourcesInfo (resources: any) {
+    public addResourcesInfo(resources: any) {
         for (const className in resources) {
             resourceClassKeys[className] = className; // TODO: brief key for internal resources
             resourceLanguages[className] = resources[className];
         }
     }
 
-    public setResourceDepends (resourceClassName: string, dependResources: string[], dependParameters: string[], createdObjectNames: string[]) {
+    public setResourceDepends(
+        resourceClassName: string,
+        dependResources: string[],
+        dependParameters: string[],
+        createdObjectNames: string[],
+    ) {
         if (!(resourceClassName in resourceClassDepends)) {
             resourceClassDepends[resourceClassName] = deepCopy(dependResources);
-            preparerInfos[resourceClassName] = new PreparerInfo(null, resourceClassName, dependParameters, dependResources);
+            preparerInfos[resourceClassName] = new PreparerInfo(
+                null,
+                resourceClassName,
+                dependParameters,
+                dependResources,
+            );
         } else {
             for (let i = 0; i < dependResources.length; i++) {
                 const dependResource = dependResources[i];
@@ -915,22 +1186,26 @@ export class ResourcePool {
         }
     }
 
-    public isDependResource (child: string, parent: string) {
+    public isDependResource(child: string, parent: string) {
         const depends = resourceClassDepends[child];
         return depends && depends.indexOf(parent) >= 0;
     }
 
-    public getListCheckers (example: CommandExample): string[] {
+    public getListCheckers(example: CommandExample): string[] {
         const ret = [];
         if (example.Method !== 'list') return ret;
-        const len = this.findAllResource(example.ResourceClassName, example.Parameters, ObjectStatus.Created).length;
+        const len = this.findAllResource(
+            example.ResourceClassName,
+            example.Parameters,
+            ObjectStatus.Created,
+        ).length;
         if (len > 0) {
             ret.push(`test.check('length(@)', ${len}),`);
         }
         return ret;
     }
 
-    public clearExampleParams () {
+    public clearExampleParams() {
         for (const resource of this.findAllResource(null, [], null)) {
             resource.exampleParams = [];
         }

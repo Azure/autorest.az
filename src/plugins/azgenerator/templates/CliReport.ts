@@ -11,20 +11,20 @@ import { PathConstants } from '../../models';
 import { TemplateBase } from './TemplateBase';
 
 export class CliReport extends TemplateBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         this.relativePath = path.join(PathConstants.reportFile);
     }
 
-    public async fullGeneration (): Promise<string[]> {
+    public async fullGeneration(): Promise<string[]> {
         return this.GenerateAzureCliReport(this.model);
     }
 
-    public async incrementalGeneration (base: string): Promise<string[]> {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         return this.fullGeneration();
     }
 
-    GenerateAzureCliReport (model: CodeModelAz): string[] {
+    GenerateAzureCliReport(model: CodeModelAz): string[] {
         let output: string[] = [];
 
         output.push('# Azure CLI Module Creation Report');
@@ -35,14 +35,27 @@ export class CliReport extends TemplateBase {
         output.push('|az ' + model.Extension_Name + '|[groups](#CommandGroups)');
         output.push('');
         output.push('## GROUPS');
-        output.push('### <a name="CommandGroups">Command groups in `az ' + model.Extension_Name + '` extension </a>');
+        output.push(
+            '### <a name="CommandGroups">Command groups in `az ' +
+                model.Extension_Name +
+                '` extension </a>',
+        );
         output.push('|CLI Command Group|Group Swagger name|Commands|');
         output.push('|---------|------------|--------|');
 
         let cmds = {};
         if (model.SelectFirstCommandGroup()) {
             do {
-                output.push('|az ' + model.CommandGroup_Name + '|' + model.CommandGroup_CliKey + '|' + '[commands](#CommandsIn' + model.CommandGroup_CliKey + ')|');
+                output.push(
+                    '|az ' +
+                        model.CommandGroup_Name +
+                        '|' +
+                        model.CommandGroup_CliKey +
+                        '|' +
+                        '[commands](#CommandsIn' +
+                        model.CommandGroup_CliKey +
+                        ')|',
+                );
             } while (model.SelectNextCommandGroup());
         }
 
@@ -60,7 +73,7 @@ export class CliReport extends TemplateBase {
                         cmds[model.CommandGroup_Name] = mo;
                     }
                 }
-            } while (model.SelectNextCommandGroup()); 
+            } while (model.SelectNextCommandGroup());
         }
 
         // build sorted output
@@ -98,16 +111,62 @@ export class CliReport extends TemplateBase {
         return output;
     }
 
-    getCommandBody (model: CodeModelAz) {
+    getCommandBody(model: CodeModelAz) {
         const mo: string[] = [];
-        mo.push('### <a name="CommandsIn' + model.CommandGroup_CliKey + '">Commands in `az ' + model.CommandGroup_Name + '` group</a>');
+        mo.push(
+            '### <a name="CommandsIn' +
+                model.CommandGroup_CliKey +
+                '">Commands in `az ' +
+                model.CommandGroup_Name +
+                '` group</a>',
+        );
         mo.push('|CLI Command|Operation Swagger name|Parameters|Examples|');
         mo.push('|---------|------------|--------|-----------|');
         if (model.SelectFirstCommand()) {
             do {
                 if (model.SelectFirstMethod()) {
                     do {
-                        if (model.GetExamples().length > 0) { mo.push('|[az ' + model.CommandGroup_Name + ' ' + model.Method_NameAz + '](#' + model.CommandGroup_CliKey + model.Method_CliKey + ')|' + model.Method_CliKey + '|' + '[Parameters](#Parameters' + model.CommandGroup_CliKey + model.Method_CliKey + ')' + '|' + '[Example](#Examples' + model.CommandGroup_CliKey + model.Method_CliKey + ')|'); } else { mo.push('|[az ' + model.CommandGroup_Name + ' ' + model.Method_NameAz + '](#' + model.CommandGroup_CliKey + model.Method_CliKey + ')|' + model.Method_CliKey + '|' + '[Parameters](#Parameters' + model.CommandGroup_CliKey + model.Method_CliKey + ')' + '|Not Found|'); }
+                        if (model.GetExamples().length > 0) {
+                            mo.push(
+                                '|[az ' +
+                                    model.CommandGroup_Name +
+                                    ' ' +
+                                    model.Method_NameAz +
+                                    '](#' +
+                                    model.CommandGroup_CliKey +
+                                    model.Method_CliKey +
+                                    ')|' +
+                                    model.Method_CliKey +
+                                    '|' +
+                                    '[Parameters](#Parameters' +
+                                    model.CommandGroup_CliKey +
+                                    model.Method_CliKey +
+                                    ')' +
+                                    '|' +
+                                    '[Example](#Examples' +
+                                    model.CommandGroup_CliKey +
+                                    model.Method_CliKey +
+                                    ')|',
+                            );
+                        } else {
+                            mo.push(
+                                '|[az ' +
+                                    model.CommandGroup_Name +
+                                    ' ' +
+                                    model.Method_NameAz +
+                                    '](#' +
+                                    model.CommandGroup_CliKey +
+                                    model.Method_CliKey +
+                                    ')|' +
+                                    model.Method_CliKey +
+                                    '|' +
+                                    '[Parameters](#Parameters' +
+                                    model.CommandGroup_CliKey +
+                                    model.Method_CliKey +
+                                    ')' +
+                                    '|Not Found|',
+                            );
+                        }
                     } while (model.SelectNextMethod());
                 }
             } while (model.SelectNextCommand());
@@ -116,7 +175,7 @@ export class CliReport extends TemplateBase {
         return mo;
     }
 
-    getCommandDetails (model: CodeModelAz) {
+    getCommandDetails(model: CodeModelAz) {
         let mo: string[] = [];
         mo.push('### group `az ' + model.CommandGroup_Name + '`');
         if (model.SelectFirstCommand()) {
@@ -127,10 +186,25 @@ export class CliReport extends TemplateBase {
                 let nonrequiredmo: Array<string> = [];
                 if (model.SelectFirstMethod()) {
                     do {
-                        mo.push('#### <a name="' + model.CommandGroup_CliKey + model.Method_CliKey + '">Command `az ' + model.CommandGroup_Name + ' ' + model.Method_NameAz + '`</a>');
+                        mo.push(
+                            '#### <a name="' +
+                                model.CommandGroup_CliKey +
+                                model.Method_CliKey +
+                                '">Command `az ' +
+                                model.CommandGroup_Name +
+                                ' ' +
+                                model.Method_NameAz +
+                                '`</a>',
+                        );
                         mo.push('');
                         for (const example of model.GetExamples()) {
-                            mo.push('##### <a name="' + 'Examples' + model.CommandGroup_CliKey + model.Method_CliKey + '">Example</a>');
+                            mo.push(
+                                '##### <a name="' +
+                                    'Examples' +
+                                    model.CommandGroup_CliKey +
+                                    model.Method_CliKey +
+                                    '">Example</a>',
+                            );
                             mo.push('```');
                             let parameters: string[] = [];
                             parameters = model.GetExampleItems(example, false, undefined);
@@ -138,7 +212,13 @@ export class CliReport extends TemplateBase {
                             ToMultiLine(line, mo, 119, true);
                             mo.push('```');
                         }
-                        mo.push('##### <a name="' + 'Parameters' + model.CommandGroup_CliKey + model.Method_CliKey + '">Parameters</a> ');
+                        mo.push(
+                            '##### <a name="' +
+                                'Parameters' +
+                                model.CommandGroup_CliKey +
+                                model.Method_CliKey +
+                                '">Parameters</a> ',
+                        );
                         mo.push('|Option|Type|Description|Path (SDK)|Swagger name|');
                         mo.push('|------|----|-----------|----------|------------|');
                         if (!model.SelectFirstMethodParameter()) {
@@ -146,13 +226,19 @@ export class CliReport extends TemplateBase {
                         }
                         const originalOperation = model.Method_GetOriginalOperation;
                         do {
-                            if (model.MethodParameter_IsFlattened || model.MethodParameter_Type === SchemaType.Constant) {
+                            if (
+                                model.MethodParameter_IsFlattened ||
+                                model.MethodParameter_Type === SchemaType.Constant
+                            ) {
                                 continue;
                             }
                             if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                                 continue;
                             }
-                            if (!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.isDiscriminator) {
+                            if (
+                                !isNullOrUndefined(originalOperation) &&
+                                model.MethodParameter['targetProperty']?.isDiscriminator
+                            ) {
                                 continue;
                             }
                             let optionName = model.MethodParameter_MapsTo;
@@ -165,18 +251,40 @@ export class CliReport extends TemplateBase {
                                     continue;
                                 }
                                 allRequiredParam.set(optionName, true);
-                                requiredmo.push('|**--' + optionName + '**|' + model.MethodParameter_Type + '|' + model.MethodParameter_Description + '|' +
-                                    model.MethodParameter_Name + '|' + model.MethodParameter_CliKey + '|');
+                                requiredmo.push(
+                                    '|**--' +
+                                        optionName +
+                                        '**|' +
+                                        model.MethodParameter_Type +
+                                        '|' +
+                                        model.MethodParameter_Description +
+                                        '|' +
+                                        model.MethodParameter_Name +
+                                        '|' +
+                                        model.MethodParameter_CliKey +
+                                        '|',
+                                );
                             } else {
                                 if (allNonRequiredParam.has(optionName)) {
                                     continue;
                                 }
                                 allNonRequiredParam.set(optionName, true);
-                                nonrequiredmo.push('|**--' + optionName + '**|' + model.MethodParameter_Type + '|' + model.MethodParameter_Description + '|' +
-                                    model.MethodParameter_Name + '|' + model.MethodParameter_CliKey + '|');
+                                nonrequiredmo.push(
+                                    '|**--' +
+                                        optionName +
+                                        '**|' +
+                                        model.MethodParameter_Type +
+                                        '|' +
+                                        model.MethodParameter_Description +
+                                        '|' +
+                                        model.MethodParameter_Name +
+                                        '|' +
+                                        model.MethodParameter_CliKey +
+                                        '|',
+                                );
                             }
                         } while (model.SelectNextMethodParameter());
-                        let flag  = false;
+                        let flag = false;
                         if (requiredmo.length > 0 || nonrequiredmo.length > 0) {
                             flag = true;
                         }

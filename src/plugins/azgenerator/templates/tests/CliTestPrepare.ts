@@ -5,24 +5,33 @@ import { TemplateBase } from '../TemplateBase';
 import { PathConstants } from '../../../models';
 
 export class CliTestPrepare extends TemplateBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         if (this.model.IsCliCore) {
-            this.relativePath = path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.preparersFile);
+            this.relativePath = path.join(
+                PathConstants.testFolder,
+                PathConstants.latestFolder,
+                PathConstants.preparersFile,
+            );
         } else {
-            this.relativePath = path.join(model.AzextFolder, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.preparersFile);
+            this.relativePath = path.join(
+                model.AzextFolder,
+                PathConstants.testFolder,
+                PathConstants.latestFolder,
+                PathConstants.preparersFile,
+            );
         }
     }
 
-    public async fullGeneration (): Promise<string[]> {
+    public async fullGeneration(): Promise<string[]> {
         return this.GenerateAzureCliTestPrepare(this.model);
     }
 
-    public async incrementalGeneration (base: string): Promise<string[]> {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         return this.fullGeneration();
     }
 
-    private GenerateAzureCliTestPrepare (model: CodeModelAz): string[] {
+    private GenerateAzureCliTestPrepare(model: CodeModelAz): string[] {
         const header: HeaderGenerator = new HeaderGenerator();
         const output: string[] = header.getLines();
         output.push('');
@@ -40,7 +49,9 @@ export class CliTestPrepare extends TemplateBase {
         output.push("KEY_VNET_NIC = 'nic'");
         output.push('');
         output.push('');
-        output.push('class VirtualNetworkPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):');
+        output.push(
+            'class VirtualNetworkPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):',
+        );
         output.push("    def __init__(self, name_prefix='clitest.vn',");
         output.push("                 parameter_name='virtual_network',");
         output.push('                 resource_group_name=None,');
@@ -49,7 +60,9 @@ export class CliTestPrepare extends TemplateBase {
         output.push('                 random_name_length=24, key=KEY_VIRTUAL_NETWORK):');
         output.push("        if ' ' in name_prefix:");
         output.push('            raise CliTestError(');
-        output.push("                'Error: Space character in name prefix \\'%s\\'' % name_prefix)");
+        output.push(
+            "                'Error: Space character in name prefix \\'%s\\'' % name_prefix)",
+        );
         output.push('        super(VirtualNetworkPreparer, self).__init__(');
         output.push('            name_prefix, random_name_length)');
         output.push('        self.cli_ctx = get_dummy_cli()');
@@ -75,7 +88,9 @@ export class CliTestPrepare extends TemplateBase {
         output.push("            tags['job'] = os.environ['ENV_JOB_NAME']");
         output.push("        tags = ' '.join(['{}={}'.format(key, value)");
         output.push('                         for key, value in tags.items()])');
-        output.push("        template = 'az network vnet create --resource-group {} --name {} --subnet-name default --tag ' + tags");
+        output.push(
+            "        template = 'az network vnet create --resource-group {} --name {} --subnet-name default --tag ' + tags",
+        );
         output.push('        self.live_only_execute(self.cli_ctx, template.format(');
         output.push('            self.resource_group_name, name))');
         output.push('');
@@ -83,11 +98,15 @@ export class CliTestPrepare extends TemplateBase {
         output.push('        return {self.parameter_name: name}');
         output.push('');
         output.push('    def remove_resource(self, name, **_):');
-        output.push('        # delete vnet if test is being recorded and if the vnet is not a dev rg');
+        output.push(
+            '        # delete vnet if test is being recorded and if the vnet is not a dev rg',
+        );
         output.push('        if not self.dev_setting_name:');
         output.push('            self.live_only_execute(');
         output.push('                self.cli_ctx,');
-        output.push("                'az network vnet delete --name {} --resource-group {}'.format(name, self.resource_group_name))");
+        output.push(
+            "                'az network vnet delete --name {} --resource-group {}'.format(name, self.resource_group_name))",
+        );
         output.push('');
         output.push('');
         output.push('class VnetSubnetPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):');
@@ -100,7 +119,9 @@ export class CliTestPrepare extends TemplateBase {
         output.push('                 key=KEY_VNET_SUBNET):');
         output.push("        if ' ' in name_prefix:");
         output.push('            raise CliTestError(');
-        output.push("                'Error: Space character in name prefix \\'%s\\'' % name_prefix)");
+        output.push(
+            "                'Error: Space character in name prefix \\'%s\\'' % name_prefix)",
+        );
         output.push('        super(VnetSubnetPreparer, self).__init__(name_prefix, 15)');
         output.push('        self.cli_ctx = get_dummy_cli()');
         output.push('        self.parameter_name = parameter_name');
@@ -159,7 +180,9 @@ export class CliTestPrepare extends TemplateBase {
         output.push('                 key=KEY_VNET_NIC):');
         output.push("        if ' ' in name_prefix:");
         output.push('            raise CliTestError(');
-        output.push("                'Error: Space character in name prefix \\'%s\\'' % name_prefix)");
+        output.push(
+            "                'Error: Space character in name prefix \\'%s\\'' % name_prefix)",
+        );
         output.push('        super(VnetNicPreparer, self).__init__(name_prefix, 15)');
         output.push('        self.cli_ctx = get_dummy_cli()');
         output.push('        self.parameter_name = parameter_name');
@@ -182,7 +205,9 @@ export class CliTestPrepare extends TemplateBase {
         output.push('            if not self.vnet[1]:');
         output.push('                raise CliTestError("Error: No vnet configured!")');
         output.push('');
-        output.push("        template = 'az network nic create --resource-group {} --name {} --vnet-name {} --subnet default '");
+        output.push(
+            "        template = 'az network nic create --resource-group {} --name {} --vnet-name {} --subnet default '",
+        );
         output.push('        self.live_only_execute(self.cli_ctx, template.format(');
         output.push('            self.resource_group[1], name, self.vnet[1]))');
         output.push('');
@@ -193,7 +218,9 @@ export class CliTestPrepare extends TemplateBase {
         output.push('        if not self.dev_setting_name:');
         output.push('            self.live_only_execute(');
         output.push('                self.cli_ctx,');
-        output.push("                'az network nic delete --name {} --resource-group {}'.format(name, self.resource_group[1]))");
+        output.push(
+            "                'az network nic delete --name {} --resource-group {}'.format(name, self.resource_group[1]))",
+        );
         output.push('');
         return output;
     }

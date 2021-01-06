@@ -6,6 +6,8 @@
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
         "plugin:import/typescript"
@@ -21,8 +23,8 @@
     "rules": {
         "semi": [2, "always"],
         "prefer-template": 0,
-        "linebreak-style": ["error", "windows"],
-        "indent": ["error", 4],
+        "linebreak-style": 0,
+        "indent": 0,
         "no-console": "off",
         "import/extensions": [
             "error",

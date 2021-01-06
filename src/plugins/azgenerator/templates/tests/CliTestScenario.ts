@@ -11,44 +11,67 @@ import { TemplateBase } from '../TemplateBase';
 import { PathConstants } from '../../../models';
 
 export class CliTestScenario extends TemplateBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean, testFilename: string, configValue:any, groupName: string) {
+    constructor(
+        model: CodeModelAz,
+        isDebugMode: boolean,
+        testFilename: string,
+        configValue: any,
+        groupName: string,
+    ) {
         super(model, isDebugMode);
         if (this.model.IsCliCore) {
-            this.relativePath = path.join(PathConstants.testFolder, PathConstants.latestFolder, testFilename);
+            this.relativePath = path.join(
+                PathConstants.testFolder,
+                PathConstants.latestFolder,
+                testFilename,
+            );
         } else {
-            this.relativePath = path.join(model.AzextFolder, PathConstants.testFolder, PathConstants.latestFolder, testFilename);
+            this.relativePath = path.join(
+                model.AzextFolder,
+                PathConstants.testFolder,
+                PathConstants.latestFolder,
+                testFilename,
+            );
         }
         this.configValue = configValue;
         this.groupName = groupName;
     }
 
-    public configValue : any;
+    public configValue: any;
     private groupName: string;
 
     private header: HeaderGenerator = new HeaderGenerator();
     private scenarios: string[] = [];
 
-    public async fullGeneration (): Promise<string[]> {
+    public async fullGeneration(): Promise<string[]> {
         this.StartGenerateAzureCliTestScenario();
-        for (const scenarioName of Object.getOwnPropertyNames(this.configValue)) { this.GenerateAzureCliTestScenario(this.model, this.configValue[scenarioName], scenarioName); }
+        for (const scenarioName of Object.getOwnPropertyNames(this.configValue)) {
+            this.GenerateAzureCliTestScenario(
+                this.model,
+                this.configValue[scenarioName],
+                scenarioName,
+            );
+        }
         return this.EndGenerateAzureCliTestScenario();
     }
 
-    public async incrementalGeneration (base: string): Promise<string[]> {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         return this.fullGeneration();
     }
 
-    private StartGenerateAzureCliTestScenario () {
+    private StartGenerateAzureCliTestScenario() {
         this.header.addImport('os');
         this.header.addFromImport('azure.cli.testsdk', ['ScenarioTest']);
         this.scenarios.push('');
         this.scenarios.push('');
-        this.scenarios.push("TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))");
+        this.scenarios.push(
+            "TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))",
+        );
         this.scenarios.push('');
         this.scenarios.push('');
     }
 
-    private GenerateAzureCliTestScenario (model: CodeModelAz, config:any, scenarioName: string) {
+    private GenerateAzureCliTestScenario(model: CodeModelAz, config: any, scenarioName: string) {
         const commandParams = model.GatherInternalResource();
         config.unshift({ function: `setup_${scenarioName}` });
         config.push({ function: `cleanup_${scenarioName}` });
@@ -71,7 +94,12 @@ export class CliTestScenario extends TemplateBase {
         }
 
         const decorators: string[] = [];
-        const parameterNames = CliTestStep.InitiateDependencies(model, this.header, decorators, initiates);
+        const parameterNames = CliTestStep.InitiateDependencies(
+            model,
+            this.header,
+            decorators,
+            initiates,
+        );
         let jsonAdded = false;
 
         const funcScenario: string[] = [];
@@ -79,9 +107,15 @@ export class CliTestScenario extends TemplateBase {
         const steps: string[] = [];
         funcScenario.push(`# Testcase: ${scenarioName}`);
         funcScenario.push('@try_manual');
-        funcScenario.push(...ToMultiLine(`def call_${scenarioName.toLowerCase()}(test${CliTestStep.parameterLine(parameterNames)}):`));
+        funcScenario.push(
+            ...ToMultiLine(
+                `def call_${scenarioName.toLowerCase()}(test${CliTestStep.parameterLine(
+                    parameterNames,
+                )}):`,
+            ),
+        );
 
-        function buildSenario (header: HeaderGenerator, outputFunc: string[], minimum: boolean) {
+        function buildSenario(header: HeaderGenerator, outputFunc: string[], minimum: boolean) {
             model.GetResourcePool().clearExampleParams();
 
             // go through the examples to generate steps
@@ -94,25 +128,49 @@ export class CliTestScenario extends TemplateBase {
                     let found = false;
                     const examples: CommandExample[] = [];
                     let exampleIdx = -1;
-                    for (const exampleCmd of model.FindExampleById(exampleId, commandParams, examples, minimum)) {
+                    for (const exampleCmd of model.FindExampleById(
+                        exampleId,
+                        commandParams,
+                        examples,
+                        minimum,
+                    )) {
                         exampleIdx += 1;
                         if (exampleCmd && exampleCmd.length > 0) {
                             found = true;
                             const checks = model.GetExampleChecks(examples[exampleIdx]);
-                            functionName = CliTestStep.ToFunctionName({ name: examples[exampleIdx].Id }, exampleCmd[0]);
+                            functionName = CliTestStep.ToFunctionName(
+                                { name: examples[exampleIdx].Id },
+                                exampleCmd[0],
+                            );
                             if (minimum) functionName += '_min';
                             if (checks.length > 0) {
-                                outputFunc.push(...ToMultiLine(`    ${disabled}${functionName}(test${CliTestStep.parameterLine(parameterNames)}, checks=[`));
+                                outputFunc.push(
+                                    ...ToMultiLine(
+                                        `    ${disabled}${functionName}(test${CliTestStep.parameterLine(
+                                            parameterNames,
+                                        )}, checks=[`,
+                                    ),
+                                );
                                 for (const check of checks) {
                                     ToMultiLine('    ' + disabled + '    ' + check, outputFunc);
-                                    if (!jsonAdded && !disabled && check.indexOf('json.loads') >= 0) {
+                                    if (
+                                        !jsonAdded &&
+                                        !disabled &&
+                                        check.indexOf('json.loads') >= 0
+                                    ) {
                                         header.addImport('json');
                                         jsonAdded = true;
                                     }
                                 }
                                 outputFunc.push(`    ${disabled}])`);
                             } else {
-                                outputFunc.push(...ToMultiLine(`    ${functionName}(test${CliTestStep.parameterLine(parameterNames)}, checks=[])`));
+                                outputFunc.push(
+                                    ...ToMultiLine(
+                                        `    ${functionName}(test${CliTestStep.parameterLine(
+                                            parameterNames,
+                                        )}, checks=[])`,
+                                    ),
+                                );
                             }
                         }
                     }
@@ -125,12 +183,22 @@ export class CliTestScenario extends TemplateBase {
                     if (!minimum) {
                         steps.push(`# Env ${functionName}`);
                         steps.push('@try_manual');
-                        steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames)}):`));
+                        steps.push(
+                            ...ToMultiLine(
+                                `def ${functionName}(test${CliTestStep.parameterLine(
+                                    parameterNames,
+                                )}):`,
+                            ),
+                        );
                         steps.push('    pass');
                         steps.push('');
                         steps.push('');
                     }
-                    outputFunc.push(...ToMultiLine(`    ${functionName}(test${CliTestStep.parameterLine(parameterNames)})`));
+                    outputFunc.push(
+                        ...ToMultiLine(
+                            `    ${functionName}(test${CliTestStep.parameterLine(parameterNames)})`,
+                        ),
+                    );
                 }
             }
             outputFunc.push('');
@@ -139,7 +207,13 @@ export class CliTestScenario extends TemplateBase {
         buildSenario(this.header, funcScenario, false);
         if (model.GenMinTest) {
             funcMinScenario.push('@try_manual');
-            funcMinScenario.push(...ToMultiLine(`def call_${scenarioName.toLowerCase()}_min(test${CliTestStep.parameterLine(parameterNames)}):`));
+            funcMinScenario.push(
+                ...ToMultiLine(
+                    `def call_${scenarioName.toLowerCase()}_min(test${CliTestStep.parameterLine(
+                        parameterNames,
+                    )}):`,
+                ),
+            );
             buildSenario(this.header, funcMinScenario, true);
         }
         classInfo.push('    def __init__(self, *args, **kwargs):');
@@ -148,7 +222,7 @@ export class CliTestScenario extends TemplateBase {
         classInfo.push('');
         classInfo.push('');
 
-        function buildTestcase (testcaseName: string, minimum: boolean) {
+        function buildTestcase(testcaseName: string, minimum: boolean) {
             const ret = [...decorators];
             if (minimum) testcaseName += '_min';
             let funcLine = '    def test_' + testcaseName + '(self';
@@ -159,7 +233,11 @@ export class CliTestScenario extends TemplateBase {
             ToMultiLine(funcLine, ret);
             let _scenarioName = scenarioName;
             if (minimum) _scenarioName += '_min';
-            ret.push(`        call_${_scenarioName.toLowerCase()}(self${CliTestStep.parameterLine(parameterNames)})`);
+            ret.push(
+                `        call_${_scenarioName.toLowerCase()}(self${CliTestStep.parameterLine(
+                    parameterNames,
+                )})`,
+            );
             ret.push('        calc_coverage(__file__)');
             ret.push('        raise_if()');
             ret.push('');
@@ -167,15 +245,22 @@ export class CliTestScenario extends TemplateBase {
             return ret;
         }
         const testCaseName = this.groupName + '_' + scenarioName;
-        this.scenarios.push(...steps.concat(funcScenario, funcMinScenario, classInfo, buildTestcase(testCaseName, false)));
+        this.scenarios.push(
+            ...steps.concat(
+                funcScenario,
+                funcMinScenario,
+                classInfo,
+                buildTestcase(testCaseName, false),
+            ),
+        );
         if (model.GenMinTest) {
             this.scenarios.push(...buildTestcase(testCaseName, true));
         }
     }
 
-    private EndGenerateAzureCliTestScenario (): string[] {
+    private EndGenerateAzureCliTestScenario(): string[] {
         this.header.addFromImport('..', ['try_manual', 'raise_if', 'calc_coverage']);
-        this.scenarios.forEach(element => {
+        this.scenarios.forEach((element) => {
             if (element.length > 120) this.header.disableLineTooLong = true;
         });
         return this.header.getLines().concat(this.scenarios);

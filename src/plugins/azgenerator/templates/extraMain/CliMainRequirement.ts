@@ -10,19 +10,19 @@ import { CodeModelAz } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 
 export class CliMainRequirement extends TemplateBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
     }
 
-    public async fullGeneration (): Promise<string[]> {
+    public async fullGeneration(): Promise<string[]> {
         return this.GenerateRequirementTxt(this.model, this.relativePath);
     }
 
-    public async incrementalGeneration (base: string): Promise<string[]> {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         return this.GenerateRequirementTxt(this.model, this.relativePath);
     }
 
-    private async GenerateRequirementTxt (model: CodeModelAz, requirementPath) {
+    private async GenerateRequirementTxt(model: CodeModelAz, requirementPath) {
         const outputFile = fs.readFileSync(requirementPath).toString().split(EOL);
         const latestVersion = await getLatestPyPiVersion(model.GetPythonPackageName());
         let found = false;

@@ -5,17 +5,17 @@ import { serialize } from '@azure-tools/codegen';
 export class Renamer {
     codeModel: CodeModel;
 
-    constructor (protected session: Session<CodeModel>) {
+    constructor(protected session: Session<CodeModel>) {
         this.codeModel = session.model;
     }
 
-    async process () {
+    async process() {
         return this.codeModel;
     }
 }
 
-export async function processRequest (host: Host) {
-    const debug = await host.GetValue('debug') || false;
+export async function processRequest(host: Host) {
+    const debug = (await host.GetValue('debug')) || false;
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);

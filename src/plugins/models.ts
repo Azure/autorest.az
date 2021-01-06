@@ -6,34 +6,34 @@
 export enum GenerationMode {
     Manual,
     Full,
-    Incremental
+    Incremental,
 }
 
 export const ExtensionMode = {
     Preview: 'preview',
     Experimental: 'experimental',
-    Stable: 'stable'
+    Stable: 'stable',
 };
 
 export enum TargetMode {
     Core = 'core',
-    Extension = 'extension'
+    Extension = 'extension',
 }
 
 export enum CompatibleLevel {
     Track1 = 'track1',
-    Track2 = 'track2'
+    Track2 = 'track2',
 }
 
 export enum GenerateSdk {
     Yes = 'yes',
-    No = 'no'
+    No = 'no',
 }
 
 export enum SystemType {
     Darwin = 'Darwin',
     Linux = 'Linux',
-    windows = 'windows'
+    windows = 'windows',
 }
 
 export const EXCLUDED_PARAMS = [
@@ -45,7 +45,7 @@ export const EXCLUDED_PARAMS = [
     'content_version',
     'kwargs',
     'client',
-    'no_wait'
+    'no_wait',
 ];
 
 export class PathConstants {
@@ -65,18 +65,18 @@ export class PathConstants {
     public static readonly helpFile: string = '_help.py';
     public static readonly reportFile: string = 'report.md';
     public static readonly preparersFile: string = 'preparers.py';
-    public static readonly testStepFile: string = 'example_steps.py'
+    public static readonly testStepFile: string = 'example_steps.py';
     public static readonly metadataFile: string = 'azext_metadata.json';
     public static readonly setupPyFile: string = 'setup.py';
     public static readonly docSourceJsonFile: string = '/doc/sphinx/azhelpgen/doc_source_map.json';
     public static readonly mainSetupPyFile: string = 'src/azure-cli/setup.py';
     public static readonly readmeFile: string = 'README.md';
 
-    public static fullTestSceanrioFile (rpName: string): string {
+    public static fullTestSceanrioFile(rpName: string): string {
         return 'test_' + rpName + '_scenario.py';
     }
 
-    public static incTestScenarioFile (rpName: string): string {
+    public static incTestScenarioFile(rpName: string): string {
         return 'test_' + rpName + '_scenario_incrementalGenerated.py';
     }
 }

@@ -8,24 +8,28 @@ import { TemplateBase } from '../TemplateBase';
 import { PathConstants } from '../../../models';
 
 export class CliTestInit extends TemplateBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         if (this.model.IsCliCore) {
             this.relativePath = path.join(PathConstants.testFolder, PathConstants.initFile);
         } else {
-            this.relativePath = path.join(model.AzextFolder, PathConstants.testFolder, PathConstants.initFile);
+            this.relativePath = path.join(
+                model.AzextFolder,
+                PathConstants.testFolder,
+                PathConstants.initFile,
+            );
         }
     }
 
-    public async fullGeneration (): Promise<string[]> {
+    public async fullGeneration(): Promise<string[]> {
         return this.GenerateAzureCliTestInit(this.model);
     }
 
-    public async incrementalGeneration (base: string): Promise<string[]> {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         return this.fullGeneration();
     }
 
-    private GenerateAzureCliTestInit (model: CodeModelAz): string[] {
+    private GenerateAzureCliTestInit(model: CodeModelAz): string[] {
         const output: string[] = [];
 
         output.push('# coding=utf-8');
@@ -46,7 +50,9 @@ export class CliTestInit extends TemplateBase {
         output.push('import datetime as dt');
         output.push('');
         output.push('from azure.core.exceptions import AzureError');
-        output.push('from azure.cli.testsdk.exceptions import CliTestError, CliExecutionError, JMESPathCheckAssertionError');
+        output.push(
+            'from azure.cli.testsdk.exceptions import CliTestError, CliExecutionError, JMESPathCheckAssertionError',
+        );
         output.push('');
         output.push('');
         output.push("logger = logging.getLogger('azure.cli.testsdk')");
@@ -71,7 +77,9 @@ export class CliTestInit extends TemplateBase {
         output.push('        module_name, _ = os.path.splitext(manual_file_name)');
         output.push('        manual_module = "..manual." + \\');
         output.push('            ".".join(manual_file_path.split(os.path.sep) + [module_name, ])');
-        output.push('        return getattr(import_module(manual_module, package=__name__), origin_func.__name__)');
+        output.push(
+            '        return getattr(import_module(manual_module, package=__name__), origin_func.__name__)',
+        );
         output.push('');
         output.push('    def get_func_to_call():');
         output.push('        func_to_call = func');
@@ -93,15 +101,23 @@ export class CliTestInit extends TemplateBase {
         output.push('            test_map[func.__name__]["error_normalized"] = ""');
         output.push('            test_map[func.__name__]["start_dt"] = dt.datetime.utcnow()');
         output.push('            ret = func_to_call(*args, **kwargs)');
-        output.push('        except (AssertionError, AzureError, CliTestError, CliExecutionError, SystemExit,');
+        output.push(
+            '        except (AssertionError, AzureError, CliTestError, CliExecutionError, SystemExit,',
+        );
         output.push('                JMESPathCheckAssertionError) as e:');
         output.push('            use_exception_cache = os.getenv("TEST_EXCEPTION_CACHE")');
-        output.push('            if use_exception_cache is None or use_exception_cache.lower() != "true":');
+        output.push(
+            '            if use_exception_cache is None or use_exception_cache.lower() != "true":',
+        );
         output.push('                raise');
         output.push('            test_map[func.__name__]["end_dt"] = dt.datetime.utcnow()');
         output.push('            test_map[func.__name__]["result"] = FAILED');
-        output.push('            test_map[func.__name__]["error_message"] = str(e).replace("\\r\\n", " ").replace("\\n", " ")[:500]');
-        output.push('            test_map[func.__name__]["error_stack"] = traceback.format_exc().replace(');
+        output.push(
+            '            test_map[func.__name__]["error_message"] = str(e).replace("\\r\\n", " ").replace("\\n", " ")[:500]',
+        );
+        output.push(
+            '            test_map[func.__name__]["error_stack"] = traceback.format_exc().replace(',
+        );
         output.push('                "\\r\\n", " ").replace("\\n", " ")[:500]');
         output.push('            logger.info("--------------------------------------")');
         output.push('            logger.info("step exception: %s", e)');
@@ -122,7 +138,9 @@ export class CliTestInit extends TemplateBase {
         output.push('    filename = filename.split(".")[0]');
         output.push('    coverage_name = filename + "_coverage.md"');
         output.push('    with open(coverage_name, "w") as f:');
-        output.push('        f.write("|Scenario|Result|ErrorMessage|ErrorStack|ErrorNormalized|StartDt|EndDt|\\n")');
+        output.push(
+            '        f.write("|Scenario|Result|ErrorMessage|ErrorStack|ErrorNormalized|StartDt|EndDt|\\n")',
+        );
         output.push('        total = len(test_map)');
         output.push('        covered = 0');
         output.push('        for k, v in test_map.items():');
@@ -131,7 +149,9 @@ export class CliTestInit extends TemplateBase {
         output.push('                continue');
         output.push('            if v["result"] == SUCCESSED:');
         output.push('                covered += 1');
-        output.push('            f.write("|{step_name}|{result}|{error_message}|{error_stack}|{error_normalized}|{start_dt}|"');
+        output.push(
+            '            f.write("|{step_name}|{result}|{error_message}|{error_stack}|{error_normalized}|{start_dt}|"',
+        );
         output.push('                    "{end_dt}|\\n".format(step_name=k, **v))');
         output.push('        f.write("Coverage: {}/{}\\n".format(covered, total))');
         output.push('    print("Create coverage\\n", file=sys.stderr)');
@@ -141,9 +161,15 @@ export class CliTestInit extends TemplateBase {
         output.push('    if exceptions:');
         output.push('        if len(exceptions) <= 1:');
         output.push('            raise exceptions[0][1][1]');
-        output.push('        message = "{}\\nFollowed with exceptions in other steps:\\n".format(str(exceptions[0][1][1]))');
-        output.push('        message += "\\n".join(["{}: {}".format(h[0], h[1][1]) for h in exceptions[1:]])');
-        output.push('        raise exceptions[0][1][0](message).with_traceback(exceptions[0][1][2])');
+        output.push(
+            '        message = "{}\\nFollowed with exceptions in other steps:\\n".format(str(exceptions[0][1][1]))',
+        );
+        output.push(
+            '        message += "\\n".join(["{}: {}".format(h[0], h[1][1]) for h in exceptions[1:]])',
+        );
+        output.push(
+            '        raise exceptions[0][1][0](message).with_traceback(exceptions[0][1][2])',
+        );
         output.push('');
 
         return output;

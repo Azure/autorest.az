@@ -29,62 +29,134 @@ import { CliTestStep, NeedPreparer } from './templates/tests/CliTestStep';
 import { GenerateMetaFile } from './templates/CliMeta';
 
 export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         this.azDirectory = model.AzextFolder;
     }
 
-    public async generateAll (): Promise<void> {
-        this.files[path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.paramsFile)] = GenerateAzureCliParams(this.model, this.isDebugMode);
-        this.files[path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.commandsFile)] = GenerateAzureCliCommands(this.model);
-        this.files[path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.customFile)] = GenerateAzureCliCustom(this.model);
-        this.files[path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.clientFactoryFile)] = GenerateAzureCliClientFactory(this.model);
-        this.files[path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.validatorsFile)] = GenerateAzureCliValidators(this.model);
-        this.files[path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.actionFile)] = GenerateAzureCliActions(this.model);
-        this.files[path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.initFile)] = GenerateNamespaceInit(this.model);
-        this.files[path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.helpFile)] = GenerateAzureCliHelp(this.model, this.isDebugMode);
+    public async generateAll(): Promise<void> {
+        this.files[
+            path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.paramsFile)
+        ] = GenerateAzureCliParams(this.model, this.isDebugMode);
+        this.files[
+            path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.commandsFile)
+        ] = GenerateAzureCliCommands(this.model);
+        this.files[
+            path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.customFile)
+        ] = GenerateAzureCliCustom(this.model);
+        this.files[
+            path.join(
+                this.azDirectory,
+                PathConstants.generatedFolder,
+                PathConstants.clientFactoryFile,
+            )
+        ] = GenerateAzureCliClientFactory(this.model);
+        this.files[
+            path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.validatorsFile)
+        ] = GenerateAzureCliValidators(this.model);
+        this.files[
+            path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.actionFile)
+        ] = GenerateAzureCliActions(this.model);
+        this.files[
+            path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.initFile)
+        ] = GenerateNamespaceInit(this.model);
+        this.files[
+            path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.helpFile)
+        ] = GenerateAzureCliHelp(this.model, this.isDebugMode);
 
-        this.files[path.join(this.azDirectory, PathConstants.manualFolder, PathConstants.initFile)] = GenerateNamespaceInit(this.model);
+        this.files[
+            path.join(this.azDirectory, PathConstants.manualFolder, PathConstants.initFile)
+        ] = GenerateNamespaceInit(this.model);
 
         if (this.model.SDK_NeedSDK) {
-            this.files[path.join(this.azDirectory, PathConstants.vendoredskdsFolder, PathConstants.initFile)] = GenerateNamespaceInit(this.model);
+            this.files[
+                path.join(
+                    this.azDirectory,
+                    PathConstants.vendoredskdsFolder,
+                    PathConstants.initFile,
+                )
+            ] = GenerateNamespaceInit(this.model);
         }
 
         // Add Import and run method from generated folder (Init)
-        await this.generateIncrementalSingleAndAddtoOutput(new CliTopInit(this.model, this.isDebugMode));
+        await this.generateIncrementalSingleAndAddtoOutput(
+            new CliTopInit(this.model, this.isDebugMode),
+        );
 
         // Add Import from generated folder (Custom)
-        await this.generateIncrementalSingleAndAddtoOutput(new CliTopCustom(this.model, this.isDebugMode));
+        await this.generateIncrementalSingleAndAddtoOutput(
+            new CliTopCustom(this.model, this.isDebugMode),
+        );
 
         // Add Import from generated folder (Help)
-        await this.generateIncrementalSingleAndAddtoOutput(new CliTopHelp(this.model, this.isDebugMode));
+        await this.generateIncrementalSingleAndAddtoOutput(
+            new CliTopHelp(this.model, this.isDebugMode),
+        );
 
         // Add Import from generated folder (Report)
-        await this.generateIncrementalSingleAndAddtoOutput(new CliReport(this.model, this.isDebugMode));
+        await this.generateIncrementalSingleAndAddtoOutput(
+            new CliReport(this.model, this.isDebugMode),
+        );
 
         // Add Import from generated folder (Action)
         const cliTopActionGenerator = new CliTopAction(this.model, this.isDebugMode);
         let cliTopActionBase = '';
-        const relativePathOldVersion = cliTopActionGenerator.relativePath.replace(PathConstants.actionFile, PathConstants.actionFileOldVersion);
+        const relativePathOldVersion = cliTopActionGenerator.relativePath.replace(
+            PathConstants.actionFile,
+            PathConstants.actionFileOldVersion,
+        );
         if (fs.existsSync(path.join(this.model.CliOutputFolder, relativePathOldVersion))) {
-            cliTopActionBase = fs.readFileSync(path.join(this.model.CliOutputFolder, relativePathOldVersion)).toString();
+            cliTopActionBase = fs
+                .readFileSync(path.join(this.model.CliOutputFolder, relativePathOldVersion))
+                .toString();
             cliTopActionGenerator.relativePath = relativePathOldVersion;
-        } else if (fs.existsSync(path.join(this.model.CliOutputFolder, cliTopActionGenerator.relativePath))) {
-            cliTopActionBase = fs.readFileSync(path.join(this.model.CliOutputFolder, cliTopActionGenerator.relativePath)).toString();
+        } else if (
+            fs.existsSync(path.join(this.model.CliOutputFolder, cliTopActionGenerator.relativePath))
+        ) {
+            cliTopActionBase = fs
+                .readFileSync(
+                    path.join(this.model.CliOutputFolder, cliTopActionGenerator.relativePath),
+                )
+                .toString();
         }
-        this.files[cliTopActionGenerator.relativePath] = await cliTopActionGenerator.incrementalGeneration(cliTopActionBase);
+        this.files[
+            cliTopActionGenerator.relativePath
+        ] = await cliTopActionGenerator.incrementalGeneration(cliTopActionBase);
 
         // Upgrade version of azext_metadata
-        await this.generateIncrementalSingleAndAddtoOutput(new CliTopMetadata(this.model, this.isDebugMode));
-        await this.generateIncrementalSingleAndAddtoOutput(new CliExtSetupPy(this.model, this.isDebugMode));
+        await this.generateIncrementalSingleAndAddtoOutput(
+            new CliTopMetadata(this.model, this.isDebugMode),
+        );
+        await this.generateIncrementalSingleAndAddtoOutput(
+            new CliExtSetupPy(this.model, this.isDebugMode),
+        );
 
-        await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
-        await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model, this.isDebugMode), true, true);
-        for (const testGroup of this.model.Extension_TestScenario ? Object.getOwnPropertyNames(this.model.Extension_TestScenario) : []) {
-            await this.generateIncrementalSingleAndAddtoOutput(new CliTestScenario(this.model, this.isDebugMode, PathConstants.incTestScenarioFile(testGroup), this.model.Extension_TestScenario[testGroup], testGroup), true);
+        await this.generateIncrementalSingleAndAddtoOutput(
+            new CliTestInit(this.model, this.isDebugMode),
+        );
+        await this.generateFullSingleAndAddtoOutput(
+            new CliTestStep(this.model, this.isDebugMode),
+            true,
+            true,
+        );
+        for (const testGroup of this.model.Extension_TestScenario
+            ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)
+            : []) {
+            await this.generateIncrementalSingleAndAddtoOutput(
+                new CliTestScenario(
+                    this.model,
+                    this.isDebugMode,
+                    PathConstants.incTestScenarioFile(testGroup),
+                    this.model.Extension_TestScenario[testGroup],
+                    testGroup,
+                ),
+                true,
+            );
         }
         if (NeedPreparer()) {
-            await this.generateIncrementalSingleAndAddtoOutput(new CliTestPrepare(this.model, this.isDebugMode));
+            await this.generateIncrementalSingleAndAddtoOutput(
+                new CliTestPrepare(this.model, this.isDebugMode),
+            );
         }
         GenerateMetaFile(this.model);
     }

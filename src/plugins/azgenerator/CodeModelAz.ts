@@ -13,7 +13,7 @@ export class MethodParam {
     public isSimpleListOrArray: boolean;
     public submethodparameters: Property[];
     public inBody: boolean;
-    public constructor (value, isList, isSimpleListOrArray, submethodparameters, inBody) {
+    public constructor(value, isList, isSimpleListOrArray, submethodparameters, inBody) {
         this.value = value;
         this.isList = isList;
         this.isSimpleListOrArray = isSimpleListOrArray;
@@ -41,7 +41,17 @@ export class ExampleParam {
     ancestors: string[];
     replacedValue: any;
     rawValue: any;
-    public constructor (name: string, value: any, isJson: boolean, keyValue: KeyValueType, keys: string[], defaultName: string, methodParam: MethodParam, ancestors: string[], rawValue: any) {
+    public constructor(
+        name: string,
+        value: any,
+        isJson: boolean,
+        keyValue: KeyValueType,
+        keys: string[],
+        defaultName: string,
+        methodParam: MethodParam,
+        ancestors: string[],
+        rawValue: any,
+    ) {
         this.name = name;
         this.value = value;
         this.isJson = isJson;
@@ -88,7 +98,7 @@ export interface CodeModelAz {
     Extension_Name: string;
     Extension_Parent: string;
     Extension_NameUnderscored: string;
-    ConfiguredScenario:boolean;
+    ConfiguredScenario: boolean;
     Extension_NameClass: string;
     Extension_TestScenario: any;
     Extension_DefaultTestScenario: any;
@@ -97,7 +107,7 @@ export interface CodeModelAz {
     Extension_ClientAuthenticationPolicy: string;
     Extension_Mode: string;
     ResourceType: string | undefined;
-    isComplexSchema(type: string): boolean
+    isComplexSchema(type: string): boolean;
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;
@@ -165,8 +175,8 @@ export interface CodeModelAz {
     MethodParameter_MaxApi: string;
     MethodParameter_MinApi: string;
     MethodParameter_ResourceType: string | undefined;
-    MethodParameter_IsArray: boolean
-    MethodParameter_NamePython: string
+    MethodParameter_IsArray: boolean;
+    MethodParameter_NamePython: string;
     MethodParameter_MapsTo: string;
     MethodParameter_Description: string;
     MethodParameter_Type: string;
@@ -249,5 +259,5 @@ export interface CodeModelAz {
     // readme config
     CliCoreLib: string;
     GenMinTest: boolean;
-    GetMetaData(): {[key: string]: any};
+    GetMetaData(): { [key: string]: any };
 }

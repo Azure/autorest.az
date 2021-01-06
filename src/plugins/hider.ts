@@ -6,24 +6,36 @@ import { isNullOrUndefined } from '../utils/helper';
 export class Hider {
     codeModel: CodeModel;
 
-    constructor (protected session: Session<CodeModel>) {
+    constructor(protected session: Session<CodeModel>) {
         this.codeModel = session.model;
     }
 
-    async process () {
+    async process() {
         this.mergeOperation();
         return this.codeModel;
     }
 
-    mergeOperation () {
-        this.codeModel.operationGroups.forEach(operationGroup => {
-            const operations = operationGroup.operations.filter(function cliSplitOperation (operation, index, array) {
-                if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-split-operation-original-operation'])) {
-                    const originalOperation = operation.extensions['cli-split-operation-original-operation'];
+    mergeOperation() {
+        this.codeModel.operationGroups.forEach((operationGroup) => {
+            const operations = operationGroup.operations.filter(function cliSplitOperation(
+                operation,
+                index,
+                array,
+            ) {
+                if (
+                    !isNullOrUndefined(operation.extensions) &&
+                    !isNullOrUndefined(
+                        operation.extensions['cli-split-operation-original-operation'],
+                    )
+                ) {
+                    const originalOperation =
+                        operation.extensions['cli-split-operation-original-operation'];
                     if (isNullOrUndefined(originalOperation.extensions)) {
                         return false;
                     }
-                    if (isNullOrUndefined(originalOperation.extensions['cli-splitted-operations'])) {
+                    if (
+                        isNullOrUndefined(originalOperation.extensions['cli-splitted-operations'])
+                    ) {
                         originalOperation.extensions['cli-splitted-operations'] = [];
                     }
                     originalOperation.extensions['cli-splitted-operations'].push(operation);
@@ -36,8 +48,8 @@ export class Hider {
     }
 }
 
-export async function processRequest (host: Host) {
-    const debug = await host.GetValue('debug') || false;
+export async function processRequest(host: Host) {
+    const debug = (await host.GetValue('debug')) || false;
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);

@@ -9,7 +9,7 @@ import { processRequest as generator } from './plugins/azgenerator/azgenerator';
 export type LogCallback = (message: string) => void;
 export type FileCallback = (path: string, rows: string[]) => void;
 
-export async function initializePlugins (pluginHost: AutoRestExtension) {
+export async function initializePlugins(pluginHost: AutoRestExtension) {
     pluginHost.Add('hider', hider);
     pluginHost.Add('renamer', renamer);
     pluginHost.Add('aznamer', aznamer);
@@ -18,7 +18,7 @@ export async function initializePlugins (pluginHost: AutoRestExtension) {
     pluginHost.Add('azgenerator', generator);
 }
 
-export async function az () {
+export async function az() {
     const extension = new AutoRestExtension();
     await initializePlugins(extension);
     extension.Run();

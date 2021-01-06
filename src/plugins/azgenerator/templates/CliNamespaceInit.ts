@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from '../CodeModelAz';
 
-export function GenerateNamespaceInit (model: CodeModelAz) : string[] {
+export function GenerateNamespaceInit(model: CodeModelAz): string[] {
     const output: string[] = [];
 
     output.push('# coding=utf-8');

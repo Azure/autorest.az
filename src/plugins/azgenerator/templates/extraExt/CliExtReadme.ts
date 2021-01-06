@@ -9,12 +9,12 @@ import { CodeModelAz, CommandExample } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 
 export class CliExtReadme extends TemplateBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         this.relativePath = PathConstants.readmeFile;
     }
 
-    public async fullGeneration (): Promise<string[]> {
+    public async fullGeneration(): Promise<string[]> {
         let output: string[] = [];
 
         output.push('# Azure CLI ' + this.model.Extension_Name + ' Extension #');
@@ -54,14 +54,18 @@ export class CliExtReadme extends TemplateBase {
                 // Generate example
                 for (const example of exampleList) {
                     if (!isNullOrUndefined(example.CommandString) && example.CommandString !== '') {
-                        const title = example.Method.charAt(0).toUpperCase() + example.Method.slice(1);
+                        const title =
+                            example.Method.charAt(0).toUpperCase() + example.Method.slice(1);
                         // const title = example.Id.slice(example.Id.lastIndexOf("/") + 1).match(/[A-Z][a-z]+|[0-9]+/g).join(" ");
                         exampleCommandList.push('##### ' + title + ' #####');
                         exampleCommandList.push('```');
                         const temp = CmdToMultiLines(example.CommandString);
                         exampleCommandList.push(...temp);
                     }
-                    if (!isNullOrUndefined(example.WaitCommandString) && example.WaitCommandString !== '') {
+                    if (
+                        !isNullOrUndefined(example.WaitCommandString) &&
+                        example.WaitCommandString !== ''
+                    ) {
                         exampleCommandList.push('');
                         const temp = CmdToMultiLines(example.WaitCommandString);
                         exampleCommandList.push(...temp);
@@ -77,22 +81,22 @@ export class CliExtReadme extends TemplateBase {
         return output;
     }
 
-    public async incrementalGeneration (base: string): Promise<string[]> {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         throw new Error('Method not implemented.');
     }
 
-    private compareExamples (example1: CommandExample, example2: CommandExample): boolean {
-        return (this.getExampleOrder(example1) >= this.getExampleOrder(example2));
+    private compareExamples(example1: CommandExample, example2: CommandExample): boolean {
+        return this.getExampleOrder(example1) >= this.getExampleOrder(example2);
     }
 
-    private getExampleOrder (example: CommandExample): number {
+    private getExampleOrder(example: CommandExample): number {
         switch (example.HttpMethod.toLowerCase()) {
-        case HttpMethod.Put:
-            return 1;
-        case HttpMethod.Delete:
-            return -1;
-        default:
-            return 0;
+            case HttpMethod.Put:
+                return 1;
+            case HttpMethod.Delete:
+                return -1;
+            default:
+                return 0;
         }
     }
 }

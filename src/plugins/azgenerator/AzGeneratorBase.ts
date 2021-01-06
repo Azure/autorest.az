@@ -14,33 +14,53 @@ export abstract class AzGeneratorBase {
     azDirectory: string;
     isDebugMode: boolean;
 
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         this.model = model;
         this.azDirectory = '';
         this.isDebugMode = isDebugMode;
     }
 
-    public abstract async generateAll(): Promise<void>;
+    public abstract generateAll(): Promise<void>;
 
-    protected async generateFullSingleAndAddtoOutput (template: TemplateBase, override = true, inplace = false): Promise<void> {
-        if (override !== false || !fs.existsSync(path.join(this.model.CliOutputFolder, template.relativePath))) {
+    protected async generateFullSingleAndAddtoOutput(
+        template: TemplateBase,
+        override = true,
+        inplace = false,
+    ): Promise<void> {
+        if (
+            override !== false ||
+            !fs.existsSync(path.join(this.model.CliOutputFolder, template.relativePath))
+        ) {
             const genContent = await template.fullGeneration();
             if (inplace) {
-                this.files[template.relativePath] = inplaceGen(this.model.CliOutputFolder, template.relativePath, genContent);
+                this.files[template.relativePath] = inplaceGen(
+                    this.model.CliOutputFolder,
+                    template.relativePath,
+                    genContent,
+                );
             } else {
                 this.files[template.relativePath] = genContent;
             }
         }
     }
 
-    protected async generateIncrementalSingleAndAddtoOutput (template: TemplateBase, inplace = false): Promise<void> {
+    protected async generateIncrementalSingleAndAddtoOutput(
+        template: TemplateBase,
+        inplace = false,
+    ): Promise<void> {
         let base = '';
         if (fs.existsSync(path.join(this.model.CliOutputFolder, template.relativePath))) {
-            base = fs.readFileSync(path.join(this.model.CliOutputFolder, template.relativePath)).toString();
+            base = fs
+                .readFileSync(path.join(this.model.CliOutputFolder, template.relativePath))
+                .toString();
         }
         const genContent = await template.incrementalGeneration(base);
         if (inplace) {
-            this.files[template.relativePath] = inplaceGen(this.model.CliOutputFolder, template.relativePath, genContent);
+            this.files[template.relativePath] = inplaceGen(
+                this.model.CliOutputFolder,
+                template.relativePath,
+                genContent,
+            );
         } else {
             this.files[template.relativePath] = genContent;
         }

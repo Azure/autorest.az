@@ -16,18 +16,20 @@ sourceMapSupport.install();
 
 const resources = path.join(`${__dirname}`, '/../../src/test/resources/');
 
-@suite export class Process {
-    @test(slow(600000), timeout(1500000)) async simpleNamerTest () {
+@suite
+export class Process {
+    @test(slow(600000), timeout(1500000)) async simpleNamerTest() {
         const folders = await readdir(resources);
         for (const each of folders) {
             const cfg = {
                 'azure-cli-extension-folder': true,
                 az: {
-                    extensions: each
-                }
-
+                    extensions: each,
+                },
             };
-            const session = await createTestSession<CodeModel>(cfg, resources + '/' + each, [each + '-cli-common.yaml']);
+            const session = await createTestSession<CodeModel>(cfg, resources + '/' + each, [
+                each + '-cli-common.yaml',
+            ]);
 
             // process OAI model
             const aznamer = new AzNamer(session);
@@ -37,7 +39,10 @@ const resources = path.join(`${__dirname}`, '/../../src/test/resources/');
             const codeModel = await aznamer.process();
 
             // console.log(serialize(codeModel))
-            const fileName = path.join(`${__dirname}`, '/../../src/test/resources/' + each + '/' + each + '-az-namer.yaml');
+            const fileName = path.join(
+                `${__dirname}`,
+                '/../../src/test/resources/' + each + '/' + each + '-az-namer.yaml',
+            );
 
             // uncomment this line to overwrite existing file
             // await (writeFile(fileName, serialize(codeModel)));

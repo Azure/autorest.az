@@ -9,8 +9,8 @@ import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { HeaderGenerator } from './Header';
 import { openInplaceGen, closeInplaceGen } from '../../utils/inplace';
 
-export async function processRequest (host: Host) {
-    const debug = await host.GetValue('debug') || false;
+export async function processRequest(host: Host) {
+    const debug = (await host.GetValue('debug')) || false;
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         const azureCliFolder = await host.GetValue(ArgumentConstants.azureCliFolder);
@@ -38,7 +38,11 @@ export async function processRequest (host: Host) {
             } while (model.SelectNextExtension());
         }
         // Read existing file generation-mode
-        model.CliGenerationMode = await autoDetectGenerationMode(host, model.AzextFolder, model.IsCliCore);
+        model.CliGenerationMode = await autoDetectGenerationMode(
+            host,
+            model.AzextFolder,
+            model.IsCliCore,
+        );
         model.CliOutputFolder = azOutputFolder;
 
         openInplaceGen();
@@ -69,7 +73,11 @@ export async function processRequest (host: Host) {
     }
 }
 
-async function autoDetectGenerationMode (host: Host, azextFolder: string, isCliCore: boolean): Promise<GenerationMode> {
+async function autoDetectGenerationMode(
+    host: Host,
+    azextFolder: string,
+    isCliCore: boolean,
+): Promise<GenerationMode> {
     // Verify the __init__.py in generated folder
     if (isNullOrUndefined(azextFolder)) {
         throw new Error('name should not be null');
@@ -79,7 +87,12 @@ async function autoDetectGenerationMode (host: Host, azextFolder: string, isCliC
 
     if (needClearOutputFolder) {
         result = GenerationMode.Full;
-        host.Message({ Channel: Channel.Information, Text: 'As clear output folder is set, generation-mode in code model is: ' + GenerationMode[result] });
+        host.Message({
+            Channel: Channel.Information,
+            Text:
+                'As clear output folder is set, generation-mode in code model is: ' +
+                GenerationMode[result],
+        });
     } else {
         let azName = '';
         if (!isCliCore) {
@@ -89,15 +102,27 @@ async function autoDetectGenerationMode (host: Host, azextFolder: string, isCliC
         const rootInit = await host.ReadFile(relativePath);
         const existingMode = HeaderGenerator.GetCliGenerationMode(rootInit);
 
-        host.Message({ Channel: Channel.Information, Text: 'Existing Cli code generation-mode is: ' + GenerationMode[existingMode] });
+        host.Message({
+            Channel: Channel.Information,
+            Text: 'Existing Cli code generation-mode is: ' + GenerationMode[existingMode],
+        });
 
         // Read the argument of generation-mode, detect if needed
-        const generationMode = await host.GetValue(ArgumentConstants.generationMode) || 'auto';
-        host.Message({ Channel: Channel.Information, Text: 'Input generation-mode is: ' + generationMode });
+        const generationMode = (await host.GetValue(ArgumentConstants.generationMode)) || 'auto';
+        host.Message({
+            Channel: Channel.Information,
+            Text: 'Input generation-mode is: ' + generationMode,
+        });
 
-        if (String(generationMode).toLowerCase() === GenerationMode[GenerationMode.Full].toLowerCase()) {
+        if (
+            String(generationMode).toLowerCase() ===
+            GenerationMode[GenerationMode.Full].toLowerCase()
+        ) {
             result = GenerationMode.Full;
-        } else if (String(generationMode).toLowerCase() === GenerationMode[GenerationMode.Incremental].toLowerCase()) {
+        } else if (
+            String(generationMode).toLowerCase() ===
+            GenerationMode[GenerationMode.Incremental].toLowerCase()
+        ) {
             result = GenerationMode.Incremental;
         } else {
             if (existingMode === GenerationMode.Full) {
@@ -106,7 +131,10 @@ async function autoDetectGenerationMode (host: Host, azextFolder: string, isCliC
                 result = GenerationMode.Incremental;
             }
         }
-        host.Message({ Channel: Channel.Information, Text: 'generation-mode in code model is: ' + GenerationMode[result] });
+        host.Message({
+            Channel: Channel.Information,
+            Text: 'generation-mode in code model is: ' + GenerationMode[result],
+        });
     }
     return result;
 }

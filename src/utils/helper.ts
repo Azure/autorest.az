@@ -10,9 +10,9 @@ import * as request from 'request-promise-native';
 import { ExtensionMode } from '../plugins/models';
 import * as child_process from 'child_process';
 
-export function changeCamelToDash (str: string): string {
-    str = str.replace(/[A-Z][^A-Z]/g, letter => `-${letter.toLowerCase()}`);
-    str = str.replace(/[^A-Z][A-Z]/g, letter => `${letter[0]}-${letter[1].toLowerCase()}`);
+export function changeCamelToDash(str: string): string {
+    str = str.replace(/[A-Z][^A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+    str = str.replace(/[^A-Z][A-Z]/g, (letter) => `${letter[0]}-${letter[1].toLowerCase()}`);
     str = str.toLowerCase();
     if (str.startsWith('-')) {
         str = str.substring(1, str.length);
@@ -20,41 +20,48 @@ export function changeCamelToDash (str: string): string {
     return str;
 }
 
-export function ToSnakeCase (v: string): string {
-    return v.replace(/([a-z](?=[A-Z]))/g, '$1 ').split(' ').join('_').toLowerCase();
+export function ToSnakeCase(v: string): string {
+    return v
+        .replace(/([a-z](?=[A-Z]))/g, '$1 ')
+        .split(' ')
+        .join('_')
+        .toLowerCase();
 }
 
-export function Capitalize (v: string): string {
+export function Capitalize(v: string): string {
     return v.charAt(0).toUpperCase() + v.slice(1);
 }
 
-export function Uncapitalize (v: string): string {
+export function Uncapitalize(v: string): string {
     return v.charAt(0).toLowerCase() + v.slice(1);
 }
 
-export function ToSentence (v: string): string {
-    v = v.replace(/[a-z0-9][A-Z]/g, letter => `${letter[0]} ${letter[1]}`);
+export function ToSentence(v: string): string {
+    v = v.replace(/[a-z0-9][A-Z]/g, (letter) => `${letter[0]} ${letter[1]}`);
     return Capitalize(v);
 }
 
-export function ToCamelCase (v: string): string {
-    v = v.toLowerCase().replace(/[^A-Za-z0-9]/g, ' ').split(' ')
+export function ToCamelCase(v: string): string {
+    v = v
+        .toLowerCase()
+        .replace(/[^A-Za-z0-9]/g, ' ')
+        .split(' ')
         .reduce((result, word) => result + Capitalize(word.toLowerCase()));
     return v.charAt(0).toLowerCase() + v.slice(1);
 }
 
-export function EscapeString (original: string): string {
+export function EscapeString(original: string): string {
     if (original === undefined) return 'undefined';
     original = original.split('\n').join(' ');
-    original = original.split('\'').join('\\\'');
+    original = original.split("'").join("\\'");
     return original;
 }
 
-export function ReadFile (filename: string): string {
+export function ReadFile(filename: string): string {
     return fs.readFileSync(filename, 'utf8');
 }
 
-export function deepCopy (obj: any): any {
+export function deepCopy(obj: any): any {
     let copy;
 
     // Handle the 3 simple types, and null or undefined
@@ -88,8 +95,10 @@ export function deepCopy (obj: any): any {
     throw new Error("Unable to copy obj! Its type isn't supported.");
 }
 
-export function MergeSort (arr: any[], comparer: (left, right) => number): any[] {
-    if (arr.length < 2) { return arr; }
+export function MergeSort(arr: any[], comparer: (left, right) => number): any[] {
+    if (arr.length < 2) {
+        return arr;
+    }
 
     const middle: number = Math.floor(arr.length / 2);
     const left = arr.slice(0, middle);
@@ -97,7 +106,7 @@ export function MergeSort (arr: any[], comparer: (left, right) => number): any[]
     return Merge(MergeSort(left, comparer), MergeSort(right, comparer), comparer);
 }
 
-function Merge (left: any[], right: any[], comparer: (left, right) => number): any[] {
+function Merge(left: any[], right: any[], comparer: (left, right) => number): any[] {
     const result = [];
     while (left.length && right.length) {
         if (comparer(left[0], right[0]) <= 0) {
@@ -106,20 +115,35 @@ function Merge (left: any[], right: any[], comparer: (left, right) => number): a
             result.push(right.shift());
         }
     }
-    while (left.length) { result.push(left.shift()); }
-    while (right.length) { result.push(right.shift()); }
+    while (left.length) {
+        result.push(left.shift());
+    }
+    while (right.length) {
+        result.push(right.shift());
+    }
     return result;
 }
 
-export function isDict (v: unknown): boolean {
-    return typeof v === 'object' && !isNullOrUndefined(v) && !(v instanceof Array) && !(v instanceof Date);
+export function isDict(v: unknown): boolean {
+    return (
+        typeof v === 'object' &&
+        !isNullOrUndefined(v) &&
+        !(v instanceof Array) &&
+        !(v instanceof Date)
+    );
 }
 
-export function ToJsonString (_in: unknown): string {
-    return JSON.stringify(_in).split(/[\r\n]+/).join('').split('\\').join('\\\\').split("'").join("\\'");
+export function ToJsonString(_in: unknown): string {
+    return JSON.stringify(_in)
+        .split(/[\r\n]+/)
+        .join('')
+        .split('\\')
+        .join('\\\\')
+        .split("'")
+        .join("\\'");
 }
 
-export function ToPythonString (value: any, type: string): string {
+export function ToPythonString(value: any, type: string): string {
     let str = value;
 
     if (!isNullOrUndefined(str)) {
@@ -137,7 +161,7 @@ export function ToPythonString (value: any, type: string): string {
     return str;
 }
 
-function isEscaped (str: string, index: number): boolean {
+function isEscaped(str: string, index: number): boolean {
     let slashNum = 0;
     index--;
     while (index >= 0 && str[index] === '\\') {
@@ -147,7 +171,12 @@ function isEscaped (str: string, index: number): boolean {
     return slashNum % 2 === 1;
 }
 
-export function ToMultiLine (sentence: string, output: string[] = undefined, maxLength = 119, strMode = false): string[] {
+export function ToMultiLine(
+    sentence: string,
+    output: string[] = undefined,
+    maxLength = 119,
+    strMode = false,
+): string[] {
     let lastComma = -1;
     let inStr = false;
     let strTag = '';
@@ -166,7 +195,13 @@ export function ToMultiLine (sentence: string, output: string[] = undefined, max
     }
     if (maxLength < 3) maxLength = 3;
     for (let i = 0; i < sentence.length; i++) {
-        if (sentence[i] === ' ' && !inStr && ret.length > 1 && ret[ret.length - 1].length === (indent > 0 ? indent : spaceNum)) continue;
+        if (
+            sentence[i] === ' ' &&
+            !inStr &&
+            ret.length > 1 &&
+            ret[ret.length - 1].length === (indent > 0 ? indent : spaceNum)
+        )
+            continue;
         ret[ret.length - 1] += sentence[i];
         isStrTags[ret[ret.length - 1].length - 1] = false;
         if (inStr) {
@@ -177,9 +212,9 @@ export function ToMultiLine (sentence: string, output: string[] = undefined, max
             inStrTags[ret[ret.length - 1].length - 1] = true;
         } else {
             if (sentence[i] === ',') lastComma = ret[ret.length - 1].length - 1;
-            if (sentence[i] === '\'' && !isEscaped(sentence, i)) {
+            if (sentence[i] === "'" && !isEscaped(sentence, i)) {
                 inStr = true;
-                strTag = '\'';
+                strTag = "'";
                 strStart = i;
                 isStrTags[ret[ret.length - 1].length - 1] = true;
             } else if (sentence[i] === '"' && !isEscaped(sentence, i)) {
@@ -203,7 +238,8 @@ export function ToMultiLine (sentence: string, output: string[] = undefined, max
             if (inStr) {
                 let lastNormal = ret[ret.length - 1].length - 1;
                 const originLastNormal = lastNormal;
-                while (lastNormal >= 0 && isEscaped(ret[ret.length - 1], lastNormal + 1)) lastNormal--;
+                while (lastNormal >= 0 && isEscaped(ret[ret.length - 1], lastNormal + 1))
+                    lastNormal--;
                 const UnEscapedLastNormal = lastNormal;
                 for (let n = 0; n < Math.min(30, maxLength - 1); n++) {
                     if (i - n === strStart) break;
@@ -213,7 +249,10 @@ export function ToMultiLine (sentence: string, output: string[] = undefined, max
                         break;
                     }
                 }
-                if (ret[ret.length - 1][lastNormal] !== ' ' && i - (originLastNormal - lastNormal) !== strStart) {
+                if (
+                    ret[ret.length - 1][lastNormal] !== ' ' &&
+                    i - (originLastNormal - lastNormal) !== strStart
+                ) {
                     lastNormal = UnEscapedLastNormal;
                 }
 
@@ -233,8 +272,12 @@ export function ToMultiLine (sentence: string, output: string[] = undefined, max
                 } else {
                     const CommaPos = lastComma;
                     if (lastNormal !== ret[ret.length - 1].length - 1) {
-                        const newLine = ' '.repeat(indent > 0 ? indent : spaceNum) + strTag + ret[ret.length - 1].substr(lastNormal + 1);
-                        ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastNormal + 1) + strTag;
+                        const newLine =
+                            ' '.repeat(indent > 0 ? indent : spaceNum) +
+                            strTag +
+                            ret[ret.length - 1].substr(lastNormal + 1);
+                        ret[ret.length - 1] =
+                            ret[ret.length - 1].substr(0, lastNormal + 1) + strTag;
                         ret.push(newLine);
                         lastComma = -1;
                     } else {
@@ -246,19 +289,28 @@ export function ToMultiLine (sentence: string, output: string[] = undefined, max
                     if (ret[ret.length - 2].length >= 2) {
                         const lenLast = ret[ret.length - 2].length;
                         if (isStrTags[lenLast - 2]) {
-                            if (ret[ret.length - 2].slice(0, -2).match(/^ *$/i)) { ret.splice(ret.length - 2, 1); } else {
+                            if (ret[ret.length - 2].slice(0, -2).match(/^ *$/i)) {
+                                ret.splice(ret.length - 2, 1);
+                            } else {
                                 ret[ret.length - 2] = ret[ret.length - 2].slice(0, -2); // remove "" at the tail
                                 if (ret[ret.length - 2].slice(-1)[0] !== '=') {
-                                    while (ret[ret.length - 2].slice(-1)[0] === ' ') { // remove all spaces before ""
+                                    while (ret[ret.length - 2].slice(-1)[0] === ' ') {
+                                        // remove all spaces before ""
                                         ret[ret.length - 2] = ret[ret.length - 2].slice(0, -1);
                                     }
                                 } else {
                                     // there is = in the end of line --> create new line from the last comma
                                     const tmp = ret[ret.length - 2].slice(CommaPos + 1).trimLeft();
-                                    ret[ret.length - 2] = ret[ret.length - 2].slice(0, CommaPos + 1);
+                                    ret[ret.length - 2] = ret[ret.length - 2].slice(
+                                        0,
+                                        CommaPos + 1,
+                                    );
                                     const startSpaceNum = ret[ret.length - 1].search(/\S|$/);
                                     if (startSpaceNum >= 0) {
-                                        ret[ret.length - 1] = ' '.repeat(startSpaceNum) + tmp + ret[ret.length - 1].substr(startSpaceNum);
+                                        ret[ret.length - 1] =
+                                            ' '.repeat(startSpaceNum) +
+                                            tmp +
+                                            ret[ret.length - 1].substr(startSpaceNum);
                                     } else {
                                         ret[ret.length - 1] = tmp + ret[ret.length - 1];
                                     }
@@ -288,7 +340,9 @@ export function ToMultiLine (sentence: string, output: string[] = undefined, max
 
                     let prefixSpaces = ret[ret.length - 1].search(/\S|$/);
                     if (indent > 0) prefixSpaces = indent;
-                    const newLine = ' '.repeat(prefixSpaces) + ret[ret.length - 1].substr(lastComma + 1).trimLeft();
+                    const newLine =
+                        ' '.repeat(prefixSpaces) +
+                        ret[ret.length - 1].substr(lastComma + 1).trimLeft();
                     ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastComma + 1);
                     ret.push(newLine);
                     lastComma = -1;
@@ -296,7 +350,9 @@ export function ToMultiLine (sentence: string, output: string[] = undefined, max
                     for (let j = ret[ret.length - 1].length - 1; j > indent; j--) {
                         const currentChar = ret[ret.length - 1][j];
                         if (!currentChar.match(/[a-z0-9_]/i) && sentence[i + 1] !== ',') {
-                            const newLine = ' '.repeat(ret[ret.length - 1].search(/\S|$/)) + ret[ret.length - 1].substr(j + 1).trimLeft();
+                            const newLine =
+                                ' '.repeat(ret[ret.length - 1].search(/\S|$/)) +
+                                ret[ret.length - 1].substr(j + 1).trimLeft();
                             ret[ret.length - 1] = ret[ret.length - 1].substr(0, j + 1);
                             if (indents.length === 0) {
                                 ret[ret.length - 1] += '\\'; // fix E502
@@ -311,9 +367,21 @@ export function ToMultiLine (sentence: string, output: string[] = undefined, max
 
             let firstCharIdx = 0;
             const newLine = ret[ret.length - 1];
-            while (firstCharIdx < ret[0].length && ret[0][firstCharIdx] === ' ' && firstCharIdx < newLine.length && newLine[firstCharIdx] === ' ') firstCharIdx++;
-            if (firstCharIdx < newLine.length && firstCharIdx < ret[0].length && ret[0][firstCharIdx] === '#') {
-                ret[ret.length - 1] = `${newLine.substr(0, firstCharIdx)}# ${newLine.substr(firstCharIdx)}`;
+            while (
+                firstCharIdx < ret[0].length &&
+                ret[0][firstCharIdx] === ' ' &&
+                firstCharIdx < newLine.length &&
+                newLine[firstCharIdx] === ' '
+            )
+                firstCharIdx++;
+            if (
+                firstCharIdx < newLine.length &&
+                firstCharIdx < ret[0].length &&
+                ret[0][firstCharIdx] === '#'
+            ) {
+                ret[ret.length - 1] = `${newLine.substr(0, firstCharIdx)}# ${newLine.substr(
+                    firstCharIdx,
+                )}`;
             }
         }
     }
@@ -324,7 +392,7 @@ export function ToMultiLine (sentence: string, output: string[] = undefined, max
     return ret;
 }
 
-export function CmdToMultiLines (cmd: string): string[] {
+export function CmdToMultiLines(cmd: string): string[] {
     const result: string[] = [];
 
     if (cmd.length < 120) {
@@ -357,7 +425,7 @@ export function CmdToMultiLines (cmd: string): string[] {
     return result;
 }
 
-export function parseResourceId (mpath: string): Map<string, string> {
+export function parseResourceId(mpath: string): Map<string, string> {
     const baseRegex = /\/subscriptions\/(?<subscription>[^/]*)(\/resourceGroups\/(?<resource_group>[^/]*))?(\/providers\/(?<namespace>[^/]*)\/(?<type>[^/]*)\/(?<name>[^/]*)(?<children>.*))?/g;
     const childRegex = /(\/providers\/(?<child_namespace>[^/]*))?\/(?<child_type>[^/]*)\/(?<child_name>[^/]*)/g;
     const mp: RegExpExecArray = baseRegex.exec(mpath);
@@ -373,7 +441,7 @@ export function parseResourceId (mpath: string): Map<string, string> {
         let count = 0;
         const childStr: string = groups.children;
         let result = null;
-        while (childStr != "") {
+        while (childStr != '') {
             result = childRegex.exec(childStr);
             if (isNullOrUndefined(result)) {
                 break;
@@ -388,7 +456,13 @@ export function parseResourceId (mpath: string): Map<string, string> {
     return ret;
 }
 
-export function findNodeInCodeModel (cliM4Path: any, codeModel: CodeModel, flattenMode = false, nodeTobeFound: any = null, noMatch = false) {
+export function findNodeInCodeModel(
+    cliM4Path: any,
+    codeModel: CodeModel,
+    flattenMode = false,
+    nodeTobeFound: any = null,
+    noMatch = false,
+) {
     const nodePaths = cliM4Path.split('$$');
     let curNode: any = codeModel;
     let lastValidNode: any = null;
@@ -428,7 +502,15 @@ export function findNodeInCodeModel (cliM4Path: any, codeModel: CodeModel, flatt
                 curNode = curNode[Number(nextStep)];
             }
             if (!isNullOrUndefined(curNode) && curNode.language?.cli?.cliPath === cliM4Path) {
-                if (noMatch || curNode.language.cli?.cliM4Path === cliM4Path || (!isNullOrUndefined(nodeTobeFound) && !isNullOrUndefined(curNode.language?.cli?.cliFlattenTrace) && !isNullOrUndefined(nodeTobeFound.language?.cli?.cliFlattenTrace) && nodeTobeFound.language.cli.cliFlattenTrace.join(';') === curNode.language.cli.cliFlattenTrace.join(';'))) {
+                if (
+                    noMatch ||
+                    curNode.language.cli?.cliM4Path === cliM4Path ||
+                    (!isNullOrUndefined(nodeTobeFound) &&
+                        !isNullOrUndefined(curNode.language?.cli?.cliFlattenTrace) &&
+                        !isNullOrUndefined(nodeTobeFound.language?.cli?.cliFlattenTrace) &&
+                        nodeTobeFound.language.cli.cliFlattenTrace.join(';') ===
+                            curNode.language.cli.cliFlattenTrace.join(';'))
+                ) {
                     lastValidNode = curNode;
                 } else {
                     curNode = null;
@@ -442,7 +524,17 @@ export function findNodeInCodeModel (cliM4Path: any, codeModel: CodeModel, flatt
         }
     }
     if (!isNullOrUndefined(curNode) && curNode.language?.cli?.cliPath === cliM4Path) {
-        if (!noMatch && (!(curNode.language.cli?.cliM4Path === cliM4Path || (!isNullOrUndefined(nodeTobeFound) && !isNullOrUndefined(curNode.language?.cli?.cliFlattenTrace) && !isNullOrUndefined(nodeTobeFound.language?.cli?.cliFlattenTrace) && nodeTobeFound.language.cli.cliFlattenTrace.join(';') === curNode.language.cli.cliFlattenTrace.join(';'))))) {
+        if (
+            !noMatch &&
+            !(
+                curNode.language.cli?.cliM4Path === cliM4Path ||
+                (!isNullOrUndefined(nodeTobeFound) &&
+                    !isNullOrUndefined(curNode.language?.cli?.cliFlattenTrace) &&
+                    !isNullOrUndefined(nodeTobeFound.language?.cli?.cliFlattenTrace) &&
+                    nodeTobeFound.language.cli.cliFlattenTrace.join(';') ===
+                        curNode.language.cli.cliFlattenTrace.join(';'))
+            )
+        ) {
             curNode = null;
         }
     }
@@ -464,10 +556,10 @@ export function findNodeInCodeModel (cliM4Path: any, codeModel: CodeModel, flatt
     return flattenedNodes;
 }
 
-export async function getLatestPyPiVersion (packageName: string) {
+export async function getLatestPyPiVersion(packageName: string) {
     const url = 'https://pypi.org/pypi/' + packageName + '/json';
     const option = {
-        uri: url
+        uri: url,
     };
     const response = await request.get(option);
     const res = JSON.parse(response);
@@ -477,7 +569,7 @@ export async function getLatestPyPiVersion (packageName: string) {
     return version;
 }
 
-export function getIndentString (indent: number): string {
+export function getIndentString(indent: number): string {
     let indentStr = '';
     for (let i = 0; i < indent; ++i) {
         indentStr += ' ';
@@ -485,7 +577,7 @@ export function getIndentString (indent: number): string {
     return indentStr;
 }
 
-export function copyRecursiveSync (src, dest) {
+export function copyRecursiveSync(src, dest) {
     const exists = fs.existsSync(src);
     const stats = exists && fs.statSync(src);
     const isDirectory = exists && stats.isDirectory();
@@ -499,13 +591,15 @@ export function copyRecursiveSync (src, dest) {
     }
 }
 
-export function deleteFolderRecursive (target) {
+export function deleteFolderRecursive(target) {
     if (fs.existsSync(target)) {
         fs.readdirSync(target).forEach((file, index) => {
             const curPath = path.join(target, file);
-            if (fs.lstatSync(curPath).isDirectory()) { // recurse
+            if (fs.lstatSync(curPath).isDirectory()) {
+                // recurse
                 deleteFolderRecursive(curPath);
-            } else { // delete file
+            } else {
+                // delete file
                 fs.unlinkSync(curPath);
             }
         });
@@ -513,7 +607,7 @@ export function deleteFolderRecursive (target) {
     }
 }
 
-export function skipCommentLines (base: string[]): number {
+export function skipCommentLines(base: string[]): number {
     let firstNoneCommentLineIdx = 0;
     for (let i = 0; i < base.length; ++i) {
         if (!base[i].startsWith('#') && firstNoneCommentLineIdx === 0) {
@@ -523,7 +617,7 @@ export function skipCommentLines (base: string[]): number {
     return firstNoneCommentLineIdx;
 }
 
-export function keepHeaderLines (base: string[]): number {
+export function keepHeaderLines(base: string[]): number {
     let futureImportLineIdx = 0;
     for (let i = 0; i < base.length; ++i) {
         if (base[i].indexOf('__future__') !== -1) {
@@ -533,7 +627,7 @@ export function keepHeaderLines (base: string[]): number {
     return futureImportLineIdx;
 }
 
-export function getExtraModeInfo (mode: string, skipMode: string = null): string {
+export function getExtraModeInfo(mode: string, skipMode: string = null): string {
     if (mode === ExtensionMode.Experimental && mode !== skipMode) {
         return 'is_experimental=True';
     }
@@ -545,12 +639,13 @@ export function getExtraModeInfo (mode: string, skipMode: string = null): string
 
 // compute edit distance of two strings
 // original from https://www.codementor.io/tips/6243778211/javascript-algorithms-levenshtein-s-distance-for-string-conversion
-export function calculateLevDistance (src: string, tgt: string) {
+export function calculateLevDistance(src: string, tgt: string) {
     let realCost;
 
     let srcLength = src.length;
     let tgtLength = tgt.length;
-    let tempString; let tempLength; // for swapping
+    let tempString;
+    let tempLength; // for swapping
 
     const resultMatrix = [];
     resultMatrix[0] = []; // Multi dimensional
@@ -558,8 +653,12 @@ export function calculateLevDistance (src: string, tgt: string) {
     // To limit the space in minimum of source and target,
     // we make sure that srcLength is greater than tgtLength
     if (srcLength < tgtLength) {
-        tempString = src; src = tgt; tgt = tempString;
-        tempLength = srcLength; srcLength = tgtLength; tgtLength = tempLength;
+        tempString = src;
+        src = tgt;
+        tgt = tempString;
+        tempLength = srcLength;
+        srcLength = tgtLength;
+        tgtLength = tempLength;
     }
 
     for (let c = 0; c < tgtLength + 1; c++) {
@@ -570,11 +669,11 @@ export function calculateLevDistance (src: string, tgt: string) {
         resultMatrix[i] = [];
         resultMatrix[i][0] = i;
         for (let j = 1; j < tgtLength + 1; j++) {
-            realCost = (src.charAt(i - 1) === tgt.charAt(j - 1)) ? 0 : 1;
+            realCost = src.charAt(i - 1) === tgt.charAt(j - 1) ? 0 : 1;
             resultMatrix[i][j] = Math.min(
                 resultMatrix[i - 1][j] + 1,
                 resultMatrix[i][j - 1] + 1,
-                resultMatrix[i - 1][j - 1] + realCost // same logic as our previous example.
+                resultMatrix[i - 1][j - 1] + realCost, // same logic as our previous example.
             );
         }
     }
@@ -582,12 +681,12 @@ export function calculateLevDistance (src: string, tgt: string) {
     return resultMatrix[srcLength][tgtLength];
 }
 
-export function distancePercentage (src: string, tgt: string) {
+export function distancePercentage(src: string, tgt: string) {
     const distance = calculateLevDistance(src, tgt);
     return distance / src.length;
 }
 
-export function composeParamString (maxApi: string, minApi: string, resourceType: string) {
+export function composeParamString(maxApi: string, minApi: string, resourceType: string) {
     let ret = '';
     let useResourceType = false;
     if (!isNullOrUndefined(maxApi) && maxApi.length > 0) {
@@ -603,7 +702,7 @@ export function composeParamString (maxApi: string, minApi: string, resourceType
     return [ret, useResourceType];
 }
 
-export function isEqualStringArray (array1: string[], array2: string[]): boolean {
+export function isEqualStringArray(array1: string[], array2: string[]): boolean {
     if (isNullOrUndefined(array1) && isNullOrUndefined(array2)) return true;
     if (isNullOrUndefined(array1) || isNullOrUndefined(array2)) return false;
     if (array1.length !== array2.length) return false;
@@ -614,7 +713,7 @@ export function isEqualStringArray (array1: string[], array2: string[]): boolean
     return true;
 }
 
-export function getGitStatus (folder: string) {
+export function getGitStatus(folder: string) {
     try {
         const execSync = child_process.execSync;
         const cmd = `cd ${folder} & git log -50 & echo ********GIT STATUS******** & git status`;
@@ -624,6 +723,6 @@ export function getGitStatus (folder: string) {
     }
 }
 
-export function isNullOrUndefined (obj: any) {
+export function isNullOrUndefined(obj: any) {
     return obj === null || obj === undefined;
 }

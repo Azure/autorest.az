@@ -9,18 +9,14 @@ export class TargetFile {
     currentAt: number;
     root: BaseSegment;
 
-    public constructor (fileContent: string[]) {
+    public constructor(fileContent: string[]) {
         this.content = fileContent.join('\n');
         this.currentAt = 0;
         this.root = new BaseSegment(this, 0, fileContent.length);
     }
 
-    public createSegments (): void {
-        const SegmentTypes = [
-            HeadSegment,
-            TestStepSegment,
-            TailSegment
-        ];
+    public createSegments(): void {
+        const SegmentTypes = [HeadSegment, TestStepSegment, TailSegment];
 
         let matchOne = true;
         while (matchOne && this.currentAt < this.content.length) {
@@ -34,11 +30,11 @@ export class TargetFile {
         }
     }
 
-    public getContent (): string[] {
+    public getContent(): string[] {
         return this.root.genResult().split('\n');
     }
 
-    public merge (originA: TargetFile, customizedA: TargetFile): void {
+    public merge(originA: TargetFile, customizedA: TargetFile): void {
         if (isNullOrUndefined(originA)) return;
         if (!isNullOrUndefined(customizedA)) {
             originA.root.matchCustomize(customizedA.root);
@@ -67,7 +63,7 @@ export class BaseSegment {
     customized: BaseSegment;
     originA: BaseSegment;
 
-    public constructor (target: TargetFile, startAt: number, endAt: number, name = '') {
+    public constructor(target: TargetFile, startAt: number, endAt: number, name = '') {
         this.startAt = startAt;
         this.endAt = endAt;
         this.children = [];
@@ -83,11 +79,11 @@ export class BaseSegment {
         this.originA = undefined;
     }
 
-    public get Content (): string {
+    public get Content(): string {
         return this.target.content.slice(this.startAt, this.endAt);
     }
 
-    public matchCustomize (customized: BaseSegment): void {
+    public matchCustomize(customized: BaseSegment): void {
         if (this.Content === customized.Content) {
             this.status = SegmentStatus.Origin;
         } else {
@@ -114,7 +110,7 @@ export class BaseSegment {
         }
     }
 
-    public matchVA (originA: BaseSegment): void {
+    public matchVA(originA: BaseSegment): void {
         this.originA = originA;
         const usedChild = [];
         for (let i = 0; i < this.children.length; i++) {
@@ -126,7 +122,7 @@ export class BaseSegment {
         }
     }
 
-    public findChild (childSeg: BaseSegment, used:any[] = undefined, startPos = 0): number {
+    public findChild(childSeg: BaseSegment, used: any[] = undefined, startPos = 0): number {
         if (isNullOrUndefined(used)) used = [];
 
         const candidates = [];
@@ -170,13 +166,17 @@ export class BaseSegment {
         return -1;
     }
 
-    public alignOrder (baseline: BaseSegment): void {
+    public alignOrder(baseline: BaseSegment): void {
         if (isNullOrUndefined(baseline)) return;
 
         let p = 0;
         for (const child of baseline.children) {
             // new segement  --> keep current position
-            while (p < this.children.length && isNullOrUndefined(this.children[p].originA?.customized)) p++;
+            while (
+                p < this.children.length &&
+                isNullOrUndefined(this.children[p].originA?.customized)
+            )
+                p++;
 
             // customized segement --> find pos in customize, and move.
             let curPos = -1;
@@ -198,7 +198,7 @@ export class BaseSegment {
         }
     }
 
-    public addCustomize (customizedA: BaseSegment): void {
+    public addCustomize(customizedA: BaseSegment): void {
         if (isNullOrUndefined(customizedA)) return;
 
         // merge new added in customziedA into this
@@ -224,7 +224,7 @@ export class BaseSegment {
         }
     }
 
-    public genResult (): string {
+    public genResult(): string {
         if (this.originA?.status === SegmentStatus.Deleted) {
             if (this.originA.Content !== this.Content) {
                 return this.Content;
@@ -233,13 +233,21 @@ export class BaseSegment {
             }
         }
 
-        const solidChildren = this.children.filter(child => {
-            return child.originA?.status !== SegmentStatus.Deleted || child.Content !== child.originA?.Content;
+        const solidChildren = this.children.filter((child) => {
+            return (
+                child.originA?.status !== SegmentStatus.Deleted ||
+                child.Content !== child.originA?.Content
+            );
         });
 
         let ret = '';
         if (solidChildren.length === 0) {
-            if (isNullOrUndefined(this.originA) || this.status === SegmentStatus.Added || this.originA.status === SegmentStatus.Origin || this.originA.Content !== this.Content) {
+            if (
+                isNullOrUndefined(this.originA) ||
+                this.status === SegmentStatus.Added ||
+                this.originA.status === SegmentStatus.Origin ||
+                this.originA.Content !== this.Content
+            ) {
                 ret += this.Content;
             } else if (this.originA.status === SegmentStatus.Modified) {
                 ret += this.originA.customized.Content;
@@ -252,10 +260,10 @@ export class BaseSegment {
         return ret;
     }
 
-    public createChildrenByIndent (): void {
+    public createChildrenByIndent(): void {
         const lines = this.target.content.slice(this.startAt, this.endAt).split('\n');
 
-        function lineIndent (line) {
+        function lineIndent(line) {
             const firstCharAt = line.search(/\S/);
             return firstCharAt >= 0 ? firstCharAt : line.length;
         }
@@ -265,7 +273,7 @@ export class BaseSegment {
         let curEnd = 0;
         let curParathesisCount = 0;
 
-        function getBiasOfLine (cur, startAt) {
+        function getBiasOfLine(cur, startAt) {
             let ret = startAt;
             for (let i = 0; i < cur; i++) {
                 ret += lines[i].length;
@@ -275,12 +283,17 @@ export class BaseSegment {
         }
 
         while (curEnd < lines.length) {
-            if (curParathesisCount === 0 && // all parathesis completed
+            if (
+                curParathesisCount === 0 && // all parathesis completed
                 curEnd > curStart && // length greater than zero
                 myIndent === lineIndent(lines[curEnd]) && // in the same indent with the parent segment
                 lines[curEnd].search(/\S/) >= 0 // not full-of-space line
             ) {
-                const child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
+                const child = new BaseSegment(
+                    this.target,
+                    getBiasOfLine(curStart, this.startAt),
+                    getBiasOfLine(curEnd, this.startAt),
+                );
                 child.createChildrenByIndent();
                 this.children.push(child);
                 curStart = curEnd;
@@ -292,18 +305,27 @@ export class BaseSegment {
 
         if (this.children.length > 0) {
             if (curEnd > curStart) {
-                const child = new BaseSegment(this.target, getBiasOfLine(curStart, this.startAt), getBiasOfLine(curEnd, this.startAt));
+                const child = new BaseSegment(
+                    this.target,
+                    getBiasOfLine(curStart, this.startAt),
+                    getBiasOfLine(curEnd, this.startAt),
+                );
                 child.createChildrenByIndent();
                 this.children.push(child);
             }
-        } else { // find child indents
+        } else {
+            // find child indents
             curEnd = 1;
             curParathesisCount = 0;
             let postIdx = 1;
             while (curEnd < lines.length) {
                 if (lineIndent(lines[curEnd]) > myIndent) {
                     postIdx = curEnd + 1;
-                    while (postIdx < lines.length && (lineIndent(lines[postIdx]) !== myIndent || lines[postIdx].trim().length === 0)) {
+                    while (
+                        postIdx < lines.length &&
+                        (lineIndent(lines[postIdx]) !== myIndent ||
+                            lines[postIdx].trim().length === 0)
+                    ) {
                         postIdx += 1;
                     }
                     break;
@@ -311,15 +333,30 @@ export class BaseSegment {
                 curEnd += 1;
             }
             if (postIdx > curEnd && curEnd < lines.length) {
-                let child = new BaseSegment(this.target, getBiasOfLine(0, this.startAt), getBiasOfLine(curEnd, this.startAt), 'pre');
+                let child = new BaseSegment(
+                    this.target,
+                    getBiasOfLine(0, this.startAt),
+                    getBiasOfLine(curEnd, this.startAt),
+                    'pre',
+                );
                 this.children.push(child);
 
-                child = new BaseSegment(this.target, getBiasOfLine(curEnd, this.startAt), getBiasOfLine(postIdx, this.startAt), 'body');
+                child = new BaseSegment(
+                    this.target,
+                    getBiasOfLine(curEnd, this.startAt),
+                    getBiasOfLine(postIdx, this.startAt),
+                    'body',
+                );
                 child.createChildrenByIndent();
                 this.children.push(child);
 
                 if (lines.length > postIdx) {
-                    const child = new BaseSegment(this.target, getBiasOfLine(postIdx, this.startAt), getBiasOfLine(lines.length, this.startAt), 'post');
+                    const child = new BaseSegment(
+                        this.target,
+                        getBiasOfLine(postIdx, this.startAt),
+                        getBiasOfLine(lines.length, this.startAt),
+                        'post',
+                    );
                     this.children.push(child);
                 }
             }
@@ -327,7 +364,7 @@ export class BaseSegment {
     }
 }
 
-function nextStepAt (content: string): number {
+function nextStepAt(content: string): number {
     const nextEnv = content.search(/\n# Env/);
     const nextExample = content.search(/\n# EXAMPLE/);
     const nextCase = content.search(/\n# Testcase/);
@@ -343,7 +380,7 @@ function nextStepAt (content: string): number {
     return -1;
 }
 export class HeadSegment extends BaseSegment {
-    public static addInstance (target: TargetFile): boolean {
+    public static addInstance(target: TargetFile): boolean {
         if (target.currentAt === 0) {
             let nextAt = nextStepAt(target.content);
             if (nextAt < 0) {
@@ -360,12 +397,10 @@ export class HeadSegment extends BaseSegment {
     }
 }
 
-export class DefSegment extends BaseSegment {
-
-}
+export class DefSegment extends BaseSegment {}
 
 export class TestStepSegment extends DefSegment {
-    public static addInstance (target: TargetFile): boolean {
+    public static addInstance(target: TargetFile): boolean {
         const remain = target.content.slice(target.currentAt);
         if (target.currentAt >= 0) {
             let nextAt = nextStepAt(remain);
@@ -373,7 +408,12 @@ export class TestStepSegment extends DefSegment {
                 nextAt = remain.length - 1;
             }
             nextAt += target.currentAt + 1;
-            const newStep = new TestStepSegment(target, target.currentAt, nextAt, remain.slice(2, remain.indexOf('\n')));
+            const newStep = new TestStepSegment(
+                target,
+                target.currentAt,
+                nextAt,
+                remain.slice(2, remain.indexOf('\n')),
+            );
             target.root.children.push(newStep);
             newStep.createChildrenByIndent();
             target.currentAt = nextAt;
@@ -382,11 +422,11 @@ export class TestStepSegment extends DefSegment {
         return false;
     }
 
-    public createChildrenByTestCmd (): void {
+    public createChildrenByTestCmd(): void {
         const seperators = [
             ['endwith', ':\n', 'declare'],
             ['startwith', '    test.cmd(', 'pre'],
-            ['endwith', 'checks=checks)', 'command']
+            ['endwith', 'checks=checks)', 'command'],
         ];
 
         let bias = this.startAt;
@@ -418,7 +458,7 @@ export class TestStepSegment extends DefSegment {
 }
 
 export class TailSegment extends BaseSegment {
-    public static addInstance (target: TargetFile): boolean {
+    public static addInstance(target: TargetFile): boolean {
         if (target.currentAt >= 0) {
             return false;
         }
@@ -431,7 +471,7 @@ export class TailSegment extends BaseSegment {
     }
 }
 
-export function createTarget (file: string[]| string): TargetFile {
+export function createTarget(file: string[] | string): TargetFile {
     if (isNullOrUndefined(file)) return null;
     let fileContent: string[];
     if (typeof file === 'string') {
@@ -445,34 +485,33 @@ export function createTarget (file: string[]| string): TargetFile {
     return target;
 }
 
-export function zipFile (zipFile: string, genFile: string, content: string[]): void {
+export function zipFile(zipFile: string, genFile: string, content: string[]): void {
     const strContent = content.join('\n');
     const zip = new JSZip();
     zip.sync(() => {
         if (existsSync(zipFile)) {
-            zip.loadAsync(readFileSync(zipFile, 'binary')).then(zip => {
+            zip.loadAsync(readFileSync(zipFile, 'binary')).then((zip) => {
                 zip.file(genFile, strContent);
             });
         } else {
             mkdirSync(dirname(zipFile), { recursive: true });
             zip.file(genFile, strContent);
         }
-        zip.generateAsync({ type: 'nodebuffer' })
-            .then(function (content) {
-                writeFileSync(zipFile, content);
-            });
+        zip.generateAsync({ type: 'nodebuffer' }).then(function (content) {
+            writeFileSync(zipFile, content);
+        });
     });
 }
 
-export function loadFromZip (zipFile: string, genFile: string): string[] {
+export function loadFromZip(zipFile: string, genFile: string): string[] {
     if (existsSync(zipFile)) {
         const zip = new JSZip();
         let content;
         zip.sync(() => {
-            zip.loadAsync(readFileSync(zipFile, 'binary')).then(zip => {
+            zip.loadAsync(readFileSync(zipFile, 'binary')).then((zip) => {
                 const inFile = zip.file(genFile);
                 if (!isNullOrUndefined(inFile)) {
-                    inFile.async('string').then(data => {
+                    inFile.async('string').then((data) => {
                         content = data.split('\n');
                     });
                 }
@@ -487,11 +526,11 @@ export function loadFromZip (zipFile: string, genFile: string): string[] {
 
 let zipBuffer = [];
 
-export function openInplaceGen (): void {
+export function openInplaceGen(): void {
     zipBuffer = [];
 }
 
-export function inplaceGen (outputFolder: string, filename: string, genContent: string[]): string[] {
+export function inplaceGen(outputFolder: string, filename: string, genContent: string[]): string[] {
     const zipGenFile = join(outputFolder, 'gen.zip');
     const originA = createTarget(loadFromZip(zipGenFile, filename));
     const customizedA = createTarget(join(outputFolder, filename));
@@ -501,12 +540,12 @@ export function inplaceGen (outputFolder: string, filename: string, genContent: 
     return target.getContent();
 }
 
-export function putToZip (outputFolder: string, filename: string, genContent: string[]): void {
+export function putToZip(outputFolder: string, filename: string, genContent: string[]): void {
     const zipGenFile = join(outputFolder, 'gen.zip');
     zipBuffer.push([zipGenFile, filename, genContent]);
 }
 
-export function closeInplaceGen (): void {
+export function closeInplaceGen(): void {
     for (const meta of zipBuffer) {
         zipFile(meta[0], meta[1], meta[2]);
     }

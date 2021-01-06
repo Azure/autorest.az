@@ -11,11 +11,11 @@ import { ToMultiLine, isNullOrUndefined } from '../../../../utils/helper';
 let showExampleStr: string;
 const allSupportWaited = ['create', 'update', 'delete'];
 
-function initVars () {
+function initVars() {
     showExampleStr = '';
 }
 
-export function GenerateAzureCliHelp (model: CodeModelAz, debug: boolean): string[] {
+export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string[] {
     initVars();
     const header: HeaderGenerator = new HeaderGenerator();
     header.disableTooManyLines = true;
@@ -27,7 +27,9 @@ export function GenerateAzureCliHelp (model: CodeModelAz, debug: boolean): strin
     if (model.SelectFirstCommandGroup()) {
         do {
             // if there's no operation in this command group
-            if (!model.SelectFirstCommand()) { continue; }
+            if (!model.SelectFirstCommand()) {
+                continue;
+            }
 
             output = output.concat(generateCommandGroupHelp(model, '', debug));
             // let methods: string[] = model.CommandGroup_Commands;
@@ -40,7 +42,9 @@ export function GenerateAzureCliHelp (model: CodeModelAz, debug: boolean): strin
                     const subCommandGroupName = model.Command_SubGroupName;
                     if (subCommandGroupName !== '' && !allSubGroup.has(subCommandGroupName)) {
                         allSubGroup.set(subCommandGroupName, true);
-                        output = output.concat(generateCommandGroupHelp(model, subCommandGroupName, debug));
+                        output = output.concat(
+                            generateCommandGroupHelp(model, subCommandGroupName, debug),
+                        );
                     }
                     if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
                         hasWait = true;
@@ -54,36 +58,45 @@ export function GenerateAzureCliHelp (model: CodeModelAz, debug: boolean): strin
                             allLongRunCommand.push(waitParam + 'd');
                         }
                     }
-                    const commandOutput: string [] = generateCommandHelp(model, debug);
+                    const commandOutput: string[] = generateCommandHelp(model, debug);
                     output = output.concat(commandOutput);
-                }
-                while (model.SelectNextCommand());
+                } while (model.SelectNextCommand());
                 if (hasWait) {
-                    output = output.concat(generateWaitCommandHelp(model.CommandGroup_Name, allLongRunCommand));
+                    output = output.concat(
+                        generateWaitCommandHelp(model.CommandGroup_Name, allLongRunCommand),
+                    );
                 }
             }
-        } while (model.SelectNextCommandGroup()); 
+        } while (model.SelectNextCommandGroup());
 
         output.push('');
     }
 
-    output.forEach(element => {
+    output.forEach((element) => {
         if (element.length > 120) header.disableLineTooLong = true;
     });
 
     return header.getLines().concat(output);
 }
 
-function generateWaitCommandHelp (commandGroup, allLongRunCommand) {
+function generateWaitCommandHelp(commandGroup, allLongRunCommand) {
     const output = [];
     output.push('');
-    output.push("helps['" + commandGroup + " wait'] = \"\"\"");
+    output.push("helps['" + commandGroup + ' wait\'] = """');
     output.push('    type: command');
-    const summary = '    short-summary: Place the CLI in a waiting state until a condition of the ' + commandGroup + ' is met.';
+    const summary =
+        '    short-summary: Place the CLI in a waiting state until a condition of the ' +
+        commandGroup +
+        ' is met.';
     ToMultiLine(summary, output, 119, true);
     output.push('    examples:');
     for (const waitParam of allLongRunCommand) {
-        const name = '      - name: Pause executing next line of CLI script until the ' + commandGroup + ' is successfully ' + waitParam + '.';
+        const name =
+            '      - name: Pause executing next line of CLI script until the ' +
+            commandGroup +
+            ' is successfully ' +
+            waitParam +
+            '.';
         ToMultiLine(name, output, 119, true);
         if (!isNullOrUndefined(showExampleStr) && showExampleStr !== '') {
             output.push('        text: |-');
@@ -95,13 +108,13 @@ function generateWaitCommandHelp (commandGroup, allLongRunCommand) {
     return output;
 }
 
-function generateCommandGroupHelp (model: CodeModelAz, subCommandGroupName = '', debug: boolean) {
+function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = '', debug: boolean) {
     const output = [];
     output.push('');
     if (subCommandGroupName !== '') {
-        output.push("helps['" + subCommandGroupName + "'] = \"\"\"");
+        output.push("helps['" + subCommandGroupName + '\'] = """');
     } else {
-        output.push("helps['" + model.CommandGroup_Name + "'] = \"\"\"");
+        output.push("helps['" + model.CommandGroup_Name + '\'] = """');
     }
     output.push('    type: group');
     let shortSummary = '    short-summary: ' + model.CommandGroup_Help.trim();
@@ -120,7 +133,7 @@ function generateCommandGroupHelp (model: CodeModelAz, subCommandGroupName = '',
     return output;
 }
 
-function addParameterHelp (output: string[], model: CodeModelAz, debug: boolean) {
+function addParameterHelp(output: string[], model: CodeModelAz, debug: boolean) {
     let parameterOutput = ['    parameters:'];
 
     if (model.SelectFirstMethod()) {
@@ -132,11 +145,17 @@ function addParameterHelp (output: string[], model: CodeModelAz, debug: boolean)
                     if (model.MethodParameter_IsFlattened) {
                         continue;
                     }
-                    if (model.MethodParameter_Type === SchemaType.Constant || model.MethodParameter['readOnly']) {
+                    if (
+                        model.MethodParameter_Type === SchemaType.Constant ||
+                        model.MethodParameter['readOnly']
+                    ) {
                         continue;
                     }
                     const parameterName = model.MethodParameter_MapsTo;
-                    if (!isNullOrUndefined(originalOperation) && model.MethodParameter['targetProperty']?.isDiscriminator) {
+                    if (
+                        !isNullOrUndefined(originalOperation) &&
+                        model.MethodParameter['targetProperty']?.isDiscriminator
+                    ) {
                         continue;
                     }
 
@@ -158,17 +177,27 @@ function addParameterHelp (output: string[], model: CodeModelAz, debug: boolean)
                         return '--' + alias.replace(/'/g, '').replace(/_/g, '-');
                     });
 
-                    if (model.MethodParameter_IsList && model.MethodParameter_IsListOfSimple && !model.MethodParameter_IsSimpleArray) {
+                    if (
+                        model.MethodParameter_IsList &&
+                        model.MethodParameter_IsListOfSimple &&
+                        !model.MethodParameter_IsSimpleArray
+                    ) {
                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                             baseParam = model.MethodParameter;
                             continue;
                         }
                         if (model.MethodParameter_IsPositional) {
-                            parameterOutput = parameterOutput.concat(getPositionalActionHelp(model, parameterAlias, baseParam, debug));
+                            parameterOutput = parameterOutput.concat(
+                                getPositionalActionHelp(model, parameterAlias, baseParam, debug),
+                            );
                         } else if (model.MethodParameter_IsShorthandSyntax) {
-                            parameterOutput = parameterOutput.concat(getShorthandSyntaxAction(model, parameterAlias, baseParam, debug));
+                            parameterOutput = parameterOutput.concat(
+                                getShorthandSyntaxAction(model, parameterAlias, baseParam, debug),
+                            );
                         } else {
-                            parameterOutput = parameterOutput.concat(getKeyValueActionHelp(model, parameterAlias, baseParam, debug));
+                            parameterOutput = parameterOutput.concat(
+                                getKeyValueActionHelp(model, parameterAlias, baseParam, debug),
+                            );
                         }
                     }
                 } while (model.SelectNextMethodParameter());
@@ -183,25 +212,46 @@ function addParameterHelp (output: string[], model: CodeModelAz, debug: boolean)
     }
 }
 
-function getShorthandSyntaxAction (model: CodeModelAz, parameterAlias: string[], baseParam: Parameter, debug: boolean) {
+function getShorthandSyntaxAction(
+    model: CodeModelAz,
+    parameterAlias: string[],
+    baseParam: Parameter,
+    debug: boolean,
+) {
     let parameterOutput: string[] = [];
     const actionOutput: string[] = [];
     ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, actionOutput, 119, true);
 
     if (debug) {
         let shortSummary = '"';
-        if (model.MethodParameter_Description && model.MethodParameter_Description.trim().length > 0) {
+        if (
+            model.MethodParameter_Description &&
+            model.MethodParameter_Description.trim().length > 0
+        ) {
             shortSummary += model.MethodParameter_Description.trim().replace(/"/g, '\\\\"');
         }
         if (!shortSummary.endsWith('.')) {
             shortSummary += '.';
         }
         shortSummary += ' Swagger name=' + model.MethodParameter_CliKey + '"';
-        ToMultiLine(`        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''), actionOutput, 119, true);
+        ToMultiLine(
+            `        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''),
+            actionOutput,
+            119,
+            true,
+        );
     } else {
-        if (model.MethodParameter_Description && model.MethodParameter_Description.trim().length > 0) {
+        if (
+            model.MethodParameter_Description &&
+            model.MethodParameter_Description.trim().length > 0
+        ) {
             const shortSummary = model.MethodParameter_Description.trim().replace(/"/g, '\\\\"');
-            ToMultiLine(`        short-summary: "${shortSummary}"`.replace(/\r?\n|\r/g, ''), actionOutput, 119, true);
+            ToMultiLine(
+                `        short-summary: "${shortSummary}"`.replace(/\r?\n|\r/g, ''),
+                actionOutput,
+                119,
+                true,
+            );
         }
     }
 
@@ -217,11 +267,21 @@ function getShorthandSyntaxAction (model: CodeModelAz, parameterAlias: string[],
     }
     if (options.length > 0) {
         actionOutput.push('        long-summary: |');
-        const optionUsage = ' ' + options.map(p => `${model.Parameter_NameAz(p)}=XX`).join(',');
+        const optionUsage = ' ' + options.map((p) => `${model.Parameter_NameAz(p)}=XX`).join(',');
         if (model.MethodParameter_Type === SchemaType.Array) {
-            ToMultiLine('            Usage: ' + parameterAlias[0] + optionUsage.repeat(2), actionOutput, 119, true);
+            ToMultiLine(
+                '            Usage: ' + parameterAlias[0] + optionUsage.repeat(2),
+                actionOutput,
+                119,
+                true,
+            );
         } else {
-            ToMultiLine('            Usage: ' + parameterAlias[0] + optionUsage, actionOutput, 119, true);
+            ToMultiLine(
+                '            Usage: ' + parameterAlias[0] + optionUsage,
+                actionOutput,
+                119,
+                true,
+            );
         }
         actionOutput.push('');
         for (const p of options) {
@@ -229,37 +289,66 @@ function getShorthandSyntaxAction (model: CodeModelAz, parameterAlias: string[],
             if (!pDesc || pDesc.trim().length <= 0) continue;
             let line = `            ${model.Parameter_NameAz(p)}: `;
             if (p.required) line += 'Required. ';
-            line += model.Parameter_Description(p).trim().replace(/\r?\n|\r/g, '');
+            line += model
+                .Parameter_Description(p)
+                .trim()
+                .replace(/\r?\n|\r/g, '');
             ToMultiLine(line, actionOutput, 119, true);
         }
         if (model.Schema_Type(model.MethodParameter.schema) === SchemaType.Array) {
             actionOutput.push('');
-            ToMultiLine(`            Multiple actions can be specified by using more than one ${parameterAlias[0]} argument.`, actionOutput, 119, true);
+            ToMultiLine(
+                `            Multiple actions can be specified by using more than one ${parameterAlias[0]} argument.`,
+                actionOutput,
+                119,
+                true,
+            );
         }
         parameterOutput = parameterOutput.concat(actionOutput);
     }
     return parameterOutput;
 }
 
-function getPositionalActionHelp (model: CodeModelAz, parameterAlias: string[], baseParam: Parameter, debug: boolean) {
+function getPositionalActionHelp(
+    model: CodeModelAz,
+    parameterAlias: string[],
+    baseParam: Parameter,
+    debug: boolean,
+) {
     let parameterOutput: string[] = [];
     const actionOutput: string[] = [];
     ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, actionOutput, 119, true);
 
     if (debug) {
         let shortSummary = '"';
-        if (model.MethodParameter_Description && model.MethodParameter_Description.trim().length > 0) {
+        if (
+            model.MethodParameter_Description &&
+            model.MethodParameter_Description.trim().length > 0
+        ) {
             shortSummary += model.MethodParameter_Description.trim().replace(/"/g, '\\\\"');
         }
         if (!shortSummary.endsWith('.')) {
             shortSummary += '.';
         }
         shortSummary += ' Swagger name=' + model.MethodParameter_CliKey + '"';
-        ToMultiLine(`        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''), actionOutput, 119, true);
+        ToMultiLine(
+            `        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''),
+            actionOutput,
+            119,
+            true,
+        );
     } else {
-        if (model.MethodParameter_Description && model.MethodParameter_Description.trim().length > 0) {
+        if (
+            model.MethodParameter_Description &&
+            model.MethodParameter_Description.trim().length > 0
+        ) {
             const shortSummary = model.MethodParameter_Description.trim().replace(/"/g, '\\\\"');
-            ToMultiLine(`        short-summary: "${shortSummary}"`.replace(/\r?\n|\r/g, ''), actionOutput, 119, true);
+            ToMultiLine(
+                `        short-summary: "${shortSummary}"`.replace(/\r?\n|\r/g, ''),
+                actionOutput,
+                119,
+                true,
+            );
         }
     }
 
@@ -276,44 +365,83 @@ function getPositionalActionHelp (model: CodeModelAz, parameterAlias: string[], 
     }
     if (options.length > 0) {
         actionOutput.push('        long-summary: |');
-        ToMultiLine(['            The order of this parameter is specific customized. Usage: ', parameterAlias[0]].concat(options.map(p => `${model.Parameter_NameAz(p)}-value`)).join(' '), actionOutput, 119, true);
+        ToMultiLine(
+            [
+                '            The order of this parameter is specific customized. Usage: ',
+                parameterAlias[0],
+            ]
+                .concat(options.map((p) => `${model.Parameter_NameAz(p)}-value`))
+                .join(' '),
+            actionOutput,
+            119,
+            true,
+        );
         actionOutput.push('');
         for (const p of options) {
             const pDesc = model.Parameter_Description(p);
             if (!pDesc || pDesc.trim().length <= 0) continue;
             let line = `            ${model.Parameter_NameAz(p)}: `;
             line += 'Required. ';
-            line += model.Parameter_Description(p).trim().replace(/\r?\n|\r/g, '');
+            line += model
+                .Parameter_Description(p)
+                .trim()
+                .replace(/\r?\n|\r/g, '');
             ToMultiLine(line, actionOutput, 119, true);
         }
         if (model.Schema_Type(model.MethodParameter.schema) === SchemaType.Array) {
             actionOutput.push('');
-            ToMultiLine(`            Multiple actions can be specified by using more than one ${parameterAlias[0]} argument.`, actionOutput, 119, true);
+            ToMultiLine(
+                `            Multiple actions can be specified by using more than one ${parameterAlias[0]} argument.`,
+                actionOutput,
+                119,
+                true,
+            );
         }
         parameterOutput = parameterOutput.concat(actionOutput);
     }
     return parameterOutput;
 }
 
-function getKeyValueActionHelp (model: CodeModelAz, parameterAlias: string[], baseParam: Parameter, debug: boolean) {
+function getKeyValueActionHelp(
+    model: CodeModelAz,
+    parameterAlias: string[],
+    baseParam: Parameter,
+    debug: boolean,
+) {
     let parameterOutput: string[] = [];
     const actionOutput: string[] = [];
     ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, actionOutput, 119, true);
 
     if (debug) {
         let shortSummary = '"';
-        if (model.MethodParameter_Description && model.MethodParameter_Description.trim().length > 0) {
+        if (
+            model.MethodParameter_Description &&
+            model.MethodParameter_Description.trim().length > 0
+        ) {
             shortSummary += model.MethodParameter_Description.trim().replace(/"/g, '\\\\"');
         }
         if (!shortSummary.endsWith('.')) {
             shortSummary += '.';
         }
         shortSummary += ' Swagger name=' + model.MethodParameter_CliKey + '"';
-        ToMultiLine(`        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''), actionOutput, 119, true);
+        ToMultiLine(
+            `        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''),
+            actionOutput,
+            119,
+            true,
+        );
     } else {
-        if (model.MethodParameter_Description && model.MethodParameter_Description.trim().length > 0) {
+        if (
+            model.MethodParameter_Description &&
+            model.MethodParameter_Description.trim().length > 0
+        ) {
             const shortSummary = model.MethodParameter_Description.trim().replace(/"/g, '\\\\"');
-            ToMultiLine(`        short-summary: "${shortSummary}"`.replace(/\r?\n|\r/g, ''), actionOutput, 119, true);
+            ToMultiLine(
+                `        short-summary: "${shortSummary}"`.replace(/\r?\n|\r/g, ''),
+                actionOutput,
+                119,
+                true,
+            );
         }
     }
 
@@ -329,26 +457,46 @@ function getKeyValueActionHelp (model: CodeModelAz, parameterAlias: string[], ba
     }
     if (options.length > 0) {
         actionOutput.push('        long-summary: |');
-        ToMultiLine(['            Usage:', parameterAlias[0]].concat(options.map(p => `${model.Parameter_NameAz(p)}=XX`)).join(' '), actionOutput, 119, true);
+        ToMultiLine(
+            ['            Usage:', parameterAlias[0]]
+                .concat(options.map((p) => `${model.Parameter_NameAz(p)}=XX`))
+                .join(' '),
+            actionOutput,
+            119,
+            true,
+        );
         actionOutput.push('');
         for (const p of options) {
             const pDesc = model.Parameter_Description(p);
             if (!pDesc || pDesc.trim().length <= 0) continue;
             let line = `            ${model.Parameter_NameAz(p)}: `;
             if (p.required) line += 'Required. ';
-            line += model.Parameter_Description(p).trim().replace(/\r?\n|\r/g, '');
+            line += model
+                .Parameter_Description(p)
+                .trim()
+                .replace(/\r?\n|\r/g, '');
             ToMultiLine(line, actionOutput, 119, true);
         }
         if (model.Schema_Type(model.MethodParameter.schema) === SchemaType.Array) {
             actionOutput.push('');
-            ToMultiLine(`            Multiple actions can be specified by using more than one ${parameterAlias[0]} argument.`, actionOutput, 119, true);
+            ToMultiLine(
+                `            Multiple actions can be specified by using more than one ${parameterAlias[0]} argument.`,
+                actionOutput,
+                119,
+                true,
+            );
         }
         parameterOutput = parameterOutput.concat(actionOutput);
     }
     return parameterOutput;
 }
 
-function GetKeyValueActionOptions (model: CodeModelAz, positionalKeys: string[], keyToMatch: string = null, valueToMatch: string = null): Parameter[] {
+function GetKeyValueActionOptions(
+    model: CodeModelAz,
+    positionalKeys: string[],
+    keyToMatch: string = null,
+    valueToMatch: string = null,
+): Parameter[] {
     const options: Parameter[] = [];
 
     if (!SchemaType.Object || !SchemaType.Array) {
@@ -370,13 +518,28 @@ function GetKeyValueActionOptions (model: CodeModelAz, positionalKeys: string[],
                 if (model.SubMethodParameter.schema?.type === SchemaType.Constant) {
                     continue;
                 }
-                if (!isNullOrUndefined(keyToMatch) && !isNullOrUndefined(valueToMatch) && model.Parameter_NamePython(model.SubMethodParameter) === keyToMatch) {
+                if (
+                    !isNullOrUndefined(keyToMatch) &&
+                    !isNullOrUndefined(valueToMatch) &&
+                    model.Parameter_NamePython(model.SubMethodParameter) === keyToMatch
+                ) {
                     continue;
                 }
                 if (model.SubMethodParameter) {
                     if (model.MethodParameter_IsPositional) {
-                        if (!isNullOrUndefined(positionalKeys) && Array.isArray(positionalKeys) && positionalKeys.length > 0 && positionalKeys.indexOf(model.Parameter_NamePython(model.SubMethodParameter)) > -1) {
-                            options[positionalKeys.indexOf(model.Parameter_NamePython(model.SubMethodParameter))] = model.SubMethodParameter;
+                        if (
+                            !isNullOrUndefined(positionalKeys) &&
+                            Array.isArray(positionalKeys) &&
+                            positionalKeys.length > 0 &&
+                            positionalKeys.indexOf(
+                                model.Parameter_NamePython(model.SubMethodParameter),
+                            ) > -1
+                        ) {
+                            options[
+                                positionalKeys.indexOf(
+                                    model.Parameter_NamePython(model.SubMethodParameter),
+                                )
+                            ] = model.SubMethodParameter;
                         }
                     } else {
                         options.push(model.SubMethodParameter);
@@ -390,7 +553,7 @@ function GetKeyValueActionOptions (model: CodeModelAz, positionalKeys: string[],
     return options;
 }
 
-function generateCommandHelp (model: CodeModelAz, debug = false) {
+function generateCommandHelp(model: CodeModelAz, debug = false) {
     // create, delete, list, show, update
     // let method: string = methods[mi];
     // let ctx = model.SelectCommand(method);
@@ -400,7 +563,7 @@ function generateCommandHelp (model: CodeModelAz, debug = false) {
     let output: string[] = [];
     output.push('');
     const commandHead = model.Command_Name;
-    output.push("helps['" + commandHead + "'] = \"\"\"");
+    output.push("helps['" + commandHead + '\'] = """');
     output.push('    type: command');
 
     // there will be just one method for create, update, delete, show, etc.
@@ -413,7 +576,11 @@ function generateCommandHelp (model: CodeModelAz, debug = false) {
             shortSummary += (isFirst ? '' : ' And ') + model.Method_Help.trim();
             isFirst = false;
             if (debug) {
-                shortSummary += ' Command group swagger name=' + model.CommandGroup_CliKey + ', Command swagger name=' + model.Method_CliKey;
+                shortSummary +=
+                    ' Command group swagger name=' +
+                    model.CommandGroup_CliKey +
+                    ', Command swagger name=' +
+                    model.Method_CliKey;
             }
         } while (model.SelectNextMethod());
     }

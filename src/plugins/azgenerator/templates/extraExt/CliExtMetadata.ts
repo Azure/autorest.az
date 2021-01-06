@@ -10,16 +10,16 @@ import { CodeModelAz } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 
 export class CliTopMetadata extends TemplateBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         this.relativePath = path.join(model.AzextFolder, PathConstants.metadataFile);
     }
 
-    public async fullGeneration (): Promise<string[]> {
+    public async fullGeneration(): Promise<string[]> {
         return this.GenerateAzureCliAzextMetadata(this.model);
     }
 
-    public async incrementalGeneration (base: string): Promise<string[]> {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         if (isNullOrUndefined(base) || base.length === 0) {
             return this.fullGeneration();
         } else {
@@ -30,7 +30,7 @@ export class CliTopMetadata extends TemplateBase {
         }
     }
 
-    private GenerateAzureCliAzextMetadata (model: CodeModelAz): string[] {
+    private GenerateAzureCliAzextMetadata(model: CodeModelAz): string[] {
         const output: string[] = [];
 
         output.push('{');

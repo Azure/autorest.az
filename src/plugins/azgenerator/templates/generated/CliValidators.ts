@@ -6,7 +6,7 @@
 import { CodeModelAz } from '../../CodeModelAz';
 import { HeaderGenerator } from '../../Header';
 
-export function GenerateAzureCliValidators (model: CodeModelAz) : string[] {
+export function GenerateAzureCliValidators(model: CodeModelAz): string[] {
     const header: HeaderGenerator = new HeaderGenerator();
     const output: string[] = header.getLines();
 

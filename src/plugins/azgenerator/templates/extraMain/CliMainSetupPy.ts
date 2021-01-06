@@ -12,27 +12,28 @@ import { CodeModelAz } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 
 export class CliMainSetupPy extends TemplateBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         this.relativePath = path.join(model.AzureCliFolder, PathConstants.mainSetupPyFile);
     }
 
-    public async fullGeneration (): Promise<string[]> {
+    public async fullGeneration(): Promise<string[]> {
         return await this.GenerateAzureCliMainSetUp(this.model, this.relativePath);
     }
 
-    public async incrementalGeneration (base: string): Promise<string[]> {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         return await this.GenerateAzureCliMainSetUp(this.model, this.relativePath);
     }
 
-    private async GenerateAzureCliMainSetUp (model: CodeModelAz, requirementPath) {
+    private async GenerateAzureCliMainSetUp(model: CodeModelAz, requirementPath) {
         const outputFile = fs.readFileSync(requirementPath).toString().split(EOL);
         const packageName = model.GetPythonPackageName();
         const latestVersion = await getLatestPyPiVersion(packageName);
         let found = false;
         let cnt = 0;
         const line = "'" + packageName + '~=' + latestVersion + "'";
-        let beginLine = -1; let endLine = -1;
+        let beginLine = -1;
+        let endLine = -1;
         for (const line of outputFile) {
             if (line.startsWith('DEPENDENCIES')) {
                 beginLine = cnt;

@@ -12,7 +12,10 @@ import { AzGeneratorBase } from './AzGeneratorBase';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 
 export class AzGeneratorFactory {
-    static async createAzGenerator (model: CodeModelCliImpl, isDebugMode: boolean): Promise<AzGeneratorBase> {
+    static async createAzGenerator(
+        model: CodeModelCliImpl,
+        isDebugMode: boolean,
+    ): Promise<AzGeneratorBase> {
         await model.init();
         model.GenerateTestInit();
 

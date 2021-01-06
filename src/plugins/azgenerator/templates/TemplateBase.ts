@@ -9,7 +9,7 @@ export abstract class TemplateBase {
     protected isDebugMode: boolean;
     public relativePath: string;
 
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         this.model = model;
         this.isDebugMode = isDebugMode;
         this.relativePath = '';

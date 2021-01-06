@@ -4,14 +4,19 @@
  *-------------------------------------------------------------------------------------------- */
 import { EOL } from 'os';
 import * as path from 'path';
-import { getIndentString, keepHeaderLines, skipCommentLines, isNullOrUndefined } from '../../../utils/helper';
+import {
+    getIndentString,
+    keepHeaderLines,
+    skipCommentLines,
+    isNullOrUndefined,
+} from '../../../utils/helper';
 import { GenerationMode, PathConstants } from '../../models';
 import { CodeModelAz } from '../CodeModelAz';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from './TemplateBase';
 
 export class CliTopAction extends TemplateBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         if (this.model.IsCliCore) {
             this.relativePath = path.join(PathConstants.actionFile);
@@ -20,7 +25,7 @@ export class CliTopAction extends TemplateBase {
         }
     }
 
-    public async fullGeneration (): Promise<string[]> {
+    public async fullGeneration(): Promise<string[]> {
         const headerGenerator: HeaderGenerator = new HeaderGenerator();
         headerGenerator.disableWildcardImport = true;
         headerGenerator.disableUnusedWildcardImport = true;
@@ -29,7 +34,7 @@ export class CliTopAction extends TemplateBase {
         return output;
     }
 
-    public async incrementalGeneration (base: string): Promise<string[]> {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         if (isNullOrUndefined(base) || base.length === 0) {
             const headerGenerator: HeaderGenerator = new HeaderGenerator();
             headerGenerator.disableWildcardImport = true;
@@ -41,7 +46,9 @@ export class CliTopAction extends TemplateBase {
         } else {
             const existingMode: GenerationMode = HeaderGenerator.GetCliGenerationMode(base);
             if (existingMode === GenerationMode.Full) {
-                throw new Error('GenerationMode Error: Should not set Incremental mode on existing Full generation RP.');
+                throw new Error(
+                    'GenerationMode Error: Should not set Incremental mode on existing Full generation RP.',
+                );
             } else if (existingMode === GenerationMode.Incremental) {
                 // No need more incremental change
                 return base.split(EOL);
@@ -72,7 +79,7 @@ export class CliTopAction extends TemplateBase {
         }
     }
 
-    private loadGeneratedAction (indent: number): string[] {
+    private loadGeneratedAction(indent: number): string[] {
         const output: string[] = [];
         const indentStr: string = getIndentString(indent);
 

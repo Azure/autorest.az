@@ -5,7 +5,7 @@
 
 import { CodeModelAz } from '../../CodeModelAz';
 
-export function GenerateAzureCliHistory (model: CodeModelAz) : string[] {
+export function GenerateAzureCliHistory(model: CodeModelAz): string[] {
     const output: string[] = [];
 
     output.push('.. :changelog:');

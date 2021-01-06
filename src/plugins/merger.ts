@@ -3,96 +3,156 @@ import { Session, startSession, Host, Channel } from '@azure-tools/autorest-exte
 import { serialize, deserialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined, findNodeInCodeModel } from '../utils/helper';
-import { ArgumentConstants, ExtensionMode, TargetMode, CompatibleLevel, GenerateSdk } from './models';
+import {
+    ArgumentConstants,
+    ExtensionMode,
+    TargetMode,
+    CompatibleLevel,
+    GenerateSdk,
+} from './models';
 
 export class Merger {
     codeModel: CodeModel;
 
-    constructor (protected session: Session<CodeModel>) {
+    constructor(protected session: Session<CodeModel>) {
         this.codeModel = session.model;
     }
 
-    async process () {
+    async process() {
         this.mergeOperation();
         return this.codeModel;
     }
 
-    mergeOperation () {
-        this.codeModel.operationGroups.forEach(operationGroup => {
+    mergeOperation() {
+        this.codeModel.operationGroups.forEach((operationGroup) => {
             let operations = operationGroup.operations;
-            operationGroup.operations.forEach(operation => {
-                if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-split-operation-original-operation'])) {
+            operationGroup.operations.forEach((operation) => {
+                if (
+                    !isNullOrUndefined(operation.extensions) &&
+                    !isNullOrUndefined(
+                        operation.extensions['cli-split-operation-original-operation'],
+                    )
+                ) {
                     const nameIndexMap: Map<string, number> = new Map<string, number>();
                     let index = 0;
-                    operation.extensions['cli-split-operation-original-operation'].parameters.forEach(param => {
+                    operation.extensions[
+                        'cli-split-operation-original-operation'
+                    ].parameters.forEach((param) => {
                         nameIndexMap.set(param.language['cli'].name, index);
                         index++;
                     });
                     const nameIndexMapRequest: Map<string, number> = new Map<string, number>();
                     let indexRequest = 0;
-                    if (!isNullOrUndefined(operation.extensions['cli-split-operation-original-operation'].requests?.[0]?.parameters)) {
-                        operation.extensions['cli-split-operation-original-operation'].requests[0].parameters.forEach(rparam => {
+                    if (
+                        !isNullOrUndefined(
+                            operation.extensions['cli-split-operation-original-operation']
+                                .requests?.[0]?.parameters,
+                        )
+                    ) {
+                        operation.extensions[
+                            'cli-split-operation-original-operation'
+                        ].requests[0].parameters.forEach((rparam) => {
                             nameIndexMapRequest.set(rparam.language.cli.name, indexRequest);
                             indexRequest++;
                         });
                     }
-                    operation.parameters.forEach(subParam => {
+                    operation.parameters.forEach((subParam) => {
                         const idx = nameIndexMap.get(subParam.language['cli'].name);
                         if (idx > -1) {
-                            if (isNullOrUndefined(operation.extensions['cli-split-operation-original-operation'].parameters[idx].subParams)) {
-                                operation.extensions['cli-split-operation-original-operation'].parameters[idx].subParams = {};
+                            if (
+                                isNullOrUndefined(
+                                    operation.extensions['cli-split-operation-original-operation']
+                                        .parameters[idx].subParams,
+                                )
+                            ) {
+                                operation.extensions[
+                                    'cli-split-operation-original-operation'
+                                ].parameters[idx].subParams = {};
                             }
-                            operation.extensions['cli-split-operation-original-operation'].parameters[idx].subParams[operation.language['cli'].name] = subParam.language['cli'].name;
-                            subParam['nameBaseParam'] = operation.extensions['cli-split-operation-original-operation'].parameters[idx];
+                            operation.extensions[
+                                'cli-split-operation-original-operation'
+                            ].parameters[idx].subParams[operation.language['cli'].name] =
+                                subParam.language['cli'].name;
+                            subParam['nameBaseParam'] =
+                                operation.extensions[
+                                    'cli-split-operation-original-operation'
+                                ].parameters[idx];
                         }
                     });
                     if (!isNullOrUndefined(operation?.requests?.[0]?.parameters)) {
-                        operation.requests[0].parameters.forEach(subParam => {
+                        operation.requests[0].parameters.forEach((subParam) => {
                             const idx = nameIndexMapRequest.get(subParam.language['cli'].name);
                             if (idx > -1) {
-                                if (isNullOrUndefined(operation.extensions['cli-split-operation-original-operation']?.requests?.[0]?.parameters[idx].subParams)) {
-                                    operation.extensions['cli-split-operation-original-operation'].requests[0].parameters[idx].subParams = {};
+                                if (
+                                    isNullOrUndefined(
+                                        operation.extensions[
+                                            'cli-split-operation-original-operation'
+                                        ]?.requests?.[0]?.parameters[idx].subParams,
+                                    )
+                                ) {
+                                    operation.extensions[
+                                        'cli-split-operation-original-operation'
+                                    ].requests[0].parameters[idx].subParams = {};
                                 }
-                                operation.extensions['cli-split-operation-original-operation'].requests[0].parameters[idx].subParams[operation.language['cli'].name] = subParam.language['cli'].name;
-                                subParam['nameBaseParam'] = operation.extensions['cli-split-operation-original-operation'].requests[0].parameters[idx];
+                                operation.extensions[
+                                    'cli-split-operation-original-operation'
+                                ].requests[0].parameters[idx].subParams[
+                                    operation.language['cli'].name
+                                ] = subParam.language['cli'].name;
+                                subParam['nameBaseParam'] =
+                                    operation.extensions[
+                                        'cli-split-operation-original-operation'
+                                    ].requests[0].parameters[idx];
                             }
                         });
                     }
                 }
-                if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-operations']) && !operation.language['cli']['cli-operation-splitted']) {
+                if (
+                    !isNullOrUndefined(operation.extensions) &&
+                    !isNullOrUndefined(operation.extensions['cli-operations']) &&
+                    !operation.language['cli']['cli-operation-splitted']
+                ) {
                     const nameIndexMap: Map<string, number> = new Map<string, number>();
                     let index = 0;
-                    operation.parameters.forEach(param => {
+                    operation.parameters.forEach((param) => {
                         nameIndexMap.set(param.language['cli'].name, index);
                         index++;
                     });
                     const nameIndexMapRequest: Map<string, number> = new Map<string, number>();
                     let indexRequest = 0;
                     if (!isNullOrUndefined(operation.requests?.[0]?.parameters)) {
-                        operation.requests[0].parameters.forEach(rparam => {
+                        operation.requests[0].parameters.forEach((rparam) => {
                             nameIndexMapRequest.set(rparam.language['cli'].name, indexRequest);
                             indexRequest++;
                         });
                     }
-                    operation.extensions['cli-operations'].forEach(subOperation => {
-                        subOperation.parameters.forEach(subParam => {
+                    operation.extensions['cli-operations'].forEach((subOperation) => {
+                        subOperation.parameters.forEach((subParam) => {
                             const idx = nameIndexMap.get(subParam.language['cli'].name);
                             if (idx > -1) {
                                 if (isNullOrUndefined(operation.parameters[idx]['subParams'])) {
                                     operation.parameters[idx]['subParams'] = {};
                                 }
-                                operation.parameters[idx]['subParams'][subOperation.language['cli'].name] = subParam.language['cli'].name;
+                                operation.parameters[idx]['subParams'][
+                                    subOperation.language['cli'].name
+                                ] = subParam.language['cli'].name;
                                 subParam.nameBaseParam = operation.parameters[idx];
                             }
                         });
                         if (!isNullOrUndefined(subOperation?.requests?.[0]?.parameters)) {
-                            subOperation.requests[0].parameters.forEach(subParam => {
+                            subOperation.requests[0].parameters.forEach((subParam) => {
                                 const idx = nameIndexMapRequest.get(subParam.language['cli'].name);
                                 if (idx > -1) {
-                                    if (isNullOrUndefined(operation?.requests?.[0]?.parameters[idx]['subParams'])) {
+                                    if (
+                                        isNullOrUndefined(
+                                            operation?.requests?.[0]?.parameters[idx]['subParams'],
+                                        )
+                                    ) {
                                         operation.requests[0].parameters[idx]['subParams'] = {};
                                     }
-                                    operation.requests[0].parameters[idx]['subParams'][subOperation.language['cli'].name] = subParam.language['cli'].name;
+                                    operation.requests[0].parameters[idx]['subParams'][
+                                        subOperation.language['cli'].name
+                                    ] = subParam.language['cli'].name;
                                     subParam.nameBaseParam = operation.requests[0].parameters[idx];
                                 }
                             });
@@ -107,16 +167,17 @@ export class Merger {
 }
 
 export class CodeModelMerger {
-    constructor (public cliCodeModel: CodeModel, public pythonCodeModel: CodeModel) {
-    }
+    constructor(public cliCodeModel: CodeModel, public pythonCodeModel: CodeModel) {}
 
-    async process () {
+    async process() {
         return this.mergeCodeModel();
     }
 
-    mergeCodeModel (): CodeModel {
+    mergeCodeModel(): CodeModel {
         this.cliCodeModel.info['python_title'] = this.pythonCodeModel.info['python_title'];
-        this.cliCodeModel.info['pascal_case_title'] = this.pythonCodeModel.info['pascal_case_title'];
+        this.cliCodeModel.info['pascal_case_title'] = this.pythonCodeModel.info[
+            'pascal_case_title'
+        ];
         this.processOperationGroup();
         this.processGlobalParam();
         this.processSchemas();
@@ -124,15 +185,23 @@ export class CodeModelMerger {
         return azCodeModel;
     }
 
-    setPythonName (param, m4FlattenedFrom: any[] = []) {
+    setPythonName(param, m4FlattenedFrom: any[] = []) {
         const cliM4Path = param?.language?.cli?.cliM4Path;
         if (isNullOrUndefined(cliM4Path)) {
             return;
         }
         const cliNode = findNodeInCodeModel(cliM4Path, this.cliCodeModel, false, param);
         let foundNode = false;
-        if (!isNullOrUndefined(cliNode) && !isNullOrUndefined(cliNode.language) && isNullOrUndefined(cliNode.language.python)) {
-            if ((!isNullOrUndefined(cliNode.language.cli.cliM4Path) && cliNode.language.cli.cliM4Path === cliM4Path) || cliNode.language.cli.cliFlattenTrace === param.language.cli.cliFlattenTrace) {
+        if (
+            !isNullOrUndefined(cliNode) &&
+            !isNullOrUndefined(cliNode.language) &&
+            isNullOrUndefined(cliNode.language.python)
+        ) {
+            if (
+                (!isNullOrUndefined(cliNode.language.cli.cliM4Path) &&
+                    cliNode.language.cli.cliM4Path === cliM4Path) ||
+                cliNode.language.cli.cliFlattenTrace === param.language.cli.cliFlattenTrace
+            ) {
                 foundNode = true;
                 cliNode.language.python = param.language.python;
                 if (param.flattened && param.language.cli?.['cli-m4-flattened']) {
@@ -149,15 +218,25 @@ export class CodeModelMerger {
                 for (const fnode of flattenedNodes) {
                     if (!isNullOrUndefined(fnode) && !isNullOrUndefined(fnode.language)) {
                         for (const prop of values(param.schema.properties)) {
-                            if (!isNullOrUndefined(fnode.language?.cli?.cliKey) && fnode.language?.cli?.cliKey === prop['language']?.cli?.cliKey) {
+                            if (
+                                !isNullOrUndefined(fnode.language?.cli?.cliKey) &&
+                                fnode.language?.cli?.cliKey === prop['language']?.cli?.cliKey
+                            ) {
                                 fnode.language.python = prop['language'].python;
                                 fnode.language.cli.pythonFlattenedFrom = param;
                                 break;
                             } else if (!isNullOrUndefined(fnode.language?.cli?.cliFlattenTrace)) {
                                 for (const trace of values(fnode.language.cli.cliFlattenTrace)) {
-                                    if (!isNullOrUndefined(prop['language']?.cli?.cliPath) && trace === prop['language'].cli.cliPath) {
+                                    if (
+                                        !isNullOrUndefined(prop['language']?.cli?.cliPath) &&
+                                        trace === prop['language'].cli.cliPath
+                                    ) {
                                         for (const p of prop['schema']?.properties) {
-                                            if (!isNullOrUndefined(p.language?.cli?.cliKey) && fnode.language?.cli?.cliKey === p.language?.cli?.cliKey) {
+                                            if (
+                                                !isNullOrUndefined(p.language?.cli?.cliKey) &&
+                                                fnode.language?.cli?.cliKey ===
+                                                    p.language?.cli?.cliKey
+                                            ) {
                                                 fnode.language.python = p.language.python;
                                                 fnode.language.cli.pythonFlattenedFrom = prop;
                                                 break;
@@ -174,13 +253,13 @@ export class CodeModelMerger {
         }
     }
 
-    processGlobalParam () {
+    processGlobalParam() {
         for (const para of values(this.pythonCodeModel.globalParameters)) {
             this.setPythonName(para);
         }
     }
 
-    processSchemas () {
+    processSchemas() {
         const schemas = this.pythonCodeModel.schemas;
 
         for (const obj of values(schemas.objects)) {
@@ -227,7 +306,7 @@ export class CodeModelMerger {
         }
     }
 
-    getLastValidPath (cliPath: string) {
+    getLastValidPath(cliPath: string) {
         const cliPaths = cliPath.split('$$');
         let last = cliPaths.last;
         if (last.indexOf('[') > -1) {
@@ -243,28 +322,38 @@ export class CodeModelMerger {
         return path + '$$' + last;
     }
 
-    processOperationGroup () {
-        this.pythonCodeModel.operationGroups.forEach(operationGroup => {
+    processOperationGroup() {
+        this.pythonCodeModel.operationGroups.forEach((operationGroup) => {
             if (!isNullOrUndefined(operationGroup.language['cli'])) {
                 this.setPythonName(operationGroup);
             }
 
             const operations = operationGroup.operations;
-            operations.forEach(operation => {
+            operations.forEach((operation) => {
                 if (!isNullOrUndefined(operation.language['cli'])) {
                     this.setPythonName(operation);
                 }
                 let cnt = 0;
-                operation.parameters.forEach(parameter => {
+                operation.parameters.forEach((parameter) => {
                     if (!isNullOrUndefined(parameter.language['cli'])) {
                         const m4FlattenedFrom = [];
-                        if (parameter.flattened && parameter.language['cli']?.['cli-m4-flattened']) {
-                            for (let tmpCnt = cnt + 1; tmpCnt < operation.parameters.length; tmpCnt++) {
+                        if (
+                            parameter.flattened &&
+                            parameter.language['cli']?.['cli-m4-flattened']
+                        ) {
+                            for (
+                                let tmpCnt = cnt + 1;
+                                tmpCnt < operation.parameters.length;
+                                tmpCnt++
+                            ) {
                                 const tmpParam = operation.parameters[tmpCnt];
                                 if (tmpParam['originalParameter'] === parameter) {
                                     if (!isNullOrUndefined(tmpParam?.language['cli']?.cliPath)) {
                                         const cliPath = tmpParam.language['cli']?.cliPath;
-                                        const cliNode = findNodeInCodeModel(cliPath, this.cliCodeModel);
+                                        const cliNode = findNodeInCodeModel(
+                                            cliPath,
+                                            this.cliCodeModel,
+                                        );
                                         if (isNullOrUndefined(cliNode)) {
                                             m4FlattenedFrom.push(tmpParam);
                                         } else {
@@ -282,35 +371,74 @@ export class CodeModelMerger {
                     }
                     cnt++;
                 });
-                operation.requests.forEach(request => {
+                operation.requests.forEach((request) => {
                     if (!isNullOrUndefined(request?.parameters)) {
                         cnt = 0;
-                        request.parameters.forEach(parameter => {
+                        request.parameters.forEach((parameter) => {
                             if (!isNullOrUndefined(parameter.language['cli'])) {
                                 const m4FlattenedFrom = [];
-                                if (parameter.flattened && parameter.language['cli']?.['cli-m4-flattened']) {
-                                    for (let tmpCnt = cnt + 1; tmpCnt < request.parameters.length; tmpCnt++) {
+                                if (
+                                    parameter.flattened &&
+                                    parameter.language['cli']?.['cli-m4-flattened']
+                                ) {
+                                    for (
+                                        let tmpCnt = cnt + 1;
+                                        tmpCnt < request.parameters.length;
+                                        tmpCnt++
+                                    ) {
                                         const tmpParam = request.parameters[tmpCnt];
                                         let deepFlatten = false;
                                         if (tmpParam['originalParameter'] === parameter) {
-                                            if (!isNullOrUndefined(tmpParam?.language['cli']?.cliPath)) {
+                                            if (
+                                                !isNullOrUndefined(
+                                                    tmpParam?.language['cli']?.cliPath,
+                                                )
+                                            ) {
                                                 const cliPath = tmpParam.language['cli']?.cliPath;
-                                                const cliNode = findNodeInCodeModel(cliPath, this.cliCodeModel, false, tmpParam);
+                                                const cliNode = findNodeInCodeModel(
+                                                    cliPath,
+                                                    this.cliCodeModel,
+                                                    false,
+                                                    tmpParam,
+                                                );
                                                 if (isNullOrUndefined(cliNode)) {
-                                                    const lastValidPath = this.getLastValidPath(cliPath);
+                                                    const lastValidPath = this.getLastValidPath(
+                                                        cliPath,
+                                                    );
                                                     if (!isNullOrUndefined(lastValidPath)) {
-                                                        const lastValidNode = findNodeInCodeModel(lastValidPath, this.cliCodeModel);
-                                                        if (!isNullOrUndefined(lastValidNode) && Array.isArray(lastValidNode)) {
-                                                            const cliFlattenTrace = tmpParam.language['cli'].cliFlattenTrace;
-                                                            const cliFlattenTraceStr = cliFlattenTrace.join(';');
+                                                        const lastValidNode = findNodeInCodeModel(
+                                                            lastValidPath,
+                                                            this.cliCodeModel,
+                                                        );
+                                                        if (
+                                                            !isNullOrUndefined(lastValidNode) &&
+                                                            Array.isArray(lastValidNode)
+                                                        ) {
+                                                            const cliFlattenTrace =
+                                                                tmpParam.language['cli']
+                                                                    .cliFlattenTrace;
+                                                            const cliFlattenTraceStr = cliFlattenTrace.join(
+                                                                ';',
+                                                            );
                                                             let cnt1 = -1;
                                                             for (const lnode of lastValidNode) {
                                                                 if (!deepFlatten) {
                                                                     cnt1++;
                                                                 }
-                                                                if (!isNullOrUndefined(lnode.language.cli?.cliFlattenTrace)) {
-                                                                    const cftstr = lnode.language.cli?.cliFlattenTrace.join(';');
-                                                                    if (cftstr.startsWith(cliFlattenTraceStr)) {
+                                                                if (
+                                                                    !isNullOrUndefined(
+                                                                        lnode.language.cli
+                                                                            ?.cliFlattenTrace,
+                                                                    )
+                                                                ) {
+                                                                    const cftstr = lnode.language.cli?.cliFlattenTrace.join(
+                                                                        ';',
+                                                                    );
+                                                                    if (
+                                                                        cftstr.startsWith(
+                                                                            cliFlattenTraceStr,
+                                                                        )
+                                                                    ) {
                                                                         deepFlatten = true;
                                                                         lnode.originalParameter = tmpParam;
                                                                     }
@@ -318,26 +446,106 @@ export class CodeModelMerger {
                                                             }
                                                             if (deepFlatten) {
                                                                 tmpParam.flattened = true;
-                                                                tmpParam.language['cli']['cli-flatten'] = true;
-                                                                tmpParam.language['cli']['cli-flattened'] = true;
-                                                                tmpParam['originalParameter'] = findNodeInCodeModel(parameter.language['cli'].cliM4Path, this.cliCodeModel, false, parameter);
-                                                                lastValidNode.splice(cnt1, 0, tmpParam);
-                                                                const cliOperation = findNodeInCodeModel(operation.language['cli'].cliM4Path, this.cliCodeModel, false, operation);
-                                                                if (cliOperation.language.cli['cli-operation-splitted'] && Array.isArray(cliOperation.language.cli['split-operation-names'])) {
-                                                                    for (const tmpName of cliOperation.language['cli']['split-operation-names']) {
-                                                                        const subParamPath = parameter.language['cli'].cliM4Path.replace(cliOperation.language.cli.cliKey, cliOperation.language.cli.cliKey + '#' + tmpName);
-                                                                        const subParam = findNodeInCodeModel(subParamPath, this.cliCodeModel, false, null, true);
-                                                                        const subLastValidPath = this.getLastValidPath(subParamPath);
-                                                                        const subLastValidNode = findNodeInCodeModel(subLastValidPath, this.cliCodeModel, false, null, true);
-                                                                        const idx = subLastValidNode.indexOf(subParam);
+                                                                tmpParam.language['cli'][
+                                                                    'cli-flatten'
+                                                                ] = true;
+                                                                tmpParam.language['cli'][
+                                                                    'cli-flattened'
+                                                                ] = true;
+                                                                tmpParam[
+                                                                    'originalParameter'
+                                                                ] = findNodeInCodeModel(
+                                                                    parameter.language['cli']
+                                                                        .cliM4Path,
+                                                                    this.cliCodeModel,
+                                                                    false,
+                                                                    parameter,
+                                                                );
+                                                                lastValidNode.splice(
+                                                                    cnt1,
+                                                                    0,
+                                                                    tmpParam,
+                                                                );
+                                                                const cliOperation = findNodeInCodeModel(
+                                                                    operation.language['cli']
+                                                                        .cliM4Path,
+                                                                    this.cliCodeModel,
+                                                                    false,
+                                                                    operation,
+                                                                );
+                                                                if (
+                                                                    cliOperation.language.cli[
+                                                                        'cli-operation-splitted'
+                                                                    ] &&
+                                                                    Array.isArray(
+                                                                        cliOperation.language.cli[
+                                                                            'split-operation-names'
+                                                                        ],
+                                                                    )
+                                                                ) {
+                                                                    for (const tmpName of cliOperation
+                                                                        .language['cli'][
+                                                                        'split-operation-names'
+                                                                    ]) {
+                                                                        const subParamPath = parameter.language[
+                                                                            'cli'
+                                                                        ].cliM4Path.replace(
+                                                                            cliOperation.language
+                                                                                .cli.cliKey,
+                                                                            cliOperation.language
+                                                                                .cli.cliKey +
+                                                                                '#' +
+                                                                                tmpName,
+                                                                        );
+                                                                        const subParam = findNodeInCodeModel(
+                                                                            subParamPath,
+                                                                            this.cliCodeModel,
+                                                                            false,
+                                                                            null,
+                                                                            true,
+                                                                        );
+                                                                        const subLastValidPath = this.getLastValidPath(
+                                                                            subParamPath,
+                                                                        );
+                                                                        const subLastValidNode = findNodeInCodeModel(
+                                                                            subLastValidPath,
+                                                                            this.cliCodeModel,
+                                                                            false,
+                                                                            null,
+                                                                            true,
+                                                                        );
+                                                                        const idx = subLastValidNode.indexOf(
+                                                                            subParam,
+                                                                        );
                                                                         if (idx > -1) {
-                                                                            subLastValidNode.splice(idx + 1, 0, tmpParam);
-                                                                            subLastValidNode[idx + 1].originalParameter = subParam;
-                                                                            subLastValidNode[idx + 1].language.cli['moved-from-python'] = true;
+                                                                            subLastValidNode.splice(
+                                                                                idx + 1,
+                                                                                0,
+                                                                                tmpParam,
+                                                                            );
+                                                                            subLastValidNode[
+                                                                                idx + 1
+                                                                            ].originalParameter = subParam;
+                                                                            subLastValidNode[
+                                                                                idx + 1
+                                                                            ].language.cli[
+                                                                                'moved-from-python'
+                                                                            ] = true;
                                                                             let subcnt = idx + 2;
-                                                                            while (subcnt < subLastValidNode.length) {
-                                                                                if (subLastValidNode[subcnt].originalParameter === subParam) {
-                                                                                    subLastValidNode[subcnt].originalParameter = tmpParam;
+                                                                            while (
+                                                                                subcnt <
+                                                                                subLastValidNode.length
+                                                                            ) {
+                                                                                if (
+                                                                                    subLastValidNode[
+                                                                                        subcnt
+                                                                                    ]
+                                                                                        .originalParameter ===
+                                                                                    subParam
+                                                                                ) {
+                                                                                    subLastValidNode[
+                                                                                        subcnt
+                                                                                    ].originalParameter = tmpParam;
                                                                                 } else {
                                                                                     break;
                                                                                 }
@@ -346,22 +554,69 @@ export class CodeModelMerger {
                                                                         }
                                                                     }
                                                                 }
-                                                                if (!isNullOrUndefined(cliOperation.language.cli['cli-operations'])) {
-                                                                    for (const mop of cliOperation.language.cli['cli-operations']) {
-                                                                        const subParamPath = parameter.language['cli'].cliM4Path.replace(cliOperation.language.cli.cliKey, mop.language.cli.cliKey);
-                                                                        const subParam = findNodeInCodeModel(subParamPath, this.cliCodeModel);
-                                                                        const subLastValidPath = this.getLastValidPath(subParamPath);
-                                                                        const subLastValidNode = findNodeInCodeModel(subLastValidPath, this.cliCodeModel);
+                                                                if (
+                                                                    !isNullOrUndefined(
+                                                                        cliOperation.language.cli[
+                                                                            'cli-operations'
+                                                                        ],
+                                                                    )
+                                                                ) {
+                                                                    for (const mop of cliOperation
+                                                                        .language.cli[
+                                                                        'cli-operations'
+                                                                    ]) {
+                                                                        const subParamPath = parameter.language[
+                                                                            'cli'
+                                                                        ].cliM4Path.replace(
+                                                                            cliOperation.language
+                                                                                .cli.cliKey,
+                                                                            mop.language.cli.cliKey,
+                                                                        );
+                                                                        const subParam = findNodeInCodeModel(
+                                                                            subParamPath,
+                                                                            this.cliCodeModel,
+                                                                        );
+                                                                        const subLastValidPath = this.getLastValidPath(
+                                                                            subParamPath,
+                                                                        );
+                                                                        const subLastValidNode = findNodeInCodeModel(
+                                                                            subLastValidPath,
+                                                                            this.cliCodeModel,
+                                                                        );
                                                                         if (subLastValidNode) {
-                                                                            const idx = subLastValidNode.indexOf(subParam);
+                                                                            const idx = subLastValidNode.indexOf(
+                                                                                subParam,
+                                                                            );
                                                                             if (idx > -1) {
-                                                                                subLastValidNode.splice(idx + 1, 0, tmpParam);
-                                                                                subLastValidNode[idx + 1].originalParameter = subParam;
-                                                                                subLastValidNode[idx + 1].language.cli['moved-from-python'] = true;
-                                                                                let subcnt = idx + 2;
-                                                                                while (subcnt < subLastValidNode.length) {
-                                                                                    if (subLastValidNode[subcnt].originalParameter === subParam) {
-                                                                                        subLastValidNode[subcnt].originalParameter = tmpParam;
+                                                                                subLastValidNode.splice(
+                                                                                    idx + 1,
+                                                                                    0,
+                                                                                    tmpParam,
+                                                                                );
+                                                                                subLastValidNode[
+                                                                                    idx + 1
+                                                                                ].originalParameter = subParam;
+                                                                                subLastValidNode[
+                                                                                    idx + 1
+                                                                                ].language.cli[
+                                                                                    'moved-from-python'
+                                                                                ] = true;
+                                                                                let subcnt =
+                                                                                    idx + 2;
+                                                                                while (
+                                                                                    subcnt <
+                                                                                    subLastValidNode.length
+                                                                                ) {
+                                                                                    if (
+                                                                                        subLastValidNode[
+                                                                                            subcnt
+                                                                                        ]
+                                                                                            .originalParameter ===
+                                                                                        subParam
+                                                                                    ) {
+                                                                                        subLastValidNode[
+                                                                                            subcnt
+                                                                                        ].originalParameter = tmpParam;
                                                                                     } else {
                                                                                         break;
                                                                                     }
@@ -378,8 +633,11 @@ export class CodeModelMerger {
                                                         m4FlattenedFrom.push(tmpParam);
                                                     }
                                                 } else {
-                                                    if (isNullOrUndefined(cliNode.language.python)) {
-                                                        cliNode.language.python = tmpParam.language.python;
+                                                    if (
+                                                        isNullOrUndefined(cliNode.language.python)
+                                                    ) {
+                                                        cliNode.language.python =
+                                                            tmpParam.language.python;
                                                     }
                                                 }
                                             }
@@ -402,17 +660,27 @@ export class CodeModelMerger {
     }
 }
 
-export async function processRequest (host: Host) {
-    const debug = await host.GetValue('debug') || false;
-    const targetMode = await host.GetValue(ArgumentConstants.targetMode) || TargetMode.Extension;
+export async function processRequest(host: Host) {
+    const debug = (await host.GetValue('debug')) || false;
+    const targetMode = (await host.GetValue(ArgumentConstants.targetMode)) || TargetMode.Extension;
     const cliCore = targetMode === TargetMode.Core;
     // change both core and extension mode into no flattened mode.
     let sdkFlatten = false;
-    sdkFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkFlatten)) ? true : sdkFlatten;
-    sdkFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkNoFlatten)) ? false : sdkFlatten;
-    const sdkNoFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkNoFlatten)) ? true : !sdkFlatten;
+    sdkFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkFlatten))
+        ? true
+        : sdkFlatten;
+    sdkFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkNoFlatten))
+        ? false
+        : sdkFlatten;
+    const sdkNoFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkNoFlatten))
+        ? true
+        : !sdkFlatten;
     if (cliCore && !sdkNoFlatten) {
-        host.Message({ Channel: Channel.Fatal, Text: 'You have specified the --target-mode=core and --sdk-no-flatten=false at the same time. which is not a valid configuration' });
+        host.Message({
+            Channel: Channel.Fatal,
+            Text:
+                'You have specified the --target-mode=core and --sdk-no-flatten=false at the same time. which is not a valid configuration',
+        });
         throw new Error('Wrong configuration detected, please check!');
     }
     let azExtensionFolder = '';
@@ -423,26 +691,45 @@ export async function processRequest (host: Host) {
         azCoreFolder = await host.GetValue(ArgumentConstants.azureCliFolder);
     }
     if ((isNullOrUndefined(cliCore) || cliCore === false) && isNullOrUndefined(azExtensionFolder)) {
-        host.Message({ Channel: Channel.Fatal, Text: '--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example' });
+        host.Message({
+            Channel: Channel.Fatal,
+            Text:
+                '--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example',
+        });
         throw new Error('Wrong configuration, please check!');
     } else if (cliCore && isNullOrUndefined(azCoreFolder)) {
-        host.Message({ Channel: Channel.Fatal, Text: '--azure-cli-folder is not provided in the command line and you are using --target-mode=core to generate azure-cli repo command modules ! \nplease use --azure-cli-folder=your-local-azure-cli-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example' });
+        host.Message({
+            Channel: Channel.Fatal,
+            Text:
+                '--azure-cli-folder is not provided in the command line and you are using --target-mode=core to generate azure-cli repo command modules ! \nplease use --azure-cli-folder=your-local-azure-cli-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example',
+        });
         throw new Error('Wrong configuration, please check!');
     }
     let isSdkNeeded = !cliCore;
     const generateSdk = await host.GetValue(ArgumentConstants.generateSDK);
     isSdkNeeded = isNullOrUndefined(generateSdk) ? isSdkNeeded : generateSdk === GenerateSdk.Yes;
-    const compatibleLevel = await host.GetValue(ArgumentConstants.compatibleLevel) || cliCore ? CompatibleLevel.Track1 : CompatibleLevel.Track2;
+    const compatibleLevel =
+        (await host.GetValue(ArgumentConstants.compatibleLevel)) || cliCore
+            ? CompatibleLevel.Track1
+            : CompatibleLevel.Track2;
     const isTrack1 = compatibleLevel === CompatibleLevel.Track1;
 
     let extensionMode = ExtensionMode.Experimental;
-    extensionMode = await host.GetValue(ArgumentConstants.extensionMode) || extensionMode;
+    extensionMode = (await host.GetValue(ArgumentConstants.extensionMode)) || extensionMode;
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         if (cliCore || sdkNoFlatten) {
-            const cliCodeModel = deserialize<CodeModel>(await host.ReadFile('code-model-cli-v4.yaml'), 'code-model-cli-v4.yaml', codeModelSchema);
-            const pythonCodeModel = deserialize<CodeModel>(await host.ReadFile('code-model-v4-no-tags.yaml'), 'code-model-v4-no-tags.yaml', codeModelSchema);
+            const cliCodeModel = deserialize<CodeModel>(
+                await host.ReadFile('code-model-cli-v4.yaml'),
+                'code-model-cli-v4.yaml',
+                codeModelSchema,
+            );
+            const pythonCodeModel = deserialize<CodeModel>(
+                await host.ReadFile('code-model-v4-no-tags.yaml'),
+                'code-model-v4-no-tags.yaml',
+                codeModelSchema,
+            );
             const codeModelMerger = new CodeModelMerger(cliCodeModel, pythonCodeModel);
             const azCodeModel = await codeModelMerger.process();
             session.model = azCodeModel;
@@ -468,7 +755,7 @@ export async function processRequest (host: Host) {
         throw E;
     }
 
-    async function processFolderPath (session: Session<CodeModel>) {
+    async function processFolderPath(session: Session<CodeModel>) {
         const options = await session.getValue('az');
         const extensionName = options['extensions'];
         const azOutputFolder = await host.GetValue('az-output-folder');
@@ -485,7 +772,10 @@ export async function processRequest (host: Host) {
         }
         if (!session.model.language['az'].sdkNeeded && !isNullOrUndefined(options['namespace'])) {
             session.model.language['az'].pythonNamespace = options['namespace'];
-        } else if (session.model.language['az'].sdkNeeded || isNullOrUndefined(options['namespace'])) {
+        } else if (
+            session.model.language['az'].sdkNeeded ||
+            isNullOrUndefined(options['namespace'])
+        ) {
             session.model.language['az'].pythonNamespace = sdkFolder.replace(/\//g, '.');
         }
     }

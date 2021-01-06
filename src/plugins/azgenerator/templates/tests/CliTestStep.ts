@@ -12,7 +12,7 @@ import { PathConstants } from '../../../models';
 
 let usePreparers: boolean, shortToLongName, funcNames, allSteps, stepBuff: any;
 
-function initVars () {
+function initVars() {
     usePreparers = false;
     shortToLongName = {};
     funcNames = {};
@@ -20,29 +20,38 @@ function initVars () {
     stepBuff = {};
 }
 
-export function NeedPreparer (): boolean {
+export function NeedPreparer(): boolean {
     return usePreparers;
 }
 
 export class CliTestStep extends TemplateBase {
-    constructor (model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         if (this.model.IsCliCore) {
-            this.relativePath = path.join(PathConstants.testFolder, PathConstants.latestFolder, PathConstants.testStepFile);
+            this.relativePath = path.join(
+                PathConstants.testFolder,
+                PathConstants.latestFolder,
+                PathConstants.testStepFile,
+            );
         } else {
-            this.relativePath = path.join(model.AzextFolder, PathConstants.testFolder, PathConstants.latestFolder, PathConstants.testStepFile);
+            this.relativePath = path.join(
+                model.AzextFolder,
+                PathConstants.testFolder,
+                PathConstants.latestFolder,
+                PathConstants.testStepFile,
+            );
         }
     }
 
-    public async fullGeneration (): Promise<string[]> {
+    public async fullGeneration(): Promise<string[]> {
         return this.GenerateAzureCliTestStep(this.model);
     }
 
-    public async incrementalGeneration (base: string): Promise<string[]> {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         return this.fullGeneration();
     }
 
-    private GenerateAzureCliTestStep (model: CodeModelAz): string[] {
+    private GenerateAzureCliTestStep(model: CodeModelAz): string[] {
         initVars();
         const steps: string[] = [];
         steps.push('');
@@ -56,7 +65,12 @@ export class CliTestStep extends TemplateBase {
 
         const header: HeaderGenerator = new HeaderGenerator();
 
-        const parameterNames = CliTestStep.InitiateDependencies(model, new HeaderGenerator(), [], []);
+        const parameterNames = CliTestStep.InitiateDependencies(
+            model,
+            new HeaderGenerator(),
+            [],
+            [],
+        );
         model.GetResourcePool().clearExampleParams();
 
         // go through the examples to generate steps
@@ -75,14 +89,29 @@ export class CliTestStep extends TemplateBase {
                     let found = false;
                     const examples: CommandExample[] = [];
                     let exampleIdx = -1;
-                    let waitCmds:string[][];
-                    for (const exampleCmd of model.FindExampleById(exampleId, commandParams, examples, minimum)) {
+                    let waitCmds: string[][];
+                    for (const exampleCmd of model.FindExampleById(
+                        exampleId,
+                        commandParams,
+                        examples,
+                        minimum,
+                    )) {
                         exampleIdx += 1;
                         if (exampleCmd && exampleCmd.length > 0) {
-                            functionName = CliTestStep.ToFunctionName({ name: examples[exampleIdx].Id }, exampleCmd[0]);
+                            functionName = CliTestStep.ToFunctionName(
+                                { name: examples[exampleIdx].Id },
+                                exampleCmd[0],
+                            );
                             if (minimum) functionName += '_min';
                             if (exampleIdx === 0) {
-                                steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames, true)}):`));
+                                steps.push(
+                                    ...ToMultiLine(
+                                        `def ${functionName}(test${CliTestStep.parameterLine(
+                                            parameterNames,
+                                            true,
+                                        )}):`,
+                                    ),
+                                );
                             }
                             found = true;
                             if (isNullOrUndefined(waitCmds)) {
@@ -91,7 +120,15 @@ export class CliTestStep extends TemplateBase {
 
                             const cmdString = exampleCmd.join('\n');
                             if (Object.prototype.hasOwnProperty.call(stepBuff, cmdString)) {
-                                steps.push(...ToMultiLine(`    return ${stepBuff[cmdString]}(test${CliTestStep.parameterLine(parameterNames)}, checks)`));
+                                steps.push(
+                                    ...ToMultiLine(
+                                        `    return ${
+                                            stepBuff[cmdString]
+                                        }(test${CliTestStep.parameterLine(
+                                            parameterNames,
+                                        )}, checks)`,
+                                    ),
+                                );
                             } else {
                                 stepBuff[cmdString] = functionName;
                                 if (exampleCmd[0].indexOf(' delete') > -1) {
@@ -102,8 +139,12 @@ export class CliTestStep extends TemplateBase {
                                 steps.push('        checks = []');
 
                                 for (let idx = 0; idx < exampleCmd.length; idx++) {
-                                    const prefix: string = '    ' + disabled + ((idx === 0) ? "test.cmd('" : "         '");
-                                    const postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
+                                    const prefix: string =
+                                        '    ' +
+                                        disabled +
+                                        (idx === 0 ? "test.cmd('" : "         '");
+                                    const postfix: string =
+                                        idx < exampleCmd.length - 1 ? " '" : "',";
                                     ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
                                 }
                                 if (isNullOrUndefined(waitCmds) || waitCmds.length === 0) {
@@ -116,15 +157,26 @@ export class CliTestStep extends TemplateBase {
                     }
                     if (!found) {
                         if (minimum) functionName += '_min';
-                        steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames, true)}):`));
+                        steps.push(
+                            ...ToMultiLine(
+                                `def ${functionName}(test${CliTestStep.parameterLine(
+                                    parameterNames,
+                                    true,
+                                )}):`,
+                            ),
+                        );
                         steps.push('    # EXAMPLE NOT FOUND!');
                         steps.push('    pass');
                     } else {
                         for (const exampleCmd of waitCmds) {
                             if (exampleCmd && exampleCmd.length > 0) {
                                 for (let idx = 0; idx < exampleCmd.length; idx++) {
-                                    const prefix: string = '    ' + disabled + ((idx === 0) ? "test.cmd('" : "         '");
-                                    const postfix: string = (idx < exampleCmd.length - 1) ? " '" : "',";
+                                    const prefix: string =
+                                        '    ' +
+                                        disabled +
+                                        (idx === 0 ? "test.cmd('" : "         '");
+                                    const postfix: string =
+                                        idx < exampleCmd.length - 1 ? " '" : "',";
                                     ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
                                 }
                                 steps.push('    ' + disabled + '         checks=checks)');
@@ -142,20 +194,24 @@ export class CliTestStep extends TemplateBase {
             } else if (functionName) {
                 steps.push(`# Env ${functionName}`);
                 steps.push('@try_manual');
-                steps.push(...ToMultiLine(`def ${functionName}(test${CliTestStep.parameterLine(parameterNames)}):`));
+                steps.push(
+                    ...ToMultiLine(
+                        `def ${functionName}(test${CliTestStep.parameterLine(parameterNames)}):`,
+                    ),
+                );
                 steps.push('    pass');
                 steps.push('');
                 steps.push('');
             }
         }
 
-        steps.forEach(element => {
+        steps.forEach((element) => {
             if (element.length > 120) header.disableLineTooLong = true;
         });
         return header.getLines().concat(steps);
     }
 
-    public static parameterLine (parameterNames, withChecksDef = false) {
+    public static parameterLine(parameterNames, withChecksDef = false) {
         let ret = '';
         const paramList: string[] = deepCopy(parameterNames) as string[];
         if (withChecksDef) {
@@ -167,18 +223,33 @@ export class CliTestStep extends TemplateBase {
         return ret;
     }
 
-    public static InitiateDependencies (model: CodeModelAz, header: HeaderGenerator, decorators: string[], initiates: string[]): string[] {
+    public static InitiateDependencies(
+        model: CodeModelAz,
+        header: HeaderGenerator,
+        decorators: string[],
+        initiates: string[],
+    ): string[] {
         const decorated = [];
         const internalObjects = [];
         const parameterNames = [];
-        for (const entity of (model.GetPreparerEntities() as PreparerEntity[])) {
+        for (const entity of model.GetPreparerEntities() as PreparerEntity[]) {
             if (!entity.info.name) {
-                internalObjects.push([entity.info.className, getResourceKey(entity.info.className, entity.objectName), entity.info.createdObjectNames.indexOf(entity.objectName) >= 0, entity.objectName]);
+                internalObjects.push([
+                    entity.info.className,
+                    getResourceKey(entity.info.className, entity.objectName),
+                    entity.info.createdObjectNames.indexOf(entity.objectName) >= 0,
+                    entity.objectName,
+                ]);
                 continue;
             }
 
             // create preparers for outside dependency
-            let line = `    @${entity.info.name}(name_prefix='clitest${model.Extension_NameUnderscored}_${entity.objectName}'[:7], key='${getResourceKey(entity.info.className, entity.objectName)}'`;
+            let line = `    @${entity.info.name}(name_prefix='clitest${
+                model.Extension_NameUnderscored
+            }_${entity.objectName}'[:7], key='${getResourceKey(
+                entity.info.className,
+                entity.objectName,
+            )}'`;
             for (let i = 0; i < entity.dependParameterValues.length; i++) {
                 line += `, ${entity.info.dependParameters[i]}='${entity.dependParameterValues[i]}'`;
             }
@@ -209,20 +280,33 @@ export class CliTestStep extends TemplateBase {
                 if (hasCreateExample && model.RandomizeNames) {
                     const RANDOMIZE_MIN_LEN = 4;
                     let prefixLen = Math.floor(objectName.length / 2);
-                    if (objectName.length - prefixLen < RANDOMIZE_MIN_LEN) prefixLen = Math.max(objectName.length - RANDOMIZE_MIN_LEN, 0);
-                    ToMultiLine(`            '${kargsKey}': self.create_random_name(prefix='${objectName}'[:${prefixLen}], length=${Math.max(objectName.length, RANDOMIZE_MIN_LEN)}),`, initiates);
-                } else { initiates.push(`            '${kargsKey}': '${objectName}',`); } // keep the original name in example if there is no create example in the test-scenario
+                    if (objectName.length - prefixLen < RANDOMIZE_MIN_LEN)
+                        prefixLen = Math.max(objectName.length - RANDOMIZE_MIN_LEN, 0);
+                    ToMultiLine(
+                        `            '${kargsKey}': self.create_random_name(prefix='${objectName}'[:${prefixLen}], length=${Math.max(
+                            objectName.length,
+                            RANDOMIZE_MIN_LEN,
+                        )}),`,
+                        initiates,
+                    );
+                } else {
+                    initiates.push(`            '${kargsKey}': '${objectName}',`);
+                } // keep the original name in example if there is no create example in the test-scenario
             }
             initiates.push('        })');
         }
         return parameterNames;
     }
 
-    public static ToFunctionName (step: any, azCmd: string = undefined): string {
+    public static ToFunctionName(step: any, azCmd: string = undefined): string {
         for (let round = 1; ; round += 1) {
-            let ret: undefined| string;
+            let ret: undefined | string;
             let stepId: string;
-            if (step.name) { stepId = 'step_' + step.name; } else if (step.function) { stepId = step.function; }
+            if (step.name) {
+                stepId = 'step_' + step.name;
+            } else if (step.function) {
+                stepId = step.function;
+            }
             ret = isNullOrUndefined(azCmd) ? stepId : 'step_' + azCmd.split(' ').slice(2).join('_');
             if (!ret) return undefined;
 
@@ -252,7 +336,10 @@ export class CliTestStep extends TemplateBase {
 
             if (round > 1) funcname += round.toString();
 
-            if (!Object.prototype.hasOwnProperty.call(funcNames, funcname) || funcNames[funcname] === stepId) {
+            if (
+                !Object.prototype.hasOwnProperty.call(funcNames, funcname) ||
+                funcNames[funcname] === stepId
+            ) {
                 funcNames[funcname] = stepId;
                 return funcname;
             }

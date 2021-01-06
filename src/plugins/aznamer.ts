@@ -8,11 +8,11 @@ import { EXCLUDED_PARAMS } from './models';
 export class AzNamer {
     codeModel: CodeModel;
 
-    constructor (protected session: Session<CodeModel>) {
+    constructor(protected session: Session<CodeModel>) {
         this.codeModel = session.model;
     }
 
-    public methodMap (operationNameOri: string, httpProtocol: string) {
+    public methodMap(operationNameOri: string, httpProtocol: string) {
         let operationName = operationNameOri.toLowerCase();
         httpProtocol = httpProtocol.toLowerCase();
         let subOperationGroupName = '';
@@ -26,7 +26,10 @@ export class AzNamer {
         }
         if (operationName.startsWith('create') && httpProtocol === 'put') {
             return subOperationGroupName === '' ? 'create' : subOperationGroupName + ' ' + 'create';
-        } else if (operationName === 'update' && (httpProtocol === 'put' || httpProtocol === 'patch')) {
+        } else if (
+            operationName === 'update' &&
+            (httpProtocol === 'put' || httpProtocol === 'patch')
+        ) {
             return subOperationGroupName === '' ? 'update' : subOperationGroupName + ' ' + 'update';
         } else if (operationName.startsWith('get') && httpProtocol === 'get') {
             // return subOperationGroupName === "" ? "show" : subOperationGroupName + " " + "show";
@@ -71,7 +74,7 @@ export class AzNamer {
         return changeCamelToDash(operationNameOri);
     }
 
-    async process () {
+    async process() {
         await this.processOperationGroup();
         this.getAzName(this.codeModel);
         this.processGlobalParam();
@@ -79,27 +82,31 @@ export class AzNamer {
         return this.codeModel;
     }
 
-    getAzName (obj) {
+    getAzName(obj) {
         if (obj.language['az']) {
             return;
         }
         obj.language['az'] = new Language();
-        obj.language['az'].name = obj.language['cli']?.name ? obj.language['cli'].name : obj.language.python.name;
+        obj.language['az'].name = obj.language['cli']?.name
+            ? obj.language['cli'].name
+            : obj.language.python.name;
         obj.language['az'].name = changeCamelToDash(obj.language['az'].name);
         obj.language['az'].mapsto = obj.language['az'].name.replace(/-/g, '_');
-        obj.language['az'].description = obj.language['cli'] ? obj.language['cli'].description : obj.language.python.description;
+        obj.language['az'].description = obj.language['cli']
+            ? obj.language['cli'].description
+            : obj.language.python.description;
         if (!isNullOrUndefined(obj.language['cli'].id_part)) {
             obj.language['az'].id_part = obj.language['cli'].id_part;
         }
     }
 
-    processGlobalParam () {
+    processGlobalParam() {
         for (const para of values(this.codeModel.globalParameters)) {
             this.getAzName(para);
         }
     }
 
-    processSchemas () {
+    processSchemas() {
         const schemas = this.codeModel.schemas;
 
         for (const obj of values(schemas.objects)) {
@@ -146,7 +153,7 @@ export class AzNamer {
         }
     }
 
-    addAttributes (param: any, isSchema: boolean, key: string) {
+    addAttributes(param: any, isSchema: boolean, key: string) {
         let obj: any = param;
         if (isSchema) {
             obj = param.schema;
@@ -158,7 +165,7 @@ export class AzNamer {
             if (isNullOrUndefined(param.language['az'][key])) {
                 param.language['az'][key] = [];
             }
-            if (typeof (obj.language['cli'][key]) === 'string') {
+            if (typeof obj.language['cli'][key] === 'string') {
                 if (EXCLUDED_PARAMS.indexOf(obj.language['cli'][key]) > -1) {
                     if (key === 'alias') {
                         obj.language['cli'][key] = 'gen_' + obj.language['cli'][key];
@@ -176,23 +183,28 @@ export class AzNamer {
         }
     }
 
-    async processOperationGroup () {
+    async processOperationGroup() {
         const azSettings = await this.session.getValue('az');
         let extensionName = azSettings['extensions'];
         // console.error(extensionName);
         if (extensionName === '' || extensionName === undefined) {
-            this.session.message({ Channel: Channel.Error, Text: 'probably missing readme.az.md possible settings are:\naz:\n  extensions: managed-network\n  namespace: azure.mgmt.managednetwork\n  package-name: azure-mgmt-managednetwork\npython-sdk-output-folder: "$(output-folder)/src/managed-network/azext_managed_network/vendored_sdks/managed-network"\n' });
+            this.session.message({
+                Channel: Channel.Error,
+                Text:
+                    'probably missing readme.az.md possible settings are:\naz:\n  extensions: managed-network\n  namespace: azure.mgmt.managednetwork\n  package-name: azure-mgmt-managednetwork\npython-sdk-output-folder: "$(output-folder)/src/managed-network/azext_managed_network/vendored_sdks/managed-network"\n',
+            });
         }
 
         if (!isNullOrUndefined(azSettings['parent-extension'])) {
             extensionName = azSettings['parent-extension'].trim() + ' ' + extensionName.trim();
         }
-        this.codeModel.operationGroups.forEach(operationGroup => {
+        this.codeModel.operationGroups.forEach((operationGroup) => {
             let operationGroupName = '';
             if (!isNullOrUndefined(operationGroup.language['cli'])) {
                 operationGroup.language['az'] = new Language();
                 operationGroup.language['az'].name = operationGroup.language['cli'].name;
-                operationGroup.language['az'].description = operationGroup.language['cli'].description;
+                operationGroup.language['az'].description =
+                    operationGroup.language['cli'].description;
                 const groupName = changeCamelToDash(operationGroup.language['az'].name);
                 if (extensionName.endsWith(groupName)) {
                     operationGroupName = extensionName;
@@ -203,34 +215,55 @@ export class AzNamer {
             }
 
             const operations = operationGroup.operations;
-            operations.forEach(operation => {
+            operations.forEach((operation) => {
                 let genericTargetSchema = null;
                 if (operation.language['cli'].cliKey === 'Get') {
                     genericTargetSchema = operation.responses[0]['schema'];
                     operationGroup.language['az'].genericTargetSchema = genericTargetSchema;
                 }
-                operation.requests.forEach(request => {
+                operation.requests.forEach((request) => {
                     let operationName = '';
                     if (!isNullOrUndefined(operation.language['cli'])) {
                         operation.language['az'] = new Language();
-                        const commandName = this.methodMap(operation.language['cli'].name, request.protocol.http.method);
+                        const commandName = this.methodMap(
+                            operation.language['cli'].name,
+                            request.protocol.http.method,
+                        );
                         operation.language['az'].name = commandName;
                         if (commandName === 'show') {
                             operationGroup.language['az'].hasShowCommand = true;
                         }
-                        operation.language['az'].description = operation.language['cli'].description;
-                        operationName = operationGroupName + ' ' + changeCamelToDash(operation.language['az'].name);
+                        operation.language['az'].description =
+                            operation.language['cli'].description;
+                        operationName =
+                            operationGroupName +
+                            ' ' +
+                            changeCamelToDash(operation.language['az'].name);
                         operation.language['az'].command = operationName;
                         if (commandName.indexOf(' ') > -1) {
-                            operation.language['az'].subCommandGroup = operationGroupName + ' ' + commandName.split(' ')[0];
+                            operation.language['az'].subCommandGroup =
+                                operationGroupName + ' ' + commandName.split(' ')[0];
                         }
-                        if (operation.language['az'].command.endsWith(' update') && !isNullOrUndefined(operation.extensions?.['cli-split-operation-original-operation'])) {
+                        if (
+                            operation.language['az'].command.endsWith(' update') &&
+                            !isNullOrUndefined(
+                                operation.extensions?.['cli-split-operation-original-operation'],
+                            )
+                        ) {
                             operation.language['az'].isSplitUpdate = true;
                         }
                     } else {
-                        this.session.message({ Channel: Channel.Warning, Text: 'OperationGroup ' + operationGroup.language.default.name + ' operation ' + operation.language.default.name + " doesn't have cli" });
+                        this.session.message({
+                            Channel: Channel.Warning,
+                            Text:
+                                'OperationGroup ' +
+                                operationGroup.language.default.name +
+                                ' operation ' +
+                                operation.language.default.name +
+                                " doesn't have cli",
+                        });
                     }
-                    operation.parameters.forEach(parameter => {
+                    operation.parameters.forEach((parameter) => {
                         if (!isNullOrUndefined(parameter.language['cli'])) {
                             this.getAzName(parameter);
                             for (const k of ['alias', 'positionalKeys']) {
@@ -245,7 +278,7 @@ export class AzNamer {
                         }
                     });
                     if (request.parameters) {
-                        request.parameters.forEach(parameter => {
+                        request.parameters.forEach((parameter) => {
                             if (!isNullOrUndefined(parameter.language['cli'])) {
                                 this.getAzName(parameter);
                                 for (const k of ['alias', 'positionalKeys']) {
@@ -262,15 +295,21 @@ export class AzNamer {
                     }
                 });
             });
-            operations.forEach(operation => {
+            operations.forEach((operation) => {
                 // if generic update exists, set the setter_arg_name in the original operation
-                if (operation.language['az'].isSplitUpdate && !isNullOrUndefined(operationGroup.language['az'].genericTargetSchema)) {
+                if (
+                    operation.language['az'].isSplitUpdate &&
+                    !isNullOrUndefined(operationGroup.language['az'].genericTargetSchema)
+                ) {
                     for (let n = 0; n < operation.requests.length; n++) {
                         const request = operation.requests[n];
                         if (request.parameters) {
                             for (let m = 0; m < request.parameters.length; m++) {
                                 const parameter = request.parameters[m];
-                                if (parameter.schema === operationGroup.language['az'].genericTargetSchema) {
+                                if (
+                                    parameter.schema ===
+                                    operationGroup.language['az'].genericTargetSchema
+                                ) {
                                     // Since the update is splited from the CreateOrUpdate the nameBaseParam of that parameter can't be null
                                     // The condition of a generic update exists are
                                     // 1. the parameter's schema equals to genericTargetSchema
@@ -278,10 +317,20 @@ export class AzNamer {
                                     let lastGenericSetter = null;
                                     let genericSetter = null;
                                     // purely using cli-flattened isn't enough to determine whether only CLI has flattened it.
-                                    if (!isNullOrUndefined(parameter['nameBaseParam']) && !isNullOrUndefined(parameter['nameBaseParam'].language?.python) && parameter?.language?.['cli']?.['cli-flattened']) {
-                                        operation.extensions['cli-split-operation-original-operation'].genericSetterParam = parameter['nameBaseParam'];
+                                    if (
+                                        !isNullOrUndefined(parameter['nameBaseParam']) &&
+                                        !isNullOrUndefined(
+                                            parameter['nameBaseParam'].language?.python,
+                                        ) &&
+                                        parameter?.language?.['cli']?.['cli-flattened']
+                                    ) {
+                                        operation.extensions[
+                                            'cli-split-operation-original-operation'
+                                        ].genericSetterParam = parameter['nameBaseParam'];
                                         genericSetter = parameter['nameBaseParam'];
-                                        operation.extensions['cli-split-operation-original-operation'].genericPath = [];
+                                        operation.extensions[
+                                            'cli-split-operation-original-operation'
+                                        ].genericPath = [];
                                         // If found any parameter doesn't have nameBaseParam or has nameBaseParam but don't have language Python, then this parameter is flattened from CLI not in Python.
                                         let onlyCliFlattened = false;
                                         m++;
@@ -289,24 +338,49 @@ export class AzNamer {
                                             const param = request.parameters[m];
                                             m++;
                                             // the original parameter which schema equals to genericTargetSchema must at most flatten out one generic setter param
-                                            if (!isNullOrUndefined(lastGenericSetter) && !isNullOrUndefined(param['nameBaseParam']) && param['nameBaseParam'].originalParameter === lastGenericSetter) {
+                                            if (
+                                                !isNullOrUndefined(lastGenericSetter) &&
+                                                !isNullOrUndefined(param['nameBaseParam']) &&
+                                                param['nameBaseParam'].originalParameter ===
+                                                    lastGenericSetter
+                                            ) {
                                                 onlyCliFlattened = false;
                                                 break;
                                             }
-                                            if (!isNullOrUndefined(param['nameBaseParam']) && !isNullOrUndefined(param['nameBaseParam']?.language?.python) && param?.language?.['cli']?.['cli-flattened']) {
-                                                operation.extensions['cli-split-operation-original-operation'].genericSetterParam = param['nameBaseParam'];
+                                            if (
+                                                !isNullOrUndefined(param['nameBaseParam']) &&
+                                                !isNullOrUndefined(
+                                                    param['nameBaseParam']?.language?.python,
+                                                ) &&
+                                                param?.language?.['cli']?.['cli-flattened']
+                                            ) {
+                                                operation.extensions[
+                                                    'cli-split-operation-original-operation'
+                                                ].genericSetterParam = param['nameBaseParam'];
                                                 lastGenericSetter = genericSetter;
                                                 genericSetter = param['nameBaseParam'];
-                                                operation.extensions['cli-split-operation-original-operation'].genericPath.push(param['nameBaseParam']?.language?.python.name);
+                                                operation.extensions[
+                                                    'cli-split-operation-original-operation'
+                                                ].genericPath.push(
+                                                    param['nameBaseParam']?.language?.python.name,
+                                                );
                                                 continue;
                                             }
 
-                                            if (isNullOrUndefined(param['nameBaseParam']) || (!isNullOrUndefined(param['nameBaseParam']) && isNullOrUndefined(param['nameBaseParam']?.language?.python))) {
+                                            if (
+                                                isNullOrUndefined(param['nameBaseParam']) ||
+                                                (!isNullOrUndefined(param['nameBaseParam']) &&
+                                                    isNullOrUndefined(
+                                                        param['nameBaseParam']?.language?.python,
+                                                    ))
+                                            ) {
                                                 onlyCliFlattened = true;
                                             }
                                         }
                                         if (!onlyCliFlattened) {
-                                            operation.extensions['cli-split-operation-original-operation'].genericSetterParam = null;
+                                            operation.extensions[
+                                                'cli-split-operation-original-operation'
+                                            ].genericSetterParam = null;
                                         }
                                     }
                                     break;
@@ -320,8 +394,8 @@ export class AzNamer {
     }
 }
 
-export async function processRequest (host: Host) {
-    const debug = await host.GetValue('debug') || false;
+export async function processRequest(host: Host) {
+    const debug = (await host.GetValue('debug')) || false;
     // host.Message({Channel:Channel.Warning, Text:"in aznamer processRequest"});
 
     // console.error(extensionName);

@@ -17,26 +17,29 @@ sourceMapSupport.install();
 
 const resources = path.join(`${__dirname}`, '/../../src/test/resources');
 
-@suite export class Process {
-    @test(slow(600000), timeout(1500000)) async simpleModifierTest () {
+@suite
+export class Process {
+    @test(slow(600000), timeout(1500000)) async simpleModifierTest() {
         const folders = await readdir(resources);
         for (const each of folders) {
             const cfg = {
                 az: {
-                    extensions: each
+                    extensions: each,
                 },
                 directive: [
                     {
                         where: {
-                            command: each + ' operations list'
+                            command: each + ' operations list',
                         },
                         set: {
-                            command: each + ' list'
-                        }
-                    }
-                ]
+                            command: each + ' list',
+                        },
+                    },
+                ],
             };
-            const session = await createTestSession<CodeModel>(cfg, resources + '/' + each, [each + '-az-namer.yaml']);
+            const session = await createTestSession<CodeModel>(cfg, resources + '/' + each, [
+                each + '-az-namer.yaml',
+            ]);
 
             // process OAI model
             const modeler = new Modifiers(session);
@@ -44,7 +47,10 @@ const resources = path.join(`${__dirname}`, '/../../src/test/resources');
             // go!
             const codeModel = await modeler.process();
 
-            const fileName = path.join(`${__dirname}`, '/../../src/test/resources/' + each + '/' + each + '-az-modifier.yaml');
+            const fileName = path.join(
+                `${__dirname}`,
+                '/../../src/test/resources/' + each + '/' + each + '-az-modifier.yaml',
+            );
 
             // uncomment this line to overwrite existing file
             // await (writeFile(fileName, serialize(codeModel)));

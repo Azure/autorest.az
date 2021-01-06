@@ -8,7 +8,10 @@ import * as sourceMapSupport from 'source-map-support';
 
 sourceMapSupport.install();
 
-export async function readData (folder: string, ...files: Array<string>): Promise<Array<{ model: any; filename: string; content: string }>> {
+export async function readData(
+    folder: string,
+    ...files: Array<string>
+): Promise<Array<{ model: any; filename: string; content: string }>> {
     const results = [];
     for (const filename of files) {
         const content = await readFile(`${folder}/${filename}`);
@@ -16,33 +19,49 @@ export async function readData (folder: string, ...files: Array<string>): Promis
         results.push({
             model,
             filename,
-            content
+            content,
         });
     }
     return results;
 }
 
-export async function cts<TInputModel> (config: unknown, filename: string, content: string): Promise<Session<TInputModel>>  {
-    const ii = [{
-        model: deserialize<unknown>(content, filename),
-        filename,
-        content
-    }];
+export async function cts<TInputModel>(
+    config: unknown,
+    filename: string,
+    content: string,
+): Promise<Session<TInputModel>> {
+    const ii = [
+        {
+            model: deserialize<unknown>(content, filename),
+            filename,
+            content,
+        },
+    ];
 
     return await startSession<TInputModel>({
-        ReadFile: async (filename: string): Promise<string> => (values(ii).first(each => each.filename === filename) || fail(`missing input '${filename}'`)).content,
+        ReadFile: async (filename: string): Promise<string> =>
+            (
+                values(ii).first((each) => each.filename === filename) ||
+                fail(`missing input '${filename}'`)
+            ).content,
         GetValue: async (key: string): Promise<unknown> => {
             if (!key) {
                 return config;
             }
             return config[key];
         },
-        ListInputs: async (artifactType?: string): Promise<Array<string>> => ii.map(each => each.filename),
+        ListInputs: async (artifactType?: string): Promise<Array<string>> =>
+            ii.map((each) => each.filename),
 
         ProtectFiles: async (path: string): Promise<void> => {
             // test
         },
-        WriteFile: (filename: string, content: string, sourceMap?: any, artifactType?: string): void => {
+        WriteFile: (
+            filename: string,
+            content: string,
+            sourceMap?: any,
+            artifactType?: string,
+        ): void => {
             // test
         },
         Message: (message: any): void => {
@@ -52,27 +71,41 @@ export async function cts<TInputModel> (config: unknown, filename: string, conte
         UpdateConfigurationFile: (filename: string, content: string): void => {
             // test
         },
-        GetConfigurationFile: async (filename: string): Promise<string> => ''
+        GetConfigurationFile: async (filename: string): Promise<string> => '',
     });
 }
 
-export async function createTestSession<TInputModel> (config: unknown, folder: string, inputs: Array<string>): Promise<Session<TInputModel>> {
+export async function createTestSession<TInputModel>(
+    config: unknown,
+    folder: string,
+    inputs: Array<string>,
+): Promise<Session<TInputModel>> {
     const ii = await readData(folder, ...inputs);
 
     return await startSession<TInputModel>({
-        ReadFile: async (filename: string): Promise<string> => (values(ii).first(each => each.filename === filename) || fail(`missing input '${filename}'`)).content,
+        ReadFile: async (filename: string): Promise<string> =>
+            (
+                values(ii).first((each) => each.filename === filename) ||
+                fail(`missing input '${filename}'`)
+            ).content,
         GetValue: async (key: string): Promise<unknown> => {
             if (!key) {
                 return config;
             }
             return config[key];
         },
-        ListInputs: async (artifactType?: string): Promise<Array<string>> => ii.map(each => each.filename),
+        ListInputs: async (artifactType?: string): Promise<Array<string>> =>
+            ii.map((each) => each.filename),
 
         ProtectFiles: async (path: string): Promise<void> => {
             // test
         },
-        WriteFile: (filename: string, content: string, sourceMap?: any, artifactType?: string): void => {
+        WriteFile: (
+            filename: string,
+            content: string,
+            sourceMap?: any,
+            artifactType?: string,
+        ): void => {
             // test
         },
         Message: (message: unknown): void => {
@@ -82,34 +115,49 @@ export async function createTestSession<TInputModel> (config: unknown, folder: s
         UpdateConfigurationFile: (filename: string, content: string): void => {
             // test
         },
-        GetConfigurationFile: async (filename: string): Promise<string> => ''
+        GetConfigurationFile: async (filename: string): Promise<string> => '',
     });
 }
 
-export async function createPassThruSession (config: unknown, input: string, inputArtifactType: string): Promise<Session<CodeModel>>  {
-    return await startSession<CodeModel>({
-        ReadFile: async (filename: string): Promise<string> => input,
-        GetValue: async (key: string): Promise<unknown> => {
-            if (!key) {
-                return config;
-            }
-            return config[key];
-        },
-        ListInputs: async (artifactType?: string): Promise<Array<string>> => [inputArtifactType],
+export async function createPassThruSession(
+    config: unknown,
+    input: string,
+    inputArtifactType: string,
+): Promise<Session<CodeModel>> {
+    return await startSession<CodeModel>(
+        {
+            ReadFile: async (filename: string): Promise<string> => input,
+            GetValue: async (key: string): Promise<unknown> => {
+                if (!key) {
+                    return config;
+                }
+                return config[key];
+            },
+            ListInputs: async (artifactType?: string): Promise<Array<string>> => [
+                inputArtifactType,
+            ],
 
-        ProtectFiles: async (path: string): Promise<void> => {
-            // test
+            ProtectFiles: async (path: string): Promise<void> => {
+                // test
+            },
+            WriteFile: (
+                filename: string,
+                content: string,
+                sourceMap?: unknown,
+                artifactType?: string,
+            ): void => {
+                // test
+            },
+            Message: (message: unknown): void => {
+                // test
+                console.error(message);
+            },
+            UpdateConfigurationFile: (filename: string, content: string): void => {
+                // test
+            },
+            GetConfigurationFile: async (filename: string): Promise<string> => '',
         },
-        WriteFile: (filename: string, content: string, sourceMap?: unknown, artifactType?: string): void => {
-            // test
-        },
-        Message: (message: unknown): void => {
-            // test
-            console.error(message);
-        },
-        UpdateConfigurationFile: (filename: string, content: string): void => {
-            // test
-        },
-        GetConfigurationFile: async (filename: string): Promise<string> => ''
-    }, {}, codeModelSchema);
+        {},
+        codeModelSchema,
+    );
 }

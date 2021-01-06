@@ -5,17 +5,22 @@
 
 import { CodeModelAz } from '../../CodeModelAz';
 import { HeaderGenerator } from '../../Header';
-import { ToMultiLine, getExtraModeInfo, composeParamString, isNullOrUndefined } from '../../../../utils/helper';
+import {
+    ToMultiLine,
+    getExtraModeInfo,
+    composeParamString,
+    isNullOrUndefined,
+} from '../../../../utils/helper';
 
 let showCommandFunctionName: string;
 let useResourceType: boolean;
 
-function initVars () {
+function initVars() {
     showCommandFunctionName = undefined;
     useResourceType = false;
 }
 
-export function GenerateAzureCliCommands (model: CodeModelAz): string[] {
+export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
     initVars();
     const header: HeaderGenerator = new HeaderGenerator();
 
@@ -40,15 +45,39 @@ export function GenerateAzureCliCommands (model: CodeModelAz): string[] {
             if (model.SelectFirstCommand()) {
                 output.push('');
 
-                const cfName: string = 'cf_' + ((model.GetModuleOperationName() !== '') ? model.GetModuleOperationName() : model.Extension_NameUnderscored);
+                const cfName: string =
+                    'cf_' +
+                    (model.GetModuleOperationName() !== ''
+                        ? model.GetModuleOperationName()
+                        : model.Extension_NameUnderscored);
                 if (model.SDK_NeedSDK) {
-                    output.push('    from ' + model.AzextFolder + '.generated._client_factory import ' + cfName);
+                    output.push(
+                        '    from ' +
+                            model.AzextFolder +
+                            '.generated._client_factory import ' +
+                            cfName,
+                    );
                 } else {
                     output.push('    from ..generated._client_factory import ' + cfName);
                 }
 
-                output.push('    ' + model.Extension_NameUnderscored + '_' + model.GetModuleOperationName() + ' = CliCommandType(');
-                ToMultiLine("        operations_tmpl='" + model.GetPythonNamespace() + '.operations._' + model.GetModuleOperationNamePython() + '_operations#' + model.GetModuleOperationNamePythonUpper() + ".{}',", output);
+                output.push(
+                    '    ' +
+                        model.Extension_NameUnderscored +
+                        '_' +
+                        model.GetModuleOperationName() +
+                        ' = CliCommandType(',
+                );
+                ToMultiLine(
+                    "        operations_tmpl='" +
+                        model.GetPythonNamespace() +
+                        '.operations._' +
+                        model.GetModuleOperationNamePython() +
+                        '_operations#' +
+                        model.GetModuleOperationNamePythonUpper() +
+                        ".{}',",
+                    output,
+                );
 
                 output.push('        client_factory=' + cfName + ')');
                 const groupName = model.CommandGroup_Name;
@@ -62,8 +91,21 @@ export function GenerateAzureCliCommands (model: CodeModelAz): string[] {
                 if (extraInfo !== '') {
                     extraInfo = ', ' + extraInfo;
                 }
-                let commandGroupOutput = "    with self.command_group('" + model.CommandGroup_Name + "', " + model.Extension_NameUnderscored + '_' + model.GetModuleOperationName() + ', client_factory=' + cfName + extraInfo;
-                const paramRet = composeParamString(model.CommandGroup_MaxApi, model.CommandGroup_MinApi, model.CommandGroup_ResourceType);
+                let commandGroupOutput =
+                    "    with self.command_group('" +
+                    model.CommandGroup_Name +
+                    "', " +
+                    model.Extension_NameUnderscored +
+                    '_' +
+                    model.GetModuleOperationName() +
+                    ', client_factory=' +
+                    cfName +
+                    extraInfo;
+                const paramRet = composeParamString(
+                    model.CommandGroup_MaxApi,
+                    model.CommandGroup_MinApi,
+                    model.CommandGroup_ResourceType,
+                );
                 commandGroupOutput += paramRet[0];
                 if (paramRet[1]) useResourceType = true;
                 commandGroupOutput += ') as g:';
@@ -74,11 +116,14 @@ export function GenerateAzureCliCommands (model: CodeModelAz): string[] {
                         needWait = true;
                     }
                     output = output.concat(getCommandBody(model));
-                }
-                while (model.SelectNextCommand());
+                } while (model.SelectNextCommand());
                 if (needWait) {
                     if (showCommandFunctionName) {
-                        output.push("        g.custom_wait_command('wait', '" + showCommandFunctionName + "')");
+                        output.push(
+                            "        g.custom_wait_command('wait', '" +
+                                showCommandFunctionName +
+                                "')",
+                        );
                     } else {
                         output.push("        g.custom_wait_command('wait')");
                     }
@@ -94,7 +139,7 @@ export function GenerateAzureCliCommands (model: CodeModelAz): string[] {
         output.push('');
     }
 
-    output.forEach(element => {
+    output.forEach((element) => {
         if (element.length > 120) header.disableLineTooLong = true;
     });
 
@@ -108,7 +153,7 @@ export function GenerateAzureCliCommands (model: CodeModelAz): string[] {
     return header.getLines().concat(output);
 }
 
-function getCommandBody (model: CodeModelAz) {
+function getCommandBody(model: CodeModelAz) {
     let commandExtraInfo = '';
     const output: string[] = [];
     const functionName = model.Command_FunctionName;
@@ -141,15 +186,31 @@ function getCommandBody (model: CodeModelAz) {
                     genericUpdate += "', setter_name='begin_create_or_update";
                 }
                 genericUpdate += "'";
-                const paramRet = composeParamString(model.Method_MaxApi, model.Method_MinApi, model.Method_ResourceType);
+                const paramRet = composeParamString(
+                    model.Method_MaxApi,
+                    model.Method_MinApi,
+                    model.Method_ResourceType,
+                );
                 genericUpdate += paramRet[0];
                 if (paramRet[1]) useResourceType = true;
-                genericUpdate += ", custom_func_name='" + functionName + "'" + endStr + commandExtraInfo + ')';
+                genericUpdate +=
+                    ", custom_func_name='" + functionName + "'" + endStr + commandExtraInfo + ')';
                 ToMultiLine(genericUpdate, output);
             }
         } else {
-            let customCommand = "        g.custom_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo;
-            const paramRet = composeParamString(model.Command_MaxApi, model.Command_MinApi, model.Command_ResourceType);
+            let customCommand =
+                "        g.custom_command('" +
+                methodName +
+                "', '" +
+                functionName +
+                "'" +
+                endStr +
+                commandExtraInfo;
+            const paramRet = composeParamString(
+                model.Command_MaxApi,
+                model.Command_MinApi,
+                model.Command_ResourceType,
+            );
             customCommand += paramRet[0];
             if (paramRet[1]) useResourceType = true;
             customCommand += ')';
@@ -157,8 +218,19 @@ function getCommandBody (model: CodeModelAz) {
         }
     } else {
         showCommandFunctionName = functionName;
-        let customCommand = "        g.custom_show_command('" + methodName + "', '" + functionName + "'" + endStr + commandExtraInfo;
-        const paramRet = composeParamString(model.Command_MaxApi, model.Command_MinApi, model.Command_ResourceType);
+        let customCommand =
+            "        g.custom_show_command('" +
+            methodName +
+            "', '" +
+            functionName +
+            "'" +
+            endStr +
+            commandExtraInfo;
+        const paramRet = composeParamString(
+            model.Command_MaxApi,
+            model.Command_MinApi,
+            model.Command_ResourceType,
+        );
         customCommand += paramRet[0];
         if (paramRet[1]) useResourceType = true;
         customCommand += ')';
