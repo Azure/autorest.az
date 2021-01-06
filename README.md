@@ -128,7 +128,7 @@ Users can refer to [this document](https://github.com/Azure/azure-rest-api-specs
 
 See [different combination of generation options](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md#most-useful-command-options-combination) for more useful scenarios.
 
-## Compile the Generated Code
+## Build the Generated Code
 If it's try out mode, 
 ``` 
 cd <az-output-folder> // the az-output-folder you have specified in your readme.az.md 
