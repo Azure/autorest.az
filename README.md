@@ -120,7 +120,7 @@ Since the Autorest.Az depends on Autorest.Clicommon and Autorest.Python, readme 
 Users can refer to [this document](https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/code-gen/configure-cli.md) for more details. 
 
 ## Generate Azure CLI Code
-1. Sammple command for authoring Azure CLI extensions:  
+1. Sample command for authoring Azure CLI extensions:  
 `autorest --az --use=@autorest/az@latest <path-to-the-swagger-readme.md> --sdk-no-flatten --azure-cli-extension-folder=<path-to-the-azure-cli-extension-repo>`
 
 2. Sample command for authoring Azure CLI main modules:  
@@ -142,7 +142,7 @@ azdev setup -r ./azure-cli-extensions -c ./azure-cli
 azdev extension add <extension-name> // for Azure CLI extensions
 // extension add step is needed for developing Azure CLI main repo modules 
 ```
-## Execute the Generated  Azure CLI Commands
+## Execute the Generated Azure CLI Commands
 
 ### Run `az <extension-name> -h` to view all the commands and parameters. Here the `<extension-name>` is the main resource command group name.    
 You can also find a **report.md** in generated azext_{extensionName} folder, which contains an overview of all the generated command groups, commands and parameters.   
@@ -164,7 +164,7 @@ If you found the everything goes well so far and you want to start the onboard p
 
 # Advanced Features
 
-In this section, we will introduce the advanced features we support and how end users can use them when generating Azure CLI code.  
+In this section, we will introduce the advanced features and how end users can leverage those features to generate Azure CLI code.  
 
 Autorest.az is using directive for customization:   
 1. the autorest directive. For example:
@@ -188,7 +188,7 @@ cli:
 ```
 **The only supported usage for autorest directive is for moving the command groups/commands layer like remove subgroups or add subgroups.** 
 
-Like SQL language, you can use **where clause** to specify groups/operations/parameters/schemas that need to be modified, and **set clause or directive action clause** to specify what kind of change to make. Unlike the SQL Language that operates on data, the directive operates on code model. See details on [cli directive doc](https://github.com/Azure/autorest.clicommon/blob/master/doc/cli-directive.md)
+Like SQL language, you can use **where clause** to specify groups/operations/parameters/schemas that need to be modified, and **set clause or directive action clause** to specify what kind of change to make. Unlike SQL that mainly operates on data, the directive operates on the code model. See details on [cli directive doc](https://github.com/Azure/autorest.clicommon/blob/master/doc/cli-directive.md)
 
 * Note: the name conventions in **where clause** are always using swagger name format. The name conventions in **set clause** are always using snake case. You may refer to [this document](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-find-swagger-name-used-by-directive) for more details if having trouble finding the name in **where clause** 
 
