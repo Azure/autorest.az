@@ -494,7 +494,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     //
     //= ================================================================================================================
 
-    public GenerateTestInit () {
+    public GenerateTestInit (): void {
         if (this.codeModel['test-scenario']) {
             // if ('examples' in this.codeModel['test-scenario']) {
             //     //new style of example configuration
@@ -526,19 +526,19 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
-    public get Extension_Name () {
+    public get Extension_Name (): string {
         return this.extensionName;
     }
 
-    public get Extension_Parent () {
+    public get Extension_Parent (): string {
         return this.parentExtension;
     }
 
-    public get Extension_Mode () {
+    public get Extension_Mode (): string {
         return this.codeModel.info['extensionMode'];
     }
 
-    public get Extension_NameUnderscored () {
+    public get Extension_NameUnderscored (): string {
         return this.extensionName.replace(/-/g, '_');
     }
 
@@ -677,7 +677,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.CommandGroup.language['cli']?.cliKey;
     }
 
-    public get CommandGroup_Mode () {
+    public get CommandGroup_Mode (): string {
         if (isNullOrUndefined(this.CommandGroup?.language?.['cli']?.extensionMode)) {
             return this.Extension_Mode;
         }
@@ -801,11 +801,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
-    public get Command () {
+    public get Command (): Operation {
         return this.CommandGroup.operations[this.currentOperationIndex];
     }
 
-    public get Command_FunctionName () {
+    public get Command_FunctionName (): string {
         return this.Command_Name.replace(/( |-)/g, '_');
     }
 
@@ -857,7 +857,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return isNullOrUndefined(subCommandGroupName) ? '' : subCommandGroupName;
     }
 
-    public get Command_Mode () {
+    public get Command_Mode (): string {
         if (isNullOrUndefined(this.Command?.language?.['cli']?.extensionMode)) {
             return this.CommandGroup_Mode;
         }
@@ -876,7 +876,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.formResourceType(this.Command.language['cli']?.['resource-type']);
     }
 
-    public formResourceType (config: string|undefined) {
+    public formResourceType (config: string|undefined): string {
         if (isNullOrUndefined(config) || config.startsWith('ResourceType.')) return config;
         else return 'ResourceType.' + config;
     }

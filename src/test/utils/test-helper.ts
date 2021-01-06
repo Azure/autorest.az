@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { readFile } from '@azure-tools/async-io';
 import { deserialize, fail } from '@azure-tools/codegen';
-import { startSession } from '@azure-tools/autorest-extension-base';
+import { startSession, Session } from '@azure-tools/autorest-extension-base';
 import { values } from '@azure-tools/linq';
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import * as sourceMapSupport from 'source-map-support';
@@ -21,16 +22,16 @@ export async function readData (folder: string, ...files: Array<string>): Promis
     return results;
 }
 
-export async function cts<TInputModel> (config: any, filename: string, content: string) {
+export async function cts<TInputModel> (config: unknown, filename: string, content: string): Promise<Session<TInputModel>>  {
     const ii = [{
-        model: deserialize<any>(content, filename),
+        model: deserialize<unknown>(content, filename),
         filename,
         content
     }];
 
     return await startSession<TInputModel>({
         ReadFile: async (filename: string): Promise<string> => (values(ii).first(each => each.filename === filename) || fail(`missing input '${filename}'`)).content,
-        GetValue: async (key: string): Promise<any> => {
+        GetValue: async (key: string): Promise<unknown> => {
             if (!key) {
                 return config;
             }
@@ -55,12 +56,12 @@ export async function cts<TInputModel> (config: any, filename: string, content: 
     });
 }
 
-export async function createTestSession<TInputModel> (config: any, folder: string, inputs: Array<string>) {
+export async function createTestSession<TInputModel> (config: unknown, folder: string, inputs: Array<string>): Promise<Session<TInputModel>> {
     const ii = await readData(folder, ...inputs);
 
     return await startSession<TInputModel>({
         ReadFile: async (filename: string): Promise<string> => (values(ii).first(each => each.filename === filename) || fail(`missing input '${filename}'`)).content,
-        GetValue: async (key: string): Promise<any> => {
+        GetValue: async (key: string): Promise<unknown> => {
             if (!key) {
                 return config;
             }
@@ -74,7 +75,7 @@ export async function createTestSession<TInputModel> (config: any, folder: strin
         WriteFile: (filename: string, content: string, sourceMap?: any, artifactType?: string): void => {
             // test
         },
-        Message: (message: any): void => {
+        Message: (message: unknown): void => {
             // test
             console.error(message);
         },
@@ -85,10 +86,10 @@ export async function createTestSession<TInputModel> (config: any, folder: strin
     });
 }
 
-export async function createPassThruSession (config: any, input: string, inputArtifactType: string) {
+export async function createPassThruSession (config: unknown, input: string, inputArtifactType: string): Promise<Session<CodeModel>>  {
     return await startSession<CodeModel>({
         ReadFile: async (filename: string): Promise<string> => input,
-        GetValue: async (key: string): Promise<any> => {
+        GetValue: async (key: string): Promise<unknown> => {
             if (!key) {
                 return config;
             }
@@ -99,10 +100,10 @@ export async function createPassThruSession (config: any, input: string, inputAr
         ProtectFiles: async (path: string): Promise<void> => {
             // test
         },
-        WriteFile: (filename: string, content: string, sourceMap?: any, artifactType?: string): void => {
+        WriteFile: (filename: string, content: string, sourceMap?: unknown, artifactType?: string): void => {
             // test
         },
-        Message: (message: any): void => {
+        Message: (message: unknown): void => {
             // test
             console.error(message);
         },

@@ -43,7 +43,7 @@ export class HeaderGenerator {
         return GenerationMode.Full;
     }
 
-    public addFromImport (from: string, imports: string[]) {
+    public addFromImport (from: string, imports: string[]): void {
         // TODO: search already-import-history-list by import target
         let found = false;
         for (const fi of this.fromImports) {
@@ -56,7 +56,7 @@ export class HeaderGenerator {
         if (!found) { this.fromImports.push(new FromImport(from, imports)); }
     }
 
-    public addImport (name) {
+    public addImport (name): void {
         // TODO: search already-import-history-list together with addFromImport
         if (this.imports.indexOf(name) < 0) { this.imports.push(name); }
     }
