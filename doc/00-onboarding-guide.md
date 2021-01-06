@@ -23,7 +23,7 @@ If it is your first time to use Azure Cli code-gen, please prepare initial readm
 3. Run linter and style check for the code generated and make sure all of them can pass. (Refer to [here](how-to-generate.md#through-our-pre-prepared-docker) for how to run linter and style check)
 
 ## Step 5. Add test recordings and code owners
-1. After you have make sure `azdev test --live --discover <extension-name>` run successfully,  you can see there's test recordings in your az-output-folder. You need to submit those test recordings. 
+1. After you have made sure `azdev test --live --discover <extension-name>` run successfully, you can see there're test recordings (*.yaml files) in your az-output-folder. You need to submit those test recordings as they are needed in CI tests. 
 2. Add the codeowner for your CLI extension here https://github.com/Azure/azure-cli-extensions/blob/master/.github/CODEOWNERS
 
 ## Step 6. Code review with Cli team
