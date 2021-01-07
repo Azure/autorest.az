@@ -6,5 +6,13 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
-    "eslint.workingDirectories": [".", ".scripts"],
+    "eslint.workingDirectories": [
+        ".",
+        ".scripts"
+    ],
+    "prettier.printWidth": 100,
+    "prettier.singleQuote": true,
+    "prettier.requireConfig": true,
+    "prettier.tabWidth": 4,
+    "prettier.configPath": ".prettierrc",
 }
