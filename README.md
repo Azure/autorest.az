@@ -3,11 +3,11 @@
 [2. How does CLI Code Generator Work](#How-does-CLI-Code-Generator-Work)  
 &nbsp;  [2.1. Different Generation Options](#Different-Generation-Options)  
 [3. How to use CLI Code Generator](#How-to-use-CLI-Code-Generator)  
-&nbsp;  [3.1. Preparing Environment](#Preparing-Environment)  
+&nbsp;  [3.1. Prepare Environment](#Prepare-Environment)  
 &nbsp;  [3.2. Authoring Readme Files](#Authoring-Readme-Files)  
-&nbsp;  [3.3. Generating the Code](#Generating-the-Code)  
-&nbsp;  [3.4. Building the Code](#Building-the-Code)  
-&nbsp;  [3.5. Play with Azure CLI](#Play-with-Azure-CLI)  
+&nbsp;  [3.3. Generate Azure CLI Code](#Generate-Azure-CLI-Code)  
+&nbsp;  [3.4. Build the Generated Code](#Build-the-Generated-Code)  
+&nbsp;  [3.5. Execute the Generated Azure CLI Commands](#Execute-the-Generated-Azure-CLI-Commands)  
 &nbsp;  &nbsp;  [a. Checks](#Checks)  
 &nbsp;  &nbsp;  [b. Live Tests](#Live-Tests)  
 [4. Advanced Features](#Advanced-Features)  
@@ -144,7 +144,8 @@ azdev extension add <extension-name> // for Azure CLI extensions
 ```
 ## Execute the Generated Azure CLI Commands
 
-### Run `az <extension-name> -h` to view all the commands and parameters. Here the `<extension-name>` is the main resource command group name.    
+### Run `az <extension-name> -h` to view all the commands and parameters. 
+Here the `<extension-name>` is the main resource command group name.    
 You can also find a **report.md** in generated azext_{extensionName} folder, which contains an overview of all the generated command groups, commands and parameters.   
 
 ### Checks
