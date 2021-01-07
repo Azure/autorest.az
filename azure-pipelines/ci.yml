@@ -8,19 +8,16 @@ variables:
   parallelTest: 'true'
 
 jobs:
-  - job: TSLint
+  - job: ESLint
     pool:
       vmImage: 'vs2017-win2016'
     steps:
-      - task: aa8c4bad-1e3b-4258-97c3-20366415afec@1
+      - task: Npm@1
+        displayName: 'npm install'
         inputs:
-          RuleLibrary: 'tslint'
-          Ruleset: 'tsrecommended'
-          FileSelectionType: 'fileGlob'
-          Files: '**\*.ts'
-          OutputFormat: 'json'
-          ToolVersion: 'latest'
-          TypeScriptVersion: 'latest'
+          verbose: false
+      - script: 'node_modules\.bin\eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/'
+        displayName: 'eslint'
 
   - job: Build
     pool:

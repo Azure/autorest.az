@@ -1,9 +1,7 @@
-import { CodeModel, codeModelSchema, Language, Parameter } from "@azure-tools/codemodel";
-import { Session, startSession, Host, Channel } from "@azure-tools/autorest-extension-base";
-import { serialize, deserialize } from "@azure-tools/codegen";
-import { values, items, length, Dictionary } from "@azure-tools/linq";
-import { changeCamelToDash } from '../utils/helper';
-import { isNullOrUndefined } from "util";
+import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
+import { Session, startSession, Host } from '@azure-tools/autorest-extension-base';
+import { serialize } from '@azure-tools/codegen';
+import { isNullOrUndefined } from '../utils/helper';
 
 export class Hider {
     codeModel: CodeModel;
@@ -18,14 +16,26 @@ export class Hider {
     }
 
     mergeOperation() {
-        this.codeModel.operationGroups.forEach(operationGroup => {
-            let operations = operationGroup.operations.filter(function cliSplitOperation(operation, index, array) {
-                if (!isNullOrUndefined(operation.extensions) && !isNullOrUndefined(operation.extensions['cli-split-operation-original-operation'])) {
-                    let originalOperation = operation.extensions['cli-split-operation-original-operation'];
-                    if(isNullOrUndefined(originalOperation.extensions)) {
+        this.codeModel.operationGroups.forEach((operationGroup) => {
+            const operations = operationGroup.operations.filter(function cliSplitOperation(
+                operation,
+                index,
+                array,
+            ) {
+                if (
+                    !isNullOrUndefined(operation.extensions) &&
+                    !isNullOrUndefined(
+                        operation.extensions['cli-split-operation-original-operation'],
+                    )
+                ) {
+                    const originalOperation =
+                        operation.extensions['cli-split-operation-original-operation'];
+                    if (isNullOrUndefined(originalOperation.extensions)) {
                         return false;
                     }
-                    if(isNullOrUndefined(originalOperation.extensions['cli-splitted-operations'])) {
+                    if (
+                        isNullOrUndefined(originalOperation.extensions['cli-splitted-operations'])
+                    ) {
                         originalOperation.extensions['cli-splitted-operations'] = [];
                     }
                     originalOperation.extensions['cli-splitted-operations'].push(operation);
@@ -39,7 +49,7 @@ export class Hider {
 }
 
 export async function processRequest(host: Host) {
-    const debug = await host.GetValue('debug') || false;
+    const debug = (await host.GetValue('debug')) || false;
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
@@ -52,5 +62,4 @@ export async function processRequest(host: Host) {
         }
         throw E;
     }
-
 }

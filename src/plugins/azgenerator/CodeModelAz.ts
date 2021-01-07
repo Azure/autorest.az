@@ -1,10 +1,10 @@
-﻿/*---------------------------------------------------------------------------------------------
+/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+ *-------------------------------------------------------------------------------------------- */
 
-import { Operation, OperationGroup, Parameter, Property, Schema } from "@azure-tools/codemodel";
-import { GenerationMode, ExtensionMode } from "../models";
+import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-tools/codemodel';
+import { GenerationMode } from '../models';
 import { ResourcePool } from './templates/tests/ScenarioTool';
 
 export class MethodParam {
@@ -41,7 +41,17 @@ export class ExampleParam {
     ancestors: string[];
     replacedValue: any;
     rawValue: any;
-    public constructor(name: string, value: any, isJson: boolean, keyValue: KeyValueType, keys: string[], defaultName: string, methodParam: MethodParam, ancestors: string[], rawValue: any) {
+    public constructor(
+        name: string,
+        value: any,
+        isJson: boolean,
+        keyValue: KeyValueType,
+        keys: string[],
+        defaultName: string,
+        methodParam: MethodParam,
+        ancestors: string[],
+        rawValue: any,
+    ) {
         this.name = name;
         this.value = value;
         this.isJson = isJson;
@@ -62,7 +72,7 @@ export class CommandExample {
     // public MethodName: string;
     public Path: string;
     public ResourceClassName: string;
-    public HttpMethod: string;    // Get, Post, Put ...
+    public HttpMethod: string; // Get, Post, Put ...
     public MethodResponses: any[];
     public Method_IsLongRun: boolean;
     public MethodParams: MethodParam[];
@@ -88,7 +98,7 @@ export interface CodeModelAz {
     Extension_Name: string;
     Extension_Parent: string;
     Extension_NameUnderscored: string;
-    ConfiguredScenario:boolean;
+    ConfiguredScenario: boolean;
     Extension_NameClass: string;
     Extension_TestScenario: any;
     Extension_DefaultTestScenario: any;
@@ -96,9 +106,8 @@ export interface CodeModelAz {
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
     Extension_Mode: string;
-    ResourceType: string | undefined;   
-    isComplexSchema(type: string): boolean
-
+    ResourceType: string | undefined;
+    isComplexSchema(type: string): boolean;
 
     SelectFirstCommandGroup(): boolean;
     SelectNextCommandGroup(): boolean;
@@ -133,7 +142,6 @@ export interface CodeModelAz {
     Command_SubGroupName: string;
     Command_Mode: string;
 
-
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
 
@@ -156,7 +164,6 @@ export interface CodeModelAz {
     Method_Mode: string;
     Operation_IsHidden(op?: Operation): boolean;
 
-
     SelectFirstMethodParameter(containHidden?: boolean): boolean;
     SelectNextMethodParameter(containHidden?: boolean): boolean;
     EnterSubMethodParameters(param?: Parameter): boolean;
@@ -168,8 +175,8 @@ export interface CodeModelAz {
     MethodParameter_MaxApi: string;
     MethodParameter_MinApi: string;
     MethodParameter_ResourceType: string | undefined;
-    MethodParameter_IsArray: boolean
-    MethodParameter_NamePython: string
+    MethodParameter_IsArray: boolean;
+    MethodParameter_NamePython: string;
     MethodParameter_MapsTo: string;
     MethodParameter_Description: string;
     MethodParameter_Type: string;
@@ -181,7 +188,6 @@ export interface CodeModelAz {
     MethodParameter: Parameter;
     MethodParameters: Array<Parameter>;
     SubMethodParameter: Parameter;
-
 
     MethodParameter_In: string;
     MethodParameter_IsHidden: boolean;
@@ -249,9 +255,9 @@ export interface CodeModelAz {
     GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
     GetExampleChecks(example: CommandExample): string[];
     RandomizeNames: boolean;
-    
+
     // readme config
     CliCoreLib: string;
     GenMinTest: boolean;
-    GetMetaData(): {[key: string]: any};
+    GetMetaData(): { [key: string]: any };
 }

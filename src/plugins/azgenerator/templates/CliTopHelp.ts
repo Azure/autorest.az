@@ -1,23 +1,26 @@
-/*---------------------------------------------------------------------------------------------
+/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+ *-------------------------------------------------------------------------------------------- */
 import { EOL } from 'os';
 import * as path from 'path';
-import { isNullOrUndefined } from "util";
-import { getIndentString, keepHeaderLines, skipCommentLines } from "../../../utils/helper";
-import { GenerationMode, PathConstants } from "../../models";
-import { CodeModelAz } from "../CodeModelAz";
-import { HeaderGenerator } from "../Header";
-import { TemplateBase } from "./TemplateBase";
+import {
+    getIndentString,
+    keepHeaderLines,
+    skipCommentLines,
+    isNullOrUndefined,
+} from '../../../utils/helper';
+import { GenerationMode, PathConstants } from '../../models';
+import { CodeModelAz } from '../CodeModelAz';
+import { HeaderGenerator } from '../Header';
+import { TemplateBase } from './TemplateBase';
 
 export class CliTopHelp extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         if (this.model.IsCliCore) {
             this.relativePath = path.join(PathConstants.helpFile);
-        }
-        else {
+        } else {
             this.relativePath = path.join(model.AzextFolder, PathConstants.helpFile);
         }
     }
@@ -28,19 +31,18 @@ export class CliTopHelp extends TemplateBase {
     }
 
     public async incrementalGeneration(base: string): Promise<string[]> {
-        if (isNullOrUndefined(base) || base.length == 0) {
+        if (isNullOrUndefined(base) || base.length === 0) {
             return null;
-        }
-        else {
+        } else {
             const existingMode: GenerationMode = HeaderGenerator.GetCliGenerationMode(base);
-            if (existingMode == GenerationMode.Full) {
-                throw new Error("GenerationMode Error: Should not set Incremental mode on existing Full generation RP.");
-            }
-            else if (existingMode == GenerationMode.Incremental) {
+            if (existingMode === GenerationMode.Full) {
+                throw new Error(
+                    'GenerationMode Error: Should not set Incremental mode on existing Full generation RP.',
+                );
+            } else if (existingMode === GenerationMode.Incremental) {
                 // No need more incremental change
                 return base.split(EOL);
-            }
-            else {
+            } else {
                 // Change base on the manual
                 const headerGenerator: HeaderGenerator = new HeaderGenerator();
                 headerGenerator.generationMode = GenerationMode.Incremental;
@@ -55,11 +57,11 @@ export class CliTopHelp extends TemplateBase {
                     output = output.concat(baseSplit.slice(skipLineIdx, keepLineIdx));
                 }
 
-                // Add loading code block                
+                // Add loading code block
                 output = output.concat(this.loadGeneratedHelp(0));
 
                 const appendLineStartIdx = skipLineIdx < keepLineIdx ? keepLineIdx : skipLineIdx;
-                if (appendLineStartIdx != -1) {
+                if (appendLineStartIdx !== -1) {
                     output = output.concat(baseSplit.slice(appendLineStartIdx));
                 }
                 return output;
@@ -68,14 +70,16 @@ export class CliTopHelp extends TemplateBase {
     }
 
     private loadGeneratedHelp(indent: number): string[] {
-        let output: string[] = [];
-        let indentStr: string = getIndentString(indent);
+        const output: string[] = [];
+        const indentStr: string = getIndentString(indent);
 
-        output.push(indentStr + "from .generated._help import helps  # pylint: disable=reimported");
-        output.push(indentStr + "try:");
-        output.push(indentStr + "    from .manual._help import helps  # pylint: disable=reimported");
-        output.push(indentStr + "except ImportError:");
-        output.push(indentStr + "    pass");
+        output.push(indentStr + 'from .generated._help import helps  # pylint: disable=reimported');
+        output.push(indentStr + 'try:');
+        output.push(
+            indentStr + '    from .manual._help import helps  # pylint: disable=reimported',
+        );
+        output.push(indentStr + 'except ImportError:');
+        output.push(indentStr + '    pass');
         return output;
     }
 }
