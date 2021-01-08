@@ -8,7 +8,7 @@ import { CliTestStep } from './CliTestStep';
 import { ToMultiLine, Capitalize } from '../../../../utils/helper';
 import { HeaderGenerator } from '../../Header';
 import { TemplateBase } from '../TemplateBase';
-import { PathConstants } from '../../../models';
+import { PathConstants } from '../../../../utils/models';
 
 export class CliTestScenario extends TemplateBase {
     constructor(

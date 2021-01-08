@@ -4,7 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 import * as fs from 'fs';
 import * as path from 'path';
-import { PathConstants } from '../models';
+import { PathConstants } from '../../utils/models';
 import { AzGeneratorBase } from './AzGeneratorBase';
 import { CodeModelAz } from './CodeModelAz';
 import { GenerateNamespaceInit } from './templates/CliNamespaceInit';
@@ -105,17 +105,17 @@ export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
             PathConstants.actionFile,
             PathConstants.actionFileOldVersion,
         );
-        if (fs.existsSync(path.join(this.model.CliOutputFolder, relativePathOldVersion))) {
+        if (fs.existsSync(path.join(this.model.azOutputFolder, relativePathOldVersion))) {
             cliTopActionBase = fs
-                .readFileSync(path.join(this.model.CliOutputFolder, relativePathOldVersion))
+                .readFileSync(path.join(this.model.azOutputFolder, relativePathOldVersion))
                 .toString();
             cliTopActionGenerator.relativePath = relativePathOldVersion;
         } else if (
-            fs.existsSync(path.join(this.model.CliOutputFolder, cliTopActionGenerator.relativePath))
+            fs.existsSync(path.join(this.model.azOutputFolder, cliTopActionGenerator.relativePath))
         ) {
             cliTopActionBase = fs
                 .readFileSync(
-                    path.join(this.model.CliOutputFolder, cliTopActionGenerator.relativePath),
+                    path.join(this.model.azOutputFolder, cliTopActionGenerator.relativePath),
                 )
                 .toString();
         }

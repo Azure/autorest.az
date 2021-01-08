@@ -1,0 +1,10 @@
+{
+  "parameters": {
+      "input": 200.4
+  },
+  "responses": {
+    "200": {
+      "body": "Nice job posting a float enum"
+    }
+  }
+}

@@ -29,12 +29,12 @@ export abstract class AzGeneratorBase {
     ): Promise<void> {
         if (
             override !== false ||
-            !fs.existsSync(path.join(this.model.CliOutputFolder, template.relativePath))
+            !fs.existsSync(path.join(this.model.azOutputFolder, template.relativePath))
         ) {
             const genContent = await template.fullGeneration();
             if (inplace) {
                 this.files[template.relativePath] = inplaceGen(
-                    this.model.CliOutputFolder,
+                    this.model.azOutputFolder,
                     template.relativePath,
                     genContent,
                 );
@@ -49,15 +49,15 @@ export abstract class AzGeneratorBase {
         inplace = false,
     ): Promise<void> {
         let base = '';
-        if (fs.existsSync(path.join(this.model.CliOutputFolder, template.relativePath))) {
+        if (fs.existsSync(path.join(this.model.azOutputFolder, template.relativePath))) {
             base = fs
-                .readFileSync(path.join(this.model.CliOutputFolder, template.relativePath))
+                .readFileSync(path.join(this.model.azOutputFolder, template.relativePath))
                 .toString();
         }
         const genContent = await template.incrementalGeneration(base);
         if (inplace) {
             this.files[template.relativePath] = inplaceGen(
-                this.model.CliOutputFolder,
+                this.model.azOutputFolder,
                 template.relativePath,
                 genContent,
             );

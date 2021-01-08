@@ -2,7 +2,7 @@ import * as path from 'path';
 import { CodeModelAz } from '../../CodeModelAz';
 import { HeaderGenerator } from '../../Header';
 import { TemplateBase } from '../TemplateBase';
-import { PathConstants } from '../../../models';
+import { PathConstants } from '../../../../utils/models';
 
 export class CliTestPrepare extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {

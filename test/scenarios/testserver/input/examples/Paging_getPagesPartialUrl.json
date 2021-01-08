@@ -1,0 +1,20 @@
+{
+  "parameters": {
+    "accountName": "testaccount"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "values":[
+          {
+            "properties":{
+              "id":1,
+              "name":"Product"
+            }
+          }
+        ],
+        "nextLink":"/paging/customurl/partialnextlink/page/2"
+      }
+    }
+  }
+}

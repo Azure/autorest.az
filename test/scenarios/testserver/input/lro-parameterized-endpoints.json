@@ -1,0 +1,88 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "LRO With Paramaterized Endpoints",
+      "description": "Test Infrastructure for AutoRest",
+      "version": "1.0.0"
+    },
+    "host": "badhost",
+    "x-ms-parameterized-host": {
+      "hostTemplate": "{accountName}{host}",
+      "positionInOperation": "last",
+      "parameters": [
+        {
+          "name": "accountName",
+          "description": "Account Name. Pass in 'local' to pass test.",
+          "required": true,
+          "type": "string",
+          "in": "path",
+          "x-ms-skip-url-encoding": true
+        },
+        {
+          "$ref": "#/parameters/host"
+        }
+      ]
+    },
+    "produces": [ "application/json" ],
+    "consumes": [ "application/json" ],
+    "paths": {
+        "/lroParameterizedEndpoints": {
+            "post": {
+              "operationId": "pollWithParameterizedEndpoints",
+              "x-ms-long-running-operation": true,
+              "x-ms-long-running-operation-options" : {
+                "final-state-via" : "location"
+              },
+              "description": "Poll with method and client level parameters in endpoint",
+              "responses": {
+                "200": {
+                  "description": "Will return string 'success' if polling was a success",
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "202": {
+                  "description": "Accepted polling request",
+                  "headers": {
+                    "Location": {
+                      "type": "string",
+                      "description": "Url to retrieve the final update resource. Is a relative link"
+                    }
+                  }
+                },
+                "default": {
+                    "description": "Unexpected error",
+                    "schema": {
+                      "$ref": "#/definitions/Error"
+                    }
+                }
+              }
+            }
+        }
+    },
+    "parameters": {
+      "host": {
+        "name": "host",
+        "description": "A string value that is used as a global part of the parameterized host. Pass in 'host:3000' to pass test.",
+        "type": "string",
+        "required": true,
+        "default": "host",
+        "in": "path",
+        "x-ms-skip-url-encoding": true
+      }
+    },
+    "definitions": {
+      "Error": {
+        "type":  "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }

@@ -1,0 +1,8 @@
+{
+  "parameters": {
+    "stringBody": "red color"
+  },
+  "responses": {
+    "200": {}
+  }
+}

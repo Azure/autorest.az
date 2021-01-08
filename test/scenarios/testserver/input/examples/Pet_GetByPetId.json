@@ -1,0 +1,14 @@
+{
+  "parameters": {
+    "petId": "tommy"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "name": "Retriever",
+        "DaysOfWeek": "Monday",
+        "IntEnum": "1"
+      }
+    }
+  }
+}

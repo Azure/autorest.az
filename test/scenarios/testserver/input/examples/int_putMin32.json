@@ -1,0 +1,8 @@
+{
+  "parameters": {
+    "intBody": -2147483648
+  },
+  "responses": {
+    "200": {}
+  }
+}

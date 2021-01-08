@@ -1,0 +1,10 @@
+{
+  "parameters": {
+    "petId": "x",
+    "name": "x",
+    "status": "x"
+  },
+  "responses": {
+    "200": {}
+  }
+}

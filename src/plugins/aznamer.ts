@@ -3,7 +3,8 @@ import { Session, startSession, Host, Channel } from '@azure-tools/autorest-exte
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { changeCamelToDash, isNullOrUndefined } from '../utils/helper';
-import { EXCLUDED_PARAMS } from './models';
+import { AzConfiguration } from '../utils/config';
+import { CodeGenConstants, EXCLUDED_PARAMS } from '../utils/models';
 
 export class AzNamer {
     codeModel: CodeModel;
@@ -184,8 +185,8 @@ export class AzNamer {
     }
 
     async processOperationGroup() {
-        const azSettings = await this.session.getValue('az');
-        let extensionName = azSettings['extensions'];
+        const azSettings = AzConfiguration.getValue(CodeGenConstants.az);
+        let extensionName = azSettings[CodeGenConstants.extensions];
         // console.error(extensionName);
         if (extensionName === '' || extensionName === undefined) {
             this.session.message({
@@ -195,8 +196,9 @@ export class AzNamer {
             });
         }
 
-        if (!isNullOrUndefined(azSettings['parent-extension'])) {
-            extensionName = azSettings['parent-extension'].trim() + ' ' + extensionName.trim();
+        if (!isNullOrUndefined(azSettings[CodeGenConstants.parentExtension])) {
+            extensionName =
+                azSettings[CodeGenConstants.parentExtension].trim() + ' ' + extensionName.trim();
         }
         this.codeModel.operationGroups.forEach((operationGroup) => {
             let operationGroupName = '';

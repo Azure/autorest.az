@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from '../../../../utils/helper';
-import { PathConstants } from '../../../models';
+import { PathConstants } from '../../../../utils/models';
 import { CodeModelAz } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 

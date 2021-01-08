@@ -1,0 +1,8 @@
+{
+  "parameters": {
+    "numberBody": 99999999.99
+  },
+  "responses": {
+    "200": {}
+  }
+}

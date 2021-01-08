@@ -1,0 +1,8 @@
+{
+  "parameters": {},
+  "responses": {
+    "200": {
+      "body": "P3Y6M4DT12H30M5S"
+    }
+  }
+}

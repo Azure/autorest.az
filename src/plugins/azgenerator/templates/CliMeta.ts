@@ -9,5 +9,5 @@ import { putToZip } from '../../../utils/inplace';
 export function GenerateMetaFile(model: CodeModelAz) {
     const output: string[] = JSON.stringify(model.GetMetaData(), null, 2).split('\n');
 
-    putToZip(model.CliOutputFolder, 'meta.txt', output);
+    putToZip(model.azOutputFolder, 'meta.txt', output);
 }

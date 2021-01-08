@@ -1,0 +1,97 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "AutoRest Time Test Service",
+      "description": "Test Infrastructure for AutoRest",
+      "version": "1.0.0"
+    },
+    "host": "localhost:3000",
+    "schemes": [
+      "http"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "paths": {
+      "/time/get": {
+        "get": {
+          "operationId": "time_get",
+          "description": "Get time value \"11:34:56\"",
+          "x-ms-examples": {
+            "time_get": {
+              "$ref": "./examples/time_get.json"
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "The time value",
+              "schema": {
+                "type": "string",
+                "format": "time"
+              }
+            },
+            "default": {
+              "description": "Unexpected error",
+              "schema": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      },
+      "/time/put": {
+        "put": {
+          "operationId": "time_put",
+          "description": "Put time value \"08:07:56\"",
+          "x-ms-examples": {
+            "time_put": {
+              "$ref": "./examples/time_put.json"
+            }
+          },
+          "parameters": [
+            {
+              "name": "timeBody",
+              "in": "body",
+              "description": "Put time value \"08:07:56\" in parameter to pass testserver",
+              "schema": {
+                "type": "string",
+                "format": "time"
+              },
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Received correct time",
+              "schema": {
+                "type": "string"
+              }
+            },
+            "default": {
+              "description": "Unexpected error",
+              "schema": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Error": {
+        "type":  "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }

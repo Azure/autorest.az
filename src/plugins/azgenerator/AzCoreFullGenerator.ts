@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { SystemType, PathConstants } from '../models';
+import { SystemType, PathConstants } from '../../utils/models';
 import { AzGeneratorBase } from './AzGeneratorBase';
 import { CodeModelAz } from './CodeModelAz';
 import { GenerateNamespaceInit } from './templates/CliNamespaceInit';
