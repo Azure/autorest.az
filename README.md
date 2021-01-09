@@ -501,13 +501,15 @@ modelerfour:
 pipeline:
     python/m2r:
         input: clicommon/identity
-    az/hider:
+    az/azentry:
         input: python/namer
+    az/hider:
+        input: az/azentry
         #output-artifact: source-file-az-hider
     python/codegen:
         input: az/hider
     az/merger:
-        input: python/namer
+        input: az/azentry
         #output-artifact: source-file-merger
     az/aznamer:
         input: az/merger
@@ -549,8 +551,10 @@ cli:
 pipeline:
     python/m2r:
         input: clicommon/cli-m4namer
-    az/renamer:
+    az/azentry:
         input: clicommon/identity
+    az/renamer:
+        input: az/azentry
     az/merger:
         input:
             - az/renamer

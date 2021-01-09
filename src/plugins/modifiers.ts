@@ -3,8 +3,7 @@ import { Session, startSession, Host, Channel } from '@azure-tools/autorest-exte
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined } from '../utils/helper';
-import { CodeGenConstants } from '../utils/models';
-import { AzConfiguration } from '../utils/config';
+import { CodeGenConstants, AzConfiguration } from '../utils/models';
 
 let directives: Array<any> = [];
 
@@ -339,7 +338,7 @@ export class Modifiers {
 }
 
 export async function processRequest(host: Host) {
-    const debug = (await host.GetValue('debug')) || false;
+    const debug = AzConfiguration.getValue(CodeGenConstants.debug);
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);

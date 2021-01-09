@@ -3,13 +3,13 @@ import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from '../../utils/helper';
-import { CodeGenConstants, PathConstants } from '../../utils/models';
+import { CodeGenConstants, PathConstants, AzConfiguration } from '../../utils/models';
 import { AzGeneratorFactory } from './AzGeneratorFactory';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { openInplaceGen, closeInplaceGen } from '../../utils/inplace';
 
 export async function processRequest(host: Host) {
-    const debug = (await host.GetValue(CodeGenConstants.debug)) || false;
+    const debug = AzConfiguration.getValue(CodeGenConstants.debug);
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
 

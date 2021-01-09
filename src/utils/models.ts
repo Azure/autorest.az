@@ -3,6 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
+import { isNullOrUndefined } from "./helper";
+
 export enum GenerationMode {
     Manual,
     Full,
@@ -83,12 +85,21 @@ export class PathConstants {
 }
 
 export enum CodeGenConstants {
+
+    // some configuration that by calculation 
     isCliCore,
     sdkNeeded,
     sdkTrack1,
     azextFolder,
     pythonNamespace,
-    azOutputFolder,
+
+    // some configuration keys in the top section
+    az = 'az',
+    debug = 'debug',
+    use = 'use',
+    directive = 'directive',
+    parents = '_parents',
+    azOutputFolder = 'az-output-folder',
     generationMode = 'generation-mode',
     clearOutputFolder = 'clear-output-folder',
     generateSDK = 'generate-sdk',
@@ -99,28 +110,49 @@ export enum CodeGenConstants {
     extensionMode = 'extension-mode',
     azureCliFolder = 'azure-cli-folder',
     azureCliExtFolder = 'azure-cli-extension-folder',
-    az = 'az',
-    debug = 'debug',
-    namespace = 'namespace',
-    extensions = 'extensions',
-    azOuputFolder = 'az-output-folder',
     pythonSdkOutputFolder = 'python-sdk-output-folder',
     cliCoreLib = 'cli-core-lib',
-    use = 'use',
-    parents = '_parents',
+
+    // some configuration keys under az section
+    namespace = 'namespace',
+    extensions = 'extensions',
     parentExtension = 'parent-extension',
     clientBaseUrlBound = 'client-base-url-bound',
     clientSubscriptionBound = 'client-subscription-bound',
     clientAuthenticationPolicy = 'client-authentication-policy',
-    directive = 'directive',
+
+    // default constant values
     minCliCoreVersion = '2.15.0',
     cliCodeModelName = 'code-model-cli-v4.yaml',
     m4CodeModelName = 'code-model-v4-no-tags.yaml',
     DEFAULT_CLI_CORE_LIB = 'azure.cli.core',
+    AZ_ENTRY_CODE_MODEL_NAME = 'az-entry-code-model.yaml',
 }
 
 export interface AzextMetadata {
     'azext.minCliCoreVersion': string;
     'azext.isPreview': boolean;
     'azext.isExperimental': boolean;
+}
+
+
+export class AzConfiguration {
+    private static dict: unknown;
+
+    constructor(config: unknown = null) {
+        if (!isNullOrUndefined(config)) {
+            AzConfiguration.dict = config;
+        } else {
+            AzConfiguration.dict = {};
+        }
+        
+    }
+
+    public static getValue(key: CodeGenConstants) {
+        return AzConfiguration.dict[key];
+    }
+
+    public static setValue(key: CodeGenConstants, value: unknown): void {
+        AzConfiguration.dict[key] = value;
+    }
 }

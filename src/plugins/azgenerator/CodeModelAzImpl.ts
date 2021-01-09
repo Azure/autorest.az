@@ -31,7 +31,7 @@ import {
     ToSentence,
     isNullOrUndefined,
 } from '../../utils/helper';
-import { CodeGenConstants, EXCLUDED_PARAMS, GenerationMode } from '../../utils/models';
+import { CodeGenConstants, EXCLUDED_PARAMS, GenerationMode, AzConfiguration } from '../../utils/models';
 import {
     CodeModelAz,
     CommandExample,
@@ -49,7 +49,6 @@ import {
     GroupTestScenario,
 } from './templates/tests/ScenarioTool';
 import { readFile } from '@azure-tools/async-io';
-import { AzConfiguration } from '../../utils/config';
 
 class ActionParam {
     public constructor(
@@ -227,7 +226,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             ret['swagger git status'] = getGitStatus(swaggerFolder).split('\n');
         }
 
-        const azpkg = path.join(__dirname, '..', '..', '..', 'package.json');
+        const azpkg = path.join(__dirname, '..', '..', '..', '..', 'package.json');
         const pjson = JSON.parse(await readFile(azpkg));
         ret['package info'] = `${pjson.name} ${pjson.version}`;
         return ret;
@@ -772,7 +771,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Extension_Mode(): string {
-        return this.codeModel.info['extensionMode'];
+        return AzConfiguration.getValue(CodeGenConstants.extensionMode);
     }
 
     public get Extension_NameUnderscored(): string {

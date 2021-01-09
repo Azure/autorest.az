@@ -5,11 +5,13 @@ import { processRequest as aznamer } from './plugins/aznamer';
 import { processRequest as modifiers } from './plugins/modifiers';
 import { processRequest as merger } from './plugins/merger';
 import { processRequest as generator } from './plugins/azgenerator/azgenerator';
+import { processRequest as entry } from './plugins/entry';
 
 export type LogCallback = (message: string) => void;
 export type FileCallback = (path: string, rows: string[]) => void;
 
 export async function initializePlugins(pluginHost: AutoRestExtension) {
+    pluginHost.Add('azentry', entry);
     pluginHost.Add('hider', hider);
     pluginHost.Add('renamer', renamer);
     pluginHost.Add('aznamer', aznamer);

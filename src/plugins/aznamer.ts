@@ -3,8 +3,7 @@ import { Session, startSession, Host, Channel } from '@azure-tools/autorest-exte
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { changeCamelToDash, isNullOrUndefined } from '../utils/helper';
-import { AzConfiguration } from '../utils/config';
-import { CodeGenConstants, EXCLUDED_PARAMS } from '../utils/models';
+import { CodeGenConstants, EXCLUDED_PARAMS, AzConfiguration } from '../utils/models';
 
 export class AzNamer {
     codeModel: CodeModel;
@@ -397,7 +396,7 @@ export class AzNamer {
 }
 
 export async function processRequest(host: Host) {
-    const debug = (await host.GetValue('debug')) || false;
+    const debug = AzConfiguration.getValue(CodeGenConstants.debug);
     // host.Message({Channel:Channel.Warning, Text:"in aznamer processRequest"});
 
     // console.error(extensionName);

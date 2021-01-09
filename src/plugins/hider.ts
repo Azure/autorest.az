@@ -2,6 +2,7 @@ import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { Session, startSession, Host } from '@azure-tools/autorest-extension-base';
 import { serialize } from '@azure-tools/codegen';
 import { isNullOrUndefined } from '../utils/helper';
+import { CodeGenConstants, AzConfiguration } from '../utils/models';
 
 export class Hider {
     codeModel: CodeModel;
@@ -49,13 +50,13 @@ export class Hider {
 }
 
 export async function processRequest(host: Host) {
-    const debug = (await host.GetValue('debug')) || false;
+    const debug = AzConfiguration.getValue(CodeGenConstants.debug);
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
         const plugin = new Hider(session);
         const result = await plugin.process();
-        host.WriteFile('code-model-v4-no-tags.yaml', serialize(result));
+        host.WriteFile(CodeGenConstants.m4CodeModelName, serialize(result));
     } catch (E) {
         if (debug) {
             console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);

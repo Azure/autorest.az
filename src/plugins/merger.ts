@@ -3,8 +3,7 @@ import { Session, startSession, Host, Channel } from '@azure-tools/autorest-exte
 import { serialize, deserialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined, findNodeInCodeModel } from '../utils/helper';
-import { CodeGenConstants } from '../utils/models';
-import { AzConfiguration } from '../utils/config';
+import { CodeGenConstants, AzConfiguration } from '../utils/models';
 export class Merger {
     codeModel: CodeModel;
 
@@ -655,7 +654,7 @@ export class CodeModelMerger {
 }
 
 export async function processRequest(host: Host) {
-    const debug = (await host.GetValue(CodeGenConstants.debug)) || false;
+    const debug = AzConfiguration.getValue(CodeGenConstants.debug);
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);

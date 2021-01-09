@@ -12,6 +12,7 @@ import { CodeModel } from '@azure-tools/codemodel';
 import { createTestSession } from './utils/test-helper';
 import { Modifiers } from '../src/plugins/modifiers';
 import * as sourceMapSupport from 'source-map-support';
+import { Entry } from '../src/plugins/entry';
 
 sourceMapSupport.install();
 
@@ -41,6 +42,9 @@ export class Process {
                 each + '-az-namer.yaml',
             ]);
 
+            const entry = new Entry(session);
+            await entry.init();
+
             // process OAI model
             const modeler = new Modifiers(session);
 
@@ -49,7 +53,7 @@ export class Process {
 
             const fileName = path.join(
                 `${__dirname}`,
-                '/../../src/test/resources/' + each + '/' + each + '-az-modifier.yaml',
+                '/../../test/resources/' + each + '/' + each + '-az-modifier.yaml',
             );
 
             // uncomment this line to overwrite existing file

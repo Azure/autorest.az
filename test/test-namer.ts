@@ -10,6 +10,7 @@ import { deserialize } from '@azure-tools/codegen';
 import { CodeModel } from '@azure-tools/codemodel';
 import { createTestSession } from './utils/test-helper';
 import { AzNamer } from '../src/plugins/aznamer';
+import { Entry } from '../src/plugins/entry';
 import * as sourceMapSupport from 'source-map-support';
 
 sourceMapSupport.install();
@@ -31,6 +32,9 @@ export class Process {
                 each + '-cli-common.yaml',
             ]);
 
+            const entry = new Entry(session);
+            await entry.init();
+
             // process OAI model
             const aznamer = new AzNamer(session);
 
@@ -41,7 +45,7 @@ export class Process {
             // console.log(serialize(codeModel))
             const fileName = path.join(
                 `${__dirname}`,
-                '/../../src/test/resources/' + each + '/' + each + '-az-namer.yaml',
+                '/../../test/resources/' + each + '/' + each + '-az-namer.yaml',
             );
 
             // uncomment this line to overwrite existing file
