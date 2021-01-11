@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { GenerationMode } from '../models';
+import { GenerationMode } from '../../utils/models';
 
 class FromImport {
     public constructor(from: string, imports: string[]) {

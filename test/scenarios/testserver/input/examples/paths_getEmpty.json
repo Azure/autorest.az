@@ -1,0 +1,10 @@
+{
+  "parameters": {
+    "accountName": "testaccount"
+  },
+  "responses": {
+    "200": {
+      "body": ""
+    }
+  }
+}

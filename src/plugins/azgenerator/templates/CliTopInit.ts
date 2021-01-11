@@ -11,7 +11,7 @@ import {
     composeParamString,
     isNullOrUndefined,
 } from '../../../utils/helper';
-import { GenerationMode, PathConstants } from '../../models';
+import { GenerationMode, PathConstants } from '../../../utils/models';
 import { CodeModelAz } from '../CodeModelAz';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from './TemplateBase';

@@ -1,0 +1,66 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "AutoRest Report Service For Azure",
+    "description": "Test Infrastructure for AutoRest",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "schemes": [
+    "http"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/report/azure": {
+      "get": {
+        "operationId": "getReport",
+        "description": "Get test coverage report",
+        "parameters": [
+          {
+            "name": "qualifier",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators that run all tests several times, can distinguish the generated reports."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The test coverage mapping",
+            "schema": {
+              "type":  "object",
+              "additionalProperties": {
+                "type": "integer"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type":  "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

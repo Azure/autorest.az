@@ -3,14 +3,7 @@ import { Session, startSession, Host, Channel } from '@azure-tools/autorest-exte
 import { serialize, deserialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined, findNodeInCodeModel } from '../utils/helper';
-import {
-    ArgumentConstants,
-    ExtensionMode,
-    TargetMode,
-    CompatibleLevel,
-    GenerateSdk,
-} from './models';
-
+import { CodeGenConstants, AzConfiguration } from '../utils/models';
 export class Merger {
     codeModel: CodeModel;
 
@@ -661,73 +654,22 @@ export class CodeModelMerger {
 }
 
 export async function processRequest(host: Host) {
-    const debug = (await host.GetValue('debug')) || false;
-    const targetMode = (await host.GetValue(ArgumentConstants.targetMode)) || TargetMode.Extension;
-    const cliCore = targetMode === TargetMode.Core;
-    // change both core and extension mode into no flattened mode.
-    let sdkFlatten = false;
-    sdkFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkFlatten))
-        ? true
-        : sdkFlatten;
-    sdkFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkNoFlatten))
-        ? false
-        : sdkFlatten;
-    const sdkNoFlatten = !isNullOrUndefined(await host.GetValue(ArgumentConstants.sdkNoFlatten))
-        ? true
-        : !sdkFlatten;
-    if (cliCore && !sdkNoFlatten) {
-        host.Message({
-            Channel: Channel.Fatal,
-            Text:
-                'You have specified the --target-mode=core and --sdk-no-flatten=false at the same time. which is not a valid configuration',
-        });
-        throw new Error('Wrong configuration detected, please check!');
-    }
-    let azExtensionFolder = '';
-    let azCoreFolder = '';
-    if (isNullOrUndefined(cliCore) || cliCore === false) {
-        azExtensionFolder = await host.GetValue(ArgumentConstants.azureCliExtFolder);
-    } else {
-        azCoreFolder = await host.GetValue(ArgumentConstants.azureCliFolder);
-    }
-    if ((isNullOrUndefined(cliCore) || cliCore === false) && isNullOrUndefined(azExtensionFolder)) {
-        host.Message({
-            Channel: Channel.Fatal,
-            Text:
-                '--azure-cli-extension-folder is not provided in the command line ! \nplease use --azure-cli-extension-folder=your-local-azure-cli-extensions-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example',
-        });
-        throw new Error('Wrong configuration, please check!');
-    } else if (cliCore && isNullOrUndefined(azCoreFolder)) {
-        host.Message({
-            Channel: Channel.Fatal,
-            Text:
-                '--azure-cli-folder is not provided in the command line and you are using --target-mode=core to generate azure-cli repo command modules ! \nplease use --azure-cli-folder=your-local-azure-cli-repo instead of --output-folder now ! \nThe readme.az.md example can be found here https://github.com/Azure/autorest.az/blob/master/doc/01-authoring-azure-cli-commands.md#az-readme-example',
-        });
-        throw new Error('Wrong configuration, please check!');
-    }
-    let isSdkNeeded = !cliCore;
-    const generateSdk = await host.GetValue(ArgumentConstants.generateSDK);
-    isSdkNeeded = isNullOrUndefined(generateSdk) ? isSdkNeeded : generateSdk === GenerateSdk.Yes;
-    const compatibleLevel =
-        (await host.GetValue(ArgumentConstants.compatibleLevel)) || cliCore
-            ? CompatibleLevel.Track1
-            : CompatibleLevel.Track2;
-    const isTrack1 = compatibleLevel === CompatibleLevel.Track1;
-
-    let extensionMode = ExtensionMode.Experimental;
-    extensionMode = (await host.GetValue(ArgumentConstants.extensionMode)) || extensionMode;
+    const debug = AzConfiguration.getValue(CodeGenConstants.debug);
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-        if (cliCore || sdkNoFlatten) {
+        if (
+            AzConfiguration.getValue(CodeGenConstants.isCliCore) ||
+            AzConfiguration.getValue(CodeGenConstants.sdkNoFlatten)
+        ) {
             const cliCodeModel = deserialize<CodeModel>(
-                await host.ReadFile('code-model-cli-v4.yaml'),
-                'code-model-cli-v4.yaml',
+                await host.ReadFile(CodeGenConstants.cliCodeModelName),
+                CodeGenConstants.cliCodeModelName,
                 codeModelSchema,
             );
             const pythonCodeModel = deserialize<CodeModel>(
-                await host.ReadFile('code-model-v4-no-tags.yaml'),
-                'code-model-v4-no-tags.yaml',
+                await host.ReadFile(CodeGenConstants.m4CodeModelName),
+                CodeGenConstants.m4CodeModelName,
                 codeModelSchema,
             );
             const codeModelMerger = new CodeModelMerger(cliCodeModel, pythonCodeModel);
@@ -736,15 +678,6 @@ export async function processRequest(host: Host) {
         } else {
             host.Message({ Channel: Channel.Information, Text: 'Generating CLI extension!' });
         }
-        if (isNullOrUndefined(session.model.language['az'])) {
-            session.model.language['az'] = {};
-        }
-        session.model.language['az'].isCliCore = cliCore;
-        session.model.language['az'].sdkNeeded = isSdkNeeded;
-        session.model.language['az'].sdkTrack1 = isTrack1;
-        session.model.language['az'].sdkNoFlatten = sdkNoFlatten;
-        session.model.info['extensionMode'] = extensionMode;
-        await processFolderPath(session);
         const plugin = new Merger(session);
         const result = await plugin.process();
         host.WriteFile('azmerger-cli-temp-output-after.yaml', serialize(result));
@@ -753,30 +686,5 @@ export async function processRequest(host: Host) {
             console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
         }
         throw E;
-    }
-
-    async function processFolderPath(session: Session<CodeModel>) {
-        const options = await session.getValue('az');
-        const extensionName = options['extensions'];
-        const azOutputFolder = await host.GetValue('az-output-folder');
-        const pythonSdkOutputFolder = await host.GetValue('python-sdk-output-folder');
-        let sdkFolder = pythonSdkOutputFolder.replace(azOutputFolder, '');
-        if (sdkFolder.startsWith('/')) {
-            sdkFolder = sdkFolder.substring(1, sdkFolder.length);
-        }
-        const azextFolder = sdkFolder.split('/')[0];
-        if (!isNullOrUndefined(azextFolder) && azextFolder.startsWith('azext_')) {
-            session.model.language['az'].azextFolder = azextFolder;
-        } else {
-            session.model.language['az'].azextFolder = 'azext_' + extensionName.replace(/-/g, '_');
-        }
-        if (!session.model.language['az'].sdkNeeded && !isNullOrUndefined(options['namespace'])) {
-            session.model.language['az'].pythonNamespace = options['namespace'];
-        } else if (
-            session.model.language['az'].sdkNeeded ||
-            isNullOrUndefined(options['namespace'])
-        ) {
-            session.model.language['az'].pythonNamespace = sdkFolder.replace(/\//g, '.');
-        }
     }
 }

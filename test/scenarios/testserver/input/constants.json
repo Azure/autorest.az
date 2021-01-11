@@ -1,0 +1,734 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "AutoRest Swagger Constant Service",
+        "description": "Test Infrastructure for AutoRest Swagger Constant",
+        "version": "1.0.0"
+    },
+    "host": "localhost:3000",
+    "schemes": [
+        "http"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "paths": {
+        "/constants/putNoModelAsStringNoRequiredTwoValueNoDefault": {
+            "put": {
+                "operationId": "contants_putNoModelAsStringNoRequiredTwoValueNoDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1",
+                            "value2"
+                        ],
+                        "x-ms-enum": {
+                            "name": "NoModelAsStringNoRequiredTwoValueNoDefaultOpEnum",
+                            "modelAsString": false
+                        },
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putNoModelAsStringNoRequiredTwoValueDefault": {
+            "put": {
+                "operationId": "contants_putNoModelAsStringNoRequiredTwoValueDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1",
+                            "value2"
+                        ],
+                        "x-ms-enum": {
+                            "name": "NoModelAsStringNoRequiredTwoValueDefaultOpEnum",
+                            "modelAsString": false
+                        },
+                        "required": false,
+                        "x-ms-client-default": "value1"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putNoModelAsStringNoRequiredOneValueNoDefault": {
+            "put": {
+                "operationId": "contants_putNoModelAsStringNoRequiredOneValueNoDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1"
+                        ],
+                        "x-ms-enum": {
+                            "name": "NoModelAsStringNoRequiredOneValueNoDefaultOpEnum",
+                            "modelAsString": false
+                        },
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putNoModelAsStringNoRequiredOneValueDefault": {
+            "put": {
+                "operationId": "contants_putNoModelAsStringNoRequiredOneValueDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1"
+                        ],
+                        "x-ms-enum": {
+                            "name": "NoModelAsStringNoRequiredOneValueDefaultOpEnum",
+                            "modelAsString": false
+                        },
+                        "required": false,
+                        "x-ms-client-default": "value1"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putNoModelAsStringRequiredTwoValueNoDefault": {
+            "put": {
+                "operationId": "contants_putNoModelAsStringRequiredTwoValueNoDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1",
+                            "value2"
+                        ],
+                        "x-ms-enum": {
+                            "name": "NoModelAsStringRequiredTwoValueNoDefaultOpEnum",
+                            "modelAsString": false
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putNoModelAsStringRequiredTwoValueDefault": {
+            "put": {
+                "operationId": "contants_putNoModelAsStringRequiredTwoValueDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1",
+                            "value2"
+                        ],
+                        "x-ms-enum": {
+                            "name": "NoModelAsStringRequiredTwoValueDefaultOpEnum",
+                            "modelAsString": false
+                        },
+                        "required": true,
+                        "x-ms-client-default": "value1"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putNoModelAsStringRequiredOneValueNoDefault": {
+            "put": {
+                "operationId": "contants_putNoModelAsStringRequiredOneValueNoDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1"
+                        ],
+                        "x-ms-enum": {
+                            "name": "NoModelAsStringRequiredOneValueNoDefaultOpEnum",
+                            "modelAsString": false
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putNoModelAsStringRequiredOneValueDefault": {
+            "put": {
+                "operationId": "contants_putNoModelAsStringRequiredOneValueDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1"
+                        ],
+                        "x-ms-enum": {
+                            "name": "NoModelAsStringRequiredOneValueDefaultOpEnum",
+                            "modelAsString": false
+                        },
+                        "required": true,
+                        "x-ms-client-default": "value1"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putModelAsStringNoRequiredTwoValueNoDefault": {
+            "put": {
+                "operationId": "contants_putModelAsStringNoRequiredTwoValueNoDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1",
+                            "value2"
+                        ],
+                        "x-ms-enum": {
+                            "name": "ModelAsStringNoRequiredTwoValueNoDefaultOpEnum",
+                            "modelAsString": true
+                        },
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putModelAsStringNoRequiredTwoValueDefault": {
+            "put": {
+                "operationId": "contants_putModelAsStringNoRequiredTwoValueDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1",
+                            "value2"
+                        ],
+                        "x-ms-enum": {
+                            "name": "ModelAsStringNoRequiredTwoValueDefaultOpEnum",
+                            "modelAsString": true
+                        },
+                        "required": false,
+                        "x-ms-client-default": "value1"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putModelAsStringNoRequiredOneValueNoDefault": {
+            "put": {
+                "operationId": "contants_putModelAsStringNoRequiredOneValueNoDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1"
+                        ],
+                        "x-ms-enum": {
+                            "name": "ModelAsStringNoRequiredOneValueNoDefaultOpEnum",
+                            "modelAsString": true
+                        },
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putModelAsStringNoRequiredOneValueDefault": {
+            "put": {
+                "operationId": "contants_putModelAsStringNoRequiredOneValueDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1"
+                        ],
+                        "x-ms-enum": {
+                            "name": "ModelAsStringNoRequiredOneValueDefaultOpEnum",
+                            "modelAsString": true
+                        },
+                        "required": false,
+                        "x-ms-client-default": "value1"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putModelAsStringRequiredTwoValueNoDefault": {
+            "put": {
+                "operationId": "contants_putModelAsStringRequiredTwoValueNoDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1",
+                            "value2"
+                        ],
+                        "x-ms-enum": {
+                            "name": "ModelAsStringRequiredTwoValueNoDefaultOpEnum",
+                            "modelAsString": true
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putModelAsStringRequiredTwoValueDefault": {
+            "put": {
+                "operationId": "contants_putModelAsStringRequiredTwoValueDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1",
+                            "value2"
+                        ],
+                        "x-ms-enum": {
+                            "name": "ModelAsStringRequiredTwoValueDefaultOpEnum",
+                            "modelAsString": true
+                        },
+                        "required": true,
+                        "x-ms-client-default": "value1"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putModelAsStringRequiredOneValueNoDefault": {
+            "put": {
+                "operationId": "contants_putModelAsStringRequiredOneValueNoDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1"
+                        ],
+                        "x-ms-enum": {
+                            "name": "ModelAsStringRequiredOneValueNoDefaultOpEnum",
+                            "modelAsString": true
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        },
+        "/constants/putModelAsStringRequiredOneValueDefault": {
+            "put": {
+                "operationId": "contants_putModelAsStringRequiredOneValueDefault",
+                "summary": "Puts constants to the testserver",
+                "parameters": [
+                    {
+                        "name": "input",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "value1"
+                        ],
+                        "x-ms-enum": {
+                            "name": "ModelAsStringRequiredOneValueDefaultOpEnum",
+                            "modelAsString": true
+                        },
+                        "required": true,
+                        "x-ms-client-default": "value1"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Indicates success."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "NoModelAsStringNoRequiredTwoValueNoDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1",
+                        "value2"
+                    ],
+                    "x-ms-enum": {
+                        "name": "NoModelAsStringNoRequiredTwoValueNoDefaultEnum",
+                        "modelAsString": false
+                    }
+                }
+            }
+        },
+        "NoModelAsStringNoRequiredTwoValueDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1",
+                        "value2"
+                    ],
+                    "x-ms-enum": {
+                        "name": "NoModelAsStringNoRequiredTwoValueDefaultEnum",
+                        "modelAsString": false
+                    },
+                    "x-ms-client-default": "value1"
+                }
+            }
+        },
+        "NoModelAsStringNoRequiredOneValueNoDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1"
+                    ],
+                    "x-ms-enum": {
+                        "name": "NoModelAsStringNoRequiredOneValueNoDefaultEnum",
+                        "modelAsString": false
+                    }
+                }
+            }
+        },
+        "NoModelAsStringNoRequiredOneValueDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1"
+                    ],
+                    "x-ms-enum": {
+                        "name": "NoModelAsStringNoRequiredOneValueDefaultEnum",
+                        "modelAsString": false
+                    },
+                    "x-ms-client-default": "value1"
+                }
+            }
+        },
+        "NoModelAsStringRequiredTwoValueNoDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1",
+                        "value2"
+                    ],
+                    "x-ms-enum": {
+                        "name": "NoModelAsStringRequiredTwoValueNoDefaultEnum",
+                        "modelAsString": false
+                    }
+                }
+            },
+            "required": [
+                "parameter"
+            ]
+        },
+        "NoModelAsStringRequiredTwoValueDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1",
+                        "value2"
+                    ],
+                    "x-ms-enum": {
+                        "name": "NoModelAsStringRequiredTwoValueDefaultEnum",
+                        "modelAsString": false
+                    },
+                    "x-ms-client-default": "value1"
+                }
+            },
+            "required": [
+                "parameter"
+            ]
+        },
+        "NoModelAsStringRequiredOneValueNoDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1"
+                    ],
+                    "x-ms-enum": {
+                        "name": "NoModelAsStringRequiredOneValueNoDefaultEnum",
+                        "modelAsString": false
+                    }
+                }
+            },
+            "required": [
+                "parameter"
+            ]
+        },
+        "NoModelAsStringRequiredOneValueDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1"
+                    ],
+                    "x-ms-enum": {
+                        "name": "NoModelAsStringRequiredOneValueDefaultEnum",
+                        "modelAsString": false
+                    },
+                    "x-ms-client-default": "value1"
+                }
+            },
+            "required": [
+                "parameter"
+            ]
+        },
+        "ModelAsStringNoRequiredTwoValueNoDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1",
+                        "value2"
+                    ],
+                    "x-ms-enum": {
+                        "name": "ModelAsStringNoRequiredTwoValueNoDefaultEnum",
+                        "modelAsString": true
+                    }
+                }
+            }
+        },
+        "ModelAsStringNoRequiredTwoValueDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1",
+                        "value2"
+                    ],
+                    "x-ms-enum": {
+                        "name": "ModelAsStringNoRequiredTwoValueDefaultEnum",
+                        "modelAsString": true
+                    },
+                    "x-ms-client-default": "value1"
+                }
+            }
+        },
+        "ModelAsStringNoRequiredOneValueNoDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1"
+                    ],
+                    "x-ms-enum": {
+                        "name": "ModelAsStringNoRequiredOneValueNoDefaultEnum",
+                        "modelAsString": true
+                    }
+                }
+            }
+        },
+        "ModelAsStringNoRequiredOneValueDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1"
+                    ],
+                    "x-ms-enum": {
+                        "name": "ModelAsStringNoRequiredOneValueDefaultEnum",
+                        "modelAsString": true
+                    },
+                    "x-ms-client-default": "value1"
+                }
+            }
+        },
+        "ModelAsStringRequiredTwoValueNoDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1",
+                        "value2"
+                    ],
+                    "x-ms-enum": {
+                        "name": "ModelAsStringRequiredTwoValueNoDefaultEnum",
+                        "modelAsString": true
+                    }
+                }
+            },
+            "required": [
+                "parameter"
+            ]
+        },
+        "ModelAsStringRequiredTwoValueDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1",
+                        "value2"
+                    ],
+                    "x-ms-enum": {
+                        "name": "ModelAsStringRequiredTwoValueDefaultEnum",
+                        "modelAsString": true
+                    },
+                    "x-ms-client-default": "value1"
+                }
+            },
+            "required": [
+                "parameter"
+            ]
+        },
+        "ModelAsStringRequiredOneValueNoDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1"
+                    ],
+                    "x-ms-enum": {
+                        "name": "ModelAsStringRequiredOneValueNoDefaultEnum",
+                        "modelAsString": true
+                    }
+                }
+            },
+            "required": [
+                "parameter"
+            ]
+        },
+        "ModelAsStringRequiredOneValueDefault": {
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "string",
+                    "enum": [
+                        "value1"
+                    ],
+                    "x-ms-enum": {
+                        "name": "ModelAsStringRequiredOneValueDefaultEnum",
+                        "modelAsString": true
+                    },
+                    "x-ms-client-default": "value1"
+                }
+            },
+            "required": [
+                "parameter"
+            ]
+        }
+    }
+}

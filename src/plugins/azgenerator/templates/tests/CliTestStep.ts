@@ -8,7 +8,7 @@ import { PreparerEntity, getResourceKey } from './ScenarioTool';
 import { ToMultiLine, deepCopy, isNullOrUndefined } from '../../../../utils/helper';
 import { HeaderGenerator } from '../../Header';
 import { TemplateBase } from '../TemplateBase';
-import { PathConstants } from '../../../models';
+import { PathConstants } from '../../../../utils/models';
 
 let usePreparers: boolean, shortToLongName, funcNames, allSteps, stepBuff: any;
 

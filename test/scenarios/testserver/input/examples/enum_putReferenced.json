@@ -1,0 +1,8 @@
+{
+  "parameters": {
+    "enumStringBody": "red color"
+  },
+  "responses": {
+    "200": {}
+  }
+}

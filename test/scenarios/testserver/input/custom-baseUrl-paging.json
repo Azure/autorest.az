@@ -1,0 +1,172 @@
+﻿{
+  "swagger": "2.0",
+  "info": {
+    "title": "AutoRest Parameterized Host Test Paging Client",
+    "description": "Test Infrastructure for AutoRest",
+    "version": "1.0.0"
+  },
+  "host": "badhost",
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{accountName}{host}",
+    "positionInOperation": "last",
+    "parameters": [
+      {
+        "name": "accountName",
+        "description": "Account Name",
+        "required": true,
+        "type": "string",
+        "in": "path",
+        "x-ms-skip-url-encoding": true
+      },
+      {
+        "$ref": "#/parameters/host"
+      }
+    ]
+  },
+  "produces": [ "application/json" ],
+  "consumes": [ "application/json" ],
+  "paths": {
+    "/paging/customurl/partialnextlink": {
+      "get": {
+        "operationId": "Paging_getPagesPartialUrl",
+        "description": "A paging operation that combines custom url, paging and partial URL and expect to concat after host",
+        "x-ms-examples": {
+          "Paging_getPagesPartialUrl": {
+            "$ref": "./examples/Paging_getPagesPartialUrl.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Paging response with a fragment nextLink",
+            "schema": {
+              "$ref": "#/definitions/ProductResult"
+            }
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink",
+          "itemName": "values"
+        }
+      }
+    },
+    "/paging/customurl/partialnextlinkop": {
+      "get": {
+        "operationId": "Paging_getPagesPartialUrlOperation",
+        "description": "A paging operation that combines custom url, paging and partial URL with next operation",
+        "x-ms-examples": {
+          "Paging_getPagesPartialUrlOperation": {
+            "$ref": "./examples/Paging_getPagesPartialUrlOperation.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Paging response with a fragment nextLink",
+            "schema": {
+              "$ref": "#/definitions/ProductResult"
+            }
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink",
+          "itemName": "values",
+          "operationName": "Paging_getPagesPartialUrlOperationNext"
+        }
+      }
+    }
+  },
+  "x-ms-paths": {
+    "/paging/customurl/{nextLink}?Paging_getPagesPartialUrlOperationNext": {
+      "get": {
+        "operationId": "Paging_getPagesPartialUrlOperationNext",
+        "description": "A paging operation that combines custom url, paging and partial URL",
+        "parameters": [
+          {
+            "name": "nextLink",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Next link for the list operation.",
+            "x-ms-skip-url-encoding": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paging response with a fragment nextLink",
+            "schema": {
+              "$ref": "#/definitions/ProductResult"
+            }
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink",
+          "itemName": "values",
+          "operationName": "Paging_getPagesPartialUrlOperationNext"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "host": {
+      "name": "host",
+      "description": "A string value that is used as a global part of the parameterized host",
+      "type": "string",
+      "required": true,
+      "default": "host",
+      "in": "path",
+      "x-ms-skip-url-encoding": true
+    }
+  },
+  "definitions": {
+    "ProductResult": {
+      "type":  "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        },
+        "nextLink": {
+          "type": "string"
+        }
+      }
+    },
+    "Product": {
+      "type":  "object",
+      "properties": {
+        "properties": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Error": {
+      "type":  "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

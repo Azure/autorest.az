@@ -1,0 +1,8 @@
+{
+  "parameters": {
+      "arrayQuery": "ArrayQuery1,begin!*'();:@ &=+$,/?#[]end,,"
+  },
+  "responses": {
+    "200": {}
+  }
+}

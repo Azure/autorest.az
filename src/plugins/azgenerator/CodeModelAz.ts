@@ -4,7 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 
 import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-tools/codemodel';
-import { GenerationMode } from '../models';
+import { GenerationMode } from '../../utils/models';
 import { ResourcePool } from './templates/tests/ScenarioTool';
 
 export class MethodParam {
@@ -86,7 +86,6 @@ export interface CodeModelAz {
     SelectFirstExtension(): boolean;
     SelectNextExtension(): boolean;
     CliGenerationMode: GenerationMode;
-    CliOutputFolder: string;
     AzextFolder: string;
 
     IsCliCore: boolean;

@@ -1,0 +1,8 @@
+{
+  "parameters": {
+    "stringBody": "YSBzdHJpbmcgdGhhdCBnZXRzIGVuY29kZWQgd2l0aCBiYXNlNjR1cmw"
+  },
+  "responses": {
+    "200": {}
+  }
+}

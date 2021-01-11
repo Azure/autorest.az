@@ -1,0 +1,307 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Multiple Inheritance Service Client",
+      "description": "Service client for multiinheritance client testing",
+      "version": "3.0.0"
+    },
+    "host": "localhost:3000",
+	"schemes": [
+		"http"
+    ],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/multipleInheritance/horse": {
+            "get": {
+                "operationId": "getHorse",
+                "description": "Get a horse with name 'Fred' and isAShowHorse true",
+                "responses": {
+                    "200": {
+                        "description": "Horse with name 'Fred' and isAShowHorse true",
+                        "schema": {
+                            "$ref": "#/definitions/Horse"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "putHorse",
+                "description": "Put a horse with name 'General' and isAShowHorse false",
+                "parameters": [
+                    {
+                        "name": "horse",
+                        "in": "body",
+                        "description": "Put a horse with name 'General' and isAShowHorse false",
+                        "schema": {
+                            "$ref": "#/definitions/Horse"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+				    "200": {
+                        "description": "Received correct format",
+                        "schema": {
+                            "type": "string"
+                        }
+				    }
+				}
+            }
+        },
+        "/multipleInheritance/pet": {
+            "get": {
+                "operationId": "getPet",
+                "description": "Get a pet with name 'Peanut'",
+                "responses": {
+                        "200": {
+                            "description": "Pet with name 'Peanut'",
+                        "schema": {
+                            "$ref": "#/definitions/Pet"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "putPet",
+                "description": "Put a pet with name 'Butter'",
+                "parameters": [
+                    {
+                        "name": "pet",
+                        "in": "body",
+                        "description": "Put a pet with name 'Butter'",
+                        "schema": {
+                            "$ref": "#/definitions/Pet"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+				    "200": {
+                        "description": "Received correct format",
+                        "schema": {
+                            "type": "string"
+                        }
+				    }
+				}
+            }
+        },
+        "/multipleInheritance/feline": {
+            "get": {
+                "operationId": "getFeline",
+                "description": "Get a feline where meows and hisses are true",
+                "responses": {
+                        "200": {
+                            "description": "Feline where meows and hisses are true",
+                        "schema": {
+                            "$ref": "#/definitions/Feline"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "putFeline",
+                "description": "Put a feline who hisses and doesn't meow",
+                "parameters": [
+                    {
+                        "name": "feline",
+                        "in": "body",
+                        "description": "Put a feline who hisses and doesn't meow",
+                        "schema": {
+                            "$ref": "#/definitions/Feline"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+				    "200": {
+                        "description": "Received correct format",
+                        "schema": {
+                            "type": "string"
+                        }
+				    }
+				}
+            }
+        },
+        "/multipleInheritance/cat": {
+            "get": {
+                "operationId": "getCat",
+                "description": "Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true",
+                "responses": {
+                        "200": {
+                            "description": "Cat with name 'Whiskers' where likesMilk, meows, and hisses is true",
+                        "schema": {
+                            "$ref": "#/definitions/Cat"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "putCat",
+                "description": "Put a cat with name 'Boots' where likesMilk and hisses is false, meows is true",
+                "parameters": [
+                    {
+                        "name": "cat",
+                        "in": "body",
+                        "description": "Put a cat with name 'Boots' where likesMilk and hisses is false, meows is true",
+                        "schema": {
+                            "$ref": "#/definitions/Cat"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+				    "200": {
+                        "description": "Received correct format",
+                        "schema": {
+                            "type": "string"
+                        }
+				    }
+				}
+            }
+        },
+        "/multipleInheritance/kitten": {
+            "get": {
+                "operationId": "getKitten",
+                "description": "Get a kitten with name 'Gatito' where likesMilk and meows is true, and hisses and eatsMiceYet is false",
+                "responses": {
+                        "200": {
+                            "description": "Kitten with name 'Gatito' where likesMilk and meows is true, and hisses and eatsMiceYet is false",
+                        "schema": {
+                            "$ref": "#/definitions/Kitten"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "putKitten",
+                "description": "Put a kitten with name 'Kitty' where likesMilk and hisses is false, meows and eatsMiceYet is true",
+                "parameters": [
+                    {
+                        "name": "kitten",
+                        "in": "body",
+                        "description": "Put a kitten with name 'Kitty' where likesMilk and hisses is false, meows and eatsMiceYet is true",
+                        "schema": {
+                            "$ref": "#/definitions/Kitten"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+				    "200": {
+                        "description": "Received correct format",
+                        "schema": {
+                            "type": "string"
+                        }
+				    }
+				}
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "type":  "object",
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "Pet": {
+            "type": "object",
+            "required": [ "name" ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "Feline": {
+            "type": "object",
+            "properties": {
+                "meows": {
+                    "type": "boolean"
+                },
+                "hisses": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Cat": {
+            "allOf": [
+                {
+                  "$ref": "#/definitions/Pet"
+                },
+                {
+                    "$ref": "#/definitions/Feline"
+                }
+            ],
+			"type": "object",
+			"properties": {
+				"likesMilk": {
+                    "type": "boolean"
+                }
+			}
+        },
+        "Kitten": {
+            "allOf": [
+                {
+                  "$ref": "#/definitions/Cat"
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "eatsMiceYet": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Horse": {
+            "allOf": [
+                {
+                  "$ref": "#/definitions/Pet"
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "isAShowHorse": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}

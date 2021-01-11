@@ -1,0 +1,8 @@
+{
+  "parameters": {
+      "arrayQuery": ""
+  },
+  "responses": {
+    "200": {}
+  }
+}

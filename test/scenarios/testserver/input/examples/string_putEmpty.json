@@ -1,0 +1,8 @@
+{
+  "parameters": {
+    "stringBody": ""
+  },
+  "responses": {
+    "200": {}
+  }
+}

@@ -1,0 +1,70 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Object Type Client",
+      "description": "Service client for testing basic type: object swaggers",
+      "version": "1.0.0"
+    },
+    "host": "localhost:3000",
+    "schemes": [
+        "http"
+    ],
+    "produces": [ "application/json"],
+    "paths": {
+        "/objectType/get": {
+            "get": {
+                "operationId": "get",
+                "description": "Basic get that returns an object. Returns object { 'message': 'An object was successfully returned' }",
+                "responses": {
+                    "200": {
+                        "description": "Returns object { 'message': 'An object was successfully returned' }",
+                        "schema": {
+                            "$ref": "#/definitions/Object"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Object"
+                        }
+                    }
+                }
+            }
+        },
+        "/objectType/put": {
+            "put": {
+                "operationId": "put",
+                "description": "Basic put that puts an object. Pass in {'foo': 'bar'} to get a 200 and anything else to get an object error.",
+                "parameters": [
+                    {
+                        "name": "putObject",
+                        "description": "Pass in {'foo': 'bar'} for a 200, anything else for an object error",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {}
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The empty return value"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Object"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Object": {
+            "type": "object",
+            "properties": {}
+        }
+    }
+}

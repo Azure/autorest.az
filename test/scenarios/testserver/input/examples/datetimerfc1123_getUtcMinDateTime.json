@@ -1,0 +1,8 @@
+{
+  "parameters": {},
+  "responses": {
+    "200": {
+      "body": "Mon, 1 Jan 0001 00:00:00 GMT"
+    }
+  }
+}

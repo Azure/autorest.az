@@ -25,7 +25,7 @@ import { GenerateAzureCliValidators } from './templates/generated/CliValidators'
 import { CliTestInit } from './templates/tests/CliTestInit';
 import { CliTestPrepare } from './templates/tests/CliTestPrepare';
 import { CliTestScenario } from './templates/tests/CliTestScenario';
-import { PathConstants } from '../models';
+import { PathConstants } from '../../utils/models';
 import { CliTestStep, NeedPreparer } from './templates/tests/CliTestStep';
 import { GenerateMetaFile } from './templates/CliMeta';
 

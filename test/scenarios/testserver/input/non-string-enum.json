@@ -1,0 +1,141 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "2.0-preview",
+		"title": "Non String Enums Client",
+		"description": "Testing non-string enums."
+	},
+	"host": "localhost:3000",
+	"schemes": [
+		"http"
+    ],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+	"paths": {
+		"/nonStringEnums/int/put": {
+			"put": {
+				"description": "Put an int enum",
+				"operationId": "Int_put",
+				"x-ms-examples": {
+                    "Int_put": {
+                        "$ref": "./examples/Int_put.json"
+                    }
+                },
+				"parameters": [
+					{
+                        "name": "input",
+                        "description": "Input int enum.",
+                        "x-ms-parameter-location": "method",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/IntEnum"
+                        }
+                    }
+				],
+				"responses": {
+					"200": {
+						"description": "Received correct format",
+						"schema": {
+							"type": "string"
+						}
+					}
+				}
+			}
+        },
+        "/nonStringEnums/int/get": {
+			"get": {
+				"description": "Get an int enum",
+				"operationId": "Int_get",
+				"x-ms-examples": {
+                    "Int_get": {
+                        "$ref": "./examples/Int_get.json"
+                    }
+                },
+				"responses": {
+					"200": {
+						"description": "Returns int enum",
+						"schema": {
+							"$ref": "#/definitions/IntEnum"
+						}
+					}
+				}
+			}
+        },
+        "/nonStringEnums/float/put": {
+			"put": {
+				"description": "Put a float enum",
+				"operationId": "Float_put",
+				"x-ms-examples": {
+                    "Float_put": {
+                        "$ref": "./examples/Float_put.json"
+                    }
+                },
+				"parameters": [
+					{
+                        "name": "input",
+                        "description": "Input float enum.",
+                        "x-ms-parameter-location": "method",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/FloatEnum"
+                        }
+                    }
+				],
+				"responses": {
+					"200": {
+						"description": "Received correct format",
+						"schema": {
+							"type": "string"
+						}
+					}
+				}
+			}
+        },
+        "/nonStringEnums/float/get": {
+			"get": {
+				"description": "Get a float enum",
+				"operationId": "Float_Get",
+				"x-ms-examples": {
+                    "Float_Get": {
+                        "$ref": "./examples/Float_Get.json"
+                    }
+                },
+				"responses": {
+					"200": {
+						"description": "Returns float enum",
+						"schema": {
+							"$ref": "#/definitions/FloatEnum"
+						}
+					}
+				}
+			}
+        }
+	},
+	"definitions": {
+		"IntEnum": {
+            "x-ms-enum": { "name": "IntEnum", "modelAsString": true},
+            "description": "List of integer enums",
+            "type": "integer",
+            "enum": [
+                200,
+                403,
+                405,
+                406,
+                429
+            ]
+        },
+        "FloatEnum": {
+            "x-ms-enum": { "name": "FloatEnum", "modelAsString": true},
+            "description": "List of float enums",
+            "type": "number",
+            "format": "float",
+            "enum": [
+                200.4,
+                403.4,
+                405.3,
+                406.2,
+                429.1
+            ]
+        }
+	}
+}
