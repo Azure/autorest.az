@@ -8,7 +8,7 @@ import {
     ExtensionMode,
     GenerationMode,
     PathConstants,
-    AzConfiguration
+    AzConfiguration,
 } from '../utils/models';
 import { HeaderGenerator } from './azgenerator/Header';
 import { Host, Channel, startSession, Session } from '@azure-tools/autorest-extension-base';
@@ -58,19 +58,18 @@ export async function processRequest(host: Host) {
 }
 
 function processSimpleOption() {
-
     // handling extension-mode by default it's experimental.
     let extensionMode = ExtensionMode.Experimental;
     extensionMode = AzConfiguration.getValue(CodeGenConstants.extensionMode) || extensionMode;
     AzConfiguration.setValue(CodeGenConstants.extensionMode, extensionMode);
 
-    // handling default debug 
-    if(isNullOrUndefined(AzConfiguration.getValue(CodeGenConstants.debug))) {
+    // handling default debug
+    if (isNullOrUndefined(AzConfiguration.getValue(CodeGenConstants.debug))) {
         AzConfiguration.setValue(CodeGenConstants.debug, false);
     }
 
     // handling azure-cli-folder
-    const azureCliFolder = AzConfiguration.getValue(CodeGenConstants.azureCliFolder)
+    const azureCliFolder = AzConfiguration.getValue(CodeGenConstants.azureCliFolder);
     if (!isNullOrUndefined(azureCliFolder)) {
         AzConfiguration.setValue(CodeGenConstants.azureCliFolder, azureCliFolder);
     }
@@ -80,12 +79,11 @@ function processSimpleOption() {
     if (!isNullOrUndefined(cliCoreLib) && cliCoreLib.length > 0) {
         AzConfiguration.setValue(CodeGenConstants.cliCoreLib, cliCoreLib);
     }
-
-
 }
 
 function processGenerationOption(session: Session<CodeModel>) {
-    const targetMode = AzConfiguration.getValue(CodeGenConstants.targetMode) || TargetMode.Extension;
+    const targetMode =
+        AzConfiguration.getValue(CodeGenConstants.targetMode) || TargetMode.Extension;
     const cliCore = <TargetMode>targetMode === TargetMode.Core;
     // change both core and extension mode into no flattened mode.
     let sdkFlatten = false;
@@ -132,7 +130,7 @@ function processGenerationOption(session: Session<CodeModel>) {
     const generateSdk = AzConfiguration.getValue(CodeGenConstants.generateSDK);
     isSdkNeeded = isNullOrUndefined(generateSdk) ? isSdkNeeded : generateSdk === GenerateSdk.Yes;
     const compatibleLevel =
-        (AzConfiguration.getValue(CodeGenConstants.compatibleLevel)) || cliCore
+        AzConfiguration.getValue(CodeGenConstants.compatibleLevel) || cliCore
             ? CompatibleLevel.Track1
             : CompatibleLevel.Track2;
     const isTrack1 = compatibleLevel === CompatibleLevel.Track1;
@@ -146,7 +144,9 @@ function processFolderPath() {
     const options = AzConfiguration.getValue(CodeGenConstants.az);
     const extensionName = options[CodeGenConstants.extensions];
     const azOutputFolder: string = AzConfiguration.getValue(CodeGenConstants.azOutputFolder);
-    const pythonSdkOutputFolder: string = AzConfiguration.getValue(CodeGenConstants.pythonSdkOutputFolder);
+    const pythonSdkOutputFolder: string = AzConfiguration.getValue(
+        CodeGenConstants.pythonSdkOutputFolder,
+    );
     let sdkFolder = pythonSdkOutputFolder.replace(azOutputFolder, '');
     if (sdkFolder.startsWith('/')) {
         sdkFolder = sdkFolder.substring(1, sdkFolder.length);
@@ -211,7 +211,7 @@ async function autoDetectGenerationMode(
         });
 
         // Read the argument of generation-mode, detect if needed
-        const generationMode = (AzConfiguration.getValue(CodeGenConstants.generationMode)) || 'auto';
+        const generationMode = AzConfiguration.getValue(CodeGenConstants.generationMode) || 'auto';
         session.message({
             Channel: Channel.Information,
             Text: 'Input generation-mode is: ' + generationMode,

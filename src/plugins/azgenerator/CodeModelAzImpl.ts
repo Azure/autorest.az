@@ -31,7 +31,12 @@ import {
     ToSentence,
     isNullOrUndefined,
 } from '../../utils/helper';
-import { CodeGenConstants, EXCLUDED_PARAMS, GenerationMode, AzConfiguration } from '../../utils/models';
+import {
+    CodeGenConstants,
+    EXCLUDED_PARAMS,
+    GenerationMode,
+    AzConfiguration,
+} from '../../utils/models';
 import {
     CodeModelAz,
     CommandExample,

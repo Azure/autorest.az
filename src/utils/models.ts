@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { isNullOrUndefined } from "./helper";
+import { isNullOrUndefined } from './helper';
 
 export enum GenerationMode {
     Manual,
@@ -85,8 +85,7 @@ export class PathConstants {
 }
 
 export enum CodeGenConstants {
-
-    // some configuration that by calculation 
+    // some configuration that by calculation
     isCliCore,
     sdkNeeded,
     sdkTrack1,
@@ -135,7 +134,6 @@ export interface AzextMetadata {
     'azext.isExperimental': boolean;
 }
 
-
 export class AzConfiguration {
     private static dict: unknown;
 
@@ -145,7 +143,6 @@ export class AzConfiguration {
         } else {
             AzConfiguration.dict = {};
         }
-        
     }
 
     public static getValue(key: CodeGenConstants) {
