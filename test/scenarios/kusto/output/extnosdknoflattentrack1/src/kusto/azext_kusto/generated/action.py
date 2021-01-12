@@ -124,8 +124,8 @@ class AddVirtualNetworkConfiguration(argparse.Action):
                 d['data_management_public_ip_id'] = v[0]
             else:
                 raise CLIError('Unsupported Key {} is provided for parameter virtual_network_configuration. All '
-                               'possible keys are: subnet-id, engine-public-ip-id, data-management-public-ip-id'
-                               .format(k))
+                               'possible keys are: subnet-id, engine-public-ip-id, data-management-public-ip-id'.
+                               format(k))
         return d
 
 

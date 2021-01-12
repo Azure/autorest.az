@@ -97,7 +97,7 @@ export enum CodeGenConstants {
     debug = 'debug',
     use = 'use',
     directive = 'directive',
-    parents = '_parents',
+    parents = '__parents',
     azOutputFolder = 'az-output-folder',
     generationMode = 'generation-mode',
     clearOutputFolder = 'clear-output-folder',
@@ -111,6 +111,8 @@ export enum CodeGenConstants {
     azureCliExtFolder = 'azure-cli-extension-folder',
     pythonSdkOutputFolder = 'python-sdk-output-folder',
     cliCoreLib = 'cli-core-lib',
+    inputFile = 'input-file',
+    testResources = 'test-resources',
 
     // some configuration keys under az section
     namespace = 'namespace',
@@ -126,6 +128,9 @@ export enum CodeGenConstants {
     m4CodeModelName = 'code-model-v4-no-tags.yaml',
     DEFAULT_CLI_CORE_LIB = 'azure.cli.core',
     AZ_ENTRY_CODE_MODEL_NAME = 'az-entry-code-model.yaml',
+
+    //configuration keys under test-resources section
+    test = 'test',
 }
 
 export interface AzextMetadata {

@@ -1,4 +1,4 @@
-import { CommandExample, ExampleParam, KeyValueType, CodeModelAz } from '../../CodeModelAz';
+import { CommandExample, ExampleParam, KeyValueType } from '../../CodeModelAz';
 import {
     deepCopy,
     isDict,
@@ -9,8 +9,19 @@ import {
     isNullOrUndefined,
     Capitalize,
     ToSnakeCase,
+    setPathValue,
+    checkNested,
 } from '../../../../utils/helper';
 import { EnglishPluralizationService } from '@azure-tools/codegen';
+import { AzConfiguration, CodeGenConstants } from '../../../../utils/models';
+import { TestResourceLoader } from 'oav/dist/lib/testScenario/testResourceLoader';
+import {
+    TestDefinitionFile,
+    TestStepArmTemplateDeployment,
+    TestStepExampleFileRestCall,
+} from 'oav/dist/lib/testScenario/testResourceTypes';
+import * as path from 'path';
+import * as os from 'os';
 
 export const azOptions = {};
 
@@ -137,43 +148,16 @@ export function GroupTestScenario(testScenario: any, extensionName: string) {
     return ret;
 }
 
-const SUBSCRIPTIONS = "subscriptions";
-const RESOUREGROUP = "resourceGroups";
-const VIRTUALNETWORK = "virtualNetworks";
-const STORAGEACCOUNT = "storageAccounts";
-const SUBNET = "subnets";
-const NETWORKINTERFACE = "networkInterfaces";
-
-// let resourceClassDepends = {
-//     [RESOUREGROUP]: [],
-//     [STORAGEACCOUNT]: [RESOUREGROUP,],
-//     // [VIRTUALNETWORK]: [RESOUREGROUP,],
-//     // [SUBNET]: [VIRTUALNETWORK, RESOUREGROUP],
-//     // [NETWORKINTERFACE]: [VIRTUALNETWORK, RESOUREGROUP],
-// }
-
-// let resourceLanguages = {
-//     [RESOUREGROUP]: ['resource-group', 'resourceGroupName', 'resourceGroups'],
-//     [STORAGEACCOUNT]: ['storage-account', 'storageAccountName', 'storageAccounts'],
-//     // [VIRTUALNETWORK]: ['virtual-network', 'virtualNetworkName', 'virtualNetworks'],
-//     // [SUBNET]: ['subnet', 'subnetName', 'subnets'],
-//     // [NETWORKINTERFACE]: ['network-interface', 'networkInterfaceName', 'networkInterfaces'],
-// }
-
-// let resourceClassKeys = {
-//     [RESOUREGROUP]: 'rg',
-//     [STORAGEACCOUNT]: 'sa',
-//     // [VIRTUALNETWORK]: 'vn',
-//     // [SUBNET]: 'sn',
-//     // [NETWORKINTERFACE]: 'nic',
-// }
+const SUBSCRIPTIONS = 'subscriptions';
+const RESOUREGROUP = 'resourceGroups';
+const STORAGEACCOUNT = 'storageAccounts';
 
 export function TopoSortResource() {
-    let ret = [];
-    let resources = Object.keys(preparerInfos);
+    const ret = [];
+    const resources = Object.keys(preparerInfos);
     //let reverse_depends = { };
-    let depends = {};
-    for (let r in preparerInfos) {
+    const depends = {};
+    for (const r in preparerInfos) {
         depends[r] = deepCopy(preparerInfos[r].dependResources);
     }
     while (ret.length < Object.keys(preparerInfos).length) {
@@ -212,7 +196,7 @@ export class PreparerConfig {
     forInstance: string;
     create: string[];
     delete: string[];
-    inits: {[key: string]: any;};
+    inits: { [key: string]: any };
 }
 
 export class PreparerInfo {
@@ -232,8 +216,8 @@ export class PreparerInfo {
         dependResources: string[],
         key: string,
         alias: string[],
-        needGen: boolean=false,
-        config: PreparerConfig=undefined,
+        needGen = false,
+        config: PreparerConfig = undefined,
     ) {
         this.name = name;
         this.className = className;
@@ -247,36 +231,44 @@ export class PreparerInfo {
     }
 }
 
-export let preparerInfos: { [key: string]: PreparerInfo; } = {
-    [RESOUREGROUP]: new PreparerInfo('ResourceGroupPreparer', RESOUREGROUP, [], [], 'rg', ['resource-group', 'resourceGroupName', 'resourceGroups']),
-    [STORAGEACCOUNT]: new PreparerInfo('StorageAccountPreparer', STORAGEACCOUNT, ['resource_group_parameter_name'], [RESOUREGROUP], 'sa', ['storage-account', 'storageAccountName', 'storageAccounts']),
-    // [VIRTUALNETWORK]: new PreparerInfo('VirtualNetworkPreparer', VIRTUALNETWORK, ['resource_group_parameter_name'], [RESOUREGROUP], 'vnet', ['virtualNetworks', 'virtual-network', 'virtualNetworkName',]),
-    // [SUBNET]: new PreparerInfo('VnetSubnetPreparer', SUBNET, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
-    // [NETWORKINTERFACE]: new PreparerInfo('VnetNicPreparer', NETWORKINTERFACE, ['resource_group_key', 'vnet_key'], [RESOUREGROUP, VIRTUALNETWORK]),
-}
+export const preparerInfos: { [key: string]: PreparerInfo } = {
+    [RESOUREGROUP]: new PreparerInfo('ResourceGroupPreparer', RESOUREGROUP, [], [], 'rg', [
+        'resource-group',
+        'resourceGroupName',
+        'resourceGroups',
+    ]),
+    [STORAGEACCOUNT]: new PreparerInfo(
+        'StorageAccountPreparer',
+        STORAGEACCOUNT,
+        ['resource_group_parameter_name'],
+        [RESOUREGROUP],
+        'sa',
+        ['storage-account', 'storageAccountName', 'storageAccounts'],
+    ),
+};
 
 export function GenPreparerName(className: string): string {
-    let eps = new EnglishPluralizationService();
-    return Capitalize(eps.singularize(ToCamelCase(ToSnakeCase(className)))) + "Preparer";
+    const eps = new EnglishPluralizationService();
+    return Capitalize(eps.singularize(ToCamelCase(ToSnakeCase(className)))) + 'Preparer';
 }
 
 export function GenPreparerDependParamName(className: string): string {
-    let eps = new EnglishPluralizationService();
-    return ToSnakeCase(eps.singularize(className)) + "_key";
+    const eps = new EnglishPluralizationService();
+    return ToSnakeCase(eps.singularize(className)) + '_key';
 }
 
-export function LoadPreparesConfig(preparers: {[key: string]: PreparerConfig;}) {
-    if (isNullOrUndefined(preparers))   return;
-    for (let resourceClass in preparers) {
+export function LoadPreparesConfig(preparers: { [key: string]: PreparerConfig }) {
+    if (isNullOrUndefined(preparers)) return;
+    for (const resourceClass in preparers) {
         // let resourceClass: string = config.resource;
-        let config = preparers[resourceClass];
+        const config = preparers[resourceClass];
         let classKey = config.abbr;
         if (isNullOrUndefined(classKey)) {
             classKey = resourceClass;
         }
         // resourceClassKeys[resourceClass] = classKey;
         // resourceLanguages[resourceClass] = [resourceClass];
-        let alias = [resourceClass];
+        const alias = [resourceClass];
         if (config.alias) {
             alias.push(...config.alias);
         }
@@ -289,23 +281,35 @@ export function LoadPreparesConfig(preparers: {[key: string]: PreparerConfig;}) 
         if (isNullOrUndefined(config.inits)) {
             config.inits = {};
         }
-        if (Object.getOwnPropertyNames(config.inits).indexOf('name_prefix')<0) {
-            config.inits['name_prefix'] = "clitest." + classKey;
+        if (Object.getOwnPropertyNames(config.inits).indexOf('name_prefix') < 0) {
+            config.inits['name_prefix'] = 'clitest.' + classKey;
         }
-        if (Object.getOwnPropertyNames(config.inits).indexOf('random_name_length')<0) {
+        if (Object.getOwnPropertyNames(config.inits).indexOf('random_name_length') < 0) {
             config.inits['random_name_length'] = 24;
         }
-        let depends: string[] = config.create.concat(config.delete).join("\n").match(/\{.*?\}/g);
-        depends = depends.map((x: string)=>{
-            return x.substr(1, x.length-2);
+        let depends: string[] = config.create
+            .concat(config.delete)
+            .join('\n')
+            .match(/\{.*?\}/g);
+        depends = depends.map((x: string) => {
+            return x.substr(1, x.length - 2);
         });
         depends = Array.from(new Set(depends));
-        let nameIndex = depends.indexOf('name');
+        const nameIndex = depends.indexOf('name');
         if (nameIndex !== -1) {
             depends.splice(nameIndex, 1);
         }
         // resourceClassDepends[resourceClass] = depends;
-        preparerInfos[resourceClass] = new PreparerInfo(GenPreparerName(resourceClass), resourceClass, depends.map(GenPreparerDependParamName), depends, classKey, alias, true, config);
+        preparerInfos[resourceClass] = new PreparerInfo(
+            GenPreparerName(resourceClass),
+            resourceClass,
+            depends.map(GenPreparerDependParamName),
+            depends,
+            classKey,
+            alias,
+            true,
+            config,
+        );
     }
 }
 
@@ -544,18 +548,17 @@ function singlizeLast(word: string) {
     return ws.join('-');
 }
 
-let keyCache = {}  //class_name+objectname->key
-let formalCache = {}
-let keySeq = {}    // class_name ->seq
-let uniqueNames = {};
+const keyCache = {}; //class_name+objectname->key
+const formalCache = {};
+const keySeq = {}; // class_name ->seq
+const uniqueNames = {};
 
 function addUniqueName(className: string, objectName: string): string {
     let ret = objectName;
     if (azOptions?.['test-unique-resource']) {
-        if (uniqueNames.hasOwnProperty(className)) {
+        if (Object.prototype.hasOwnProperty.call(uniqueNames, className)) {
             ret = uniqueNames[className];
-        }
-        else {
+        } else {
             uniqueNames[className] = ret;
         }
     }
@@ -563,8 +566,8 @@ function addUniqueName(className: string, objectName: string): string {
 }
 
 export function getResourceKey(className: string, objectName: string, formalName = false): string {
-    let originObjectName = addUniqueName(className, objectName);
-    let longKey = (preparerInfos[className]?.key || className) + '_' + originObjectName;
+    const originObjectName = addUniqueName(className, objectName);
+    const longKey = (preparerInfos[className]?.key || className) + '_' + originObjectName;
     if (formalName && longKey in formalCache) {
         return formalCache[longKey];
     }
@@ -572,24 +575,26 @@ export function getResourceKey(className: string, objectName: string, formalName
         return keyCache[longKey];
     }
 
-    if (keySeq.hasOwnProperty(className)) {
-        let key = (preparerInfos[className]?.key || className) + '_' + keySeq[className];
+    if (Object.prototype.hasOwnProperty.call(keySeq, className)) {
+        const key = (preparerInfos[className]?.key || className) + '_' + keySeq[className];
         keySeq[className] += 1;
         formalCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}${keySeq[className] - 1}`);
-        if (preparerInfos[className]?.name) {  // is external resource
+        if (preparerInfos[className]?.name) {
+            // is external resource
             keyCache[longKey] = key;
+        } else {
+            keyCache[longKey] = ToCamelCase(
+                `my-${singlizeLast(className)}${keySeq[className] - 1}`,
+            );
         }
-        else {
-            keyCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}${keySeq[className] - 1}`);
-        }
-    }
-    else {
+    } else {
         keySeq[className] = 2;
         formalCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}`);
-        if (preparerInfos[className]?.name) {  // is external resource
+        if (preparerInfos[className]?.name) {
+            // is external resource
             keyCache[longKey] = preparerInfos[className]?.key || className;
-        }
-        else {                              // is internal resource
+        } else {
+            // is internal resource
             // generally, internal resource object_name is shorter than class_name
             // keyCache[longKey] = object_name;
             keyCache[longKey] = ToCamelCase(`my-${singlizeLast(className)}`);
@@ -885,7 +890,7 @@ export class ResourcePool {
 
     public addMapResource(className: string, objectName: string): ResourceObject {
         objectName = addUniqueName(className, objectName);
-        let resourceObject = this.findTreeResource(className, objectName, this.root);
+        const resourceObject = this.findTreeResource(className, objectName, this.root);
         if (resourceObject) {
             return resourceObject;
         }
@@ -902,32 +907,45 @@ export class ResourcePool {
     }
 
     public matchFullType(preparerConfig: PreparerConfig, instanceName: string, fullType: string[]) {
-        const configedFullType = preparerConfig?.fullType?.split("/");
-        if (isNullOrUndefined(configedFullType) ||isNullOrUndefined(fullType))    return true;
-        if (configedFullType.length!=fullType.length)   return false;
-        for (let i=0;i<configedFullType.length; i++) {
+        const configedFullType = preparerConfig?.fullType?.split('/');
+        if (isNullOrUndefined(configedFullType) || isNullOrUndefined(fullType)) return true;
+        if (configedFullType.length != fullType.length) return false;
+        for (let i = 0; i < configedFullType.length; i++) {
             const resourceA = configedFullType[i];
             const resourceB = fullType[i];
-            if (resourceA.toLowerCase()!=resourceB.toLowerCase() && this.isResource(resourceA, instanceName)!=this.isResource(resourceB, instanceName)) return false;
+            if (
+                resourceA.toLowerCase() != resourceB.toLowerCase() &&
+                this.isResource(resourceA, instanceName) != this.isResource(resourceB, instanceName)
+            )
+                return false;
         }
         return true;
     }
 
-    public isResource(language: string, instanceName: string, fullType: string[]=undefined): string | null {
-        if (language.startsWith("--")) language = language.substr(2);
+    public isResource(
+        language: string,
+        instanceName: string,
+        fullType: string[] = undefined,
+    ): string | null {
+        if (language.startsWith('--')) language = language.substr(2);
         let classResource = null;
         let instanceResource = null;
-        for (let resource in preparerInfos) {
-            for (let resourceLanguage of preparerInfos[resource]?.alias || []) {
-                if (resourceLanguage.toLowerCase() == language.toLowerCase() &&
-                    this.matchFullType(preparerInfos[resource]?.config, instanceName, fullType)) {
+        for (const resource in preparerInfos) {
+            for (const resourceLanguage of preparerInfos[resource]?.alias || []) {
+                if (
+                    resourceLanguage.toLowerCase() == language.toLowerCase() &&
+                    this.matchFullType(preparerInfos[resource]?.config, instanceName, fullType)
+                ) {
                     if (isNullOrUndefined(preparerInfos[resource]?.config?.forInstance)) {
                         classResource = resource;
-                    }
-                    else if(typeof instanceName === 'string' && preparerInfos[resource]?.config?.forInstance?.toLowerCase() == instanceName?.toLowerCase()) {
+                    } else if (
+                        typeof instanceName === 'string' &&
+                        preparerInfos[resource]?.config?.forInstance?.toLowerCase() ==
+                            instanceName?.toLowerCase()
+                    ) {
                         instanceResource = resource;
                     }
-                } 
+                }
             }
         }
         if (isNullOrUndefined(instanceName)) {
@@ -941,6 +959,17 @@ export class ResourcePool {
         str = str.split('{').join('{{').split('}').join('}}');
         for (const placeholder of placeholders) {
             str = str.split(`{${placeholder}}`).join(placeholder);
+        }
+
+        // apply replace in testResource scenario
+        let p = str.indexOf('$(');
+        let q = 0;
+        while (p >= 0 && q >= 0) {
+            q = str.indexOf(')', p);
+            if (q >= 0) {
+                str = str.slice(0, p) + '{' + str.slice(p + 2, q) + '}' + str.slice(q + 1);
+                p = str.indexOf('$(');
+            }
         }
         return str;
     }
@@ -1153,31 +1182,30 @@ export class ResourcePool {
         this.useSubscription = true;
         let i = 3;
         let resourceObject: ResourceObject = null;
-        let fullType: string[] = [];
-        while (i < (nodes.length - 1)) {
-            if (nodes[i].toLowerCase()=="providers") {
-                fullType.push(nodes[i+1].toLowerCase());
-            }
-            else {
-                if (fullType.length>=1) {
+        const fullType: string[] = [];
+        while (i < nodes.length - 1) {
+            if (nodes[i].toLowerCase() == 'providers') {
+                fullType.push(nodes[i + 1].toLowerCase());
+            } else {
+                if (fullType.length >= 1) {
                     fullType.push(nodes[i].toLowerCase());
                 }
             }
-            const resource = this.isResource(nodes[i], nodes[i+1], fullType);
+            const resource = this.isResource(nodes[i], nodes[i + 1], fullType);
             if (resource) {
-                if (false && resource == SUBNET) {
-                    // since the subnet can't be created with rand name, just use the dfault one.
-                    nodes[i + 1] = 'default';
-                } else {
-                    resourceObject = this.addTreeResource(resource, nodes[i + 1], resourceObject);
-                    nodes[i + 1] = resourceObject.placeholder(isTest);
-                    if (placeholders.indexOf(resourceObject.placeholder(isTest)) < 0) {
-                        placeholders.push(resourceObject.placeholder(isTest));
-                    }
-                    if (resources.indexOf(resource) < 0) {
-                        resources.push(resource);
-                    }
+                // if (resource == SUBNET) {
+                //     // since the subnet can't be created with rand name, just use the dfault one.
+                //     nodes[i + 1] = 'default';
+                // } else {
+                resourceObject = this.addTreeResource(resource, nodes[i + 1], resourceObject);
+                nodes[i + 1] = resourceObject.placeholder(isTest);
+                if (placeholders.indexOf(resourceObject.placeholder(isTest)) < 0) {
+                    placeholders.push(resourceObject.placeholder(isTest));
                 }
+                if (resources.indexOf(resource) < 0) {
+                    resources.push(resource);
+                }
+                // }
             } else {
                 nodes[i + 1] = this.getPlaceholder(nodes[i + 1], isTest);
             }
@@ -1208,22 +1236,28 @@ export class ResourcePool {
         //     // since the subnet can't be created with rand name, just use the dfault one.
         //     return 'default';
         // }
-        let resourceObject = this.addMapResource(resource, paramValue);
+        const resourceObject = this.addMapResource(resource, paramValue);
         if (resourceObject) {
             return resourceObject.placeholder(isTest);
-        }
-        else {
+        } else {
             return this.getPlaceholder(paramValue, isTest);
         }
     }
 
-
-    public getPlaceholder(objectName: string, isTest: boolean, placeholders: string[] = null, targetClassName=undefined): string {
+    public getPlaceholder(
+        objectName: string,
+        isTest: boolean,
+        placeholders: string[] = null,
+        targetClassName = undefined,
+    ): string {
         // find in MapResource
-        for (let className in this.map) {
-            if (!isNullOrUndefined(targetClassName) && className != targetClassName)   continue;
-            if ( !isNullOrUndefined(this.map[className].objects) && this.map[className].objects.hasOwnProperty(objectName)) {
-                let ret = this.map[className].objects[objectName].placeholder(isTest);
+        for (const className in this.map) {
+            if (!isNullOrUndefined(targetClassName) && className != targetClassName) continue;
+            if (
+                !isNullOrUndefined(this.map[className].objects) &&
+                Object.prototype.hasOwnProperty.call(this.map[className].objects, objectName)
+            ) {
+                const ret = this.map[className].objects[objectName].placeholder(isTest);
                 if (!isNullOrUndefined(placeholders)) {
                     if (placeholders.indexOf(ret) < 0) {
                         placeholders.push(ret);
@@ -1234,7 +1268,7 @@ export class ResourcePool {
         }
 
         // find in TreeResource
-        let resourceObject = this.findTreeResource(targetClassName, objectName, this.root);
+        const resourceObject = this.findTreeResource(targetClassName, objectName, this.root);
         if (resourceObject) {
             const ret = resourceObject.placeholder(isTest);
             if (!isNullOrUndefined(placeholders)) {
@@ -1257,28 +1291,45 @@ export class ResourcePool {
         return objectName;
     }
 
-    public addResourcesInfo(resources: object) {
-        for (let className in resources) {
+    public addResourcesInfo(resources: Record<string, any>) {
+        for (const className in resources) {
             if (!(className in preparerInfos)) {
-                preparerInfos[className] = new PreparerInfo(null, className, [], [], className, resources[className]);
-            }
-            else {
+                preparerInfos[className] = new PreparerInfo(
+                    null,
+                    className,
+                    [],
+                    [],
+                    className,
+                    resources[className],
+                );
+            } else {
                 preparerInfos[className].key = className; // TODO: brief key for internal resources
-                for (let a of resources[className]) {
-                    if (preparerInfos[className].alias.indexOf(a)<0)
+                for (const a of resources[className]) {
+                    if (preparerInfos[className].alias.indexOf(a) < 0)
                         preparerInfos[className].alias.push(a);
                 }
             }
         }
     }
 
-    public setResourceDepends(resourceClassName: string, dependResources: string[], dependParameters: string[], createdObjectNames: string[]) {
+    public setResourceDepends(
+        resourceClassName: string,
+        dependResources: string[],
+        dependParameters: string[],
+        createdObjectNames: string[],
+    ) {
         if (!(resourceClassName in preparerInfos)) {
-            preparerInfos[resourceClassName] = new PreparerInfo(null, resourceClassName, dependParameters, deepCopy(dependResources) as string[], resourceClassName, [resourceClassName]);
-        }
-        else {
+            preparerInfos[resourceClassName] = new PreparerInfo(
+                null,
+                resourceClassName,
+                dependParameters,
+                deepCopy(dependResources) as string[],
+                resourceClassName,
+                [resourceClassName],
+            );
+        } else {
             for (let i = 0; i < dependResources.length; i++) {
-                let dependResource = dependResources[i];
+                const dependResource = dependResources[i];
                 if (preparerInfos[resourceClassName].dependResources.indexOf(dependResource) < 0) {
                     preparerInfos[resourceClassName].dependParameters.push(dependParameters[i]);
                     preparerInfos[resourceClassName].dependResources.push(dependResource);
@@ -1294,7 +1345,7 @@ export class ResourcePool {
     }
 
     public isDependResource(child: string, parent: string) {
-        let depends = preparerInfos[child].dependResources;
+        const depends = preparerInfos[child].dependResources;
         return depends && depends.indexOf(parent) >= 0;
     }
 
@@ -1315,6 +1366,122 @@ export class ResourcePool {
     public clearExampleParams() {
         for (const resource of this.findAllResource(null, [], null)) {
             resource.exampleParams = [];
+        }
+    }
+
+    public testDefs: TestDefinitionFile[] = [];
+    public async loadTestResources() {
+        function getSwaggerFolder() {
+            const parentsOptions = AzConfiguration.getValue(CodeGenConstants.parents);
+            for (const k in parentsOptions) {
+                const v: string = parentsOptions[k];
+                if (
+                    k.endsWith('.json') &&
+                    typeof v === 'string' &&
+                    v.startsWith('file:///') &&
+                    v.indexOf('specification') > 0
+                ) {
+                    if (os.type().toLowerCase().indexOf('linux') >= 0) {
+                        return v.slice('file:///'.length - 1);
+                    }
+                    return v.slice('file:///'.length);
+                }
+            }
+            return undefined;
+        }
+
+        const loader = new TestResourceLoader({
+            useJsonParser: false,
+            checkUnderFileRoot: false,
+            fileRoot: getSwaggerFolder(),
+            swaggerFilePaths: AzConfiguration.getValue(CodeGenConstants.inputFile),
+        });
+
+        for (const testResource of AzConfiguration.getValue(CodeGenConstants.testResources) || []) {
+            const testDef = await loader.load(testResource[CodeGenConstants.test]);
+            this.testDefs.push(testDef);
+        }
+    }
+
+    public generateArmTemplate(files: Record<string, any>, templateFolder: string) {
+        for (const testDef of this.testDefs) {
+            for (let prepareStep of testDef.prepareSteps) {
+                if ((prepareStep as TestStepArmTemplateDeployment).armTemplateDeployment) {
+                    prepareStep = prepareStep as TestStepArmTemplateDeployment;
+                    files[
+                        path.join(templateFolder, prepareStep.armTemplateDeployment)
+                    ] = JSON.stringify(prepareStep.armTemplatePayload, null, 4).split('\n');
+                }
+            }
+        }
+    }
+
+    public setupWithArmTemplate(): string[] {
+        const ret: string[] = [];
+        for (const testDef of this.testDefs) {
+            for (const prepareStep of testDef.prepareSteps) {
+                if ((prepareStep as TestStepArmTemplateDeployment).armTemplateDeployment) {
+                    const templateFile = (prepareStep as TestStepArmTemplateDeployment)
+                        .armTemplateDeployment;
+                    ret.push(
+                        `    cmd = "az deployment group create --resource-group {{rg}} --template-file \\"{}\\"".format(os.path.join(TEST_DIR, '${templateFile}'))`,
+                    );
+                    ret.push(`    o = test.cmd(cmd).get_output_in_json()`);
+                    ret.push(
+                        `    kwargs = {k: v.get("value") for k, v in o.get('properties', {}).get('outputs', {}).items()}`,
+                    );
+                    ret.push(`    test.kwargs.update(kwargs)`);
+                }
+            }
+        }
+        if (ret.length == 0) {
+            ret.push('    pass');
+        }
+        return ret;
+    }
+
+    public generateTestScenario() {
+        const cliScenario = {};
+        for (const testDef of this.testDefs) {
+            for (const testScenario of testDef.testScenarios) {
+                cliScenario[testScenario.description] = [];
+                for (let step of testScenario.steps) {
+                    if ((step as TestStepExampleFileRestCall).exampleId) {
+                        step = step as TestStepExampleFileRestCall;
+                        this.applyTestResourceReplace(step);
+                        cliScenario[testScenario.description].push({
+                            name: step.exampleId,
+                            step: step,
+                        });
+                    }
+                }
+            }
+        }
+        return cliScenario;
+    }
+
+    public get hasTestResourceScenario(): boolean {
+        return this.testDefs.length > 0;
+    }
+
+    public applyTestResourceReplace(step: TestStepExampleFileRestCall) {
+        for (const replace of step.replace) {
+            if (replace.pathInBody) {
+                for (const k in step.exampleTemplate.parameters) {
+                    if (checkNested(step.exampleTemplate.parameters[k], replace.pathInBody)) {
+                        setPathValue(
+                            step.exampleTemplate.parameters[k],
+                            replace.pathInBody,
+                            replace.to,
+                        );
+                    }
+                }
+            }
+            if (replace.pathInExample) {
+                if (checkNested(step.exampleTemplate, replace.pathInBody)) {
+                    setPathValue(step.exampleTemplate, replace.pathInBody, replace.to);
+                }
+            }
         }
     }
 }

@@ -176,7 +176,6 @@ export function ToMultiLine(
     output: string[] = undefined,
     maxLength = 119,
     strMode = false,
-    useContinuation: boolean = true,
 ): string[] {
     let lastComma = -1;
     let inStr = false;
@@ -258,15 +257,14 @@ export function ToMultiLine(
                 }
 
                 if (strMode) {
-                    if (lastNormal != ret[ret.length - 1].length - 1) {
-                        let newLine = ret[ret.length - 1].substr(lastNormal + 1);
-                        ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastNormal + 1);
-                        if (useContinuation)    ret[ret.length - 1] += "\\";
+                    if (lastNormal !== ret[ret.length - 1].length - 1) {
+                        const newLine = ret[ret.length - 1].substr(lastNormal + 1);
+                        ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastNormal + 1) + '\\';
                         ret.push(newLine);
                         lastComma = -1;
                     } else {
                         if (i < sentence.length - 1) {
-                            if (indents.length==0 && useContinuation) ret[ret.length - 1] += "\\";
+                            ret[ret.length - 1] += '\\';
                             ret.push('');
                             lastComma = -1;
                         }
@@ -288,18 +286,17 @@ export function ToMultiLine(
                         lastComma = -1;
                     }
 
-                    // handle special case: space, "" or = in tail
-                    if (ret[ret.length-2].length>=2) {
-                        let lenLast = ret[ret.length - 2].length;
-                        if (isStrTags[lenLast-2]) {
-                            if (ret[ret.length-2].slice(0, -2).match(/^ *$/i))
-                                ret.splice(ret.length-2, 1);
-                            else
-                            {
-                                ret[ret.length-2] = ret[ret.length-2].slice(0, -2); // remove "" at the tail
-                                if (ret[ret.length-2].slice(-1)[0]!="=") {
-                                    while (ret[ret.length-2].slice(-1)[0] == " ") {     // remove all spaces before ""
-                                        ret[ret.length-2] = ret[ret.length-2].slice(0, -1); 
+                    if (ret[ret.length - 2].length >= 2) {
+                        const lenLast = ret[ret.length - 2].length;
+                        if (isStrTags[lenLast - 2]) {
+                            if (ret[ret.length - 2].slice(0, -2).match(/^ *$/i)) {
+                                ret.splice(ret.length - 2, 1);
+                            } else {
+                                ret[ret.length - 2] = ret[ret.length - 2].slice(0, -2); // remove "" at the tail
+                                if (ret[ret.length - 2].slice(-1)[0] !== '=') {
+                                    while (ret[ret.length - 2].slice(-1)[0] === ' ') {
+                                        // remove all spaces before ""
+                                        ret[ret.length - 2] = ret[ret.length - 2].slice(0, -1);
                                     }
                                 } else {
                                     // there is = in the end of line --> create new line from the last comma
@@ -321,49 +318,26 @@ export function ToMultiLine(
                             }
                         }
                     }
-
-                    // add '\' in end of breaking point if there is no parathesis
-                    if (indents.length==0 && useContinuation) {
-                        ret[ret.length - 2] += "\\";
-                    }
                 }
-            }
-            else {
-                let tmpIndents: number[] = deepCopy(indents) as number[];
-                //find indent by parathesis before the lastComma
-                while (lastComma>=0 && tmpIndents.length>0 && indent>lastComma) {
-                    if (tmpIndents.length>1 || lastComma<tmpIndents[0]) {
-                        // if it's not the first parathesis indent, or lastComma is in front of the first parathesis indent, then pop();
-                        indent = tmpIndents.pop();
-                    }
-                    else {
-                        // if it's the first parathesis indent, and lastComma is behind of it, then keep it.
-                        break;
-                    }
-                }
-                if (lastComma>=0) {
-                    // if tmpIndents.length ==0 && lastComma>=0, then try to seek for the parathesis before the lastComma
+            } else {
+                if (lastComma >= 0) {
+                    // find indent by parathesis before the lastComma
                     let closePara = 0;
-                    for (let row=ret.length-1; row>=0 && tmpIndents.length ==0; row--) {
-                        for (let seek = lastComma>=0 && row==ret.length-1?lastComma:ret[row].length-1; seek > indent; seek--) {
-                            if (inStrTags[seek]) continue;
-                            let currentChar = ret[row][seek];
-                            if (currentChar == ')' || currentChar == ']') closePara++;
-                            if (currentChar == '(' || currentChar == '[') {
-                                if (closePara == 0) {
-                                    tmpIndents.push(indent);
-                                    indent = seek + 1;
-                                    break;
-                                }
-                                else {
-                                    closePara--;
-                                }
+                    for (let i = lastComma; i > indent; i--) {
+                        if (inStrTags[i]) continue;
+                        const currentChar = ret[ret.length - 1][i];
+                        if (currentChar === ')' || currentChar === ']') closePara++;
+                        if (currentChar === '(' || currentChar === '[') {
+                            if (closePara === 0) {
+                                indents.push(indent);
+                                indent = i + 1;
+                                break;
+                            } else {
+                                closePara--;
                             }
                         }
                     }
-                }
-                let newlineAdded = false;
-                if (lastComma >= 0 && lastComma>indent) {
+
                     let prefixSpaces = ret[ret.length - 1].search(/\S|$/);
                     if (indent > 0) prefixSpaces = indent;
                     const newLine =
@@ -371,30 +345,23 @@ export function ToMultiLine(
                         ret[ret.length - 1].substr(lastComma + 1).trimLeft();
                     ret[ret.length - 1] = ret[ret.length - 1].substr(0, lastComma + 1);
                     ret.push(newLine);
-                    newlineAdded = true;
                     lastComma = -1;
-                }
-                else if (i < sentence.length - 2) {
-                    for (let j=ret[ret.length - 1].length-1; j>indent; j--) {
-                        let currentChar = ret[ret.length - 1][j];
-                        if (!currentChar.match(/[a-z0-9_\.]/i) && sentence[i+1] != ",") {
-                            let prefixSpaces = ret[ret.length - 1].search(/\S|$/);
-                            if (indent > 0) prefixSpaces = indent;
-                            let newLine = ' '.repeat(prefixSpaces) + ret[ret.length - 1].substr(j + 1).trimLeft();
+                } else if (i < sentence.length - 2) {
+                    for (let j = ret[ret.length - 1].length - 1; j > indent; j--) {
+                        const currentChar = ret[ret.length - 1][j];
+                        if (!currentChar.match(/[a-z0-9_]/i) && sentence[i + 1] !== ',') {
+                            const newLine =
+                                ' '.repeat(ret[ret.length - 1].search(/\S|$/)) +
+                                ret[ret.length - 1].substr(j + 1).trimLeft();
                             ret[ret.length - 1] = ret[ret.length - 1].substr(0, j + 1);
-                            // if (indents.length === 0) {
-                            //     ret[ret.length - 1] += '\\'; // fix E502
-                            // }
+                            if (indents.length === 0) {
+                                ret[ret.length - 1] += '\\'; // fix E502
+                            }
                             ret.push(newLine);
-                            newlineAdded = true;
                             lastComma = -1;
                             break;
                         }
                     }
-                }
-
-                if (newlineAdded && tmpIndents.length==0 && useContinuation) {
-                    ret[ret.length - 2] += "\\";
                 }
             }
 
@@ -758,4 +725,40 @@ export function getGitStatus(folder: string) {
 
 export function isNullOrUndefined(obj: any) {
     return obj === null || obj === undefined;
+}
+
+export function setPathValue(obj, path, value) {
+    if (Object(obj) !== obj) return obj; // When obj is not an object
+    // If not yet an array, get the keys from the string-path
+    if (!Array.isArray(path)) path = path.toString().match(/[^.[\]]+/g) || [];
+    path.slice(0, -1).reduce(
+        (
+            a,
+            c,
+            i, // Iterate all of them except the last one
+        ) =>
+            Object(a[c]) === a[c] // Does the key exist and is its value an object?
+                ? // Yes: then follow that path
+                  a[c]
+                : // No: create the key. Is the next key a potential array-index?
+                  (a[c] =
+                      Math.abs(path[i + 1]) >> 0 === +path[i + 1]
+                          ? [] // Yes: assign a new array object
+                          : {}), // No: assign a new plain object
+        obj,
+    )[path[path.length - 1]] = value; // Finally assign the value to the last key
+    return obj; // Return the top-level object to allow chaining
+}
+
+export function checkNested(obj, path: string) {
+    if (Object(obj) !== obj) return false; // When obj is not an object
+    const args = path.split('.');
+
+    for (let i = 0; i < args.length; i++) {
+        if (!obj || !(args[i] in obj)) {
+            return false;
+        }
+        obj = obj[args[i]];
+    }
+    return true;
 }

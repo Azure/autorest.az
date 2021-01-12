@@ -14,6 +14,7 @@ from azure.cli.testsdk.exceptions import CliTestError
 from azure.cli.testsdk.reverse_dependency import get_dummy_cli
 
 
+
 class VirtualNetworkPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):
     def __init__(self,
                  resource_group_key="rg",
@@ -30,16 +31,17 @@ class VirtualNetworkPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):
 
     def create_resource(self, name, **_):
         template = 'az network vnet create --resource-group {} --name {}'
-        self.live_only_execute(self.cli_ctx,
-                               template.format(self.test_class_instance.kwargs.get(self.resource_group_key), name))
+        cmd = template.format(self.test_class_instance.kwargs.get(self.resource_group_key), name)
+        self.live_only_execute(self.cli_ctx, cmd)
 
         self.test_class_instance.kwargs[self.key] = name
         return {self.key: name}
 
     def remove_resource(self, name, **_):
         template = 'az network vnet delete --resource-group {} --name {}'
-        self.live_only_execute(self.cli_ctx,
-                               template.format(self.test_class_instance.kwargs.get(self.resource_group_key), name))
+        cmd = template.format(self.test_class_instance.kwargs.get(self.resource_group_key), name)
+        self.live_only_execute(self.cli_ctx, cmd)
+
 
 
 class SubnetPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):
@@ -60,19 +62,15 @@ class SubnetPreparer(NoTrafficRecordingPreparer, SingleValueReplacer):
 
     def create_resource(self, name, **_):
         template = 'az network vnet subnet create -n {} --vnet-name {} -g {} --address-prefixes "10.0.0.0/21"'
-        self.live_only_execute(self.cli_ctx, template.format(name,
-                                                             self.test_class_instance.kwargs.get(
-                                                             self.virtual_network_key),
-                                                             self.test_class_instance.kwargs.get(self.resource_group_key)
-                                                             ))
+        cmd = template.format(name, self.test_class_instance.kwargs.get(self.virtual_network_key),
+                              self.test_class_instance.kwargs.get(self.resource_group_key))
+        self.live_only_execute(self.cli_ctx, cmd)
 
         self.test_class_instance.kwargs[self.key] = name
         return {self.key: name}
 
     def remove_resource(self, name, **_):
         template = 'az network vnet subnet delete --name {} --resource-group {} --vnet-name {}'
-        self.live_only_execute(self.cli_ctx, template.format(name,
-                                                             self.test_class_instance.kwargs.get(
-                                                             self.resource_group_key),
-                                                             self.test_class_instance.kwargs.get(self.virtual_network_key)
-                                                             ))
+        cmd = template.format(name, self.test_class_instance.kwargs.get(self.resource_group_key),
+                              self.test_class_instance.kwargs.get(self.virtual_network_key))
+        self.live_only_execute(self.cli_ctx, cmd)

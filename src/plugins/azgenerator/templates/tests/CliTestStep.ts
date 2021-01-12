@@ -3,15 +3,15 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { CodeModelAz, CommandExample } from "../../CodeModelAz"
-import { PreparerEntity, getResourceKey } from "./ScenarioTool"
-import { ToMultiLine, deepCopy, ToSnakeCase } from '../../../../utils/helper';
-import { HeaderGenerator } from "../../Header";
-import { TemplateBase } from "../TemplateBase";
-import { PathConstants } from "../../../models";
+import { CodeModelAz, CommandExample } from '../../CodeModelAz';
+import { PreparerEntity, getResourceKey } from './ScenarioTool';
+import { ToMultiLine, deepCopy } from '../../../../utils/helper';
+import { HeaderGenerator } from '../../Header';
+import { TemplateBase } from '../TemplateBase';
+import { PathConstants } from '../../../../utils/models';
 import { isNullOrUndefined } from 'util';
 
-let usePreparers: Set<string>, shortToLongName, funcNames, allSteps, stepBuff: object;
+let usePreparers: Set<string>, shortToLongName, funcNames, allSteps, stepBuff: Record<string, any>;
 
 function initVars() {
     usePreparers = new Set<string>();
@@ -62,7 +62,15 @@ export class CliTestStep extends TemplateBase {
         steps.push('');
 
         const commandParams = model.GatherInternalResource();
-        const config: any = deepCopy(model.Extension_DefaultTestScenario);
+        let config: any = [];
+        if (model.GetResourcePool().hasTestResourceScenario) {
+            for (const g in model.Extension_TestScenario) {
+                for (const s in model.Extension_TestScenario[g])
+                    config.push(...model.Extension_TestScenario[g][s]);
+            }
+        } else {
+            config = deepCopy(model.Extension_DefaultTestScenario);
+        }
 
         const header: HeaderGenerator = new HeaderGenerator();
 
@@ -96,6 +104,7 @@ export class CliTestStep extends TemplateBase {
                         commandParams,
                         examples,
                         minimum,
+                        config[ci].step,
                     )) {
                         exampleIdx += 1;
                         if (exampleCmd && exampleCmd.length > 0) {
@@ -132,8 +141,11 @@ export class CliTestStep extends TemplateBase {
                                 );
                             } else {
                                 stepBuff[cmdString] = functionName;
-                                if (exampleCmd[0].indexOf(' delete') > -1 && examples[exampleIdx].HttpMethod.toLowerCase()=="delete") {
-                                    exampleCmd[0] += " -y";
+                                if (
+                                    exampleCmd[0].indexOf(' delete') > -1 &&
+                                    examples[exampleIdx].HttpMethod.toLowerCase() == 'delete'
+                                ) {
+                                    exampleCmd[0] += ' -y';
                                 }
 
                                 steps.push('    if checks is None:');
@@ -146,7 +158,7 @@ export class CliTestStep extends TemplateBase {
                                         (idx === 0 ? "test.cmd('" : "         '");
                                     const postfix: string =
                                         idx < exampleCmd.length - 1 ? " '" : "',";
-                                    ToMultiLine(prefix + exampleCmd[idx] + postfix, steps, 119, false, false);
+                                    ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
                                 }
                                 if (isNullOrUndefined(waitCmds) || waitCmds.length === 0) {
                                     steps.push('    ' + disabled + '         checks=checks)');
@@ -235,7 +247,9 @@ export class CliTestStep extends TemplateBase {
         const parameterNames = [];
         for (const entity of model.GetPreparerEntities() as PreparerEntity[]) {
             if (!entity.info.name) {
-                const created = model.GetTestUniqueResource?entity.info.createdObjectNames.length>0: entity.info.createdObjectNames.indexOf(entity.objectName) >= 0;
+                const created = model.GetTestUniqueResource
+                    ? entity.info.createdObjectNames.length > 0
+                    : entity.info.createdObjectNames.indexOf(entity.objectName) >= 0;
                 internalObjects.push([
                     entity.info.className,
                     getResourceKey(entity.info.className, entity.objectName),
@@ -264,15 +278,15 @@ export class CliTestStep extends TemplateBase {
             ToMultiLine(line, decorators);
             if (decorated.indexOf(entity.info.name) < 0) {
                 if (!entity.info.needGen) {
-                    header.addFromImport("azure.cli.testsdk", [entity.info.name]);
-                // }
-                // else if (entity.info.name == 'ResourceGroupPreparer') {
-                //     header.addFromImport("azure.cli.testsdk", [entity.info.name]);
-                // }
-                // else if (entity.info.name == 'StorageAccountPreparer') {
-                //     header.addFromImport("azure.cli.testsdk", [entity.info.name]);
+                    header.addFromImport('azure.cli.testsdk', [entity.info.name]);
+                    // }
+                    // else if (entity.info.name == 'ResourceGroupPreparer') {
+                    //     header.addFromImport("azure.cli.testsdk", [entity.info.name]);
+                    // }
+                    // else if (entity.info.name == 'StorageAccountPreparer') {
+                    //     header.addFromImport("azure.cli.testsdk", [entity.info.name]);
                 } else if (entity.info.needGen) {
-                    header.addFromImport(".preparers", [entity.info.name]);
+                    header.addFromImport('.preparers', [entity.info.name]);
                     usePreparers.add(entity.info.className);
                 }
                 decorated.push(entity.info.name);

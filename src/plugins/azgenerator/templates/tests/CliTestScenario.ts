@@ -1,4 +1,4 @@
-/* ---------------------------------------------------------------------------------------------
+﻿/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
@@ -133,6 +133,7 @@ export class CliTestScenario extends TemplateBase {
                         commandParams,
                         examples,
                         minimum,
+                        config[ci].step,
                     )) {
                         exampleIdx += 1;
                         if (exampleCmd && exampleCmd.length > 0) {
@@ -190,7 +191,14 @@ export class CliTestScenario extends TemplateBase {
                                 )}):`,
                             ),
                         );
-                        steps.push('    pass');
+                        if (
+                            functionName.startsWith('setup_') &&
+                            model.GetResourcePool().hasTestResourceScenario
+                        ) {
+                            steps.push(...model.GetResourcePool().setupWithArmTemplate());
+                        } else {
+                            steps.push('    pass');
+                        }
                         steps.push('');
                         steps.push('');
                     }

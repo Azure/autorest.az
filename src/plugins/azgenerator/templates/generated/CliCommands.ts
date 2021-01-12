@@ -77,9 +77,6 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
                         model.GetModuleOperationNamePythonUpper() +
                         ".{}',",
                     output,
-                    119,
-                    false,
-                    false,
                 );
 
                 output.push('        client_factory=' + cfName + ')');

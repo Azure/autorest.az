@@ -6,6 +6,11 @@
 import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-tools/codemodel';
 import { GenerationMode } from '../../utils/models';
 import { ResourcePool } from './templates/tests/ScenarioTool';
+import {
+    TestDefinitionFile,
+    TestStepArmTemplateDeployment,
+    TestStepExampleFileRestCall,
+} from 'oav/dist/lib/testScenario/testResourceTypes';
 
 export class MethodParam {
     public value: any;
@@ -242,7 +247,13 @@ export interface CodeModelAz {
     GenerateTestInit(): void;
     SelectFirstExample(): boolean;
     SelectNextExample(): boolean;
-    FindExampleById(id: string, commandParams: any, examples: any[], minimum: boolean): string[][];
+    FindExampleById(
+        id: string,
+        commandParams: any,
+        examples: any[],
+        minimum: boolean,
+        step?: TestStepExampleFileRestCall,
+    ): string[][];
     Example_Body: string[];
     Example_Title: string;
     Example_Params: any;
@@ -250,7 +261,7 @@ export interface CodeModelAz {
     GetSubscriptionKey(): string;
     GetPreparerEntities(): any[];
     GatherInternalResource();
-    FindExampleWaitById(id: string): string[][];
+    FindExampleWaitById(id: string, step?: TestStepExampleFileRestCall): string[][];
     GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
     GetExampleChecks(example: CommandExample): string[];
     RandomizeNames: boolean;
@@ -258,7 +269,7 @@ export interface CodeModelAz {
     // readme config
     CliCoreLib: string;
     GenMinTest: boolean;
-    GetMetaData(): {[key: string]: any};
+    GetMetaData(): { [key: string]: any };
     PreparerConfig: any;
     GetTestUniqueResource: boolean;
 }

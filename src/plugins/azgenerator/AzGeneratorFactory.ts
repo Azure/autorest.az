@@ -17,6 +17,7 @@ export class AzGeneratorFactory {
         isDebugMode: boolean,
     ): Promise<AzGeneratorBase> {
         await model.init();
+        await model.resourcePool.loadTestResources();
         model.GenerateTestInit();
 
         if (model.CliGenerationMode === GenerationMode.Full) {

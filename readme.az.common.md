@@ -36,7 +36,6 @@ cli:
 az:
   preparers:
     virtualNetworks:
-      fullType: microsoft.network/virtualnetworks
       abbr:  vn
       alias:
         - virtualnetwork
@@ -46,17 +45,30 @@ az:
         - az network vnet delete --resource-group {resourceGroups} --name {name}
 
     subnets:
-      # forInstance: mySubnet
+      alias:
+        - subnet
       create: |-
         az network vnet subnet create -n {name} --vnet-name {virtualNetworks} -g {resourceGroups} --address-prefixes "10.0.0.0/21"
       delete:  |-
         az network vnet subnet delete --name {name} --resource-group {resourceGroups} --vnet-name {virtualNetworks}
 
-    serviceendpointpolicies:
+    serviceEndpointPolicies:
+      abbr: sep
+      alias:
+        - serviceendpointpolicy
       create: |-
         az network service-endpoint policy create --name {name} --resource-group {resourceGroups}
       delete:  |-
         az network service-endpoint policy delete --name {name} -g {resourceGroups}
+
+    networkInterfaces:
+      abbr: nic
+      alias:
+        - virtualinterface
+      create:
+        - az network nic create --resource-group {resourceGroups} --name {name} --vnet-name {virtualNetworks} --subnet {subnets}
+      delete:
+        - az network nic delete --resource-group {resourceGroups} --name {name}
 ```
  
 ``` yaml $(python) && ($(generate-sdk) == 'yes' || ($(target-mode) != 'core' && !$(generate-sdk)))
