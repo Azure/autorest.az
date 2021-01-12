@@ -21,6 +21,7 @@ export class Process {
                 Extension_Name: 'offazure',
                 azRelativeOutputFolder: 'src/offazure',
                 Extension_NameClass: 'AzureMigrateV2',
+                Extension_NameUnderscored: 'offazure',
             },
         });
         const expectedFile = path.join(`${__dirname}`, '../../../test/unittest/expected/setup1.py');
@@ -36,6 +37,7 @@ export class Process {
                 Extension_Name: 'offazure',
                 azRelativeOutputFolder: 'src/offazure',
                 Extension_NameClass: 'AzureMigrateV2',
+                Extension_NameUnderscored: 'offazure',
                 dependencies: ['azure-mgmt-offazure~=0.1.0', 'python==3.6'],
             },
         });

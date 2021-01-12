@@ -31,7 +31,7 @@ CLASSIFIERS = [
 ]
 
 DEPENDENCIES = [
-{%- if model.dependencies %}
+{%- if model.dependencies.length %}
 {% for d in model.dependencies %}    '{{d}}',
 {% endfor -%}
 {% endif -%}
@@ -48,7 +48,7 @@ with open('HISTORY.rst', 'r', encoding='utf-8') as f:
     HISTORY = f.read()
 
 setup(
-    name='{{model.Extension_Name}}',
+    name='{{model.Extension_NameUnderscored}}',
     version=VERSION,
     description='Microsoft Azure Command-Line Tools {{model.Extension_NameClass}} Extension',
     author='Microsoft Corporation',

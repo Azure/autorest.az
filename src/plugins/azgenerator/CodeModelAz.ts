@@ -94,6 +94,7 @@ export interface CodeModelAz {
     SDK_IsTrack1: boolean;
     SDK_NoFlatten: boolean;
     AzureCliFolder: string;
+    AzureCliExtFolder: string;
     azOutputFolder: string;
     Extension_Name: string;
     Extension_Parent: string;

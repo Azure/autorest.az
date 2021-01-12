@@ -3407,7 +3407,11 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get AzureCliFolder(): string {
-        return AzConfiguration.getValue(CodeGenConstants.azureCliFolder) + '/';
+        return AzConfiguration.getValue(CodeGenConstants.azureCliFolder);
+    }
+
+    public get AzureCliExtFolder(): string {
+        return AzConfiguration.getValue(CodeGenConstants.azureCliExtFolder);
     }
 
     public get AzextFolder(): string {
