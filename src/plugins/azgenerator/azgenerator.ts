@@ -47,7 +47,16 @@ export async function processRequest(host: Host) {
 
         for (const f in files) {
             if (!isNullOrUndefined(files[f])) {
-                host.WriteFile(f, files[f].join(EOL));
+                if (
+                    f.endsWith('HISTORY.rst') ||
+                    f.endsWith('azext_metadata.json') ||
+                    f.endsWith('setup.cfg') ||
+                    f.endsWith('setup.py')
+                ) {
+                    host.WriteFile(f, files[f]);
+                } else {
+                    host.WriteFile(f, files[f].join(EOL));
+                }
             }
         }
         closeInplaceGen();

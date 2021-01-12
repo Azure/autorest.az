@@ -52,7 +52,7 @@ import {
     ResourcePool,
     ObjectStatus,
     GroupTestScenario,
-} from './templates/tests/ScenarioTool';
+} from './renders/tests/ScenarioTool';
 import { readFile } from '@azure-tools/async-io';
 
 class ActionParam {
@@ -3420,6 +3420,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get IsCliCore() {
         return AzConfiguration.getValue(CodeGenConstants.isCliCore);
+    }
+
+    public get minCliCoreVersion(): string {
+        return CodeGenConstants.minCliCoreVersion;
     }
 
     public get SDK_NeedSDK() {

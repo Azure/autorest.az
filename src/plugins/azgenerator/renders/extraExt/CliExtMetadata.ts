@@ -13,6 +13,7 @@ import {
 } from '../../../../utils/models';
 import { CodeModelAz } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
+import * as nunjucks from 'nunjucks';
 
 export class CliTopMetadata extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -36,18 +37,11 @@ export class CliTopMetadata extends TemplateBase {
     }
 
     private GenerateAzureCliAzextMetadata(model: CodeModelAz): string[] {
-        const output: string[] = [];
-
-        output.push('{');
-        if (model.Extension_Mode === ExtensionMode.Experimental) {
-            output.push('    "azext.isExperimental": true,');
-        } else if (model.Extension_Mode === ExtensionMode.Preview) {
-            output.push('    "azext.isPreview": true,');
-        }
-
-        output.push('    "azext.minCliCoreVersion": "' + CodeGenConstants.minCliCoreVersion + '"');
-        output.push('}');
-
+        const tmplPath = path.join(
+            `${__dirname}`,
+            '../../../../templates/azext/azext_metadata.json.njx',
+        );
+        const output = nunjucks.render(tmplPath, { model: model });
         return output;
     }
 }

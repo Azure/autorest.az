@@ -5,7 +5,7 @@
 
 import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-tools/codemodel';
 import { GenerationMode } from '../../utils/models';
-import { ResourcePool } from './templates/tests/ScenarioTool';
+import { ResourcePool } from './renders/tests/ScenarioTool';
 
 export class MethodParam {
     public value: any;
@@ -89,6 +89,7 @@ export interface CodeModelAz {
     AzextFolder: string;
 
     IsCliCore: boolean;
+    minCliCoreVersion: string;
     SDK_NeedSDK: boolean;
     SDK_IsTrack1: boolean;
     SDK_NoFlatten: boolean;

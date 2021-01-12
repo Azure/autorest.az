@@ -4,18 +4,11 @@
  *-------------------------------------------------------------------------------------------- */
 
 import { CodeModelAz } from '../../CodeModelAz';
+import * as path from 'path';
+import * as nunjucks from 'nunjucks';
 
-export function GenerateAzureCliHistory(model: CodeModelAz): string[] {
-    const output: string[] = [];
-
-    output.push('.. :changelog:');
-    output.push('');
-    output.push('Release History');
-    output.push('===============');
-    output.push('');
-    output.push('0.1.0');
-    output.push('++++++');
-    output.push('* Initial release.');
-    output.push('');
+export function GenerateAzureCliSetupCfg(model: CodeModelAz): string[] {
+    const tmplPath = path.join(`${__dirname}`, '../../../../templates/setup.cfg.njx');
+    const output = nunjucks.render(tmplPath, {});
     return output;
 }
