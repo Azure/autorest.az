@@ -3441,4 +3441,56 @@ export class CodeModelCliImpl implements CodeModelAz {
     public get SDK_NoFlatten() {
         return AzConfiguration.getValue(CodeGenConstants.sdkNoFlatten);
     }
+
+    private handleExtensionRenderData() {
+
+    }
+    
+    public handleRenderData(
+        extensionProperties: string[],
+        commandGroupProperties: string[],
+        commandProperties: string[],
+        methodProperties: string[],
+        parameterProperties: string[],
+    ) {
+        const extensions = [];
+        if (this.SelectFirstExtension) {
+            data.model.hasExtension = true;
+            do {
+                const extension = {
+                    name: this.Extension_Name,
+                    CommandGroups: [],
+                    hasCommandGroup: false,
+                };
+                if (this.SelectFirstCommandGroup) {
+                    extension.hasCommandGroup = true;
+                    const commandGroups = [];
+                    do {
+                        const commandGroup = {
+                            name: this.CommandGroup_Name,
+                            cliKey: this.CommandGroup_CliKey,
+                            hasCommand: false,
+                            Commands: [],
+                        };
+                        if (this.SelectFirstCommand) {
+                            commandGroup.hasCommand = true;
+                            const commands = [];
+                            do {
+                                const command = {
+                                    Methods: [],
+                                    hasMethod: false,
+                                };
+                                commands.push(command);
+                            } while (this.SelectNextCommand);
+                            commandGroup.Commands = commands;
+                        }
+                        commandGroups.push(commandGroup);
+                    } while (this.SelectNextCommandGroup);
+                    extension.CommandGroups = commandGroups;
+                }
+                extensions.push(extension);
+            } while (this.SelectNextExtension);
+            data.model.Extensions = extensions;
+        }
+    }
 }

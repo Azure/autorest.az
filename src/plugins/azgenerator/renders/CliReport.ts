@@ -34,45 +34,6 @@ export class CliReport extends TemplateBase {
             },
         };
 
-        const extensions = [];
-        if (model.SelectFirstExtension) {
-            data.model.hasExtension = true;
-            do {
-                const extension = {
-                    name: model.Extension_Name,
-                    CommandGroups: [],
-                    hasCommandGroup: false,
-                };
-                if (model.SelectFirstCommandGroup) {
-                    extension.hasCommandGroup = true;
-                    const commandGroups = [];
-                    do {
-                        const commandGroup = {
-                            name: model.CommandGroup_Name,
-                            cliKey: model.CommandGroup_CliKey,
-                            hasCommand: false,
-                            Commands: [],
-                        };
-                        if (model.SelectFirstCommand) {
-                            commandGroup.hasCommand = true;
-                            const commands = [];
-                            do {
-                                const command = {
-                                    Methods: [],
-                                    hasMethod: false,
-                                };
-                                commands.push(command);
-                            } while (model.SelectNextCommand);
-                            commandGroup.Commands = commands;
-                        }
-                        commandGroups.push(commandGroup);
-                    } while (model.SelectNextCommandGroup);
-                    extension.CommandGroups = commandGroups;
-                }
-                extensions.push(extension);
-            } while (model.SelectNextExtension);
-            data.model.Extensions = extensions;
-        }
 
         output.push('# Azure CLI Module Creation Report');
         output.push('');
