@@ -1,0 +1,66 @@
+# Azure CLI Module Creation Report
+
+{% if model.hasExtension %}
+## EXTENSION
+|CLI Extension|Command Groups|
+|---------|------------|
+{% for extension in model.Extensions %}
+|az {{extension.name}}}|[groups](#CommandGroups)
+{% endfor %}
+{% endif %}
+
+{% if model.hasCommandGroup %}
+## GROUPS
+{% for extension in model.Extensions %}
+### <a name="CommandGroups">Command groups in `az {{extension.name}}` extension </a>
+|CLI Command Group|Group Swagger name|Commands|
+|---------|------------|--------|
+{% for group in model.CommandGroups %}
+|az {{group.name}}|{{group.cliKey}}}|[commands](#CommandsIn{{group.cliKey}})|
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+{% if model.hasCommand %}
+## COMMANDS
+{% for group in model.CommandGroups %}
+### <a name="CommandsIn{{group.cliKey}}">Commands in `az {{group.name}}` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+{% for command in group.Commands %}
+{% for method in command.Methods %}
+|[az {{command.name}}](#{{group.cliKey}}{{method.cliKey}})|{{method.cliKey}}|[Parameters](#Parameters{{group.cliKey}}{{method.cliKey}})|[Example](#Examples{{group.cliKey}}{{method.cliKey}})|
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+{% if model.hasCommand %}
+## COMMAND DETAILS
+{% for group in model.CommandGroups %}
+### group `az {{group.name}}`
+{% for command in group.Commands %}
+{% for method in command.Methods %}
+#### <a name="{{group.cliKey}}{{method.cliKey}}">Command `az {{command.name}}`</a>
+
+{% if method.hasExample %}
+##### <a name="Examples{{group.cliKey}}{{method.cliKey}}">Example</a>
+```
+{% for example in method.Examples %}
+{{example}}
+{% endfor %}
+```
+{% endif %}
+
+{% if method.hasParameter %}
+##### <a name="Parameters{{group.cliKey}}{{method.cliKey}}">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+{% for param in method.Parameters %}
+|**--{{param.mapsTo}}**|{{param.type}}|{{param.description}}|{{param.namePython}}|{{param.cliKey}}|
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% endif %}
