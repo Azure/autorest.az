@@ -85,11 +85,17 @@ export class CliExtSetupPy extends TemplateBase {
         }
         let azRelativeOutputFolder = path.resolve(model.azOutputFolder);
         if (!isNullOrUndefined(model.AzureCliFolder)) {
-            azRelativeOutputFolder = azRelativeOutputFolder.replace(path.resolve(model.AzureCliFolder, '/'), '');
+            azRelativeOutputFolder = azRelativeOutputFolder.replace(
+                path.join(path.resolve(model.AzureCliFolder), '/'),
+                '',
+            );
         } else if (!isNullOrUndefined(model.AzureCliExtFolder)) {
-            azRelativeOutputFolder = azRelativeOutputFolder.replace(path.join(path.resolve(model.AzureCliExtFolder), '/'), '');
+            azRelativeOutputFolder = azRelativeOutputFolder.replace(
+                path.join(path.resolve(model.AzureCliExtFolder), '/'),
+                '',
+            );
         }
-        const data =  {
+        const data = {
             model: {
                 AzextFolder: model.AzextFolder,
                 Extension_Name: model.Extension_Name,
