@@ -7,8 +7,9 @@ import { CodeModelAz } from '../CodeModelAz';
 import * as path from 'path';
 import { SchemaType } from '@azure-tools/codemodel';
 import { ToMultiLine, isNullOrUndefined } from '../../../utils/helper';
-import { PathConstants } from '../../../utils/models';
+import { PathConstants, RenderProperties } from '../../../utils/models';
 import { TemplateBase } from './TemplateBase';
+import * as nunjucks from 'nunjucks';
 
 export class CliReport extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
@@ -24,17 +25,32 @@ export class CliReport extends TemplateBase {
         return this.fullGeneration();
     }
 
-    GenerateAzureCliReport(model: CodeModelAz): string[] {
-        let output: string[] = [];
-        
+    GenerateAzureCliReport(model: CodeModelAz): string[] { 
         let data = {
             model: {
                 Extensions: [],
                 hasExtension: false,
             },
         };
+        const Types = [
+            'extension',
+            'commandGroup',
+            'command',
+            'method',
+            'methodParameter',
+        ];
 
+        const inputProperties = new RenderProperties(
+            ['name'],
+            ['name', 'cliKey'],
+            [],
+            ['nameAz', 'cliKey'],
+            ['mapsTo', 'type', 'description', 'cliKey']
+        )
 
+        data.model = model.getRenderData(0, inputProperties, Types);
+        const tmplPath = path.join(`${__dirname}`, '../../../templates/report.md.njx');
+        const output = nunjucks.render(tmplPath, data);
         output.push('# Azure CLI Module Creation Report');
         output.push('');
         output.push('## EXTENSION');

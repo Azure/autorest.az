@@ -36,6 +36,7 @@ import {
     EXCLUDED_PARAMS,
     GenerationMode,
     AzConfiguration,
+    RenderProperties,
 } from '../../utils/models';
 import {
     CodeModelAz,
@@ -54,6 +55,7 @@ import {
     GroupTestScenario,
 } from './renders/tests/ScenarioTool';
 import { readFile } from '@azure-tools/async-io';
+import { prototype } from 'events';
 
 class ActionParam {
     public constructor(
@@ -3442,55 +3444,31 @@ export class CodeModelCliImpl implements CodeModelAz {
         return AzConfiguration.getValue(CodeGenConstants.sdkNoFlatten);
     }
 
-    private handleExtensionRenderData() {
-
-    }
-    
-    public handleRenderData(
-        extensionProperties: string[],
-        commandGroupProperties: string[],
-        commandProperties: string[],
-        methodProperties: string[],
-        parameterProperties: string[],
-    ) {
-        const extensions = [];
-        if (this.SelectFirstExtension) {
-            data.model.hasExtension = true;
+    public getRenderData(layer: number, properties: RenderProperties, Types: string[]) {
+        let type = Types[layer];
+        let Type = Capitalize(type);
+        let nextLayer = layer + 1;
+        const data = {}
+        data['has' + Type] = false;
+        data[Type + 's'] = [];
+        let props = properties[type + 'Properties'];
+        const items = [];
+        if (this['SelectFirst' + Type]) {
+            data['has' + Type] = true;
             do {
-                const extension = {
-                    name: this.Extension_Name,
-                    CommandGroups: [],
-                    hasCommandGroup: false,
-                };
-                if (this.SelectFirstCommandGroup) {
-                    extension.hasCommandGroup = true;
-                    const commandGroups = [];
-                    do {
-                        const commandGroup = {
-                            name: this.CommandGroup_Name,
-                            cliKey: this.CommandGroup_CliKey,
-                            hasCommand: false,
-                            Commands: [],
-                        };
-                        if (this.SelectFirstCommand) {
-                            commandGroup.hasCommand = true;
-                            const commands = [];
-                            do {
-                                const command = {
-                                    Methods: [],
-                                    hasMethod: false,
-                                };
-                                commands.push(command);
-                            } while (this.SelectNextCommand);
-                            commandGroup.Commands = commands;
-                        }
-                        commandGroups.push(commandGroup);
-                    } while (this.SelectNextCommandGroup);
-                    extension.CommandGroups = commandGroups;
+                let item = {};
+                if (nextLayer <= Types.length) {
+                    item = this.getRenderData(nextLayer, properties, Types);
                 }
-                extensions.push(extension);
-            } while (this.SelectNextExtension);
-            data.model.Extensions = extensions;
+                if (!isNullOrUndefined(props) && Array.isArray(props) && props.length > 0) {
+                    for(const prop in props) {
+                        item[prop] = this[Type + '_' + Capitalize(prop)];
+                    }
+                }
+                items.push(item);
+            } while (this['SelectNext' + Type]);
+            data[Type + 's'] = items;
         }
+        return data;
     }
 }

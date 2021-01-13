@@ -153,3 +153,13 @@ export class AzConfiguration {
         AzConfiguration.dict[key] = value;
     }
 }
+
+export class RenderProperties {
+    public constructor(
+        public extensionProperties: string[] = [],
+        public commandGroupProperties: string[] = [],
+        public commandProperties: string[] = [],
+        public methodProperties: string[] = [],
+        public methodParameterProperties: string[] = [],
+    ) {}
+}
