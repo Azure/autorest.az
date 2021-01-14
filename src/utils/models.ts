@@ -163,3 +163,23 @@ export class RenderProperties {
         public methodParameterProperties: string[] = [],
     ) {}
 }
+
+export enum SortOrder {
+    DESC = -1,
+    ASEC = 1,
+}
+
+export type CodeModelTypes =
+    | 'extension'
+    | 'commandGroup'
+    | 'command'
+    | 'method'
+    | 'methodParameter';
+export class RenderInput {
+    public constructor(
+        public properties: string[],
+        public sortBy: Record<string, SortOrder> = {},
+        public conditions: string[] = [],
+        public converter: Map<string, (item) => unknown> = new Map<string, (item) => unknown>(),
+    ) {}
+}

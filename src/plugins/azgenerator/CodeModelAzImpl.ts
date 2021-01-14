@@ -37,6 +37,8 @@ import {
     GenerationMode,
     AzConfiguration,
     RenderProperties,
+    CodeModelTypes,
+    RenderInput,
 } from '../../utils/models';
 import {
     CodeModelAz,
@@ -3444,29 +3446,60 @@ export class CodeModelCliImpl implements CodeModelAz {
         return AzConfiguration.getValue(CodeGenConstants.sdkNoFlatten);
     }
 
-    public getRenderData(layer: number, properties: RenderProperties, Types: string[]) {
-        let type = Types[layer];
-        let Type = Capitalize(type);
-        let nextLayer = layer + 1;
-        const data = {}
+    public getRenderData(iter: IterableIterator<[CodeModelTypes, RenderInput]>) {
+        if (iter.next().done) {
+            return {};
+        }
+        const entry = iter.next().value;
+        const type: CodeModelTypes = entry.first;
+        const renderInput: RenderInput = entry.second;
+        const sortBy = renderInput.sortBy;
+        const properties = renderInput.properties;
+        const conditions = renderInput.conditions;
+        const converter = renderInput.converter;
+        const Type = Capitalize(type);
+        const data = {};
         data['has' + Type] = false;
         data[Type + 's'] = [];
-        let props = properties[type + 'Properties'];
+        const props = properties[type + 'Properties'];
         const items = [];
         if (this['SelectFirst' + Type]) {
             data['has' + Type] = true;
             do {
-                let item = {};
-                if (nextLayer <= Types.length) {
-                    item = this.getRenderData(nextLayer, properties, Types);
-                }
+                const item = this.getRenderData(iter);
                 if (!isNullOrUndefined(props) && Array.isArray(props) && props.length > 0) {
-                    for(const prop in props) {
+                    for (const prop in props) {
                         item[prop] = this[Type + '_' + Capitalize(prop)];
+                        if (!isNullOrUndefined(converter[prop])) {
+                            item[prop] = converter[prop](item[prop]);
+                        }
+                    }
+                    for (const condition of conditions) {
+                        if (eval(condition)) {
+                            continue;
+                        }
                     }
                 }
                 items.push(item);
             } while (this['SelectNext' + Type]);
+            if (items.length > 0 && sortBy.length > 0) {
+                items.sort(function (a, b) {
+                    for (const sortKey in sortBy) {
+                        if (
+                            a[Type + '_' + Capitalize(sortKey)] >
+                            b[Type + '_' + Capitalize(sortKey)]
+                        ) {
+                            return sortBy[sortKey];
+                        } else if (
+                            a[Type + '_' + Capitalize(sortKey)] <
+                            b[Type + '_' + Capitalize(sortKey)]
+                        ) {
+                            return 0 - sortBy[sortKey];
+                        }
+                    }
+                    return 0;
+                });
+            }
             data[Type + 's'] = items;
         }
         return data;

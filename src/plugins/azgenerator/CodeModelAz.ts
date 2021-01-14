@@ -4,7 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 
 import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-tools/codemodel';
-import { GenerationMode, RenderProperties } from '../../utils/models';
+import { CodeModelTypes, GenerationMode, RenderInput, RenderProperties } from '../../utils/models';
 import { ResourcePool } from './renders/tests/ScenarioTool';
 
 export class MethodParam {
@@ -261,5 +261,5 @@ export interface CodeModelAz {
     CliCoreLib: string;
     GenMinTest: boolean;
     GetMetaData(): { [key: string]: any };
-    getRenderData(layer: number, properties: RenderProperties, Types: string[])
+    getRenderData(iter: IterableIterator<[CodeModelTypes, RenderInput]>);
 }
