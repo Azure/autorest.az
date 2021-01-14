@@ -92,8 +92,7 @@ export class CliReport extends TemplateBase {
             ],
         ]);
 
-        const iter = inputProperties.entries();
-        data.model = model.getRenderData(iter);
+        data.model = model.getRenderData('extension', 'commandGroup', inputProperties);
         const tmplPath = path.join(`${__dirname}`, '../../../templates/report.md.njx');
         const output = nunjucks.render(tmplPath, data);
         return output;

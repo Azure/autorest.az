@@ -1,0 +1,103 @@
+{
+    "model": {
+        "hasCommandGroup": true,
+        "CommandGroups": [
+            {
+                "name": "offazure hyperv cluster",
+                "cliKey": "HyperVCluster",
+                "hasCommand": true,
+                "Commands": [
+                    { "name": "offazure hyperv cluster cluster list" },
+                    { "name": "offazure hyperv cluster show" }
+                ]
+            },
+            {
+                "name": "offazure hyperv host",
+                "cliKey": "HyperVHost",
+                "hasCommand": true,
+                "Commands": [
+                    { "name": "offazure hyperv host put-host" },
+                    { "name": "offazure hyperv host show-all-host-in-site" },
+                    { "name": "offazure hyperv host show-host" }
+                ]
+            },
+            {
+                "name": "offazure hyperv machine",
+                "cliKey": "HyperVMachines",
+                "hasCommand": true,
+                "Commands": [
+                    { "name": "offazure hyperv machine show-all-machine-in-site" },
+                    { "name": "offazure hyperv machine show-machine" }
+                ]
+            },
+            {
+                "name": "offazure hyperv run-as-account",
+                "cliKey": "HyperVRunAsAccounts",
+                "hasCommand": true,
+                "Commands": [
+                    { "name": "offazure hyperv run-as-account show-all-run-as-account-in-site" },
+                    { "name": "offazure hyperv run-as-account show-run-as-account" }
+                ]
+            },
+            {
+                "name": "offazure hyperv site",
+                "cliKey": "HyperVSites",
+                "hasCommand": true,
+                "Commands": [
+                    { "name": "offazure hyperv site delete" },
+                    { "name": "offazure hyperv site get-site-health-summary" },
+                    { "name": "offazure hyperv site get-site-usage" },
+                    { "name": "offazure hyperv site patch-site" },
+                    { "name": "offazure hyperv site put-site" },
+                    { "name": "offazure hyperv site refresh-site" },
+                    { "name": "offazure hyperv site show-site" }
+                ]
+            },
+            {
+                "name": "offazure vmware machine",
+                "cliKey": "Machines",
+                "hasCommand": true,
+                "Commands": [
+                    { "name": "offazure vmware machine show-all-machine-in-site" },
+                    { "name": "offazure vmware machine show-machine" },
+                    { "name": "offazure vmware machine start-machine" },
+                    { "name": "offazure vmware machine stop-machine" }
+                ]
+            },
+            {
+                "name": "offazure vmware run-as-account",
+                "cliKey": "RunAsAccounts",
+                "hasCommand": true,
+                "Commands": [
+                    { "name": "offazure vmware run-as-account show-all-run-as-account-in-site" },
+                    { "name": "offazure vmware run-as-account show-run-as-account" }
+                ]
+            },
+            {
+                "name": "offazure vmware site",
+                "cliKey": "Sites",
+                "hasCommand": true,
+                "Commands": [
+                    { "name": "offazure vmware site delete" },
+                    { "name": "offazure vmware site get-site-health-summary" },
+                    { "name": "offazure vmware site get-site-usage" },
+                    { "name": "offazure vmware site patch-site" },
+                    { "name": "offazure vmware site put-site" },
+                    { "name": "offazure vmware site refresh-site" },
+                    { "name": "offazure vmware site show-site" }
+                ]
+            },
+            {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter",
+                "hasCommand": true,
+                "Commands": [
+                    { "name": "offazure vmware vcenter delete" },
+                    { "name": "offazure vmware vcenter put-v-center" },
+                    { "name": "offazure vmware vcenter show-all-v-center-in-site" },
+                    { "name": "offazure vmware vcenter show-v-center" }
+                ]
+            }
+        ]
+    }
+}

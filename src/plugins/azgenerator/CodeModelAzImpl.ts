@@ -128,6 +128,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public constructor(protected session: Session<CodeModel>) {
+        this.init();
         this.codeModel = session.model;
         this.resourcePool = new ResourcePool();
         this.dealingSimplePolymorphism();
@@ -3446,29 +3447,31 @@ export class CodeModelCliImpl implements CodeModelAz {
         return AzConfiguration.getValue(CodeGenConstants.sdkNoFlatten);
     }
 
-    public getRenderData(iter: IterableIterator<[CodeModelTypes, RenderInput]>) {
-        if (iter.next().done) {
+    public getRenderData(
+        layer: CodeModelTypes,
+        nextLayer: CodeModelTypes,
+        inputProperties: Map<CodeModelTypes, RenderInput>,
+    ): unknown {
+        if (isNullOrUndefined(layer)) {
             return {};
         }
-        const entry = iter.next().value;
-        const type: CodeModelTypes = entry.first;
-        const renderInput: RenderInput = entry.second;
+        const type: CodeModelTypes = layer;
+        const renderInput: RenderInput = inputProperties.get(type);
         const sortBy = renderInput.sortBy;
-        const properties = renderInput.properties;
+        const props = renderInput.properties;
         const conditions = renderInput.conditions;
         const converter = renderInput.converter;
         const Type = Capitalize(type);
         const data = {};
         data['has' + Type] = false;
         data[Type + 's'] = [];
-        const props = properties[type + 'Properties'];
         const items = [];
-        if (this['SelectFirst' + Type]) {
+        if (this['SelectFirst' + Type]()) {
             data['has' + Type] = true;
             do {
-                const item = this.getRenderData(iter);
+                let item = {};
                 if (!isNullOrUndefined(props) && Array.isArray(props) && props.length > 0) {
-                    for (const prop in props) {
+                    for (const prop of props) {
                         item[prop] = this[Type + '_' + Capitalize(prop)];
                         if (!isNullOrUndefined(converter[prop])) {
                             item[prop] = converter[prop](item[prop]);
@@ -3480,8 +3483,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                         }
                     }
                 }
+                let item2 = {};
+                item2 = this.getRenderData(nextLayer, null, inputProperties);
+                item = { ...item, ...item2 };
                 items.push(item);
-            } while (this['SelectNext' + Type]);
+            } while (this['SelectNext' + Type]());
             if (items.length > 0 && sortBy.length > 0) {
                 items.sort(function (a, b) {
                     for (const sortKey in sortBy) {
