@@ -29,7 +29,7 @@ export class Process {
                 },
             };
             const session = await createTestSession<CodeModel>(cfg, resources + '/' + each, [
-                each + '-az-namer.yaml',
+                each + '-az-modifier-after.yaml',
             ]);
 
             const entry = new Entry(session);
