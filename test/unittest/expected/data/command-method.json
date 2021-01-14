@@ -11,8 +11,18 @@
                         "cliKey": "HyperVCluster",
                         "hasCommand": true,
                         "Commands": [
-                            { "name": "offazure hyperv cluster cluster list" },
-                            { "name": "offazure hyperv cluster show" }
+                            {
+                                "name": "offazure hyperv cluster cluster list",
+                                "hasMethod": true,
+                                "Methods": [
+                                    { "nameAz": "cluster list", "cliKey": "GetAllClustersInSite" }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv cluster show",
+                                "hasMethod": true,
+                                "Methods": [{ "nameAz": "cluster show", "cliKey": "GetCluster" }]
+                            }
                         ]
                     },
                     {

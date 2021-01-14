@@ -4,7 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 
 import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-tools/codemodel';
-import { CodeModelTypes, GenerationMode, RenderInput, RenderProperties } from '../../utils/models';
+import { CodeModelTypes, DataGraph, GenerationMode, RenderInput, RenderProperties } from '../../utils/models';
 import { ResourcePool } from './renders/tests/ScenarioTool';
 
 export class MethodParam {
@@ -263,7 +263,7 @@ export interface CodeModelAz {
     GetMetaData(): { [key: string]: any };
     getRenderData(
         layer: CodeModelTypes,
-        nextLayer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
+        dependencies: DataGraph,
     );
 }

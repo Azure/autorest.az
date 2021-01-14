@@ -175,6 +175,10 @@ export type CodeModelTypes =
     | 'command'
     | 'method'
     | 'methodParameter';
+
+export type DataGraph = [CodeModelTypes, CodeModelTypes][];
+
+
 export class RenderInput {
     public constructor(
         public properties: string[],

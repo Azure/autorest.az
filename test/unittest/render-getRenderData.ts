@@ -13,7 +13,7 @@ import { createTestSession } from '../utils/test-helper';
 import * as sourceMapSupport from 'source-map-support';
 import { Entry } from '../../src/plugins/entry';
 import { CodeModelCliImpl } from '../../src/plugins/azgenerator/CodeModelAzImpl';
-import { CodeModelTypes, RenderInput, SortOrder } from '../../src/utils/models';
+import { CodeModelTypes, DataGraph, RenderInput, SortOrder } from '../../src/utils/models';
 
 sourceMapSupport.install();
 
@@ -46,7 +46,7 @@ export class Process {
         this.model = model;
     }
 
-    getRenderTestData(layer: CodeModelTypes, nextLayer: CodeModelTypes) {
+    getRenderTestData(dependencies: DataGraph) {
         const data = {
             model: {},
         };
@@ -88,7 +88,8 @@ export class Process {
             ],
         ]);
 
-        data.model = this.model.getRenderData(layer, nextLayer, inputProperties);
+
+        data.model = this.model.getRenderData('extension', inputProperties, dependencies);
         return data;
     }
 
@@ -97,7 +98,13 @@ export class Process {
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/extension-command-groups.json')),
         );
-        const data = this.getRenderTestData('extension', 'commandGroup');
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+        ];
+        const data = this.getRenderTestData(dependencies);
+
+        console.log('getRenderDataTest1');
+        console.log(JSON.stringify(data));
 
         assert.deepStrictEqual(
             data,
@@ -106,12 +113,82 @@ export class Process {
         );
     }
 
+    /*
+    {
+        extension: { 
+            commandGroup: {
+                command: { 
+                    method: {
+                        'methodParameter',
+                        'example',
+                    }
+                }
+            }
+        }
+    }
+
+    */
+
+    
+
     @test(slow(600000), timeout(1500000)) async getRenderDataTest2() {
         await this.init();
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/command-groups-command.json')),
         );
-        const data = this.getRenderTestData('commandGroup', 'command');
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+            ['commandGroup', 'command'],
+        ];
+        const data = this.getRenderTestData(dependencies);
+
+        console.log('getRenderDataTest2')
+        console.log(JSON.stringify(data));
+
+        assert.deepStrictEqual(
+            data,
+            expected,
+            'Getting render data error from extension to commandGroup ',
+        );
+    }
+
+    @test(slow(600000), timeout(1500000)) async getRenderDataTest3() {
+        await this.init();
+        const expected = JSON.parse(
+            await readFile(path.join(resources, 'expected', 'data/command-groups-command.json')),
+        );
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+            ['commandGroup', 'command'],
+            ['command', 'method'],
+        ];
+        const data = this.getRenderTestData(dependencies);
+
+        console.log('getRenderDataTest3');
+        console.log(JSON.stringify(data));
+
+        assert.deepStrictEqual(
+            data,
+            expected,
+            'Getting render data error from extension to commandGroup ',
+        );
+    }
+
+    @test(slow(600000), timeout(1500000)) async getRenderDataTest4() {
+        await this.init();
+        const expected = JSON.parse(
+            await readFile(path.join(resources, 'expected', 'data/command-groups-command.json')),
+        );
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+            ['commandGroup', 'command'],
+            ['command', 'method'],
+            ['method', 'methodParameter'],
+        ];
+        const data = this.getRenderTestData(dependencies);
+
+        console.log('getRenderDataTest4');
+        console.log(JSON.stringify(data));
 
         assert.deepStrictEqual(
             data,

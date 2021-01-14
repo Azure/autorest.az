@@ -39,6 +39,7 @@ import {
     RenderProperties,
     CodeModelTypes,
     RenderInput,
+    DataGraph,
 } from '../../utils/models';
 import {
     CodeModelAz,
@@ -3447,13 +3448,31 @@ export class CodeModelCliImpl implements CodeModelAz {
         return AzConfiguration.getValue(CodeGenConstants.sdkNoFlatten);
     }
 
+    
+    /*
+    [
+        [extension, commandGroup],
+        [commandGroup, command],
+        [command, method],
+        [method, methodParameter],
+        [method, example]
+    ]
+     */
     public getRenderData(
         layer: CodeModelTypes,
-        nextLayer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
+        dependencies: DataGraph,
     ): unknown {
-        if (isNullOrUndefined(layer)) {
+        if (isNullOrUndefined(layer) || isNullOrUndefined(dependencies) || dependencies.length < 0) {
             return {};
+        }
+        let nextLayer = undefined;
+        if (dependencies.length > 0) {
+            if (layer != dependencies[0][0]) {
+                layer = dependencies[0][0];
+            }
+            nextLayer = dependencies[0][1];
+            dependencies.shift();
         }
         const type: CodeModelTypes = layer;
         const renderInput: RenderInput = inputProperties.get(type);
@@ -3484,7 +3503,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                 }
                 let item2 = {};
-                item2 = this.getRenderData(nextLayer, null, inputProperties);
+                item2 = this.getRenderData(nextLayer, inputProperties, dependencies);
                 item = { ...item, ...item2 };
                 items.push(item);
             } while (this['SelectNext' + Type]());
