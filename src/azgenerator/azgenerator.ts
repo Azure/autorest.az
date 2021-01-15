@@ -4,7 +4,7 @@ import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from '../utils/helper';
 import { CodeGenConstants, PathConstants, AzConfiguration } from '../utils/models';
-import { AzGeneratorFactory } from './AzGeneratorFactory';
+import { AzGeneratorFactory } from './generators/AzGeneratorFactory';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { openInplaceGen, closeInplaceGen } from '../utils/inplace';
 

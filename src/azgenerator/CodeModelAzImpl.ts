@@ -40,13 +40,8 @@ import {
     RenderInput,
     DataGraph,
 } from '../utils/models';
-import {
-    CodeModelAz,
-    CommandExample,
-    ExampleParam,
-    MethodParam,
-    KeyValueType,
-} from './CodeModelAz';
+import { CodeModelAz } from './CodeModelAz';
+import { CommandExample, ExampleParam, MethodParam, KeyValueType } from './climodels/ExampleType';
 import {
     azOptions,
     GenerateDefaultTestScenario,

@@ -3,12 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { CodeModelAz, CommandExample } from '../../CodeModelAz';
+import { CodeModelAz } from '../../CodeModelAz';
 import { PreparerEntity, getResourceKey } from './ScenarioTool';
 import { ToMultiLine, deepCopy, isNullOrUndefined } from '../../../utils/helper';
 import { HeaderGenerator } from '../../Header';
 import { TemplateBase } from '../TemplateBase';
 import { PathConstants } from '../../../utils/models';
+import { CommandExample } from '../../climodels/ExampleType';
 
 let usePreparers: boolean, shortToLongName, funcNames, allSteps, stepBuff: any;
 

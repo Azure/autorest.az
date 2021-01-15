@@ -5,8 +5,9 @@
 import { HttpMethod } from '@azure-tools/codemodel';
 import { CmdToMultiLines, isNullOrUndefined } from '../../../utils/helper';
 import { PathConstants } from '../../../utils/models';
-import { CodeModelAz, CommandExample } from '../../CodeModelAz';
+import { CodeModelAz } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
+import { CommandExample } from '../../climodels/ExampleType';
 
 export class CliExtReadme extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
