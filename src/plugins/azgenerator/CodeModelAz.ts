@@ -4,7 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 
 import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-tools/codemodel';
-import { CodeModelTypes, DataGraph, GenerationMode, RenderInput, RenderProperties } from '../../utils/models';
+import { CodeModelTypes, DataGraph, GenerationMode, RenderInput } from '../../utils/models';
 import { ResourcePool } from './renders/tests/ScenarioTool';
 
 export class MethodParam {
@@ -184,6 +184,8 @@ export interface CodeModelAz {
     MethodParameter_IsList: boolean;
     MethodParameter_IsSimpleArray: boolean;
     MethodParameter_IsListOfSimple: boolean;
+    MethodParameter_IsPolyOfSimple: boolean;
+    MethodParameter_IsDiscriminator: boolean;
     MethodParameter_IdPart: string;
     MethodParameter_ArgGroup: string;
     MethodParameter: Parameter;

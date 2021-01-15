@@ -8,7 +8,7 @@ import * as assert from 'assert';
 import * as path from 'path';
 import * as fs from 'fs';
 import { readFile } from '@azure-tools/async-io';
-import { CodeModel } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType } from '@azure-tools/codemodel';
 import { createTestSession } from '../utils/test-helper';
 import * as sourceMapSupport from 'source-map-support';
 import { Entry } from '../../src/plugins/entry';
@@ -78,16 +78,15 @@ export class Process {
                     ['mapsTo', 'type', 'description', 'cliKey'],
                     {},
                     [
-                        'this.MethodParameter_IsFlattened',
-                        'this.MethodParameter_Type === SchemaType.Constant',
-                        'this.Parameter_IsPolyOfSimple(this.MethodParameter)',
-                        "!isNullOrUndefined(this.Method_GetOriginalOperation) && this.MethodParameter['targetProperty']?.isDiscriminator",
+                        ['isFlattened', true],
+                        ['type', SchemaType.Constant],
+                        ['isPolyOfSimple', true],
+                        ['isDiscriminator', true],
                     ],
                     converter,
                 ),
             ],
         ]);
-
 
         data.model = this.model.getRenderData('extension', inputProperties, dependencies);
         return data;
@@ -96,15 +95,10 @@ export class Process {
     @test(slow(600000), timeout(1500000)) async getRenderDataTest1() {
         await this.init();
         const expected = JSON.parse(
-            await readFile(path.join(resources, 'expected', 'data/extension-command-groups.json')),
+            await readFile(path.join(resources, 'expected', 'data/command-groups.json')),
         );
-        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
-            ['extension', 'commandGroup'],
-        ];
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[['extension', 'commandGroup']];
         const data = this.getRenderTestData(dependencies);
-
-        console.log('getRenderDataTest1');
-        console.log(JSON.stringify(data));
 
         assert.deepStrictEqual(
             data,
@@ -113,28 +107,10 @@ export class Process {
         );
     }
 
-    /*
-    {
-        extension: { 
-            commandGroup: {
-                command: { 
-                    method: {
-                        'methodParameter',
-                        'example',
-                    }
-                }
-            }
-        }
-    }
-
-    */
-
-    
-
     @test(slow(600000), timeout(1500000)) async getRenderDataTest2() {
         await this.init();
         const expected = JSON.parse(
-            await readFile(path.join(resources, 'expected', 'data/command-groups-command.json')),
+            await readFile(path.join(resources, 'expected', 'data/commands.json')),
         );
         const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
             ['extension', 'commandGroup'],
@@ -142,20 +118,17 @@ export class Process {
         ];
         const data = this.getRenderTestData(dependencies);
 
-        console.log('getRenderDataTest2')
-        console.log(JSON.stringify(data));
-
         assert.deepStrictEqual(
             data,
             expected,
-            'Getting render data error from extension to commandGroup ',
+            'Getting render data error from extension to command ',
         );
     }
 
     @test(slow(600000), timeout(1500000)) async getRenderDataTest3() {
         await this.init();
         const expected = JSON.parse(
-            await readFile(path.join(resources, 'expected', 'data/command-groups-command.json')),
+            await readFile(path.join(resources, 'expected', 'data/methods.json')),
         );
         const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
             ['extension', 'commandGroup'],
@@ -164,20 +137,17 @@ export class Process {
         ];
         const data = this.getRenderTestData(dependencies);
 
-        console.log('getRenderDataTest3');
-        console.log(JSON.stringify(data));
-
         assert.deepStrictEqual(
             data,
             expected,
-            'Getting render data error from extension to commandGroup ',
+            'Getting render data error from extension to method ',
         );
     }
 
     @test(slow(600000), timeout(1500000)) async getRenderDataTest4() {
         await this.init();
         const expected = JSON.parse(
-            await readFile(path.join(resources, 'expected', 'data/command-groups-command.json')),
+            await readFile(path.join(resources, 'expected', 'data/method-parameters.json')),
         );
         const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
             ['extension', 'commandGroup'],
@@ -187,13 +157,10 @@ export class Process {
         ];
         const data = this.getRenderTestData(dependencies);
 
-        console.log('getRenderDataTest4');
-        console.log(JSON.stringify(data));
-
         assert.deepStrictEqual(
             data,
             expected,
-            'Getting render data error from extension to commandGroup ',
+            'Getting render data error from extension to methodParameter ',
         );
     }
 }

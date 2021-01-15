@@ -30,31 +30,6 @@ export class CliReport extends TemplateBase {
             model: {},
         };
 
-        /*
-            if (
-                model.MethodParameter_IsFlattened ||
-                model.MethodParameter_Type === SchemaType.Constant
-            ) {
-                continue;
-            }
-            if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                continue;
-            }
-            if (
-                !isNullOrUndefined(originalOperation) &&
-                model.MethodParameter['targetProperty']?.isDiscriminator
-            ) {
-                continue;
-            }
-            
-            
-            let optionName = model.MethodParameter_MapsTo;
-            if (optionName.endsWith('_')) {
-                optionName = optionName.substr(0, optionName.length - 1);
-            }
-            optionName = optionName.replace(/_/g, '-');
-        */
-
         const converter = new Map<string, (item) => unknown>([
             [
                 'mapsTo',
@@ -82,10 +57,10 @@ export class CliReport extends TemplateBase {
                     ['mapsTo', 'type', 'description', 'cliKey'],
                     {},
                     [
-                        'this.MethodParameter_IsFlattened',
-                        'this.MethodParameter_Type === SchemaType.Constant',
-                        'this.Parameter_IsPolyOfSimple(this.MethodParameter)',
-                        "!isNullOrUndefined(this.Method_GetOriginalOperation) && this.MethodParameter['targetProperty']?.isDiscriminator",
+                        ['isFlattened', true],
+                        ['type', SchemaType.Constant],
+                        ['isPolyOfSimple', true],
+                        ['isDiscriminator', true],
                     ],
                     converter,
                 ),

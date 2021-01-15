@@ -36,7 +36,6 @@ import {
     EXCLUDED_PARAMS,
     GenerationMode,
     AzConfiguration,
-    RenderProperties,
     CodeModelTypes,
     RenderInput,
     DataGraph,
@@ -1772,6 +1771,18 @@ export class CodeModelCliImpl implements CodeModelAz {
         return false;
     }
 
+    public get MethodParameter_IsPolyOfSimple(): boolean {
+        return this.Parameter_IsPolyOfSimple(this.MethodParameter);
+    }
+
+    public get MethodParameter_IsDiscriminator(): boolean {
+        return (
+            this.Method_GetOriginalOperation &&
+            this.MethodParameter['targetProperty'] &&
+            this.MethodParameter['targetProperty']['isDiscriminator']
+        );
+    }
+
     public Parameter_IsPolyOfSimple(param: Parameter = this.MethodParameter): boolean {
         if (!isNullOrUndefined(param['isPolyOfSimple'])) {
             return param['isPolyOfSimple'];
@@ -3448,7 +3459,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         return AzConfiguration.getValue(CodeGenConstants.sdkNoFlatten);
     }
 
-    
     /*
     [
         [extension, commandGroup],
@@ -3458,21 +3468,18 @@ export class CodeModelCliImpl implements CodeModelAz {
         [method, example]
     ]
      */
+
     public getRenderData(
         layer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
     ): unknown {
-        if (isNullOrUndefined(layer) || isNullOrUndefined(dependencies) || dependencies.length < 0) {
+        if (
+            isNullOrUndefined(layer) ||
+            isNullOrUndefined(dependencies) ||
+            dependencies.length < 0
+        ) {
             return {};
-        }
-        let nextLayer = undefined;
-        if (dependencies.length > 0) {
-            if (layer != dependencies[0][0]) {
-                layer = dependencies[0][0];
-            }
-            nextLayer = dependencies[0][1];
-            dependencies.shift();
         }
         const type: CodeModelTypes = layer;
         const renderInput: RenderInput = inputProperties.get(type);
@@ -3489,22 +3496,35 @@ export class CodeModelCliImpl implements CodeModelAz {
             data['has' + Type] = true;
             do {
                 let item = {};
+                let hasFiltered = false;
                 if (!isNullOrUndefined(props) && Array.isArray(props) && props.length > 0) {
                     for (const prop of props) {
                         item[prop] = this[Type + '_' + Capitalize(prop)];
-                        if (!isNullOrUndefined(converter[prop])) {
-                            item[prop] = converter[prop](item[prop]);
+                        if (!isNullOrUndefined(converter.get(prop))) {
+                            item[prop] = converter.get(prop)(item[prop]);
                         }
                     }
                     for (const condition of conditions) {
-                        if (eval(condition)) {
-                            continue;
+                        // console.log(Type + '_' + Capitalize(condition[0]));
+                        // console.log(this[Type + '_' + Capitalize(condition[0])]);
+                        // console.log(condition[1]);
+                        if (this[Type + '_' + Capitalize(condition[0])] === condition[1]) {
+                            hasFiltered = true;
+                            break;
                         }
                     }
                 }
-                let item2 = {};
-                item2 = this.getRenderData(nextLayer, inputProperties, dependencies);
-                item = { ...item, ...item2 };
+                if (hasFiltered) {
+                    continue;
+                }
+                if (dependencies.length > 0 && layer == dependencies[0][0]) {
+                    const nextLayer = dependencies[0][1];
+                    let item2 = {};
+                    const d = dependencies.shift();
+                    item2 = this.getRenderData(nextLayer, inputProperties, dependencies);
+                    dependencies.unshift(d);
+                    item = { ...item, ...item2 };
+                }
                 items.push(item);
             } while (this['SelectNext' + Type]());
             if (items.length > 0 && sortBy.length > 0) {
