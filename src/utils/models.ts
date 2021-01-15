@@ -126,6 +126,18 @@ export enum CodeGenConstants {
     m4CodeModelName = 'code-model-v4-no-tags.yaml',
     DEFAULT_CLI_CORE_LIB = 'azure.cli.core',
     AZ_ENTRY_CODE_MODEL_NAME = 'az-entry-code-model.yaml',
+    TEST_SCENARIO_CONFIG_KEY = 'test-scenario',
+    RANDOMIZE_NAMES_CONFIG_KEY = 'randomize-names',
+    FORMALIZE_NAMES_CONFIG_KEY = 'formalize-names',
+    DISABLE_CHECKS_CONFIG_KEY = 'disable-checks',
+    GEN_MIN_TEST_CONFIG_KEY = 'gen-min-test',
+    RESOURCE_TYPE_CONFIG_KEY = 'resource-type',
+    PACKAGE_NAME_CONFIG_KEY = 'package-name',
+}
+
+export function getAZConfiguration(configKey: CodeGenConstants) {
+    const options = AzConfiguration.getValue(CodeGenConstants.az);
+    return options[configKey];
 }
 
 export interface AzextMetadata {

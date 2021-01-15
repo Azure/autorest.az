@@ -5,8 +5,6 @@
 
 import { Operation, OperationGroup, Parameter, Schema } from '@azure-tools/codemodel';
 import { CodeModelTypes, DataGraph, GenerationMode, RenderInput } from '../utils/models';
-import { ResourcePool } from './renders/tests/ScenarioTool';
-import { CommandExample } from './climodels/ExampleType';
 
 export interface CodeModelAz {
     init(): any;
@@ -26,10 +24,7 @@ export interface CodeModelAz {
     Extension_Name: string;
     Extension_Parent: string;
     Extension_NameUnderscored: string;
-    ConfiguredScenario: boolean;
     Extension_NameClass: string;
-    Extension_TestScenario: any;
-    Extension_DefaultTestScenario: any;
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
@@ -165,30 +160,17 @@ export interface CodeModelAz {
     GetModuleOperationNamePythonUpper(): string;
     GetPythonNamespace(): string;
     GetPythonPackageName(): string;
-    GetResourcePool(): ResourcePool;
 
     // Python
     PythonMgmtClient: string;
-
-    GenerateTestInit(): void;
     SelectFirstExample(): boolean;
     SelectNextExample(): boolean;
-    FindExampleById(id: string, commandParams: any, examples: any[], minimum: boolean): string[][];
     Example_Body: string[];
     Example_Title: string;
     Example_Params: any;
-    GetExamples(): CommandExample[];
-    GetSubscriptionKey(): string;
-    GetPreparerEntities(): any[];
-    GatherInternalResource();
-    FindExampleWaitById(id: string): string[][];
-    GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
-    GetExampleChecks(example: CommandExample): string[];
-    RandomizeNames: boolean;
 
     // readme config
     CliCoreLib: string;
-    GenMinTest: boolean;
     GetMetaData(): { [key: string]: any };
     getRenderData(
         layer: CodeModelTypes,
