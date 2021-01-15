@@ -9,8 +9,8 @@ import { readFile, readdir } from '@azure-tools/async-io';
 import { deserialize } from '@azure-tools/codegen';
 import { CodeModel } from '@azure-tools/codemodel';
 import { createTestSession } from './utils/test-helper';
-import { AzNamer } from '../src/plugins/aznamer';
-import { Entry } from '../src/plugins/entry';
+import { AzNamer } from '../src/aznamer';
+import { Entry } from '../src/entry';
 import * as sourceMapSupport from 'source-map-support';
 
 sourceMapSupport.install();

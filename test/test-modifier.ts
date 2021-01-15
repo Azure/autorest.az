@@ -10,9 +10,9 @@ import { readFile, readdir } from '@azure-tools/async-io';
 import { deserialize } from '@azure-tools/codegen';
 import { CodeModel } from '@azure-tools/codemodel';
 import { createTestSession } from './utils/test-helper';
-import { Modifiers } from '../src/plugins/modifiers';
+import { Modifiers } from '../src/modifiers';
 import * as sourceMapSupport from 'source-map-support';
-import { Entry } from '../src/plugins/entry';
+import { Entry } from '../src/entry';
 
 sourceMapSupport.install();
 

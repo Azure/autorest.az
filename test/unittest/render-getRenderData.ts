@@ -11,8 +11,8 @@ import { readFile } from '@azure-tools/async-io';
 import { CodeModel, SchemaType } from '@azure-tools/codemodel';
 import { createTestSession } from '../utils/test-helper';
 import * as sourceMapSupport from 'source-map-support';
-import { Entry } from '../../src/plugins/entry';
-import { CodeModelCliImpl } from '../../src/plugins/azgenerator/CodeModelAzImpl';
+import { Entry } from '../../src/entry';
+import { CodeModelCliImpl } from '../../src/azgenerator/CodeModelAzImpl';
 import { CodeModelTypes, DataGraph, RenderInput, SortOrder } from '../../src/utils/models';
 
 sourceMapSupport.install();
