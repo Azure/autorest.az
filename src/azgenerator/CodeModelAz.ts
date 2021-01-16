@@ -263,9 +263,10 @@ export interface CodeModelAz {
     CliCoreLib: string;
     GenMinTest: boolean;
     GetMetaData(): { [key: string]: any };
-    getRenderData(
+    getModelData(
         layer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
+        arrayOutputFormat: boolean,
     );
 }

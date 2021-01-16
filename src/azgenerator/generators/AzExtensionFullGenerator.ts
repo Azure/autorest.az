@@ -3,31 +3,31 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
+import { PathConstants } from '../../utils/models';
 import { AzGeneratorBase } from './AzGeneratorBase';
-import { CodeModelAz } from './CodeModelAz';
-import { GenerateNamespaceInit } from './renders/CliNamespaceInit';
-import { CliReport } from './renders/CliReport';
-import { CliTopAction } from './renders/CliTopAction';
-import { CliTopCustom } from './renders/CliTopCustom';
-import { CliTopInit } from './renders/CliTopInit';
-import { GenerateAzureCliHistory } from './renders/extraExt/CliExtHistory';
-import { CliTopMetadata } from './renders/extraExt/CliExtMetadata';
-import { CliExtReadme } from './renders/extraExt/CliExtReadme';
-import { GenerateAzureCliSetupCfg } from './renders/extraExt/CliExtSetupCfg';
-import { CliExtSetupPy } from './renders/extraExt/CliExtSetupPy';
-import { GenerateAzureCliActions } from './renders/generated/CliActions';
-import { GenerateAzureCliClientFactory } from './renders/generated/CliClientFactory';
-import { GenerateAzureCliCommands } from './renders/generated/CliCommands';
-import { GenerateAzureCliCustom } from './renders/generated/CliCustom';
-import { GenerateAzureCliHelp } from './renders/generated/CliHelp';
-import { GenerateAzureCliParams } from './renders/generated/CliParams';
-import { GenerateAzureCliValidators } from './renders/generated/CliValidators';
-import { CliTestInit } from './renders/tests/CliTestInit';
-import { CliTestPrepare } from './renders/tests/CliTestPrepare';
-import { CliTestScenario } from './renders/tests/CliTestScenario';
-import { PathConstants } from '../utils/models';
-import { CliTestStep, NeedPreparer } from './renders/tests/CliTestStep';
-import { GenerateMetaFile } from './renders/CliMeta';
+import { CodeModelAz } from '../CodeModelAz';
+import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
+import { CliTopAction } from '../renders/CliTopAction';
+import { CliTopCustom } from '../renders/CliTopCustom';
+import { CliReport } from '../renders/CliReport';
+import { CliTopInit } from '../renders/CliTopInit';
+import { CliTopMetadata } from '../renders/extraExt/CliExtMetadata';
+import { CliExtSetupPy } from '../renders/extraExt/CliExtSetupPy';
+import { GenerateAzureCliActions } from '../renders/generated/CliActions';
+import { GenerateAzureCliClientFactory } from '../renders/generated/CliClientFactory';
+import { GenerateAzureCliCommands } from '../renders/generated/CliCommands';
+import { GenerateAzureCliCustom } from '../renders/generated/CliCustom';
+import { GenerateAzureCliHelp } from '../renders/generated/CliHelp';
+import { GenerateAzureCliParams } from '../renders/generated/CliParams';
+import { GenerateAzureCliValidators } from '../renders/generated/CliValidators';
+import { CliTestInit } from '../renders/tests/CliTestInit';
+import { CliTestPrepare } from '../renders/tests/CliTestPrepare';
+import { CliTestScenario } from '../renders/tests/CliTestScenario';
+import { CliTestStep, NeedPreparer } from '../renders/tests/CliTestStep';
+import { GenerateMetaFile } from '../renders/CliMeta';
+import { GenerateAzureCliSetupCfg } from '../renders/extraExt/CliExtSetupCfg';
+import { GenerateAzureCliHistory } from '../renders/extraExt/CliExtHistory';
+import { CliExtReadme } from '../renders/extraExt/CliExtReadme';
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {

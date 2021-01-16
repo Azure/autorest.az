@@ -39,6 +39,7 @@ import {
     CodeModelTypes,
     RenderInput,
     DataGraph,
+    SortOrder,
 } from '../utils/models';
 import {
     CodeModelAz,
@@ -3469,11 +3470,12 @@ export class CodeModelCliImpl implements CodeModelAz {
     ]
      */
 
-    public getRenderData(
+    public getModelData(
         layer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
-    ): unknown {
+        arrayOutputFormat: boolean = false,
+    ): unknown|[] {
         if (
             isNullOrUndefined(layer) ||
             isNullOrUndefined(dependencies) ||
@@ -3481,17 +3483,26 @@ export class CodeModelCliImpl implements CodeModelAz {
         ) {
             return {};
         }
+        let a = typeof CodeModelCliImpl['Extension_Name'];
         const type: CodeModelTypes = layer;
+        const Type = Capitalize(type);
         const renderInput: RenderInput = inputProperties.get(type);
         const sortBy = renderInput.sortBy;
-        const props = renderInput.properties;
+        let props = renderInput.properties;
+        if (isNullOrUndefined(props) || Array.isArray(props) && props.length == 0) {
+            props = Object.getOwnPropertyNames(CodeModelCliImpl).filter(function (p) {
+                if (p.startsWith(Type + '_') && typeof CodeModelCliImpl[p] === 'function') {
+                    return true;
+                }
+                return false;
+            })
+        }
         const conditions = renderInput.conditions;
         const converter = renderInput.converter;
-        const Type = Capitalize(type);
         const data = {};
         data['has' + Type] = false;
         data[Type + 's'] = [];
-        const items = [];
+        let items = [];
         if (this['SelectFirst' + Type]()) {
             data['has' + Type] = true;
             do {
@@ -3505,9 +3516,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                         }
                     }
                     for (const condition of conditions) {
-                        // console.log(Type + '_' + Capitalize(condition[0]));
-                        // console.log(this[Type + '_' + Capitalize(condition[0])]);
-                        // console.log(condition[1]);
                         if (this[Type + '_' + Capitalize(condition[0])] === condition[1]) {
                             hasFiltered = true;
                             break;
@@ -3519,13 +3527,24 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 if (dependencies.length > 0 && layer == dependencies[0][0]) {
                     const nextLayer = dependencies[0][1];
-                    let item2 = {};
+                    let item2;
                     const d = dependencies.shift();
-                    item2 = this.getRenderData(nextLayer, inputProperties, dependencies);
+                    item2 = this.getModelData(nextLayer, inputProperties, dependencies, arrayOutputFormat);
                     dependencies.unshift(d);
-                    item = { ...item, ...item2 };
+                    if (arrayOutputFormat) {
+                        let result = [];
+                        for (it of item2) {
+                            it[type] = item;
+                            result.push(it);
+                        }
+                        items = result;
+                    }  else {
+                        item = { ...item, ...item2 };
+                    }
                 }
-                items.push(item);
+                if (!arrayOutputFormat) {
+                    items.push(item);
+                }
             } while (this['SelectNext' + Type]());
             if (items.length > 0 && sortBy.length > 0) {
                 items.sort(function (a, b) {
@@ -3547,6 +3566,51 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             data[Type + 's'] = items;
         }
+        if (arrayOutputFormat) {
+            return items;
+        }
         return data;
     }
+    
+    
+    /*
+    [
+        {
+            name: '',
+            type: '',
+            extension: {
+                name: 
+            }
+        }
+    ]
+    */
+    
+    public getAllCommandGroups() {
+        const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
+            CodeModelTypes,
+            RenderInput
+        >([
+            ['extension', new RenderInput(['name'], { name: SortOrder.ASEC })],
+            ['commandGroup', new RenderInput([], { name: SortOrder.ASEC })],
+        ]);
+    
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+        ];
+    
+        return this.getModelData('extension', inputProperties, dependencies);
+    }
+    
+    public CreateCommandGroupModel() {
+        let commandGroups = this.getAllCommandGroups();
+    }
+    
+    public CreateCommandModel() {
+    
+    }
+    
+    public CreateParameterModel() {
+    
+    }
+    
 }

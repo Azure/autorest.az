@@ -46,7 +46,7 @@ export class Process {
         this.model = model;
     }
 
-    getRenderTestData(dependencies: DataGraph) {
+    getRenderTestData(dependencies: DataGraph, arrayOutputFormat: boolean = false) {
         const data = {
             model: {},
         };
@@ -88,11 +88,11 @@ export class Process {
             ],
         ]);
 
-        data.model = this.model.getRenderData('extension', inputProperties, dependencies);
+        data.model = this.model.getModelData('extension', inputProperties, dependencies, arrayOutputFormat);
         return data;
     }
 
-    @test(slow(600000), timeout(1500000)) async getRenderDataTest1() {
+    @test(slow(600000), timeout(1500000)) async getModelDataTest1() {
         await this.init();
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/command-groups.json')),
@@ -107,7 +107,7 @@ export class Process {
         );
     }
 
-    @test(slow(600000), timeout(1500000)) async getRenderDataTest2() {
+    @test(slow(600000), timeout(1500000)) async getModelDataTest2() {
         await this.init();
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/commands.json')),
@@ -125,7 +125,7 @@ export class Process {
         );
     }
 
-    @test(slow(600000), timeout(1500000)) async getRenderDataTest3() {
+    @test(slow(600000), timeout(1500000)) async getModelDataTest3() {
         await this.init();
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/methods.json')),
@@ -144,7 +144,7 @@ export class Process {
         );
     }
 
-    @test(slow(600000), timeout(1500000)) async getRenderDataTest4() {
+    @test(slow(600000), timeout(1500000)) async getModelDataTest4() {
         await this.init();
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/method-parameters.json')),
@@ -156,6 +156,27 @@ export class Process {
             ['method', 'methodParameter'],
         ];
         const data = this.getRenderTestData(dependencies);
+
+        assert.deepStrictEqual(
+            data,
+            expected,
+            'Getting render data error from extension to methodParameter ',
+        );
+    }
+
+    @test(slow(600000), timeout(1500000)) async getModelDataTest5() {
+        await this.init();
+        const expected = JSON.parse(
+            await readFile(path.join(resources, 'expected', 'data/command-groups.json')),
+        );
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+            ['commandGroup', 'command'],
+            ['command', 'method'],
+            // ['method', 'methodParameter'],
+        ];
+        const data = this.getRenderTestData(dependencies, true);
+        console.log(JSON.stringify(data));
 
         assert.deepStrictEqual(
             data,
