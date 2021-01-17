@@ -180,7 +180,7 @@ export type DataGraph = [CodeModelTypes, CodeModelTypes][];
 
 export class RenderInput {
     public constructor(
-        public properties: string[],
+        public properties: string[] = [],
         public sortBy: Record<string, SortOrder> = {},
         public conditions: [string, unknown][] = [],
         public converter: Map<string, (item) => unknown> = new Map<string, (item) => unknown>(),

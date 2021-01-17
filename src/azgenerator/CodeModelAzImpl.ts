@@ -60,6 +60,7 @@ import {
 import { readFile } from '@azure-tools/async-io';
 import { prototype } from 'events';
 import { CLIModule } from './climodels/CLIModule';
+import { FORMERR } from 'dns';
 
 class ActionParam {
     public constructor(
@@ -3476,8 +3477,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         layer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
-        arrayOutputFormat: boolean = false,
-    ): unknown|[] {
+    ): unknown|any[] {
         if (
             isNullOrUndefined(layer) ||
             isNullOrUndefined(dependencies) ||
@@ -3491,14 +3491,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         const renderInput: RenderInput = inputProperties.get(type);
         const sortBy = renderInput.sortBy;
         let props = renderInput.properties;
-        if (isNullOrUndefined(props) || Array.isArray(props) && props.length == 0) {
-            props = Object.getOwnPropertyNames(CodeModelCliImpl).filter(function (p) {
-                if (p.startsWith(Type + '_') && typeof CodeModelCliImpl[p] === 'function') {
-                    return true;
-                }
-                return false;
-            })
-        }
         const conditions = renderInput.conditions;
         const converter = renderInput.converter;
         const data = {};
@@ -3529,24 +3521,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 if (dependencies.length > 0 && layer == dependencies[0][0]) {
                     const nextLayer = dependencies[0][1];
-                    let item2;
                     const d = dependencies.shift();
-                    item2 = this.getModelData(nextLayer, inputProperties, dependencies, arrayOutputFormat);
+                    let item2: any = this.getModelData(nextLayer, inputProperties, dependencies);
                     dependencies.unshift(d);
-                    if (arrayOutputFormat) {
-                        let result = [];
-                        for (it of item2) {
-                            it[type] = item;
-                            result.push(it);
-                        }
-                        items = result;
-                    }  else {
-                        item = { ...item, ...item2 };
-                    }
+                    item = { ...item, ...item2 };
                 }
-                if (!arrayOutputFormat) {
-                    items.push(item);
-                }
+                items.push(item);
             } while (this['SelectNext' + Type]());
             if (items.length > 0 && sortBy.length > 0) {
                 items.sort(function (a, b) {
@@ -3568,12 +3548,45 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             data[Type + 's'] = items;
         }
-        if (arrayOutputFormat) {
-            return items;
-        }
         return data;
     }
     
+
+    public getArrayModelData(
+        layer: CodeModelTypes,
+        inputProperties: Map<CodeModelTypes, RenderInput>,
+        dependencies: DataGraph,
+    ) {
+        const data = this.getModelData(layer, inputProperties, dependencies);
+        const allTypes = [];
+        // allTypes.push(layer);
+        while(dependencies.length > 0) {
+            allTypes.push(dependencies[0][1]);
+            dependencies.shift();
+        }
+        let ret = data[Capitalize(layer) + 's'];
+        let preType = layer;
+        let prePreType = layer;
+        for (const type of allTypes) {
+            const mret = [];
+            for (let arr of ret) {
+                const next = arr[Capitalize(type) + 's'];
+                delete arr['has' + Capitalize(type)];
+                delete arr[Capitalize(type) + 's'];
+                for (let item of next) {
+                    item[prePreType] = arr[prePreType];
+                    item[preType] = arr;
+                    delete item[preType][prePreType];
+                    mret.push(item);
+                }
+            }
+            ret = mret;
+            prePreType = preType;
+            preType = type;
+        }
+        return ret;
+    }
+
     
     /*
     [

@@ -267,6 +267,5 @@ export interface CodeModelAz {
         layer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
-        arrayOutputFormat: boolean,
     );
 }
