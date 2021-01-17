@@ -4,9 +4,10 @@ import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from '../utils/helper';
 import { CodeGenConstants, PathConstants, AzConfiguration } from '../utils/models';
-import { AzGeneratorFactory } from './generators/AzGeneratorFactory';
+import { AzGeneratorFactory } from './AzGeneratorFactory';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { openInplaceGen, closeInplaceGen } from '../utils/inplace';
+import { CLIModule } from './climodels/CLIModule';
 
 export async function processRequest(host: Host) {
     const debug = AzConfiguration.getValue(CodeGenConstants.debug);
@@ -14,6 +15,10 @@ export async function processRequest(host: Host) {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
 
         const model = new CodeModelCliImpl(session);
+
+        const cliModule = model.CreateCliModule();
+
+        cliModule.render();
 
         if (model.SelectFirstExtension()) {
             do {
@@ -32,7 +37,7 @@ export async function processRequest(host: Host) {
         }
 
         openInplaceGen();
-        const generator = await AzGeneratorFactory.createAzGenerator(model, debug);
+        const generator = AzGeneratorFactory.createAzGenerator(model, debug);
         await generator.generateAll();
         const files = generator.files;
 

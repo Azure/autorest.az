@@ -4,9 +4,9 @@
  *-------------------------------------------------------------------------------------------- */
 import * as fs from 'fs';
 import * as path from 'path';
-import { CodeModelAz } from '../CodeModelAz';
-import { TemplateBase } from '../renders/TemplateBase';
-import { inplaceGen } from '../../utils/inplace';
+import { CodeModelAz } from './CodeModelAz';
+import { TemplateBase } from './renders/TemplateBase';
+import { inplaceGen } from '../utils/inplace';
 
 export abstract class AzGeneratorBase {
     model: CodeModelAz;

@@ -3,21 +3,19 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { GenerationMode } from '../../utils/models';
+import { GenerationMode } from '../utils/models';
 import { AzCoreFullGenerator } from './AzCoreFullGenerator';
 import { AzCoreIncrementalGenerator } from './AzCoreIncrementalGenerator';
 import { AzExtensionFullGenerator } from './AzExtensionFullGenerator';
 import { AzExtensionIncrementalGenerator } from './AzExtensionIncrementalGenerator';
 import { AzGeneratorBase } from './AzGeneratorBase';
-import { CodeModelCliImpl } from '../CodeModelAzImpl';
+import { CodeModelCliImpl } from './CodeModelAzImpl';
 
 export class AzGeneratorFactory {
-    static async createAzGenerator(
+    static createAzGenerator(
         model: CodeModelCliImpl,
         isDebugMode: boolean,
-    ): Promise<AzGeneratorBase> {
-        await model.init();
-        model.GenerateTestInit();
+    ): AzGeneratorBase {
 
         if (model.CliGenerationMode === GenerationMode.Full) {
             if (model.IsCliCore) {

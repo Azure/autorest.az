@@ -59,6 +59,7 @@ import {
 } from './renders/tests/ScenarioTool';
 import { readFile } from '@azure-tools/async-io';
 import { prototype } from 'events';
+import { CLIModule } from './climodels/CLIModule';
 
 class ActionParam {
     public constructor(
@@ -136,6 +137,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.setParamAzUniqueNames();
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
+        this.GenerateTestInit();
     }
 
     private sortOperationByAzCommand() {
@@ -3612,5 +3614,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     public CreateParameterModel() {
     
     }
+
+    public CreateCliModule() {
+        return new CLIModule();
+    };
     
 }

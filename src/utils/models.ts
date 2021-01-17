@@ -186,3 +186,5 @@ export class RenderInput {
         public converter: Map<string, (item) => unknown> = new Map<string, (item) => unknown>(),
     ) {}
 }
+
+export type Template = [string, string, any];
