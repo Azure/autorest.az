@@ -1,6 +1,6 @@
 # Autorest.Az
 [1. Introduction](#Introduction)  
-[2. How does Azuure CLI Code Generator Work](#How-does-Azure-CLI-Code-Generator-Work)  
+[2. How does Azure CLI Code Generator Work](#How-does-Azure-CLI-Code-Generator-Work)  
 &nbsp;  [2.1. Different Generation Options](#Different-Generation-Options)  
 [3. How to use Azure CLI Code Generator](#How-to-use-CLI-Code-Generator)  
 &nbsp;  [3.1. Preparing Environment](#Preparing-Environment)  
