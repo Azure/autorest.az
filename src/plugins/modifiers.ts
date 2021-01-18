@@ -3,6 +3,7 @@ import { Session, startSession, Host, Channel } from '@azure-tools/autorest-exte
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined } from '../utils/helper';
+import { CodeGenConstants, AzConfiguration } from '../utils/models';
 
 let directives: Array<any> = [];
 
@@ -106,8 +107,8 @@ export class Modifiers {
     }
 
     async process() {
-        directives = await this.session.getValue('directive');
-        const options = await this.session.getValue('az');
+        directives = AzConfiguration.getValue(CodeGenConstants.directive);
+        const options = AzConfiguration.getValue(CodeGenConstants.az);
         if (!isNullOrUndefined(directives)) {
             for (const directive of directives.filter((each) => !each.transform)) {
                 const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
@@ -337,7 +338,7 @@ export class Modifiers {
 }
 
 export async function processRequest(host: Host) {
-    const debug = (await host.GetValue('debug')) || false;
+    const debug = AzConfiguration.getValue(CodeGenConstants.debug);
 
     try {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);

@@ -1,0 +1,8 @@
+{
+  "parameters": {},
+  "responses": {
+    "200": {
+      "body": "FRI, 31 DEC 9999 23:59:59 GMT"
+    }
+  }
+}

@@ -7,7 +7,7 @@ import { values } from '@azure-tools/linq';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as request from 'request-promise-native';
-import { ExtensionMode } from '../plugins/models';
+import { ExtensionMode } from './models';
 import * as child_process from 'child_process';
 
 export function changeCamelToDash(str: string): string {

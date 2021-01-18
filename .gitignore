@@ -11,3 +11,4 @@ test-results.xml
 *.user
 *.orig
 gen.zip
+.nyc_output

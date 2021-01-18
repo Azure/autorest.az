@@ -1,0 +1,93 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "2.0-preview",
+		"title": "Media Types Client",
+		"description": "Play with produces/consumes and media-types in general."
+	},
+	"host": "localhost:3000",
+	"schemes": [
+		"http"
+	],
+	"paths": {
+		"/mediatypes/analyze": {
+			"post": {
+				"description": "Analyze body, that could be different media types.",
+				"operationId": "AnalyzeBody",
+				"consumes": [
+					"application/pdf",
+					"application/json",
+					"image/jpeg",
+					"image/png",
+					"image/tiff"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"$ref": "#/parameters/Input"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Received correct format",
+						"schema": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"/mediatypes/contentTypeWithEncoding": {
+			"post": {
+				"description": "Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter",
+				"operationId": "contentTypeWithEncoding",
+				"consumes": [
+					"text/plain"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"$ref": "#/parameters/Input"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Received 'text/plain; encoding=UTF-8' as contentType",
+						"schema": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"SourcePath": {
+			"description": "Uri or local path to source data.",
+			"type": "object",
+			"properties": {
+				"source": {
+					"description": "File source path.",
+					"maxLength": 2048,
+					"minLength": 0,
+					"type": "string"
+				}
+			}
+		}
+	},
+	"parameters": {
+		"Input": {
+			"name": "input",
+			"description": "Input parameter.",
+			"x-ms-parameter-location": "method",
+			"in": "body",
+			"schema": {
+				"$ref": "#/definitions/SourcePath"
+			}
+		}
+	}
+}

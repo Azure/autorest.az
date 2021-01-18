@@ -1,0 +1,12 @@
+{
+  "parameters": {
+    "petParam": {
+      "name": "Retriever",
+      "DaysOfWeek": "Monday",
+      "IntEnum": "1"
+    }
+  },
+  "responses": {
+    "200": {}
+  }
+}

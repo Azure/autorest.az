@@ -1,0 +1,691 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "AutoRest Number Test Service",
+    "description": "Test Infrastructure for AutoRest",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "schemes": [
+    "http"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/number/null": {
+      "get": {
+        "operationId": "number_getNull",
+        "description": "Get null Number value",
+        "x-ms-examples": {
+          "number_getNull": {
+            "$ref": "./examples/number_getNull.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The null number value",
+            "schema": {
+              "type": "number"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/invalidfloat": {
+      "get": {
+        "operationId": "number_getInvalidFloat",
+        "description": "Get invalid float Number value",
+        "responses": {
+          "200": {
+            "description": "The invalid float number value",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/invaliddouble": {
+      "get": {
+        "operationId": "number_getInvalidDouble",
+        "description": "Get invalid double Number value",
+        "responses": {
+          "200": {
+            "description": "The invalid double number value",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/big/float/3.402823e+20": {
+      "put": {
+        "operationId": "number_putBigFloat",
+        "description": "Put big float value 3.402823e+20",
+        "x-ms-examples": {
+          "number_putBigFloat": {
+            "$ref": "./examples/number_putBigFloat.json"
+          }
+        },
+        "parameters": [
+          {
+            "name": "numberBody",
+            "description": "number body",
+            "in": "body",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The big float value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "number_getBigFloat",
+        "description": "Get big float value 3.402823e+20",
+        "x-ms-examples": {
+          "number_getBigFloat": {
+            "$ref": "./examples/number_getBigFloat.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The big float value",
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "enum":  [3.402823e+20]
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/big/double/2.5976931e+101": {
+      "put": {
+        "operationId": "number_putBigDouble",
+        "description": "Put big double value 2.5976931e+101",
+        "x-ms-examples": {
+          "number_putBigDouble": {
+            "$ref": "./examples/number_putBigDouble.json"
+          }
+        },
+        "parameters": [
+          {
+            "name": "numberBody",
+            "description": "number body",
+            "in": "body",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The big double value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "number_getBigDouble",
+        "description": "Get big double value 2.5976931e+101",
+        "x-ms-examples": {
+          "number_getBigDouble": {
+            "$ref": "./examples/number_getBigDouble.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The big double value 2.5976931e+101",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "enum":  [2.5976931e+101]
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/big/double/99999999.99": {
+      "put": {
+        "operationId": "number_putBigDoublePositiveDecimal",
+        "description": "Put big double value 99999999.99",
+        "x-ms-examples": {
+          "number_putBigDoublePositiveDecimal": {
+            "$ref": "./examples/number_putBigDoublePositiveDecimal.json"
+          }
+        },
+        "parameters": [
+          {
+            "name": "numberBody",
+            "description": "number body",
+            "in": "body",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The big double value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "number_getBigDoublePositiveDecimal",
+        "description": "Get big double value 99999999.99",
+        "x-ms-examples": {
+          "number_getBigDoublePositiveDecimal": {
+            "$ref": "./examples/number_getBigDoublePositiveDecimal.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The big double value 99999999.99",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "enum":  [99999999.99]
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/big/double/-99999999.99": {
+      "put": {
+        "operationId": "number_putBigDoubleNegativeDecimal",
+        "description": "Put big double value -99999999.99",
+        "x-ms-examples": {
+          "number_putBigDoubleNegativeDecimal": {
+            "$ref": "./examples/number_putBigDoubleNegativeDecimal.json"
+          }
+        },
+        "parameters": [
+          {
+            "name": "numberBody",
+            "description": "number body",
+            "in": "body",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The big double value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "number_getBigDoubleNegativeDecimal",
+        "description": "Get big double value -99999999.99",
+        "x-ms-examples": {
+          "number_getBigDoubleNegativeDecimal": {
+            "$ref": "./examples/number_getBigDoubleNegativeDecimal.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The big double value -99999999.99",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "enum":  [-99999999.99]
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/big/decimal/2.5976931e+101": {
+      "put": {
+        "operationId": "number_putBigDecimal",
+        "description": "Put big decimal value 2.5976931e+101",
+        "x-ms-examples": {
+          "number_putBigDecimal": {
+            "$ref": "./examples/number_putBigDecimal.json"
+          }
+        },
+        "parameters": [
+          {
+            "name": "numberBody",
+            "description": "number body",
+            "in": "body",
+            "schema": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The big decimal value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "number_getBigDecimal",
+        "description": "Get big decimal value 2.5976931e+101",
+        "x-ms-examples": {
+          "number_getBigDecimal": {
+            "$ref": "./examples/number_getBigDecimal.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The big decimal value 2.5976931e+101",
+            "schema": {
+              "type": "number",
+              "format": "decimal",
+              "enum":  [2.5976931e+101]
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/big/decimal/99999999.99": {
+      "put": {
+        "operationId": "number_putBigDecimalPositiveDecimal",
+        "description": "Put big decimal value 99999999.99",
+        "x-ms-examples": {
+          "number_putBigDecimalPositiveDecimal": {
+            "$ref": "./examples/number_putBigDecimalPositiveDecimal.json"
+          }
+        },
+        "parameters": [
+          {
+            "name": "numberBody",
+            "description": "number body",
+            "in": "body",
+            "schema": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The big decimal value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "number_getBigDecimalPositiveDecimal",
+        "description": "Get big decimal value 99999999.99",
+        "x-ms-examples": {
+          "number_getBigDecimalPositiveDecimal": {
+            "$ref": "./examples/number_getBigDecimalPositiveDecimal.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The big decimal value 99999999.99",
+            "schema": {
+              "type": "number",
+              "format": "decimal",
+              "enum":  [99999999.99]
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/big/decimal/-99999999.99": {
+      "put": {
+        "operationId": "number_putBigDecimalNegativeDecimal",
+        "description": "Put big decimal value -99999999.99",
+        "x-ms-examples": {
+          "number_putBigDecimalNegativeDecimal": {
+            "$ref": "./examples/number_putBigDecimalNegativeDecimal.json"
+          }
+        },
+        "parameters": [
+          {
+            "name": "numberBody",
+            "description": "number body",
+            "in": "body",
+            "schema": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The big decimal value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "number_getBigDecimalNegativeDecimal",
+        "description": "Get big decimal value -99999999.99",
+        "x-ms-examples": {
+          "number_getBigDecimalNegativeDecimal": {
+            "$ref": "./examples/number_getBigDecimalNegativeDecimal.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The big decimal value -99999999.99",
+            "schema": {
+              "type": "number",
+              "format": "decimal",
+              "enum":  [-99999999.99]
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/small/float/3.402823e-20": {
+      "put": {
+        "operationId": "number_putSmallFloat",
+        "description": "Put small float value 3.402823e-20",
+        "x-ms-examples": {
+          "number_putSmallFloat": {
+            "$ref": "./examples/number_putSmallFloat.json"
+          }
+        },
+        "parameters": [
+          {
+            "name": "numberBody",
+            "description": "number body",
+            "in": "body",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The small float value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "number_getSmallFloat",
+        "description": "Get big double value 3.402823e-20",
+        "x-ms-examples": {
+          "number_getSmallFloat": {
+            "$ref": "./examples/number_getSmallFloat.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The big double value 3.402823e-20",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "enum":  [3.402823e-20]
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/small/double/2.5976931e-101": {
+      "put": {
+        "operationId": "number_putSmallDouble",
+        "description": "Put small double value 2.5976931e-101",
+        "x-ms-examples": {
+          "number_putSmallDouble": {
+            "$ref": "./examples/number_putSmallDouble.json"
+          }
+        },
+        "parameters": [
+          {
+            "name": "numberBody",
+            "description": "number body",
+            "in": "body",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The small double value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "number_getSmallDouble",
+        "description": "Get big double value 2.5976931e-101",
+        "x-ms-examples": {
+          "number_getSmallDouble": {
+            "$ref": "./examples/number_getSmallDouble.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The big double value 2.5976931e-101",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "enum":  [2.5976931e-101]
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/number/small/decimal/2.5976931e-101": {
+      "put": {
+        "operationId": "number_putSmallDecimal",
+        "description": "Put small decimal value 2.5976931e-101",
+        "x-ms-examples": {
+          "number_putSmallDecimal": {
+            "$ref": "./examples/number_putSmallDecimal.json"
+          }
+        },
+        "parameters": [
+          {
+            "name": "numberBody",
+            "description": "number body",
+            "in": "body",
+            "schema": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The small decimal value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "number_getSmallDecimal",
+        "description": "Get small decimal value 2.5976931e-101",
+        "x-ms-examples": {
+          "number_getSmallDecimal": {
+            "$ref": "./examples/number_getSmallDecimal.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The small decimal value 2.5976931e-101",
+            "schema": {
+              "type": "number",
+              "format": "decimal",
+              "enum":  [2.5976931e-101]
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type":  "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

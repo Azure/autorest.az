@@ -5,7 +5,7 @@
 import * as path from 'path';
 import { CodeModelAz } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
-import { PathConstants } from '../../../models';
+import { PathConstants } from '../../../../utils/models';
 
 export class CliTestInit extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {

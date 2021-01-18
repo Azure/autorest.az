@@ -5,7 +5,12 @@
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from '../../../../utils/helper';
-import { AzextMetadata, CodeGenConstants, PathConstants } from '../../../models';
+import {
+    AzextMetadata,
+    CodeGenConstants,
+    PathConstants,
+    ExtensionMode,
+} from '../../../../utils/models';
 import { CodeModelAz } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 
@@ -34,9 +39,9 @@ export class CliTopMetadata extends TemplateBase {
         const output: string[] = [];
 
         output.push('{');
-        if (model.Extension_Mode === 'experimental') {
+        if (model.Extension_Mode === ExtensionMode.Experimental) {
             output.push('    "azext.isExperimental": true,');
-        } else if (model.Extension_Mode === 'preview') {
+        } else if (model.Extension_Mode === ExtensionMode.Preview) {
             output.push('    "azext.isPreview": true,');
         }
 

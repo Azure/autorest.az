@@ -31,7 +31,12 @@ import {
     ToSentence,
     isNullOrUndefined,
 } from '../../utils/helper';
-import { EXCLUDED_PARAMS, GenerationMode } from '../models';
+import {
+    CodeGenConstants,
+    EXCLUDED_PARAMS,
+    GenerationMode,
+    AzConfiguration,
+} from '../../utils/models';
 import {
     CodeModelAz,
     CommandExample,
@@ -91,15 +96,14 @@ export class CodeModelCliImpl implements CodeModelAz {
     private _useOptions: string[];
 
     private _cliCoreLib: string;
-    private static readonly DEFAULT_CLI_CORE_LIB = 'azure.cli.core';
 
-    async init() {
-        this.options = await this.session.getValue('az');
-        this._parentOptions = await this.session.getValue('__parents');
-        this._useOptions = await this.session.getValue('use');
+    init(): void {
+        this.options = AzConfiguration.getValue(CodeGenConstants.az);
+        this._parentOptions = AzConfiguration.getValue(CodeGenConstants.parents);
+        this._useOptions = AzConfiguration.getValue(CodeGenConstants.use);
         Object.assign(azOptions, this.options);
         this.extensionName = this.options.extensions;
-        this.parentExtension = this.options['parent-extension'];
+        this.parentExtension = this.options[CodeGenConstants.parentExtension];
         this.currentOperationGroupIndex = -1;
         this.currentSubOperationGroupIndex = -1;
         this.currentOperationIndex = -1;
@@ -111,9 +115,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.currentSubOptionIndex = -1;
         this.submethodparameters = null;
         this.substack = new Array<[Parameter[], number]>();
-        this._clientBaseUrlBound = this.options['client-base-url-bound'];
-        this._clientSubscriptionBound = this.options['client-subscription-bound'];
-        this._clientAuthenticationPolicy = this.options['client-authentication-policy'];
+        this._clientBaseUrlBound = this.options[CodeGenConstants.clientBaseUrlBound];
+        this._clientSubscriptionBound = this.options[CodeGenConstants.clientSubscriptionBound];
+        this._clientAuthenticationPolicy = this.options[
+            CodeGenConstants.clientAuthenticationPolicy
+        ];
         // this.sortOperationByAzCommand();
     }
 
@@ -225,7 +231,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             ret['swagger git status'] = getGitStatus(swaggerFolder).split('\n');
         }
 
-        const azpkg = path.join(__dirname, '..', '..', '..', 'package.json');
+        const azpkg = path.join(__dirname, '..', '..', '..', '..', 'package.json');
         const pjson = JSON.parse(await readFile(azpkg));
         ret['package info'] = `${pjson.name} ${pjson.version}`;
         return ret;
@@ -770,7 +776,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Extension_Mode(): string {
-        return this.codeModel.info['extensionMode'];
+        return AzConfiguration.getValue(CodeGenConstants.extensionMode);
     }
 
     public get Extension_NameUnderscored(): string {
@@ -802,19 +808,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get CliGenerationMode(): GenerationMode {
-        return this._generationMode;
-    }
-
-    public set CliGenerationMode(value: GenerationMode) {
-        this._generationMode = value;
-    }
-
-    public get CliOutputFolder(): string {
-        return this._outputPath;
-    }
-
-    public set CliOutputFolder(value: string) {
-        this._outputPath = value;
+        return AzConfiguration.getValue(CodeGenConstants.generationMode);
     }
 
     //= ================================================================================================================
@@ -2212,7 +2206,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public GetPythonNamespace(): string {
-        return this.codeModel.language['az'].pythonNamespace;
+        return AzConfiguration.getValue(CodeGenConstants.pythonNamespace);
     }
 
     public GetPythonPackageName(): string {
@@ -3407,36 +3401,36 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get CliCoreLib(): string {
         if (isNullOrUndefined(this._cliCoreLib)) {
-            return CodeModelCliImpl.DEFAULT_CLI_CORE_LIB;
+            return CodeGenConstants.DEFAULT_CLI_CORE_LIB;
         }
         return this._cliCoreLib;
     }
 
     public get AzureCliFolder(): string {
-        return this.codeModel.language['az']?.azureCliFolder + '/';
+        return AzConfiguration.getValue(CodeGenConstants.azureCliFolder) + '/';
     }
 
     public get AzextFolder(): string {
-        return this.codeModel.language['az']?.azextFolder;
+        return AzConfiguration.getValue(CodeGenConstants.azextFolder);
     }
 
     public get azOutputFolder(): string {
-        return this.codeModel.language['az']?.azOutputFolder;
+        return AzConfiguration.getValue(CodeGenConstants.azOutputFolder);
     }
 
     public get IsCliCore() {
-        return !!this.codeModel.language['az']?.isCliCore;
+        return AzConfiguration.getValue(CodeGenConstants.isCliCore);
     }
 
     public get SDK_NeedSDK() {
-        return !!this.codeModel.language['az']?.sdkNeeded;
+        return AzConfiguration.getValue(CodeGenConstants.sdkNeeded);
     }
 
     public get SDK_IsTrack1() {
-        return !!this.codeModel.language['az']?.sdkTrack1;
+        return AzConfiguration.getValue(CodeGenConstants.sdkTrack1);
     }
 
     public get SDK_NoFlatten() {
-        return !!this.codeModel.language['az']?.sdkNoFlatten;
+        return AzConfiguration.getValue(CodeGenConstants.sdkNoFlatten);
     }
 }

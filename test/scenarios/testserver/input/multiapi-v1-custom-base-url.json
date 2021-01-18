@@ -1,0 +1,85 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Multiapi CustomBaseUrl Service Client",
+      "description": "Service client for multiapi custom base url testing",
+      "version": "1.0.0"
+    },
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{Endpoint}/multiapiCustomBaseUrl/v1",
+        "useSchemePrefix": false,
+        "parameters": [
+          {
+            "$ref": "#/parameters/Endpoint"
+          }
+        ]
+    },
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/test": {
+            "put": {
+                "operationId": "test",
+                "description": "Should be a mixin operation. Put in 1 for the required parameter and have the correct api version of 1.0.0 to pass",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "An int parameter. Put in 1 to pass",
+                        "type": "integer",
+                        "format": "int32",
+                        "required": true
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The empty return value"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "type":  "object",
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "parameters": {
+        "ApiVersionParameter": {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The API version to use for this operation.",
+            "minLength": 1
+        },
+        "Endpoint": {
+            "name": "Endpoint",
+            "description": "Pass in https://localhost:3000",
+            "x-ms-parameter-location": "client",
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "x-ms-skip-url-encoding": true
+        }
+    }
+}

@@ -7,7 +7,7 @@ import { CodeModelAz } from '../CodeModelAz';
 import * as path from 'path';
 import { SchemaType } from '@azure-tools/codemodel';
 import { ToMultiLine, isNullOrUndefined } from '../../../utils/helper';
-import { PathConstants } from '../../models';
+import { PathConstants } from '../../../utils/models';
 import { TemplateBase } from './TemplateBase';
 
 export class CliReport extends TemplateBase {
