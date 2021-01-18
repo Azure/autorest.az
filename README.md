@@ -1,8 +1,8 @@
 # Autorest.Az
 [1. Introduction](#Introduction)  
-[2. How does CLI Code Generator Work](#How-does-CLI-Code-Generator-Work)  
+[2. How does Azuure CLI Code Generator Work](#How-does-Azure-CLI-Code-Generator-Work)  
 &nbsp;  [2.1. Different Generation Options](#Different-Generation-Options)  
-[3. How to use CLI Code Generator](#How-to-use-CLI-Code-Generator)  
+[3. How to use Azure CLI Code Generator](#How-to-use-CLI-Code-Generator)  
 &nbsp;  [3.1. Preparing Environment](#Preparing-Environment)  
 &nbsp;  [3.2. Authoring Readme Files](#Authoring-Readme-Files)  
 &nbsp;  [3.3. Generating the Code](#Generating-the-Code)  
@@ -41,13 +41,12 @@
 
 # Introduction
 
-The Azure CLI Code Generator provides Azure CLI module generation for both Azure CLI extensions and Azure CLI main repository. In this document, we will first introduce how Azure CLI Code Generator works including the basic usage as well as some advanced features. Then, we will describe how to debug the code generator. Finally, we will show the Autorest Pipeline definitions. 
+Azure CLI Code Generator provides the feature of Azure CLI module generation in Azure CLI extensions repository and Azure CLI main repository. In this document, we will first introduce how Azure CLI Code Generator works including the basic usage as well as some advanced features. Then, we will describe how to debug the code generator. Finally, we will show the Autorest Pipeline definitions. 
 
-**Assumption**
+Azure CLI Code Generator is mainly for Azure CLI developers and people who are interested in generating Azure CLI by themselves.
 
-This document is mainly for Azure CLI developers and people who are interested in generating Azure CLI by themselves.  
-# How does CLI Code Generator Work
-The Azure Code Generator is an [Autorest](https://github.com/Azure/autorest) extension which generates functional Azure CLI code for Azure services by using Swagger specifications defined in [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) or [azure-rest-api-specs-pr](https://github.com/Azure/azure-rest-api-specs-pr) repos. It uses Autorest V3 to handle the configuration interpretation, pipeline resolving, pipeline scheduling and uses [Autorest.Modelerfour](https://github.com/Azure/autorest.modelerfour) as a basic code model. 
+# How does Azure CLI Code Generator Work
+Azure CLI Code Generator is an [Autorest](https://github.com/Azure/autorest) extension which generates functional Azure CLI code for Azure services by using Swagger specifications defined in [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) or [azure-rest-api-specs-pr](https://github.com/Azure/azure-rest-api-specs-pr) repos. It uses Autorest V3 to handle the configuration interpretation, pipeline resolving, pipeline scheduling and uses [Autorest.Modelerfour](https://github.com/Azure/autorest.modelerfour) as a basic code model. 
 
 Besides the Autorest.Modelerfour, Autorest.Az has two more Autorest extensions dependencies, the [Autorest.Clicommon](https://github.com/Azure/autorest.clicommon) and [Autorest.Python](https://github.com/Azure/autorest.python), the Autorest.Clicommon is responsiblefor handling the user defined CLI directives such as operations splitting, polymorphism, renaming, hiding etc. and marking them properly in the code model. The Autorest.Python is integrated into Autorest.Az for the Rest APIs calls. Azure CLI does not do the Rest call directly. It either call the vendored SDKs from Azure CLI Extensions or call the public released SDK from Azure CLI main repo modules.
 
@@ -67,7 +66,7 @@ This *--interactive* option will help users to understand how the Autorest Pipel
  
 **Autorest.Az Specific Options**
 1. *--az.debugger*  
-Actually this *--xxx.debugger* option is provided by Autorest, by which you can debug the Autorest extension where `xxx` is the name of the Autorest extensions in our autorest.az's case, the CLI code generator step by step by adding break points. 
+The *--exname.debugger* option is provided by Autorest for developers to debug the Autorest extension and `exname` is the extension name. After you start autorest.az with *--az.debugger*, you could then attach the VSCode to the autorest process for step by step debugging.
 1. *--sdk-no-flatten*  
 CLI code generator supports to generate the flattened SDK or the un-flattened SDK. Users can specify *--sdk-no-flatten* to generate the un-flattened SDK. The current publish released autorest.az (version 1.6.2) will still generate the flattened SDK in Azure CLI extensions generation. But in our latest private release, we have change the default behavior into un-flattened SDKs for both Azure CLI extensions and Azure CLI main repo modules generation.
 1. *--sdk-flatten*  
@@ -77,14 +76,14 @@ This *--generate-sdk* has two available value "yes" or "no". By default the valu
 1. --compatible-level  
 This *--generate-sdk* has two available value "track1" or "track2". By default the value is "track2" for Azure CLI extensions generation, and "track1" for Azure CLI main repo modules.
 1. --target-mode  
-This *--target-mode* option is a convenience option for users who working on Azure CLI main repo modules. It basically equals to `--sdk-no-flatten --generate-sdk=no --compatible-level=track1`.
+This *--target-mode* option is a convenience option for users who working on Azure CLI main repo modules. By default Autorest.az will generate code targeting azure-cli-extensions repo. Setting `--target-mode=core` if you want to generate azure-cli repo command modules. It basically equals to `--sdk-no-flatten --generate-sdk=no --compatible-level=track1`.
 
 Other command line options can be found in the [generate with different options doc](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md)
 
 
-# How to Use CLI Code Generator
+# How to Use Azure CLI Code Generator
 
-Azure CLI code generation is integrated into the pull request of [Azure rest api specs repo](https://github.com/Azure/azure-rest-api-specs) and users could also try it locally. The guidance on how to generate Azure CLI code in rest api specs PR pipeline can be found in [rest api specs documentation](https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/code-gen/configure-cli.md). In this section, we will focus on the guidance on how to generate Azure CLI code locally.  
+Azure CLI code generator is integrated into the pull request of [Azure rest api specs repo](https://github.com/Azure/azure-rest-api-specs) and users could also try it locally. The guidance on how to generate Azure CLI code in rest api specs PR pipeline can be found in [rest api specs documentation](https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/code-gen/configure-cli.md). In this section, we will focus on the guidance on how to generate Azure CLI code locally.  
 
 More detailed information can be found in the [how to generate doc](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate.md)
 
@@ -93,7 +92,7 @@ More detailed information can be found in the [how to generate doc](https://gith
 1. Install the last version of Node.js   
    Please follow the [link](https://nodejs.org/en/download/) to download the latest version of Node.js.
    * Hint: to install NodeJS. You could install a NodeJS globally or use nvm (for linux) or nvm-windows (for windows). It will also help to install NodeJS package management command line tool, npm.
-2. Install Python3 and prepare virtual environment
+1. Install Python3 and prepare virtual environment
    ### Please follow the [link](https://www.python.org/downloads/) to download Python3.
    ### Run the following commands to prepare the virtual environment.
    
@@ -103,19 +102,21 @@ source ./env/bin/activate // or .\env\Scripts\Activate.ps1 in windows
 pip install azure-cli // This is must to have if for simple try out
 pip install azdev // this is optional if for simple try out. 
 ```
-3. Install Autorest  
+1. Install Autorest  
 Please run this command: `npm install -g autorest@latest` 
-4. Download Azure CLI and Azure rest API spec repositories (Optional)  
-if users only want to try out the generated CLI extensions,please build the wheel artifact by invoking `python setup.py sdist bdist_wheel` in the azure-cli-extensions/src/{serviceName} folder.  
-* Users need to prepare their swagger and download:  
-[azure-cli-extensions](https://github.com/Azure/azure-cli-extensions) repo if targeting at Azure CLI extensions development. Or the generated code needs some manual customization after trying out.   
-[azure-cli](https://github.com/Azure/azure-cli) repo if targeting at Azure CLI main repo modules development.   
-[azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) repo if you are working on public rest api specs.  
-[azure-rest-api-specs-pr](https://github.com/Azure/azure-rest-api-specs-pr) repo if you are working on private rest api specs.  
-The azure-rest-api-specs and azure-rest-api-specs-pr repo are optional for Service Team whose swagger and readme files hasn't checked in yet.
+
+1. Download Azure CLI and Azure rest API spec repositories (Optional):
+
+* Users need to prepare the swagger and download:  
+    * [azure-cli-extensions](https://github.com/Azure/azure-cli-extensions) repo if targeting at Azure CLI extensions development. Or the generated code needs some manual customization after trying out. If users only want to try out the generated CLI extensions, please build the wheel artifact by invoking `python setup.py sdist bdist_wheel` in the `{root}/azure-cli-extensions/src/{serviceName}` folder. 
+    * [azure-cli](https://github.com/Azure/azure-cli) repo if targeting at Azure CLI main repo modules development.   
+    * [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) repo if you are working on public rest api specs.  
+    * [azure-rest-api-specs-pr](https://github.com/Azure/azure-rest-api-specs-pr) repo if you are working on private rest api specs.  
+
+    The azure-rest-api-specs and azure-rest-api-specs-pr repo are optional for Service Team whose swagger and readme files hasn't checked in yet.
 
 ## Authoring Readme Files
-Since the Autorest.Az depends on Autorest.Clicommon and Autorest.Python, readme files including readme.az.md, readme.cli.md and readme.python.md should be prepared before code generation.
+Since the Autorest.Az depends on Autorest.Clicommon and Autorest.Python, readme files including readme.az.md, readme.cli.md and readme.python.md should be prepared before Azure CLI code generation.
 
 Users can refer to [this document](https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/code-gen/configure-cli.md) for more details. 
 
@@ -123,24 +124,25 @@ Users can refer to [this document](https://github.com/Azure/azure-rest-api-specs
 1. Sample command for authoring Azure CLI extensions:  
 `autorest --az --use=@autorest/az@latest <path-to-the-swagger-readme.md> --sdk-no-flatten --azure-cli-extension-folder=<path-to-the-azure-cli-extension-repo>`
 
-2. Sample command for authoring Azure CLI main modules:  
+1. Sample command for authoring Azure CLI main modules:  
 `autorest --az --use=https://github.com/Azure/autorest.az/releases/download/1.6.2-b.20201211.1/autorest-az-1.6.2.tgz <path-to-the-swagger-readme.md> --compatible-level=track2 --azure-cli-folder=<path-to-the-azure-cli-repo>`
 
 See [different combination of generation options](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md#most-useful-command-options-combination) for more useful scenarios.
 
 ## Build the Generated Code
-If it's try out mode, 
-``` 
-cd <az-output-folder> // the az-output-folder you have specified in your readme.az.md 
-python setup.py sdist bdist_wheel // you will find a wheel file in your local dist folder
+If you want to do a simple try, please go to the az-output-folder that you specified in your readme.az.md, build the wheel file and add the generated file into Azure CLI.
+```
+cd <az-output-folder>  
+python setup.py sdist bdist_wheel 
 az extension add <path-to-the-wheel-file>
 ``` 
-If it's for Azure CLI extensions development, you need  
+
+If it's for Azure CLI extensions development, you need to setup the azdev development environment and add the extension.
 ```
-azdev setup -r ./azure-cli-extensions -c ./azure-cli 
-// where the ./azure-cli-extensions is the path to Azure CLI extension repo and ./azure-cli is the path to azure-cli repo, you don't need to specify them both if you are not working on both of them. 
+azdev setup -r ./<path of azure-cli-extensions repository> -c ./<path of azure-cli repository>
+// You only need to specify the local path of the repository you plan to work on. 
 azdev extension add <extension-name> // for Azure CLI extensions
-// extension add step is needed for developing Azure CLI main repo modules 
+// The step of adding extension is required for developing Azure CLI main repo modules 
 ```
 ## Execute the Generated Azure CLI Commands
 
@@ -160,13 +162,13 @@ You can also run the live test against the service backend server.
 azdev test <extension-name> --live --discover 
 ```
 
-If you found the everything goes well so far and you want to start the onboard process, you can commit the generated Azure CLI code and file a PR in azure-cli-extension repo or in azure-cli repo.  If you found there's something you think that's not good enough and you need to customize, you can refer to our **Advanced Features**
+After all steps completed successfully and the generated module is ready to release, you can commit the generated code and create a PR in azure-cli-extension repo or in azure-cli repo for review.  If there's contain behaviour that's not good enough and you need to customize, you can refer to our **Advanced Features**
 
 # Advanced Features
 
-In this section, we will introduce the advanced features and how end users can leverage those features to generate Azure CLI code.  
+In this section, we will introduce the advanced features and how to leverage those features to generate Azure CLI code.  
 
-Autorest.az is using directive for customization:   
+Autorest.az use directive for customization:   
 1. the autorest directive. For example:
 ``` 
 directive:
@@ -186,11 +188,11 @@ cli:
         - name
         - n
 ```
-**The only supported usage for autorest directive is for moving the command groups/commands layer like remove subgroups or add subgroups.** 
+**The supported usage for autorest directive is to update the command groups and commands layer e.g. remove subgroups or add subgroups.** 
 
 Like SQL language, you can use **where clause** to specify groups/operations/parameters/schemas that need to be modified, and **set clause or directive action clause** to specify what kind of change to make. Unlike SQL that mainly operates on data, the directive operates on the code model. See details on [cli directive doc](https://github.com/Azure/autorest.clicommon/blob/master/doc/cli-directive.md)
 
-* Note: the name conventions in **where clause** are always using swagger name format. The name conventions in **set clause** are always using snake case. You may refer to [this document](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-find-swagger-name-used-by-directive) for more details if having trouble finding the name in **where clause** 
+* Note: the name conventions in **where clause** are always using swagger name format. The name conventions in **set clause** should use snake case. Please refer to [this document](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-find-swagger-name-used-by-directive) for more details if you have trouble finding the name in **where clause** 
 
 ## Folder Customization
 A typical readme.az.md configuration would look like this 
@@ -213,12 +215,12 @@ az:
 az-output-folder: $(azure-cli-extension-folder)/src/storage-preview
 python-sdk-output-folder: "$(az-output-folder)/azext_storage_preview/vendored_sdks/azure_mgmt_storage/v2019_06_01"
 ```
-we want the extension name to be `storage` but we want the code in `src/storage-preview` folder, and since `storage-preview` extension has both data plane sdks and mgmt plane sdks, and the sdks is multi-api, in this way we should follow the sdk path conventions, 
+we want the extension name to be `storage` but we want the code in `src/storage-preview` folder, and since `storage-preview` extension has both data plane sdks and mgmt plane sdks, and the sdks contains multiple api versions, so we should use different sdk path for `storage`.
 
-## CLI User Interface Customization
+## Azure CLI User Interface Customization
 ### **Add Parent Extension**   
-In the case of RP ApplicationInsights, It's actually a sub module of Monitor. which means we should design the Azure CLI user interface like `az monitor app-insight` instead of `az app-insight`. In such case, we need to add a parent extension monitor of app-insight.
-We can do that by 
+For the resource provider of ApplicationInsights, it's actually a sub module of Monitor. which means we should design the Azure CLI user interface like `az monitor app-insight` instead of `az app-insight`. To solve this problem, we could update the directive to use the parent extension `monitor` for `app-insight`.
+
 ```
 az:
   extensions: app-insight
@@ -230,8 +232,8 @@ In Azure CLI, we allow user to set different mode like is_preview or is_experime
 see [how to configure is_preview/is_experimental in different levels](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-support-configuring-is_previewis_experimental-in-different-levels) for more details.
 
 ### **Set min-api/max-api in Command Groups/Commands/Parameters**  
-In Azure CLI, we allow user to set the min or max api versions of a specific command groups or command or parameters. We can configure in readme.az.md so the generate code can work in that way too.  
-For example:
+In Azure CLI, we allow user to set the min or max api versions for command group, command and parameter. Below is a sample configuration in readme.az.md to generate code with min or max api versions.  
+
 ```
 cli:
   cli-directive:
@@ -242,14 +244,14 @@ cli:
       min-api: 2019-01-01
       max-api: 2020-12-01
 ```
-* Note: you don't need to specify both the min-api and max-api. and the group, op, param conditions are not all necessary either.   
+* Note: Both the min-api and max-api are optional and the conditions group, op and param are optional as well.   
 
 ### **Move Command Groups/Command Layer**  
-Before we talk about move command groups and command layer. we need to have some basic ideas about what command group name comes from and what command name comes from.  
+Before we talk about move command groups and command layer. we will first introduce what command group name and command name come from.  
 
-As we probably know that in Swagger the operationId are usually in the format of **A_B** where **A** is resource name in the format of plural and **B** is the action name you want to perform on that resource for example create, update, get, start, stop, delete etc.   
+In Azure rest APIs, the operationId are usually with the format of **A_B** where **A** is resource name in the format of plural and **B** is the action name you want to perform on that resource for example create, update, get, start, stop, delete etc.   
 
-In Azure CLI code generation, we view **A** as group name, **B** as the command name and the CLI command of operationId **A_B** would be like `az <extension-name> A B`.  
+Azure CLI code generator would assume **A** as group name, **B** as the command name and the CLI command of operationId **A_B** would be like `az <extension-name> A B`.  
     
 In Azure CLI it's quite common that we want to move the same functional command into the same command group. For example:   
 ```
@@ -277,7 +279,7 @@ directive:
 See [how to add or remove subgroups](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-addremove-subgroup) for more details.   
 
 ### **Rename/Hide Command Groups/Commands/Parameters**  
-We provide the ability for user to rename or hide command groups or commands or parameters. For example:
+We provide the ability to rename or hide command groups, commands and parameters. For example:
 ```
 cli:
   cli-directive:
@@ -335,7 +337,7 @@ def cf_bool_cl(cli_ctx, *_):
 ### **Parameter Specific Customization**  
 There are some customization that we provide only applicable for parameter layer.  
 #### flatten a parameter  
-let's say we have a parameter A which type is object and it has three properties a, b, c, and we want the a, b, c to be the command line parameters directly. In such case, we need to flatten the parameter. An example would be like:    
+let's say we have a parameter A which type is an object and it has three properties a, b, c, and we want the a, b, c to be the command line parameters directly. In such case, we need to flatten the parameter. An example would be like:    
 ```
 cli:
     cli-directive:
@@ -358,7 +360,7 @@ cli:
             parameter: identityType
         default-value: SystemAssigned
 ```
-This is useful when CLI has some special handling logic for parameters like SKU tier. it doesn't want customer to pass this value and in such case, you can give SKU tier a default value and then hide it. 
+This is useful when Azure CLI wants to do some special handling for parameters like SKU tier as it doesn't want customer to pass SKU tier directly. Use customization to provide a default value and hide it. 
 #### add alias for a parameter  
 It's quite common that in Azure CLI a parameter can have one or more aliases.
 ```
@@ -389,23 +391,23 @@ see [how to set an action argument as aws shorthand syntax](https://github.com/A
 ## SDK Customization
 We also provide some SDK layer customization options. See [how to generate with different options](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md) for more details. 
 ### Flattened SDK and un-Flattened SDK
-The previous version of Autorest.Az code generator can only support the flattened SDK(before 1.6.0 release), and after we have supported the Azure CLI main repo modules(since 1.6.0 release). We are using flattened sdk by default for generating Azure CLI extensions and using un-flattened sdk by default for generating Azure CLI main repo modules.(current 1.6.1 release)  
+The previous version of Autorest.Az code generator can only support the flattened SDK(before 1.6.0 release), and after we have supported the Azure CLI main repo modules(since 1.6.0 release). We are using flattened SDK by default for generating Azure CLI extensions and using un-flattened SDK by default for generating Azure CLI main repo modules.(current 1.6.1 release)  
 Current in our private releases we have changed the default generated SDK to un-flattened way as well. which should be public release very soon.
-Users can use `--sdk-no-flatten` to specific an un-flattened sdk and `--sdk-flatten` to generate a flattened sdk. If users use both `--sdk-no-flatten` and `--sdk-flatten` we will still generate the un-flattened sdk.
+Users can use `--sdk-no-flatten` to specific an un-flattened SDK and `--sdk-flatten` to generate a flattened SDK. If users use both `--sdk-no-flatten` and `--sdk-flatten` we will still generate the un-flattened SDK.
 
 ### Track1 SDK and Track2 SDK
-In the current Azure CLI main repo. most of the modules are still using track1 publish released SDKs. but in Azure CLI extensions generation we are using track2 sdk as vendored sdk. 
+In the current Azure CLI main repo, most of the modules are still using track1 publish released SDKs. However, in Azure CLI extension repos, the track2 SDK are used as vendored SDK for code generation. 
 
-By default, we will use track1 mode for Azure CLI main repo modules generation and track2 mode for Azure CLI extensions generation.
+This means, by default, we will use track1 mode for Azure CLI main repo modules generation and track2 mode for Azure CLI extensions generation.
 
-Users can use `compatible-level=track1` or `compatible-level=track2` to specific which kind of sdk you want. 
+Users can use `compatible-level=track1` or `compatible-level=track2` to specific which kind of SDK you want. 
 
 ## Manual Override 
 In some scenarios, we might find the generated code doesn't work for us and there's no way to use customization to meet our requirements. Though we are trying to reduce the manual override work, we can't rule out the possibility of generated code won't work in some complex scenaros.  
 
 Therefore, we provide the manual override ability for users to do manual override. See [manual customization](https://github.com/Azure/autorest.az/blob/master/doc/03-manual-customizations.md) for more details.   
 ## Test Customization
-By default the Autorest.Az can generate all the tests from examples in the Order of CURD and it can resolve the resource dependencies within one RP, it also support users to define test scenarios by yourselves. 
+By default the Autorest.Az can generate all the tests from examples in the order of CURD and it can resolve the resource dependencies within one RP, it also support users to define test scenarios by yourselves. 
 See [test configuration](https://github.com/Azure/autorest.az/blob/master/doc/04-scenario-test-configuration.md) for more details
 
 
