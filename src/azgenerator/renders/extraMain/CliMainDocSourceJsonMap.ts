@@ -17,11 +17,11 @@ export class CliMainDocSourceJsonMap extends TemplateBase {
         this.relativePath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
     }
 
-    public async fullGeneration(): Promise<string[]> {
+    public fullGeneration(): string[] {
         return this.GenerateDocSourceJsonMap(this.model, this.relativePath);
     }
 
-    public async incrementalGeneration(base: string): Promise<string[]> {
+    public incrementalGeneration(base: string): string[] {
         return null;
     }
 
@@ -57,5 +57,10 @@ export class CliMainDocSourceJsonMap extends TemplateBase {
             }
         }
         return outputFile;
+    }
+
+    public GetRenderData(model: CodeModelAz): string[] {
+        const output: string[] = [];
+        return output;
     }
 }

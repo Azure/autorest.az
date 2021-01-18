@@ -3477,7 +3477,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         layer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
-    ): unknown|any[] {
+    ): unknown | any[] {
         if (
             isNullOrUndefined(layer) ||
             isNullOrUndefined(dependencies) ||
@@ -3485,18 +3485,17 @@ export class CodeModelCliImpl implements CodeModelAz {
         ) {
             return {};
         }
-        let a = typeof CodeModelCliImpl['Extension_Name'];
         const type: CodeModelTypes = layer;
         const Type = Capitalize(type);
         const renderInput: RenderInput = inputProperties.get(type);
         const sortBy = renderInput.sortBy;
-        let props = renderInput.properties;
+        const props = renderInput.properties;
         const conditions = renderInput.conditions;
         const converter = renderInput.converter;
         const data = {};
         data['has' + Type] = false;
         data[Type + 's'] = [];
-        let items = [];
+        const items = [];
         if (this['SelectFirst' + Type]()) {
             data['has' + Type] = true;
             do {
@@ -3522,7 +3521,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 if (dependencies.length > 0 && layer == dependencies[0][0]) {
                     const nextLayer = dependencies[0][1];
                     const d = dependencies.shift();
-                    let item2: any = this.getModelData(nextLayer, inputProperties, dependencies);
+                    const item2: any = this.getModelData(nextLayer, inputProperties, dependencies);
                     dependencies.unshift(d);
                     item = { ...item, ...item2 };
                 }
@@ -3550,44 +3549,47 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
         return data;
     }
-    
 
     public getArrayModelData(
         layer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
-    ) {
+    ): any[] {
         const data = this.getModelData(layer, inputProperties, dependencies);
-        const allTypes = [];
-        // allTypes.push(layer);
-        while(dependencies.length > 0) {
-            allTypes.push(dependencies[0][1]);
+        const allTypes = {};
+        while (dependencies.length > 0) {
+            allTypes[dependencies[0][0]] = dependencies[0][1];
             dependencies.shift();
         }
-        let ret = data[Capitalize(layer) + 's'];
-        let preType = layer;
-        let prePreType = layer;
-        for (const type of allTypes) {
-            const mret = [];
-            for (let arr of ret) {
-                const next = arr[Capitalize(type) + 's'];
-                delete arr['has' + Capitalize(type)];
-                delete arr[Capitalize(type) + 's'];
-                for (let item of next) {
-                    item[prePreType] = arr[prePreType];
-                    item[preType] = arr;
-                    delete item[preType][prePreType];
-                    mret.push(item);
+        let next = data[Capitalize(layer) + 's'];
+        delete data['has' + Capitalize(layer)];
+        delete data[Capitalize(layer) + 's'];
+        const preItem = {};
+        const traceItem = [];
+        traceItem.push([preItem, next, layer]);
+        const ret = [];
+        while (traceItem.length > 0) {
+            const front = traceItem.shift();
+            next = front[1];
+            const currentLayer = front[2];
+            const nextLayer = allTypes[currentLayer];
+            let mItem = front[0];
+            for (const item of next) {
+                if (!isNullOrUndefined(nextLayer)) {
+                    const mNext = item[Capitalize(nextLayer) + 's'];
+                    delete item['has' + Capitalize(nextLayer)];
+                    delete item[Capitalize(nextLayer) + 's'];
+                    mItem[currentLayer] = item;
+                    traceItem.push([mItem, mNext, nextLayer]);
+                } else {
+                    mItem = { ...mItem, ...item };
+                    ret.push(mItem);
                 }
             }
-            ret = mret;
-            prePreType = preType;
-            preType = type;
         }
         return ret;
     }
 
-    
     /*
     [
         {
@@ -3599,7 +3601,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     ]
     */
-    
     public getAllCommandGroups() {
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
             CodeModelTypes,
@@ -3608,28 +3609,25 @@ export class CodeModelCliImpl implements CodeModelAz {
             ['extension', new RenderInput(['name'], { name: SortOrder.ASEC })],
             ['commandGroup', new RenderInput([], { name: SortOrder.ASEC })],
         ]);
-    
-        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
-            ['extension', 'commandGroup'],
-        ];
-    
+
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[['extension', 'commandGroup']];
+
         return this.getModelData('extension', inputProperties, dependencies);
     }
-    
+
     public CreateCommandGroupModel() {
-        let commandGroups = this.getAllCommandGroups();
+        const commandGroups = this.getAllCommandGroups();
     }
-    
+
     public CreateCommandModel() {
-    
+        //
     }
-    
+
     public CreateParameterModel() {
-    
+        //
     }
 
     public CreateCliModule() {
         return new CLIModule();
-    };
-    
+    }
 }

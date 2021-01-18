@@ -14,17 +14,17 @@ export class CliMainRequirement extends TemplateBase {
         super(model, isDebugMode);
     }
 
-    public async fullGeneration(): Promise<string[]> {
+    public fullGeneration(): string[] {
         return this.GenerateRequirementTxt(this.model, this.relativePath);
     }
 
-    public async incrementalGeneration(base: string): Promise<string[]> {
+    public incrementalGeneration(base: string): string[] {
         return this.GenerateRequirementTxt(this.model, this.relativePath);
     }
 
-    private async GenerateRequirementTxt(model: CodeModelAz, requirementPath) {
+    private GenerateRequirementTxt(model: CodeModelAz, requirementPath) {
         const outputFile = fs.readFileSync(requirementPath).toString().split(EOL);
-        const latestVersion = await getLatestPyPiVersion(model.GetPythonPackageName());
+        const latestVersion = getLatestPyPiVersion(model.GetPythonPackageName());
         let found = false;
 
         const line = model.GetPythonPackageName() + '==' + latestVersion;
@@ -42,5 +42,10 @@ export class CliMainRequirement extends TemplateBase {
             }
         }
         return outputFile;
+    }
+
+    public GetRenderData(model: CodeModelAz): string[] {
+        const output: string[] = [];
+        return output;
     }
 }

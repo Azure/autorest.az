@@ -3,16 +3,16 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { GenerationMode } from '../utils/models';
-import { AzCoreFullGenerator } from './AzCoreFullGenerator';
-import { AzCoreIncrementalGenerator } from './AzCoreIncrementalGenerator';
-import { AzExtensionFullGenerator } from './AzExtensionFullGenerator';
-import { AzExtensionIncrementalGenerator } from './AzExtensionIncrementalGenerator';
-import { AzGeneratorBase } from './AzGeneratorBase';
-import { CodeModelCliImpl } from './CodeModelAzImpl';
+import { GenerationMode } from '../../utils/models';
+import { AzCoreFullGenerator } from './CoreFull';
+import { AzCoreIncrementalGenerator } from './CoreIncre';
+import { AzExtensionFullGenerator } from './ExtensionFull';
+import { AzExtensionIncrementalGenerator } from './ExtensionIncre';
+import { GeneratorBase } from './Base';
+import { CodeModelCliImpl } from '../CodeModelAzImpl';
 
 export class AzGeneratorFactory {
-    static createAzGenerator(model: CodeModelCliImpl, isDebugMode: boolean): AzGeneratorBase {
+    static createAzGenerator(model: CodeModelCliImpl, isDebugMode: boolean): GeneratorBase {
         if (model.CliGenerationMode === GenerationMode.Full) {
             if (model.IsCliCore) {
                 return new AzCoreFullGenerator(model, isDebugMode);
@@ -26,9 +26,5 @@ export class AzGeneratorFactory {
                 return new AzExtensionIncrementalGenerator(model, isDebugMode);
             }
         }
-    }
-
-    static generate() {
-        
     }
 }

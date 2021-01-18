@@ -23,11 +23,11 @@ export class CliTestPrepare extends TemplateBase {
         }
     }
 
-    public async fullGeneration(): Promise<string[]> {
+    public fullGeneration(): string[] {
         return this.GenerateAzureCliTestPrepare(this.model);
     }
 
-    public async incrementalGeneration(base: string): Promise<string[]> {
+    public incrementalGeneration(base: string): string[] {
         return this.fullGeneration();
     }
 
@@ -222,6 +222,11 @@ export class CliTestPrepare extends TemplateBase {
             "                'az network nic delete --name {} --resource-group {}'.format(name, self.resource_group[1]))",
         );
         output.push('');
+        return output;
+    }
+
+    public GetRenderData(model: CodeModelAz): string[] {
+        const output: string[] = [];
         return output;
     }
 }

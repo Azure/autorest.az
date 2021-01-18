@@ -13,6 +13,7 @@ import {
     composeParamString,
     isNullOrUndefined,
 } from '../../../utils/helper';
+import { CLIModule } from '../../climodels/CLIModule';
 import { SchemaType } from '@azure-tools/codemodel';
 import { HeaderGenerator } from '../../Header';
 
@@ -38,6 +39,11 @@ function initVars() {
     hasTags = false;
     actions = [];
     useResourceType = false;
+}
+
+export function GetRenderData(cliModel: CLIModule) {
+    const data = {};
+    return data;
 }
 
 export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): string[] {

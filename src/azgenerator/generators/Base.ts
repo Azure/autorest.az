@@ -4,15 +4,17 @@
  *-------------------------------------------------------------------------------------------- */
 import * as fs from 'fs';
 import * as path from 'path';
-import { CodeModelAz } from './CodeModelAz';
-import { TemplateBase } from './renders/TemplateBase';
-import { inplaceGen } from '../utils/inplace';
+import { CodeModelAz } from '../CodeModelAz';
+import { TemplateBase } from '../renders/TemplateBase';
+import { inplaceGen } from '../../utils/inplace';
+import { TemplateRender } from '../../utils/models';
 
-export abstract class AzGeneratorBase {
+export abstract class GeneratorBase {
     model: CodeModelAz;
     files: any = {};
     azDirectory: string;
     isDebugMode: boolean;
+    templates: TemplateRender[];
 
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         this.model = model;

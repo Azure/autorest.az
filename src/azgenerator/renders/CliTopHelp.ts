@@ -25,12 +25,12 @@ export class CliTopHelp extends TemplateBase {
         }
     }
 
-    public async fullGeneration(): Promise<string[]> {
+    public fullGeneration(): string[] {
         // Nothing need to do as Full Generation will not have top level help
         return null;
     }
 
-    public async incrementalGeneration(base: string): Promise<string[]> {
+    public incrementalGeneration(base: string): string[] {
         if (isNullOrUndefined(base) || base.length === 0) {
             return null;
         } else {
@@ -80,6 +80,11 @@ export class CliTopHelp extends TemplateBase {
         );
         output.push(indentStr + 'except ImportError:');
         output.push(indentStr + '    pass');
+        return output;
+    }
+
+    public GetRenderData(model: CodeModelAz): string[] {
+        const output: string[] = [];
         return output;
     }
 }

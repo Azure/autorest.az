@@ -19,5 +19,5 @@ def load_command_table(self, _):
     offazure_hyper_vcluster = CliCommandType(
         operations_tmpl='{{commandGroup.operationTmpl}}',
         client_factory={{commandGroup.clientFactory}})
-    with self.command_group('{{commandGroup.groupName}}', {{commandGroup.renderString}}) as g:
-        g.{{command.type}}('{{command.commandName}}', {{command.renderString}})
+    with self.command_group('{{commandGroup.groupName}}', {{commandGroup.propertiesString}}) as g:
+        g.{{command.type}}('{{command.commandName}}', {{command.propertiesString}})

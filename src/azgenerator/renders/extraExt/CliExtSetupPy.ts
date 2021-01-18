@@ -18,11 +18,11 @@ export class CliExtSetupPy extends TemplateBase {
         this.relativePath = PathConstants.setupPyFile;
     }
 
-    public async fullGeneration(): Promise<string[]> {
-        return await this.GenerateAzureCliSetupPy(this.model);
+    public fullGeneration(): string[] {
+        return this.GenerateAzureCliSetupPy(this.model);
     }
 
-    public async incrementalGeneration(base: string): Promise<string[]> {
+    public incrementalGeneration(base: string): string[] {
         if (isNullOrUndefined(base) || base.length === 0) {
             return null;
         } else {
@@ -75,11 +75,11 @@ export class CliExtSetupPy extends TemplateBase {
         }
     }
 
-    private async GenerateAzureCliSetupPy(model: CodeModelAz): Promise<string[]> {
+    private GenerateAzureCliSetupPy(model: CodeModelAz): string[] {
         const dependencies = [];
         if (!model.SDK_NeedSDK) {
             const packageName = model.GetPythonPackageName();
-            const latestVersion = await getLatestPyPiVersion(packageName);
+            const latestVersion = getLatestPyPiVersion(packageName);
             const line = "'" + packageName + '~=' + latestVersion + "'";
             dependencies.push(line);
         }
@@ -107,6 +107,11 @@ export class CliExtSetupPy extends TemplateBase {
         };
         const tmplPath = path.join(`${__dirname}`, '../../../../templates/setup.py.njx');
         const output = nunjucks.render(tmplPath, data);
+        return output;
+    }
+
+    public GetRenderData(model: CodeModelAz): string[] {
+        const output: string[] = [];
         return output;
     }
 }

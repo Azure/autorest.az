@@ -556,12 +556,12 @@ export function findNodeInCodeModel(
     return flattenedNodes;
 }
 
-export async function getLatestPyPiVersion(packageName: string) {
+export function getLatestPyPiVersion(packageName: string) {
     const url = 'https://pypi.org/pypi/' + packageName + '/json';
     const option = {
         uri: url,
     };
-    const response = await request.get(option);
+    const response = request.get(option);
     const res = JSON.parse(response);
     const latest = res.urls[1];
     const filename = latest.filename;

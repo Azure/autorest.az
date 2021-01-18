@@ -19,13 +19,17 @@ export class CliTopMetadata extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         this.relativePath = path.join(model.AzextFolder, PathConstants.metadataFile);
+        this.tmplPath = path.join(
+            `${__dirname}`,
+            '../../../../templates/azext/azext_metadata.json.njx',
+        );
     }
 
-    public async fullGeneration(): Promise<string[]> {
+    public fullGeneration(): string[] {
         return this.GenerateAzureCliAzextMetadata(this.model);
     }
 
-    public async incrementalGeneration(base: string): Promise<string[]> {
+    public incrementalGeneration(base: string): string[] {
         if (isNullOrUndefined(base) || base.length === 0) {
             return this.fullGeneration();
         } else {
@@ -37,11 +41,12 @@ export class CliTopMetadata extends TemplateBase {
     }
 
     private GenerateAzureCliAzextMetadata(model: CodeModelAz): string[] {
-        const tmplPath = path.join(
-            `${__dirname}`,
-            '../../../../templates/azext/azext_metadata.json.njx',
-        );
-        const output = nunjucks.render(tmplPath, { model: model });
+        const output = [];
+        return output;
+    }
+
+    public GetRenderData(model: CodeModelAz): any {
+        const output: string[] = [];
         return output;
     }
 }

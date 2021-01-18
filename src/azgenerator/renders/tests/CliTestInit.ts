@@ -21,11 +21,11 @@ export class CliTestInit extends TemplateBase {
         }
     }
 
-    public async fullGeneration(): Promise<string[]> {
+    public fullGeneration(): string[] {
         return this.GenerateAzureCliTestInit(this.model);
     }
 
-    public async incrementalGeneration(base: string): Promise<string[]> {
+    public incrementalGeneration(base: string): string[] {
         return this.fullGeneration();
     }
 
@@ -172,6 +172,11 @@ export class CliTestInit extends TemplateBase {
         );
         output.push('');
 
+        return output;
+    }
+
+    public GetRenderData(model: CodeModelAz): string[] {
+        const output: string[] = [];
         return output;
     }
 }

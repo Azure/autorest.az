@@ -25,7 +25,7 @@ export class CliTopCustom extends TemplateBase {
         }
     }
 
-    public async fullGeneration(): Promise<string[]> {
+    public fullGeneration(): string[] {
         const headerGenerator: HeaderGenerator = new HeaderGenerator();
         headerGenerator.disableWildcardImport = true;
         headerGenerator.disableUnusedWildcardImport = true;
@@ -35,7 +35,7 @@ export class CliTopCustom extends TemplateBase {
         return output;
     }
 
-    public async incrementalGeneration(base: string): Promise<string[]> {
+    public incrementalGeneration(base: string): string[] {
         if (isNullOrUndefined(base) || base.length === 0) {
             const headerGenerator: HeaderGenerator = new HeaderGenerator();
             headerGenerator.disableWildcardImport = true;
@@ -92,6 +92,11 @@ export class CliTopCustom extends TemplateBase {
         output.push(indentStr + 'except ImportError:');
         output.push(indentStr + '    pass');
         output.push('');
+        return output;
+    }
+
+    public GetRenderData(model: CodeModelAz): string[] {
+        const output: string[] = [];
         return output;
     }
 }

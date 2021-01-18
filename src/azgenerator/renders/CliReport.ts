@@ -14,17 +14,23 @@ export class CliReport extends TemplateBase {
     constructor(model: CodeModelAz, isDebugMode: boolean) {
         super(model, isDebugMode);
         this.relativePath = path.join(PathConstants.reportFile);
+        this.tmplPath = path.join(`${__dirname}`, '../../../templates/report.md.njx');
     }
 
-    public async fullGeneration(): Promise<string[]> {
+    public fullGeneration(): string[] {
         return this.GenerateAzureCliReport(this.model);
     }
 
-    public async incrementalGeneration(base: string): Promise<string[]> {
+    public incrementalGeneration(base: string): string[] {
         return this.fullGeneration();
     }
 
     GenerateAzureCliReport(model: CodeModelAz): string[] {
+        const output = [];
+        return output;
+    }
+
+    public GetRenderData(model: CodeModelAz): any {
         const data = {
             model: {},
         };
@@ -73,8 +79,6 @@ export class CliReport extends TemplateBase {
             ['method', 'methodParameter'],
         ];
         data.model = model.getModelData('extension', inputProperties, dependencies);
-        const tmplPath = path.join(`${__dirname}`, '../../../templates/report.md.njx');
-        const output = nunjucks.render(tmplPath, data);
-        return output;
+        return data;
     }
 }

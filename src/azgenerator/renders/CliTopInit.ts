@@ -26,11 +26,11 @@ export class CliTopInit extends TemplateBase {
         }
     }
 
-    public async fullGeneration(): Promise<string[]> {
+    public fullGeneration(): string[] {
         return this.GenerateAzureCliInit(this.model);
     }
 
-    public async incrementalGeneration(base: string): Promise<string[]> {
+    public incrementalGeneration(base: string): string[] {
         if (isNullOrUndefined(base) || base.length === 0) {
             // No base version
             return this.fullGeneration();
@@ -207,6 +207,11 @@ export class CliTopInit extends TemplateBase {
         output.push('COMMAND_LOADER_CLS = ' + model.Extension_NameClass + 'CommandsLoader');
         output.push('');
 
+        return output;
+    }
+
+    public GetRenderData(model: CodeModelAz): string[] {
+        const output: string[] = [];
         return output;
     }
 }

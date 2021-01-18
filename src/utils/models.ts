@@ -3,6 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
+import { CLIModule } from '../azgenerator/climodels/CLIModule';
+import { TemplateBase } from '../azgenerator/renders/TemplateBase';
 import { isNullOrUndefined } from './helper';
 
 export enum GenerationMode {
@@ -187,4 +189,4 @@ export class RenderInput {
     ) {}
 }
 
-export type Template = [string, string, any];
+export type TemplateRender = [string, TemplateBase];

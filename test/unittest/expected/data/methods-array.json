@@ -1,0 +1,466 @@
+{
+    "model": [
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "cluster list",
+            "cliKey": "GetAllClustersInSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "cluster show",
+            "cliKey": "GetCluster"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "put-host",
+            "cliKey": "PutHost"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-all-host-in-site",
+            "cliKey": "GetAllHostsInSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-host",
+            "cliKey": "GetHost"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-all-machine-in-site",
+            "cliKey": "GetAllMachinesInSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-machine",
+            "cliKey": "GetMachine"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-all-run-as-account-in-site",
+            "cliKey": "GetAllRunAsAccountsInSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-run-as-account",
+            "cliKey": "GetRunAsAccount"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "delete",
+            "cliKey": "DeleteSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "get-site-health-summary",
+            "cliKey": "GetSiteHealthSummary"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "get-site-usage",
+            "cliKey": "GetSiteUsage"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "patch-site",
+            "cliKey": "PatchSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "put-site",
+            "cliKey": "PutSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "refresh-site",
+            "cliKey": "RefreshSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-site",
+            "cliKey": "GetSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-all-machine-in-site",
+            "cliKey": "GetAllMachinesInSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-machine",
+            "cliKey": "GetMachine"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "start-machine",
+            "cliKey": "StartMachine"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "stop-machine",
+            "cliKey": "StopMachine"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-all-run-as-account-in-site",
+            "cliKey": "GetAllRunAsAccountsInSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-run-as-account",
+            "cliKey": "GetRunAsAccount"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "delete",
+            "cliKey": "DeleteSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "get-site-health-summary",
+            "cliKey": "GetSiteHealthSummary"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "get-site-usage",
+            "cliKey": "GetSiteUsage"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "patch-site",
+            "cliKey": "PatchSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "put-site",
+            "cliKey": "PutSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "refresh-site",
+            "cliKey": "RefreshSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-site",
+            "cliKey": "GetSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "delete",
+            "cliKey": "DeleteVCenter"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "put-v-center",
+            "cliKey": "PutVCenter"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-all-v-center-in-site",
+            "cliKey": "GetAllVCentersInSite"
+        },
+        {
+            "extension": {
+                "name": "offazure"
+            },
+            "commandGroup": {
+                "name": "offazure vmware vcenter",
+                "cliKey": "VCenter"
+            },
+            "command": {
+                "name": "offazure vmware vcenter show-v-center"
+            },
+            "nameAz": "show-v-center",
+            "cliKey": "GetVCenter"
+        }
+    ]
+}
