@@ -77,36 +77,24 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
             ] = GenerateNamespaceInit(this.model);
         }
 
-        await this.generateFullSingleAndAddtoOutput(new CliTopAction(this.model, this.isDebugMode));
-        await this.generateFullSingleAndAddtoOutput(new CliTopCustom(this.model, this.isDebugMode));
-        await this.generateFullSingleAndAddtoOutput(new CliTopInit(this.model, this.isDebugMode));
-        await this.generateFullSingleAndAddtoOutput(
-            new CliTopMetadata(this.model, this.isDebugMode),
-        );
-        await this.generateFullSingleAndAddtoOutput(new CliReport(this.model, this.isDebugMode));
+        await this.generateFullSingleAndAddtoOutput(new CliTopAction(this.model));
+        await this.generateFullSingleAndAddtoOutput(new CliTopCustom(this.model));
+        await this.generateFullSingleAndAddtoOutput(new CliTopInit(this.model));
+        await this.generateFullSingleAndAddtoOutput(new CliTopMetadata(this.model));
+        await this.generateFullSingleAndAddtoOutput(new CliReport(this.model));
         this.files['HISTORY.rst'] = GenerateAzureCliHistory(this.model);
-        await this.generateFullSingleAndAddtoOutput(
-            new CliExtReadme(this.model, this.isDebugMode),
-            false,
-        );
+        await this.generateFullSingleAndAddtoOutput(new CliExtReadme(this.model), false);
         this.files['setup.cfg'] = GenerateAzureCliSetupCfg(this.model);
-        await this.generateFullSingleAndAddtoOutput(
-            new CliExtSetupPy(this.model, this.isDebugMode),
-        );
+        await this.generateFullSingleAndAddtoOutput(new CliExtSetupPy(this.model));
 
         await this.generateFullSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
-        await this.generateFullSingleAndAddtoOutput(
-            new CliTestStep(this.model, this.isDebugMode),
-            true,
-            true,
-        );
+        await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model), true, true);
         for (const testGroup of this.model.Extension_TestScenario
             ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)
             : []) {
             await this.generateFullSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
-                    this.isDebugMode,
                     PathConstants.fullTestSceanrioFile(testGroup),
                     this.model.Extension_TestScenario[testGroup],
                     testGroup,
@@ -116,9 +104,7 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
             );
         }
         if (NeedPreparer()) {
-            await this.generateFullSingleAndAddtoOutput(
-                new CliTestPrepare(this.model, this.isDebugMode),
-            );
+            await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(this.model));
         }
         GenerateMetaFile(this.model);
     }

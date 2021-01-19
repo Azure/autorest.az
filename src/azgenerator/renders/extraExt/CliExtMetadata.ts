@@ -16,8 +16,8 @@ import { TemplateBase } from '../TemplateBase';
 import * as nunjucks from 'nunjucks';
 
 export class CliTopMetadata extends TemplateBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
-        super(model, isDebugMode);
+    constructor(model: CodeModelAz) {
+        super(model);
         this.relativePath = path.join(model.AzextFolder, PathConstants.metadataFile);
         this.tmplPath = path.join(
             `${__dirname}`,

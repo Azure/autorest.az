@@ -16,8 +16,8 @@ import { HeaderGenerator } from '../Header';
 import { TemplateBase } from './TemplateBase';
 
 export class CliTopHelp extends TemplateBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
-        super(model, isDebugMode);
+    constructor(model: CodeModelAz) {
+        super(model);
         if (this.model.IsCliCore) {
             this.relativePath = path.join(PathConstants.helpFile);
         } else {

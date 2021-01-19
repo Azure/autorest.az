@@ -23,11 +23,11 @@ from {{lib}} import (
 {% endfor %}
 
 
-def load_command_table(self, _):
-
-    from {{azextFolder}}.generated._client_factory import {{commandGroup.clientFactory}}
-    {{extension.nameUnderscore}}_hyper_vcluster = CliCommandType(
-        operations_tmpl='{{commandGroup.operationTmpl}}',
-        client_factory={{commandGroup.clientFactory}})
-    with self.command_group('{{commandGroup.groupName}}'{{commandGroup.propertiesString}}) as g:
-        g.{{command.type}}('{{command.commandName}}'{{command.propertiesString}})
+def load_arguments(self, _):
+ 
+    {% for command in data.commands %}
+    with self.argument_context('{{command.commandName}}'{{command.propertiesString}}) as c:
+        {% for parameter in command.parameter %}
+        c.argument('{{parameter.parameterName}}'{{parameter.propertiesString}})
+        {% endfor %}
+    {% endfor %}

@@ -4,6 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 import { CodeModelAz } from '../CodeModelAz';
 import * as nunjucks from 'nunjucks';
+import { AzConfiguration, CodeGenConstants } from '../../utils/models';
 
 export abstract class TemplateBase {
     protected model: CodeModelAz;
@@ -11,9 +12,9 @@ export abstract class TemplateBase {
     public relativePath: string;
     protected tmplPath: string;
 
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
+    constructor(model: CodeModelAz) {
         this.model = model;
-        this.isDebugMode = isDebugMode;
+        this.isDebugMode = AzConfiguration.getValue(CodeGenConstants.debug);
         this.relativePath = '';
         this.tmplPath = '';
     }

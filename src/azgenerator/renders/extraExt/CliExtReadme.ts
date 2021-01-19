@@ -9,8 +9,8 @@ import { CodeModelAz, CommandExample } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 
 export class CliExtReadme extends TemplateBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
-        super(model, isDebugMode);
+    constructor(model: CodeModelAz) {
+        super(model);
         this.relativePath = PathConstants.readmeFile;
     }
 

@@ -20,14 +20,27 @@ from {{lib}} import (
     {{item}}
     {% endfor %}
 )
+{% endif %}
 {% endfor %}
 
+{% for commandGroup in data.commandGroups %}
+helps['{{commandGroup.groupName}}'] = """
+type: group
+short-summary: {{commandGroup.description}}
+"""
 
-def load_command_table(self, _):
-
-    from {{azextFolder}}.generated._client_factory import {{commandGroup.clientFactory}}
-    {{extension.nameUnderscore}}_hyper_vcluster = CliCommandType(
-        operations_tmpl='{{commandGroup.operationTmpl}}',
-        client_factory={{commandGroup.clientFactory}})
-    with self.command_group('{{commandGroup.groupName}}'{{commandGroup.propertiesString}}) as g:
-        g.{{command.type}}('{{command.commandName}}'{{command.propertiesString}})
+{% for command in commandGroup.commands %}
+helps['{{command.commandName}}'] = """
+type: command
+short-summary: {{command.description}}
+{% if command.hasExample %}
+examples:
+  {% for example in command.Examples %}
+  - name: {{example.title}}
+    text: |-
+           {{example.commandString}}
+  {% endfor %}
+{% endif %}
+"""
+{% endfor %}
+{% endfor %}

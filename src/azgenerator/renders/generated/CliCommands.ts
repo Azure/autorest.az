@@ -11,6 +11,9 @@ import {
     composeParamString,
     isNullOrUndefined,
 } from '../../../utils/helper';
+import { TemplateBase } from '../TemplateBase';
+import { CodeGenConstants, CodeModelTypes, RenderInput, SortOrder } from '../../../utils/models';
+import { SchemaType } from '@azure-tools/codemodel';
 
 let showCommandFunctionName: string;
 let useResourceType: boolean;
@@ -18,6 +21,77 @@ let useResourceType: boolean;
 function initVars() {
     showCommandFunctionName = undefined;
     useResourceType = false;
+}
+
+export class CliCommands extends TemplateBase {
+    constructor(model: CodeModelAz) {
+        super(model);
+    }
+
+    public getDataFromModel() {
+        let data = {};
+
+        const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
+            CodeModelTypes,
+            RenderInput
+        >([
+            [
+                'extension',
+                new RenderInput(['name', 'parent', 'mode', 'nameUnderscore'], {
+                    name: SortOrder.ASEC,
+                }),
+            ],
+            [
+                'commandGroup',
+                new RenderInput(
+                    ['name', 'hasShowCommand', 'maxApi', 'minApi', 'resourceType', 'mode'],
+                    { name: SortOrder.ASEC },
+                ),
+            ],
+            [
+                'command',
+                new RenderInput([
+                    'name',
+                    'mode',
+                    'maxApi',
+                    'minApi',
+                    'resourceType',
+                    'isLongRun',
+                    'functionName',
+                    'methodName',
+                    'needGeneric',
+                ]),
+            ],
+            ['method', new RenderInput(['maxApi', 'minApi', 'mode'])],
+        ]);
+
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+            ['commandGroup', 'command'],
+            ['command', 'method'],
+        ];
+        data = this.model.getModelData('extension', inputProperties, dependencies);
+        return data;
+    }
+
+    public GetRenderData(): Record<string, unknown> {
+        const data = {};
+        data['imports'] = [];
+        data['imports'].push([CodeGenConstants.DEFAULT_CLI_CORE_LIB, ['CliCommandType']]);
+        data['commandGroups'] = [];
+        const modelData = this.getDataFromModel();
+        return data;
+    }
+
+    public fullGeneration(): string[] {
+        const output: string[] = [];
+        return output;
+    }
+
+    public incrementalGeneration(): string[] {
+        const output: string[] = [];
+        return output;
+    }
 }
 
 export function GenerateAzureCliCommands(model: CodeModelAz): string[] {

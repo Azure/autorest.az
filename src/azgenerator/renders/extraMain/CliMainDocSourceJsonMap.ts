@@ -12,8 +12,8 @@ import { CodeModelAz } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 
 export class CliMainDocSourceJsonMap extends TemplateBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
-        super(model, isDebugMode);
+    constructor(model: CodeModelAz) {
+        super(model);
         this.relativePath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
     }
 

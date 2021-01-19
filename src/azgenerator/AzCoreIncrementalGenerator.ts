@@ -74,27 +74,19 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         }
 
         // Add Import and run method from generated folder (Init)
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliTopInit(this.model, this.isDebugMode),
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTopInit(this.model));
 
         // Add Import from generated folder (Custom)
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliTopCustom(this.model, this.isDebugMode),
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTopCustom(this.model));
 
         // Add Import from generated folder (Help)
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliTopHelp(this.model, this.isDebugMode),
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTopHelp(this.model));
 
         // Add Import from generated folder (Report)
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliReport(this.model, this.isDebugMode),
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliReport(this.model));
 
         // Add Import from generated folder (Action)
-        const cliTopActionGenerator = new CliTopAction(this.model, this.isDebugMode);
+        const cliTopActionGenerator = new CliTopAction(this.model);
         let cliTopActionBase = '';
         const relativePathOldVersion = cliTopActionGenerator.relativePath.replace(
             PathConstants.actionFile,
@@ -119,11 +111,9 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         ] = await cliTopActionGenerator.incrementalGeneration(cliTopActionBase);
 
         // update sdk version in requirements and setuppy
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliMainSetupPy(this.model, this.isDebugMode),
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliMainSetupPy(this.model));
 
-        const cliRequirement = new CliMainRequirement(this.model, this.isDebugMode);
+        const cliRequirement = new CliMainRequirement(this.model);
         for (const sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
             cliRequirement.relativePath = path.join(
                 this.model.AzureCliFolder,
@@ -137,18 +127,13 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
         await this.generateIncrementalSingleAndAddtoOutput(
             new CliTestInit(this.model, this.isDebugMode),
         );
-        await this.generateFullSingleAndAddtoOutput(
-            new CliTestStep(this.model, this.isDebugMode),
-            true,
-            true,
-        );
+        await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model), true, true);
         for (const testGroup of this.model.Extension_TestScenario
             ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)
             : []) {
             await this.generateIncrementalSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
-                    this.isDebugMode,
                     PathConstants.incTestScenarioFile(testGroup),
                     this.model.Extension_TestScenario[testGroup],
                     testGroup,
@@ -157,9 +142,7 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
             );
         }
         if (NeedPreparer()) {
-            await this.generateIncrementalSingleAndAddtoOutput(
-                new CliTestPrepare(this.model, this.isDebugMode),
-            );
+            await this.generateIncrementalSingleAndAddtoOutput(new CliTestPrepare(this.model));
         }
         GenerateMetaFile(this.model);
     }

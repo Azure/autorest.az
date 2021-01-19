@@ -13,8 +13,8 @@ import * as path from 'path';
 import * as nunjucks from 'nunjucks';
 
 export class CliExtSetupPy extends TemplateBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
-        super(model, isDebugMode);
+    constructor(model: CodeModelAz) {
+        super(model);
         this.relativePath = PathConstants.setupPyFile;
     }
 

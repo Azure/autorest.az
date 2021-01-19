@@ -11,8 +11,8 @@ import { TemplateBase } from './TemplateBase';
 import * as nunjucks from 'nunjucks';
 
 export class CliReport extends TemplateBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
-        super(model, isDebugMode);
+    constructor(model: CodeModelAz) {
+        super(model);
         this.relativePath = path.join(PathConstants.reportFile);
         this.tmplPath = path.join(`${__dirname}`, '../../../templates/report.md.njx');
     }
