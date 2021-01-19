@@ -29,8 +29,8 @@ import { CliTestStep, NeedPreparer } from './renders/tests/CliTestStep';
 import { GenerateMetaFile } from './renders/CliMeta';
 
 export class AzCoreIncrementalGenerator extends AzGeneratorBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
-        super(model, isDebugMode);
+    constructor(model: CodeModelAz) {
+        super(model);
         this.azDirectory = '';
     }
 
@@ -124,9 +124,7 @@ export class AzCoreIncrementalGenerator extends AzGeneratorBase {
             );
         }
 
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliTestInit(this.model, this.isDebugMode),
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model), true, true);
         for (const testGroup of this.model.Extension_TestScenario
             ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)

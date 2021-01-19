@@ -30,8 +30,8 @@ import { GenerateAzureCliHistory } from './renders/extraExt/CliExtHistory';
 import { CliExtReadme } from './renders/extraExt/CliExtReadme';
 
 export class AzExtensionFullGenerator extends AzGeneratorBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
-        super(model, isDebugMode);
+    constructor(model: CodeModelAz) {
+        super(model);
         this.azDirectory = model.AzextFolder;
     }
 
@@ -87,7 +87,7 @@ export class AzExtensionFullGenerator extends AzGeneratorBase {
         this.files['setup.cfg'] = GenerateAzureCliSetupCfg(this.model);
         await this.generateFullSingleAndAddtoOutput(new CliExtSetupPy(this.model));
 
-        await this.generateFullSingleAndAddtoOutput(new CliTestInit(this.model, this.isDebugMode));
+        await this.generateFullSingleAndAddtoOutput(new CliTestInit(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model), true, true);
         for (const testGroup of this.model.Extension_TestScenario
             ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)

@@ -23,8 +23,8 @@ import { CliTestScenario } from '../renders/tests/CliTestScenario';
 import { CliTestStep, NeedPreparer } from '../renders/tests/CliTestStep';
 import { GenerateMetaFile } from '../renders/CliMeta';
 export class AzCoreFullGenerator extends GeneratorBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
-        super(model, isDebugMode);
+    constructor(model: CodeModelAz) {
+        super(model);
         this.azDirectory = model.AzureCliFolder;
     }
 
@@ -72,14 +72,12 @@ export class AzCoreFullGenerator extends GeneratorBase {
                 files[
                     path.join(model.azOutputFolder, 'manual/__init__.py')
                 ] = GenerateNamespaceInit(model);
-                await this.generateFullSingleAndAddtoOutput(new CliTopAction(model, isDebugMode));
-                await this.generateFullSingleAndAddtoOutput(new CliTopCustom(model, isDebugMode));
-                await this.generateFullSingleAndAddtoOutput(new CliTopInit(model, isDebugMode));
-                await this.generateFullSingleAndAddtoOutput(new CliReport(model, isDebugMode));
-                await this.generateFullSingleAndAddtoOutput(
-                    new CliMainDocSourceJsonMap(model, isDebugMode),
-                );
-                const requirementGenerator = new CliMainRequirement(model, isDebugMode);
+                await this.generateFullSingleAndAddtoOutput(new CliTopAction(model));
+                await this.generateFullSingleAndAddtoOutput(new CliTopCustom(model));
+                await this.generateFullSingleAndAddtoOutput(new CliTopInit(model));
+                await this.generateFullSingleAndAddtoOutput(new CliReport(model));
+                await this.generateFullSingleAndAddtoOutput(new CliMainDocSourceJsonMap(model));
+                const requirementGenerator = new CliMainRequirement(model);
                 for (const sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
                     requirementGenerator.relativePath = path.join(
                         model.AzureCliFolder,
@@ -89,21 +87,16 @@ export class AzCoreFullGenerator extends GeneratorBase {
                         requirementGenerator.relativePath
                     ] = await requirementGenerator.fullGeneration();
                 }
-                await this.generateFullSingleAndAddtoOutput(new CliMainSetupPy(model, isDebugMode));
+                await this.generateFullSingleAndAddtoOutput(new CliMainSetupPy(model));
 
-                await this.generateFullSingleAndAddtoOutput(new CliTestInit(model, isDebugMode));
-                await this.generateFullSingleAndAddtoOutput(
-                    new CliTestStep(model, isDebugMode),
-                    true,
-                    true,
-                );
+                await this.generateFullSingleAndAddtoOutput(new CliTestInit(model));
+                await this.generateFullSingleAndAddtoOutput(new CliTestStep(model), true, true);
                 for (const testGroup of model.Extension_TestScenario
                     ? Object.getOwnPropertyNames(model.Extension_TestScenario)
                     : []) {
                     await this.generateFullSingleAndAddtoOutput(
                         new CliTestScenario(
                             model,
-                            isDebugMode,
                             PathConstants.fullTestSceanrioFile(testGroup),
                             model.Extension_TestScenario[testGroup],
                             testGroup,
@@ -113,9 +106,7 @@ export class AzCoreFullGenerator extends GeneratorBase {
                     );
                 }
                 if (NeedPreparer()) {
-                    await this.generateFullSingleAndAddtoOutput(
-                        new CliTestPrepare(model, isDebugMode),
-                    );
+                    await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(model));
                 }
                 GenerateMetaFile(model);
             } while (model.SelectNextExtension());

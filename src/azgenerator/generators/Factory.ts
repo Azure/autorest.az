@@ -12,18 +12,18 @@ import { GeneratorBase } from './Base';
 import { CodeModelCliImpl } from '../CodeModelAzImpl';
 
 export class AzGeneratorFactory {
-    static createAzGenerator(model: CodeModelCliImpl, isDebugMode: boolean): GeneratorBase {
+    static createAzGenerator(model: CodeModelCliImpl): GeneratorBase {
         if (model.CliGenerationMode === GenerationMode.Full) {
             if (model.IsCliCore) {
-                return new AzCoreFullGenerator(model, isDebugMode);
+                return new AzCoreFullGenerator(model);
             } else {
-                return new AzExtensionFullGenerator(model, isDebugMode);
+                return new AzExtensionFullGenerator(model);
             }
         } else {
             if (model.IsCliCore) {
-                return new AzCoreIncrementalGenerator(model, isDebugMode);
+                return new AzCoreIncrementalGenerator(model);
             } else {
-                return new AzExtensionIncrementalGenerator(model, isDebugMode);
+                return new AzExtensionIncrementalGenerator(model);
             }
         }
     }

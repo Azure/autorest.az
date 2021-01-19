@@ -23,8 +23,8 @@ import { CliTestScenario } from './renders/tests/CliTestScenario';
 import { CliTestStep, NeedPreparer } from './renders/tests/CliTestStep';
 import { GenerateMetaFile } from './renders/CliMeta';
 export class AzCoreFullGenerator extends AzGeneratorBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
-        super(model, isDebugMode);
+    constructor(model: CodeModelAz) {
+        super(model);
         this.azDirectory = model.AzureCliFolder;
     }
 
@@ -89,7 +89,7 @@ export class AzCoreFullGenerator extends AzGeneratorBase {
                 }
                 await this.generateFullSingleAndAddtoOutput(new CliMainSetupPy(model));
 
-                await this.generateFullSingleAndAddtoOutput(new CliTestInit(model, isDebugMode));
+                await this.generateFullSingleAndAddtoOutput(new CliTestInit(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTestStep(model), true, true);
                 for (const testGroup of model.Extension_TestScenario
                     ? Object.getOwnPropertyNames(model.Extension_TestScenario)

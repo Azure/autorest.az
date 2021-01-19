@@ -29,8 +29,8 @@ import { CliTestStep, NeedPreparer } from './renders/tests/CliTestStep';
 import { GenerateMetaFile } from './renders/CliMeta';
 
 export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
-    constructor(model: CodeModelAz, isDebugMode: boolean) {
-        super(model, isDebugMode);
+    constructor(model: CodeModelAz) {
+        super(model);
         this.azDirectory = model.AzextFolder;
     }
 
@@ -79,27 +79,19 @@ export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
         }
 
         // Add Import and run method from generated folder (Init)
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliTopInit(this.model, this.isDebugMode),
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTopInit(this.model));
 
         // Add Import from generated folder (Custom)
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliTopCustom(this.model, this.isDebugMode),
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTopCustom(this.model));
 
         // Add Import from generated folder (Help)
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliTopHelp(this.model, this.isDebugMode),
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTopHelp(this.model));
 
         // Add Import from generated folder (Report)
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliReport(this.model, this.isDebugMode),
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliReport(this.model));
 
         // Add Import from generated folder (Action)
-        const cliTopActionGenerator = new CliTopAction(this.model, this.isDebugMode);
+        const cliTopActionGenerator = new CliTopAction(this.model);
         let cliTopActionBase = '';
         const relativePathOldVersion = cliTopActionGenerator.relativePath.replace(
             PathConstants.actionFile,
@@ -124,28 +116,17 @@ export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
         ] = await cliTopActionGenerator.incrementalGeneration(cliTopActionBase);
 
         // Upgrade version of azext_metadata
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliTopMetadata(this.model, this.isDebugMode),
-        );
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliExtSetupPy(this.model, this.isDebugMode),
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTopMetadata(this.model));
+        await this.generateIncrementalSingleAndAddtoOutput(new CliExtSetupPy(this.model));
 
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliTestInit(this.model, this.isDebugMode),
-        );
-        await this.generateFullSingleAndAddtoOutput(
-            new CliTestStep(this.model, this.isDebugMode),
-            true,
-            true,
-        );
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model));
+        await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model), true, true);
         for (const testGroup of this.model.Extension_TestScenario
             ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)
             : []) {
             await this.generateIncrementalSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
-                    this.isDebugMode,
                     PathConstants.incTestScenarioFile(testGroup),
                     this.model.Extension_TestScenario[testGroup],
                     testGroup,
@@ -154,9 +135,7 @@ export class AzExtensionIncrementalGenerator extends AzGeneratorBase {
             );
         }
         if (NeedPreparer()) {
-            await this.generateIncrementalSingleAndAddtoOutput(
-                new CliTestPrepare(this.model, this.isDebugMode),
-            );
+            await this.generateIncrementalSingleAndAddtoOutput(new CliTestPrepare(this.model));
         }
         GenerateMetaFile(this.model);
     }

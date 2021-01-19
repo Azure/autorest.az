@@ -37,7 +37,7 @@ export async function processRequest(host: Host) {
         }
 
         openInplaceGen();
-        const generator = AzGeneratorFactory.createAzGenerator(model, debug);
+        const generator = AzGeneratorFactory.createAzGenerator(model);
         await generator.generateAll();
         const files = generator.files;
 
