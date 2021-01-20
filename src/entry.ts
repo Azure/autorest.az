@@ -10,7 +10,7 @@ import {
     PathConstants,
     AzConfiguration,
 } from './utils/models';
-import { HeaderGenerator } from './azgenerator/Header';
+import { HeaderGenerator } from './generate/renders/Header';
 import { Host, Channel, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { serialize } from '@azure-tools/codegen';

@@ -12,7 +12,7 @@ import { CodeModel, SchemaType } from '@azure-tools/codemodel';
 import { createTestSession } from '../utils/test-helper';
 import * as sourceMapSupport from 'source-map-support';
 import { Entry } from '../../src/entry';
-import { CodeModelCliImpl } from '../../src/azgenerator/CodeModelAzImpl';
+import { CodeModelCliImpl } from '../../src/generate/CodeModelAzImpl';
 import { CodeModelTypes, DataGraph, RenderInput, SortOrder } from '../../src/utils/models';
 
 sourceMapSupport.install();
@@ -86,6 +86,7 @@ export class Process {
                     converter,
                 ),
             ],
+            ['azExample', new RenderInput(['commandStringItems'], {})],
         ]);
 
         if (arrayOutputFormat) {
@@ -186,5 +187,27 @@ export class Process {
             expected,
             'Getting render data error from extension to methodParameter ',
         );
+    }
+
+    @test(slow(600000), timeout(1500000)) async getModelDataTest6() {
+        await this.init();
+        const expected = JSON.parse(
+            await readFile(path.join(resources, 'expected', 'data/methods.json')),
+        );
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+            ['commandGroup', 'command'],
+            ['command', 'method'],
+            ['method', 'methodParameter'],
+            ['method', 'azExample'],
+        ];
+        const data = this.getRenderTestData(dependencies);
+        console.log(JSON.stringify(data));
+
+        // assert.deepStrictEqual(
+        //     data,
+        //     expected,
+        //     'Getting render data error from extension to methodParameter ',
+        // );
     }
 }

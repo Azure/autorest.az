@@ -49,8 +49,10 @@
 {% if method.hasExample -%}
 ##### <a name="Examples{{group.cliKey}}{{method.cliKey}}">Example</a>
 ```
-{%- for example in method.Examples %}
-{{example}}
+{%- for example in method.azExamples %}
+{% for item in example.commandStringItems %}
+{{item}}
+{% endfor %}
 {%- endfor %}
 ```
 {%- endif %}

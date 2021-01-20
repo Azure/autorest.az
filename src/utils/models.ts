@@ -3,8 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { CLIModule } from '../azgenerator/climodels/CLIModule';
-import { TemplateBase } from '../azgenerator/renders/TemplateBase';
+import { TemplateBase } from '../generate/renders/TemplateBase';
 import { isNullOrUndefined } from './helper';
 
 export enum GenerationMode {
@@ -72,6 +71,8 @@ export class PathConstants {
     public static readonly testStepFile: string = 'example_steps.py';
     public static readonly metadataFile: string = 'azext_metadata.json';
     public static readonly setupPyFile: string = 'setup.py';
+    public static readonly setupCfgFile: string = 'setup.cfg';
+    public static readonly historyRstFile: string = 'HISTORY.rst';
     public static readonly docSourceJsonFile: string = '/doc/sphinx/azhelpgen/doc_source_map.json';
     public static readonly mainSetupPyFile: string = 'src/azure-cli/setup.py';
     public static readonly readmeFile: string = 'README.md';
@@ -176,7 +177,8 @@ export type CodeModelTypes =
     | 'commandGroup'
     | 'command'
     | 'method'
-    | 'methodParameter';
+    | 'methodParameter'
+    | 'azExample';
 
 export type DataGraph = [CodeModelTypes, CodeModelTypes][];
 
