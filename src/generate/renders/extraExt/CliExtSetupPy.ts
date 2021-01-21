@@ -19,11 +19,11 @@ export class CliExtSetupPy extends TemplateBase {
         this.tmplPath = path.join(`${__dirname}`, '../../../../src/templates/setup.py.njx');
     }
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         return this.GenerateAzureCliSetupPy(this.model);
     }
 
-    public incrementalGeneration(base: string): string[] {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         if (isNullOrUndefined(base) || base.length === 0) {
             return null;
         } else {
@@ -80,11 +80,11 @@ export class CliExtSetupPy extends TemplateBase {
         return this.render();
     }
 
-    public GetRenderData(model: CodeModelAz): any {
+    public async GetRenderData(model: CodeModelAz): Promise<any> {
         const dependencies = [];
         if (!model.SDK_NeedSDK) {
             const packageName = model.GetPythonPackageName();
-            const latestVersion = getLatestPyPiVersion(packageName);
+            const latestVersion = await getLatestPyPiVersion(packageName);
             const line = "'" + packageName + '~=' + latestVersion + "'";
             dependencies.push(line);
         }

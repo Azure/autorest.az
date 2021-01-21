@@ -43,12 +43,12 @@ export class CliTestStep extends TemplateBase {
         }
     }
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         return this.GenerateAzureCliTestStep(this.model);
     }
 
-    public incrementalGeneration(base: string): string[] {
-        return this.fullGeneration();
+    public async incrementalGeneration(base: string): Promise<string[]> {
+        return await this.fullGeneration();
     }
 
     private GenerateAzureCliTestStep(model: CodeModelAz): string[] {
@@ -346,7 +346,7 @@ export class CliTestStep extends TemplateBase {
         }
     }
 
-    public GetRenderData(model: CodeModelAz): string[] {
+    public async GetRenderData(model: CodeModelAz): Promise<string[]> {
         const output: string[] = [];
         return output;
     }

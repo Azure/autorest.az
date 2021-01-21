@@ -62,11 +62,7 @@ export class Process {
             const supposeFile = await readFile(fileName);
 
             const codeModelSupposed = deserialize<CodeModel>(supposeFile, fileName);
-            assert.deepStrictEqual(
-                codeModel,
-                codeModelSupposed,
-                'modifier has failed the unit test',
-            );
+            assert.deepEqual(codeModel, codeModelSupposed, 'modifier has failed the unit test');
         }
     }
 }

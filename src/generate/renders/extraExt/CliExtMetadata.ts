@@ -26,11 +26,11 @@ export class CliTopMetadata extends TemplateBase {
         );
     }
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         return this.GenerateAzureCliAzextMetadata(this.model);
     }
 
-    public incrementalGeneration(base: string): string[] {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         if (isNullOrUndefined(base) || base.length === 0) {
             return this.fullGeneration();
         } else {
@@ -41,12 +41,12 @@ export class CliTopMetadata extends TemplateBase {
         }
     }
 
-    private GenerateAzureCliAzextMetadata(model: CodeModelAz): string[] {
-        const output = this.render();
+    private async GenerateAzureCliAzextMetadata(model: CodeModelAz): Promise<string[]> {
+        const output = await this.render();
         return output;
     }
 
-    public GetRenderData(model: CodeModelAz): any {
+    public async GetRenderData(model: CodeModelAz): Promise<any> {
         const data = {
             model: {
                 Extension_Mode: model.Extension_Mode,

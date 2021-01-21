@@ -17,18 +17,18 @@ export class CliMainSetupPy extends TemplateBase {
         this.relativePath = path.join(model.AzureCliFolder, PathConstants.mainSetupPyFile);
     }
 
-    public fullGeneration(): string[] {
-        return this.GenerateAzureCliMainSetUp(this.model, this.relativePath);
+    public async fullGeneration(): Promise<string[]> {
+        return await this.GenerateAzureCliMainSetUp(this.model, this.relativePath);
     }
 
-    public incrementalGeneration(base: string): string[] {
-        return this.GenerateAzureCliMainSetUp(this.model, this.relativePath);
+    public async incrementalGeneration(base: string): Promise<string[]> {
+        return await this.GenerateAzureCliMainSetUp(this.model, this.relativePath);
     }
 
-    private GenerateAzureCliMainSetUp(model: CodeModelAz, requirementPath) {
+    private async GenerateAzureCliMainSetUp(model: CodeModelAz, requirementPath) {
         const outputFile = fs.readFileSync(requirementPath).toString().split(EOL);
         const packageName = model.GetPythonPackageName();
-        const latestVersion = getLatestPyPiVersion(packageName);
+        const latestVersion = await getLatestPyPiVersion(packageName);
         let found = false;
         let cnt = 0;
         const line = "'" + packageName + '~=' + latestVersion + "'";
@@ -70,7 +70,7 @@ export class CliMainSetupPy extends TemplateBase {
         return outputFile;
     }
 
-    public GetRenderData(model: CodeModelAz): string[] {
+    public async GetRenderData(model: CodeModelAz): Promise<string[]> {
         const output: string[] = [];
         return output;
     }

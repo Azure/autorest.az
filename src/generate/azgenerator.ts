@@ -3,7 +3,7 @@ import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from '../utils/helper';
-import { CodeGenConstants, PathConstants, AzConfiguration } from '../utils/models';
+import { CodeGenConstants, PathConstants, AzConfiguration, TargetMode } from '../utils/models';
 import { AzGeneratorFactory } from './generators/Factory';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { openInplaceGen, closeInplaceGen } from '../utils/inplace';
@@ -51,8 +51,11 @@ export async function processRequest(host: Host) {
                     f.endsWith('HISTORY.rst') ||
                     f.endsWith('azext_metadata.json') ||
                     f.endsWith('setup.cfg') ||
-                    f.endsWith('setup.py') ||
-                    f.endsWith('report.md')
+                    (f.endsWith('setup.py') &&
+                        AzConfiguration.getValue(CodeGenConstants.targetMode) != TargetMode.Core) ||
+                    // f.endsWith('report.md') ||
+                    f.endsWith('tests/__init__.py') ||
+                    f.endsWith('prepares.py')
                 ) {
                     host.WriteFile(f, files[f]);
                 } else {

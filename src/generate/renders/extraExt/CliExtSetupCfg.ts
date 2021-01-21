@@ -15,15 +15,15 @@ export class CliExtSetupCfg extends TemplateBase {
         this.tmplPath = path.join(`${__dirname}`, '../../../../src/templates/setup.cfg.njx');
     }
 
-    public fullGeneration(): string[] {
-        return this.render();
+    public async fullGeneration(): Promise<string[]> {
+        return await this.render();
     }
 
-    public incrementalGeneration(base: string): string[] {
-        return this.fullGeneration();
+    public async incrementalGeneration(base: string): Promise<string[]> {
+        return await this.fullGeneration();
     }
 
-    public GetRenderData(model: CodeModelAz): unknown {
+    public async GetRenderData(model: CodeModelAz): Promise<unknown> {
         return {};
     }
 }

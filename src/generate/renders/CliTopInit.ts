@@ -26,14 +26,14 @@ export class CliTopInit extends TemplateBase {
         }
     }
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         return this.GenerateAzureCliInit(this.model);
     }
 
-    public incrementalGeneration(base: string): string[] {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         if (isNullOrUndefined(base) || base.length === 0) {
             // No base version
-            return this.fullGeneration();
+            return await this.fullGeneration();
         } else {
             const existingMode: GenerationMode = HeaderGenerator.GetCliGenerationMode(base);
             if (existingMode === GenerationMode.Full) {
@@ -210,7 +210,7 @@ export class CliTopInit extends TemplateBase {
         return output;
     }
 
-    public GetRenderData(model: CodeModelAz): string[] {
+    public async GetRenderData(model: CodeModelAz): Promise<string[]> {
         const output: string[] = [];
         return output;
     }

@@ -15,15 +15,15 @@ export class CliExtHistory extends TemplateBase {
         this.tmplPath = path.join(`${__dirname}`, '../../../../src/templates/HISTORY.rst.njx');
     }
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         return this.render();
     }
 
-    public incrementalGeneration(base: string): string[] {
-        return this.fullGeneration();
+    public async incrementalGeneration(base: string): Promise<string[]> {
+        return await this.fullGeneration();
     }
 
-    public GetRenderData(model: CodeModelAz): unknown {
+    public async GetRenderData(model: CodeModelAz): Promise<unknown> {
         return {};
     }
 }

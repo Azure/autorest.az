@@ -25,12 +25,12 @@ export class CliTopHelp extends TemplateBase {
         }
     }
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         // Nothing need to do as Full Generation will not have top level help
         return null;
     }
 
-    public incrementalGeneration(base: string): string[] {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         if (isNullOrUndefined(base) || base.length === 0) {
             return null;
         } else {
@@ -83,7 +83,7 @@ export class CliTopHelp extends TemplateBase {
         return output;
     }
 
-    public GetRenderData(model: CodeModelAz): string[] {
+    public async GetRenderData(model: CodeModelAz): Promise<string[]> {
         const output: string[] = [];
         return output;
     }

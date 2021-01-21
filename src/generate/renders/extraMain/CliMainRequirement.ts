@@ -14,17 +14,17 @@ export class CliMainRequirement extends TemplateBase {
         super(model);
     }
 
-    public fullGeneration(): string[] {
-        return this.GenerateRequirementTxt(this.model, this.relativePath);
+    public async fullGeneration(): Promise<string[]> {
+        return await this.GenerateRequirementTxt(this.model, this.relativePath);
     }
 
-    public incrementalGeneration(base: string): string[] {
-        return this.GenerateRequirementTxt(this.model, this.relativePath);
+    public async incrementalGeneration(base: string): Promise<string[]> {
+        return await this.GenerateRequirementTxt(this.model, this.relativePath);
     }
 
-    private GenerateRequirementTxt(model: CodeModelAz, requirementPath) {
+    private async GenerateRequirementTxt(model: CodeModelAz, requirementPath) {
         const outputFile = fs.readFileSync(requirementPath).toString().split(EOL);
-        const latestVersion = getLatestPyPiVersion(model.GetPythonPackageName());
+        const latestVersion = await getLatestPyPiVersion(model.GetPythonPackageName());
         let found = false;
 
         const line = model.GetPythonPackageName() + '==' + latestVersion;
@@ -44,7 +44,7 @@ export class CliMainRequirement extends TemplateBase {
         return outputFile;
     }
 
-    public GetRenderData(model: CodeModelAz): string[] {
+    public async GetRenderData(model: CodeModelAz): Promise<string[]> {
         const output: string[] = [];
         return output;
     }

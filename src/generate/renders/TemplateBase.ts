@@ -19,15 +19,15 @@ export abstract class TemplateBase {
         this.tmplPath = '';
     }
 
-    public abstract fullGeneration(): string[];
+    public abstract async fullGeneration(): Promise<string[]>;
 
-    public abstract incrementalGeneration(base: string): string[];
+    public abstract async incrementalGeneration(base: string): Promise<string[]>;
 
-    public render(): string[] {
+    public async render(): Promise<string[]> {
         nunjucks.configure({ autoescape: false });
-        const output = nunjucks.render(this.tmplPath, this.GetRenderData(this.model));
+        const output = nunjucks.render(this.tmplPath, await this.GetRenderData(this.model));
         return output;
     }
 
-    public abstract GetRenderData(model: CodeModelAz): any;
+    public abstract async GetRenderData(model: CodeModelAz): Promise<any>;
 }

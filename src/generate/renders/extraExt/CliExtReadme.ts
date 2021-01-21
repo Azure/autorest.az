@@ -14,7 +14,7 @@ export class CliExtReadme extends TemplateBase {
         this.relativePath = PathConstants.readmeFile;
     }
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         let output: string[] = [];
 
         output.push('# Azure CLI ' + this.model.Extension_Name + ' Extension #');
@@ -81,7 +81,7 @@ export class CliExtReadme extends TemplateBase {
         return output;
     }
 
-    public incrementalGeneration(base: string): string[] {
+    public async incrementalGeneration(base: string): Promise<string[]> {
         throw new Error('Method not implemented.');
     }
 
@@ -100,7 +100,7 @@ export class CliExtReadme extends TemplateBase {
         }
     }
 
-    public GetRenderData(model: CodeModelAz): string[] {
+    public async GetRenderData(model: CodeModelAz): Promise<string[]> {
         const output: string[] = [];
         return output;
     }

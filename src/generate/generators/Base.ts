@@ -33,7 +33,7 @@ export abstract class GeneratorBase {
             override !== false ||
             !fs.existsSync(path.join(this.model.azOutputFolder, template.relativePath))
         ) {
-            const genContent = template.fullGeneration();
+            const genContent = await template.fullGeneration();
             if (inplace) {
                 this.files[template.relativePath] = inplaceGen(
                     this.model.azOutputFolder,
@@ -56,7 +56,7 @@ export abstract class GeneratorBase {
                 .readFileSync(path.join(this.model.azOutputFolder, template.relativePath))
                 .toString();
         }
-        const genContent = template.incrementalGeneration(base);
+        const genContent = await template.incrementalGeneration(base);
         if (inplace) {
             this.files[template.relativePath] = inplaceGen(
                 this.model.azOutputFolder,

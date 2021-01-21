@@ -37,7 +37,7 @@ export class CliTestScenario extends TemplateBase {
     private header: HeaderGenerator = new HeaderGenerator();
     private scenarios: string[] = [];
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         this.StartGenerateAzureCliTestScenario();
         for (const scenarioName of Object.getOwnPropertyNames(this.configValue)) {
             this.GenerateAzureCliTestScenario(
@@ -49,8 +49,8 @@ export class CliTestScenario extends TemplateBase {
         return this.EndGenerateAzureCliTestScenario();
     }
 
-    public incrementalGeneration(base: string): string[] {
-        return this.fullGeneration();
+    public async incrementalGeneration(base: string): Promise<string[]> {
+        return await this.fullGeneration();
     }
 
     private StartGenerateAzureCliTestScenario() {
@@ -260,7 +260,7 @@ export class CliTestScenario extends TemplateBase {
         return this.header.getLines().concat(this.scenarios);
     }
 
-    public GetRenderData(model: CodeModelAz): string[] {
+    public async GetRenderData(model: CodeModelAz): Promise<string[]> {
         const output: string[] = [];
         return output;
     }

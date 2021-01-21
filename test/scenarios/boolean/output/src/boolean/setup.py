@@ -48,7 +48,7 @@ setup(
     description='Microsoft Azure Command-Line Tools AutoRestTestService Extension',
     author='Microsoft Corporation',
     author_email='azpycli@microsoft.com',
-    url='https://github.com/Azure/azure-cli-extensions/tree/master/src/bool',
+    url='https://github.com/Azure/azure-cli-extensions/tree/master/src/boolean',
     long_description=README + '\n\n' + HISTORY,
     license='MIT',
     classifiers=CLASSIFIERS,

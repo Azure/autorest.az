@@ -74,7 +74,7 @@ export class CliCommands extends TemplateBase {
         return data;
     }
 
-    public GetRenderData(): Record<string, unknown> {
+    public async GetRenderData(): Promise<Record<string, unknown>> {
         const data = {};
         data['imports'] = [];
         data['imports'].push([CodeGenConstants.DEFAULT_CLI_CORE_LIB, ['CliCommandType']]);
@@ -83,12 +83,12 @@ export class CliCommands extends TemplateBase {
         return data;
     }
 
-    public fullGeneration(): string[] {
+    public async fullGeneration(): Promise<string[]> {
         const output: string[] = [];
         return output;
     }
 
-    public incrementalGeneration(): string[] {
+    public async incrementalGeneration(): Promise<string[]> {
         const output: string[] = [];
         return output;
     }

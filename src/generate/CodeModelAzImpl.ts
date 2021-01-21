@@ -2130,11 +2130,11 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public Parameter_Description(param: Parameter = this.MethodParameter): string {
-        return param.language['az'].description.replace(/\r?\n|\r/g, ' ');
+        return param.language['az'].description?.replace(/\r?\n|\r/g, ' ');
     }
 
     public Schema_Description(schema: Schema): string {
-        return schema.language['az'].description.replace(/\r?\n|\r/g, ' ');
+        return schema.language['az'].description?.replace(/\r?\n|\r/g, ' ');
     }
 
     public Schema_FlattenedFrom(schema: Schema): Schema {
@@ -2344,7 +2344,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get AzExample_CommandStringItems(): string[] {
-        return ToMultiLine(this.AzExample_CommandString);
+        return this.AzExample.commandStringItems;
     }
     /**
      * Gets method parameters dict
