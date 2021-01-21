@@ -8,7 +8,6 @@ import * as path from 'path';
 import { SchemaType } from '@azure-tools/codemodel';
 import { CodeModelTypes, PathConstants, RenderInput, SortOrder } from '../../utils/models';
 import { TemplateBase } from './TemplateBase';
-import * as nunjucks from 'nunjucks';
 
 export class CliReport extends TemplateBase {
     constructor(model: CodeModelAz) {
@@ -18,21 +17,15 @@ export class CliReport extends TemplateBase {
     }
 
     public fullGeneration(): string[] {
-        return this.GenerateAzureCliReport(this.model);
+        return this.render();
     }
 
     public incrementalGeneration(base: string): string[] {
         return this.fullGeneration();
     }
 
-    GenerateAzureCliReport(model: CodeModelAz): string[] {
-        return this.render();
-    }
-
     public GetRenderData(model: CodeModelAz): any {
-        const data = {
-            model: {},
-        };
+        let data = {};
 
         const converter = new Map<string, (item) => unknown>([
             [
@@ -58,7 +51,7 @@ export class CliReport extends TemplateBase {
             [
                 'methodParameter',
                 new RenderInput(
-                    ['mapsTo', 'type', 'description', 'cliKey'],
+                    ['mapsTo', 'type', 'description', 'cliKey', 'namePython'],
                     {},
                     [
                         ['isFlattened', true],
@@ -79,7 +72,7 @@ export class CliReport extends TemplateBase {
             ['method', 'methodParameter'],
             ['method', 'azExample'],
         ];
-        data.model = model.getModelData('extension', inputProperties, dependencies);
+        data = model.getModelData('extension', inputProperties, dependencies);
         return data;
     }
 }

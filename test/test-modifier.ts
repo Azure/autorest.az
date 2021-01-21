@@ -6,8 +6,8 @@
 import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
 import * as path from 'path';
-import { readFile, readdir } from '@azure-tools/async-io';
-import { deserialize } from '@azure-tools/codegen';
+import { readFile, readdir, writeFile } from '@azure-tools/async-io';
+import { deserialize, serialize } from '@azure-tools/codegen';
 import { CodeModel } from '@azure-tools/codemodel';
 import { createTestSession } from './utils/test-helper';
 import { Modifiers } from '../src/modifiers';
@@ -57,12 +57,16 @@ export class Process {
             );
 
             // uncomment this line to overwrite existing file
-            // await (writeFile(fileName, serialize(codeModel)));
+            // await writeFile(fileName, serialize(codeModel));
 
             const supposeFile = await readFile(fileName);
 
             const codeModelSupposed = deserialize<CodeModel>(supposeFile, fileName);
-            assert.deepStrictEqual(codeModel, codeModelSupposed, 'namer has failed the unit test');
+            assert.deepStrictEqual(
+                codeModel,
+                codeModelSupposed,
+                'modifier has failed the unit test',
+            );
         }
     }
 }

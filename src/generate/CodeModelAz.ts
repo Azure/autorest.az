@@ -77,6 +77,7 @@ export class CommandExample {
     public Method_IsLongRun: boolean;
     public MethodParams: MethodParam[];
     public ExampleObj: any;
+    public commandStringItems;
     public CommandString: string;
     public WaitCommandString: string;
 }

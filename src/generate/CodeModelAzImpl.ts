@@ -2287,7 +2287,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             return false;
         }
 
-        const example = this.Method.extensions['az-examples'];
+        const example = this.Method['az-examples'];
         if (example && example.length > 0) {
             this.currentAzExampleIndex = 0;
             return true;
@@ -2298,7 +2298,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public SelectNextAzExample(): boolean {
-        const example = this.Method.extensions['az-examples'];
+        const example = this.Method['az-examples'];
         if (example && this.currentAzExampleIndex < example.length - 1) {
             this.currentAzExampleIndex++;
             return true;
@@ -2988,7 +2988,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                     examples.push(example);
                 }
-                example.CommandString = this.GetExampleItems(example, false, undefined).join(' ');
+                example.commandStringItems = this.GetExampleItems(example, false, undefined);
+                example.CommandString = example.commandStringItems.join(' ');
                 example.WaitCommandString = this.GetExampleWait(example).join(' ');
             });
         }
@@ -3574,12 +3575,22 @@ export class CodeModelCliImpl implements CodeModelAz {
                 if (hasFiltered) {
                     continue;
                 }
-                if (dependencies.length > 0 && layer == dependencies[0][0]) {
-                    const nextLayer = dependencies[0][1];
-                    const d = dependencies.shift();
-                    const item2: any = this.getModelData(nextLayer, inputProperties, dependencies);
-                    dependencies.unshift(d);
-                    item = { ...item, ...item2 };
+
+                if (dependencies.length > 0) {
+                    // const d = dependencies.shift();
+                    for (let i = 0; i < dependencies.length; i++) {
+                        if (layer == dependencies[i][0]) {
+                            const nextLayer = dependencies[i][1];
+                            const item2: any = this.getModelData(
+                                nextLayer,
+                                inputProperties,
+                                dependencies,
+                            );
+                            item = { ...item, ...item2 };
+                        } else {
+                            continue;
+                        }
+                    }
                 }
                 items.push(item);
             } while (this['SelectNext' + Type]());

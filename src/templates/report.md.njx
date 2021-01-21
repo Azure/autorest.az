@@ -1,63 +1,55 @@
 # Azure CLI Module Creation Report
 
-{% if model.hasExtension -%}
+{% if hasExtension -%}
 ## EXTENSION
 |CLI Extension|Command Groups|
 |---------|------------|
-{%- for extension in model.Extensions %}
+{%- for extension in Extensions %}
 |az {{extension.name}}|[groups](#CommandGroups)
 {% endfor -%}
-{% endif -%}
-
-{% if model.hasCommandGroup %}
+{%- endif %}
 ## GROUPS
-{%- for extension in model.Extensions %}
+{%- for extension in Extensions %}
 ### <a name="CommandGroups">Command groups in `az {{extension.name}}` extension </a>
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
 {%- for group in extension.CommandGroups %}
 |az {{group.name}}|{{group.cliKey}}|[commands](#CommandsIn{{group.cliKey}})|
-{%- endfor -%}
-{% endfor -%}
-{% endif %}
+{%- endfor %}
+{%- endfor %}
 
-{% if model.hasCommand -%}
 ## COMMANDS
-{%- for extension in model.Extensions %}
+{%- for extension in Extensions %}
 {%- for group in extension.CommandGroups %}
 ### <a name="CommandsIn{{group.cliKey}}">Commands in `az {{group.name}}` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
 {%- for command in group.Commands %}
 {%- for method in command.Methods %}
-|[az {{command.name}}](#{{group.cliKey}}{{method.cliKey}})|{{method.cliKey}}|[Parameters](#Parameters{{group.cliKey}}{{method.cliKey}})|[Example](#Examples{{group.cliKey}}{{method.cliKey}})|
+|[az {{command.name}}](#{{group.cliKey}}{{method.cliKey}})|{{method.cliKey}}|[Parameters](#Parameters{{group.cliKey}}{{method.cliKey}})|{%- if method.hasAzExample -%}[Example](#Examples{{group.cliKey}}{{method.cliKey}}){%- else -%}Not Found{%- endif -%}|
 {%- endfor -%}
 {%- endfor %}
 {% endfor -%}
-{%- endfor -%}
-{%- endif %}
-
-{%- if model.hasCommand %}
+{%- endfor %}
 ## COMMAND DETAILS
-{%- for extension in model.Extensions %}
+{%- for extension in Extensions %}
 {%- for group in extension.CommandGroups %}
 ### group `az {{group.name}}`
 {%- for command in group.Commands %}
 {%- for method in command.Methods %}
 #### <a name="{{group.cliKey}}{{method.cliKey}}">Command `az {{command.name}}`</a>
 
-{% if method.hasExample -%}
+{% if method.hasAzExample -%}
 ##### <a name="Examples{{group.cliKey}}{{method.cliKey}}">Example</a>
 ```
-{%- for example in method.azExamples %}
-{% for item in example.commandStringItems %}
-{{item}}
-{% endfor %}
+{%- for example in method.AzExamples -%}
+{%- for item in example.commandStringItems %}
+{{item }}
+{%- endfor -%}
 {%- endfor %}
 ```
 {%- endif %}
-
-{%- if method.hasMethodParameter %}
+{% if method.hasMethodParameter -%}
 ##### <a name="Parameters{{group.cliKey}}{{method.cliKey}}">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -68,5 +60,4 @@
 {% endfor %}
 {%- endfor %}
 {%- endfor -%}
-{% endfor -%}
-{% endif %}
+{%- endfor %}

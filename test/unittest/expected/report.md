@@ -32,7 +32,7 @@
 
 ##### <a name="ExamplesHyperVClusterGetAllClustersInSite">Example</a>
 ```
-az offazure hyperv cluster cluster list --resource-group "ipsahoo-RI-121119" --site-name "hyperv121319c813site" \
+az offazure hyperv cluster cluster list --resource-group "ipsahoo-RI-121119" --site-name "hyperv121319c813site" 
 --subscription-id "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600"
 ```
 ##### <a name="ParametersHyperVClusterGetAllClustersInSite">Parameters</a> 
@@ -47,8 +47,8 @@ az offazure hyperv cluster cluster list --resource-group "ipsahoo-RI-121119" --s
 
 ##### <a name="ExamplesHyperVClusterGetCluster">Example</a>
 ```
-az offazure hyperv cluster show --name "hypgqlclusrs1-ntdev-corp-micros-11e77b27-67cc-5e46-a5d8-0ff3dc2ef179" \
---resource-group "ipsahoo-RI-121119" --site-name "hyperv121319c813site" --subscription-id \
+az offazure hyperv cluster show --name "hypgqlclusrs1-ntdev-corp-micros-11e77b27-67cc-5e46-a5d8-0ff3dc2ef179" 
+--resource-group "ipsahoo-RI-121119" --site-name "hyperv121319c813site" --subscription-id 
 "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600"
 ```
 ##### <a name="ParametersHyperVClusterGetCluster">Parameters</a> 
@@ -64,7 +64,7 @@ az offazure hyperv cluster show --name "hypgqlclusrs1-ntdev-corp-micros-11e77b27
 
 ##### <a name="ExamplesHyperVHostPutHost">Example</a>
 ```
-az offazure hyperv host put-host --fqdn "10.10.10.20" --run-as-account-id "Account1" --host-name "Host1" \
+az offazure hyperv host put-host --fqdn "10.10.10.20" --run-as-account-id "Account1" --host-name "Host1" 
 --resource-group "pajindTest" --site-name "appliance1e39site" --subscription-id "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600"
 ```
 ##### <a name="ParametersHyperVHostPutHost">Parameters</a> 
@@ -82,7 +82,7 @@ az offazure hyperv host put-host --fqdn "10.10.10.20" --run-as-account-id "Accou
 
 ##### <a name="ExamplesHyperVHostGetAllHostsInSite">Example</a>
 ```
-az offazure hyperv host show-all-host-in-site --resource-group "pajindTest" --site-name "appliance1e39site" \
+az offazure hyperv host show-all-host-in-site --resource-group "pajindTest" --site-name "appliance1e39site" 
 --subscription-id "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600"
 ```
 ##### <a name="ParametersHyperVHostGetAllHostsInSite">Parameters</a> 
@@ -97,7 +97,7 @@ az offazure hyperv host show-all-host-in-site --resource-group "pajindTest" --si
 
 ##### <a name="ExamplesHyperVHostGetHost">Example</a>
 ```
-az offazure hyperv host show-host --host-name "bcdr-ewlab-46-ntdev-corp-micros-e4638031-3b19-5642-926d-385da60cfb8a" \
+az offazure hyperv host show-host --host-name "bcdr-ewlab-46-ntdev-corp-micros-e4638031-3b19-5642-926d-385da60cfb8a" 
 --resource-group "pajindTest" --site-name "appliance1e39site" --subscription-id "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600"
 ```
 ##### <a name="ParametersHyperVHostGetHost">Parameters</a> 

@@ -189,25 +189,19 @@ export class Process {
         );
     }
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest6() {
-        await this.init();
-        const expected = JSON.parse(
-            await readFile(path.join(resources, 'expected', 'data/methods.json')),
-        );
-        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
-            ['extension', 'commandGroup'],
-            ['commandGroup', 'command'],
-            ['command', 'method'],
-            ['method', 'methodParameter'],
-            ['method', 'azExample'],
-        ];
-        const data = this.getRenderTestData(dependencies);
-        console.log(JSON.stringify(data));
-
-        // assert.deepStrictEqual(
-        //     data,
-        //     expected,
-        //     'Getting render data error from extension to methodParameter ',
-        // );
-    }
+    // @test(slow(600000), timeout(1500000)) async getModelDataTest6() {
+    //     await this.init();
+    //     const expected = JSON.parse(
+    //         await readFile(path.join(resources, 'expected', 'data/methods.json')),
+    //     );
+    //     const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+    //         ['extension', 'commandGroup'],
+    //         ['commandGroup', 'command'],
+    //         ['command', 'method'],
+    //         ['method', 'methodParameter'],
+    //         ['method', 'azExample'],
+    //     ];
+    //     const data = this.getRenderTestData(dependencies);
+    //     console.log(JSON.stringify(data));
+    // }
 }

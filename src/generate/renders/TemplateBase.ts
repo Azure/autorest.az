@@ -24,6 +24,7 @@ export abstract class TemplateBase {
     public abstract incrementalGeneration(base: string): string[];
 
     public render(): string[] {
+        nunjucks.configure({ autoescape: false });
         const output = nunjucks.render(this.tmplPath, this.GetRenderData(this.model));
         return output;
     }
