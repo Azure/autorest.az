@@ -138,6 +138,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.setParamAzUniqueNames();
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
+        this.dealingParameterAlias();
         this.GenerateTestInit();
         this.GetAllExamples();
     }
@@ -711,6 +712,32 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
+    private dealingParameterAlias() {
+        this.getMethodParametersWithCallback(function() {
+            const parameterName = this.MethodParameter_MapsTo;
+            // this is to handle names like "format", "type", etc
+            if (parameterName.endsWith('_')) {
+                if (isNullOrUndefined(this.MethodParameter.language['az'].alias)) {
+                    this.MethodParameter.language['az'].alias = [];
+                }
+                this.MethodParameter.language['az'].alias.push(
+                    parameterName.substr(0, parameterName.length - 1),
+                );
+            } else if (
+                parameterName.endsWith('name') &&
+                !this.Method['hasName'] &&
+                parameterName.replace(/_name$|_/g, '') ===
+                    this.CommandGroup_DefaultName.toLowerCase()
+            ) {
+                if (isNullOrUndefined(this.MethodParameter.language['az'].alias) || this.MethodParameter.language['az'].alias.length <= 0) {
+                    this.MethodParameter.language['az'].alias = [];
+                    this.MethodParameter.language['az'].alias.push('name');
+                    this.MethodParameter.language['az'].alias.push('n');
+                    this.MethodParameter.language['az'].alias.push(parameterName);
+                }
+            }
+        }.bind(this));
+    }
     //= ================================================================================================================
     // Extension level information
     // autorest.az will have support for multiple extensions from single swagger file.
@@ -761,6 +788,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._testScenario = undefined;
             this._configuredScenario = false;
         }
+        this.GatherInternalResource();
     }
 
     public get ConfiguredScenario(): boolean {
@@ -2344,7 +2372,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get AzExample_CommandStringItems(): string[] {
-        return this.AzExample.commandStringItems;
+        let items = [];
+        ToMultiLine(this.AzExample_CommandString, items, 119, true);
+        return items;
     }
     /**
      * Gets method parameters dict
@@ -3696,5 +3726,63 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public CreateCliModule() {
         //
+    }
+
+    public getAllCommandGroupWithCallback(callback: () => void): void {
+        const commandGroupCall = function() {
+            if (this.SelectFirstCommandGroup()) {
+                do {
+                    callback.bind(this)();
+                } while (this.SelectNextCommandGroup());
+            }
+        }.bind(this);
+        commandGroupCall();
+    } 
+
+    public getCommandsWithCallback(callback: () => void, needAll: boolean = true): void {
+        const commandCall = function() {
+            if (this.SelectFirstCommand()) {
+                do {
+                    callback.bind(this)();
+                } while (this.SelectNextCommand());
+            }
+        }.bind(this);
+        if (needAll) {
+            this.getAllCommandGroupWithCallback(commandCall);
+        } else {
+            commandCall();
+        }
+        
+    }
+
+    public getMethodsWithCallback(callback: () => void, needAll: boolean = true): void {
+        const methodCall = function() {
+            if (this.SelectFirstMethod()) {
+                do {
+                    callback.bind(this)();
+                } while (this.SelectNextMethod());
+            }
+        }.bind(this);
+        if (needAll) {
+            this.getCommandsWithCallback(methodCall);
+        } else {
+            methodCall();
+        }
+        
+    }
+
+    public getMethodParametersWithCallback(callback:() => void, needAll: boolean = true): void {
+        const methodParameterCall = function () {
+            if (this.SelectFirstMethodParameter()) {
+                do {
+                    callback.bind(this)();
+                } while (this.SelectNextMethodParameter());
+            }
+        }.bind(this);
+        if (needAll) {
+            this.getMethodsWithCallback(methodParameterCall);
+        } else {
+            methodParameterCall();
+        }
     }
 }

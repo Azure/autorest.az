@@ -41,15 +41,7 @@ export class CliExtReadme extends TemplateBase {
                 }
 
                 // Sort
-                for (let i = 0; i < exampleList.length - 1; ++i) {
-                    for (let j = i + 1; j < exampleList.length; ++j) {
-                        if (this.compareExamples(exampleList[i], exampleList[j]) === false) {
-                            const tempExample = exampleList[i];
-                            exampleList[i] = exampleList[j];
-                            exampleList[j] = tempExample;
-                        }
-                    }
-                }
+                exampleList.sort(this.compareExamples.bind(this));
 
                 // Generate example
                 for (const example of exampleList) {
@@ -67,7 +59,7 @@ export class CliExtReadme extends TemplateBase {
                         example.WaitCommandString !== ''
                     ) {
                         exampleCommandList.push('');
-                        const temp = CmdToMultiLines(example.WaitCommandString);
+                        const temp = CmdToMultiLines(example.CommandString);
                         exampleCommandList.push(...temp);
                     }
                     exampleCommandList.push('```');
@@ -85,8 +77,13 @@ export class CliExtReadme extends TemplateBase {
         throw new Error('Method not implemented.');
     }
 
-    private compareExamples(example1: CommandExample, example2: CommandExample): boolean {
-        return this.getExampleOrder(example1) >= this.getExampleOrder(example2);
+    private compareExamples(example1: CommandExample, example2: CommandExample): number {
+        if (this.getExampleOrder(example1) > this.getExampleOrder(example2)) {
+            return -1;
+        } else if (this.getExampleOrder(example1) < this.getExampleOrder(example2)) {
+            return 1;
+        }
+        return 0;
     }
 
     private getExampleOrder(example: CommandExample): number {

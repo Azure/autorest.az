@@ -18,6 +18,7 @@ export class CliReport extends TemplateBase {
     }
 
     public async fullGeneration(): Promise<string[]> {
+        // return this.render();
         return this.GenerateAzureCliReport(this.model);
     }
 
