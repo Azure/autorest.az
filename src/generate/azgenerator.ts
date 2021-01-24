@@ -1,9 +1,9 @@
-import { Host, startSession } from '@azure-tools/autorest-extension-base';
+import { Channel, Host, startSession } from '@azure-tools/autorest-extension-base';
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from '../utils/helper';
-import { CodeGenConstants, PathConstants, AzConfiguration, TargetMode } from '../utils/models';
+import { CodeGenConstants, PathConstants, AzConfiguration, TargetMode, GenerationMode } from '../utils/models';
 import { AzGeneratorFactory } from './generators/Factory';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { openInplaceGen, closeInplaceGen } from '../utils/inplace';
@@ -47,18 +47,18 @@ export async function processRequest(host: Host) {
 
         for (const f in files) {
             if (!isNullOrUndefined(files[f])) {
-                if (
-                    f.endsWith('HISTORY.rst') ||
+                if ( (AzConfiguration.getValue(CodeGenConstants.generationMode) != GenerationMode.Incremental && (
                     f.endsWith('azext_metadata.json') ||
-                    f.endsWith('setup.cfg') ||
-                    (f.endsWith('setup.py') &&
-                        AzConfiguration.getValue(CodeGenConstants.targetMode) != TargetMode.Core) ||
+                    (f.endsWith('setup.py') && AzConfiguration.getValue(CodeGenConstants.targetMode) != TargetMode.Core))) ||
+                       f.endsWith('HISTORY.rst') ||
+                       f.endsWith('setup.cfg') ||
                     // f.endsWith('report.md') ||
                     f.endsWith('tests/__init__.py') ||
-                    f.endsWith('prepares.py')
+                    f.endsWith('preparers.py')
                 ) {
                     host.WriteFile(f, files[f]);
                 } else {
+                    host.Message({Channel: Channel.Warning, Text: f});
                     host.WriteFile(f, files[f].join(EOL));
                 }
             }

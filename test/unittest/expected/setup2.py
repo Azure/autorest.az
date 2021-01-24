@@ -32,7 +32,7 @@ CLASSIFIERS = [
 
 DEPENDENCIES = [
     'azure-mgmt-offazure~=0.1.0',
-    'python==3.6',
+    'python==3.6'
 ]
 
 try:

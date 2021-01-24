@@ -17,7 +17,11 @@ az synapse big-data-pool create --location "West US 2" --auto-pause delay-in-min
     --node-size-family "MemoryOptimized" --spark-events-folder "/events" --spark-version "2.4" --tags key="value" \
     --name "ExamplePool" --resource-group "ExampleResourceGroup" --workspace-name "ExampleWorkspace" 
 
-az synapse big-data-pool wait --created --name "{myBigDataPool}" --resource-group "{rg}"
+az synapse big-data-pool create --location "West US 2" --auto-pause delay-in-minutes=15 enabled=true \
+    --auto-scale enabled=true max-node-count=50 min-node-count=3 --default-spark-log-folder "/logs" \
+    --library-requirements content="" filename="requirements.txt" --node-count 4 --node-size "Medium" \
+    --node-size-family "MemoryOptimized" --spark-events-folder "/events" --spark-version "2.4" --tags key="value" \
+    --name "ExamplePool" --resource-group "ExampleResourceGroup" --workspace-name "ExampleWorkspace" 
 ```
 ##### Show #####
 ```
@@ -82,7 +86,10 @@ az synapse sql-pool create --resource-group "ExampleResourceGroup" --location "W
     --restore-point-in-time "1970-01-01T00:00:00.000Z" --source-database-id "" --sku name="" tier="" \
     --name "ExampleSqlPool" --workspace-name "ExampleWorkspace" 
 
-az synapse sql-pool wait --created --resource-group "{rg}" --name "{mySqlPool2}"
+az synapse sql-pool create --resource-group "ExampleResourceGroup" --location "West US 2" --collation "" \
+    --create-mode "" --creation-date "1970-01-01T00:00:00.000Z" --max-size-bytes 0 --recoverable-database-id "" \
+    --restore-point-in-time "1970-01-01T00:00:00.000Z" --source-database-id "" --sku name="" tier="" \
+    --name "ExampleSqlPool" --workspace-name "ExampleWorkspace" 
 ```
 ##### List #####
 ```
@@ -375,7 +382,11 @@ az synapse workspace create --resource-group "resourceGroup1" --type "SystemAssi
     --sql-administrator-login "login" --sql-administrator-login-password "password" --tags key="value" \
     --name "workspace1" 
 
-az synapse workspace wait --created --resource-group "{rg_2}" --name "{myWorkspace2}"
+az synapse workspace create --resource-group "resourceGroup1" --type "SystemAssigned" --location "East US" \
+    --default-data-lake-storage account-url="https://accountname.dfs.core.windows.net" filesystem="default" \
+    --managed-resource-group-name "workspaceManagedResourceGroupUnique" --managed-virtual-network "default" \
+    --sql-administrator-login "login" --sql-administrator-login-password "password" --tags key="value" \
+    --name "workspace1" 
 ```
 ##### Show #####
 ```
@@ -546,7 +557,8 @@ az synapse private-link-resource show --name "sql" --resource-group "ExampleReso
 az synapse private-endpoint-connection create --name "ExamplePrivateEndpointConnection" \
     --resource-group "ExampleResourceGroup" --workspace-name "ExampleWorkspace" 
 
-az synapse private-endpoint-connection wait --created --name "{myPrivateEndpointConnection}" --resource-group "{rg}"
+az synapse private-endpoint-connection create --name "ExamplePrivateEndpointConnection" \
+    --resource-group "ExampleResourceGroup" --workspace-name "ExampleWorkspace" 
 ```
 ##### Show #####
 ```

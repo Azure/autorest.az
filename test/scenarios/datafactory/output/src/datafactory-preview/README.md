@@ -13,13 +13,13 @@ az extension add --name datafactory
 ```
 az datafactory create --location "East US" --zones "earth" "moon" --name "myFactory" --resource-group "myResourceGroup"
 ```
-##### List #####
-```
-az datafactory list --resource-group "myResourceGroup"
-```
 ##### Show #####
 ```
 az datafactory show --name "myFactory" --resource-group "myResourceGroup"
+```
+##### List #####
+```
+az datafactory list --resource-group "myResourceGroup"
 ```
 ##### Update #####
 ```
@@ -105,10 +105,6 @@ az datafactory trigger delete --factory-name "myFactory" --resource-group "myRes
 az datafactory integration-runtime self-hosted create --factory-name "myFactory" \
     --description "A selfhosted integration runtime" --name "myIntegrationRuntime" --resource-group "myResourceGroup" 
 ```
-##### List #####
-```
-az datafactory integration-runtime list --factory-name "myFactory" --resource-group "myResourceGroup"
-```
 ##### Show #####
 ```
 az datafactory integration-runtime show --factory-name "myFactory" --name "myIntegrationRuntime" \
@@ -120,6 +116,10 @@ az datafactory integration-runtime linked-integration-runtime create --name "bfa
     --data-factory-location "West US" --data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" \
     --subscription-id "061774c7-4b5a-4159-a55b-365581830283" --factory-name "myFactory" \
     --integration-runtime-name "myIntegrationRuntime" --resource-group "myResourceGroup" 
+```
+##### List #####
+```
+az datafactory integration-runtime list --factory-name "myFactory" --resource-group "myResourceGroup"
 ```
 ##### Update #####
 ```

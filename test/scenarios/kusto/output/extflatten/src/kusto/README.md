@@ -15,7 +15,9 @@ az kusto cluster create --name "kustoclusterrptest4" --type "SystemAssigned" --l
     --enable-double-encryption false --enable-purge true --enable-streaming-ingest true \
     --sku name="Standard_L8s" capacity=2 tier="Standard" --resource-group "kustorptest" 
 
-az kusto cluster wait --created --name "{myCluster}" --resource-group "{rg}"
+az kusto cluster create --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" \
+    --enable-double-encryption false --enable-purge true --enable-streaming-ingest true \
+    --sku name="Standard_L8s" capacity=2 tier="Standard" --resource-group "kustorptest" 
 ```
 ##### Show #####
 ```
@@ -176,8 +178,10 @@ az kusto attached-database-configuration create --name "attachedDatabaseConfigur
     --cluster-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Kusto/Clusters/KustoClusterLeader" \
     --database-name "kustodatabase" --default-principals-modification-kind "Union" --resource-group "kustorptest" 
 
-az kusto attached-database-configuration wait --created --name "{myAttachedDatabaseConfiguration2}" \
-    --resource-group "{rg}" 
+az kusto attached-database-configuration create --name "attachedDatabaseConfigurations1" \
+    --cluster-name "kustoclusterrptest4" --location "westus" \
+    --cluster-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Kusto/Clusters/KustoClusterLeader" \
+    --database-name "kustodatabase" --default-principals-modification-kind "Union" --resource-group "kustorptest" 
 ```
 ##### Show #####
 ```

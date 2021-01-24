@@ -32,7 +32,7 @@ CLASSIFIERS = [
 
 DEPENDENCIES = [
 {%- if model.dependencies.length %}
-{% for d in model.dependencies %}    '{{d}}',
+{% for d in model.dependencies %}    '{{d}}'{%- if not loop.last -%},{%- endif %}
 {% endfor -%}
 {% endif -%}
 ]

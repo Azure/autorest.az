@@ -85,7 +85,7 @@ export class CliExtSetupPy extends TemplateBase {
         if (!model.SDK_NeedSDK) {
             const packageName = model.GetPythonPackageName();
             const latestVersion = await getLatestPyPiVersion(packageName);
-            const line = "'" + packageName + '~=' + latestVersion + "'";
+            const line = packageName + '~=' + latestVersion;
             dependencies.push(line);
         }
         let azRelativeOutputFolder = path.resolve(model.azOutputFolder);

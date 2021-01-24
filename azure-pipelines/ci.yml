@@ -38,8 +38,6 @@ jobs:
           versionSpec: 3.6
       - script: 'npm run build'
         displayName: 'npm build'
-      - script: 'npm test'
-        displayName: 'npm test'
       - script: 'npm pack'
         displayName: 'npm pack'
       - task: PublishBuildArtifacts@1
@@ -47,7 +45,29 @@ jobs:
           PathtoPublish: '$(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)'
           ArtifactName: '$(VAR_ARIFACT_NAME)'
           publishLocation: 'Container'
-
+          
+  - job: Test Report
+    pool:
+      vmImage: 'Ubuntu 16.04'
+      pythonVersion: '3.6'
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '$(NodeVersion)'
+        displayName: 'Install Node.js $(NodeVersion)'
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          verbose: false
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.6'
+        inputs:
+          versionSpec: 3.6
+      - script: 'npm run build'
+        displayName: 'npm build'
+      - script: 'npm run test-report'
+        displayName: 'npm test-report'
+     
   - job: Analyze
     pool:
       vmImage: 'Ubuntu 16.04'
