@@ -67,7 +67,7 @@ export class CliExtReadme extends TemplateBase {
                         example.WaitCommandString !== ''
                     ) {
                         exampleCommandList.push('');
-                        const temp = CmdToMultiLines(example.CommandString);
+                        const temp = CmdToMultiLines(example.WaitCommandString);
                         exampleCommandList.push(...temp);
                     }
                     exampleCommandList.push('```');
