@@ -84,7 +84,7 @@ export class CliExtReadme extends TemplateBase {
     public async incrementalGeneration(base: string): Promise<string[]> {
         throw new Error('Method not implemented.');
     }
-    
+
     private compareExamples(example1: CommandExample, example2: CommandExample): boolean {
         return this.getExampleOrder(example1) >= this.getExampleOrder(example2);
     }
