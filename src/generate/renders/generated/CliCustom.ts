@@ -522,8 +522,12 @@ function GetSingleCommandBody(model: CodeModelAz, required: any) {
                     );
                 }
             }
+            let skip = false;
             if (model.SelectFirstMethodParameter()) {
                 do {
+                    if (skip) {
+                        skip = false;
+                    }
                     if (
                         needGeneric &&
                         !isNullOrUndefined(genericParameter) &&
@@ -546,8 +550,12 @@ function GetSingleCommandBody(model: CodeModelAz, required: any) {
                             const baseRequired = model.MethodParameter_RequiredByMethod;
                             outputBody.push('    ' + 'all_' + baseName + ' = []');
                             const childNames = [];
+                            let hasNext = false;
+                            if (model.SelectNextMethodParameter()) {
+                                hasNext = true;
+                            }
                             while (
-                                model.SelectNextMethodParameter() &&
+                                hasNext &&
                                 model.MethodParameter['polyBaseParam'] === baseParam
                             ) {
                                 const childName = model.MethodParameter_MapsTo;
@@ -556,6 +564,10 @@ function GetSingleCommandBody(model: CodeModelAz, required: any) {
                                 outputBody.push(
                                     '        ' + 'all_' + baseName + '.append(' + childName + ')',
                                 );
+                                hasNext = model.SelectNextMethodParameter();
+                            }
+                            if (hasNext) {
+                                skip = true;
                             }
                             if (childNames.length > 0) {
                                 outputBody.push('    if len(' + 'all_' + baseName + ') > 1:');
@@ -610,7 +622,7 @@ function GetSingleCommandBody(model: CodeModelAz, required: any) {
                                 ),
                         );
                     }
-                } while (model.SelectNextMethodParameter());
+                } while (skip || model.SelectNextMethodParameter());
             }
 
             outputBody = outputBody.concat(
