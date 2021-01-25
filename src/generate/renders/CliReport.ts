@@ -20,7 +20,7 @@ export class CliReport extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
         this.relativePath = path.join(PathConstants.reportFile);
-        this.tmplPath = path.join(`${__dirname}`, '../../../src/templates/report.md.njx');
+        this.tmplPath = path.join(PathConstants.templateRootFolder, 'report.md.njx');
     }
 
     public async fullGeneration(): Promise<string[]> {

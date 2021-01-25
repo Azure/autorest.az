@@ -16,7 +16,7 @@ export class CliExtSetupPy extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
         this.relativePath = PathConstants.setupPyFile;
-        this.tmplPath = path.join(`${__dirname}`, '../../../../src/templates/setup.py.njx');
+        this.tmplPath = path.join(PathConstants.templateRootFolder, 'setup.py.njx');
     }
 
     public async fullGeneration(): Promise<string[]> {

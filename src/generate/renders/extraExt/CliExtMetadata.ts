@@ -5,24 +5,17 @@
 import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from '../../../utils/helper';
-import {
-    AzextMetadata,
-    CodeGenConstants,
-    PathConstants,
-    ExtensionMode,
-    AzConfiguration,
-} from '../../../utils/models';
+import { AzextMetadata, CodeGenConstants, PathConstants } from '../../../utils/models';
 import { CodeModelAz } from '../../CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
-import * as nunjucks from 'nunjucks';
 
 export class CliTopMetadata extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
         this.relativePath = path.join(model.AzextFolder, PathConstants.metadataFile);
         this.tmplPath = path.join(
-            `${__dirname}`,
-            '../../../../src/templates/azext/azext_metadata.json.njx',
+            PathConstants.templateRootFolder,
+            'azext/azext_metadata.json.njx',
         );
     }
 

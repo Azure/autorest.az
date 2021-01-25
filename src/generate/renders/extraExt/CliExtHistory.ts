@@ -12,7 +12,7 @@ export class CliExtHistory extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
         this.relativePath = PathConstants.historyRstFile;
-        this.tmplPath = path.join(`${__dirname}`, '../../../../src/templates/HISTORY.rst.njx');
+        this.tmplPath = path.join(PathConstants.templateRootFolder, 'HISTORY.rst.njx');
     }
 
     public async fullGeneration(): Promise<string[]> {

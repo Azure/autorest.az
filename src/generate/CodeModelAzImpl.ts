@@ -3559,13 +3559,86 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     /*
-    [
-        [extension, commandGroup],
-        [commandGroup, command],
-        [command, method],
-        [method, methodParameter],
-        [method, example]
-    ]
+        This is trying to get all the model data by passing all the CodeModelTypes and InputProperties and dependencies,
+        The dependencies is used for describe how the result will look like. For example: In case of report.md, 
+        we basically need all the commandGroups, all the commands, all the methods, all the methodParameters and all the azExamples.
+        and since the azExamples actually belongs to each methods i.e. the swagger operations, we need the result to be in the format of 
+        extensions: [
+            commandGroups : [
+                commands: [
+                    methods: [
+                        methodParameters: [],
+                        azExample: [],
+                    ]
+                ]
+            ]   
+        ]
+        Then the dependencies would look like 
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+            ['commandGroup', 'command'],
+            ['command', 'method'],
+            ['method', 'methodParameter'],
+            ['method', 'azExample'],
+        ];
+
+        Since we need different properties for each of the CodeModelType, we can define our requirements in InputProperties 
+        to specify what kind of CodeModelType properties do we need for rendering, 
+               and what's hte order condition 
+               and what's the filter condition
+               and what's the converter we need after we get the data.
+        Still take report as an example,
+
+        const converter = new Map<string, (item) => unknown>([
+            [
+                'mapsTo',
+                function (item: string) {
+                    if (item.endsWith('_')) {
+                        item = item.substr(0, item.length - 1);
+                    }
+                    item = item.replace(/_/g, '-');
+                    return item;
+                },
+            ],
+        ]);
+
+        const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
+            CodeModelTypes,
+            RenderInput
+        >([
+            ['extension', new RenderInput(['name'], { name: SortOrder.ASEC })],
+            ['commandGroup', new RenderInput(['name', 'cliKey'], { name: SortOrder.ASEC })],
+            ['command', new RenderInput(['name'])],
+            ['method', new RenderInput(['nameAz', 'cliKey'], { nameAz: SortOrder.ASEC })],
+            [
+                'methodParameter',
+                new RenderInput(
+                    ['mapsTo', 'type', 'description', 'cliKey', 'namePython'],
+                    {},
+                    [
+                        ['isFlattened', true],
+                        ['type', SchemaType.Constant],
+                        ['isPolyOfSimple', true],
+                        ['isDiscriminator', true],
+                    ],
+                    converter,
+                ),
+            ],
+            ['azExample', new RenderInput(['commandStringItems'], {})],
+        ]);
+
+        
+        This means we need extension => properties: name, sort by name
+                           commandGroup => properties: name, cliKey, sort by name
+                           command => properties: name,
+                           method => properties: nameAz, cliKey, sort by nameAz
+                           methodParameter => properties: mapsTo, type, description, cliKey, namePython, and filter those parameters that 
+                                isFlattened == true and methodParameter_type != constants, isPolyOfSimple != true, isDiscrminator != true
+
+                                and converter
+
+        data = model.getModelData('extension', inputProperties, dependencies);
+
      */
 
     public getModelData(

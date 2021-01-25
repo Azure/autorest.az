@@ -19,7 +19,7 @@ export class CliTestInit extends TemplateBase {
                 PathConstants.initFile,
             );
         }
-        this.tmplPath = path.join(`${__dirname}`, '../../../../src/templates/tests/init.py.njx');
+        this.tmplPath = path.join(PathConstants.templateRootFolder, 'tests/init.py.njx');
     }
 
     public async fullGeneration(): Promise<string[]> {

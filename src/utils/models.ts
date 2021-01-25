@@ -5,6 +5,7 @@
 
 import { TemplateBase } from '../generate/renders/TemplateBase';
 import { isNullOrUndefined } from './helper';
+import * as path from 'path';
 
 export enum GenerationMode {
     Manual,
@@ -77,6 +78,10 @@ export class PathConstants {
     public static readonly mainSetupPyFile: string = 'src/azure-cli/setup.py';
     public static readonly readmeFile: string = 'README.md';
     public static readonly recordingFolder: string = 'recordings';
+    public static readonly templateRootFolder: string = path.join(
+        `${__dirname}`,
+        '../../../dist/src/templates',
+    );
 
     public static fullTestSceanrioFile(rpName: string): string {
         return 'test_' + rpName + '_scenario.py';

@@ -21,10 +21,7 @@ export class CliTestPrepare extends TemplateBase {
                 PathConstants.preparersFile,
             );
         }
-        this.tmplPath = path.join(
-            `${__dirname}`,
-            '../../../../src/templates/tests/latest/prepares.py.njx',
-        );
+        this.tmplPath = path.join(PathConstants.templateRootFolder, 'tests/latest/prepares.py.njx');
     }
 
     public async fullGeneration(): Promise<string[]> {

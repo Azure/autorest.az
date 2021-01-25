@@ -54,11 +54,11 @@ export async function processRequest(host: Host) {
         for (const f in files) {
             if (!isNullOrUndefined(files[f])) {
                 if (
-                    (AzConfiguration.getValue(CodeGenConstants.generationMode) !=
+                    (AzConfiguration.getValue(CodeGenConstants.generationMode) !==
                         GenerationMode.Incremental &&
                         (f.endsWith('azext_metadata.json') ||
                             (f.endsWith('setup.py') &&
-                                AzConfiguration.getValue(CodeGenConstants.targetMode) !=
+                                AzConfiguration.getValue(CodeGenConstants.targetMode) !==
                                     TargetMode.Core))) ||
                     f.endsWith('HISTORY.rst') ||
                     f.endsWith('setup.cfg') ||
