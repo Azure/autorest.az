@@ -13,26 +13,5 @@
                 "<node_internals>/**"
             ]
         },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Mocha Tests",
-            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-            "args": [
-              "--require",
-              "${workspaceFolder}/dist/test/render-getRenderData.js",
-              "--reporter",
-              "dot",
-              "--slow",
-              "5000",
-              "--colors",
-              "${workspaceFolder}/dist/test/render-getRenderData.js",
-      
-            ],
-            "internalConsoleOptions": "openOnSessionStart",
-            "skipFiles": [
-              "<node_internals>/**"
-            ]
-        },
     ]
 }
