@@ -46,7 +46,7 @@ jobs:
           ArtifactName: '$(VAR_ARIFACT_NAME)'
           publishLocation: 'Container'
           
-  - job: Test Report
+  - job: TestReport
     pool:
       vmImage: 'Ubuntu 16.04'
       pythonVersion: '3.6'
