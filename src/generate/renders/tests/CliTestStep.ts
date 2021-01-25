@@ -8,7 +8,7 @@ import { PreparerEntity, getResourceKey } from './ScenarioTool';
 import { ToMultiLine, deepCopy, isNullOrUndefined } from '../../../utils/helper';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
-import { PathConstants } from '../../../utils/models';
+import { CodeGenConstants, PathConstants } from '../../../utils/models';
 
 let usePreparers: boolean, shortToLongName, funcNames, allSteps, stepBuff: any;
 
@@ -206,7 +206,9 @@ export class CliTestStep extends TemplateBase {
         }
 
         steps.forEach((element) => {
-            if (element.length > 120) header.disableLineTooLong = true;
+            if (element.length > CodeGenConstants.PYLINT_MAX_CODE_LENGTH + 1) {
+                header.disableLineTooLong = true;
+            }
         });
         return header.getLines().concat(steps);
     }

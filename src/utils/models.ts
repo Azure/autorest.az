@@ -129,6 +129,7 @@ export enum CodeGenConstants {
     m4CodeModelName = 'code-model-v4-no-tags.yaml',
     DEFAULT_CLI_CORE_LIB = 'azure.cli.core',
     AZ_ENTRY_CODE_MODEL_NAME = 'az-entry-code-model.yaml',
+    PYLINT_MAX_CODE_LENGTH = 119,
 }
 
 export interface AzextMetadata {

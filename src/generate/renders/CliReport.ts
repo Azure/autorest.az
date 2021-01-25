@@ -6,7 +6,13 @@
 import { CodeModelAz } from '../CodeModelAz';
 import * as path from 'path';
 import { SchemaType } from '@azure-tools/codemodel';
-import { CodeModelTypes, PathConstants, RenderInput, SortOrder } from '../../utils/models';
+import {
+    CodeGenConstants,
+    CodeModelTypes,
+    PathConstants,
+    RenderInput,
+    SortOrder,
+} from '../../utils/models';
 import { TemplateBase } from './TemplateBase';
 import { isNullOrUndefined, ToMultiLine } from '../../utils/helper';
 
@@ -263,7 +269,7 @@ export class CliReport extends TemplateBase {
                             let parameters: string[] = [];
                             parameters = model.GetExampleItems(example, false, undefined);
                             const line = parameters.join(' ');
-                            ToMultiLine(line, mo, 119, true);
+                            ToMultiLine(line, mo, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
                             mo.push('```');
                         }
                         mo.push(

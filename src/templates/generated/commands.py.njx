@@ -17,7 +17,7 @@ from {{lib}} import {{items[0]}}
 {% else %}
 from {{lib}} import (
     {% for item in items %}
-    {{item}}
+    {{item}}{%- if not loop.last -%},{%- endif %}
     {% endfor %}
 )
 {% endfor %}

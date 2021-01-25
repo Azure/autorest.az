@@ -11,6 +11,7 @@ import {
     ToPythonString,
     isNullOrUndefined,
 } from '../../../utils/helper';
+import { CodeGenConstants } from '../../../utils/models';
 import { CodeModelAz } from '../../CodeModelAz';
 import { HeaderGenerator } from '../Header';
 
@@ -46,7 +47,9 @@ export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     output.push('');
 
     output.forEach((element) => {
-        if (element.length > 120) header.disableLineTooLong = true;
+        if (element.length > CodeGenConstants.PYLINT_MAX_CODE_LENGTH + 1) {
+            header.disableLineTooLong = true;
+        }
     });
 
     return header.getLines().concat(output);

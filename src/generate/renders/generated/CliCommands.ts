@@ -214,7 +214,9 @@ export function GenerateAzureCliCommands(model: CodeModelAz): string[] {
     }
 
     output.forEach((element) => {
-        if (element.length > 120) header.disableLineTooLong = true;
+        if (element.length > CodeGenConstants.PYLINT_MAX_CODE_LENGTH + 1) {
+            header.disableLineTooLong = true;
+        }
     });
 
     if (output.length + header.getLines().length > 1000) {

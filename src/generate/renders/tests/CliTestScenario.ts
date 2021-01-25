@@ -8,7 +8,7 @@ import { CliTestStep } from './CliTestStep';
 import { ToMultiLine, Capitalize } from '../../../utils/helper';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
-import { PathConstants } from '../../../utils/models';
+import { CodeGenConstants, PathConstants } from '../../../utils/models';
 
 export class CliTestScenario extends TemplateBase {
     constructor(model: CodeModelAz, testFilename: string, configValue: any, groupName: string) {
@@ -255,7 +255,9 @@ export class CliTestScenario extends TemplateBase {
     private EndGenerateAzureCliTestScenario(): string[] {
         this.header.addFromImport('..', ['try_manual', 'raise_if', 'calc_coverage']);
         this.scenarios.forEach((element) => {
-            if (element.length > 120) this.header.disableLineTooLong = true;
+            if (element.length > CodeGenConstants.PYLINT_MAX_CODE_LENGTH + 1) {
+                this.header.disableLineTooLong = true;
+            }
         });
         return this.header.getLines().concat(this.scenarios);
     }

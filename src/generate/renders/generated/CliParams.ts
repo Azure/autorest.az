@@ -15,6 +15,7 @@ import {
 } from '../../../utils/helper';
 import { SchemaType } from '@azure-tools/codemodel';
 import { HeaderGenerator } from '../Header';
+import { CodeGenConstants } from '../../../utils/models';
 
 let hasActions: boolean,
     hasBoolean: boolean,
@@ -120,7 +121,9 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     output.push('');
 
     output.forEach((element) => {
-        if (element.length > 120) header.disableLineTooLong = true;
+        if (element.length > CodeGenConstants.PYLINT_MAX_CODE_LENGTH + 1) {
+            header.disableLineTooLong = true;
+        }
     });
 
     if (useResourceType) {

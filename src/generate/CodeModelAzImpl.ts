@@ -713,8 +713,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     private dealingParameterAlias() {
-        this.getMethodParametersWithCallback(
-            function () {
+        this.getMethodParametersWithCallback (
+            () => {
                 const parameterName = this.MethodParameter_MapsTo;
                 // this is to handle names like "format", "type", etc
                 if (parameterName.endsWith('_')) {
@@ -740,7 +740,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         this.MethodParameter.language['az'].alias.push(parameterName);
                     }
                 }
-            }.bind(this),
+            }
         );
     }
     //= ================================================================================================================
@@ -1360,7 +1360,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public set Method_AzExamples(examples: CommandExample[]) {
-        if (isNullOrUndefined(this.Method_AzExamples) || this.Method_AzExamples.length == 0) {
+        if (isNullOrUndefined(this.Method_AzExamples) || this.Method_AzExamples.length === 0) {
             this.Method['az-examples'] = examples;
         }
     }
@@ -2378,7 +2378,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get AzExample_CommandStringItems(): string[] {
         const items = [];
-        ToMultiLine(this.AzExample_CommandString, items, 119, true);
+        ToMultiLine(this.AzExample_CommandString, items, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
         return items;
     }
     /**
@@ -3614,7 +3614,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 if (dependencies.length > 0) {
                     // const d = dependencies.shift();
                     for (let i = 0; i < dependencies.length; i++) {
-                        if (layer == dependencies[i][0]) {
+                        if (layer === dependencies[i][0]) {
                             const nextLayer = dependencies[i][1];
                             const item2: any = this.getModelData(
                                 nextLayer,
@@ -3734,24 +3734,24 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public getAllCommandGroupWithCallback(callback: () => void): void {
-        const commandGroupCall = function () {
+        const commandGroupCall = () => {
             if (this.SelectFirstCommandGroup()) {
                 do {
                     callback.bind(this)();
                 } while (this.SelectNextCommandGroup());
             }
-        }.bind(this);
+        };
         commandGroupCall();
     }
 
     public getCommandsWithCallback(callback: () => void, needAll = true): void {
-        const commandCall = function () {
+        const commandCall = () => {
             if (this.SelectFirstCommand()) {
                 do {
                     callback.bind(this)();
                 } while (this.SelectNextCommand());
             }
-        }.bind(this);
+        };
         if (needAll) {
             this.getAllCommandGroupWithCallback(commandCall);
         } else {
@@ -3760,13 +3760,13 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public getMethodsWithCallback(callback: () => void, needAll = true): void {
-        const methodCall = function () {
+        const methodCall = () => {
             if (this.SelectFirstMethod()) {
                 do {
                     callback.bind(this)();
                 } while (this.SelectNextMethod());
             }
-        }.bind(this);
+        };
         if (needAll) {
             this.getCommandsWithCallback(methodCall);
         } else {
@@ -3775,13 +3775,13 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public getMethodParametersWithCallback(callback: () => void, needAll = true): void {
-        const methodParameterCall = function () {
+        const methodParameterCall = () => {
             if (this.SelectFirstMethodParameter()) {
                 do {
                     callback.bind(this)();
                 } while (this.SelectNextMethodParameter());
             }
-        }.bind(this);
+        };
         if (needAll) {
             this.getMethodsWithCallback(methodParameterCall);
         } else {

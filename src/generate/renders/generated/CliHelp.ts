@@ -7,6 +7,7 @@ import { CodeModelAz } from '../../CodeModelAz';
 import { SchemaType, Parameter } from '@azure-tools/codemodel';
 import { HeaderGenerator } from '../Header';
 import { ToMultiLine, isNullOrUndefined } from '../../../utils/helper';
+import { CodeGenConstants } from '../../../utils/models';
 
 let showExampleStr: string;
 const allSupportWaited = ['create', 'update', 'delete'];
@@ -73,7 +74,9 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
     }
 
     output.forEach((element) => {
-        if (element.length > 120) header.disableLineTooLong = true;
+        if (element.length > CodeGenConstants.PYLINT_MAX_CODE_LENGTH + 1) {
+            header.disableLineTooLong = true;
+        }
     });
 
     return header.getLines().concat(output);
@@ -88,7 +91,7 @@ function generateWaitCommandHelp(commandGroup, allLongRunCommand) {
         '    short-summary: Place the CLI in a waiting state until a condition of the ' +
         commandGroup +
         ' is met.';
-    ToMultiLine(summary, output, 119, true);
+    ToMultiLine(summary, output, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
     output.push('    examples:');
     for (const waitParam of allLongRunCommand) {
         const name =
@@ -97,11 +100,11 @@ function generateWaitCommandHelp(commandGroup, allLongRunCommand) {
             ' is successfully ' +
             waitParam +
             '.';
-        ToMultiLine(name, output, 119, true);
+        ToMultiLine(name, output, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
         if (!isNullOrUndefined(showExampleStr) && showExampleStr !== '') {
             output.push('        text: |-');
             const line = showExampleStr.replace(/ show /g, ' wait ') + ' --' + waitParam;
-            ToMultiLine(line, output, 119, true);
+            ToMultiLine(line, output, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
         }
     }
     output.push('"""');
@@ -127,7 +130,7 @@ function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = '', 
         }
         shortSummary += ' Command group swagger name=' + model.CommandGroup_CliKey;
     }
-    ToMultiLine(shortSummary, output, 119, true);
+    ToMultiLine(shortSummary, output, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
 
     output.push('"""');
     return output;
@@ -220,7 +223,10 @@ function getShorthandSyntaxAction(
 ) {
     let parameterOutput: string[] = [];
     const actionOutput: string[] = [];
-    ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, actionOutput, 119, true);
+    ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, 
+                actionOutput, 
+                CodeGenConstants.PYLINT_MAX_CODE_LENGTH, 
+                true);
 
     if (debug) {
         let shortSummary = '"';
@@ -237,7 +243,7 @@ function getShorthandSyntaxAction(
         ToMultiLine(
             `        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''),
             actionOutput,
-            119,
+            CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
             true,
         );
     } else {
@@ -249,7 +255,7 @@ function getShorthandSyntaxAction(
             ToMultiLine(
                 `        short-summary: "${shortSummary}"`.replace(/\r?\n|\r/g, ''),
                 actionOutput,
-                119,
+                CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
                 true,
             );
         }
@@ -272,14 +278,14 @@ function getShorthandSyntaxAction(
             ToMultiLine(
                 '            Usage: ' + parameterAlias[0] + optionUsage.repeat(2),
                 actionOutput,
-                119,
+                CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
                 true,
             );
         } else {
             ToMultiLine(
                 '            Usage: ' + parameterAlias[0] + optionUsage,
                 actionOutput,
-                119,
+                CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
                 true,
             );
         }
@@ -293,14 +299,14 @@ function getShorthandSyntaxAction(
                 .Parameter_Description(p)
                 .trim()
                 .replace(/\r?\n|\r/g, '');
-            ToMultiLine(line, actionOutput, 119, true);
+            ToMultiLine(line, actionOutput, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
         }
         if (model.Schema_Type(model.MethodParameter.schema) === SchemaType.Array) {
             actionOutput.push('');
             ToMultiLine(
                 `            Multiple actions can be specified by using more than one ${parameterAlias[0]} argument.`,
                 actionOutput,
-                119,
+                CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
                 true,
             );
         }
@@ -317,7 +323,7 @@ function getPositionalActionHelp(
 ) {
     let parameterOutput: string[] = [];
     const actionOutput: string[] = [];
-    ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, actionOutput, 119, true);
+    ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, actionOutput, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
 
     if (debug) {
         let shortSummary = '"';
@@ -334,7 +340,7 @@ function getPositionalActionHelp(
         ToMultiLine(
             `        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''),
             actionOutput,
-            119,
+            CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
             true,
         );
     } else {
@@ -346,7 +352,7 @@ function getPositionalActionHelp(
             ToMultiLine(
                 `        short-summary: "${shortSummary}"`.replace(/\r?\n|\r/g, ''),
                 actionOutput,
-                119,
+                CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
                 true,
             );
         }
@@ -373,7 +379,7 @@ function getPositionalActionHelp(
                 .concat(options.map((p) => `${model.Parameter_NameAz(p)}-value`))
                 .join(' '),
             actionOutput,
-            119,
+            CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
             true,
         );
         actionOutput.push('');
@@ -386,14 +392,14 @@ function getPositionalActionHelp(
                 .Parameter_Description(p)
                 .trim()
                 .replace(/\r?\n|\r/g, '');
-            ToMultiLine(line, actionOutput, 119, true);
+            ToMultiLine(line, actionOutput, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
         }
         if (model.Schema_Type(model.MethodParameter.schema) === SchemaType.Array) {
             actionOutput.push('');
             ToMultiLine(
                 `            Multiple actions can be specified by using more than one ${parameterAlias[0]} argument.`,
                 actionOutput,
-                119,
+                CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
                 true,
             );
         }
@@ -410,7 +416,7 @@ function getKeyValueActionHelp(
 ) {
     let parameterOutput: string[] = [];
     const actionOutput: string[] = [];
-    ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, actionOutput, 119, true);
+    ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, actionOutput, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
 
     if (debug) {
         let shortSummary = '"';
@@ -427,7 +433,7 @@ function getKeyValueActionHelp(
         ToMultiLine(
             `        short-summary: ${shortSummary}`.replace(/\r?\n|\r/g, ''),
             actionOutput,
-            119,
+            CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
             true,
         );
     } else {
@@ -439,7 +445,7 @@ function getKeyValueActionHelp(
             ToMultiLine(
                 `        short-summary: "${shortSummary}"`.replace(/\r?\n|\r/g, ''),
                 actionOutput,
-                119,
+                CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
                 true,
             );
         }
@@ -462,7 +468,7 @@ function getKeyValueActionHelp(
                 .concat(options.map((p) => `${model.Parameter_NameAz(p)}=XX`))
                 .join(' '),
             actionOutput,
-            119,
+            CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
             true,
         );
         actionOutput.push('');
@@ -475,14 +481,14 @@ function getKeyValueActionHelp(
                 .Parameter_Description(p)
                 .trim()
                 .replace(/\r?\n|\r/g, '');
-            ToMultiLine(line, actionOutput, 119, true);
+            ToMultiLine(line, actionOutput, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
         }
         if (model.Schema_Type(model.MethodParameter.schema) === SchemaType.Array) {
             actionOutput.push('');
             ToMultiLine(
                 `            Multiple actions can be specified by using more than one ${parameterAlias[0]} argument.`,
                 actionOutput,
-                119,
+                CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
                 true,
             );
         }
@@ -588,7 +594,7 @@ function generateCommandHelp(model: CodeModelAz, debug = false) {
         shortSummary += '.';
     }
     shortSummary += '"';
-    ToMultiLine(shortSummary, output, 119, true);
+    ToMultiLine(shortSummary, output, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
 
     output = addParameterHelp(output, model, debug);
 
@@ -611,7 +617,7 @@ function generateCommandHelp(model: CodeModelAz, debug = false) {
                 if (model.Command_MethodName === 'show') {
                     showExampleStr = line;
                 }
-                ToMultiLine(line, output, 119, true);
+                ToMultiLine(line, output, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
             }
         } while (model.SelectNextMethod());
     }
