@@ -713,35 +713,33 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     private dealingParameterAlias() {
-        this.getMethodParametersWithCallback (
-            () => {
-                const parameterName = this.MethodParameter_MapsTo;
-                // this is to handle names like "format", "type", etc
-                if (parameterName.endsWith('_')) {
-                    if (isNullOrUndefined(this.MethodParameter.language['az'].alias)) {
-                        this.MethodParameter.language['az'].alias = [];
-                    }
-                    this.MethodParameter.language['az'].alias.push(
-                        parameterName.substr(0, parameterName.length - 1),
-                    );
-                } else if (
-                    parameterName.endsWith('name') &&
-                    !this.Method['hasName'] &&
-                    parameterName.replace(/_name$|_/g, '') ===
-                        this.CommandGroup_DefaultName.toLowerCase()
+        this.getMethodParametersWithCallback(() => {
+            const parameterName = this.MethodParameter_MapsTo;
+            // this is to handle names like "format", "type", etc
+            if (parameterName.endsWith('_')) {
+                if (isNullOrUndefined(this.MethodParameter.language['az'].alias)) {
+                    this.MethodParameter.language['az'].alias = [];
+                }
+                this.MethodParameter.language['az'].alias.push(
+                    parameterName.substr(0, parameterName.length - 1),
+                );
+            } else if (
+                parameterName.endsWith('name') &&
+                !this.Method['hasName'] &&
+                parameterName.replace(/_name$|_/g, '') ===
+                    this.CommandGroup_DefaultName.toLowerCase()
+            ) {
+                if (
+                    isNullOrUndefined(this.MethodParameter.language['az'].alias) ||
+                    this.MethodParameter.language['az'].alias.length <= 0
                 ) {
-                    if (
-                        isNullOrUndefined(this.MethodParameter.language['az'].alias) ||
-                        this.MethodParameter.language['az'].alias.length <= 0
-                    ) {
-                        this.MethodParameter.language['az'].alias = [];
-                        this.MethodParameter.language['az'].alias.push('name');
-                        this.MethodParameter.language['az'].alias.push('n');
-                        this.MethodParameter.language['az'].alias.push(parameterName);
-                    }
+                    this.MethodParameter.language['az'].alias = [];
+                    this.MethodParameter.language['az'].alias.push('name');
+                    this.MethodParameter.language['az'].alias.push('n');
+                    this.MethodParameter.language['az'].alias.push(parameterName);
                 }
             }
-        );
+        });
     }
     //= ================================================================================================================
     // Extension level information
@@ -2378,7 +2376,12 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get AzExample_CommandStringItems(): string[] {
         const items = [];
-        ToMultiLine(this.AzExample_CommandString, items, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
+        ToMultiLine(
+            this.AzExample_CommandString,
+            items,
+            CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
+            true,
+        );
         return items;
     }
     /**

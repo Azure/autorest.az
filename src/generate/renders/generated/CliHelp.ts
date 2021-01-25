@@ -223,10 +223,12 @@ function getShorthandSyntaxAction(
 ) {
     let parameterOutput: string[] = [];
     const actionOutput: string[] = [];
-    ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, 
-                actionOutput, 
-                CodeGenConstants.PYLINT_MAX_CODE_LENGTH, 
-                true);
+    ToMultiLine(
+        `      - name: ${parameterAlias.join(' ')}`,
+        actionOutput,
+        CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
+        true,
+    );
 
     if (debug) {
         let shortSummary = '"';
@@ -323,7 +325,12 @@ function getPositionalActionHelp(
 ) {
     let parameterOutput: string[] = [];
     const actionOutput: string[] = [];
-    ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, actionOutput, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
+    ToMultiLine(
+        `      - name: ${parameterAlias.join(' ')}`,
+        actionOutput,
+        CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
+        true,
+    );
 
     if (debug) {
         let shortSummary = '"';
@@ -416,7 +423,12 @@ function getKeyValueActionHelp(
 ) {
     let parameterOutput: string[] = [];
     const actionOutput: string[] = [];
-    ToMultiLine(`      - name: ${parameterAlias.join(' ')}`, actionOutput, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
+    ToMultiLine(
+        `      - name: ${parameterAlias.join(' ')}`,
+        actionOutput,
+        CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
+        true,
+    );
 
     if (debug) {
         let shortSummary = '"';
