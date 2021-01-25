@@ -1,0 +1,31 @@
+{
+    "RPName": "consumption",
+    "resources": [
+        {
+            "Resource": "Microsfot.Consumption/marketplaces",
+            "operations": [
+                {
+                    "operationId": "StorageAccounts_Create",
+                    "version": "2019-06-01",
+                    "jsonfileName": "/specification/consumption/resource-manager/Microsoft.Consumption/stable/2019-01-01/marketplace.json"
+                },
+                {
+                    "operationId": "StorageAccounts_Delete",
+                    "version": "2019-06-01",
+                    "jsonfileName": "/specification/consumption/resource-manager/Microsoft.Consumption/stable/2019-01-01/marketplace.json"
+                },
+                {
+                    "operationId": "ApplicationGateways_CreateOrUpdate",
+                    "version": "2020-07-01",
+                    "jsonfileName": "/specification/consumption/resource-manager/Microsoft.Consumption/stable/2019-01-01/marketplace.json"
+                },
+                {
+                    "operationId": "ApplicationGateways_UpdateTags",
+                    "version": "2020-07-01",
+                    "jsonfileName": "/specification/consumption/resource-manager/Microsoft.Consumption/stable/2019-01-01/marketplace.json"
+                }
+            ]
+        }
+    ],
+    "status": "submit"
+}
