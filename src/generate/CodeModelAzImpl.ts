@@ -907,6 +907,12 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get CommandGroup(): OperationGroup {
+        if (
+            this.currentOperationGroupIndex < 0 ||
+            this.currentOperationGroupIndex >= this.codeModel.operationGroups.length
+        ) {
+            return undefined;
+        }
         return this.codeModel.operationGroups[this.currentOperationGroupIndex];
     }
 
@@ -1085,6 +1091,12 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Command(): Operation {
+        if (
+            this.currentOperationIndex < 0 ||
+            this.currentOperationIndex >= this.CommandGroup.operations.length
+        ) {
+            return undefined;
+        }
         return this.CommandGroup.operations[this.currentOperationIndex];
     }
 
@@ -1226,6 +1238,12 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Method(): Operation {
+        if (
+            this.currentMethodIndex < 0 ||
+            this.currentMethodIndex >= this.CommandGroup.operations.length
+        ) {
+            return undefined;
+        }
         return this.CommandGroup.operations[this.currentMethodIndex];
     }
 
@@ -2339,27 +2357,9 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public get Example_Title(): string {
-        return this.Method.extensions['x-ms-examples'][this.currentExampleIndex].value().title;
-    }
-
-    public get Example_Body(): string[] {
-        // TBD
-        return this.Method.extensions['x-ms-examples'][this.currentExampleIndex].key();
-    }
-
-    public get Example_Params(): any {
-        // TBD
-        return this.Method.extensions['x-ms-examples'][this.currentExampleIndex].value().parameters;
-    }
-
     public get Examples(): unknown {
         const extensions = this.Method.extensions;
         return extensions && 'x-ms-examples' in extensions ? extensions['x-ms-examples'] : {};
-    }
-
-    public get Example(): unknown {
-        return this.Examples[this.currentExampleIndex];
     }
 
     public get ExampleAmount(): number {
@@ -2367,6 +2367,12 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get AzExample(): CommandExample {
+        if (
+            this.currentAzExampleIndex < 0 ||
+            this.currentAzExampleIndex >= this.Method_AzExamples.length
+        ) {
+            return undefined;
+        }
         return this.Method_AzExamples[this.currentAzExampleIndex];
     }
 
@@ -3584,7 +3590,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         Since we need different properties for each of the CodeModelType, we can define our requirements in InputProperties 
         to specify what kind of CodeModelType properties do we need for rendering, 
-               and what's hte order condition 
+               and what's the order condition 
                and what's the filter condition
                and what's the converter we need after we get the data.
         Still take report as an example,
