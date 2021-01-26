@@ -5,22 +5,22 @@
             "Resource": "Microsfot.Consumption/marketplaces",
             "operations": [
                 {
-                    "operationId": "StorageAccounts_Create",
+                    "OperationId": "StorageAccounts_Create",
                     "version": "2019-06-01",
                     "jsonfileName": "/specification/consumption/resource-manager/Microsoft.Consumption/stable/2019-01-01/marketplace.json"
                 },
                 {
-                    "operationId": "StorageAccounts_Delete",
+                    "OperationId": "StorageAccounts_Delete",
                     "version": "2019-06-01",
                     "jsonfileName": "/specification/consumption/resource-manager/Microsoft.Consumption/stable/2019-01-01/marketplace.json"
                 },
                 {
-                    "operationId": "ApplicationGateways_CreateOrUpdate",
+                    "OperationId": "ApplicationGateways_CreateOrUpdate",
                     "version": "2020-07-01",
                     "jsonfileName": "/specification/consumption/resource-manager/Microsoft.Consumption/stable/2019-01-01/marketplace.json"
                 },
                 {
-                    "operationId": "ApplicationGateways_UpdateTags",
+                    "OperationId": "ApplicationGateways_UpdateTags",
                     "version": "2020-07-01",
                     "jsonfileName": "/specification/consumption/resource-manager/Microsoft.Consumption/stable/2019-01-01/marketplace.json"
                 }

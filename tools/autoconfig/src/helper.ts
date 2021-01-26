@@ -232,22 +232,22 @@ export function isNullOrUndefined(obj: any) {
 }
 
 export class OperationInfo {
-    operationId: string;
+    OperationId: string;
     version: string;
     jsonfileName: string;
 
     constructor(obj) {
-        this.operationId = obj.operationId;
+        this.OperationId = obj.OperationId;
         this.version = obj.version;
         this.jsonfileName = obj.jsonfileName;
     }
 
     public get groupName(): string {
-        return this.operationId.split('_')[0];
+        return this.OperationId.split('_')[0];
     }
 
     public get operationName(): string {
-        return this.operationId.split('_')[1];
+        return this.OperationId.split('_')[1];
     }
 }
 
