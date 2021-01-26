@@ -16,6 +16,8 @@ jobs:
         displayName: 'npm install'
         inputs:
           verbose: false
+      - script: 'cd tools\autoconfig && npm install && cd ..\..'
+        displayName: 'install autoconfig dependencies'
       - script: 'node_modules\.bin\eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/'
         displayName: 'eslint'
         
