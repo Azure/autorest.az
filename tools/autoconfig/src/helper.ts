@@ -58,6 +58,14 @@ export enum CodeGenConstants {
     AZ_ENTRY_CODE_MODEL_NAME = 'az-entry-code-model.yaml',
 }
 
+export function isTrack2(pythonPackageName: string): boolean {
+    return (
+        ['azure-mgmt-compute', 'azure-mgmt-network', 'azure-mgmt-storage'].indexOf(
+            pythonPackageName.toLowerCase(),
+        ) >= 0
+    );
+}
+
 export function mapToPythonPackage(swaggerName: string): string {
     const map = {};
     if (Object.prototype.hasOwnProperty.call(map, swaggerName)) {

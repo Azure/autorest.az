@@ -9,6 +9,7 @@ import {
     getHiddenOperations,
     groupOperations,
     RPInfo,
+    isTrack2,
 } from '../helper';
 import * as fs from 'fs';
 import { CodeModel } from '@azure-tools/codemodel';
@@ -53,6 +54,11 @@ function genBasicInfo(output: string[]) {
         `python-sdk-output-folder: "${usePathVariable(
             AzConfiguration.getValue(CodeGenConstants.pythonSdkOutputFolder),
         )}"`,
+    );
+    output.push(
+        `compatible-level: ${
+            isTrack2(azConfig[CodeGenConstants.packageName]) ? 'track2' : 'track1'
+        }`,
     );
     output.push('```');
 }
