@@ -1,0 +1,22 @@
+{
+    "model": {
+        "hasExtension": true,
+        "Extensions": [
+            {
+                "name": "offazure",
+                "hasCommandGroup": true,
+                "CommandGroups": [
+                    { "name": "offazure hyperv cluster", "cliKey": "HyperVCluster" },
+                    { "name": "offazure hyperv host", "cliKey": "HyperVHost" },
+                    { "name": "offazure hyperv machine", "cliKey": "HyperVMachines" },
+                    { "name": "offazure hyperv run-as-account", "cliKey": "HyperVRunAsAccounts" },
+                    { "name": "offazure hyperv site", "cliKey": "HyperVSites" },
+                    { "name": "offazure vmware machine", "cliKey": "Machines" },
+                    { "name": "offazure vmware run-as-account", "cliKey": "RunAsAccounts" },
+                    { "name": "offazure vmware site", "cliKey": "Sites" },
+                    { "name": "offazure vmware vcenter", "cliKey": "VCenter" }
+                ]
+            }
+        ]
+    }
+}

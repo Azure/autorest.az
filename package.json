@@ -10,13 +10,14 @@
     "start": "node dist/src/index.js",
     "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/src/index.js",
     "eslint-fix": "eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/ --fix",
-    "eslint": "eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/",
-    "build": "tsc -p .",
+    "eslint": "eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/ --quiet",
+    "build": "npm run eslint && tsc && cp -R src/templates dist/src",
     "start-testserver": "./node_modules/.bin/start-autorest-testserver",
     "stop-testserver": "./node_modules/.bin/stop-autorest-testserver",
     "watch": "tsc -p . --watch",
     "prepare": "npm run build",
-    "test": "npm run build && mocha dist/test",
+    "test": "npm run build && mocha dist/test --recursive",
+    "test-report": "npm run build && nyc mocha dist/test --recursive",
     "clean": "ver > nul 2>&1 nul && npm run --silent clean-cmd || npm run --silent clean-bash",
     "clean-cmd": "if exist dist rmdir /s /q dist && exit 0 || exit 0 ",
     "clean-bash": "rm nul && rm -rf dist && exit 0 || exit 0"
@@ -51,7 +52,9 @@
     "nyc": "^15.0.0",
     "source-map-support": "^0.5.13",
     "typescript": "^3.7.5",
-    "utf-8-validate": "^5.0.2"
+    "utf-8-validate": "^5.0.2",
+    "cpy-cli": "^2.0.0",
+    "del-cli": "^3.0.0"
   },
   "dependencies": {
     "@azure-tools/async-io": "^3.0.209",
@@ -68,6 +71,7 @@
     "js-yaml": "^3.13.1",
     "jszip-sync": "^3.2.1-sync",
     "node-yaml": "^3.2.0",
+    "nunjucks": "^3.2.2",
     "prettier": "^2.2.1",
     "request": "^2.87.0",
     "request-promise-native": "1.0.8"

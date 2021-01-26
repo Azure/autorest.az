@@ -5,12 +5,12 @@
 import * as path from 'path';
 import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
-import { readFile, readdir } from '@azure-tools/async-io';
-import { deserialize } from '@azure-tools/codegen';
+import { readFile, readdir, writeFile } from '@azure-tools/async-io';
+import { deserialize, serialize } from '@azure-tools/codegen';
 import { CodeModel } from '@azure-tools/codemodel';
 import { createTestSession } from './utils/test-helper';
-import { AzNamer } from '../src/plugins/aznamer';
-import { Entry } from '../src/plugins/entry';
+import { AzNamer } from '../src/aznamer';
+import { Entry } from '../src/entry';
 import * as sourceMapSupport from 'source-map-support';
 
 sourceMapSupport.install();
@@ -49,12 +49,12 @@ export class Process {
             );
 
             // uncomment this line to overwrite existing file
-            // await (writeFile(fileName, serialize(codeModel)));
+            // await writeFile(fileName, serialize(codeModel));
 
             const supposeFile = await readFile(fileName);
 
             const codeModelSupposed = deserialize<CodeModel>(supposeFile, fileName);
-            assert.deepEqual(codeModel, codeModelSupposed, 'modifier has failed the unit test');
+            assert.deepEqual(codeModel, codeModelSupposed, 'namer has failed the unit test');
         }
     }
 }

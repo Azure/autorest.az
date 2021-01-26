@@ -1,0 +1,6 @@
+{
+    {% if model.Extension_Mode == 'experimental' -%}"azext.isExperimental": true,
+    {% elseif model.Extension_Mode == 'preview' -%}"azext.isPreview": true,
+    {% else -%}{% endif -%}
+    "azext.minCliCoreVersion": "{{ model.minCliCoreVersion }}"
+}

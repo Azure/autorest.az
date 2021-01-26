@@ -7,7 +7,7 @@ import { values } from '@azure-tools/linq';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as request from 'request-promise-native';
-import { ExtensionMode } from './models';
+import { CodeGenConstants, ExtensionMode } from './models';
 import * as child_process from 'child_process';
 
 export function changeCamelToDash(str: string): string {
@@ -174,7 +174,7 @@ function isEscaped(str: string, index: number): boolean {
 export function ToMultiLine(
     sentence: string,
     output: string[] = undefined,
-    maxLength = 119,
+    maxLength: number = CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
     strMode = false,
 ): string[] {
     let lastComma = -1;
@@ -395,7 +395,7 @@ export function ToMultiLine(
 export function CmdToMultiLines(cmd: string): string[] {
     const result: string[] = [];
 
-    if (cmd.length < 120) {
+    if (cmd.length <= CodeGenConstants.PYLINT_MAX_CODE_LENGTH) {
         result.push(cmd);
     } else {
         const base = cmd.split(' ');
@@ -412,7 +412,7 @@ export function CmdToMultiLines(cmd: string): string[] {
         temp = '';
 
         for (let i = 0; i < merged.length; ++i) {
-            if (temp.length + merged[i].length > 119) {
+            if (temp.length + merged[i].length > CodeGenConstants.PYLINT_MAX_CODE_LENGTH) {
                 temp += '\\';
                 result.push(temp);
                 temp = getIndentString(4);

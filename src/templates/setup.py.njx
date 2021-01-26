@@ -12,7 +12,7 @@ from setuptools import setup, find_packages
 # HISTORY.rst entry.
 VERSION = '0.1.0'
 try:
-    from azext_boolean.manual.version import VERSION
+    from {{model.AzextFolder}}.manual.version import VERSION
 except ImportError:
     pass
 
@@ -30,10 +30,15 @@ CLASSIFIERS = [
     'License :: OSI Approved :: MIT License',
 ]
 
-DEPENDENCIES = []
+DEPENDENCIES = [
+{%- if model.dependencies.length %}
+{% for d in model.dependencies %}    '{{d}}'{%- if not loop.last -%},{%- endif %}
+{% endfor -%}
+{% endif -%}
+]
 
 try:
-    from azext_boolean.manual.dependency import DEPENDENCIES
+    from {{model.AzextFolder}}.manual.dependency import DEPENDENCIES
 except ImportError:
     pass
 
@@ -43,16 +48,16 @@ with open('HISTORY.rst', 'r', encoding='utf-8') as f:
     HISTORY = f.read()
 
 setup(
-    name='bool',
+    name='{{model.Extension_NameUnderscored}}',
     version=VERSION,
-    description='Microsoft Azure Command-Line Tools AutoRestTestService Extension',
+    description='Microsoft Azure Command-Line Tools {{model.Extension_NameClass}} Extension',
     author='Microsoft Corporation',
     author_email='azpycli@microsoft.com',
-    url='https://github.com/Azure/azure-cli-extensions/tree/master/src/boolean',
+    url='https://github.com/Azure/azure-cli-extensions/tree/master/{{model.azRelativeOutputFolder}}',
     long_description=README + '\n\n' + HISTORY,
     license='MIT',
     classifiers=CLASSIFIERS,
     packages=find_packages(),
     install_requires=DEPENDENCIES,
-    package_data={'azext_boolean': ['azext_metadata.json']},
+    package_data={'{{model.AzextFolder}}': ['azext_metadata.json']},
 )

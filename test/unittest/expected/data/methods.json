@@ -1,0 +1,406 @@
+{
+    "model": {
+        "hasExtension": true,
+        "Extensions": [
+            {
+                "name": "offazure",
+                "hasCommandGroup": true,
+                "CommandGroups": [
+                    {
+                        "name": "offazure hyperv cluster",
+                        "cliKey": "HyperVCluster",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure hyperv cluster cluster list",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "cluster list",
+                                        "cliKey": "GetAllClustersInSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv cluster show",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "cluster show",
+                                        "cliKey": "GetCluster"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure hyperv host",
+                        "cliKey": "HyperVHost",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure hyperv host put-host",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "put-host",
+                                        "cliKey": "PutHost"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv host show-all-host-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-host-in-site",
+                                        "cliKey": "GetAllHostsInSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv host show-host",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-host",
+                                        "cliKey": "GetHost"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure hyperv machine",
+                        "cliKey": "HyperVMachines",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure hyperv machine show-all-machine-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-machine-in-site",
+                                        "cliKey": "GetAllMachinesInSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv machine show-machine",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-machine",
+                                        "cliKey": "GetMachine"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure hyperv run-as-account",
+                        "cliKey": "HyperVRunAsAccounts",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure hyperv run-as-account show-all-run-as-account-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-run-as-account-in-site",
+                                        "cliKey": "GetAllRunAsAccountsInSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv run-as-account show-run-as-account",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-run-as-account",
+                                        "cliKey": "GetRunAsAccount"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure hyperv site",
+                        "cliKey": "HyperVSites",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure hyperv site delete",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "delete",
+                                        "cliKey": "DeleteSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site get-site-health-summary",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "get-site-health-summary",
+                                        "cliKey": "GetSiteHealthSummary"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site get-site-usage",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "get-site-usage",
+                                        "cliKey": "GetSiteUsage"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site patch-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "patch-site",
+                                        "cliKey": "PatchSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site put-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "put-site",
+                                        "cliKey": "PutSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site refresh-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "refresh-site",
+                                        "cliKey": "RefreshSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site show-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-site",
+                                        "cliKey": "GetSite"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure vmware machine",
+                        "cliKey": "Machines",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure vmware machine show-all-machine-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-machine-in-site",
+                                        "cliKey": "GetAllMachinesInSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware machine show-machine",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-machine",
+                                        "cliKey": "GetMachine"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware machine start-machine",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "start-machine",
+                                        "cliKey": "StartMachine"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware machine stop-machine",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "stop-machine",
+                                        "cliKey": "StopMachine"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure vmware run-as-account",
+                        "cliKey": "RunAsAccounts",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure vmware run-as-account show-all-run-as-account-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-run-as-account-in-site",
+                                        "cliKey": "GetAllRunAsAccountsInSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware run-as-account show-run-as-account",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-run-as-account",
+                                        "cliKey": "GetRunAsAccount"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure vmware site",
+                        "cliKey": "Sites",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure vmware site delete",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "delete",
+                                        "cliKey": "DeleteSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site get-site-health-summary",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "get-site-health-summary",
+                                        "cliKey": "GetSiteHealthSummary"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site get-site-usage",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "get-site-usage",
+                                        "cliKey": "GetSiteUsage"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site patch-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "patch-site",
+                                        "cliKey": "PatchSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site put-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "put-site",
+                                        "cliKey": "PutSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site refresh-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "refresh-site",
+                                        "cliKey": "RefreshSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site show-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-site",
+                                        "cliKey": "GetSite"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure vmware vcenter",
+                        "cliKey": "VCenter",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure vmware vcenter delete",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "delete",
+                                        "cliKey": "DeleteVCenter"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware vcenter put-v-center",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "put-v-center",
+                                        "cliKey": "PutVCenter"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware vcenter show-all-v-center-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-v-center-in-site",
+                                        "cliKey": "GetAllVCentersInSite"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware vcenter show-v-center",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-v-center",
+                                        "cliKey": "GetVCenter"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

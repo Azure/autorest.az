@@ -12,7 +12,7 @@ from setuptools import setup, find_packages
 # HISTORY.rst entry.
 VERSION = '0.1.0'
 try:
-    from azext_boolean.manual.version import VERSION
+    from azext_offazure.manual.version import VERSION
 except ImportError:
     pass
 
@@ -33,7 +33,7 @@ CLASSIFIERS = [
 DEPENDENCIES = []
 
 try:
-    from azext_boolean.manual.dependency import DEPENDENCIES
+    from azext_offazure.manual.dependency import DEPENDENCIES
 except ImportError:
     pass
 
@@ -43,16 +43,16 @@ with open('HISTORY.rst', 'r', encoding='utf-8') as f:
     HISTORY = f.read()
 
 setup(
-    name='bool',
+    name='offazure',
     version=VERSION,
-    description='Microsoft Azure Command-Line Tools AutoRestTestService Extension',
+    description='Microsoft Azure Command-Line Tools AzureMigrateV2 Extension',
     author='Microsoft Corporation',
     author_email='azpycli@microsoft.com',
-    url='https://github.com/Azure/azure-cli-extensions/tree/master/src/boolean',
+    url='https://github.com/Azure/azure-cli-extensions/tree/master/src/offazure',
     long_description=README + '\n\n' + HISTORY,
     license='MIT',
     classifiers=CLASSIFIERS,
     packages=find_packages(),
     install_requires=DEPENDENCIES,
-    package_data={'azext_boolean': ['azext_metadata.json']},
+    package_data={'azext_offazure': ['azext_metadata.json']},
 )

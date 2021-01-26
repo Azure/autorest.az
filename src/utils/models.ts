@@ -3,7 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
+import { TemplateBase } from '../generate/renders/TemplateBase';
 import { isNullOrUndefined } from './helper';
+import * as path from 'path';
 
 export enum GenerationMode {
     Manual,
@@ -70,10 +72,16 @@ export class PathConstants {
     public static readonly testStepFile: string = 'example_steps.py';
     public static readonly metadataFile: string = 'azext_metadata.json';
     public static readonly setupPyFile: string = 'setup.py';
+    public static readonly setupCfgFile: string = 'setup.cfg';
+    public static readonly historyRstFile: string = 'HISTORY.rst';
     public static readonly docSourceJsonFile: string = '/doc/sphinx/azhelpgen/doc_source_map.json';
     public static readonly mainSetupPyFile: string = 'src/azure-cli/setup.py';
     public static readonly readmeFile: string = 'README.md';
     public static readonly recordingFolder: string = 'recordings';
+    public static readonly templateRootFolder: string = path.join(
+        `${__dirname}`,
+        '../../../dist/src/templates',
+    );
 
     public static fullTestSceanrioFile(rpName: string): string {
         return 'test_' + rpName + '_scenario.py';
@@ -126,6 +134,7 @@ export enum CodeGenConstants {
     m4CodeModelName = 'code-model-v4-no-tags.yaml',
     DEFAULT_CLI_CORE_LIB = 'azure.cli.core',
     AZ_ENTRY_CODE_MODEL_NAME = 'az-entry-code-model.yaml',
+    PYLINT_MAX_CODE_LENGTH = 119,
 }
 
 export interface AzextMetadata {
@@ -153,3 +162,39 @@ export class AzConfiguration {
         AzConfiguration.dict[key] = value;
     }
 }
+
+export class RenderProperties {
+    public constructor(
+        public extensionProperties: string[] = [],
+        public commandGroupProperties: string[] = [],
+        public commandProperties: string[] = [],
+        public methodProperties: string[] = [],
+        public methodParameterProperties: string[] = [],
+    ) {}
+}
+
+export enum SortOrder {
+    DESC = -1,
+    ASEC = 1,
+}
+
+export type CodeModelTypes =
+    | 'extension'
+    | 'commandGroup'
+    | 'command'
+    | 'method'
+    | 'methodParameter'
+    | 'azExample';
+
+export type DataGraph = [CodeModelTypes, CodeModelTypes][];
+
+export class RenderInput {
+    public constructor(
+        public properties: string[] = [],
+        public sortBy: Record<string, SortOrder> = {},
+        public conditions: [string, unknown][] = [],
+        public converter: Map<string, (item) => unknown> = new Map<string, (item) => unknown>(),
+    ) {}
+}
+
+export type TemplateRender = [string, TemplateBase];
