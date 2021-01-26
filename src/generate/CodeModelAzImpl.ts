@@ -3694,20 +3694,17 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
 
                 if (dependencies.length > 0) {
-                    // const d = dependencies.shift();
-                    for (let i = 0; i < dependencies.length; i++) {
-                        if (layer === dependencies[i][0]) {
-                            const nextLayer = dependencies[i][1];
+                    dependencies
+                        .filter((d) => d[0] === layer)
+                        .forEach((d) => {
                             const item2: any = this.getModelData(
-                                nextLayer,
+                                d[1],
                                 inputProperties,
                                 dependencies,
                             );
                             item = { ...item, ...item2 };
-                        } else {
-                            continue;
-                        }
-                    }
+                        });
+                    // const d = dependencies.shift();
                 }
                 items.push(item);
             } while (this['SelectNext' + Type]());
