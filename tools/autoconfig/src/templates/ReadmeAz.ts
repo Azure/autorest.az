@@ -10,6 +10,7 @@ import {
     groupOperations,
     RPInfo,
     isTrack2,
+    isNullOrUndefined,
 } from '../helper';
 import * as fs from 'fs';
 import { CodeModel } from '@azure-tools/codemodel';
@@ -120,7 +121,7 @@ export function GenerateReadmeAz(
                     return x.operationName;
                 });
                 newDirective.push('    - where:');
-                newDirective.push(`        group: '${groupName}'`);
+                if (groupName !== '') newDirective.push(`        group: '${groupName}'`);
                 newDirective.push(`        op: ${ops.join('|')}`);
                 newDirective.push(`        apiVersion: '${version}'`);
                 newDirective.push(`      hidden: false`);

@@ -242,11 +242,13 @@ export class OperationInfo {
     }
 
     public get groupName(): string {
-        return this.OperationId.split('_')[0];
+        const arr = this.OperationId.split('_');
+        return arr.length > 1 ? arr[0] : '';
     }
 
     public get operationName(): string {
-        return this.OperationId.split('_')[1];
+        const arr = this.OperationId.split('_');
+        return arr.length > 1 ? arr.slice(1).join('_') : arr[0];
     }
 }
 
@@ -326,7 +328,7 @@ export function isHiddenOperation(operationInfo: OperationInfo): boolean {
         const cliDirective = new CliDirective(directive);
         if (
             cliDirective.selector.match({
-                operationGroupCliKey: groupName,
+                operationGroupCliKey: groupName === '' ? undefined : groupName,
                 operationCliKey: operationName,
                 parent: undefined,
                 target: new Operation('fake', 'fake description'),
@@ -343,6 +345,7 @@ export function isHiddenOperation(operationInfo: OperationInfo): boolean {
         }
 
         if (
+            groupName !== '' &&
             cliDirective.selector.match({
                 operationGroupCliKey: groupName,
                 parent: undefined,
