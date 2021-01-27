@@ -7,27 +7,37 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
-{% for pylint in data.pylints %}
-{{pylint}}
-{% endfor %}
+{%- for pylint in data.pylints %}
+{{ pylint }}
+{%- endfor %}
 
-{% for lib, items in data.imports %}
-{% if items.length == 1 %}
+{% for lib, items in data.imports -%}
+{% if items.length == 1 -%}
 from {{lib}} import {{items[0]}}
-{% else %}
+{% else -%}
 from {{lib}} import (
-    {% for item in items %}
+    {% for item in items -%}
     {{item}}{%- if not loop.last -%},{%- endif %}
-    {% endfor %}
+    {% endfor -%}
 )
-{% endfor %}
-
+{% endif -%}
+{%- endfor %}
 
 def load_command_table(self, _):
+{%- if data.hasExtension -%}
+{%- for extension in data.Extensions -%}
+{%- for commandGroup in extension.CommandGroups %}
 
-    from {{azextFolder}}.generated._client_factory import {{commandGroup.clientFactory}}
-    {{extension.nameUnderscore}}_hyper_vcluster = CliCommandType(
+    from {{extension.azextFolder}}.generated._client_factory import {{commandGroup.clientFactoryName}}
+    {{commandGroup.customCommandTypeName}} = CliCommandType(
         operations_tmpl='{{commandGroup.operationTmpl}}',
-        client_factory={{commandGroup.clientFactory}})
-    with self.command_group('{{commandGroup.groupName}}'{{commandGroup.propertiesString}}) as g:
-        g.{{command.type}}('{{command.commandName}}'{{command.propertiesString}})
+        client_factory={{commandGroup.clientFactoryName}})
+    with self.command_group('{{commandGroup.name}}', {{commandGroup.customCommandTypeName}}{%- for key, value in commandGroup.propertiesString %}, {{key}}={{value}}{% endfor -%}) as g:   
+        {%- for command in commandGroup.Commands %}
+        g.{{command.type}}('{{command.name}}'{%- if command.type != 'generic_update_command' %}, '{{command.customFunctionName}}'{% endif -%}{%- for key, value in command.propertiesString %}, {{key}}={{value}}{% endfor -%})
+        {%- endfor %}
+{%- endfor %}
+{%- endfor %}
+{%- else %}
+    pass
+{%- endif %}
