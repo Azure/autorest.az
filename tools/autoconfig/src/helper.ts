@@ -194,7 +194,6 @@ export async function genDefaultConfiguration(
         const cliName = mapToCliName(getRPFolder(parentsSetting));
         config[CodeGenConstants.pythonSdkOutputFolder] = path.join(
             config[CodeGenConstants.azOutputFolder],
-            'az_' + cliName,
             'vendored_sdks',
             cliName,
         );
