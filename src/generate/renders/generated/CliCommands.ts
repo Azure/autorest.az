@@ -77,15 +77,36 @@ export class CliCommands extends TemplateBase {
     public async GetRenderData(): Promise<Record<string, unknown>> {
         const data = {};
         data['imports'] = [];
-        data['imports'].push([CodeGenConstants.DEFAULT_CLI_CORE_LIB, ['CliCommandType']]);
+        data['imports'].push([
+            CodeGenConstants.DEFAULT_CLI_CORE_LIB + '.commands',
+            ['CliCommandType'],
+        ]);
         data['commandGroups'] = [];
         const modelData = this.getDataFromModel();
+        data['data'] = this.transformModelData(modelData);
         return data;
     }
 
     public async fullGeneration(): Promise<string[]> {
         const output: string[] = [];
         return output;
+    }
+
+    private transformModelData(modelData: Record<string, unknown>) {
+        const result = {};
+        if (!modelData['hasExtension']) {
+            return result;
+        }
+        const extensions: [] = modelData['Extensions'] as [];
+        extensions.forEach((extension) => {
+            if (!extension['hasCommandGroup']) {
+                return result;
+            }
+            const commandGroups: [] = extension['CommandGroups'];
+            commandGroups.forEach((commandGroup) => {
+                commandGroup;
+            });
+        });
     }
 
     public async incrementalGeneration(): Promise<string[]> {

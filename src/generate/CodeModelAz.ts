@@ -124,6 +124,9 @@ export interface CodeModelAz {
     CommandGroup_MinApi: string;
     CommandGroup_ResourceType: string | undefined;
     CommandGroup_Mode: string;
+    CommandGroup_ClientFactoryName: string;
+    CommandGroup_OperationTmplName: string;
+    CommandGroup_CustomCommandTypeName: string;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;

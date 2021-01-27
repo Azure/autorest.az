@@ -969,6 +969,31 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.CommandGroup?.language?.['cli']?.extensionMode;
     }
 
+    public get CommandGroup_ClientFactoryName(): string {
+        const cfName: string =
+            'cf_' +
+            (this.GetModuleOperationName() !== ''
+                ? this.GetModuleOperationName()
+                : this.Extension_NameUnderscored);
+        return cfName;
+    }
+
+    public get CommandGroup_OperationTmplName(): string {
+        const operationTmpl =
+            this.GetPythonNamespace() +
+            '.operations._' +
+            this.GetModuleOperationNamePython() +
+            '_operations#' +
+            this.GetModuleOperationNamePythonUpper() +
+            '.{}';
+        return operationTmpl;
+    }
+
+    public get CommandGroup_CustomCommandTypeName(): string {
+        const customName = this.Extension_NameUnderscored + '_' + this.GetModuleOperationName();
+        return customName;
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Commands
     //
