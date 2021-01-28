@@ -8,23 +8,46 @@ import * as assert from 'assert';
 import * as nunjucks from 'nunjucks';
 import * as path from 'path';
 import * as sourceMapSupport from 'source-map-support';
-import { readFile } from '@azure-tools/async-io';
-import { ToMultiLine } from '../../src/utils/helper';
+import { readFile, writeFile, rmFile } from '@azure-tools/async-io';
+import { isNullOrUndefined } from '../../src/utils/helper';
+import { exec } from 'child_process';
 sourceMapSupport.install();
 
 @suite
 export class Process {
+    async runLintball(filename: string) {
+        const cmd =
+            path.join(`${__dirname}`, '/../../../' + 'node_modules/.bin/lintball') +
+            ' -c ' +
+            path.join(`${__dirname}`, '/../../../.lintballrc.json') +
+            ' fix ' +
+            filename;
+        console.log('Lintball processing');
+        return await new Promise<boolean>((resolve, reject) => {
+            exec(cmd, function (error) {
+                if (!isNullOrUndefined(error)) {
+                    console.log('exec error: ' + error);
+                    // Reject if there is an error:
+                    return reject(false);
+                }
+                // Otherwise resolve the promise:
+                return resolve(true);
+            });
+        });
+    }
+
     @test(slow(600000), timeout(1500000)) async renderCommandsPYTest1() {
         const tmplPath = path.join(
             `${__dirname}`,
             '../../../src/templates/generated/commands.py.njx',
         );
         nunjucks.configure({ autoescape: false });
-        const result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(tmplPath, {
             data: {
                 pylints: [
                     '# pylint: disable=too-many-statements',
                     '# pylint: disable=too-many-locals',
+                    '# pylint: disable=line-too-long',
                 ],
                 imports: {
                     'azure.cli.core.commands': ['CliCommandType'],
@@ -295,12 +318,20 @@ export class Process {
                 ],
             },
         });
+        const oriFile = path.join(
+            `${__dirname}`,
+            '../../../test/unittest/expected/generated/ori_commands.py',
+        );
+        await writeFile(oriFile, result);
+        await this.runLintball(oriFile);
+        result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
             '../../../test/unittest/expected/generated/commands.py',
         );
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic 1 in commands.py is incorrect');
+        await rmFile(oriFile);
     }
 
     @test(slow(600000), timeout(1500000)) async renderCommandsPYTest2() {
@@ -309,7 +340,7 @@ export class Process {
             '../../../src/templates/generated/commands.py.njx',
         );
         nunjucks.configure({ autoescape: false });
-        const result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(tmplPath, {
             data: {
                 pylints: [],
                 imports: {},
@@ -317,11 +348,19 @@ export class Process {
                 Extensions: [],
             },
         });
+        const oriFile = path.join(
+            `${__dirname}`,
+            '../../../test/unittest/expected/generated/ori_commands.py',
+        );
+        await writeFile(oriFile, result);
+        await this.runLintball(oriFile);
+        result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
             '../../../test/unittest/expected/generated/commands2.py',
         );
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic 2 in commands.py is incorrect');
+        await rmFile(oriFile);
     }
 }
