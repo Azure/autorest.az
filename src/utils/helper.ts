@@ -9,6 +9,7 @@ import * as path from 'path';
 import * as request from 'request-promise-native';
 import { CodeGenConstants, ExtensionMode } from './models';
 import * as child_process from 'child_process';
+import { exec } from 'child_process';
 
 export function changeCamelToDash(str: string): string {
     str = str.replace(/[A-Z][^A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
@@ -725,4 +726,25 @@ export function getGitStatus(folder: string) {
 
 export function isNullOrUndefined(obj: any) {
     return obj === null || obj === undefined;
+}
+
+export async function runLintball(filename: string): Promise<boolean> {
+    const cmd =
+        path.join(`${__dirname}`, '/../../../' + 'node_modules/.bin/lintball') +
+        ' -c ' +
+        path.join(`${__dirname}`, '/../../../.lintballrc.json') +
+        ' fix ' +
+        filename;
+    console.log('Lintball processing');
+    return await new Promise<boolean>((resolve, reject) => {
+        exec(cmd, function (error) {
+            if (!isNullOrUndefined(error)) {
+                console.log('exec error: ' + error);
+                // Reject if there is an error:
+                return reject(false);
+            }
+            // Otherwise resolve the promise:
+            return resolve(true);
+        });
+    });
 }
