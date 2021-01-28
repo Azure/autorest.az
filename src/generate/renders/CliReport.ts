@@ -35,18 +35,17 @@ export class CliReport extends TemplateBase {
     public GetRenderData(model: CodeModelAz): any {
         let data = {};
 
-        const converter = new Map<string, (item) => unknown>([
-            [
-                'mapsTo',
-                function (item: string) {
-                    if (item.endsWith('_')) {
-                        item = item.substr(0, item.length - 1);
-                    }
-                    item = item.replace(/_/g, '-');
-                    return item;
-                },
-            ],
-        ]);
+        const converter = (item) => {
+            let mapsTo = item['mapsTo'];
+            if (!isNullOrUndefined(mapsTo)) {
+                return undefined;
+            }
+            if (mapsTo.endsWith('_')) {
+                mapsTo = mapsTo.substr(0, mapsTo.length - 1);
+            }
+            item['mapsTo'] = mapsTo.replace(/_/g, '-');
+            return item;
+        };
 
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
             CodeModelTypes,
