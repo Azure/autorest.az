@@ -198,3 +198,10 @@ export class RenderInput {
 }
 
 export type TemplateRender = [string, TemplateBase];
+
+export enum CliCommandType {
+    CUSTOM_SHOW_COMMAND = 'custom_show_command',
+    CUSTOM_COMMAND = 'custom_command',
+    CUSTOM_WAIT_COMMAND = 'custom_wait_command',
+    GENERIC_UPDATE_COMMAND = 'generic_update_command',
+}

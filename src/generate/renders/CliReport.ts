@@ -37,7 +37,7 @@ export class CliReport extends TemplateBase {
 
         const converter = (item) => {
             let mapsTo = item['mapsTo'];
-            if (!isNullOrUndefined(mapsTo)) {
+            if (isNullOrUndefined(mapsTo)) {
                 return undefined;
             }
             if (mapsTo.endsWith('_')) {

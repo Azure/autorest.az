@@ -10,10 +10,16 @@ import {
     getExtraModeInfo,
     composeParamString,
     isNullOrUndefined,
+    ToPythonString,
 } from '../../../utils/helper';
 import { TemplateBase } from '../TemplateBase';
-import { CodeGenConstants, CodeModelTypes, RenderInput, SortOrder } from '../../../utils/models';
-import { SchemaType } from '@azure-tools/codemodel';
+import {
+    AzConfiguration,
+    CodeGenConstants,
+    CodeModelTypes,
+    RenderInput,
+    SortOrder,
+} from '../../../utils/models';
 
 let showCommandFunctionName: string;
 let useResourceType: boolean;
@@ -31,6 +37,39 @@ export class CliCommands extends TemplateBase {
     public getDataFromModel() {
         let data = {};
 
+        const extraProperties = ['maxApi', 'minApi', 'resourceType', 'mode'];
+        const commandGroupConverter = (item) => {
+            item['propertiesString'] = {};
+            extraProperties.forEach((prop) => {
+                item['propertiesString'][prop] = ToPythonString(item[prop], typeof item[prop]);
+            });
+            return item;
+        };
+
+        const commandConverter = (item) => {
+            item['propertiesString'] = {};
+            extraProperties.forEach((prop) => {
+                item['propertiesString'][prop] = ToPythonString(item[prop], typeof item[prop]);
+            });
+            if (item['isLongRun']) {
+                item['propertiesString']['suppose_no_wait'] = 'True';
+            }
+            if (item['type'] === 'delete') {
+                item['propertiesString']['confirmation'] = 'True';
+            }
+            if (item['needGeneric'] && !isNullOrUndefined(item['genericSetterArgsName'])) {
+                item['propertiesString']['custom_func_name'] = item['functionName'];
+                const setterName = item['genericSetterArgsName'];
+                if (setterName && setterName !== '' && setterName !== 'parameters') {
+                    item['propertiesString']['setter_arg_name'] = setterName;
+                }
+                if (item['isLongRun'] && !AzConfiguration.getValue(CodeGenConstants.sdkTrack1)) {
+                    item['propertiesString']['setter_name'] = 'begin_create_or_update';
+                }
+            }
+            return item;
+        };
+
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
             CodeModelTypes,
             RenderInput
@@ -44,31 +83,46 @@ export class CliCommands extends TemplateBase {
             [
                 'commandGroup',
                 new RenderInput(
-                    ['name', 'hasShowCommand', 'maxApi', 'minApi', 'resourceType', 'mode'],
+                    [
+                        'name',
+                        'clientFactoryName',
+                        'customCommandTypeName',
+                        'operationTmplName',
+                        'maxApi',
+                        'minApi',
+                        'resourceType',
+                        'mode',
+                    ],
                     { name: SortOrder.ASEC },
+                    [],
+                    commandGroupConverter,
                 ),
             ],
             [
                 'command',
-                new RenderInput([
-                    'name',
-                    'mode',
-                    'maxApi',
-                    'minApi',
-                    'resourceType',
-                    'isLongRun',
-                    'functionName',
-                    'methodName',
-                    'needGeneric',
-                ]),
+                new RenderInput(
+                    [
+                        'methodName',
+                        'type',
+                        'mode',
+                        'maxApi',
+                        'minApi',
+                        'resourceType',
+                        'isLongRun',
+                        'functionName',
+                        'needGeneric',
+                        'genericSetterArgsName',
+                    ],
+                    {},
+                    [],
+                    commandConverter,
+                ),
             ],
-            ['method', new RenderInput(['maxApi', 'minApi', 'mode'])],
         ]);
 
         const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
             ['extension', 'commandGroup'],
             ['commandGroup', 'command'],
-            ['command', 'method'],
         ];
         data = this.model.getModelData('extension', inputProperties, dependencies);
         return data;
