@@ -146,6 +146,8 @@ export interface CodeModelAz {
     Command_IsLongRun: boolean;
     Command_SubGroupName: string;
     Command_Mode: string;
+    Command_Type: string;
+    Command_GenericSetterArgName: string;
 
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;

@@ -30,7 +30,7 @@ def load_command_table(self, _):
 
     from {{extension.azextFolder}}.generated._client_factory import {{commandGroup.clientFactoryName}}
     {{commandGroup.customCommandTypeName}} = CliCommandType(
-        operations_tmpl='{{commandGroup.operationTmpl}}',
+        operations_tmpl='{{commandGroup.operationTmplName}}',
         client_factory={{commandGroup.clientFactoryName}})
     with self.command_group('{{commandGroup.name}}', {{commandGroup.customCommandTypeName}}{%- for key, value in commandGroup.propertiesString %}, {{key}}={{value}}{% endfor -%}) as g:   
         {%- for command in commandGroup.Commands %}

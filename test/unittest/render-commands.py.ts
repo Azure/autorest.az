@@ -95,7 +95,7 @@ export class Process {
                                 ],
                                 clientFactoryName: 'cf_factory',
                                 customCommandTypeName: 'datafactory_factory',
-                                operationTmpl:
+                                operationTmplName:
                                     'azext_datafactory.vendored_sdks.datafactory.operations._factory_operations#FactoryOperations.{}',
                                 name: 'datafactory factory',
                                 propertiesString: {
@@ -235,7 +235,7 @@ export class Process {
                                 ],
                                 clientFactoryName: 'cf_integration_runtime',
                                 customCommandTypeName: 'datafactory_integration_runtime',
-                                operationTmpl:
+                                operationTmplName:
                                     'azext_datafactory.vendored_sdks.datafactory.operations._integration_runtime_operations#IntegrationRuntimeOperations.{}',
                                 name: 'datafactory integration-runtime',
                                 propertiesString: {
@@ -283,7 +283,7 @@ export class Process {
                                 ],
                                 clientFactoryName: 'cf_linked_service',
                                 customCommandTypeName: 'datafactory_linked_service',
-                                operationTmpl:
+                                operationTmplName:
                                     'azext_datafactory.vendored_sdks.datafactory.operations._linked_service_operations#LinkedServiceOperations.{}',
                                 name: 'datafactory linked-service',
                                 propertiesString: {

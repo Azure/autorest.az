@@ -13,8 +13,16 @@ import { createTestSession } from '../utils/test-helper';
 import * as sourceMapSupport from 'source-map-support';
 import { Entry } from '../../src/entry';
 import { CodeModelCliImpl } from '../../src/generate/CodeModelAzImpl';
-import { CodeModelTypes, DataGraph, RenderInput, SortOrder } from '../../src/utils/models';
-import { isNullOrUndefined } from '../../src/utils/helper';
+import {
+    AzConfiguration,
+    CodeGenConstants,
+    CodeModelTypes,
+    DataGraph,
+    RenderInput,
+    SortOrder,
+} from '../../src/utils/models';
+import { isNullOrUndefined, ToPythonString } from '../../src/utils/helper';
+import { RenderDataBase } from './render-getRenderDataBase';
 
 sourceMapSupport.install();
 
@@ -23,30 +31,7 @@ const resources = path.join(`${__dirname}`, '/../../../test/unittest/');
 const fileName = 'offazure-az-modifier-after.yaml';
 
 @suite
-export class Process {
-    private model: CodeModelCliImpl;
-
-    async init(): Promise<void> {
-        const cfg = {
-            az: {
-                extensions: 'offazure',
-            },
-        };
-        if (!fs.existsSync(path.join(resources, 'input', fileName))) {
-            throw Error;
-        }
-        const session = await createTestSession<CodeModel>(cfg, path.join(resources, 'input'), [
-            fileName,
-        ]);
-
-        const entry = new Entry(session);
-        await entry.init();
-
-        const model = new CodeModelCliImpl(session);
-
-        this.model = model;
-    }
-
+export class Process extends RenderDataBase {
     getRenderTestData(dependencies: DataGraph, arrayOutputFormat = false) {
         const data = {
             model: {},
@@ -98,7 +83,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async getModelDataTest1() {
-        await this.init();
+        await super.init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/command-groups.json')),
         );
@@ -113,7 +98,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async getModelDataTest2() {
-        await this.init();
+        await super.init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/commands.json')),
         );
@@ -131,7 +116,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async getModelDataTest3() {
-        await this.init();
+        await super.init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/methods.json')),
         );
@@ -150,7 +135,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async getModelDataTest4() {
-        await this.init();
+        await super.init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/method-parameters.json')),
         );
@@ -170,7 +155,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async getModelDataTest5() {
-        await this.init();
+        await super.init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/methods-array.json')),
         );
@@ -190,7 +175,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async getModelDataTest6() {
-        await this.init();
+        await super.init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(
                 path.join(resources, 'expected', 'data/method-parameters-az-examples.json'),

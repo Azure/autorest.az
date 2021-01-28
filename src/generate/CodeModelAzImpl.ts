@@ -41,6 +41,7 @@ import {
     RenderInput,
     DataGraph,
     SortOrder,
+    CliCommandType,
 } from '../utils/models';
 import {
     CodeModelAz,
@@ -1152,12 +1153,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         const polyOriginal = this.Command.extensions?.['cli-poly-as-resource-original-operation'];
         if (
             !isNullOrUndefined(polyOriginal) &&
-            !isNullOrUndefined(polyOriginal.extensions['cli-split-operation-original-operation'])
+            !isNullOrUndefined(polyOriginal.extensions?.['cli-split-operation-original-operation'])
         ) {
-            const splitOriginal = polyOriginal.extensions['cli-split-operation-original-operation'];
+            const splitOriginal =
+                polyOriginal.extensions?.['cli-split-operation-original-operation'];
             return splitOriginal;
         }
-        const splittedOriginal = this.Command.extensions['cli-split-operation-original-operation'];
+        const splittedOriginal = this.Command.extensions?.[
+            'cli-split-operation-original-operation'
+        ];
         if (!isNullOrUndefined(splittedOriginal)) {
             return splittedOriginal;
         }
@@ -1191,6 +1195,22 @@ export class CodeModelCliImpl implements CodeModelAz {
             return this.CommandGroup_Mode;
         }
         return this.Command?.language?.['cli']?.extensionMode;
+    }
+
+    public get Command_Type(): string {
+        if (this.Command_MethodName === 'show') {
+            return CliCommandType.CUSTOM_SHOW_COMMAND;
+        } else if (this.Command_NeedGeneric) {
+            if (!isNullOrUndefined(this.Command_GenericSetterArgName)) {
+                return CliCommandType.GENERIC_UPDATE_COMMAND;
+            }
+        }
+        return CliCommandType.CUSTOM_COMMAND;
+    }
+
+    public get Command_GenericSetterArgName(): string {
+        const geneParam = this.Command_GenericSetterParameter(this.Command_GetOriginalOperation);
+        return this.Parameter_NamePython(geneParam);
     }
 
     public get Command_MaxApi(): string {
