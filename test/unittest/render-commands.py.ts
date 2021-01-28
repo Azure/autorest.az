@@ -9,33 +9,12 @@ import * as nunjucks from 'nunjucks';
 import * as path from 'path';
 import * as sourceMapSupport from 'source-map-support';
 import { readFile, writeFile, rmFile } from '@azure-tools/async-io';
-import { isNullOrUndefined } from '../../src/utils/helper';
+import { isNullOrUndefined, runLintball } from '../../src/utils/helper';
 import { exec } from 'child_process';
 sourceMapSupport.install();
 
 @suite
 export class Process {
-    async runLintball(filename: string) {
-        const cmd =
-            path.join(`${__dirname}`, '/../../../' + 'node_modules/.bin/lintball') +
-            ' -c ' +
-            path.join(`${__dirname}`, '/../../../.lintballrc.json') +
-            ' fix ' +
-            filename;
-        console.log('Lintball processing');
-        return await new Promise<boolean>((resolve, reject) => {
-            exec(cmd, function (error) {
-                if (!isNullOrUndefined(error)) {
-                    console.log('exec error: ' + error);
-                    // Reject if there is an error:
-                    return reject(false);
-                }
-                // Otherwise resolve the promise:
-                return resolve(true);
-            });
-        });
-    }
-
     @test(slow(600000), timeout(1500000)) async renderCommandsPYTest1() {
         const tmplPath = path.join(
             `${__dirname}`,
@@ -323,7 +302,7 @@ export class Process {
             '../../../test/unittest/expected/generated/ori_commands.py',
         );
         await writeFile(oriFile, result);
-        await this.runLintball(oriFile);
+        await runLintball(oriFile);
         result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
@@ -353,7 +332,7 @@ export class Process {
             '../../../test/unittest/expected/generated/ori_commands.py',
         );
         await writeFile(oriFile, result);
-        await this.runLintball(oriFile);
+        await runLintball(oriFile);
         result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
