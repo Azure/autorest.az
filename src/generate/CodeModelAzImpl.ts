@@ -3703,9 +3703,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                 if (!isNullOrUndefined(props) && Array.isArray(props) && props.length > 0) {
                     for (const prop of props) {
                         item[prop] = this[Type + '_' + Capitalize(prop)];
-                        if (!isNullOrUndefined(converter.get(prop))) {
-                            item[prop] = converter.get(prop)(item[prop]);
-                        }
                     }
                     for (const condition of conditions) {
                         if (this[Type + '_' + Capitalize(condition[0])] === condition[1]) {
@@ -3730,6 +3727,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                             item = { ...item, ...item2 };
                         });
                     // const d = dependencies.shift();
+                }
+                if (!isNullOrUndefined(converter)) {
+                    item = converter(item);
                 }
                 items.push(item);
             } while (this['SelectNext' + Type]());
