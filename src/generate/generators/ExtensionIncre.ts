@@ -17,7 +17,7 @@ import { CliTopMetadata } from '../renders/extraExt/CliExtMetadata';
 import { CliExtSetupPy } from '../renders/extraExt/CliExtSetupPy';
 import { GenerateAzureCliActions } from '../renders/generated/CliActions';
 import { GenerateAzureCliClientFactory } from '../renders/generated/CliClientFactory';
-import { GenerateAzureCliCommands } from '../renders/generated/CliCommands';
+import { CliCommands } from '../renders/generated/CliCommands';
 import { GenerateAzureCliCustom } from '../renders/generated/CliCustom';
 import { GenerateAzureCliHelp } from '../renders/generated/CliHelp';
 import { GenerateAzureCliParams } from '../renders/generated/CliParams';
@@ -38,9 +38,6 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
         this.files[
             path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.paramsFile)
         ] = GenerateAzureCliParams(this.model, this.isDebugMode);
-        this.files[
-            path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.commandsFile)
-        ] = GenerateAzureCliCommands(this.model);
         this.files[
             path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.customFile)
         ] = GenerateAzureCliCustom(this.model);
@@ -116,6 +113,7 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
         ] = await cliTopActionGenerator.incrementalGeneration(cliTopActionBase);
 
         // Upgrade version of azext_metadata
+        await this.generateIncrementalSingleAndAddtoOutput(new CliCommands(this.model));
         await this.generateIncrementalSingleAndAddtoOutput(new CliTopMetadata(this.model));
         await this.generateIncrementalSingleAndAddtoOutput(new CliExtSetupPy(this.model));
 

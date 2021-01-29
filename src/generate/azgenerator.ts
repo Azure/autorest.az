@@ -2,7 +2,7 @@ import { Channel, Host, startSession } from '@azure-tools/autorest-extension-bas
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from 'os';
 import * as path from 'path';
-import { isNullOrUndefined } from '../utils/helper';
+import { isNullOrUndefined, runLintball } from '../utils/helper';
 import {
     CodeGenConstants,
     PathConstants,
@@ -51,6 +51,7 @@ export async function processRequest(host: Host) {
             }
         }
 
+        const tolintFiles = [];
         for (const f in files) {
             if (!isNullOrUndefined(files[f])) {
                 if (
@@ -64,15 +65,22 @@ export async function processRequest(host: Host) {
                     f.endsWith('setup.cfg') ||
                     // f.endsWith('report.md') ||
                     f.endsWith('tests/__init__.py') ||
-                    f.endsWith('preparers.py')
+                    f.endsWith('preparers.py') ||
+                    f.endsWith('commands.py')
                 ) {
                     host.WriteFile(f, files[f]);
+                    if (f.endsWith('commands.py')) {
+                        tolintFiles.push(path.join(model.azOutputFolder, f));
+                    }
                 } else {
                     host.WriteFile(f, files[f].join(EOL));
                 }
             }
         }
         closeInplaceGen();
+        // tolintFiles.forEach(async (fileName) => {
+        //     await runLintball(fileName);
+        // });
     } catch (E) {
         if (debug) {
             console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);

@@ -735,7 +735,6 @@ export async function runLintball(filename: string): Promise<boolean> {
         path.join(`${__dirname}`, '/../../../.lintballrc.json') +
         ' fix ' +
         filename;
-    console.log('Lintball processing');
     return await new Promise<boolean>((resolve, reject) => {
         exec(cmd, function (error) {
             if (!isNullOrUndefined(error)) {
