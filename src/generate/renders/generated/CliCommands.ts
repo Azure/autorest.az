@@ -42,9 +42,11 @@ export class CliCommands extends TemplateBase {
         this.tmplPath = path.join(PathConstants.templateRootFolder, 'generated/commands.py.njx');
     }
 
-    public getDataFromModel() {
-        let data = {};
-
+    public getDataFromModel(data: any) {
+        data['imports'].push([
+            CodeGenConstants.DEFAULT_CLI_CORE_LIB + '.commands',
+            ['CliCommandType'],
+        ]);
         const extraProperties = ['maxApi', 'minApi', 'resourceType', 'mode'];
         const commandGroupConverter = (item) => {
             item['propertiesString'] = {};
@@ -57,6 +59,16 @@ export class CliCommands extends TemplateBase {
                         );
                     } else {
                         item['propertiesString'][prop] = item[prop];
+                    }
+                    if (prop === 'resourceType' && !isNullOrUndefined(item[prop])) {
+                        data['imports'].push(['azure.cli.core.profiles', ['ResourceType']]);
+                    }
+                    if (
+                        !isNullOrUndefined(item['operationTmplName']) &&
+                        item['operationTmplName'].length >
+                            CodeGenConstants.PYLINT_MAX_OPERATION_TEMPLATE_LENGTH
+                    ) {
+                        data['pylints'].push('# pylint: disable=line-too-long');
                     }
                 }
             });
@@ -74,6 +86,9 @@ export class CliCommands extends TemplateBase {
                         );
                     } else {
                         item['propertiesString'][prop] = item[prop];
+                    }
+                    if (prop === 'resourceType' && !isNullOrUndefined(item[prop])) {
+                        data['imports'].push(['azure.cli.core.profiles', ['ResourceType']]);
                     }
                 }
             });
@@ -162,14 +177,9 @@ export class CliCommands extends TemplateBase {
     }
 
     public async GetRenderData(): Promise<Record<string, unknown>> {
-        const data = { data: {} };
-        const modelData = this.getDataFromModel();
-        data['data'] = modelData;
-        data['imports'] = [];
-        data['imports'].push([
-            CodeGenConstants.DEFAULT_CLI_CORE_LIB + '.commands',
-            ['CliCommandType'],
-        ]);
+        const data = { data: { imports: [], pylints: [] } };
+        const modelData = this.getDataFromModel(data.data);
+        data.data = modelData;
         return data;
     }
 
