@@ -26,17 +26,43 @@ from {{lib}} import (
 def load_command_table(self, _):
 {%- if data.hasExtension -%}
 {%- for extension in data.Extensions -%}
+{% set extensionModeDefined = false %}
+{% set groupMode = extension.mode %}
 {%- for commandGroup in extension.CommandGroups %}
 
-    from {{extension.azextFolder}}.generated._client_factory import {{commandGroup.clientFactoryName}}
+    from {{data.azextFolder}}.generated._client_factory import {{commandGroup.clientFactoryName}}
     {{commandGroup.customCommandTypeName}} = CliCommandType(
         operations_tmpl='{{commandGroup.operationTmplName}}',
         client_factory={{commandGroup.clientFactoryName}})
-    with self.command_group('{{commandGroup.name}}', {{commandGroup.customCommandTypeName}}{%- for key, value in commandGroup.propertiesString %}, {{key}}={{value}}{% endfor -%}) as g:   
+    with self.command_group('{{commandGroup.name}}', {{commandGroup.customCommandTypeName}}
+                            {%- for key, value in commandGroup.propertiesString %}
+                                {% if key != 'mode' %}
+                                    , {{key}}={{value}}
+                                {% else %}
+                                    {% if commandGroup.name == extension.name %}
+                                        {% set extensionModeDefined = true %}
+                                    {% endif %}
+                                    {% if (value != "stable" and value != extension.mode) or (commandGroup.name == extension.name) %}
+                                        , is_{{value}}=True
+                                    {% endif %}
+                                    {% set groupMode = value %}
+                                {% endif %}
+                            {% endfor -%}) as g:   
         {%- for command in commandGroup.Commands %}
-        g.{{command.type}}('{{command.name}}'{%- if command.type != 'generic_update_command' %}, '{{command.customFunctionName}}'{% endif -%}{%- for key, value in command.propertiesString %}, {{key}}={{value}}{% endfor -%})
+        g.{{command.type}}('{{command.methodName}}'{%- if command.type != 'generic_update_command' %}, '{{command.functionName}}'{% endif -%}
+                            {%- for key, value in command.propertiesString %}
+                                {% if key != 'mode' %}
+                                    , {{key}}={{value|safe}}
+                                {% elif value != groupMode and value != "stable" %}
+                                    , is_{{value}}=True
+                                {% endif %}
+                            {% endfor -%})
         {%- endfor %}
 {%- endfor %}
+{% if not extensionModeDefined %}
+    with self.command_group('{{extension.name}}'{% if extension.mode != 'stable' %}, is_{{extension.mode}}=True{% endif %}):
+        pass
+{% endif %}
 {%- endfor %}
 {%- else %}
     pass

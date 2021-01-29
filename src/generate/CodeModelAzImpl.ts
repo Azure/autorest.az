@@ -818,7 +818,16 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Extension_Mode(): string {
-        return AzConfiguration.getValue(CodeGenConstants.extensionMode);
+        let extensionMode = AzConfiguration.getValue(CodeGenConstants.extensionMode);
+        this.codeModel.operationGroups.forEach((operationGroup) => {
+            if (
+                operationGroup.language['az'].command === this.Extension_Name &&
+                !isNullOrUndefined(operationGroup.language?.['cli']?.extensionMode)
+            ) {
+                extensionMode = operationGroup.language?.['cli']?.extensionMode;
+            }
+        });
+        return extensionMode;
     }
 
     public get Extension_NameUnderscored(): string {

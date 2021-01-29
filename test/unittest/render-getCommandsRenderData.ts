@@ -12,11 +12,13 @@ import {
     AzConfiguration,
     CodeGenConstants,
     CodeModelTypes,
+    ExtensionMode,
     RenderInput,
     SortOrder,
 } from '../../src/utils/models';
 import { isNullOrUndefined, ToPythonString, runLintball } from '../../src/utils/helper';
 import { RenderDataBase } from './render-getRenderDataBase';
+import { SchemaType } from '@azure-tools/codemodel';
 
 sourceMapSupport.install();
 
@@ -35,7 +37,14 @@ export class Process extends RenderDataBase {
             item['propertiesString'] = {};
             extraProperties.forEach((prop) => {
                 if (!isNullOrUndefined(item[prop])) {
-                    item['propertiesString'][prop] = ToPythonString(item[prop], typeof item[prop]);
+                    if (prop !== 'mode') {
+                        item['propertiesString'][prop] = ToPythonString(
+                            item[prop],
+                            typeof item[prop],
+                        );
+                    } else {
+                        item['propertiesString'][prop] = item[prop];
+                    }
                 }
             });
             return item;
@@ -45,20 +54,33 @@ export class Process extends RenderDataBase {
             item['propertiesString'] = {};
             extraProperties.forEach((prop) => {
                 if (!isNullOrUndefined(item[prop])) {
-                    item['propertiesString'][prop] = ToPythonString(item[prop], typeof item[prop]);
+                    if (prop !== 'mode') {
+                        item['propertiesString'][prop] = ToPythonString(
+                            item[prop],
+                            typeof item[prop],
+                        );
+                    } else {
+                        item['propertiesString'][prop] = item[prop];
+                    }
                 }
             });
             if (item['isLongRun']) {
                 item['propertiesString']['suppose_no_wait'] = 'True';
             }
-            if (item['type'] === 'delete') {
+            if (item['methodName'] === 'delete') {
                 item['propertiesString']['confirmation'] = 'True';
             }
             if (item['needGeneric'] && !isNullOrUndefined(item['genericSetterArgName'])) {
-                item['propertiesString']['custom_func_name'] = item['functionName'];
+                item['propertiesString']['custom_func_name'] = ToPythonString(
+                    item['functionName'],
+                    typeof item['functionName'],
+                );
                 const setterName = item['genericSetterArgName'];
                 if (setterName && setterName !== '' && setterName !== 'parameters') {
-                    item['propertiesString']['setter_arg_name'] = setterName;
+                    item['propertiesString']['setter_arg_name'] = ToPythonString(
+                        setterName,
+                        typeof setterName,
+                    );
                 }
                 if (item['isLongRun'] && !AzConfiguration.getValue(CodeGenConstants.sdkTrack1)) {
                     item['propertiesString']['setter_name'] = 'begin_create_or_update';
@@ -121,8 +143,14 @@ export class Process extends RenderDataBase {
             ['extension', 'commandGroup'],
             ['commandGroup', 'command'],
         ];
+        AzConfiguration.setValue(CodeGenConstants.extensionMode, ExtensionMode.Experimental);
+        AzConfiguration.setValue(CodeGenConstants.azextFolder, 'azext_datafactory_preview');
+        AzConfiguration.setValue(
+            CodeGenConstants.pythonNamespace,
+            'azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory',
+        );
         data = this.model.getModelData('extension', inputProperties, dependencies);
-        data['azextFolder'] = 'azext_datafactory';
+        data['azextFolder'] = 'azext_datafactory_preview';
         return data;
     }
 
@@ -131,8 +159,8 @@ export class Process extends RenderDataBase {
             await readFile(path.join(resources, 'expected', 'data/render-commands.json')),
         );
         let data = await this.getCommandsRenderData();
-        data = JSON.parse(JSON.stringify(data));
         // console.log(JSON.stringify(data));
+        data = JSON.parse(JSON.stringify(data));
         assert.deepStrictEqual(
             data,
             expected,
@@ -158,7 +186,6 @@ export class Process extends RenderDataBase {
             '# pylint: disable=line-too-long',
         ];
         let result = super.render(tmplPath, data);
-        console.log(result);
         const oriFile = path.join(
             `${__dirname}`,
             '../../../test/unittest/expected/generated/ori_commands.py',
@@ -168,10 +195,10 @@ export class Process extends RenderDataBase {
         result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
-            '../../../test/unittest/expected/generated/commands2.py',
+            '../../../test/unittest/expected/generated/commands3.py',
         );
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic for commands.py is incorrect');
-        // await rmFile(oriFile);
+        await rmFile(oriFile);
     }
 }

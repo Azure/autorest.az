@@ -3,6 +3,7 @@
     "Extensions": [
         {
             "name": "datafactory",
+            "mode": "experimental",
             "nameUnderscored": "datafactory",
             "hasCommandGroup": true,
             "CommandGroups": [
@@ -10,419 +11,545 @@
                     "name": "datafactory",
                     "clientFactoryName": "cf_factory",
                     "customCommandTypeName": "datafactory_factory",
-                    "operationTmplName": "undefined.operations._factories_operations#FactoriesOperations.{}",
+                    "operationTmplName": "azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._factories_operations#FactoriesOperations.{}",
+                    "mode": "experimental",
                     "hasCommand": true,
                     "Commands": [
                         {
                             "methodName": "list",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_list",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "show",
                             "type": "custom_show_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_show",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "create",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_create",
                             "needGeneric": false,
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "update",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_update",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
-                        },
-                        {
-                            "methodName": "delete",
-                            "type": "custom_command",
-                            "isLongRun": false,
-                            "functionName": "datafactory_delete",
-                            "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
-                        },
-                        {
-                            "methodName": "configure-factory-repo",
-                            "type": "custom_command",
-                            "isLongRun": false,
-                            "functionName": "datafactory_configure_factory_repo",
-                            "needGeneric": false,
-                            "genericSetterArgName": "location_id",
-                            "propertiesString": {}
-                        },
-                        {
-                            "methodName": "get-data-plane-access",
-                            "type": "custom_command",
-                            "isLongRun": false,
-                            "functionName": "datafactory_get_data_plane_access",
-                            "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
-                        },
-                        {
-                            "methodName": "get-git-hub-access-token",
-                            "type": "custom_command",
-                            "isLongRun": false,
-                            "functionName": "datafactory_get_git_hub_access_token",
-                            "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
-                        }
-                    ],
-                    "propertiesString": {}
-                },
-                {
-                    "name": "datafactory trigger",
-                    "clientFactoryName": "cf_trigger",
-                    "customCommandTypeName": "datafactory_trigger",
-                    "operationTmplName": "undefined.operations._triggers_operations#TriggersOperations.{}",
-                    "hasCommand": true,
-                    "Commands": [
-                        {
-                            "methodName": "list",
-                            "type": "custom_command",
-                            "isLongRun": false,
-                            "functionName": "datafactory_trigger_list",
-                            "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
-                        },
-                        {
-                            "methodName": "show",
-                            "type": "custom_show_command",
-                            "isLongRun": false,
-                            "functionName": "datafactory_trigger_show",
-                            "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
-                        },
-                        {
-                            "methodName": "create",
-                            "type": "custom_command",
-                            "isLongRun": false,
-                            "functionName": "datafactory_trigger_create",
-                            "needGeneric": false,
-                            "genericSetterArgName": "trigger",
-                            "propertiesString": {}
-                        },
-                        {
-                            "methodName": "update",
-                            "type": "generic_update_command",
-                            "isLongRun": false,
-                            "functionName": "datafactory_trigger_update",
-                            "needGeneric": true,
-                            "genericSetterArgName": "trigger",
                             "propertiesString": {
-                                "custom_func_name": "datafactory_trigger_update",
-                                "setter_arg_name": "trigger"
+                                "mode": "experimental"
                             }
                         },
                         {
                             "methodName": "delete",
                             "type": "custom_command",
+                            "mode": "experimental",
+                            "isLongRun": false,
+                            "functionName": "datafactory_delete",
+                            "needGeneric": false,
+                            "genericSetterArgName": "resource_group_name",
+                            "propertiesString": {
+                                "mode": "experimental",
+                                "confirmation": "True"
+                            }
+                        },
+                        {
+                            "methodName": "configure-factory-repo",
+                            "type": "custom_command",
+                            "mode": "experimental",
+                            "isLongRun": false,
+                            "functionName": "datafactory_configure_factory_repo",
+                            "needGeneric": false,
+                            "genericSetterArgName": "location_id",
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
+                        },
+                        {
+                            "methodName": "get-data-plane-access",
+                            "type": "custom_command",
+                            "mode": "experimental",
+                            "isLongRun": false,
+                            "functionName": "datafactory_get_data_plane_access",
+                            "needGeneric": false,
+                            "genericSetterArgName": "resource_group_name",
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
+                        },
+                        {
+                            "methodName": "get-git-hub-access-token",
+                            "type": "custom_command",
+                            "mode": "experimental",
+                            "isLongRun": false,
+                            "functionName": "datafactory_get_git_hub_access_token",
+                            "needGeneric": false,
+                            "genericSetterArgName": "resource_group_name",
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
+                        }
+                    ],
+                    "propertiesString": {
+                        "mode": "experimental"
+                    }
+                },
+                {
+                    "name": "datafactory trigger",
+                    "clientFactoryName": "cf_trigger",
+                    "customCommandTypeName": "datafactory_trigger",
+                    "operationTmplName": "azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._triggers_operations#TriggersOperations.{}",
+                    "mode": "experimental",
+                    "hasCommand": true,
+                    "Commands": [
+                        {
+                            "methodName": "list",
+                            "type": "custom_command",
+                            "mode": "experimental",
+                            "isLongRun": false,
+                            "functionName": "datafactory_trigger_list",
+                            "needGeneric": false,
+                            "genericSetterArgName": "resource_group_name",
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
+                        },
+                        {
+                            "methodName": "show",
+                            "type": "custom_show_command",
+                            "mode": "experimental",
+                            "isLongRun": false,
+                            "functionName": "datafactory_trigger_show",
+                            "needGeneric": false,
+                            "genericSetterArgName": "resource_group_name",
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
+                        },
+                        {
+                            "methodName": "create",
+                            "type": "custom_command",
+                            "mode": "experimental",
+                            "isLongRun": false,
+                            "functionName": "datafactory_trigger_create",
+                            "needGeneric": false,
+                            "genericSetterArgName": "trigger",
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
+                        },
+                        {
+                            "methodName": "update",
+                            "type": "generic_update_command",
+                            "mode": "experimental",
+                            "isLongRun": false,
+                            "functionName": "datafactory_trigger_update",
+                            "needGeneric": true,
+                            "genericSetterArgName": "trigger",
+                            "propertiesString": {
+                                "mode": "experimental",
+                                "custom_func_name": "\"datafactory_trigger_update\"",
+                                "setter_arg_name": "\"trigger\""
+                            }
+                        },
+                        {
+                            "methodName": "delete",
+                            "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_trigger_delete",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental",
+                                "confirmation": "True"
+                            }
                         },
                         {
                             "methodName": "get-event-subscription-status",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_trigger_get_event_subscription_status",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "query-by-factory",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_trigger_query_by_factory",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "start",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": true,
                             "functionName": "datafactory_trigger_start",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
+                                "mode": "experimental",
                                 "suppose_no_wait": "True"
                             }
                         },
                         {
                             "methodName": "stop",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": true,
                             "functionName": "datafactory_trigger_stop",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
+                                "mode": "experimental",
                                 "suppose_no_wait": "True"
                             }
                         },
                         {
                             "methodName": "subscribe-to-event",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": true,
                             "functionName": "datafactory_trigger_subscribe_to_event",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
+                                "mode": "experimental",
                                 "suppose_no_wait": "True"
                             }
                         },
                         {
                             "methodName": "unsubscribe-from-event",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": true,
                             "functionName": "datafactory_trigger_unsubscribe_from_event",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
+                                "mode": "experimental",
                                 "suppose_no_wait": "True"
                             }
                         }
                     ],
-                    "propertiesString": {}
+                    "propertiesString": {
+                        "mode": "experimental"
+                    }
                 },
                 {
                     "name": "datafactory integration-runtime",
                     "clientFactoryName": "cf_integration_runtime",
                     "customCommandTypeName": "datafactory_integration_runtime",
-                    "operationTmplName": "undefined.operations._integration_runtimes_operations#IntegrationRuntimesOperations.{}",
+                    "operationTmplName": "azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._integration_runtimes_operations#IntegrationRuntimesOperations.{}",
+                    "mode": "experimental",
                     "hasCommand": true,
                     "Commands": [
                         {
                             "methodName": "list",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_list",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "show",
                             "type": "custom_show_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_show",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "linked-integration-runtime create",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_linked_integration_runtime_create",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "managed create",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_managed_create",
                             "needGeneric": false,
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "self-hosted create",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_self_hosted_create",
                             "needGeneric": false,
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "update",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_update",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "delete",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_delete",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental",
+                                "confirmation": "True"
+                            }
                         },
                         {
                             "methodName": "get-connection-info",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_get_connection_info",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "get-monitoring-data",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_get_monitoring_data",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "get-status",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_get_status",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "list-auth-key",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_list_auth_key",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "regenerate-auth-key",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_regenerate_auth_key",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "remove-link",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_remove_link",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "start",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": true,
                             "functionName": "datafactory_integration_runtime_start",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
+                                "mode": "experimental",
                                 "suppose_no_wait": "True"
                             }
                         },
                         {
                             "methodName": "stop",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": true,
                             "functionName": "datafactory_integration_runtime_stop",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
+                                "mode": "experimental",
                                 "suppose_no_wait": "True"
                             }
                         },
                         {
                             "methodName": "sync-credentials",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_sync_credentials",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         },
                         {
                             "methodName": "upgrade",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_upgrade",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         }
                     ],
-                    "propertiesString": {}
+                    "propertiesString": {
+                        "mode": "experimental"
+                    }
                 },
                 {
                     "name": "datafactory domain-service",
                     "clientFactoryName": "cf_domain_service",
                     "customCommandTypeName": "datafactory_domain_service",
-                    "operationTmplName": "undefined.operations._domain_services_operations#DomainServicesOperations.{}",
+                    "operationTmplName": "azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._domain_services_operations#DomainServicesOperations.{}",
+                    "mode": "experimental",
                     "hasCommand": true,
                     "Commands": [
                         {
                             "methodName": "create",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": true,
                             "functionName": "datafactory_domain_service_create",
                             "needGeneric": false,
                             "propertiesString": {
+                                "mode": "experimental",
                                 "suppose_no_wait": "True"
                             }
                         },
                         {
                             "methodName": "update",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": true,
                             "functionName": "datafactory_domain_service_update",
                             "needGeneric": false,
                             "propertiesString": {
+                                "mode": "experimental",
                                 "suppose_no_wait": "True"
                             }
                         }
                     ],
-                    "propertiesString": {}
+                    "propertiesString": {
+                        "mode": "experimental"
+                    }
                 },
                 {
                     "name": "datafactory group",
                     "clientFactoryName": "cf_group",
                     "customCommandTypeName": "datafactory_group",
-                    "operationTmplName": "undefined.operations._groups_operations#GroupsOperations.{}",
+                    "operationTmplName": "azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._groups_operations#GroupsOperations.{}",
+                    "mode": "experimental",
                     "hasCommand": true,
                     "Commands": [
                         {
                             "methodName": "create",
                             "type": "custom_command",
+                            "mode": "experimental",
                             "isLongRun": false,
                             "functionName": "datafactory_group_create",
                             "needGeneric": false,
                             "genericSetterArgName": "resource_group_name",
-                            "propertiesString": {}
+                            "propertiesString": {
+                                "mode": "experimental"
+                            }
                         }
                     ],
-                    "propertiesString": {}
+                    "propertiesString": {
+                        "mode": "experimental"
+                    }
                 }
             ]
         }
     ],
-    "azextFolder": "azext_datafactory"
+    "azextFolder": "azext_datafactory_preview"
 }
