@@ -17,9 +17,11 @@ import {
     AzConfiguration,
     CodeGenConstants,
     CodeModelTypes,
+    PathConstants,
     RenderInput,
     SortOrder,
 } from '../../../utils/models';
+import * as path from 'path';
 
 let showCommandFunctionName: string;
 let useResourceType: boolean;
@@ -32,6 +34,12 @@ function initVars() {
 export class CliCommands extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
+        this.relativePath = path.join(
+            model.AzextFolder,
+            PathConstants.generatedFolder,
+            PathConstants.commandsFile,
+        );
+        this.tmplPath = path.join(PathConstants.templateRootFolder, 'generated/commands.py.njx');
     }
 
     public getDataFromModel() {
@@ -41,7 +49,16 @@ export class CliCommands extends TemplateBase {
         const commandGroupConverter = (item) => {
             item['propertiesString'] = {};
             extraProperties.forEach((prop) => {
-                item['propertiesString'][prop] = ToPythonString(item[prop], typeof item[prop]);
+                if (!isNullOrUndefined(item[prop])) {
+                    if (prop !== 'mode') {
+                        item['propertiesString'][prop] = ToPythonString(
+                            item[prop],
+                            typeof item[prop],
+                        );
+                    } else {
+                        item['propertiesString'][prop] = item[prop];
+                    }
+                }
             });
             return item;
         };
@@ -49,19 +66,34 @@ export class CliCommands extends TemplateBase {
         const commandConverter = (item) => {
             item['propertiesString'] = {};
             extraProperties.forEach((prop) => {
-                item['propertiesString'][prop] = ToPythonString(item[prop], typeof item[prop]);
+                if (!isNullOrUndefined(item[prop])) {
+                    if (prop !== 'mode') {
+                        item['propertiesString'][prop] = ToPythonString(
+                            item[prop],
+                            typeof item[prop],
+                        );
+                    } else {
+                        item['propertiesString'][prop] = item[prop];
+                    }
+                }
             });
             if (item['isLongRun']) {
                 item['propertiesString']['suppose_no_wait'] = 'True';
             }
-            if (item['type'] === 'delete') {
+            if (item['methodName'] === 'delete') {
                 item['propertiesString']['confirmation'] = 'True';
             }
-            if (item['needGeneric'] && !isNullOrUndefined(item['genericSetterArgsName'])) {
-                item['propertiesString']['custom_func_name'] = item['functionName'];
-                const setterName = item['genericSetterArgsName'];
+            if (item['needGeneric'] && !isNullOrUndefined(item['genericSetterArgName'])) {
+                item['propertiesString']['custom_func_name'] = ToPythonString(
+                    item['functionName'],
+                    typeof item['functionName'],
+                );
+                const setterName = item['genericSetterArgName'];
                 if (setterName && setterName !== '' && setterName !== 'parameters') {
-                    item['propertiesString']['setter_arg_name'] = setterName;
+                    item['propertiesString']['setter_arg_name'] = ToPythonString(
+                        setterName,
+                        typeof setterName,
+                    );
                 }
                 if (item['isLongRun'] && !AzConfiguration.getValue(CodeGenConstants.sdkTrack1)) {
                     item['propertiesString']['setter_name'] = 'begin_create_or_update';
@@ -76,7 +108,7 @@ export class CliCommands extends TemplateBase {
         >([
             [
                 'extension',
-                new RenderInput(['name', 'parent', 'mode', 'nameUnderscore'], {
+                new RenderInput(['name', 'parent', 'mode', 'nameUnderscored'], {
                     name: SortOrder.ASEC,
                 }),
             ],
@@ -111,7 +143,7 @@ export class CliCommands extends TemplateBase {
                         'isLongRun',
                         'functionName',
                         'needGeneric',
-                        'genericSetterArgsName',
+                        'genericSetterArgName',
                     ],
                     {},
                     [],
@@ -125,47 +157,28 @@ export class CliCommands extends TemplateBase {
             ['commandGroup', 'command'],
         ];
         data = this.model.getModelData('extension', inputProperties, dependencies);
+        data['azextFolder'] = this.model.AzextFolder;
         return data;
     }
 
     public async GetRenderData(): Promise<Record<string, unknown>> {
-        const data = {};
+        const data = { data: {} };
+        const modelData = this.getDataFromModel();
+        data['data'] = modelData;
         data['imports'] = [];
         data['imports'].push([
             CodeGenConstants.DEFAULT_CLI_CORE_LIB + '.commands',
             ['CliCommandType'],
         ]);
-        data['commandGroups'] = [];
-        const modelData = this.getDataFromModel();
-        data['data'] = this.transformModelData(modelData);
         return data;
     }
 
     public async fullGeneration(): Promise<string[]> {
-        const output: string[] = [];
-        return output;
-    }
-
-    private transformModelData(modelData: Record<string, unknown>) {
-        const result = {};
-        if (!modelData['hasExtension']) {
-            return result;
-        }
-        const extensions: [] = modelData['Extensions'] as [];
-        extensions.forEach((extension) => {
-            if (!extension['hasCommandGroup']) {
-                return result;
-            }
-            const commandGroups: [] = extension['CommandGroups'];
-            commandGroups.forEach((commandGroup) => {
-                commandGroup;
-            });
-        });
+        return this.render();
     }
 
     public async incrementalGeneration(): Promise<string[]> {
-        const output: string[] = [];
-        return output;
+        return this.render();
     }
 }
 
