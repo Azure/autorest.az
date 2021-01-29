@@ -1,6 +1,6 @@
 # Onboarding Process for Using Azure Cli Code-gen (autorest.az)
 
-Thanks for selecting Azure Cli Code-gen as approach to onboarding Azure Cli for your RP. No matter you want add a new feature to existing PR or onboard a new RP. This document will provide the guideline for your on-boarding process.
+Thanks for selecting Azure Cli Code-gen as approach to onboarding Azure Cli for your RP. If you want add a new feature to existing PR or onboard a new RP, then this document will provide the guideline for your on-boarding process.
 
 ## Step 1. Send request to AME team in Github
 AME team use github issue as a centralized entry point to trigger the process for new RP onboarding or add feature in existing RP. Please go to [Azure-Cli](https://github.com/Azure/azure-cli) to create a new github issue and following the onboarding template first. 
