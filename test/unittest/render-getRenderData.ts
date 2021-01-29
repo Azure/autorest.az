@@ -6,22 +6,11 @@
 import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
 import * as path from 'path';
-import * as fs from 'fs';
 import { readFile } from '@azure-tools/async-io';
-import { CodeModel, SchemaType } from '@azure-tools/codemodel';
-import { createTestSession } from '../utils/test-helper';
+import { SchemaType } from '@azure-tools/codemodel';
 import * as sourceMapSupport from 'source-map-support';
-import { Entry } from '../../src/entry';
-import { CodeModelCliImpl } from '../../src/generate/CodeModelAzImpl';
-import {
-    AzConfiguration,
-    CodeGenConstants,
-    CodeModelTypes,
-    DataGraph,
-    RenderInput,
-    SortOrder,
-} from '../../src/utils/models';
-import { isNullOrUndefined, ToPythonString } from '../../src/utils/helper';
+import { CodeModelTypes, DataGraph, RenderInput, SortOrder } from '../../src/utils/models';
+import { isNullOrUndefined } from '../../src/utils/helper';
 import { RenderDataBase } from './render-getRenderDataBase';
 
 sourceMapSupport.install();

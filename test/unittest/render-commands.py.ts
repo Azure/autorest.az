@@ -9,8 +9,7 @@ import * as nunjucks from 'nunjucks';
 import * as path from 'path';
 import * as sourceMapSupport from 'source-map-support';
 import { readFile, writeFile, rmFile } from '@azure-tools/async-io';
-import { isNullOrUndefined, runLintball } from '../../src/utils/helper';
-import { exec } from 'child_process';
+import { runLintball } from '../../src/utils/helper';
 sourceMapSupport.install();
 
 @suite
@@ -34,61 +33,60 @@ export class Process {
                 hasExtension: true,
                 Extensions: [
                     {
+                        name: 'datafactory',
                         hasCommandGroup: true,
                         CommandGroups: [
                             {
                                 hasCommand: true,
                                 Commands: [
                                     {
-                                        name: 'list',
+                                        methodName: 'list',
                                         type: 'custom_command',
-                                        customFunctionName: 'datafactory_factory_list',
+                                        functionName: 'datafactory_factory_list',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'show',
+                                        methodName: 'show',
                                         type: 'custom_show_command',
-                                        customFunctionName: 'datafactory_factory_show',
+                                        functionName: 'datafactory_factory_show',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'create',
+                                        methodName: 'create',
                                         type: 'custom_command',
-                                        customFunctionName: 'datafactory_factory_create',
+                                        functionName: 'datafactory_factory_create',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'update',
+                                        methodName: 'update',
                                         type: 'custom_command',
-                                        customFunctionName: 'datafactory_factory_update',
+                                        functionName: 'datafactory_factory_update',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'delete',
+                                        methodName: 'delete',
                                         type: 'custom_command',
-                                        customFunctionName: 'datafactory_factory_delete',
+                                        functionName: 'datafactory_factory_delete',
                                         propertiesString: {
                                             confirmation: 'True',
                                         },
                                     },
                                     {
-                                        name: 'configure-factory-repo',
+                                        methodName: 'configure-factory-repo',
                                         type: 'custom_command',
-                                        customFunctionName:
-                                            'datafactory_factory_configure_factory_repo',
+                                        functionName: 'datafactory_factory_configure_factory_repo',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'get-data-plane-access',
+                                        methodName: 'get-data-plane-access',
                                         type: 'custom_command',
-                                        customFunctionName:
-                                            'datafactory_factory_get_data_plane_access',
+                                        functionName: 'datafactory_factory_get_data_plane_access',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'get-git-hub-access-token',
+                                        methodName: 'get-git-hub-access-token',
                                         type: 'custom_command',
-                                        customFunctionName:
+                                        functionName:
                                             'datafactory_factory_get_git_hub_access_token',
                                         propertiesString: {},
                                     },
@@ -99,137 +97,132 @@ export class Process {
                                     'azext_datafactory.vendored_sdks.datafactory.operations._factory_operations#FactoryOperations.{}',
                                 name: 'datafactory factory',
                                 propertiesString: {
-                                    is_experimental: 'True',
+                                    mode: 'experimental',
                                 },
                             },
                             {
                                 hasCommand: true,
                                 Commands: [
                                     {
-                                        name: 'list',
+                                        methodName: 'list',
                                         type: 'custom_command',
-                                        customFunctionName: 'datafactory_integration_runtime_list',
+                                        functionName: 'datafactory_integration_runtime_list',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'show',
+                                        methodName: 'show',
                                         type: 'custom_show_command',
-                                        customFunctionName: 'datafactory_integration_runtime_show',
+                                        functionName: 'datafactory_integration_runtime_show',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'linked-integration-runtime create',
+                                        methodName: 'linked-integration-runtime create',
                                         type: 'custom_command',
-                                        customFunctionName:
+                                        functionName:
                                             'datafactory_integration_runtime_linked_integration_runtime_create',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'managed create',
+                                        methodName: 'managed create',
                                         type: 'custom_command',
-                                        customFunctionName:
+                                        functionName:
                                             'datafactory_integration_runtime_managed_create',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'self-hosted create',
+                                        methodName: 'self-hosted create',
                                         type: 'custom_command',
-                                        customFunctionName:
+                                        functionName:
                                             'datafactory_integration_runtime_self_hosted_create',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'update',
+                                        methodName: 'update',
                                         type: 'custom_command',
-                                        customFunctionName:
-                                            'datafactory_integration_runtime_update',
+                                        functionName: 'datafactory_integration_runtime_update',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'delete',
+                                        methodName: 'delete',
                                         type: 'custom_command',
-                                        customFunctionName:
-                                            'datafactory_integration_runtime_delete',
+                                        functionName: 'datafactory_integration_runtime_delete',
                                         propertiesString: {
                                             confirmation: 'True',
                                         },
                                     },
                                     {
-                                        name: 'get-connection-info',
+                                        methodName: 'get-connection-info',
                                         type: 'custom_command',
-                                        customFunctionName:
+                                        functionName:
                                             'datafactory_integration_runtime_get_connection_info',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'get-monitoring-data',
+                                        methodName: 'get-monitoring-data',
                                         type: 'custom_command',
-                                        customFunctionName:
+                                        functionName:
                                             'datafactory_integration_runtime_get_monitoring_data',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'get-status',
+                                        methodName: 'get-status',
                                         type: 'custom_command',
-                                        customFunctionName:
-                                            'datafactory_integration_runtime_get_status',
+                                        functionName: 'datafactory_integration_runtime_get_status',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'list-auth-key',
+                                        methodName: 'list-auth-key',
                                         type: 'custom_command',
-                                        customFunctionName:
+                                        functionName:
                                             'datafactory_integration_runtime_list_auth_key',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'regenerate-auth-key',
+                                        methodName: 'regenerate-auth-key',
                                         type: 'custom_command',
-                                        customFunctionName:
+                                        functionName:
                                             'datafactory_integration_runtime_regenerate_auth_key',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'remove-link',
+                                        methodName: 'remove-link',
                                         type: 'custom_command',
-                                        customFunctionName:
-                                            'datafactory_integration_runtime_remove_link',
+                                        functionName: 'datafactory_integration_runtime_remove_link',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'start',
+                                        methodName: 'start',
                                         type: 'custom_command',
-                                        customFunctionName: 'datafactory_integration_runtime_start',
+                                        functionName: 'datafactory_integration_runtime_start',
                                         propertiesString: {
                                             supports_no_wait: 'True',
                                         },
                                     },
                                     {
-                                        name: 'stop',
+                                        methodName: 'stop',
                                         type: 'custom_command',
-                                        customFunctionName: 'datafactory_integration_runtime_stop',
+                                        functionName: 'datafactory_integration_runtime_stop',
                                         propertiesString: {
                                             supports_no_wait: 'True',
                                         },
                                     },
                                     {
-                                        name: 'sync-credentials',
+                                        methodName: 'sync-credentials',
                                         type: 'custom_command',
-                                        customFunctionName:
+                                        functionName:
                                             'datafactory_integration_runtime_sync_credentials',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'upgrade',
+                                        methodName: 'upgrade',
                                         type: 'custom_command',
-                                        customFunctionName:
-                                            'datafactory_integration_runtime_upgrade',
+                                        functionName: 'datafactory_integration_runtime_upgrade',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'wait',
+                                        methodName: 'wait',
                                         type: 'custom_wait_command',
-                                        customFunctionName: 'datafactory_integration_runtime_show',
+                                        functionName: 'datafactory_integration_runtime_show',
                                         propertiesString: {},
                                     },
                                 ],
@@ -239,43 +232,43 @@ export class Process {
                                     'azext_datafactory.vendored_sdks.datafactory.operations._integration_runtime_operations#IntegrationRuntimeOperations.{}',
                                 name: 'datafactory integration-runtime',
                                 propertiesString: {
-                                    is_experimental: 'True',
+                                    mode: 'experimental',
                                 },
                             },
                             {
                                 hasCommand: true,
                                 Commands: [
                                     {
-                                        name: 'list',
+                                        methodName: 'list',
                                         type: 'custom_command',
-                                        customFunctionName: 'datafactory_linked_service_list',
+                                        functionName: 'datafactory_linked_service_list',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'show',
+                                        methodName: 'show',
                                         type: 'custom_show_command',
-                                        customFunctionName: 'datafactory_linked_service_show',
+                                        functionName: 'datafactory_linked_service_show',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'create',
+                                        methodName: 'create',
                                         type: 'custom_command',
-                                        customFunctionName: 'datafactory_linked_service_create',
+                                        functionName: 'datafactory_linked_service_create',
                                         propertiesString: {},
                                     },
                                     {
-                                        name: 'update',
+                                        methodName: 'update',
                                         type: 'generic_update_command',
-                                        customFunctionName: 'datafactory_linked_service_update',
+                                        functionName: 'datafactory_linked_service_update',
                                         propertiesString: {
                                             setter_arg_name: "'properties'",
                                             custom_func_name: "'datafactory_linked_service_update'",
                                         },
                                     },
                                     {
-                                        name: 'delete',
+                                        methodName: 'delete',
                                         type: 'custom_command',
-                                        customFunctionName: 'datafactory_linked_service_delete',
+                                        functionName: 'datafactory_linked_service_delete',
                                         propertiesString: {
                                             confirmation: 'True',
                                         },
@@ -287,14 +280,15 @@ export class Process {
                                     'azext_datafactory.vendored_sdks.datafactory.operations._linked_service_operations#LinkedServiceOperations.{}',
                                 name: 'datafactory linked-service',
                                 propertiesString: {
-                                    is_experimental: 'True',
+                                    mode: 'preview',
                                 },
                             },
                         ],
-                        azextFolder: 'azext_datafactory',
                         nameUnderscore: 'datafactory',
+                        mode: 'experimental',
                     },
                 ],
+                azextFolder: 'azext_datafactory',
             },
         });
         const oriFile = path.join(
