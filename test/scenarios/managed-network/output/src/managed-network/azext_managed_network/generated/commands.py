@@ -7,6 +7,8 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=too-many-statements
+# pylint: disable=too-many-locals
 # pylint: disable=line-too-long
 
 from azure.cli.core.commands import CliCommandType
@@ -59,6 +61,7 @@ def load_command_table(self, _):
             setter_name='begin_create_or_update',
         )
         g.custom_command('delete', 'managed_network_mn_group_delete', supports_no_wait=True, confirmation=True)
+        g.custom_wait_command('wait', 'managed_network_mn_group_show')
 
     from azext_managed_network.generated._client_factory import cf_managed_network_peering_policy
 
@@ -108,6 +111,7 @@ def load_command_table(self, _):
             supports_no_wait=True,
             confirmation=True,
         )
+        g.custom_wait_command('wait', 'managed_network_managed_network_peering_policy_show')
 
     with self.command_group('managed-network', is_preview=True):
         pass

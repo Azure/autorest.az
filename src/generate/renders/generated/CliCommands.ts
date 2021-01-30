@@ -47,8 +47,14 @@ export class CliCommands extends TemplateBase {
         const pythonString = (str) => {
             return "'" + str + "'";
         };
+        const extensionConverter = (item) => {
+            if (!isNullOrUndefined(item['parent']) && !isNullOrUndefined(item['name'])) {
+                item['name'] = item['parent'] + ' ' + item['name'];
+            }
+            return item;
+        };
+
         const commandGroupConverter = (item) => {
-            needWaitCommand = false;
             item['propertiesString'] = {};
             extraProperties.forEach((prop) => {
                 if (!isNullOrUndefined(item[prop])) {
@@ -73,6 +79,9 @@ export class CliCommands extends TemplateBase {
             if (needWaitCommand && showCustomFunctionName != '') {
                 item['needWaitCommand'] = true;
                 item['showCustomFunctionName'] = showCustomFunctionName;
+                needWaitCommand = false;
+            } else if (needWaitCommand) {
+                needWaitCommand = false;
             }
             return item;
         };
@@ -121,9 +130,14 @@ export class CliCommands extends TemplateBase {
         >([
             [
                 'extension',
-                new RenderInput(['name', 'parent', 'mode', 'nameUnderscored'], {
-                    name: SortOrder.ASEC,
-                }),
+                new RenderInput(
+                    ['name', 'parent', 'mode', 'nameUnderscored'],
+                    {
+                        name: SortOrder.ASEC,
+                    },
+                    [],
+                    extensionConverter,
+                ),
             ],
             [
                 'commandGroup',
@@ -173,6 +187,10 @@ export class CliCommands extends TemplateBase {
         if (importProfile) {
             data['imports'].push(['azure.cli.core.profiles', ['ResourceType']]);
         }
+        data['pylints'].push(
+            '# pylint: disable=too-many-statements',
+            '# pylint: disable=too-many-locals',
+        );
         if (lineTooLong) {
             data['pylints'].push('# pylint: disable=line-too-long');
         }

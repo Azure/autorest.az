@@ -8,17 +8,10 @@ import * as assert from 'assert';
 import * as path from 'path';
 import { readFile, rmFile, writeFile } from '@azure-tools/async-io';
 import * as sourceMapSupport from 'source-map-support';
-import {
-    AzConfiguration,
-    CodeGenConstants,
-    CodeModelTypes,
-    ExtensionMode,
-    RenderInput,
-    SortOrder,
-} from '../../src/utils/models';
-import { isNullOrUndefined, ToPythonString, runLintball } from '../../src/utils/helper';
+import { AzConfiguration, CodeGenConstants, ExtensionMode } from '../../src/utils/models';
+import { runLintball } from '../../src/utils/helper';
 import { RenderDataBase } from './render-getRenderDataBase';
-import { SchemaType } from '@azure-tools/codemodel';
+import { CliCommands } from '../../src/generate/renders/generated/CliCommands';
 
 sourceMapSupport.install();
 
@@ -30,127 +23,14 @@ const fileName = 'datafactory-az-modifier-after.yaml';
 export class Process extends RenderDataBase {
     async getCommandsRenderData() {
         await super.init('datafactory', fileName);
-        let data = {};
-
-        const extraProperties = ['maxApi', 'minApi', 'resourceType', 'mode'];
-        const commandGroupConverter = (item) => {
-            item['propertiesString'] = {};
-            extraProperties.forEach((prop) => {
-                if (!isNullOrUndefined(item[prop])) {
-                    if (prop !== 'mode') {
-                        item['propertiesString'][prop] = ToPythonString(
-                            item[prop],
-                            typeof item[prop],
-                        );
-                    } else {
-                        item['propertiesString'][prop] = item[prop];
-                    }
-                }
-            });
-            return item;
-        };
-
-        const commandConverter = (item) => {
-            item['propertiesString'] = {};
-            extraProperties.forEach((prop) => {
-                if (!isNullOrUndefined(item[prop])) {
-                    if (prop !== 'mode') {
-                        item['propertiesString'][prop] = ToPythonString(
-                            item[prop],
-                            typeof item[prop],
-                        );
-                    } else {
-                        item['propertiesString'][prop] = item[prop];
-                    }
-                }
-            });
-            if (item['isLongRun']) {
-                item['propertiesString']['suppose_no_wait'] = 'True';
-            }
-            if (item['methodName'] === 'delete') {
-                item['propertiesString']['confirmation'] = 'True';
-            }
-            if (item['needGeneric'] && !isNullOrUndefined(item['genericSetterArgName'])) {
-                item['propertiesString']['custom_func_name'] = ToPythonString(
-                    item['functionName'],
-                    typeof item['functionName'],
-                );
-                const setterName = item['genericSetterArgName'];
-                if (setterName && setterName !== '' && setterName !== 'parameters') {
-                    item['propertiesString']['setter_arg_name'] = ToPythonString(
-                        setterName,
-                        typeof setterName,
-                    );
-                }
-                if (item['isLongRun'] && !AzConfiguration.getValue(CodeGenConstants.sdkTrack1)) {
-                    item['propertiesString']['setter_name'] = 'begin_create_or_update';
-                }
-            }
-            return item;
-        };
-
-        const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
-            CodeModelTypes,
-            RenderInput
-        >([
-            [
-                'extension',
-                new RenderInput(['name', 'parent', 'mode', 'nameUnderscored'], {
-                    name: SortOrder.ASEC,
-                }),
-            ],
-            [
-                'commandGroup',
-                new RenderInput(
-                    [
-                        'name',
-                        'clientFactoryName',
-                        'customCommandTypeName',
-                        'operationTmplName',
-                        'maxApi',
-                        'minApi',
-                        'resourceType',
-                        'mode',
-                    ],
-                    { name: SortOrder.ASEC },
-                    [],
-                    commandGroupConverter,
-                ),
-            ],
-            [
-                'command',
-                new RenderInput(
-                    [
-                        'methodName',
-                        'type',
-                        'mode',
-                        'maxApi',
-                        'minApi',
-                        'resourceType',
-                        'isLongRun',
-                        'functionName',
-                        'needGeneric',
-                        'genericSetterArgName',
-                    ],
-                    {},
-                    [],
-                    commandConverter,
-                ),
-            ],
-        ]);
-
-        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
-            ['extension', 'commandGroup'],
-            ['commandGroup', 'command'],
-        ];
         AzConfiguration.setValue(CodeGenConstants.extensionMode, ExtensionMode.Experimental);
         AzConfiguration.setValue(CodeGenConstants.azextFolder, 'azext_datafactory_preview');
         AzConfiguration.setValue(
             CodeGenConstants.pythonNamespace,
             'azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory',
         );
-        data = this.model.getModelData('extension', inputProperties, dependencies);
-        data['azextFolder'] = 'azext_datafactory_preview';
+        const cliCommandsRender = new CliCommands(this.model);
+        const data = await cliCommandsRender.GetRenderData();
         return data;
     }
 
@@ -173,18 +53,7 @@ export class Process extends RenderDataBase {
             `${__dirname}`,
             '../../../src/templates/generated/commands.py.njx',
         );
-        const data = {
-            data: {},
-        };
-        data.data = await this.getCommandsRenderData();
-        data.data['imports'] = {
-            'azure.cli.core.commands': ['CliCommandType'],
-        };
-        data.data['pylints'] = [
-            '# pylint: disable=too-many-statements',
-            '# pylint: disable=too-many-locals',
-            '# pylint: disable=line-too-long',
-        ];
+        const data = await this.getCommandsRenderData();
         let result = super.render(tmplPath, data);
         const oriFile = path.join(
             `${__dirname}`,

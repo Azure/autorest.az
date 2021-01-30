@@ -7,6 +7,8 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=too-many-statements
+# pylint: disable=too-many-locals
 # pylint: disable=line-too-long
 
 from azure.cli.core.commands import CliCommandType
@@ -37,6 +39,7 @@ def load_command_table(self, _):
         g.custom_command('remove-language-extension', 'kusto_cluster_remove_language_extension', supports_no_wait=True)
         g.custom_command('start', 'kusto_cluster_start', supports_no_wait=True)
         g.custom_command('stop', 'kusto_cluster_stop', supports_no_wait=True)
+        g.custom_wait_command('wait', 'kusto_cluster_show')
 
     from azext_kusto.generated._client_factory import cf_cluster_principal_assignment
 
@@ -57,6 +60,7 @@ def load_command_table(self, _):
         g.custom_command(
             'delete', 'kusto_cluster_principal_assignment_delete', supports_no_wait=True, confirmation=True
         )
+        g.custom_wait_command('wait', 'kusto_cluster_principal_assignment_show')
 
     from azext_kusto.generated._client_factory import cf_database
 
@@ -73,6 +77,7 @@ def load_command_table(self, _):
         g.custom_command('add-principal', 'kusto_database_add_principal')
         g.custom_command('list-principal', 'kusto_database_list_principal')
         g.custom_command('remove-principal', 'kusto_database_remove_principal')
+        g.custom_wait_command('wait', 'kusto_database_show')
 
     from azext_kusto.generated._client_factory import cf_database_principal_assignment
 
@@ -93,6 +98,7 @@ def load_command_table(self, _):
         g.custom_command(
             'delete', 'kusto_database_principal_assignment_delete', supports_no_wait=True, confirmation=True
         )
+        g.custom_wait_command('wait', 'kusto_database_principal_assignment_show')
 
     from azext_kusto.generated._client_factory import cf_attached_database_configuration
 
@@ -113,6 +119,7 @@ def load_command_table(self, _):
         g.custom_command(
             'delete', 'kusto_attached_database_configuration_delete', supports_no_wait=True, confirmation=True
         )
+        g.custom_wait_command('wait', 'kusto_attached_database_configuration_show')
 
     from azext_kusto.generated._client_factory import cf_data_connection
 
@@ -147,6 +154,7 @@ def load_command_table(self, _):
             'kusto_data_connection_iot_hub_data_connection_validation',
             supports_no_wait=True,
         )
+        g.custom_wait_command('wait', 'kusto_data_connection_show')
 
     with self.command_group('kusto'):
         pass
