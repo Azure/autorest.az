@@ -62,8 +62,8 @@ def load_command_table(self, _):
         g.custom_wait_command('wait', '{{commandGroup.showCustomFunctionName}}')
         {%- endif %}
 {%- endfor %}
-{% if not extensionModeDefined %}
-    with self.command_group('{{extension.name}}'{% if extension.mode != 'stable' %}, is_{{extension.mode}}=True{% endif %}):
+{% if not extensionModeDefined and extension.mode != 'stable' %}
+    with self.command_group('{{extension.name}}', is_{{extension.mode}}=True):
         pass
 {% endif %}
 {%- endfor %}
