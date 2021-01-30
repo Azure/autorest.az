@@ -40,14 +40,14 @@ def load_command_table(self, _):
         g.custom_command('list', 'datafactory_trigger_list')
         g.custom_show_command('show', 'datafactory_trigger_show')
         g.custom_command('create', 'datafactory_trigger_create')
-        g.generic_update_command('update', custom_func_name="datafactory_trigger_update", setter_arg_name="trigger")
+        g.generic_update_command('update', custom_func_name='datafactory_trigger_update', setter_arg_name='trigger')
         g.custom_command('delete', 'datafactory_trigger_delete', confirmation=True)
         g.custom_command('get-event-subscription-status', 'datafactory_trigger_get_event_subscription_status')
         g.custom_command('query-by-factory', 'datafactory_trigger_query_by_factory')
-        g.custom_command('start', 'datafactory_trigger_start', suppose_no_wait=True)
-        g.custom_command('stop', 'datafactory_trigger_stop', suppose_no_wait=True)
-        g.custom_command('subscribe-to-event', 'datafactory_trigger_subscribe_to_event', suppose_no_wait=True)
-        g.custom_command('unsubscribe-from-event', 'datafactory_trigger_unsubscribe_from_event', suppose_no_wait=True)
+        g.custom_command('start', 'datafactory_trigger_start', supports_no_wait=True)
+        g.custom_command('stop', 'datafactory_trigger_stop', supports_no_wait=True)
+        g.custom_command('subscribe-to-event', 'datafactory_trigger_subscribe_to_event', supports_no_wait=True)
+        g.custom_command('unsubscribe-from-event', 'datafactory_trigger_unsubscribe_from_event', supports_no_wait=True)
 
     from azext_datafactory_preview.generated._client_factory import cf_integration_runtime
 
@@ -71,8 +71,8 @@ def load_command_table(self, _):
         g.custom_command('list-auth-key', 'datafactory_integration_runtime_list_auth_key')
         g.custom_command('regenerate-auth-key', 'datafactory_integration_runtime_regenerate_auth_key')
         g.custom_command('remove-link', 'datafactory_integration_runtime_remove_link')
-        g.custom_command('start', 'datafactory_integration_runtime_start', suppose_no_wait=True)
-        g.custom_command('stop', 'datafactory_integration_runtime_stop', suppose_no_wait=True)
+        g.custom_command('start', 'datafactory_integration_runtime_start', supports_no_wait=True)
+        g.custom_command('stop', 'datafactory_integration_runtime_stop', supports_no_wait=True)
         g.custom_command('sync-credentials', 'datafactory_integration_runtime_sync_credentials')
         g.custom_command('upgrade', 'datafactory_integration_runtime_upgrade')
 
@@ -83,8 +83,8 @@ def load_command_table(self, _):
         client_factory=cf_domain_service,
     )
     with self.command_group('datafactory domain-service', datafactory_domain_service) as g:
-        g.custom_command('create', 'datafactory_domain_service_create', suppose_no_wait=True)
-        g.custom_command('update', 'datafactory_domain_service_update', suppose_no_wait=True)
+        g.custom_command('create', 'datafactory_domain_service_create', supports_no_wait=True)
+        g.custom_command('update', 'datafactory_domain_service_update', supports_no_wait=True)
 
     from azext_datafactory_preview.generated._client_factory import cf_group
 

@@ -25,9 +25,9 @@ def load_command_table(self, _):
     with self.command_group('synapse big-data-pool', synapse_big_data_pool) as g:
         g.custom_command('list', 'synapse_big_data_pool_list')
         g.custom_show_command('show', 'synapse_big_data_pool_show')
-        g.custom_command('create', 'synapse_big_data_pool_create', suppose_no_wait=True)
+        g.custom_command('create', 'synapse_big_data_pool_create', supports_no_wait=True)
         g.custom_command('update', 'synapse_big_data_pool_update')
-        g.custom_command('delete', 'synapse_big_data_pool_delete', suppose_no_wait=True, confirmation=True)
+        g.custom_command('delete', 'synapse_big_data_pool_delete', supports_no_wait=True, confirmation=True)
 
     from azext_synapse.generated._client_factory import cf_operation
 
@@ -50,16 +50,16 @@ def load_command_table(self, _):
     with self.command_group('synapse ip-firewall-rule', synapse_ip_firewall_rule) as g:
         g.custom_command('list', 'synapse_ip_firewall_rule_list')
         g.custom_show_command('show', 'synapse_ip_firewall_rule_show')
-        g.custom_command('create', 'synapse_ip_firewall_rule_create', suppose_no_wait=True)
+        g.custom_command('create', 'synapse_ip_firewall_rule_create', supports_no_wait=True)
         g.generic_update_command(
             'update',
-            suppose_no_wait=True,
-            custom_func_name="synapse_ip_firewall_rule_update",
-            setter_arg_name="ip_firewall_rule_info",
+            supports_no_wait=True,
+            custom_func_name='synapse_ip_firewall_rule_update',
+            setter_arg_name='ip_firewall_rule_info',
             setter_name='begin_create_or_update',
         )
-        g.custom_command('delete', 'synapse_ip_firewall_rule_delete', suppose_no_wait=True, confirmation=True)
-        g.custom_command('replace-all', 'synapse_ip_firewall_rule_replace_all', suppose_no_wait=True)
+        g.custom_command('delete', 'synapse_ip_firewall_rule_delete', supports_no_wait=True, confirmation=True)
+        g.custom_command('replace-all', 'synapse_ip_firewall_rule_replace_all', supports_no_wait=True)
 
     from azext_synapse.generated._client_factory import cf_sqlpool
 
@@ -70,12 +70,12 @@ def load_command_table(self, _):
     with self.command_group('synapse sql-pool', synapse_sqlpool) as g:
         g.custom_command('list', 'synapse_sql_pool_list')
         g.custom_show_command('show', 'synapse_sql_pool_show')
-        g.custom_command('create', 'synapse_sql_pool_create', suppose_no_wait=True)
+        g.custom_command('create', 'synapse_sql_pool_create', supports_no_wait=True)
         g.custom_command('update', 'synapse_sql_pool_update')
-        g.custom_command('delete', 'synapse_sql_pool_delete', suppose_no_wait=True, confirmation=True)
-        g.custom_command('pause', 'synapse_sql_pool_pause', suppose_no_wait=True)
+        g.custom_command('delete', 'synapse_sql_pool_delete', supports_no_wait=True, confirmation=True)
+        g.custom_command('pause', 'synapse_sql_pool_pause', supports_no_wait=True)
         g.custom_command('rename', 'synapse_sql_pool_rename')
-        g.custom_command('resume', 'synapse_sql_pool_resume', suppose_no_wait=True)
+        g.custom_command('resume', 'synapse_sql_pool_resume', supports_no_wait=True)
 
     from azext_synapse.generated._client_factory import cf_sqlpool_metadata_sync_config
 
@@ -124,7 +124,7 @@ def load_command_table(self, _):
     )
     with self.command_group('synapse sql-pool-restore-point', synapse_sqlpool_restore_point) as g:
         g.custom_command('list', 'synapse_sql_pool_restore_point_list')
-        g.custom_command('create', 'synapse_sql_pool_restore_point_create', suppose_no_wait=True)
+        g.custom_command('create', 'synapse_sql_pool_restore_point_create', supports_no_wait=True)
 
     from azext_synapse.generated._client_factory import cf_sqlpool_replication_link
 
@@ -146,7 +146,7 @@ def load_command_table(self, _):
     ) as g:
         g.custom_show_command('show', 'synapse_sql_pool_transparent_data_encryption_show')
         g.custom_command('create', 'synapse_sql_pool_transparent_data_encryption_create')
-        g.generic_update_command('update', custom_func_name="synapse_sql_pool_transparent_data_encryption_update")
+        g.generic_update_command('update', custom_func_name='synapse_sql_pool_transparent_data_encryption_update')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_blob_auditing_policy
 
@@ -157,7 +157,7 @@ def load_command_table(self, _):
     with self.command_group('synapse sql-pool-blob-auditing-policy', synapse_sqlpool_blob_auditing_policy) as g:
         g.custom_show_command('show', 'synapse_sql_pool_blob_auditing_policy_show')
         g.custom_command('create', 'synapse_sql_pool_blob_auditing_policy_create')
-        g.generic_update_command('update', custom_func_name="synapse_sql_pool_blob_auditing_policy_update")
+        g.generic_update_command('update', custom_func_name='synapse_sql_pool_blob_auditing_policy_update')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_operation
 
@@ -244,7 +244,7 @@ def load_command_table(self, _):
         g.custom_command('list', 'synapse_sql_pool_vulnerability_assessment_list')
         g.custom_show_command('show', 'synapse_sql_pool_vulnerability_assessment_show')
         g.custom_command('create', 'synapse_sql_pool_vulnerability_assessment_create')
-        g.generic_update_command('update', custom_func_name="synapse_sql_pool_vulnerability_assessment_update")
+        g.generic_update_command('update', custom_func_name='synapse_sql_pool_vulnerability_assessment_update')
         g.custom_command('delete', 'synapse_sql_pool_vulnerability_assessment_delete', confirmation=True)
 
     from azext_synapse.generated._client_factory import cf_sqlpool_vulnerability_assessment_scan
@@ -259,7 +259,7 @@ def load_command_table(self, _):
         g.custom_command('list', 'synapse_sql_pool_vulnerability_assessment_scan_list')
         g.custom_command('export', 'synapse_sql_pool_vulnerability_assessment_scan_export')
         g.custom_command(
-            'initiate-scan', 'synapse_sql_pool_vulnerability_assessment_scan_initiate_scan', suppose_no_wait=True
+            'initiate-scan', 'synapse_sql_pool_vulnerability_assessment_scan_initiate_scan', supports_no_wait=True
         )
 
     from azext_synapse.generated._client_factory import cf_sqlpool_security_alert_policy
@@ -271,7 +271,7 @@ def load_command_table(self, _):
     with self.command_group('synapse sql-pool-security-alert-policy', synapse_sqlpool_security_alert_policy) as g:
         g.custom_show_command('show', 'synapse_sql_pool_security_alert_policy_show')
         g.custom_command('create', 'synapse_sql_pool_security_alert_policy_create')
-        g.generic_update_command('update', custom_func_name="synapse_sql_pool_security_alert_policy_update")
+        g.generic_update_command('update', custom_func_name='synapse_sql_pool_security_alert_policy_update')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_vulnerability_assessment_rule_baseline
 
@@ -296,9 +296,9 @@ def load_command_table(self, _):
     with self.command_group('synapse workspace', synapse_workspace) as g:
         g.custom_command('list', 'synapse_workspace_list')
         g.custom_show_command('show', 'synapse_workspace_show')
-        g.custom_command('create', 'synapse_workspace_create', suppose_no_wait=True)
-        g.custom_command('update', 'synapse_workspace_update', suppose_no_wait=True)
-        g.custom_command('delete', 'synapse_workspace_delete', suppose_no_wait=True, confirmation=True)
+        g.custom_command('create', 'synapse_workspace_create', supports_no_wait=True)
+        g.custom_command('update', 'synapse_workspace_update', supports_no_wait=True)
+        g.custom_command('delete', 'synapse_workspace_delete', supports_no_wait=True, confirmation=True)
 
     from azext_synapse.generated._client_factory import cf_workspace_aadadmin
 
@@ -308,15 +308,15 @@ def load_command_table(self, _):
     )
     with self.command_group('synapse workspace-aad-admin', synapse_workspace_aadadmin) as g:
         g.custom_show_command('show', 'synapse_workspace_aad_admin_show')
-        g.custom_command('create', 'synapse_workspace_aad_admin_create', suppose_no_wait=True)
+        g.custom_command('create', 'synapse_workspace_aad_admin_create', supports_no_wait=True)
         g.generic_update_command(
             'update',
-            suppose_no_wait=True,
-            custom_func_name="synapse_workspace_aad_admin_update",
-            setter_arg_name="aad_admin_info",
+            supports_no_wait=True,
+            custom_func_name='synapse_workspace_aad_admin_update',
+            setter_arg_name='aad_admin_info',
             setter_name='begin_create_or_update',
         )
-        g.custom_command('delete', 'synapse_workspace_aad_admin_delete', suppose_no_wait=True, confirmation=True)
+        g.custom_command('delete', 'synapse_workspace_aad_admin_delete', supports_no_wait=True, confirmation=True)
 
     from azext_synapse.generated._client_factory import cf_workspace_managed_identity_sqlcontrol_setting
 
@@ -331,8 +331,8 @@ def load_command_table(self, _):
         g.custom_command('create', 'synapse_workspace_managed_identity_sql_control_setting_create')
         g.generic_update_command(
             'update',
-            custom_func_name="synapse_workspace_managed_identity_sql_control_setting_update",
-            setter_arg_name="managed_identity_sql_control_settings",
+            custom_func_name='synapse_workspace_managed_identity_sql_control_setting_update',
+            setter_arg_name='managed_identity_sql_control_settings',
         )
 
     from azext_synapse.generated._client_factory import cf_integration_runtime
@@ -344,9 +344,9 @@ def load_command_table(self, _):
     with self.command_group('synapse integration-runtime', synapse_integration_runtime) as g:
         g.custom_command('list', 'synapse_integration_runtime_list')
         g.custom_show_command('show', 'synapse_integration_runtime_show')
-        g.custom_command('create', 'synapse_integration_runtime_create', suppose_no_wait=True)
+        g.custom_command('create', 'synapse_integration_runtime_create', supports_no_wait=True)
         g.custom_command('update', 'synapse_integration_runtime_update')
-        g.custom_command('delete', 'synapse_integration_runtime_delete', suppose_no_wait=True, confirmation=True)
+        g.custom_command('delete', 'synapse_integration_runtime_delete', supports_no_wait=True, confirmation=True)
         g.custom_command('start', 'synapse_integration_runtime_start')
         g.custom_command('stop', 'synapse_integration_runtime_stop')
         g.custom_command('upgrade', 'synapse_integration_runtime_upgrade')
@@ -454,9 +454,9 @@ def load_command_table(self, _):
     with self.command_group('synapse private-endpoint-connection', synapse_private_endpoint_connection) as g:
         g.custom_command('list', 'synapse_private_endpoint_connection_list')
         g.custom_show_command('show', 'synapse_private_endpoint_connection_show')
-        g.custom_command('create', 'synapse_private_endpoint_connection_create', suppose_no_wait=True)
+        g.custom_command('create', 'synapse_private_endpoint_connection_create', supports_no_wait=True)
         g.custom_command(
-            'delete', 'synapse_private_endpoint_connection_delete', suppose_no_wait=True, confirmation=True
+            'delete', 'synapse_private_endpoint_connection_delete', supports_no_wait=True, confirmation=True
         )
 
     from azext_synapse.generated._client_factory import cf_private_link_hub

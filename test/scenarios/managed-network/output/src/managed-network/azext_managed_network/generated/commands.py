@@ -24,8 +24,8 @@ def load_command_table(self, _):
     with self.command_group('managed-network mn', managed_network_managed_network, is_experimental=True) as g:
         g.custom_command('list', 'managed_network_mn_list')
         g.custom_command('create', 'managed_network_mn_create')
-        g.custom_command('update', 'managed_network_mn_update', suppose_no_wait=True)
-        g.custom_command('delete', 'managed_network_mn_delete', suppose_no_wait=True, confirmation=True)
+        g.custom_command('update', 'managed_network_mn_update', supports_no_wait=True)
+        g.custom_command('delete', 'managed_network_mn_delete', supports_no_wait=True, confirmation=True)
         g.custom_command('show-modify', 'managed_network_mn_show_modify')
 
     from azext_managed_network.generated._client_factory import cf_scope_assignment
@@ -38,7 +38,7 @@ def load_command_table(self, _):
         g.custom_command('list', 'managed_network_mn_scope_assignment_list')
         g.custom_show_command('show', 'managed_network_mn_scope_assignment_show')
         g.custom_command('create', 'managed_network_mn_scope_assignment_create')
-        g.generic_update_command('update', custom_func_name="managed_network_mn_scope_assignment_update")
+        g.generic_update_command('update', custom_func_name='managed_network_mn_scope_assignment_update')
         g.custom_command('delete', 'managed_network_mn_scope_assignment_delete', confirmation=True)
 
     from azext_managed_network.generated._client_factory import cf_managed_network_group
@@ -50,15 +50,15 @@ def load_command_table(self, _):
     with self.command_group('managed-network mn group', managed_network_managed_network_group) as g:
         g.custom_command('list', 'managed_network_mn_group_list')
         g.custom_show_command('show', 'managed_network_mn_group_show')
-        g.custom_command('create', 'managed_network_mn_group_create', suppose_no_wait=True)
+        g.custom_command('create', 'managed_network_mn_group_create', supports_no_wait=True)
         g.generic_update_command(
             'update',
-            suppose_no_wait=True,
-            custom_func_name="managed_network_mn_group_update",
-            setter_arg_name="managed_network_group",
+            supports_no_wait=True,
+            custom_func_name='managed_network_mn_group_update',
+            setter_arg_name='managed_network_group',
             setter_name='begin_create_or_update',
         )
-        g.custom_command('delete', 'managed_network_mn_group_delete', suppose_no_wait=True, confirmation=True)
+        g.custom_command('delete', 'managed_network_mn_group_delete', supports_no_wait=True, confirmation=True)
 
     from azext_managed_network.generated._client_factory import cf_managed_network_peering_policy
 
@@ -69,8 +69,8 @@ def load_command_table(self, _):
     with self.command_group(
         'managed-network managed-network-peering-policy',
         managed_network_managed_network_peering_policy,
-        maxApi="2020-07-01-preview",
-        minApi="2019-07-01",
+        maxApi='2020-07-01-preview',
+        minApi='2019-07-01',
         resourceType=ResourceType.DATA_STORAGE_BLOB,
     ) as g:
         g.custom_command('list', 'managed_network_managed_network_peering_policy_list')
@@ -78,34 +78,34 @@ def load_command_table(self, _):
         g.custom_command(
             'hub-and-spoke-topology create',
             'managed_network_managed_network_peering_policy_hub_and_spoke_topology_create',
-            suppose_no_wait=True,
+            supports_no_wait=True,
         )
         g.custom_command(
             'mesh-topology create',
             'managed_network_managed_network_peering_policy_mesh_topology_create',
-            suppose_no_wait=True,
+            supports_no_wait=True,
         )
         g.generic_update_command(
             'hub-and-spoke-topology update',
-            suppose_no_wait=True,
-            custom_func_name="managed_network_managed_network_peering_policy_hub_and_spoke_topology_update",
-            setter_arg_name="managed_network_policy",
+            supports_no_wait=True,
+            custom_func_name='managed_network_managed_network_peering_policy_hub_and_spoke_topology_update',
+            setter_arg_name='managed_network_policy',
             setter_name='begin_create_or_update',
         )
         g.generic_update_command(
             'mesh-topology update',
-            suppose_no_wait=True,
-            custom_func_name="managed_network_managed_network_peering_policy_mesh_topology_update",
-            setter_arg_name="managed_network_policy",
+            supports_no_wait=True,
+            custom_func_name='managed_network_managed_network_peering_policy_mesh_topology_update',
+            setter_arg_name='managed_network_policy',
             setter_name='begin_create_or_update',
         )
         g.custom_command(
             'delete',
             'managed_network_managed_network_peering_policy_delete',
-            maxApi="2020-09-01",
-            minApi="2019-09-01",
+            maxApi='2020-09-01',
+            minApi='2019-09-01',
             resourceType=ResourceType.DATA_COMPUTE,
-            suppose_no_wait=True,
+            supports_no_wait=True,
             confirmation=True,
         )
 
