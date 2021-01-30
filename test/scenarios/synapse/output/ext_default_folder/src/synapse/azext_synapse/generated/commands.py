@@ -7,6 +7,8 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=too-many-statements
+# pylint: disable=too-many-locals
 # pylint: disable=line-too-long
 
 from azure.cli.core.commands import CliCommandType
@@ -28,6 +30,7 @@ def load_command_table(self, _):
         g.custom_command('create', 'synapse_big_data_pool_create', supports_no_wait=True)
         g.custom_command('update', 'synapse_big_data_pool_update')
         g.custom_command('delete', 'synapse_big_data_pool_delete', supports_no_wait=True, confirmation=True)
+        g.custom_wait_command('wait', 'synapse_big_data_pool_show')
 
     from azext_synapse.generated._client_factory import cf_operation
 
@@ -60,6 +63,7 @@ def load_command_table(self, _):
         )
         g.custom_command('delete', 'synapse_ip_firewall_rule_delete', supports_no_wait=True, confirmation=True)
         g.custom_command('replace-all', 'synapse_ip_firewall_rule_replace_all', supports_no_wait=True)
+        g.custom_wait_command('wait', 'synapse_ip_firewall_rule_show')
 
     from azext_synapse.generated._client_factory import cf_sqlpool
 
@@ -76,6 +80,7 @@ def load_command_table(self, _):
         g.custom_command('pause', 'synapse_sql_pool_pause', supports_no_wait=True)
         g.custom_command('rename', 'synapse_sql_pool_rename')
         g.custom_command('resume', 'synapse_sql_pool_resume', supports_no_wait=True)
+        g.custom_wait_command('wait', 'synapse_sql_pool_show')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_metadata_sync_config
 
@@ -125,6 +130,7 @@ def load_command_table(self, _):
     with self.command_group('synapse sql-pool-restore-point', synapse_sqlpool_restore_point) as g:
         g.custom_command('list', 'synapse_sql_pool_restore_point_list')
         g.custom_command('create', 'synapse_sql_pool_restore_point_create', supports_no_wait=True)
+        g.custom_wait_command('wait', 'synapse_sql_pool_data_warehouse_user_activity_show')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_replication_link
 
@@ -261,6 +267,7 @@ def load_command_table(self, _):
         g.custom_command(
             'initiate-scan', 'synapse_sql_pool_vulnerability_assessment_scan_initiate_scan', supports_no_wait=True
         )
+        g.custom_wait_command('wait', 'synapse_sql_pool_vulnerability_assessment_show')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_security_alert_policy
 
@@ -299,6 +306,7 @@ def load_command_table(self, _):
         g.custom_command('create', 'synapse_workspace_create', supports_no_wait=True)
         g.custom_command('update', 'synapse_workspace_update', supports_no_wait=True)
         g.custom_command('delete', 'synapse_workspace_delete', supports_no_wait=True, confirmation=True)
+        g.custom_wait_command('wait', 'synapse_workspace_show')
 
     from azext_synapse.generated._client_factory import cf_workspace_aadadmin
 
@@ -317,6 +325,7 @@ def load_command_table(self, _):
             setter_name='begin_create_or_update',
         )
         g.custom_command('delete', 'synapse_workspace_aad_admin_delete', supports_no_wait=True, confirmation=True)
+        g.custom_wait_command('wait', 'synapse_workspace_aad_admin_show')
 
     from azext_synapse.generated._client_factory import cf_workspace_managed_identity_sqlcontrol_setting
 
@@ -350,6 +359,7 @@ def load_command_table(self, _):
         g.custom_command('start', 'synapse_integration_runtime_start')
         g.custom_command('stop', 'synapse_integration_runtime_stop')
         g.custom_command('upgrade', 'synapse_integration_runtime_upgrade')
+        g.custom_wait_command('wait', 'synapse_integration_runtime_show')
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_node_ip_address
 
@@ -458,6 +468,7 @@ def load_command_table(self, _):
         g.custom_command(
             'delete', 'synapse_private_endpoint_connection_delete', supports_no_wait=True, confirmation=True
         )
+        g.custom_wait_command('wait', 'synapse_private_endpoint_connection_show')
 
     from azext_synapse.generated._client_factory import cf_private_link_hub
 

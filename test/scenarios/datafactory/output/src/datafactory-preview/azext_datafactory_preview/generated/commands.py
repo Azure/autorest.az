@@ -7,6 +7,8 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=too-many-statements
+# pylint: disable=too-many-locals
 # pylint: disable=line-too-long
 
 from azure.cli.core.commands import CliCommandType
@@ -48,6 +50,7 @@ def load_command_table(self, _):
         g.custom_command('stop', 'datafactory_trigger_stop', supports_no_wait=True)
         g.custom_command('subscribe-to-event', 'datafactory_trigger_subscribe_to_event', supports_no_wait=True)
         g.custom_command('unsubscribe-from-event', 'datafactory_trigger_unsubscribe_from_event', supports_no_wait=True)
+        g.custom_wait_command('wait', 'datafactory_trigger_show')
 
     from azext_datafactory_preview.generated._client_factory import cf_integration_runtime
 
@@ -75,6 +78,7 @@ def load_command_table(self, _):
         g.custom_command('stop', 'datafactory_integration_runtime_stop', supports_no_wait=True)
         g.custom_command('sync-credentials', 'datafactory_integration_runtime_sync_credentials')
         g.custom_command('upgrade', 'datafactory_integration_runtime_upgrade')
+        g.custom_wait_command('wait', 'datafactory_integration_runtime_show')
 
     from azext_datafactory_preview.generated._client_factory import cf_domain_service
 
@@ -85,6 +89,7 @@ def load_command_table(self, _):
     with self.command_group('datafactory domain-service', datafactory_domain_service) as g:
         g.custom_command('create', 'datafactory_domain_service_create', supports_no_wait=True)
         g.custom_command('update', 'datafactory_domain_service_update', supports_no_wait=True)
+        g.custom_wait_command('wait', 'datafactory_integration_runtime_show')
 
     from azext_datafactory_preview.generated._client_factory import cf_group
 
