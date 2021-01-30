@@ -160,6 +160,9 @@ function processFolderPath() {
             'azext_' + extensionName.replace(/-/g, '_'),
         );
     }
+    if (AzConfiguration.getValue(CodeGenConstants.isCliCore)) {
+        AzConfiguration.setValue(CodeGenConstants.azextFolder, '.');
+    }
     if (
         !AzConfiguration.getValue(CodeGenConstants.sdkNeeded) &&
         !isNullOrUndefined(options[CodeGenConstants.namespace])

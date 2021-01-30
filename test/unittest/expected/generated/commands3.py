@@ -87,9 +87,8 @@ def load_command_table(self, _):
         client_factory=cf_domain_service,
     )
     with self.command_group('datafactory domain-service', datafactory_domain_service) as g:
-        g.custom_command('create', 'datafactory_domain_service_create', supports_no_wait=True)
-        g.custom_command('update', 'datafactory_domain_service_update', supports_no_wait=True)
-        g.custom_wait_command('wait', 'datafactory_integration_runtime_show')
+        g.custom_command('create', 'datafactory_domain_service_create')
+        g.custom_command('update', 'datafactory_domain_service_update')
 
     from azext_datafactory_preview.generated._client_factory import cf_group
 

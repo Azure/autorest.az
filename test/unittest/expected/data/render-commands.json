@@ -489,8 +489,7 @@
                                 "functionName": "datafactory_domain_service_create",
                                 "needGeneric": false,
                                 "propertiesString": {
-                                    "mode": "experimental",
-                                    "supports_no_wait": "True"
+                                    "mode": "experimental"
                                 }
                             },
                             {
@@ -501,16 +500,13 @@
                                 "functionName": "datafactory_domain_service_update",
                                 "needGeneric": false,
                                 "propertiesString": {
-                                    "mode": "experimental",
-                                    "supports_no_wait": "True"
+                                    "mode": "experimental"
                                 }
                             }
                         ],
                         "propertiesString": {
                             "mode": "experimental"
-                        },
-                        "needWaitCommand": true,
-                        "showCustomFunctionName": "datafactory_integration_runtime_show"
+                        }
                     },
                     {
                         "name": "datafactory group",
