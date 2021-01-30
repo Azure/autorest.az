@@ -2,7 +2,7 @@
     "check_args": {
       "autoflake": "--check --expand-star-imports --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables",
       "autopep8": "--global-config '.pyproject.toml' --diff",
-      "black": "--check --line-length=120 --experimental-string-processing",
+      "black": "--check --line-length=120 --experimental-string-processing --skip-string-normalization",
       "clippy": "-- -D clippy::all",
       "docformatter": "--check",
       "isort": "--settings-path './.pyproject.toml' --check-only",
@@ -13,7 +13,7 @@
     "write_args": {
       "autoflake": "--in-place --expand-star-imports --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables",
       "autopep8": "--global-config '.pyproject.toml' --in-place",
-      "black": "--line-length=120 --experimental-string-processing",
+      "black": "--line-length=120 --experimental-string-processing --skip-string-normalization",
       "clippy": "--allow-no-vcs --fix -Z unstable-options -- -D clippy::all",
       "docformatter": "--in-place",
       "isort": "--settings-path '.pyproject.toml'",

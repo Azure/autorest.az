@@ -17,313 +17,313 @@ def load_command_table(self, _):
     from azext_synapse.generated._client_factory import cf_big_data_pool
 
     synapse_big_data_pool = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._big_data_pools_operations#BigDataPoolsOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._big_data_pools_operations#BigDataPoolsOperations.{}',
         client_factory=cf_big_data_pool,
     )
-    with self.command_group("synapse big-data-pool", synapse_big_data_pool) as g:
-        g.custom_command("list", "synapse_big_data_pool_list")
-        g.custom_show_command("show", "synapse_big_data_pool_show")
-        g.custom_command("create", "synapse_big_data_pool_create", suppose_no_wait=True)
-        g.custom_command("update", "synapse_big_data_pool_update")
-        g.custom_command("delete", "synapse_big_data_pool_delete", suppose_no_wait=True, confirmation=True)
+    with self.command_group('synapse big-data-pool', synapse_big_data_pool) as g:
+        g.custom_command('list', 'synapse_big_data_pool_list')
+        g.custom_show_command('show', 'synapse_big_data_pool_show')
+        g.custom_command('create', 'synapse_big_data_pool_create', suppose_no_wait=True)
+        g.custom_command('update', 'synapse_big_data_pool_update')
+        g.custom_command('delete', 'synapse_big_data_pool_delete', suppose_no_wait=True, confirmation=True)
 
     from azext_synapse.generated._client_factory import cf_operation
 
     synapse_operation = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._operations_operations#Operations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._operations_operations#Operations.{}',
         client_factory=cf_operation,
     )
-    with self.command_group("synapse operation", synapse_operation) as g:
-        g.custom_command("show-azure-async-header-result", "synapse_operation_show_azure_async_header_result")
-        g.custom_command("show-location-header-result", "synapse_operation_show_location_header_result")
+    with self.command_group('synapse operation', synapse_operation) as g:
+        g.custom_command('show-azure-async-header-result', 'synapse_operation_show_azure_async_header_result')
+        g.custom_command('show-location-header-result', 'synapse_operation_show_location_header_result')
 
     from azext_synapse.generated._client_factory import cf_ip_firewall_rule
 
     synapse_ip_firewall_rule = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._ip_firewall_rules_operations#IpFirewallRulesOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._ip_firewall_rules_operations#IpFirewallRulesOperations.{}',
         client_factory=cf_ip_firewall_rule,
     )
-    with self.command_group("synapse ip-firewall-rule", synapse_ip_firewall_rule) as g:
-        g.custom_command("list", "synapse_ip_firewall_rule_list")
-        g.custom_show_command("show", "synapse_ip_firewall_rule_show")
-        g.custom_command("create", "synapse_ip_firewall_rule_create", suppose_no_wait=True)
-        g.custom_command("update", "synapse_ip_firewall_rule_update", suppose_no_wait=True)
-        g.custom_command("delete", "synapse_ip_firewall_rule_delete", suppose_no_wait=True, confirmation=True)
-        g.custom_command("replace-all", "synapse_ip_firewall_rule_replace_all", suppose_no_wait=True)
+    with self.command_group('synapse ip-firewall-rule', synapse_ip_firewall_rule) as g:
+        g.custom_command('list', 'synapse_ip_firewall_rule_list')
+        g.custom_show_command('show', 'synapse_ip_firewall_rule_show')
+        g.custom_command('create', 'synapse_ip_firewall_rule_create', suppose_no_wait=True)
+        g.custom_command('update', 'synapse_ip_firewall_rule_update', suppose_no_wait=True)
+        g.custom_command('delete', 'synapse_ip_firewall_rule_delete', suppose_no_wait=True, confirmation=True)
+        g.custom_command('replace-all', 'synapse_ip_firewall_rule_replace_all', suppose_no_wait=True)
 
     from azext_synapse.generated._client_factory import cf_sqlpool
 
     synapse_sqlpool = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pools_operations#SqlPoolsOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pools_operations#SqlPoolsOperations.{}',
         client_factory=cf_sqlpool,
     )
-    with self.command_group("synapse sql-pool", synapse_sqlpool) as g:
-        g.custom_command("list", "synapse_sql_pool_list")
-        g.custom_show_command("show", "synapse_sql_pool_show")
-        g.custom_command("create", "synapse_sql_pool_create", suppose_no_wait=True)
-        g.custom_command("update", "synapse_sql_pool_update")
-        g.custom_command("delete", "synapse_sql_pool_delete", suppose_no_wait=True, confirmation=True)
-        g.custom_command("pause", "synapse_sql_pool_pause", suppose_no_wait=True)
-        g.custom_command("rename", "synapse_sql_pool_rename")
-        g.custom_command("resume", "synapse_sql_pool_resume", suppose_no_wait=True)
+    with self.command_group('synapse sql-pool', synapse_sqlpool) as g:
+        g.custom_command('list', 'synapse_sql_pool_list')
+        g.custom_show_command('show', 'synapse_sql_pool_show')
+        g.custom_command('create', 'synapse_sql_pool_create', suppose_no_wait=True)
+        g.custom_command('update', 'synapse_sql_pool_update')
+        g.custom_command('delete', 'synapse_sql_pool_delete', suppose_no_wait=True, confirmation=True)
+        g.custom_command('pause', 'synapse_sql_pool_pause', suppose_no_wait=True)
+        g.custom_command('rename', 'synapse_sql_pool_rename')
+        g.custom_command('resume', 'synapse_sql_pool_resume', suppose_no_wait=True)
 
     from azext_synapse.generated._client_factory import cf_sqlpool_metadata_sync_config
 
     synapse_sqlpool_metadata_sync_config = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_metadata_sync_configs_operations#SqlPoolMetadataSyncConfigsOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_metadata_sync_configs_operations#SqlPoolMetadataSyncConfigsOperations.{}',
         client_factory=cf_sqlpool_metadata_sync_config,
     )
-    with self.command_group("synapse sql-pool-metadata-sync-config", synapse_sqlpool_metadata_sync_config) as g:
-        g.custom_show_command("show", "synapse_sql_pool_metadata_sync_config_show")
-        g.custom_command("create", "synapse_sql_pool_metadata_sync_config_create")
+    with self.command_group('synapse sql-pool-metadata-sync-config', synapse_sqlpool_metadata_sync_config) as g:
+        g.custom_show_command('show', 'synapse_sql_pool_metadata_sync_config_show')
+        g.custom_command('create', 'synapse_sql_pool_metadata_sync_config_create')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_operation_result
 
     synapse_sqlpool_operation_result = CliCommandType(
         operations_tmpl=(
-            "azure.mgmt.synapse.operations._sql_pool_operation_results_operations#SqlPoolOperationResultsOperations.{}"
+            'azure.mgmt.synapse.operations._sql_pool_operation_results_operations#SqlPoolOperationResultsOperations.{}'
         ),
         client_factory=cf_sqlpool_operation_result,
     )
-    with self.command_group("synapse sql-pool-operation-result", synapse_sqlpool_operation_result) as g:
-        g.custom_command("show-location-header-result", "synapse_sql_pool_operation_result_show_location_header_result")
+    with self.command_group('synapse sql-pool-operation-result', synapse_sqlpool_operation_result) as g:
+        g.custom_command('show-location-header-result', 'synapse_sql_pool_operation_result_show_location_header_result')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_geo_backup_policy
 
     synapse_sqlpool_geo_backup_policy = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_geo_backup_policies_operations#SqlPoolGeoBackupPoliciesOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_geo_backup_policies_operations#SqlPoolGeoBackupPoliciesOperations.{}',
         client_factory=cf_sqlpool_geo_backup_policy,
     )
-    with self.command_group("synapse sql-pool-geo-backup-policy", synapse_sqlpool_geo_backup_policy) as g:
-        g.custom_show_command("show", "synapse_sql_pool_geo_backup_policy_show")
+    with self.command_group('synapse sql-pool-geo-backup-policy', synapse_sqlpool_geo_backup_policy) as g:
+        g.custom_show_command('show', 'synapse_sql_pool_geo_backup_policy_show')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_data_warehouse_user_activity
 
     synapse_sqlpool_data_warehouse_user_activity = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_data_warehouse_user_activities_operations#SqlPoolDataWarehouseUserActivitiesOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_data_warehouse_user_activities_operations#SqlPoolDataWarehouseUserActivitiesOperations.{}',
         client_factory=cf_sqlpool_data_warehouse_user_activity,
     )
     with self.command_group(
-        "synapse sql-pool-data-warehouse-user-activity", synapse_sqlpool_data_warehouse_user_activity
+        'synapse sql-pool-data-warehouse-user-activity', synapse_sqlpool_data_warehouse_user_activity
     ) as g:
-        g.custom_show_command("show", "synapse_sql_pool_data_warehouse_user_activity_show")
+        g.custom_show_command('show', 'synapse_sql_pool_data_warehouse_user_activity_show')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_restore_point
 
     synapse_sqlpool_restore_point = CliCommandType(
         operations_tmpl=(
-            "azure.mgmt.synapse.operations._sql_pool_restore_points_operations#SqlPoolRestorePointsOperations.{}"
+            'azure.mgmt.synapse.operations._sql_pool_restore_points_operations#SqlPoolRestorePointsOperations.{}'
         ),
         client_factory=cf_sqlpool_restore_point,
     )
-    with self.command_group("synapse sql-pool-restore-point", synapse_sqlpool_restore_point) as g:
-        g.custom_command("list", "synapse_sql_pool_restore_point_list")
-        g.custom_command("create", "synapse_sql_pool_restore_point_create", suppose_no_wait=True)
+    with self.command_group('synapse sql-pool-restore-point', synapse_sqlpool_restore_point) as g:
+        g.custom_command('list', 'synapse_sql_pool_restore_point_list')
+        g.custom_command('create', 'synapse_sql_pool_restore_point_create', suppose_no_wait=True)
 
     from azext_synapse.generated._client_factory import cf_sqlpool_replication_link
 
     synapse_sqlpool_replication_link = CliCommandType(
         operations_tmpl=(
-            "azure.mgmt.synapse.operations._sql_pool_replication_links_operations#SqlPoolReplicationLinksOperations.{}"
+            'azure.mgmt.synapse.operations._sql_pool_replication_links_operations#SqlPoolReplicationLinksOperations.{}'
         ),
         client_factory=cf_sqlpool_replication_link,
     )
-    with self.command_group("synapse sql-pool-replication-link", synapse_sqlpool_replication_link) as g:
-        g.custom_command("list", "synapse_sql_pool_replication_link_list")
+    with self.command_group('synapse sql-pool-replication-link', synapse_sqlpool_replication_link) as g:
+        g.custom_command('list', 'synapse_sql_pool_replication_link_list')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_transparent_data_encryption
 
     synapse_sqlpool_transparent_data_encryption = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_transparent_data_encryptions_operations#SqlPoolTransparentDataEncryptionsOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_transparent_data_encryptions_operations#SqlPoolTransparentDataEncryptionsOperations.{}',
         client_factory=cf_sqlpool_transparent_data_encryption,
     )
     with self.command_group(
-        "synapse sql-pool-transparent-data-encryption", synapse_sqlpool_transparent_data_encryption
+        'synapse sql-pool-transparent-data-encryption', synapse_sqlpool_transparent_data_encryption
     ) as g:
-        g.custom_show_command("show", "synapse_sql_pool_transparent_data_encryption_show")
-        g.custom_command("create", "synapse_sql_pool_transparent_data_encryption_create")
-        g.custom_command("update", "synapse_sql_pool_transparent_data_encryption_update")
+        g.custom_show_command('show', 'synapse_sql_pool_transparent_data_encryption_show')
+        g.custom_command('create', 'synapse_sql_pool_transparent_data_encryption_create')
+        g.custom_command('update', 'synapse_sql_pool_transparent_data_encryption_update')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_blob_auditing_policy
 
     synapse_sqlpool_blob_auditing_policy = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_blob_auditing_policies_operations#SqlPoolBlobAuditingPoliciesOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_blob_auditing_policies_operations#SqlPoolBlobAuditingPoliciesOperations.{}',
         client_factory=cf_sqlpool_blob_auditing_policy,
     )
-    with self.command_group("synapse sql-pool-blob-auditing-policy", synapse_sqlpool_blob_auditing_policy) as g:
-        g.custom_show_command("show", "synapse_sql_pool_blob_auditing_policy_show")
-        g.custom_command("create", "synapse_sql_pool_blob_auditing_policy_create")
-        g.generic_update_command("update", custom_func_name="synapse_sql_pool_blob_auditing_policy_update")
+    with self.command_group('synapse sql-pool-blob-auditing-policy', synapse_sqlpool_blob_auditing_policy) as g:
+        g.custom_show_command('show', 'synapse_sql_pool_blob_auditing_policy_show')
+        g.custom_command('create', 'synapse_sql_pool_blob_auditing_policy_create')
+        g.generic_update_command('update', custom_func_name="synapse_sql_pool_blob_auditing_policy_update")
 
     from azext_synapse.generated._client_factory import cf_sqlpool_operation
 
     synapse_sqlpool_operation = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_operations_operations#SqlPoolOperationsOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_operations_operations#SqlPoolOperationsOperations.{}',
         client_factory=cf_sqlpool_operation,
     )
-    with self.command_group("synapse sql-pool-operation", synapse_sqlpool_operation) as g:
-        g.custom_command("list", "synapse_sql_pool_operation_list")
+    with self.command_group('synapse sql-pool-operation', synapse_sqlpool_operation) as g:
+        g.custom_command('list', 'synapse_sql_pool_operation_list')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_usage
 
     synapse_sqlpool_usage = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_usages_operations#SqlPoolUsagesOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_usages_operations#SqlPoolUsagesOperations.{}',
         client_factory=cf_sqlpool_usage,
     )
-    with self.command_group("synapse sql-pool-usage", synapse_sqlpool_usage) as g:
-        g.custom_command("list", "synapse_sql_pool_usage_list")
+    with self.command_group('synapse sql-pool-usage', synapse_sqlpool_usage) as g:
+        g.custom_command('list', 'synapse_sql_pool_usage_list')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_sensitivity_label
 
     synapse_sqlpool_sensitivity_label = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_sensitivity_labels_operations#SqlPoolSensitivityLabelsOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_sensitivity_labels_operations#SqlPoolSensitivityLabelsOperations.{}',
         client_factory=cf_sqlpool_sensitivity_label,
     )
-    with self.command_group("synapse sql-pool-sensitivity-label", synapse_sqlpool_sensitivity_label) as g:
-        g.custom_command("create", "synapse_sql_pool_sensitivity_label_create")
-        g.custom_command("update", "synapse_sql_pool_sensitivity_label_update")
-        g.custom_command("delete", "synapse_sql_pool_sensitivity_label_delete", confirmation=True)
-        g.custom_command("disable-recommendation", "synapse_sql_pool_sensitivity_label_disable_recommendation")
-        g.custom_command("enable-recommendation", "synapse_sql_pool_sensitivity_label_enable_recommendation")
-        g.custom_command("list-current", "synapse_sql_pool_sensitivity_label_list_current")
-        g.custom_command("list-recommended", "synapse_sql_pool_sensitivity_label_list_recommended")
+    with self.command_group('synapse sql-pool-sensitivity-label', synapse_sqlpool_sensitivity_label) as g:
+        g.custom_command('create', 'synapse_sql_pool_sensitivity_label_create')
+        g.custom_command('update', 'synapse_sql_pool_sensitivity_label_update')
+        g.custom_command('delete', 'synapse_sql_pool_sensitivity_label_delete', confirmation=True)
+        g.custom_command('disable-recommendation', 'synapse_sql_pool_sensitivity_label_disable_recommendation')
+        g.custom_command('enable-recommendation', 'synapse_sql_pool_sensitivity_label_enable_recommendation')
+        g.custom_command('list-current', 'synapse_sql_pool_sensitivity_label_list_current')
+        g.custom_command('list-recommended', 'synapse_sql_pool_sensitivity_label_list_recommended')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_schema
 
     synapse_sqlpool_schema = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_schemas_operations#SqlPoolSchemasOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_schemas_operations#SqlPoolSchemasOperations.{}',
         client_factory=cf_sqlpool_schema,
     )
-    with self.command_group("synapse sql-pool-schema", synapse_sqlpool_schema) as g:
-        g.custom_command("list", "synapse_sql_pool_schema_list")
+    with self.command_group('synapse sql-pool-schema', synapse_sqlpool_schema) as g:
+        g.custom_command('list', 'synapse_sql_pool_schema_list')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_table
 
     synapse_sqlpool_table = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_tables_operations#SqlPoolTablesOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_tables_operations#SqlPoolTablesOperations.{}',
         client_factory=cf_sqlpool_table,
     )
-    with self.command_group("synapse sql-pool-table", synapse_sqlpool_table) as g:
-        g.custom_command("list", "synapse_sql_pool_table_list")
+    with self.command_group('synapse sql-pool-table', synapse_sqlpool_table) as g:
+        g.custom_command('list', 'synapse_sql_pool_table_list')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_table_column
 
     synapse_sqlpool_table_column = CliCommandType(
         operations_tmpl=(
-            "azure.mgmt.synapse.operations._sql_pool_table_columns_operations#SqlPoolTableColumnsOperations.{}"
+            'azure.mgmt.synapse.operations._sql_pool_table_columns_operations#SqlPoolTableColumnsOperations.{}'
         ),
         client_factory=cf_sqlpool_table_column,
     )
-    with self.command_group("synapse sql-pool-table-column", synapse_sqlpool_table_column) as g:
-        g.custom_command("list", "synapse_sql_pool_table_column_list")
+    with self.command_group('synapse sql-pool-table-column', synapse_sqlpool_table_column) as g:
+        g.custom_command('list', 'synapse_sql_pool_table_column_list')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_connection_policy
 
     synapse_sqlpool_connection_policy = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_connection_policies_operations#SqlPoolConnectionPoliciesOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_connection_policies_operations#SqlPoolConnectionPoliciesOperations.{}',
         client_factory=cf_sqlpool_connection_policy,
     )
-    with self.command_group("synapse sql-pool-connection-policy", synapse_sqlpool_connection_policy) as g:
-        g.custom_show_command("show", "synapse_sql_pool_connection_policy_show")
+    with self.command_group('synapse sql-pool-connection-policy', synapse_sqlpool_connection_policy) as g:
+        g.custom_show_command('show', 'synapse_sql_pool_connection_policy_show')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_vulnerability_assessment
 
     synapse_sqlpool_vulnerability_assessment = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_vulnerability_assessments_operations#SqlPoolVulnerabilityAssessmentsOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_vulnerability_assessments_operations#SqlPoolVulnerabilityAssessmentsOperations.{}',
         client_factory=cf_sqlpool_vulnerability_assessment,
     )
-    with self.command_group("synapse sql-pool-vulnerability-assessment", synapse_sqlpool_vulnerability_assessment) as g:
-        g.custom_command("list", "synapse_sql_pool_vulnerability_assessment_list")
-        g.custom_show_command("show", "synapse_sql_pool_vulnerability_assessment_show")
-        g.custom_command("create", "synapse_sql_pool_vulnerability_assessment_create")
-        g.generic_update_command("update", custom_func_name="synapse_sql_pool_vulnerability_assessment_update")
-        g.custom_command("delete", "synapse_sql_pool_vulnerability_assessment_delete", confirmation=True)
+    with self.command_group('synapse sql-pool-vulnerability-assessment', synapse_sqlpool_vulnerability_assessment) as g:
+        g.custom_command('list', 'synapse_sql_pool_vulnerability_assessment_list')
+        g.custom_show_command('show', 'synapse_sql_pool_vulnerability_assessment_show')
+        g.custom_command('create', 'synapse_sql_pool_vulnerability_assessment_create')
+        g.generic_update_command('update', custom_func_name="synapse_sql_pool_vulnerability_assessment_update")
+        g.custom_command('delete', 'synapse_sql_pool_vulnerability_assessment_delete', confirmation=True)
 
     from azext_synapse.generated._client_factory import cf_sqlpool_vulnerability_assessment_scan
 
     synapse_sqlpool_vulnerability_assessment_scan = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_vulnerability_assessment_scans_operations#SqlPoolVulnerabilityAssessmentScansOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_vulnerability_assessment_scans_operations#SqlPoolVulnerabilityAssessmentScansOperations.{}',
         client_factory=cf_sqlpool_vulnerability_assessment_scan,
     )
     with self.command_group(
-        "synapse sql-pool-vulnerability-assessment-scan", synapse_sqlpool_vulnerability_assessment_scan
+        'synapse sql-pool-vulnerability-assessment-scan', synapse_sqlpool_vulnerability_assessment_scan
     ) as g:
-        g.custom_command("list", "synapse_sql_pool_vulnerability_assessment_scan_list")
-        g.custom_command("export", "synapse_sql_pool_vulnerability_assessment_scan_export")
+        g.custom_command('list', 'synapse_sql_pool_vulnerability_assessment_scan_list')
+        g.custom_command('export', 'synapse_sql_pool_vulnerability_assessment_scan_export')
         g.custom_command(
-            "initiate-scan", "synapse_sql_pool_vulnerability_assessment_scan_initiate_scan", suppose_no_wait=True
+            'initiate-scan', 'synapse_sql_pool_vulnerability_assessment_scan_initiate_scan', suppose_no_wait=True
         )
 
     from azext_synapse.generated._client_factory import cf_sqlpool_security_alert_policy
 
     synapse_sqlpool_security_alert_policy = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_security_alert_policies_operations#SqlPoolSecurityAlertPoliciesOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_security_alert_policies_operations#SqlPoolSecurityAlertPoliciesOperations.{}',
         client_factory=cf_sqlpool_security_alert_policy,
     )
-    with self.command_group("synapse sql-pool-security-alert-policy", synapse_sqlpool_security_alert_policy) as g:
-        g.custom_show_command("show", "synapse_sql_pool_security_alert_policy_show")
-        g.custom_command("create", "synapse_sql_pool_security_alert_policy_create")
-        g.generic_update_command("update", custom_func_name="synapse_sql_pool_security_alert_policy_update")
+    with self.command_group('synapse sql-pool-security-alert-policy', synapse_sqlpool_security_alert_policy) as g:
+        g.custom_show_command('show', 'synapse_sql_pool_security_alert_policy_show')
+        g.custom_command('create', 'synapse_sql_pool_security_alert_policy_create')
+        g.generic_update_command('update', custom_func_name="synapse_sql_pool_security_alert_policy_update")
 
     from azext_synapse.generated._client_factory import cf_sqlpool_vulnerability_assessment_rule_baseline
 
     synapse_sqlpool_vulnerability_assessment_rule_baseline = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._sql_pool_vulnerability_assessment_rule_baselines_operations#SqlPoolVulnerabilityAssessmentRuleBaselinesOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._sql_pool_vulnerability_assessment_rule_baselines_operations#SqlPoolVulnerabilityAssessmentRuleBaselinesOperations.{}',
         client_factory=cf_sqlpool_vulnerability_assessment_rule_baseline,
     )
     with self.command_group(
-        "synapse sql-pool-vulnerability-assessment-rule-baseline",
+        'synapse sql-pool-vulnerability-assessment-rule-baseline',
         synapse_sqlpool_vulnerability_assessment_rule_baseline,
     ) as g:
-        g.custom_command("create", "synapse_sql_pool_vulnerability_assessment_rule_baseline_create")
-        g.custom_command("update", "synapse_sql_pool_vulnerability_assessment_rule_baseline_update")
-        g.custom_command("delete", "synapse_sql_pool_vulnerability_assessment_rule_baseline_delete", confirmation=True)
+        g.custom_command('create', 'synapse_sql_pool_vulnerability_assessment_rule_baseline_create')
+        g.custom_command('update', 'synapse_sql_pool_vulnerability_assessment_rule_baseline_update')
+        g.custom_command('delete', 'synapse_sql_pool_vulnerability_assessment_rule_baseline_delete', confirmation=True)
 
     from azext_synapse.generated._client_factory import cf_workspace
 
     synapse_workspace = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._workspaces_operations#WorkspacesOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._workspaces_operations#WorkspacesOperations.{}',
         client_factory=cf_workspace,
     )
-    with self.command_group("synapse workspace", synapse_workspace) as g:
-        g.custom_command("list", "synapse_workspace_list")
-        g.custom_show_command("show", "synapse_workspace_show")
-        g.custom_command("create", "synapse_workspace_create", suppose_no_wait=True)
-        g.custom_command("update", "synapse_workspace_update", suppose_no_wait=True)
-        g.custom_command("delete", "synapse_workspace_delete", suppose_no_wait=True, confirmation=True)
+    with self.command_group('synapse workspace', synapse_workspace) as g:
+        g.custom_command('list', 'synapse_workspace_list')
+        g.custom_show_command('show', 'synapse_workspace_show')
+        g.custom_command('create', 'synapse_workspace_create', suppose_no_wait=True)
+        g.custom_command('update', 'synapse_workspace_update', suppose_no_wait=True)
+        g.custom_command('delete', 'synapse_workspace_delete', suppose_no_wait=True, confirmation=True)
 
     from azext_synapse.generated._client_factory import cf_workspace_aadadmin
 
     synapse_workspace_aadadmin = CliCommandType(
         operations_tmpl=(
-            "azure.mgmt.synapse.operations._workspace_aad_admins_operations#WorkspaceAadAdminsOperations.{}"
+            'azure.mgmt.synapse.operations._workspace_aad_admins_operations#WorkspaceAadAdminsOperations.{}'
         ),
         client_factory=cf_workspace_aadadmin,
     )
-    with self.command_group("synapse workspace-aad-admin", synapse_workspace_aadadmin) as g:
-        g.custom_show_command("show", "synapse_workspace_aad_admin_show")
-        g.custom_command("create", "synapse_workspace_aad_admin_create", suppose_no_wait=True)
+    with self.command_group('synapse workspace-aad-admin', synapse_workspace_aadadmin) as g:
+        g.custom_show_command('show', 'synapse_workspace_aad_admin_show')
+        g.custom_command('create', 'synapse_workspace_aad_admin_create', suppose_no_wait=True)
         g.generic_update_command(
-            "update",
+            'update',
             suppose_no_wait=True,
             custom_func_name="synapse_workspace_aad_admin_update",
             setter_arg_name="aad_admin_info",
         )
-        g.custom_command("delete", "synapse_workspace_aad_admin_delete", suppose_no_wait=True, confirmation=True)
+        g.custom_command('delete', 'synapse_workspace_aad_admin_delete', suppose_no_wait=True, confirmation=True)
 
     from azext_synapse.generated._client_factory import cf_workspace_managed_identity_sqlcontrol_setting
 
     synapse_workspace_managed_identity_sqlcontrol_setting = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._workspace_managed_identity_sql_control_settings_operations#WorkspaceManagedIdentitySqlControlSettingsOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._workspace_managed_identity_sql_control_settings_operations#WorkspaceManagedIdentitySqlControlSettingsOperations.{}',
         client_factory=cf_workspace_managed_identity_sqlcontrol_setting,
     )
     with self.command_group(
-        "synapse workspace-managed-identity-sql-control-setting", synapse_workspace_managed_identity_sqlcontrol_setting
+        'synapse workspace-managed-identity-sql-control-setting', synapse_workspace_managed_identity_sqlcontrol_setting
     ) as g:
-        g.custom_show_command("show", "synapse_workspace_managed_identity_sql_control_setting_show")
-        g.custom_command("create", "synapse_workspace_managed_identity_sql_control_setting_create")
+        g.custom_show_command('show', 'synapse_workspace_managed_identity_sql_control_setting_show')
+        g.custom_command('create', 'synapse_workspace_managed_identity_sql_control_setting_create')
         g.generic_update_command(
-            "update",
+            'update',
             custom_func_name="synapse_workspace_managed_identity_sql_control_setting_update",
             setter_arg_name="grant_sql_control_to_managed_identity",
         )
@@ -332,146 +332,146 @@ def load_command_table(self, _):
 
     synapse_integration_runtime = CliCommandType(
         operations_tmpl=(
-            "azure.mgmt.synapse.operations._integration_runtimes_operations#IntegrationRuntimesOperations.{}"
+            'azure.mgmt.synapse.operations._integration_runtimes_operations#IntegrationRuntimesOperations.{}'
         ),
         client_factory=cf_integration_runtime,
     )
-    with self.command_group("synapse integration-runtime", synapse_integration_runtime) as g:
-        g.custom_command("list", "synapse_integration_runtime_list")
-        g.custom_show_command("show", "synapse_integration_runtime_show")
-        g.custom_command("create", "synapse_integration_runtime_create", suppose_no_wait=True)
-        g.custom_command("update", "synapse_integration_runtime_update")
-        g.custom_command("delete", "synapse_integration_runtime_delete", suppose_no_wait=True, confirmation=True)
-        g.custom_command("start", "synapse_integration_runtime_start")
-        g.custom_command("stop", "synapse_integration_runtime_stop")
-        g.custom_command("upgrade", "synapse_integration_runtime_upgrade")
+    with self.command_group('synapse integration-runtime', synapse_integration_runtime) as g:
+        g.custom_command('list', 'synapse_integration_runtime_list')
+        g.custom_show_command('show', 'synapse_integration_runtime_show')
+        g.custom_command('create', 'synapse_integration_runtime_create', suppose_no_wait=True)
+        g.custom_command('update', 'synapse_integration_runtime_update')
+        g.custom_command('delete', 'synapse_integration_runtime_delete', suppose_no_wait=True, confirmation=True)
+        g.custom_command('start', 'synapse_integration_runtime_start')
+        g.custom_command('stop', 'synapse_integration_runtime_stop')
+        g.custom_command('upgrade', 'synapse_integration_runtime_upgrade')
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_node_ip_address
 
     synapse_integration_runtime_node_ip_address = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._integration_runtime_node_ip_address_operations#IntegrationRuntimeNodeIpAddressOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._integration_runtime_node_ip_address_operations#IntegrationRuntimeNodeIpAddressOperations.{}',
         client_factory=cf_integration_runtime_node_ip_address,
     )
     with self.command_group(
-        "synapse integration-runtime-node-ip-address", synapse_integration_runtime_node_ip_address
+        'synapse integration-runtime-node-ip-address', synapse_integration_runtime_node_ip_address
     ) as g:
-        g.custom_command("get", "synapse_integration_runtime_node_ip_address_get")
+        g.custom_command('get', 'synapse_integration_runtime_node_ip_address_get')
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_object_metadata
 
     synapse_integration_runtime_object_metadata = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._integration_runtime_object_metadata_operations#IntegrationRuntimeObjectMetadataOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._integration_runtime_object_metadata_operations#IntegrationRuntimeObjectMetadataOperations.{}',
         client_factory=cf_integration_runtime_object_metadata,
     )
     with self.command_group(
-        "synapse integration-runtime-object-metadata", synapse_integration_runtime_object_metadata
+        'synapse integration-runtime-object-metadata', synapse_integration_runtime_object_metadata
     ) as g:
-        g.custom_command("get", "synapse_integration_runtime_object_metadata_get")
-        g.custom_command("refresh", "synapse_integration_runtime_object_metadata_refresh")
+        g.custom_command('get', 'synapse_integration_runtime_object_metadata_get')
+        g.custom_command('refresh', 'synapse_integration_runtime_object_metadata_refresh')
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_node
 
     synapse_integration_runtime_node = CliCommandType(
         operations_tmpl=(
-            "azure.mgmt.synapse.operations._integration_runtime_nodes_operations#IntegrationRuntimeNodesOperations.{}"
+            'azure.mgmt.synapse.operations._integration_runtime_nodes_operations#IntegrationRuntimeNodesOperations.{}'
         ),
         client_factory=cf_integration_runtime_node,
     )
-    with self.command_group("synapse integration-runtime-node", synapse_integration_runtime_node) as g:
-        g.custom_show_command("show", "synapse_integration_runtime_node_show")
-        g.custom_command("update", "synapse_integration_runtime_node_update")
-        g.custom_command("delete", "synapse_integration_runtime_node_delete", confirmation=True)
+    with self.command_group('synapse integration-runtime-node', synapse_integration_runtime_node) as g:
+        g.custom_show_command('show', 'synapse_integration_runtime_node_show')
+        g.custom_command('update', 'synapse_integration_runtime_node_update')
+        g.custom_command('delete', 'synapse_integration_runtime_node_delete', confirmation=True)
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_credentials
 
     synapse_integration_runtime_credentials = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._integration_runtime_credentials_operations#IntegrationRuntimeCredentialsOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._integration_runtime_credentials_operations#IntegrationRuntimeCredentialsOperations.{}',
         client_factory=cf_integration_runtime_credentials,
     )
-    with self.command_group("synapse integration-runtime-credentials", synapse_integration_runtime_credentials) as g:
-        g.custom_command("sync", "synapse_integration_runtime_credentials_sync")
+    with self.command_group('synapse integration-runtime-credentials', synapse_integration_runtime_credentials) as g:
+        g.custom_command('sync', 'synapse_integration_runtime_credentials_sync')
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_connection_info
 
     synapse_integration_runtime_connection_info = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._integration_runtime_connection_infos_operations#IntegrationRuntimeConnectionInfosOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._integration_runtime_connection_infos_operations#IntegrationRuntimeConnectionInfosOperations.{}',
         client_factory=cf_integration_runtime_connection_info,
     )
     with self.command_group(
-        "synapse integration-runtime-connection-info", synapse_integration_runtime_connection_info
+        'synapse integration-runtime-connection-info', synapse_integration_runtime_connection_info
     ) as g:
-        g.custom_command("get", "synapse_integration_runtime_connection_info_get")
+        g.custom_command('get', 'synapse_integration_runtime_connection_info_get')
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_auth_key
 
     synapse_integration_runtime_auth_key = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._integration_runtime_auth_keys_operations#IntegrationRuntimeAuthKeysOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._integration_runtime_auth_keys_operations#IntegrationRuntimeAuthKeysOperations.{}',
         client_factory=cf_integration_runtime_auth_key,
     )
-    with self.command_group("synapse integration-runtime-auth-key", synapse_integration_runtime_auth_key) as g:
-        g.custom_command("list", "synapse_integration_runtime_auth_key_list")
-        g.custom_command("regenerate", "synapse_integration_runtime_auth_key_regenerate")
+    with self.command_group('synapse integration-runtime-auth-key', synapse_integration_runtime_auth_key) as g:
+        g.custom_command('list', 'synapse_integration_runtime_auth_key_list')
+        g.custom_command('regenerate', 'synapse_integration_runtime_auth_key_regenerate')
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_monitoring_data
 
     synapse_integration_runtime_monitoring_data = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._integration_runtime_monitoring_data_operations#IntegrationRuntimeMonitoringDataOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._integration_runtime_monitoring_data_operations#IntegrationRuntimeMonitoringDataOperations.{}',
         client_factory=cf_integration_runtime_monitoring_data,
     )
     with self.command_group(
-        "synapse integration-runtime-monitoring-data", synapse_integration_runtime_monitoring_data
+        'synapse integration-runtime-monitoring-data', synapse_integration_runtime_monitoring_data
     ) as g:
-        g.custom_command("get", "synapse_integration_runtime_monitoring_data_get")
+        g.custom_command('get', 'synapse_integration_runtime_monitoring_data_get')
 
     from azext_synapse.generated._client_factory import cf_integration_runtime_status
 
     synapse_integration_runtime_status = CliCommandType(
         operations_tmpl=(
-            "azure.mgmt.synapse.operations._integration_runtime_status_operations#IntegrationRuntimeStatusOperations.{}"
+            'azure.mgmt.synapse.operations._integration_runtime_status_operations#IntegrationRuntimeStatusOperations.{}'
         ),
         client_factory=cf_integration_runtime_status,
     )
-    with self.command_group("synapse integration-runtime-status", synapse_integration_runtime_status) as g:
-        g.custom_command("get", "synapse_integration_runtime_status_get")
+    with self.command_group('synapse integration-runtime-status', synapse_integration_runtime_status) as g:
+        g.custom_command('get', 'synapse_integration_runtime_status_get')
 
     from azext_synapse.generated._client_factory import cf_private_link_resource
 
     synapse_private_link_resource = CliCommandType(
         operations_tmpl=(
-            "azure.mgmt.synapse.operations._private_link_resources_operations#PrivateLinkResourcesOperations.{}"
+            'azure.mgmt.synapse.operations._private_link_resources_operations#PrivateLinkResourcesOperations.{}'
         ),
         client_factory=cf_private_link_resource,
     )
-    with self.command_group("synapse private-link-resource", synapse_private_link_resource) as g:
-        g.custom_command("list", "synapse_private_link_resource_list")
-        g.custom_show_command("show", "synapse_private_link_resource_show")
+    with self.command_group('synapse private-link-resource', synapse_private_link_resource) as g:
+        g.custom_command('list', 'synapse_private_link_resource_list')
+        g.custom_show_command('show', 'synapse_private_link_resource_show')
 
     from azext_synapse.generated._client_factory import cf_private_endpoint_connection
 
     synapse_private_endpoint_connection = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._private_endpoint_connections_operations#PrivateEndpointConnectionsOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._private_endpoint_connections_operations#PrivateEndpointConnectionsOperations.{}',
         client_factory=cf_private_endpoint_connection,
     )
-    with self.command_group("synapse private-endpoint-connection", synapse_private_endpoint_connection) as g:
-        g.custom_command("list", "synapse_private_endpoint_connection_list")
-        g.custom_show_command("show", "synapse_private_endpoint_connection_show")
-        g.custom_command("create", "synapse_private_endpoint_connection_create", suppose_no_wait=True)
+    with self.command_group('synapse private-endpoint-connection', synapse_private_endpoint_connection) as g:
+        g.custom_command('list', 'synapse_private_endpoint_connection_list')
+        g.custom_show_command('show', 'synapse_private_endpoint_connection_show')
+        g.custom_command('create', 'synapse_private_endpoint_connection_create', suppose_no_wait=True)
         g.custom_command(
-            "delete", "synapse_private_endpoint_connection_delete", suppose_no_wait=True, confirmation=True
+            'delete', 'synapse_private_endpoint_connection_delete', suppose_no_wait=True, confirmation=True
         )
 
     from azext_synapse.generated._client_factory import cf_private_link_hub
 
     synapse_private_link_hub = CliCommandType(
-        operations_tmpl="azure.mgmt.synapse.operations._private_link_hubs_operations#PrivateLinkHubsOperations.{}",
+        operations_tmpl='azure.mgmt.synapse.operations._private_link_hubs_operations#PrivateLinkHubsOperations.{}',
         client_factory=cf_private_link_hub,
     )
-    with self.command_group("synapse private-link-hub", synapse_private_link_hub) as g:
-        g.custom_command("list", "synapse_private_link_hub_list")
-        g.custom_show_command("show", "synapse_private_link_hub_show")
-        g.custom_command("create", "synapse_private_link_hub_create")
-        g.custom_command("update", "synapse_private_link_hub_update")
-        g.custom_command("delete", "synapse_private_link_hub_delete", confirmation=True)
+    with self.command_group('synapse private-link-hub', synapse_private_link_hub) as g:
+        g.custom_command('list', 'synapse_private_link_hub_list')
+        g.custom_show_command('show', 'synapse_private_link_hub_show')
+        g.custom_command('create', 'synapse_private_link_hub_create')
+        g.custom_command('update', 'synapse_private_link_hub_update')
+        g.custom_command('delete', 'synapse_private_link_hub_delete', confirmation=True)
 
-    with self.command_group("synapse", is_experimental=True):
+    with self.command_group('synapse', is_experimental=True):
         pass

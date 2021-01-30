@@ -18,22 +18,22 @@ def load_command_table(self, _):
 
     attestation_operation = CliCommandType(
         operations_tmpl=(
-            "azext_attestation.vendored_sdks.attestation.operations._operation_operations#OperationOperations.{}"
+            'azext_attestation.vendored_sdks.attestation.operations._operation_operations#OperationOperations.{}'
         ),
         client_factory=cf_operation,
     )
-    with self.command_group("attestation", attestation_operation, is_experimental=True) as g:
-        g.custom_command("create-provider", "attestation_create_provider")
-        g.custom_command("list-operation", "attestation_list_operation")
+    with self.command_group('attestation', attestation_operation, is_experimental=True) as g:
+        g.custom_command('create-provider', 'attestation_create_provider')
+        g.custom_command('list-operation', 'attestation_list_operation')
 
     from azext_attestation.generated._client_factory import cf_attestation_provider
 
     attestation_attestation_provider = CliCommandType(
-        operations_tmpl="azext_attestation.vendored_sdks.attestation.operations._attestation_providers_operations#AttestationProvidersOperations.{}",
+        operations_tmpl='azext_attestation.vendored_sdks.attestation.operations._attestation_providers_operations#AttestationProvidersOperations.{}',
         client_factory=cf_attestation_provider,
     )
-    with self.command_group("attestation attestation-provider", attestation_attestation_provider) as g:
-        g.custom_command("provider list", "attestation_attestation_provider_provider_list")
-        g.custom_show_command("show", "attestation_attestation_provider_show")
-        g.custom_command("update", "attestation_attestation_provider_update")
-        g.custom_command("delete", "attestation_attestation_provider_delete", confirmation=True)
+    with self.command_group('attestation attestation-provider', attestation_attestation_provider) as g:
+        g.custom_command('provider list', 'attestation_attestation_provider_provider_list')
+        g.custom_show_command('show', 'attestation_attestation_provider_show')
+        g.custom_command('update', 'attestation_attestation_provider_update')
+        g.custom_command('delete', 'attestation_attestation_provider_delete', confirmation=True)
