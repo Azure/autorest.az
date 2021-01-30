@@ -22,7 +22,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_list",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -34,7 +33,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_show",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -57,7 +55,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_update",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -69,7 +66,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_delete",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental",
                                 "confirmation": "True"
@@ -82,7 +78,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_configure_factory_repo",
                             "needGeneric": false,
-                            "genericSetterArgName": "location_id",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -94,7 +89,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_get_data_plane_access",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -106,7 +100,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_get_git_hub_access_token",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -131,7 +124,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_trigger_list",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -143,7 +135,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_trigger_show",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -181,7 +172,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_trigger_delete",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental",
                                 "confirmation": "True"
@@ -194,7 +184,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_trigger_get_event_subscription_status",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -206,7 +195,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_trigger_query_by_factory",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -218,7 +206,6 @@
                             "isLongRun": true,
                             "functionName": "datafactory_trigger_start",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental",
                                 "suppose_no_wait": "True"
@@ -231,7 +218,6 @@
                             "isLongRun": true,
                             "functionName": "datafactory_trigger_stop",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental",
                                 "suppose_no_wait": "True"
@@ -244,7 +230,6 @@
                             "isLongRun": true,
                             "functionName": "datafactory_trigger_subscribe_to_event",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental",
                                 "suppose_no_wait": "True"
@@ -257,7 +242,6 @@
                             "isLongRun": true,
                             "functionName": "datafactory_trigger_unsubscribe_from_event",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental",
                                 "suppose_no_wait": "True"
@@ -283,7 +267,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_list",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -295,7 +278,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_show",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -307,7 +289,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_linked_integration_runtime_create",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -341,7 +322,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_update",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -353,7 +333,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_delete",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental",
                                 "confirmation": "True"
@@ -366,7 +345,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_get_connection_info",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -378,7 +356,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_get_monitoring_data",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -390,7 +367,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_get_status",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -402,7 +378,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_list_auth_key",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -414,7 +389,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_regenerate_auth_key",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -426,7 +400,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_remove_link",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -438,7 +411,6 @@
                             "isLongRun": true,
                             "functionName": "datafactory_integration_runtime_start",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental",
                                 "suppose_no_wait": "True"
@@ -451,7 +423,6 @@
                             "isLongRun": true,
                             "functionName": "datafactory_integration_runtime_stop",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental",
                                 "suppose_no_wait": "True"
@@ -464,7 +435,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_sync_credentials",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -476,7 +446,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_integration_runtime_upgrade",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
@@ -538,7 +507,6 @@
                             "isLongRun": false,
                             "functionName": "datafactory_group_create",
                             "needGeneric": false,
-                            "genericSetterArgName": "resource_group_name",
                             "propertiesString": {
                                 "mode": "experimental"
                             }
