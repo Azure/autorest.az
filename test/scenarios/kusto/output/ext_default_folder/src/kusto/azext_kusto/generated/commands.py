@@ -155,6 +155,3 @@ def load_command_table(self, _):
             supports_no_wait=True,
         )
         g.custom_wait_command('wait', 'kusto_data_connection_show')
-
-    with self.command_group('kusto'):
-        pass

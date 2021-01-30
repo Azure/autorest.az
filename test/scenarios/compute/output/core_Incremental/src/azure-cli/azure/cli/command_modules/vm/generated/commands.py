@@ -23,6 +23,3 @@ def load_command_table(self, _):
     )
     with self.command_group('vm virtual-machine', vm_virtual_machine, is_experimental=True) as g:
         g.custom_command('assess-patch', 'vm_virtual_machine_assess_patch', minApi='2020-06-01')
-
-    with self.command_group('vm'):
-        pass
