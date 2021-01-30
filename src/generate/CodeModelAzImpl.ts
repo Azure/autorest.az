@@ -1219,6 +1219,9 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get Command_GenericSetterArgName(): string {
         const geneParam = this.Command_GenericSetterParameter(this.Command_GetOriginalOperation);
+        if (isNullOrUndefined(geneParam)) {
+            return undefined;
+        }
         return this.Parameter_NamePython(geneParam);
     }
 

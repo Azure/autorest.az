@@ -34,11 +34,18 @@ function initVars() {
 export class CliCommands extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.relativePath = path.join(
-            model.AzextFolder,
-            PathConstants.generatedFolder,
-            PathConstants.commandsFile,
-        );
+        if (model.IsCliCore) {
+            this.relativePath = path.join(
+                PathConstants.generatedFolder,
+                PathConstants.commandsFile,
+            );
+        } else {
+            this.relativePath = path.join(
+                model.AzextFolder,
+                PathConstants.generatedFolder,
+                PathConstants.commandsFile,
+            );
+        }
         this.tmplPath = path.join(PathConstants.templateRootFolder, 'generated/commands.py.njx');
     }
 
@@ -47,31 +54,32 @@ export class CliCommands extends TemplateBase {
             CodeGenConstants.DEFAULT_CLI_CORE_LIB + '.commands',
             ['CliCommandType'],
         ]);
-        const extraProperties = ['maxApi', 'minApi', 'resourceType', 'mode'];
+        let importProfile = false;
+        let lineTooLong = false;
+        const extraNonStringProperties = ['resourceType', 'mode'];
+        const extraProperties = ['maxApi', 'minApi'];
         const commandGroupConverter = (item) => {
             item['propertiesString'] = {};
             extraProperties.forEach((prop) => {
                 if (!isNullOrUndefined(item[prop])) {
-                    if (prop !== 'mode') {
-                        item['propertiesString'][prop] = ToPythonString(
-                            item[prop],
-                            typeof item[prop],
-                        );
-                    } else {
-                        item['propertiesString'][prop] = item[prop];
-                    }
-                    if (prop === 'resourceType' && !isNullOrUndefined(item[prop])) {
-                        data['imports'].push(['azure.cli.core.profiles', ['ResourceType']]);
-                    }
-                    if (
-                        !isNullOrUndefined(item['operationTmplName']) &&
-                        item['operationTmplName'].length >
-                            CodeGenConstants.PYLINT_MAX_OPERATION_TEMPLATE_LENGTH
-                    ) {
-                        data['pylints'].push('# pylint: disable=line-too-long');
-                    }
+                    item['propertiesString'][prop] = ToPythonString(item[prop], typeof item[prop]);
                 }
             });
+            extraNonStringProperties.forEach((prop) => {
+                if (!isNullOrUndefined(item[prop])) {
+                    item['propertiesString'][prop] = item[prop];
+                }
+                if (prop === 'resourceType' && !isNullOrUndefined(item[prop])) {
+                    importProfile = true;
+                }
+            });
+            if (
+                !isNullOrUndefined(item['operationTmplName']) &&
+                item['operationTmplName'].length >
+                    CodeGenConstants.PYLINT_MAX_OPERATION_TEMPLATE_LENGTH
+            ) {
+                lineTooLong = true;
+            }
             return item;
         };
 
@@ -79,17 +87,15 @@ export class CliCommands extends TemplateBase {
             item['propertiesString'] = {};
             extraProperties.forEach((prop) => {
                 if (!isNullOrUndefined(item[prop])) {
-                    if (prop !== 'mode') {
-                        item['propertiesString'][prop] = ToPythonString(
-                            item[prop],
-                            typeof item[prop],
-                        );
-                    } else {
-                        item['propertiesString'][prop] = item[prop];
-                    }
-                    if (prop === 'resourceType' && !isNullOrUndefined(item[prop])) {
-                        data['imports'].push(['azure.cli.core.profiles', ['ResourceType']]);
-                    }
+                    item['propertiesString'][prop] = ToPythonString(item[prop], typeof item[prop]);
+                }
+            });
+            extraNonStringProperties.forEach((prop) => {
+                if (!isNullOrUndefined(item[prop])) {
+                    item['propertiesString'][prop] = item[prop];
+                }
+                if (prop === 'resourceType' && !isNullOrUndefined(item[prop])) {
+                    importProfile = true;
                 }
             });
             if (item['isLongRun']) {
@@ -111,7 +117,7 @@ export class CliCommands extends TemplateBase {
                     );
                 }
                 if (item['isLongRun'] && !AzConfiguration.getValue(CodeGenConstants.sdkTrack1)) {
-                    item['propertiesString']['setter_name'] = 'begin_create_or_update';
+                    item['propertiesString']['setter_name'] = "'begin_create_or_update'";
                 }
             }
             return item;
@@ -171,7 +177,13 @@ export class CliCommands extends TemplateBase {
             ['extension', 'commandGroup'],
             ['commandGroup', 'command'],
         ];
-        data = this.model.getModelData('extension', inputProperties, dependencies);
+        data = { ...data, ...this.model.getModelData('extension', inputProperties, dependencies) };
+        if (importProfile) {
+            data['imports'].push(['azure.cli.core.profiles', ['ResourceType']]);
+        }
+        if (lineTooLong) {
+            data['pylints'].push('# pylint: disable=line-too-long');
+        }
         data['azextFolder'] = this.model.AzextFolder;
         return data;
     }

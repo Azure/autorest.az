@@ -6,12 +6,16 @@ import { runLintball } from './utils/helper';
 export async function processRequest(host: Host) {
     try {
         const folder = await host.GetValue(CodeGenConstants.azOutputFolder);
-        const fileName = path.join(
+        const azextFolder = AzConfiguration.getValue(CodeGenConstants.azextFolder);
+        let fileName = path.join(
             folder,
-            AzConfiguration.getValue(CodeGenConstants.azextFolder),
+            azextFolder,
             PathConstants.generatedFolder,
             PathConstants.commandsFile,
         );
+        if (AzConfiguration.getValue(CodeGenConstants.isCliCore)) {
+            fileName = path.join(folder, PathConstants.generatedFolder, PathConstants.commandsFile);
+        }
         await runLintball(fileName);
         return;
     } catch (E) {

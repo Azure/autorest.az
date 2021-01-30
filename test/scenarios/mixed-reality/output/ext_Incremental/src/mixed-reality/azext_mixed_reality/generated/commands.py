@@ -7,8 +7,7 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
-# pylint: disable=too-many-statements
-# pylint: disable=too-many-locals
+# pylint: disable=line-too-long
 
 from azure.cli.core.commands import CliCommandType
 
@@ -16,28 +15,28 @@ from azure.cli.core.commands import CliCommandType
 def load_command_table(self, _):
 
     from azext_mixed_reality.generated._client_factory import cf_spatial_anchor_account
+
     mixed_reality_spatial_anchor_account = CliCommandType(
-        operations_tmpl='azext_mixed_reality.vendored_sdks.mixedreality.operations._spatial_anchors_accounts_operations'
-        '#SpatialAnchorsAccountsOperations.{}',
-        client_factory=cf_spatial_anchor_account)
-    with self.command_group('spatial-anchors-account', mixed_reality_spatial_anchor_account,
-                            client_factory=cf_spatial_anchor_account) as g:
-        g.custom_command('regenerate-key', 'spatial_anchors_account_regenerate_key')
+        operations_tmpl="azext_mixed_reality.vendored_sdks.mixedreality.operations._spatial_anchors_accounts_operations#SpatialAnchorsAccountsOperations.{}",
+        client_factory=cf_spatial_anchor_account,
+    )
+    with self.command_group("spatial-anchors-account", mixed_reality_spatial_anchor_account) as g:
+        g.custom_command("regenerate-key", "spatial_anchors_account_regenerate_key")
 
     from azext_mixed_reality.generated._client_factory import cf_remote_rendering_account
-    mixed_reality_remote_rendering_account = CliCommandType(
-        operations_tmpl='azext_mixed_reality.vendored_sdks.mixedreality.operations._remote_rendering_accounts_operation'
-        's#RemoteRenderingAccountsOperations.{}',
-        client_factory=cf_remote_rendering_account)
-    with self.command_group('remote-rendering-account', mixed_reality_remote_rendering_account,
-                            client_factory=cf_remote_rendering_account) as g:
-        g.custom_command('list', 'remote_rendering_account_list')
-        g.custom_show_command('show', 'remote_rendering_account_show')
-        g.custom_command('create', 'remote_rendering_account_create')
-        g.custom_command('update', 'remote_rendering_account_update')
-        g.custom_command('delete', 'remote_rendering_account_delete', confirmation=True)
-        g.custom_command('list-key', 'remote_rendering_account_list_key')
-        g.custom_command('regenerate-key', 'remote_rendering_account_regenerate_key')
 
-    with self.command_group('mixed-reality', is_experimental=True):
+    mixed_reality_remote_rendering_account = CliCommandType(
+        operations_tmpl="azext_mixed_reality.vendored_sdks.mixedreality.operations._remote_rendering_accounts_operations#RemoteRenderingAccountsOperations.{}",
+        client_factory=cf_remote_rendering_account,
+    )
+    with self.command_group("remote-rendering-account", mixed_reality_remote_rendering_account) as g:
+        g.custom_command("list", "remote_rendering_account_list")
+        g.custom_show_command("show", "remote_rendering_account_show")
+        g.custom_command("create", "remote_rendering_account_create")
+        g.custom_command("update", "remote_rendering_account_update")
+        g.custom_command("delete", "remote_rendering_account_delete", confirmation=True)
+        g.custom_command("list-key", "remote_rendering_account_list_key")
+        g.custom_command("regenerate-key", "remote_rendering_account_regenerate_key")
+
+    with self.command_group("mixed-reality", is_experimental=True):
         pass
