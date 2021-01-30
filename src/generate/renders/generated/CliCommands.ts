@@ -76,12 +76,15 @@ export class CliCommands extends TemplateBase {
             ) {
                 lineTooLong = true;
             }
-            if (needWaitCommand && showCustomFunctionName != '') {
+            if (needWaitCommand && showCustomFunctionName !== '') {
                 item['needWaitCommand'] = true;
                 item['showCustomFunctionName'] = showCustomFunctionName;
                 needWaitCommand = false;
+                showCustomFunctionName = '';
             } else if (needWaitCommand) {
                 needWaitCommand = false;
+            } else if (showCustomFunctionName !== '') {
+                showCustomFunctionName = '';
             }
             return item;
         };
@@ -101,7 +104,7 @@ export class CliCommands extends TemplateBase {
                     importProfile = true;
                 }
             });
-            if (item['isLongRun']) {
+            if (item['isLongRun'] && showCustomFunctionName !== '') {
                 item['propertiesString']['supports_no_wait'] = 'True';
                 needWaitCommand = true;
             }

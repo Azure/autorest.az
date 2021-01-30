@@ -26,8 +26,8 @@ def load_command_table(self, _):
     with self.command_group('managed-network mn', managed_network_managed_network, is_experimental=True) as g:
         g.custom_command('list', 'managed_network_mn_list')
         g.custom_command('create', 'managed_network_mn_create')
-        g.custom_command('update', 'managed_network_mn_update', supports_no_wait=True)
-        g.custom_command('delete', 'managed_network_mn_delete', supports_no_wait=True, confirmation=True)
+        g.custom_command('update', 'managed_network_mn_update')
+        g.custom_command('delete', 'managed_network_mn_delete', confirmation=True)
         g.custom_command('show-modify', 'managed_network_mn_show_modify')
 
     from azext_managed_network.generated._client_factory import cf_scope_assignment

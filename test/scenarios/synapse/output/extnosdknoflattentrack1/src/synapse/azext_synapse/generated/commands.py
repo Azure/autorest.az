@@ -123,8 +123,7 @@ def load_command_table(self, _):
     )
     with self.command_group('synapse sql-pool-restore-point', synapse_sqlpool_restore_point) as g:
         g.custom_command('list', 'synapse_sql_pool_restore_point_list')
-        g.custom_command('create', 'synapse_sql_pool_restore_point_create', supports_no_wait=True)
-        g.custom_wait_command('wait', 'synapse_sql_pool_data_warehouse_user_activity_show')
+        g.custom_command('create', 'synapse_sql_pool_restore_point_create')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_replication_link
 
@@ -256,10 +255,7 @@ def load_command_table(self, _):
     ) as g:
         g.custom_command('list', 'synapse_sql_pool_vulnerability_assessment_scan_list')
         g.custom_command('export', 'synapse_sql_pool_vulnerability_assessment_scan_export')
-        g.custom_command(
-            'initiate-scan', 'synapse_sql_pool_vulnerability_assessment_scan_initiate_scan', supports_no_wait=True
-        )
-        g.custom_wait_command('wait', 'synapse_sql_pool_vulnerability_assessment_show')
+        g.custom_command('initiate-scan', 'synapse_sql_pool_vulnerability_assessment_scan_initiate_scan')
 
     from azext_synapse.generated._client_factory import cf_sqlpool_security_alert_policy
 

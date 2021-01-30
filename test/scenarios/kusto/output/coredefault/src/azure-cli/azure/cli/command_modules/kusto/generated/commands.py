@@ -16,7 +16,7 @@ from azure.cli.core.commands import CliCommandType
 
 def load_command_table(self, _):
 
-    from azext_kusto.generated._client_factory import cf_cluster
+    from ..generated._client_factory import cf_cluster
 
     kusto_cluster = CliCommandType(
         operations_tmpl='azure.mgmt.kusto.operations._clusters_operations#ClustersOperations.{}',
@@ -39,7 +39,7 @@ def load_command_table(self, _):
         g.custom_command('stop', 'kusto_cluster_stop', supports_no_wait=True)
         g.custom_wait_command('wait', 'kusto_cluster_show')
 
-    from azext_kusto.generated._client_factory import cf_cluster_principal_assignment
+    from ..generated._client_factory import cf_cluster_principal_assignment
 
     kusto_cluster_principal_assignment = CliCommandType(
         operations_tmpl='azure.mgmt.kusto.operations._cluster_principal_assignments_operations#ClusterPrincipalAssignmentsOperations.{}',
@@ -57,7 +57,7 @@ def load_command_table(self, _):
         )
         g.custom_wait_command('wait', 'kusto_cluster_principal_assignment_show')
 
-    from azext_kusto.generated._client_factory import cf_database
+    from ..generated._client_factory import cf_database
 
     kusto_database = CliCommandType(
         operations_tmpl='azure.mgmt.kusto.operations._databases_operations#DatabasesOperations.{}',
@@ -74,7 +74,7 @@ def load_command_table(self, _):
         g.custom_command('remove-principal', 'kusto_database_remove_principal')
         g.custom_wait_command('wait', 'kusto_database_show')
 
-    from azext_kusto.generated._client_factory import cf_database_principal_assignment
+    from ..generated._client_factory import cf_database_principal_assignment
 
     kusto_database_principal_assignment = CliCommandType(
         operations_tmpl='azure.mgmt.kusto.operations._database_principal_assignments_operations#DatabasePrincipalAssignmentsOperations.{}',
@@ -92,7 +92,7 @@ def load_command_table(self, _):
         )
         g.custom_wait_command('wait', 'kusto_database_principal_assignment_show')
 
-    from azext_kusto.generated._client_factory import cf_attached_database_configuration
+    from ..generated._client_factory import cf_attached_database_configuration
 
     kusto_attached_database_configuration = CliCommandType(
         operations_tmpl='azure.mgmt.kusto.operations._attached_database_configurations_operations#AttachedDatabaseConfigurationsOperations.{}',
@@ -110,7 +110,7 @@ def load_command_table(self, _):
         )
         g.custom_wait_command('wait', 'kusto_attached_database_configuration_show')
 
-    from azext_kusto.generated._client_factory import cf_data_connection
+    from ..generated._client_factory import cf_data_connection
 
     kusto_data_connection = CliCommandType(
         operations_tmpl='azure.mgmt.kusto.operations._data_connections_operations#DataConnectionsOperations.{}',
