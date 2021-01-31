@@ -22,7 +22,7 @@ jobs:
   - job: Build
     pool:
       vmImage: 'Ubuntu 16.04'
-      pythonVersion: '3.6'
+      pythonVersion: '3.7'
     steps:
       - task: NodeTool@0
         inputs:
@@ -49,7 +49,7 @@ jobs:
   - job: TestReport
     pool:
       vmImage: 'Ubuntu 16.04'
-      pythonVersion: '3.6'
+      pythonVersion: '3.7'
     steps:
       - task: NodeTool@0
         inputs:
@@ -60,9 +60,9 @@ jobs:
         inputs:
           verbose: false
       - task: UsePythonVersion@0
-        displayName: 'Use Python 3.6'
+        displayName: 'Use Python 3.7'
         inputs:
-          versionSpec: 3.6
+          versionSpec: 3.7
       - script: 'npm run build'
         displayName: 'npm build'
       - script: 'npm run test-report'
