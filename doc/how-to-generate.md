@@ -7,11 +7,7 @@ There are 3 approaches to use autorest.az:
 * **Docker**
 * **Locally** running autorest command
 
-The following table shows which approaches can be used for which scenarios:
-Modules                |    Approaches              | 
------------------------|----------------------------|
-Azure CLI main modules | **Docker** and **Locally** |
-Azure CLI Extensions   |    All approaches          | 
+Note: Azure CLI main modules generation currently doesn't support Swagger PR generation.
 
 ## Azure CLI main modules and Azure CLI Extensions
 
@@ -82,24 +78,24 @@ We have pre-prepared docker image for you to use autorest.az easily. (Please mak
 
 2. Generate the code:
     * Make sure the readme files are ready in the swagger repo. We can help to prepare the init readme files for you as mentioned in [onboarding-guide](onboarding-guide.md), or you can also find example [here](../src/test/scenarios/attestation/configuration).
-    * Generate the code:
-    if it's for Azure CLI Extensions:
-    ``` bash
-    > autorest --az --azure-cli-extension-folder=/home/azext /home/swg/specification/{service_name}/resource-manager/readme.md
-    ```
-    if it's for Azure CLI main repo modules:
-    ``` bash
-    > autorest --az --target-mode=core --azure-cli-folder=/home/azcli /home/swg/specification/{service_name}/resource-manager/readme.md
-    ```
+    * Generate the code:  
+        if it's for Azure CLI Extensions:  
+        ``` bash
+        > autorest --az --azure-cli-extension-folder=/home/azext /home/swg/specification/{service_name}/resource-manager/readme.md
+        ```
+        if it's for Azure CLI main repo modules:  
+        ``` bash
+        > autorest --az --target-mode=core --azure-cli-folder=/home/azcli /home/swg/specification/{service_name}/resource-manager/readme.md
+        ```
 
 3. Run the generated command
-    * Generated commands are ready to use after adding the extension:
-    If it's for Azure CLI Extensions.
-    ``` bash
-    > azdev extension add {service_name}
-    # your command is ready to use now
-    ```
-    If it's for Azure CLI main repo modules, then there's nothing more needed.
+    * Generated commands are ready to use after adding the extension:  
+        If it's for Azure CLI Extensions.  
+        ``` bash
+        > azdev extension add {service_name}
+        # your command is ready to use now
+        ```
+        If it's for Azure CLI main repo modules, then there's nothing more needed.
 
 4. Run generated test cases and style check
     * run azdev test
@@ -123,17 +119,17 @@ We have pre-prepared docker image for you to use autorest.az easily. (Please mak
 1. sync 'https://github.com/Azure/azure-cli-extensions.git' to {azure_cli_ext_folder} or 'https://github.com/Azure/azure-cli.git' to {azure_cli_folder} if you are working on Azure CLI main modules generation.
 1. Generate the code:
     * Make sure the readme files are ready in the swagger repo. To prepare the initial readme file, please following [Preparing Readme](how-to-author-readme-file.md).
-    * Generate the code:
-    if it's for Azure CLI Extensions generation:
-    ``` bash
-    > autorest --az --azure-cli-extension-folder={azure_cli_ext_folder} {swagger_folder}/specification/{service_name}/resource-manager/readme.md
-    ```
-    if it's for Azure CLI main modules generation:
-    ``` bash
-    > autorest --az --target-mode=core --azure-cli-folder={azure_cli_folder} {swagger_folder}/specification/{service_name}/resource-manager/readme.md
-    ```
+    * Generate the code:  
+        if it's for Azure CLI Extensions generation:  
+        ``` bash
+        > autorest --az --azure-cli-extension-folder={azure_cli_ext_folder} {swagger_folder}/specification/{service_name}/resource-manager/readme.md
+        ```
+        if it's for Azure CLI main modules generation:  
+        ``` bash
+        > autorest --az --target-mode=core --azure-cli-folder={azure_cli_folder} {swagger_folder}/specification/{service_name}/resource-manager/readme.md
+        ```
 
-1. Run the generated command
+1. Run the generated command  
    :warning: This step is only needed for Azure CLI Extensions generation.
     * Build az extension from the generated code and load it in az
     ``` bash
@@ -158,7 +154,7 @@ In both Azure CLI main modules or Azure CLI Extensions generation, CLI Code Gene
 In incremental generation, we will put our generated code into a generated folder in your modules code folder and the only change for existing code is to add import logic in very few places so that the code in generated folder can be loaded by CLI commands loader.  
 
 ### Incremental codegen configuration:
-1. Readme: Besides following [Preparing Readme](how-to-author-readme-file.md). Incremental mode needs to be configured in the Readme.az.md file. There are two ways to configure incremental mode:
+1. Readme: Besides following [Preparing Readme](how-to-author-readme-file.md). Incremental mode needs to be configured in the Readme.az.md file. There are two ways to configure incremental mode:  
     * **Allow list** hide all commands by setting hidden to true. Then unhide the command groups or commands to be generated:
 
       ![Allow list](images/allowlist.png)
@@ -166,7 +162,7 @@ In incremental generation, we will put our generated code into a generated folde
 
       ![Deny list](images/denylist.png)
 
-2. As autorest.az supports auto detect full/incremental generation mode:
+2. As autorest.az supports auto detect full/incremental generation mode:  
     * If the cli extention folder for target RP is empty or the code was generated by autorest.az before, then full code generation mode will be run.
     * If the cli extention folder for target RP is not empty and the code was manually written before, incremental code generation mode will be run.
 
