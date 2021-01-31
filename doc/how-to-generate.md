@@ -4,8 +4,6 @@ Autorest.az supports two kinds of code genreation now: full and incremental:
 * Full: generates the full Az Cli code for RP. All files are generated.
 * Incremental: generate Az Cli code based on existing Az Cli code. The existing code will not change. New generated code will be integrated into existing code. 
 
-Currently, autorest.az only supports targeting cli extension repo. The cli repo will be supported soon.
-
 There are 3 approaches to use autorest.az:
 * **Swagger** repo pull request
 * **Docker**
@@ -13,10 +11,10 @@ There are 3 approaches to use autorest.az:
 
 The following table shows which approaches can be used for which scenarios:
 
-Approaches | Cli | Cli Extension
------------|-----|--------------
-Full       | N/A | All approaches
-Incremental| N/A | **Docker** and **Locally**
+Approaches |         Cli                | Cli Extension
+-----------|----------------------------|--------------
+Full       | **Docker** and **Locally** | All approaches
+Incremental| **Docker** and **Locally** | **Docker** and **Locally**
 
 The preparation and autorest command for full/incremental, target to cli/cli-extension have differences.
 
@@ -37,7 +35,7 @@ Use the following command for full code generation targeting the cli extension r
  ```
 
 ## Incremental codegen to cli extension
-* **Readme**: Besides following [Preparing Readme](how-to-author-readme-file.md). Incremental mode needs to be configured in the Readme.az.md file. There are two was to configure incremental mode:
+* **Readme**: Besides following [Preparing Readme](how-to-author-readme-file.md). Incremental mode needs to be configured in the Readme.az.md file. There are two ways to configure incremental mode:
     * **Allow list** hide all commands by setting hidden to true. Then unhide the command groups or commands to be generated:
 
       ![Allow list](images/allowlist.png)
@@ -60,7 +58,7 @@ Use `--target-mode=core` and change the `--azure-cli-extension-folder` to `--azu
 Other interesting options available when generating the cli are list [here](how-to-generate-with-different-options.md#what-kind-of-options-do-we-have) for more details.  
 
 ## Incremental codegen to cli
-Coming soon
+The configuration is basically the same as extension incremental generation, except you need to add `--target-mode=core` when you run `autorest --az` command.
 
 # How to generate code using autorest.az
 
