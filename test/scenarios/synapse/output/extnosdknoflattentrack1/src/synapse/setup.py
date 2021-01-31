@@ -31,7 +31,7 @@ CLASSIFIERS = [
 ]
 
 DEPENDENCIES = [
-    'azure-mgmt-synapse~=0.6.0'
+    'azure-mgmt-synapse~=0.7.0'
 ]
 
 try:
