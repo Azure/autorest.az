@@ -124,7 +124,7 @@ export class Modifiers {
         });
     }
 
-    paramModify(parameter: Parameter, directive: any): void {
+    modifyParam(parameter: Parameter, directive: any): void {
         const parameterRegex = getPatternToMatch(directive.where['parameter-name']);
         const parameterReplacer =
             directive.set !== undefined ? directive.set['parameter-name'] : undefined;
@@ -146,7 +146,7 @@ export class Modifiers {
         }
     }
 
-    operationGroupModify(operationGroup: OperationGroup, directive: any, groupIdx: number): void {
+    modifyOperationGroup(operationGroup: OperationGroup, directive: any, groupIdx: number): void {
         const groupRegex = getPatternToMatch(directive.where.group);
         const groupReplacer = directive.set !== undefined ? directive.set.group : undefined;
         const groupDescriptionReplacer =
@@ -176,7 +176,7 @@ export class Modifiers {
         }
     }
 
-    operationModify(
+    modifyOperation(
         operationGroup: OperationGroup,
         operation: Operation,
         directive: any,
@@ -270,13 +270,13 @@ export class Modifiers {
                     groupIdx++;
                     // operationGroup
                     this.groupChanged = false;
-                    this.operationGroupModify(operationGroup, directive, groupIdx);
+                    this.modifyOperationGroup(operationGroup, directive, groupIdx);
 
                     let opIndex = -1;
                     operationGroup.operations.map((operation) => {
                         opIndex++;
                         // operation
-                        this.operationModify(
+                        this.modifyOperation(
                             operationGroup,
                             operation,
                             directive,
@@ -285,12 +285,12 @@ export class Modifiers {
                         );
 
                         operation.parameters.map((parameter) => {
-                            this.paramModify(parameter, directive);
+                            this.modifyParam(parameter, directive);
                         });
 
                         operation.requests.map((request) => {
                             request.parameters?.map((parameter) => {
-                                this.paramModify(parameter, directive);
+                                this.modifyParam(parameter, directive);
                             });
                         });
                     });
