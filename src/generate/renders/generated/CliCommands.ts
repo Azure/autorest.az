@@ -16,6 +16,13 @@ import {
 } from '../../../utils/models';
 import * as path from 'path';
 export class CliCommands extends TemplateBase {
+    private importProfile = false;
+    private lineTooLong = false;
+    private needWaitCommand = false;
+    private showCustomFunctionName = '';
+    private extraNonStringProperties = ['resourceType', 'mode'];
+    private extraProperties = ['maxApi', 'minApi'];
+
     constructor(model: CodeModelAz) {
         super(model);
         this.relativePath = path.join(
@@ -26,100 +33,95 @@ export class CliCommands extends TemplateBase {
         this.tmplPath = path.join(PathConstants.templateRootFolder, 'generated/commands.py.njx');
     }
 
+    pythonString(str: string): string {
+        return `'${str}'`;
+    }
+
+    extensionConverter(item: any): any {
+        if (!isNullOrUndefined(item['parent']) && !isNullOrUndefined(item['name'])) {
+            item['name'] = item['parent'] + ' ' + item['name'];
+        }
+        return item;
+    }
+
+    commandGroupConverter(item: any): any {
+        item['propertiesString'] = {};
+        this.extraProperties.forEach((prop) => {
+            if (!isNullOrUndefined(item[prop])) {
+                item['propertiesString'][prop] = this.pythonString(item[prop]);
+            }
+        });
+        this.extraNonStringProperties.forEach((prop) => {
+            if (!isNullOrUndefined(item[prop])) {
+                item['propertiesString'][prop] = item[prop];
+            }
+            if (prop === 'resourceType' && !isNullOrUndefined(item[prop])) {
+                this.importProfile = true;
+            }
+        });
+        if (
+            !isNullOrUndefined(item['operationTmplName']) &&
+            item['operationTmplName'].length > CodeGenConstants.PYLINT_MAX_OPERATION_TEMPLATE_LENGTH
+        ) {
+            this.lineTooLong = true;
+        }
+        if (this.needWaitCommand && this.showCustomFunctionName !== '') {
+            item['needWaitCommand'] = true;
+            item['showCustomFunctionName'] = this.showCustomFunctionName;
+            this.needWaitCommand = false;
+            this.showCustomFunctionName = '';
+        } else if (this.needWaitCommand) {
+            this.needWaitCommand = false;
+        } else if (this.showCustomFunctionName !== '') {
+            this.showCustomFunctionName = '';
+        }
+        return item;
+    }
+
+    commandConverter(item: any): any {
+        item['propertiesString'] = {};
+        this.extraProperties.forEach((prop) => {
+            if (!isNullOrUndefined(item[prop])) {
+                item['propertiesString'][prop] = this.pythonString(item[prop]);
+            }
+        });
+        this.extraNonStringProperties.forEach((prop) => {
+            if (!isNullOrUndefined(item[prop])) {
+                item['propertiesString'][prop] = item[prop];
+            }
+            if (prop === 'resourceType' && !isNullOrUndefined(item[prop])) {
+                this.importProfile = true;
+            }
+        });
+        if (item['isLongRun'] && this.showCustomFunctionName !== '') {
+            item['propertiesString']['supports_no_wait'] = 'True';
+            this.needWaitCommand = true;
+        }
+        if (item['methodName'] === 'delete') {
+            item['propertiesString']['confirmation'] = 'True';
+        }
+        if (item['methodName'] === 'show') {
+            this.showCustomFunctionName = item['functionName'];
+        }
+        if (item['needGeneric'] && !isNullOrUndefined(item['genericSetterArgName'])) {
+            item['propertiesString']['custom_func_name'] = this.pythonString(item['functionName']);
+            const setterName = item['genericSetterArgName'];
+            if (setterName && setterName !== '' && setterName !== 'parameters') {
+                item['propertiesString']['setter_arg_name'] = this.pythonString(setterName);
+            }
+            if (item['isLongRun'] && !AzConfiguration.getValue(CodeGenConstants.sdkTrack1)) {
+                item['propertiesString']['setter_name'] = "'begin_create_or_update'";
+            }
+        }
+        return item;
+    }
+
     public async GetRenderData(): Promise<Record<string, unknown>> {
         let data = { imports: [], pylints: [] };
         data['imports'].push([
             CodeGenConstants.DEFAULT_CLI_CORE_LIB + '.commands',
             ['CliCommandType'],
         ]);
-        let importProfile = false;
-        let lineTooLong = false;
-        let needWaitCommand = false;
-        let showCustomFunctionName = '';
-        const extraNonStringProperties = ['resourceType', 'mode'];
-        const extraProperties = ['maxApi', 'minApi'];
-        const pythonString = (str) => {
-            return `'${str}'`;
-        };
-        const extensionConverter = (item) => {
-            if (!isNullOrUndefined(item['parent']) && !isNullOrUndefined(item['name'])) {
-                item['name'] = item['parent'] + ' ' + item['name'];
-            }
-            return item;
-        };
-
-        const commandGroupConverter = (item) => {
-            item['propertiesString'] = {};
-            extraProperties.forEach((prop) => {
-                if (!isNullOrUndefined(item[prop])) {
-                    item['propertiesString'][prop] = pythonString(item[prop]);
-                }
-            });
-            extraNonStringProperties.forEach((prop) => {
-                if (!isNullOrUndefined(item[prop])) {
-                    item['propertiesString'][prop] = item[prop];
-                }
-                if (prop === 'resourceType' && !isNullOrUndefined(item[prop])) {
-                    importProfile = true;
-                }
-            });
-            if (
-                !isNullOrUndefined(item['operationTmplName']) &&
-                item['operationTmplName'].length >
-                    CodeGenConstants.PYLINT_MAX_OPERATION_TEMPLATE_LENGTH
-            ) {
-                lineTooLong = true;
-            }
-            if (needWaitCommand && showCustomFunctionName !== '') {
-                item['needWaitCommand'] = true;
-                item['showCustomFunctionName'] = showCustomFunctionName;
-                needWaitCommand = false;
-                showCustomFunctionName = '';
-            } else if (needWaitCommand) {
-                needWaitCommand = false;
-            } else if (showCustomFunctionName !== '') {
-                showCustomFunctionName = '';
-            }
-            return item;
-        };
-
-        const commandConverter = (item) => {
-            item['propertiesString'] = {};
-            extraProperties.forEach((prop) => {
-                if (!isNullOrUndefined(item[prop])) {
-                    item['propertiesString'][prop] = pythonString(item[prop]);
-                }
-            });
-            extraNonStringProperties.forEach((prop) => {
-                if (!isNullOrUndefined(item[prop])) {
-                    item['propertiesString'][prop] = item[prop];
-                }
-                if (prop === 'resourceType' && !isNullOrUndefined(item[prop])) {
-                    importProfile = true;
-                }
-            });
-            if (item['isLongRun'] && showCustomFunctionName !== '') {
-                item['propertiesString']['supports_no_wait'] = 'True';
-                needWaitCommand = true;
-            }
-            if (item['methodName'] === 'delete') {
-                item['propertiesString']['confirmation'] = 'True';
-            }
-            if (item['methodName'] === 'show') {
-                showCustomFunctionName = item['functionName'];
-            }
-            if (item['needGeneric'] && !isNullOrUndefined(item['genericSetterArgName'])) {
-                item['propertiesString']['custom_func_name'] = pythonString(item['functionName']);
-                const setterName = item['genericSetterArgName'];
-                if (setterName && setterName !== '' && setterName !== 'parameters') {
-                    item['propertiesString']['setter_arg_name'] = pythonString(setterName);
-                }
-                if (item['isLongRun'] && !AzConfiguration.getValue(CodeGenConstants.sdkTrack1)) {
-                    item['propertiesString']['setter_name'] = "'begin_create_or_update'";
-                }
-            }
-            return item;
-        };
 
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
             CodeModelTypes,
@@ -133,7 +135,7 @@ export class CliCommands extends TemplateBase {
                         name: SortOrder.ASEC,
                     },
                     [],
-                    extensionConverter,
+                    this.extensionConverter.bind(this),
                 ),
             ],
             [
@@ -151,7 +153,7 @@ export class CliCommands extends TemplateBase {
                     ],
                     { name: SortOrder.ASEC },
                     [],
-                    commandGroupConverter,
+                    this.commandGroupConverter.bind(this),
                 ),
             ],
             [
@@ -171,7 +173,7 @@ export class CliCommands extends TemplateBase {
                     ],
                     {},
                     [],
-                    commandConverter,
+                    this.commandConverter.bind(this),
                 ),
             ],
         ]);
@@ -181,14 +183,14 @@ export class CliCommands extends TemplateBase {
             ['commandGroup', 'command'],
         ];
         data = { ...data, ...this.model.getModelData('extension', inputProperties, dependencies) };
-        if (importProfile) {
+        if (this.importProfile) {
             data['imports'].push(['azure.cli.core.profiles', ['ResourceType']]);
         }
         data['pylints'].push(
             '# pylint: disable=too-many-statements',
             '# pylint: disable=too-many-locals',
         );
-        if (lineTooLong) {
+        if (this.lineTooLong) {
             data['pylints'].push('# pylint: disable=line-too-long');
         }
         data['azextFolder'] = this.model.AzextFolder;
