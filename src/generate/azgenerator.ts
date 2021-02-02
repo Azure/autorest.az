@@ -52,25 +52,23 @@ export async function processRequest(host: Host) {
         }
 
         for (const f in files) {
-            if (!isNullOrUndefined(files[f])) {
-                if (
-                    (AzConfiguration.getValue(CodeGenConstants.generationMode) !==
-                        GenerationMode.Incremental &&
-                        (f.endsWith('azext_metadata.json') ||
-                            (f.endsWith('setup.py') &&
-                                AzConfiguration.getValue(CodeGenConstants.targetMode) !==
-                                    TargetMode.Core))) ||
-                    f.endsWith('HISTORY.rst') ||
-                    f.endsWith('setup.cfg') ||
-                    // f.endsWith('report.md') ||
-                    f.endsWith('tests/__init__.py') ||
-                    f.endsWith('preparers.py') ||
-                    f.endsWith('commands.py')
-                ) {
-                    host.WriteFile(f, files[f]);
-                } else {
-                    host.WriteFile(f, files[f].join(EOL));
-                }
+            if (
+                (AzConfiguration.getValue(CodeGenConstants.generationMode) !==
+                    GenerationMode.Incremental &&
+                    (f.endsWith('azext_metadata.json') ||
+                        (f.endsWith('setup.py') &&
+                            AzConfiguration.getValue(CodeGenConstants.targetMode) !==
+                                TargetMode.Core))) ||
+                f.endsWith('HISTORY.rst') ||
+                f.endsWith('setup.cfg') ||
+                // f.endsWith('report.md') ||
+                f.endsWith('tests/__init__.py') ||
+                f.endsWith('preparers.py') ||
+                f.endsWith('commands.py')
+            ) {
+                host.WriteFile(f, files[f]);
+            } else {
+                host.WriteFile(f, files[f].join(EOL));
             }
         }
         closeInplaceGen();
