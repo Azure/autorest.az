@@ -18,22 +18,16 @@ import * as path from 'path';
 export class CliCommands extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        if (model.IsCliCore) {
-            this.relativePath = path.join(
-                PathConstants.generatedFolder,
-                PathConstants.commandsFile,
-            );
-        } else {
-            this.relativePath = path.join(
-                model.AzextFolder,
-                PathConstants.generatedFolder,
-                PathConstants.commandsFile,
-            );
-        }
+        this.relativePath = path.join(
+            model.AzextFolder,
+            PathConstants.generatedFolder,
+            PathConstants.commandsFile,
+        );
         this.tmplPath = path.join(PathConstants.templateRootFolder, 'generated/commands.py.njx');
     }
 
-    public getDataFromModel(data: any) {
+    public async GetRenderData(): Promise<Record<string, unknown>> {
+        let data = { imports: [], pylints: [] };
         data['imports'].push([
             CodeGenConstants.DEFAULT_CLI_CORE_LIB + '.commands',
             ['CliCommandType'],
@@ -45,7 +39,7 @@ export class CliCommands extends TemplateBase {
         const extraNonStringProperties = ['resourceType', 'mode'];
         const extraProperties = ['maxApi', 'minApi'];
         const pythonString = (str) => {
-            return "'" + str + "'";
+            return `'${str}'`;
         };
         const extensionConverter = (item) => {
             if (!isNullOrUndefined(item['parent']) && !isNullOrUndefined(item['name'])) {
@@ -198,14 +192,9 @@ export class CliCommands extends TemplateBase {
             data['pylints'].push('# pylint: disable=line-too-long');
         }
         data['azextFolder'] = this.model.AzextFolder;
-        return data;
-    }
-
-    public async GetRenderData(): Promise<Record<string, unknown>> {
-        const data = { data: { imports: [], pylints: [] } };
-        const modelData = this.getDataFromModel(data.data);
-        data.data = modelData;
-        return data;
+        const result = { data: { imports: [], pylints: [] } };
+        result.data = data;
+        return result;
     }
 
     public async fullGeneration(): Promise<string[]> {

@@ -51,7 +51,6 @@ export async function processRequest(host: Host) {
             }
         }
 
-        const tolintFiles = [];
         for (const f in files) {
             if (!isNullOrUndefined(files[f])) {
                 if (
@@ -69,22 +68,16 @@ export async function processRequest(host: Host) {
                     f.endsWith('commands.py')
                 ) {
                     host.WriteFile(f, files[f]);
-                    if (f.endsWith('commands.py')) {
-                        tolintFiles.push(path.join(model.azOutputFolder, f));
-                    }
                 } else {
                     host.WriteFile(f, files[f].join(EOL));
                 }
             }
         }
         closeInplaceGen();
-        // tolintFiles.forEach(async (fileName) => {
-        //     await runLintball(fileName);
-        // });
-    } catch (E) {
+    } catch (error) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
-        throw E;
+        throw error;
     }
 }
