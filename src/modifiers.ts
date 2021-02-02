@@ -1,4 +1,10 @@
-import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
+import {
+    CodeModel,
+    codeModelSchema,
+    Operation,
+    OperationGroup,
+    Parameter,
+} from '@azure-tools/codemodel';
 import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
@@ -90,249 +96,216 @@ function hasSpecialChars(str: string): boolean {
     return !/^[a-zA-Z0-9]+$/.test(str);
 }
 
+const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
+    return selector
+        ? !hasSpecialChars(selector)
+            ? new RegExp(`^${selector}$`, 'gi')
+            : new RegExp(selector, 'gi')
+        : undefined;
+};
+
 export class Modifiers {
     codeModel: CodeModel;
-    allCommandGroups: string[];
+    allCommandGroups: Record<string, number>;
+    groupChanged: boolean;
 
     constructor(protected session: Session<CodeModel>) {
         this.codeModel = session.model;
-        this.getAllCommandGroup();
+        this.initAllCommandGroup();
+        this.groupChanged = false;
     }
 
-    getAllCommandGroup() {
-        this.allCommandGroups = [];
-        for (const group of values(this.codeModel.operationGroups)) {
-            this.allCommandGroups.push(group.language['az'].command);
+    initAllCommandGroup(): void {
+        this.allCommandGroups = {};
+        let groupIdx = 0;
+        this.codeModel.operationGroups.forEach((operationGroup) => {
+            this.allCommandGroups[operationGroup.language['az'].command] = groupIdx;
+            groupIdx++;
+        });
+    }
+
+    modifyParam(parameter: Parameter, directive: any): void {
+        const parameterRegex = getPatternToMatch(directive.where['parameter-name']);
+        const parameterReplacer =
+            directive.set !== undefined ? directive.set['parameter-name'] : undefined;
+        const paramDescriptionReplacer =
+            directive.set !== undefined ? directive.set['parameter-description'] : undefined;
+        if (
+            !isNullOrUndefined(parameter.language['az'].name) &&
+            !isNullOrUndefined(parameterRegex) &&
+            parameter.language['az'].name.match(parameterRegex)
+        ) {
+            parameter.language['az'].name = parameterReplacer
+                ? parameterRegex
+                    ? parameter.language['az'].name.replace(parameterRegex, parameterReplacer)
+                    : parameterReplacer
+                : parameter.language['az'].name;
+            parameter.language['az'].mapsto = parameter.language['az'].name.replace(/-/g, '_');
+            parameter.language['az'].description =
+                paramDescriptionReplacer || parameter.language['az'].description;
         }
     }
 
-    async process() {
+    modifyOperationGroup(operationGroup: OperationGroup, directive: any, groupIdx: number): void {
+        const groupRegex = getPatternToMatch(directive.where.group);
+        const groupReplacer = directive.set !== undefined ? directive.set.group : undefined;
+        const groupDescriptionReplacer =
+            directive.set !== undefined ? directive.set['group-description'] : undefined;
+        if (
+            !isNullOrUndefined(operationGroup.language['az']['command']) &&
+            !isNullOrUndefined(groupRegex) &&
+            operationGroup.language['az'].command.match(groupRegex)
+        ) {
+            if (
+                Object.prototype.hasOwnProperty.call(
+                    this.allCommandGroups,
+                    operationGroup.language['az'].command,
+                )
+            ) {
+                delete this.allCommandGroups[operationGroup.language['az'].command];
+            }
+            operationGroup.language['az'].command = groupReplacer
+                ? groupRegex
+                    ? operationGroup.language['az'].command.replace(groupRegex, groupReplacer)
+                    : groupReplacer
+                : operationGroup.language['az'].command;
+            this.allCommandGroups[operationGroup.language['az'].command] = groupIdx;
+            operationGroup.language['az'].description =
+                groupDescriptionReplacer || operationGroup.language['az'].description;
+            this.groupChanged = true;
+        }
+    }
+
+    modifyOperation(
+        operationGroup: OperationGroup,
+        operation: Operation,
+        directive: any,
+        opIndex: number,
+        groupIdx: number,
+    ): void {
+        const commandRegex = getPatternToMatch(directive.where.command);
+        const commandReplacer = directive.set !== undefined ? directive.set.command : undefined;
+        const commandDescriptionReplacer =
+            directive.set !== undefined ? directive.set['command-description'] : undefined;
+        if (this.groupChanged) {
+            operation.language['az'].command =
+                operationGroup.language['az'].command + ' ' + operation.language['az'].name;
+        }
+        if (
+            !isNullOrUndefined(operation.language['az'].command) &&
+            !isNullOrUndefined(commandRegex) &&
+            operation.language['az'].command.match(commandRegex)
+        ) {
+            operation.language['az'].description =
+                commandDescriptionReplacer || operation.language['az'].description;
+            if (isNullOrUndefined(commandReplacer)) {
+                return;
+            }
+            const oldCommand = operation.language['az'].command;
+            const oldCommandArr = oldCommand.split(' ');
+            const newCommand = operation.language['az'].command.replace(
+                commandRegex,
+                commandReplacer,
+            );
+            const newCommandArr = newCommand.split(' ');
+            oldCommandArr.pop();
+            const oldGroup = oldCommandArr.join(' ');
+            let commonIdx = newCommandArr.length - 2;
+            let newGroup = newCommandArr.slice(0, newCommandArr.length - 1).join(' ');
+            const subCommandGroup = newGroup;
+            let newAzName = newCommandArr.last;
+            while (commonIdx >= 0) {
+                const groupName = newCommandArr.slice(0, commonIdx + 1).join(' ');
+                const newIndex = this.allCommandGroups[groupName];
+                if (!isNullOrUndefined(newIndex)) {
+                    newAzName = newCommandArr.slice(commonIdx + 1, newCommandArr.length).join(' ');
+                    newGroup = newCommandArr.slice(0, commonIdx + 1).join(' ');
+                    if (groupIdx !== newIndex) {
+                        this.codeModel.operationGroups[groupIdx].operations.splice(opIndex, 1);
+                        this.codeModel.operationGroups[newIndex].operations.push(operation);
+                    }
+                    break;
+                } else if (operationGroup.operations.length === 1) {
+                    operationGroup.language['az'].command = newGroup;
+                    const oldIndex = this.allCommandGroups[oldGroup];
+                    if (!isNullOrUndefined(oldIndex)) {
+                        delete this.allCommandGroups[oldGroup];
+                    }
+                    this.allCommandGroups[newGroup] = groupIdx;
+                    break;
+                }
+                commonIdx--;
+            }
+            if (commonIdx < 0) {
+                this.session.message({
+                    Channel: Channel.Warning,
+                    Text:
+                        'Trying to change the extension-name of a single command is not allowed!\n if you want to change the whole extension-name you can change the configuration in readme.az.md \n',
+                });
+                return;
+            }
+            operation.language['az'].name = newAzName;
+            operation.language['az'].command = newCommand;
+            if (newGroup != subCommandGroup) {
+                operation.language['az'].subCommandGroup = subCommandGroup;
+            }
+            this.session.message({
+                Channel: Channel.Warning,
+                Text: ' newAzName:' + newAzName,
+            });
+        }
+    }
+
+    async process(): Promise<CodeModel> {
         directives = AzConfiguration.getValue(CodeGenConstants.directive);
         const options = AzConfiguration.getValue(CodeGenConstants.az);
-        if (!isNullOrUndefined(directives)) {
-            for (const directive of directives.filter((each) => !each.transform)) {
-                const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
-                    return selector
-                        ? !hasSpecialChars(selector)
-                            ? new RegExp(`^${selector}$`, 'gi')
-                            : new RegExp(selector, 'gi')
-                        : undefined;
-                };
-                if (isWhereCommandDirective(directive)) {
-                    const groupRegex = getPatternToMatch(directive.where.group);
-                    const parameterRegex = getPatternToMatch(directive.where['parameter-name']);
-                    const commandRegex = getPatternToMatch(directive.where.command);
-                    const parameterReplacer =
-                        directive.set !== undefined ? directive.set['parameter-name'] : undefined;
-                    const paramDescriptionReplacer =
-                        directive.set !== undefined
-                            ? directive.set['parameter-description']
-                            : undefined;
-                    const commandReplacer =
-                        directive.set !== undefined ? directive.set.command : undefined;
-                    const commandDescriptionReplacer =
-                        directive.set !== undefined
-                            ? directive.set['command-description']
-                            : undefined;
-                    const groupReplacer =
-                        directive.set !== undefined ? directive.set.group : undefined;
-                    const groupDescriptionReplacer =
-                        directive.set !== undefined
-                            ? directive.set['group-description']
-                            : undefined;
-                    for (const operationGroup of values(this.codeModel.operationGroups)) {
-                        // operationGroup
-                        let groupChanged = false;
-                        if (
-                            !isNullOrUndefined(operationGroup.language['az']['command']) &&
-                            operationGroup.language['az'].command.match(groupRegex)
-                        ) {
-                            const index = this.allCommandGroups.indexOf(
-                                operationGroup.language['az'].command,
-                            );
-                            if (index > -1) {
-                                this.allCommandGroups.splice(index, 1);
-                            }
-                            operationGroup.language['az'].command = groupReplacer
-                                ? groupRegex
-                                    ? operationGroup.language['az'].command.replace(
-                                          groupRegex,
-                                          groupReplacer,
-                                      )
-                                    : groupReplacer
-                                : operationGroup.language['az'].command;
-                            this.allCommandGroups.push(operationGroup.language['az'].command);
-                            operationGroup.language['az'].description =
-                                groupDescriptionReplacer ||
-                                operationGroup.language['az'].description;
-                            groupChanged = true;
-                        }
-                        let opIndex = -1;
-                        for (const operation of values(operationGroup.operations)) {
-                            opIndex++;
-                            // operation
-                            if (groupChanged) {
-                                operation.language['az'].command =
-                                    operationGroup.language['az'].command +
-                                    ' ' +
-                                    operation.language['az'].name;
-                            }
-                            if (
-                                operation.language['az'].command !== undefined &&
-                                operation.language['az'].command.match(commandRegex)
-                            ) {
-                                if (
-                                    !isNullOrUndefined(commandRegex) &&
-                                    !isNullOrUndefined(commandReplacer)
-                                ) {
-                                    const oldCommand = operation.language['az'].command;
-                                    const oldCommandArr = oldCommand.split(' ');
-                                    const newCommand = operation.language['az'].command.replace(
-                                        commandRegex,
-                                        commandReplacer,
-                                    );
-                                    const newCommandArr = newCommand.split(' ');
-                                    const oriName = operation.language['az'].name;
-                                    operation.language['az'].name =
-                                        newCommandArr[newCommandArr.length - 1];
-                                    if (oldCommandArr[0] !== newCommandArr[0]) {
-                                        this.session.message({
-                                            Channel: Channel.Warning,
-                                            Text:
-                                                'Trying to change the extension-name of a single command is not allowed!\n if you want to change the whole extension-name you can change the configuration in readme.az.md \n',
-                                        });
-                                        continue;
-                                    }
-                                    const newAzName =
-                                        newCommandArr.length > 2
-                                            ? newCommandArr.slice(2, newCommandArr.length).join(' ')
-                                            : newCommandArr.last;
-                                    this.session.message({
-                                        Channel: Channel.Warning,
-                                        Text: ' newAzName:' + newAzName,
-                                    });
-                                    newCommandArr.pop();
-                                    const newGroup =
-                                        newCommandArr.length >= 2
-                                            ? newCommandArr[0] + ' ' + newCommandArr[1]
-                                            : newCommandArr.join(' ');
-
-                                    oldCommandArr.pop();
-                                    const oldGroup =
-                                        oldCommandArr.length >= 2
-                                            ? oldCommandArr[0] + ' ' + oldCommandArr[1]
-                                            : oldCommandArr.join(' ');
-                                    if (oldGroup !== newGroup) {
-                                        // if there's only one command in the operationGroup it's okay to change the group name
-                                        if (operationGroup.operations.length === 1) {
-                                            operationGroup.language['az'].command = newGroup;
-                                            const oldIndex = this.allCommandGroups.indexOf(
-                                                oldGroup,
-                                            );
-                                            if (oldIndex > -1) {
-                                                this.allCommandGroups.splice(oldIndex, 1);
-                                            }
-                                            this.allCommandGroups.push(newGroup);
-                                        } else {
-                                            // else if the new group is already exists then we can move the operation into that operationGroup
-                                            const newIndex = this.allCommandGroups.indexOf(
-                                                newGroup,
-                                            );
-                                            if (newIndex > -1) {
-                                                operation.language['az'].command = newCommand;
-                                                operation.language['az'].description =
-                                                    commandDescriptionReplacer ||
-                                                    operation.language['az'].description;
-                                                this.codeModel.operationGroups[
-                                                    newIndex
-                                                ].operations.push(operation);
-                                                operationGroup.operations.splice(opIndex, 1);
-                                            } else {
-                                                // otherwise it's not allowed to change the group name in command directive.
-                                                // but before that we should change operation az name back.
-                                                this.session.message({
-                                                    Channel: Channel.Warning,
-                                                    Text:
-                                                        'Trying to change the group-name of a command in a group with other commands exists is not allowed!\nYou can move the command to an pre-existing command group. \nYou can use the group directive to change the group-name.\n',
-                                                });
-                                                operation.language['az'].name = oriName;
-                                            }
-                                            continue;
-                                        }
-                                    }
-                                    operation.language['az'].command = newCommand;
-                                    if (newCommandArr.length > 2) {
-                                        operation.language['az'].name = newAzName;
-                                        operation.language[
-                                            'az'
-                                        ].subCommandGroup = newCommandArr.join(' ');
-                                    }
-                                }
-                                operation.language['az'].description =
-                                    commandDescriptionReplacer ||
-                                    operation.language['az'].description;
-                            }
-
-                            for (const parameter of values(operation.parameters)) {
-                                if (
-                                    parameter.language['az'].name !== undefined &&
-                                    parameter.language['az'].name.match(parameterRegex)
-                                ) {
-                                    parameter.language['az'].name = parameterReplacer
-                                        ? parameterRegex
-                                            ? parameter.language['az'].name.replace(
-                                                  parameterRegex,
-                                                  parameterReplacer,
-                                              )
-                                            : parameterReplacer
-                                        : parameter.language['az'].name;
-                                    parameter.language['az'].mapsto = parameter.language[
-                                        'az'
-                                    ].name.replace(/-/g, '_');
-                                    parameter.language['az'].description =
-                                        paramDescriptionReplacer ||
-                                        parameter.language['az'].description;
-                                }
-                            }
-
-                            for (const request of values(operation.requests)) {
-                                for (const parameter of values(request.parameters)) {
-                                    if (
-                                        parameter.language['az'].name !== undefined &&
-                                        parameter.language['az'].name.match(parameterRegex)
-                                    ) {
-                                        parameter.language['az'].name = parameterReplacer
-                                            ? parameterRegex
-                                                ? parameter.language['az'].name.replace(
-                                                      parameterRegex,
-                                                      parameterReplacer,
-                                                  )
-                                                : parameterReplacer
-                                            : parameter.language['az'].name;
-                                        parameter.language['az'].mapsto = parameter.language[
-                                            'az'
-                                        ].name.replace(/-/g, '_');
-                                        parameter.language['az'].description =
-                                            paramDescriptionReplacer ||
-                                            parameter.language['az'].description;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (
-                            operationGroup.language['az'].command === options['extensions'] &&
-                            !isNullOrUndefined(operationGroup.language['cli'].extensionMode) &&
-                            operationGroup.language['cli'].extensionMode !==
-                                this.codeModel.info['extensionMode']
-                        ) {
-                            this.codeModel.info['extensionMode'] =
-                                operationGroup.language['cli'].extensionMode;
-                        }
-                    }
-                }
-            }
+        if (isNullOrUndefined(directives)) {
+            return this.codeModel;
         }
+        directives
+            .filter((each) => !each.transform && isWhereCommandDirective(each))
+            .forEach((directive) => {
+                let groupIdx = -1;
+                this.codeModel.operationGroups.map((operationGroup) => {
+                    groupIdx++;
+                    // operationGroup
+                    this.groupChanged = false;
+                    this.modifyOperationGroup(operationGroup, directive, groupIdx);
+
+                    let opIndex = -1;
+                    operationGroup.operations.map((operation) => {
+                        opIndex++;
+                        // operation
+                        this.modifyOperation(
+                            operationGroup,
+                            operation,
+                            directive,
+                            opIndex,
+                            groupIdx,
+                        );
+
+                        operation.parameters.map((parameter) => {
+                            this.modifyParam(parameter, directive);
+                        });
+
+                        operation.requests.map((request) => {
+                            request.parameters?.map((parameter) => {
+                                this.modifyParam(parameter, directive);
+                            });
+                        });
+                    });
+
+                    if (
+                        operationGroup.language['az'].command === options['extensions'] &&
+                        !isNullOrUndefined(operationGroup.language['cli'].extensionMode) &&
+                        operationGroup.language['cli'].extensionMode !==
+                            this.codeModel.info['extensionMode']
+                    ) {
+                        this.codeModel.info['extensionMode'] =
+                            operationGroup.language['cli'].extensionMode;
+                    }
+                });
+            });
         return this.codeModel;
     }
 }
