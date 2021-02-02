@@ -1218,11 +1218,11 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Command_GenericSetterArgName(): string {
-        const geneParam = this.Command_GenericSetterParameter(this.Command_GetOriginalOperation);
-        if (isNullOrUndefined(geneParam)) {
+        const genericParam = this.Command_GenericSetterParameter(this.Command_GetOriginalOperation);
+        if (isNullOrUndefined(genericParam)) {
             return undefined;
         }
-        return this.Parameter_NamePython(geneParam);
+        return this.Parameter_NamePython(genericParam);
     }
 
     public get Command_MaxApi(): string {
