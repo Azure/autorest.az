@@ -23,10 +23,10 @@ export async function processRequest(host: Host) {
         const plugin = new Renamer(session);
         const result = await plugin.process();
         host.WriteFile(CodeGenConstants.cliCodeModelName, serialize(result));
-    } catch (E) {
+    } catch (error) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
-        throw E;
+        throw error;
     }
 }

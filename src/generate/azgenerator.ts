@@ -1,8 +1,7 @@
-import { Channel, Host, startSession } from '@azure-tools/autorest-extension-base';
+import { Host, startSession } from '@azure-tools/autorest-extension-base';
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from 'os';
 import * as path from 'path';
-import { isNullOrUndefined } from '../utils/helper';
 import {
     CodeGenConstants,
     PathConstants,
@@ -52,19 +51,17 @@ export async function processRequest(host: Host) {
         }
 
         for (const f in files) {
-            if (!isNullOrUndefined(files[f])) {
-                if (typeof files[f] === 'string') {
-                    host.WriteFile(f, files[f]);
-                } else {
-                    host.WriteFile(f, files[f].join(EOL));
-                }
+            if (typeof files[f] === 'string') {
+                host.WriteFile(f, files[f]);
+            } else {
+                host.WriteFile(f, files[f].join(EOL));
             }
         }
         closeInplaceGen();
-    } catch (E) {
+    } catch (error) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
-        throw E;
+        throw error;
     }
 }

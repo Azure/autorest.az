@@ -6,14 +6,12 @@
 import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
 import * as path from 'path';
-import * as fs from 'fs';
 import { readFile } from '@azure-tools/async-io';
-import { CodeModel, SchemaType } from '@azure-tools/codemodel';
-import { createTestSession } from '../utils/test-helper';
+import { SchemaType } from '@azure-tools/codemodel';
 import * as sourceMapSupport from 'source-map-support';
-import { Entry } from '../../src/entry';
-import { CodeModelCliImpl } from '../../src/generate/CodeModelAzImpl';
 import { CodeModelTypes, DataGraph, RenderInput, SortOrder } from '../../src/utils/models';
+import { isNullOrUndefined } from '../../src/utils/helper';
+import { RenderDataBase } from './render-getRenderDataBase';
 
 sourceMapSupport.install();
 
@@ -22,47 +20,23 @@ const resources = path.join(`${__dirname}`, '/../../../test/unittest/');
 const fileName = 'offazure-az-modifier-after.yaml';
 
 @suite
-export class Process {
-    private model: CodeModelCliImpl;
-
-    async init(): Promise<void> {
-        const cfg = {
-            az: {
-                extensions: 'offazure',
-            },
-        };
-        if (!fs.existsSync(path.join(resources, 'input', fileName))) {
-            throw Error;
-        }
-        const session = await createTestSession<CodeModel>(cfg, path.join(resources, 'input'), [
-            fileName,
-        ]);
-
-        const entry = new Entry(session);
-        await entry.init();
-
-        const model = new CodeModelCliImpl(session);
-
-        this.model = model;
-    }
-
+export class Process extends RenderDataBase {
     getRenderTestData(dependencies: DataGraph, arrayOutputFormat = false) {
         const data = {
             model: {},
         };
 
-        const converter = new Map<string, (item) => unknown>([
-            [
-                'mapsTo',
-                function (item: string) {
-                    if (item.endsWith('_')) {
-                        item = item.substr(0, item.length - 1);
-                    }
-                    item = item.replace(/_/g, '-');
-                    return item;
-                },
-            ],
-        ]);
+        const converter = (item) => {
+            let mapsTo = item['mapsTo'];
+            if (isNullOrUndefined(mapsTo)) {
+                return undefined;
+            }
+            if (mapsTo.endsWith('_')) {
+                mapsTo = mapsTo.substr(0, mapsTo.length - 1);
+            }
+            item['mapsTo'] = mapsTo.replace(/_/g, '-');
+            return item;
+        };
 
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
             CodeModelTypes,
@@ -98,7 +72,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async getModelDataTest1() {
-        await this.init();
+        await super.init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/command-groups.json')),
         );
@@ -113,7 +87,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async getModelDataTest2() {
-        await this.init();
+        await super.init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/commands.json')),
         );
@@ -131,7 +105,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async getModelDataTest3() {
-        await this.init();
+        await super.init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/methods.json')),
         );
@@ -150,7 +124,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async getModelDataTest4() {
-        await this.init();
+        await super.init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/method-parameters.json')),
         );
@@ -170,7 +144,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async getModelDataTest5() {
-        await this.init();
+        await super.init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/methods-array.json')),
         );
@@ -189,19 +163,45 @@ export class Process {
         );
     }
 
-    // @test(slow(600000), timeout(1500000)) async getModelDataTest6() {
-    //     await this.init();
-    //     const expected = JSON.parse(
-    //         await readFile(path.join(resources, 'expected', 'data/methods.json')),
-    //     );
-    //     const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
-    //         ['extension', 'commandGroup'],
-    //         ['commandGroup', 'command'],
-    //         ['command', 'method'],
-    //         ['method', 'methodParameter'],
-    //         ['method', 'azExample'],
-    //     ];
-    //     const data = this.getRenderTestData(dependencies);
-    //     console.log(JSON.stringify(data));
-    // }
+    @test(slow(600000), timeout(1500000)) async getModelDataTest6() {
+        await super.init('offazure', fileName);
+        const expected = JSON.parse(
+            await readFile(
+                path.join(resources, 'expected', 'data/method-parameters-az-examples.json'),
+            ),
+        );
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+            ['commandGroup', 'command'],
+            ['command', 'method'],
+            ['method', 'methodParameter'],
+            ['method', 'azExample'],
+        ];
+        const data = this.getRenderTestData(dependencies);
+        // console.log(JSON.stringify(data));
+        assert.deepStrictEqual(
+            data,
+            expected,
+            'Getting render data error from extension to methodParameter ',
+        );
+    }
+
+    @test(slow(600000), timeout(1500000)) async testConverter() {
+        const converter = (item) => {
+            let mapsTo = item['mapsTo'];
+            if (isNullOrUndefined(mapsTo)) {
+                return undefined;
+            }
+            if (mapsTo.endsWith('_')) {
+                mapsTo = mapsTo.substr(0, mapsTo.length - 1);
+            }
+            item['mapsTo'] = mapsTo.replace(/_/g, '-');
+            return item;
+        };
+        const item = {
+            mapsTo: 'converter_test_',
+        };
+        const data = converter(item);
+        assert.deepStrictEqual(data, { mapsTo: 'converter-test' }, 'testConverter error!');
+    }
 }
