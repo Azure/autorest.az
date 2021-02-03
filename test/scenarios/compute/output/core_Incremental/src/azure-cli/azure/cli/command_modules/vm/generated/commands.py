@@ -16,11 +16,10 @@ from azure.cli.core.commands import CliCommandType
 def load_command_table(self, _):
 
     from ..generated._client_factory import cf_virtual_machine
+
     vm_virtual_machine = CliCommandType(
         operations_tmpl='azure.mgmt.compute.operations._virtual_machines_operations#VirtualMachinesOperations.{}',
-        client_factory=cf_virtual_machine)
-    with self.command_group('vm virtual-machine', vm_virtual_machine, client_factory=cf_virtual_machine,
-                            is_experimental=True) as g:
-        g.custom_command('assess-patch', 'vm_virtual_machine_assess_patch', supports_no_wait=True,
-                         min_api='2020-06-01')
-        g.custom_wait_command('wait')
+        client_factory=cf_virtual_machine,
+    )
+    with self.command_group('vm virtual-machine', vm_virtual_machine, is_experimental=True) as g:
+        g.custom_command('assess-patch', 'vm_virtual_machine_assess_patch', minApi='2020-06-01')
