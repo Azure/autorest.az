@@ -134,7 +134,7 @@ If you want to do a simple try, please go to the az-output-folder that you speci
 ```
 cd <az-output-folder>  
 python setup.py sdist bdist_wheel 
-az extension add <path-to-the-wheel-file>
+az extension add --source=<path-to-the-wheel-file>
 ``` 
 
 If it's for Azure CLI extensions development, you need to setup the azdev development environment and add the extension.
