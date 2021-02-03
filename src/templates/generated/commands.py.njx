@@ -7,27 +7,66 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
-{% for pylint in data.pylints %}
-{{pylint}}
-{% endfor %}
+{%- for pylint in data.pylints %}
+{{ pylint }}
+{%- endfor %}
 
-{% for lib, items in data.imports %}
-{% if items.length == 1 %}
+{% for lib, items in data.imports -%}
+{% if items.length == 1 -%}
 from {{lib}} import {{items[0]}}
-{% else %}
+{% else -%}
 from {{lib}} import (
-    {% for item in items %}
+    {% for item in items -%}
     {{item}}{%- if not loop.last -%},{%- endif %}
-    {% endfor %}
+    {% endfor -%}
 )
-{% endfor %}
-
+{% endif -%}
+{%- endfor %}
 
 def load_command_table(self, _):
+{%- if data.hasExtension -%}
+{%- for extension in data.Extensions -%}
+{% set extensionModeDefined = false %}
+{% set groupMode = extension.mode %}
+{%- for commandGroup in extension.CommandGroups %}
 
-    from {{azextFolder}}.generated._client_factory import {{commandGroup.clientFactory}}
-    {{extension.nameUnderscore}}_hyper_vcluster = CliCommandType(
-        operations_tmpl='{{commandGroup.operationTmpl}}',
-        client_factory={{commandGroup.clientFactory}})
-    with self.command_group('{{commandGroup.groupName}}'{{commandGroup.propertiesString}}) as g:
-        g.{{command.type}}('{{command.commandName}}'{{command.propertiesString}})
+    from {{data.azextFolder}}.generated._client_factory import {{commandGroup.clientFactoryName}}
+    {{commandGroup.customCommandTypeName}} = CliCommandType(
+        operations_tmpl='{{commandGroup.operationTmplName}}',
+        client_factory={{commandGroup.clientFactoryName}})
+    with self.command_group('{{commandGroup.name}}', {{commandGroup.customCommandTypeName}}
+                            {%- for key, value in commandGroup.propertiesString %}
+                                {% if key != 'mode' %}
+                                    , {{key}}={{value}}
+                                {% else %}
+                                    {% if commandGroup.name == extension.name %}
+                                        {% set extensionModeDefined = true %}
+                                    {% endif %}
+                                    {% if (value != "stable" and value != extension.mode) or (commandGroup.name == extension.name) %}
+                                        , is_{{value}}=True
+                                    {% endif %}
+                                    {% set groupMode = value %}
+                                {% endif %}
+                            {% endfor -%}) as g:   
+        {%- for command in commandGroup.Commands %}
+        g.{{command.type}}('{{command.methodName}}'{%- if command.type != 'generic_update_command' %}, '{{command.functionName}}'{% endif -%}
+                            {%- for key, value in command.propertiesString %}
+                                {% if key != 'mode' %}
+                                    , {{key}}={{value|safe}}
+                                {% elif value != groupMode and value != "stable" %}
+                                    , is_{{value}}=True
+                                {% endif %}
+                            {% endfor -%})
+        {%- endfor %}
+        {% if commandGroup.needWaitCommand -%} 
+        g.custom_wait_command('wait', '{{commandGroup.showCustomFunctionName}}')
+        {%- endif %}
+{%- endfor %}
+{% if not extensionModeDefined and extension.mode != 'stable' %}
+    with self.command_group('{{extension.name}}', is_{{extension.mode}}=True):
+        pass
+{% endif %}
+{%- endfor %}
+{%- else %}
+    pass
+{%- endif %}

@@ -49,11 +49,11 @@ export async function processRequest(host: Host) {
         const plugin = new Entry(session);
         const result = await plugin.process();
         host.WriteFile(CodeGenConstants.AZ_ENTRY_CODE_MODEL_NAME, serialize(result));
-    } catch (E) {
+    } catch (error) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
-        throw E;
+        throw error;
     }
 }
 
@@ -159,6 +159,9 @@ function processFolderPath() {
             CodeGenConstants.azextFolder,
             'azext_' + extensionName.replace(/-/g, '_'),
         );
+    }
+    if (AzConfiguration.getValue(CodeGenConstants.isCliCore)) {
+        AzConfiguration.setValue(CodeGenConstants.azextFolder, '.');
     }
     if (
         !AzConfiguration.getValue(CodeGenConstants.sdkNeeded) &&
