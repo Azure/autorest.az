@@ -1,8 +1,7 @@
-import { Channel, Host, startSession } from '@azure-tools/autorest-extension-base';
+import { Host, startSession } from '@azure-tools/autorest-extension-base';
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from 'os';
 import * as path from 'path';
-import { isNullOrUndefined, runLintball } from '../utils/helper';
 import {
     CodeGenConstants,
     PathConstants,
@@ -52,20 +51,7 @@ export async function processRequest(host: Host) {
         }
 
         for (const f in files) {
-            if (
-                (AzConfiguration.getValue(CodeGenConstants.generationMode) !==
-                    GenerationMode.Incremental &&
-                    (f.endsWith('azext_metadata.json') ||
-                        (f.endsWith('setup.py') &&
-                            AzConfiguration.getValue(CodeGenConstants.targetMode) !==
-                                TargetMode.Core))) ||
-                f.endsWith('HISTORY.rst') ||
-                f.endsWith('setup.cfg') ||
-                // f.endsWith('report.md') ||
-                f.endsWith('tests/__init__.py') ||
-                f.endsWith('preparers.py') ||
-                f.endsWith('commands.py')
-            ) {
+            if (typeof files[f] === 'string') {
                 host.WriteFile(f, files[f]);
             } else {
                 host.WriteFile(f, files[f].join(EOL));
