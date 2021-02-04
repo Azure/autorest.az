@@ -730,7 +730,7 @@ export function isNullOrUndefined(obj: any) {
 
 export async function runLintball(filename: string): Promise<boolean> {
     const projectPath = path.join(`${__dirname}`, '/../../../');
-    filename = filename.replace(projectPath, '');
+    filename = path.relative(projectPath, filename);
     const cmd =
         `cd ${projectPath} && ` +
         path.join('node_modules/.bin/lintball') +
