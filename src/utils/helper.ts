@@ -729,10 +729,13 @@ export function isNullOrUndefined(obj: any) {
 }
 
 export async function runLintball(filename: string): Promise<boolean> {
+    const projectPath = path.join(`${__dirname}`, '/../../../');
+    filename = filename.replace(projectPath, '');
     const cmd =
-        path.join(`${__dirname}`, '/../../../' + 'node_modules/.bin/lintball') +
+        `cd ${projectPath} && ` +
+        path.join('node_modules/.bin/lintball') +
         ' -c ' +
-        path.join(`${__dirname}`, '/../../../.lintballrc.json') +
+        path.join('.lintballrc.json') +
         ' fix ' +
         filename;
     return await new Promise<boolean>((resolve, reject) => {
