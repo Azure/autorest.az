@@ -10,6 +10,7 @@ import * as request from 'request-promise-native';
 import { CodeGenConstants, ExtensionMode } from './models';
 import * as child_process from 'child_process';
 import { exec } from 'child_process';
+import * as extension from '@azure-tools/extension';
 
 export function changeCamelToDash(str: string): string {
     str = str.replace(/[A-Z][^A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
@@ -748,5 +749,13 @@ export async function runLintball(filename: string): Promise<boolean> {
             // Otherwise resolve the promise:
             return resolve(true);
         });
+    });
+}
+
+export async function runPython3(scriptName, debug = '') {
+    const command = ['python', scriptName, debug];
+    await extension.updatePythonPath(command);
+    child_process.execSync(command.join(' '), {
+        stdio: [0, 1, 2],
     });
 }

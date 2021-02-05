@@ -8,13 +8,21 @@
   },
   "scripts": {
     "start": "node dist/src/index.js",
+    "poststart": "node dist/src/azlinter/azlinter.js",
     "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/src/index.js",
     "eslint-fix": "eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/ --fix",
     "eslint": "eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/ --quiet",
+<<<<<<< HEAD
     "build": "npm run eslint && tsc",
     "postbuild": "cpy templates ../dist/src --cwd=src/ --parents",
     "start-testserver": "./node_modules/.bin/start-autorest-testserver",
     "stop-testserver": "./node_modules/.bin/stop-autorest-testserver",
+=======
+    "build": "npm run eslint && tsc ",
+    "postbuild": "cpy templates azlinter/*.py azlinter/requirements.txt ../dist/src --cwd=src/ --parents",
+    "start-testserver": "start-autorest-testserver",
+    "stop-testserver": "stop-autorest-testserver",
+>>>>>>> 5dd535af... using python scripts
     "watch": "tsc -p . --watch",
     "prepare": "npm run build",
     "test": "npm run build && mocha dist/test --recursive",
@@ -71,7 +79,6 @@
     "eslint-plugin-prettier": "^3.3.1",
     "js-yaml": "^3.13.1",
     "jszip-sync": "^3.2.1-sync",
-    "lintball": "^1.2.1",
     "node-yaml": "^3.2.0",
     "nunjucks": "^3.2.2",
     "prettier": "^2.2.1",
