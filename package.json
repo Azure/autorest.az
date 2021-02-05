@@ -1,6 +1,6 @@
 {
   "name": "@autorest/az",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Autorest Azure AZ extension",
   "main": "dist/src/index.js",
   "engines": {
@@ -11,7 +11,8 @@
     "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/src/index.js",
     "eslint-fix": "eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/ --fix",
     "eslint": "eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/ --quiet",
-    "build": "npm run eslint && tsc && cp -R src/templates dist/src",
+    "build": "npm run eslint && tsc",
+    "postbuild": "cpy templates ../dist/src --cwd=src/ --parents",
     "start-testserver": "./node_modules/.bin/start-autorest-testserver",
     "stop-testserver": "./node_modules/.bin/stop-autorest-testserver",
     "watch": "tsc -p . --watch",
@@ -57,11 +58,11 @@
     "del-cli": "^3.0.0"
   },
   "dependencies": {
-    "@azure-tools/async-io": "^3.0.209",
-    "@azure-tools/autorest-extension-base": "~3.1.235",
-    "@azure-tools/codegen": "^2.5.276",
+    "@azure-tools/async-io": "3.0.209",
+    "@azure-tools/autorest-extension-base": "3.1.235",
+    "@azure-tools/codegen": "2.5.276",
     "@azure-tools/codemodel": "4.13.325",
-    "@azure-tools/linq": "^3.1.232",
+    "@azure-tools/linq": "3.1.232",
     "autorest": "^3.0.6187",
     "await-exec": "^0.1.2",
     "compare-versions": "^3.6.0",

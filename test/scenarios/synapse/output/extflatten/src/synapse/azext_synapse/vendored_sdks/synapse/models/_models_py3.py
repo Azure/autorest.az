@@ -2053,6 +2053,43 @@ class LinkedIntegrationRuntimeRbacAuthorization(LinkedIntegrationRuntimeType):
         self.resource_id = resource_id
 
 
+class ManagedIdentity(msrest.serialization.Model):
+    """The workspace managed identity.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar principal_id: The principal ID of the workspace managed identity.
+    :vartype principal_id: str
+    :ivar tenant_id: The tenant ID of the workspace managed identity.
+    :vartype tenant_id: str
+    :param type: The type of managed identity for the workspace. Possible values include: "None",
+     "SystemAssigned".
+    :type type: str or ~synapse_management_client.models.ResourceIdentityType
+    """
+
+    _validation = {
+        'principal_id': {'readonly': True},
+        'tenant_id': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'principal_id': {'key': 'principalId', 'type': 'str'},
+        'tenant_id': {'key': 'tenantId', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        type: Optional[Union[str, "ResourceIdentityType"]] = None,
+        **kwargs
+    ):
+        super(ManagedIdentity, self).__init__(**kwargs)
+        self.principal_id = None
+        self.tenant_id = None
+        self.type = type
+
+
 class ManagedIdentitySQLControlSettingsModel(Resource):
     """Sql Control Settings for workspace managed identity.
 
@@ -2097,6 +2134,40 @@ class ManagedIdentitySQLControlSettingsModel(Resource):
         **kwargs
     ):
         super(ManagedIdentitySQLControlSettingsModel, self).__init__(**kwargs)
+        self.desired_state = desired_state
+        self.actual_state = None
+
+
+class ManagedIdentitySQLControlSettingsModelPropertiesGrantSQLControlToManagedIdentity(msrest.serialization.Model):
+    """Grant sql control to managed identity.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :param desired_state: Desired state. Possible values include: "Enabled", "Disabled".
+    :type desired_state: str or
+     ~synapse_management_client.models.ManagedIdentitySQLControlSettingsModelPropertiesGrantSQLControlToManagedIdentityDesiredState
+    :ivar actual_state: Actual state. Possible values include: "Enabling", "Enabled", "Disabling",
+     "Disabled", "Unknown".
+    :vartype actual_state: str or
+     ~synapse_management_client.models.ManagedIdentitySQLControlSettingsModelPropertiesGrantSQLControlToManagedIdentityActualState
+    """
+
+    _validation = {
+        'actual_state': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'desired_state': {'key': 'desiredState', 'type': 'str'},
+        'actual_state': {'key': 'actualState', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        desired_state: Optional[Union[str, "ManagedIdentitySQLControlSettingsModelPropertiesGrantSQLControlToManagedIdentityDesiredState"]] = None,
+        **kwargs
+    ):
+        super(ManagedIdentitySQLControlSettingsModelPropertiesGrantSQLControlToManagedIdentity, self).__init__(**kwargs)
         self.desired_state = desired_state
         self.actual_state = None
 
@@ -5704,6 +5775,27 @@ class UpdateIntegrationRuntimeRequest(msrest.serialization.Model):
         super(UpdateIntegrationRuntimeRequest, self).__init__(**kwargs)
         self.auto_update = auto_update
         self.update_delay_offset = update_delay_offset
+
+
+class VirtualNetworkProfile(msrest.serialization.Model):
+    """Virtual Network Profile.
+
+    :param compute_subnet_id: Subnet ID used for computes in workspace.
+    :type compute_subnet_id: str
+    """
+
+    _attribute_map = {
+        'compute_subnet_id': {'key': 'computeSubnetId', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        compute_subnet_id: Optional[str] = None,
+        **kwargs
+    ):
+        super(VirtualNetworkProfile, self).__init__(**kwargs)
+        self.compute_subnet_id = compute_subnet_id
 
 
 class VulnerabilityAssessmentRecurringScansProperties(msrest.serialization.Model):
