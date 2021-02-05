@@ -35,7 +35,7 @@ def pytest_generate_tests(metafunc):
             if testserver_path is not None:
                 print("TestServer: " + testserver_path)
                 from_path = testserver_path + '/swagger/'
-                to_path = az_path + '/src/test/scenarios/testserver/input/'
+                to_path = az_path + '/test/scenarios/testserver/input/'
                 print("Copy from " + from_path + " to " + to_path);
                 copy_tree(from_path, to_path)
             metafunc.parametrize("az", [az_path])
